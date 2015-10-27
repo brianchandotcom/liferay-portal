@@ -25,8 +25,8 @@ boolean companyMentionsEnabled = GetterUtil.getBoolean(request.getAttribute(Ment
 
 <c:if test="<%= !companyMentionsEnabled %>">
 	<div class="alert alert-warning">
-		<liferay-ui:message key="mentions-are-disabled-in-the-portal" />
+		<%= LanguageUtil.get(resourceBundle, "mentions-are-disabled-in-the-portal") %>
 	</div>
 </c:if>
 
-<aui:input checked="<%= groupMentionsEnabled %>" disabled="<%= !companyMentionsEnabled %>" label="enable-mentions" name="TypeSettingsProperties--mentionsEnabled--" type="checkbox" value="<%= groupMentionsEnabled %>" />
+<aui:input checked="<%= groupMentionsEnabled %>" disabled="<%= !companyMentionsEnabled %>" label="<%= LanguageUtil.get(resourceBundle, "enable-mentions") %>" name="TypeSettingsProperties--mentionsEnabled--" type="checkbox" value="<%= groupMentionsEnabled %>" />

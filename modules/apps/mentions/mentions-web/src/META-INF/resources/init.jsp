@@ -26,6 +26,9 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.mentions.web.constants.MentionsPortletKeys" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portlet.social.util.SocialInteractionsConfiguration" %><%@
+page import="com.liferay.portal.kernel.util.ResourceBundleUtil" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="java.util.ResourceBundle" %><%@
 page import="com.liferay.portlet.social.util.SocialInteractionsConfigurationUtil" %>
 
 <portlet:defineObjects />
@@ -33,3 +36,7 @@ page import="com.liferay.portlet.social.util.SocialInteractionsConfigurationUtil
 <liferay-theme:defineObjects />
 
 <%@ include file="/init-ext.jsp" %>
+
+<%
+ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, getClass());
+%>

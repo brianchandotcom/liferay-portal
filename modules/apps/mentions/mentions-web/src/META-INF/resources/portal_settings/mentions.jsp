@@ -22,22 +22,20 @@
 boolean companyMentionsEnabled = GetterUtil.getBoolean(request.getAttribute(MentionsWebKeys.COMPANY_MENTIONS_ENABLED));
 %>
 
-<aui:input checked="<%= companyMentionsEnabled %>" label="enable-mentions" name="settings--mentionsEnabled--" type="checkbox" value="<%= companyMentionsEnabled %>" />
+<aui:input checked="<%= companyMentionsEnabled %>" label='<%= LanguageUtil.get(resourceBundle, "enable-mentions") %>' name="settings--mentionsEnabled--" type="checkbox" value="<%= companyMentionsEnabled %>" />
 
 <%
 SocialInteractionsConfiguration mentionsSocialInteractionsConfiguration = SocialInteractionsConfigurationUtil.getSocialInteractionsConfiguration(company.getCompanyId(), request, MentionsPortletKeys.MENTIONS);
 %>
 
-<div id="<portlet:namespace />socialInteractionsSettings">
-	<aui:input checked="<%= mentionsSocialInteractionsConfiguration.isSocialInteractionsAnyUserEnabled() %>" id="socialInteractionsAnyUser" label="all-users-can-interact-with-each-other" name='<%= "settings--socialInteractionsType" + MentionsPortletKeys.MENTIONS + "--" %>' type="radio" value="<%= SocialInteractionsConfiguration.SocialInteractionsType.ALL_USERS.toString() %>" />
+<aui:input checked="<%= mentionsSocialInteractionsConfiguration.isSocialInteractionsAnyUserEnabled() %>" id="socialInteractionsAnyUser" label='<%= LanguageUtil.get(resourceBundle, "all-users-can-interact-with-each-other") %>' name='<%= "settings--socialInteractionsType" + MentionsPortletKeys.MENTIONS + "--" %>' type="radio" value="<%= SocialInteractionsConfiguration.SocialInteractionsType.ALL_USERS.toString() %>" />
 
-	<aui:input checked="<%= mentionsSocialInteractionsConfiguration.isSocialInteractionsSelectUsersEnabled() %>" id="socialInteractionsChooseUsers" label="define-social-interactions-for-users" name='<%= "settings--socialInteractionsType" + MentionsPortletKeys.MENTIONS + "--" %>' type="radio" value="<%= SocialInteractionsConfiguration.SocialInteractionsType.SELECT_USERS.toString() %>" />
+<aui:input checked="<%= mentionsSocialInteractionsConfiguration.isSocialInteractionsSelectUsersEnabled() %>" id="socialInteractionsChooseUsers" label='<%= LanguageUtil.get(resourceBundle, "define-social-interactions-for-users") %>' name='<%= "settings--socialInteractionsType" + MentionsPortletKeys.MENTIONS + "--" %>' type="radio" value="<%= SocialInteractionsConfiguration.SocialInteractionsType.SELECT_USERS.toString() %>" />
 
-	<div class="social-interactions-users" id="<portlet:namespace />socialInteractionsUsersWrapper">
-		<aui:input checked="<%= mentionsSocialInteractionsConfiguration.isSocialInteractionsSitesEnabled() %>" label="site-members-can-interact-with-each-other" name='<%= "settings--socialInteractionsSitesEnabled" + MentionsPortletKeys.MENTIONS + "--" %>' type="checkbox" value="<%= mentionsSocialInteractionsConfiguration.isSocialInteractionsSitesEnabled() %>" />
+<div class="social-interactions-users" id="<portlet:namespace />socialInteractionsUsersWrapper">
+	<aui:input checked="<%= mentionsSocialInteractionsConfiguration.isSocialInteractionsSitesEnabled() %>" label='<%= LanguageUtil.get(resourceBundle, "site-members-can-interact-with-each-other") %>' name='<%= "settings--socialInteractionsSitesEnabled" + MentionsPortletKeys.MENTIONS + "--" %>' type="checkbox" value="<%= mentionsSocialInteractionsConfiguration.isSocialInteractionsSitesEnabled() %>" />
 
-		<aui:input checked="<%= mentionsSocialInteractionsConfiguration.isSocialInteractionsFriendsEnabled() %>" label="friends-can-interact-with-each-other" name='<%= "settings--socialInteractionsFriendsEnabled" + MentionsPortletKeys.MENTIONS + "--" %>' type="checkbox" value="<%= mentionsSocialInteractionsConfiguration.isSocialInteractionsFriendsEnabled() %>" />
-	</div>
+	<aui:input checked="<%= mentionsSocialInteractionsConfiguration.isSocialInteractionsFriendsEnabled() %>" label='<%= LanguageUtil.get(resourceBundle, "friends-can-interact-with-each-other") %>' name='<%= "settings--socialInteractionsFriendsEnabled" + MentionsPortletKeys.MENTIONS + "--" %>' type="checkbox" value="<%= mentionsSocialInteractionsConfiguration.isSocialInteractionsFriendsEnabled() %>" />
 </div>
 
 <aui:script sandbox="<%= true %>">

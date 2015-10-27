@@ -71,7 +71,7 @@ public class UnstableMessageUtil {
 				String runBuildURL = runsJSONObject.getString("url");
 
 				if (runBuildURL.endsWith(
-						"/" + jsonObject.get("number") + "/")) {
+						"/" + jsonObject.getString("number") + "/")) {
 							JSONObject runJSONObject =
 								JenkinsResultsParserUtil.toJSONObject(
 									JenkinsResultsParserUtil.getLocalURL(
@@ -190,18 +190,19 @@ public class UnstableMessageUtil {
 
 						if (jobVariant.contains("functional")) {
 							sb.append(" - ");
-
 							String description = jobJSONObject.getString(
 								"description");
-
 							x = description.indexOf(">Jenkins Report<");
+							x = x + 22;
 
-							description = description.substring(x + 22);
+							if (description.length() > x) {
+								description = description.substring(x);
+								description = description.replace("\"", "\\\"");
+								sb.append(description);
+								sb.append(" - ");
+							}
 
-							description = description.replace("\"", "\\\"");
-
-							sb.append(description);
-							sb.append(" - <a href=\\\"");
+							sb.append("<a href=\\\"");
 							sb.append(runBuildURL);
 							sb.append("/console\\\">Console Output</a>");
 						}

@@ -2,7 +2,7 @@
     "childReports": [{
         "child": {
             "number": 5141,
-            "url": "file:/Users/pyoo/dev/liferay-portal/modules/test/jenkins-results-parser/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/generic_test-portal-acceptance-pullrequest-batch(master)_test-1-9.liferay.com_5141/test-portal-acceptance-pullrequest-batch(master)_SetupWizard%23HypersonicToHypersonic,label_exp=!master_test-1-9.liferay.com_5141"
+            "url": "file:${user.dir}/src/test/resources/com/liferay/results/parser/dependencies/UnstableMessageUtilTest/generic_test-portal-acceptance-pullrequest-batch(master)_test-1-9.liferay.com_5141/test-portal-acceptance-pullrequest-batch(master)_SetupWizard%23HypersonicToHypersonic,label_exp=!master_test-1-9.liferay.com/5141/"
         },
         "result": {
             "duration": 0.001,

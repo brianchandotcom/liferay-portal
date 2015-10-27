@@ -29,6 +29,8 @@ import java.nio.file.Paths;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 public class UnstableMessageUtilTest {
@@ -41,6 +43,23 @@ public class UnstableMessageUtilTest {
 		_downloadBatchDependency(
 			"generic", "test-1-18.liferay.com",
 			"test-portal-acceptance-pullrequest-batch(master)", "3415");
+		_downloadBatchDependency(
+			"multiple", "test-1-19.liferay.com",
+			"test-portal-acceptance-pullrequest-batch(master)", "1287");
+	}
+
+	@Before
+	public void setUp() throws Exception {
+		_replaceInAllFiles(
+			_testDependenciesDir, _USER_DIR_TOKEN,
+			System.getProperty("user.dir"));
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_replaceInAllFiles(
+			_testDependenciesDir, System.getProperty("user.dir"),
+			_USER_DIR_TOKEN);
 	}
 
 	@Test
@@ -116,8 +135,11 @@ public class UnstableMessageUtilTest {
 					String runUrlString = URLDecoder.decode(
 						runJSONObject.getString("url"), "UTF8");
 					String localRunUrlString = _downloadSlaveDependency(
-						batchDir, runUrlString);
-					runJSONObject.put("url", localRunUrlString);
+						batchDir, runUrlString, buildNumber, jobName, hostName);
+
+					if (localRunUrlString != null) {
+						runJSONObject.put("url", localRunUrlString);
+					}
 				}
 			}
 		}
@@ -184,8 +206,11 @@ public class UnstableMessageUtilTest {
 					String runUrlString = URLDecoder.decode(
 						childJSONObject.getString("url"), "UTF8");
 					String localRunUrlString = _downloadSlaveDependency(
-						batchDir, runUrlString);
-					childJSONObject.put("url", localRunUrlString);
+						batchDir, runUrlString, buildNumber, jobName, hostName);
+
+					if (localRunUrlString != null) {
+						childJSONObject.put("url", localRunUrlString);
+					}
 				}
 			}
 		}
@@ -193,47 +218,63 @@ public class UnstableMessageUtilTest {
 		_write(testReportJSONFile, testReportJSONObject);
 	}
 
-	private static String _downloadSlaveDependency(
-			File batchDir, String urlString)
+	private static File _downloadJSONFile(File targetFile, URL url)
 		throws Exception {
 
-		URL jsonUrl = _createURL(urlString + "/api/json");
+		File targetFileParentDir = targetFile.getParentFile();
+		targetFileParentDir.mkdirs();
 
-		URI jsonUri = jsonUrl.toURI();
+		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+			JenkinsResultsParserUtil.getLocalURL(url.toString()));
 
-		String hostName = jsonUrl.getHost();
+		_write(targetFile, jsonObject.toString(4));
 
-		int x = urlString.indexOf("/job/") + 5;
+		return targetFile;
+	}
 
-		String jobName = urlString.substring(x, urlString.indexOf("/", x));
+	private static String _downloadSlaveDependency(
+			File batchDir, String urlString, String buildNumber, String jobName,
+			String hostName)
+		throws Exception {
 
-		x = urlString.indexOf("AXIS_VARIABLE=") + "AXIS_VARIABLE=".length();
+		URL jsonURL = _createURL(urlString + "/api/json");
+		URL jsonTestReportURL = _createURL(urlString + "/testReport/api/json");
+
+		int x = urlString.indexOf("AXIS_VARIABLE=") + "AXIS_VARIABLE=".length();
 
 		String axis = urlString.substring(x, urlString.indexOf("/", x));
 
 		x = urlString.indexOf("/", x) + 1;
 
-		String buildNumber = urlString.substring(x, urlString.indexOf("/", x));
+		String slaveBuildNumber = urlString.substring(
+			x, urlString.indexOf("/", x));
 
-		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-			JenkinsResultsParserUtil.getLocalURL(jsonUri.toASCIIString()));
+		if (!slaveBuildNumber.equals(buildNumber)) {
+			return null;
+		}
 
-		String name = jobName + "_" + axis + "_" + hostName + "_" + buildNumber;
+		String name = jobName + "_" + axis + "_" + hostName;
 
-		File slaveDependencyDir = new File(
-			batchDir.getPath() + "/" + name + "/api/");
-		slaveDependencyDir.mkdirs();
+		File slaveDependencyRootDir = new File(
+			batchDir.getPath() + "/" + name + "/" + buildNumber + "/");
+
+		slaveDependencyRootDir.mkdirs();
 
 		File slaveDependencyFile = new File(
-			slaveDependencyDir.getPath() + "/json");
-		_write(slaveDependencyFile, jsonObject);
+			slaveDependencyRootDir.getPath() + "/api/json");
+
+		File slaveTestReportDependencyFile = new File(
+			slaveDependencyRootDir.getPath() + "/testReport/api/json");
+
+		_downloadJSONFile(slaveDependencyFile, jsonURL);
+		_downloadJSONFile(slaveTestReportDependencyFile, jsonTestReportURL);
 
 		URI slaveDependencyFileUri = slaveDependencyFile.toURI();
 		String slaveDependencyJsonFilePath =
 			slaveDependencyFileUri.toASCIIString();
 
 		return slaveDependencyJsonFilePath.substring(
-			0, slaveDependencyJsonFilePath.indexOf("/api/json"));
+			0, slaveDependencyJsonFilePath.indexOf("api/json"));
 	}
 
 	private static URL _encode(URL url) throws Exception {
@@ -260,6 +301,35 @@ public class UnstableMessageUtilTest {
 		return new String(Files.readAllBytes(Paths.get(file.toURI())));
 	}
 
+	private static void _replaceInAllFiles(
+			File rootDir, String token, String value)
+		throws Exception {
+
+		File[] descendantFileArray = rootDir.listFiles();
+
+		for (File descendantFile : descendantFileArray) {
+			if (descendantFile.isDirectory()) {
+				_replaceInAllFiles(descendantFile, token, value);
+			}
+			else {
+				_replaceInFile(descendantFile, token, value);
+			}
+		}
+	}
+
+	private static void _replaceInFile(
+			File targetFile, String token, String value)
+		throws Exception {
+
+		String fileContents = _read(targetFile);
+
+		fileContents = fileContents.replace(token, value);
+
+		targetFile.delete();
+
+		_write(targetFile, fileContents);
+	}
+
 	private static String _replaceToken(
 		String string, String token, String value) {
 
@@ -280,8 +350,7 @@ public class UnstableMessageUtilTest {
 		Files.write(Paths.get(file.toURI()), content.getBytes());
 	}
 
-	private static final String _EXPECTED_RESULTS_FILE_PATH =
-		"expected-results/UnstableMessageUtilTest.html";
+	private static final String _USER_DIR_TOKEN = "${user.dir}";
 
 	private static final File _testDependenciesDir = new File(
 		"src/test/resources/com/liferay/results/parser/dependencies/" +

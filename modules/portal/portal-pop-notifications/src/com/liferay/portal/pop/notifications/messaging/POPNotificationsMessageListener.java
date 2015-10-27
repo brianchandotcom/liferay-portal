@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.pop.notifications.listener;
+package com.liferay.portal.pop.notifications.messaging;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -29,11 +29,12 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.pop.MessageListenerWrapper;
-import com.liferay.portal.pop.notifications.portlet.POPNotificationPortlet;
+import com.liferay.portal.pop.notifications.MessageListenerWrapper;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.mail.MailEngine;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.mail.Address;
 import javax.mail.Flags;
@@ -47,6 +48,7 @@ import javax.mail.internet.InternetAddress;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -81,14 +83,16 @@ public class POPNotificationsMessageListener
 	)
 	protected void addMessageListener(MessageListener messageListener) {
 		MessageListenerWrapper messageListenerWrapper =
-			new MessageListenerWrapper(listener);
+			new MessageListenerWrapper(messageListener);
 
 		_messageListeners.put(messageListener, messageListenerWrapper);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_schedulerEngineHelper.unregister(this);
+		if (PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED) {
+			_schedulerEngineHelper.unregister(this);
+		}
 	}
 
 	@Override
@@ -234,13 +238,6 @@ public class POPNotificationsMessageListener
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
-	@Reference(
-		target =
-			"(javax.portlet.name=" + POPNotificationPortlet.PORTLET_ID + ")"
-	)
-	protected void setPortlet(Portlet portlet) {
 	}
 
 	@Reference(unbind = "-")

@@ -49,6 +49,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRIVATE_SITE_LINK</td>
+	<td>//div[contains(@id,'my_sites')]//a[contains(@id,'PrivateSiteLink') and contains(.,'${key_site}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLIC_SITE_LINK</td>
+	<td>//div[contains(@id,'my_sites')]//a[contains(@id,'PublicSiteLink') and contains(.,'${key_site}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SITE_NAME_HEADER</td>
 	<td>//div[contains(@class,'sidebar-header')]//span[contains(.,'${key_siteName}')]</td>
 	<td></td>

@@ -6,6 +6,7 @@ dependencies {
 
 jar {
 	exclude "OSGI-INF/permissions.perm"
+	includeEmptyDirs = false
 
 	from zipTree(
 		{

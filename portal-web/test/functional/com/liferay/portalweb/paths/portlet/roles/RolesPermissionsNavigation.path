@@ -157,6 +157,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITE_ADMIN_APPLICATIONS_CALENDAR</td>
+	<td>//div[contains(.,'Applications') and contains(@class,'permission-navigation-item-header')]/following-sibling::ul//span[contains(@class,'permission-navigation-item')]/a[contains(.,'Calendar')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SITE_ADMIN_APPLICATIONS_CATEGORIES_NAVIGATION</td>
 	<td>//div[contains(.,'Applications') and contains(@class,'permission-navigation-item-header')]/following-sibling::ul//span[contains(@class,'permission-navigation-item')]/a[contains(.,'Categories Navigation')]</td>
 	<td></td>

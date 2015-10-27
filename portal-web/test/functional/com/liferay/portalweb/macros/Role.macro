@@ -333,6 +333,13 @@
 					</then>
 				</elseif>
 				<elseif>
++					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_APPLICATIONS_CALENDAR" />
++					<then>
++						<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_CALENDAR" />
++						<var name="permissionNavigationValue" value="Calendar" />
++					</then>
++				</elseif>
+				<elseif>
 					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_APPLICATIONS_CATEGORIES_NAVIGATION" />
 					<then>
 						<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_CATEGORIES_NAVIGATION" />
@@ -877,6 +884,13 @@
 					<var name="permissionNavigationValue" value="Bookmarks" />
 				</then>
 			</elseif>
+			<elseif>
++				<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_APPLICATIONS_CALENDAR" />
++				<then>
++					<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_CALENDAR" />
++					<var name="permissionNavigationValue" value="Calendar" />
++				</then>
++			</elseif>
 			<elseif>
 				<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA" />
 				<then>

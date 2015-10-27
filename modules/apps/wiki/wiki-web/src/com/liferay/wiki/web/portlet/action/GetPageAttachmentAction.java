@@ -23,12 +23,14 @@ import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.wiki.exception.NoSuchPageException;
+import com.liferay.wiki.importer.impl.mediawiki.MediaWikiImporter;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageServiceUtil;
 
@@ -56,6 +58,18 @@ public class GetPageAttachmentAction extends BaseStrutsAction {
 			long nodeId = ParamUtil.getLong(request, "nodeId");
 			String title = ParamUtil.getString(request, "title");
 			String fileName = ParamUtil.getString(request, "fileName");
+
+			if (fileName.startsWith(
+					MediaWikiImporter.SHARED_IMAGES_TITLE + StringPool.SLASH)) {
+
+				String[] paths = fileName.split(
+					MediaWikiImporter.SHARED_IMAGES_TITLE + StringPool.SLASH);
+
+				fileName = paths[1];
+
+				title = MediaWikiImporter.SHARED_IMAGES_TITLE;
+			}
+
 			int status = ParamUtil.getInteger(
 				request, "status", WorkflowConstants.STATUS_APPROVED);
 

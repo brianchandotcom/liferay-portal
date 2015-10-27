@@ -37,7 +37,7 @@ JournalFolder folder = journalDisplayContext.getFolder();
 
 			<div class="lfr-asset-metadata">
 				<div class="icon-calendar lfr-asset-icon">
-					<%= LanguageUtil.format(request, "last-updated-x", dateFormatDateTime.format(folder.getModifiedDate()), false) %>
+					<liferay-ui:message arguments="<%= dateFormatDateTime.format(folder.getModifiedDate()) %>" key="last-updated-x" translateArguments="<%= false %>" />
 				</div>
 
 				<%

@@ -83,7 +83,7 @@ if (!rankingNamesList.isEmpty()) {
 	<c:if test="<%= socialUserStatisticsPortletInstanceConfiguration.showHeaderText() %>">
 		<div class="top-users">
 			<c:if test="<%= total > 0 %>">
-				<liferay-ui:message arguments="<%= total %>" key="top-users-out-of-x" translateArguments="<%= false %>" /> <%= LanguageUtil.format(request, "ranking-is-based-on-x", rankingNamesMessage, false) %><br />
+				<liferay-ui:message arguments="<%= total %>" key="top-users-out-of-x" translateArguments="<%= false %>" /> <liferay-ui:message arguments="<%= rankingNamesMessage %>" key="ranking-is-based-on-x" translateArguments="<%= false %>" /></br />
 			</c:if>
 		</div>
 	</c:if>

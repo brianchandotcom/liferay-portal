@@ -27,5 +27,5 @@ if (portletTitle == null) {
 %>
 
 <div class="alert alert-danger">
-	<%= LanguageUtil.format(request, "is-temporarily-unavailable", portletTitle, false) %>
+	<liferay-ui:message arguments="<%= portletTitle %>" key="is-temporarily-unavailable" translateArguments="<%= false %>" />
 </div>

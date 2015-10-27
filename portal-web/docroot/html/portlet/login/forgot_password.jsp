@@ -122,7 +122,7 @@ if (reminderAttempts == null) {
 					%>
 
 					<div class="alert alert-info">
-						<%= LanguageUtil.format(request, "a-new-password-will-be-sent-to-x-if-you-can-correctly-answer-the-following-question", login, false) %>
+						<liferay-ui:message arguments="<%= login %>" key="a-new-password-will-be-sent-to-x-if-you-can-correctly-answer-the-following-question" translateArguments="<%= false %>" />
 					</div>
 
 					<aui:input autoFocus="<%= true %>" label="<%= HtmlUtil.escape(LanguageUtil.get(request, user2.getReminderQueryQuestion())) %>" name="answer" type="text" />

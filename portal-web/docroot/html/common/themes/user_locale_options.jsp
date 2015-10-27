@@ -25,7 +25,7 @@ Locale userLocale = user.getLocale();
 <c:if test="<%= !locale.equals(user.getLocale()) %>">
 	<button class="close" id="ignoreUserLocaleOptions" type="button">&times;</button>
 
-	<%= LanguageUtil.format(userLocale, "this-page-is-displayed-in-x", locale.getDisplayName(userLocale), false) %>
+	<liferay-ui:message arguments="<%= locale.getDisplayName(userLocale) %>" key="this-page-is-displayed-in-x" translateArguments="<%= false %>" />
 
 	<c:if test="<%= LanguageUtil.isAvailableLocale(userLocale) %>">
 
@@ -33,14 +33,18 @@ Locale userLocale = user.getLocale();
 		String displayPreferredLanguageURLString = themeDisplay.getPathMain() + "/portal/update_language?p_l_id=" + themeDisplay.getPlid() + "&redirect=" + currentURL + "&languageId=" + user.getLanguageId() + "&persistState=false&showUserLocaleOptionsMessage=false";
 		%>
 
-		<aui:a href="<%= displayPreferredLanguageURLString %>"><%= LanguageUtil.format(userLocale, "display-the-page-in-x", userLocale.getDisplayName(userLocale), false) %></aui:a>
+		<aui:a href="<%= displayPreferredLanguageURLString %>">
+			<liferay-ui:message arguments="<%= userLocale.getDisplayName(userLocale) %>" key="display-the-page-in-x" translateArguments="<%= false %>" />
+		</aui:a>
 	</c:if>
 
 	<%
 	String changePreferredLanguageURLString = themeDisplay.getPathMain() + "/portal/update_language?p_l_id=" + themeDisplay.getPlid() + "&redirect=" + currentURL + "&languageId=" + themeDisplay.getLanguageId() + "&showUserLocaleOptionsMessage=false";
 	%>
 
-	<aui:a href="<%= changePreferredLanguageURLString %>"><%= LanguageUtil.format(userLocale, "set-x-as-your-preferred-language", locale.getDisplayName(userLocale), false) %></aui:a>
+	<aui:a href="<%= changePreferredLanguageURLString %>">
+		<liferay-ui:message arguments="<%= locale.getDisplayName(userLocale) %>" key="set-x-as-your-preferred-language" translateArguments="<%= false %>" />
+	</aui:a>
 
 	<aui:script use="aui-base,liferay-store">
 		var ignoreUserLocaleOptionsNode = A.one('#ignoreUserLocaleOptions');

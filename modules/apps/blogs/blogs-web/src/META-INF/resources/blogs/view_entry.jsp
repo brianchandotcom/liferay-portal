@@ -175,7 +175,9 @@ Discussion discussion = CommentManagerUtil.getDiscussion(user.getUserId(), scope
 
 <div class="col-md-8 col-md-offset-2">
 	<c:if test="<%= (discussion != null) && blogsPortletInstanceConfiguration.enableComments() %>">
-		<h2><strong><%= LanguageUtil.format(request, "x-comments", CommentManagerUtil.getCommentsCount(BlogsEntry.class.getName(), entry.getEntryId())) %></strong></h2>
+		<h2>
+			<strong><liferay-ui:message arguments="<%= CommentManagerUtil.getCommentsCount(BlogsEntry.class.getName(), entry.getEntryId()) %>" key="x-comments" /></strong>
+		</h2>
 
 		<c:if test="<%= PropsValues.BLOGS_TRACKBACK_ENABLED && entry.isAllowTrackbacks() && !portletId.equals(BlogsPortletKeys.BLOGS_ADMIN) %>">
 			<aui:input inlineLabel="left" name="trackbackURL" type="resource" value='<%= PortalUtil.getLayoutFullURL(themeDisplay) + Portal.FRIENDLY_URL_SEPARATOR + "blogs/trackback/" + entry.getUrlTitle() %>' />

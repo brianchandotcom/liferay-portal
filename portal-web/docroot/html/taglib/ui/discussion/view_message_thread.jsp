@@ -134,7 +134,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 								</a>
 							</liferay-util:buffer>
 
-							<%= LanguageUtil.format(request, "x-ago-in-reply-to-x", new Object[] {createDateDescription, parentCommentBodyBuffer}, false) %>
+							<liferay-ui:message arguments="<%= new Object[] {createDateDescription, parentCommentBodyBuffer} %>" key="x-ago-in-reply-to-x" translateArguments="<%= false %>" />
 						</c:otherwise>
 					</c:choose>
 

@@ -124,7 +124,7 @@
 					<br />
 
 					<div>
-						<%= LanguageUtil.format(request, "posted-on-x", dateFormatDateTime.format(wallEntry.getCreateDate()), false) %>
+						<liferay-ui:message arguments="<%= dateFormatDateTime.format(wallEntry.getCreateDate()) %>" key="posted-on-x" translateArguments="<%= false %>" />
 					</div>
 
 					<c:if test="<%= themeDisplay.isSignedIn() && UserPermissionUtil.contains(permissionChecker, user2.getUserId(), ActionKeys.UPDATE) %>">
@@ -233,14 +233,16 @@
 							<%= LanguageUtil.format(request, (user2.isMale() ? "x-needs-to-approve-you-as-his-friend" : "x-needs-to-approve-you-as-her-friend"), HtmlUtil.escape(user2.getFirstName()), false) %>
 						</c:when>
 						<c:when test="<%= SocialRequestLocalServiceUtil.hasRequest(user2.getUserId(), User.class.getName(), user2.getUserId(), FriendsRequestKeys.ADD_FRIEND, user.getUserId(), SocialRequestConstants.STATUS_PENDING) %>">
-							<%= LanguageUtil.format(request, "you-need-to-approve-x-as-your-friend", HtmlUtil.escape(user2.getFirstName()), false) %>
+							<liferay-ui:message arguments="<%= HtmlUtil.escape(user2.getFirstName()) %>" key="you-need-to-approve-x-as-your-friend" translateArguments="<%= false %>" />
 						</c:when>
 						<c:when test="<%= layoutTypePortlet.hasPortletId(SocialNetworkingPortletKeys.SUMMARY) %>">
 							<liferay-portlet:actionURL name="addFriend" portletName="<%= SocialNetworkingPortletKeys.SUMMARY %>" var="addAsFriendURL">
 								<portlet:param name="redirect" value="<%= currentURL %>" />
 							</liferay-portlet:actionURL>
 
-							<a href="<%= addAsFriendURL %>"><%= LanguageUtil.format(request, "ask-x-to-be-your-friend", HtmlUtil.escape(user2.getFirstName()), false) %></a>
+							<a href="<%= addAsFriendURL %>">
+								<liferay-ui:message arguments="<%= HtmlUtil.escape(user2.getFirstName()) %>" key="ask-x-to-be-your-friend" translateArguments="<%= false %>" />
+							</a>
 						</c:when>
 					</c:choose>
 				</c:when>

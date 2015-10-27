@@ -78,6 +78,10 @@ public class IdentifiableOSGIServiceUtil {
 		public void modifiedService(
 			ServiceReference<IdentifiableOSGIService> serviceReference,
 			IdentifiableOSGIService identifiableOSGIService) {
+
+			_identifiableOSGIServices.put(
+				identifiableOSGIService.getOSGIServiceIdentifier(),
+				identifiableOSGIService);
 		}
 
 		@Override

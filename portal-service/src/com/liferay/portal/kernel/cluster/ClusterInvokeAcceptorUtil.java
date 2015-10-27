@@ -74,6 +74,10 @@ public class ClusterInvokeAcceptorUtil {
 		public void modifiedService(
 			ServiceReference<ClusterInvokeAcceptor> serviceReference,
 			ClusterInvokeAcceptor clusterInvokeAcceptor) {
+
+			Class<?> clazz = clusterInvokeAcceptor.getClass();
+
+			_clusterInvokeAcceptors.put(clazz.getName(), clusterInvokeAcceptor);
 		}
 
 		@Override

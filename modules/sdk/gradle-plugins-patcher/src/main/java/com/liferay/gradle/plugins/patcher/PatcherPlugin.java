@@ -16,7 +16,6 @@ package com.liferay.gradle.plugins.patcher;
 
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.StringUtil;
-import com.liferay.gradle.util.copy.ExcludeExistingFileAction;
 
 import java.io.File;
 
@@ -29,6 +28,7 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.file.FileCopyDetails;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.specs.Spec;
@@ -78,10 +78,23 @@ public class PatcherPlugin implements Plugin<Project> {
 			"copy" + StringUtil.capitalize(patchTask.getName()) +
 				"OriginalLibClasses";
 
-		Copy copy = GradleUtil.addTask(
+		final Copy copy = GradleUtil.addTask(
 			patchTask.getProject(), taskName, Copy.class);
 
-		copy.eachFile(new ExcludeExistingFileAction(copy.getDestinationDir()));
+		copy.eachFile(
+			new Action<FileCopyDetails>() {
+
+				@Override
+				public void execute(FileCopyDetails fileCopyDetails) {
+					File file = new File(
+						copy.getDestinationDir(), fileCopyDetails.getPath());
+
+					if (file.exists()) {
+						fileCopyDetails.exclude();
+					}
+				}
+
+			});
 
 		copy.from(
 			new Callable<FileCollection>() {

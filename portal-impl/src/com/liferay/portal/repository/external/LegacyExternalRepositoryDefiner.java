@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.BaseRepository;
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.RepositoryConfiguration;
+import com.liferay.portal.kernel.repository.RepositoryConfigurationBuilder;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.capabilities.ProcessorCapability;
 import com.liferay.portal.kernel.repository.registry.BaseRepositoryDefiner;
@@ -46,12 +47,35 @@ public class LegacyExternalRepositoryDefiner extends BaseRepositoryDefiner {
 	@Override
 	public RepositoryConfiguration getRepositoryConfiguration() {
 		try {
+			if (_repositoryConfiguration != null) {
+				return _repositoryConfiguration;
+			}
+
 			BaseRepository baseRepository =
 				ExternalRepositoryFactoryUtil.getInstance(getClassName());
 
-			return new LegacyRepositoryConfiguration(
-				baseRepository.getSupportedConfigurations(),
-				baseRepository.getSupportedParameters());
+			String[][] supportedParameters =
+				baseRepository.getSupportedParameters();
+
+			int size = 0;
+
+			if ((supportedParameters != null) &&
+				(supportedParameters[0] != null)) {
+
+				size = supportedParameters[0].length;
+			}
+
+			RepositoryConfigurationBuilder repositoryConfigurationBuilder =
+				new RepositoryConfigurationBuilder();
+
+			for (int i = 0; i < size; i++) {
+				repositoryConfigurationBuilder.addParameter(
+					supportedParameters[0][i]);
+			}
+
+			_repositoryConfiguration = repositoryConfigurationBuilder.build();
+
+			return _repositoryConfiguration;
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -81,31 +105,7 @@ public class LegacyExternalRepositoryDefiner extends BaseRepositoryDefiner {
 	private final String _className;
 	private final LiferayProcessorCapability _processorCapability =
 		new LiferayProcessorCapability();
+	private RepositoryConfiguration _repositoryConfiguration;
 	private final RepositoryFactory _repositoryFactory;
-
-	private static class LegacyRepositoryConfiguration
-		implements RepositoryConfiguration {
-
-		public LegacyRepositoryConfiguration(
-			String[] supportedConfigurations, String[][] supportedParameters) {
-
-			_supportedConfigurations = supportedConfigurations;
-			_supportedParameters = supportedParameters;
-		}
-
-		@Override
-		public String[] getSupportedConfigurations() {
-			return _supportedConfigurations;
-		}
-
-		@Override
-		public String[][] getSupportedParameters() {
-			return _supportedParameters;
-		}
-
-		private final String[] _supportedConfigurations;
-		private final String[][] _supportedParameters;
-
-	}
 
 }

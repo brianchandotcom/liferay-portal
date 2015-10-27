@@ -74,8 +74,6 @@ long folderId = ParamUtil.getLong(request, "folderId");
 
 					</aui:select>
 
-					<div id="<portlet:namespace />settingsConfiguration"></div>
-
 					<div id="<portlet:namespace />settingsParameters"></div>
 				</c:when>
 				<c:otherwise>
@@ -95,21 +93,19 @@ long folderId = ParamUtil.getLong(request, "folderId");
 						<%
 						UnicodeProperties typeSettingsProperties = repository.getTypeSettingsProperties();
 
-						String configuration = typeSettingsProperties.get("configuration-type");
+						RepositoryConfiguration repositoryConfiguration = repositoryClassDefinition.getRepositoryConfiguration();
 
-						String[] supportedParameters = RepositoryServiceUtil.getSupportedParameters(repositoryClassDefinition.getClassName(), configuration);
+						for (RepositoryConfiguration.Parameter repositoryConfigurationParameter : repositoryConfiguration.getParameters()) {
+							String parameterValue = typeSettingsProperties.getProperty(repositoryConfigurationParameter.getName());
 
-						for (String supportedParameter : supportedParameters) {
-							String supportedParameterValue = typeSettingsProperties.getProperty(supportedParameter);
-
-							if (Validator.isNotNull(supportedParameterValue)) {
+							if (Validator.isNotNull(parameterValue)) {
 						%>
 
 								<dt>
-									<%= LanguageUtil.get(request, HtmlUtil.escape(StringUtil.replace(StringUtil.toLowerCase(supportedParameter), CharPool.UNDERLINE, CharPool.DASH))) %>
+									<%= HtmlUtil.escape(repositoryConfigurationParameter.getLabel(locale)) %>
 								</dt>
 								<dd>
-									<%= HtmlUtil.escape(supportedParameterValue) %>
+									<%= HtmlUtil.escape(parameterValue) %>
 								</dd>
 
 						<%
@@ -144,26 +140,17 @@ long folderId = ParamUtil.getLong(request, "folderId");
 				String className = repositoryClassDefinition.getClassName();
 
 				String unqualifiedClassName = HtmlUtil.escapeAttribute(className.substring(className.lastIndexOf(StringPool.PERIOD) + 1));
-
-				String[] supportedConfigurations = repositoryClassDefinition.getSupportedConfigurations();
-
-				for (String supportedConfiguration : supportedConfigurations) {
 			%>
 
-				<div class="settings-configuration <%= ((supportedConfigurations.length == 1) ? "hide" : "") %>" id="<portlet:namespace />repository-<%= unqualifiedClassName %>-wrapper">
-					<aui:select cssClass="repository-configuration" id='<%= "repository-" + unqualifiedClassName %>' label="repository-configuration" name="settings--configuration-type--">
-						<aui:option label="<%= LanguageUtil.get(request, HtmlUtil.escape(StringUtil.replace(StringUtil.toLowerCase(supportedConfiguration), CharPool.UNDERLINE, CharPool.DASH))) %>" selected="<%= supportedConfiguration.equals(supportedConfigurations[0]) %>" value="<%= HtmlUtil.escapeAttribute(supportedConfiguration) %>" />
-					</aui:select>
-				</div>
-				<div class="settings-parameters" id="<portlet:namespace />repository-<%= unqualifiedClassName %>-configuration-<%= HtmlUtil.escapeAttribute(supportedConfiguration) %>">
+				<div class="settings-parameters" id="<portlet:namespace />repository-<%= unqualifiedClassName %>-configuration">
 
 					<%
-					String[] supportedParameters = RepositoryServiceUtil.getSupportedParameters(className, supportedConfiguration);
+					RepositoryConfiguration repositoryConfiguration = repositoryClassDefinition.getRepositoryConfiguration();
 
-					for (String supportedParameter : supportedParameters) {
+					for (RepositoryConfiguration.Parameter repositoryConfigurationParameter : repositoryConfiguration.getParameters()) {
 					%>
 
-						<aui:input label="<%= LanguageUtil.get(request, HtmlUtil.escape(StringUtil.replace(StringUtil.toLowerCase(supportedParameter), CharPool.UNDERLINE, CharPool.DASH))) %>" name='<%= "settings--" + HtmlUtil.escapeAttribute(supportedParameter) + "--" %>' type="text" value="" />
+						<aui:input label="<%= HtmlUtil.escape(repositoryConfigurationParameter.getLabel(locale)) %>" name='<%= "settings--" + HtmlUtil.escapeAttribute(repositoryConfigurationParameter.getName()) + "--" %>' type="text" value="" />
 
 					<%
 					}
@@ -172,7 +159,6 @@ long folderId = ParamUtil.getLong(request, "folderId");
 				</div>
 
 		<%
-				}
 			}
 			catch (Exception e) {
 				_log.error(e);
@@ -185,29 +171,16 @@ long folderId = ParamUtil.getLong(request, "folderId");
 
 <aui:script sandbox="<%= true %>">
 	var settingsSupported = $('#<portlet:namespace />settingsSupported');
-	var settingsConfiguration = $('#<portlet:namespace />settingsConfiguration');
 	var settingsParameters = $('#<portlet:namespace />settingsParameters');
 
 	var showConfiguration = function(select) {
-		settingsSupported.append(settingsConfiguration.find('.settings-configuration'));
 		settingsSupported.append(settingsParameters.find('.settings-parameters'));
 
 		var className = select.val().split('.').pop();
 
-		var selectRepositoryConfiguration = $('#<portlet:namespace />repository-' + className);
-
-		var repositoryParameters = $('#<portlet:namespace />repository-' + className + '-configuration-' + selectRepositoryConfiguration.val());
-
-		settingsConfiguration.append($('#<portlet:namespace />repository-' + className + '-wrapper'));
+		var repositoryParameters = $('#<portlet:namespace />repository-' + className + '-configuration');
 
 		settingsParameters.append(repositoryParameters);
-	};
-
-	var showParameters = function(event) {
-		var select = $(event.currentTarget);
-
-		settingsSupported.append(settingsParameters.find('.settings-parameters'));
-		settingsParameters.append($('#' + select.attr('id') + '-configuration-' + select.val()));
 	};
 
 	var selectRepositoryTypes = $('#<portlet:namespace />repositoryTypes');
@@ -220,8 +193,6 @@ long folderId = ParamUtil.getLong(request, "folderId");
 	);
 
 	showConfiguration(selectRepositoryTypes);
-
-	$('.repository-configuration').on('change', showParameters);
 </aui:script>
 
 <%

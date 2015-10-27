@@ -16,6 +16,7 @@ package com.liferay.document.library.repository.cmis.internal;
 
 import com.liferay.document.library.repository.cmis.internal.constants.CMISRepositoryConstants;
 import com.liferay.portal.kernel.repository.RepositoryConfiguration;
+import com.liferay.portal.kernel.repository.RepositoryConfigurationBuilder;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
@@ -59,31 +60,13 @@ public class CMISAtomPubRepositoryDefiner extends BaseCMISRepositoryDefiner {
 		_repositoryFactory = repositoryFactory;
 	}
 
-	private static final String[] _SUPPORTED_CONFIGURATIONS = {
-		CMISRepositoryConstants.CMIS_ATOMPUB_CONFIGURATION
-	};
-
-	private static final String[][] _SUPPORTED_PARAMETERS = {
-		{CMISRepositoryConstants.CMIS_ATOMPUB_URL_PARAMETER,
-			CMISRepositoryConstants.CMIS_ATOMPUB_REPOSITORY_ID_PARAMETER
-		}
-	};
-
 	private final RepositoryConfiguration _repositoryConfiguration =
-		new RepositoryConfiguration() {
-
-			@Override
-			public String[] getSupportedConfigurations() {
-				return _SUPPORTED_CONFIGURATIONS;
-			}
-
-			@Override
-			public String[][] getSupportedParameters() {
-				return _SUPPORTED_PARAMETERS;
-			}
-
-		};
-
+		new RepositoryConfigurationBuilder(getClass(), "content.Language").
+			addParameter(
+				CMISRepositoryConstants.CMIS_ATOMPUB_URL_PARAMETER
+			).addParameter(
+				CMISRepositoryConstants.CMIS_ATOMPUB_REPOSITORY_ID_PARAMETER
+			).build();
 	private RepositoryFactory _repositoryFactory;
 
 }

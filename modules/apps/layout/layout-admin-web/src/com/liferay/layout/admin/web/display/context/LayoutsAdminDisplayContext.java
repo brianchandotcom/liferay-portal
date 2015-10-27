@@ -125,7 +125,8 @@ public class LayoutsAdminDisplayContext {
 
 		editLayoutURL.setParameter("tabs1", getTabs1());
 		editLayoutURL.setParameter("redirect", getRedirect());
-		editLayoutURL.setParameter("groupId", String.valueOf(getLiveGroupId()));
+		editLayoutURL.setParameter(
+			"groupId", String.valueOf(getSelGroup().getGroupId()));
 		editLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
 
 		return editLayoutURL;

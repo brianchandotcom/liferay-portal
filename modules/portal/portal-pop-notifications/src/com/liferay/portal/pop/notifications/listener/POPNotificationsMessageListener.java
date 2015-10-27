@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.pop.MessageListener;
 import com.liferay.portal.kernel.pop.MessageListenerException;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
@@ -55,10 +56,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(
-	property = {"javax.portlet.name=" + POPNotificationPortlet.PORTLET_ID},
-	service = SchedulerEntry.class
-)
+@Component(immediate = true, service = POPNotificationsMessageListener.class)
 public class POPNotificationsMessageListener
 	extends BaseSchedulerEntryMessageListener {
 
@@ -70,7 +68,14 @@ public class POPNotificationsMessageListener
 				TriggerFactoryUtil.createTrigger(
 					getEventListenerClass(), getEventListenerClass(), 1,
 					TimeUnit.MINUTE));
+
+			_schedulerEngineHelper.register(this, schedulerEntryImpl);
 		}
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_schedulerEngineHelper.unregister(this);
 	}
 
 	@Override
@@ -234,6 +239,13 @@ public class POPNotificationsMessageListener
 	}
 
 	@Reference(unbind = "-")
+	protected void setSchedulerEngineHelper(
+		SchedulerEngineHelper schedulerEngineHelper) {
+
+		_schedulerEngineHelper = schedulerEngineHelper;
+	}
+
+	@Reference(unbind = "-")
 	protected void setTriggerFactory(TriggerFactory triggerFactory) {
 	}
 
@@ -243,5 +255,6 @@ public class POPNotificationsMessageListener
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		POPNotificationsMessageListener.class);
+	private SchedulerEngineHelper _schedulerEngineHelper;
 
 }

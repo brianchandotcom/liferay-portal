@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.pop;
-
-import aQute.bnd.annotation.ProviderType;
+package com.liferay.portal.pop.notifications;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -26,7 +24,6 @@ import javax.mail.Message;
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class MessageListenerWrapper implements MessageListener {
 
 	public MessageListenerWrapper(MessageListener listener) {

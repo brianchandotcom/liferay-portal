@@ -4661,7 +4661,7 @@
 			<var name="portletName" value="Calendar" />
 		</execute>
 
-		<execute macro="CalendarNavigator#gotoAddEvent" />
+		<execute macro="Page#gotoMyDashboard" />
 
 		<execute macro="CalendarNavigator#gotoAddEvent" />
 

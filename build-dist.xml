@@ -3274,7 +3274,7 @@ plugins.includes=</echo>
 		<zip destfile="dist/liferay-portal-src-${lp.version}.zip">
 			<zipfileset
 				dir="${lp.source.dir}"
-				excludes="portal-web/test/com/**,portal-web/test-ant-templates/**"
+				excludes=".gradle/**,portal-web/test/com/**,portal-web/test-ant-templates/**"
 				prefix="liferay-portal-src-${lp.version}"
 			/>
 		</zip>

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.documentlibrary.display.context.BaseDLViewFileVersionDisplayContext;
 import com.liferay.portlet.documentlibrary.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.portlet.dynamicdatamapping.DDMStructure;
@@ -116,36 +115,30 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 
 		PrintWriter printWriter = response.getWriter();
 
-		String previewURL = null;
-
 		if (_googleDocsMetadataHelper.containsField(
 				GoogleDocsConstants.DDM_FIELD_NAME_EMBEDDABLE_URL)) {
 
-			previewURL = _googleDocsMetadataHelper.getFieldValue(
+			String previewURL = _googleDocsMetadataHelper.getFieldValue(
 				GoogleDocsConstants.DDM_FIELD_NAME_EMBEDDABLE_URL);
-		}
 
-		if (Validator.isNull(previewURL)) {
-			ResourceBundle resourceBundle = ResourceUtil.getResourceBundle(
-				request.getLocale());
-
-			printWriter.write(
-				"<div style='border: 1px solid #C0C0C0; padding: 1em 0;" +
-					"text-align: center;'>");
-			printWriter.write(
-				ResourceBundleUtil.getString(
-					resourceBundle,
-					"google-docs-does-not-provide-a-preview-for-this" +
-						"-document"));
-			printWriter.write("</div>");
+			printWriter.format(
+				"<iframe frameborder=\"0\" height=\"300\" src=\"%s\" " +
+					"width=\"100%%\"></iframe>",
+				previewURL);
 
 			return;
 		}
 
-		printWriter.format(
-			"<iframe frameborder=\"0\" height=\"300\" src=\"%s\" " +
-				"width=\"100%%\"></iframe>",
-			previewURL);
+		ResourceBundle resourceBundle = ResourceUtil.getResourceBundle(
+			request.getLocale());
+
+		printWriter.write("<div class=\"alert alert-info\">");
+		printWriter.write(
+			ResourceBundleUtil.getString(
+				resourceBundle,
+				"google-docs-does-not-provide-a-preview-for-this" +
+					"-document"));
+		printWriter.write("</div>");
 	}
 
 	private static final UUID _UUID = UUID.fromString(

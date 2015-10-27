@@ -35,6 +35,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 import org.apache.tools.ant.filters.FixCrLfFilter;
 
@@ -55,6 +56,7 @@ import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.OutputFiles;
 import org.gradle.api.tasks.SkipWhenEmpty;
@@ -68,6 +70,17 @@ import org.gradle.util.GUtil;
 public class PatchTask extends DefaultTask {
 
 	public static final String PATCHED_SRC_DIR_MAPPING_DEFAULT_EXTENSION = "*";
+
+	public PatchTask() {
+		_originalLibSrcFile = new Callable<File>() {
+
+			@Override
+			public File call() throws Exception {
+				return FileUtil.get(getProject(), getOriginalLibSrcUrl());
+			}
+
+		};
+	}
 
 	public PatchTask fileNames(Iterable<Object> fileNames) {
 		GUtil.addToCollection(_fileNames, fileNames);
@@ -148,8 +161,9 @@ public class PatchTask extends DefaultTask {
 		return GradleUtil.toString(_originalLibSrcDirName);
 	}
 
+	@InputFile
 	public File getOriginalLibSrcFile() throws Exception {
-		return FileUtil.get(getProject(), getOriginalLibSrcUrl());
+		return GradleUtil.toFile(getProject(), _originalLibSrcFile);
 	}
 
 	public Map<String, File> getPatchedSrcDirMappings() {
@@ -345,6 +359,10 @@ public class PatchTask extends DefaultTask {
 		_originalLibSrcDirName = originalLibSrcDirName;
 	}
 
+	public void setOriginalLibSrcFile(Object originalLibSrcFile) {
+		_originalLibSrcFile = originalLibSrcFile;
+	}
+
 	public void setPatchedSrcDirMappings(
 		Map<String, Object> patchedSrcDirMappings) {
 
@@ -453,6 +471,7 @@ public class PatchTask extends DefaultTask {
 	private Object _originalLibModuleName;
 	private Object _originalLibSrcBaseUrl;
 	private Object _originalLibSrcDirName = ".";
+	private Object _originalLibSrcFile;
 	private final Map<String, Object> _patchedSrcDirMappings = new HashMap<>();
 	private Object _patchesDir = "patches";
 	private final List<Object> _patchFiles = new ArrayList<>();

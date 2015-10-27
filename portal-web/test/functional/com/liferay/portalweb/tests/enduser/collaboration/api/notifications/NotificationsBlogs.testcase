@@ -379,9 +379,6 @@
 		<execute macro="BlogsEntryComment#viewPG">
 			<var name="commentCount" value="1" />
 			<var name="entryComment" value="Blogs Entry Comment" />
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="userFullName" value="Test Test" />
 			<var name="userFullName" value="userfn userln" />
 		</execute>
 

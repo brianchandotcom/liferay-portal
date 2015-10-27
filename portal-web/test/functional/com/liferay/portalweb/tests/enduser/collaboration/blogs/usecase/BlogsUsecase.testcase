@@ -283,8 +283,6 @@
 		<execute macro="BlogsEntryComment#viewPG">
 			<var name="commentCount" value="1" />
 			<var name="entryComment" value="[...] Blogs Entry2 Content [...] Read More" />
-			<var name="entryContent" value="Blogs Entry1 Content" />
-			<var name="entryTitle" value="Blogs Entry1 Title" />
 			<var name="userFullName" value="Test Test" />
 		</execute>
 
@@ -417,8 +415,6 @@
 
 		<execute macro="BlogsEntryComment#viewPG">
 			<var name="entryComment" value="[...] Blogs Entry6 Content [...] Read More" />
-			<var name="entryContent" value="Blogs Entry5 Content" />
-			<var name="entryTitle" value="Blogs Entry5 Title" />
 			<var name="userFullName" value="Test Test" />
 		</execute>
 
@@ -484,8 +480,6 @@
 		<execute macro="BlogsEntryComment#viewPG">
 			<var name="commentCount" value="1" />
 			<var name="entryComment" value="Blogs Entry Comment" />
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
 			<var name="userFullName" value="Test Test" />
 		</execute>
 
@@ -536,7 +530,6 @@
 
 		<execute macro="BlogsEntryComment#viewPG">
 			<var name="entryComment" value="Blogs Entry Comment" />
-			<var name="entryTitle" value="Blogs Entry Title" />
 			<var name="userFullName" value="Test Test" />
 		</execute>
 	</command>

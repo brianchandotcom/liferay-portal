@@ -99,6 +99,12 @@
 		</if>
 	</command>
 
+	<command name="editParagraphField">
+		<var name="key_wfNewFieldName" value="${wfNewFieldName}" />
+
+		<execute function="Type" locator1="WebFormConfiguration#SETUP_FORM_FIELDS_PARAGRAPH_FIELD" value1="${wfParagraphFieldText}" />
+	</command>
+
 	<command name="saveConfiguration">
 		<execute function="AssertClick#assertTextClickAtAndWait" locator1="Button#SAVE" value1="Save" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />

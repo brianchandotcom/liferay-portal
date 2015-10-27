@@ -31,10 +31,19 @@ public class IdentifiableOSGIServiceUtil {
 	public static IdentifiableOSGIService getIdentifiableOSGIService(
 		String osgiServiceIdentifier) {
 
-		return _instance._getIdentifiableOSGIService(osgiServiceIdentifier);
+		return _identifiableOSGIServices.get(osgiServiceIdentifier);
 	}
 
 	private IdentifiableOSGIServiceUtil() {
+	}
+
+	private static final Map<String, IdentifiableOSGIService>
+		_identifiableOSGIServices = new ConcurrentHashMap<>();
+	private static final
+		ServiceTracker<IdentifiableOSGIService, IdentifiableOSGIService>
+			_serviceTracker;
+
+	static {
 		Registry registry = RegistryUtil.getRegistry();
 
 		_serviceTracker = registry.trackServices(
@@ -44,22 +53,7 @@ public class IdentifiableOSGIServiceUtil {
 		_serviceTracker.open();
 	}
 
-	private IdentifiableOSGIService _getIdentifiableOSGIService(
-		String osgiServiceIdentifier) {
-
-		return _identifiableOSGIServices.get(osgiServiceIdentifier);
-	}
-
-	private static final IdentifiableOSGIServiceUtil _instance =
-		new IdentifiableOSGIServiceUtil();
-
-	private final Map<String, IdentifiableOSGIService>
-		_identifiableOSGIServices = new ConcurrentHashMap<>();
-	private final
-		ServiceTracker<IdentifiableOSGIService, IdentifiableOSGIService>
-			_serviceTracker;
-
-	private class IdentifiableOSGIServiceServiceTrackerCustomizer
+	private static class IdentifiableOSGIServiceServiceTrackerCustomizer
 		implements
 			ServiceTrackerCustomizer
 				<IdentifiableOSGIService, IdentifiableOSGIService> {

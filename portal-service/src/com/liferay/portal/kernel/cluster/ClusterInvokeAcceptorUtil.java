@@ -31,10 +31,15 @@ public class ClusterInvokeAcceptorUtil {
 	public static ClusterInvokeAcceptor getClusterInvokeAcceptor(
 		String clusterInvokeAcceptorName) {
 
-		return _instance._getClusterInvokeAcceptor(clusterInvokeAcceptorName);
+		return _clusterInvokeAcceptors.get(clusterInvokeAcceptorName);
 	}
 
-	private ClusterInvokeAcceptorUtil() {
+	private static final Map<String, ClusterInvokeAcceptor>
+		_clusterInvokeAcceptors = new ConcurrentHashMap<>();
+	private static final ServiceTracker
+		<ClusterInvokeAcceptor, ClusterInvokeAcceptor> _serviceTracker;
+
+	static {
 		Registry registry = RegistryUtil.getRegistry();
 
 		_serviceTracker = registry.trackServices(
@@ -44,21 +49,7 @@ public class ClusterInvokeAcceptorUtil {
 		_serviceTracker.open();
 	}
 
-	private ClusterInvokeAcceptor _getClusterInvokeAcceptor(
-		String clusterInvokeAcceptorName) {
-
-		return _clusterInvokeAcceptors.get(clusterInvokeAcceptorName);
-	}
-
-	private static final ClusterInvokeAcceptorUtil _instance =
-		new ClusterInvokeAcceptorUtil();
-
-	private final Map<String, ClusterInvokeAcceptor> _clusterInvokeAcceptors =
-		new ConcurrentHashMap<>();
-	private final ServiceTracker<ClusterInvokeAcceptor, ClusterInvokeAcceptor>
-		_serviceTracker;
-
-	private class ClusterInvokeAcceptorServiceTrackerCustomizer
+	private static class ClusterInvokeAcceptorServiceTrackerCustomizer
 		implements
 			ServiceTrackerCustomizer
 				<ClusterInvokeAcceptor, ClusterInvokeAcceptor> {

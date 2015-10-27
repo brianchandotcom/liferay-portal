@@ -15,6 +15,7 @@
 package com.liferay.document.library.repository.cmis.internal;
 
 import com.liferay.document.library.repository.cmis.internal.constants.CMISRepositoryConstants;
+import com.liferay.portal.kernel.repository.RepositoryConfiguration;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
@@ -32,16 +33,6 @@ public class CMISWebServicesRepositoryDefiner
 	@Override
 	public String getClassName() {
 		return CMISWebServicesRepository.class.getName();
-	}
-
-	@Override
-	public String[] getSupportedConfigurations() {
-		return _SUPPORTED_CONFIGURATIONS;
-	}
-
-	@Override
-	public String[][] getSupportedParameters() {
-		return _SUPPORTED_PARAMETERS;
 	}
 
 	@Override
@@ -88,6 +79,21 @@ public class CMISWebServicesRepositoryDefiner
 				CMIS_WEBSERVICES_VERSIONING_SERVICE_PARAMETER
 		}
 	};
+
+	private final RepositoryConfiguration _repositoryConfiguration =
+		new RepositoryConfiguration() {
+
+			@Override
+			public String[] getSupportedConfigurations() {
+				return _SUPPORTED_CONFIGURATIONS;
+			}
+
+			@Override
+			public String[][] getSupportedParameters() {
+				return _SUPPORTED_PARAMETERS;
+			}
+
+		};
 
 	private RepositoryFactory _repositoryFactory;
 

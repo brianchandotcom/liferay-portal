@@ -15,6 +15,7 @@
 package com.liferay.portal.repository.registry.bundle.repositoryclassdefinitioncatalogimpl;
 
 import com.liferay.portal.kernel.repository.DocumentRepository;
+import com.liferay.portal.kernel.repository.RepositoryConfiguration;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
@@ -39,17 +40,12 @@ public class TestRepositoryDefiner implements RepositoryDefiner {
 	}
 
 	@Override
+	public RepositoryConfiguration getRepositoryConfiguration() {
+		return null;
+	}
+
+	@Override
 	public String getRepositoryTypeLabel(Locale locale) {
-		return null;
-	}
-
-	@Override
-	public String[] getSupportedConfigurations() {
-		return null;
-	}
-
-	@Override
-	public String[][] getSupportedParameters() {
 		return null;
 	}
 

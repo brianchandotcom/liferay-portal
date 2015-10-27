@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
+import com.liferay.portal.kernel.repository.RepositoryConfiguration;
 import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.ClassName;
@@ -93,7 +94,10 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 				_repositoryClassDefinitionCatalog.getRepositoryClassDefinition(
 					repositoryImplClassName);
 
-			return repositoryClassDefinition.getSupportedConfigurations();
+			RepositoryConfiguration repositoryConfiguration =
+				repositoryClassDefinition.getRepositoryConfiguration();
+
+			return repositoryConfiguration.getSupportedConfigurations();
 		}
 		catch (PortalException pe) {
 			throw new SystemException(pe);
@@ -132,11 +136,14 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 				_repositoryClassDefinitionCatalog.getRepositoryClassDefinition(
 					className);
 
+			RepositoryConfiguration repositoryConfiguration =
+				repositoryClassDefinition.getRepositoryConfiguration();
+
 			String[] supportedConfigurations =
-				repositoryClassDefinition.getSupportedConfigurations();
+				repositoryConfiguration.getSupportedConfigurations();
 
 			String[][] supportedParameters =
-				repositoryClassDefinition.getSupportedParameters();
+				repositoryConfiguration.getSupportedParameters();
 
 			for (int i = 0; i < supportedConfigurations.length; i++) {
 				if (supportedConfigurations[i].equals(configuration)) {

@@ -17,6 +17,7 @@ package com.liferay.portal.repository.external;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.BaseRepository;
 import com.liferay.portal.kernel.repository.DocumentRepository;
+import com.liferay.portal.kernel.repository.RepositoryConfiguration;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.capabilities.ProcessorCapability;
 import com.liferay.portal.kernel.repository.registry.BaseRepositoryDefiner;
@@ -42,28 +43,15 @@ public class LegacyExternalRepositoryDefiner extends BaseRepositoryDefiner {
 		return _className;
 	}
 
-	@Deprecated
 	@Override
-	public String[] getSupportedConfigurations() {
+	public RepositoryConfiguration getRepositoryConfiguration() {
 		try {
 			BaseRepository baseRepository =
 				ExternalRepositoryFactoryUtil.getInstance(getClassName());
 
-			return baseRepository.getSupportedConfigurations();
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-	}
-
-	@Deprecated
-	@Override
-	public String[][] getSupportedParameters() {
-		try {
-			BaseRepository baseRepository =
-				ExternalRepositoryFactoryUtil.getInstance(getClassName());
-
-			return baseRepository.getSupportedParameters();
+			return new LegacyRepositoryConfiguration(
+				baseRepository.getSupportedConfigurations(),
+				baseRepository.getSupportedParameters());
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -94,5 +82,30 @@ public class LegacyExternalRepositoryDefiner extends BaseRepositoryDefiner {
 	private final LiferayProcessorCapability _processorCapability =
 		new LiferayProcessorCapability();
 	private final RepositoryFactory _repositoryFactory;
+
+	private static class LegacyRepositoryConfiguration
+		implements RepositoryConfiguration {
+
+		public LegacyRepositoryConfiguration(
+			String[] supportedConfigurations, String[][] supportedParameters) {
+
+			_supportedConfigurations = supportedConfigurations;
+			_supportedParameters = supportedParameters;
+		}
+
+		@Override
+		public String[] getSupportedConfigurations() {
+			return _supportedConfigurations;
+		}
+
+		@Override
+		public String[][] getSupportedParameters() {
+			return _supportedParameters;
+		}
+
+		private final String[] _supportedConfigurations;
+		private final String[][] _supportedParameters;
+
+	}
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.document.library.repository.cmis.internal;
 
 import com.liferay.document.library.repository.cmis.internal.constants.CMISRepositoryConstants;
+import com.liferay.portal.kernel.repository.RepositoryConfiguration;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
@@ -34,13 +35,8 @@ public class CMISAtomPubRepositoryDefiner extends BaseCMISRepositoryDefiner {
 	}
 
 	@Override
-	public String[] getSupportedConfigurations() {
-		return _SUPPORTED_CONFIGURATIONS;
-	}
-
-	@Override
-	public String[][] getSupportedParameters() {
-		return _SUPPORTED_PARAMETERS;
+	public RepositoryConfiguration getRepositoryConfiguration() {
+		return _repositoryConfiguration;
 	}
 
 	@Override
@@ -72,6 +68,21 @@ public class CMISAtomPubRepositoryDefiner extends BaseCMISRepositoryDefiner {
 			CMISRepositoryConstants.CMIS_ATOMPUB_REPOSITORY_ID_PARAMETER
 		}
 	};
+
+	private final RepositoryConfiguration _repositoryConfiguration =
+		new RepositoryConfiguration() {
+
+			@Override
+			public String[] getSupportedConfigurations() {
+				return _SUPPORTED_CONFIGURATIONS;
+			}
+
+			@Override
+			public String[][] getSupportedParameters() {
+				return _SUPPORTED_PARAMETERS;
+			}
+
+		};
 
 	private RepositoryFactory _repositoryFactory;
 

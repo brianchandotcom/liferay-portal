@@ -46,8 +46,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Adolfo Pérez
  */
 public class RepositoryClassDefinition
-	implements RepositoryConfiguration, RepositoryFactory,
-			   RepositoryFactoryRegistry {
+	implements RepositoryFactory, RepositoryFactoryRegistry {
 
 	public static final RepositoryClassDefinition fromRepositoryDefiner(
 		RepositoryDefiner repositoryDefiner) {
@@ -158,18 +157,12 @@ public class RepositoryClassDefinition
 		return _repositoryDefiner.getClassName();
 	}
 
+	public RepositoryConfiguration getRepositoryConfiguration() {
+		return _repositoryDefiner.getRepositoryConfiguration();
+	}
+
 	public String getRepositoryTypeLabel(Locale locale) {
 		return _repositoryDefiner.getRepositoryTypeLabel(locale);
-	}
-
-	@Override
-	public String[] getSupportedConfigurations() {
-		return _repositoryDefiner.getSupportedConfigurations();
-	}
-
-	@Override
-	public String[][] getSupportedParameters() {
-		return _repositoryDefiner.getSupportedParameters();
 	}
 
 	public void invalidateCache() {

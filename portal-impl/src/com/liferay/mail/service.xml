@@ -3,6 +3,5 @@
 
 <service-builder package-path="com.liferay.mail">
 	<namespace>Mail</namespace>
-	<entity name="Cyrus" local-service="false" remote-service="true" />
 	<entity name="Mail" local-service="false" remote-service="true" />
 </service-builder>

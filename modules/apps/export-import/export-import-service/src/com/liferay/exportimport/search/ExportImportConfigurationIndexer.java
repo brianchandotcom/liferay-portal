@@ -45,7 +45,6 @@ import java.util.TimeZone;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -96,11 +95,6 @@ public class ExportImportConfigurationIndexer
 		addSearchTerm(
 			searchQuery, searchContext, "exportImportConfigurationId", false);
 		addSearchTerm(searchQuery, searchContext, Field.NAME, false);
-	}
-
-	@Activate
-	protected void activate() {
-		setCommitImmediately(true);
 	}
 
 	@Override

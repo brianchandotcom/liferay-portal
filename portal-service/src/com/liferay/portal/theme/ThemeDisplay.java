@@ -63,6 +63,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Provides general configuration methods for the portal, providing access to
@@ -695,6 +696,16 @@ public class ThemeDisplay
 	@JSON(include = false)
 	public HttpServletRequest getRequest() {
 		return _request;
+	}
+
+	/**
+	 * Returns the currently served HTTP servlet response.
+	 *
+	 * @return the currently served HTTP servlet response
+	 */
+	@JSON(include = false)
+	public HttpServletResponse getResponse() {
+		return _response;
 	}
 
 	/**
@@ -1555,6 +1566,10 @@ public class ThemeDisplay
 		_request = request;
 	}
 
+	public void setResponse(HttpServletResponse response) {
+		_response = response;
+	}
+
 	public void setScopeGroupId(long scopeGroupId) {
 		_scopeGroupId = scopeGroupId;
 
@@ -1885,6 +1900,7 @@ public class ThemeDisplay
 	private long _refererGroupId;
 	private long _refererPlid;
 	private transient HttpServletRequest _request;
+	private transient HttpServletResponse _response;
 	private Group _scopeGroup;
 	private long _scopeGroupId;
 	private boolean _secure;

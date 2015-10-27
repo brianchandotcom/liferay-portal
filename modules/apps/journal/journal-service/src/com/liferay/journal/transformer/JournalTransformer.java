@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.URLTemplateResource;
@@ -66,6 +67,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
@@ -360,6 +363,24 @@ public class JournalTransformer {
 
 				template.put("groupId", articleGroupId);
 				template.put("journalTemplatesPath", templatesPath);
+
+				// Taglibs
+
+				if (themeDisplay != null) {
+					TemplateManager templateManager =
+						TemplateManagerUtil.getTemplateManager(langType);
+
+					HttpServletRequest request = themeDisplay.getRequest();
+
+					templateManager.addTaglibApplication(
+						template, "Application", request.getServletContext());
+					templateManager.addTaglibFactory(
+						template, "PortalJspTagLibs",
+						request.getServletContext());
+					templateManager.addTaglibRequest(
+						template, "Request", request,
+						themeDisplay.getResponse());
+				}
 
 				mergeTemplate(template, unsyncStringWriter, propagateException);
 			}

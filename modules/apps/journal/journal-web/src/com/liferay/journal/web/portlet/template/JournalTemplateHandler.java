@@ -156,8 +156,8 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 			"com/liferay/journal/web/portlet/template/dependencies/",
 			SetUtil.fromArray(
 				new String[] {
-					"boolean", "date", "document-library", "image",
-					"link-to-page"
+					"boolean", "date", "document-library", "geolocation",
+					"image", "link-to-page"
 				}));
 
 }

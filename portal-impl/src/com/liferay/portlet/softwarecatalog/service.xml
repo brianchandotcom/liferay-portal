@@ -64,6 +64,10 @@
 
 		<column name="licenseId" type="long" primary="true" />
 
+		<!-- Company instance -->
+
+		<column name="companyId" type="long" />
+
 		<!-- Other fields -->
 
 		<column name="name" type="String" />

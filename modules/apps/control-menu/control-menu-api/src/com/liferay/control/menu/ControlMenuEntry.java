@@ -35,6 +35,8 @@ public interface ControlMenuEntry {
 
 	public String getLabel(Locale locale);
 
+	public String getLinkCssClass(HttpServletRequest request);
+
 	public String getURL(HttpServletRequest request);
 
 	public boolean hasAccessPermission(HttpServletRequest request)
@@ -43,5 +45,7 @@ public interface ControlMenuEntry {
 	public boolean include(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException;
+
+	public boolean useDialog();
 
 }

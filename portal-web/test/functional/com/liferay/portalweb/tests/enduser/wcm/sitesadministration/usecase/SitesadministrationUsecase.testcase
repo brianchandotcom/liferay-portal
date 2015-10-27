@@ -1035,7 +1035,7 @@
 			<var name="javaScript" value="alert('Welcome to Russia.');" />
 		</execute>
 
-		<execute function="Open#openNotError" locator1="http://localhost:8080/web/russia2018" />
+		<execute function="Open#openNoError" locator1="http://localhost:8080/web/russia2018" />
 
 		<execute function="Confirm#waitForConfirmation" value1="Welcome to Russia." />
 
@@ -1050,7 +1050,7 @@
 			</execute>
 		</for>
 
-		<execute function="Open#openNotError" locator1="http://localhost:8080/web/russia2018" />
+		<execute function="Open#openNoError" locator1="http://localhost:8080/web/russia2018" />
 
 		<execute function="Confirm#waitForConfirmation" value1="Welcome to Russia." />
 

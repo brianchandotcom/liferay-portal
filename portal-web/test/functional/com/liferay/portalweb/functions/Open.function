@@ -11,7 +11,7 @@
 		<execute selenium="assertLiferayErrors" />
 	</command>
 
-	<command name="openNotError">
+	<command name="openNoError">
 		<execute argument1="null" selenium="selectWindow" />
 
 		<execute argument1="relative=top" selenium="selectFrame" />

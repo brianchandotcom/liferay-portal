@@ -71,13 +71,16 @@ public class SingleVMEhcachePortalCacheManager<K extends Serializable, V>
 		destroy();
 	}
 
-	@Reference(unbind = "-")
-	protected void setEhcachePortalCacheManagerConfigurator(
-		EhcachePortalCacheManagerConfigurator
-			ehcachePortalCacheManagerConfigurator) {
+	@Reference(
+		target = "(" + PortalCacheManager.PORTAL_CACHE_MANAGER_NAME + "=" + PortalCacheManagerNames.SINGLE_VM + ")",
+		unbind = "-"
+	)
+	protected void setAbstractEhcachePortalCacheManagerConfigurator(
+		AbstractEhcachePortalCacheManagerConfigurator
+			abstractEhcachePortalCacheManagerConfigurator) {
 
-		this.ehcachePortalCacheManagerConfigurator =
-			ehcachePortalCacheManagerConfigurator;
+		this.abstractEhcachePortalCacheManagerConfigurator =
+			abstractEhcachePortalCacheManagerConfigurator;
 	}
 
 	@Reference(unbind = "-")

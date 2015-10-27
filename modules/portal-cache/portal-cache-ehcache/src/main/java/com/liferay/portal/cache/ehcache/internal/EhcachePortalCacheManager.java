@@ -69,7 +69,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	public void reconfigurePortalCaches(URL configurationURL) {
 		ObjectValuePair<Configuration, PortalCacheManagerConfiguration>
 			configurationObjectValuePair =
-				ehcachePortalCacheManagerConfigurator.
+				abstractEhcachePortalCacheManagerConfigurator.
 					getConfigurationObjectValuePair(
 						getPortalCacheManagerName(), configurationURL,
 						isClusterAware(), _usingDefault);
@@ -197,7 +197,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		}
 
 		URL configFileURL =
-			EhcachePortalCacheManagerConfigurator.class.getResource(
+			AbstractEhcachePortalCacheManagerConfigurator.class.getResource(
 				_configFile);
 
 		if (configFileURL == null) {
@@ -210,7 +210,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 		ObjectValuePair<Configuration, PortalCacheManagerConfiguration>
 			configurationObjectValuePair =
-				ehcachePortalCacheManagerConfigurator.
+				abstractEhcachePortalCacheManagerConfigurator.
 					getConfigurationObjectValuePair(
 						getPortalCacheManagerName(), configFileURL,
 						isClusterAware(), _usingDefault);
@@ -334,8 +334,8 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		return true;
 	}
 
-	protected EhcachePortalCacheManagerConfigurator
-		ehcachePortalCacheManagerConfigurator;
+	protected AbstractEhcachePortalCacheManagerConfigurator
+		abstractEhcachePortalCacheManagerConfigurator;
 	protected MBeanServer mBeanServer;
 	protected volatile Props props;
 

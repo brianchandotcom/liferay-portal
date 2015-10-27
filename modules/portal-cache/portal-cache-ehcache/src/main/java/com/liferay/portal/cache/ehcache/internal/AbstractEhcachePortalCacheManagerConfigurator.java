@@ -14,7 +14,6 @@
 
 package com.liferay.portal.cache.ehcache.internal;
 
-import com.liferay.portal.cache.PortalCacheReplicator;
 import com.liferay.portal.cache.configuration.PortalCacheConfiguration;
 import com.liferay.portal.cache.configuration.PortalCacheManagerConfiguration;
 import com.liferay.portal.cache.ehcache.EhcacheConstants;
@@ -23,10 +22,8 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -46,12 +43,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 import net.sf.ehcache.config.CacheConfiguration;
-import net.sf.ehcache.config.CacheConfiguration.BootstrapCacheLoaderFactoryConfiguration;
 import net.sf.ehcache.config.CacheConfiguration.CacheEventListenerFactoryConfiguration;
 import net.sf.ehcache.config.Configuration;
 import net.sf.ehcache.config.ConfigurationFactory;
@@ -62,10 +54,7 @@ import net.sf.ehcache.event.NotificationScope;
 /**
  * @author Tina Tian
  */
-@Component(
-	immediate = true, service = EhcachePortalCacheManagerConfigurator.class
-)
-public class EhcachePortalCacheManagerConfigurator {
+public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 
 	public ObjectValuePair
 		<Configuration, PortalCacheManagerConfiguration>
@@ -82,23 +71,21 @@ public class EhcachePortalCacheManagerConfigurator {
 
 		ehcacheConfiguration.setName(portalCacheManagerName);
 
-		_handleCacheManagerPeerFactoryConfigurations(
+		handleCacheManagerPeerFactoryConfigurations(
 			ehcacheConfiguration.
-				getCacheManagerPeerProviderFactoryConfiguration(),
-			clusterAware);
+				getCacheManagerPeerProviderFactoryConfiguration());
 
-		_handleCacheManagerPeerFactoryConfigurations(
+		handleCacheManagerPeerFactoryConfigurations(
 			ehcacheConfiguration.
-				getCacheManagerPeerListenerFactoryConfigurations(),
-			clusterAware);
+				getCacheManagerPeerListenerFactoryConfigurations());
 
 		Set<Properties> cacheManagerListenerPropertiesSet =
-			_getCacheManagerListenerPropertiesSet(ehcacheConfiguration);
+			getCacheManagerListenerPropertiesSet(ehcacheConfiguration);
 
 		PortalCacheConfiguration defaultPortalCacheConfiguration =
-			_getPortalCacheConfiguration(
+			getPortalCacheConfiguration(
 				ehcacheConfiguration.getDefaultCacheConfiguration(),
-				clusterAware, usingDefault);
+				usingDefault);
 
 		Set<PortalCacheConfiguration> portalCacheConfigurations =
 			new HashSet<>();
@@ -110,8 +97,7 @@ public class EhcachePortalCacheManagerConfigurator {
 				cacheConfigurations.entrySet()) {
 
 			portalCacheConfigurations.add(
-				_getPortalCacheConfiguration(
-					entry.getValue(), clusterAware, usingDefault));
+				getPortalCacheConfiguration(entry.getValue(), usingDefault));
 		}
 
 		PortalCacheManagerConfiguration portalCacheManagerConfiguration =
@@ -123,23 +109,8 @@ public class EhcachePortalCacheManagerConfigurator {
 			ehcacheConfiguration, portalCacheManagerConfiguration);
 	}
 
-	@Activate
-	protected void activate() {
-		_clusterEnabled = GetterUtil.getBoolean(
-			props.get(PropsKeys.CLUSTER_LINK_ENABLED));
-		_clusterLinkReplicationEnabled = GetterUtil.getBoolean(
-			props.get(PropsKeys.EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED));
-	}
-
-	@Reference(unbind = "-")
-	protected void setProps(Props props) {
-		this.props = props;
-	}
-
-	protected volatile Props props;
-
-	private Set<Properties>
-		_getCacheManagerListenerPropertiesSet(
+	protected Set<Properties>
+		getCacheManagerListenerPropertiesSet(
 			Configuration ehcacheConfiguration) {
 
 		FactoryConfiguration<?> factoryConfiguration =
@@ -150,13 +121,13 @@ public class EhcachePortalCacheManagerConfigurator {
 			return Collections.emptySet();
 		}
 
-		Properties properties = _parseProperties(
+		Properties properties = parseProperties(
 			factoryConfiguration.getProperties(),
 			factoryConfiguration.getPropertySeparator());
 
 		properties.put(
 			EhcacheConstants.CACHE_MANAGER_LISTENER_FACTORY_CLASS_NAME,
-			_parseFactoryClassName(
+			parseFactoryClassName(
 				factoryConfiguration.getFullyQualifiedClassPath()));
 
 		factoryConfiguration.setClass(null);
@@ -164,7 +135,7 @@ public class EhcachePortalCacheManagerConfigurator {
 		return Collections.singleton(properties);
 	}
 
-	private String _getPropertiesString(
+	protected String getPropertiesString(
 		Properties properties, String propertySeparator) {
 
 		if (propertySeparator == null) {
@@ -188,60 +159,12 @@ public class EhcachePortalCacheManagerConfigurator {
 	}
 
 	@SuppressWarnings("rawtypes")
-	private void _handleCacheManagerPeerFactoryConfigurations(
-		List<FactoryConfiguration> factoryConfigurations,
-		boolean clusterAware) {
-
-		if (factoryConfigurations.isEmpty()) {
-			return;
-		}
-
-		if (!clusterAware || !_clusterEnabled ||
-				_clusterLinkReplicationEnabled) {
-
-			factoryConfigurations.clear();
-
-			return;
-		}
-
-		for (FactoryConfiguration factoryConfiguration :
-				factoryConfigurations) {
-
-			Properties properties = null;
-
-			factoryConfiguration.setClass(
-				_parseFactoryClassName(
-					factoryConfiguration.getFullyQualifiedClassPath()));
-
-			String propertiesString = factoryConfiguration.getProperties();
-
-			if (Validator.isNull(propertiesString)) {
-				properties = new Properties();
-			}
-			else {
-				properties = _parseProperties(
-					propertiesString,
-					factoryConfiguration.getPropertySeparator());
-			}
-
-			properties.put(PropsKeys.CLUSTER_LINK_ENABLED, _clusterEnabled);
-			properties.put(
-				PropsKeys.EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED,
-				_clusterLinkReplicationEnabled);
-
-			factoryConfiguration.setProperties(
-				_getPropertiesString(
-					properties, factoryConfiguration.getPropertySeparator()));
-		}
-	}
+	protected abstract void handleCacheManagerPeerFactoryConfigurations(
+		List<FactoryConfiguration> factoryConfigurations);
 
 	@SuppressWarnings("deprecation")
-	private boolean _isRequireSerialization(
-		CacheConfiguration cacheConfiguration, boolean clusterAware) {
-
-		if (clusterAware && _clusterEnabled) {
-			return true;
-		}
+	protected boolean isRequireSerialization(
+		CacheConfiguration cacheConfiguration) {
 
 		if (cacheConfiguration.isOverflowToDisk() ||
 			cacheConfiguration.isOverflowToOffHeap() ||
@@ -265,9 +188,8 @@ public class EhcachePortalCacheManagerConfigurator {
 		return false;
 	}
 
-	private PortalCacheConfiguration _getPortalCacheConfiguration(
-		CacheConfiguration cacheConfiguration, boolean clusterAware,
-		boolean usingDefault) {
+	protected PortalCacheConfiguration getPortalCacheConfiguration(
+		CacheConfiguration cacheConfiguration, boolean usingDefault) {
 
 		if (cacheConfiguration == null) {
 			return null;
@@ -281,24 +203,22 @@ public class EhcachePortalCacheManagerConfigurator {
 		}
 
 		Set<Properties> portalCacheListenerPropertiesSet =
-			_parseCacheEventListenerFactoryConfiguration(
-				cacheConfiguration, clusterAware, usingDefault);
+			parseCacheEventListenerFactoryConfiguration(
+				cacheConfiguration, usingDefault);
 
 		Properties portalCacheBootstrapLoaderProperties =
-			_parsePortalCacheBootstrapLoaderProperties(
-				cacheConfiguration, clusterAware);
+			parsePortalCacheBootstrapLoaderProperties(cacheConfiguration);
 
-		boolean requireSerialization = _isRequireSerialization(
-			cacheConfiguration, clusterAware);
+		boolean requireSerialization = isRequireSerialization(
+			cacheConfiguration);
 
 		return new EhcachePortalCacheConfiguration(
 			portalCacheName, portalCacheListenerPropertiesSet,
 			portalCacheBootstrapLoaderProperties, requireSerialization);
 	}
 
-	private Set<Properties> _parseCacheEventListenerFactoryConfiguration(
-		CacheConfiguration cacheConfiguration, boolean clusterAware,
-		boolean usingDefault) {
+	protected Set<Properties> parseCacheEventListenerFactoryConfiguration(
+		CacheConfiguration cacheConfiguration, boolean usingDefault) {
 
 		Set<Properties> portalCacheListenerPropertiesSet = new HashSet<>();
 
@@ -310,11 +230,11 @@ public class EhcachePortalCacheManagerConfigurator {
 				cacheEventListenerFactoryConfiguration :
 					cacheEventListenerConfigurations) {
 
-			String factoryClassName = _parseFactoryClassName(
+			String factoryClassName = parseFactoryClassName(
 				cacheEventListenerFactoryConfiguration.
 					getFullyQualifiedClassPath());
 
-			Properties properties = _parseProperties(
+			Properties properties = parseProperties(
 				cacheEventListenerFactoryConfiguration.getProperties(),
 				cacheEventListenerFactoryConfiguration. getPropertySeparator());
 
@@ -322,10 +242,9 @@ public class EhcachePortalCacheManagerConfigurator {
 				_portalCacheListenerScopes.get(
 					cacheEventListenerFactoryConfiguration.getListenFor());
 
-			_processCacheEventListenerFactoryProperties(
-				clusterAware, factoryClassName,
-				portalCacheListenerPropertiesSet, portalCacheListenerScope,
-				properties, usingDefault);
+			processCacheEventListenerFactoryProperties(
+				factoryClassName, portalCacheListenerPropertiesSet,
+				portalCacheListenerScope, properties, usingDefault);
 		}
 
 		cacheEventListenerConfigurations.clear();
@@ -333,40 +252,10 @@ public class EhcachePortalCacheManagerConfigurator {
 		return portalCacheListenerPropertiesSet;
 	}
 
-	private Properties _parsePortalCacheBootstrapLoaderProperties(
-		CacheConfiguration cacheConfiguration, boolean clusterAware) {
+	protected abstract Properties parsePortalCacheBootstrapLoaderProperties(
+		CacheConfiguration cacheConfiguration);
 
-		Properties portalCacheBootstrapLoaderProperties = null;
-
-		BootstrapCacheLoaderFactoryConfiguration
-			bootstrapCacheLoaderFactoryConfiguration =
-				cacheConfiguration.
-					getBootstrapCacheLoaderFactoryConfiguration();
-
-		if (bootstrapCacheLoaderFactoryConfiguration != null) {
-			portalCacheBootstrapLoaderProperties = _parseProperties(
-				bootstrapCacheLoaderFactoryConfiguration.getProperties(),
-				bootstrapCacheLoaderFactoryConfiguration.
-					getPropertySeparator());
-
-			if (clusterAware && _clusterEnabled) {
-				if (!_clusterLinkReplicationEnabled) {
-					portalCacheBootstrapLoaderProperties.put(
-						EhcacheConstants.
-							BOOTSTRAP_CACHE_LOADER_FACTORY_CLASS_NAME,
-						_parseFactoryClassName(
-							bootstrapCacheLoaderFactoryConfiguration.
-								getFullyQualifiedClassPath()));
-				}
-			}
-
-			cacheConfiguration.addBootstrapCacheLoaderFactory(null);
-		}
-
-		return portalCacheBootstrapLoaderProperties;
-	}
-
-	private String _parseFactoryClassName(String factoryClassName) {
+	protected String parseFactoryClassName(String factoryClassName) {
 		if (factoryClassName.indexOf(CharPool.EQUAL) == -1) {
 			return factoryClassName;
 		}
@@ -385,7 +274,7 @@ public class EhcachePortalCacheManagerConfigurator {
 		return factoryClassName;
 	}
 
-	private Properties _parseProperties(
+	protected Properties parseProperties(
 		String propertiesString, String propertySeparator) {
 
 		Properties properties = new Properties();
@@ -442,33 +331,13 @@ public class EhcachePortalCacheManagerConfigurator {
 		return properties;
 	}
 
-	private void _processCacheEventListenerFactoryProperties(
-		boolean clusterAware, String factoryClassName,
+	protected void processCacheEventListenerFactoryProperties(
+		String factoryClassName,
 		Set<Properties> portalCacheListenerPropertiesSet,
 		PortalCacheListenerScope portalCacheListenerScope,
 		Properties properties, boolean usingDefault) {
 
-		if (factoryClassName.equals(
-				props.get(
-					PropsKeys.EHCACHE_CACHE_EVENT_LISTENER_FACTORY))) {
-
-			if (clusterAware && _clusterEnabled) {
-				if (!_clusterLinkReplicationEnabled) {
-					properties.put(
-						EhcacheConstants.
-							CACHE_EVENT_LISTENER_FACTORY_CLASS_NAME,
-						factoryClassName);
-				}
-
-				properties.put(
-					PortalCacheConfiguration.PORTAL_CACHE_LISTENER_SCOPE,
-					portalCacheListenerScope);
-				properties.put(PortalCacheReplicator.REPLICATOR, true);
-
-				portalCacheListenerPropertiesSet.add(properties);
-			}
-		}
-		else if (!usingDefault) {
+		if (!usingDefault) {
 			properties.put(
 				EhcacheConstants.CACHE_EVENT_LISTENER_FACTORY_CLASS_NAME,
 				factoryClassName);
@@ -480,6 +349,8 @@ public class EhcachePortalCacheManagerConfigurator {
 		}
 	}
 
+	protected volatile Props props;
+
 	private String _unescape(String text) {
 		return StringUtil.replace(text, "&", ";", _unescapeMap);
 	}
@@ -487,7 +358,7 @@ public class EhcachePortalCacheManagerConfigurator {
 	private static final String _PORTAL_PROPERTY_KEY = "portalPropertyKey";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		EhcachePortalCacheManagerConfigurator.class);
+		AbstractEhcachePortalCacheManagerConfigurator.class);
 
 	private static final Map<NotificationScope, PortalCacheListenerScope>
 		_portalCacheListenerScopes = new EnumMap<>(NotificationScope.class);
@@ -517,8 +388,5 @@ public class EhcachePortalCacheManagerConfigurator {
 		_unescapeMap.put("#043", "+");
 		_unescapeMap.put("#045", "-");
 	}
-
-	private boolean _clusterEnabled;
-	private boolean _clusterLinkReplicationEnabled;
 
 }

@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project>
+	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
+
+	<target name="jar">
+		<process-ivy
+			module.dir="${basedir}"
+		/>
+
+		<tstamp>
+			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+		</tstamp>
+
+		<mkdir dir="${tstamp.value}" />
+
+		<unjar dest="${tstamp.value}" src="lib/org.apache.felix.configadmin.jar">
+			<patternset>
+				<include name="META-INF/MANIFEST.MF" />
+			</patternset>
+		</unjar>
+
+		<jar destfile="${tstamp.value}.jar" manifest="${tstamp.value}/META-INF/MANIFEST.MF">
+			<zipfileset excludes="OSGI-INF/permissions.perm" src="lib/org.apache.felix.configadmin.jar" />
+		</jar>
+
+		<delete dir="${tstamp.value}" />
+
+		<move file="${tstamp.value}.jar" tofile="lib/org.apache.felix.configadmin.jar" />
+
+		<copy file="lib/org.apache.felix.configadmin.jar" tofile="${plugin.file}" />
+	</target>
+</project>

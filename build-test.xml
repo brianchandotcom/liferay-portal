@@ -2833,6 +2833,7 @@ go]]></replacevalue>
 		<get-env-java-jdk />
 		<get-env-liferay-portal />
 		<get-env-operating-system />
+		<get-poshi-dir-name />
 		<get-testray-case-defect />
 		<get-testray-components />
 		<get-testray-logs />
@@ -2874,7 +2875,7 @@ go]]></replacevalue>
 		</if>
 
 		<if>
-			<available file="portal-web/test-results/functional/report.html" />
+			<available file="portal-web/test-results/${poshi.dir.name}/index.html" />
 			<then>
 				<property name="test.case.attachments">
 					<![CDATA[

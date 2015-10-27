@@ -747,6 +747,9 @@
 			<then>
 				<execute function="Check" locator1="MessageBoards#THREAD_TABLE_ALL_CHECKBOX" />
 				<execute function="AssertClick" locator1="MessageBoardsAdmin#THREADS_RECYCLE_BIN_BUTTON" value1="Move to the Recycle Bin" />
+
+				<var name="key_assetType" value="${assetType}" />
+
 				<execute function="AssertTextEquals#assertPartialText" locator1="Message#RECYCLE_BIN_SUCCESS" value1="moved to the Recycle Bin. Undo" />
 			</then>
 		</if>

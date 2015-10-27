@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>MENTIONS_TAG_LINK</td>
-	<td>//span[@class='lfr-ac-content']/a[contains(.,'${key_mentionsUserScreenName}')]</td>
+	<td>//div[contains(@id,'message_boards')]//a[contains(.,'${key_mentionsUserScreenName}')]</td>
 	<td></td>
 </tr>
 </tbody>

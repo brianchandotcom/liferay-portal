@@ -29,10 +29,10 @@ import com.liferay.portlet.social.test.BaseSocialActivityInterpreterTestCase;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
+import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
-import com.liferay.wiki.social.WikiActivityInterpreter;
 import com.liferay.wiki.social.WikiActivityKeys;
 import com.liferay.wiki.util.test.WikiTestUtil;
 
@@ -71,7 +71,8 @@ public class WikiActivityInterpreterTest
 
 	@Override
 	protected SocialActivityInterpreter getActivityInterpreter() {
-		return new WikiActivityInterpreter();
+		return getActivityInterpreter(
+			WikiPortletKeys.WIKI, WikiPage.class.getName());
 	}
 
 	@Override

@@ -4553,30 +4553,6 @@
 		<description message="This is a use case for LPS-56229." />
 
 		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site A" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site B" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site C" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
 		</execute>
 
@@ -4615,32 +4591,24 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
+		<for list="Site A,Site B,Site C" param="siteName">
+			<execute macro="Page#gotoCP">
+				<var name="portletName" value="Sites" />
+			</execute>
+
+			<execute macro="Site#addBlankCP">
+				<var name="siteName" value="${siteName}" />
+			</execute>
+
+			<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
-		</execute>
+			</execute>
 
-		<execute macro="User#editUserSiteCP">
-			<var name="siteName" value="Site A" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editUserSiteCP">
-			<var name="siteName" value="Site B" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editUserSiteCP">
-			<var name="siteName" value="Site C" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
+			<execute macro="User#editUserSiteCP">
+				<var name="siteName" value="${siteName}" />
+				<var name="userScreenName" value="usersn" />
+			</execute>
+		</for>
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site A" />

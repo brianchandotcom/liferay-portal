@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
+import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -749,11 +750,7 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 				if (!CalendarPermission.contains(
 						getPermissionChecker(), calendarBooking.getCalendarId(),
 						actionId) ||
-					(calendarBooking.isPending() &&
-					 !CalendarPermission.contains(
-						 getPermissionChecker(),
-						 calendarBooking.getCalendarId(),
-						 CalendarActionKeys.MANAGE_BOOKINGS))) {
+					isPendingInWorkflow(calendarBooking)) {
 
 					itr.remove();
 				}
@@ -764,6 +761,15 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 		}
 
 		return calendarBookings;
+	}
+
+	protected boolean isPendingInWorkflow(CalendarBooking calendarBooking)
+		throws PortalException, PrincipalException {
+
+		return calendarBooking.isPending() &&
+			 !CalendarPermission.contains(
+				 getPermissionChecker(), calendarBooking.getCalendarId(),
+				 CalendarActionKeys.MANAGE_BOOKINGS);
 	}
 
 }

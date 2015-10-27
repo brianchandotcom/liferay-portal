@@ -1,13 +1,11 @@
 AUI.add(
 	'liferay-alloy-editor-source',
 	function(A) {
-		var Lang = A.Lang;
-
 		var CSS_SHOW_SOURCE = 'show-source';
 
-		var STRINGS = 'strings';
-
 		var STR_HOST = 'host';
+
+		var STRINGS = 'strings';
 
 		var STR_VALUE = 'value';
 
@@ -203,10 +201,10 @@ AUI.add(
 					_toggleEditorModeUI: function() {
 						var instance = this;
 
-						var editorWrapper = instance._editorWrapper;
 						var editorFullscreen = instance._editorFullscreen;
 						var editorSwitch = instance._editorSwitch;
 						var editorSwitchContainer = editorSwitch.ancestor();
+						var editorWrapper = instance._editorWrapper;
 
 						editorWrapper.toggleClass(CSS_SHOW_SOURCE);
 						editorSwitchContainer.toggleClass(CSS_SHOW_SOURCE);

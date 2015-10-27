@@ -16,17 +16,25 @@
 
 <%@ include file="/html/taglib/aui/icon/init.jsp" %>
 
+<liferay-util:buffer var="iconContent">
+	<svg class="lexicon-icon" role="img" title="<%= image %>">
+	    <use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#<%= image %>" />
+	</svg>
+
+	<liferay-ui:message key="<%= label %>" />
+</liferay-util:buffer>
+
 <c:choose>
 	<c:when test="<%= Validator.isNotNull(url) %>">
 		<aui:a cssClass="<%= cssClass %>" data="<%= data %>" href="<%= url %>" id="<%= id %>" target="<%= target %>">
 			<span class="<%= image %>">
-				<liferay-ui:message key="<%= label %>" />
+				<%= iconContent %>
 			</span>
 		</aui:a>
 	</c:when>
 	<c:otherwise>
 		<span class="<%= cssClass %> <%= image %>" <%= AUIUtil.buildData(data) %> id="<%= id %>">
-			<liferay-ui:message key="<%= label %>" />
+			<%= iconContent %>
 		</span>
 	</c:otherwise>
 </c:choose>

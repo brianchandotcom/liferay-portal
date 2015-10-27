@@ -1,8 +1,8 @@
+task jar(type: Jar, overwrite: true)
+
 dependencies {
 	compile group: "org.apache.felix", name: "org.apache.felix.configadmin", transitive: false, version: "1.8.8"
 }
-
-task jar(type: Jar, overwrite: true)
 
 jar {
 	exclude "OSGI-INF/permissions.perm"

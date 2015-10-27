@@ -13,12 +13,6 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddPageNameApostrophe" priority="4">
-		<execute macro="Page#addPG">
-			<var name="pageName" value="Tester&apos;s Page" />
-		</execute>
-	</command>
-
 	<command name="AutomaticChangesToDisplayStyle" priority="3">
 		<property name="custom.properties" value="display.style.options=from-level-1-to-all-sublevels${line.separator}navigation.display.style[from-level-1-with-title]=root-layout,absolute,1,auto,true${line.separator}display.style.default=" />
 

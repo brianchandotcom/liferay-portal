@@ -30,6 +30,12 @@
 		<execute macro="SitePage#deleteSitepagesPG" />
 	</command>
 
+	<command name="AddPageWithEscapeCharacter" priority="3">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Tester&apos;s Page" />
+		</execute>
+	</command>
+
 	<command name="AddPageWithMultipleChildPagesToSite" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />

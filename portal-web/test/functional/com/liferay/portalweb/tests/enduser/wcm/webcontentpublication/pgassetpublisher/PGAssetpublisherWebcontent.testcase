@@ -595,7 +595,7 @@
 			<var name="tagName" value="tag name" />
 		</execute>
 	</command>
-e
+
 	<command name="SaveAsDraftWebContentPGViaAP" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Asset Publisher Page" />

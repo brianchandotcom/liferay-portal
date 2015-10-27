@@ -46,6 +46,10 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 import net.sf.ehcache.config.CacheConfiguration;
 import net.sf.ehcache.config.CacheConfiguration.BootstrapCacheLoaderFactoryConfiguration;
 import net.sf.ehcache.config.CacheConfiguration.CacheEventListenerFactoryConfiguration;
@@ -58,13 +62,16 @@ import net.sf.ehcache.event.NotificationScope;
 /**
  * @author Tina Tian
  */
+@Component(
+	immediate = true, service = EhcacheConfigurationHelperUtil.class
+)
 public class EhcacheConfigurationHelperUtil {
 
-	public static ObjectValuePair
+	public ObjectValuePair
 		<Configuration, PortalCacheManagerConfiguration>
 			getConfigurationObjectValuePair(
 				String portalCacheManagerName, URL configurationURL,
-				boolean clusterAware, boolean usingDefault, Props props) {
+				boolean clusterAware, boolean usingDefault) {
 
 		if (configurationURL == null) {
 			throw new NullPointerException("Configuration path is null");
@@ -75,29 +82,23 @@ public class EhcacheConfigurationHelperUtil {
 
 		ehcacheConfiguration.setName(portalCacheManagerName);
 
-		boolean clusterEnabled = GetterUtil.getBoolean(
-			props.get(PropsKeys.CLUSTER_LINK_ENABLED));
-		boolean clusterLinkReplicationEnabled = GetterUtil.getBoolean(
-			props.get(PropsKeys.EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED));
-
 		_handlePeerFactoryConfigurations(
 			ehcacheConfiguration.
 				getCacheManagerPeerProviderFactoryConfiguration(),
-			clusterAware, clusterEnabled, clusterLinkReplicationEnabled, props);
+			clusterAware);
 
 		_handlePeerFactoryConfigurations(
 			ehcacheConfiguration.
 				getCacheManagerPeerListenerFactoryConfigurations(),
-			clusterAware, clusterEnabled, clusterLinkReplicationEnabled, props);
+			clusterAware);
 
 		Set<Properties> cacheManagerListenerPropertiesSet =
-			_getCacheManagerListenerPropertiesSet(ehcacheConfiguration, props);
+			_getCacheManagerListenerPropertiesSet(ehcacheConfiguration);
 
 		PortalCacheConfiguration defaultPortalCacheConfiguration =
 			_parseCacheConfiguration(
 				ehcacheConfiguration.getDefaultCacheConfiguration(),
-				clusterAware, usingDefault, clusterEnabled,
-				clusterLinkReplicationEnabled, props);
+				clusterAware, usingDefault);
 
 		Set<PortalCacheConfiguration> portalCacheConfigurations =
 			new HashSet<>();
@@ -110,8 +111,7 @@ public class EhcacheConfigurationHelperUtil {
 
 			portalCacheConfigurations.add(
 				_parseCacheConfiguration(
-					entry.getValue(), clusterAware, usingDefault,
-					clusterEnabled, clusterLinkReplicationEnabled, props));
+					entry.getValue(), clusterAware, usingDefault));
 		}
 
 		PortalCacheManagerConfiguration portalCacheManagerConfiguration =
@@ -123,9 +123,24 @@ public class EhcacheConfigurationHelperUtil {
 			ehcacheConfiguration, portalCacheManagerConfiguration);
 	}
 
-	private static Set<Properties>
+	@Activate
+	protected void activate() {
+		_clusterEnabled = GetterUtil.getBoolean(
+			props.get(PropsKeys.CLUSTER_LINK_ENABLED));
+		_clusterLinkReplicationEnabled = GetterUtil.getBoolean(
+			props.get(PropsKeys.EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED));
+	}
+
+	@Reference(unbind = "-")
+	protected void setProps(Props props) {
+		this.props = props;
+	}
+
+	protected volatile Props props;
+
+	private Set<Properties>
 		_getCacheManagerListenerPropertiesSet(
-			Configuration ehcacheConfiguration, Props props) {
+			Configuration ehcacheConfiguration) {
 
 		FactoryConfiguration<?> factoryConfiguration =
 			ehcacheConfiguration.
@@ -137,19 +152,19 @@ public class EhcacheConfigurationHelperUtil {
 
 		Properties properties = _parseProperties(
 			factoryConfiguration.getProperties(),
-			factoryConfiguration.getPropertySeparator(), props);
+			factoryConfiguration.getPropertySeparator());
 
 		properties.put(
 			EhcacheConstants.CACHE_MANAGER_LISTENER_FACTORY_CLASS_NAME,
 			_parseFactoryClassName(
-				factoryConfiguration.getFullyQualifiedClassPath(), props));
+				factoryConfiguration.getFullyQualifiedClassPath()));
 
 		factoryConfiguration.setClass(null);
 
 		return Collections.singleton(properties);
 	}
 
-	private static String _getPropertiesString(
+	private String _getPropertiesString(
 		Properties properties, String propertySeparator) {
 
 		if (propertySeparator == null) {
@@ -173,16 +188,17 @@ public class EhcacheConfigurationHelperUtil {
 	}
 
 	@SuppressWarnings("rawtypes")
-	private static void _handlePeerFactoryConfigurations(
-		List<FactoryConfiguration> factoryConfigurations, boolean clusterAware,
-		boolean clusterEnabled, boolean clusterLinkReplicationEnabled,
-		Props props) {
+	private void _handlePeerFactoryConfigurations(
+		List<FactoryConfiguration> factoryConfigurations,
+		boolean clusterAware) {
 
 		if (factoryConfigurations.isEmpty()) {
 			return;
 		}
 
-		if (!clusterAware || !clusterEnabled || clusterLinkReplicationEnabled) {
+		if (!clusterAware || !_clusterEnabled ||
+				_clusterLinkReplicationEnabled) {
+
 			factoryConfigurations.clear();
 
 			return;
@@ -195,7 +211,7 @@ public class EhcacheConfigurationHelperUtil {
 
 			factoryConfiguration.setClass(
 				_parseFactoryClassName(
-					factoryConfiguration.getFullyQualifiedClassPath(), props));
+					factoryConfiguration.getFullyQualifiedClassPath()));
 
 			String propertiesString = factoryConfiguration.getProperties();
 
@@ -205,13 +221,13 @@ public class EhcacheConfigurationHelperUtil {
 			else {
 				properties = _parseProperties(
 					propertiesString,
-					factoryConfiguration.getPropertySeparator(), props);
+					factoryConfiguration.getPropertySeparator());
 			}
 
-			properties.put(PropsKeys.CLUSTER_LINK_ENABLED, clusterEnabled);
+			properties.put(PropsKeys.CLUSTER_LINK_ENABLED, _clusterEnabled);
 			properties.put(
 				PropsKeys.EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED,
-				clusterLinkReplicationEnabled);
+				_clusterLinkReplicationEnabled);
 
 			factoryConfiguration.setProperties(
 				_getPropertiesString(
@@ -220,11 +236,10 @@ public class EhcacheConfigurationHelperUtil {
 	}
 
 	@SuppressWarnings("deprecation")
-	private static boolean _isRequireSerialization(
-		CacheConfiguration cacheConfiguration, boolean clusterAware,
-		boolean clusterEnabled) {
+	private boolean _isRequireSerialization(
+		CacheConfiguration cacheConfiguration, boolean clusterAware) {
 
-		if (clusterAware && clusterEnabled) {
+		if (clusterAware && _clusterEnabled) {
 			return true;
 		}
 
@@ -250,10 +265,9 @@ public class EhcacheConfigurationHelperUtil {
 		return false;
 	}
 
-	private static PortalCacheConfiguration _parseCacheConfiguration(
+	private PortalCacheConfiguration _parseCacheConfiguration(
 		CacheConfiguration cacheConfiguration, boolean clusterAware,
-		boolean usingDefault, boolean clusterEnabled,
-		boolean clusterLinkReplicationEnabled, Props props) {
+		boolean usingDefault) {
 
 		if (cacheConfiguration == null) {
 			return null;
@@ -278,12 +292,11 @@ public class EhcacheConfigurationHelperUtil {
 
 			String factoryClassName = _parseFactoryClassName(
 				cacheEventListenerFactoryConfiguration.
-					getFullyQualifiedClassPath(), props);
+					getFullyQualifiedClassPath());
 
 			Properties properties = _parseProperties(
 				cacheEventListenerFactoryConfiguration.getProperties(),
-				cacheEventListenerFactoryConfiguration. getPropertySeparator(),
-				props);
+				cacheEventListenerFactoryConfiguration. getPropertySeparator());
 
 			PortalCacheListenerScope portalCacheListenerScope =
 				_portalCacheListenerScopes.get(
@@ -293,8 +306,8 @@ public class EhcacheConfigurationHelperUtil {
 					props.get(
 						PropsKeys.EHCACHE_CACHE_EVENT_LISTENER_FACTORY))) {
 
-				if (clusterAware && clusterEnabled) {
-					if (!clusterLinkReplicationEnabled) {
+				if (clusterAware && _clusterEnabled) {
+					if (!_clusterLinkReplicationEnabled) {
 						properties.put(
 							EhcacheConstants.
 								CACHE_EVENT_LISTENER_FACTORY_CLASS_NAME,
@@ -334,16 +347,16 @@ public class EhcacheConfigurationHelperUtil {
 			portalCacheBootstrapLoaderProperties = _parseProperties(
 				bootstrapCacheLoaderFactoryConfiguration.getProperties(),
 				bootstrapCacheLoaderFactoryConfiguration.
-					getPropertySeparator(), props);
+					getPropertySeparator());
 
-			if (clusterAware && clusterEnabled) {
-				if (!clusterLinkReplicationEnabled) {
+			if (clusterAware && _clusterEnabled) {
+				if (!_clusterLinkReplicationEnabled) {
 					portalCacheBootstrapLoaderProperties.put(
 						EhcacheConstants.
 							BOOTSTRAP_CACHE_LOADER_FACTORY_CLASS_NAME,
 						_parseFactoryClassName(
 							bootstrapCacheLoaderFactoryConfiguration.
-								getFullyQualifiedClassPath(), props));
+								getFullyQualifiedClassPath()));
 				}
 			}
 
@@ -351,16 +364,14 @@ public class EhcacheConfigurationHelperUtil {
 		}
 
 		boolean requireSerialization = _isRequireSerialization(
-			cacheConfiguration, clusterAware, clusterEnabled);
+			cacheConfiguration, clusterAware);
 
 		return new EhcachePortalCacheConfiguration(
 			portalCacheName, portalCacheListenerPropertiesSet,
 			portalCacheBootstrapLoaderProperties, requireSerialization);
 	}
 
-	private static String _parseFactoryClassName(
-		String factoryClassName, Props props) {
-
+	private String _parseFactoryClassName(String factoryClassName) {
 		if (factoryClassName.indexOf(CharPool.EQUAL) == -1) {
 			return factoryClassName;
 		}
@@ -379,8 +390,8 @@ public class EhcacheConfigurationHelperUtil {
 		return factoryClassName;
 	}
 
-	private static Properties _parseProperties(
-		String propertiesString, String propertySeparator, Props props) {
+	private Properties _parseProperties(
+		String propertiesString, String propertySeparator) {
 
 		Properties properties = new Properties();
 
@@ -436,7 +447,7 @@ public class EhcacheConfigurationHelperUtil {
 		return properties;
 	}
 
-	private static String _unescape(String text) {
+	private String _unescape(String text) {
 		return StringUtil.replace(text, "&", ";", _unescapeMap);
 	}
 
@@ -473,5 +484,8 @@ public class EhcacheConfigurationHelperUtil {
 		_unescapeMap.put("#043", "+");
 		_unescapeMap.put("#045", "-");
 	}
+
+	private boolean _clusterEnabled;
+	private boolean _clusterLinkReplicationEnabled;
 
 }

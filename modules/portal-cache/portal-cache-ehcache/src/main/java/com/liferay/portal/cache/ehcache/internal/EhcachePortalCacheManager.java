@@ -69,9 +69,9 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	public void reconfigurePortalCaches(URL configurationURL) {
 		ObjectValuePair<Configuration, PortalCacheManagerConfiguration>
 			configurationObjectValuePair =
-				EhcacheConfigurationHelperUtil.getConfigurationObjectValuePair(
+				ehcacheConfigurationHelperUtil.getConfigurationObjectValuePair(
 					getPortalCacheManagerName(), configurationURL,
-					isClusterAware(), _usingDefault, props);
+					isClusterAware(), _usingDefault);
 
 		reconfigEhcache(configurationObjectValuePair.getKey());
 
@@ -195,8 +195,9 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 			_configFile = _defaultConfigFile;
 		}
 
-		URL configFileURL = EhcacheConfigurationHelperUtil.class.getResource(
-			_configFile);
+		URL configFileURL =
+			EhcacheConfigurationHelperUtil.class.getResource(
+				_configFile);
 
 		if (configFileURL == null) {
 			ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
@@ -208,9 +209,9 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 		ObjectValuePair<Configuration, PortalCacheManagerConfiguration>
 			configurationObjectValuePair =
-				EhcacheConfigurationHelperUtil.getConfigurationObjectValuePair(
+				ehcacheConfigurationHelperUtil.getConfigurationObjectValuePair(
 					getPortalCacheManagerName(), configFileURL,
-					isClusterAware(), _usingDefault, props);
+					isClusterAware(), _usingDefault);
 
 		_cacheManager = new CacheManager(configurationObjectValuePair.getKey());
 
@@ -331,6 +332,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		return true;
 	}
 
+	protected EhcacheConfigurationHelperUtil ehcacheConfigurationHelperUtil;
 	protected MBeanServer mBeanServer;
 	protected volatile Props props;
 

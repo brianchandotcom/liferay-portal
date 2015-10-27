@@ -125,6 +125,8 @@ public class WikiPageResourcePersistenceTest {
 
 		newWikiPageResource.setUuid(RandomTestUtil.randomString());
 
+		newWikiPageResource.setCompanyId(RandomTestUtil.nextLong());
+
 		newWikiPageResource.setGroupId(RandomTestUtil.nextLong());
 
 		newWikiPageResource.setNodeId(RandomTestUtil.nextLong());
@@ -139,6 +141,8 @@ public class WikiPageResourcePersistenceTest {
 			newWikiPageResource.getUuid());
 		Assert.assertEquals(existingWikiPageResource.getResourcePrimKey(),
 			newWikiPageResource.getResourcePrimKey());
+		Assert.assertEquals(existingWikiPageResource.getCompanyId(),
+			newWikiPageResource.getCompanyId());
 		Assert.assertEquals(existingWikiPageResource.getGroupId(),
 			newWikiPageResource.getGroupId());
 		Assert.assertEquals(existingWikiPageResource.getNodeId(),
@@ -163,6 +167,15 @@ public class WikiPageResourcePersistenceTest {
 		_persistence.countByUUID_G(StringPool.NULL, 0L);
 
 		_persistence.countByUUID_G((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C(StringPool.BLANK, RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C(StringPool.NULL, 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -198,8 +211,8 @@ public class WikiPageResourcePersistenceTest {
 
 	protected OrderByComparator<WikiPageResource> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("WikiPageResource", "uuid",
-			true, "resourcePrimKey", true, "groupId", true, "nodeId", true,
-			"title", true);
+			true, "resourcePrimKey", true, "companyId", true, "groupId", true,
+			"nodeId", true, "title", true);
 	}
 
 	@Test
@@ -426,6 +439,8 @@ public class WikiPageResourcePersistenceTest {
 		WikiPageResource wikiPageResource = _persistence.create(pk);
 
 		wikiPageResource.setUuid(RandomTestUtil.randomString());
+
+		wikiPageResource.setCompanyId(RandomTestUtil.nextLong());
 
 		wikiPageResource.setGroupId(RandomTestUtil.nextLong());
 

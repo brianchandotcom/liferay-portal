@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.ShardedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -39,7 +40,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface WikiPageResourceModel extends BaseModel<WikiPageResource> {
+public interface WikiPageResourceModel extends BaseModel<WikiPageResource>,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -88,6 +90,22 @@ public interface WikiPageResourceModel extends BaseModel<WikiPageResource> {
 	 * @param resourcePrimKey the resource prim key of this wiki page resource
 	 */
 	public void setResourcePrimKey(long resourcePrimKey);
+
+	/**
+	 * Returns the company ID of this wiki page resource.
+	 *
+	 * @return the company ID of this wiki page resource
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this wiki page resource.
+	 *
+	 * @param companyId the company ID of this wiki page resource
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the group ID of this wiki page resource.

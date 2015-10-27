@@ -37,7 +37,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface UserIdMapperModel extends BaseModel<UserIdMapper>, MVCCModel {
+public interface UserIdMapperModel extends BaseModel<UserIdMapper>, MVCCModel,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -87,6 +88,22 @@ public interface UserIdMapperModel extends BaseModel<UserIdMapper>, MVCCModel {
 	 * @param userIdMapperId the user ID mapper ID of this user ID mapper
 	 */
 	public void setUserIdMapperId(long userIdMapperId);
+
+	/**
+	 * Returns the company ID of this user ID mapper.
+	 *
+	 * @return the company ID of this user ID mapper
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this user ID mapper.
+	 *
+	 * @param companyId the company ID of this user ID mapper
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this user ID mapper.

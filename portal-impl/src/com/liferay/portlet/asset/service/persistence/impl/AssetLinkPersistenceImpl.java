@@ -3105,6 +3105,8 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		assetLink.setNew(true);
 		assetLink.setPrimaryKey(linkId);
 
+		assetLink.setCompanyId(0);
+
 		return assetLink;
 	}
 

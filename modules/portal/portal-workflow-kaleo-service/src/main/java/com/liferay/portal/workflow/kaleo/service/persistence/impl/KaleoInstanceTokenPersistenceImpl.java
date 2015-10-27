@@ -2939,6 +2939,8 @@ public class KaleoInstanceTokenPersistenceImpl extends BasePersistenceImpl<Kaleo
 		kaleoInstanceToken.setNew(true);
 		kaleoInstanceToken.setPrimaryKey(kaleoInstanceTokenId);
 
+		kaleoInstanceToken.setCompanyId(0);
+
 		return kaleoInstanceToken;
 	}
 

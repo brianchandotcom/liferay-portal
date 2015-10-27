@@ -686,6 +686,8 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 		shoppingOrderItem.setNew(true);
 		shoppingOrderItem.setPrimaryKey(orderItemId);
 
+		shoppingOrderItem.setCompanyId(0);
+
 		return shoppingOrderItem;
 	}
 
@@ -849,6 +851,7 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 		shoppingOrderItemImpl.setPrimaryKey(shoppingOrderItem.getPrimaryKey());
 
 		shoppingOrderItemImpl.setOrderItemId(shoppingOrderItem.getOrderItemId());
+		shoppingOrderItemImpl.setCompanyId(shoppingOrderItem.getCompanyId());
 		shoppingOrderItemImpl.setOrderId(shoppingOrderItem.getOrderId());
 		shoppingOrderItemImpl.setItemId(shoppingOrderItem.getItemId());
 		shoppingOrderItemImpl.setSku(shoppingOrderItem.getSku());

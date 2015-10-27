@@ -312,6 +312,37 @@ public class WikiPageResourceLocalServiceUtil {
 	}
 
 	/**
+	* Returns all the wiki page resources matching the UUID and company.
+	*
+	* @param uuid the UUID of the wiki page resources
+	* @param companyId the primary key of the company
+	* @return the matching wiki page resources, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.wiki.model.WikiPageResource> getWikiPageResourcesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService()
+				   .getWikiPageResourcesByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns a range of wiki page resources matching the UUID and company.
+	*
+	* @param uuid the UUID of the wiki page resources
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of wiki page resources
+	* @param end the upper bound of the range of wiki page resources (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching wiki page resources, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.wiki.model.WikiPageResource> getWikiPageResourcesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPageResource> orderByComparator) {
+		return getService()
+				   .getWikiPageResourcesByUuidAndCompanyId(uuid, companyId,
+			start, end, orderByComparator);
+	}
+
+	/**
 	* Returns the number of wiki page resources.
 	*
 	* @return the number of wiki page resources

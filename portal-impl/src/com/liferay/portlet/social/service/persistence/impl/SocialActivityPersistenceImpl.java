@@ -6357,6 +6357,8 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 		socialActivity.setNew(true);
 		socialActivity.setPrimaryKey(activityId);
 
+		socialActivity.setCompanyId(0);
+
 		return socialActivity;
 	}
 

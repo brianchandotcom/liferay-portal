@@ -65,6 +65,7 @@ public class DDMStorageLinkModelImpl extends BaseModelImpl<DDMStorageLink>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "uuid_", Types.VARCHAR },
 			{ "storageLinkId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
 			{ "structureId", Types.BIGINT }
@@ -74,12 +75,13 @@ public class DDMStorageLinkModelImpl extends BaseModelImpl<DDMStorageLink>
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("storageLinkId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("structureId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table DDMStorageLink (uuid_ VARCHAR(75) null,storageLinkId LONG not null primary key,classNameId LONG,classPK LONG,structureId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table DDMStorageLink (uuid_ VARCHAR(75) null,storageLinkId LONG not null primary key,companyId LONG,classNameId LONG,classPK LONG,structureId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table DDMStorageLink";
 	public static final String ORDER_BY_JPQL = " ORDER BY ddmStorageLink.storageLinkId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DDMStorageLink.storageLinkId ASC";
@@ -96,9 +98,10 @@ public class DDMStorageLinkModelImpl extends BaseModelImpl<DDMStorageLink>
 				"value.object.column.bitmask.enabled.com.liferay.dynamic.data.mapping.model.DDMStorageLink"),
 			true);
 	public static final long CLASSPK_COLUMN_BITMASK = 1L;
-	public static final long STRUCTUREID_COLUMN_BITMASK = 2L;
-	public static final long UUID_COLUMN_BITMASK = 4L;
-	public static final long STORAGELINKID_COLUMN_BITMASK = 8L;
+	public static final long COMPANYID_COLUMN_BITMASK = 2L;
+	public static final long STRUCTUREID_COLUMN_BITMASK = 4L;
+	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static final long STORAGELINKID_COLUMN_BITMASK = 16L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.dynamic.data.mapping.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.dynamic.data.mapping.model.DDMStorageLink"));
 
@@ -141,6 +144,7 @@ public class DDMStorageLinkModelImpl extends BaseModelImpl<DDMStorageLink>
 
 		attributes.put("uuid", getUuid());
 		attributes.put("storageLinkId", getStorageLinkId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("structureId", getStructureId());
@@ -163,6 +167,12 @@ public class DDMStorageLinkModelImpl extends BaseModelImpl<DDMStorageLink>
 
 		if (storageLinkId != null) {
 			setStorageLinkId(storageLinkId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long classNameId = (Long)attributes.get("classNameId");
@@ -215,6 +225,28 @@ public class DDMStorageLinkModelImpl extends BaseModelImpl<DDMStorageLink>
 	@Override
 	public void setStorageLinkId(long storageLinkId) {
 		_storageLinkId = storageLinkId;
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@Override
@@ -297,7 +329,7 @@ public class DDMStorageLinkModelImpl extends BaseModelImpl<DDMStorageLink>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			DDMStorageLink.class.getName(), getPrimaryKey());
 	}
 
@@ -324,6 +356,7 @@ public class DDMStorageLinkModelImpl extends BaseModelImpl<DDMStorageLink>
 
 		ddmStorageLinkImpl.setUuid(getUuid());
 		ddmStorageLinkImpl.setStorageLinkId(getStorageLinkId());
+		ddmStorageLinkImpl.setCompanyId(getCompanyId());
 		ddmStorageLinkImpl.setClassNameId(getClassNameId());
 		ddmStorageLinkImpl.setClassPK(getClassPK());
 		ddmStorageLinkImpl.setStructureId(getStructureId());
@@ -391,6 +424,10 @@ public class DDMStorageLinkModelImpl extends BaseModelImpl<DDMStorageLink>
 
 		ddmStorageLinkModelImpl._originalUuid = ddmStorageLinkModelImpl._uuid;
 
+		ddmStorageLinkModelImpl._originalCompanyId = ddmStorageLinkModelImpl._companyId;
+
+		ddmStorageLinkModelImpl._setOriginalCompanyId = false;
+
 		ddmStorageLinkModelImpl._originalClassPK = ddmStorageLinkModelImpl._classPK;
 
 		ddmStorageLinkModelImpl._setOriginalClassPK = false;
@@ -416,6 +453,8 @@ public class DDMStorageLinkModelImpl extends BaseModelImpl<DDMStorageLink>
 
 		ddmStorageLinkCacheModel.storageLinkId = getStorageLinkId();
 
+		ddmStorageLinkCacheModel.companyId = getCompanyId();
+
 		ddmStorageLinkCacheModel.classNameId = getClassNameId();
 
 		ddmStorageLinkCacheModel.classPK = getClassPK();
@@ -427,12 +466,14 @@ public class DDMStorageLinkModelImpl extends BaseModelImpl<DDMStorageLink>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
 		sb.append(", storageLinkId=");
 		sb.append(getStorageLinkId());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append(", classNameId=");
 		sb.append(getClassNameId());
 		sb.append(", classPK=");
@@ -446,7 +487,7 @@ public class DDMStorageLinkModelImpl extends BaseModelImpl<DDMStorageLink>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.dynamic.data.mapping.model.DDMStorageLink");
@@ -459,6 +500,10 @@ public class DDMStorageLinkModelImpl extends BaseModelImpl<DDMStorageLink>
 		sb.append(
 			"<column><column-name>storageLinkId</column-name><column-value><![CDATA[");
 		sb.append(getStorageLinkId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
@@ -485,6 +530,9 @@ public class DDMStorageLinkModelImpl extends BaseModelImpl<DDMStorageLink>
 	private String _uuid;
 	private String _originalUuid;
 	private long _storageLinkId;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _classNameId;
 	private long _classPK;
 	private long _originalClassPK;

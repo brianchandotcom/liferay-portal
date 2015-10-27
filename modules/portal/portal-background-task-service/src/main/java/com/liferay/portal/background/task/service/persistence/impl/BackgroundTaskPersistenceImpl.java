@@ -7513,6 +7513,8 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		backgroundTask.setNew(true);
 		backgroundTask.setPrimaryKey(backgroundTaskId);
 
+		backgroundTask.setCompanyId(0);
+
 		return backgroundTask;
 	}
 

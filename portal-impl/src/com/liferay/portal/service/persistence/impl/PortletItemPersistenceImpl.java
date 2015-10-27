@@ -1762,6 +1762,8 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 		portletItem.setNew(true);
 		portletItem.setPrimaryKey(portletItemId);
 
+		portletItem.setCompanyId(0);
+
 		return portletItem;
 	}
 

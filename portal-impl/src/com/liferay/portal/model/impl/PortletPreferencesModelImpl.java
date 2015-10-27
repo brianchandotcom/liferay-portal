@@ -66,6 +66,7 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "mvccVersion", Types.BIGINT },
 			{ "portletPreferencesId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
 			{ "ownerId", Types.BIGINT },
 			{ "ownerType", Types.INTEGER },
 			{ "plid", Types.BIGINT },
@@ -77,6 +78,7 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("portletPreferencesId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ownerId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ownerType", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("plid", Types.BIGINT);
@@ -84,7 +86,7 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 		TABLE_COLUMNS_MAP.put("preferences", Types.CLOB);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table PortletPreferences (mvccVersion LONG default 0,portletPreferencesId LONG not null primary key,ownerId LONG,ownerType INTEGER,plid LONG,portletId VARCHAR(200) null,preferences TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table PortletPreferences (mvccVersion LONG default 0,portletPreferencesId LONG not null primary key,companyId LONG,ownerId LONG,ownerType INTEGER,plid LONG,portletId VARCHAR(200) null,preferences TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table PortletPreferences";
 	public static final String ORDER_BY_JPQL = " ORDER BY portletPreferences.portletPreferencesId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY PortletPreferences.portletPreferencesId ASC";
@@ -121,6 +123,7 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 
 		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setPortletPreferencesId(soapModel.getPortletPreferencesId());
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setOwnerId(soapModel.getOwnerId());
 		model.setOwnerType(soapModel.getOwnerType());
 		model.setPlid(soapModel.getPlid());
@@ -193,6 +196,7 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("portletPreferencesId", getPortletPreferencesId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("ownerId", getOwnerId());
 		attributes.put("ownerType", getOwnerType());
 		attributes.put("plid", getPlid());
@@ -217,6 +221,12 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 
 		if (portletPreferencesId != null) {
 			setPortletPreferencesId(portletPreferencesId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long ownerId = (Long)attributes.get("ownerId");
@@ -270,6 +280,17 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 	@Override
 	public void setPortletPreferencesId(long portletPreferencesId) {
 		_portletPreferencesId = portletPreferencesId;
+	}
+
+	@JSON
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	@JSON
@@ -389,7 +410,7 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			PortletPreferences.class.getName(), getPrimaryKey());
 	}
 
@@ -416,6 +437,7 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 
 		portletPreferencesImpl.setMvccVersion(getMvccVersion());
 		portletPreferencesImpl.setPortletPreferencesId(getPortletPreferencesId());
+		portletPreferencesImpl.setCompanyId(getCompanyId());
 		portletPreferencesImpl.setOwnerId(getOwnerId());
 		portletPreferencesImpl.setOwnerType(getOwnerType());
 		portletPreferencesImpl.setPlid(getPlid());
@@ -508,6 +530,8 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 
 		portletPreferencesCacheModel.portletPreferencesId = getPortletPreferencesId();
 
+		portletPreferencesCacheModel.companyId = getCompanyId();
+
 		portletPreferencesCacheModel.ownerId = getOwnerId();
 
 		portletPreferencesCacheModel.ownerType = getOwnerType();
@@ -535,12 +559,14 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
 		sb.append(", portletPreferencesId=");
 		sb.append(getPortletPreferencesId());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append(", ownerId=");
 		sb.append(getOwnerId());
 		sb.append(", ownerType=");
@@ -558,7 +584,7 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(28);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.PortletPreferences");
@@ -571,6 +597,10 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 		sb.append(
 			"<column><column-name>portletPreferencesId</column-name><column-value><![CDATA[");
 		sb.append(getPortletPreferencesId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>ownerId</column-name><column-value><![CDATA[");
@@ -604,6 +634,7 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 		};
 	private long _mvccVersion;
 	private long _portletPreferencesId;
+	private long _companyId;
 	private long _ownerId;
 	private long _originalOwnerId;
 	private boolean _setOriginalOwnerId;

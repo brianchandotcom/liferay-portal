@@ -2794,6 +2794,8 @@ public class UserGroupGroupRolePersistenceImpl extends BasePersistenceImpl<UserG
 		userGroupGroupRole.setNew(true);
 		userGroupGroupRole.setPrimaryKey(userGroupGroupRolePK);
 
+		userGroupGroupRole.setCompanyId(0);
+
 		return userGroupGroupRole;
 	}
 
@@ -3037,6 +3039,7 @@ public class UserGroupGroupRolePersistenceImpl extends BasePersistenceImpl<UserG
 		userGroupGroupRoleImpl.setUserGroupId(userGroupGroupRole.getUserGroupId());
 		userGroupGroupRoleImpl.setGroupId(userGroupGroupRole.getGroupId());
 		userGroupGroupRoleImpl.setRoleId(userGroupGroupRole.getRoleId());
+		userGroupGroupRoleImpl.setCompanyId(userGroupGroupRole.getCompanyId());
 
 		return userGroupGroupRoleImpl;
 	}

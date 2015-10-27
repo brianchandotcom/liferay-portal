@@ -6706,6 +6706,8 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 
 		calendarResource.setUuid(uuid);
 
+		calendarResource.setCompanyId(0);
+
 		return calendarResource;
 	}
 

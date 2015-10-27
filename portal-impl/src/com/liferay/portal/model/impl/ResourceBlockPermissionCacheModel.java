@@ -76,12 +76,14 @@ public class ResourceBlockPermissionCacheModel implements CacheModel<ResourceBlo
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", resourceBlockPermissionId=");
 		sb.append(resourceBlockPermissionId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", resourceBlockId=");
 		sb.append(resourceBlockId);
 		sb.append(", roleId=");
@@ -99,6 +101,7 @@ public class ResourceBlockPermissionCacheModel implements CacheModel<ResourceBlo
 
 		resourceBlockPermissionImpl.setMvccVersion(mvccVersion);
 		resourceBlockPermissionImpl.setResourceBlockPermissionId(resourceBlockPermissionId);
+		resourceBlockPermissionImpl.setCompanyId(companyId);
 		resourceBlockPermissionImpl.setResourceBlockId(resourceBlockId);
 		resourceBlockPermissionImpl.setRoleId(roleId);
 		resourceBlockPermissionImpl.setActionIds(actionIds);
@@ -112,6 +115,7 @@ public class ResourceBlockPermissionCacheModel implements CacheModel<ResourceBlo
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 		resourceBlockPermissionId = objectInput.readLong();
+		companyId = objectInput.readLong();
 		resourceBlockId = objectInput.readLong();
 		roleId = objectInput.readLong();
 		actionIds = objectInput.readLong();
@@ -122,6 +126,7 @@ public class ResourceBlockPermissionCacheModel implements CacheModel<ResourceBlo
 		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(resourceBlockPermissionId);
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(resourceBlockId);
 		objectOutput.writeLong(roleId);
 		objectOutput.writeLong(actionIds);
@@ -129,6 +134,7 @@ public class ResourceBlockPermissionCacheModel implements CacheModel<ResourceBlo
 
 	public long mvccVersion;
 	public long resourceBlockPermissionId;
+	public long companyId;
 	public long resourceBlockId;
 	public long roleId;
 	public long actionIds;

@@ -103,6 +103,7 @@
 		<id name="itemFieldId" type="long">
 			<generator class="assigned" />
 		</id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="itemId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="values" type="com.liferay.portal.dao.orm.hibernate.StringType" column="values_" />
@@ -112,6 +113,7 @@
 		<id name="itemPriceId" type="long">
 			<generator class="assigned" />
 		</id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="itemId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="minQuantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="maxQuantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
@@ -181,6 +183,7 @@
 		<id name="orderItemId" type="long">
 			<generator class="assigned" />
 		</id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="orderId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="itemId" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property name="sku" type="com.liferay.portal.dao.orm.hibernate.StringType" />

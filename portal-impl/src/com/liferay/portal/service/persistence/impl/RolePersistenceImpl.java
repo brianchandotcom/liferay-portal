@@ -8664,6 +8664,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 		role.setUuid(uuid);
 
+		role.setCompanyId(0);
+
 		return role;
 	}
 

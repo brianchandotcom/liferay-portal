@@ -3915,6 +3915,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		assetEntry.setNew(true);
 		assetEntry.setPrimaryKey(entryId);
 
+		assetEntry.setCompanyId(0);
+
 		return assetEntry;
 	}
 

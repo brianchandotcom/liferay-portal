@@ -34,6 +34,7 @@ public class ShoppingOrderItemSoap implements Serializable {
 		ShoppingOrderItemSoap soapModel = new ShoppingOrderItemSoap();
 
 		soapModel.setOrderItemId(model.getOrderItemId());
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setOrderId(model.getOrderId());
 		soapModel.setItemId(model.getItemId());
 		soapModel.setSku(model.getSku());
@@ -104,6 +105,14 @@ public class ShoppingOrderItemSoap implements Serializable {
 
 	public void setOrderItemId(long orderItemId) {
 		_orderItemId = orderItemId;
+	}
+
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	public long getOrderId() {
@@ -179,6 +188,7 @@ public class ShoppingOrderItemSoap implements Serializable {
 	}
 
 	private long _orderItemId;
+	private long _companyId;
 	private long _orderId;
 	private String _itemId;
 	private String _sku;

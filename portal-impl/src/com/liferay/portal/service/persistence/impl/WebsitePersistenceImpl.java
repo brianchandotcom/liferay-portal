@@ -4056,6 +4056,8 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 
 		website.setUuid(uuid);
 
+		website.setCompanyId(0);
+
 		return website;
 	}
 

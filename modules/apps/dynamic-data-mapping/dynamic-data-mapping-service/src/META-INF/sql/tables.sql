@@ -15,6 +15,7 @@ create table DDMContent (
 create table DDMStorageLink (
 	uuid_ VARCHAR(75) null,
 	storageLinkId LONG not null primary key,
+	companyId LONG,
 	classNameId LONG,
 	classPK LONG,
 	structureId LONG
@@ -58,6 +59,7 @@ create table DDMStructureLayout (
 
 create table DDMStructureLink (
 	structureLinkId LONG not null primary key,
+	companyId LONG,
 	classNameId LONG,
 	classPK LONG,
 	structureId LONG
@@ -115,6 +117,7 @@ create table DDMTemplate (
 
 create table DDMTemplateLink (
 	templateLinkId LONG not null primary key,
+	companyId LONG,
 	classNameId LONG,
 	classPK LONG,
 	templateId LONG

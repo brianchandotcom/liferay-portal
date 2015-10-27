@@ -187,22 +187,14 @@ public class QuartzSchedulerEngineTest {
 			testJobName, _MEMORY_TEST_GROUP_NAME, null, null, _DEFAULT_INTERVAL,
 			TimeUnit.SECOND);
 
-		Message message = new Message();
-
-		message.put(
-			SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME,
-			TestMessageListener.class.getName());
-
 		_quartzSchedulerEngine.schedule(
-			trigger, StringPool.BLANK, _TEST_DESTINATION_NAME, message,
+			trigger, StringPool.BLANK, _TEST_DESTINATION_NAME, null,
 			StorageType.MEMORY);
 
 		schedulerResponses = _quartzSchedulerEngine.getScheduledJobs();
 
 		Assert.assertEquals(
 			2 * _DEFAULT_JOB_NUMBER + 1, schedulerResponses.size());
-		Assert.assertEquals(
-			1, _synchronousDestination.getMessageListenerCount());
 
 		_quartzSchedulerEngine.delete(
 			testJobName, _MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
@@ -210,8 +202,6 @@ public class QuartzSchedulerEngineTest {
 		schedulerResponses = _quartzSchedulerEngine.getScheduledJobs();
 
 		Assert.assertEquals(2 * _DEFAULT_JOB_NUMBER, schedulerResponses.size());
-		Assert.assertEquals(
-			0, _synchronousDestination.getMessageListenerCount());
 	}
 
 	@Test
@@ -317,23 +307,14 @@ public class QuartzSchedulerEngineTest {
 			_TEST_JOB_NAME_PREFIX + "memory", _MEMORY_TEST_GROUP_NAME, null,
 			null, _DEFAULT_INTERVAL, TimeUnit.SECOND);
 
-		Message message = new Message();
-
-		message.put(
-			SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME,
-			TestMessageListener.class.getName());
-		message.put(SchedulerEngine.PORTLET_ID, _TEST_PORTLET_ID);
-
 		_quartzSchedulerEngine.schedule(
-			trigger, StringPool.BLANK, _TEST_DESTINATION_NAME, message,
+			trigger, StringPool.BLANK, _TEST_DESTINATION_NAME, null,
 			StorageType.MEMORY);
 
 		schedulerResponses = _quartzSchedulerEngine.getScheduledJobs(
 			_MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
 
 		Assert.assertEquals(_DEFAULT_JOB_NUMBER + 1, schedulerResponses.size());
-		Assert.assertEquals(
-			1, _synchronousDestination.getMessageListenerCount());
 	}
 
 	@Test
@@ -477,14 +458,8 @@ public class QuartzSchedulerEngineTest {
 			testJobName, _MEMORY_TEST_GROUP_NAME, null, null, _DEFAULT_INTERVAL,
 			TimeUnit.SECOND);
 
-		Message message = new Message();
-
-		message.put(
-			SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME,
-			TestMessageListener.class.getName());
-
 		_quartzSchedulerEngine.schedule(
-			trigger, StringPool.BLANK, _TEST_DESTINATION_NAME, message,
+			trigger, StringPool.BLANK, _TEST_DESTINATION_NAME, null,
 			StorageType.MEMORY);
 
 		SchedulerResponse schedulerResponse =
@@ -492,8 +467,6 @@ public class QuartzSchedulerEngineTest {
 				testJobName, _MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
 
 		assertTriggerState(schedulerResponse, TriggerState.NORMAL);
-		Assert.assertEquals(
-			1, _synchronousDestination.getMessageListenerCount());
 
 		_quartzSchedulerEngine.unschedule(
 			testJobName, _MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
@@ -502,8 +475,6 @@ public class QuartzSchedulerEngineTest {
 			testJobName, _MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
 
 		assertTriggerState(schedulerResponse, TriggerState.UNSCHEDULED);
-		Assert.assertEquals(
-			0, _synchronousDestination.getMessageListenerCount());
 	}
 
 	@Test

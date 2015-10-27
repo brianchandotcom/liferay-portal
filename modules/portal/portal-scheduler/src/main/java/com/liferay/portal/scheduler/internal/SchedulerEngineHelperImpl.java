@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.scheduler.JobState;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
@@ -36,22 +37,29 @@ import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.StorageTypeAware;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerState;
+import com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListener;
+import com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.util.PortalUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletRequest;
 
@@ -59,6 +67,7 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Filter;
 import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -75,45 +84,6 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 @Component(immediate = true, service = SchedulerEngineHelper.class)
 public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
-
-	@Override
-	public void addJob(
-			Trigger trigger, StorageType storageType, String description,
-			String destinationName, Message message,
-			String messageListenerClassName, String portletId,
-			int exceptionsMaxSize)
-		throws SchedulerException {
-
-		if (message == null) {
-			message = new Message();
-		}
-
-		message.put(
-			SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME,
-			messageListenerClassName);
-		message.put(SchedulerEngine.PORTLET_ID, portletId);
-
-		schedule(
-			trigger, storageType, description, destinationName, message,
-			exceptionsMaxSize);
-	}
-
-	@Override
-	public void addJob(
-			Trigger trigger, StorageType storageType, String description,
-			String destinationName, Object payload,
-			String messageListenerClassName, String portletId,
-			int exceptionsMaxSize)
-		throws SchedulerException {
-
-		Message message = new Message();
-
-		message.setPayload(payload);
-
-		addJob(
-			trigger, storageType, description, destinationName, message,
-			messageListenerClassName, portletId, exceptionsMaxSize);
-	}
 
 	@Override
 	public void addScriptingJob(
@@ -596,6 +566,35 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	}
 
 	@Override
+	public String register(
+		MessageListener messageListener, SchedulerEntry schedulerEntry) {
+
+		SchedulerEventMessageListenerWrapper
+			schedulerEventMessageListenerWrapper =
+				new SchedulerEventMessageListenerWrapper();
+
+		schedulerEventMessageListenerWrapper.setMessageListener(
+			messageListener);
+
+		schedulerEventMessageListenerWrapper.setSchedulerEntry(schedulerEntry);
+
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put("destination.name", DestinationNames.SCHEDULER_DISPATCH);
+
+		ServiceRegistration<SchedulerEventMessageListener> serviceRegistration =
+			_bundleContext.registerService(
+				SchedulerEventMessageListener.class,
+				schedulerEventMessageListenerWrapper, properties);
+
+		synchronized (_serviceRegistrations) {
+			_serviceRegistrations.put(messageListener, serviceRegistration);
+		}
+
+		return schedulerEventMessageListenerWrapper.getMessageListenerUUID();
+	}
+
+	@Override
 	public void resume(String groupName, StorageType storageType)
 		throws SchedulerException {
 
@@ -608,25 +607,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		throws SchedulerException {
 
 		_schedulerEngine.resume(jobName, groupName, storageType);
-	}
-
-	@Override
-	public void schedule(
-			SchedulerEntry schedulerEntry, StorageType storageType,
-			String portletId, int exceptionsMaxSize)
-		throws SchedulerException {
-
-		Message message = new Message();
-
-		message.put(
-			SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME,
-			schedulerEntry.getEventListenerClass());
-		message.put(SchedulerEngine.PORTLET_ID, portletId);
-
-		schedule(
-			schedulerEntry.getTrigger(), storageType,
-			schedulerEntry.getDescription(),
-			DestinationNames.SCHEDULER_DISPATCH, message, exceptionsMaxSize);
 	}
 
 	@Override
@@ -676,6 +656,17 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		throws SchedulerException {
 
 		_schedulerEngine.suppressError(jobName, groupName, storageType);
+	}
+
+	@Override
+	public void unregister(MessageListener messageListener) {
+		synchronized (_serviceRegistrations) {
+			ServiceRegistration<SchedulerEventMessageListener>
+				serviceRegistration = _serviceRegistrations.remove(
+					messageListener);
+
+			serviceRegistration.unregister();
+		}
 	}
 
 	@Override
@@ -748,6 +739,8 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		_auditMessageSchedulerJob = GetterUtil.getBoolean(
 			_props.get(PropsKeys.AUDIT_MESSAGE_SCHEDULER_JOB));
 
+		_bundleContext = componentContext.getBundleContext();
+
 		if (_clusterLink.isEnabled() &&
 			GetterUtil.getBoolean(_props.get(PropsKeys.SCHEDULER_ENABLED))) {
 
@@ -763,15 +756,13 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		}
 
 		if (GetterUtil.getBoolean(_props.get(PropsKeys.SCHEDULER_ENABLED))) {
-			_bundleContext = componentContext.getBundleContext();
-
 			Filter filter = _bundleContext.createFilter(
-				"(&(javax.portlet.name=*)(objectClass=" +
-					SchedulerEntry.class.getName() + "))");
+				"(objectClass=" +
+					SchedulerEventMessageListener.class.getName() + ")");
 
 			_serviceTracker = new ServiceTracker<>(
 				_bundleContext, filter,
-				new SchedulerEntryServiceTrackerCustomizer());
+				new SchedulerEventMessageListenerServiceTrackerCustomizer());
 
 			_serviceTracker.open();
 		}
@@ -800,6 +791,12 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Unable to shutdown scheduler", e);
 			}
+		}
+
+		for (ServiceRegistration<SchedulerEventMessageListener>
+				serviceRegistration : _serviceRegistrations.values()) {
+
+			serviceRegistration.unregister();
 		}
 
 		_bundleContext = null;
@@ -858,26 +855,41 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	private ClusterLink _clusterLink;
 	private ClusterMasterExecutor _clusterMasterExecutor;
 	private JSONFactory _jsonFactory;
+	private final Map<String, ServiceRegistration<MessageListener>>
+		_messageListenerServiceRegistrations = new HashMap<>();
 	private Props _props;
 	private SchedulerEngine _schedulerEngine;
-	private volatile ServiceTracker<SchedulerEntry, SchedulerEntry>
+	private final Map
+			<MessageListener,
+				ServiceRegistration<SchedulerEventMessageListener>>
+		_serviceRegistrations = new HashMap<>();
+	private volatile ServiceTracker
+			<SchedulerEventMessageListener, SchedulerEventMessageListener>
 		_serviceTracker;
 
-	private class SchedulerEntryServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<SchedulerEntry, SchedulerEntry> {
+	private class SchedulerEventMessageListenerServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer
+			<SchedulerEventMessageListener, SchedulerEventMessageListener> {
 
 		@Override
-		public SchedulerEntry addingService(
-			ServiceReference<SchedulerEntry> serviceReference) {
+		public SchedulerEventMessageListener addingService(
+			ServiceReference<SchedulerEventMessageListener> serviceReference) {
 
 			Bundle bundle = serviceReference.getBundle();
 
 			BundleContext bundleContext = bundle.getBundleContext();
 
-			SchedulerEntry schedulerEntry = bundleContext.getService(
-				serviceReference);
+			SchedulerEventMessageListener schedulerEventMessageListener =
+				bundleContext.getService(serviceReference);
+
+			SchedulerEntry schedulerEntry =
+				schedulerEventMessageListener.getSchedulerEntry();
 
 			StorageType storageType = StorageType.MEMORY_CLUSTERED;
+
+			if (schedulerEntry == null) {
+				return null;
+			}
 
 			if (schedulerEntry instanceof StorageTypeAware) {
 				StorageTypeAware storageTypeAware =
@@ -886,13 +898,39 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 				storageType = storageTypeAware.getStorageType();
 			}
 
-			String portletId = (String)serviceReference.getProperty(
-				"javax.portlet.name");
+			String destinationName = (String)serviceReference.getProperty(
+				"destination.name");
+
+			if (Validator.isNull(destinationName)) {
+				destinationName = DestinationNames.SCHEDULER_DISPATCH;
+			}
 
 			try {
-				schedule(schedulerEntry, storageType, portletId, 0);
+				Message message = new Message();
 
-				return schedulerEntry;
+				message.put(
+					SchedulerEngine.MESSAGE_LISTENER_UUID,
+					schedulerEventMessageListener.getMessageListenerUUID());
+
+				schedule(
+					schedulerEntry.getTrigger(), storageType,
+					schedulerEntry.getDescription(),
+					DestinationNames.SCHEDULER_DISPATCH, message, 0);
+
+				Dictionary<String, Object> properties =
+					new HashMapDictionary<>();
+
+				properties.put("destination.name", destinationName);
+				ServiceRegistration<MessageListener> serviceRegistration =
+					bundleContext.registerService(
+						MessageListener.class, schedulerEventMessageListener,
+						properties);
+
+				_messageListenerServiceRegistrations.put(
+					schedulerEntry.getEventListenerClass(),
+					serviceRegistration);
+
+				return schedulerEventMessageListener;
 			}
 			catch (SchedulerException se) {
 				_log.error(se, se);
@@ -903,14 +941,14 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 
 		@Override
 		public void modifiedService(
-			ServiceReference<SchedulerEntry> serviceReference,
-			SchedulerEntry schedulerEntry) {
+			ServiceReference<SchedulerEventMessageListener> serviceReference,
+			SchedulerEventMessageListener schedulerEventMessageListener) {
 		}
 
 		@Override
 		public void removedService(
-			ServiceReference<SchedulerEntry> serviceReference,
-			SchedulerEntry schedulerEntry) {
+			ServiceReference<SchedulerEventMessageListener> serviceReference,
+			SchedulerEventMessageListener schedulerEntryMessageListener) {
 
 			Bundle bundle = serviceReference.getBundle();
 
@@ -919,6 +957,13 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 			bundleContext.ungetService(serviceReference);
 
 			StorageType storageType = StorageType.MEMORY_CLUSTERED;
+
+			SchedulerEntry schedulerEntry =
+				schedulerEntryMessageListener.getSchedulerEntry();
+
+			if (schedulerEntry == null) {
+				return;
+			}
 
 			if (schedulerEntry instanceof StorageTypeAware) {
 				StorageTypeAware storageTypeAware =
@@ -933,6 +978,13 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 			catch (SchedulerException se) {
 				_log.error(se, se);
 			}
+
+			ServiceRegistration<MessageListener>
+				messageListenerServiceRegistration =
+					_messageListenerServiceRegistrations.get(
+						schedulerEntry.getEventListenerClass());
+
+			messageListenerServiceRegistration.unregister();
 		}
 
 	}

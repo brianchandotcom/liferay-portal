@@ -16,9 +16,12 @@ package com.liferay.portal.kernel.scheduler.config;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
+import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalLifecycle;
 
 /**
@@ -48,18 +51,23 @@ public class DefaultSchedulingConfigurator
 
 		@Override
 		protected void doPortalDestroy() throws Exception {
+			for (MessageListener messageListener : messageListeners.values()) {
+				SchedulerEngineHelperUtil.unregister(messageListener);
+			}
+
+			messageListeners.clear();
 		}
 
 		@Override
 		protected void doPortalInit() throws Exception {
 			for (SchedulerEntry schedulerEntry : schedulerEntries) {
-				try {
-					SchedulerEngineHelperUtil.schedule(
-						schedulerEntry, storageType, null, exceptionsMaxSize);
-				}
-				catch (Exception e) {
-					_log.error("Unable to schedule " + schedulerEntry, e);
-				}
+				MessageListener messageListener =
+					(MessageListener)InstanceFactory.newInstance(
+						PortalClassLoaderUtil.getClassLoader(),
+						schedulerEntry.getEventListenerClass());
+
+				messageListeners.put(
+					schedulerEntry.getEventListenerClass(), messageListener);
 			}
 		}
 

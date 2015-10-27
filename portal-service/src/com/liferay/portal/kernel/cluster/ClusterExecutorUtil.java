@@ -17,9 +17,7 @@ package com.liferay.portal.kernel.cluster;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
+import com.liferay.portal.kernel.util.ProxyFactory;
 
 import java.util.Collections;
 import java.util.List;
@@ -57,10 +55,7 @@ public class ClusterExecutorUtil {
 	public static ClusterExecutor getClusterExecutor() {
 		PortalRuntimePermission.checkGetBeanProperty(ClusterExecutorUtil.class);
 
-		ClusterExecutor clusterExecutor =
-			_instance._serviceTracker.getService();
-
-		if ((clusterExecutor == null) || !clusterExecutor.isEnabled()) {
+		if ((_instance == null) || !_instance.isEnabled()) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("ClusterExecutorUtil was not initialized");
 			}
@@ -68,7 +63,7 @@ public class ClusterExecutorUtil {
 			return null;
 		}
 
-		return clusterExecutor;
+		return _instance;
 	}
 
 	public static List<ClusterNode> getClusterNodes() {
@@ -123,21 +118,10 @@ public class ClusterExecutorUtil {
 		clusterExecutor.removeClusterEventListener(clusterEventListener);
 	}
 
-	private ClusterExecutorUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(ClusterExecutor.class);
-
-		_serviceTracker.open();
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClusterExecutorUtil.class);
 
-	private static final ClusterExecutorUtil _instance =
-		new ClusterExecutorUtil();
-
-	private final ServiceTracker<ClusterExecutor, ClusterExecutor>
-		_serviceTracker;
+	private static final ClusterExecutor _instance =
+		ProxyFactory.newServiceTrackedInstance(ClusterExecutor.class);
 
 }

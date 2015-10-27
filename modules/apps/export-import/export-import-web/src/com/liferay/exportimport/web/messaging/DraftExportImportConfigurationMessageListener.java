@@ -17,7 +17,7 @@ package com.liferay.exportimport.web.messaging;
 import com.liferay.exportimport.web.configuration.ExportImportWebConfigurationValues;
 import com.liferay.exportimport.web.constants.ExportImportPortletKeys;
 import com.liferay.portal.background.task.model.BackgroundTask;
-import com.liferay.portal.background.task.service.BackgroundTaskLocalServiceUtil;
+import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Order;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.scheduler.SchedulerEntry;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
@@ -38,12 +38,13 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
-import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalServiceUtil;
+import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalService;
 
 import java.util.List;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -52,8 +53,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + ExportImportPortletKeys.EXPORT_IMPORT},
-	service = SchedulerEntry.class
+	service = DraftExportImportConfigurationMessageListener.class
 )
 public class DraftExportImportConfigurationMessageListener
 	extends BaseSchedulerEntryMessageListener {
@@ -66,6 +66,13 @@ public class DraftExportImportConfigurationMessageListener
 				ExportImportWebConfigurationValues.
 					DRAFT_EXPORT_IMPORT_CONFIGURATION_CHECK_INTERVAL,
 				TimeUnit.HOUR));
+
+		_schedulerEngineHelper.register(this, schedulerEntryImpl);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_schedulerEngineHelper.unregister(this);
 	}
 
 	@Override
@@ -77,7 +84,7 @@ public class DraftExportImportConfigurationMessageListener
 		}
 
 		DynamicQuery dynamicQuery =
-			ExportImportConfigurationLocalServiceUtil.dynamicQuery();
+			_exportImportConfigurationLocalService.dynamicQuery();
 
 		Property property = PropertyFactoryUtil.forName("status");
 
@@ -93,8 +100,7 @@ public class DraftExportImportConfigurationMessageListener
 				DRAFT_EXPORT_IMPORT_CONFIGURATION_CLEAN_UP_COUNT);
 
 		List<ExportImportConfiguration> exportImportConfigurations =
-			ExportImportConfigurationLocalServiceUtil.dynamicQuery(
-				dynamicQuery);
+			_exportImportConfigurationLocalService.dynamicQuery(dynamicQuery);
 
 		for (ExportImportConfiguration exportImportConfiguration :
 				exportImportConfigurations) {
@@ -103,7 +109,7 @@ public class DraftExportImportConfigurationMessageListener
 				exportImportConfiguration);
 
 			if (ListUtil.isEmpty(backgroundTasks)) {
-				ExportImportConfigurationLocalServiceUtil.
+				_exportImportConfigurationLocalService.
 					deleteExportImportConfiguration(exportImportConfiguration);
 
 				continue;
@@ -113,7 +119,7 @@ public class DraftExportImportConfigurationMessageListener
 			// automatically
 
 			for (BackgroundTask backgroundTask : backgroundTasks) {
-				BackgroundTaskLocalServiceUtil.deleteBackgroundTask(
+				_backgroundTaskLocalService.deleteBackgroundTask(
 					backgroundTask.getBackgroundTaskId());
 			}
 		}
@@ -123,8 +129,7 @@ public class DraftExportImportConfigurationMessageListener
 			ExportImportConfiguration exportImportConfiguration)
 		throws PortalException {
 
-		DynamicQuery dynamicQuery =
-			BackgroundTaskLocalServiceUtil.dynamicQuery();
+		DynamicQuery dynamicQuery = _backgroundTaskLocalService.dynamicQuery();
 
 		Property completedProperty = PropertyFactoryUtil.forName("completed");
 
@@ -145,7 +150,23 @@ public class DraftExportImportConfigurationMessageListener
 
 		dynamicQuery.add(taskContextMapProperty.like(sb.toString()));
 
-		return BackgroundTaskLocalServiceUtil.dynamicQuery(dynamicQuery);
+		return _backgroundTaskLocalService.dynamicQuery(dynamicQuery);
+	}
+
+	@Reference(unbind = "-")
+	protected void setBackgroundTaskLocalService(
+		BackgroundTaskLocalService backgroundTaskLocalService) {
+
+		_backgroundTaskLocalService = backgroundTaskLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setExportImportConfigurationLocalService(
+		ExportImportConfigurationLocalService
+			exportImportConfigurationLocalService) {
+
+		_exportImportConfigurationLocalService =
+			exportImportConfigurationLocalService;
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -160,7 +181,19 @@ public class DraftExportImportConfigurationMessageListener
 	}
 
 	@Reference(unbind = "-")
+	protected void setSchedulerEngineHelper(
+		SchedulerEngineHelper schedulerEngineHelper) {
+
+		_schedulerEngineHelper = schedulerEngineHelper;
+	}
+
+	@Reference(unbind = "-")
 	protected void setTriggerFactory(TriggerFactory triggerFactory) {
 	}
+
+	private BackgroundTaskLocalService _backgroundTaskLocalService;
+	private ExportImportConfigurationLocalService
+		_exportImportConfigurationLocalService;
+	private SchedulerEngineHelper _schedulerEngineHelper;
 
 }

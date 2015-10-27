@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.ResourceBundleTracker;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
+import com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListener;
+import com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.OpenSearch;
 import com.liferay.portal.kernel.servlet.URLEncoder;
@@ -39,6 +41,7 @@ import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
@@ -97,8 +100,8 @@ public class PortletBagFactory {
 
 		List<OpenSearch> openSearchInstances = newOpenSearches(portlet);
 
-		List<SchedulerEntry> schedulerEntryInstances =
-			newSchedulerEntryInstances(portlet);
+		List<SchedulerEventMessageListener> schedulerEventMessageListeners =
+			newSchedulerEventMessageListeners(portlet);
 
 		FriendlyURLMapperTracker friendlyURLMapperTracker =
 			newFriendlyURLMappers(portlet);
@@ -170,12 +173,12 @@ public class PortletBagFactory {
 		PortletBag portletBag = new PortletBagImpl(
 			portlet.getPortletId(), _servletContext, portletInstance,
 			resourceBundleTracker, configurationActionInstances,
-			indexerInstances, openSearchInstances, schedulerEntryInstances,
-			friendlyURLMapperTracker, urlEncoderInstances,
-			portletDataHandlerInstances, stagedModelDataHandlerInstances,
-			templateHandlerInstances, portletLayoutListenerInstances,
-			pollerProcessorInstances, popMessageListenerInstances,
-			socialActivityInterpreterInstances,
+			indexerInstances, openSearchInstances,
+			schedulerEventMessageListeners, friendlyURLMapperTracker,
+			urlEncoderInstances, portletDataHandlerInstances,
+			stagedModelDataHandlerInstances, templateHandlerInstances,
+			portletLayoutListenerInstances, pollerProcessorInstances,
+			popMessageListenerInstances, socialActivityInterpreterInstances,
 			socialRequestInterpreterInstances,
 			userNotificationDefinitionInstances,
 			userNotificationHandlerInstances, webDAVStorageInstances,
@@ -622,15 +625,39 @@ public class PortletBagFactory {
 		return preferencesValidatorInstances;
 	}
 
-	protected List<SchedulerEntry> newSchedulerEntryInstances(Portlet portlet) {
-		ServiceTrackerList<SchedulerEntry> schedulerEntries =
-			getServiceTrackerList(SchedulerEntry.class, portlet);
+	protected List<SchedulerEventMessageListener>
+			newSchedulerEventMessageListeners(Portlet portlet)
+		throws Exception {
 
-		if (PropsValues.SCHEDULER_ENABLED) {
-			schedulerEntries.addAll(portlet.getSchedulerEntries());
+		ServiceTrackerList<SchedulerEventMessageListener>
+			schedulerEventMessageListeners = getServiceTrackerList(
+				SchedulerEventMessageListener.class, portlet);
+
+		List<SchedulerEntry> schedulerEntries = portlet.getSchedulerEntries();
+
+		for (SchedulerEntry schedulerEntry : schedulerEntries) {
+			com.liferay.portal.kernel.messaging.MessageListener
+				messageListener =
+					(com.liferay.portal.kernel.messaging.MessageListener)
+						InstanceFactory.newInstance(
+							_classLoader,
+							schedulerEntry.getEventListenerClass());
+
+			SchedulerEventMessageListenerWrapper
+				schedulerEventMessageListenerWrapper =
+					new SchedulerEventMessageListenerWrapper();
+
+			schedulerEventMessageListenerWrapper.setMessageListener(
+				messageListener);
+
+			schedulerEventMessageListenerWrapper.setSchedulerEntry(
+				schedulerEntry);
+
+			schedulerEventMessageListeners.add(
+				schedulerEventMessageListenerWrapper);
 		}
 
-		return schedulerEntries;
+		return schedulerEventMessageListeners;
 	}
 
 	protected List<SocialActivityInterpreter>

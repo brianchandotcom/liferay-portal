@@ -26,20 +26,21 @@ import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.repository.LocalRepository;
-import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
+import com.liferay.portal.kernel.repository.RepositoryProvider;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
-import com.liferay.portal.kernel.scheduler.SchedulerEntry;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.Repository;
-import com.liferay.portal.service.RepositoryLocalServiceUtil;
+import com.liferay.portal.service.RepositoryLocalService;
 
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
@@ -48,8 +49,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.document.library.configuration.DLConfiguration",
-	property = {"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN},
-	service = SchedulerEntry.class
+	immediate = true, service = TempFileEntriesMessageListener.class
 )
 public class TempFileEntriesMessageListener
 	extends BaseSchedulerEntryMessageListener {
@@ -65,13 +65,20 @@ public class TempFileEntriesMessageListener
 				getEventListenerClass(), getEventListenerClass(),
 				_dlConfiguration.temporaryFileEntriesCheckInterval(),
 				TimeUnit.HOUR));
+
+		_schedulerEngineHelper.register(this, schedulerEntryImpl);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_schedulerEngineHelper.unregister(this);
 	}
 
 	protected void deleteExpiredTemporaryFileEntries(Repository repository) {
 		LocalRepository localRepository = null;
 
 		try {
-			localRepository = RepositoryProviderUtil.getLocalRepository(
+			localRepository = _repositoryProvider.getLocalRepository(
 				repository.getRepositoryId());
 		}
 		catch (PortalException pe) {
@@ -110,7 +117,7 @@ public class TempFileEntriesMessageListener
 	@Override
 	protected void doReceive(Message message) throws Exception {
 		ActionableDynamicQuery actionableDynamicQuery =
-			RepositoryLocalServiceUtil.getActionableDynamicQuery();
+			_repositoryLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod<Repository>() {
@@ -137,6 +144,27 @@ public class TempFileEntriesMessageListener
 	}
 
 	@Reference(unbind = "-")
+	protected void setRepositoryLocalService(
+		RepositoryLocalService repositoryLocalService) {
+
+		_repositoryLocalService = repositoryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setRepositoryProvider(
+		RepositoryProvider repositoryProvider) {
+
+		_repositoryProvider = repositoryProvider;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSchedulerEngineHelper(
+		SchedulerEngineHelper schedulerEngineHelper) {
+
+		_schedulerEngineHelper = schedulerEngineHelper;
+	}
+
+	@Reference(unbind = "-")
 	protected void setTriggerFactory(TriggerFactory triggerFactory) {
 	}
 
@@ -144,5 +172,8 @@ public class TempFileEntriesMessageListener
 		TempFileEntriesMessageListener.class);
 
 	private volatile DLConfiguration _dlConfiguration;
+	private RepositoryLocalService _repositoryLocalService;
+	private RepositoryProvider _repositoryProvider;
+	private SchedulerEngineHelper _schedulerEngineHelper;
 
 }

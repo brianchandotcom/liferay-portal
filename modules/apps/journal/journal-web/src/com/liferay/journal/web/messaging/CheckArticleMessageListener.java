@@ -14,21 +14,20 @@
 
 package com.liferay.journal.web.messaging;
 
-import com.liferay.journal.constants.JournalPortletKeys;
-import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.upgrade.JournalServiceUpgrade;
 import com.liferay.journal.web.configuration.JournalWebConfigurationValues;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.scheduler.SchedulerEntry;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
-import com.liferay.portal.model.Portlet;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -36,10 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  * @author Tina Tian
  */
-@Component(
-	property = {"javax.portlet.name=" + JournalPortletKeys.JOURNAL},
-	service = SchedulerEntry.class
-)
+@Component(immediate = true, service = CheckArticleMessageListener.class)
 public class CheckArticleMessageListener
 	extends BaseSchedulerEntryMessageListener {
 
@@ -49,11 +45,25 @@ public class CheckArticleMessageListener
 			TriggerFactoryUtil.createTrigger(
 				getEventListenerClass(), getEventListenerClass(),
 				JournalWebConfigurationValues.CHECK_INTERVAL, TimeUnit.MINUTE));
+
+		_schedulerEngineHelper.register(this, schedulerEntryImpl);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_schedulerEngineHelper.unregister(this);
 	}
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		JournalArticleLocalServiceUtil.checkArticles();
+		_journalArticleLocalService.checkArticles();
+	}
+
+	@Reference(unbind = "-")
+	protected void setJournalArticleLocalService(
+		JournalArticleLocalService journalArticleLocalService) {
+
+		_journalArticleLocalService = journalArticleLocalService;
 	}
 
 	@Reference
@@ -66,14 +76,18 @@ public class CheckArticleMessageListener
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	@Reference(
-		target = "(javax.portlet.name=" + JournalPortletKeys.JOURNAL + ")"
-	)
-	protected void setPortlet(Portlet portlet) {
+	@Reference(unbind = "-")
+	protected void setSchedulerEngineHelper(
+		SchedulerEngineHelper schedulerEngineHelper) {
+
+		_schedulerEngineHelper = schedulerEngineHelper;
 	}
 
 	@Reference(unbind = "-")
 	protected void setTriggerFactory(TriggerFactory triggerFactory) {
 	}
+
+	private JournalArticleLocalService _journalArticleLocalService;
+	private SchedulerEngineHelper _schedulerEngineHelper;
 
 }

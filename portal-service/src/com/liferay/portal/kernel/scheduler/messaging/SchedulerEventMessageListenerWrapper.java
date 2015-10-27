@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.messaging.MessageListenerException;
 import com.liferay.portal.kernel.scheduler.JobState;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
+import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TriggerState;
@@ -35,16 +36,16 @@ import java.util.Date;
 /**
  * @author Shuyang Zhou
  */
-public class SchedulerEventMessageListenerWrapper implements MessageListener {
-
-	public void afterPropertiesSet() {
-		if (_messageListenerUUID == null) {
-			_messageListenerUUID = PortalUUIDUtil.generate();
-		}
-	}
+public class SchedulerEventMessageListenerWrapper
+	implements SchedulerEventMessageListener {
 
 	public String getMessageListenerUUID() {
 		return _messageListenerUUID;
+	}
+
+	@Override
+	public SchedulerEntry getSchedulerEntry() {
+		return _schedulerEntry;
 	}
 
 	@Override
@@ -123,15 +124,6 @@ public class SchedulerEventMessageListenerWrapper implements MessageListener {
 	}
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #setGroupName(String)}
-	 */
-	@Deprecated
-	public void setClassName(String className) {
-		_groupName = className;
-		_jobName = className;
-	}
-
-	/**
 	 * @deprecated As of 7.0.0
 	 */
 	@Deprecated
@@ -153,6 +145,10 @@ public class SchedulerEventMessageListenerWrapper implements MessageListener {
 
 	public void setMessageListenerUUID(String messageListenerUUID) {
 		_messageListenerUUID = messageListenerUUID;
+	}
+
+	public void setSchedulerEntry(SchedulerEntry schedulerEntry) {
+		_schedulerEntry = schedulerEntry;
 	}
 
 	protected void handleException(Message message, Exception exception) {
@@ -181,6 +177,7 @@ public class SchedulerEventMessageListenerWrapper implements MessageListener {
 	private String _jobName;
 
 	private MessageListener _messageListener;
-	private String _messageListenerUUID;
+	private String _messageListenerUUID = PortalUUIDUtil.generate();
+	private SchedulerEntry _schedulerEntry;
 
 }

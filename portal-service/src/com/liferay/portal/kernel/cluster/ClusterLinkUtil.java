@@ -18,9 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
+import com.liferay.portal.kernel.util.ProxyFactory;
 
 /**
  * @author Shuyang Zhou
@@ -35,9 +33,7 @@ public class ClusterLinkUtil {
 	public static ClusterLink getClusterLink() {
 		PortalRuntimePermission.checkGetBeanProperty(ClusterLinkUtil.class);
 
-		ClusterLink clusterLink = _instance._serviceTracker.getService();
-
-		if ((clusterLink == null) || !clusterLink.isEnabled()) {
+		if ((_instance == null) || !_instance.isEnabled()) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("ClusterLinkUtil has not been initialized");
 			}
@@ -45,7 +41,7 @@ public class ClusterLinkUtil {
 			return null;
 		}
 
-		return clusterLink;
+		return _instance;
 	}
 
 	public static void sendMulticastMessage(
@@ -86,21 +82,12 @@ public class ClusterLinkUtil {
 		return message;
 	}
 
-	private ClusterLinkUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(ClusterLink.class);
-
-		_serviceTracker.open();
-	}
-
 	private static final String _ADDRESS = "CLUSTER_ADDRESS";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClusterLinkUtil.class);
 
-	private static final ClusterLinkUtil _instance = new ClusterLinkUtil();
-
-	private final ServiceTracker<ClusterLink, ClusterLink> _serviceTracker;
+	private static final ClusterLink _instance =
+		ProxyFactory.newServiceTrackedInstance(ClusterLink.class);
 
 }

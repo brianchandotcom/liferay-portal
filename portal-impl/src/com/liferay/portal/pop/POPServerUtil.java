@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.pop.MessageListener;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
-import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
@@ -128,13 +127,16 @@ public class POPServerUtil {
 
 			SchedulerEntryImpl schedulerEntryImpl = new SchedulerEntryImpl();
 
+			POPNotificationsMessageListener popNotificationsMessageListener =
+				new POPNotificationsMessageListener();
+
 			schedulerEntryImpl.setEventListenerClass(
 				POPNotificationsMessageListener.class.getName());
 			schedulerEntryImpl.setTrigger(trigger);
 			schedulerEntryImpl.setEventListenerClass(className);
 
-			SchedulerEngineHelperUtil.schedule(
-				schedulerEntryImpl, StorageType.MEMORY_CLUSTERED, null, 0);
+			SchedulerEngineHelperUtil.register(
+				popNotificationsMessageListener, schedulerEntryImpl);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

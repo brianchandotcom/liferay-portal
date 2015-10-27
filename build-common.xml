@@ -21,6 +21,8 @@
 
 	<property name="sdk.dir" value="${project.dir}/tools/sdk" />
 
+	<property name="portal.tools.dir" value="${sdk.dir}/tmp/portal-tools" />
+
 	<property name="test.properties" value="com/liferay/portal/tools/dependencies/portal-tools.properties" />
 
 	<property environment="env" />
@@ -59,10 +61,6 @@
 		<fileset dir="${project.dir}/lib/development" includes="*.jar" />
 		<fileset dir="${project.dir}/lib/global" includes="*.jar" />
 		<fileset dir="${project.dir}/lib/portal" includes="*.jar" />
-	</path>
-
-	<path id="portal.tools.classpath">
-		<fileset dir="${project.dir}/tools/sdk/tmp/portal-tools" includes="*.jar" />
 	</path>
 
 	<path id="project.classpath">
@@ -1671,9 +1669,13 @@ rerun your task.
 	<target name="format-javadoc">
 		<echo>Run "ant compile compile-test" before using format-javadoc to generate @Override tags.</echo>
 
+		<path id="javadoc.formatter.classpath">
+			<fileset dir="${portal.tools.dir}/javadoc-formatter" includes="*.jar" />
+		</path>
+
 		<java
 			classname="com.liferay.javadoc.formatter.JavadocFormatter"
-			classpathref="portal.tools.classpath"
+			classpathref="javadoc.formatter.classpath"
 			fork="true"
 			newenvironment="true"
 		>
@@ -1777,7 +1779,7 @@ rerun your task.
 			</sequential>
 		</for>
 
-		<taskdef classpathref="portal.tools.classpath" resource="org/sonar/ant/antlib.xml" uri="antlib:org.sonar.ant" />
+		<taskdef classpath="${portal.tools.dir}/sonar/sonar-ant-task.jar" resource="org/sonar/ant/antlib.xml" uri="antlib:org.sonar.ant" />
 
 		<sonar:sonar />
 

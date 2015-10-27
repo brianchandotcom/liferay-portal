@@ -371,6 +371,11 @@
 			<var name="contentBody" value="Blogs Entry Comment" />
 		</execute>
 
+		<execute macro="BlogsNavigator#gotoEntryPG">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
 		<execute macro="BlogsEntryComment#viewPG">
 			<var name="commentCount" value="1" />
 			<var name="entryComment" value="Blogs Entry Comment" />

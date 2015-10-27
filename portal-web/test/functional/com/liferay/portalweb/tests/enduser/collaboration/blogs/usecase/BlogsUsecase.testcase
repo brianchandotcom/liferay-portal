@@ -768,10 +768,6 @@
 			<var name="entryContent" value="Blogs Entry2 Content" />
 			<var name="entryTitle"><![CDATA[Blogs Entry Title `~!@#$%^&*(){}[],.<>/?|]]></var>
 		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginPG" />
 	</command>
 
 	<command name="ViewBlogsEntryAsPublishedViaAP" priority="3">

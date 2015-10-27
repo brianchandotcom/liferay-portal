@@ -4663,16 +4663,14 @@
 
 		<execute macro="CalendarNavigator#gotoAddEvent" />
 
-		<execute macro="CalendarEvent#selectCalendar">
-			<var name="calendarName" value="userfn userln" />
+		<execute macro="CalendarNavigator#gotoAddEvent" />
+
+		<execute macro="CalendarEvent#viewAvailableCalendars">
+			<var name="availableCalendarList" value="userfn userln,Site A,Site C" />
 		</execute>
 
-		<execute macro="CalendarEvent#selectCalendar">
-			<var name="calendarName" value="Site A" />
-		</execute>
-
-		<execute macro="CalendarEvent#selectCalendar">
-			<var name="calendarName" value="Site C" />
+		<execute macro="CalendarEvent#viewUnavailableCalendarsNotPresent">
+			<var name="unavailableCalendarList" value="Site B,Liferay" />
 		</execute>
 	</command>
 

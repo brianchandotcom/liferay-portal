@@ -114,8 +114,7 @@ boolean hasViewPermission = ddlDisplayContext.isAdminPortlet() && DDLRecordSetPe
 			<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
 		</liferay-portlet:actionURL>
 
-		<liferay-ui:icon
-			message="delete"
+		<liferay-ui:icon-delete
 			url="<%= deleteRecordSetURL %>"
 		/>
 	</c:if>

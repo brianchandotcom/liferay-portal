@@ -75,8 +75,7 @@ if (hasUpdatePermission) {
 			<portlet:param name="recordId" value="<%= String.valueOf(record.getRecordId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon
-			message="delete"
+		<liferay-ui:icon-delete
 			url="<%= deleteRecordURL %>"
 		/>
 	</c:if>

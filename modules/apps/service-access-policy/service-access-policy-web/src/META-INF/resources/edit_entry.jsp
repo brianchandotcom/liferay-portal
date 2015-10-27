@@ -133,6 +133,8 @@ if (sapEntry != null) {
 	<aui:script use="autocomplete,autocomplete-filters,io-base,liferay-auto-fields,liferay-portlet-url">
 		var REGEX_DOT = /\./g;
 
+		var actionMethodNamesCache = {};
+
 		var getActionMethodNamesURL = Liferay.PortletURL.createURL('<%= getActionMethodNamesURL %>');
 
 		var serviceClassNamesToContextNames = <%= request.getAttribute(SAPWebKeys.SERVICE_CLASS_NAMES_TO_CONTEXT_NAMES) %>;
@@ -141,7 +143,7 @@ if (sapEntry != null) {
 			if (contextName && serviceClassName && callback) {
 				var namespace = contextName.replace(REGEX_DOT, '_') + '.' + serviceClassName.replace(REGEX_DOT, '_');
 
-				var methodObj = A.namespace.call({}, namespace);
+				var methodObj = A.namespace.call(actionMethodNamesCache, namespace);
 
 				var actionMethodNames = methodObj.actionMethodNames;
 

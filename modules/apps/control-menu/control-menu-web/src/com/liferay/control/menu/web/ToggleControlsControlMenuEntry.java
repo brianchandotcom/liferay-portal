@@ -66,12 +66,17 @@ public class ToggleControlsControlMenuEntry
 			stateCss = "icon-eye-close";
 		}
 
-		return "toggle-controls controls-state-icon " + stateCss;
+		return "controls-state-icon " + stateCss;
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
 		return "edit-controls";
+	}
+
+	@Override
+	public String getLinkCssClass(HttpServletRequest request) {
+		return "toggle-controls";
 	}
 
 	@Override

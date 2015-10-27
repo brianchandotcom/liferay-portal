@@ -3,7 +3,6 @@ package ${packagePath}.service.base;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.util.IdentifiableOSGIService;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import ${beanLocatorUtil};
 import com.liferay.portal.kernel.dao.db.DB;
@@ -37,6 +36,7 @@ import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.Base${sessionTypeName}ServiceImpl;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
+import com.liferay.portal.util.IdentifiableOSGIService;
 import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;

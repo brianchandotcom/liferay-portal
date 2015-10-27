@@ -30,7 +30,6 @@ AssetTag tag = (AssetTag)row.getObject();
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-edit"
 			label="<%= true %>"
 			message="edit"
 			url="<%= editURL %>"
@@ -42,7 +41,6 @@ AssetTag tag = (AssetTag)row.getObject();
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-random"
 			label="<%= true %>"
 			message="merge"
 			url="<%= mergeURL %>"
@@ -55,7 +53,9 @@ AssetTag tag = (AssetTag)row.getObject();
 			<portlet:param name="tagId" value="<%= String.valueOf(tag.getTagId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete
+		<liferay-ui:icon
+			label="<%= true %>"
+			message="delete"
 			url="<%= deleteURL %>"
 		/>
 	</c:if>

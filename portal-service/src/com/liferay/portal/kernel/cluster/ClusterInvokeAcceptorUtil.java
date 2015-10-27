@@ -89,7 +89,9 @@ public class ClusterInvokeAcceptorUtil {
 
 			registry.ungetService(serviceReference);
 
-			_clusterInvokeAcceptors.remove(serviceReference);
+			Class<?> clazz = clusterInvokeAcceptor.getClass();
+
+			_clusterInvokeAcceptors.remove(clazz.getName());
 		}
 
 	}

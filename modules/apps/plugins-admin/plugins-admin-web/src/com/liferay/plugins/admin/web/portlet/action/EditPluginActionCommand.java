@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Plugin;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.service.PluginSettingServiceUtil;
-import com.liferay.portal.service.PortletServiceUtil;
+import com.liferay.portal.service.PluginSettingService;
+import com.liferay.portal.service.PortletService;
 import com.liferay.portal.util.PortalUtil;
 
 import java.util.Arrays;
@@ -33,6 +33,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -69,6 +70,18 @@ public class EditPluginActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setPluginSettingService(
+		PluginSettingService pluginSettingService) {
+
+		_pluginSettingService = pluginSettingService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortletService(PortletService portletService) {
+		_portletService = portletService;
+	}
+
 	protected void updatePluginSetting(ActionRequest actionRequest)
 		throws Exception {
 
@@ -88,13 +101,16 @@ public class EditPluginActionCommand extends BaseMVCActionCommand {
 		if (pluginType.equals(Plugin.TYPE_PORTLET)) {
 			String portletId = pluginId;
 
-			PortletServiceUtil.updatePortlet(
+			_portletService.updatePortlet(
 				companyId, portletId, StringPool.BLANK, active);
 		}
 		else {
-			PluginSettingServiceUtil.updatePluginSetting(
+			_pluginSettingService.updatePluginSetting(
 				companyId, pluginId, pluginType, roles, active);
 		}
 	}
+
+	private PluginSettingService _pluginSettingService;
+	private PortletService _portletService;
 
 }

@@ -60,8 +60,6 @@ if (Validator.isNotNull(jspPath) || Validator.isNotNull(message)) {
 	</div>
 
 	<aui:script use="liferay-notice">
-		var portalMessageContainer = A.one('#portalMessageContainer');
-
 		var banner = new Liferay.Notice(
 			{
 				animationConfig:

@@ -238,8 +238,6 @@ if (entry == null) {
 
 		previewContent.html(content);
 
-		var previewFooter = A.one('#<portlet:namespace />entryFooter');
-
 		if (previewContent.height() > 75) {
 			var toggle = preview.one('.toggle');
 

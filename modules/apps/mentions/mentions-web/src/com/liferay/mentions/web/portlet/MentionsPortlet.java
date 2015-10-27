@@ -57,7 +57,6 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.icon=/icons/mentions.png",
-		"com.liferay.portlet.social-interactions-configuration=true",
 		"javax.portlet.display-name=Mentions",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.name=" + MentionsPortletKeys.MENTIONS,

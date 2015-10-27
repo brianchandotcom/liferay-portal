@@ -1450,10 +1450,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			GetterUtil.getString(
 				portletElement.elementText("social-request-interpreter-class"),
 				portletModel.getSocialRequestInterpreterClass()));
-		portletModel.setSocialInteractionsConfiguration(
-			GetterUtil.getBoolean(
-				portletElement.elementText("social-interactions-configuration"),
-				portletModel.getSocialInteractionsConfiguration()));
 		portletModel.setUserNotificationDefinitions(
 			GetterUtil.getString(
 				portletElement.elementText("user-notification-definitions"),

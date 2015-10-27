@@ -739,7 +739,7 @@
 		</path>
 
 		<java
-			classname="com.liferay.portal.tools.source.formatter.XMLAttributesSorter"
+			classname="com.liferay.source.formatter.XMLAttributesSorter"
 			classpathref="source.formatter.classpath"
 			fork="true"
 			newenvironment="true"

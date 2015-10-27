@@ -125,11 +125,10 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 					getBootstrapCacheLoaderFactoryConfiguration();
 
 		if (bootstrapCacheLoaderFactoryConfiguration != null) {
-			portalCacheBootstrapLoaderProperties =
-				parseProperties(
-					bootstrapCacheLoaderFactoryConfiguration.getProperties(),
-					bootstrapCacheLoaderFactoryConfiguration.
-						getPropertySeparator());
+			portalCacheBootstrapLoaderProperties = parseProperties(
+				bootstrapCacheLoaderFactoryConfiguration.getProperties(),
+				bootstrapCacheLoaderFactoryConfiguration.
+					getPropertySeparator());
 
 			if (_clusterEnabled) {
 				if (!_clusterLinkReplicationEnabled) {

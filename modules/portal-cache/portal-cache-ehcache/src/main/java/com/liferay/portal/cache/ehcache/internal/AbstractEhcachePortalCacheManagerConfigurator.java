@@ -135,6 +135,35 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 		return Collections.singleton(properties);
 	}
 
+	protected PortalCacheConfiguration getPortalCacheConfiguration(
+		CacheConfiguration cacheConfiguration, boolean usingDefault) {
+
+		if (cacheConfiguration == null) {
+			return null;
+		}
+
+		String portalCacheName = cacheConfiguration.getName();
+
+		if (portalCacheName == null) {
+			portalCacheName =
+				PortalCacheConfiguration.DEFAULT_PORTAL_CACHE_NAME;
+		}
+
+		Set<Properties> portalCacheListenerPropertiesSet =
+			parseCacheEventListenerFactoryConfiguration(
+				cacheConfiguration, usingDefault);
+
+		Properties portalCacheBootstrapLoaderProperties =
+			parsePortalCacheBootstrapLoaderProperties(cacheConfiguration);
+
+		boolean requireSerialization = isRequireSerialization(
+			cacheConfiguration);
+
+		return new EhcachePortalCacheConfiguration(
+			portalCacheName, portalCacheListenerPropertiesSet,
+			portalCacheBootstrapLoaderProperties, requireSerialization);
+	}
+
 	protected String getPropertiesString(
 		Properties properties, String propertySeparator) {
 
@@ -188,35 +217,6 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 		return false;
 	}
 
-	protected PortalCacheConfiguration getPortalCacheConfiguration(
-		CacheConfiguration cacheConfiguration, boolean usingDefault) {
-
-		if (cacheConfiguration == null) {
-			return null;
-		}
-
-		String portalCacheName = cacheConfiguration.getName();
-
-		if (portalCacheName == null) {
-			portalCacheName =
-				PortalCacheConfiguration.DEFAULT_PORTAL_CACHE_NAME;
-		}
-
-		Set<Properties> portalCacheListenerPropertiesSet =
-			parseCacheEventListenerFactoryConfiguration(
-				cacheConfiguration, usingDefault);
-
-		Properties portalCacheBootstrapLoaderProperties =
-			parsePortalCacheBootstrapLoaderProperties(cacheConfiguration);
-
-		boolean requireSerialization = isRequireSerialization(
-			cacheConfiguration);
-
-		return new EhcachePortalCacheConfiguration(
-			portalCacheName, portalCacheListenerPropertiesSet,
-			portalCacheBootstrapLoaderProperties, requireSerialization);
-	}
-
 	protected Set<Properties> parseCacheEventListenerFactoryConfiguration(
 		CacheConfiguration cacheConfiguration, boolean usingDefault) {
 
@@ -252,9 +252,6 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 		return portalCacheListenerPropertiesSet;
 	}
 
-	protected abstract Properties parsePortalCacheBootstrapLoaderProperties(
-		CacheConfiguration cacheConfiguration);
-
 	protected String parseFactoryClassName(String factoryClassName) {
 		if (factoryClassName.indexOf(CharPool.EQUAL) == -1) {
 			return factoryClassName;
@@ -273,6 +270,9 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 
 		return factoryClassName;
 	}
+
+	protected abstract Properties parsePortalCacheBootstrapLoaderProperties(
+		CacheConfiguration cacheConfiguration);
 
 	protected Properties parseProperties(
 		String propertiesString, String propertySeparator) {

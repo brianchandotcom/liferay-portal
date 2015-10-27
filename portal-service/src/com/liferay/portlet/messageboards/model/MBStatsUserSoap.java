@@ -34,6 +34,7 @@ public class MBStatsUserSoap implements Serializable {
 		MBStatsUserSoap soapModel = new MBStatsUserSoap();
 
 		soapModel.setStatsUserId(model.getStatsUserId());
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setMessageCount(model.getMessageCount());
@@ -98,6 +99,14 @@ public class MBStatsUserSoap implements Serializable {
 		_statsUserId = statsUserId;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -131,6 +140,7 @@ public class MBStatsUserSoap implements Serializable {
 	}
 
 	private long _statsUserId;
+	private long _companyId;
 	private long _groupId;
 	private long _userId;
 	private int _messageCount;

@@ -8279,6 +8279,8 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 
 		group.setUuid(uuid);
 
+		group.setCompanyId(0);
+
 		return group;
 	}
 

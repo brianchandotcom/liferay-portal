@@ -12414,6 +12414,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 
 		dlFolder.setUuid(uuid);
 
+		dlFolder.setCompanyId(0);
+
 		return dlFolder;
 	}
 

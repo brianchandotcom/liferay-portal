@@ -117,6 +117,8 @@ public class MBStatsUserPersistenceTest {
 
 		MBStatsUser newMBStatsUser = _persistence.create(pk);
 
+		newMBStatsUser.setCompanyId(RandomTestUtil.nextLong());
+
 		newMBStatsUser.setGroupId(RandomTestUtil.nextLong());
 
 		newMBStatsUser.setUserId(RandomTestUtil.nextLong());
@@ -131,6 +133,8 @@ public class MBStatsUserPersistenceTest {
 
 		Assert.assertEquals(existingMBStatsUser.getStatsUserId(),
 			newMBStatsUser.getStatsUserId());
+		Assert.assertEquals(existingMBStatsUser.getCompanyId(),
+			newMBStatsUser.getCompanyId());
 		Assert.assertEquals(existingMBStatsUser.getGroupId(),
 			newMBStatsUser.getGroupId());
 		Assert.assertEquals(existingMBStatsUser.getUserId(),
@@ -196,8 +200,8 @@ public class MBStatsUserPersistenceTest {
 
 	protected OrderByComparator<MBStatsUser> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("MBStatsUser",
-			"statsUserId", true, "groupId", true, "userId", true,
-			"messageCount", true, "lastPostDate", true);
+			"statsUserId", true, "companyId", true, "groupId", true, "userId",
+			true, "messageCount", true, "lastPostDate", true);
 	}
 
 	@Test
@@ -412,6 +416,8 @@ public class MBStatsUserPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		MBStatsUser mbStatsUser = _persistence.create(pk);
+
+		mbStatsUser.setCompanyId(RandomTestUtil.nextLong());
 
 		mbStatsUser.setGroupId(RandomTestUtil.nextLong());
 

@@ -3340,6 +3340,8 @@ public class SocialActivityAchievementPersistenceImpl
 		socialActivityAchievement.setNew(true);
 		socialActivityAchievement.setPrimaryKey(activityAchievementId);
 
+		socialActivityAchievement.setCompanyId(0);
+
 		return socialActivityAchievement;
 	}
 

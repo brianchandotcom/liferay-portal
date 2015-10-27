@@ -38,7 +38,7 @@ import java.io.Serializable;
  */
 @ProviderType
 public interface PortletPreferencesModel extends BaseModel<PortletPreferences>,
-	MVCCModel {
+	MVCCModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -88,6 +88,22 @@ public interface PortletPreferencesModel extends BaseModel<PortletPreferences>,
 	 * @param portletPreferencesId the portlet preferences ID of this portlet preferences
 	 */
 	public void setPortletPreferencesId(long portletPreferencesId);
+
+	/**
+	 * Returns the company ID of this portlet preferences.
+	 *
+	 * @return the company ID of this portlet preferences
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this portlet preferences.
+	 *
+	 * @param companyId the company ID of this portlet preferences
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the owner ID of this portlet preferences.

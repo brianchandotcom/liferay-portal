@@ -2165,6 +2165,8 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 		lock.setUuid(uuid);
 
+		lock.setCompanyId(0);
+
 		return lock;
 	}
 

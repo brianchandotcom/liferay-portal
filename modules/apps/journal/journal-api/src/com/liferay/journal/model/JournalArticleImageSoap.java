@@ -33,6 +33,7 @@ public class JournalArticleImageSoap implements Serializable {
 		JournalArticleImageSoap soapModel = new JournalArticleImageSoap();
 
 		soapModel.setArticleImageId(model.getArticleImageId());
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setArticleId(model.getArticleId());
 		soapModel.setVersion(model.getVersion());
@@ -103,6 +104,14 @@ public class JournalArticleImageSoap implements Serializable {
 		_articleImageId = articleImageId;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -164,6 +173,7 @@ public class JournalArticleImageSoap implements Serializable {
 	}
 
 	private long _articleImageId;
+	private long _companyId;
 	private long _groupId;
 	private String _articleId;
 	private double _version;

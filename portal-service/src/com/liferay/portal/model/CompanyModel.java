@@ -37,7 +37,7 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface CompanyModel extends BaseModel<Company>, MVCCModel, ShardedModel {
+public interface CompanyModel extends BaseModel<Company>, MVCCModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -79,7 +79,6 @@ public interface CompanyModel extends BaseModel<Company>, MVCCModel, ShardedMode
 	 *
 	 * @return the company ID of this company
 	 */
-	@Override
 	public long getCompanyId();
 
 	/**
@@ -87,7 +86,6 @@ public interface CompanyModel extends BaseModel<Company>, MVCCModel, ShardedMode
 	 *
 	 * @param companyId the company ID of this company
 	 */
-	@Override
 	public void setCompanyId(long companyId);
 
 	/**

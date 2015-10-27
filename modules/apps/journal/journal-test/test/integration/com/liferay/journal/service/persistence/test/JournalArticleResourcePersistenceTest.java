@@ -125,6 +125,8 @@ public class JournalArticleResourcePersistenceTest {
 
 		newJournalArticleResource.setUuid(RandomTestUtil.randomString());
 
+		newJournalArticleResource.setCompanyId(RandomTestUtil.nextLong());
+
 		newJournalArticleResource.setGroupId(RandomTestUtil.nextLong());
 
 		newJournalArticleResource.setArticleId(RandomTestUtil.randomString());
@@ -138,6 +140,8 @@ public class JournalArticleResourcePersistenceTest {
 			newJournalArticleResource.getUuid());
 		Assert.assertEquals(existingJournalArticleResource.getResourcePrimKey(),
 			newJournalArticleResource.getResourcePrimKey());
+		Assert.assertEquals(existingJournalArticleResource.getCompanyId(),
+			newJournalArticleResource.getCompanyId());
 		Assert.assertEquals(existingJournalArticleResource.getGroupId(),
 			newJournalArticleResource.getGroupId());
 		Assert.assertEquals(existingJournalArticleResource.getArticleId(),
@@ -160,6 +164,15 @@ public class JournalArticleResourcePersistenceTest {
 		_persistence.countByUUID_G(StringPool.NULL, 0L);
 
 		_persistence.countByUUID_G((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C(StringPool.BLANK, RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C(StringPool.NULL, 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -203,8 +216,8 @@ public class JournalArticleResourcePersistenceTest {
 
 	protected OrderByComparator<JournalArticleResource> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("JournalArticleResource",
-			"uuid", true, "resourcePrimKey", true, "groupId", true,
-			"articleId", true);
+			"uuid", true, "resourcePrimKey", true, "companyId", true,
+			"groupId", true, "articleId", true);
 	}
 
 	@Test
@@ -442,6 +455,8 @@ public class JournalArticleResourcePersistenceTest {
 		JournalArticleResource journalArticleResource = _persistence.create(pk);
 
 		journalArticleResource.setUuid(RandomTestUtil.randomString());
+
+		journalArticleResource.setCompanyId(RandomTestUtil.nextLong());
 
 		journalArticleResource.setGroupId(RandomTestUtil.nextLong());
 

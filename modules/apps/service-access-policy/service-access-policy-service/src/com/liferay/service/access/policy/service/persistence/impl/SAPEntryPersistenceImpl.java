@@ -4212,6 +4212,8 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 
 		sapEntry.setUuid(uuid);
 
+		sapEntry.setCompanyId(0);
+
 		return sapEntry;
 	}
 

@@ -2755,6 +2755,8 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 
 		team.setUuid(uuid);
 
+		team.setCompanyId(0);
+
 		return team;
 	}
 

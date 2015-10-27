@@ -63,10 +63,12 @@ public class DDMStructureLinkCacheModel implements CacheModel<DDMStructureLink>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{structureLinkId=");
 		sb.append(structureLinkId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", classNameId=");
 		sb.append(classNameId);
 		sb.append(", classPK=");
@@ -83,6 +85,7 @@ public class DDMStructureLinkCacheModel implements CacheModel<DDMStructureLink>,
 		DDMStructureLinkImpl ddmStructureLinkImpl = new DDMStructureLinkImpl();
 
 		ddmStructureLinkImpl.setStructureLinkId(structureLinkId);
+		ddmStructureLinkImpl.setCompanyId(companyId);
 		ddmStructureLinkImpl.setClassNameId(classNameId);
 		ddmStructureLinkImpl.setClassPK(classPK);
 		ddmStructureLinkImpl.setStructureId(structureId);
@@ -95,6 +98,7 @@ public class DDMStructureLinkCacheModel implements CacheModel<DDMStructureLink>,
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		structureLinkId = objectInput.readLong();
+		companyId = objectInput.readLong();
 		classNameId = objectInput.readLong();
 		classPK = objectInput.readLong();
 		structureId = objectInput.readLong();
@@ -104,12 +108,14 @@ public class DDMStructureLinkCacheModel implements CacheModel<DDMStructureLink>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(structureLinkId);
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(classNameId);
 		objectOutput.writeLong(classPK);
 		objectOutput.writeLong(structureId);
 	}
 
 	public long structureLinkId;
+	public long companyId;
 	public long classNameId;
 	public long classPK;
 	public long structureId;

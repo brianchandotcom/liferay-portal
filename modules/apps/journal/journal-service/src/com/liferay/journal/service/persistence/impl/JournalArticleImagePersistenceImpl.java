@@ -2370,6 +2370,8 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 		journalArticleImage.setNew(true);
 		journalArticleImage.setPrimaryKey(articleImageId);
 
+		journalArticleImage.setCompanyId(0);
+
 		return journalArticleImage;
 	}
 
@@ -2578,6 +2580,7 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 		journalArticleImageImpl.setPrimaryKey(journalArticleImage.getPrimaryKey());
 
 		journalArticleImageImpl.setArticleImageId(journalArticleImage.getArticleImageId());
+		journalArticleImageImpl.setCompanyId(journalArticleImage.getCompanyId());
 		journalArticleImageImpl.setGroupId(journalArticleImage.getGroupId());
 		journalArticleImageImpl.setArticleId(journalArticleImage.getArticleId());
 		journalArticleImageImpl.setVersion(journalArticleImage.getVersion());

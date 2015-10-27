@@ -918,6 +918,8 @@ public class DLSyncEventPersistenceImpl extends BasePersistenceImpl<DLSyncEvent>
 		dlSyncEvent.setNew(true);
 		dlSyncEvent.setPrimaryKey(syncEventId);
 
+		dlSyncEvent.setCompanyId(0);
+
 		return dlSyncEvent;
 	}
 
@@ -1063,6 +1065,7 @@ public class DLSyncEventPersistenceImpl extends BasePersistenceImpl<DLSyncEvent>
 		dlSyncEventImpl.setPrimaryKey(dlSyncEvent.getPrimaryKey());
 
 		dlSyncEventImpl.setSyncEventId(dlSyncEvent.getSyncEventId());
+		dlSyncEventImpl.setCompanyId(dlSyncEvent.getCompanyId());
 		dlSyncEventImpl.setModifiedTime(dlSyncEvent.getModifiedTime());
 		dlSyncEventImpl.setEvent(dlSyncEvent.getEvent());
 		dlSyncEventImpl.setType(dlSyncEvent.getType());

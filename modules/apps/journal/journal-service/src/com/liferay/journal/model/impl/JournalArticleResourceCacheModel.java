@@ -64,12 +64,14 @@ public class JournalArticleResourceCacheModel implements CacheModel<JournalArtic
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
 		sb.append(", resourcePrimKey=");
 		sb.append(resourcePrimKey);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", articleId=");
@@ -91,6 +93,7 @@ public class JournalArticleResourceCacheModel implements CacheModel<JournalArtic
 		}
 
 		journalArticleResourceImpl.setResourcePrimKey(resourcePrimKey);
+		journalArticleResourceImpl.setCompanyId(companyId);
 		journalArticleResourceImpl.setGroupId(groupId);
 
 		if (articleId == null) {
@@ -109,6 +112,7 @@ public class JournalArticleResourceCacheModel implements CacheModel<JournalArtic
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
 		resourcePrimKey = objectInput.readLong();
+		companyId = objectInput.readLong();
 		groupId = objectInput.readLong();
 		articleId = objectInput.readUTF();
 	}
@@ -124,6 +128,7 @@ public class JournalArticleResourceCacheModel implements CacheModel<JournalArtic
 		}
 
 		objectOutput.writeLong(resourcePrimKey);
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(groupId);
 
 		if (articleId == null) {
@@ -136,6 +141,7 @@ public class JournalArticleResourceCacheModel implements CacheModel<JournalArtic
 
 	public String uuid;
 	public long resourcePrimKey;
+	public long companyId;
 	public long groupId;
 	public String articleId;
 }

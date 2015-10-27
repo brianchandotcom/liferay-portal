@@ -5820,6 +5820,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 
 		socialRelation.setUuid(uuid);
 
+		socialRelation.setCompanyId(0);
+
 		return socialRelation;
 	}
 

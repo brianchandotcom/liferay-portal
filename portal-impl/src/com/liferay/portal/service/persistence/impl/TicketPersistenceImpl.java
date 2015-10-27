@@ -1039,6 +1039,8 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 		ticket.setNew(true);
 		ticket.setPrimaryKey(ticketId);
 
+		ticket.setCompanyId(0);
+
 		return ticket;
 	}
 

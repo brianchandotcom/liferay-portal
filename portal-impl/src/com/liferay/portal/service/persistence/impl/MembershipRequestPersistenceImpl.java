@@ -2321,6 +2321,8 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 		membershipRequest.setNew(true);
 		membershipRequest.setPrimaryKey(membershipRequestId);
 
+		membershipRequest.setCompanyId(0);
+
 		return membershipRequest;
 	}
 

@@ -19007,6 +19007,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 		mbMessage.setUuid(uuid);
 
+		mbMessage.setCompanyId(0);
+
 		return mbMessage;
 	}
 

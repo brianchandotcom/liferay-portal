@@ -1552,6 +1552,8 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 		ddmTemplateVersion.setNew(true);
 		ddmTemplateVersion.setPrimaryKey(templateVersionId);
 
+		ddmTemplateVersion.setCompanyId(0);
+
 		return ddmTemplateVersion;
 	}
 

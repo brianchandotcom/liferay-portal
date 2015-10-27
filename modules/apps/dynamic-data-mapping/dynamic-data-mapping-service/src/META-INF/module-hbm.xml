@@ -31,6 +31,7 @@
 			<generator class="assigned" />
 		</id>
 		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="structureId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -77,6 +78,7 @@
 		<id name="structureLinkId" type="long">
 			<generator class="assigned" />
 		</id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="structureId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -137,6 +139,7 @@
 		<id name="templateLinkId" type="long">
 			<generator class="assigned" />
 		</id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="templateId" type="com.liferay.portal.dao.orm.hibernate.LongType" />

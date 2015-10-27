@@ -274,6 +274,37 @@ public abstract class WikiPageResourceLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns all the wiki page resources matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the wiki page resources
+	 * @param companyId the primary key of the company
+	 * @return the matching wiki page resources, or an empty list if no matches were found
+	 */
+	@Override
+	public List<WikiPageResource> getWikiPageResourcesByUuidAndCompanyId(
+		String uuid, long companyId) {
+		return wikiPageResourcePersistence.findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of wiki page resources matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the wiki page resources
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of wiki page resources
+	 * @param end the upper bound of the range of wiki page resources (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching wiki page resources, or an empty list if no matches were found
+	 */
+	@Override
+	public List<WikiPageResource> getWikiPageResourcesByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<WikiPageResource> orderByComparator) {
+		return wikiPageResourcePersistence.findByUuid_C(uuid, companyId, start,
+			end, orderByComparator);
+	}
+
+	/**
 	 * Returns the wiki page resource matching the UUID and group.
 	 *
 	 * @param uuid the wiki page resource's UUID

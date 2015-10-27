@@ -7155,6 +7155,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 		bookmarksFolder.setUuid(uuid);
 
+		bookmarksFolder.setCompanyId(0);
+
 		return bookmarksFolder;
 	}
 

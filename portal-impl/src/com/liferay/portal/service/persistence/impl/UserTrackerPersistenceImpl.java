@@ -1728,6 +1728,8 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 		userTracker.setNew(true);
 		userTracker.setPrimaryKey(userTrackerId);
 
+		userTracker.setCompanyId(0);
+
 		return userTracker;
 	}
 

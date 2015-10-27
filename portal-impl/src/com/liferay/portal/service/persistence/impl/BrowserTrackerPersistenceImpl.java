@@ -426,6 +426,8 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 		browserTracker.setNew(true);
 		browserTracker.setPrimaryKey(browserTrackerId);
 
+		browserTracker.setCompanyId(0);
+
 		return browserTracker;
 	}
 
@@ -573,6 +575,7 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 
 		browserTrackerImpl.setMvccVersion(browserTracker.getMvccVersion());
 		browserTrackerImpl.setBrowserTrackerId(browserTracker.getBrowserTrackerId());
+		browserTrackerImpl.setCompanyId(browserTracker.getCompanyId());
 		browserTrackerImpl.setUserId(browserTracker.getUserId());
 		browserTrackerImpl.setBrowserKey(browserTracker.getBrowserKey());
 

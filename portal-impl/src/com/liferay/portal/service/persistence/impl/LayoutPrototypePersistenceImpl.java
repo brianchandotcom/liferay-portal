@@ -3938,6 +3938,8 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 
 		layoutPrototype.setUuid(uuid);
 
+		layoutPrototype.setCompanyId(0);
+
 		return layoutPrototype;
 	}
 

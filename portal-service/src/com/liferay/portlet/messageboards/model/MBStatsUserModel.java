@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.ShardedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -40,7 +41,7 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface MBStatsUserModel extends BaseModel<MBStatsUser> {
+public interface MBStatsUserModel extends BaseModel<MBStatsUser>, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -88,6 +89,22 @@ public interface MBStatsUserModel extends BaseModel<MBStatsUser> {
 	 * @param statsUserUuid the stats user uuid of this message boards stats user
 	 */
 	public void setStatsUserUuid(String statsUserUuid);
+
+	/**
+	 * Returns the company ID of this message boards stats user.
+	 *
+	 * @return the company ID of this message boards stats user
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this message boards stats user.
+	 *
+	 * @param companyId the company ID of this message boards stats user
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the group ID of this message boards stats user.

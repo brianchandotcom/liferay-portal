@@ -2421,6 +2421,8 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 		systemEvent.setNew(true);
 		systemEvent.setPrimaryKey(systemEventId);
 
+		systemEvent.setCompanyId(0);
+
 		return systemEvent;
 	}
 

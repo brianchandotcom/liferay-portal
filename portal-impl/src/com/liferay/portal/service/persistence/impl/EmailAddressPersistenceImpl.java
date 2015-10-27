@@ -4073,6 +4073,8 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 
 		emailAddress.setUuid(uuid);
 
+		emailAddress.setCompanyId(0);
+
 		return emailAddress;
 	}
 

@@ -42,6 +42,11 @@ AUI.add(
 						value: '.selected-items-count'
 					},
 
+					rowCheckerSelector: {
+						validator: Lang.isString,
+						value: '.click-selector'
+					},
+
 					rowClassNameActive: {
 						validator: Lang.isString,
 						value: 'active'
@@ -87,6 +92,7 @@ AUI.add(
 						instance._eventHandles = [
 							instance.get('rootNode').delegate(STR_CLICK, instance._toggleSelectAll, instance.get(STR_SELECT_ALL_CHECKBOXES_SELECTOR), instance),
 							instance.get(STR_CHECKBOX_CONTAINER).delegate(STR_CLICK, instance._toggleSelect, instance.get(STR_CHECKBOXES_SELECTOR), instance),
+							instance.get(STR_CHECKBOX_CONTAINER).delegate(STR_CLICK, instance._toggleSelect, instance.get('rowCheckerSelector'), instance),
 							Liferay.on('surfaceStartNavigate', instance._onSurfaceStartNavigate, instance)
 						];
 					},

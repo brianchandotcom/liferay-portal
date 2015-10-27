@@ -8,6 +8,12 @@ AUI.add(
 
 		var STR_BLANK = '';
 
+		var STR_CLICK = 'click';
+
+		var STR_CONTENT_BOX = 'contentBox';
+
+		var STR_ROW_SELECTOR = 'rowSelector';
+
 		var TPL_HIDDEN_INPUT = '<input class="hide" name="{name}" value="{value}" type="checkbox" checked />';
 
 		var TPL_INPUT_SELECTOR = 'input[type="checkbox"][value="{value}"]';
@@ -25,6 +31,11 @@ AUI.add(
 
 					id: {
 						value: STR_BLANK
+					},
+
+					rowCheckerSelector: {
+						validator: Lang.isString,
+						value: '.click-selector'
 					},
 
 					rowClassNameActive: {
@@ -96,7 +107,7 @@ AUI.add(
 
 						var id = instance.get('id');
 
-						var contentBox = instance.get('contentBox');
+						var contentBox = instance.get(STR_CONTENT_BOX);
 
 						instance._dataStore = A.one('#' + id + 'PrimaryKeys');
 						instance._emptyResultsMessage = A.one('#' + id + 'EmptyResultsMessage');
@@ -140,13 +151,24 @@ AUI.add(
 							}
 						);
 
+						var toggleRowFn = A.bind(
+							'_toggleRow',
+							instance,
+							{
+								toggleCheckbox: true
+							}
+						);
+
+						var toggleRowCSSFn = A.bind('_toggleRow', instance, {});
+
 						instance._eventHandles = [
 							Liferay.on('surfaceStartNavigate', instance._onSurfaceStartNavigate, instance),
-							instance.get('contentBox').delegate('click', instance._toggleSelect, 'input[type=checkbox]', instance)
+							instance.get(STR_CONTENT_BOX).delegate(STR_CLICK, toggleRowCSSFn, 'input[type=checkbox]', instance),
+							instance.get(STR_CONTENT_BOX).delegate(STR_CLICK, toggleRowFn, instance.get('rowCheckerSelector'), instance)
 						];
 
 						if (instance.get('hover')) {
-							instance._eventHandles.push(instance.get('contentBox').delegate(['mouseenter', 'mouseleave'], instance._onContentHover, 'tr', instance));
+							instance._eventHandles.push(instance.get(STR_CONTENT_BOX).delegate(['mouseenter', 'mouseleave'], instance._onContentHover, 'tr', instance));
 						}
 					},
 
@@ -312,9 +334,9 @@ AUI.add(
 								action: Liferay.SearchContainer.restoreTask,
 								condition: Liferay.SearchContainer.testRestoreTask,
 								params: {
-									containerId: instance.get('contentBox').attr('id'),
+									containerId: instance.get(STR_CONTENT_BOX).attr('id'),
 									rowClassNameActive: instance.get('rowClassNameActive'),
-									rowSelector: instance.get('rowSelector'),
+									rowSelector: instance.get(STR_ROW_SELECTOR),
 									searchContainerId: instance.get('id')
 								}
 							}
@@ -326,7 +348,7 @@ AUI.add(
 
 						var elements = [];
 
-						var checkedCheckBoxes = instance.get('contentBox').all('input:checked');
+						var checkedCheckBoxes = instance.get(STR_CONTENT_BOX).all('input:checked');
 
 						checkedCheckBoxes.each(
 							function(item, index) {
@@ -410,10 +432,18 @@ AUI.add(
 						instance._addRestoreTaskState();
 					},
 
-					_toggleSelect: function(event) {
+					_toggleRow: function(config, event) {
 						var instance = this;
 
-						event.currentTarget.ancestor(instance.get('rowSelector')).toggleClass(instance.get('rowClassNameActive'));
+						var row = event.currentTarget.ancestor(instance.get(STR_ROW_SELECTOR));
+
+						if (config && config.toggleCheckbox) {
+							var checkbox = row.one('input[type=checkbox]');
+
+							checkbox.attr('checked', !checkbox.attr('checked'));
+						}
+
+						row.toggleClass(instance.get('rowClassNameActive'));
 					}
 				},
 

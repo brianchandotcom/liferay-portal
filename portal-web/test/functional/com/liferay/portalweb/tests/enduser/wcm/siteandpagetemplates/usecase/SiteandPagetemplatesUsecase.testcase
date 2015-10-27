@@ -890,7 +890,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewInlineGuestPermissionsInSiteTemplatesViaWCD" priority="4">
+	<command name="ViewInlineGuestPermissionsInSiteTemplatesViaWCD" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Site Templates" />
 		</execute>
@@ -932,7 +932,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewNoAddPageTabViaPageTemplatesCP" priority="4">
+	<command name="ViewNoAddPageTabViaPageTemplatesCP" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Page Templates" />
 		</execute>

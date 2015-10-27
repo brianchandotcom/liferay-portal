@@ -23,7 +23,7 @@ import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutTypeController;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.impl.BaseLayoutTypeControllerImpl;
-import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.service.PortletLocalService;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.util.List;
@@ -91,7 +91,7 @@ public class FullPageApplicationLayoutTypeController
 	protected void addAttributes(HttpServletRequest request) {
 		super.addAttributes(request);
 
-		List<Portlet> portlets = PortletLocalServiceUtil.getPortlets();
+		List<Portlet> portlets = _portletLocalService.getPortlets();
 
 		if (portlets.isEmpty()) {
 			return;
@@ -131,6 +131,13 @@ public class FullPageApplicationLayoutTypeController
 		return _VIEW_PAGE;
 	}
 
+	@Reference(unbind = "-")
+	protected void setPortletLocalService(
+		PortletLocalService portletLocalService) {
+
+		_portletLocalService = portletLocalService;
+	}
+
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.full.page.application)"
 	)
@@ -147,5 +154,7 @@ public class FullPageApplicationLayoutTypeController
 
 	private static final String _VIEW_PAGE =
 		"/layout/view/full_page_application.jsp";
+
+	private PortletLocalService _portletLocalService;
 
 }

@@ -30,7 +30,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command name="AddFeedBetweenFeeds" priority="4">
+	<command name="AddFeedBetweenFeeds" priority="3">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Site Page Name" />
 			<var name="siteName" value="Site Name" />
@@ -195,29 +195,7 @@
 		</for>
 	</command>
 
-	<command name="AddRSSPortlet" priority="4">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="RSS" />
-		</execute>
-
-		<execute function="Refresh" />
-
-		<execute macro="Portlet#viewSpecificPG">
-			<var name="portletName" value="RSS" />
-		</execute>
-
-		<execute macro="RSS#viewDefaultDisplayFeedTitle">
-			<var name="feedTitle" value="Technology" />
-		</execute>
-	</command>
-
-	<command name="ChangeDefaultToNavigationDisplay" priority="4">
+	<command name="ChangeDefaultToNavigationDisplay" priority="3">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Site Page Name" />
 			<var name="siteName" value="Site Name" />
@@ -393,7 +371,7 @@
 		</execute>
 	</command>
 
-	<command name="DisabledFeedTitle" priority="4">
+	<command name="DisabledFeedTitle" priority="3">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Site Page Name" />
 			<var name="siteName" value="Site Name" />
@@ -434,7 +412,7 @@
 		</execute>
 	</command>
 
-	<command name="EnableRSSFeedFromAssetpublisher" priority="4">
+	<command name="EnableRSSFeedFromAssetpublisher" priority="3">
 		<execute macro="Page#gotoPagesCP">
 			<var name="portletName" value="Site Pages" />
 			<var name="siteScopeName" value="Site Name" />

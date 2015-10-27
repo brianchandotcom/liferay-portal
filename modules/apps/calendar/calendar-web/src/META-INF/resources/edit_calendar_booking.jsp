@@ -384,6 +384,7 @@ for (long otherCalendarId : otherCalendarIds) {
 			<liferay-security:permissionsURL
 				modelResource="<%= CalendarBooking.class.getName() %>"
 				modelResourceDescription="<%= calendarBooking.getTitle(locale) %>"
+				redirect="<%= redirectURL %>"
 				resourceGroupId="<%= calendarBooking.getGroupId() %>"
 				resourcePrimKey="<%= String.valueOf(calendarBooking.getCalendarBookingId()) %>"
 				var="permissionsCalendarBookingURL"

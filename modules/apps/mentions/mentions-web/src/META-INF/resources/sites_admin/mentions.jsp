@@ -29,4 +29,4 @@ boolean companyMentionsEnabled = GetterUtil.getBoolean(request.getAttribute(Ment
 	</div>
 </c:if>
 
-<aui:input checked="<%= groupMentionsEnabled %>" disabled="<%= !companyMentionsEnabled %>" label="<%= LanguageUtil.get(resourceBundle, "enable-mentions") %>" name="TypeSettingsProperties--mentionsEnabled--" type="checkbox" value="<%= groupMentionsEnabled %>" />
+<aui:input checked="<%= groupMentionsEnabled %>" disabled="<%= !companyMentionsEnabled %>" label='<%= LanguageUtil.get(resourceBundle, "enable-mentions") %>' name="TypeSettingsProperties--mentionsEnabled--" type="checkbox" value="<%= groupMentionsEnabled %>" />

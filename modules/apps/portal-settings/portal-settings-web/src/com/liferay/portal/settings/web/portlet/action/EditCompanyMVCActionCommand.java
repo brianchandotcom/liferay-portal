@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.EmailAddress;
 import com.liferay.portal.model.Phone;
@@ -140,7 +139,6 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 		throws Exception {
 
 		validateLDAP(actionRequest);
-		validateSocialInteractions(actionRequest);
 	}
 
 	@Reference(unbind = "-")
@@ -214,45 +212,6 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 		if (ldapExportEnabled && ldapImportEnabled) {
 			SessionErrors.add(
 				actionRequest, "ldapExportAndImportOnPasswordAutogeneration");
-		}
-	}
-
-	protected void validateSocialInteractions(ActionRequest actionRequest) {
-		boolean socialInteractionsEnabled = ParamUtil.getBoolean(
-			actionRequest, "settings--socialInteractionsEnabled--");
-
-		if (!socialInteractionsEnabled) {
-			return;
-		}
-
-		boolean socialInteractionsAnyUserEnabled = ParamUtil.getBoolean(
-			actionRequest, "settings--socialInteractionsAnyUserEnabled--");
-
-		if (socialInteractionsAnyUserEnabled) {
-			return;
-		}
-
-		boolean socialInteractionsSocialRelationTypesEnabled =
-			ParamUtil.getBoolean(
-				actionRequest,
-				"settings--socialInteractionsSocialRelationTypesEnabled--");
-		String socialInteractionsSocialRelationTypes = ParamUtil.getString(
-			actionRequest, "settings--socialInteractionsSocialRelationTypes--");
-
-		if (socialInteractionsSocialRelationTypesEnabled &&
-			Validator.isNull(socialInteractionsSocialRelationTypes)) {
-
-			SessionErrors.add(
-				actionRequest, "socialInteractionsSocialRelationTypes");
-		}
-
-		boolean socialInteractionsSitesEnabled = ParamUtil.getBoolean(
-			actionRequest, "settings--socialInteractionsSitesEnabled--");
-
-		if (!socialInteractionsSocialRelationTypesEnabled &&
-			!socialInteractionsSitesEnabled) {
-
-			SessionErrors.add(actionRequest, "socialInteractionsInvalid");
 		}
 	}
 

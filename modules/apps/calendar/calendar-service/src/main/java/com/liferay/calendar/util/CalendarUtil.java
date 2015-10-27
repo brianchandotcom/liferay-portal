@@ -65,9 +65,9 @@ public class CalendarUtil {
 	}
 
 	public static JSONObject getCalendarRenderingRules(
-		ThemeDisplay themeDisplay, long[] calendarIds, int[] statuses,
-		long startTime, long endTime,
-		String ruleName, TimeZone timeZone) throws PortalException {
+			ThemeDisplay themeDisplay, long[] calendarIds, int[] statuses,
+			long startTime, long endTime, String ruleName, TimeZone timeZone)
+		throws PortalException {
 
 		List<CalendarBooking> calendarBookings =
 			CalendarBookingServiceUtil.search(

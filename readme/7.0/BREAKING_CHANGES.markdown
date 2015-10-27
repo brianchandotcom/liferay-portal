@@ -2674,13 +2674,13 @@ continued support.
 
 ---------------------------------------
 
-### Removed all methods from SchedulerEngineHelper that explicitly schedule jobs using SchedulerEntry or specify messageListenerClassNames  
+### Removed All Methods from SchedulerEngineHelper that Explicitly Schedule Jobs Using SchedulerEntry or Specify MessageListener Class Names
 - **Date:** 2015-Oct-29
 - **JIRA Ticket:** LPS-59681
 
 #### What changed?
 
-The following methods were removed from SchedulerEngine
+The following methods were removed from `SchedulerEngine`:
 
 - `SchedulerEngineHelper.addJob(Trigger, StorageType, String, String, Message, String, String, int)`
 - `SchedulerEngineHelper.addJob(Trigger, StorageType, String, String, Object, String, String, int)`
@@ -2688,27 +2688,29 @@ The following methods were removed from SchedulerEngine
 
 #### Who is affected?
 
-This affects developers that use the above 3 methods to schedule jobs into the
-SchedulerEngine.
+This affects developers that use the above methods to schedule jobs into the
+`SchedulerEngine`.
 
 #### How should I update my code?
 
-You should update your code to call either:
+You should update your code to call one of these methods:
 
 - `SchedulerEngineHelper.schedule(Trigger, StorageType, String, String, Message, int)`
 - `SchedulerEngineHelper.schedule(Trigger, StorageType, String, String, Object, int)`
 
-Instead of simply providing the className of your scheduled job listener, you 
-should:
-(1) Instantiate your MessageListener
-(2) Call `SchedulerEngineHelper.register(MessageListener, SchedulerEntry)` to register your SchedulerEventMessageListener
+Instead of simply providing the class name of your scheduled job listener, you
+should follow these steps:
+
+1.  Instantiate your MessageListener.
+
+2.  Call `SchedulerEngineHelper.register(MessageListener, SchedulerEntry)` to
+    register your `SchedulerEventMessageListener`.
 
 
 #### Why was this change made?
 
-The deleted methods provided facilities that are not compatible with use with 
-declarative services in an OSGI container.  The new approach allows for proper
+The deleted methods provided facilities that aren't compatible with using
+declarative services in an OSGI container. The new approach allows for proper
 injection of dependencies into scheduled event message listeners.
-
 
 ---------------------------------------

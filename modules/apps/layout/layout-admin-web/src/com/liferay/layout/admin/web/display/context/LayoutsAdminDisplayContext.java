@@ -125,8 +125,7 @@ public class LayoutsAdminDisplayContext {
 
 		editLayoutURL.setParameter("tabs1", getTabs1());
 		editLayoutURL.setParameter("redirect", getRedirect());
-		editLayoutURL.setParameter(
-			"groupId", String.valueOf(getSelGroup().getGroupId()));
+		editLayoutURL.setParameter("groupId", String.valueOf(getSelGroupId()));
 		editLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
 
 		return editLayoutURL;
@@ -243,8 +242,7 @@ public class LayoutsAdminDisplayContext {
 		portletURL.setParameter("mvcPath", "/view.jsp");
 		portletURL.setParameter("tabs1", getTabs1());
 		portletURL.setParameter("redirect", getRedirect());
-		portletURL.setParameter(
-			"groupId", String.valueOf(getSelGroup().getGroupId()));
+		portletURL.setParameter("groupId", String.valueOf(getSelGroupId()));
 
 		return portletURL;
 	}
@@ -264,6 +262,16 @@ public class LayoutsAdminDisplayContext {
 
 	public Group getSelGroup() {
 		return _groupDisplayContextHelper.getSelGroup();
+	}
+
+	public long getSelGroupId() {
+		Group selGroup = getSelGroup();
+
+		if (selGroup != null) {
+			return selGroup.getGroupId();
+		}
+
+		return 0;
 	}
 
 	public Layout getSelLayout() {

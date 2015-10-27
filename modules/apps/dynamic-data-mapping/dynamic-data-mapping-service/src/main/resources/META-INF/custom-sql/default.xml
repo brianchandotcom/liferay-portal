@@ -4,16 +4,16 @@
 	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMStructureFinder.countByC_G_C_N_D_S_T_S">
 		<![CDATA[
 			SELECT
-				COUNT(DDMStructure.structureId) AS COUNT_VALUE
+				COUNT(DISTINCT DDMStructure.structureId) AS COUNT_VALUE
 			FROM
 				DDMStructure
 			WHERE
-				(companyId = ?) AND
+				(DDMStructure.companyId = ?) AND
 				[$GROUP_ID$]
-				(classNameId = ?) AND
+				(DDMStructure.classNameId = ?) AND
 				(
-					(lower(CAST_TEXT(name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(description LIKE ? [$AND_OR_NULL_CHECK$])
+					(lower(CAST_TEXT(DDMStructure.name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(DDMStructure.description LIKE ? [$AND_OR_NULL_CHECK$])
 				) AND
 				(storageType = ? OR ? IS NULL) AND
 				(type_ = ?)
@@ -23,19 +23,19 @@
 	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMStructureFinder.findByC_G_C_N_D_S_T_S">
 		<![CDATA[
 			SELECT
-				{DDMStructure.*}
+				DISTINCT {DDMStructure.*}
 			FROM
 				DDMStructure
 			WHERE
 				(DDMStructure.companyId = ?) AND
 				[$GROUP_ID$]
-				(classNameId = ?) AND
+				(DDMStructure.classNameId = ?) AND
 				(
 					(lower(CAST_TEXT(DDMStructure.name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(DDMStructure.description LIKE ? [$AND_OR_NULL_CHECK$])
 				) AND
-				(storageType = ? OR ? IS NULL) AND
-				(type_ = ?)
+				(DDMStructure.storageType = ? OR ? IS NULL) AND
+				(DDMStructure.type_ = ?)
 				[$STATUS$]
 			ORDER BY
 				DDMStructure.structureId DESC
@@ -49,10 +49,10 @@
 				DDMTemplate
 			WHERE
 				[$GROUP_ID$]
-				(classNameId = ?) AND
+				(DDMTemplate.classNameId = ?) AND
 				(
-					(classPK = 0) OR
-					(classPK IN (
+					(DDMTemplate.classPK = 0) OR
+					(DDMTemplate.classPK IN (
 						SELECT
 							DDMStructure.structureId
 						FROM
@@ -67,21 +67,21 @@
 	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateFinder.countByC_G_C_C_R_N_D_T_M_L_S">
 		<![CDATA[
 			SELECT
-				COUNT(DDMTemplate.templateId) AS COUNT_VALUE
+				COUNT(DISTINCT DDMTemplate.templateId) AS COUNT_VALUE
 			FROM
 				DDMTemplate
 			WHERE
-				(companyId = ?) AND
+				(DDMTemplate.companyId = ?) AND
 				[$GROUP_ID$]
 				[$CLASSNAME_ID$]
 				[$CLASS_PK$]
-				(resourceClassNameId = ?) AND
+				(DDMTemplate.resourceClassNameId = ?) AND
 				(
-					(lower(CAST_TEXT(name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(type_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(mode_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(language LIKE ? [$AND_OR_NULL_CHECK$])
+					(lower(CAST_TEXT(DDMTemplate.name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(DDMTemplate.description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(DDMTemplate.type_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(DDMTemplate.mode_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(DDMTemplate.language LIKE ? [$AND_OR_NULL_CHECK$])
 				)
 				[$STATUS$]
 		]]>
@@ -114,7 +114,7 @@
 	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateFinder.findByC_G_C_C_R_N_D_T_M_L_S">
 		<![CDATA[
 			SELECT
-				{DDMTemplate.*}
+				DISTINCT {DDMTemplate.*}
 			FROM
 				DDMTemplate
 			WHERE
@@ -122,13 +122,13 @@
 				[$GROUP_ID$]
 				[$CLASSNAME_ID$]
 				[$CLASS_PK$]
-				(resourceClassNameId = ?) AND
+				(DDMTemplate.resourceClassNameId = ?) AND
 				(
 					(lower(CAST_TEXT(DDMTemplate.name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(DDMTemplate.description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(type_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(mode_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(language LIKE ? [$AND_OR_NULL_CHECK$])
+					(DDMTemplate.type_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(DDMTemplate.mode_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(DDMTemplate.language LIKE ? [$AND_OR_NULL_CHECK$])
 				)
 				[$STATUS$]
 			ORDER BY

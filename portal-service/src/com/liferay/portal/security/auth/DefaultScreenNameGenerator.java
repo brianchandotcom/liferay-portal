@@ -52,9 +52,7 @@ public class DefaultScreenNameGenerator implements ScreenNameGenerator {
 				}
 			}
 
-			if (screenName.equals(DefaultScreenNameValidator.CYRUS) ||
-				screenName.equals(DefaultScreenNameValidator.POSTFIX)) {
-
+			if (screenName.equals(DefaultScreenNameValidator.POSTFIX)) {
 				screenName += StringPool.PERIOD + userId;
 			}
 		}

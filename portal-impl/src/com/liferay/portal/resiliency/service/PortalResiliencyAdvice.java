@@ -14,7 +14,6 @@
 
 package com.liferay.portal.resiliency.service;
 
-import com.liferay.portal.bean.IdentifiableBeanInvokerUtil;
 import com.liferay.portal.kernel.nio.intraband.rpc.IntrabandRPCUtil;
 import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIRegistryUtil;
@@ -23,6 +22,7 @@ import com.liferay.portal.kernel.security.access.control.AccessControlThreadLoca
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
+import com.liferay.portal.util.IdentifiableOSGIServiceInvokerUtil;
 
 import java.io.Serializable;
 
@@ -70,8 +70,9 @@ public class PortalResiliencyAdvice
 
 		ServiceMethodProcessCallable serviceMethodProcessCallable =
 			new ServiceMethodProcessCallable(
-				IdentifiableBeanInvokerUtil.createMethodHandler(
-					methodInvocation));
+				IdentifiableOSGIServiceInvokerUtil.createMethodHandler(
+					methodInvocation.getThis(), methodInvocation.getMethod(),
+					methodInvocation.getArguments()));
 
 		Future<Serializable> future = IntrabandRPCUtil.execute(
 			spi.getRegistrationReference(), serviceMethodProcessCallable);

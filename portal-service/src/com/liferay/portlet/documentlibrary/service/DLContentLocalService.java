@@ -185,13 +185,6 @@ public interface DLContentLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLContent getContent(
 		long companyId, long repositoryId, java.lang.String path)
@@ -253,6 +246,11 @@ public interface DLContentLocalService extends BaseLocalService,
 	public com.liferay.portlet.documentlibrary.model.DLContentDataBlobModel getDataBlobModel(
 		java.io.Serializable primaryKey);
 
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	public java.lang.String getOSGIServiceIdentifier();
+
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
@@ -261,13 +259,6 @@ public interface DLContentLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasContent(long companyId, long repositoryId,
 		java.lang.String path, java.lang.String version);
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public void updateDLContent(long companyId, long oldRepositoryId,
 		long newRepositoryId, java.lang.String oldPath, java.lang.String newPath);

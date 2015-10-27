@@ -80,13 +80,11 @@ public class ExportImportLocalServiceWrapper implements ExportImportLocalService
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
+	* Returns OSGI service identifier for this bean.
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _exportImportLocalService.getBeanIdentifier();
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _exportImportLocalService.getOSGIServiceIdentifier();
 	}
 
 	@Override
@@ -208,16 +206,6 @@ public class ExportImportLocalServiceWrapper implements ExportImportLocalService
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _exportImportLocalService.importPortletInfoInBackground(userId,
 			exportImportConfigurationId, inputStream);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_exportImportLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

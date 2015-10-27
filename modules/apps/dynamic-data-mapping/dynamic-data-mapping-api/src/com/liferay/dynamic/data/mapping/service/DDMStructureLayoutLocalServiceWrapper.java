@@ -228,16 +228,6 @@ public class DDMStructureLayoutLocalServiceWrapper
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _ddmStructureLayoutLocalService.getBeanIdentifier();
-	}
-
-	/**
 	* Returns the d d m structure layout with the primary key.
 	*
 	* @param structureLayoutId the primary key of the d d m structure layout
@@ -332,6 +322,14 @@ public class DDMStructureLayoutLocalServiceWrapper
 		return _ddmStructureLayoutLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	@Override
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _ddmStructureLayoutLocalService.getOSGIServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
@@ -351,16 +349,6 @@ public class DDMStructureLayoutLocalServiceWrapper
 		long structureVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmStructureLayoutLocalService.getStructureLayoutByStructureVersionId(structureVersionId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_ddmStructureLayoutLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

@@ -192,16 +192,6 @@ public class MeetupsRegistrationLocalServiceWrapper
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _meetupsRegistrationLocalService.getBeanIdentifier();
-	}
-
-	/**
 	* Returns the meetups registration with the primary key.
 	*
 	* @param meetupsRegistrationId the primary key of the meetups registration
@@ -264,21 +254,19 @@ public class MeetupsRegistrationLocalServiceWrapper
 			status);
 	}
 
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	@Override
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _meetupsRegistrationLocalService.getOSGIServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _meetupsRegistrationLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_meetupsRegistrationLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

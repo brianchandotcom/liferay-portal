@@ -245,19 +245,17 @@ public class AnnouncementsDeliveryLocalServiceUtil {
 		return getService().getAnnouncementsDelivery(deliveryId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
 	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery getDelivery(
 		long deliveryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDelivery(deliveryId);
+	}
+
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	public static java.lang.String getOSGIServiceIdentifier() {
+		return getService().getOSGIServiceIdentifier();
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
@@ -275,15 +273,6 @@ public class AnnouncementsDeliveryLocalServiceUtil {
 		long userId, java.lang.String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getUserDelivery(userId, type);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

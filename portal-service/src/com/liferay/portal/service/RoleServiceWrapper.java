@@ -128,16 +128,6 @@ public class RoleServiceWrapper implements RoleService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _roleService.getBeanIdentifier();
-	}
-
-	/**
 	* Returns all the roles associated with the group.
 	*
 	* @param groupId the primary key of the group
@@ -149,6 +139,14 @@ public class RoleServiceWrapper implements RoleService,
 		long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _roleService.getGroupRoles(groupId);
+	}
+
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	@Override
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _roleService.getOSGIServiceIdentifier();
 	}
 
 	/**
@@ -316,16 +314,6 @@ public class RoleServiceWrapper implements RoleService,
 		java.lang.Integer[] types,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params) {
 		return _roleService.searchCount(companyId, keywords, types, params);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_roleService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

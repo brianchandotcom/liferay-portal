@@ -32,16 +32,6 @@ public class LayoutTemplateLocalServiceWrapper
 		_layoutTemplateLocalService = layoutTemplateLocalService;
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _layoutTemplateLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public java.lang.String getContent(java.lang.String layoutTemplateId,
 		boolean standard, java.lang.String themeId) {
@@ -66,6 +56,14 @@ public class LayoutTemplateLocalServiceWrapper
 	public java.util.List<com.liferay.portal.model.LayoutTemplate> getLayoutTemplates(
 		java.lang.String themeId) {
 		return _layoutTemplateLocalService.getLayoutTemplates(themeId);
+	}
+
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	@Override
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _layoutTemplateLocalService.getOSGIServiceIdentifier();
 	}
 
 	@Override
@@ -102,16 +100,6 @@ public class LayoutTemplateLocalServiceWrapper
 		_layoutTemplateLocalService.readLayoutTemplate(servletContextName,
 			servletContext, layoutTemplates, element, standard, themeId,
 			pluginPackage);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_layoutTemplateLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

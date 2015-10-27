@@ -303,15 +303,6 @@ public class OrganizationServiceUtil {
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
 	* Returns all the organizations which the user has permission to manage.
 	*
 	* @param actionId the permitted action
@@ -326,6 +317,13 @@ public class OrganizationServiceUtil {
 		java.lang.String actionId, int max)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getManageableOrganizations(actionId, max);
+	}
+
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	public static java.lang.String getOSGIServiceIdentifier() {
+		return getService().getOSGIServiceIdentifier();
 	}
 
 	/**
@@ -430,15 +428,6 @@ public class OrganizationServiceUtil {
 	public static java.util.List<com.liferay.portal.model.Organization> getUserOrganizations(
 		long userId) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getUserOrganizations(userId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

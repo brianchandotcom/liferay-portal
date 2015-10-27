@@ -224,16 +224,6 @@ public class DLFileEntryMetadataLocalServiceWrapper
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _dlFileEntryMetadataLocalService.getBeanIdentifier();
-	}
-
-	/**
 	* Returns the document library file entry metadata with the primary key.
 	*
 	* @param fileEntryMetadataId the primary key of the document library file entry metadata
@@ -322,21 +312,19 @@ public class DLFileEntryMetadataLocalServiceWrapper
 		return _dlFileEntryMetadataLocalService.getNoStructuresFileEntryMetadatas();
 	}
 
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	@Override
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _dlFileEntryMetadataLocalService.getOSGIServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileEntryMetadataLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_dlFileEntryMetadataLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

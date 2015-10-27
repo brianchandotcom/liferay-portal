@@ -206,16 +206,6 @@ public class SocialActivityAchievementLocalServiceWrapper
 		return _socialActivityAchievementLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _socialActivityAchievementLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public java.util.List<com.liferay.portlet.social.model.SocialActivityAchievement> getGroupAchievements(
 		long groupId) {
@@ -249,6 +239,14 @@ public class SocialActivityAchievementLocalServiceWrapper
 	@Override
 	public int getGroupFirstAchievementsCount(long groupId) {
 		return _socialActivityAchievementLocalService.getGroupFirstAchievementsCount(groupId);
+	}
+
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	@Override
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _socialActivityAchievementLocalService.getOSGIServiceIdentifier();
 	}
 
 	@Override
@@ -311,16 +309,6 @@ public class SocialActivityAchievementLocalServiceWrapper
 	public int getUserAchievementsCount(long userId, long groupId) {
 		return _socialActivityAchievementLocalService.getUserAchievementsCount(userId,
 			groupId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_socialActivityAchievementLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

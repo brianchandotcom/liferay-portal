@@ -1074,15 +1074,6 @@ public class UserLocalServiceUtil {
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
 	* Returns a range of all the users belonging to the company.
 	*
 	* <p>
@@ -1235,6 +1226,13 @@ public class UserLocalServiceUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.User> getNoGroups() {
 		return getService().getNoGroups();
+	}
+
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	public static java.lang.String getOSGIServiceIdentifier() {
+		return getService().getOSGIServiceIdentifier();
 	}
 
 	/**
@@ -2430,15 +2428,6 @@ public class UserLocalServiceUtil {
 	public static boolean sendPasswordByUserId(long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().sendPasswordByUserId(userId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static void setGroupUsers(long groupId, long[] userIds) {

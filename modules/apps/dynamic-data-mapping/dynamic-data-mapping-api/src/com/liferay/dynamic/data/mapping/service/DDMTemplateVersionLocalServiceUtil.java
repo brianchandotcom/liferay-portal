@@ -186,15 +186,6 @@ public class DDMTemplateVersionLocalServiceUtil {
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
 	* Returns the d d m template version with the primary key.
 	*
 	* @param templateVersionId the primary key of the d d m template version
@@ -238,6 +229,13 @@ public class DDMTemplateVersionLocalServiceUtil {
 		return getService().getLatestTemplateVersion(templateId);
 	}
 
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	public static java.lang.String getOSGIServiceIdentifier() {
+		return getService().getOSGIServiceIdentifier();
+	}
+
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -266,15 +264,6 @@ public class DDMTemplateVersionLocalServiceUtil {
 
 	public static int getTemplateVersionsCount(long templateId) {
 		return getService().getTemplateVersionsCount(templateId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

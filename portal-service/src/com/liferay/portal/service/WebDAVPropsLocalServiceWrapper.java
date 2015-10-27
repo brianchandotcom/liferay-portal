@@ -193,13 +193,11 @@ public class WebDAVPropsLocalServiceWrapper implements WebDAVPropsLocalService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
+	* Returns OSGI service identifier for this bean.
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _webDAVPropsLocalService.getBeanIdentifier();
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _webDAVPropsLocalService.getOSGIServiceIdentifier();
 	}
 
 	@Override
@@ -255,16 +253,6 @@ public class WebDAVPropsLocalServiceWrapper implements WebDAVPropsLocalService,
 	@Override
 	public int getWebDAVPropsesCount() {
 		return _webDAVPropsLocalService.getWebDAVPropsesCount();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_webDAVPropsLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

@@ -214,16 +214,6 @@ public class KaleoTaskAssignmentLocalServiceWrapper
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _kaleoTaskAssignmentLocalService.getBeanIdentifier();
-	}
-
-	/**
 	* Returns the kaleo task assignment with the primary key.
 	*
 	* @param kaleoTaskAssignmentId the primary key of the kaleo task assignment
@@ -297,21 +287,19 @@ public class KaleoTaskAssignmentLocalServiceWrapper
 			assigneeClassName);
 	}
 
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	@Override
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _kaleoTaskAssignmentLocalService.getOSGIServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoTaskAssignmentLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_kaleoTaskAssignmentLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

@@ -639,13 +639,11 @@ public class SocialActivityCounterLocalServiceWrapper
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
+	* Returns OSGI service identifier for this bean.
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _socialActivityCounterLocalService.getBeanIdentifier();
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _socialActivityCounterLocalService.getOSGIServiceIdentifier();
 	}
 
 	/**
@@ -855,16 +853,6 @@ public class SocialActivityCounterLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_socialActivityCounterLocalService.incrementUserAchievementCounter(userId,
 			groupId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_socialActivityCounterLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

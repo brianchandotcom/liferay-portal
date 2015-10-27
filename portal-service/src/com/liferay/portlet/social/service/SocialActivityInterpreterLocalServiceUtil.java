@@ -71,12 +71,10 @@ public class SocialActivityInterpreterLocalServiceUtil {
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
+	* Returns OSGI service identifier for this bean.
 	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
+	public static java.lang.String getOSGIServiceIdentifier() {
+		return getService().getOSGIServiceIdentifier();
 	}
 
 	/**
@@ -119,15 +117,6 @@ public class SocialActivityInterpreterLocalServiceUtil {
 		com.liferay.portlet.social.model.SocialActivitySet activitySet,
 		com.liferay.portal.service.ServiceContext serviceContext) {
 		return getService().interpret(selector, activitySet, serviceContext);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static void updateActivitySet(long activityId)

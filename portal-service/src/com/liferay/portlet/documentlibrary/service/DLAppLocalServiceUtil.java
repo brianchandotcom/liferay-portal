@@ -354,15 +354,6 @@ public class DLAppLocalServiceUtil {
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
 	* Returns the file entry with the primary key.
 	*
 	* @param fileEntryId the primary key of the file entry
@@ -488,6 +479,13 @@ public class DLAppLocalServiceUtil {
 	}
 
 	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	public static java.lang.String getOSGIServiceIdentifier() {
+		return getService().getOSGIServiceIdentifier();
+	}
+
+	/**
 	* Moves the file entry to the new folder.
 	*
 	* @param userId the primary key of the user
@@ -550,15 +548,6 @@ public class DLAppLocalServiceUtil {
 	public static void restoreFileEntryFromTrash(long userId, long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().restoreFileEntryFromTrash(userId, fileEntryId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

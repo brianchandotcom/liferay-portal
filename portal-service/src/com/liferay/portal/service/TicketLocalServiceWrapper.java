@@ -206,13 +206,11 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
+	* Returns OSGI service identifier for this bean.
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _ticketLocalService.getBeanIdentifier();
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _ticketLocalService.getOSGIServiceIdentifier();
 	}
 
 	@Override
@@ -266,16 +264,6 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 	@Override
 	public int getTicketsCount() {
 		return _ticketLocalService.getTicketsCount();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_ticketLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

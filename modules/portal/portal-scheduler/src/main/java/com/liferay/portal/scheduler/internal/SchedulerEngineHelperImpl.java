@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.cal.Recurrence;
 import com.liferay.portal.kernel.cal.RecurrenceSerializer;
 import com.liferay.portal.kernel.cluster.ClusterLink;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
+import com.liferay.portal.kernel.cluster.ClusterableProxyFactory;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -51,6 +52,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CompanyConstants;
+import com.liferay.portal.util.IdentifiableOSGIService;
 import com.liferay.portal.util.PortalUtil;
 
 import java.util.ArrayList;
@@ -752,7 +754,12 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 			clusterSchedulerEngine.setProps(_props);
 			clusterSchedulerEngine.setSchedulerEngineHelper(this);
 
-			_schedulerEngine = clusterSchedulerEngine;
+			_serviceRegistration = _bundleContext.registerService(
+				IdentifiableOSGIService.class, clusterSchedulerEngine,
+				new HashMapDictionary<String, Object>());
+
+			_schedulerEngine = ClusterableProxyFactory.createClusterableProxy(
+				clusterSchedulerEngine);
 		}
 
 		if (GetterUtil.getBoolean(_props.get(PropsKeys.SCHEDULER_ENABLED))) {
@@ -782,6 +789,10 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 			_serviceTracker.close();
 
 			_serviceTracker = null;
+		}
+
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
 		}
 
 		try {
@@ -859,6 +870,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		_messageListenerServiceRegistrations = new HashMap<>();
 	private Props _props;
 	private SchedulerEngine _schedulerEngine;
+	private ServiceRegistration<IdentifiableOSGIService> _serviceRegistration;
 	private final Map
 		<MessageListener, ServiceRegistration<SchedulerEventMessageListener>>
 			_serviceRegistrations = new HashMap<>();

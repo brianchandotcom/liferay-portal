@@ -488,16 +488,6 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 		return _organizationLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _organizationLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext) {
@@ -552,6 +542,14 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	@Override
 	public java.util.List<com.liferay.portal.model.Organization> getNoAssetOrganizations() {
 		return _organizationLocalService.getNoAssetOrganizations();
+	}
+
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	@Override
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _organizationLocalService.getOSGIServiceIdentifier();
 	}
 
 	/**
@@ -1408,16 +1406,6 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 		return _organizationLocalService.searchOrganizations(companyId,
 			parentOrganizationId, name, type, street, city, zip, region,
 			country, params, andSearch, start, end, sort);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_organizationLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

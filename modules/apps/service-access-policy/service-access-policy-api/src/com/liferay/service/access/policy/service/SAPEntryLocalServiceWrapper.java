@@ -229,16 +229,6 @@ public class SAPEntryLocalServiceWrapper implements SAPEntryLocalService,
 		return _sapEntryLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _sapEntryLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public java.util.List<com.liferay.service.access.policy.model.SAPEntry> getCompanySAPEntries(
 		long companyId, int start, int end) {
@@ -269,6 +259,14 @@ public class SAPEntryLocalServiceWrapper implements SAPEntryLocalService,
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext) {
 		return _sapEntryLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	@Override
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _sapEntryLocalService.getOSGIServiceIdentifier();
 	}
 
 	@Override
@@ -340,16 +338,6 @@ public class SAPEntryLocalServiceWrapper implements SAPEntryLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sapEntryLocalService.getSAPEntryByUuidAndCompanyId(uuid,
 			companyId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_sapEntryLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

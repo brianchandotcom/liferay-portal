@@ -201,16 +201,6 @@ public class ClassNameLocalServiceWrapper implements ClassNameLocalService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _classNameLocalService.getBeanIdentifier();
-	}
-
-	/**
 	* Returns the class name with the primary key.
 	*
 	* @param classNameId the primary key of the class name
@@ -266,6 +256,14 @@ public class ClassNameLocalServiceWrapper implements ClassNameLocalService,
 		return _classNameLocalService.getClassNamesCount();
 	}
 
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	@Override
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _classNameLocalService.getOSGIServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
@@ -281,16 +279,6 @@ public class ClassNameLocalServiceWrapper implements ClassNameLocalService,
 	@Override
 	public void invalidate() {
 		_classNameLocalService.invalidate();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_classNameLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

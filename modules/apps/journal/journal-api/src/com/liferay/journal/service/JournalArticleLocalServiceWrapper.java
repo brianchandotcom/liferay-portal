@@ -1709,16 +1709,6 @@ public class JournalArticleLocalServiceWrapper
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _journalArticleLocalService.getBeanIdentifier();
-	}
-
-	/**
 	* Returns an ordered range of all the web content articles matching the
 	* company and workflow status.
 	*
@@ -2185,6 +2175,14 @@ public class JournalArticleLocalServiceWrapper
 	public int getNotInTrashArticlesCount(long groupId, long folderId) {
 		return _journalArticleLocalService.getNotInTrashArticlesCount(groupId,
 			folderId);
+	}
+
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	@Override
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _journalArticleLocalService.getOSGIServiceIdentifier();
 	}
 
 	/**
@@ -3552,16 +3550,6 @@ public class JournalArticleLocalServiceWrapper
 		int end) throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalArticleLocalService.searchJournalArticles(groupId,
 			userId, creatorUserId, status, start, end);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_journalArticleLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

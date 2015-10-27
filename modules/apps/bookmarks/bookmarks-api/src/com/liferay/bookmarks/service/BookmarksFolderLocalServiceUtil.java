@@ -238,15 +238,6 @@ public class BookmarksFolderLocalServiceUtil {
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
 	* Returns the bookmarks folder with the primary key.
 	*
 	* @param folderId the primary key of the bookmarks folder
@@ -404,6 +395,13 @@ public class BookmarksFolderLocalServiceUtil {
 		return getService().getNoAssetFolders();
 	}
 
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	public static java.lang.String getOSGIServiceIdentifier() {
+		return getService().getOSGIServiceIdentifier();
+	}
+
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -454,15 +452,6 @@ public class BookmarksFolderLocalServiceUtil {
 		long userId, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().restoreFolderFromTrash(userId, folderId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static void subscribeFolder(long userId, long groupId, long folderId)

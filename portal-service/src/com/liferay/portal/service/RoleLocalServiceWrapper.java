@@ -446,16 +446,6 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _roleLocalService.getBeanIdentifier();
-	}
-
-	/**
 	* Returns the default role for the group with the primary key.
 	*
 	* <p>
@@ -525,6 +515,14 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	@Override
 	public int getGroupRolesCount(long groupId) {
 		return _roleLocalService.getGroupRolesCount(groupId);
+	}
+
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	@Override
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _roleLocalService.getOSGIServiceIdentifier();
 	}
 
 	@Override
@@ -1274,16 +1272,6 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params) {
 		return _roleLocalService.searchCount(companyId, name, description,
 			types, params);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_roleLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

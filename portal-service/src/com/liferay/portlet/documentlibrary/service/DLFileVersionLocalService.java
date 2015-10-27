@@ -184,13 +184,6 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
-	/**
 	* Returns the document library file version with the primary key.
 	*
 	* @param fileVersionId the primary key of the document library file version
@@ -293,19 +286,17 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 	public com.liferay.portlet.documentlibrary.model.DLFileVersion getLatestFileVersion(
 		long userId, long fileEntryId) throws PortalException;
 
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	public java.lang.String getOSGIServiceIdentifier();
+
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	public void rebuildTree(long companyId) throws PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public void setTreePaths(long folderId, java.lang.String treePath)
 		throws PortalException;

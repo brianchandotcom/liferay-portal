@@ -69,11 +69,9 @@ public interface MDRRuleGroupService extends BaseService {
 		long ruleGroupId) throws PortalException;
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
+	* Returns OSGI service identifier for this bean.
 	*/
-	public java.lang.String getBeanIdentifier();
+	public java.lang.String getOSGIServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.mobile.device.rules.model.MDRRuleGroup getRuleGroup(
@@ -85,13 +83,6 @@ public interface MDRRuleGroupService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRuleGroupsCount(long[] groupIds);
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public com.liferay.mobile.device.rules.model.MDRRuleGroup updateRuleGroup(
 		long ruleGroupId,

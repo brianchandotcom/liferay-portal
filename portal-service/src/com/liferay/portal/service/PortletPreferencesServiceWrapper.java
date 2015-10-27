@@ -39,13 +39,11 @@ public class PortletPreferencesServiceWrapper
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
+	* Returns OSGI service identifier for this bean.
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _portletPreferencesService.getBeanIdentifier();
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _portletPreferencesService.getOSGIServiceIdentifier();
 	}
 
 	@Override
@@ -74,16 +72,6 @@ public class PortletPreferencesServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_portletPreferencesService.restoreArchivedPreferences(groupId, name,
 			layout, portletId, preferences);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_portletPreferencesService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

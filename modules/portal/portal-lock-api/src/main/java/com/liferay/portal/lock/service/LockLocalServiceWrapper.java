@@ -202,16 +202,6 @@ public class LockLocalServiceWrapper implements LockLocalService,
 		return _lockLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _lockLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.portal.lock.model.Lock getLock(
 		java.lang.String className, java.lang.String key)
@@ -281,6 +271,14 @@ public class LockLocalServiceWrapper implements LockLocalService,
 		return _lockLocalService.getLocksCount();
 	}
 
+	/**
+	* Returns OSGI service identifier for this bean.
+	*/
+	@Override
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _lockLocalService.getOSGIServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
@@ -346,16 +344,6 @@ public class LockLocalServiceWrapper implements LockLocalService,
 		long companyId, long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _lockLocalService.refresh(uuid, companyId, expirationTime);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_lockLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

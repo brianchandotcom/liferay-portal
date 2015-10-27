@@ -46,16 +46,6 @@ public class MembershipRequestServiceWrapper implements MembershipRequestService
 		_membershipRequestService.deleteMembershipRequests(groupId, statusId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _membershipRequestService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.portal.model.MembershipRequest getMembershipRequest(
 		long membershipRequestId)
@@ -64,13 +54,11 @@ public class MembershipRequestServiceWrapper implements MembershipRequestService
 	}
 
 	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
+	* Returns OSGI service identifier for this bean.
 	*/
 	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_membershipRequestService.setBeanIdentifier(beanIdentifier);
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _membershipRequestService.getOSGIServiceIdentifier();
 	}
 
 	@Override

@@ -54,7 +54,8 @@ public class ClusterableProxyFactory {
 			if (clusterable == null) {
 				return method.invoke(_targetObject, args);
 			}
-			else if (clusterable.onMaster()) {
+
+			if (clusterable.onMaster()) {
 				if (ClusterMasterExecutorUtil.isMaster()) {
 					return method.invoke(_targetObject, args);
 				}
@@ -85,7 +86,7 @@ public class ClusterableProxyFactory {
 
 			if (clusterable != null) {
 				if (clusterable == NullClusterable.NULL_CLUSTERABLE) {
-					return null;
+					clusterable = null;
 				}
 
 				return clusterable;
@@ -95,11 +96,10 @@ public class ClusterableProxyFactory {
 				method, _targetObject.getClass(), Clusterable.class);
 
 			if (clusterable == null) {
-				_clusterables.put(methodKey, NullClusterable.NULL_CLUSTERABLE);
+				clusterable = NullClusterable.NULL_CLUSTERABLE;
 			}
-			else {
-				_clusterables.put(methodKey, clusterable);
-			}
+
+			_clusterables.put(methodKey, clusterable);
 
 			return clusterable;
 		}

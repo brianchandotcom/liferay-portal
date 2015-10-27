@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.pop.MessageListener;
 import com.liferay.portal.kernel.pop.MessageListenerException;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
-import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
@@ -31,6 +30,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.pop.MessageListenerWrapper;
 import com.liferay.portal.pop.notifications.portlet.POPNotificationPortlet;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.mail.MailEngine;
@@ -71,6 +71,19 @@ public class POPNotificationsMessageListener
 
 			_schedulerEngineHelper.register(this, schedulerEntryImpl);
 		}
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.RELUCTANT,
+		service = MessageListener.class
+	)
+	protected void addMessageListener(MessageListener messageListener) {
+		MessageListenerWrapper messageListenerWrapper =
+			new MessageListenerWrapper(listener);
+
+		_messageListeners.put(messageListener, messageListenerWrapper);
 	}
 
 	@Deactivate
@@ -201,9 +214,7 @@ public class POPNotificationsMessageListener
 				_log.debug("Recipient " + recipient);
 			}
 
-			for (MessageListener messageListener :
-					POPServerUtil.getListeners()) {
-
+			for (MessageListener messageListener : _messageListeners.values()) {
 				try {
 					if (messageListener.accept(from, recipient, message)) {
 						messageListener.deliver(from, recipient, message);
@@ -216,14 +227,8 @@ public class POPNotificationsMessageListener
 		}
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.RELUCTANT,
-		service = MessageListener.class
-	)
-	protected void setMessageListener(MessageListener messageListener) {
-		POPServerUtil.addListener(messageListener);
+	protected void removeMessageListener(MessageListener messageListener) {
+		_messageListeners.remove(messageListener);
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -249,12 +254,11 @@ public class POPNotificationsMessageListener
 	protected void setTriggerFactory(TriggerFactory triggerFactory) {
 	}
 
-	protected void unsetMessageListener(MessageListener messageListener) {
-		POPServerUtil.deleteListener(messageListener);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		POPNotificationsMessageListener.class);
+
+	private final Map<MessageListener, MessageListenerWrapper>
+		_messageListeners = new ConcurrentHashMap<>();
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
 }

@@ -26,11 +26,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Sergio González
  */
 @Component(
-	property = {"service.ranking:Integer=50"},
+	property = {"service.ranking:Integer=20"},
 	service = FormNavigatorCategory.class
 )
-public class SitesBasicInformationFormNavigatorCategory
-	implements FormNavigatorCategory {
+public class SitesSocialFormNavigatorCategory implements FormNavigatorCategory {
 
 	@Override
 	public String getFormNavigatorId() {
@@ -39,12 +38,12 @@ public class SitesBasicInformationFormNavigatorCategory
 
 	@Override
 	public String getKey() {
-		return FormNavigatorConstants.CATEGORY_KEY_SITES_BASIC_INFORMATION;
+		return FormNavigatorConstants.CATEGORY_KEY_SITES_SOCIAL;
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "basic-information");
+		return LanguageUtil.get(locale, "social");
 	}
 
 }

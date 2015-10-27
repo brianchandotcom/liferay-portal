@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Sergio González
  */
 @Component(
-	property = {"service.ranking:Integer=10"},
+	property = {"service.ranking:Integer=20"},
 	service = FormNavigatorCategory.class
 )
 public class SitesMiscellaneousFormNavigatorCategory

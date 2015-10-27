@@ -48,7 +48,7 @@ public class MentionsSitesFormNavigatorEntry
 
 	@Override
 	public String getCategoryKey() {
-		return FormNavigatorConstants.CATEGORY_KEY_COMPANY_SETTINGS_SOCIAL;
+		return FormNavigatorConstants.CATEGORY_KEY_SITES_SOCIAL;
 	}
 
 	@Override

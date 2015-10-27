@@ -1149,8 +1149,6 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 		</#if>
 	</#if>
 
-	private String _beanIdentifier;
-
 	<#if pluginName != "">
 		private ClassLoader _classLoader;
 		private ${entity.name}${sessionTypeName}ServiceClpInvoker _clpInvoker = new ${entity.name}${sessionTypeName}ServiceClpInvoker();

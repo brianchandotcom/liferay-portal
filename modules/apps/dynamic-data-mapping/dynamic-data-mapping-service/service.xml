@@ -46,6 +46,10 @@
 
 		<column name="storageLinkId" type="long" primary="true" />
 
+		<!-- Company instance -->
+
+		<column name="companyId" type="long" />
+
 		<!-- Other fields -->
 
 		<column name="classNameId" type="long" />
@@ -181,6 +185,10 @@
 		<!-- PK fields -->
 
 		<column name="structureLinkId" type="long" primary="true" />
+
+		<!-- Company instance -->
+
+		<column name="companyId" type="long" />
 
 		<!-- Other fields -->
 
@@ -365,6 +373,10 @@
 		<!-- PK fields -->
 
 		<column name="templateLinkId" type="long" primary="true" />
+
+		<!-- Company instance -->
+
+		<column name="companyId" type="long" />
 
 		<!-- Other fields -->
 

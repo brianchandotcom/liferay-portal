@@ -104,6 +104,10 @@
 
 		<column name="flagId" type="long" primary="true" />
 
+		<!-- Company instance -->
+
+		<column name="companyId" type="long" />
+
 		<!-- Audit fields -->
 
 		<column name="userId" type="long" />

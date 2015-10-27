@@ -103,16 +103,8 @@ PortletURL navigationPortletURL = renderResponse.createRenderURL();
 
 			<liferay-ui:search-container-column-text
 				name="usages"
-			>
-				<c:choose>
-					<c:when test="<%= tag.getAssetCount() > 0 %>">
-						<liferay-ui:message arguments="<%= tag.getAssetCount() %>" key="used-in-x-assets" />
-					</c:when>
-					<c:otherwise>
-						<liferay-ui:message key="this-tag-is-not-used" />
-					</c:otherwise>
-				</c:choose>
-			</liferay-ui:search-container-column-text>
+				value="<%= String.valueOf(tag.getAssetCount()) %>"
+			/>
 
 			<liferay-ui:search-container-column-jsp
 				cssClass="checkbox-cell entry-action"

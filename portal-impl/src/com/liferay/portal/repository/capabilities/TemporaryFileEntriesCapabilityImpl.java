@@ -295,13 +295,13 @@ public class TemporaryFileEntriesCapabilityImpl
 
 			_documentRepository.deleteFileEntry(fileEntry.getFileEntryId());
 
-			Folder rootFolder = _documentRepository.getFolder(
+			Folder mountFolder = _documentRepository.getFolder(
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-			while ((folder.getFolderId() != rootFolder.getFolderId()) &&
-				   _documentRepository.getFileEntriesCount(
+			while ((folder.getFolderId() != mountFolder.getFolderId()) &&
+				   (_documentRepository.getFileEntriesCount(
 					   folder.getFolderId(),
-					   WorkflowConstants.STATUS_ANY) == 0) {
+					   WorkflowConstants.STATUS_ANY) == 0)) {
 
 				long folderId = folder.getFolderId();
 

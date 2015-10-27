@@ -47,7 +47,6 @@
 					ariaRole="<%= portletConfigurationIcon.getAriaRole() %>"
 					cssClass="<%= portletConfigurationIcon.getCssClass() %>"
 					data="<%= portletConfigurationIcon.getData() %>"
-					iconCssClass="<%= portletConfigurationIcon.getIconCssClass() %>"
 					id="<%= portletConfigurationIcon.getId() %>"
 					image="<%= portletConfigurationIcon.getImage() %>"
 					imageHover="<%= portletConfigurationIcon.getImageHover() %>"

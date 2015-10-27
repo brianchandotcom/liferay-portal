@@ -242,7 +242,8 @@ public class LayoutsAdminDisplayContext {
 		portletURL.setParameter("mvcPath", "/view.jsp");
 		portletURL.setParameter("tabs1", getTabs1());
 		portletURL.setParameter("redirect", getRedirect());
-		portletURL.setParameter("groupId", String.valueOf(getLiveGroupId()));
+		portletURL.setParameter(
+			"groupId", String.valueOf(getSelGroup().getGroupId()));
 
 		return portletURL;
 	}

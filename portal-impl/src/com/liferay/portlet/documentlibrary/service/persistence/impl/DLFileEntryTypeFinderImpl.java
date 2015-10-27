@@ -163,6 +163,9 @@ public class DLFileEntryTypeFinderImpl
 			}
 
 			sql = StringUtil.replace(
+				sql, "[$BASIC_DOCUMENT$]",
+				getCountBasicDocument(includeBasicFileEntryType));
+			sql = StringUtil.replace(
 				sql, "[$GROUP_ID$]", getGroupIds(groupIds));
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "lower(DLFileEntryType.name)", StringPool.LIKE, false,
@@ -172,11 +175,20 @@ public class DLFileEntryTypeFinderImpl
 				descriptions);
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 
+			if (includeBasicFileEntryType) {
+				sql = sql.concat(StringPool.CLOSE_PARENTHESIS);
+			}
+
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
 			QueryPos qPos = QueryPos.getInstance(q);
+
+			if (includeBasicFileEntryType) {
+				qPos.add(names, 2);
+				qPos.add(descriptions, 2);
+			}
 
 			qPos.add(companyId);
 			qPos.add(groupIds);
@@ -185,17 +197,13 @@ public class DLFileEntryTypeFinderImpl
 
 			int countValue = 0;
 
-			if (includeBasicFileEntryType) {
-				countValue = 1;
-			}
-
 			Iterator<Long> itr = q.iterate();
 
-			if (itr.hasNext()) {
+			while (itr.hasNext()) {
 				Long count = itr.next();
 
 				if (count != null) {
-					return countValue + count.intValue();
+					countValue += count.intValue();
 				}
 			}
 
@@ -292,6 +300,27 @@ public class DLFileEntryTypeFinderImpl
 		StringBundler sb = new StringBundler(9);
 
 		sb.append("(SELECT {DLFileEntryType.*} From DLFileEntryType WHERE ");
+		sb.append("((DLFileEntryType.companyId = 0) ");
+		sb.append("AND (DLFileEntryType.groupId = 0) AND (");
+		sb.append("(lower(DLFileEntryType.name) LIKE ? ");
+		sb.append("[$AND_OR_NULL_CHECK$]) ");
+		sb.append("[$AND_OR_CONNECTOR$] ");
+		sb.append("(DLFileEntryType.description LIKE ? ");
+		sb.append("[$AND_OR_NULL_CHECK$]) ");
+		sb.append("))) UNION ALL (");
+
+		return sb.toString();
+	}
+
+	protected String getCountBasicDocument(boolean includeBasicFileEntryType) {
+		if (!includeBasicFileEntryType) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler(10);
+
+		sb.append("(SELECT COUNT(DISTINCT fileEntryTypeId) AS COUNT_VALUE ");
+		sb.append("From DLFileEntryType WHERE ");
 		sb.append("((DLFileEntryType.companyId = 0) ");
 		sb.append("AND (DLFileEntryType.groupId = 0) AND (");
 		sb.append("(lower(DLFileEntryType.name) LIKE ? ");

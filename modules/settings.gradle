@@ -6,6 +6,7 @@ FileTree fileTree = fileTree(rootDir) {
 		exclude "apps/journal/journal-content-asset-addon-entry/build.gradle"
 		exclude "apps/mentions/mentions-editor-config/build.gradle"
 		exclude "apps/social/social-networking-*/build.gradle"
+		exclude "frontend/frontend-editor/frontend-editor-lang/build.gradle"
 		exclude "portal/portal-scripting-beanshell/build.gradle"
 		exclude "portal/portal-scripting-javascript/build.gradle"
 		exclude "portal/portal-scripting-python/build.gradle"

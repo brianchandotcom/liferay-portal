@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.frontend.editor.simple.web
 Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\
+	content=../frontend-editor-lang/src/main/resources/content,\
 	META-INF/resources=src/main/resources/META-INF/resources
 Web-ContextPath: /frontend-editor-simple-web
 

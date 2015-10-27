@@ -253,12 +253,7 @@
 </tr>
 <tr>
 	<td>ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT_CONTENT_CHOOSE_BUTTON</td>
-	<td>//tr[contains(.,'${key_assetTitle}')]//button[contains(.,'Choose')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT_CONTENT_CHOOSE_BUTTON</td>
-	<td>//tr//td[6]/button[contains(.,'Choose')]</td>
+	<td>//td/button[@data-assettitle='${key_assetTitle}']</td>
 	<td></td>
 </tr>
 </tbody>

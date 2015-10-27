@@ -72,15 +72,13 @@ public class BeanReferenceAnnotationBeanPostProcessor
 	public Object postProcessBeforeInitialization(Object bean, String beanName)
 		throws BeansException {
 
-		if ((bean instanceof IdentifiableOSGIService) &&
-			beanName.endsWith("Service")) {
+		if (!(bean instanceof IdentifiableOSGIService) &&
+			beanName.endsWith("Service") && _log.isWarnEnabled()) {
 
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					beanName + " should implement " +
-						IdentifiableOSGIService.class.getName() +
-							" for " + ClusterableAdvice.class.getName());
-			}
+			_log.warn(
+				beanName + " should implement " +
+					IdentifiableOSGIService.class.getName() +
+						" for " + ClusterableAdvice.class.getName());
 		}
 
 		_autoInject(bean, beanName, bean.getClass());

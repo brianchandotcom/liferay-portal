@@ -14,6 +14,7 @@
 
 package com.liferay.journal.web.portlet.configuration.icon;
 
+import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIconFactory;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
@@ -25,7 +26,11 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = PortletConfigurationIconFactory.class)
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + JournalPortletKeys.JOURNAL},
+	service = PortletConfigurationIconFactory.class
+)
 public class FeedsPortletConfigurationIconFactory
 	extends BasePortletConfigurationIconFactory {
 

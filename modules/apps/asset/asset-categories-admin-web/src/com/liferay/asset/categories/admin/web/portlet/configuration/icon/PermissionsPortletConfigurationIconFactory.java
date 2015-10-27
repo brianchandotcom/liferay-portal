@@ -14,6 +14,7 @@
 
 package com.liferay.asset.categories.admin.web.portlet.configuration.icon;
 
+import com.liferay.asset.categories.admin.web.constants.AssetCategoriesAdminPortletKeys;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIconFactory;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
@@ -25,7 +26,13 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = PortletConfigurationIconFactory.class)
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN
+	},
+	service = PortletConfigurationIconFactory.class
+)
 public class PermissionsPortletConfigurationIconFactory
 	extends BasePortletConfigurationIconFactory {
 

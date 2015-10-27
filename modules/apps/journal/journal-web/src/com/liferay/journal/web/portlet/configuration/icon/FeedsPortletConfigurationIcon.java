@@ -18,7 +18,6 @@ import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.model.User;
-import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.util.PortalUtil;
 
 import javax.portlet.PortletRequest;
@@ -76,15 +75,7 @@ public class FeedsPortletConfigurationIcon
 			return false;
 		}
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		String rootPortletId = portletDisplay.getRootPortletId();
-
-		if (rootPortletId.equals(JournalPortletKeys.JOURNAL)) {
-			return true;
-		}
-
-		return false;
+		return true;
 	}
 
 	@Override

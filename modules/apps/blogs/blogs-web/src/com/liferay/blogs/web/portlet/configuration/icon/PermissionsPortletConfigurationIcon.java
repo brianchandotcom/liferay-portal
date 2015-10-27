@@ -14,14 +14,12 @@
 
 package com.liferay.blogs.web.portlet.configuration.icon;
 
-import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portlet.blogs.service.permission.BlogsPermission;
 import com.liferay.taglib.security.PermissionsURLTag;
 
@@ -70,14 +68,6 @@ public class PermissionsPortletConfigurationIcon
 		User user = themeDisplay.getUser();
 
 		if (user.isDefaultUser()) {
-			return false;
-		}
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		String rootPortletId = portletDisplay.getRootPortletId();
-
-		if (!rootPortletId.equals(BlogsPortletKeys.BLOGS_ADMIN)) {
 			return false;
 		}
 

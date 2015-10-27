@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.monitoring.configuration.MonitoringConfiguration;
 import com.liferay.portal.monitoring.constants.MonitoringWebKeys;
+import com.liferay.portal.monitoring.internal.statistics.portal.PortalRequestDataSample;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -58,13 +59,15 @@ public class MonitoringBottomDynamicInclude extends BaseDynamicInclude {
 			return;
 		}
 
-		DataSample dataSample = (DataSample)request.getAttribute(
-			MonitoringWebKeys.PORTAL_REQUEST_DATA_SAMPLE);
+		PortalRequestDataSample portalRequestDataSample = (PortalRequestDataSample)
+				request.getAttribute(
+					MonitoringWebKeys.PORTAL_REQUEST_DATA_SAMPLE);
 
-		if (dataSample != null) {
-			dataSample.capture(RequestStatus.SUCCESS);
+		if (portalRequestDataSample != null) {
+			portalRequestDataSample.capture(RequestStatus.SUCCESS);
+			portalRequestDataSample.setStatusCode(response.getStatus());
 
-			DataSampleThreadLocal.addDataSample(dataSample);
+			DataSampleThreadLocal.addDataSample(portalRequestDataSample);
 		}
 
 		List<DataSample> dataSamples = DataSampleThreadLocal.getDataSamples();

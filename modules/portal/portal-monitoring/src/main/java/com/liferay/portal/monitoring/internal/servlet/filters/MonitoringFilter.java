@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.monitoring.internal.statistics.portal.PortalRequestDataSample;
 import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.util.PortalUtil;
 
@@ -138,33 +139,35 @@ public class MonitoringFilter extends BaseFilter
 		long companyId = PortalUtil.getCompanyId(request);
 		long groupId = getGroupId(request);
 
-		DataSample dataSample = null;
+		PortalRequestDataSample portalRequestDataSample = null;
 
 		if (_monitorPortalRequest) {
-			dataSample = _dataSampleFactory.createPortalRequestDataSample(
-				companyId, groupId, request.getRemoteUser(),
-				request.getRequestURI(),
-				GetterUtil.getString(request.getRequestURL()));
+			portalRequestDataSample = (PortalRequestDataSample)
+				_dataSampleFactory.createPortalRequestDataSample(
+					companyId, groupId, request.getRemoteUser(),
+					request.getRequestURI(),
+					GetterUtil.getString(request.getRequestURL()));
 
 			DataSampleThreadLocal.initialize();
 		}
 
 		try {
-			if (dataSample != null) {
-				dataSample.prepare();
+			if (portalRequestDataSample != null) {
+				portalRequestDataSample.prepare();
 			}
 
 			processFilter(
 				MonitoringFilter.class, request, response, filterChain);
 
-			if (dataSample != null) {
-				dataSample.capture(RequestStatus.SUCCESS);
-				dataSample.setGroupId(getGroupId(request));
+			if (portalRequestDataSample != null) {
+				portalRequestDataSample.capture(RequestStatus.SUCCESS);
+				portalRequestDataSample.setGroupId(getGroupId(request));
+				portalRequestDataSample.setStatusCode(response.getStatus());
 			}
 		}
 		catch (Exception e) {
-			if (dataSample != null) {
-				dataSample.capture(RequestStatus.ERROR);
+			if (portalRequestDataSample != null) {
+				portalRequestDataSample.capture(RequestStatus.ERROR);
 			}
 
 			if (e instanceof IOException) {
@@ -178,8 +181,8 @@ public class MonitoringFilter extends BaseFilter
 			}
 		}
 		finally {
-			if (dataSample != null) {
-				DataSampleThreadLocal.addDataSample(dataSample);
+			if (portalRequestDataSample != null) {
+				DataSampleThreadLocal.addDataSample(portalRequestDataSample);
 			}
 
 			MessageBusUtil.sendMessage(

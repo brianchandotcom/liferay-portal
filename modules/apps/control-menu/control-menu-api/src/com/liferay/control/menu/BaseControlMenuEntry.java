@@ -16,6 +16,7 @@ package com.liferay.control.menu;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.HashUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
@@ -49,10 +50,20 @@ public abstract class BaseControlMenuEntry implements ControlMenuEntry {
 	}
 
 	@Override
+	public String getIconCssClass(HttpServletRequest request) {
+		return StringPool.BLANK;
+	}
+
+	@Override
 	public String getKey() {
 		Class<?> clazz = getClass();
 
 		return clazz.getName();
+	}
+
+	@Override
+	public String getLinkCssClass(HttpServletRequest request) {
+		return StringPool.BLANK;
 	}
 
 	@Override
@@ -72,6 +83,11 @@ public abstract class BaseControlMenuEntry implements ControlMenuEntry {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
+		return false;
+	}
+
+	@Override
+	public boolean useDialog() {
 		return false;
 	}
 

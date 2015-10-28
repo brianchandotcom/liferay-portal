@@ -432,12 +432,17 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 		<sequential>
 			<var name="poshi.dir.name" unset="true" />
 
-			<get-poshi-test-name />
+			<if>
+				<isset property="test.class" />
+				<then>
+					<get-poshi-test-name />
 
-			<antelope:stringutil property="poshi.dir.name" string="${poshi.test.name}">
-				<antelope:replace regex="," replacement="_" />
-				<antelope:replace regex="#" replacement="_" />
-			</antelope:stringutil>
+					<antelope:stringutil property="poshi.dir.name" string="${poshi.test.name}">
+						<antelope:replace regex="," replacement="_" />
+						<antelope:replace regex="#" replacement="_" />
+					</antelope:stringutil>
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 

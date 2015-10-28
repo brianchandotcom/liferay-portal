@@ -59,6 +59,9 @@
 		<execute function="AssertClick" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />
 
 		<execute function="AssertClick" locator1="SiteTeamsAssignMembers#USER_GROUPS" value1="User Groups" />
+
+		<execute function="Pause" locator1="5000" />
+		
 		<execute function="AssertClick" locator1="SiteTeamsAssignMembers#AVAILABLE" value1="Available" />
 
 		<var name="key_userGroupName" value="${userGroupName}" />

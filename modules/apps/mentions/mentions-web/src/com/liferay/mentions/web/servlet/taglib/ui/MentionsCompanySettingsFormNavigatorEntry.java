@@ -36,14 +36,16 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sergio González
  */
-@Component(immediate = true, service = FormNavigatorEntry.class)
+@Component(
+	immediate = true, property = {"service.ranking:Integer=90"},
+	service = FormNavigatorEntry.class
+)
 public class MentionsCompanySettingsFormNavigatorEntry
 	extends BaseMentionsFormNavigatorEntry {
 
 	@Override
 	public String getCategoryKey() {
-		return FormNavigatorConstants.
-			CATEGORY_KEY_COMPANY_SETTINGS_MISCELLANEOUS;
+		return FormNavigatorConstants.CATEGORY_KEY_COMPANY_SETTINGS_SOCIAL;
 	}
 
 	@Override

@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Philip Jones
  */
 @Component(
-	immediate = true, property = {"service.ranking:Integer=10"},
+	immediate = true, property = {"service.ranking:Integer=100"},
 	service = FormNavigatorEntry.class
 )
 public class CompanySettingsRatingsFormNavigatorEntry
@@ -41,8 +41,7 @@ public class CompanySettingsRatingsFormNavigatorEntry
 
 	@Override
 	public String getCategoryKey() {
-		return
-			FormNavigatorConstants.CATEGORY_KEY_COMPANY_SETTINGS_MISCELLANEOUS;
+		return FormNavigatorConstants.CATEGORY_KEY_COMPANY_SETTINGS_SOCIAL;
 	}
 
 	@Override

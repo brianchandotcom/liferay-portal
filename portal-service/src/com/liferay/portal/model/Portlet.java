@@ -922,15 +922,6 @@ public interface Portlet extends PortletModel, PersistedModel {
 	public java.util.List<com.liferay.portlet.social.model.SocialActivityInterpreter> getSocialActivityInterpreterInstances();
 
 	/**
-	* Returns <code>true</code> if the portlet uses Social Interactions
-	* Configuration
-	*
-	* @return <code>true</code> if the portlet uses Social Interactions
-	Configuration
-	*/
-	public boolean getSocialInteractionsConfiguration();
-
-	/**
 	* Returns the name of the social request interpreter class of the portlet.
 	*
 	* @return the name of the social request interpreter class of the portlet
@@ -1452,15 +1443,6 @@ public interface Portlet extends PortletModel, PersistedModel {
 	* @return <code>true</code> if the portlet uses Single Page Application
 	*/
 	public boolean isSinglePageApplication();
-
-	/**
-	* Returns <code>true</code> if the portlet uses Social Interactions
-	* Configuration
-	*
-	* @return <code>true</code> if the portlet uses Social Interactions
-	Configuration
-	*/
-	public boolean isSocialInteractionsConfiguration();
 
 	/**
 	* Returns <code>true</code> if the portlet is a static portlet that is
@@ -2187,9 +2169,6 @@ public interface Portlet extends PortletModel, PersistedModel {
 	*/
 	public void setSocialActivityInterpreterClasses(
 		java.util.List<java.lang.String> socialActivityInterpreterClasses);
-
-	public void setSocialInteractionsConfiguration(
-		boolean socialInteractionsConfiguration);
 
 	/**
 	* Sets the name of the social request interpreter class of the portlet.

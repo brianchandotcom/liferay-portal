@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.settings.web.servlet.taglib.ui;
+package com.liferay.site.admin.web.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategory;
@@ -24,29 +24,26 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Sergio González
- * @author Philip Jones
  */
 @Component(
-	immediate = true, property = {"service.ranking:Integer=10"},
+	property = {"service.ranking:Integer=20"},
 	service = FormNavigatorCategory.class
 )
-public class CompanySettingsMiscellaneousFormNavigatorCategory
-	implements FormNavigatorCategory {
+public class SitesSocialFormNavigatorCategory implements FormNavigatorCategory {
 
 	@Override
 	public String getFormNavigatorId() {
-		return FormNavigatorConstants.FORM_NAVIGATOR_ID_COMPANY_SETTINGS;
+		return FormNavigatorConstants.FORM_NAVIGATOR_ID_SITES;
 	}
 
 	@Override
 	public String getKey() {
-		return
-			FormNavigatorConstants.CATEGORY_KEY_COMPANY_SETTINGS_MISCELLANEOUS;
+		return FormNavigatorConstants.CATEGORY_KEY_SITES_SOCIAL;
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "miscellaneous");
+		return LanguageUtil.get(locale, "social");
 	}
 
 }

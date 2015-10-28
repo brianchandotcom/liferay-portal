@@ -51,6 +51,8 @@ public class FormNavigatorConstants {
 	public static final String CATEGORY_KEY_SITES_SEO =
 		"search-engine-optimization";
 
+	public static final String CATEGORY_KEY_SITES_SOCIAL = "social";
+
 	public static final String CATEGORY_KEY_USER_IDENTIFICATION =
 		"identification";
 

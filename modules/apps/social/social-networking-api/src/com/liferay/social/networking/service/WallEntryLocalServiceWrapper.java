@@ -206,13 +206,13 @@ public class WallEntryLocalServiceWrapper implements WallEntryLocalService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the OSGI service identifier.
 	*
-	* @return the Spring bean ID for this bean
+	* @return the OSGI service identifier
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _wallEntryLocalService.getBeanIdentifier();
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _wallEntryLocalService.getOSGIServiceIdentifier();
 	}
 
 	@Override
@@ -287,16 +287,6 @@ public class WallEntryLocalServiceWrapper implements WallEntryLocalService,
 		long userId1, long userId2) {
 		return _wallEntryLocalService.getWallToWallEntriesCount(groupId1,
 			groupId2, userId1, userId2);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_wallEntryLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

@@ -75,13 +75,6 @@ public interface JournalFeedService extends BaseService {
 	public void deleteFeed(long groupId, java.lang.String feedId)
 		throws PortalException;
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.journal.model.JournalFeed getFeed(long feedId)
 		throws PortalException;
@@ -100,11 +93,11 @@ public interface JournalFeedService extends BaseService {
 		long feedId) throws PortalException;
 
 	/**
-	* Sets the Spring bean ID for this bean.
+	* Returns the OSGI service identifier.
 	*
-	* @param beanIdentifier the Spring bean ID for this bean
+	* @return the OSGI service identifier
 	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
+	public java.lang.String getOSGIServiceIdentifier();
 
 	public com.liferay.journal.model.JournalFeed updateFeed(long groupId,
 		java.lang.String feedId, java.lang.String name,

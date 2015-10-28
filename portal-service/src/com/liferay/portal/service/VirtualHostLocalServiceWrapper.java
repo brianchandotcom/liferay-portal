@@ -200,13 +200,13 @@ public class VirtualHostLocalServiceWrapper implements VirtualHostLocalService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the OSGI service identifier.
 	*
-	* @return the Spring bean ID for this bean
+	* @return the OSGI service identifier
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _virtualHostLocalService.getBeanIdentifier();
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _virtualHostLocalService.getOSGIServiceIdentifier();
 	}
 
 	@Override
@@ -269,16 +269,6 @@ public class VirtualHostLocalServiceWrapper implements VirtualHostLocalService,
 	@Override
 	public int getVirtualHostsCount() {
 		return _virtualHostLocalService.getVirtualHostsCount();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_virtualHostLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

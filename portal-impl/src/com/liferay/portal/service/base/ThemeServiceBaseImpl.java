@@ -15,12 +15,12 @@
 package com.liferay.portal.service.base;
 
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.module.service.IdentifiableOSGIService;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.service.BaseServiceImpl;
 import com.liferay.portal.service.ThemeService;
@@ -42,7 +42,7 @@ import javax.sql.DataSource;
  * @generated
  */
 public abstract class ThemeServiceBaseImpl extends BaseServiceImpl
-	implements ThemeService, IdentifiableBean {
+	implements ThemeService, IdentifiableOSGIService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -188,23 +188,13 @@ public abstract class ThemeServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the Spring bean ID for this bean.
+	 * Returns the OSGI service identifier.
 	 *
-	 * @return the Spring bean ID for this bean
+	 * @return the OSGI service identifier
 	 */
 	@Override
-	public String getBeanIdentifier() {
-		return _beanIdentifier;
-	}
-
-	/**
-	 * Sets the Spring bean ID for this bean.
-	 *
-	 * @param beanIdentifier the Spring bean ID for this bean
-	 */
-	@Override
-	public void setBeanIdentifier(String beanIdentifier) {
-		_beanIdentifier = beanIdentifier;
+	public String getOSGIServiceIdentifier() {
+		return ThemeService.class.getName();
 	}
 
 	/**
@@ -245,5 +235,4 @@ public abstract class ThemeServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.portal.service.PluginSettingService pluginSettingService;
 	@BeanReference(type = PluginSettingPersistence.class)
 	protected PluginSettingPersistence pluginSettingPersistence;
-	private String _beanIdentifier;
 }

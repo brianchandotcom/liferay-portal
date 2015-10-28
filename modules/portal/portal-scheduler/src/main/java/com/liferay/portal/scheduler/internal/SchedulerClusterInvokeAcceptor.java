@@ -23,9 +23,12 @@ import java.io.Serializable;
 
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Michael C. Han
  */
+@Component(immediate = true, service = ClusterInvokeAcceptor.class)
 public class SchedulerClusterInvokeAcceptor implements ClusterInvokeAcceptor {
 
 	@Override

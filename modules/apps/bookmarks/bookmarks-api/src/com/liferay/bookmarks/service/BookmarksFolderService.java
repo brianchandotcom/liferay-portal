@@ -61,13 +61,6 @@ public interface BookmarksFolderService extends BaseService {
 	public void deleteFolder(long folderId, boolean includeTrashedEntries)
 		throws PortalException;
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.bookmarks.model.BookmarksFolder getFolder(long folderId)
 		throws PortalException;
@@ -117,6 +110,13 @@ public interface BookmarksFolderService extends BaseService {
 	public int getFoldersCount(long groupId, long parentFolderId, int status);
 
 	/**
+	* Returns the OSGI service identifier.
+	*
+	* @return the OSGI service identifier
+	*/
+	public java.lang.String getOSGIServiceIdentifier();
+
+	/**
 	* @deprecated As of 7.0.0, replaced by {@link #getSubfolderIds(List, long,
 	long, boolean)}
 	*/
@@ -146,13 +146,6 @@ public interface BookmarksFolderService extends BaseService {
 		long folderId) throws PortalException;
 
 	public void restoreFolderFromTrash(long folderId) throws PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public void subscribeFolder(long groupId, long folderId)
 		throws PortalException;

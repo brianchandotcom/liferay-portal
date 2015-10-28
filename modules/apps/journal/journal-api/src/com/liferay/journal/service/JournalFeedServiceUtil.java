@@ -79,15 +79,6 @@ public class JournalFeedServiceUtil {
 		getService().deleteFeed(groupId, feedId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
 	public static com.liferay.journal.model.JournalFeed getFeed(long feedId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getFeed(feedId);
@@ -109,12 +100,12 @@ public class JournalFeedServiceUtil {
 	}
 
 	/**
-	* Sets the Spring bean ID for this bean.
+	* Returns the OSGI service identifier.
 	*
-	* @param beanIdentifier the Spring bean ID for this bean
+	* @return the OSGI service identifier
 	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
+	public static java.lang.String getOSGIServiceIdentifier() {
+		return getService().getOSGIServiceIdentifier();
 	}
 
 	public static com.liferay.journal.model.JournalFeed updateFeed(

@@ -20,12 +20,12 @@ import com.liferay.journal.service.persistence.JournalFeedFinder;
 import com.liferay.journal.service.persistence.JournalFeedPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.module.service.IdentifiableOSGIService;
 import com.liferay.portal.service.BaseServiceImpl;
 import com.liferay.portal.service.persistence.ClassNamePersistence;
 import com.liferay.portal.service.persistence.SystemEventPersistence;
@@ -49,7 +49,7 @@ import javax.sql.DataSource;
  * @generated
  */
 public abstract class JournalFeedServiceBaseImpl extends BaseServiceImpl
-	implements JournalFeedService, IdentifiableBean {
+	implements JournalFeedService, IdentifiableOSGIService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -383,23 +383,13 @@ public abstract class JournalFeedServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the Spring bean ID for this bean.
+	 * Returns the OSGI service identifier.
 	 *
-	 * @return the Spring bean ID for this bean
+	 * @return the OSGI service identifier
 	 */
 	@Override
-	public String getBeanIdentifier() {
-		return _beanIdentifier;
-	}
-
-	/**
-	 * Sets the Spring bean ID for this bean.
-	 *
-	 * @param beanIdentifier the Spring bean ID for this bean
-	 */
-	@Override
-	public void setBeanIdentifier(String beanIdentifier) {
-		_beanIdentifier = beanIdentifier;
+	public String getOSGIServiceIdentifier() {
+		return JournalFeedService.class.getName();
 	}
 
 	protected Class<?> getModelClass() {
@@ -468,5 +458,4 @@ public abstract class JournalFeedServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.portlet.expando.service.ExpandoValueService expandoValueService;
 	@BeanReference(type = ExpandoValuePersistence.class)
 	protected ExpandoValuePersistence expandoValuePersistence;
-	private String _beanIdentifier;
 }

@@ -33,16 +33,6 @@ public class DLFileVersionServiceWrapper implements DLFileVersionService,
 		_dlFileVersionService = dlFileVersionService;
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _dlFileVersionService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFileVersion getFileVersion(
 		long fileVersionId)
@@ -79,13 +69,13 @@ public class DLFileVersionServiceWrapper implements DLFileVersionService,
 	}
 
 	/**
-	* Sets the Spring bean ID for this bean.
+	* Returns the OSGI service identifier.
 	*
-	* @param beanIdentifier the Spring bean ID for this bean
+	* @return the OSGI service identifier
 	*/
 	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_dlFileVersionService.setBeanIdentifier(beanIdentifier);
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _dlFileVersionService.getOSGIServiceIdentifier();
 	}
 
 	/**

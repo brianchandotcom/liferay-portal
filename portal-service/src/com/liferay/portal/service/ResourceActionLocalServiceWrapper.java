@@ -220,13 +220,13 @@ public class ResourceActionLocalServiceWrapper
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the OSGI service identifier.
 	*
-	* @return the Spring bean ID for this bean
+	* @return the OSGI service identifier
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _resourceActionLocalService.getBeanIdentifier();
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _resourceActionLocalService.getOSGIServiceIdentifier();
 	}
 
 	@Override
@@ -293,16 +293,6 @@ public class ResourceActionLocalServiceWrapper
 	@Override
 	public int getResourceActionsCount(java.lang.String name) {
 		return _resourceActionLocalService.getResourceActionsCount(name);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_resourceActionLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

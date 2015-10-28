@@ -88,15 +88,6 @@ public class AssetVocabularyServiceUtil {
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
 	@Deprecated
@@ -205,6 +196,15 @@ public class AssetVocabularyServiceUtil {
 	}
 
 	/**
+	* Returns the OSGI service identifier.
+	*
+	* @return the OSGI service identifier
+	*/
+	public static java.lang.String getOSGIServiceIdentifier() {
+		return getService().getOSGIServiceIdentifier();
+	}
+
+	/**
 	* @deprecated As of 7.0.0, replaced by {@link
 	AssetUtil#filterVocabularyIds(PermissionChecker, long[])}
 	*/
@@ -228,15 +228,6 @@ public class AssetVocabularyServiceUtil {
 		return getService()
 				   .searchVocabulariesDisplay(groupId, title, start, end,
 			addDefaultVocabulary);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static com.liferay.portlet.asset.model.AssetVocabulary updateVocabulary(

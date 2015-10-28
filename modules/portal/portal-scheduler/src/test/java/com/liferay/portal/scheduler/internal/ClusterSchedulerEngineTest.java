@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -120,8 +121,7 @@ public class ClusterSchedulerEngineTest {
 			_schedulerEngineHelperImpl.getSchedulerEngine();
 
 		Assert.assertNotSame(_mockSchedulerEngine, schedulerEngine);
-		Assert.assertEquals(
-			ClusterSchedulerEngine.class, schedulerEngine.getClass());
+		Assert.assertTrue(ProxyUtil.isProxyClass(schedulerEngine.getClass()));
 	}
 
 	@Test
@@ -372,16 +372,6 @@ public class ClusterSchedulerEngineTest {
 			_clusterSchedulerEngine.getScheduledJobs();
 
 		Assert.assertEquals(6, schedulerResponses.size());
-	}
-
-	@Test
-	public void testGetSetBeanIdentifier() {
-		String beanIdentifier = "BeanIdentifier";
-
-		_clusterSchedulerEngine.setBeanIdentifier(beanIdentifier);
-
-		Assert.assertEquals(
-			beanIdentifier, _clusterSchedulerEngine.getBeanIdentifier());
 	}
 
 	@Test

@@ -331,11 +331,11 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 		java.util.Collection<java.lang.String> actionIds);
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the OSGI service identifier.
 	*
-	* @return the Spring bean ID for this bean
+	* @return the OSGI service identifier
 	*/
-	public java.lang.String getBeanIdentifier();
+	public java.lang.String getOSGIServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -699,13 +699,6 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	public void removeResourcePermissions(long companyId,
 		java.lang.String name, int scope, long roleId, java.lang.String actionId)
 		throws PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	/**
 	* Updates the role's permissions at the scope, setting the actions that can

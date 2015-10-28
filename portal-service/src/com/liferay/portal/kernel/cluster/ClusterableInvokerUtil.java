@@ -12,17 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.cluster;
+package com.liferay.portal.kernel.cluster;
 
-import com.liferay.portal.bean.IdentifiableBeanInvokerUtil;
-import com.liferay.portal.kernel.cluster.ClusterInvokeAcceptor;
-import com.liferay.portal.kernel.cluster.ClusterableContextThreadLocal;
+import com.liferay.portal.kernel.module.service.IdentifiableOSGIServiceInvokerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
-import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
@@ -34,10 +33,12 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Method;
+
 import java.util.Locale;
 import java.util.Map;
-
-import org.aopalliance.intercept.MethodInvocation;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Shuyang Zhou
@@ -46,10 +47,11 @@ public class ClusterableInvokerUtil {
 
 	public static MethodHandler createMethodHandler(
 		Class<? extends ClusterInvokeAcceptor> clusterInvokeAcceptorClass,
-		MethodInvocation methodInvocation) {
+		Object targetObject, Method method, Object[] args) {
 
 		MethodHandler methodHandler =
-			IdentifiableBeanInvokerUtil.createMethodHandler(methodInvocation);
+			IdentifiableOSGIServiceInvokerUtil.createMethodHandler(
+				targetObject, method, args);
 
 		Map<String, Serializable> context =
 			ClusterableContextThreadLocal.collectThreadLocalContext();
@@ -68,6 +70,36 @@ public class ClusterableInvokerUtil {
 			context);
 	}
 
+	public static void invokeOnCluster(
+			Class<? extends ClusterInvokeAcceptor> clusterInvokeAcceptorClass,
+			Object targetObject, Method method, Object[] args)
+		throws Throwable {
+
+		MethodHandler methodHandler = createMethodHandler(
+			clusterInvokeAcceptorClass, targetObject, method, args);
+
+		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
+			methodHandler, true);
+
+		clusterRequest.setFireAndForget(true);
+
+		ClusterExecutorUtil.execute(clusterRequest);
+	}
+
+	public static Object invokeOnMaster(
+			Class<? extends ClusterInvokeAcceptor> clusterInvokeAcceptorClass,
+			Object targetObject, Method method, Object[] args)
+		throws Throwable {
+
+		MethodHandler methodHandler = createMethodHandler(
+			clusterInvokeAcceptorClass, targetObject, method, args);
+
+		Future<Object> futureResult = ClusterMasterExecutorUtil.executeOnMaster(
+			methodHandler);
+
+		return futureResult.get(_TIME_OUT, TimeUnit.SECONDS);
+	}
+
 	@SuppressWarnings("unused")
 	private static Object _invoke(
 			MethodHandler methodHandler, String clusterInvokeAcceptorClassName,
@@ -76,7 +108,7 @@ public class ClusterableInvokerUtil {
 
 		if (Validator.isNotNull(clusterInvokeAcceptorClassName)) {
 			ClusterInvokeAcceptor clusterInvokeAcceptor =
-				(ClusterInvokeAcceptor)InstanceFactory.newInstance(
+				ClusterInvokeAcceptorUtil.getClusterInvokeAcceptor(
 					clusterInvokeAcceptorClassName);
 
 			if (!clusterInvokeAcceptor.accept(context)) {
@@ -190,6 +222,9 @@ public class ClusterableInvokerUtil {
 			LocaleThreadLocal.setThemeDisplayLocale(themeDisplayLocale);
 		}
 	}
+
+	private static final long _TIME_OUT = GetterUtil.getLong(
+		PropsUtil.get(PropsKeys.CLUSTERABLE_ADVICE_CALL_MASTER_TIMEOUT));
 
 	private static final MethodKey _invokeMethodKey = new MethodKey(
 		ClusterableInvokerUtil.class, "_invoke", MethodHandler.class,

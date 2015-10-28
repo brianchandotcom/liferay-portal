@@ -48,18 +48,11 @@ public interface SocialRequestService extends BaseService {
 	 */
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the OSGI service identifier.
 	*
-	* @return the Spring bean ID for this bean
+	* @return the OSGI service identifier
 	*/
-	public java.lang.String getBeanIdentifier();
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
+	public java.lang.String getOSGIServiceIdentifier();
 
 	public com.liferay.portlet.social.model.SocialRequest updateRequest(
 		long requestId, int status,

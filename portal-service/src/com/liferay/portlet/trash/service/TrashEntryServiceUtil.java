@@ -106,15 +106,6 @@ public class TrashEntryServiceUtil {
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
 	* Returns the trash entries with the matching group ID.
 	*
 	* @param groupId the primary key of the group
@@ -151,6 +142,15 @@ public class TrashEntryServiceUtil {
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.trash.model.TrashEntry> obc)
 		throws com.liferay.portal.security.auth.PrincipalException {
 		return getService().getEntries(groupId, start, end, obc);
+	}
+
+	/**
+	* Returns the OSGI service identifier.
+	*
+	* @return the OSGI service identifier
+	*/
+	public static java.lang.String getOSGIServiceIdentifier() {
+		return getService().getOSGIServiceIdentifier();
 	}
 
 	/**
@@ -258,15 +258,6 @@ public class TrashEntryServiceUtil {
 		long entryId, long overrideClassPK, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().restoreEntry(entryId, overrideClassPK, name);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static TrashEntryService getService() {

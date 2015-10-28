@@ -400,15 +400,6 @@ public class WikiPageLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
 	public static java.util.List<com.liferay.wiki.model.WikiPage> getChildren(
 		long nodeId, boolean head, java.lang.String parentTitle) {
 		return getService().getChildren(nodeId, head, parentTitle);
@@ -480,6 +471,15 @@ public class WikiPageLocalServiceUtil {
 
 	public static java.util.List<com.liferay.wiki.model.WikiPage> getNoAssetPages() {
 		return getService().getNoAssetPages();
+	}
+
+	/**
+	* Returns the OSGI service identifier.
+	*
+	* @return the OSGI service identifier
+	*/
+	public static java.lang.String getOSGIServiceIdentifier() {
+		return getService().getOSGIServiceIdentifier();
 	}
 
 	public static java.util.List<com.liferay.wiki.model.WikiPage> getOrphans(
@@ -905,15 +905,6 @@ public class WikiPageLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .revertPage(userId, nodeId, title, version, serviceContext);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static void subscribePage(long userId, long nodeId,

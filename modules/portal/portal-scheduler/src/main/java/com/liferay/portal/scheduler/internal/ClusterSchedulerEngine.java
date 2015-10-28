@@ -14,7 +14,6 @@
 
 package com.liferay.portal.scheduler.internal;
 
-import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.cluster.BaseClusterMasterTokenTransitionListener;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterMasterTokenTransitionListener;
@@ -40,6 +39,7 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.util.IdentifiableOSGIService;
 
 import java.util.Iterator;
 import java.util.List;
@@ -55,7 +55,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * @author Tina Tian
  */
 public class ClusterSchedulerEngine
-	implements IdentifiableBean, SchedulerEngine {
+	implements IdentifiableOSGIService, SchedulerEngine {
 
 	public ClusterSchedulerEngine(SchedulerEngine schedulerEngine) {
 		_schedulerEngine = schedulerEngine;
@@ -118,8 +118,8 @@ public class ClusterSchedulerEngine
 	}
 
 	@Override
-	public String getBeanIdentifier() {
-		return _beanIdentifier;
+	public String getOSGIServiceIdentifier() {
+		return ClusterSchedulerEngine.class.getName();
 	}
 
 	@Clusterable(onMaster = true)
@@ -331,11 +331,6 @@ public class ClusterSchedulerEngine
 		}
 
 		setClusterableThreadLocal(storageType);
-	}
-
-	@Override
-	public void setBeanIdentifier(String beanIdentifier) {
-		_beanIdentifier = beanIdentifier;
 	}
 
 	@Override
@@ -631,7 +626,6 @@ public class ClusterSchedulerEngine
 	private static final MethodKey _getScheduledJobsMethodKey = new MethodKey(
 		SchedulerEngineHelperUtil.class, "getScheduledJobs", StorageType.class);
 
-	private String _beanIdentifier;
 	private ClusterMasterExecutor _clusterMasterExecutor;
 	private final Map<String, ObjectValuePair<SchedulerResponse, TriggerState>>
 		_memoryClusteredJobs = new ConcurrentHashMap<>();

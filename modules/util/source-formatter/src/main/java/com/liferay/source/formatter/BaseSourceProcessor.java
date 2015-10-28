@@ -1088,6 +1088,12 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected Properties getBNDFileLanguageProperties(String fileName)
 		throws Exception {
 
+		Properties properties = _bndFileLanguageProperties.get(fileName);
+
+		if (properties != null) {
+			return properties;
+		}
+
 		String bndContent = null;
 		String bndFileLocation = fileName;
 
@@ -1122,11 +1128,13 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				return null;
 			}
 
-			Properties properties = new Properties();
+			properties = new Properties();
 
 			InputStream inputStream = new FileInputStream(file);
 
 			properties.load(inputStream);
+
+			_bndFileLanguageProperties.put(fileName, properties);
 
 			return properties;
 		}
@@ -1379,6 +1387,12 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected Properties getModuleLanguageProperties(String fileName) {
+		Properties properties = _moduleLanguageProperties.get(fileName);
+
+		if (properties != null) {
+			return properties;
+		}
+
 		StringBundler sb = new StringBundler(3);
 
 		int pos = fileName.indexOf("/docroot/");
@@ -1404,11 +1418,13 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		sb.append("content/Language.properties");
 
 		try {
-			Properties properties = new Properties();
+			properties = new Properties();
 
 			InputStream inputStream = new FileInputStream(sb.toString());
 
 			properties.load(inputStream);
+
+			_moduleLanguageProperties.put(fileName, properties);
 
 			return properties;
 		}
@@ -2040,6 +2056,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	private Set<String> _annotationsExclusions;
+	private Map<String, Properties> _bndFileLanguageProperties =
+		new HashMap<>();
 	private Map<String, String> _compatClassNamesMap;
 	private String _copyright;
 	private Map<String, List<String>> _errorMessagesMap = new HashMap<>();
@@ -2048,6 +2066,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private Set<String> _immutableFieldTypes;
 	private String _mainReleaseVersion;
 	private final List<String> _modifiedFileNames = new ArrayList<>();
+	private Map<String, Properties> _moduleLanguageProperties = new HashMap<>();
 	private String _oldCopyright;
 	private Properties _portalLanguageProperties;
 	private Properties _properties;

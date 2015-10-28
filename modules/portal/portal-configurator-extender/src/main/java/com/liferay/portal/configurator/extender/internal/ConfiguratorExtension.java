@@ -137,7 +137,8 @@ public class ConfiguratorExtension implements Extension {
 				Logger.LOG_WARNING,
 				"Supplier from factoryConfigurationDescription " +
 					factoryConfigurationDescription + " threw " +
-					"Exception: ", t);
+					"Exception: ",
+				t);
 
 			return;
 		}

@@ -56,14 +56,16 @@ public class ConfigurationDescriptionFactoryImplTest {
 			configurationDescription
 				instanceof FactoryConfigurationDescription);
 
-		FactoryConfigurationDescription description =
+		FactoryConfigurationDescription factoryConfigurationDescription =
 			(FactoryConfigurationDescription)configurationDescription;
 
-		Assert.assertEquals("factory.pid", description.getFactoryPid());
-		Assert.assertEquals("config.pid", description.getPid());
+		Assert.assertEquals(
+			"factory.pid", factoryConfigurationDescription.getFactoryPid());
+		Assert.assertEquals(
+			"config.pid", factoryConfigurationDescription.getPid());
 
 		Supplier<Dictionary<String, Object>> propertiesSupplier =
-			description.getPropertiesSupplier();
+			factoryConfigurationDescription.getPropertiesSupplier();
 
 		Dictionary<String, Object> properties = propertiesSupplier.get();
 
@@ -112,13 +114,14 @@ public class ConfigurationDescriptionFactoryImplTest {
 		Assert.assertTrue(
 			configurationDescription instanceof SingleConfigurationDescription);
 
-		SingleConfigurationDescription description =
+		SingleConfigurationDescription singleConfigurationDescription =
 			(SingleConfigurationDescription)configurationDescription;
 
-		Assert.assertEquals("config.pid", description.getPid());
+		Assert.assertEquals(
+			"config.pid", singleConfigurationDescription.getPid());
 
 		Supplier<Dictionary<String, Object>> propertiesSupplier =
-			description.getPropertiesSupplier();
+			singleConfigurationDescription.getPropertiesSupplier();
 
 		Dictionary<String, Object> properties = propertiesSupplier.get();
 

@@ -662,6 +662,12 @@ public class CalendarBookingLocalServiceImpl
 			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			getExtraDataJSON(calendarBooking), 0);
 
+		WorkflowHandlerRegistryUtil.startWorkflowInstance(
+				calendarBooking.getCompanyId(), calendarBooking.getGroupId(),
+				userId, CalendarBooking.class.getName(),
+				calendarBooking.getCalendarBookingId(), calendarBooking,
+				serviceContext);
+
 		return calendarBooking;
 	}
 

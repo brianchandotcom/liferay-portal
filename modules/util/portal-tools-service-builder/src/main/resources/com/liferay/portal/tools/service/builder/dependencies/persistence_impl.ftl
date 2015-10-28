@@ -412,10 +412,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			${entity.varName}.setUuid(uuid);
 		</#if>
 
-		<#if entity.isShardedModel()>
-			${entity.varName}.setCompanyId(0);
-		</#if>
-
 		return ${entity.varName};
 	}
 
@@ -1710,7 +1706,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
 
 		<#list entity.columnList as column>
 			<#if column.isCollection() && column.isMappingManyToMany()>

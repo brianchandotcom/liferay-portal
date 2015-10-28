@@ -116,8 +116,7 @@ public class UnstableMessageUtil {
 						break;
 					}
 
-					JSONObject caseJSONObject = casesJSONArray.getJSONObject(
-						j);
+					JSONObject caseJSONObject = casesJSONArray.getJSONObject(j);
 
 					String status = caseJSONObject.getString("status");
 

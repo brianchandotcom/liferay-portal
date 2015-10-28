@@ -20,6 +20,9 @@ alter table Contact_ drop column msnSn;
 alter table Contact_ drop column mySpaceSn;
 alter table Contact_ drop column ymSn;
 
+drop table CyrusUser;
+drop table CyrusVirtual;
+
 drop index IX_C803899D on DDMStructureLink;
 
 alter table DLFileEntryMetadata drop column fileEntryTypeId;

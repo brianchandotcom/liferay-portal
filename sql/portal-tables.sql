@@ -357,16 +357,6 @@ create table Country (
 	active_ BOOLEAN
 );
 
-create table CyrusUser (
-	userId VARCHAR(75) not null primary key,
-	password_ VARCHAR(75) not null
-);
-
-create table CyrusVirtual (
-	emailAddress VARCHAR(75) not null primary key,
-	userId VARCHAR(75) not null
-);
-
 create table DLContent (
 	contentId LONG not null primary key,
 	groupId LONG,

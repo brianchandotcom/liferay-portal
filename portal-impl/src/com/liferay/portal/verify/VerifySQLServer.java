@@ -263,8 +263,8 @@ public class VerifySQLServer extends VerifyProcess {
 	}
 
 	private static final String _FILTER_EXCLUDED_TABLES =
-		"(sysobjects.name not like 'Counter') and (sysobjects.name not like " +
-			"'Cyrus%') and (sysobjects.name not like 'QUARTZ%')";
+		"(sysobjects.name not like 'Counter') and " +
+			"(sysobjects.name not like 'QUARTZ%')";
 
 	private static final String _FILTER_NONUNICODE_DATA_TYPES =
 		"((systypes.name = 'ntext') OR (systypes.name = 'text') OR " +

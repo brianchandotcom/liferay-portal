@@ -457,7 +457,7 @@
 				<var name="key_pageType" value="${sitePageType}" />
 
 				<execute function="Click" locator1="SitePagesEditPage#PAGE_TYPE_RADIO" />
-		
+
 				<execute macro="SitePage#addSitePageTypeEmbeddedCP">
 					<var name="pageTypeDescription" value="${pageTypeDescription}" />
 					<var name="pageTypeURL" value="${pageTypeURL}" />

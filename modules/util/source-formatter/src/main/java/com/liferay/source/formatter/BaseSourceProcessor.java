@@ -429,10 +429,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 					continue;
 				}
 
-				Properties languageProperties = getLanguageProperties(fileName);
+				Properties moduleLanguageProperties =
+					getModuleLanguageProperties(fileName);
 
-				if ((languageProperties == null) ||
-					!languageProperties.containsKey(languageKey)) {
+				if ((moduleLanguageProperties == null) ||
+					!moduleLanguageProperties.containsKey(languageKey)) {
 
 					processErrorMessage(
 						fileName,
@@ -1305,7 +1306,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return new String[0];
 	}
 
-	protected Properties getLanguageProperties(String fileName) {
+	protected Properties getModuleLanguageProperties(String fileName) {
 		StringBundler sb = new StringBundler(3);
 
 		int pos = fileName.indexOf("/docroot/");

@@ -76,31 +76,9 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 
 		resolvePortalProperty(ehcacheConfiguration);
 
-		Set<Properties> cacheManagerListenerPropertiesSet =
-			getCacheManagerListenerPropertiesSet(ehcacheConfiguration);
-
-		PortalCacheConfiguration defaultPortalCacheConfiguration =
-			getPortalCacheConfiguration(
-				ehcacheConfiguration.getDefaultCacheConfiguration(),
-				usingDefault);
-
-		Set<PortalCacheConfiguration> portalCacheConfigurations =
-			new HashSet<>();
-
-		Map<String, CacheConfiguration> cacheConfigurations =
-			ehcacheConfiguration.getCacheConfigurations();
-
-		for (Map.Entry<String, CacheConfiguration> entry :
-				cacheConfigurations.entrySet()) {
-
-			portalCacheConfigurations.add(
-				getPortalCacheConfiguration(entry.getValue(), usingDefault));
-		}
-
 		PortalCacheManagerConfiguration portalCacheManagerConfiguration =
-			new PortalCacheManagerConfiguration(
-				cacheManagerListenerPropertiesSet,
-				defaultPortalCacheConfiguration, portalCacheConfigurations);
+			getPortalCacheManagerConfiguration(
+				ehcacheConfiguration, usingDefault);
 
 		clearListenerConfigrations(ehcacheConfiguration);
 
@@ -208,6 +186,35 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 		return new EhcachePortalCacheConfiguration(
 			portalCacheName, portalCacheListenerPropertiesSet,
 			portalCacheBootstrapLoaderProperties, requireSerialization);
+	}
+
+	protected PortalCacheManagerConfiguration
+		getPortalCacheManagerConfiguration(
+			Configuration configuration, boolean usingDefault) {
+
+		Set<Properties> cacheManagerListenerPropertiesSet =
+			getCacheManagerListenerPropertiesSet(configuration);
+
+		PortalCacheConfiguration defaultPortalCacheConfiguration =
+			getPortalCacheConfiguration(
+				configuration.getDefaultCacheConfiguration(), usingDefault);
+
+		Set<PortalCacheConfiguration> portalCacheConfigurations =
+			new HashSet<>();
+
+		Map<String, CacheConfiguration> cacheConfigurations =
+			configuration.getCacheConfigurations();
+
+		for (Map.Entry<String, CacheConfiguration> entry :
+				cacheConfigurations.entrySet()) {
+
+			portalCacheConfigurations.add(
+				getPortalCacheConfiguration(entry.getValue(), usingDefault));
+		}
+
+		return new PortalCacheManagerConfiguration(
+			cacheManagerListenerPropertiesSet, defaultPortalCacheConfiguration,
+			portalCacheConfigurations);
 	}
 
 	protected String getPortalPropertyKey(String propertyString) {

@@ -1306,6 +1306,20 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return new String[0];
 	}
 
+	protected String getMainReleaseVersion() {
+		if (_mainReleaseVersion != null) {
+			return _mainReleaseVersion;
+		}
+
+		String releaseVersion = ReleaseInfo.getVersion();
+
+		int pos = releaseVersion.lastIndexOf(CharPool.PERIOD);
+
+		_mainReleaseVersion = releaseVersion.substring(0, pos) + ".0";
+
+		return _mainReleaseVersion;
+	}
+
 	protected Properties getModuleLanguageProperties(String fileName) {
 		StringBundler sb = new StringBundler(3);
 
@@ -1344,20 +1358,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return null;
-	}
-
-	protected String getMainReleaseVersion() {
-		if (_mainReleaseVersion != null) {
-			return _mainReleaseVersion;
-		}
-
-		String releaseVersion = ReleaseInfo.getVersion();
-
-		int pos = releaseVersion.lastIndexOf(CharPool.PERIOD);
-
-		_mainReleaseVersion = releaseVersion.substring(0, pos) + ".0";
-
-		return _mainReleaseVersion;
 	}
 
 	protected String getProperty(String key) {

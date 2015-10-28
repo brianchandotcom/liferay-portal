@@ -1,0 +1,11 @@
+dependencies {
+	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
+	compile group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
+
+	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	provided group: "org.apache.felix", name: "org.apache.felix.utils", version: "1.6.0"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/portal")
+}

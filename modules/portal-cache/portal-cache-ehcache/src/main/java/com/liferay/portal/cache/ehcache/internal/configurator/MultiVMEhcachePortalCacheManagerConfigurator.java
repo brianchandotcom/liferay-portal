@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Properties;
@@ -67,31 +66,6 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 
 			return;
 		}
-
-		for (FactoryConfiguration factoryConfiguration :
-				factoryConfigurations) {
-
-			Properties properties = null;
-
-			factoryConfiguration.setClass(
-				parseFactoryClassName(
-					factoryConfiguration.getFullyQualifiedClassPath()));
-
-			String propertiesString = factoryConfiguration.getProperties();
-
-			if (Validator.isNull(propertiesString)) {
-				properties = new Properties();
-			}
-			else {
-				properties = parseProperties(
-					propertiesString,
-					factoryConfiguration.getPropertySeparator());
-			}
-
-			factoryConfiguration.setProperties(
-				getPropertiesString(
-					properties, factoryConfiguration.getPropertySeparator()));
-		}
 	}
 
 	@Override
@@ -127,9 +101,8 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 					portalCacheBootstrapLoaderProperties.put(
 						EhcacheConstants.
 							BOOTSTRAP_CACHE_LOADER_FACTORY_CLASS_NAME,
-						parseFactoryClassName(
-							bootstrapCacheLoaderFactoryConfiguration.
-								getFullyQualifiedClassPath()));
+						bootstrapCacheLoaderFactoryConfiguration.
+							getFullyQualifiedClassPath());
 				}
 			}
 		}

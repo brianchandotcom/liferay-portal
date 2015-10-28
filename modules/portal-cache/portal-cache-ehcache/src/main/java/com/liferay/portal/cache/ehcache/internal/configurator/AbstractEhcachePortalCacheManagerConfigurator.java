@@ -14,6 +14,7 @@
 
 package com.liferay.portal.cache.ehcache.internal.configurator;
 
+import com.liferay.portal.cache.PortalCacheReplicator;
 import com.liferay.portal.cache.configuration.PortalCacheConfiguration;
 import com.liferay.portal.cache.configuration.PortalCacheManagerConfiguration;
 import com.liferay.portal.cache.ehcache.EhcacheConstants;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -71,6 +73,8 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 			ConfigurationFactory.parseConfiguration(configurationURL);
 
 		ehcacheConfiguration.setName(portalCacheManagerName);
+
+		resolvePortalProperty(ehcacheConfiguration);
 
 		handleCacheManagerPeerFactoryConfigurations(
 			ehcacheConfiguration.
@@ -128,8 +132,7 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 
 		properties.put(
 			EhcacheConstants.CACHE_MANAGER_LISTENER_FACTORY_CLASS_NAME,
-			parseFactoryClassName(
-				factoryConfiguration.getFullyQualifiedClassPath()));
+			factoryConfiguration.getFullyQualifiedClassPath());
 
 		factoryConfiguration.setClass(null);
 
@@ -165,27 +168,18 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 			portalCacheBootstrapLoaderProperties, requireSerialization);
 	}
 
-	protected String getPropertiesString(
-		Properties properties, String propertySeparator) {
-
-		if (propertySeparator == null) {
-			propertySeparator = StringPool.COMMA;
+	protected String getPortalPropertyKey(String propertyString) {
+		if (propertyString.indexOf(CharPool.EQUAL) == -1) {
+			return null;
 		}
 
-		StringBundler sb = new StringBundler(properties.size() * 4);
+		String[] parts = StringUtil.split(propertyString, CharPool.EQUAL);
 
-		for (Map.Entry<Object, Object> entry : properties.entrySet()) {
-			sb.append(entry.getKey());
-			sb.append(StringPool.EQUAL);
-			sb.append(entry.getValue());
-			sb.append(propertySeparator);
+		if (parts[0].equals(_PORTAL_PROPERTY_KEY)) {
+			return parts[1];
 		}
 
-		if (!properties.isEmpty()) {
-			sb.setIndex(sb.index() - 1);
-		}
-
-		return sb.toString();
+		return null;
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -231,9 +225,9 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 				cacheEventListenerFactoryConfiguration :
 					cacheEventListenerConfigurations) {
 
-			String factoryClassName = parseFactoryClassName(
+			String factoryClassName =
 				cacheEventListenerFactoryConfiguration.
-					getFullyQualifiedClassPath());
+					getFullyQualifiedClassPath();
 
 			Properties properties = parseProperties(
 				cacheEventListenerFactoryConfiguration.getProperties(),
@@ -253,25 +247,6 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 		return portalCacheListenerPropertiesSet;
 	}
 
-	protected String parseFactoryClassName(String factoryClassName) {
-		if (factoryClassName.indexOf(CharPool.EQUAL) == -1) {
-			return factoryClassName;
-		}
-
-		String[] factoryClassNameParts = StringUtil.split(
-			factoryClassName, CharPool.EQUAL);
-
-		if (factoryClassNameParts[0].equals(_PORTAL_PROPERTY_KEY)) {
-			return props.get(factoryClassNameParts[1]);
-		}
-
-		if (_log.isWarnEnabled()) {
-			_log.warn("Unable to parse factory class name " + factoryClassName);
-		}
-
-		return factoryClassName;
-	}
-
 	protected abstract Properties parsePortalCacheBootstrapLoaderProperties(
 		CacheConfiguration cacheConfiguration);
 
@@ -284,10 +259,6 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 			return properties;
 		}
 
-		if (propertySeparator == null) {
-			propertySeparator = StringPool.COMMA;
-		}
-
 		String propertyLines = propertiesString.trim();
 
 		propertyLines = StringUtil.replace(
@@ -298,35 +269,6 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);
-		}
-
-		String portalPropertyKey = (String)properties.remove(
-			_PORTAL_PROPERTY_KEY);
-
-		if (Validator.isNull(portalPropertyKey)) {
-			return properties;
-		}
-
-		String[] values = props.getArray(portalPropertyKey);
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"portalPropertyKey " + portalPropertyKey + " has value " +
-					Arrays.toString(values));
-		}
-
-		for (String value : values) {
-			String[] valueParts = StringUtil.split(value, CharPool.EQUAL);
-
-			if (valueParts.length != 2) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Ignore malformed value " + value);
-				}
-
-				continue;
-			}
-
-			properties.put(valueParts[0], _unescape(valueParts[1]));
 		}
 
 		return properties;
@@ -347,6 +289,144 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 				portalCacheListenerScope);
 
 			portalCacheListenerPropertiesSet.add(properties);
+		}
+	}
+
+	protected void resolvePortalProperty(
+		CacheConfiguration cacheConfiguration) {
+
+		resolvePortalProperty(
+			cacheConfiguration.getBootstrapCacheLoaderFactoryConfiguration());
+
+		List<FactoryConfiguration<?>> factoryConfigurations =
+			cacheConfiguration.getCacheEventListenerConfigurations();
+
+		for (FactoryConfiguration<?> factoryConfiguration :
+				factoryConfigurations) {
+
+			resolvePortalProperty(factoryConfiguration);
+		}
+	}
+
+	protected void resolvePortalProperty(Configuration configuration) {
+		resolvePortalProperty(
+			configuration.getCacheManagerEventListenerFactoryConfiguration());
+
+		for (FactoryConfiguration<?> factoryConfiguration :
+				configuration.
+					getCacheManagerPeerListenerFactoryConfigurations()) {
+
+			resolvePortalProperty(factoryConfiguration);
+		}
+
+		for (FactoryConfiguration<?> factoryConfiguration :
+				configuration.
+					getCacheManagerPeerProviderFactoryConfiguration()) {
+
+			resolvePortalProperty(factoryConfiguration);
+		}
+
+		resolvePortalProperty(configuration.getDefaultCacheConfiguration());
+
+		Map<String, CacheConfiguration> cacheConfigurations =
+			configuration.getCacheConfigurations();
+
+		for (CacheConfiguration cacheConfiguration :
+				cacheConfigurations.values()) {
+
+			resolvePortalProperty(cacheConfiguration);
+		}
+	}
+
+	protected void resolvePortalProperty(
+		FactoryConfiguration<?> factoryConfiguration) {
+
+		if (factoryConfiguration == null) {
+			return;
+		}
+
+		String propertySeparatorPortalPropertyKey = getPortalPropertyKey(
+			factoryConfiguration.getPropertySeparator());
+
+		if (Validator.isNotNull(propertySeparatorPortalPropertyKey)) {
+			factoryConfiguration.setPropertySeparator(StringPool.COMMA);
+		}
+
+		String propertiesStringPortalPropertyKey = getPortalPropertyKey(
+			factoryConfiguration.getProperties());
+
+		if (Validator.isNotNull(propertiesStringPortalPropertyKey)) {
+			String[] values = props.getArray(propertiesStringPortalPropertyKey);
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"portalPropertyKey " + propertiesStringPortalPropertyKey +
+						" has value " + Arrays.toString(values));
+			}
+
+			StringBundler sb = new StringBundler(values.length * 4 - 1);
+
+			String propertySeparator =
+				factoryConfiguration.getPropertySeparator();
+
+			for (String value : values) {
+				String[] valueParts = StringUtil.split(value, CharPool.EQUAL);
+
+				if (valueParts.length != 2) {
+					if (_log.isWarnEnabled()) {
+						_log.warn("Ignore malformed value " + value);
+					}
+
+					continue;
+				}
+
+				sb.append(valueParts[0]);
+				sb.append(CharPool.EQUAL);
+				sb.append(_unescape(valueParts[1]));
+				sb.append(propertySeparator);
+			}
+
+			if (values.length > 0) {
+				sb.setIndex(sb.index() - 1);
+			}
+
+			factoryConfiguration.setProperties(sb.toString());
+		}
+
+		String classPathPortalPropertyKey = getPortalPropertyKey(
+			factoryConfiguration.getFullyQualifiedClassPath());
+
+		if (Validator.isNull(classPathPortalPropertyKey)) {
+			return;
+		}
+
+		String value = props.get(classPathPortalPropertyKey);
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"portalPropertyKey " + classPathPortalPropertyKey +
+					" has value " + value);
+		}
+
+		factoryConfiguration.setClass(props.get(classPathPortalPropertyKey));
+
+		if (classPathPortalPropertyKey.equals(
+				PropsKeys.EHCACHE_CACHE_EVENT_LISTENER_FACTORY)) {
+
+			StringBundler sb = new StringBundler(5);
+
+			String propertiesString = factoryConfiguration.getProperties();
+
+			if (propertiesString != null) {
+				sb.append(factoryConfiguration.getProperties());
+				sb.append(factoryConfiguration.getPropertySeparator());
+			}
+
+			sb.append(PortalCacheReplicator.REPLICATOR);
+			sb.append(CharPool.EQUAL);
+			sb.append(Boolean.TRUE);
+
+			factoryConfiguration.setProperties(sb.toString());
 		}
 	}
 

@@ -164,7 +164,7 @@ public class DLFileEntryTypeFinderImpl
 
 			sql = StringUtil.replace(
 				sql, "[$BASIC_DOCUMENT$]",
-				getCountBasicDocument(includeBasicFileEntryType));
+				getBasicDocumentCount(includeBasicFileEntryType));
 			sql = StringUtil.replace(
 				sql, "[$GROUP_ID$]", getGroupIds(groupIds));
 			sql = CustomSQLUtil.replaceKeywords(
@@ -301,7 +301,7 @@ public class DLFileEntryTypeFinderImpl
 			"(SELECT {DLFileEntryType.*} From DLFileEntryType WHERE ");
 	}
 
-	protected String getCountBasicDocument(boolean includeBasicFileEntryType) {
+	protected String getBasicDocumentCount(boolean includeBasicFileEntryType) {
 		if (!includeBasicFileEntryType) {
 			return StringPool.BLANK;
 		}

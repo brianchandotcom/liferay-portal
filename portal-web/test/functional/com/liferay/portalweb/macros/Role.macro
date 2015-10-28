@@ -333,12 +333,12 @@
 					</then>
 				</elseif>
 				<elseif>
-+					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_APPLICATIONS_CALENDAR" />
-+					<then>
-+						<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_CALENDAR" />
-+						<var name="permissionNavigationValue" value="Calendar" />
-+					</then>
-+				</elseif>
+					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_APPLICATIONS_CALENDAR" />
+					<then>
+						<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_CALENDAR" />
+						<var name="permissionNavigationValue" value="Calendar" />
+					</then>
+				</elseif>
 				<elseif>
 					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_APPLICATIONS_CATEGORIES_NAVIGATION" />
 					<then>
@@ -885,12 +885,12 @@
 				</then>
 			</elseif>
 			<elseif>
-+				<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_APPLICATIONS_CALENDAR" />
-+				<then>
-+					<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_CALENDAR" />
-+					<var name="permissionNavigationValue" value="Calendar" />
-+				</then>
-+			</elseif>
+				<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_APPLICATIONS_CALENDAR" />
+				<then>
+					<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_CALENDAR" />
+					<var name="permissionNavigationValue" value="Calendar" />
+				</then>
+			</elseif>
 			<elseif>
 				<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA" />
 				<then>

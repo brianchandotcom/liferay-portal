@@ -117,8 +117,9 @@ public class ConfiguratorExtender extends AbstractExtender {
 		}
 
 		return new ConfiguratorExtension(
-			_configurationAdmin, _logger, bundle.getSymbolicName(),
-			configurationURLs, _configurationDescriptionFactories);
+			_configurationAdmin, new Logger(bundle.getBundleContext()),
+			bundle.getSymbolicName(), configurationURLs,
+			_configurationDescriptionFactories);
 	}
 
 	@Override

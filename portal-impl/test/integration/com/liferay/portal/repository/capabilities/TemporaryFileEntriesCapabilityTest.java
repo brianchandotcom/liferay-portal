@@ -21,7 +21,9 @@ import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCap
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -33,7 +35,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
-import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -61,8 +63,9 @@ public class TemporaryFileEntriesCapabilityTest {
 	@Test
 	public void testDeleteExpiredTemporaryFileEntries() throws Exception {
 		TempFileEntryUtil.addTempFileEntry(
-			_group.getGroupId(), _user.getUserId(), "folder", "file",
-			new ByteArrayInputStream("Hello World!".getBytes()), "text/plain");
+			_group.getGroupId(), _user.getUserId(),
+			RandomTestUtil.randomString(), "image.jpg", getInputStream(),
+			ContentTypes.IMAGE_JPEG);
 
 		Repository repository = RepositoryLocalServiceUtil.fetchRepository(
 			_group.getGroupId(), TempFileEntryUtil.class.getName(),
@@ -88,6 +91,15 @@ public class TemporaryFileEntriesCapabilityTest {
 		itemsCount = getItemsCount(localRepository);
 
 		Assert.assertEquals(itemsCount, 0);
+	}
+
+	protected InputStream getInputStream() {
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		return classLoader.getResourceAsStream(
+			"com/liferay/portal/util/dependencies/test.jpg");
 	}
 
 	protected int getItemsCount(LocalRepository localRepository)

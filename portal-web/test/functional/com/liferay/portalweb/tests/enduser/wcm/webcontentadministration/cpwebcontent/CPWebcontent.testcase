@@ -405,7 +405,7 @@
 		</execute>
 	</command>
 
-	<command name="AddTemplateXSL" priority="4">
+	<command name="AddTemplateXSL" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -485,7 +485,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWebContentExpirationDate" priority="4">
+	<command name="AddWebContentExpirationDate" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -517,7 +517,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWebContentMultiple" priority="4">
+	<command name="AddWebContentMultiple" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -695,7 +695,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWebContentWithTemplateXSL" priority="4">
+	<command name="AddWebContentWithTemplateXSL" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -760,7 +760,7 @@
 		</execute>
 	</command>
 
-	<command name="AdvancedSearchStructure" priority="4">
+	<command name="AdvancedSearchStructure" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -794,7 +794,7 @@
 		</execute>
 	</command>
 
-	<command name="AdvancedSearchTemplate" priority="4">
+	<command name="AdvancedSearchTemplate" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -842,7 +842,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteWebContentTitleEscapeCharacter" priority="4">
+	<command name="DeleteWebContentTitleEscapeCharacter" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -1012,7 +1012,7 @@
 		</execute>
 	</command>
 
-	<command name="ExpireEditWebContent" priority="4">
+	<command name="ExpireEditWebContent" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>

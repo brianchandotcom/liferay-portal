@@ -111,7 +111,7 @@
 		<execute macro="WebContent#viewAudioViaWCD" />
 	</command>
 
-	<command name="AddExistingPageAsDisplayPageInSiteCP" priority="4">
+	<command name="AddExistingPageAsDisplayPageInSiteCP" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -339,7 +339,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWebContentWithGlobalStructureAndEditedDefaultValues" priority="4">
+	<command name="AddWebContentWithGlobalStructureAndEditedDefaultValues" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Global" />
@@ -959,7 +959,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewGlobalStructureViaAddMenuInLiferaySite" priority="4">
+	<command name="ViewGlobalStructureViaAddMenuInLiferaySite" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Global" />
@@ -1316,7 +1316,7 @@
 		</execute>
 	</command>
 
-	<command name="WebContentAdministrationPaginatingRelatedAssets" priority="4">
+	<command name="WebContentAdministrationPaginatingRelatedAssets" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>

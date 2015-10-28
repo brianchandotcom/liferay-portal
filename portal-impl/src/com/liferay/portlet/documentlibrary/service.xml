@@ -245,7 +245,7 @@
 
 		<column name="fileEntryMetadataId" type="long" primary="true" />
 
-		<!-- Company instance -->
+		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
 
@@ -683,12 +683,9 @@
 
 		<column name="syncEventId" type="long" primary="true" />
 
-		<!-- Company instance -->
-
-		<column name="companyId" type="long" />
-
 		<!-- Audit fields -->
 
+		<column name="companyId" type="long" />
 		<column name="modifiedTime" type="long" />
 
 		<!-- Other fields -->

@@ -108,12 +108,9 @@
 
 		<column name="browserTrackerId" type="long" primary="true" />
 
-		<!-- Company instance -->
-
-		<column name="companyId" type="long" />
-
 		<!-- Audit fields -->
 
+		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 
 		<!-- Other fields -->
@@ -537,12 +534,9 @@
 
 		<column name="imageId" type="long" primary="true" />
 
-		<!-- Company instance -->
-
-		<column name="companyId" type="long" />
-
 		<!-- Audit fields -->
 
+		<column name="companyId" type="long" />
 		<column name="modifiedDate" type="Date" />
 
 		<!-- Other fields -->
@@ -1303,7 +1297,7 @@
 		<column name="groupId" type="long" primary="true" />
 		<column name="roleId" type="long" primary="true" />
 
-		<!-- Company instance -->
+		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
 
@@ -1322,7 +1316,7 @@
 
 		<column name="orgLaborId" type="long" primary="true" />
 
-		<!-- Company instance -->
+		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
 
@@ -1433,7 +1427,7 @@
 
 		<column name="passwordPolicyRelId" type="long" primary="true" />
 
-		<!-- Company instance -->
+		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
 
@@ -1463,12 +1457,9 @@
 
 		<column name="passwordTrackerId" type="long" primary="true" />
 
-		<!-- Company instance -->
-
-		<column name="companyId" type="long" />
-
 		<!-- Audit fields -->
 
+		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="createDate" type="Date" />
 
@@ -1715,7 +1706,7 @@
 
 		<column name="portletPreferencesId" type="long" primary="true" />
 
-		<!-- Company instance -->
+		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
 
@@ -2036,7 +2027,7 @@
 
 		<column name="resourceBlockPermissionId" type="long" primary="true" />
 
-		<!-- Company instance -->
+		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
 
@@ -2255,7 +2246,7 @@
 
 		<column name="serviceComponentId" type="long" primary="true" />
 
-		<!-- Company instance -->
+		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
 
@@ -2722,7 +2713,7 @@
 		<column name="groupId" type="long" primary="true" />
 		<column name="roleId" type="long" primary="true" />
 
-		<!-- Company instance -->
+		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
 
@@ -2759,7 +2750,7 @@
 		<column name="groupId" type="long" primary="true" accessor="true" />
 		<column name="roleId" type="long" primary="true" accessor="true" />
 
-		<!-- Company instance -->
+		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
 
@@ -2795,12 +2786,9 @@
 
 		<column name="userIdMapperId" type="long" primary="true" />
 
-		<!-- Company instance -->
-
-		<column name="companyId" type="long" />
-
 		<!-- Audit fields -->
 
+		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 
 		<!-- Other fields -->
@@ -2982,7 +2970,7 @@
 
 		<column name="userTrackerPathId" type="long" primary="true" />
 
-		<!-- Company instance -->
+		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
 

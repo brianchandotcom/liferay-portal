@@ -64,7 +64,7 @@
 
 		<column name="licenseId" type="long" primary="true" />
 
-		<!-- Company instance -->
+		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
 

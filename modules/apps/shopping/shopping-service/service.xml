@@ -240,7 +240,7 @@
 
 		<column name="itemFieldId" type="long" primary="true" />
 
-		<!-- Company instance -->
+		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
 
@@ -270,7 +270,7 @@
 
 		<column name="itemPriceId" type="long" primary="true" />
 
-		<!-- Company instance -->
+		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
 
@@ -407,7 +407,7 @@
 
 		<column name="orderItemId" type="long" primary="true" />
 
-		<!-- Company instance -->
+		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
 

@@ -46,7 +46,7 @@
 
 		<column name="storageLinkId" type="long" primary="true" />
 
-		<!-- Company instance -->
+		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
 
@@ -186,7 +186,7 @@
 
 		<column name="structureLinkId" type="long" primary="true" />
 
-		<!-- Company instance -->
+		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
 
@@ -374,7 +374,7 @@
 
 		<column name="templateLinkId" type="long" primary="true" />
 
-		<!-- Company instance -->
+		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
 

@@ -77,11 +77,11 @@ public class NamedConfigurationPathContentFactoryTest {
 		BundleStorage bundleStorage = new DummyBundleStorage(
 			100, "aLocation", _headers, Arrays.asList(uri.toURL()));
 
-		NamedConfigurationContentFactory contentFactory =
+		NamedConfigurationContentFactory namedConfigurationContentFactory =
 			new NamedConfigurationPathContentFactory();
 
 		List<NamedConfigurationContent> namedConfigurationContents =
-			contentFactory.create(bundleStorage);
+			namedConfigurationContentFactory.create(bundleStorage);
 
 		Assert.assertEquals(1, namedConfigurationContents.size());
 

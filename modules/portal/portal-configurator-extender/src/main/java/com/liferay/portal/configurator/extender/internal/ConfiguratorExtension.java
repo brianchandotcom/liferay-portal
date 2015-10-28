@@ -90,13 +90,13 @@ public class ConfiguratorExtension implements Extension {
 					instanceof SingleConfigurationDescription) {
 
 				_process(
-					(SingleConfigurationDescription) configurationDescription);
+					(SingleConfigurationDescription)configurationDescription);
 			}
 			else if (configurationDescription
 						instanceof FactoryConfigurationDescription) {
 
 				_process(
-					(FactoryConfigurationDescription) configurationDescription);
+					(FactoryConfigurationDescription)configurationDescription);
 			}
 			else {
 				_logger.log(
@@ -106,19 +106,6 @@ public class ConfiguratorExtension implements Extension {
 							configurationDescription);
 			}
 		}
-	}
-
-	private boolean configurationExists(String filter)
-		throws InvalidSyntaxException, IOException {
-
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			filter);
-
-		if (ArrayUtil.isNotEmpty(configurations)) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private void _process(
@@ -150,7 +137,8 @@ public class ConfiguratorExtension implements Extension {
 				Logger.LOG_WARNING,
 				"Supplier from factoryConfigurationDescription " +
 					factoryConfigurationDescription + " threw " +
-					"Exception: ", t);
+					"Exception: ",
+				t);
 
 			return;
 		}
@@ -191,6 +179,19 @@ public class ConfiguratorExtension implements Extension {
 		}
 
 		configuration.update(properties);
+	}
+
+	private boolean configurationExists(String filter)
+		throws InvalidSyntaxException, IOException {
+
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			filter);
+
+		if (ArrayUtil.isNotEmpty(configurations)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private final ConfigurationAdmin _configurationAdmin;

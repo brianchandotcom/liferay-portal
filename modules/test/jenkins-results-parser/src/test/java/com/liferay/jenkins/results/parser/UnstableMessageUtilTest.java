@@ -16,15 +16,15 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 import java.io.IOException;
-
 import java.net.URI;
 import java.net.URL;
-
+import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import org.apache.tools.ant.Project;
-
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -32,19 +32,19 @@ import org.junit.Test;
 /**
  * @author Peter Yoo
  */
-public class FailureMessageUtilTest {
+public class UnstableMessageUtilTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_downloadSample(
-			"generic-1", "0,label_exp=!master", "129",
-			"test-portal-acceptance-pullrequest-batch(master)", "test-4-1");
+			"2-of-3888", "test-1-9", "5141",
+			"test-portal-acceptance-pullrequest-batch(master)");
 		_downloadSample(
-			"rebase-1", null, "267",
-			"test-portal-acceptance-pullrequest-source(ee-6.2.x)", "test-1-1");
+			"1-of-1", "test-1-18", "3415",
+			"test-portal-acceptance-pullrequest-batch(master)");
 		_downloadSample(
-			"plugin-compile-1", "9,label_exp=!master", "233",
-			"test-portal-acceptance-pullrequest-batch(ee-6.2.x)", "test-1-20");
+			"6-of-6", "test-1-19", "1287",
+			"test-portal-acceptance-pullrequest-batch(master)");
 	}
 
 	@Test
@@ -110,21 +110,13 @@ public class FailureMessageUtilTest {
 	}
 
 	private static void _downloadSample(
-			String sampleKey, String axisVariable, String buildNumber,
-			String jobName, String hostName)
+			String sampleKey, String buildNumber, String jobName,
+			String hostName)
 		throws Exception {
 
 		String urlString =
-			"https://${hostName}.liferay.com/job/${jobName}/" +
-				"/${buildNumber}/";
-
-		if (axisVariable != null) {
-			urlString =
-				"https://${hostName}.liferay.com/job/${jobName}/" +
-					"AXIS_VARIABLE=${axis}/${buildNumber}/";
-
-			urlString = _replaceToken(urlString, "axis", axisVariable);
-		}
+			"https://${hostName}.liferay.com/job/${jobName}/${buildNumber}/" + 
+				"testReport/api/json";
 
 		urlString = _replaceToken(urlString, "buildNumber", buildNumber);
 		urlString = _replaceToken(urlString, "hostName", hostName);
@@ -134,7 +126,7 @@ public class FailureMessageUtilTest {
 
 		_downloadSample(sampleKey, url);
 	}
-
+	
 	private static void _downloadSample(String sampleKey, URL url)
 		throws Exception {
 
@@ -149,8 +141,10 @@ public class FailureMessageUtilTest {
 		}
 
 		try {
+			_downloadSampleURL(sampleDir, url, "/testReport/api/json");
 			_downloadSampleURL(sampleDir, url, "/api/json");
-			_downloadSampleURL(sampleDir, url, "/logText/progressiveText");
+
+			_downloadSampleRuns(new File(sampleDir, "/api/json"));
 
 			_writeExpectedFailureMessage(_project, sampleDir);
 		}
@@ -161,6 +155,38 @@ public class FailureMessageUtilTest {
 		}
 	}
 
+	private static void _downloadSampleRuns(File sampleJSONFile)
+		throws Exception {
+		JSONObject sampleJSONObject =
+			JenkinsResultsParserUtil.toJSONObject(
+				_toExternalForm(sampleJSONFile));
+		
+		JSONArray runsJSONArray = sampleJSONObject.getJSONArray("runs");
+		String sampleNumber = sampleJSONObject.getString("number");
+		
+		for (int i = 0; i < runsJSONArray.length(); i++) {
+			JSONObject runJSONObject = runsJSONArray.getJSONObject(i);
+	
+			if (!sampleNumber.equals(runJSONObject.getString("number"))) {
+				continue;
+			}
+			
+			String runKey = "run-" + i + "/" + sampleNumber + "/";
+			String runURLString = URLDecoder.decode(
+				runJSONObject.getString("url"), "UTF8");
+			
+			File runSubDir = new File(sampleJSONFile.getParentFile(), runKey);
+			
+			_downloadSampleURL(
+				runSubDir, _createURL(runURLString), "/api/json");
+			_downloadSampleURL(
+				runSubDir, _createURL(runURLString), "/testReport/api/json");
+			
+			runJSONObject.put("url", _toExternalForm(runSubDir));
+		}
+		_write(sampleJSONFile, sampleJSONObject.toString(4));
+	}
+	
 	private static void _downloadSampleURL(File dir, URL url, String urlSuffix)
 		throws Exception {
 
@@ -225,10 +251,10 @@ public class FailureMessageUtilTest {
 
 		_write(expectedFailureMessageFile, expectedFailureMessage);
 	}
-
+	
 	private static final File _dependenciesDir = new File(
 		"src/test/resources/com/liferay/results/parser/dependencies" +
-			"/FailureMessageUtilTest");
+			"/UnstableMessageUtilTest");
 	private static final Project _project = new Project();
 
 	static {

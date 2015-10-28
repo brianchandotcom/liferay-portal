@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.util.Props;
 
 import java.util.Properties;
 
-import net.sf.ehcache.config.CacheConfiguration;
+import net.sf.ehcache.config.FactoryConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -40,9 +40,7 @@ public class SingleVMEhcachePortalCacheManagerConfigurator
 
 	@Override
 	protected Properties parsePortalCacheBootstrapLoaderProperties(
-		CacheConfiguration cacheConfiguration) {
-
-		cacheConfiguration.addBootstrapCacheLoaderFactory(null);
+		FactoryConfiguration<?> factoryConfiguration) {
 
 		return null;
 	}

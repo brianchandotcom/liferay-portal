@@ -138,11 +138,7 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 
 	protected Set<Properties>
 		getCacheManagerListenerPropertiesSet(
-			Configuration ehcacheConfiguration) {
-
-		FactoryConfiguration<?> factoryConfiguration =
-			ehcacheConfiguration.
-				getCacheManagerEventListenerFactoryConfiguration();
+			FactoryConfiguration<?> factoryConfiguration) {
 
 		if (factoryConfiguration == null) {
 			return Collections.emptySet();
@@ -175,10 +171,14 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 
 		Set<Properties> portalCacheListenerPropertiesSet =
 			parseCacheEventListenerFactoryConfiguration(
-				cacheConfiguration, usingDefault);
+				(List<CacheEventListenerFactoryConfiguration>)
+					cacheConfiguration.getCacheEventListenerConfigurations(),
+				usingDefault);
 
 		Properties portalCacheBootstrapLoaderProperties =
-			parsePortalCacheBootstrapLoaderProperties(cacheConfiguration);
+			parsePortalCacheBootstrapLoaderProperties(
+				cacheConfiguration.
+					getBootstrapCacheLoaderFactoryConfiguration());
 
 		boolean requireSerialization = isRequireSerialization(
 			cacheConfiguration);
@@ -193,7 +193,9 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 			Configuration configuration, boolean usingDefault) {
 
 		Set<Properties> cacheManagerListenerPropertiesSet =
-			getCacheManagerListenerPropertiesSet(configuration);
+			getCacheManagerListenerPropertiesSet(
+				configuration.
+					getCacheManagerEventListenerFactoryConfiguration());
 
 		PortalCacheConfiguration defaultPortalCacheConfiguration =
 			getPortalCacheConfiguration(
@@ -270,13 +272,11 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 	}
 
 	protected Set<Properties> parseCacheEventListenerFactoryConfiguration(
-		CacheConfiguration cacheConfiguration, boolean usingDefault) {
+		List<CacheEventListenerFactoryConfiguration>
+			cacheEventListenerConfigurations,
+		boolean usingDefault) {
 
 		Set<Properties> portalCacheListenerPropertiesSet = new HashSet<>();
-
-		List<CacheEventListenerFactoryConfiguration>
-			cacheEventListenerConfigurations =
-				cacheConfiguration.getCacheEventListenerConfigurations();
 
 		for (CacheEventListenerFactoryConfiguration
 				cacheEventListenerFactoryConfiguration :
@@ -313,7 +313,7 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 	}
 
 	protected abstract Properties parsePortalCacheBootstrapLoaderProperties(
-		CacheConfiguration cacheConfiguration);
+		FactoryConfiguration<?> factoryConfiguration);
 
 	protected Properties parseProperties(
 		String propertiesString, String propertySeparator) {

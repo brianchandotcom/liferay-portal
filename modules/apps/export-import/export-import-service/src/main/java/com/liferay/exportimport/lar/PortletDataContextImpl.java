@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateRange;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -1772,6 +1773,52 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	@Override
+	public boolean isMissingReference(Element referenceElement) {
+		Attribute missingAttribute = referenceElement.attribute("missing");
+
+		if ((missingAttribute != null) &&
+			!GetterUtil.getBoolean(
+				referenceElement.attributeValue("missing"))) {
+
+			return false;
+		}
+
+		String className = referenceElement.attributeValue("class-name");
+		String classPK = referenceElement.attributeValue("class-pk");
+
+		String referenceKey = getReferenceKey(className, classPK);
+
+		if (!_missingReferences.isEmpty()) {
+			return _missingReferences.contains(referenceKey);
+		}
+
+		List<Element> missingReferenceElements =
+			_missingReferencesElement.elements();
+
+		boolean missing = false;
+
+		for (Element missingReferenceElement : missingReferenceElements) {
+			String missingReferenceClassName =
+				missingReferenceElement.attributeValue("class-name");
+			String missingReferenceClassPK =
+				missingReferenceElement.attributeValue("class-pk");
+
+			String missingReferenceKey = getReferenceKey(
+				missingReferenceClassName, missingReferenceClassPK);
+
+			_missingReferences.add(missingReferenceKey);
+
+			if (className.equals(missingReferenceClassName) &&
+				classPK.equals(missingReferenceClassPK)) {
+
+				missing = true;
+			}
+		}
+
+		return missing;
+	}
+
+	@Override
 	public boolean isModelCounted(String className, long classPK) {
 		String modelCountedPrimaryKey = className.concat(
 			StringPool.POUND).concat(String.valueOf(classPK));
@@ -2465,11 +2512,13 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	protected String getReferenceKey(ClassedModel classedModel) {
-		String referenceKey = ExportImportClassedModelUtil.getClassName(
-			classedModel);
-
-		return referenceKey.concat(StringPool.POUND).concat(
+		return getReferenceKey(
+			ExportImportClassedModelUtil.getClassName(classedModel),
 			String.valueOf(classedModel.getPrimaryKeyObj()));
+	}
+
+	protected String getReferenceKey(String className, String classPK) {
+		return className.concat(StringPool.POUND).concat(classPK);
 	}
 
 	protected long getUserId(AuditedModel auditedModel) {

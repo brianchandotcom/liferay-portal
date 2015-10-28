@@ -451,13 +451,13 @@
 	</command>
 
 	<command name="selectSitePageTypeRadioCP">
-		<var name="key_pageType" value="${sitePageType}" />
-
-		<execute function="Click" locator1="SitePagesEditPage#PAGE_TYPE_RADIO" />
-
 		<if>
 			<equals arg1="${sitePageType}" arg2="Embedded" />
 			<then>
+				<var name="key_pageType" value="${sitePageType}" />
+
+				<execute function="Click" locator1="SitePagesEditPage#PAGE_TYPE_RADIO" />
+		
 				<execute macro="SitePage#addSitePageTypeEmbeddedCP">
 					<var name="pageTypeDescription" value="${pageTypeDescription}" />
 					<var name="pageTypeURL" value="${pageTypeURL}" />
@@ -466,6 +466,10 @@
 			<elseif>
 				<equals arg1="${sitePageType}" arg2="Link to URL" />
 				<then>
+					<var name="key_pageType" value="${sitePageType}" />
+
+					<execute function="Click" locator1="SitePagesEditPage#PAGE_TYPE_RADIO" />
+
 					<execute macro="SitePage#addSitePageTypeLinkToURLCP">
 						<var name="pageTypeDescription" value="${pageTypeDescription}" />
 						<var name="pageTypeURL" value="${pageTypeURL}" />
@@ -475,9 +479,21 @@
 			<elseif>
 				<equals arg1="${sitePageType}" arg2="Panel" />
 				<then>
+					<var name="key_pageType" value="${sitePageType}" />
+
+					<execute function="Click" locator1="SitePagesEditPage#PAGE_TYPE_RADIO" />
+
 					<execute macro="SitePage#addSitePageTypePanelCP">
 						<var name="componentName" value="${componentName}" />
 					</execute>
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${sitePageType}" arg2="Empty Page" />
+				<then>
+					<var name="key_columnName" value="${columnName}" />
+
+					<execute function="Click" locator1="SitePagesEditPage#LAYOUT_RADIO" />
 				</then>
 			</elseif>
 		</if>

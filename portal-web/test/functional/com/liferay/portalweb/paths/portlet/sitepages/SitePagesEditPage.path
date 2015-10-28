@@ -51,7 +51,7 @@
 </tr>
 <tr>
 	<td>LAYOUT_RADIO</td>
-	<td>//input[@value='${columnName}']</td>
+	<td>//input[@value='${key_columnName}']</td>
 	<td></td>
 </tr>
 <tr>

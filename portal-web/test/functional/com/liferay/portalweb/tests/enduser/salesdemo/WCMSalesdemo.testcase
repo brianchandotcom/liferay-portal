@@ -19,8 +19,13 @@
 
 	<command name="IFrameDemo" priority="4">
 		<execute macro="Page#addPG">
+			<var name="columnName" value="1_column" />
 			<var name="pageName" value="IFrame Page" />
-			<var name="pageType" value="1 Column" />
+			<var name="pageType" value="Empty Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="IFrame Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -32,7 +37,7 @@
 		</execute>
 
 		<execute macro="IFrame#addCP">
-			<var name="sourceURL" value="http://www.liferay.com/products/liferay-portal/overview" />
+			<var name="sourceURL" value="http://www.nba.com" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -43,7 +48,7 @@
 
 		<take-screenshot />
 
-		<execute function="SikuliAssertElementPresent" locator1="IFramePortlet#SCREENSHOTS_LIFERAY_PRODUCTS_LOGO_PNG" />
+		<execute function="SikuliAssertElementPresent" locator1="IFramePortlet#SCREENSHOTS_NBA_LOGO_PNG" />
 	</command>
 
 	<command name="SalesDemo" priority="4">

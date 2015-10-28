@@ -308,7 +308,7 @@
 </tr>
 <tr>
 	<td>PAGE_DELETE</td>
-	<td>//li[contains(@class,'lfr-nav-deletable') and contains(@class,'lfr-nav-hover')]/span[@class='delete-tab']</td>
+	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
 	<td>Delete Page Button</td>
 </tr>
 <tr>

@@ -127,6 +127,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REPEAT_ENDS_ON_DATE_FIELD</td>
+	<td>//input[contains(@id,'CalendarPortlet_untilDate')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REPEAT_ENDS_ON_RADIO</td>
 	<td>//input[contains(@name,'CalendarPortlet_ends') and @value='on']</td>
 	<td></td>

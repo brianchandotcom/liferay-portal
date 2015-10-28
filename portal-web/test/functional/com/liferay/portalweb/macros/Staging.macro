@@ -206,6 +206,8 @@
 	</command>
 
 	<command name="configurePublishToLive">
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="StagingPublishtolivenow#SWITCH_TO_ADVANCED" value1="Switch to Advanced Publication" />
+
 		<if>
 			<equals arg1="${deleteMissingPages}" arg2="true" />
 			<then>

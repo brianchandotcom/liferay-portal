@@ -82,15 +82,12 @@ public class DDLRecordSetImplTest {
 		DDMStructure recordSetDDMStructure = recordSet.getDDMStructure(
 			template.getTemplateId());
 
-		if (fieldNames.equals(recordSetDDMStructure.getFieldNames())) {
-			Assert.fail();
-		}
+		Assert.assertNotEquals(
+			fieldNames, recordSetDDMStructure.getFieldNames());
 
 		recordSetDDMStructure = recordSet.getDDMStructure();
 
-		if (!fieldNames.equals(recordSetDDMStructure.getFieldNames())) {
-			Assert.fail();
-		}
+		Assert.assertEquals(fieldNames, recordSetDDMStructure.getFieldNames());
 	}
 
 	private DDLRecordSetTestHelper _ddlRecordSetTestHelper;

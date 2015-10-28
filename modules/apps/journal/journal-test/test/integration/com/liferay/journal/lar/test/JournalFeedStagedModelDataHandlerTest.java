@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
+import com.liferay.journal.lar.JournalFeedStagedModelDataHandler;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.service.JournalFeedLocalServiceUtil;
@@ -35,6 +36,8 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
@@ -43,9 +46,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.spi.LoggingEvent;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -77,6 +84,60 @@ public class JournalFeedStagedModelDataHandlerTest
 			_layout.getName(), _layout.getTitle(), _layout.getDescription(),
 			_layout.getType(), _layout.getHidden(), _layout.getFriendlyURL(),
 			serviceContext);
+	}
+
+	@Override
+	@Test
+	public void testCleanStagedModelDataHandler() throws Exception {
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					JournalFeedStagedModelDataHandler.class.getName(),
+					Level.WARN)) {
+
+			super.testCleanStagedModelDataHandler();
+
+			List<LoggingEvent> loggingEvents =
+				captureAppender.getLoggingEvents();
+
+			Assert.assertEquals(1, loggingEvents.size());
+
+			LoggingEvent loggingEvent = loggingEvents.get(0);
+
+			String message = (String)loggingEvent.getMessage();
+
+			Assert.assertTrue(
+				message, message.startsWith("A feed with the ID "));
+			Assert.assertTrue(
+				message,
+				message.contains(" already exists. The new generated ID is "));
+		}
+	}
+
+	@Override
+	@Test
+	public void testStagedModelDataHandler() throws Exception {
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					JournalFeedStagedModelDataHandler.class.getName(),
+					Level.WARN)) {
+
+			super.testStagedModelDataHandler();
+
+			List<LoggingEvent> loggingEvents =
+				captureAppender.getLoggingEvents();
+
+			Assert.assertEquals(1, loggingEvents.size());
+
+			LoggingEvent loggingEvent = loggingEvents.get(0);
+
+			String message = (String)loggingEvent.getMessage();
+
+			Assert.assertTrue(
+				message, message.startsWith("A feed with the ID "));
+			Assert.assertTrue(
+				message,
+				message.contains(" already exists. The new generated ID is "));
+		}
 	}
 
 	@Override

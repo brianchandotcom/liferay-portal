@@ -57,7 +57,7 @@ renderResponse.setTitle(((tag == null) ? LanguageUtil.get(request, "add-tag") : 
 
 	<aui:model-context bean="<%= tag %>" model="<%= AssetTag.class %>" />
 
-	<div class="row">
+	<div class="container-decorate row">
 		<aui:fieldset cssClass="col-md-4">
 			<aui:input name="tagId" type="hidden" value="<%= tagId %>" />
 

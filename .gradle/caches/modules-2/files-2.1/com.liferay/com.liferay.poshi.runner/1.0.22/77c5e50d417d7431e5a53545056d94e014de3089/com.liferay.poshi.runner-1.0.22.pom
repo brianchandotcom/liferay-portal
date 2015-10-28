@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.liferay</groupId>
   <artifactId>com.liferay.poshi.runner</artifactId>
-  <version>1.0.21</version>
+  <version>1.0.22</version>
   <licenses>
     <license>
       <name>LGPL 2.1</name>
@@ -28,6 +28,12 @@
       <groupId>org.apache.ant</groupId>
       <artifactId>ant</artifactId>
       <version>1.9.4</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.jayway.jsonpath</groupId>
+      <artifactId>json-path</artifactId>
+      <version>2.0.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>

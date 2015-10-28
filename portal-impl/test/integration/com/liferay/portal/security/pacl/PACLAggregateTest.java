@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.process.local.LocalProcessLauncher.ProcessConte
 import com.liferay.portal.kernel.process.log.ProcessOutputStream;
 import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.ci.AutoBalanceTestCase;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -59,6 +60,7 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -84,7 +86,7 @@ import org.junit.runners.model.InitializationError;
  * @author Shuyang Zhou
  */
 @RunWith(PACLAggregateTest.PACLAggregateTestRunner.class)
-public class PACLAggregateTest {
+public class PACLAggregateTest extends AutoBalanceTestCase {
 
 	@ClassRule
 	public static final HypersonicServerTestRule hypersonicServerTestRule =
@@ -198,6 +200,10 @@ public class PACLAggregateTest {
 				}
 
 			});
+
+		Arrays.sort(files);
+
+		files = slice(files);
 
 		Package pkg = PACLAggregateTest.class.getPackage();
 

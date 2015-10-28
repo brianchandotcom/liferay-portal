@@ -1,0 +1,40 @@
+task reJar(type: Jar)
+
+configurations {
+	archives.artifacts.removeAll {
+		it.archiveTask in [jarSources, zipJavadoc]
+	}
+
+	configAdmin
+}
+
+dependencies {
+	configAdmin group: "org.apache.felix", name: "org.apache.felix.configadmin", transitive: false, version: "1.8.8"
+}
+
+jar {
+	deleteAllActions()
+	dependsOn = [reJar]
+}
+
+reJar {
+	exclude "OSGI-INF/permissions.perm"
+	includeEmptyDirs = false
+
+	from zipTree(
+		{
+			configurations.configAdmin.singleFile
+		})
+
+	manifest {
+		from {
+			copy {
+				from zipTree(configurations.configAdmin.singleFile)
+				include "META-INF/MANIFEST.MF"
+				into temporaryDir
+			}
+
+			new File(temporaryDir, "META-INF/MANIFEST.MF")
+		}
+	}
+}

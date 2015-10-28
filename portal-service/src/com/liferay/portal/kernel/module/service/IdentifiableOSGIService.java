@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.util;
+package com.liferay.portal.kernel.module.service;
 
 /**
  * @author Tina Tian

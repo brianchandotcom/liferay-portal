@@ -35,31 +35,31 @@ public class JenkinsResultsParserUtilTest {
     @Test
     public void testFixJSON() {
         Assert.assertEquals(
-            "ABC&#09123", JenkinsResultsParserUtil.fixJSON("ABC\t123"));
+            "ABC&#09;123", JenkinsResultsParserUtil.fixJSON("ABC\t123"));
         Assert.assertEquals(
-            "ABC&#34123", JenkinsResultsParserUtil.fixJSON("ABC\"123"));
+            "ABC&#34;123", JenkinsResultsParserUtil.fixJSON("ABC\"123"));
         Assert.assertEquals(
-            "ABC&#39123", JenkinsResultsParserUtil.fixJSON("ABC'123"));
+            "ABC&#39;123", JenkinsResultsParserUtil.fixJSON("ABC'123"));
         Assert.assertEquals(
-            "ABC&#40123", JenkinsResultsParserUtil.fixJSON("ABC(123"));
+            "ABC&#40;123", JenkinsResultsParserUtil.fixJSON("ABC(123"));
         Assert.assertEquals(
-            "ABC&#41123", JenkinsResultsParserUtil.fixJSON("ABC)123"));
+            "ABC&#41;123", JenkinsResultsParserUtil.fixJSON("ABC)123"));
         Assert.assertEquals(
-            "ABC&#60123", JenkinsResultsParserUtil.fixJSON("ABC<123"));
+            "ABC&#60;123", JenkinsResultsParserUtil.fixJSON("ABC<123"));
         Assert.assertEquals(
-            "ABC&#62123", JenkinsResultsParserUtil.fixJSON("ABC>123"));
+            "ABC&#62;123", JenkinsResultsParserUtil.fixJSON("ABC>123"));
         Assert.assertEquals(
-            "ABC&#91123", JenkinsResultsParserUtil.fixJSON("ABC[123"));
+            "ABC&#91;123", JenkinsResultsParserUtil.fixJSON("ABC[123"));
         Assert.assertEquals(
-            "ABC&#92123", JenkinsResultsParserUtil.fixJSON("ABC\\123"));
+            "ABC&#92;123", JenkinsResultsParserUtil.fixJSON("ABC\\123"));
         Assert.assertEquals(
-            "ABC&#93123", JenkinsResultsParserUtil.fixJSON("ABC]123"));
+            "ABC&#93;123", JenkinsResultsParserUtil.fixJSON("ABC]123"));
         Assert.assertEquals(
-            "ABC&#123123", JenkinsResultsParserUtil.fixJSON("ABC{123"));
+            "ABC&#123;123", JenkinsResultsParserUtil.fixJSON("ABC{123"));
         Assert.assertEquals(
-            "ABC&#125123", JenkinsResultsParserUtil.fixJSON("ABC}123"));
+            "ABC&#125;123", JenkinsResultsParserUtil.fixJSON("ABC}123"));
         Assert.assertEquals(
-            "ABC&<br />123", JenkinsResultsParserUtil.fixJSON("ABC\n123"));
+            "ABC<br />123", JenkinsResultsParserUtil.fixJSON("ABC\n123"));
     }
 
     @Test
@@ -87,13 +87,13 @@ public class JenkinsResultsParserUtilTest {
 
     @Test
     public void testGetJobVariant() throws Exception {
-        assertgetJobVariantSample(
+        assertGetJobVariantSample(
             "sample-2.json", "functional-tomcat-mysql/0");
-        assertgetJobVariantSample(
+        assertGetJobVariantSample(
             "sample-3.json", "integration-db2");
     }
 
-    public void assertgetJobVariantSample(
+    public void assertGetJobVariantSample(
         String fileName, String expectedVariantString)
             throws Exception {
 
@@ -110,15 +110,17 @@ public class JenkinsResultsParserUtilTest {
     @Test
     public void testGetLocalURL() {
         Assert.assertEquals(
-            "http://test-8/8",
-            JenkinsResultsParserUtil.getLocalURL("https://test-liferay.com/8"));
-        Assert.assertEquals(
-            "http://test-1-20/",
+            "http://test-8/8/ABC?123=456&xyz=abc",
             JenkinsResultsParserUtil.getLocalURL(
-                "https://test-1-20.liferay.com"));
+            	"https://test.liferay.com/8/ABC?123=456&xyz=abc"));
         Assert.assertEquals(
-            "http://test-4-1/",
-            JenkinsResultsParserUtil.getLocalURL("http://test-4-1"));
+            "http://test-1-20/ABC?123=456&xyz=abc",
+            JenkinsResultsParserUtil.getLocalURL(
+                "https://test-1-20.liferay.com/ABC?123=456&xyz=abc"));
+        Assert.assertEquals(
+            "http://test-4-1/ABC?123=456&xyz=abc",
+            JenkinsResultsParserUtil.getLocalURL(
+            	"http://test-4-1/ABC?123=456&xyz=abc"));
     }
 
     @Test

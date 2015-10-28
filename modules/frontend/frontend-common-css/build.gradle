@@ -1,18 +1,15 @@
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask
 import com.liferay.gradle.util.FileUtil
-import com.liferay.gradle.util.copy.ReplaceLeadingPathAction
+import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 task buildBourbon(type: Copy)
 task buildCssCommon(type: Copy)
 task publishNodeModule(type: PublishNodeModuleTask)
 
-String bourbonVersion = "3.2.3"
-
 File commonCssDestinationDir = file("tmp/META-INF/resources")
 
 buildBourbon {
 	File bourbonDestinationDir = new File(commonCssDestinationDir, "bourbon")
-	File bourbonZipFile = file("../../../portal-web/third-party/bourbon-${bourbonVersion}.zip")
 
 	from("src/main/resources/META-INF/resources") {
 		exclude "**.npmignore"
@@ -23,13 +20,10 @@ buildBourbon {
 	into commonCssDestinationDir
 
 	into(bourbonDestinationDir.name) {
-		eachFile new ReplaceLeadingPathAction("bourbon/bourbon-3.2.3/app/assets/stylesheets": "bourbon")
-		from zipTree(bourbonZipFile)
-		include "bourbon-${bourbonVersion}/app/assets/stylesheets/**/*"
-	}
-
-	onlyIf {
-		!FileUtil.isUpToDate(project, bourbonZipFile, bourbonDestinationDir)
+		eachFile new StripPathSegmentsAction(8)
+		from ({ zipTree(configurations.compile.fileCollection { it.name.startsWith("bourbon") }.singleFile) })
+		include "**/app/assets/stylesheets/**/*"
+		includeEmptyDirs = false
 	}
 }
 
@@ -46,6 +40,7 @@ classes {
 dependencies {
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	compile group: "org.webjars.bower", name: "bourbon", version: "4.2.3"
 }
 
 liferay {

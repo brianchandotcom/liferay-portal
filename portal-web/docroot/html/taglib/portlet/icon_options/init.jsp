@@ -22,6 +22,8 @@ page import="com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigu
 page import="com.liferay.taglib.servlet.PipingServletResponse" %><%@
 page import="com.liferay.util.PropertyComparator" %>
 
+<liferay-theme:defineObjects />
+
 <%
 String direction = (String)request.getAttribute("liferay-ui:icon:direction");
 String markupView = (String)request.getAttribute("liferay-ui:icon:markupView");

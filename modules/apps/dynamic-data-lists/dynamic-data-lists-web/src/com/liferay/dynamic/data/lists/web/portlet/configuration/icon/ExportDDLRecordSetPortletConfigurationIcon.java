@@ -15,7 +15,6 @@
 package com.liferay.dynamic.data.lists.web.portlet.configuration.icon;
 
 import com.liferay.dynamic.data.lists.constants.DDLActionKeys;
-import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.service.permission.DDLPermission;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -68,15 +67,9 @@ public class ExportDDLRecordSetPortletConfigurationIcon
 			return false;
 		}
 
-		String rootPortletId = portletDisplay.getRootPortletId();
-
-		if (rootPortletId.equals(DDLPortletKeys.DYNAMIC_DATA_LISTS)) {
-			return DDLPermission.contains(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), DDLActionKeys.ADD_RECORD_SET);
-		}
-
-		return false;
+		return DDLPermission.contains(
+			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
+			DDLActionKeys.ADD_RECORD_SET);
 	}
 
 	@Override

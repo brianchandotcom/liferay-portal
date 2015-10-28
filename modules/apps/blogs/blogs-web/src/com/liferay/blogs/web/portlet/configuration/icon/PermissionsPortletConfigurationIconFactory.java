@@ -14,6 +14,7 @@
 
 package com.liferay.blogs.web.portlet.configuration.icon;
 
+import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIconFactory;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
@@ -25,7 +26,11 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Sergio González
  */
-@Component(immediate = true, service = PortletConfigurationIconFactory.class)
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + BlogsPortletKeys.BLOGS_ADMIN},
+	service = PortletConfigurationIconFactory.class
+)
 public class PermissionsPortletConfigurationIconFactory
 	extends BasePortletConfigurationIconFactory {
 

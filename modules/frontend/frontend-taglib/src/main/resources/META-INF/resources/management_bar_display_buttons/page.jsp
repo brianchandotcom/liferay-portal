@@ -41,11 +41,13 @@ for (String displayStyle : displayViews) {
 	}
 %>
 
-	<aui:a
-		cssClass='<%= displayStyle.equals(selectedDisplayStyle) ? "active btn" : "btn" %>'
-		href="<%= displayStyleURL.toString() %>"
-		iconCssClass="<%= iconCssClass %>"
-	/>
+	<li class="<%= displayStyle.equals(selectedDisplayStyle) ? "active" : StringPool.BLANK %>">
+		<aui:a
+			cssClass="btn"
+			href="<%= displayStyleURL.toString() %>"
+			iconCssClass="<%= iconCssClass %>"
+		/>
+	</li>
 
 <%
 }

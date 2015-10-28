@@ -29,7 +29,9 @@
 
 			<c:if test="<%= Validator.isNotNull(buttons) %>">
 				<div class="management-bar-header-right">
-					<%= buttons %>
+					<ul class="management-bar-nav nav">
+						<%= buttons %>
+					</ul>
 				</div>
 			</c:if>
 
@@ -55,7 +57,9 @@
 				</div>
 
 				<div class="management-bar-header-right">
-					<%= actionButtons %>
+					<ul class="management-bar-nav nav">
+						<%= actionButtons %>
+					</ul>
 				</div>
 
 				<div class="collapse management-bar-collapse">

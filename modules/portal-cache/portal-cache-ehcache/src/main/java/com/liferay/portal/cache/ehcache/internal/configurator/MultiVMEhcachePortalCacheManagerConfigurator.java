@@ -85,7 +85,7 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 	}
 
 	@Override
-	protected Properties parsePortalCacheBootstrapLoaderProperties(
+	protected Properties parseBootstrapCacheLoaderConfigurations(
 		FactoryConfiguration<?> factoryConfiguration) {
 
 		if ((factoryConfiguration == null) || !_clusterEnabled) {

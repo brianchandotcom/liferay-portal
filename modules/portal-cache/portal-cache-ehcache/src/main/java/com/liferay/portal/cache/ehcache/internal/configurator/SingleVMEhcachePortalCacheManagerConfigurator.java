@@ -39,7 +39,7 @@ public class SingleVMEhcachePortalCacheManagerConfigurator
 	}
 
 	@Override
-	protected Properties parsePortalCacheBootstrapLoaderProperties(
+	protected Properties parseBootstrapCacheLoaderConfigurations(
 		FactoryConfiguration<?> factoryConfiguration) {
 
 		return null;

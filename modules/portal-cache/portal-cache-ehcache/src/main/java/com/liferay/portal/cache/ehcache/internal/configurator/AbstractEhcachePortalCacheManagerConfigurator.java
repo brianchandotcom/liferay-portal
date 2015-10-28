@@ -69,21 +69,20 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 			throw new NullPointerException("Configuration path is null");
 		}
 
-		Configuration ehcacheConfiguration =
-			ConfigurationFactory.parseConfiguration(configurationURL);
+		Configuration configuration = ConfigurationFactory.parseConfiguration(
+			configurationURL);
 
-		ehcacheConfiguration.setName(portalCacheManagerName);
+		configuration.setName(portalCacheManagerName);
 
-		resolvePortalProperty(ehcacheConfiguration);
+		resolvePortalProperty(configuration);
 
 		PortalCacheManagerConfiguration portalCacheManagerConfiguration =
-			getPortalCacheManagerConfiguration(
-				ehcacheConfiguration, usingDefault);
+			parseListenerConfigurations(configuration, usingDefault);
 
-		clearListenerConfigrations(ehcacheConfiguration);
+		clearListenerConfigrations(configuration);
 
 		return new ObjectValuePair<>(
-			ehcacheConfiguration, portalCacheManagerConfiguration);
+			configuration, portalCacheManagerConfiguration);
 	}
 
 	protected void clearListenerConfigrations(
@@ -137,7 +136,7 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 	}
 
 	protected Set<Properties>
-		getCacheManagerListenerPropertiesSet(
+		parseCacheManagerEventListenerConfigurations(
 			FactoryConfiguration<?> factoryConfiguration) {
 
 		if (factoryConfiguration == null) {
@@ -155,7 +154,7 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 		return Collections.singleton(properties);
 	}
 
-	protected PortalCacheConfiguration getPortalCacheConfiguration(
+	protected PortalCacheConfiguration parseCacheListenerConfigurations(
 		CacheConfiguration cacheConfiguration, boolean usingDefault) {
 
 		if (cacheConfiguration == null) {
@@ -170,13 +169,13 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 		}
 
 		Set<Properties> portalCacheListenerPropertiesSet =
-			parseCacheEventListenerFactoryConfiguration(
+			parseCacheEventListenerConfigurations(
 				(List<CacheEventListenerFactoryConfiguration>)
 					cacheConfiguration.getCacheEventListenerConfigurations(),
 				usingDefault);
 
 		Properties portalCacheBootstrapLoaderProperties =
-			parsePortalCacheBootstrapLoaderProperties(
+			parseBootstrapCacheLoaderConfigurations(
 				cacheConfiguration.
 					getBootstrapCacheLoaderFactoryConfiguration());
 
@@ -188,17 +187,16 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 			portalCacheBootstrapLoaderProperties, requireSerialization);
 	}
 
-	protected PortalCacheManagerConfiguration
-		getPortalCacheManagerConfiguration(
-			Configuration configuration, boolean usingDefault) {
+	protected PortalCacheManagerConfiguration parseListenerConfigurations(
+		Configuration configuration, boolean usingDefault) {
 
 		Set<Properties> cacheManagerListenerPropertiesSet =
-			getCacheManagerListenerPropertiesSet(
+			parseCacheManagerEventListenerConfigurations(
 				configuration.
 					getCacheManagerEventListenerFactoryConfiguration());
 
 		PortalCacheConfiguration defaultPortalCacheConfiguration =
-			getPortalCacheConfiguration(
+			parseCacheListenerConfigurations(
 				configuration.getDefaultCacheConfiguration(), usingDefault);
 
 		Set<PortalCacheConfiguration> portalCacheConfigurations =
@@ -211,7 +209,8 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 				cacheConfigurations.entrySet()) {
 
 			portalCacheConfigurations.add(
-				getPortalCacheConfiguration(entry.getValue(), usingDefault));
+				parseCacheListenerConfigurations(
+					entry.getValue(), usingDefault));
 		}
 
 		return new PortalCacheManagerConfiguration(
@@ -271,7 +270,7 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 		return true;
 	}
 
-	protected Set<Properties> parseCacheEventListenerFactoryConfiguration(
+	protected Set<Properties> parseCacheEventListenerConfigurations(
 		List<CacheEventListenerFactoryConfiguration>
 			cacheEventListenerConfigurations,
 		boolean usingDefault) {
@@ -312,7 +311,7 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 		return portalCacheListenerPropertiesSet;
 	}
 
-	protected abstract Properties parsePortalCacheBootstrapLoaderProperties(
+	protected abstract Properties parseBootstrapCacheLoaderConfigurations(
 		FactoryConfiguration<?> factoryConfiguration);
 
 	protected Properties parseProperties(

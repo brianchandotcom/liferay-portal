@@ -16,14 +16,17 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 import java.io.IOException;
+
 import java.net.URI;
 import java.net.URL;
 import java.net.URLDecoder;
+
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -38,14 +41,14 @@ public class UnstableMessageUtilTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_downloadSample(
-			"2-of-3888", "5141",
+			"1-of-1", "5141",
 			"test-portal-acceptance-pullrequest-batch(master)", "test-1-9");
 		_downloadSample(
-			"1-of-1", "3415",
+			"2-of-3888", "3415",
 			"test-portal-acceptance-pullrequest-batch(master)", "test-1-18");
 		_downloadSample(
 			"6-of-6", "1287",
-			"test-portal-acceptance-pullrequest-batch(master)",  "test-1-19");
+			"test-portal-acceptance-pullrequest-batch(master)", "test-1-19");
 	}
 
 	@Before
@@ -59,7 +62,7 @@ public class UnstableMessageUtilTest {
 		_replaceInAllFiles(
 			_dependenciesDir, System.getProperty("user.dir"), "${user.dir}");
 	}
-	
+
 	@Test
 	public void testGetUnstableMessage() throws Exception {
 		File[] files = _dependenciesDir.listFiles();
@@ -69,9 +72,7 @@ public class UnstableMessageUtilTest {
 		}
 	}
 
-	protected void assertSample(File caseDir)
-		throws Exception {
-
+	protected void assertSample(File caseDir) throws Exception {
 		System.out.print("Asserting sample " + caseDir.getName() + ": ");
 
 		File expectedUnstableMessageFile = new File(
@@ -80,7 +81,7 @@ public class UnstableMessageUtilTest {
 		String expectedUnstableMessage = _read(expectedUnstableMessageFile);
 
 		String actualUnstableMessage = UnstableMessageUtil.getUnstableMessage(
-			_toExternalForm(caseDir));
+			_toURLString(caseDir));
 
 		boolean value = expectedUnstableMessage.equals(actualUnstableMessage);
 
@@ -128,8 +129,7 @@ public class UnstableMessageUtilTest {
 		throws Exception {
 
 		String urlString =
-			"https://${hostName}.liferay.com/job/${jobName}/${buildNumber}/" + 
-				"testReport/api/json";
+			"https://${hostName}.liferay.com/job/${jobName}/${buildNumber}/";
 
 		urlString = _replaceToken(urlString, "buildNumber", buildNumber);
 		urlString = _replaceToken(urlString, "hostName", hostName);
@@ -139,7 +139,7 @@ public class UnstableMessageUtilTest {
 
 		_downloadSample(sampleKey, url);
 	}
-	
+
 	private static void _downloadSample(String sampleKey, URL url)
 		throws Exception {
 
@@ -157,7 +157,7 @@ public class UnstableMessageUtilTest {
 			_downloadSampleURL(sampleDir, url, "/testReport/api/json");
 			_downloadSampleURL(sampleDir, url, "/api/json");
 
-			_downloadSampleRuns(new File(sampleDir, "/api/json"));
+			_downloadSampleRuns(sampleDir, new File(sampleDir, "/api/json"));
 
 			_writeExpectedUnstableMessage(sampleDir);
 		}
@@ -168,44 +168,45 @@ public class UnstableMessageUtilTest {
 		}
 	}
 
-	private static void _downloadSampleRuns(File sampleJSONFile)
+	private static void _downloadSampleRuns(File sampleDir, File sampleJSONFile)
 		throws Exception {
-		JSONObject sampleJSONObject =
-			JenkinsResultsParserUtil.toJSONObject(
-				_toExternalForm(sampleJSONFile));
-		
+
+		JSONObject sampleJSONObject = JenkinsResultsParserUtil.toJSONObject(
+			_toURLString(sampleJSONFile));
+
 		JSONArray runsJSONArray = sampleJSONObject.getJSONArray("runs");
 		String sampleNumber = sampleJSONObject.getString("number");
-		
+
 		for (int i = 0; i < runsJSONArray.length(); i++) {
 			JSONObject runJSONObject = runsJSONArray.getJSONObject(i);
-	
+
 			if (!sampleNumber.equals(runJSONObject.getString("number"))) {
 				continue;
 			}
-			
+
 			String runKey = "run-" + i + "/" + sampleNumber + "/";
 			String runURLString = URLDecoder.decode(
-				runJSONObject.getString("url"), "UTF8");
-			
-			File runSubDir = new File(sampleJSONFile.getParentFile(), runKey);
-			
+				runJSONObject.getString("url"), "UTF-8");
+
+			File runSubDir = new File(sampleDir, runKey);
+
 			_downloadSampleURL(
 				runSubDir, _createURL(runURLString), "/api/json");
 			_downloadSampleURL(
 				runSubDir, _createURL(runURLString), "/testReport/api/json");
-			
-			runJSONObject.put("url", _toExternalForm(runSubDir));
+
+			runJSONObject.put("url", _toURLString(runSubDir));
 		}
-		_write(sampleJSONFile, sampleJSONObject.toString(4));
+
+		_write(sampleJSONFile, sampleJSONObject);
 	}
-	
+
 	private static void _downloadSampleURL(File dir, URL url, String urlSuffix)
 		throws Exception {
 
 		_write(
 			new File(dir, urlSuffix),
-			JenkinsResultsParserUtil.toString(url + urlSuffix));
+			JenkinsResultsParserUtil.toJSONObject(url + urlSuffix));
 	}
 
 	private static URL _encode(URL url) throws Exception {
@@ -213,7 +214,9 @@ public class UnstableMessageUtilTest {
 			url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(),
 			url.getPath(), url.getQuery(), url.getRef());
 
-		return new URL(uri.toASCIIString());
+		String uriString = uri.toASCIIString();
+
+		return new URL(uriString.replace("#", "%23"));
 	}
 
 	private static String _read(File file) throws IOException {
@@ -221,11 +224,11 @@ public class UnstableMessageUtilTest {
 	}
 
 	private static void _replaceInAllFiles(
-		File rootDir, String token, String value)
-			throws Exception {
-	
+			File rootDir, String token, String value)
+		throws Exception {
+
 		File[] childFileArray = rootDir.listFiles();
-	
+
 		for (File childFile : childFileArray) {
 			if (childFile.isDirectory()) {
 				_replaceInAllFiles(childFile, token, value);
@@ -235,19 +238,22 @@ public class UnstableMessageUtilTest {
 			}
 		}
 	}
-	
+
 	private static void _replaceInFile(
 			File targetFile, String token, String value)
 		throws Exception {
-	
+
 		String fileContents = _read(targetFile);
-	
+
+		if (!fileContents.contains(token)) {
+			return;
+		}
+
 		fileContents = fileContents.replace(token, value);
 
 		_write(targetFile, fileContents);
 	}
-	
-	
+
 	private static String _replaceToken(
 		String string, String token, String value) {
 
@@ -258,12 +264,18 @@ public class UnstableMessageUtilTest {
 		return string.replace("${" + token + "}", value);
 	}
 
-	private static String _toExternalForm(File file) throws Exception {
+	private static String _toURLString(File file) throws Exception {
 		URI uri = file.toURI();
 
 		URL url = uri.toURL();
 
-		return url.toExternalForm();
+		return url.toString();
+	}
+
+	private static void _write(File file, JSONObject jsonObject)
+		throws Exception {
+
+		_write(file, jsonObject.toString(4));
 	}
 
 	private static void _write(File file, String content) throws Exception {
@@ -287,11 +299,11 @@ public class UnstableMessageUtilTest {
 		File expectedUnstableMessageFile = new File(
 			sampleDir, "expected_unstable_message.html");
 		String expectedUnstableMessage = UnstableMessageUtil.getUnstableMessage(
-			_toExternalForm(sampleDir));
+			_toURLString(sampleDir));
 
 		_write(expectedUnstableMessageFile, expectedUnstableMessage);
 	}
-	
+
 	private static final File _dependenciesDir = new File(
 		"src/test/resources/com/liferay/results/parser/dependencies" +
 			"/UnstableMessageUtilTest");

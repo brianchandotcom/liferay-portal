@@ -50,8 +50,8 @@ public final class PropertiesFileNamedConfigurationContent
 		try {
 			_inputStream = url.openStream();
 		}
-		catch (IOException e) {
-			throw new RuntimeException(e);
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
 		}
 	}
 

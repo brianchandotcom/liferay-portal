@@ -18,6 +18,7 @@ package com.liferay.portal.kernel.util;
  * @author Carlos Sierra Andrés
  */
 public interface Supplier<T> {
+
 	public T get();
 
 }

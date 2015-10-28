@@ -68,12 +68,10 @@ public class CalendarResourceServiceTest {
 
 		nameMap.put(LocaleUtil.getDefault(), name);
 
-		CalendarResource calendarResource =
-			CalendarResourceLocalServiceUtil.addCalendarResource(
-				_user.getUserId(), _user.getGroupId(), classNameId, 0,
-				PortalUUIDUtil.generate(), RandomTestUtil.randomString(8),
-				nameMap, RandomTestUtil.randomLocaleStringMap(), true,
-				new ServiceContext());
+		CalendarResourceLocalServiceUtil.addCalendarResource(
+			_user.getUserId(), _user.getGroupId(), classNameId, 0,
+			PortalUUIDUtil.generate(), RandomTestUtil.randomString(8), nameMap,
+			RandomTestUtil.randomLocaleStringMap(), true, new ServiceContext());
 
 		int count = CalendarResourceServiceUtil.searchCount(
 			_user.getCompanyId(), new long[] {_user.getGroupId()},

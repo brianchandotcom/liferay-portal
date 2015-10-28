@@ -1345,7 +1345,9 @@ ${output.content}</echo>
 			<test-set-up>
 				<prepare-test-build />
 
-				<antcall target="prepare-portal-ext-properties" />
+				<antcall target="prepare-portal-ext-properties">
+					<param name="hot.deploy.dependency.management.enabled" value="false" />
+				</antcall>
 
 				<antcall target="prepare-system-ext-properties" />
 			</test-set-up>

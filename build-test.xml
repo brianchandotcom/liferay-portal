@@ -4655,9 +4655,14 @@ include-and-override=${liferay.home}/portal-setup-wizard.properties</echo>
 			</then>
 		</if>
 
-		<echo file="portal-impl/src/portal-ext.properties" append="true">
+		<if>
+			<equals arg1="${hot.deploy.dependency.management.enabled}" arg2="false" />
+			<then>
+				<echo file="portal-impl/src/portal-ext.properties" append="true">
 
 hot.deploy.dependency.management.enabled=false</echo>
+			</then>
+		</if>
 
 		<if>
 			<isset property="test.set.default.portal.properties" />

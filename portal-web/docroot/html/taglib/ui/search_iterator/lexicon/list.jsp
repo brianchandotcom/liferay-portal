@@ -132,7 +132,7 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 			</thead>
 		</c:if>
 
-		<tbody>
+		<tbody class="container-decorate">
 
 		<c:if test="<%= resultRows.isEmpty() && (emptyResultsMessage != null) %>">
 			<tr>

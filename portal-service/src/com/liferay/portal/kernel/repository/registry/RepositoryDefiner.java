@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.repository.registry;
 
 import com.liferay.portal.kernel.repository.DocumentRepository;
+import com.liferay.portal.kernel.repository.RepositoryConfiguration;
 
 import java.util.Locale;
 
@@ -25,11 +26,9 @@ public interface RepositoryDefiner {
 
 	public String getClassName();
 
+	public RepositoryConfiguration getRepositoryConfiguration();
+
 	public String getRepositoryTypeLabel(Locale locale);
-
-	public String[] getSupportedConfigurations();
-
-	public String[][] getSupportedParameters();
 
 	public boolean isExternalRepository();
 

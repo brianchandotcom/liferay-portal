@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
-import com.liferay.portal.kernel.repository.RepositoryException;
+import com.liferay.portal.kernel.repository.RepositoryConfiguration;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.ClassName;
 import com.liferay.portal.model.Group;
@@ -35,6 +35,9 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * @author Alexander Chow
@@ -81,28 +84,17 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 		return repositoryPersistence.findByPrimaryKey(repositoryId);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement.
+	 */
+	@Deprecated
 	@Override
 	public String[] getSupportedConfigurations(long classNameId) {
-		try {
-			ClassName className = classNameLocalService.getClassName(
-				classNameId);
-
-			String repositoryImplClassName = className.getValue();
-
-			RepositoryClassDefinition repositoryClassDefinition =
-				_repositoryClassDefinitionCatalog.getRepositoryClassDefinition(
-					repositoryImplClassName);
-
-			return repositoryClassDefinition.getSupportedConfigurations();
-		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
-		}
+		return _DEFAULT_CONFIGURATIONS;
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getSupportedParameters(String, String)}
+	 * @deprecated As of 7.0.0, with no direct replacement.
 	 */
 	@Deprecated
 	@Override
@@ -123,30 +115,44 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement.
+	 */
 	@Override
 	public String[] getSupportedParameters(
 		String className, String configuration) {
 
 		try {
+			if (!configuration.equals(_DEFAULT_CONFIGURATION)) {
+				throw new IllegalArgumentException(
+					"Unsupported configuration " + configuration + "; the " +
+						"only supported configuration is " +
+							_DEFAULT_CONFIGURATION);
+			}
+
 			RepositoryClassDefinition repositoryClassDefinition =
 				_repositoryClassDefinitionCatalog.getRepositoryClassDefinition(
 					className);
 
-			String[] supportedConfigurations =
-				repositoryClassDefinition.getSupportedConfigurations();
+			RepositoryConfiguration repositoryConfiguration =
+				repositoryClassDefinition.getRepositoryConfiguration();
 
-			String[][] supportedParameters =
-				repositoryClassDefinition.getSupportedParameters();
+			Collection<RepositoryConfiguration.Parameter>
+				repositoryConfigurationParameters =
+					repositoryConfiguration.getParameters();
 
-			for (int i = 0; i < supportedConfigurations.length; i++) {
-				if (supportedConfigurations[i].equals(configuration)) {
-					return supportedParameters[i];
-				}
+			Collection<String> supportedParameters = new ArrayList<>();
+
+			for (RepositoryConfiguration.Parameter
+					repositoryConfigurationParameter :
+						repositoryConfigurationParameters) {
+
+				supportedParameters.add(
+					repositoryConfigurationParameter.getName());
 			}
 
-			throw new RepositoryException(
-				"Configuration not found for repository with class name " +
-					className);
+			return supportedParameters.toArray(
+				new String[repositoryConfigurationParameters.size()]);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -240,6 +246,11 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 			throw new InvalidRepositoryIdException(nsre.getMessage());
 		}
 	}
+
+	private static final String _DEFAULT_CONFIGURATION = "DEFAULT";
+
+	private static final String[] _DEFAULT_CONFIGURATIONS =
+		new String[] {_DEFAULT_CONFIGURATION};
 
 	@BeanReference(type = RepositoryClassDefinitionCatalog.class)
 	private RepositoryClassDefinitionCatalog _repositoryClassDefinitionCatalog;

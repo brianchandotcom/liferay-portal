@@ -70,11 +70,18 @@ public class RepositoryServiceWrapper implements RepositoryService,
 		return _repositoryService.getRepository(repositoryId);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement.
+	*/
+	@Deprecated
 	@Override
 	public java.lang.String[] getSupportedConfigurations(long classNameId) {
 		return _repositoryService.getSupportedConfigurations(classNameId);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement.
+	*/
 	@Override
 	public java.lang.String[] getSupportedParameters(
 		java.lang.String className, java.lang.String configuration) {
@@ -83,8 +90,7 @@ public class RepositoryServiceWrapper implements RepositoryService,
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	#getSupportedParameters(String, String)}
+	* @deprecated As of 7.0.0, with no direct replacement.
 	*/
 	@Deprecated
 	@Override

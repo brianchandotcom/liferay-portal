@@ -15,6 +15,8 @@
 package com.liferay.portal.repository.registry.bundle.repositoryclassdefinitioncatalogimpl;
 
 import com.liferay.portal.kernel.repository.DocumentRepository;
+import com.liferay.portal.kernel.repository.RepositoryConfiguration;
+import com.liferay.portal.kernel.repository.RepositoryConfigurationBuilder;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
@@ -39,17 +41,12 @@ public class TestExternalRepositoryDefiner implements RepositoryDefiner {
 	}
 
 	@Override
+	public RepositoryConfiguration getRepositoryConfiguration() {
+		return _EMPTY_CONFIGURATION;
+	}
+
+	@Override
 	public String getRepositoryTypeLabel(Locale locale) {
-		return null;
-	}
-
-	@Override
-	public String[] getSupportedConfigurations() {
-		return null;
-	}
-
-	@Override
-	public String[][] getSupportedParameters() {
 		return null;
 	}
 
@@ -72,5 +69,8 @@ public class TestExternalRepositoryDefiner implements RepositoryDefiner {
 	public void registerRepositoryFactory(
 		RepositoryFactoryRegistry repositoryFactoryRegistry) {
 	}
+
+	private static final RepositoryConfiguration _EMPTY_CONFIGURATION =
+		new RepositoryConfigurationBuilder().build();
 
 }

@@ -167,16 +167,6 @@
 	margin-top: 6px;
 }
 
-.label-required {
-	&:after {
-		content: ")";
-	}
-
-	&:before {
-		content: "(";
-	}
-}
-
 @include respond-to(phone, tablet) {
 	#{$form_text_fields},
 	select,

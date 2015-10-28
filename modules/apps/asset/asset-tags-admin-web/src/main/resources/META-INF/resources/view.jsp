@@ -135,7 +135,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 			/>
 
 			<liferay-ui:search-container-column-jsp
-				cssClass="checkbox-cell entry-action"
+				cssClass="list-group-item-field"
 				path="/tag_action.jsp"
 			/>
 		</liferay-ui:search-container-row>

@@ -77,19 +77,25 @@ public class RepositoryServiceUtil {
 		return getService().getRepository(repositoryId);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement.
+	*/
+	@Deprecated
 	public static java.lang.String[] getSupportedConfigurations(
 		long classNameId) {
 		return getService().getSupportedConfigurations(classNameId);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement.
+	*/
 	public static java.lang.String[] getSupportedParameters(
 		java.lang.String className, java.lang.String configuration) {
 		return getService().getSupportedParameters(className, configuration);
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	#getSupportedParameters(String, String)}
+	* @deprecated As of 7.0.0, with no direct replacement.
 	*/
 	@Deprecated
 	public static java.lang.String[] getSupportedParameters(long classNameId,

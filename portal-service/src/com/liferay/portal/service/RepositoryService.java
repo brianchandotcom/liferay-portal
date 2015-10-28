@@ -68,16 +68,22 @@ public interface RepositoryService extends BaseService {
 	public com.liferay.portal.model.Repository getRepository(long repositoryId)
 		throws PortalException;
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement.
+	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String[] getSupportedConfigurations(long classNameId);
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement.
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String[] getSupportedParameters(
 		java.lang.String className, java.lang.String configuration);
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	#getSupportedParameters(String, String)}
+	* @deprecated As of 7.0.0, with no direct replacement.
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -62,6 +62,7 @@ import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutBranch;
 import com.liferay.portal.model.LayoutRevision;
+import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.User;
@@ -79,6 +80,7 @@ import com.liferay.portal.service.LayoutBranchLocalService;
 import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.service.LayoutRevisionLocalService;
 import com.liferay.portal.service.LayoutService;
+import com.liferay.portal.service.LayoutSetBranchLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.UserLocalService;
@@ -1662,11 +1664,8 @@ public class StagingImpl implements Staging {
 		PortalPreferences portalPreferences =
 			PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
-		portalPreferences.setValue(
-			Staging.class.getName(), getRecentLayoutSetBranchIdKey(layoutSetId),
-			String.valueOf(layoutSetBranchId));
-
-		ProxiedLayoutsThreadLocal.clearProxiedLayouts();
+		setRecentLayoutSetBranchId(
+			portalPreferences, layoutSetId, layoutSetBranchId);
 	}
 
 	@Override
@@ -1675,11 +1674,8 @@ public class StagingImpl implements Staging {
 
 		PortalPreferences portalPreferences = getPortalPreferences(user);
 
-		portalPreferences.setValue(
-			Staging.class.getName(), getRecentLayoutSetBranchIdKey(layoutSetId),
-			String.valueOf(layoutSetBranchId));
-
-		ProxiedLayoutsThreadLocal.clearProxiedLayouts();
+		setRecentLayoutSetBranchId(
+			portalPreferences, layoutSetId, layoutSetBranchId);
 	}
 
 	@Override
@@ -2371,6 +2367,13 @@ public class StagingImpl implements Staging {
 	}
 
 	@Reference(unbind = "-")
+	protected void setLayoutSetBranchLocalService(
+		LayoutSetBranchLocalService layoutSetBranchLocalService) {
+
+		_layoutSetBranchLocalService = layoutSetBranchLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setLockManager(LockManager lockManager) {
 		_lockManager = lockManager;
 	}
@@ -2379,10 +2382,24 @@ public class StagingImpl implements Staging {
 		PortalPreferences portalPreferences, long layoutSetBranchId, long plid,
 		long layoutBranchId) {
 
-		portalPreferences.setValue(
-			Staging.class.getName(),
-			getRecentLayoutBranchIdKey(layoutSetBranchId, plid),
-			String.valueOf(layoutBranchId));
+		LayoutBranch layoutBranch = _layoutBranchLocalService.fetchLayoutBranch(
+			layoutBranchId);
+
+		if (layoutBranch == null) {
+			return;
+		}
+
+		if (layoutBranch.isMaster()) {
+			portalPreferences.setValue(
+				Staging.class.getName(),
+				getRecentLayoutBranchIdKey(layoutSetBranchId, plid), null);
+		}
+		else {
+			portalPreferences.setValue(
+				Staging.class.getName(),
+				getRecentLayoutBranchIdKey(layoutSetBranchId, plid),
+				String.valueOf(layoutBranchId));
+		}
 
 		ProxiedLayoutsThreadLocal.clearProxiedLayouts();
 	}
@@ -2426,6 +2443,33 @@ public class StagingImpl implements Staging {
 
 		setRecentLayoutBranchId(
 			portalPreferences, layoutSetBranchId, plid, layoutBranchId);
+	}
+
+	protected void setRecentLayoutSetBranchId(
+		PortalPreferences portalPreferences, long layoutSetId,
+		long layoutSetBranchId) {
+
+		LayoutSetBranch layoutSetBranch =
+			_layoutSetBranchLocalService.fetchLayoutSetBranch(
+				layoutSetBranchId);
+
+		if (layoutSetBranch == null) {
+			return;
+		}
+
+		if (layoutSetBranch.isMaster()) {
+			portalPreferences.setValue(
+				Staging.class.getName(),
+				getRecentLayoutSetBranchIdKey(layoutSetId), null);
+		}
+		else {
+			portalPreferences.setValue(
+				Staging.class.getName(),
+				getRecentLayoutSetBranchIdKey(layoutSetId),
+				String.valueOf(layoutSetBranchId));
+		}
+
+		ProxiedLayoutsThreadLocal.clearProxiedLayouts();
 	}
 
 	@Reference(unbind = "-")
@@ -2542,6 +2586,7 @@ public class StagingImpl implements Staging {
 	private volatile LayoutLocalService _layoutLocalService;
 	private volatile LayoutRevisionLocalService _layoutRevisionLocalService;
 	private volatile LayoutService _layoutService;
+	private volatile LayoutSetBranchLocalService _layoutSetBranchLocalService;
 	private volatile LockManager _lockManager;
 	private volatile StagingLocalService _stagingLocalService;
 	private volatile UserLocalService _userLocalService;

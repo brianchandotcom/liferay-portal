@@ -2,14 +2,14 @@ Bundle-Name: Liferay Server Admin Web
 Bundle-SymbolicName: com.liferay.server.admin.web
 Bundle-Version: 1.0.0
 Include-Resource:\
-    classes,\
-    META-INF/resources=src/main/resources/META-INF/resources,\
-    @../../../../util-java/util-java.jar!/com/liferay/util/log4j/Levels.class,\
-    @../../../../util-java/util-java.jar!/com/liferay/util/log4j/Log4JUtil.class,\
-    @../../../../util-java/util-java.jar!/com/liferay/util/ContentUtil.class,\
-    @../../../../util-java/util-java.jar!/com/liferay/util/Encryptor.class,\
-    @../../../../lib/portal/jcommon.jar,\
-    @../../../../lib/portal/jfreechart.jar
+	classes,\
+	META-INF/resources=src/main/resources/META-INF/resources,\
+	@../../../../util-java/util-java.jar!/com/liferay/util/log4j/Levels.class,\
+	@../../../../util-java/util-java.jar!/com/liferay/util/log4j/Log4JUtil.class,\
+	@../../../../util-java/util-java.jar!/com/liferay/util/ContentUtil.class,\
+	@../../../../util-java/util-java.jar!/com/liferay/util/Encryptor.class,\
+	@../../../../lib/portal/jcommon.jar,\
+	@../../../../lib/portal/jfreechart.jar
 Provide-Capability:\
-    osgi.extender;osgi.extender="jsp.taglib";uri="http://struts.apache.org/tags-html";version:Version="1.0.0"
+	osgi.extender;osgi.extender="jsp.taglib";uri="http://struts.apache.org/tags-html";version:Version="1.0.0"
 Require-SchemaVersion: 1.0.0

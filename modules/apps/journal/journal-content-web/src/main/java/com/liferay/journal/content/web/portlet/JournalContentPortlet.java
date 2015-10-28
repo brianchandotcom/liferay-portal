@@ -116,6 +116,10 @@ public class JournalContentPortlet extends MVCPortlet {
 
 				double version = article.getVersion();
 
+				if (Validator.isNull(ddmTemplateKey)) {
+					ddmTemplateKey = article.getDDMTemplateKey();
+				}
+
 				articleDisplay = JournalContentUtil.getDisplay(
 					articleGroupId, articleId, version, ddmTemplateKey,
 					viewMode, languageId, page,

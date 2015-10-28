@@ -5,8 +5,8 @@
 	<model-resource>
 		<model-name>com.liferay.portlet.messageboards</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_message_boards_web_portlet_MessageBoardsPortlet</portlet-name>
-			<portlet-name>com_liferay_message_boards_web_portlet_MessageBoardsAdminPortlet</portlet-name>
+			<portlet-name>com_liferay_message_boards_web_portlet_MBPortlet</portlet-name>
+			<portlet-name>com_liferay_message_boards_web_portlet_MBAdminPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>
@@ -48,8 +48,8 @@
 	<model-resource>
 		<model-name>com.liferay.portlet.messageboards.model.MBCategory</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_message_boards_web_portlet_MessageBoardsPortlet</portlet-name>
-			<portlet-name>com_liferay_message_boards_web_portlet_MessageBoardsAdminPortlet</portlet-name>
+			<portlet-name>com_liferay_message_boards_web_portlet_MBPortlet</portlet-name>
+			<portlet-name>com_liferay_message_boards_web_portlet_MBAdminPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>
@@ -90,8 +90,8 @@
 	<model-resource>
 		<model-name>com.liferay.portlet.messageboards.model.MBMessage</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_message_boards_web_portlet_MessageBoardsPortlet</portlet-name>
-			<portlet-name>com_liferay_message_boards_web_portlet_MessageBoardsAdminPortlet</portlet-name>
+			<portlet-name>com_liferay_message_boards_web_portlet_MBPortlet</portlet-name>
+			<portlet-name>com_liferay_message_boards_web_portlet_MBAdminPortlet</portlet-name>
 		</portlet-ref>
 		<weight>4</weight>
 		<permissions>
@@ -118,8 +118,8 @@
 	<model-resource>
 		<model-name>com.liferay.portlet.messageboards.model.MBThread</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_message_boards_web_portlet_MessageBoardsPortlet</portlet-name>
-			<portlet-name>com_liferay_message_boards_web_portlet_MessageBoardsAdminPortlet</portlet-name>
+			<portlet-name>com_liferay_message_boards_web_portlet_MBPortlet</portlet-name>
+			<portlet-name>com_liferay_message_boards_web_portlet_MBAdminPortlet</portlet-name>
 		</portlet-ref>
 		<weight>3</weight>
 		<permissions>

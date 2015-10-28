@@ -24,7 +24,7 @@ import org.json.JSONObject;
  */
 public class UnstableMessageUtil {
 
-	public String getUnstableMessage(String buildURL) throws Exception {
+	public static String getUnstableMessage(String buildURL) throws Exception {
 		StringBuilder sb = new StringBuilder();
 
 		JSONObject testReportJSONObject = JenkinsResultsParserUtil.toJSONObject(
@@ -65,22 +65,17 @@ public class UnstableMessageUtil {
 		if (jsonObject.has("runs")) {
 			JSONArray runsJSONArray = jsonObject.getJSONArray("runs");
 
-			List<String> failureBuildURLs = new ArrayList<>();
-
 			for (int i = 0; i < runsJSONArray.length(); i++) {
-				JSONObject runsJSONObject = runsJSONArray.getJSONObject(i);
+				JSONObject runJSONObject = runsJSONArray.getJSONObject(i);
 
-				String runBuildURL = runsJSONObject.getString("url");
+				String runBuildURL = runJSONObject.getString("url");
 
 				if (runBuildURL.endsWith(
 						"/" + jsonObject.getString("number") + "/")) {
 
-					JSONObject runJSONObject =
-						JenkinsResultsParserUtil.toJSONObject(
-							JenkinsResultsParserUtil.getLocalURL(
-								runBuildURL + "api/json"));
-
-					String runResult = runJSONObject.getString("result");
+					String runResult = (JenkinsResultsParserUtil.toJSONObject(
+						JenkinsResultsParserUtil.getLocalURL(
+							runBuildURL + "api/json"))).getString("result");
 
 					if (!runResult.equals("SUCCESS")) {
 						runBuildURLs.add(runBuildURL);
@@ -94,14 +89,14 @@ public class UnstableMessageUtil {
 
 		int failureCount = 0;
 
-		for (String runBuildURL : runBuildURLs) {
+		for (String runBuildURLString : runBuildURLs) {
 			if (failureCount >= 3) {
 				break;
 			}
 
 			testReportJSONObject = JenkinsResultsParserUtil.toJSONObject(
 				JenkinsResultsParserUtil.getLocalURL(
-					runBuildURL + "testReport/api/json"));
+					runBuildURLString + "testReport/api/json"));
 
 			JSONArray suitesJSONArray = testReportJSONObject.getJSONArray(
 				"suites");
@@ -111,9 +106,9 @@ public class UnstableMessageUtil {
 					break;
 				}
 
-				JSONObject suitesJSONObject = suitesJSONArray.getJSONObject(i);
+				JSONObject suiteJSONObject = suitesJSONArray.getJSONObject(i);
 
-				JSONArray casesJSONArray = suitesJSONObject.getJSONArray(
+				JSONArray casesJSONArray = suiteJSONObject.getJSONArray(
 					"cases");
 
 				for (int j = 0; j < casesJSONArray.length(); j++) {
@@ -121,10 +116,10 @@ public class UnstableMessageUtil {
 						break;
 					}
 
-					JSONObject casesJSONObject = casesJSONArray.getJSONObject(
+					JSONObject caseJSONObject = casesJSONArray.getJSONObject(
 						j);
 
-					String status = casesJSONObject.getString("status");
+					String status = caseJSONObject.getString("status");
 
 					if (!status.equals("FIXED") && !status.equals("PASSED") &&
 						!status.equals("SKIPPED")) {
@@ -132,11 +127,11 @@ public class UnstableMessageUtil {
 						JSONObject jobJSONObject =
 							JenkinsResultsParserUtil.toJSONObject(
 								JenkinsResultsParserUtil.getLocalURL(
-									runBuildURL + "api/json"));
+									runBuildURLString + "api/json"));
 
-						String testClassName = casesJSONObject.getString(
+						String testClassName = caseJSONObject.getString(
 							"className");
-						String testMethodName = casesJSONObject.getString(
+						String testMethodName = caseJSONObject.getString(
 							"name");
 
 						int x = testClassName.lastIndexOf(".");
@@ -145,33 +140,33 @@ public class UnstableMessageUtil {
 						String testSimpleClassName = testClassName.substring(
 							x + 1);
 
-						runBuildURL = runBuildURL.replace("[", "_");
-						runBuildURL = runBuildURL.replace("]", "_");
-						runBuildURL = runBuildURL.replace("#", "_");
+						runBuildURLString = runBuildURLString.replace("[", "_");
+						runBuildURLString = runBuildURLString.replace("]", "_");
+						runBuildURLString = runBuildURLString.replace("#", "_");
 
 						sb.append("<li><a href=\\\"");
-						sb.append(runBuildURL);
+						sb.append(runBuildURLString);
 						sb.append("/testReport/");
 						sb.append(testPackageName);
 						sb.append("/");
 						sb.append(testSimpleClassName);
 						sb.append("/");
 
-						String testMethodNameURLFormat = testMethodName;
+						String testMethodNameURLString = testMethodName;
 
-						testMethodNameURLFormat =
-							testMethodNameURLFormat.replace("[", "_");
-						testMethodNameURLFormat =
-							testMethodNameURLFormat.replace("]", "_");
-						testMethodNameURLFormat =
-							testMethodNameURLFormat.replace("#", "_");
+						testMethodNameURLString =
+							testMethodNameURLString.replace("[", "_");
+						testMethodNameURLString =
+							testMethodNameURLString.replace("]", "_");
+						testMethodNameURLString =
+							testMethodNameURLString.replace("#", "_");
 
 						if (testPackageName.equals("junit.framework")) {
-							testMethodNameURLFormat =
-								testMethodNameURLFormat.replace(".", "_");
+							testMethodNameURLString =
+								testMethodNameURLString.replace(".", "_");
 						}
 
-						sb.append(testMethodNameURLFormat);
+						sb.append(testMethodNameURLString);
 						sb.append("\\\">");
 						sb.append(testSimpleClassName);
 						sb.append(".");
@@ -213,7 +208,7 @@ public class UnstableMessageUtil {
 							}
 
 							sb.append("<a href=\\\"");
-							sb.append(runBuildURL);
+							sb.append(runBuildURLString);
 							sb.append("/console\\\">Console Output</a>");
 						}
 
@@ -234,8 +229,8 @@ public class UnstableMessageUtil {
 		if (failureCount > 3) {
 			sb.append("<p><strong>Click <a href=\\\"");
 			sb.append(buildURL);
-			sb.append(
-				"/testReport/\\\">here</a> for more failures.</strong></p>");
+			sb.append("/testReport/\\\">here</a> for more failures.</strong>");
+			sb.append("</p>");
 		}
 
 		return sb.toString();

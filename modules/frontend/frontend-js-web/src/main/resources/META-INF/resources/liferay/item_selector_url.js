@@ -76,6 +76,8 @@ AUI.add(
 					},
 
 					_getURLItemMetadata: function(url) {
+						url = url.split('?')[0];
+
 						var dotIndex = url.lastIndexOf('.');
 						var slashIndex = url.lastIndexOf('/');
 

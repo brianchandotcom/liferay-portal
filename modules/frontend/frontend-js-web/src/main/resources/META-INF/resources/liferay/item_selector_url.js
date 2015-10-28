@@ -145,7 +145,9 @@ AUI.add(
 								)
 							);
 
-							linkNode.setData('metadata', JSON.stringify(instance._getURLItemMetadata(url)));
+							var urlMetaData = instance._getURLItemMetadata(url);
+
+							linkNode.setData('metadata', JSON.stringify(urlMetaData));
 
 							var itemViewer = instance._itemViewer;
 

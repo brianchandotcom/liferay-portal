@@ -32,6 +32,24 @@ public abstract class CompanyScopedConfigurationProvider
 
 	@Override
 	public T getConfiguration(long companyId) {
+		Dictionary<String, Object> properties = getConfigurationProperties(
+			companyId);
+
+		T configurable = Configurable.createConfigurable(
+			getMetatype(), properties);
+
+		return configurable;
+	}
+
+	@Override
+	public T getConfiguration(long companyId, long index) {
+		return getConfiguration(companyId);
+	}
+
+	@Override
+	public Dictionary<String, Object> getConfigurationProperties(
+		long companyId) {
+
 		Configuration configuration = _configurations.get(companyId);
 
 		if (configuration == null) {
@@ -48,15 +66,14 @@ public abstract class CompanyScopedConfigurationProvider
 
 		Dictionary<String, Object> properties = configuration.getProperties();
 
-		T configurable = Configurable.createConfigurable(
-			getMetatype(), properties);
-
-		return configurable;
+		return properties;
 	}
 
 	@Override
-	public T getConfiguration(long companyId, long index) {
-		return getConfiguration(companyId);
+	public Dictionary<String, Object> getConfigurationProperties(
+		long companyId, long index) {
+
+		return getConfigurationProperties(companyId);
 	}
 
 	@Override
@@ -68,6 +85,23 @@ public abstract class CompanyScopedConfigurationProvider
 		configurations.add(t);
 
 		return configurations;
+	}
+
+	@Override
+	public List<Dictionary<String, Object>> getConfigurationsProperties(
+		long companyId) {
+
+		List<Dictionary<String, Object>> configurationsProperties =
+			new ArrayList<>();
+
+		for (Configuration configuration : _configurations.values()) {
+			Dictionary<String, Object> properties =
+				configuration.getProperties();
+
+			configurationsProperties.add(properties);
+		}
+
+		return configurationsProperties;
 	}
 
 	@Override

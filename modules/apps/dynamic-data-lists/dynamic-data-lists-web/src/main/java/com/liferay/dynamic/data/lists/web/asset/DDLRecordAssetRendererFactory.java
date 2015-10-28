@@ -19,11 +19,13 @@ import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
+import com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordPermission;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -65,19 +67,26 @@ public class DDLRecordAssetRendererFactory
 	public AssetRenderer<DDLRecord> getAssetRenderer(long classPK, int type)
 		throws PortalException {
 
-		DDLRecord record = _ddlRecordLocalService.getRecord(classPK);
-
+		DDLRecord record = _ddlRecordLocalService.fetchDDLRecord(classPK);
 		DDLRecordVersion recordVersion = null;
 
-		if (type == TYPE_LATEST) {
-			recordVersion = record.getLatestRecordVersion();
-		}
-		else if (type == TYPE_LATEST_APPROVED) {
-			recordVersion = record.getRecordVersion();
+		if (Validator.isNull(record)) {
+			recordVersion = _ddlRecordVersionLocalService.getRecordVersion(
+				classPK);
+
+			record = recordVersion.getRecord();
 		}
 		else {
-			throw new IllegalArgumentException(
-				"Unknown asset renderer type " + type);
+			if (type == TYPE_LATEST) {
+				recordVersion = record.getLatestRecordVersion();
+			}
+			else if (type == TYPE_LATEST_APPROVED) {
+				recordVersion = record.getRecordVersion();
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unknown asset renderer type " + type);
+			}
 		}
 
 		DDLRecordAssetRenderer ddlRecordAssetRenderer =
@@ -169,7 +178,15 @@ public class DDLRecordAssetRendererFactory
 		_ddlRecordLocalService = ddlRecordLocalService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setDDLRecordVersionLocalService(
+		DDLRecordVersionLocalService ddlRecordVersionLocalService) {
+
+		_ddlRecordVersionLocalService = ddlRecordVersionLocalService;
+	}
+
 	private DDLRecordLocalService _ddlRecordLocalService;
+	private DDLRecordVersionLocalService _ddlRecordVersionLocalService;
 	private ServletContext _servletContext;
 
 }

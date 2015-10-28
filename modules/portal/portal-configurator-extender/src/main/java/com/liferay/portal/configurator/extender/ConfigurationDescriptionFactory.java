@@ -18,6 +18,7 @@ package com.liferay.portal.configurator.extender;
  * @author Carlos Sierra Andrés
  */
 public interface ConfigurationDescriptionFactory {
+
 	public ConfigurationDescription create(
 		NamedConfigurationContent namedConfigurationContent);
 

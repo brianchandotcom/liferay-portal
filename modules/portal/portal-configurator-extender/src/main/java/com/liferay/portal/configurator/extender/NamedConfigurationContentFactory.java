@@ -20,6 +20,7 @@ import java.util.List;
  * @author Carlos Sierra Andrés
  */
 public interface NamedConfigurationContentFactory {
-	public List<NamedConfigurationContent> create(BundleStorage bundle);
+
+	public List<NamedConfigurationContent> create(BundleStorage bundleStorage);
 
 }

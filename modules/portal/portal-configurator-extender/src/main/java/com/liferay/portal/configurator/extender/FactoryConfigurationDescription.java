@@ -47,10 +47,8 @@ public final class FactoryConfigurationDescription
 
 	@Override
 	public String toString() {
-		return "FactoryConfigurationDescription{" +
-			"factoryPid='" + _factoryPid + '\'' +
-			", pid='" + _pid + '\'' +
-			'}';
+		return "FactoryConfigurationDescription {factoryPid='" +
+			_factoryPid + "\', pid='" + _pid + '\'' + '}';
 	}
 
 	private final String _factoryPid;

@@ -89,14 +89,14 @@ public class ConfiguratorExtension implements Extension {
 			if (configurationDescription
 					instanceof SingleConfigurationDescription) {
 
-				process(
-					(SingleConfigurationDescription)configurationDescription);
+				_process(
+					(SingleConfigurationDescription) configurationDescription);
 			}
 			else if (configurationDescription
 						instanceof FactoryConfigurationDescription) {
 
-				process(
-					(FactoryConfigurationDescription)configurationDescription);
+				_process(
+					(FactoryConfigurationDescription) configurationDescription);
 			}
 			else {
 				_logger.log(
@@ -121,11 +121,12 @@ public class ConfiguratorExtension implements Extension {
 		return false;
 	}
 
-	private void process(FactoryConfigurationDescription description)
+	private void _process(
+			FactoryConfigurationDescription factoryConfigurationDescription)
 		throws InvalidSyntaxException, IOException {
 
-		String factoryPid = description.getFactoryPid();
-		String pid = description.getPid();
+		String factoryPid = factoryConfigurationDescription.getFactoryPid();
+		String pid = factoryConfigurationDescription.getPid();
 
 		String configuratorUrl = _namespace + "#" + pid;
 
@@ -135,8 +136,9 @@ public class ConfiguratorExtension implements Extension {
 
 		Configuration configuration =
 			_configurationAdmin.createFactoryConfiguration(factoryPid, null);
+
 		Supplier<Dictionary<String, Object>> propertiesSupplier =
-			description.getPropertiesSupplier();
+			factoryConfigurationDescription.getPropertiesSupplier();
 
 		Dictionary<String, Object> properties;
 
@@ -146,9 +148,9 @@ public class ConfiguratorExtension implements Extension {
 		catch (Throwable t) {
 			_logger.log(
 				Logger.LOG_WARNING,
-				"Supplier from description " + description + " threw " +
-					"Exception: ",
-				t);
+				"Supplier from factoryConfigurationDescription " +
+					factoryConfigurationDescription + " threw " +
+					"Exception: ", t);
 
 			return;
 		}
@@ -158,7 +160,7 @@ public class ConfiguratorExtension implements Extension {
 		configuration.update(properties);
 	}
 
-	private void process(SingleConfigurationDescription description)
+	private void _process(SingleConfigurationDescription description)
 		throws InvalidSyntaxException, IOException {
 
 		String pid = description.getPid();

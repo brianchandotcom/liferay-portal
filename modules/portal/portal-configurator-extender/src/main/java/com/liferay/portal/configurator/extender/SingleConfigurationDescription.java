@@ -41,9 +41,7 @@ public final class SingleConfigurationDescription
 
 	@Override
 	public String toString() {
-		return "SingleConfigurationDescriptor{" +
-			"pid='" + _pid + '\'' +
-			'}';
+		return "SingleConfigurationDescriptor {pid='" + _pid + "\'}";
 	}
 
 	private final String _pid;

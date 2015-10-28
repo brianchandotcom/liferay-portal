@@ -297,19 +297,8 @@ public class DLFileEntryTypeFinderImpl
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(9);
-
-		sb.append("(SELECT {DLFileEntryType.*} From DLFileEntryType WHERE ");
-		sb.append("((DLFileEntryType.companyId = 0) ");
-		sb.append("AND (DLFileEntryType.groupId = 0) AND (");
-		sb.append("(lower(DLFileEntryType.name) LIKE ? ");
-		sb.append("[$AND_OR_NULL_CHECK$]) ");
-		sb.append("[$AND_OR_CONNECTOR$] ");
-		sb.append("(DLFileEntryType.description LIKE ? ");
-		sb.append("[$AND_OR_NULL_CHECK$]) ");
-		sb.append("))) UNION ALL (");
-
-		return sb.toString();
+		return _getBasicDocument(
+			"(SELECT {DLFileEntryType.*} From DLFileEntryType WHERE ");
 	}
 
 	protected String getCountBasicDocument(boolean includeBasicFileEntryType) {
@@ -317,20 +306,8 @@ public class DLFileEntryTypeFinderImpl
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append("(SELECT COUNT(*) AS COUNT_VALUE ");
-		sb.append("From DLFileEntryType WHERE ");
-		sb.append("((DLFileEntryType.companyId = 0) ");
-		sb.append("AND (DLFileEntryType.groupId = 0) AND (");
-		sb.append("(lower(DLFileEntryType.name) LIKE ? ");
-		sb.append("[$AND_OR_NULL_CHECK$]) ");
-		sb.append("[$AND_OR_CONNECTOR$] ");
-		sb.append("(DLFileEntryType.description LIKE ? ");
-		sb.append("[$AND_OR_NULL_CHECK$]) ");
-		sb.append("))) UNION ALL (");
-
-		return sb.toString();
+		return _getBasicDocument(
+			"(SELECT COUNT(*) AS COUNT_VALUE From DLFileEntryType WHERE ");
 	}
 
 	protected String getGroupIds(long[] groupIds) {
@@ -351,6 +328,22 @@ public class DLFileEntryTypeFinderImpl
 		}
 
 		sb.append(") AND");
+
+		return sb.toString();
+	}
+
+	private String _getBasicDocument(String prefix) {
+		StringBundler sb = new StringBundler(9);
+
+		sb.append(prefix);
+		sb.append("((DLFileEntryType.companyId = 0) ");
+		sb.append("AND (DLFileEntryType.groupId = 0) AND (");
+		sb.append("(lower(DLFileEntryType.name) LIKE ? ");
+		sb.append("[$AND_OR_NULL_CHECK$]) ");
+		sb.append("[$AND_OR_CONNECTOR$] ");
+		sb.append("(DLFileEntryType.description LIKE ? ");
+		sb.append("[$AND_OR_NULL_CHECK$]) ");
+		sb.append("))) UNION ALL (");
 
 		return sb.toString();
 	}

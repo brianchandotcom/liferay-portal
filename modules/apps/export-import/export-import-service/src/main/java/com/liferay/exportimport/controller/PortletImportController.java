@@ -530,6 +530,14 @@ public class PortletImportController implements ImportController {
 
 		portletDataContext.setManifestSummary(manifestSummary);
 
+		Element missingReferencesElement = _rootElement.element(
+			"missing-references");
+
+		if (missingReferencesElement != null) {
+			portletDataContext.setMissingReferencesElement(
+				missingReferencesElement);
+		}
+
 		// Read expando tables, locks and permissions to make them
 		// available to the data handlers through the portlet data context
 

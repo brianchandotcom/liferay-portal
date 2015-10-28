@@ -1065,8 +1065,6 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 		pluginSetting.setNew(true);
 		pluginSetting.setPrimaryKey(pluginSettingId);
 
-		pluginSetting.setCompanyId(0);
-
 		return pluginSetting;
 	}
 

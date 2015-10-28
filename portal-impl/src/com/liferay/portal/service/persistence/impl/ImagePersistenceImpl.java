@@ -655,8 +655,6 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 		image.setNew(true);
 		image.setPrimaryKey(imageId);
 
-		image.setCompanyId(0);
-
 		return image;
 	}
 

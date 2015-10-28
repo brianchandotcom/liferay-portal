@@ -2638,8 +2638,6 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 
 		mbDiscussion.setUuid(uuid);
 
-		mbDiscussion.setCompanyId(0);
-
 		return mbDiscussion;
 	}
 

@@ -2568,8 +2568,6 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 		trashEntry.setNew(true);
 		trashEntry.setPrimaryKey(entryId);
 
-		trashEntry.setCompanyId(0);
-
 		return trashEntry;
 	}
 

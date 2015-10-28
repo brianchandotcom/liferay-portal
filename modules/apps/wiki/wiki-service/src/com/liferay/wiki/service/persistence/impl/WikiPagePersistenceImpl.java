@@ -22098,8 +22098,6 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		wikiPage.setUuid(uuid);
 
-		wikiPage.setCompanyId(0);
-
 		return wikiPage;
 	}
 

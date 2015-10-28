@@ -63,8 +63,8 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "uuid_", Types.VARCHAR },
 			{ "resourcePrimKey", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
 			{ "nodeId", Types.BIGINT },
 			{ "title", Types.VARCHAR }
 		};
@@ -73,13 +73,13 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("resourcePrimKey", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("nodeId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table WikiPageResource (uuid_ VARCHAR(75) null,resourcePrimKey LONG not null primary key,companyId LONG,groupId LONG,nodeId LONG,title VARCHAR(255) null)";
+	public static final String TABLE_SQL_CREATE = "create table WikiPageResource (uuid_ VARCHAR(75) null,resourcePrimKey LONG not null primary key,groupId LONG,companyId LONG,nodeId LONG,title VARCHAR(255) null)";
 	public static final String TABLE_SQL_DROP = "drop table WikiPageResource";
 	public static final String ORDER_BY_JPQL = " ORDER BY wikiPageResource.resourcePrimKey ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY WikiPageResource.resourcePrimKey ASC";
@@ -143,8 +143,8 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 
 		attributes.put("uuid", getUuid());
 		attributes.put("resourcePrimKey", getResourcePrimKey());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("groupId", getGroupId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("nodeId", getNodeId());
 		attributes.put("title", getTitle());
 
@@ -168,16 +168,16 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 			setResourcePrimKey(resourcePrimKey);
 		}
 
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
 		Long groupId = (Long)attributes.get("groupId");
 
 		if (groupId != null) {
 			setGroupId(groupId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long nodeId = (Long)attributes.get("nodeId");
@@ -227,28 +227,6 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 	}
 
 	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
-	}
-
-	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -268,6 +246,28 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@Override
@@ -350,8 +350,8 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 
 		wikiPageResourceImpl.setUuid(getUuid());
 		wikiPageResourceImpl.setResourcePrimKey(getResourcePrimKey());
-		wikiPageResourceImpl.setCompanyId(getCompanyId());
 		wikiPageResourceImpl.setGroupId(getGroupId());
+		wikiPageResourceImpl.setCompanyId(getCompanyId());
 		wikiPageResourceImpl.setNodeId(getNodeId());
 		wikiPageResourceImpl.setTitle(getTitle());
 
@@ -418,13 +418,13 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 
 		wikiPageResourceModelImpl._originalUuid = wikiPageResourceModelImpl._uuid;
 
-		wikiPageResourceModelImpl._originalCompanyId = wikiPageResourceModelImpl._companyId;
-
-		wikiPageResourceModelImpl._setOriginalCompanyId = false;
-
 		wikiPageResourceModelImpl._originalGroupId = wikiPageResourceModelImpl._groupId;
 
 		wikiPageResourceModelImpl._setOriginalGroupId = false;
+
+		wikiPageResourceModelImpl._originalCompanyId = wikiPageResourceModelImpl._companyId;
+
+		wikiPageResourceModelImpl._setOriginalCompanyId = false;
 
 		wikiPageResourceModelImpl._originalNodeId = wikiPageResourceModelImpl._nodeId;
 
@@ -449,9 +449,9 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 
 		wikiPageResourceCacheModel.resourcePrimKey = getResourcePrimKey();
 
-		wikiPageResourceCacheModel.companyId = getCompanyId();
-
 		wikiPageResourceCacheModel.groupId = getGroupId();
+
+		wikiPageResourceCacheModel.companyId = getCompanyId();
 
 		wikiPageResourceCacheModel.nodeId = getNodeId();
 
@@ -474,10 +474,10 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 		sb.append(getUuid());
 		sb.append(", resourcePrimKey=");
 		sb.append(getResourcePrimKey());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append(", nodeId=");
 		sb.append(getNodeId());
 		sb.append(", title=");
@@ -504,12 +504,12 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 		sb.append(getResourcePrimKey());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>nodeId</column-name><column-value><![CDATA[");
@@ -532,12 +532,12 @@ public class WikiPageResourceModelImpl extends BaseModelImpl<WikiPageResource>
 	private String _uuid;
 	private String _originalUuid;
 	private long _resourcePrimKey;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _nodeId;
 	private long _originalNodeId;
 	private boolean _setOriginalNodeId;

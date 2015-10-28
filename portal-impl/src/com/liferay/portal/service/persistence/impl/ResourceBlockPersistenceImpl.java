@@ -1808,8 +1808,6 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 		resourceBlock.setNew(true);
 		resourceBlock.setPrimaryKey(resourceBlockId);
 
-		resourceBlock.setCompanyId(0);
-
 		return resourceBlock;
 	}
 

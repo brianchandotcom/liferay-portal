@@ -2158,8 +2158,6 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 		layoutBranch.setNew(true);
 		layoutBranch.setPrimaryKey(layoutBranchId);
 
-		layoutBranch.setCompanyId(0);
-
 		return layoutBranch;
 	}
 

@@ -1937,8 +1937,6 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 
 		wikiPageResource.setUuid(uuid);
 
-		wikiPageResource.setCompanyId(0);
-
 		return wikiPageResource;
 	}
 
@@ -2133,8 +2131,8 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 
 		wikiPageResourceImpl.setUuid(wikiPageResource.getUuid());
 		wikiPageResourceImpl.setResourcePrimKey(wikiPageResource.getResourcePrimKey());
-		wikiPageResourceImpl.setCompanyId(wikiPageResource.getCompanyId());
 		wikiPageResourceImpl.setGroupId(wikiPageResource.getGroupId());
+		wikiPageResourceImpl.setCompanyId(wikiPageResource.getCompanyId());
 		wikiPageResourceImpl.setNodeId(wikiPageResource.getNodeId());
 		wikiPageResourceImpl.setTitle(wikiPageResource.getTitle());
 

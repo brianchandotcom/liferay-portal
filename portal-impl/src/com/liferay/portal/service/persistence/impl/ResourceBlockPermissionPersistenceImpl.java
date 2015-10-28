@@ -1503,8 +1503,6 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 		resourceBlockPermission.setNew(true);
 		resourceBlockPermission.setPrimaryKey(resourceBlockPermissionId);
 
-		resourceBlockPermission.setCompanyId(0);
-
 		return resourceBlockPermission;
 	}
 

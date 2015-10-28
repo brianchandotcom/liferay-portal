@@ -63,8 +63,8 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "uuid_", Types.VARCHAR },
 			{ "resourcePrimKey", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
 			{ "articleId", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -72,12 +72,12 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("resourcePrimKey", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("articleId", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table JournalArticleResource (uuid_ VARCHAR(75) null,resourcePrimKey LONG not null primary key,companyId LONG,groupId LONG,articleId VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table JournalArticleResource (uuid_ VARCHAR(75) null,resourcePrimKey LONG not null primary key,groupId LONG,companyId LONG,articleId VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table JournalArticleResource";
 	public static final String ORDER_BY_JPQL = " ORDER BY journalArticleResource.resourcePrimKey ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY JournalArticleResource.resourcePrimKey ASC";
@@ -140,8 +140,8 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 
 		attributes.put("uuid", getUuid());
 		attributes.put("resourcePrimKey", getResourcePrimKey());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("groupId", getGroupId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("articleId", getArticleId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -164,16 +164,16 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 			setResourcePrimKey(resourcePrimKey);
 		}
 
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
 		Long groupId = (Long)attributes.get("groupId");
 
 		if (groupId != null) {
 			setGroupId(groupId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		String articleId = (String)attributes.get("articleId");
@@ -217,28 +217,6 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 	}
 
 	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
-	}
-
-	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -258,6 +236,28 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@Override
@@ -318,8 +318,8 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 
 		journalArticleResourceImpl.setUuid(getUuid());
 		journalArticleResourceImpl.setResourcePrimKey(getResourcePrimKey());
-		journalArticleResourceImpl.setCompanyId(getCompanyId());
 		journalArticleResourceImpl.setGroupId(getGroupId());
+		journalArticleResourceImpl.setCompanyId(getCompanyId());
 		journalArticleResourceImpl.setArticleId(getArticleId());
 
 		journalArticleResourceImpl.resetOriginalValues();
@@ -385,13 +385,13 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 
 		journalArticleResourceModelImpl._originalUuid = journalArticleResourceModelImpl._uuid;
 
-		journalArticleResourceModelImpl._originalCompanyId = journalArticleResourceModelImpl._companyId;
-
-		journalArticleResourceModelImpl._setOriginalCompanyId = false;
-
 		journalArticleResourceModelImpl._originalGroupId = journalArticleResourceModelImpl._groupId;
 
 		journalArticleResourceModelImpl._setOriginalGroupId = false;
+
+		journalArticleResourceModelImpl._originalCompanyId = journalArticleResourceModelImpl._companyId;
+
+		journalArticleResourceModelImpl._setOriginalCompanyId = false;
 
 		journalArticleResourceModelImpl._originalArticleId = journalArticleResourceModelImpl._articleId;
 
@@ -412,9 +412,9 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 
 		journalArticleResourceCacheModel.resourcePrimKey = getResourcePrimKey();
 
-		journalArticleResourceCacheModel.companyId = getCompanyId();
-
 		journalArticleResourceCacheModel.groupId = getGroupId();
+
+		journalArticleResourceCacheModel.companyId = getCompanyId();
 
 		journalArticleResourceCacheModel.articleId = getArticleId();
 
@@ -435,10 +435,10 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 		sb.append(getUuid());
 		sb.append(", resourcePrimKey=");
 		sb.append(getResourcePrimKey());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append(", articleId=");
 		sb.append(getArticleId());
 		sb.append("}");
@@ -463,12 +463,12 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 		sb.append(getResourcePrimKey());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>articleId</column-name><column-value><![CDATA[");
@@ -487,12 +487,12 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 	private String _uuid;
 	private String _originalUuid;
 	private long _resourcePrimKey;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private String _articleId;
 	private String _originalArticleId;
 	private long _columnBitmask;

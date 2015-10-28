@@ -3278,8 +3278,6 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 
 		dlFileEntryType.setUuid(uuid);
 
-		dlFileEntryType.setCompanyId(0);
-
 		return dlFileEntryType;
 	}
 

@@ -3603,8 +3603,6 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 
 		passwordPolicy.setUuid(uuid);
 
-		passwordPolicy.setCompanyId(0);
-
 		return passwordPolicy;
 	}
 

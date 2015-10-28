@@ -4217,8 +4217,6 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 
 		userGroup.setUuid(uuid);
 
-		userGroup.setCompanyId(0);
-
 		return userGroup;
 	}
 

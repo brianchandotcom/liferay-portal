@@ -2026,8 +2026,6 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 		mbStatsUser.setNew(true);
 		mbStatsUser.setPrimaryKey(statsUserId);
 
-		mbStatsUser.setCompanyId(0);
-
 		return mbStatsUser;
 	}
 
@@ -2209,8 +2207,8 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 		mbStatsUserImpl.setPrimaryKey(mbStatsUser.getPrimaryKey());
 
 		mbStatsUserImpl.setStatsUserId(mbStatsUser.getStatsUserId());
-		mbStatsUserImpl.setCompanyId(mbStatsUser.getCompanyId());
 		mbStatsUserImpl.setGroupId(mbStatsUser.getGroupId());
+		mbStatsUserImpl.setCompanyId(mbStatsUser.getCompanyId());
 		mbStatsUserImpl.setUserId(mbStatsUser.getUserId());
 		mbStatsUserImpl.setMessageCount(mbStatsUser.getMessageCount());
 		mbStatsUserImpl.setLastPostDate(mbStatsUser.getLastPostDate());

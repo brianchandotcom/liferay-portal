@@ -5278,8 +5278,6 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		microblogsEntry.setNew(true);
 		microblogsEntry.setPrimaryKey(microblogsEntryId);
 
-		microblogsEntry.setCompanyId(0);
-
 		return microblogsEntry;
 	}
 

@@ -1003,8 +1003,6 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 		announcementsFlag.setNew(true);
 		announcementsFlag.setPrimaryKey(flagId);
 
-		announcementsFlag.setCompanyId(0);
-
 		return announcementsFlag;
 	}
 

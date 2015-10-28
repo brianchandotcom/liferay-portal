@@ -1531,8 +1531,6 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 		layoutSet.setNew(true);
 		layoutSet.setPrimaryKey(layoutSetId);
 
-		layoutSet.setCompanyId(0);
-
 		return layoutSet;
 	}
 

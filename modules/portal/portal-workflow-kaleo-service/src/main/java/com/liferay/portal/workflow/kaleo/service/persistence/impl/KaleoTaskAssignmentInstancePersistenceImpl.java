@@ -4027,8 +4027,6 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 		kaleoTaskAssignmentInstance.setNew(true);
 		kaleoTaskAssignmentInstance.setPrimaryKey(kaleoTaskAssignmentInstanceId);
 
-		kaleoTaskAssignmentInstance.setCompanyId(0);
-
 		return kaleoTaskAssignmentInstance;
 	}
 

@@ -10825,8 +10825,6 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 
 		assetCategory.setUuid(uuid);
 
-		assetCategory.setCompanyId(0);
-
 		return assetCategory;
 	}
 

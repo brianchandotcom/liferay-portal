@@ -426,8 +426,6 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 		browserTracker.setNew(true);
 		browserTracker.setPrimaryKey(browserTrackerId);
 
-		browserTracker.setCompanyId(0);
-
 		return browserTracker;
 	}
 

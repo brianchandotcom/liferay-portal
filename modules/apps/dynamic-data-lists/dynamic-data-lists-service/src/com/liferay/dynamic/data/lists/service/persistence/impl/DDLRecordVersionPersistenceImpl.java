@@ -1544,8 +1544,6 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 		ddlRecordVersion.setNew(true);
 		ddlRecordVersion.setPrimaryKey(recordVersionId);
 
-		ddlRecordVersion.setCompanyId(0);
-
 		return ddlRecordVersion;
 	}
 

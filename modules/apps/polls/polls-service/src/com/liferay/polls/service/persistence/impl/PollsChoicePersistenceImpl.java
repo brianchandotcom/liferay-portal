@@ -2434,8 +2434,6 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 
 		pollsChoice.setUuid(uuid);
 
-		pollsChoice.setCompanyId(0);
-
 		return pollsChoice;
 	}
 

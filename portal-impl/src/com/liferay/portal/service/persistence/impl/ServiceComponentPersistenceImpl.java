@@ -1065,8 +1065,6 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 		serviceComponent.setNew(true);
 		serviceComponent.setPrimaryKey(serviceComponentId);
 
-		serviceComponent.setCompanyId(0);
-
 		return serviceComponent;
 	}
 

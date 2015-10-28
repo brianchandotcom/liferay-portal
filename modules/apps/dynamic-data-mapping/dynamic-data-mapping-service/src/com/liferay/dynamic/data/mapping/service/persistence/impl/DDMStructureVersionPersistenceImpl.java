@@ -1558,8 +1558,6 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 		ddmStructureVersion.setNew(true);
 		ddmStructureVersion.setPrimaryKey(structureVersionId);
 
-		ddmStructureVersion.setCompanyId(0);
-
 		return ddmStructureVersion;
 	}
 

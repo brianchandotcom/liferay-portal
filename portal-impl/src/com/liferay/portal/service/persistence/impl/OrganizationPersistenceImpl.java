@@ -6722,8 +6722,6 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 		organization.setUuid(uuid);
 
-		organization.setCompanyId(0);
-
 		return organization;
 	}
 

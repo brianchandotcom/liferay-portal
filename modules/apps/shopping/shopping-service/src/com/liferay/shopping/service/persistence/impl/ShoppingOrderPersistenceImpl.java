@@ -2680,8 +2680,6 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 		shoppingOrder.setNew(true);
 		shoppingOrder.setPrimaryKey(orderId);
 
-		shoppingOrder.setCompanyId(0);
-
 		return shoppingOrder;
 	}
 

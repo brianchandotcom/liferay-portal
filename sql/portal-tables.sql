@@ -953,8 +953,8 @@ create table MBMessage (
 
 create table MBStatsUser (
 	statsUserId LONG not null primary key,
-	companyId LONG,
 	groupId LONG,
+	companyId LONG,
 	userId LONG,
 	messageCount INTEGER,
 	lastPostDate DATE null

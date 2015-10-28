@@ -91,6 +91,20 @@ public interface MBStatsUserModel extends BaseModel<MBStatsUser>, ShardedModel {
 	public void setStatsUserUuid(String statsUserUuid);
 
 	/**
+	 * Returns the group ID of this message boards stats user.
+	 *
+	 * @return the group ID of this message boards stats user
+	 */
+	public long getGroupId();
+
+	/**
+	 * Sets the group ID of this message boards stats user.
+	 *
+	 * @param groupId the group ID of this message boards stats user
+	 */
+	public void setGroupId(long groupId);
+
+	/**
 	 * Returns the company ID of this message boards stats user.
 	 *
 	 * @return the company ID of this message boards stats user
@@ -105,20 +119,6 @@ public interface MBStatsUserModel extends BaseModel<MBStatsUser>, ShardedModel {
 	 */
 	@Override
 	public void setCompanyId(long companyId);
-
-	/**
-	 * Returns the group ID of this message boards stats user.
-	 *
-	 * @return the group ID of this message boards stats user
-	 */
-	public long getGroupId();
-
-	/**
-	 * Sets the group ID of this message boards stats user.
-	 *
-	 * @param groupId the group ID of this message boards stats user
-	 */
-	public void setGroupId(long groupId);
 
 	/**
 	 * Returns the user ID of this message boards stats user.

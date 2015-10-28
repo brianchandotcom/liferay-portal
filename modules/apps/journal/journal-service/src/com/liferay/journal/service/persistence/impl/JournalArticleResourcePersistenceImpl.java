@@ -2467,8 +2467,6 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 
 		journalArticleResource.setUuid(uuid);
 
-		journalArticleResource.setCompanyId(0);
-
 		return journalArticleResource;
 	}
 
@@ -2683,8 +2681,8 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 
 		journalArticleResourceImpl.setUuid(journalArticleResource.getUuid());
 		journalArticleResourceImpl.setResourcePrimKey(journalArticleResource.getResourcePrimKey());
-		journalArticleResourceImpl.setCompanyId(journalArticleResource.getCompanyId());
 		journalArticleResourceImpl.setGroupId(journalArticleResource.getGroupId());
+		journalArticleResourceImpl.setCompanyId(journalArticleResource.getCompanyId());
 		journalArticleResourceImpl.setArticleId(journalArticleResource.getArticleId());
 
 		return journalArticleResourceImpl;

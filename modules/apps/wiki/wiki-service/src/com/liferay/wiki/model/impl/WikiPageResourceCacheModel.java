@@ -70,10 +70,10 @@ public class WikiPageResourceCacheModel implements CacheModel<WikiPageResource>,
 		sb.append(uuid);
 		sb.append(", resourcePrimKey=");
 		sb.append(resourcePrimKey);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", groupId=");
 		sb.append(groupId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", nodeId=");
 		sb.append(nodeId);
 		sb.append(", title=");
@@ -95,8 +95,8 @@ public class WikiPageResourceCacheModel implements CacheModel<WikiPageResource>,
 		}
 
 		wikiPageResourceImpl.setResourcePrimKey(resourcePrimKey);
-		wikiPageResourceImpl.setCompanyId(companyId);
 		wikiPageResourceImpl.setGroupId(groupId);
+		wikiPageResourceImpl.setCompanyId(companyId);
 		wikiPageResourceImpl.setNodeId(nodeId);
 
 		if (title == null) {
@@ -115,8 +115,8 @@ public class WikiPageResourceCacheModel implements CacheModel<WikiPageResource>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
 		resourcePrimKey = objectInput.readLong();
-		companyId = objectInput.readLong();
 		groupId = objectInput.readLong();
+		companyId = objectInput.readLong();
 		nodeId = objectInput.readLong();
 		title = objectInput.readUTF();
 	}
@@ -132,8 +132,8 @@ public class WikiPageResourceCacheModel implements CacheModel<WikiPageResource>,
 		}
 
 		objectOutput.writeLong(resourcePrimKey);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(groupId);
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(nodeId);
 
 		if (title == null) {
@@ -146,8 +146,8 @@ public class WikiPageResourceCacheModel implements CacheModel<WikiPageResource>,
 
 	public String uuid;
 	public long resourcePrimKey;
-	public long companyId;
 	public long groupId;
+	public long companyId;
 	public long nodeId;
 	public String title;
 }

@@ -7149,8 +7149,6 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 
 		userNotificationEvent.setUuid(uuid);
 
-		userNotificationEvent.setCompanyId(0);
-
 		return userNotificationEvent;
 	}
 

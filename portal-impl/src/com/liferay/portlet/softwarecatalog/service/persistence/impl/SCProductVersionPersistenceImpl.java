@@ -1012,8 +1012,6 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 		scProductVersion.setNew(true);
 		scProductVersion.setPrimaryKey(productVersionId);
 
-		scProductVersion.setCompanyId(0);
-
 		return scProductVersion;
 	}
 

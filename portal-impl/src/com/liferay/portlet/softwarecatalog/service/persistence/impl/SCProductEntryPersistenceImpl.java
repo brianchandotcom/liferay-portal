@@ -2840,8 +2840,6 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 		scProductEntry.setNew(true);
 		scProductEntry.setPrimaryKey(productEntryId);
 
-		scProductEntry.setCompanyId(0);
-
 		return scProductEntry;
 	}
 

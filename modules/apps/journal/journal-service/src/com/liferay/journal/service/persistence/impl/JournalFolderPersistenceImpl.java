@@ -7502,8 +7502,6 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 
 		journalFolder.setUuid(uuid);
 
-		journalFolder.setCompanyId(0);
-
 		return journalFolder;
 	}
 

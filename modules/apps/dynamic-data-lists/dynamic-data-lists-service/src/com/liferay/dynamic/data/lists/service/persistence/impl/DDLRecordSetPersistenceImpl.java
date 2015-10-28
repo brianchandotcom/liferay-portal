@@ -3253,8 +3253,6 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 
 		ddlRecordSet.setUuid(uuid);
 
-		ddlRecordSet.setCompanyId(0);
-
 		return ddlRecordSet;
 	}
 

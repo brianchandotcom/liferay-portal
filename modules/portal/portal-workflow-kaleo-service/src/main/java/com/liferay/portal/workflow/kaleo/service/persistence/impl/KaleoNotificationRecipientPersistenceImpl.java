@@ -1755,8 +1755,6 @@ public class KaleoNotificationRecipientPersistenceImpl
 		kaleoNotificationRecipient.setNew(true);
 		kaleoNotificationRecipient.setPrimaryKey(kaleoNotificationRecipientId);
 
-		kaleoNotificationRecipient.setCompanyId(0);
-
 		return kaleoNotificationRecipient;
 	}
 

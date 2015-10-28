@@ -4798,8 +4798,6 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 		journalContentSearch.setNew(true);
 		journalContentSearch.setPrimaryKey(contentSearchId);
 
-		journalContentSearch.setCompanyId(0);
-
 		return journalContentSearch;
 	}
 

@@ -54,8 +54,8 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 
 		attributes.put("uuid", getUuid());
 		attributes.put("resourcePrimKey", getResourcePrimKey());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("groupId", getGroupId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("nodeId", getNodeId());
 		attributes.put("title", getTitle());
 
@@ -76,16 +76,16 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 			setResourcePrimKey(resourcePrimKey);
 		}
 
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
 		Long groupId = (Long)attributes.get("groupId");
 
 		if (groupId != null) {
 			setGroupId(groupId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long nodeId = (Long)attributes.get("nodeId");

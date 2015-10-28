@@ -2120,8 +2120,6 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 
 		mdrRule.setUuid(uuid);
 
-		mdrRule.setCompanyId(0);
-
 		return mdrRule;
 	}
 

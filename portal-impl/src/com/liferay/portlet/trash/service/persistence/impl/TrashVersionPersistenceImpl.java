@@ -1500,8 +1500,6 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 		trashVersion.setNew(true);
 		trashVersion.setPrimaryKey(versionId);
 
-		trashVersion.setCompanyId(0);
-
 		return trashVersion;
 	}
 

@@ -1498,8 +1498,6 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 		scProductScreenshot.setNew(true);
 		scProductScreenshot.setPrimaryKey(productScreenshotId);
 
-		scProductScreenshot.setCompanyId(0);
-
 		return scProductScreenshot;
 	}
 

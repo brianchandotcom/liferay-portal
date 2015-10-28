@@ -683,8 +683,6 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 		shoppingItemPrice.setNew(true);
 		shoppingItemPrice.setPrimaryKey(itemPriceId);
 
-		shoppingItemPrice.setCompanyId(0);
-
 		return shoppingItemPrice;
 	}
 

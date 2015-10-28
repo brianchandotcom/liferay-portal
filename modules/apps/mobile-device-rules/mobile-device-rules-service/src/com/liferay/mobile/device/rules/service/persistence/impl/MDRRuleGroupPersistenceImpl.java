@@ -2951,8 +2951,6 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 
 		mdrRuleGroup.setUuid(uuid);
 
-		mdrRuleGroup.setCompanyId(0);
-
 		return mdrRuleGroup;
 	}
 

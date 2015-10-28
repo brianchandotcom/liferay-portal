@@ -1108,8 +1108,6 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 		userNotificationDelivery.setNew(true);
 		userNotificationDelivery.setPrimaryKey(userNotificationDeliveryId);
 
-		userNotificationDelivery.setCompanyId(0);
-
 		return userNotificationDelivery;
 	}
 

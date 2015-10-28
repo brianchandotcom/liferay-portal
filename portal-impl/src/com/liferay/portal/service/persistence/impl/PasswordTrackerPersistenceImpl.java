@@ -685,8 +685,6 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 		passwordTracker.setNew(true);
 		passwordTracker.setPrimaryKey(passwordTrackerId);
 
-		passwordTracker.setCompanyId(0);
-
 		return passwordTracker;
 	}
 

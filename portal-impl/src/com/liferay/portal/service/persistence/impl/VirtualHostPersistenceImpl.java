@@ -727,8 +727,6 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 		virtualHost.setNew(true);
 		virtualHost.setPrimaryKey(virtualHostId);
 
-		virtualHost.setCompanyId(0);
-
 		return virtualHost;
 	}
 

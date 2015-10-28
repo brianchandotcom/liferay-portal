@@ -55,8 +55,8 @@ public class JournalArticleResourceWrapper implements JournalArticleResource,
 
 		attributes.put("uuid", getUuid());
 		attributes.put("resourcePrimKey", getResourcePrimKey());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("groupId", getGroupId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("articleId", getArticleId());
 
 		return attributes;
@@ -76,16 +76,16 @@ public class JournalArticleResourceWrapper implements JournalArticleResource,
 			setResourcePrimKey(resourcePrimKey);
 		}
 
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
 		Long groupId = (Long)attributes.get("groupId");
 
 		if (groupId != null) {
 			setGroupId(groupId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		String articleId = (String)attributes.get("articleId");

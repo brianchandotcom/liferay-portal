@@ -7450,8 +7450,6 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 		user.setUuid(uuid);
 
-		user.setCompanyId(0);
-
 		return user;
 	}
 

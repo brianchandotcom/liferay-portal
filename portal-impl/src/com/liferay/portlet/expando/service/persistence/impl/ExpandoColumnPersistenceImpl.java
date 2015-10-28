@@ -1863,8 +1863,6 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 		expandoColumn.setNew(true);
 		expandoColumn.setPrimaryKey(columnId);
 
-		expandoColumn.setCompanyId(0);
-
 		return expandoColumn;
 	}
 

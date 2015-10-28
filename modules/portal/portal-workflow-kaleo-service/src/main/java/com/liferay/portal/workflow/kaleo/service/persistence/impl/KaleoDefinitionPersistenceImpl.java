@@ -2809,8 +2809,6 @@ public class KaleoDefinitionPersistenceImpl extends BasePersistenceImpl<KaleoDef
 		kaleoDefinition.setNew(true);
 		kaleoDefinition.setPrimaryKey(kaleoDefinitionId);
 
-		kaleoDefinition.setCompanyId(0);
-
 		return kaleoDefinition;
 	}
 

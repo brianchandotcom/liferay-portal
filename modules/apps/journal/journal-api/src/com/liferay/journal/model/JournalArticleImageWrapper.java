@@ -53,8 +53,8 @@ public class JournalArticleImageWrapper implements JournalArticleImage,
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("articleImageId", getArticleImageId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("groupId", getGroupId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("articleId", getArticleId());
 		attributes.put("version", getVersion());
 		attributes.put("elInstanceId", getElInstanceId());
@@ -73,16 +73,16 @@ public class JournalArticleImageWrapper implements JournalArticleImage,
 			setArticleImageId(articleImageId);
 		}
 
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
 		Long groupId = (Long)attributes.get("groupId");
 
 		if (groupId != null) {
 			setGroupId(groupId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		String articleId = (String)attributes.get("articleId");

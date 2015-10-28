@@ -5879,8 +5879,6 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 		dlFileVersion.setUuid(uuid);
 
-		dlFileVersion.setCompanyId(0);
-
 		return dlFileVersion;
 	}
 

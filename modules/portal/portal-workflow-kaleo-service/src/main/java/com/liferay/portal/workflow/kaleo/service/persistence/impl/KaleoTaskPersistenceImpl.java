@@ -1448,8 +1448,6 @@ public class KaleoTaskPersistenceImpl extends BasePersistenceImpl<KaleoTask>
 		kaleoTask.setNew(true);
 		kaleoTask.setPrimaryKey(kaleoTaskId);
 
-		kaleoTask.setCompanyId(0);
-
 		return kaleoTask;
 	}
 

@@ -2325,8 +2325,6 @@ public class KaleoTransitionPersistenceImpl extends BasePersistenceImpl<KaleoTra
 		kaleoTransition.setNew(true);
 		kaleoTransition.setPrimaryKey(kaleoTransitionId);
 
-		kaleoTransition.setCompanyId(0);
-
 		return kaleoTransition;
 	}
 

@@ -92,6 +92,20 @@ public interface JournalArticleResourceModel extends BaseModel<JournalArticleRes
 	public void setResourcePrimKey(long resourcePrimKey);
 
 	/**
+	 * Returns the group ID of this journal article resource.
+	 *
+	 * @return the group ID of this journal article resource
+	 */
+	public long getGroupId();
+
+	/**
+	 * Sets the group ID of this journal article resource.
+	 *
+	 * @param groupId the group ID of this journal article resource
+	 */
+	public void setGroupId(long groupId);
+
+	/**
 	 * Returns the company ID of this journal article resource.
 	 *
 	 * @return the company ID of this journal article resource
@@ -106,20 +120,6 @@ public interface JournalArticleResourceModel extends BaseModel<JournalArticleRes
 	 */
 	@Override
 	public void setCompanyId(long companyId);
-
-	/**
-	 * Returns the group ID of this journal article resource.
-	 *
-	 * @return the group ID of this journal article resource
-	 */
-	public long getGroupId();
-
-	/**
-	 * Sets the group ID of this journal article resource.
-	 *
-	 * @param groupId the group ID of this journal article resource
-	 */
-	public void setGroupId(long groupId);
 
 	/**
 	 * Returns the article ID of this journal article resource.

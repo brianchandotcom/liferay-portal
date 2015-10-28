@@ -2485,8 +2485,6 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 
 		repository.setUuid(uuid);
 
-		repository.setCompanyId(0);
-
 		return repository;
 	}
 

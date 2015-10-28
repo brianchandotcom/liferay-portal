@@ -1949,8 +1949,6 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 		scLicense.setNew(true);
 		scLicense.setPrimaryKey(licenseId);
 
-		scLicense.setCompanyId(0);
-
 		return scLicense;
 	}
 

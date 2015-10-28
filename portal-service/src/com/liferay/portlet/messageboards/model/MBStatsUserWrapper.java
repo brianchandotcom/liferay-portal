@@ -54,8 +54,8 @@ public class MBStatsUserWrapper implements MBStatsUser,
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("statsUserId", getStatsUserId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("groupId", getGroupId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("messageCount", getMessageCount());
 		attributes.put("lastPostDate", getLastPostDate());
@@ -71,16 +71,16 @@ public class MBStatsUserWrapper implements MBStatsUser,
 			setStatsUserId(statsUserId);
 		}
 
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
 		Long groupId = (Long)attributes.get("groupId");
 
 		if (groupId != null) {
 			setGroupId(groupId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");

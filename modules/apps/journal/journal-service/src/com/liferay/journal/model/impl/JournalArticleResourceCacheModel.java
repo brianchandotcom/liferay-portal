@@ -70,10 +70,10 @@ public class JournalArticleResourceCacheModel implements CacheModel<JournalArtic
 		sb.append(uuid);
 		sb.append(", resourcePrimKey=");
 		sb.append(resourcePrimKey);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", groupId=");
 		sb.append(groupId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", articleId=");
 		sb.append(articleId);
 		sb.append("}");
@@ -93,8 +93,8 @@ public class JournalArticleResourceCacheModel implements CacheModel<JournalArtic
 		}
 
 		journalArticleResourceImpl.setResourcePrimKey(resourcePrimKey);
-		journalArticleResourceImpl.setCompanyId(companyId);
 		journalArticleResourceImpl.setGroupId(groupId);
+		journalArticleResourceImpl.setCompanyId(companyId);
 
 		if (articleId == null) {
 			journalArticleResourceImpl.setArticleId(StringPool.BLANK);
@@ -112,8 +112,8 @@ public class JournalArticleResourceCacheModel implements CacheModel<JournalArtic
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
 		resourcePrimKey = objectInput.readLong();
-		companyId = objectInput.readLong();
 		groupId = objectInput.readLong();
+		companyId = objectInput.readLong();
 		articleId = objectInput.readUTF();
 	}
 
@@ -128,8 +128,8 @@ public class JournalArticleResourceCacheModel implements CacheModel<JournalArtic
 		}
 
 		objectOutput.writeLong(resourcePrimKey);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(groupId);
+		objectOutput.writeLong(companyId);
 
 		if (articleId == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -141,7 +141,7 @@ public class JournalArticleResourceCacheModel implements CacheModel<JournalArtic
 
 	public String uuid;
 	public long resourcePrimKey;
-	public long companyId;
 	public long groupId;
+	public long companyId;
 	public String articleId;
 }

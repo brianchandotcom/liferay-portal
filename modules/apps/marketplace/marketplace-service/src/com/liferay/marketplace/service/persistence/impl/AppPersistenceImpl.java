@@ -2582,8 +2582,6 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 
 		app.setUuid(uuid);
 
-		app.setCompanyId(0);
-
 		return app;
 	}
 

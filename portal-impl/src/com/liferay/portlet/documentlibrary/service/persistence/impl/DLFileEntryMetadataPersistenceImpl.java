@@ -2645,8 +2645,6 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 
 		dlFileEntryMetadata.setUuid(uuid);
 
-		dlFileEntryMetadata.setCompanyId(0);
-
 		return dlFileEntryMetadata;
 	}
 

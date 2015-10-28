@@ -686,8 +686,6 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 		shoppingOrderItem.setNew(true);
 		shoppingOrderItem.setPrimaryKey(orderItemId);
 
-		shoppingOrderItem.setCompanyId(0);
-
 		return shoppingOrderItem;
 	}
 

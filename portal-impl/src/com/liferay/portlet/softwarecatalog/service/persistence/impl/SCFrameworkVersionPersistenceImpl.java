@@ -2494,8 +2494,6 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 		scFrameworkVersion.setNew(true);
 		scFrameworkVersion.setPrimaryKey(frameworkVersionId);
 
-		scFrameworkVersion.setCompanyId(0);
-
 		return scFrameworkVersion;
 	}
 

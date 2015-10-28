@@ -2909,8 +2909,6 @@ public class ExportImportConfigurationPersistenceImpl
 		exportImportConfiguration.setNew(true);
 		exportImportConfiguration.setPrimaryKey(exportImportConfigurationId);
 
-		exportImportConfiguration.setCompanyId(0);
-
 		return exportImportConfiguration;
 	}
 

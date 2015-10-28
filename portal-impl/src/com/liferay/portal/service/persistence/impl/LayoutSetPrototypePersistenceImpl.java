@@ -3954,8 +3954,6 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 
 		layoutSetPrototype.setUuid(uuid);
 
-		layoutSetPrototype.setCompanyId(0);
-
 		return layoutSetPrototype;
 	}
 

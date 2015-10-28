@@ -6005,8 +6005,6 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		layoutRevision.setNew(true);
 		layoutRevision.setPrimaryKey(layoutRevisionId);
 
-		layoutRevision.setCompanyId(0);
-
 		return layoutRevision;
 	}
 

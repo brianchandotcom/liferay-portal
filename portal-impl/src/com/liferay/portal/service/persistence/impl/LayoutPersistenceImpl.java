@@ -8352,8 +8352,6 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		layout.setUuid(uuid);
 
-		layout.setCompanyId(0);
-
 		return layout;
 	}
 

@@ -87,15 +87,6 @@ public class AssetCategoryServiceUtil {
 		return getService().fetchCategory(categoryId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
 	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> getCategories(
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -166,6 +157,15 @@ public class AssetCategoryServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getJSONVocabularyCategories(vocabularyId, start, end, obc);
+	}
+
+	/**
+	* Returns the OSGI service identifier.
+	*
+	* @return the OSGI service identifier
+	*/
+	public static java.lang.String getOSGIServiceIdentifier() {
+		return getService().getOSGIServiceIdentifier();
 	}
 
 	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> getVocabularyCategories(
@@ -331,15 +331,6 @@ public class AssetCategoryServiceUtil {
 		return getService()
 				   .searchCategoriesDisplay(groupIds, title, vocabularyIds,
 			start, end);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static com.liferay.portlet.asset.model.AssetCategory updateCategory(

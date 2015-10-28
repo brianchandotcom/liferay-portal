@@ -40,23 +40,13 @@ public class PollsVoteServiceWrapper implements PollsVoteService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the OSGI service identifier.
 	*
-	* @return the Spring bean ID for this bean
+	* @return the OSGI service identifier
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _pollsVoteService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_pollsVoteService.setBeanIdentifier(beanIdentifier);
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _pollsVoteService.getOSGIServiceIdentifier();
 	}
 
 	/**

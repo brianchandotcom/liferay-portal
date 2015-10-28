@@ -52,13 +52,13 @@ public class ShoppingOrderServiceWrapper implements ShoppingOrderService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the OSGI service identifier.
 	*
-	* @return the Spring bean ID for this bean
+	* @return the OSGI service identifier
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _shoppingOrderService.getBeanIdentifier();
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _shoppingOrderService.getOSGIServiceIdentifier();
 	}
 
 	@Override
@@ -75,16 +75,6 @@ public class ShoppingOrderServiceWrapper implements ShoppingOrderService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_shoppingOrderService.sendEmail(groupId, orderId, emailType,
 			serviceContext);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_shoppingOrderService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

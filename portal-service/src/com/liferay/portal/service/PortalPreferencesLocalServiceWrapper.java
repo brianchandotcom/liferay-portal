@@ -210,13 +210,13 @@ public class PortalPreferencesLocalServiceWrapper
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the OSGI service identifier.
 	*
-	* @return the Spring bean ID for this bean
+	* @return the OSGI service identifier
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _portalPreferencesLocalService.getBeanIdentifier();
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _portalPreferencesLocalService.getOSGIServiceIdentifier();
 	}
 
 	@Override
@@ -301,16 +301,6 @@ public class PortalPreferencesLocalServiceWrapper
 		int ownerType, java.lang.String defaultPreferences) {
 		return _portalPreferencesLocalService.getPreferences(ownerId,
 			ownerType, defaultPreferences);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_portalPreferencesLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

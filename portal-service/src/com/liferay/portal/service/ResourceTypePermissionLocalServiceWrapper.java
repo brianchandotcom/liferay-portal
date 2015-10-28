@@ -189,16 +189,6 @@ public class ResourceTypePermissionLocalServiceWrapper
 		return _resourceTypePermissionLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _resourceTypePermissionLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public long getCompanyScopeActionIds(long companyId, java.lang.String name,
 		long roleId) {
@@ -218,6 +208,16 @@ public class ResourceTypePermissionLocalServiceWrapper
 		long companyId, java.lang.String name, long roleId) {
 		return _resourceTypePermissionLocalService.getGroupScopeResourceTypePermissions(companyId,
 			name, roleId);
+	}
+
+	/**
+	* Returns the OSGI service identifier.
+	*
+	* @return the OSGI service identifier
+	*/
+	@Override
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _resourceTypePermissionLocalService.getOSGIServiceIdentifier();
 	}
 
 	@Override
@@ -304,16 +304,6 @@ public class ResourceTypePermissionLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _resourceTypePermissionLocalService.hasGroupScopePermission(companyId,
 			groupId, name, roleId, actionId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_resourceTypePermissionLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

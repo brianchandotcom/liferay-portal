@@ -70,29 +70,19 @@ public class MDRRuleServiceWrapper implements MDRRuleService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the OSGI service identifier.
 	*
-	* @return the Spring bean ID for this bean
+	* @return the OSGI service identifier
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _mdrRuleService.getBeanIdentifier();
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _mdrRuleService.getOSGIServiceIdentifier();
 	}
 
 	@Override
 	public com.liferay.mobile.device.rules.model.MDRRule getRule(long ruleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleService.getRule(ruleId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_mdrRuleService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

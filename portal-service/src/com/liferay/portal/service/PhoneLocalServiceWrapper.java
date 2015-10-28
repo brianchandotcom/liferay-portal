@@ -225,20 +225,20 @@ public class PhoneLocalServiceWrapper implements PhoneLocalService,
 		return _phoneLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _phoneLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext) {
 		return _phoneLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	/**
+	* Returns the OSGI service identifier.
+	*
+	* @return the OSGI service identifier
+	*/
+	@Override
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _phoneLocalService.getOSGIServiceIdentifier();
 	}
 
 	@Override
@@ -312,16 +312,6 @@ public class PhoneLocalServiceWrapper implements PhoneLocalService,
 	@Override
 	public int getPhonesCount() {
 		return _phoneLocalService.getPhonesCount();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_phoneLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

@@ -73,23 +73,16 @@ public interface AnnouncementsEntryService extends BaseService {
 
 	public void deleteEntry(long entryId) throws PortalException;
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry getEntry(
 		long entryId) throws PortalException;
 
 	/**
-	* Sets the Spring bean ID for this bean.
+	* Returns the OSGI service identifier.
 	*
-	* @param beanIdentifier the Spring bean ID for this bean
+	* @return the OSGI service identifier
 	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
+	public java.lang.String getOSGIServiceIdentifier();
 
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry updateEntry(
 		long entryId, java.lang.String title, java.lang.String content,

@@ -55,13 +55,13 @@ public class SCProductEntryServiceWrapper implements SCProductEntryService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the OSGI service identifier.
 	*
-	* @return the Spring bean ID for this bean
+	* @return the OSGI service identifier
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _scProductEntryService.getBeanIdentifier();
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _scProductEntryService.getOSGIServiceIdentifier();
 	}
 
 	@Override
@@ -69,16 +69,6 @@ public class SCProductEntryServiceWrapper implements SCProductEntryService,
 		long productEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _scProductEntryService.getProductEntry(productEntryId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_scProductEntryService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

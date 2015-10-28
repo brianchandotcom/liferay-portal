@@ -190,13 +190,13 @@ public class UserTrackerPathLocalServiceWrapper
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the OSGI service identifier.
 	*
-	* @return the Spring bean ID for this bean
+	* @return the OSGI service identifier
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _userTrackerPathLocalService.getBeanIdentifier();
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _userTrackerPathLocalService.getOSGIServiceIdentifier();
 	}
 
 	@Override
@@ -252,16 +252,6 @@ public class UserTrackerPathLocalServiceWrapper
 	@Override
 	public int getUserTrackerPathsCount() {
 		return _userTrackerPathLocalService.getUserTrackerPathsCount();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_userTrackerPathLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

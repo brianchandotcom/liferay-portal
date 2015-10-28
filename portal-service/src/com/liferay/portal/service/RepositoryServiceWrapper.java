@@ -55,13 +55,13 @@ public class RepositoryServiceWrapper implements RepositoryService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the OSGI service identifier.
 	*
-	* @return the Spring bean ID for this bean
+	* @return the OSGI service identifier
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _repositoryService.getBeanIdentifier();
+	public java.lang.String getOSGIServiceIdentifier() {
+		return _repositoryService.getOSGIServiceIdentifier();
 	}
 
 	@Override
@@ -99,16 +99,6 @@ public class RepositoryServiceWrapper implements RepositoryService,
 		long repositoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _repositoryService.getTypeSettingsProperties(repositoryId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_repositoryService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

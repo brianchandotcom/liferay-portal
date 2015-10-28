@@ -47,10 +47,10 @@ for (int i = 0; i < results.size(); i++) {
 <div>
 	<c:choose>
 		<c:when test="<%= user2.getUserId() == themeDisplay.getUserId() %>">
-			<%= LanguageUtil.format(request, "you-have-x-friends", String.valueOf(total), false) %>
+			<liferay-ui:message arguments="<%= String.valueOf(total) %>" key="you-have-x-friends" translateArguments="<%= false %>" />
 		</c:when>
 		<c:otherwise>
-			<%= LanguageUtil.format(request, "x-has-x-friends", new Object[] {HtmlUtil.escape(user2.getFullName()), String.valueOf(total)}, false) %>
+			<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(user2.getFullName()), String.valueOf(total)} %>" key="x-has-x-friends" translateArguments="<%= false %>" />
 		</c:otherwise>
 	</c:choose>
 </div>

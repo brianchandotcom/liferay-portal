@@ -190,7 +190,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 						String author = parentMessage.isAnonymous() ? LanguageUtil.get(request, "anonymous") : HtmlUtil.escape(PortalUtil.getUserName(parentMessage.getUserId(), parentMessage.getUserName()));
 						%>
 
-						<%= LanguageUtil.format(request, "posted-as-a-reply-to", author, false) %>
+						<liferay-ui:message arguments="<%= author %>" key="posted-as-a-reply-to" translateArguments="<%= false %>" />
 					</c:if>
 				</div>
 

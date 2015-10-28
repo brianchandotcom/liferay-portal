@@ -185,7 +185,7 @@
 								</c:when>
 								<c:otherwise>
 									<span>
-										<%= LanguageUtil.format(request, "x-forum-posts", new Object[] {"<strong>" + mbMessagesCount + "</strong>"}, false) %>
+										<liferay-ui:message arguments='<%= new Object[] {"<strong>" + mbMessagesCount + "</strong>"} %>' key="x-forum-posts" translateArguments="<%= false %>" />
 									</span>
 								</c:otherwise>
 							</c:choose>
@@ -224,7 +224,7 @@
 								</c:when>
 								<c:otherwise>
 									<span>
-										<%= LanguageUtil.format(request, "x-blog-entries", new Object[] {"<strong>" + blogsEntriesCount + "</strong>"}, false) %>
+										<liferay-ui:message arguments='<%= new Object[] {"<strong>" + blogsEntriesCount + "</strong>"} %>' key="x-blog-entries" translateArguments="<%= false %>" />
 									</span>
 								</c:otherwise>
 							</c:choose>

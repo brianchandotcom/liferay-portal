@@ -229,7 +229,7 @@ contextObjects.put("wikiPortletInstanceOverriddenConfiguration", wikiPortletInst
 		%>
 
 		<div class="page-redirect" onClick="location.href = '<%= originalViewPageURL.toString() %>';">
-			(<%= LanguageUtil.format(request, "redirected-from-x", originalPage.getTitle(), false) %>)
+			(<liferay-ui:message arguments="<%= originalPage.getTitle() %>" key="redirected-from-x" translateArguments="<%= false %>" />)
 		</div>
 	</c:if>
 

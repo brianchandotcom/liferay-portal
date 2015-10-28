@@ -30,7 +30,6 @@ page import="com.liferay.portal.kernel.comment.Comment" %><%@
 page import="com.liferay.portal.kernel.comment.CommentConstants" %><%@
 page import="com.liferay.portal.kernel.comment.CommentManagerUtil" %><%@
 page import="com.liferay.portal.kernel.comment.WorkflowableComment" %><%@
-page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@

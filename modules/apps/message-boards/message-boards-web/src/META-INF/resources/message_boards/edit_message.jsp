@@ -472,7 +472,7 @@ else {
 
 			<c:if test="<%= (message != null) && message.isApproved() && WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(message.getCompanyId(), message.getGroupId(), MBMessage.class.getName()) %>">
 				<div class="alert alert-info">
-					<%= LanguageUtil.format(request, "this-x-is-approved.-publishing-these-changes-will-cause-it-to-be-unpublished-and-go-through-the-approval-process-again", ResourceActionsUtil.getModelResource(locale, MBMessage.class.getName()), false) %>
+					<liferay-ui:message arguments="<%= ResourceActionsUtil.getModelResource(locale, MBMessage.class.getName()) %>" key="this-x-is-approved.-publishing-these-changes-will-cause-it-to-be-unpublished-and-go-through-the-approval-process-again" translateArguments="<%= false %>" />
 				</div>
 			</c:if>
 

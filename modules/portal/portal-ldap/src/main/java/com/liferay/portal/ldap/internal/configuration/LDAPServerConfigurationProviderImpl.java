@@ -16,9 +16,13 @@ package com.liferay.portal.ldap.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.ldap.configuration.ConfigurationProvider;
 import com.liferay.portal.ldap.configuration.LDAPServerConfiguration;
+import com.liferay.portal.ldap.constants.LDAPConstants;
+
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,7 +33,9 @@ import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -217,6 +223,58 @@ public class LDAPServerConfigurationProviderImpl
 		}
 	}
 
+	@Override
+	public void updateProperties(
+		long companyId, Dictionary<String, Object> properties) {
+
+		updateProperties(companyId, 0L, properties);
+	}
+
+	@Override
+	public void updateProperties(
+		long companyId, long ldapServerId,
+		Dictionary<String, Object> properties) {
+
+		Map<Long, Configuration> configurations = _configurations.get(
+			companyId);
+
+		Map<Long, Configuration> defaultConfigurations = _configurations.get(
+			0L);
+
+		if (defaultConfigurations == null) {
+			throw new IllegalArgumentException(
+				"No default configuration for " + getMetatype().getName());
+		}
+
+		try {
+			Configuration configuration = configurations.get(ldapServerId);
+
+			if (configuration == null) {
+				Configuration defaultConfiguration = defaultConfigurations.get(
+					0L);
+
+				configuration = _configurationAdmin.createFactoryConfiguration(
+					defaultConfiguration.getFactoryPid());
+			}
+
+			properties.put(LDAPConstants.COMPANY_ID, companyId);
+			properties.put(LDAPConstants.LDAP_SERVER_ID, ldapServerId);
+
+			configuration.update(properties);
+		}
+		catch (IOException ioe) {
+			throw new SystemException("Unable to update configuration", ioe);
+		}
+	}
+
+	@Reference(unbind = "-")
+	protected void setConfigurationAdmin(
+		ConfigurationAdmin configurationAdmin) {
+
+		_configurationAdmin = configurationAdmin;
+	}
+
+	private ConfigurationAdmin _configurationAdmin;
 	private final Map<Long, Map<Long, Configuration>>
 		_configurations = new ConcurrentHashMap<>();
 

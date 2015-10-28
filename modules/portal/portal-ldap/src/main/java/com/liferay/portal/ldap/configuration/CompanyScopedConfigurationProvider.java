@@ -16,6 +16,11 @@ package com.liferay.portal.ldap.configuration;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.ldap.constants.LDAPConstants;
+
+import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.HashMap;
@@ -23,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
  * @author Michael C. Han
@@ -131,6 +137,46 @@ public abstract class CompanyScopedConfigurationProvider
 
 		_configurations.remove(companyId);
 	}
+
+	@Override
+	public void updateProperties(
+		long companyId, Dictionary<String, Object> properties) {
+
+		Configuration configuration = _configurations.get(companyId);
+
+		Configuration defaultConfiguration = _configurations.get(0L);
+
+		if (defaultConfiguration == null) {
+			throw new IllegalArgumentException(
+				"No default configuration for " + getMetatype().getName());
+		}
+
+		try {
+			if (configuration == null) {
+				configuration = configurationAdmin.createFactoryConfiguration(
+					defaultConfiguration.getFactoryPid());
+			}
+
+			properties.put(LDAPConstants.COMPANY_ID, companyId);
+
+			configuration.update(properties);
+		}
+		catch (IOException ioe) {
+			throw new SystemException("Unable to update configuration", ioe);
+		}
+	}
+
+	@Override
+	public void updateProperties(
+		long companyId, long index, Dictionary<String, Object> properties) {
+
+		updateProperties(companyId, properties);
+	}
+
+	protected abstract void setConfigurationAdmin(
+		ConfigurationAdmin configurationAdmin);
+
+	protected ConfigurationAdmin configurationAdmin;
 
 	private final Map<Long, Configuration> _configurations = new HashMap<>();
 

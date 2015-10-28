@@ -27,10 +27,10 @@ public class UnstableMessageUtil {
 	public String getUnstableMessage(String buildURL) throws Exception {
 		StringBuilder sb = new StringBuilder();
 
-		JSONObject testReportJSONObject = toJSONObject(getLocalURL(buildURL + "testReport/api/json"));
+		JSONObject testReportJSONObject = JenkinsResultsParserUtil.toJSONObject(JenkinsResultsParserUtil.getLocalURL(buildURL + "testReport/api/json"));
 
-		int failCount = testReportJSONObject.get("failCount");
-		int totalCount = testReportJSONObject.get("totalCount");
+		int failCount = testReportJSONObject.getInt("failCount");
+		int totalCount = testReportJSONObject.getInt("totalCount");
 
 		int passCount = totalCount - failCount;
 
@@ -55,22 +55,22 @@ public class UnstableMessageUtil {
 
 		sb.append("<ol>");
 
-		List runBuildURLs = new ArrayList();
+		List<String> runBuildURLs = new ArrayList<>();
 
-		JSONObject jsonObject = toJSONObject(getLocalURL(buildURL + "api/json"));
+		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(JenkinsResultsParserUtil.getLocalURL(buildURL + "api/json"));
 
 		if (jsonObject.has("runs")) {
 			JSONArray runsJSONArray = jsonObject.getJSONArray("runs");
 
-			List failureBuildURLs = new ArrayList();
+			List<String> failureBuildURLs = new ArrayList<>();
 
 			for(int i = 0; i < runsJSONArray.length(); i++) {
-				JSONObject runsJSONObject = runsJSONArray.get(i);
+				JSONObject runsJSONObject = runsJSONArray.getJSONObject(i);
 
-				String runBuildURL = runsJSONObject.get("url");
+				String runBuildURL = runsJSONObject.getString("url");
 
-				if (runBuildURL.endsWith("/" + jsonObject.get("number") + "/")) {
-					JSONObject runJSONObject = toJSONObject(getLocalURL(runBuildURL + "api/json"));
+				if (runBuildURL.endsWith("/" + jsonObject.getString("number") + "/")) {
+					JSONObject runJSONObject = JenkinsResultsParserUtil.toJSONObject(JenkinsResultsParserUtil.getLocalURL(runBuildURL + "api/json"));
 
 					String runResult = runJSONObject.getString("result");
 
@@ -91,7 +91,7 @@ public class UnstableMessageUtil {
 				break;
 			}
 
-			JSONObject testReportJSONObject = toJSONObject(getLocalURL(runBuildURL + "testReport/api/json"));
+			testReportJSONObject = JenkinsResultsParserUtil.toJSONObject(JenkinsResultsParserUtil.getLocalURL(runBuildURL + "testReport/api/json"));
 
 			JSONArray suitesJSONArray = testReportJSONObject.getJSONArray("suites");
 
@@ -111,13 +111,13 @@ public class UnstableMessageUtil {
 
 					JSONObject casesJSONObject = casesJSONArray.getJSONObject(j);
 
-					String status = casesJSONObject.get("status");
+					String status = casesJSONObject.getString("status");
 
 					if (!status.equals("FIXED") && !status.equals("PASSED") && !status.equals("SKIPPED")) {
-						JSONObject jobJSONObject = toJSONObject(getLocalURL(runBuildURL + "api/json"));
+						JSONObject jobJSONObject = JenkinsResultsParserUtil.toJSONObject(JenkinsResultsParserUtil.getLocalURL(runBuildURL + "api/json"));
 
-						String testClassName = casesJSONObject.get("className");
-						String testMethodName = casesJSONObject.get("name");
+						String testClassName = casesJSONObject.getString("className");
+						String testMethodName = casesJSONObject.getString("name");
 
 						int x = testClassName.lastIndexOf(".");
 
@@ -152,11 +152,11 @@ public class UnstableMessageUtil {
 						sb.append(".");
 						sb.append(testMethodName);
 
-						String jobVariant = getJobVariant(jobJSONObject);
+						String jobVariant = JenkinsResultsParserUtil.getJobVariant(jobJSONObject);
 
 						if (jobVariant.contains("functional") && testClassName.contains("EvaluateLogTest")) {
 							sb.append("[");
-							sb.append(getAxisVariable(jobJSONObject));
+							sb.append(JenkinsResultsParserUtil.getAxisVariable(jobJSONObject));
 							sb.append("]");
 						}
 
@@ -165,9 +165,9 @@ public class UnstableMessageUtil {
 						if (jobVariant.contains("functional")) {
 							sb.append(" - ");
 
-							String description = jobJSONObject.get("description");
+							String description = jobJSONObject.getString("description");
 
-							int x = description.indexOf(">Jenkins Report<");
+							x = description.indexOf(">Jenkins Report<");
 
 							x = x + 22;
 

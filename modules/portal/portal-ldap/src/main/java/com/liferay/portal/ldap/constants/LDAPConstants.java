@@ -19,6 +19,8 @@ package com.liferay.portal.ldap.constants;
  */
 public class LDAPConstants {
 
-	public static final String SERVICE_NAME = "com.liferay.portal.ldap";
+	public static final String COMPANY_ID = "companyId";
+
+	public static final String LDAP_SERVER_ID = "ldapServerId";
 
 }

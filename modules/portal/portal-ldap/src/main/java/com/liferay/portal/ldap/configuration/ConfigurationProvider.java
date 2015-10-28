@@ -45,4 +45,10 @@ public interface ConfigurationProvider<T> {
 
 	public void unregisterConfiguration(Configuration configuration);
 
+	public void updateProperties(
+		long companyId, Dictionary<String, Object> properties);
+
+	public void updateProperties(
+		long companyId, long index, Dictionary<String, Object> properties);
+
 }

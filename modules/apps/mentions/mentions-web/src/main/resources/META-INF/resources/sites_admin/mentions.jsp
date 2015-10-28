@@ -29,7 +29,7 @@ boolean companyMentionsEnabled = GetterUtil.getBoolean(request.getAttribute(Ment
 	</c:when>
 	<c:otherwise>
 		<div class="alert alert-warning">
-			<%= LanguageUtil.get(resourceBundle, "mentions-are-disabled-in-portal-settings") %>
+			<liferay-ui:message key="mentions-are-disabled-in-portal-settings" />
 		</div>
 	</c:otherwise>
 </c:choose>

@@ -240,7 +240,7 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(DLPortletKeys.
 			repositories: [
 				{
 					id: '<%= scopeGroupId %>',
-					name: '<%= LanguageUtil.get(request, "local") %>'
+					name: '<liferay-ui:message key="local" />'
 				}
 
 				<%

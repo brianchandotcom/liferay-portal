@@ -29,7 +29,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 <c:choose>
 	<c:when test="<%= results.isEmpty() %>">
 		<div class="alert alert-info">
-			<%= LanguageUtil.get(request, "there-are-no-media-files-in-this-folder") %>
+			<liferay-ui:message key="there-are-no-media-files-in-this-folder" />
 		</div>
 	</c:when>
 	<c:otherwise>
@@ -212,7 +212,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 						%>
 
 							<div class="image-icon">
-								<span class="error image-thumbnail" title="<%= LanguageUtil.get(request, "an-unexpected-error-occurred-while-connecting-to-the-repository") %>">
+								<span class="error image-thumbnail" title='<liferay-ui:message key="an-unexpected-error-occurred-while-connecting-to-the-repository" />'>
 									<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="error" />" src="<%= folderImageSrc %>" style="<%= DLUtil.getThumbnailStyle(true, 0, 128, 128) %>" />
 
 									<span class="image-title"><%= HtmlUtil.escape(StringUtil.shorten(curFolder.getName(), 60)) %></span>

@@ -73,7 +73,7 @@ if (Validator.isNull(title)) {
 					{
 						content: '#<%= id %>',
 						maxDisplayItems: <%= PropsValues.MENU_MAX_DISPLAY_ITEMS %>,
-						'strings.placeholder': '<%= LanguageUtil.get(request, "search") %>',
+						'strings.placeholder': '<liferay-ui:message key="search" />',
 						toggle: <%= toggle %>,
 						toggleTouch: <%= toggleTouch %>,
 						trigger: '#<%= id %> a'

@@ -189,7 +189,7 @@ DDLRecordSet selRecordSet = ddlDisplayContext.getRecordSet();
 
 			var displayRecordSetId = A.one('.displaying-record-set-id');
 
-			displayRecordSetId.set('innerHTML', recordSetName + ' (<%= LanguageUtil.get(request, "modified") %>)');
+			displayRecordSetId.set('innerHTML', recordSetName + ' (<liferay-ui:message key="modified" />)');
 			displayRecordSetId.addClass('modified');
 		},
 		['aui-base']

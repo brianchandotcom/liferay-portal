@@ -125,7 +125,7 @@ String[] types = LayoutTypeControllerTracker.getTypes();
 								<aui:input checked="<%= true %>" id="addLayoutSelectedPageTemplateBlank" label="empty-page" name="selectedPageTemplate" type="radio" />
 
 								<div class="lfr-page-template-description">
-									<small><%= LanguageUtil.get(request, "empty-page-description" ) %></small>
+									<small><liferay-ui:message key="empty-page-description" /></small>
 								</div>
 							</div>
 
@@ -209,7 +209,7 @@ String[] types = LayoutTypeControllerTracker.getTypes();
 								<aui:input id="addLayoutSelectedPageTemplateCopyOfPage" label="copy-of-a-page" name="selectedPageTemplate" type="radio" />
 
 								<div class="lfr-page-template-description">
-									<small><%= LanguageUtil.get(request, "copy-of-a-page-description" ) %></small>
+									<small><liferay-ui:message key="copy-of-a-page-description" /></small>
 								</div>
 							</div>
 

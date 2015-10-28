@@ -30,7 +30,7 @@ if (Validator.isNotNull(scriptContent)) {
 			<c:if test="<%= DDMTemplateHelperUtil.isAutocompleteEnabled(language) %>">
 				<div class="lfr-template-palette-container pull-left" id="<portlet:namespace />templatePaletteContainer">
 					<div class="search" id="<portlet:namespace />paletteSearchContainer">
-						<input class="col-md-12 field search-query" id="<portlet:namespace />paletteSearch" placeholder='<%= LanguageUtil.get(request, "search") %>' type="text">
+						<input class="col-md-12 field search-query" id="<portlet:namespace />paletteSearch" placeholder='<liferay-ui:message key="search" />' type="text">
 					</div>
 
 					<div class="lfr-template-palette" id="<portlet:namespace />paletteDataContainer">

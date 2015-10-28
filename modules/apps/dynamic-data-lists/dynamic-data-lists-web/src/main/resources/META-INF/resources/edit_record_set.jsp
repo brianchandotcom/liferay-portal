@@ -113,7 +113,7 @@ if (ddlDisplayContext.isAdminPortlet()) {
 				}
 				%>
 
-				<aui:option><%= LanguageUtil.get(request, "no-workflow") %></aui:option>
+				<aui:option><liferay-ui:message key="no-workflow" /></aui:option>
 
 				<%
 				List<WorkflowDefinition> workflowDefinitions = WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);

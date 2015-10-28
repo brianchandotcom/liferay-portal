@@ -39,7 +39,7 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 %>
 
 <div class="alert alert-danger hide" id="<portlet:namespace />message">
-	<span class="error-message"><%= LanguageUtil.get(request, "the-field-value-is-invalid") %></span>
+	<span class="error-message"><liferay-ui:message key="the-field-value-is-invalid" /></span>
 </div>
 
 <div id="<portlet:namespace />selectDDMStructureFieldForm">

@@ -30,7 +30,7 @@
 
 	<br />
 
-	<span class="key"><%= LanguageUtil.get(request, "key") %></span>:
+	<span class="key"><liferay-ui:message key="key" /></span>:
 
 	<a href="<%= rowURL %>"><%= HtmlUtil.escape(name) %></a>
 </liferay-ui:search-container-column-text>

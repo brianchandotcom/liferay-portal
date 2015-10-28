@@ -116,7 +116,7 @@ editProductEntryURL.setParameter("productEntryId", String.valueOf(productEntryId
 </fieldset>
 
 <fieldset class="repository-fields">
-	<legend><%= LanguageUtil.get(request, "repository-fields") %></legend>
+	<legend><liferay-ui:message key="repository-fields" /></legend>
 
 	<table class="lfr-table">
 	<tr>

@@ -75,6 +75,36 @@ AUI.add(
 						];
 					},
 
+					_getURLItemMetadata: function(url) {
+						var dotIndex = url.lastIndexOf('.');
+						var slashIndex = url.lastIndexOf('/');
+
+						var fileName = url.substring(slashIndex + 1);
+						var fileType = url.substring(dotIndex + 1);
+
+						if (fileType) {
+							fileType = 'image/' + fileType;
+						}
+
+						return {
+							'groups': [
+								{
+									'data': [
+										{
+											'key': Liferay.Language.get('format'),
+											'value': fileType
+										},
+										{
+											'key': Liferay.Language.get('name'),
+											'value': fileName
+										}
+									],
+									'title': Liferay.Language.get('file-info')
+								}
+							]
+						};
+					},
+
 					_onInput: function(event) {
 						var instance = this;
 
@@ -114,6 +144,8 @@ AUI.add(
 									}
 								)
 							);
+
+							linkNode.setData('metadata', JSON.stringify(instance._getURLItemMetadata(url)));
 
 							var itemViewer = instance._itemViewer;
 

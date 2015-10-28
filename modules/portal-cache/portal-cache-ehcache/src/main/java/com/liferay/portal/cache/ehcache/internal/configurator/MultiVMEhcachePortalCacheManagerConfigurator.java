@@ -15,15 +15,12 @@
 package com.liferay.portal.cache.ehcache.internal.configurator;
 
 import com.liferay.portal.cache.PortalCacheReplicator;
-import com.liferay.portal.cache.configuration.PortalCacheConfiguration;
 import com.liferay.portal.cache.ehcache.EhcacheConstants;
-import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 
 import java.util.Properties;
-import java.util.Set;
 
 import net.sf.ehcache.config.CacheConfiguration;
 import net.sf.ehcache.config.CacheConfiguration.BootstrapCacheLoaderFactoryConfiguration;
@@ -71,6 +68,23 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 	}
 
 	@Override
+	protected boolean isValidCacheEventListener(
+		Properties properties, boolean usingDefault) {
+
+		if (Boolean.valueOf(
+				properties.getProperty(PortalCacheReplicator.REPLICATOR))) {
+
+			if (_clusterEnabled) {
+				return true;
+			}
+
+			return false;
+		}
+
+		return super.isValidCacheEventListener(properties, usingDefault);
+	}
+
+	@Override
 	protected Properties parsePortalCacheBootstrapLoaderProperties(
 		CacheConfiguration cacheConfiguration) {
 
@@ -99,39 +113,6 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 		}
 
 		return portalCacheBootstrapLoaderProperties;
-	}
-
-	protected void processCacheEventListenerFactoryProperties(
-		String factoryClassName,
-		Set<Properties> portalCacheListenerPropertiesSet,
-		PortalCacheListenerScope portalCacheListenerScope,
-		Properties properties, boolean usingDefault) {
-
-		if (factoryClassName.equals(
-				props.get(
-					PropsKeys.EHCACHE_CACHE_EVENT_LISTENER_FACTORY))) {
-
-			if (_clusterEnabled) {
-				if (!_clusterLinkReplicationEnabled) {
-					properties.put(
-						EhcacheConstants.
-							CACHE_EVENT_LISTENER_FACTORY_CLASS_NAME,
-						factoryClassName);
-				}
-
-				properties.put(
-					PortalCacheConfiguration.PORTAL_CACHE_LISTENER_SCOPE,
-					portalCacheListenerScope);
-				properties.put(PortalCacheReplicator.REPLICATOR, true);
-
-				portalCacheListenerPropertiesSet.add(properties);
-			}
-		}
-		else {
-			super.processCacheEventListenerFactoryProperties(
-				factoryClassName, portalCacheListenerPropertiesSet,
-				portalCacheListenerScope, properties, usingDefault);
-		}
 	}
 
 	@Reference(unbind = "-")

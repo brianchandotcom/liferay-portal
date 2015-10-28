@@ -252,6 +252,16 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 		return false;
 	}
 
+	protected boolean isValidCacheEventListener(
+		Properties properties, boolean usingDefault) {
+
+		if (usingDefault) {
+			return false;
+		}
+
+		return true;
+	}
+
 	protected Set<Properties> parseCacheEventListenerFactoryConfiguration(
 		CacheConfiguration cacheConfiguration, boolean usingDefault) {
 
@@ -265,21 +275,31 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 				cacheEventListenerFactoryConfiguration :
 					cacheEventListenerConfigurations) {
 
+			Properties properties = parseProperties(
+				cacheEventListenerFactoryConfiguration.getProperties(),
+				cacheEventListenerFactoryConfiguration. getPropertySeparator());
+
+			if (!isValidCacheEventListener(properties, usingDefault)) {
+				continue;
+			}
+
 			String factoryClassName =
 				cacheEventListenerFactoryConfiguration.
 					getFullyQualifiedClassPath();
 
-			Properties properties = parseProperties(
-				cacheEventListenerFactoryConfiguration.getProperties(),
-				cacheEventListenerFactoryConfiguration. getPropertySeparator());
+			properties.put(
+				EhcacheConstants.CACHE_EVENT_LISTENER_FACTORY_CLASS_NAME,
+				factoryClassName);
 
 			PortalCacheListenerScope portalCacheListenerScope =
 				_portalCacheListenerScopes.get(
 					cacheEventListenerFactoryConfiguration.getListenFor());
 
-			processCacheEventListenerFactoryProperties(
-				factoryClassName, portalCacheListenerPropertiesSet,
-				portalCacheListenerScope, properties, usingDefault);
+			properties.put(
+				PortalCacheConfiguration.PORTAL_CACHE_LISTENER_SCOPE,
+				portalCacheListenerScope);
+
+			portalCacheListenerPropertiesSet.add(properties);
 		}
 
 		return portalCacheListenerPropertiesSet;
@@ -310,24 +330,6 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 		}
 
 		return properties;
-	}
-
-	protected void processCacheEventListenerFactoryProperties(
-		String factoryClassName,
-		Set<Properties> portalCacheListenerPropertiesSet,
-		PortalCacheListenerScope portalCacheListenerScope,
-		Properties properties, boolean usingDefault) {
-
-		if (!usingDefault) {
-			properties.put(
-				EhcacheConstants.CACHE_EVENT_LISTENER_FACTORY_CLASS_NAME,
-				factoryClassName);
-			properties.put(
-				PortalCacheConfiguration.PORTAL_CACHE_LISTENER_SCOPE,
-				portalCacheListenerScope);
-
-			portalCacheListenerPropertiesSet.add(properties);
-		}
 	}
 
 	protected void resolvePortalProperty(

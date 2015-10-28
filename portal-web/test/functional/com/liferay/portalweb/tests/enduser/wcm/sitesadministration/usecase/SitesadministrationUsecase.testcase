@@ -358,8 +358,8 @@
 			<var name="userScreenName" value="test" />
 		</execute>
 
-		<execute macro="Dockbar#viewMySitesDropDownSiteName">
-			<var name="siteName" value="Site Organization Name" />
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Organization Name" />
 		</execute>
 	</command>
 

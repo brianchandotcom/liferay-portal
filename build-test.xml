@@ -4807,6 +4807,11 @@ module.framework.properties.osgi.console=11312</echo>
 					test.base.dir.name=${test.base.dir.name}
 				</echo>
 			</then>
+			<else>
+				<echo append="true" file="${test.ext.properties.file}">
+					test.base.dir.name=test/
+				</echo>
+			</else>
 		</if>
 
 		<if>

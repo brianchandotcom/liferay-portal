@@ -1,4 +1,8 @@
 <definition>
+	<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
+	<var name="ddlDataDefinitionName" value="Data Definition Name" />
+	<var name="ddlListName" value="List Name" />
+
 	<command name="addCP">
 		<var name="key_ddlListName" value="${ddlListName}" />
 
@@ -99,6 +103,10 @@
 		<execute function="AssertClick" locator1="MenuItem#VIEW" value1="View" />
 
 		<execute function="AssertClick" locator1="Button#EDIT" value1="Edit" />
+	</command>
+
+	<command name="gotoRecordPreview">
+		<execute function="AssertClick" locator1="DDL#RECORD_TABLE_COLUMN_ONE_PREVIEW_1" value1="(Preview)" />
 	</command>
 
 	<command name="populateFieldBoolean">
@@ -544,7 +552,7 @@
 		<if>
 			<equals arg1="${field}" arg2="HTML" />
 			<then>
-				<execute function="AssertClick" locator1="DDL#RECORD_TABLE_COLUMN_ONE_PREVIEW_1" value1="(Preview)" />
+				<execute macro="DDLRecord#gotoRecordPreview" />
 
 				<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
 
@@ -615,6 +623,10 @@
 		<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_COLUMN_ONE_NAME" value1="${fieldFieldLabel}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="DDL#RECORD_TABLE_COLUMN_ONE_RECORD_1" value1="Latitude:" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="DDL#RECORD_TABLE_COLUMN_ONE_RECORD_1" value1="Longitude:" />
+	</command>
+
+	<command name="viewInvalidHTMLfield">
+		<execute function="AssertElementPresent" locator1="DDL#RECORD_TABLE_PREVIEW_INVALID_IMG" />
 	</command>
 
 	<command name="viewRepeatableNestedFieldsVisualGrouping">

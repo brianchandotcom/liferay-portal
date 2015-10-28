@@ -102,7 +102,7 @@
 			<var name="structureName" value="WC Structure Name 3" />
 		</execute>
 
-		<for list="Number,Radio,Select,Text,Text Box" param="structureFieldName">
+		<for list="Number,Radio,Select,Separator,Text,Text Box" param="structureFieldName">
 			<execute macro="DynamicDataMapping#addField">
 				<var name="field" value="${structureFieldName}" />
 				<var name="fieldFieldLabel" value="${structureFieldName}" />
@@ -161,7 +161,7 @@
 			<var name="structureName" value="WC Structure Name 3" />
 		</execute>
 
-		<for list="Number,Radio,Select,Text,Text Box" param="structureFieldName">
+		<for list="Number,Radio,Select,Separator,Text,Text Box" param="structureFieldName">
 			<execute macro="DynamicDataMapping#viewField">
 				<var name="fieldFieldLabel" value="${structureFieldName}" />
 				<var method="StringUtil#replace('${structureFieldName}', ' ', '')" name="fieldName" />

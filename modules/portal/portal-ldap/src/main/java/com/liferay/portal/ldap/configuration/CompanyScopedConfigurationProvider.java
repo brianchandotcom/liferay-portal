@@ -32,13 +32,13 @@ public abstract class CompanyScopedConfigurationProvider
 
 	@Override
 	public T getConfiguration(long companyId) {
-		T t = _configurations.get(companyId);
+		Configuration configuration = _configurations.get(companyId);
 
-		if (t == null) {
-			t = _configurations.get(0L);
+		if (configuration == null) {
+			configuration = _configurations.get(0L);
 		}
 
-		if (t == null) {
+		if (configuration == null) {
 			Class<?> clazz = getMetatype();
 
 			throw new IllegalArgumentException(
@@ -46,7 +46,12 @@ public abstract class CompanyScopedConfigurationProvider
 					companyId);
 		}
 
-		return t;
+		Dictionary<String, Object> properties = configuration.getProperties();
+
+		T configurable = Configurable.createConfigurable(
+			getMetatype(), properties);
+
+		return configurable;
 	}
 
 	@Override
@@ -76,7 +81,7 @@ public abstract class CompanyScopedConfigurationProvider
 
 		long companyId = configurable.companyId();
 
-		_configurations.put(companyId, configurable);
+		_configurations.put(companyId, configuration);
 	}
 
 	@Override
@@ -93,6 +98,6 @@ public abstract class CompanyScopedConfigurationProvider
 		_configurations.remove(companyId);
 	}
 
-	private final Map<Long, T> _configurations = new HashMap<>();
+	private final Map<Long, Configuration> _configurations = new HashMap<>();
 
 }

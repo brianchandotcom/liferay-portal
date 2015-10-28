@@ -61,44 +61,61 @@ public class LDAPServerConfigurationProviderImpl
 	public LDAPServerConfiguration getConfiguration(
 		long companyId, long ldapServerId) {
 
-		Map<Long, LDAPServerConfiguration> ldapServerConfigurations =
-			_ldapServerConfigurations.get(companyId);
+		Map<Long, Configuration> configurations = _configurations.get(
+			companyId);
 
-		if (MapUtil.isEmpty(ldapServerConfigurations)) {
-			ldapServerConfigurations = _ldapServerConfigurations.get(0L);
+		if (MapUtil.isEmpty(configurations)) {
+			configurations = _configurations.get(0L);
 		}
 
-		if (MapUtil.isEmpty(ldapServerConfigurations)) {
+		if (MapUtil.isEmpty(configurations)) {
 			throw new IllegalArgumentException(
 				"No default LDAP server configuration found");
 		}
 
-		LDAPServerConfiguration ldapServerConfiguration =
-			ldapServerConfigurations.get(ldapServerId);
+		Configuration configuration = configurations.get(ldapServerId);
 
-		if (ldapServerConfiguration == null) {
+		if (configuration == null) {
 			throw new IllegalArgumentException(
 				"No LDAP server configuration found for company " + companyId +
 					" and LDAP server " + ldapServerId);
 		}
+
+		Dictionary<String, Object> properties = configuration.getProperties();
+
+		LDAPServerConfiguration ldapServerConfiguration =
+			Configurable.createConfigurable(getMetatype(), properties);
 
 		return ldapServerConfiguration;
 	}
 
 	@Override
 	public List<LDAPServerConfiguration> getConfigurations(long companyId) {
-		Map<Long, LDAPServerConfiguration> ldapServerConfigurations =
-			_ldapServerConfigurations.get(companyId);
+		Map<Long, Configuration> configurations = _configurations.get(
+			companyId);
 
-		if (MapUtil.isEmpty(ldapServerConfigurations)) {
-			ldapServerConfigurations = _ldapServerConfigurations.get(0L);
+		if (MapUtil.isEmpty(configurations)) {
+			configurations = _configurations.get(0L);
 		}
 
-		if (MapUtil.isEmpty(ldapServerConfigurations)) {
+		if (MapUtil.isEmpty(configurations)) {
 			return Collections.emptyList();
 		}
 
-		return new ArrayList<>(ldapServerConfigurations.values());
+		List<LDAPServerConfiguration> ldapServerConfigurations =
+			new ArrayList<>(configurations.size());
+
+		for (Configuration configuration : configurations.values()) {
+			Dictionary<String, Object> properties =
+				configuration.getProperties();
+
+			LDAPServerConfiguration ldapServerConfiguration =
+				Configurable.createConfigurable(getMetatype(), properties);
+
+			ldapServerConfigurations.add(ldapServerConfiguration);
+		}
+
+		return ldapServerConfigurations;
 	}
 
 	@Override
@@ -113,22 +130,20 @@ public class LDAPServerConfigurationProviderImpl
 		LDAPServerConfiguration ldapServerConfiguration =
 			Configurable.createConfigurable(getMetatype(), properties);
 
-		synchronized (_ldapServerConfigurations) {
-			Map<Long, LDAPServerConfiguration>
-				ldapServerConfigurations = _ldapServerConfigurations.get(
-					ldapServerConfiguration.companyId());
+		synchronized (_configurations) {
+			Map<Long, Configuration> ldapServerConfigurations =
+				_configurations.get(ldapServerConfiguration.companyId());
 
 			if (ldapServerConfigurations == null) {
 				ldapServerConfigurations = new TreeMap<>();
 
-				_ldapServerConfigurations.put(
+				_configurations.put(
 					ldapServerConfiguration.companyId(),
 					ldapServerConfigurations);
 			}
 
 			ldapServerConfigurations.put(
-				ldapServerConfiguration.ldapServerId(),
-				ldapServerConfiguration);
+				ldapServerConfiguration.ldapServerId(), configuration);
 		}
 	}
 
@@ -139,19 +154,17 @@ public class LDAPServerConfigurationProviderImpl
 		LDAPServerConfiguration ldapServerConfiguration =
 			Configurable.createConfigurable(getMetatype(), properties);
 
-		synchronized (_ldapServerConfigurations) {
-			Map<Long, LDAPServerConfiguration>
-				ldapServerConfigurations = _ldapServerConfigurations.get(
-					ldapServerConfiguration.companyId());
+		synchronized (_configurations) {
+			Map<Long, Configuration> configurations = _configurations.get(
+				ldapServerConfiguration.companyId());
 
-			if (!MapUtil.isEmpty(ldapServerConfigurations)) {
-				ldapServerConfigurations.remove(
-					ldapServerConfiguration.ldapServerId());
+			if (!MapUtil.isEmpty(configurations)) {
+				configurations.remove(ldapServerConfiguration.ldapServerId());
 			}
 		}
 	}
 
-	private final Map<Long, Map<Long, LDAPServerConfiguration>>
-		_ldapServerConfigurations = new ConcurrentHashMap<>();
+	private final Map<Long, Map<Long, Configuration>>
+		_configurations = new ConcurrentHashMap<>();
 
 }

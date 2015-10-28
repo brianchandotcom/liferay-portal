@@ -29,9 +29,6 @@ public class StagingConstants {
 
 	public static final String STAGED_PREFIX = "staged--";
 
-	public static final String STAGING_RECENT_LAYOUT_IDS_MAP =
-		"stagingRecentLayoutIdsMap";
-
 	public static final int TYPE_LOCAL_STAGING = 1;
 
 	public static final int TYPE_NOT_STAGED = 0;

@@ -619,7 +619,7 @@ public class TemplateContextHelper {
 
 			try {
 				variables.put(
-					"saxReaderUtil",
+					"saxReader",
 					utilLocator.findUtil(SAXReaderUtil.class.getName()));
 			}
 			catch (SecurityException se) {

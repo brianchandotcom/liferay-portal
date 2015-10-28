@@ -787,7 +787,7 @@ public class Entity {
 	}
 
 	public boolean isShardedModel() {
-		return hasColumn("companyId");
+		return hasColumn("companyId") && !getName().equals("Company");
 	}
 
 	public boolean isStagedAuditedModel() {

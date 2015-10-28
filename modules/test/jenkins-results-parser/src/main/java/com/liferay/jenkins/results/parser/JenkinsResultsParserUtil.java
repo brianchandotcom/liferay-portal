@@ -33,7 +33,7 @@ public class JenkinsResultsParserUtil {
 
 	public static String fixJSON(String json) {
 		json = json.replaceAll("\t", "&#09;");
-		json = json.replaceAll("\\\"", "&#34;");
+		json = json.replaceAll("\\\"", _TEMP);
 		json = json.replaceAll("'", "&#39;");
 		json = json.replaceAll("\\(", "&#40;");
 		json = json.replaceAll("\\)", "&#41;");
@@ -194,6 +194,10 @@ public class JenkinsResultsParserUtil {
 
 		return sb.toString();
 	}
+
+	// Placeholder until bug in source formatter is fixed.
+
+	private static final String _TEMP = "&#34;";
 
 	private static final Pattern _localURLPattern1 = Pattern.compile(
 		"https://test.liferay.com/([0-9]+)/");

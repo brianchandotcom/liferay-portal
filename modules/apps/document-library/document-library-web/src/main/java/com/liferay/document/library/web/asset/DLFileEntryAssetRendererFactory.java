@@ -31,6 +31,7 @@ import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 import com.liferay.portlet.asset.model.ClassTypeReader;
+import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.asset.DLFileEntryClassTypeReader;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -79,19 +80,26 @@ public class DLFileEntryAssetRendererFactory
 	public AssetRenderer<FileEntry> getAssetRenderer(long classPK, int type)
 		throws PortalException {
 
-		FileEntry fileEntry = _dlAppLocalService.getFileEntry(classPK);
-
+		FileEntry fileEntry = null;
 		FileVersion fileVersion = null;
 
-		if (type == TYPE_LATEST) {
-			fileVersion = fileEntry.getLatestFileVersion();
+		try {
+			fileEntry = _dlAppLocalService.getFileEntry(classPK);
+
+			if (type == TYPE_LATEST) {
+				fileVersion = fileEntry.getLatestFileVersion();
+			}
+			else if (type == TYPE_LATEST_APPROVED) {
+				fileVersion = fileEntry.getFileVersion();
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unknown asset renderer type " + type);
+			}
 		}
-		else if (type == TYPE_LATEST_APPROVED) {
-			fileVersion = fileEntry.getFileVersion();
-		}
-		else {
-			throw new IllegalArgumentException(
-				"Unknown asset renderer type " + type);
+		catch (NoSuchFileEntryException nsfee) {
+			fileVersion = _dlAppLocalService.getFileVersion(classPK);
+			fileEntry = fileVersion.getFileEntry();
 		}
 
 		DLFileEntryAssetRenderer dlFileEntryAssetRenderer =

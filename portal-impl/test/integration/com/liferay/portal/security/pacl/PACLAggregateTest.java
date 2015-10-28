@@ -203,7 +203,9 @@ public class PACLAggregateTest extends AutoBalanceTestCase {
 
 		Arrays.sort(files);
 
-		files = slice(files);
+		if (isCIMode()) {
+			files = slice(files);
+		}
 
 		Package pkg = PACLAggregateTest.class.getPackage();
 

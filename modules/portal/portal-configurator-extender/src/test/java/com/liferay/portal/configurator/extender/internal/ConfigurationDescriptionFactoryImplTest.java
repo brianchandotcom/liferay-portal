@@ -74,7 +74,9 @@ public class ConfigurationDescriptionFactoryImplTest {
 	}
 
 	@Test
-	public void testCreateReturnsNullWhenNotPropertiesFileNamedConfigurationContent() {
+	public void testCreateReturnsNullWhenNotPropertiesFileNamedConfigurationContent(
+	) {
+
 		ConfigurationDescriptionFactory configurationDescriptionFactory =
 			new ConfigurationDescriptionFactoryImpl();
 

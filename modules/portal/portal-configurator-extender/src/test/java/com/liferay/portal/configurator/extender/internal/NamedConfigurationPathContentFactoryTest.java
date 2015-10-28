@@ -192,14 +192,17 @@ public class NamedConfigurationPathContentFactoryTest {
 	@Rule
 	public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
-	private void _writeToFile(File file, String content) throws IOException {
-		Writer writer = new FileWriter(file);
+	private void _writeToFile(File file, String content) {
+		try (Writer writer = new FileWriter(file)) {
+			writer.write(content);
 
-		writer.write(content);
+			writer.flush();
 
-		writer.flush();
-
-		writer.close();
+			writer.close();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
 	private File _file;

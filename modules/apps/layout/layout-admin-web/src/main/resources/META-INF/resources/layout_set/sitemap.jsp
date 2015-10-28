@@ -41,7 +41,7 @@ if (!host.equals(layoutSet.getVirtualHostname())) {
 <br /><br />
 
 <aui:fieldset>
-	<liferay-ui:message arguments='<%= new Object[] {"<a target=\"_blank\" href=\"" + HtmlUtil.escapeAttribute(sitemapUrl) + "\">", "</a>"} %>' key="send-sitemap-information-to-preview" translateArguments="<%= false %>" />
+	<%= LanguageUtil.format(request, "send-sitemap-information-to-preview", new Object[] {"<a target=\"_blank\" href=\"" + HtmlUtil.escapeAttribute(sitemapUrl) + "\">", "</a>"}, false) %>
 
 	<ul>
 		<li>

@@ -67,10 +67,10 @@ if (entry.getPriority() > 0) {
 		<div class="entry-action">
 			<c:choose>
 				<c:when test="<%= entryUser == null %>">
-					<liferay-ui:message arguments='<%= new Object[] {HtmlUtil.escape(entry.getUserName()), "<span class=\"scope\">" + scopeName + "</span>"} %>' key="x-to-x" translateArguments="<%= false %>" />
+					<%= LanguageUtil.format(request, "x-to-x", new Object[] {HtmlUtil.escape(entry.getUserName()), "<span class=\"scope\">" + scopeName + "</span>"}, false) %>
 				</c:when>
 				<c:otherwise>
-					<liferay-ui:message arguments='<%= new Object[] {"<a href=\"" + entryUser.getDisplayURL(themeDisplay) + "\">" + HtmlUtil.escape(entryUser.getFullName()) + "</a>", "<span class=\"scope\">" + scopeName + "</span>"} %>' key="x-to-x" translateArguments="<%= false %>" />
+					<%= LanguageUtil.format(request, "x-to-x", new Object[] {"<a href=\"" + entryUser.getDisplayURL(themeDisplay) + "\">" + HtmlUtil.escape(entryUser.getFullName()) + "</a>", "<span class=\"scope\">" + scopeName + "</span>"}, false) %>
 				</c:otherwise>
 			</c:choose>
 		</div>

@@ -149,7 +149,7 @@ if (entry == null) {
 
 		<div class="entry-header">
 			<div class="entry-action">
-				<liferay-ui:message arguments='<%= new Object[] {"<a href=\"" + currentUser.getDisplayURL(themeDisplay) + "\">" + HtmlUtil.escape(currentUser.getFullName()) + "</a>", "<span class=\"scope\" id=\"" + renderResponse.getNamespace() + "scope\"></span>"} %>' key="x-to-x" translateArguments="<%= false %>" />
+				<%= LanguageUtil.format(request, "x-to-x", new Object[] {"<a href=\"" + currentUser.getDisplayURL(themeDisplay) + "\">" + HtmlUtil.escape(currentUser.getFullName()) + "</a>", "<span class=\"scope\" id=\"" + renderResponse.getNamespace() + "scope\"></span>"}, false) %>
 			</div>
 
 			<div class="entry-time">

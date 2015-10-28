@@ -319,7 +319,7 @@ public class DLFileEntryTypeFinderImpl
 
 		StringBundler sb = new StringBundler(10);
 
-		sb.append("(SELECT COUNT(DISTINCT fileEntryTypeId) AS COUNT_VALUE ");
+		sb.append("(SELECT COUNT(*) AS COUNT_VALUE ");
 		sb.append("From DLFileEntryType WHERE ");
 		sb.append("((DLFileEntryType.companyId = 0) ");
 		sb.append("AND (DLFileEntryType.groupId = 0) AND (");

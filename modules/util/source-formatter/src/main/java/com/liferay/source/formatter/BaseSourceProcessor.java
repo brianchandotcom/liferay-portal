@@ -387,7 +387,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	protected void checkLanguageKeys(
 			String fileName, String content, Pattern pattern)
-		throws IOException {
+		throws Exception {
 
 		String fileExtension = FilenameUtils.getExtension(fileName);
 
@@ -432,8 +432,17 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				Properties moduleLanguageProperties =
 					getModuleLanguageProperties(fileName);
 
-				if ((moduleLanguageProperties == null) ||
-					!moduleLanguageProperties.containsKey(languageKey)) {
+				if ((moduleLanguageProperties != null) &&
+					moduleLanguageProperties.containsKey(languageKey)) {
+
+					continue;
+				}
+
+				Properties bndFileLanguageProperties =
+					getBNDFileLanguageProperties(fileName);
+
+				if ((bndFileLanguageProperties == null) ||
+					!bndFileLanguageProperties.containsKey(languageKey)) {
 
 					processErrorMessage(
 						fileName,
@@ -1074,6 +1083,55 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			});
 
 		return _annotationsExclusions;
+	}
+
+	protected Properties getBNDFileLanguageProperties(String fileName)
+		throws Exception {
+
+		String bndContent = null;
+		String bndFileLocation = fileName;
+
+		while (true) {
+			int pos = bndFileLocation.lastIndexOf(StringPool.SLASH);
+
+			if (pos == -1) {
+				return null;
+			}
+
+			bndFileLocation = bndFileLocation.substring(0, pos + 1);
+
+			File file = new File(bndFileLocation + "bnd.bnd");
+
+			if (file.exists()) {
+				bndContent = FileUtil.read(file);
+
+				break;
+			}
+
+			bndFileLocation = StringUtil.replaceLast(
+				bndFileLocation, StringPool.SLASH, StringPool.BLANK);
+		}
+
+		Matcher matcher = bndContentDirPattern.matcher(bndContent);
+
+		if (matcher.find()) {
+			File file = new File(
+				bndFileLocation + matcher.group(1) + "/Language.properties");
+
+			if (!file.exists()) {
+				return null;
+			}
+
+			Properties properties = new Properties();
+
+			InputStream inputStream = new FileInputStream(file);
+
+			properties.load(inputStream);
+
+			return properties;
+		}
+
+		return null;
 	}
 
 	protected Map<String, String> getCompatClassNamesMap() throws Exception {
@@ -1822,6 +1880,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	protected static Pattern attributeNamePattern = Pattern.compile(
 		"[a-z]+[-_a-zA-Z0-9]*");
+	protected static Pattern bndContentDirPattern = Pattern.compile(
+		"\tcontent=(.*?)(,\\\\|\n)");
 	protected static Pattern emptyCollectionPattern = Pattern.compile(
 		"Collections\\.EMPTY_(LIST|MAP|SET)");
 	protected static Pattern javaSourceInsideJSPTagPattern = Pattern.compile(

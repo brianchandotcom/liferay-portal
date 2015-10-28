@@ -4627,6 +4627,15 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		</if>
 
 		<if>
+			<equals arg1="${hot.deploy.dependency.management.enabled}" arg2="false" />
+			<then>
+				<echo file="portal-impl/src/portal-ext.properties" append="true">
+
+hot.deploy.dependency.management.enabled=false</echo>
+			</then>
+		</if>
+
+		<if>
 			<isset property="set.permission.algorithm.5" />
 			<then>
 				<replace file="portal-impl/src/portal-ext.properties" token="#permissions.user.check.algorithm=5" value="permissions.user.check.algorithm=5" />
@@ -4652,15 +4661,6 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 				<echo append="true" file="portal-impl/src/portal-ext.properties">
 
 include-and-override=${liferay.home}/portal-setup-wizard.properties</echo>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${hot.deploy.dependency.management.enabled}" arg2="false" />
-			<then>
-				<echo file="portal-impl/src/portal-ext.properties" append="true">
-
-hot.deploy.dependency.management.enabled=false</echo>
 			</then>
 		</if>
 

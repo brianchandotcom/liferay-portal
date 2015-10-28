@@ -1783,39 +1783,29 @@ public class PortletDataContextImpl implements PortletDataContext {
 			return false;
 		}
 
+		if (_missingReferences.isEmpty()) {
+			List<Element> missingReferenceElements =
+				_missingReferencesElement.elements();
+
+			for (Element missingReferenceElement : missingReferenceElements) {
+				String missingReferenceClassName =
+					missingReferenceElement.attributeValue("class-name");
+				String missingReferenceClassPK =
+					missingReferenceElement.attributeValue("class-pk");
+
+				String missingReferenceKey = getReferenceKey(
+					missingReferenceClassName, missingReferenceClassPK);
+
+				_missingReferences.add(missingReferenceKey);
+			}
+		}
+
 		String className = referenceElement.attributeValue("class-name");
 		String classPK = referenceElement.attributeValue("class-pk");
 
 		String referenceKey = getReferenceKey(className, classPK);
 
-		if (!_missingReferences.isEmpty()) {
-			return _missingReferences.contains(referenceKey);
-		}
-
-		List<Element> missingReferenceElements =
-			_missingReferencesElement.elements();
-
-		boolean missing = false;
-
-		for (Element missingReferenceElement : missingReferenceElements) {
-			String missingReferenceClassName =
-				missingReferenceElement.attributeValue("class-name");
-			String missingReferenceClassPK =
-				missingReferenceElement.attributeValue("class-pk");
-
-			String missingReferenceKey = getReferenceKey(
-				missingReferenceClassName, missingReferenceClassPK);
-
-			_missingReferences.add(missingReferenceKey);
-
-			if (className.equals(missingReferenceClassName) &&
-				classPK.equals(missingReferenceClassPK)) {
-
-				missing = true;
-			}
-		}
-
-		return missing;
+		return _missingReferences.contains(referenceKey);
 	}
 
 	@Override

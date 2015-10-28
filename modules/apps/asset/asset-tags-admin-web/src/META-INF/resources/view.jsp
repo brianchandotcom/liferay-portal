@@ -18,6 +18,13 @@
 
 <%
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+
+String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
+PortletURL navigationPortletURL = renderResponse.createRenderURL();
+
+PortletURL sortPortletURL = renderResponse.createRenderURL();
 %>
 
 <liferay-portlet:renderURL varImpl="portletURL" />
@@ -38,6 +45,20 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 	checkBoxContainerId="assetTagsSearchContainer"
 	includeCheckBox="<%= true %>"
 >
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= navigationPortletURL %>"
+		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= orderByCol %>"
+			orderByType="<%= orderByType %>"
+			orderColumns='<%= new String[] {"name", "usages"} %>'
+			portletURL="<%= sortPortletURL %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"list"} %>'
@@ -71,11 +92,30 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 				keywords = StringUtil.quote(keywords, StringPool.PERCENT);
 			}
 
+			OrderByComparator<AssetTag> orderByComparator = null;
+
+			boolean orderByAsc = false;
+
+			if (orderByType.equals("asc")) {
+				orderByAsc = true;
+			}
+
+			if (orderByCol.equals("name")) {
+				orderByComparator = new AssetTagNameComparator(orderByAsc);
+			}
+			else if (orderByCol.equals("usages")) {
+				orderByComparator = new AssetTagAssetCountComparator(orderByAsc);
+			}
+
+			searchContainer.setOrderByCol(orderByCol);
+			searchContainer.setOrderByComparator(orderByComparator);
+			searchContainer.setOrderByType(orderByType);
+
 			total = AssetTagServiceUtil.getTagsCount(scopeGroupId, keywords);
 
 			searchContainer.setTotal(total);
 
-			results = AssetTagServiceUtil.getTags(scopeGroupId, keywords, searchContainer.getStart(), searchContainer.getEnd());
+			results = AssetTagServiceUtil.getTags(scopeGroupId, keywords, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 
 			searchContainer.setResults(results);
 			%>
@@ -94,16 +134,8 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 
 			<liferay-ui:search-container-column-text
 				name="usages"
-			>
-				<c:choose>
-					<c:when test="<%= tag.getAssetCount() > 0 %>">
-						<liferay-ui:message arguments="<%= tag.getAssetCount() %>" key="used-in-x-assets" />
-					</c:when>
-					<c:otherwise>
-						<liferay-ui:message key="this-tag-is-not-used" />
-					</c:otherwise>
-				</c:choose>
-			</liferay-ui:search-container-column-text>
+				value="<%= String.valueOf(tag.getAssetCount()) %>"
+			/>
 
 			<liferay-ui:search-container-column-jsp
 				cssClass="checkbox-cell entry-action"

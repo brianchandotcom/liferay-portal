@@ -130,8 +130,20 @@ public class AssetTagServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags(
+		long groupId, java.lang.String name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTag> obc) {
+		return getService().getTags(groupId, name, start, end, obc);
+	}
+
+	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags(
 		long[] groupIds, java.lang.String name, int start, int end) {
 		return getService().getTags(groupIds, name, start, end);
+	}
+
+	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags(
+		long[] groupIds, java.lang.String name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTag> obc) {
+		return getService().getTags(groupIds, name, start, end, obc);
 	}
 
 	public static int getTagsCount(long groupId, java.lang.String name) {

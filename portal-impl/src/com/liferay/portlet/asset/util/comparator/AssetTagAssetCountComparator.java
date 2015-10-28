@@ -18,40 +18,43 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portlet.asset.model.AssetTag;
 
 /**
- * @author Juan Fernández
+ * @author Eudaldo Alonso
  */
-public class AssetTagNameComparator extends OrderByComparator<AssetTag> {
+public class AssetTagAssetCountComparator extends OrderByComparator<AssetTag> {
 
-	public static final String ORDER_BY_ASC = "AssetTag.name ASC";
+	public static final String ORDER_BY_ASC =
+		"AssetTag.assetCount ASC, AssetTag.name ASC";
 
-	public static final String ORDER_BY_DESC = "AssetTag.name DESC";
+	public static final String ORDER_BY_DESC =
+		"AssetTag.assetCount DESC, AssetTag.name ASC";
 
-	public static final String[] ORDER_BY_FIELDS = {"name"};
+	public static final String[] ORDER_BY_FIELDS = {"assetCount"};
 
-	public AssetTagNameComparator() {
-		this(true, false);
+	public AssetTagAssetCountComparator() {
+		this(true);
 	}
 
-	public AssetTagNameComparator(boolean ascending) {
-		this(ascending, false);
-	}
-
-	public AssetTagNameComparator(boolean ascending, boolean caseSensitive) {
+	public AssetTagAssetCountComparator(boolean ascending) {
 		_ascending = ascending;
-		_caseSensitive = caseSensitive;
 	}
 
 	@Override
 	public int compare(AssetTag assetTag1, AssetTag assetTag2) {
-		String name1 = assetTag1.getName();
-		String name2 = assetTag2.getName();
+		int assetCount1 = assetTag1.getAssetCount();
+		int assetCount2 = assetTag2.getAssetCount();
 
 		int value = 0;
 
-		if (_caseSensitive) {
-			value = name1.compareTo(name2);
+		if (assetCount1 < assetCount2) {
+			value = -1;
+		}
+		else if (assetCount1 > assetCount2) {
+			value = 1;
 		}
 		else {
+			String name1 = assetTag1.getName();
+			String name2 = assetTag2.getName();
+
 			value = name1.compareToIgnoreCase(name2);
 		}
 
@@ -84,6 +87,5 @@ public class AssetTagNameComparator extends OrderByComparator<AssetTag> {
 	}
 
 	private final boolean _ascending;
-	private final boolean _caseSensitive;
 
 }

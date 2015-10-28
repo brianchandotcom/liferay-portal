@@ -139,8 +139,22 @@ public class AssetTagServiceWrapper implements AssetTagService,
 
 	@Override
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags(
+		long groupId, java.lang.String name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTag> obc) {
+		return _assetTagService.getTags(groupId, name, start, end, obc);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags(
 		long[] groupIds, java.lang.String name, int start, int end) {
 		return _assetTagService.getTags(groupIds, name, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags(
+		long[] groupIds, java.lang.String name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetTag> obc) {
+		return _assetTagService.getTags(groupIds, name, start, end, obc);
 	}
 
 	@Override

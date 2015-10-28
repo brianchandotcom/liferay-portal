@@ -27,7 +27,9 @@ public class UnstableMessageUtil {
 	public String getUnstableMessage(String buildURL) throws Exception {
 		StringBuilder sb = new StringBuilder();
 
-		JSONObject testReportJSONObject = JenkinsResultsParserUtil.toJSONObject(JenkinsResultsParserUtil.getLocalURL(buildURL + "testReport/api/json"));
+		JSONObject testReportJSONObject = JenkinsResultsParserUtil.toJSONObject(
+			JenkinsResultsParserUtil.getLocalURL(
+				buildURL + "testReport/api/json"));
 
 		int failCount = testReportJSONObject.getInt("failCount");
 		int totalCount = testReportJSONObject.getInt("totalCount");
@@ -57,20 +59,26 @@ public class UnstableMessageUtil {
 
 		List<String> runBuildURLs = new ArrayList<>();
 
-		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(JenkinsResultsParserUtil.getLocalURL(buildURL + "api/json"));
+		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+			JenkinsResultsParserUtil.getLocalURL(buildURL + "api/json"));
 
 		if (jsonObject.has("runs")) {
 			JSONArray runsJSONArray = jsonObject.getJSONArray("runs");
 
 			List<String> failureBuildURLs = new ArrayList<>();
 
-			for(int i = 0; i < runsJSONArray.length(); i++) {
+			for (int i = 0; i < runsJSONArray.length(); i++) {
 				JSONObject runsJSONObject = runsJSONArray.getJSONObject(i);
 
 				String runBuildURL = runsJSONObject.getString("url");
 
-				if (runBuildURL.endsWith("/" + jsonObject.getString("number") + "/")) {
-					JSONObject runJSONObject = JenkinsResultsParserUtil.toJSONObject(JenkinsResultsParserUtil.getLocalURL(runBuildURL + "api/json"));
+				if (runBuildURL.endsWith(
+						"/" + jsonObject.getString("number") + "/")) {
+
+					JSONObject runJSONObject =
+						JenkinsResultsParserUtil.toJSONObject(
+							JenkinsResultsParserUtil.getLocalURL(
+								runBuildURL + "api/json"));
 
 					String runResult = runJSONObject.getString("result");
 
@@ -91,38 +99,51 @@ public class UnstableMessageUtil {
 				break;
 			}
 
-			testReportJSONObject = JenkinsResultsParserUtil.toJSONObject(JenkinsResultsParserUtil.getLocalURL(runBuildURL + "testReport/api/json"));
+			testReportJSONObject = JenkinsResultsParserUtil.toJSONObject(
+				JenkinsResultsParserUtil.getLocalURL(
+					runBuildURL + "testReport/api/json"));
 
-			JSONArray suitesJSONArray = testReportJSONObject.getJSONArray("suites");
+			JSONArray suitesJSONArray = testReportJSONObject.getJSONArray(
+				"suites");
 
-			for(int i = 0; i < suitesJSONArray.length(); i++) {
+			for (int i = 0; i < suitesJSONArray.length(); i++) {
 				if (failureCount >= 3) {
 					break;
 				}
 
 				JSONObject suitesJSONObject = suitesJSONArray.getJSONObject(i);
 
-				JSONArray casesJSONArray = suitesJSONObject.getJSONArray("cases");
+				JSONArray casesJSONArray = suitesJSONObject.getJSONArray(
+					"cases");
 
-				for(int j = 0; j < casesJSONArray.length(); j++) {
+				for (int j = 0; j < casesJSONArray.length(); j++) {
 					if (failureCount >= 3) {
 						break;
 					}
 
-					JSONObject casesJSONObject = casesJSONArray.getJSONObject(j);
+					JSONObject casesJSONObject = casesJSONArray.getJSONObject(
+						j);
 
 					String status = casesJSONObject.getString("status");
 
-					if (!status.equals("FIXED") && !status.equals("PASSED") && !status.equals("SKIPPED")) {
-						JSONObject jobJSONObject = JenkinsResultsParserUtil.toJSONObject(JenkinsResultsParserUtil.getLocalURL(runBuildURL + "api/json"));
+					if (!status.equals("FIXED") && !status.equals("PASSED") &&
+						!status.equals("SKIPPED")) {
 
-						String testClassName = casesJSONObject.getString("className");
-						String testMethodName = casesJSONObject.getString("name");
+						JSONObject jobJSONObject =
+							JenkinsResultsParserUtil.toJSONObject(
+								JenkinsResultsParserUtil.getLocalURL(
+									runBuildURL + "api/json"));
+
+						String testClassName = casesJSONObject.getString(
+							"className");
+						String testMethodName = casesJSONObject.getString(
+							"name");
 
 						int x = testClassName.lastIndexOf(".");
 
 						String testPackageName = testClassName.substring(0, x);
-						String testSimpleClassName = testClassName.substring(x + 1);
+						String testSimpleClassName = testClassName.substring(
+							x + 1);
 
 						runBuildURL = runBuildURL.replace("[", "_");
 						runBuildURL = runBuildURL.replace("]", "_");
@@ -138,12 +159,16 @@ public class UnstableMessageUtil {
 
 						String testMethodNameURLFormat = testMethodName;
 
-						testMethodNameURLFormat = testMethodNameURLFormat.replace("[", "_");
-						testMethodNameURLFormat = testMethodNameURLFormat.replace("]", "_");
-						testMethodNameURLFormat = testMethodNameURLFormat.replace("#", "_");
+						testMethodNameURLFormat =
+							testMethodNameURLFormat.replace("[", "_");
+						testMethodNameURLFormat =
+							testMethodNameURLFormat.replace("]", "_");
+						testMethodNameURLFormat =
+							testMethodNameURLFormat.replace("#", "_");
 
 						if (testPackageName.equals("junit.framework")) {
-							testMethodNameURLFormat = testMethodNameURLFormat.replace(".", "_");
+							testMethodNameURLFormat =
+								testMethodNameURLFormat.replace(".", "_");
 						}
 
 						sb.append(testMethodNameURLFormat);
@@ -152,11 +177,17 @@ public class UnstableMessageUtil {
 						sb.append(".");
 						sb.append(testMethodName);
 
-						String jobVariant = JenkinsResultsParserUtil.getJobVariant(jobJSONObject);
+						String jobVariant =
+							JenkinsResultsParserUtil.getJobVariant(
+								jobJSONObject);
 
-						if (jobVariant.contains("functional") && testClassName.contains("EvaluateLogTest")) {
+						if (jobVariant.contains("functional") &&
+							testClassName.contains("EvaluateLogTest")) {
+
 							sb.append("[");
-							sb.append(JenkinsResultsParserUtil.getAxisVariable(jobJSONObject));
+							sb.append(
+								JenkinsResultsParserUtil.getAxisVariable(
+									jobJSONObject));
 							sb.append("]");
 						}
 
@@ -165,7 +196,8 @@ public class UnstableMessageUtil {
 						if (jobVariant.contains("functional")) {
 							sb.append(" - ");
 
-							String description = jobJSONObject.getString("description");
+							String description = jobJSONObject.getString(
+								"description");
 
 							x = description.indexOf(">Jenkins Report<");
 
@@ -202,7 +234,8 @@ public class UnstableMessageUtil {
 		if (failureCount > 3) {
 			sb.append("<p><strong>Click <a href=\\\"");
 			sb.append(buildURL);
-			sb.append("/testReport/\\\">here</a> for more failures.</strong></p>");
+			sb.append(
+				"/testReport/\\\">here</a> for more failures.</strong></p>");
 		}
 
 		return sb.toString();

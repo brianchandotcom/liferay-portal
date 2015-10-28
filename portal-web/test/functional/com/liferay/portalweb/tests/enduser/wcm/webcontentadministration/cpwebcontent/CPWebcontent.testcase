@@ -169,45 +169,6 @@
 		</for>
 	</command>
 
-	<command name="AddStructureWithSeparator" priority="4">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoManageStructures" />
-
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Separator" />
-			<var name="fieldFieldLabel" value="Separator" />
-			<var name="fieldName" value="Separator" />
-		</execute>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoManageStructures" />
-
-		<execute macro="WebContentStructures#viewCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#viewField">
-			<var name="fieldFieldLabel" value="Separator" />
-			<var name="fieldName" value="Separator" />
-		</execute>
-	</command>
-
 	<command name="AddStructureWithSubfield" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />

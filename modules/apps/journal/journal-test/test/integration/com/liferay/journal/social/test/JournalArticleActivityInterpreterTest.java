@@ -15,12 +15,12 @@
 package com.liferay.journal.social.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.social.JournalActivityKeys;
 import com.liferay.journal.test.util.JournalTestUtil;
-import com.liferay.journal.web.social.JournalArticleActivityInterpreter;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
@@ -62,7 +62,8 @@ public class JournalArticleActivityInterpreterTest
 
 	@Override
 	protected SocialActivityInterpreter getActivityInterpreter() {
-		return new JournalArticleActivityInterpreter();
+		return getActivityInterpreter(
+			JournalPortletKeys.JOURNAL, JournalArticle.class.getName());
 	}
 
 	@Override

@@ -17,7 +17,7 @@ package com.liferay.journal.web.social;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
-import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.permission.JournalArticlePermission;
 import com.liferay.journal.service.permission.JournalFolderPermission;
 import com.liferay.journal.social.JournalActivityKeys;
@@ -33,6 +33,7 @@ import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Roberto Diaz
@@ -55,9 +56,8 @@ public class JournalArticleActivityInterpreter
 			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
 
-		JournalArticle article =
-			JournalArticleLocalServiceUtil.getLatestArticle(
-				activity.getClassPK());
+		JournalArticle article = _journalArticleLocalService.getLatestArticle(
+			activity.getClassPK());
 
 		Layout layout = article.getLayout();
 
@@ -127,7 +127,7 @@ public class JournalArticleActivityInterpreter
 
 		if (activityType == JournalActivityKeys.ADD_ARTICLE) {
 			JournalArticle article =
-				JournalArticleLocalServiceUtil.getLatestArticle(
+				_journalArticleLocalService.getLatestArticle(
 					activity.getClassPK());
 
 			return JournalFolderPermission.contains(
@@ -143,7 +143,16 @@ public class JournalArticleActivityInterpreter
 			permissionChecker, activity.getClassPK(), actionId);
 	}
 
+	@Reference(unbind = "-")
+	protected void setJournalArticleLocalService(
+		JournalArticleLocalService journalArticleLocalService) {
+
+		_journalArticleLocalService = journalArticleLocalService;
+	}
+
 	private static final String[] _CLASS_NAMES =
 		{JournalArticle.class.getName()};
+
+	private JournalArticleLocalService _journalArticleLocalService;
 
 }

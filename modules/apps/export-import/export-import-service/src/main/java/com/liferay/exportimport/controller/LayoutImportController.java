@@ -561,14 +561,6 @@ public class LayoutImportController implements ImportController {
 			_layoutSetLocalService.updateLayoutSet(layoutSet);
 		}
 
-		Element missingReferencesElement = rootElement.element(
-			"missing-references");
-
-		if (missingReferencesElement != null) {
-			portletDataContext.setMissingReferencesElement(
-				missingReferencesElement);
-		}
-
 		// Look and feel
 
 		if (importLogo) {

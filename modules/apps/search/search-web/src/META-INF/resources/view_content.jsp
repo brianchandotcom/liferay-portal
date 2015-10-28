@@ -38,13 +38,21 @@ AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
 
 			PortletURL editPortletURL = assetRenderer.getURLEdit((LiferayPortletRequest)renderRequest, (LiferayPortletResponse)renderResponse, LiferayWindowState.POP_UP, redirectURL);
 
-			String taglibEditURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + "editAsset', title: '" + HtmlUtil.escapeJS(LanguageUtil.format(request, "edit-x", HtmlUtil.escape(assetRenderer.getTitle(locale)), false)) + "', uri:'" + HtmlUtil.escapeJS(editPortletURL.toString()) + "'});";
+			Map<String, Object> data = new HashMap<String, Object>();
+
+			data.put("destroyOnHide", true);
+			data.put("id", HtmlUtil.escape(portletDisplay.getNamespace()) + "editAsset");
+			data.put("title", LanguageUtil.format(request, "edit-x", HtmlUtil.escape(assetRenderer.getTitle(locale)), false));
 			%>
 
 			<liferay-ui:icon
+				data="<%= data %>"
 				iconCssClass="icon-edit-sign"
+				label="<%= false %>"
 				message='<%= HtmlUtil.render(LanguageUtil.format(request, "edit-x-x", new Object[] {"hide-accessible", HtmlUtil.escape(assetRenderer.getTitle(locale))}, false)) %>'
-				url="<%= taglibEditURL %>"
+				method="get"
+				url="<%= editPortletURL.toString() %>"
+				useDialog="<%= true %>"
 			/>
 		</div>
 	</c:if>

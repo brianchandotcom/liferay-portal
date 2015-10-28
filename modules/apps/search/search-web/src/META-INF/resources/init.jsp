@@ -104,6 +104,7 @@ page import="java.util.Calendar" %><%@
 page import="java.util.Collections" %><%@
 page import="java.util.Comparator" %><%@
 page import="java.util.Date" %><%@
+page import="java.util.HashMap" %><%@
 page import="java.util.LinkedHashMap" %><%@
 page import="java.util.LinkedList" %><%@
 page import="java.util.List" %><%@

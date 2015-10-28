@@ -15,10 +15,15 @@
 package com.liferay.journal.web.portlet.configuration.icon;
 
 import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.model.User;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.util.PortalUtil;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
+import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -44,7 +49,19 @@ public class FeedsPortletConfigurationIcon
 
 	@Override
 	public String getURL() {
-		return "javascript:;";
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+			request, JournalPortletKeys.JOURNAL, 0,
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("mvcPath", "/view_feeds.jsp");
+
+		try {
+			portletURL.setWindowState(LiferayWindowState.POP_UP);
+		}
+		catch (WindowStateException e) {
+		}
+
+		return portletURL.toString();
 	}
 
 	@Override
@@ -73,6 +90,11 @@ public class FeedsPortletConfigurationIcon
 	@Override
 	public boolean isToolTip() {
 		return false;
+	}
+
+	@Override
+	public boolean isUseDialog() {
+		return true;
 	}
 
 }

@@ -88,6 +88,10 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 	protected void clearListenerConfigrations(
 		CacheConfiguration cacheConfiguration) {
 
+		if (cacheConfiguration == null) {
+			return;
+		}
+
 		FactoryConfiguration<?> factoryConfiguration =
 			cacheConfiguration.getBootstrapCacheLoaderFactoryConfiguration();
 
@@ -136,7 +140,9 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 	}
 
 	protected String getPortalPropertyKey(String propertyString) {
-		if (propertyString.indexOf(CharPool.EQUAL) == -1) {
+		if ((propertyString == null) ||
+			(propertyString.indexOf(CharPool.EQUAL) == -1)) {
+
 			return null;
 		}
 
@@ -340,6 +346,10 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 
 	protected void resolvePortalProperty(
 		CacheConfiguration cacheConfiguration) {
+
+		if (cacheConfiguration == null) {
+			return;
+		}
 
 		resolvePortalProperty(
 			cacheConfiguration.getBootstrapCacheLoaderFactoryConfiguration());

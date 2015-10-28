@@ -79,7 +79,7 @@ public class JenkinsResultsParserUtilTest {
         JSONObject axisJson =
             new JSONObject(
                 _read(
-                    new File(_dependenciesDir, "testGetAxisVariable.json")));
+                    new File(_dependenciesDir, "sample-1.json")));
 
         Assert.assertEquals(
             "ABC", JenkinsResultsParserUtil.getAxisVariable(axisJson));
@@ -88,9 +88,9 @@ public class JenkinsResultsParserUtilTest {
     @Test
     public void testGetJobVariant() throws Exception {
         assertgetJobVariantSample(
-            "testGetJobVariant_functional.json", "functional-tomcat-mysql/0");
+            "sample-2.json", "functional-tomcat-mysql/0");
         assertgetJobVariantSample(
-            "testGetJobVariant_integraion.json", "integration-db2");
+            "sample-3.json", "integration-db2");
     }
 
     public void assertgetJobVariantSample(
@@ -123,8 +123,8 @@ public class JenkinsResultsParserUtilTest {
 
     @Test
     public void testToJSONObject() throws Exception {
-        assertToJSONObjectSample("testGetJobVariant_functional.json");
-        assertToJSONObjectSample("testGetJobVarian_integration.json");
+        assertToJSONObjectSample("sample-2.json");
+        assertToJSONObjectSample("sample-3.json");
     }
 
     protected void assertToJSONObjectSample(String fileName) throws Exception {
@@ -141,8 +141,8 @@ public class JenkinsResultsParserUtilTest {
 
     @Test
     public void testToString() throws Exception {
-        assertToStringSample("testGetJobVariant_functional.json");
-        assertToStringSample("testGetJobVarian_integration.json");
+        assertToStringSample("sample-2.json");
+        assertToStringSample("sample-3.json");
     }
 
     protected void assertToStringSample(String fileName) throws Exception {

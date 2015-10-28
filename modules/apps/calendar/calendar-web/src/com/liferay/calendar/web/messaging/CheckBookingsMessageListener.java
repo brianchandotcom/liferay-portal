@@ -14,7 +14,6 @@
 
 package com.liferay.calendar.web.messaging;
 
-import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.service.configuration.CalendarServiceConfigurationValues;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
@@ -24,7 +23,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
-import com.liferay.portal.model.Portlet;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -71,12 +69,6 @@ public class CheckBookingsMessageListener
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
-	@Reference(
-		target = "(javax.portlet.name=" + CalendarPortletKeys.CALENDAR + ")"
-	)
-	protected void setPortlet(Portlet portlet) {
 	}
 
 	@Reference(unbind = "-")

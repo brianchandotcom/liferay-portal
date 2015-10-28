@@ -15,7 +15,6 @@
 package com.liferay.exportimport.web.messaging;
 
 import com.liferay.exportimport.web.configuration.ExportImportWebConfigurationValues;
-import com.liferay.exportimport.web.constants.ExportImportPortletKeys;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -36,7 +35,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.model.Portlet;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalService;
 
@@ -172,12 +170,6 @@ public class DraftExportImportConfigurationMessageListener
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
-	@Reference(
-		target = "(javax.portlet.name=" + ExportImportPortletKeys.EXPORT_IMPORT + ")"
-	)
-	protected void setPortlet(Portlet portlet) {
 	}
 
 	@Reference(unbind = "-")

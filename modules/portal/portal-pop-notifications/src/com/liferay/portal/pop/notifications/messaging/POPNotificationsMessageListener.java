@@ -12,19 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.pop.messaging;
+package com.liferay.portal.pop.notifications.messaging;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mail.Account;
+import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.pop.MessageListener;
 import com.liferay.portal.kernel.pop.MessageListenerException;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
+import com.liferay.portal.kernel.scheduler.TimeUnit;
+import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.pop.POPServerUtil;
+import com.liferay.portal.pop.notifications.MessageListenerWrapper;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.util.mail.MailEngine;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.mail.Address;
 import javax.mail.Flags;
@@ -36,11 +46,54 @@ import javax.mail.Session;
 import javax.mail.Store;
 import javax.mail.internet.InternetAddress;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
+
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(immediate = true, service = POPNotificationsMessageListener.class)
 public class POPNotificationsMessageListener
-	extends com.liferay.portal.kernel.messaging.BaseMessageListener {
+	extends BaseSchedulerEntryMessageListener {
+
+	@Activate
+	@Modified
+	protected void activate() {
+		if (PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED) {
+			schedulerEntryImpl.setTrigger(
+				TriggerFactoryUtil.createTrigger(
+					getEventListenerClass(), getEventListenerClass(), 1,
+					TimeUnit.MINUTE));
+
+			_schedulerEngineHelper.register(this, schedulerEntryImpl);
+		}
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.RELUCTANT,
+		service = MessageListener.class
+	)
+	protected void addMessageListener(MessageListener messageListener) {
+		MessageListenerWrapper messageListenerWrapper =
+			new MessageListenerWrapper(messageListener);
+
+		_messageListeners.put(messageListener, messageListenerWrapper);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		if (PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED) {
+			_schedulerEngineHelper.unregister(this);
+		}
+	}
 
 	@Override
 	protected void doReceive(
@@ -165,9 +218,7 @@ public class POPNotificationsMessageListener
 				_log.debug("Recipient " + recipient);
 			}
 
-			for (MessageListener messageListener :
-					POPServerUtil.getListeners()) {
-
+			for (MessageListener messageListener : _messageListeners.values()) {
 				try {
 					if (messageListener.accept(from, recipient, message)) {
 						messageListener.deliver(from, recipient, message);
@@ -180,7 +231,31 @@ public class POPNotificationsMessageListener
 		}
 	}
 
+	protected void removeMessageListener(MessageListener messageListener) {
+		_messageListeners.remove(messageListener);
+	}
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
+
+	@Reference(unbind = "-")
+	protected void setSchedulerEngineHelper(
+		SchedulerEngineHelper schedulerEngineHelper) {
+
+		_schedulerEngineHelper = schedulerEngineHelper;
+	}
+
+	@Reference(unbind = "-")
+	protected void setTriggerFactory(TriggerFactory triggerFactory) {
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		POPNotificationsMessageListener.class);
+
+	private final Map<MessageListener, MessageListenerWrapper>
+		_messageListeners = new ConcurrentHashMap<>();
+	private SchedulerEngineHelper _schedulerEngineHelper;
 
 }

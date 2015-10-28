@@ -89,11 +89,7 @@ public class UnstableMessageUtil {
 
 		int failureCount = 0;
 
-		for (String runBuildURLString : runBuildURLs) {
-			if (failureCount >= 3) {
-				break;
-			}
-
+		topLoop: for (String runBuildURLString : runBuildURLs) {
 			testReportJSONObject = JenkinsResultsParserUtil.toJSONObject(
 				JenkinsResultsParserUtil.getLocalURL(
 					runBuildURLString + "testReport/api/json"));
@@ -102,26 +98,23 @@ public class UnstableMessageUtil {
 				"suites");
 
 			for (int i = 0; i < suitesJSONArray.length(); i++) {
-				if (failureCount >= 3) {
-					break;
-				}
-
 				JSONObject suiteJSONObject = suitesJSONArray.getJSONObject(i);
 
 				JSONArray casesJSONArray = suiteJSONObject.getJSONArray(
 					"cases");
 
 				for (int j = 0; j < casesJSONArray.length(); j++) {
-					if (failureCount >= 3) {
-						break;
-					}
-
 					JSONObject caseJSONObject = casesJSONArray.getJSONObject(j);
 
 					String status = caseJSONObject.getString("status");
 
 					if (!status.equals("FIXED") && !status.equals("PASSED") &&
 						!status.equals("SKIPPED")) {
+
+						if (failureCount == 3) {
+							sb.append("<li>...</li>");
+							break topLoop;
+						}
 
 						JSONObject jobJSONObject =
 							JenkinsResultsParserUtil.toJSONObject(
@@ -217,10 +210,6 @@ public class UnstableMessageUtil {
 					}
 				}
 			}
-		}
-
-		if (failureCount > 3) {
-			sb.append("<li>...</li>");
 		}
 
 		sb.append("</ol>");

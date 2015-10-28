@@ -61,6 +61,34 @@ public class LDAPServerConfigurationProviderImpl
 	public LDAPServerConfiguration getConfiguration(
 		long companyId, long ldapServerId) {
 
+		Dictionary<String, Object> properties = getConfigurationProperties(
+			companyId, ldapServerId);
+
+		LDAPServerConfiguration ldapServerConfiguration =
+			Configurable.createConfigurable(getMetatype(), properties);
+
+		return ldapServerConfiguration;
+	}
+
+	@Override
+	public Dictionary<String, Object> getConfigurationProperties(
+		long companyId) {
+
+		List<Dictionary<String, Object>> configurationsProperties =
+			getConfigurationsProperties(companyId);
+
+		if (configurationsProperties.isEmpty()) {
+			throw new IllegalArgumentException(
+				"No LDAP server configuration found for company " + companyId);
+		}
+
+		return configurationsProperties.get(0);
+	}
+
+	@Override
+	public Dictionary<String, Object> getConfigurationProperties(
+		long companyId, long ldapServerId) {
+
 		Map<Long, Configuration> configurations = _configurations.get(
 			companyId);
 
@@ -83,10 +111,7 @@ public class LDAPServerConfigurationProviderImpl
 
 		Dictionary<String, Object> properties = configuration.getProperties();
 
-		LDAPServerConfiguration ldapServerConfiguration =
-			Configurable.createConfigurable(getMetatype(), properties);
-
-		return ldapServerConfiguration;
+		return properties;
 	}
 
 	@Override
@@ -116,6 +141,34 @@ public class LDAPServerConfigurationProviderImpl
 		}
 
 		return ldapServerConfigurations;
+	}
+
+	@Override
+	public List<Dictionary<String, Object>> getConfigurationsProperties(
+		long companyId) {
+
+		Map<Long, Configuration> configurations = _configurations.get(
+			companyId);
+
+		if (MapUtil.isEmpty(configurations)) {
+			configurations = _configurations.get(0L);
+		}
+
+		if (MapUtil.isEmpty(configurations)) {
+			return Collections.emptyList();
+		}
+
+		List<Dictionary<String, Object>> configurationsProperties =
+			new ArrayList<>(configurations.size());
+
+		for (Configuration configuration : configurations.values()) {
+			Dictionary<String, Object> properties =
+				configuration.getProperties();
+
+			configurationsProperties.add(properties);
+		}
+
+		return configurationsProperties;
 	}
 
 	@Override

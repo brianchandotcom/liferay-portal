@@ -1737,6 +1737,10 @@ public class ServiceBuilder {
 	}
 
 	private static void _touch(File file) throws IOException {
+		Path path = file.toPath();
+
+		Files.createDirectories(path.getParent());
+
 		Files.createFile(file.toPath());
 	}
 

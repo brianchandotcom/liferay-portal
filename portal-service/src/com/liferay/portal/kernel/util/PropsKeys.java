@@ -881,6 +881,8 @@ public interface PropsKeys {
 
 	public static final String IMAGEMAGICK_RESOURCE_LIMIT = "imagemagick.resource.limit.";
 
+	public static final String INDEX_COMMIT_IMMEDIATELY = "index.commit.immediately";
+
 	public static final String INDEX_DATE_FORMAT_PATTERN = "index.date.format.pattern";
 
 	public static final String INDEX_DUMP_COMPRESSION_ENABLED = "index.dump.compression.enabled";

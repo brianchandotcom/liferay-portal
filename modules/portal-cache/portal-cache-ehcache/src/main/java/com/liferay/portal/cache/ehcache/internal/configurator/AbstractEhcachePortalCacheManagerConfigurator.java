@@ -135,89 +135,6 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 		}
 	}
 
-	protected Set<Properties>
-		parseCacheManagerEventListenerConfigurations(
-			FactoryConfiguration<?> factoryConfiguration) {
-
-		if (factoryConfiguration == null) {
-			return Collections.emptySet();
-		}
-
-		Properties properties = parseProperties(
-			factoryConfiguration.getProperties(),
-			factoryConfiguration.getPropertySeparator());
-
-		properties.put(
-			EhcacheConstants.CACHE_MANAGER_LISTENER_FACTORY_CLASS_NAME,
-			factoryConfiguration.getFullyQualifiedClassPath());
-
-		return Collections.singleton(properties);
-	}
-
-	protected PortalCacheConfiguration parseCacheListenerConfigurations(
-		CacheConfiguration cacheConfiguration, boolean usingDefault) {
-
-		if (cacheConfiguration == null) {
-			return null;
-		}
-
-		String portalCacheName = cacheConfiguration.getName();
-
-		if (portalCacheName == null) {
-			portalCacheName =
-				PortalCacheConfiguration.DEFAULT_PORTAL_CACHE_NAME;
-		}
-
-		Set<Properties> portalCacheListenerPropertiesSet =
-			parseCacheEventListenerConfigurations(
-				(List<CacheEventListenerFactoryConfiguration>)
-					cacheConfiguration.getCacheEventListenerConfigurations(),
-				usingDefault);
-
-		Properties portalCacheBootstrapLoaderProperties =
-			parseBootstrapCacheLoaderConfigurations(
-				cacheConfiguration.
-					getBootstrapCacheLoaderFactoryConfiguration());
-
-		boolean requireSerialization = isRequireSerialization(
-			cacheConfiguration);
-
-		return new EhcachePortalCacheConfiguration(
-			portalCacheName, portalCacheListenerPropertiesSet,
-			portalCacheBootstrapLoaderProperties, requireSerialization);
-	}
-
-	protected PortalCacheManagerConfiguration parseListenerConfigurations(
-		Configuration configuration, boolean usingDefault) {
-
-		Set<Properties> cacheManagerListenerPropertiesSet =
-			parseCacheManagerEventListenerConfigurations(
-				configuration.
-					getCacheManagerEventListenerFactoryConfiguration());
-
-		PortalCacheConfiguration defaultPortalCacheConfiguration =
-			parseCacheListenerConfigurations(
-				configuration.getDefaultCacheConfiguration(), usingDefault);
-
-		Set<PortalCacheConfiguration> portalCacheConfigurations =
-			new HashSet<>();
-
-		Map<String, CacheConfiguration> cacheConfigurations =
-			configuration.getCacheConfigurations();
-
-		for (Map.Entry<String, CacheConfiguration> entry :
-				cacheConfigurations.entrySet()) {
-
-			portalCacheConfigurations.add(
-				parseCacheListenerConfigurations(
-					entry.getValue(), usingDefault));
-		}
-
-		return new PortalCacheManagerConfiguration(
-			cacheManagerListenerPropertiesSet, defaultPortalCacheConfiguration,
-			portalCacheConfigurations);
-	}
-
 	protected String getPortalPropertyKey(String propertyString) {
 		if (propertyString.indexOf(CharPool.EQUAL) == -1) {
 			return null;
@@ -270,6 +187,9 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 		return true;
 	}
 
+	protected abstract Properties parseBootstrapCacheLoaderConfigurations(
+		FactoryConfiguration<?> factoryConfiguration);
+
 	protected Set<Properties> parseCacheEventListenerConfigurations(
 		List<CacheEventListenerFactoryConfiguration>
 			cacheEventListenerConfigurations,
@@ -311,8 +231,88 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 		return portalCacheListenerPropertiesSet;
 	}
 
-	protected abstract Properties parseBootstrapCacheLoaderConfigurations(
-		FactoryConfiguration<?> factoryConfiguration);
+	protected PortalCacheConfiguration parseCacheListenerConfigurations(
+		CacheConfiguration cacheConfiguration, boolean usingDefault) {
+
+		if (cacheConfiguration == null) {
+			return null;
+		}
+
+		String portalCacheName = cacheConfiguration.getName();
+
+		if (portalCacheName == null) {
+			portalCacheName =
+				PortalCacheConfiguration.DEFAULT_PORTAL_CACHE_NAME;
+		}
+
+		Set<Properties> portalCacheListenerPropertiesSet =
+			parseCacheEventListenerConfigurations(
+				(List<CacheEventListenerFactoryConfiguration>)
+					cacheConfiguration.getCacheEventListenerConfigurations(),
+				usingDefault);
+
+		Properties portalCacheBootstrapLoaderProperties =
+			parseBootstrapCacheLoaderConfigurations(
+				cacheConfiguration.
+					getBootstrapCacheLoaderFactoryConfiguration());
+
+		boolean requireSerialization = isRequireSerialization(
+			cacheConfiguration);
+
+		return new EhcachePortalCacheConfiguration(
+			portalCacheName, portalCacheListenerPropertiesSet,
+			portalCacheBootstrapLoaderProperties, requireSerialization);
+	}
+
+	protected Set<Properties>
+		parseCacheManagerEventListenerConfigurations(
+			FactoryConfiguration<?> factoryConfiguration) {
+
+		if (factoryConfiguration == null) {
+			return Collections.emptySet();
+		}
+
+		Properties properties = parseProperties(
+			factoryConfiguration.getProperties(),
+			factoryConfiguration.getPropertySeparator());
+
+		properties.put(
+			EhcacheConstants.CACHE_MANAGER_LISTENER_FACTORY_CLASS_NAME,
+			factoryConfiguration.getFullyQualifiedClassPath());
+
+		return Collections.singleton(properties);
+	}
+
+	protected PortalCacheManagerConfiguration parseListenerConfigurations(
+		Configuration configuration, boolean usingDefault) {
+
+		Set<Properties> cacheManagerListenerPropertiesSet =
+			parseCacheManagerEventListenerConfigurations(
+				configuration.
+					getCacheManagerEventListenerFactoryConfiguration());
+
+		PortalCacheConfiguration defaultPortalCacheConfiguration =
+			parseCacheListenerConfigurations(
+				configuration.getDefaultCacheConfiguration(), usingDefault);
+
+		Set<PortalCacheConfiguration> portalCacheConfigurations =
+			new HashSet<>();
+
+		Map<String, CacheConfiguration> cacheConfigurations =
+			configuration.getCacheConfigurations();
+
+		for (Map.Entry<String, CacheConfiguration> entry :
+				cacheConfigurations.entrySet()) {
+
+			portalCacheConfigurations.add(
+				parseCacheListenerConfigurations(
+					entry.getValue(), usingDefault));
+		}
+
+		return new PortalCacheManagerConfiguration(
+			cacheManagerListenerPropertiesSet, defaultPortalCacheConfiguration,
+			portalCacheConfigurations);
+	}
 
 	protected Properties parseProperties(
 		String propertiesString, String propertySeparator) {

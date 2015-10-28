@@ -8,4 +8,4 @@ Import-Package:\
 	*
 Include-Resource:\
 	classes,\
-	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/log4j/Log4JUtil.class
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/log4j/*.class

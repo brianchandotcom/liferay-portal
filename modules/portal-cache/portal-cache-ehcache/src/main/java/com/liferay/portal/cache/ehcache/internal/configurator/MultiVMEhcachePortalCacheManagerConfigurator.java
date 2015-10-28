@@ -22,13 +22,11 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 
-import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
 import net.sf.ehcache.config.CacheConfiguration;
 import net.sf.ehcache.config.CacheConfiguration.BootstrapCacheLoaderFactoryConfiguration;
-import net.sf.ehcache.config.FactoryConfiguration;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -53,19 +51,12 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 	}
 
 	@Override
-	@SuppressWarnings("rawtypes")
-	protected void handleCacheManagerPeerFactoryConfigurations(
-		List<FactoryConfiguration> factoryConfigurations) {
-
-		if (factoryConfigurations.isEmpty()) {
-			return;
+	protected boolean isClearCacheManagerPeerConfigurations() {
+		if (_clusterEnabled && !_clusterLinkReplicationEnabled) {
+			return false;
 		}
 
-		if (!_clusterEnabled || _clusterLinkReplicationEnabled) {
-			factoryConfigurations.clear();
-
-			return;
-		}
+		return true;
 	}
 
 	@Override
@@ -106,8 +97,6 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 				}
 			}
 		}
-
-		cacheConfiguration.addBootstrapCacheLoaderFactory(null);
 
 		return portalCacheBootstrapLoaderProperties;
 	}

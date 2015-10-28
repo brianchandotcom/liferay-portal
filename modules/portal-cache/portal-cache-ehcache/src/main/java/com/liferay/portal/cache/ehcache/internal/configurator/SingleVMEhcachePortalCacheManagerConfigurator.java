@@ -16,11 +16,9 @@ package com.liferay.portal.cache.ehcache.internal.configurator;
 
 import com.liferay.portal.kernel.util.Props;
 
-import java.util.List;
 import java.util.Properties;
 
 import net.sf.ehcache.config.CacheConfiguration;
-import net.sf.ehcache.config.FactoryConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -36,13 +34,8 @@ public class SingleVMEhcachePortalCacheManagerConfigurator
 	extends AbstractEhcachePortalCacheManagerConfigurator {
 
 	@Override
-	@SuppressWarnings("rawtypes")
-	protected void handleCacheManagerPeerFactoryConfigurations(
-		List<FactoryConfiguration> factoryConfigurations) {
-
-		if (!factoryConfigurations.isEmpty()) {
-			factoryConfigurations.clear();
-		}
+	protected boolean isClearCacheManagerPeerConfigurations() {
+		return true;
 	}
 
 	@Override

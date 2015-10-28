@@ -76,14 +76,6 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 
 		resolvePortalProperty(ehcacheConfiguration);
 
-		handleCacheManagerPeerFactoryConfigurations(
-			ehcacheConfiguration.
-				getCacheManagerPeerProviderFactoryConfiguration());
-
-		handleCacheManagerPeerFactoryConfigurations(
-			ehcacheConfiguration.
-				getCacheManagerPeerListenerFactoryConfigurations());
-
 		Set<Properties> cacheManagerListenerPropertiesSet =
 			getCacheManagerListenerPropertiesSet(ehcacheConfiguration);
 
@@ -110,8 +102,60 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 				cacheManagerListenerPropertiesSet,
 				defaultPortalCacheConfiguration, portalCacheConfigurations);
 
+		clearListenerConfigrations(ehcacheConfiguration);
+
 		return new ObjectValuePair<>(
 			ehcacheConfiguration, portalCacheManagerConfiguration);
+	}
+
+	protected void clearListenerConfigrations(
+		CacheConfiguration cacheConfiguration) {
+
+		FactoryConfiguration<?> factoryConfiguration =
+			cacheConfiguration.getBootstrapCacheLoaderFactoryConfiguration();
+
+		if (factoryConfiguration != null) {
+			cacheConfiguration.addBootstrapCacheLoaderFactory(null);
+		}
+
+		List<?> factoryConfigurations =
+			cacheConfiguration.getCacheEventListenerConfigurations();
+
+		factoryConfigurations.clear();
+	}
+
+	protected void clearListenerConfigrations(Configuration configuration) {
+		if (isClearCacheManagerPeerConfigurations()) {
+			List<?> listenerFactoryConfigurations =
+				configuration.
+					getCacheManagerPeerListenerFactoryConfigurations();
+
+			listenerFactoryConfigurations.clear();
+
+			List<?> providerFactoryConfigurations =
+				configuration.getCacheManagerPeerProviderFactoryConfiguration();
+
+			providerFactoryConfigurations.clear();
+		}
+
+		FactoryConfiguration<?> factoryConfiguration =
+			configuration.getCacheManagerEventListenerFactoryConfiguration();
+
+		if (factoryConfiguration != null) {
+			factoryConfiguration.setClass(null);
+		}
+
+		clearListenerConfigrations(
+			configuration.getDefaultCacheConfiguration());
+
+		Map<String, CacheConfiguration> cacheConfigurations =
+			configuration.getCacheConfigurations();
+
+		for (CacheConfiguration cacheConfiguration :
+				cacheConfigurations.values()) {
+
+			clearListenerConfigrations(cacheConfiguration);
+		}
 	}
 
 	protected Set<Properties>
@@ -133,8 +177,6 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 		properties.put(
 			EhcacheConstants.CACHE_MANAGER_LISTENER_FACTORY_CLASS_NAME,
 			factoryConfiguration.getFullyQualifiedClassPath());
-
-		factoryConfiguration.setClass(null);
 
 		return Collections.singleton(properties);
 	}
@@ -182,9 +224,7 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 		return null;
 	}
 
-	@SuppressWarnings("rawtypes")
-	protected abstract void handleCacheManagerPeerFactoryConfigurations(
-		List<FactoryConfiguration> factoryConfigurations);
+	protected abstract boolean isClearCacheManagerPeerConfigurations();
 
 	@SuppressWarnings("deprecation")
 	protected boolean isRequireSerialization(
@@ -241,8 +281,6 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 				factoryClassName, portalCacheListenerPropertiesSet,
 				portalCacheListenerScope, properties, usingDefault);
 		}
-
-		cacheEventListenerConfigurations.clear();
 
 		return portalCacheListenerPropertiesSet;
 	}

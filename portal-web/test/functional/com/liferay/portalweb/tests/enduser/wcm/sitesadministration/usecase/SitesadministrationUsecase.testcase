@@ -600,24 +600,24 @@
 	<command name="ReturnWrongLayoutForSignedInUserWithVirtualHostsConfigured" priority="3">
 		<property name="custom.properties" value="layout.default.template.id=2_columns_iii${line.separator}layout.user.private.layouts.enabled=false${line.separator}layout.user.private.layouts.auto.create=false${line.separator}layout.user.private.layouts.power.user.required=true${line.separator}layout.user.public.layouts.enabled=false${line.separator}layout.user.public.layouts.auto.create=false${line.separator}layout.user.public.layouts.power.user.required=true" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Portal Settings" />
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Portal Settings" />
 		</execute>
 
 		<execute macro="PortalSettings#editVirtualHostCP">
 			<var name="virtualHostName" value="www.able.com" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Portal Settings" />
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Portal Settings" />
 		</execute>
 
 		<execute macro="PortalSettings#editConfigurationAuthenticationGeneral">
 			<var name="enableRequireStrangers" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Portal Settings" />
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Portal Settings" />
 		</execute>
 
 		<execute macro="PortalSettings#editConfigurationUsersEmailNotificationsCP" />
@@ -632,8 +632,8 @@
 			<var name="colorScheme" value="Dark" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
@@ -723,8 +723,8 @@
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Portal Settings" />
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Portal Settings" />
 		</execute>
 
 		<execute macro="PortalSettings#editConfigurationUsersEmailVerificationNotificationsCP">

@@ -167,29 +167,7 @@
 
 		<execute macro="Site#deactivateCP">
 			<var name="siteName" value="Organization Name 2" />
-		</execute>
-
-		<execute macro="User#firstLoginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
-		</execute>
-
-		<execute macro="Site#deactivateCP">
-			<var name="siteName" value="Organization Name 2" />
 			<var name="successMessage" value="true" />
-		</execute>
-
-		<execute macro="User#firstLoginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="Site#viewNoMySitesViaMySitesPG">
-			<var name="siteName" value="Organization Name 2" />
 		</execute>
 
 		<execute macro="Page#openURL">

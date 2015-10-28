@@ -38,7 +38,7 @@ ItemSelectorURLViewDisplayContext itemSelectorURLViewDisplayContext = (ItemSelec
 					Liferay.Util.getOpener().Liferay.fire('<%= itemSelectorURLViewDisplayContext.getItemSelectedEventName() %>', event);
 				}
 			},
-			rootNode: '#itemSelectorUrlContainer'
+			rootNode: '#<portlet:namespace/>itemSelectorUrlContainer'
 		}
 	);
 </aui:script>

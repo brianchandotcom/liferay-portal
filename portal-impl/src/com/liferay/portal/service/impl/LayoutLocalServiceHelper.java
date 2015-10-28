@@ -21,7 +21,6 @@ import com.liferay.portal.LayoutParentLayoutIdException;
 import com.liferay.portal.LayoutTypeException;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
@@ -51,6 +50,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.persistence.LayoutFriendlyURLPersistence;
 import com.liferay.portal.service.persistence.LayoutPersistence;
 import com.liferay.portal.service.persistence.LayoutSetPersistence;
+import com.liferay.portal.util.IdentifiableOSGIService;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
@@ -65,12 +65,7 @@ import java.util.Map;
 /**
  * @author Raymond Augé
  */
-public class LayoutLocalServiceHelper implements IdentifiableBean {
-
-	@Override
-	public String getBeanIdentifier() {
-		return _beanIdentifier;
-	}
+public class LayoutLocalServiceHelper implements IdentifiableOSGIService {
 
 	public String getFriendlyURL(
 			long groupId, boolean privateLayout, long layoutId, String name,
@@ -183,6 +178,11 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 		}
 	}
 
+	@Override
+	public String getOSGIServiceIdentifier() {
+		return LayoutLocalServiceHelper.class.getName();
+	}
+
 	public long getParentLayoutId(
 		long groupId, boolean privateLayout, long parentLayoutId) {
 
@@ -213,11 +213,6 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 		}
 
 		return false;
-	}
-
-	@Override
-	public void setBeanIdentifier(String beanIdentifier) {
-		_beanIdentifier = beanIdentifier;
 	}
 
 	public void validate(
@@ -583,7 +578,5 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
 
 	private static final int _PRIORITY_BUFFER = 1000000;
-
-	private String _beanIdentifier;
 
 }

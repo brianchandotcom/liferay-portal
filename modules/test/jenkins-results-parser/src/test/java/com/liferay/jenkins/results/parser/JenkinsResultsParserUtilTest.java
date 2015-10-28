@@ -14,22 +14,17 @@
 
 package com.liferay.jenkins.results.parser;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import java.io.File;
 import java.io.IOException;
-
 import java.net.URI;
-
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
 import java.util.Iterator;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -37,272 +32,230 @@ import org.junit.Test;
  */
 public class JenkinsResultsParserUtilTest {
 
-	@Test
-	public void testFixJSON() {
-		String[] expectedResultArray = new String[] {
-			"&#09;", "&#34; ", "&#39;", "&#40;", "&#41;", "&#60;", "&#62;",
-			"&#91;", "&#92;", "&#93;", "&#123;", "&#125;", "<br />"
-		};
+    @Test
+    public void testFixJSON() {
+        Assert.assertEquals(
+            "ABC&#09123", JenkinsResultsParserUtil.fixJSON("ABC\t123"));
+        Assert.assertEquals(
+            "ABC&#34123", JenkinsResultsParserUtil.fixJSON("ABC\"123"));
+        Assert.assertEquals(
+            "ABC&#39123", JenkinsResultsParserUtil.fixJSON("ABC'123"));
+        Assert.assertEquals(
+            "ABC&#40123", JenkinsResultsParserUtil.fixJSON("ABC(123"));
+        Assert.assertEquals(
+            "ABC&#41123", JenkinsResultsParserUtil.fixJSON("ABC)123"));
+        Assert.assertEquals(
+            "ABC&#60123", JenkinsResultsParserUtil.fixJSON("ABC<123"));
+        Assert.assertEquals(
+            "ABC&#62123", JenkinsResultsParserUtil.fixJSON("ABC>123"));
+        Assert.assertEquals(
+            "ABC&#91123", JenkinsResultsParserUtil.fixJSON("ABC[123"));
+        Assert.assertEquals(
+            "ABC&#92123", JenkinsResultsParserUtil.fixJSON("ABC\\123"));
+        Assert.assertEquals(
+            "ABC&#93123", JenkinsResultsParserUtil.fixJSON("ABC]123"));
+        Assert.assertEquals(
+            "ABC&#123123", JenkinsResultsParserUtil.fixJSON("ABC{123"));
+        Assert.assertEquals(
+            "ABC&#125123", JenkinsResultsParserUtil.fixJSON("ABC}123"));
+        Assert.assertEquals(
+            "ABC&<br />123", JenkinsResultsParserUtil.fixJSON("ABC\n123"));
+    }
 
-		String[] testArray = new String[] {
-			"\t", "\"", "'", "(", ")", "<", ">", "[", "\\", "]", "{", "}", "\n"
-		};
+    @Test
+    public void testFixURL() {
+        Assert.assertEquals(
+            "ABC%28123", JenkinsResultsParserUtil.fixURL("ABC(123"));
+        Assert.assertEquals(
+            "ABC%29123", JenkinsResultsParserUtil.fixURL("ABC)123"));
+        Assert.assertEquals(
+            "ABC%5B123", JenkinsResultsParserUtil.fixURL("ABC[123"));
+        Assert.assertEquals(
+            "ABC%5D123", JenkinsResultsParserUtil.fixURL("ABC]123"));
+    }
 
-		if (expectedResultArray.length != testArray.length) {
-			throw
-			new RuntimeException(
-				"Expected results array length does not equal test array" +
-				" length.");
-		}
+    @Test
+    public void testGetAxisVariable() throws Exception {
+        JSONObject axisJson =
+            new JSONObject(
+                _read(
+                    new File(_dependenciesDir, "testGetAxisVariable.json")));
 
-		for (int i = 0; i<expectedResultArray.length; i++) {
-			String expectedResult = "ABC" + expectedResultArray[i] + "123";
-			String test = "ABC" + testArray[i] + "123";
+        Assert.assertEquals(
+            "ABC", JenkinsResultsParserUtil.getAxisVariable(axisJson));
+    }
 
-			assertEquals(
-				expectedResult, JenkinsResultsParserUtil.fixJSON(test));
-		}
-	}
+    @Test
+    public void testGetJobVariant() throws Exception {
+        assertgetJobVariantSample(
+            "testGetJobVariant_functional.json", "functional-tomcat-mysql/0");
+        assertgetJobVariantSample(
+            "testGetJobVariant_integraion.json", "integration-db2");
+    }
 
-	@Test
-	public void testFixURL() {
-		String[] expectedResultArray = new String[] {
-			"%28", "%29", "%5B", "%5D"
-		};
+    public void assertgetJobVariantSample(
+        String fileName, String expectedVariantString)
+            throws Exception {
 
-		String[] testArray = new String[] {"(", ")", "[", "]"};
+        String jsonString = _read(new File(
+            _dependenciesDir, fileName));
 
-		if (expectedResultArray.length != testArray.length) {
-			throw
-			new RuntimeException(
-				"expected results array length does not equal test array" +
-				" length.");
-		}
+        JSONObject jsonObject = new JSONObject(jsonString);
 
-		for (int i = 0; i<expectedResultArray.length; i++) {
-			String expectedResult = "ABC" + expectedResultArray[i] + "123";
-			String test = "ABC" + testArray[i] + "123";
+        Assert.assertEquals(
+            expectedVariantString,
+            JenkinsResultsParserUtil.getJobVariant(jsonObject));
+    }
 
-			assertEquals(JenkinsResultsParserUtil.fixURL(test), expectedResult);
-		}
-	}
+    @Test
+    public void testGetLocalURL() {
+        Assert.assertEquals(
+            "http://test-8/8",
+            JenkinsResultsParserUtil.getLocalURL("https://test-liferay.com/8"));
+        Assert.assertEquals(
+            "http://test-1-20/",
+            JenkinsResultsParserUtil.getLocalURL(
+                "https://test-1-20.liferay.com"));
+        Assert.assertEquals(
+            "http://test-4-1/",
+            JenkinsResultsParserUtil.getLocalURL("http://test-4-1"));
+    }
 
-	@Test
-	public void testGetAxisVariable() throws Exception {
-		JSONObject axisJson =
-			new JSONObject(
-				_read(
-					new File(
-						_testDependenciesDir.getPath() +
-						"/testGetAxisVariable.json")));
+    @Test
+    public void testToJSONObject() throws Exception {
+        assertToJSONObjectSample("testGetJobVariant_functional.json");
+        assertToJSONObjectSample("testGetJobVarian_integration.json");
+    }
 
-		assertEquals("ABC", JenkinsResultsParserUtil.getAxisVariable(axisJson));
-	}
+    protected void assertToJSONObjectSample(String fileName) throws Exception {
+        File jsonFile = new File(_dependenciesDir, fileName);
 
-	@Test
-	public void testGetJobVariant() throws Exception {
-		String functionalJSONString =
-			_read(
-				new File(
-					_testDependenciesDir.getPath() +
-					"/testGetJobVariant_functional.json"));
-		String integrationJSONString =
-			_read(
-				new File(
-					_testDependenciesDir.getPath() +
-					"/testGetJobVariant_integration.json"));
+        JSONObject expectedJSONObject = new JSONObject(
+            _read(jsonFile));
+        JSONObject actualJSONObject =
+            JenkinsResultsParserUtil.toJSONObject(_toURLString(jsonFile));
 
-		JSONObject functionalJSONObject = new JSONObject(functionalJSONString);
-		JSONObject integrationJSONObject = new JSONObject(
-			integrationJSONString);
+        Assert.assertTrue(
+            _equals(expectedJSONObject, actualJSONObject));
+    }
 
-		assertEquals(
-			"functional-tomcat-mysql/0",
-			JenkinsResultsParserUtil.getJobVariant(functionalJSONObject));
-		assertEquals(
-			"integration-db2",
-			JenkinsResultsParserUtil.getJobVariant(integrationJSONObject));
-	}
+    @Test
+    public void testToString() throws Exception {
+        assertToStringSample("testGetJobVariant_functional.json");
+        assertToStringSample("testGetJobVarian_integration.json");
+    }
 
-	@Test
-	public void testGetLocalURL() {
-		String[] localURLArray = new String[] {
-			"http://test-8/8/", "http://test-1-20/", "http://test-4-1/"
-		};
-		String[] remoteURLArray = new String[] {
-			"https://test.liferay.com/8/", "https://test-1-20.liferay.com/",
-			"http://test-4-1/"
-		};
+    protected void assertToStringSample(String fileName) throws Exception {
+        File jsonFile =    new File(_dependenciesDir, fileName);
 
-		if (localURLArray.length != remoteURLArray.length) {
-			throw
-			new RuntimeException(
-				"Remote URL array length does not equal local URL array " +
-				"length.");
-		}
+        String expectedJSONString = _read(jsonFile);
+        String actualJSONString = JenkinsResultsParserUtil.toString(
+            _toURLString(jsonFile));
 
-		for (int i = 0; i<localURLArray.length; i++) {
-			assertEquals(
-				localURLArray[i],
-				JenkinsResultsParserUtil.getLocalURL(remoteURLArray[i]));
-		}
-	}
+        // Remove carriage returns because the toString method handles them
+        // differently but they don't have an impact on actual equality.
 
-	@Test
-	public void testToJSONObject() throws Exception {
-		File functionalJSONFile =
-			new File(
-				_testDependenciesDir.getPath() +
-				"/testGetJobVariant_functional.json");
-		File integrationJSONFile =
-			new File(
-				_testDependenciesDir.getPath() +
-				"/testGetJobVariant_integration.json");
+        expectedJSONString = expectedJSONString.replace("\n", "");
+        actualJSONString = actualJSONString.replace("\n", "");
 
-		JSONObject expectedFunctionalJSONObject = new JSONObject(
-			_read(functionalJSONFile));
-		JSONObject expectedIntegrationJSONObject = new JSONObject(
-			_read(integrationJSONFile));
+        Assert.assertEquals(expectedJSONString, actualJSONString);
+    }
 
-		URI functionalJSONUri = functionalJSONFile.toURI();
-		URI integrationJSONUri = integrationJSONFile.toURI();
+    private static boolean _equals(JSONArray jsonArray1, JSONArray jsonArray2)
+        throws Exception {
 
-		JSONObject testFunctionalJSONObject =
-			JenkinsResultsParserUtil.toJSONObject(
-				functionalJSONUri.toASCIIString());
-		JSONObject testIntegrationJSONObject =
-			JenkinsResultsParserUtil.toJSONObject(
-				integrationJSONUri.toASCIIString());
+        if (((jsonArray1 == null) && (jsonArray2 != null)) ||
+            ((jsonArray1 != null) && (jsonArray2 == null))) {
+                return false;
+        }
 
-		assertTrue(
-			_equals(expectedFunctionalJSONObject, testFunctionalJSONObject));
-		assertTrue(
-			_equals(expectedIntegrationJSONObject, testIntegrationJSONObject));
-	}
+        if (jsonArray1.length() != jsonArray2.length()) {
+            return false;
+        }
 
-	@Test
-	public void testToString() throws Exception {
-		File functionalJSONFile =
-			new File(
-				_testDependenciesDir.getPath() +
-				"/testGetJobVariant_functional.json");
-		File integrationJSONFile =
-			new File(
-				_testDependenciesDir.getPath() +
-				"/testGetJobVariant_integration.json");
+        for (int i = 0; i<jsonArray1.length(); i++) {
+            Object obj1Child = jsonArray1.get(i);
+            Object obj2Child = jsonArray2.get(i);
 
-		String functionalJSONString = _read(functionalJSONFile);
-		String integrationJSONString = _read(integrationJSONFile);
+            if (!_equalsJSONChildObjectHandler(obj1Child, obj2Child)) {
+                return false;
+            }
+        }
 
-		URI functionalJSONUri = functionalJSONFile.toURI();
-		URI integrationJSONUri = integrationJSONFile.toURI();
+        return true;
+    }
 
-		String functionalToStringJSONString = JenkinsResultsParserUtil.toString(
-			functionalJSONUri.toASCIIString());
-		String integrationToStringJSONString =
-			JenkinsResultsParserUtil.toString(
-				integrationJSONUri.toASCIIString());
+    private static boolean _equals(JSONObject jsonObj1, JSONObject jsonObj2)
+        throws Exception {
 
-		// Remove carriage returns because the toString method handles them
-		// differently but they don't have an impact on actual equality.
+        if (((jsonObj1 == null) && (jsonObj2 != null)) ||
+            ((jsonObj1 != null) && (jsonObj2 == null))) {
+                return false;
+        }
 
-		functionalJSONString = functionalJSONString.replace("\n", "");
-		functionalToStringJSONString = functionalToStringJSONString.replace(
-			"\n", "");
-		integrationJSONString = integrationJSONString.replace("\n", "");
-		integrationToStringJSONString = integrationToStringJSONString.replace(
-			"\n", "");
+        if (jsonObj1.length() != jsonObj2.length()) {
+            return false;
+        }
 
-		assertEquals(functionalJSONString, functionalToStringJSONString);
-		assertEquals(integrationJSONString, integrationToStringJSONString);
-	}
+        Iterator<String> iterator = jsonObj1.keys();
+        while (iterator.hasNext()) {
+            String key = iterator.next();
 
-	private static boolean _equals(JSONArray jsonArray1, JSONArray jsonArray2)
-		throws Exception {
+            Object obj1Child = jsonObj1.get(key);
+            Object obj2Child = jsonObj2.get(key);
 
-		if (((jsonArray1 == null) && (jsonArray2 != null)) ||
-			((jsonArray1 != null) && (jsonArray2 == null))) {
-				return false;
-		}
+            if (!_equalsJSONChildObjectHandler(obj1Child, obj2Child)) {
+                return false;
+            }
+        }
 
-		if (jsonArray1.length() != jsonArray2.length()) {
-			return false;
-		}
+        return true;
+    }
 
-		for (int i = 0; i<jsonArray1.length(); i++) {
-			Object obj1Child = jsonArray1.get(i);
-			Object obj2Child = jsonArray2.get(i);
+    private static boolean _equalsJSONChildObjectHandler(
+        Object obj1, Object obj2)
+            throws
+                Exception {
 
-			if (!_equalsJSONChildObjectHandler(obj1Child, obj2Child)) {
-				return false;
-			}
-		}
+        if ((obj1 == null) && (obj2 == null)) {
+            return true;
+        }
 
-		return true;
-	}
+        if (((obj1 == null) && (obj2 != null)) ||
+            ((obj1 != null) && (obj2 == null))) {
 
-	private static boolean _equals(JSONObject jsonObj1, JSONObject jsonObj2)
-		throws Exception {
+            return false;
+        }
 
-		if (((jsonObj1 == null) && (jsonObj2 != null)) ||
-			((jsonObj1 != null) && (jsonObj2 == null))) {
-				return false;
-		}
+        if (obj1.getClass() != obj2.getClass()) {
+            return false;
+        }
 
-		if (jsonObj1.length() != jsonObj2.length()) {
-			return false;
-		}
+        if (obj1 instanceof JSONObject) {
+            return _equals((JSONObject)obj1, (JSONObject)obj2);
+        }
 
-		Iterator<String> iterator = jsonObj1.keys();
-		while (iterator.hasNext()) {
-			String key = iterator.next();
+        if (obj1 instanceof JSONArray) {
+            return _equals((JSONArray)obj1, (JSONArray)obj2);
+        }
 
-			Object obj1Child = jsonObj1.get(key);
-			Object obj2Child = jsonObj2.get(key);
+        return obj1.equals(obj2);
+    }
 
-			if (!_equalsJSONChildObjectHandler(obj1Child, obj2Child)) {
-				return false;
-			}
-		}
+    private static String _read(File file) throws IOException {
+        return new String(Files.readAllBytes(Paths.get(file.toURI())));
+    }
 
-		return true;
-	}
+    private static String _toURLString(File file) throws Exception {
+        URI uri = file.toURI();
 
-	private static boolean _equalsJSONChildObjectHandler(
-		Object obj1, Object obj2)
-			throws
-				Exception {
+        URL url = uri.toURL();
 
-		if ((obj1 == null) && (obj2 == null)) {
-			return true;
-		}
+        return url.toString();
+    }
 
-		if (((obj1 == null) && (obj2 != null)) ||
-			((obj1 != null) && (obj2 == null))) {
-				return false;
-		}
-
-		if (obj1.getClass() != obj2.getClass()) {
-			return false;
-		}
-
-		if (obj1 instanceof JSONObject) {
-			return _equals((JSONObject)obj1, (JSONObject)obj2);
-		}
-
-		if (obj1 instanceof JSONArray) {
-			return _equals((JSONArray)obj1, (JSONArray)obj2);
-		}
-
-		return obj1.equals(obj2);
-	}
-
-	private static String _read(File file) throws IOException {
-		return new String(Files.readAllBytes(Paths.get(file.toURI())));
-	}
-
-	private static final File _testDependenciesDir = new File(
-		"src/test/resources/com/liferay/results/parser/dependencies/" +
-		"JenkinsResultsParserUtilTest");
+    private static final File _dependenciesDir = new File(
+        "src/test/resources/com/liferay/results/parser/dependencies/" +
+        "JenkinsResultsParserUtilTest");
 
 }

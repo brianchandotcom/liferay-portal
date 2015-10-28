@@ -7,6 +7,7 @@ Bundle-ClassPath:\
 Bundle-Name: Liferay Portal SOAP Extender
 Bundle-SymbolicName: com.liferay.portal.soap.extender
 Bundle-Version: 1.0.0
+ConfigurationPath: /configs
 Export-Package:\
 	com.liferay.portal.soap.extender,
 	com.liferay.portal.soap.extender.configuration
@@ -31,6 +32,7 @@ Import-Package:\
 	!net.sf.cglib.proxy.*,\
 	*
 Include-Resource:\
+	configs=configs,\
 	classes,\
 	lib/=lib/cxf-rt-bindings-xml.jar,\
 	lib/=lib/cxf-rt-frontend-jaxws.jar,\

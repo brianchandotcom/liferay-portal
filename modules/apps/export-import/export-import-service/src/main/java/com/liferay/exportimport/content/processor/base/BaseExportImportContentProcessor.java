@@ -770,8 +770,28 @@ public class BaseExportImportContentProcessor
 				continue;
 			}
 
-			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, stagedModel, DLFileEntry.class, classPK);
+			try {
+				StagedModelDataHandlerUtil.importReferenceStagedModel(
+					portletDataContext, stagedModel, DLFileEntry.class,
+					classPK);
+			}
+			catch (Exception e) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(e, e);
+				}
+				else if (_log.isWarnEnabled()) {
+					StringBundler sb = new StringBundler(6);
+
+					sb.append("Unable to process file entry ");
+					sb.append(classPK);
+					sb.append(" in ");
+					sb.append(stagedModel.getModelClassName());
+					sb.append(" - ");
+					sb.append(stagedModel.getPrimaryKeyObj());
+
+					_log.warn(sb.toString());
+				}
+			}
 
 			Map<Long, Long> dlFileEntryIds =
 				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(

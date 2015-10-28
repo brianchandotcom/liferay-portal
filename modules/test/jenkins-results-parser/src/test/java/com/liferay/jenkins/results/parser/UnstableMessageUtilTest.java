@@ -22,10 +22,11 @@ import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import org.apache.tools.ant.Project;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -37,48 +38,60 @@ public class UnstableMessageUtilTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_downloadSample(
-			"2-of-3888", "test-1-9", "5141",
-			"test-portal-acceptance-pullrequest-batch(master)");
+			"2-of-3888", "5141",
+			"test-portal-acceptance-pullrequest-batch(master)", "test-1-9");
 		_downloadSample(
-			"1-of-1", "test-1-18", "3415",
-			"test-portal-acceptance-pullrequest-batch(master)");
+			"1-of-1", "3415",
+			"test-portal-acceptance-pullrequest-batch(master)", "test-1-18");
 		_downloadSample(
-			"6-of-6", "test-1-19", "1287",
-			"test-portal-acceptance-pullrequest-batch(master)");
+			"6-of-6", "1287",
+			"test-portal-acceptance-pullrequest-batch(master)",  "test-1-19");
 	}
 
+	@Before
+	public void setUp() throws Exception {
+		_replaceInAllFiles(
+			_dependenciesDir, "${user.dir}", System.getProperty("user.dir"));
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_replaceInAllFiles(
+			_dependenciesDir, System.getProperty("user.dir"), "${user.dir}");
+	}
+	
 	@Test
-	public void testGetFailureMessage() throws Exception {
+	public void testGetUnstableMessage() throws Exception {
 		File[] files = _dependenciesDir.listFiles();
 
 		for (File file : files) {
-			assertSample(_project, file);
+			assertSample(file);
 		}
 	}
 
-	protected void assertSample(Project project, File caseDir)
+	protected void assertSample(File caseDir)
 		throws Exception {
 
 		System.out.print("Asserting sample " + caseDir.getName() + ": ");
 
-		File expectedFailureMessageFile = new File(
-			caseDir, "expected_failure_message.html");
+		File expectedUnstableMessageFile = new File(
+			caseDir, "expected_unstable_message.html");
 
-		String expectedFailureMessage = _read(expectedFailureMessageFile);
+		String expectedUnstableMessage = _read(expectedUnstableMessageFile);
 
-		String actualFailureMessage = FailureMessageUtil.getFailureMessage(
-			project, _toExternalForm(caseDir));
+		String actualUnstableMessage = UnstableMessageUtil.getUnstableMessage(
+			_toExternalForm(caseDir));
 
-		boolean value = expectedFailureMessage.equals(actualFailureMessage);
+		boolean value = expectedUnstableMessage.equals(actualUnstableMessage);
 
 		if (value) {
 			System.out.println(" PASSED");
 		}
 		else {
 			System.out.println(" FAILED");
-			System.out.println("\nActual results: \n" + actualFailureMessage);
+			System.out.println("\nActual results: \n" + actualUnstableMessage);
 			System.out.println(
-				"\nExpected results: \n" + expectedFailureMessage);
+				"\nExpected results: \n" + expectedUnstableMessage);
 		}
 
 		Assert.assertTrue(value);
@@ -146,7 +159,7 @@ public class UnstableMessageUtilTest {
 
 			_downloadSampleRuns(new File(sampleDir, "/api/json"));
 
-			_writeExpectedFailureMessage(_project, sampleDir);
+			_writeExpectedUnstableMessage(sampleDir);
 		}
 		catch (IOException ioe) {
 			_deleteFile(sampleDir);
@@ -207,6 +220,34 @@ public class UnstableMessageUtilTest {
 		return new String(Files.readAllBytes(Paths.get(file.toURI())));
 	}
 
+	private static void _replaceInAllFiles(
+		File rootDir, String token, String value)
+			throws Exception {
+	
+		File[] childFileArray = rootDir.listFiles();
+	
+		for (File childFile : childFileArray) {
+			if (childFile.isDirectory()) {
+				_replaceInAllFiles(childFile, token, value);
+			}
+			else {
+				_replaceInFile(childFile, token, value);
+			}
+		}
+	}
+	
+	private static void _replaceInFile(
+			File targetFile, String token, String value)
+		throws Exception {
+	
+		String fileContents = _read(targetFile);
+	
+		fileContents = fileContents.replace(token, value);
+
+		_write(targetFile, fileContents);
+	}
+	
+	
 	private static String _replaceToken(
 		String string, String token, String value) {
 
@@ -240,33 +281,19 @@ public class UnstableMessageUtilTest {
 		Files.write(Paths.get(file.toURI()), content.getBytes());
 	}
 
-	private static void _writeExpectedFailureMessage(
-			Project project, File sampleDir)
+	private static void _writeExpectedUnstableMessage(File sampleDir)
 		throws Exception {
 
-		File expectedFailureMessageFile = new File(
-			sampleDir, "expected_failure_message.html");
-		String expectedFailureMessage = FailureMessageUtil.getFailureMessage(
-			project, _toExternalForm(sampleDir));
+		File expectedUnstableMessageFile = new File(
+			sampleDir, "expected_unstable_message.html");
+		String expectedUnstableMessage = UnstableMessageUtil.getUnstableMessage(
+			_toExternalForm(sampleDir));
 
-		_write(expectedFailureMessageFile, expectedFailureMessage);
+		_write(expectedUnstableMessageFile, expectedUnstableMessage);
 	}
 	
 	private static final File _dependenciesDir = new File(
 		"src/test/resources/com/liferay/results/parser/dependencies" +
 			"/UnstableMessageUtilTest");
-	private static final Project _project = new Project();
-
-	static {
-		_project.setProperty(
-			"github.pull.request.head.branch", "junit-pr-head-branch");
-		_project.setProperty(
-			"github.pull.request.head.username", "junit-pr-head-username");
-		_project.setProperty(
-			"plugins.branch.name", "junit-plugins-branch-name");
-		_project.setProperty("plugins.repository", "junit-plugins-repository");
-		_project.setProperty("portal.repository", "junit-portal-repository");
-		_project.setProperty("repository", "junit-repository");
-	}
 
 }

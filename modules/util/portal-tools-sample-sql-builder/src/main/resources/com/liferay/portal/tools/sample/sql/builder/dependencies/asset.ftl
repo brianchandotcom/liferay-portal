@@ -23,5 +23,5 @@
 </#list>
 
 <#list dataFactory.assetTagStatsModels as assetTagStatsModel>
-	insert into AssetTagStats values (${assetTagStatsModel.tagStatsId}, ${assetTagStatsModel.tagId}, ${assetTagStatsModel.classNameId}, ${assetTagStatsModel.assetCount});
+	insert into AssetTagStats values (${assetTagStatsModel.tagStatsId}, ${assetTagStatsModel.companyId}, ${assetTagStatsModel.tagId}, ${assetTagStatsModel.classNameId}, ${assetTagStatsModel.assetCount});
 </#list>

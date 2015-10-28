@@ -257,21 +257,31 @@ public class MVCPortlet extends LiferayPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		String mvcRenderCommandName = ParamUtil.getString(
-			renderRequest, "mvcRenderCommandName", "/");
+		String[] mvcRenderCommandNames = ParamUtil.getParameterValues(
+			renderRequest, "mvcRenderCommandName");
+
+		String mvcRenderCommandName = StringUtil.merge(mvcRenderCommandNames);
 
 		String mvcPath = ParamUtil.getString(renderRequest, "mvcPath");
 
-		if (!mvcRenderCommandName.equals("/") || Validator.isNull(mvcPath)) {
-			MVCRenderCommand mvcRenderCommand =
-				(MVCRenderCommand)_mvcRenderCommandCache.getMVCCommand(
+		if (!Validator.isNull(mvcRenderCommandName) ||
+			Validator.isNull(mvcPath)) {
+
+			List<MVCRenderCommand> mvcRenderCommands =
+				(List<MVCRenderCommand>)_mvcRenderCommandCache.getMVCCommands(
 					mvcRenderCommandName);
 
 			mvcPath = null;
 
-			if (mvcRenderCommand != MVCRenderCommand.EMPTY) {
-				mvcPath = mvcRenderCommand.render(
-					renderRequest, renderResponse);
+			for (MVCRenderCommand mvcRenderCommand : mvcRenderCommands) {
+				if (mvcRenderCommand != MVCRenderCommand.EMPTY) {
+					String currentMVCPath = mvcRenderCommand.render(
+						renderRequest, renderResponse);
+
+					if (Validator.isNotNull(currentMVCPath)) {
+						mvcPath = currentMVCPath;
+					}
+				}
 			}
 
 			renderRequest.setAttribute(

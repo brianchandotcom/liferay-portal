@@ -16,6 +16,9 @@ package com.liferay.item.selector;
 
 import com.liferay.portlet.RequestBackedPortletURLFactory;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
@@ -24,6 +27,9 @@ import javax.portlet.PortletURL;
  * @author Iván Zaera
  */
 public interface ItemSelector {
+
+	public List<ItemSelectorCriterion> getItemSelectorCriteria(
+		Map<String, String[]> parameters);
 
 	public ItemSelectorRendering getItemSelectorRendering(
 		PortletRequest portletRequest, PortletResponse portletResponse);

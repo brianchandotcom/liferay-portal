@@ -70,6 +70,30 @@ public class ItemSelectorImpl implements ItemSelector {
 	public static final String PARAMETER_SELECTED_TAB = "selectedTab";
 
 	@Override
+	public List<ItemSelectorCriterion> getItemSelectorCriteria(
+		Map<String, String[]> parameters) {
+
+		List<ItemSelectorCriterion> itemSelectorCriteria = new ArrayList<>();
+
+		List<Class<? extends ItemSelectorCriterion>>
+			itemSelectorCriterionClasses = getItemSelectorCriterionClasses(
+			parameters);
+
+		for (int i = 0; i<itemSelectorCriterionClasses.size(); i++) {
+			Class<? extends ItemSelectorCriterion> itemSelectorCriterionClass =
+				itemSelectorCriterionClasses.get(i);
+
+			String prefix = i + "_";
+
+			itemSelectorCriteria.add(
+				getItemSelectorCriterion(
+					parameters, prefix, itemSelectorCriterionClass));
+		}
+
+		return itemSelectorCriteria;
+	}
+
+	@Override
 	public ItemSelectorRendering getItemSelectorRendering(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
@@ -169,29 +193,6 @@ public class ItemSelectorImpl implements ItemSelector {
 		}
 
 		return portletURL;
-	}
-
-	protected List<ItemSelectorCriterion> getItemSelectorCriteria(
-		Map<String, String[]> parameters) {
-
-		List<ItemSelectorCriterion> itemSelectorCriteria = new ArrayList<>();
-
-		List<Class<? extends ItemSelectorCriterion>>
-			itemSelectorCriterionClasses = getItemSelectorCriterionClasses(
-				parameters);
-
-		for (int i = 0; i<itemSelectorCriterionClasses.size(); i++) {
-			Class<? extends ItemSelectorCriterion> itemSelectorCriterionClass =
-				itemSelectorCriterionClasses.get(i);
-
-			String prefix = i + "_";
-
-			itemSelectorCriteria.add(
-				getItemSelectorCriterion(
-					parameters, prefix, itemSelectorCriterionClass));
-		}
-
-		return itemSelectorCriteria;
 	}
 
 	protected <T extends ItemSelectorCriterion> T getItemSelectorCriterion(

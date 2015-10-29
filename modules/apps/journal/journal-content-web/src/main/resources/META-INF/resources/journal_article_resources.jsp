@@ -20,8 +20,6 @@
 JournalArticle article = journalContentDisplayContext.getArticle();
 AssetRenderer<JournalArticle> assetRenderer = journalContentDisplayContext.getAssetRenderer();
 
-User assetRendererUser = UserLocalServiceUtil.fetchUserById(assetRenderer.getUserId());
-
 String title = assetRenderer.getTitle(locale);
 
 if (article.getGroupId() != themeDisplay.getScopeGroupId()) {
@@ -38,9 +36,8 @@ if (article.getGroupId() != themeDisplay.getScopeGroupId()) {
 	title="<%= title %>"
 >
 	<liferay-frontend:vertical-card-sticker-bottom>
-		<liferay-frontend:vertical-card-small-image
-			smallImageCSSClass="user-icon user-icon-lg"
-			smallImageUrl="<%= (assetRendererUser != null) ? assetRendererUser.getPortraitURL(themeDisplay) : UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null) %>"
+		<liferay-ui:user-portrait
+			userId="<%= assetRenderer.getUserId() %>"
 		/>
 	</liferay-frontend:vertical-card-sticker-bottom>
 

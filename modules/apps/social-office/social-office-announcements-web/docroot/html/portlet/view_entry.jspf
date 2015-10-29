@@ -45,26 +45,20 @@ if (entry.getPriority() > 0) {
 <div class="clearfix entry<%= className %>" data-entryId="<%= entry.getEntryId() %>" id="<portlet:namespace /><%= entry.getEntryId() %>">
 	<div class="user-portrait">
 		<span class="avatar">
-
-			<%
-			User entryUser = UserLocalServiceUtil.fetchUserById(entry.getUserId());
-			%>
-
-			<c:choose>
-				<c:when test="<%= entryUser == null %>">
-					<img alt="<%= HtmlUtil.escapeAttribute(entry.getUserName()) %>" src="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null) %>" />
-				</c:when>
-				<c:otherwise>
-					<a href="<%= entryUser.getDisplayURL(themeDisplay) %>">
-						<img alt="<%= HtmlUtil.escapeAttribute(entryUser.getFullName()) %>" src="<%= entryUser.getPortraitURL(themeDisplay) %>" />
-					</a>
-				</c:otherwise>
-			</c:choose>
+			<liferay-ui:user-portrait
+				userIconCssClass="user-icon-lg"
+				userId="<%= entry.getUserId() %>"
+			/>
 		</span>
 	</div>
 
 	<div class="entry-header">
 		<div class="entry-action">
+
+			<%
+			User entryUser = UserLocalServiceUtil.fetchUserById(entry.getUserId());
+			%>
+
 			<c:choose>
 				<c:when test="<%= entryUser == null %>">
 					<%= LanguageUtil.format(request, "x-to-x", new Object[] {HtmlUtil.escape(entry.getUserName()), "<span class=\"scope\">" + scopeName + "</span>"}, false) %>

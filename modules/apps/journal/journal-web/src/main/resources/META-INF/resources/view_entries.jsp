@@ -300,8 +300,6 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 
 							<%
 							String articleImageURL = curArticle.getArticleImageURL(themeDisplay);
-
-							User userDisplay = UserLocalServiceUtil.fetchUserById(curArticle.getUserId());
 							%>
 
 							<liferay-frontend:vertical-card
@@ -315,9 +313,9 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 								url="<%= rowURL != null ? rowURL.toString() : null %>"
 							>
 								<liferay-frontend:vertical-card-sticker-bottom>
-									<liferay-frontend:vertical-card-small-image
-										smallImageCSSClass="user-icon user-icon-lg"
-										smallImageUrl="<%= userDisplay != null ? userDisplay.getPortraitURL(themeDisplay) : UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null) %>"
+									<liferay-ui:user-portrait
+										userIconCssClass="sticker sticker-bottom user-icon-lg"
+										userId="<%= curArticle.getUserId() %>"
 									/>
 								</liferay-frontend:vertical-card-sticker-bottom>
 

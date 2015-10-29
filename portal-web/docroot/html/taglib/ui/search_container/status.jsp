@@ -28,7 +28,9 @@ User statusByUser = UserLocalServiceUtil.fetchUser(statusByUserId);
 	<liferay-util:buffer var="buffer">
 		<div class="user-status-tooltip">
 			<span class="user-status-avatar">
-				<img alt="<%= HtmlUtil.escapeAttribute(statusByUser.getFullName()) %>" class="user-status-avatar-image" src="<%= HtmlUtil.escape(statusByUser.getPortraitURL(themeDisplay)) %>" />
+				<liferay-ui:user-portrait
+					userId="<%= statusByUser.getUserId() %>"
+				/>
 			</span>
 			<span class="user-status-info">
 				<div class="user-status-name">

@@ -68,21 +68,11 @@
 	<c:if test='<%= !displayStyle.equals("title") %>'>
 		<div class="abstract">
 			<c:if test='<%= displayStyle.endsWith("-image") %>'>
-
-				<%
-				User user2 = UserLocalServiceUtil.fetchUserById(entry.getUserId());
-
-				String portraitUrl = null;
-
-				if (user2 != null) {
-					portraitUrl = user2.getPortraitURL(themeDisplay);
-				}
-				else {
-					portraitUrl = UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null);
-				}
-				%>
-
-				<a href="<%= viewAllEntriesURL %>"><img align="left" alt="<liferay-ui:message escapeAttribute="<%= true %>" key="portrait" />" hspace="0" src="<%= portraitUrl %>" width="65" /></a>
+				<a href="<%= viewAllEntriesURL %>">
+					<liferay-ui:user-portrait
+						userId="<%= entry.getUserId() %>"
+					/>
+				</a>
 			</c:if>
 			<c:choose>
 				<c:when test='<%= displayStyle.startsWith("abstract") %>'>

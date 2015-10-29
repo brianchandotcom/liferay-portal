@@ -598,7 +598,11 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		long groupId, long parentFolderId, int status,
 		boolean includeMountfolders) {
 
-		if (includeMountfolders) {
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return getFoldersCount(
+				groupId, parentFolderId, includeMountfolders);
+		}
+		else if (includeMountfolders) {
 			return dlFolderPersistence.countByG_P_H_S(
 				groupId, parentFolderId, false, status);
 		}

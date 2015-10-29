@@ -17,6 +17,7 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
+boolean indexerDisabled = (boolean)request.getAttribute("liferay-ui:user-search-container-results:indexerDisabled");
 UserSearchTerms searchTerms = (UserSearchTerms)request.getAttribute("liferay-ui:user-search-container-results:searchTerms");
 LinkedHashMap<String, Object> userParams = (LinkedHashMap<String, Object>)request.getAttribute("liferay-ui:user-search-container-results:userParams");
 
@@ -26,7 +27,7 @@ Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
 <liferay-ui:search-container searchContainer='<%= (SearchContainer)request.getAttribute("liferay-ui:user-search-container-results:searchContainer") %>'>
 	<liferay-ui:search-container-results>
 		<c:choose>
-			<c:when test="<%= Validator.equals(themeDisplay.getPpid(), PortletKeys.DIRECTORY) && indexer.isIndexerEnabled() && PropsValues.USERS_SEARCH_WITH_INDEX %>">
+			<c:when test="<%= !indexerDisabled && indexer.isIndexerEnabled() && PropsValues.USERS_SEARCH_WITH_INDEX %>">
 
 				<%
 				userParams.put("expandoAttributes", searchTerms.getKeywords());

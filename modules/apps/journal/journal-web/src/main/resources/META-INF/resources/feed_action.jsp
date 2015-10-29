@@ -32,7 +32,6 @@ JournalFeed feed = (JournalFeed)row.getObject();
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-edit"
 			message="edit"
 			url="<%= editFeedURL %>"
 		/>
@@ -47,7 +46,6 @@ JournalFeed feed = (JournalFeed)row.getObject();
 		/>
 
 		<liferay-ui:icon
-			iconCssClass="icon-lock"
 			message="permissions"
 			url="<%= permissionsFeedURL %>"
 		/>

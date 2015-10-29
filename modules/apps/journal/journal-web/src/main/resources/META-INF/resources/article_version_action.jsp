@@ -38,7 +38,6 @@ JournalArticle article = (JournalArticle)row.getObject();
 		%>
 
 		<liferay-ui:icon
-			iconCssClass="icon-search"
 			message="preview"
 			onClick="<%= taglibOnClick %>"
 			url="javascript:;"
@@ -54,7 +53,6 @@ JournalArticle article = (JournalArticle)row.getObject();
 			</portlet:renderURL>
 
 			<liferay-ui:icon
-				iconCssClass="icon-copy"
 				message="copy"
 				url="<%= copyURL.toString() %>"
 			/>
@@ -69,7 +67,6 @@ JournalArticle article = (JournalArticle)row.getObject();
 		</portlet:actionURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-time"
 			message="expire"
 			url="<%= expireURL %>"
 		/>
@@ -91,7 +88,6 @@ JournalArticle article = (JournalArticle)row.getObject();
 	<liferay-ui:icon
 		cssClass="compare-to-link"
 		data="<%= data %>"
-		iconCssClass="icon-copy"
 		message="compare-to"
 		url="javascript:;"
 	/>

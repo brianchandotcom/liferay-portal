@@ -131,6 +131,8 @@ public interface LiferaySelenium extends Selenium {
 
 	public String getElementText(String locator) throws Exception;
 
+	public String getElementValue(String locator) throws Exception;
+
 	public String getEmailBody(String index) throws Exception;
 
 	public String getEmailSubject(String index) throws Exception;

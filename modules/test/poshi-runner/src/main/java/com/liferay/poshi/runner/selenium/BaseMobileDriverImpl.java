@@ -329,6 +329,28 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
+	public String getElementValue(String locator) throws Exception {
+		return getElementValue(locator, null);
+	}
+
+	public String getElementValue(String locator, String timeout)
+		throws Exception {
+
+		WebElement webElement = getWebElement(locator, timeout);
+
+		if (webElement == null) {
+			throw new Exception(
+				"Element is not present at \"" + locator + "\"");
+		}
+
+		if (!isInViewport(locator)) {
+			swipeWebElementIntoView(locator);
+		}
+
+		return webElement.getAttribute("value");
+	}
+
+	@Override
 	public String getEmailBody(String index) throws Exception {
 		return LiferaySeleniumHelper.getEmailBody(index);
 	}

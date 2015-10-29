@@ -14,6 +14,7 @@
 
 package com.liferay.portal.resiliency.service;
 
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGIServiceInvokerUtil;
 import com.liferay.portal.kernel.nio.intraband.rpc.IntrabandRPCUtil;
 import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIRegistryUtil;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.security.access.control.AccessControlThreadLoca
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
-import com.liferay.portal.util.IdentifiableOSGIServiceInvokerUtil;
 
 import java.io.Serializable;
 

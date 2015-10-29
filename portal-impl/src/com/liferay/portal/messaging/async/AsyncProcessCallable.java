@@ -14,9 +14,9 @@
 
 package com.liferay.portal.messaging.async;
 
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGIServiceInvokerUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.util.MethodHandler;
-import com.liferay.portal.util.IdentifiableOSGIServiceInvokerUtil;
 
 import java.io.Externalizable;
 import java.io.IOException;

@@ -39,7 +39,6 @@ Group group = layoutSetPrototype.getGroup();
 
 		<c:if test="<%= Validator.isNotNull(href) %>">
 			<liferay-ui:icon
-				iconCssClass="icon-edit"
 				message="manage"
 				method="get"
 				url="<%= href %>"
@@ -48,7 +47,6 @@ Group group = layoutSetPrototype.getGroup();
 
 		<c:if test="<%= group.getPrivateLayoutsPageCount() > 0 %>">
 			<liferay-ui:icon
-				iconCssClass="icon-search"
 				message="view-pages"
 				target="_blank"
 				url="<%= group.getDisplayURL(themeDisplay, true) %>"
@@ -66,7 +64,6 @@ Group group = layoutSetPrototype.getGroup();
 		/>
 
 		<liferay-ui:icon
-			iconCssClass="icon-lock"
 			message="permissions"
 			method="get"
 			url="<%= permissionsURL %>"
@@ -90,7 +87,6 @@ Group group = layoutSetPrototype.getGroup();
 
 		<liferay-ui:icon
 			cssClass="export-layoutset-prototype layoutset-prototype-action"
-			iconCssClass="icon-arrow-down"
 			message="export"
 			method="get"
 			url="<%= exportPagesURL.toString() %>"
@@ -111,7 +107,6 @@ Group group = layoutSetPrototype.getGroup();
 
 		<liferay-ui:icon
 			cssClass="import-layoutset-prototype layoutset-prototype-action"
-			iconCssClass="icon-arrow-up"
 			message="import"
 			method="get"
 			url="<%= importPagesURL.toString() %>"

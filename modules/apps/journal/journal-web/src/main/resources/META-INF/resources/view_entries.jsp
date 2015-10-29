@@ -314,7 +314,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 							>
 								<liferay-frontend:vertical-card-sticker-bottom>
 									<liferay-ui:user-portrait
-										userIconCssClass="sticker sticker-bottom user-icon-lg"
+										cssClass="sticker sticker-bottom user-icon-lg"
 										userId="<%= curArticle.getUserId() %>"
 									/>
 								</liferay-frontend:vertical-card-sticker-bottom>

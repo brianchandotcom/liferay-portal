@@ -35,10 +35,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class UserPortraitTag extends IncludeTag {
 
-	public void setColorCssClass(String colorCssClass) {
-		_colorCssClass = colorCssClass;
-	}
-
 	public void setCssClass(String cssClass) {
 		_cssClass = cssClass;
 	}

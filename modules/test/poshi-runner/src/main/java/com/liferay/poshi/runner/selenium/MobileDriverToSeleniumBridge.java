@@ -456,17 +456,7 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public String getValue(String locator) {
-		return getValue(locator, null);
-	}
-
-	public String getValue(String locator, String timeout) {
-		WebElement webElement = getWebElement(locator, timeout);
-
-		if (!isInViewport(locator)) {
-			swipeWebElementIntoView(locator);
-		}
-
-		return webElement.getAttribute("value");
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

@@ -115,6 +115,10 @@ public interface CalendarBookingService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.calendar.model.CalendarBooking> getCalendarBookings(
+		long calendarId, int[] statuses) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getCalendarBookingsRSS(long calendarId,
 		long startTime, long endTime, int max, java.lang.String type,
 		double version, java.lang.String displayStyle,

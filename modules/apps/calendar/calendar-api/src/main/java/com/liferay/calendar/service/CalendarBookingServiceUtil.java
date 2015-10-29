@@ -150,6 +150,12 @@ public class CalendarBookingServiceUtil {
 				   .getCalendarBookings(calendarId, startTime, endTime, max);
 	}
 
+	public static java.util.List<com.liferay.calendar.model.CalendarBooking> getCalendarBookings(
+		long calendarId, int[] statuses)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCalendarBookings(calendarId, statuses);
+	}
+
 	public static java.lang.String getCalendarBookingsRSS(long calendarId,
 		long startTime, long endTime, int max, java.lang.String type,
 		double version, java.lang.String displayStyle,

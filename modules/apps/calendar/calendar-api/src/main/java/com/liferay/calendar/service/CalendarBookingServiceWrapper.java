@@ -151,6 +151,13 @@ public class CalendarBookingServiceWrapper implements CalendarBookingService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.calendar.model.CalendarBooking> getCalendarBookings(
+		long calendarId, int[] statuses)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _calendarBookingService.getCalendarBookings(calendarId, statuses);
+	}
+
+	@Override
 	public java.lang.String getCalendarBookingsRSS(long calendarId,
 		long startTime, long endTime, int max, java.lang.String type,
 		double version, java.lang.String displayStyle,

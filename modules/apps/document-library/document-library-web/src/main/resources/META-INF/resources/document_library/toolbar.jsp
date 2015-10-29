@@ -39,6 +39,12 @@ int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repos
 			<liferay-util:include page="/document_library/display_style_buttons.jsp" servletContext="<%= application %>" />
 		</c:if>
 	</liferay-frontend:management-bar-buttons>
+
+	<c:if test='<%= !search && !navigation.equals("recent") %>'>
+		<liferay-frontend:management-bar-filters>
+			<liferay-util:include page="/document_library/sort_button.jsp" servletContext="<%= application %>" />
+		</liferay-frontend:management-bar-filters>
+	</c:if>
 </liferay-frontend:management-bar>
 
 <aui:nav-bar>
@@ -88,10 +94,6 @@ int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repos
 
 			<aui:nav-item cssClass="item-remove" href="<%= taglibURL %>" iconCssClass="icon-remove" id="deleteAction" label="delete" />
 		</aui:nav-item>
-
-		<c:if test='<%= !search && !navigation.equals("recent") %>'>
-			<liferay-util:include page="/document_library/sort_button.jsp" servletContext="<%= application %>" />
-		</c:if>
 
 		<c:if test="<%= !user.isDefaultUser() %>">
 			<aui:nav-item dropdown="<%= true %>" label="manage">

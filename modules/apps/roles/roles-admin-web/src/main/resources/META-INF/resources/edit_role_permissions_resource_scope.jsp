@@ -55,7 +55,7 @@ List groupNames = (List)objArray[8];
 		else if (role.getType() == RoleConstants.TYPE_REGULAR) {
 		%>
 
-			<%= LanguageUtil.get(request, "all-sites") %>
+			<liferay-ui:message key="all-sites" />
 
 		<%
 		}

@@ -98,7 +98,7 @@ BookmarksUtil.addPortletBreadcrumbEntries(entry, request, renderResponse);
 
 			<div class="lfr-asset-metadata">
 				<div class="icon-user lfr-asset-icon">
-					<%= LanguageUtil.format(request, "created-by-x", HtmlUtil.escape(PortalUtil.getUserName(entry.getUserId(), themeDisplay.getScopeGroupName())), false) %>
+					<liferay-ui:message arguments="<%= HtmlUtil.escape(PortalUtil.getUserName(entry.getUserId(), themeDisplay.getScopeGroupName())) %>" key="created-by-x" translateArguments="<%= false %>" />
 				</div>
 
 				<div class="icon-calendar lfr-asset-icon">

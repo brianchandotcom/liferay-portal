@@ -22,7 +22,7 @@ String layoutTemplateId = GetterUtil.getString(typeSettingsProperties.getPropert
 
 <liferay-ui:error-marker key="errorSection" value="layout" />
 
-<h5><%= LanguageUtil.get(request, "layout-template") %></h5>
+<h5><liferay-ui:message key="layout-template" /></h5>
 
 <liferay-ui:layout-templates-list
 	layoutTemplateId="<%= layoutTemplateId %>"

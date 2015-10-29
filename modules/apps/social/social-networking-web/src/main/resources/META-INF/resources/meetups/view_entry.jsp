@@ -88,7 +88,7 @@ int yesTotal = MeetupsRegistrationLocalServiceUtil.getMeetupsRegistrationsCount(
 
 <c:if test="<%= yesTotal > 1 %>">
 	<div>
-		<%= LanguageUtil.format(request, "x-people-are-planning-to-attend-this-meetup", String.valueOf(yesTotal), false) %>
+		<liferay-ui:message arguments="<%= String.valueOf(yesTotal) %>" key="x-people-are-planning-to-attend-this-meetup" translateArguments="<%= false %>" />
 	</div>
 
 	<br />

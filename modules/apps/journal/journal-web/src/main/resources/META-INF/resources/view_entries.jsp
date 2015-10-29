@@ -317,7 +317,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 								url="<%= rowURL != null ? rowURL.toString() : null %>"
 							>
 								<liferay-frontend:vertical-card-header>
-									<%= LanguageUtil.format(request, "x-ago-by-x", new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - curArticle.getModifiedDate().getTime(), true), HtmlUtil.escape(curArticle.getUserName())}, false) %>
+									<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - curArticle.getModifiedDate().getTime(), true), HtmlUtil.escape(curArticle.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
 								</liferay-frontend:vertical-card-header>
 
 								<liferay-frontend:vertical-card-footer>

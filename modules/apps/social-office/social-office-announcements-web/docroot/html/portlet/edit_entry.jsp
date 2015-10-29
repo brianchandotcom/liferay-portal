@@ -153,7 +153,7 @@ if (entry == null) {
 			</div>
 
 			<div class="entry-time">
-				<%= LanguageUtil.get(request, "about-a-minute-ago") %>
+				<liferay-ui:message key="about-a-minute-ago" />
 			</div>
 		</div>
 
@@ -237,8 +237,6 @@ if (entry == null) {
 		var previewContent = A.one('#<portlet:namespace />entryContent');
 
 		previewContent.html(content);
-
-		var previewFooter = A.one('#<portlet:namespace />entryFooter');
 
 		if (previewContent.height() > 75) {
 			var toggle = preview.one('.toggle');

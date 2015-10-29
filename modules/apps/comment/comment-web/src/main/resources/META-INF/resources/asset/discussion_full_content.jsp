@@ -61,7 +61,7 @@ if (comment instanceof WorkflowableComment) {
 
 		<div>
 			<c:if test="<%= (parentComment != null) && parentComment.isRoot() %>">
-				<%= LanguageUtil.format(request, "posted-on-x", dateFormatDateTime.format(comment.getModifiedDate()), false) %>
+				<liferay-ui:message arguments="<%= dateFormatDateTime.format(comment.getModifiedDate()) %>" key="posted-on-x" translateArguments="<%= false %>" />
 			</c:if>
 		</div>
 	</td>

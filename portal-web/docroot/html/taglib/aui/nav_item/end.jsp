@@ -69,11 +69,11 @@ if (Validator.isNull(title)) {
 
 		<c:if test="<%= dropdown %>">
 			<aui:script use="aui-base,event-move,event-outside,liferay-menu-toggle,liferay-store">
-				var toggleMenu = new Liferay.MenuToggle(
+				new Liferay.MenuToggle(
 					{
 						content: '#<%= id %>',
 						maxDisplayItems: <%= PropsValues.MENU_MAX_DISPLAY_ITEMS %>,
-						'strings.placeholder': '<%= LanguageUtil.get(request, "search") %>',
+						'strings.placeholder': '<liferay-ui:message key="search" />',
 						toggle: <%= toggle %>,
 						toggleTouch: <%= toggleTouch %>,
 						trigger: '#<%= id %> a'

@@ -83,7 +83,7 @@ for (int j = 0; j < folderColumns.length; j++) {
 				<div class="entry-metadata">
 
 					<c:if test="<%= !repositoryAccess %>">
-						<span title="<%= LanguageUtil.get(request, "an-unexpected-error-occurred-while-connecting-to-the-repository") %>">
+						<span title='<liferay-ui:message key="an-unexpected-error-occurred-while-connecting-to-the-repository" />'>
 					</c:if>
 
 					<span class="entry-title">

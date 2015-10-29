@@ -185,7 +185,7 @@ for (int i = 0; i < openSearchInstances.size(); i++) {
 
 <c:if test="<%= totalResults == 0 %>">
 	<div class="no-results">
-		<%= LanguageUtil.format(request, "no-results-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>", false) %>
+		<liferay-ui:message arguments='<%= "<strong>" + HtmlUtil.escape(keywords) + "</strong>" %>' key="no-results-were-found-that-matched-the-keywords-x" translateArguments="<%= false %>" />
 	</div>
 </c:if>
 

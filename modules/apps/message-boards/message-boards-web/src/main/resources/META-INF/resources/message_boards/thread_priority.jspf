@@ -28,7 +28,7 @@
 	</c:if>
 
 	<c:if test="<%= thread.isLocked() %>">
-		<i class="icon-lock" title="<%= LanguageUtil.get(request, "thread-locked") %>"></i>
+		<i class="icon-lock" title='<liferay-ui:message key="thread-locked" />'></i>
 	</c:if>
 
 	<%= message.getSubject() %>

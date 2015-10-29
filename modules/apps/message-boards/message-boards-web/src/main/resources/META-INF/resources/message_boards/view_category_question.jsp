@@ -130,7 +130,7 @@ portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 
 			<span class="question-details">
 				<span class="votes">
-					<span class="count"><%= String.valueOf(ratingScore) %></span> <span><%= LanguageUtil.get(request, "votes") %></span>
+					<span class="count"><%= String.valueOf(ratingScore) %></span> <span><liferay-ui:message key="votes" /></span>
 				</span>
 
 				<span class="status <%= (answers != 0) ? "answered" : " unanswered" %> ">
@@ -138,7 +138,7 @@ portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 				</span>
 
 				<span class="views">
-					<span class="count"><%= thread.getViewCount() %></span> <span><%= LanguageUtil.get(request, "views") %></span>
+					<span class="count"><%= thread.getViewCount() %></span> <span><liferay-ui:message key="views" /></span>
 				</span>
 			</span>
 		</liferay-ui:search-container-column-text>

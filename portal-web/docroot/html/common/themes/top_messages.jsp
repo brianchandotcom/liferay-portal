@@ -25,7 +25,7 @@ if ((PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 3) && !user.isDefaultUser(
 <c:if test="<%= ShutdownUtil.isInProcess() %>">
 	<div class="alert alert-danger lfr-shutdown-message popup-alert-warning" id="lfrShutdownMessage">
 		<span class="notice-label"><liferay-ui:message key="maintenance-alert" /></span> <span class="notice-date"><%= FastDateFormatFactoryUtil.getTime(locale).format(Time.getDate(CalendarFactoryUtil.getCalendar(timeZone))) %> <%= timeZone.getDisplayName(false, TimeZone.SHORT, locale) %></span>
-		<span class="notice-message"><%= LanguageUtil.format(request, "the-portal-will-shutdown-for-maintenance-in-x-minutes", String.valueOf((ShutdownUtil.getInProcess() / Time.MINUTE) + 1), false) %></span>
+		<span class="notice-message"><liferay-ui:message arguments="<%= String.valueOf((ShutdownUtil.getInProcess() / Time.MINUTE) + 1) %>" key="the-portal-will-shutdown-for-maintenance-in-x-minutes" translateArguments="<%= false %>" /></span>
 
 		<c:if test="<%= Validator.isNotNull(ShutdownUtil.getMessage()) %>">
 			<span class="custom-shutdown-message"><%= HtmlUtil.escape(ShutdownUtil.getMessage()) %></span>
@@ -60,8 +60,6 @@ if (Validator.isNotNull(jspPath) || Validator.isNotNull(message)) {
 	</div>
 
 	<aui:script use="liferay-notice">
-		var portalMessageContainer = A.one('#portalMessageContainer');
-
 		var banner = new Liferay.Notice(
 			{
 				animationConfig:

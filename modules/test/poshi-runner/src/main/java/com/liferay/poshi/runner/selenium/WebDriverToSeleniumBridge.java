@@ -609,8 +609,12 @@ public class WebDriverToSeleniumBridge
 		return attributeNode.getTextContent();
 	}
 
-	public String getHtmlNodeText(String locator) {
+	public String getHtmlNodeText(String locator) throws Exception {
 		Node node = getHtmlNode(locator);
+
+		if (node == null) {
+			throw new Exception(locator + " is not present");
+		}
 
 		return node.getTextContent();
 	}

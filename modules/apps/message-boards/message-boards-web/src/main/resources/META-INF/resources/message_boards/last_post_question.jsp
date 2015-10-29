@@ -30,14 +30,10 @@ User userDisplay = UserLocalServiceUtil.fetchUserById(thread.getLastPostByUserId
 
 <div class="user-info">
 	<div class="portrait">
-		<c:choose>
-			<c:when test="<%= message.isAnonymous() || (userDisplay == null) %>">
-				<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="generic-portrait" />" class="avatar" src="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, StringPool.BLANK) %>" width="60" /></a>
-			</c:when>
-			<c:otherwise>
-				<a href="<%= userDisplay.getDisplayURL(themeDisplay) %>"><img alt="<%= HtmlUtil.escapeAttribute(userDisplay.getFullName()) %>" class="avatar" src="<%= userDisplay.getPortraitURL(themeDisplay) %>" width="60" /></a>
-			</c:otherwise>
-		</c:choose>
+		<liferay-ui:user-portrait
+			userId="<%= (userDisplay == null) ? 0 : userDisplay.getUserId() %>"
+			userName='<%= (message.isAnonymous() || (userDisplay == null)) ? LanguageUtil.get(request, "anonymous") : userDisplay.getFullName() %>'
+		/>
 	</div>
 
 	<div class="username">

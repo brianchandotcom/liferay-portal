@@ -14,13 +14,8 @@
  */
 --%>
 
-<%@ include file="/card/init.jsp" %>
+<%@ include file="/card/vertical_card_small_image/init.jsp" %>
 
-<%
-boolean backgroundImage = GetterUtil.getBoolean(request.getAttribute("liferay-frontend:card:backgroundImage"));
-String footer = (String)request.getAttribute("liferay-frontend:card:footer");
-String header = (String)request.getAttribute("liferay-frontend:card:header");
-String stickerBottom = GetterUtil.getString(request.getAttribute("liferay-frontend:card:stickerBottom"));
-String subtitle = (String)request.getAttribute("liferay-frontend:card:subtitle");
-String title = (String)request.getAttribute("liferay-frontend:card:title");
-%>
+<div class="sticker sticker-bottom <%= cssClass %>">
+	<img alt="thumbnail" class="img-responsive" src="<%= src %>">
+</div>

@@ -20,8 +20,6 @@
 JournalArticle article = journalContentDisplayContext.getArticle();
 AssetRenderer<JournalArticle> assetRenderer = journalContentDisplayContext.getAssetRenderer();
 
-User assetRendererUser = UserLocalServiceUtil.fetchUserById(assetRenderer.getUserId());
-
 String title = assetRenderer.getTitle(locale);
 
 if (article.getGroupId() != themeDisplay.getScopeGroupId()) {
@@ -34,11 +32,15 @@ if (article.getGroupId() != themeDisplay.getScopeGroupId()) {
 <liferay-frontend:vertical-card
 	cssClass="article-preview-content"
 	imageUrl="<%= HtmlUtil.escapeAttribute(assetRenderer.getThumbnailPath(liferayPortletRequest)) %>"
-	smallImageCSSClass="user-icon user-icon-lg"
-	smallImageUrl="<%= (assetRendererUser != null) ? assetRendererUser.getPortraitURL(themeDisplay) : UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null) %>"
 	subtitle="<%= assetRenderer.getSummary() %>"
 	title="<%= title %>"
 >
+	<liferay-frontend:vertical-card-sticker-bottom>
+		<liferay-ui:user-portrait
+			userId="<%= assetRenderer.getUserId() %>"
+		/>
+	</liferay-frontend:vertical-card-sticker-bottom>
+
 	<liferay-frontend:vertical-card-footer>
 		<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= article.getStatus() %>" />
 	</liferay-frontend:vertical-card-footer>

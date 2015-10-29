@@ -636,11 +636,15 @@
 
 		<execute function="Open" locator1="${blogEntryURL}" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="You do not have the required permissions." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="Your request failed to complete." />
+
+		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
 
 		<execute function="Open" locator1="${messageBoardsThreadURL}" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="You do not have the required permissions." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="Your request failed to complete." />
+
+		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
 	</command>
 
 	<command name="ViewSecureContentAndPageAsSiteMember" priority="3">
@@ -1102,7 +1106,9 @@
 
 		<execute function="Open" locator1="${blogEntryURL}" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="You do not have the required permissions." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="Your request failed to complete." />
+
+		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Blog and Message Board Page" />
@@ -1110,7 +1116,9 @@
 
 		<execute function="Open" locator1="${messageBoardsThreadURL}" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="You do not have the required permissions." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="Your request failed to complete." />
+
+		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
 	</command>
 
 	<command name="WebContentAdministrationSitesPagesPanel" priority="3">

@@ -25,6 +25,9 @@ import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
@@ -50,6 +53,11 @@ public abstract class BaseImporter implements Importer {
 		User user = UserLocalServiceUtil.getDefaultUser(companyId);
 
 		userId = user.getUserId();
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		PermissionThreadLocal.setPermissionChecker(permissionChecker);
 
 		if (isCompanyGroup()) {
 			return;

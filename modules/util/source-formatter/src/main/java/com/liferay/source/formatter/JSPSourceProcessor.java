@@ -1028,9 +1028,18 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			logFileName = logFileName.substring(x + 1);
 		}
 		else {
-			x = Math.max(
-				logFileName.lastIndexOf(".docroot."),
-				logFileName.lastIndexOf(".src.META_INF.resources."));
+			x = logFileName.lastIndexOf(".docroot.");
+
+			if (x == -1) {
+				x = Math.max(
+					logFileName.lastIndexOf(
+						".src.main.resources.META_INF.resources."),
+					logFileName.lastIndexOf(".src.META_INF.resources."));
+			}
+
+			if (x == -1) {
+				return content;
+			}
 
 			x = logFileName.lastIndexOf(StringPool.PERIOD, x - 1);
 
@@ -1038,8 +1047,13 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 			logFileName = StringUtil.replace(
 				logFileName,
-				new String[] {".docroot.", ".src.META_INF.resources."},
-				new String[] {StringPool.PERIOD, StringPool.PERIOD});
+				new String[] {
+					".docroot.", ".src.main.resources.META_INF.resources.",
+					".src.META_INF.resources."
+				},
+				new String[] {
+					StringPool.PERIOD, StringPool.PERIOD, StringPool.PERIOD
+				});
 		}
 
 		return StringUtil.replace(

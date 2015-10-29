@@ -175,6 +175,32 @@ eclipseProject {
 idea {
 	module {
 		scopes.TEST.plus += [configurations.testIntegrationRuntime]
+
+        iml {
+            withXml {
+                provider ->
+
+                if (FileUtil.exists(project, "src/main/resources/META-INF/resources")) {
+                    def builder = new NodeBuilder()
+
+                    def node = provider.node.component.find { it.@name == 'NewModuleRootManager' }
+
+                    node.plus {
+                        builder.module(name: 'NewModuleRootManager') {
+							component(name: 'FacetManager') {
+								facet(type: "web", name: "Web") {
+									configuration {
+										webroots {
+											root(url: 'file://$MODULE_DIR$/src/main/resources/META-INF/resources', relative: '/')
+										}
+									}
+								}
+							}
+                        }
+                    }
+                }
+            }
+        }
 	}
 }
 

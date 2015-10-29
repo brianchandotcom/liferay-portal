@@ -20,8 +20,7 @@
 boolean backgroundImage = GetterUtil.getBoolean(request.getAttribute("liferay-frontend:card:backgroundImage"));
 String footer = (String)request.getAttribute("liferay-frontend:card:footer");
 String header = (String)request.getAttribute("liferay-frontend:card:header");
-String smallImageCSSClass = GetterUtil.getString(request.getAttribute("liferay-frontend:card:smallImageCSSClass"));
-String smallImageUrl = GetterUtil.getString(request.getAttribute("liferay-frontend:card:smallImageUrl"));
+String stickerBottom = GetterUtil.getString(request.getAttribute("liferay-frontend:card:stickerBottom"));
 String subtitle = (String)request.getAttribute("liferay-frontend:card:subtitle");
 String title = (String)request.getAttribute("liferay-frontend:card:title");
 %>

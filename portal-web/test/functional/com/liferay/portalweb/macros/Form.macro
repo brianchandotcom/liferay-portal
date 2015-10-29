@@ -46,6 +46,16 @@
 		<execute function="AssertClick" locator1="Form#ADD_FIELD_TYPE" value1="${fieldType}" />
 	</command>
 
+	<command name="gotoAddFirstField">
+		<var name="key_columnSize" value="${columnSize}" />
+
+		<execute function="Click" locator1="Form#ADD_FIRST_FIELD" />
+
+		<var name="key_fieldType" value="${fieldType}" />
+
+		<execute function="AssertClick" locator1="Form#ADD_FIELD_TYPE" value1="${fieldType}" />
+	</command>
+
 	<command name="save">
 		<execute function="AssertClick" locator1="Form#SAVE_BUTTON" value1="Save" />
 

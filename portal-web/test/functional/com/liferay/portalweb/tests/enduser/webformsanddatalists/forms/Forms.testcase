@@ -26,7 +26,7 @@
 
 		<execute macro="Form#editDescription" />
 
-		<execute macro="Form#gotoAddField">
+		<execute macro="Form#gotoAddFirstField">
 			<var name="fieldType" value="text" />
 		</execute>
 
@@ -41,7 +41,7 @@
 			<var name="columnLineNumber" value="3" />
 		</execute>
 
-		<execute macro="Form#gotoAddField">
+		<execute macro="Form#gotoAddFirstField">
 			<var name="columnSize" value="10" />
 			<var name="fieldType" value="text" />
 		</execute>
@@ -57,7 +57,7 @@
 			<var name="columnLineNumber" value="10" />
 		</execute>
 
-		<execute macro="Form#gotoAddField">
+		<execute macro="Form#gotoAddFirstField">
 			<var name="columnSize" value="3" />
 			<var name="fieldType" value="text" />
 		</execute>
@@ -69,7 +69,7 @@
 
 		<execute macro="FormFields#save" />
 
-		<execute macro="Form#gotoAddAdditionalField">
+		<execute macro="Form#gotoAddFirstField">
 			<var name="fieldType" value="text" />
 			<var name="previousFieldName" value="name" />
 		</execute>
@@ -86,7 +86,7 @@
 			<var name="rowNumber" value="2" />
 		</execute>
 
-		<execute macro="Form#gotoAddField">
+		<execute macro="Form#gotoAddFirstField">
 			<var name="columnSize" value="11" />
 			<var name="fieldType" value="text" />
 		</execute>
@@ -103,7 +103,7 @@
 			<var name="rowNumber" value="2" />
 		</execute>
 
-		<execute macro="Form#gotoAddField">
+		<execute macro="Form#gotoAddFirstField">
 			<var name="columnSize" value="6" />
 			<var name="fieldType" value="text" />
 		</execute>
@@ -174,7 +174,7 @@
 
 		<execute macro="Form#editDescription" />
 
-		<execute macro="Form#gotoAddField">
+		<execute macro="Form#gotoAddFirstField">
 			<var name="fieldType" value="text" />
 		</execute>
 
@@ -375,7 +375,7 @@
 
 		<execute macro="Form#editDescription" />
 
-		<execute macro="Form#gotoAddField">
+		<execute macro="Form#gotoAddFirstField">
 			<var name="fieldType" value="text" />
 		</execute>
 
@@ -455,7 +455,7 @@
 			<var name="formPageName" value="Page 1" />
 		</execute>
 
-		<execute macro="Form#gotoAddField">
+		<execute macro="Form#gotoAddFirstField">
 			<var name="fieldType" value="text" />
 		</execute>
 
@@ -477,7 +477,7 @@
 			<var name="formPageName" value="Page 2" />
 		</execute>
 
-		<execute macro="Form#gotoAddField">
+		<execute macro="Form#gotoAddFirstField">
 			<var name="fieldType" value="radio" />
 		</execute>
 
@@ -514,7 +514,7 @@
 			<var name="formPageName" value="Page 3" />
 		</execute>
 
-		<execute macro="Form#gotoAddField">
+		<execute macro="Form#gotoAddFirstField">
 			<var name="fieldType" value="checkbox" />
 		</execute>
 
@@ -629,7 +629,7 @@
 
 		<execute macro="Form#editDescription" />
 
-		<execute macro="Form#gotoAddField">
+		<execute macro="Form#gotoAddFirstField">
 			<var name="fieldType" value="text" />
 		</execute>
 

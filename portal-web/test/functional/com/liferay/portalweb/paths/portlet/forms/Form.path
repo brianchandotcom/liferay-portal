@@ -82,6 +82,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_FIRST_FIELD</td>
+	<td>//div[contains(@class,'col col-md-${key_columnSize}')]//div[contains(@class,'add-button-icon')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_FIELD_TYPE</td>
 	<td>//div[@class='field-type']/div[contains(.,'${key_fieldType}')]</td>
 	<td></td>

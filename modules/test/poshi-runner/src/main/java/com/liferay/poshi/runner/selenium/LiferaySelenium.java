@@ -115,7 +115,7 @@ public interface LiferaySelenium extends Selenium {
 
 	public void copyText(String locator) throws Exception;
 
-	public void copyValue(String locator);
+	public void copyValue(String locator) throws Exception;
 
 	public void deleteAllEmails() throws Exception;
 
@@ -173,7 +173,7 @@ public interface LiferaySelenium extends Selenium {
 
 	public boolean isNotText(String locator, String value) throws Exception;
 
-	public boolean isNotValue(String locator, String value);
+	public boolean isNotValue(String locator, String value) throws Exception;
 
 	public boolean isNotVisible(String locator);
 
@@ -189,7 +189,7 @@ public interface LiferaySelenium extends Selenium {
 
 	public boolean isTextNotPresent(String pattern);
 
-	public boolean isValue(String locator, String value);
+	public boolean isValue(String locator, String value) throws Exception;
 
 	public void javaScriptMouseDown(String locator);
 

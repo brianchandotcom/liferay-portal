@@ -307,8 +307,8 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public void copyValue(String locator) {
-		_clipBoard = super.getValue(locator);
+	public void copyValue(String locator) throws Exception {
+		_clipBoard = getElementValue(locator);
 	}
 
 	@Override
@@ -531,7 +531,7 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public boolean isNotValue(String locator, String value) {
+	public boolean isNotValue(String locator, String value) throws Exception {
 		return LiferaySeleniumHelper.isNotValue(this, locator, value);
 	}
 
@@ -571,8 +571,8 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public boolean isValue(String locator, String value) {
-		return value.equals(getValue(locator, "1"));
+	public boolean isValue(String locator, String value) throws Exception {
+		return value.equals(getElementValue(locator, "1"));
 	}
 
 	@Override

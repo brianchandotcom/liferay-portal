@@ -1,6 +1,7 @@
 Bundle-Name: Liferay Portal Security Auth Verifier
 Bundle-SymbolicName: com.liferay.portal.security.auth.verifier
 Bundle-Version: 1.0.0
+ConfigurationPath: /configs
 Export-Package:\
 	com.liferay.portal.security.auth.verifier.basic.auth.header,\
 	com.liferay.portal.security.auth.verifier.digest.authentication,\
@@ -8,6 +9,7 @@ Export-Package:\
 	com.liferay.portal.security.auth.verifier.request.parameter,\
 	com.liferay.portal.security.auth.verifier.tunnel
 Include-Resource: \
+	configs=configs,\
 	classes,\
 	@../../../util-java/util-java.jar!/com/liferay/util/Encryptor.class,\
 	@../../../util-java/util-java.jar!/com/liferay/util/EncryptorException.class

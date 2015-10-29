@@ -65,7 +65,7 @@ public class JenkinsResultsParserUtil {
 		if (url.contains("]")) {
 			url = url.replace("]", "%5D");
 		}
-
+		
 		return url;
 	}
 
@@ -168,10 +168,12 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static JSONObject toJSONObject(String url) throws Exception {
-		return new JSONObject(toString(fixURL(url)));
+		return new JSONObject(toString(url));
 	}
 
 	public static String toString(String url) throws IOException {
+		url = fixURL(url);
+
 		System.out.println("Downloading " + url);
 
 		StringBuilder sb = new StringBuilder();
@@ -191,7 +193,7 @@ public class JenkinsResultsParserUtil {
 		}
 
 		bufferedReader.close();
-
+		
 		return sb.toString();
 	}
 

@@ -154,8 +154,8 @@ public class UnstableMessageUtilTest {
 		}
 
 		try {
-			_downloadSampleURL(sampleDir, url, "/testReport/api/json");
 			_downloadSampleURL(sampleDir, url, "/api/json");
+			_downloadSampleURL(sampleDir, url, "/testReport/api/json");
 
 			_downloadSampleRuns(sampleDir, new File(sampleDir, "/api/json"));
 
@@ -203,10 +203,16 @@ public class UnstableMessageUtilTest {
 
 	private static void _downloadSampleURL(File dir, URL url, String urlSuffix)
 		throws Exception {
+		
+		String urlString = url + urlSuffix;
+		
+		if (urlString.endsWith("json")) {
+			urlString += "?pretty";
+		}
 
 		_write(
 			new File(dir, urlSuffix),
-			JenkinsResultsParserUtil.toJSONObject(url + urlSuffix));
+			JenkinsResultsParserUtil.toString(urlString));
 	}
 
 	private static URL _encode(URL url) throws Exception {
@@ -214,9 +220,9 @@ public class UnstableMessageUtilTest {
 			url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(),
 			url.getPath(), url.getQuery(), url.getRef());
 
-		String uriString = uri.toASCIIString();
+		String uriASCIIString = uri.toASCIIString();
 
-		return new URL(uriString.replace("#", "%23"));
+		return new URL(uriASCIIString.replace("#", "%23"));
 	}
 
 	private static String _read(File file) throws IOException {

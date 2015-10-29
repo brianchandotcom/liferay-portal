@@ -76,6 +76,27 @@ public class HTMLTag extends BaseHTMLTag {
 		return null;
 	}
 
+	protected DDMFormValues getDDMFormValuesFromRequest() {
+		String serializedDDMFormValues = ParamUtil.getString(
+			request, getDDMFormValuesInputName());
+
+		if (Validator.isNotNull(serializedDDMFormValues)) {
+			DDMForm ddmForm = getDDMForm();
+
+			try {
+				return DDMFormValuesJSONDeserializerUtil.deserialize(
+					ddmForm, serializedDDMFormValues);
+			}
+			catch (PortalException e) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(e, e);
+				}
+			}
+		}
+
+		return null;
+	}
+
 	protected String getDDMFormValuesInputName() {
 		String fieldsNamespace = GetterUtil.getString(getFieldsNamespace());
 
@@ -156,27 +177,6 @@ public class HTMLTag extends BaseHTMLTag {
 		setNamespacedAttribute(request, "mode", getMode());
 		setNamespacedAttribute(
 			request, "randomNamespace", getRandomNamespace());
-	}
-
-	private DDMFormValues getDDMFormValuesFromRequest() {
-		String serializedDDMFormValues = ParamUtil.getString(
-			request, getDDMFormValuesInputName());
-
-		if (Validator.isNotNull(serializedDDMFormValues)) {
-			DDMForm ddmForm = getDDMForm();
-
-			try {
-				return DDMFormValuesJSONDeserializerUtil.deserialize(
-					ddmForm, serializedDDMFormValues);
-			}
-			catch (PortalException e) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
-				}
-			}
-		}
-
-		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(HTMLTag.class);

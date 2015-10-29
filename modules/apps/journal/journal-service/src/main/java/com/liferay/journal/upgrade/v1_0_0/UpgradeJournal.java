@@ -14,6 +14,12 @@
 
 package com.liferay.journal.upgrade.v1_0_0;
 
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -22,16 +28,17 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.model.Company;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.service.CompanyLocalService;
+import com.liferay.portal.service.GroupLocalService;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.DDMStructureManager;
 import com.liferay.portlet.dynamicdatamapping.DDMTemplateManager;
@@ -42,9 +49,7 @@ import com.liferay.util.xml.XMLUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Timestamp;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -55,10 +60,28 @@ import java.util.Map;
  */
 public class UpgradeJournal extends UpgradeBaseJournal {
 
+	public UpgradeJournal(
+		CompanyLocalService companyLocalService,
+		DDMStructureLocalService ddmStructureLocalService,
+		DDMTemplateLinkLocalService ddmTemplateLinkLocalService,
+		DDMTemplateLocalService ddmTemplateLocalService,
+		GroupLocalService groupLocalService,
+		UserLocalService userLocalService) {
+
+		_companyLocalService = companyLocalService;
+		_ddmStructureLocalService = ddmStructureLocalService;
+		_ddmTemplateLinkLocalService = ddmTemplateLinkLocalService;
+		_ddmTemplateLocalService = ddmTemplateLocalService;
+		_groupLocalService = groupLocalService;
+		_userLocalService = userLocalService;
+	}
+
 	protected String addBasicWebContentStructureAndTemplate(long companyId)
 		throws Exception {
 
-		long groupId = getCompanyGroupId(companyId);
+		Group group = _groupLocalService.getCompanyGroup(companyId);
+
+		long groupId = group.getGroupId();
 
 		String defaultLanguageId = UpgradeProcessUtil.getDefaultLanguageId(
 			companyId);
@@ -73,386 +96,108 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 
 		String description = structureElement.elementText("description");
 
-		String localizedName = localize(groupId, name, defaultLanguageId);
-		String localizedDescription = localize(
-			groupId, description, defaultLanguageId);
+		Map<Locale, String> nameMap = localize(groupId, name);
+		Map<Locale, String> descriptionMap = localize(groupId, description);
 
 		Element structureElementDefinitionElement = structureElement.element(
 			"definition");
 
 		String definition = structureElementDefinitionElement.getTextTrim();
 
-		Element structureElementLayoutElement = structureElement.element(
-			"layout");
+		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
+			groupId, PortalUtil.getClassNameId(JournalArticle.class.getName()),
+			name);
 
-		String layout = structureElementLayoutElement.getTextTrim();
-
-		if (hasDDMStructure(groupId, name) > 0) {
+		if (ddmStructure != null) {
 			return name;
 		}
 
-		String ddmStructureUUID = PortalUUIDUtil.generate();
+		try {
+			long ddmStructureId = addDDMStructure(
+				groupId, companyId, name, nameMap, descriptionMap, definition);
 
-		long ddmStructureId = addDDMStructure(
-			ddmStructureUUID, increment(), groupId, companyId, name,
-			localizedName, localizedDescription, definition, layout,
-			StorageEngineManager.STORAGE_TYPE_DEFAULT);
+			Element templateElement = structureElement.element("template");
 
-		String ddmTemplateUUID = PortalUUIDUtil.generate();
+			String fileName = templateElement.elementText("file-name");
 
-		Element templateElement = structureElement.element("template");
-
-		String fileName = templateElement.elementText("file-name");
-		boolean cacheable = GetterUtil.getBoolean(
-			templateElement.elementText("cacheable"));
-
-		addDDMTemplate(
-			ddmTemplateUUID, increment(), groupId, companyId, ddmStructureId,
-			name, localizedName, localizedDescription, getContent(fileName),
-			cacheable);
-
-		long stagingGroupId = getStagingGroupId(groupId);
-
-		if (stagingGroupId > 0) {
-			ddmStructureId = addDDMStructure(
-				ddmStructureUUID, increment(), stagingGroupId, companyId, name,
-				localizedName, localizedDescription, definition, layout,
-				StorageEngineManager.STORAGE_TYPE_DEFAULT);
+			boolean cacheable = GetterUtil.getBoolean(
+				templateElement.elementText("cacheable"));
 
 			addDDMTemplate(
-				ddmTemplateUUID, increment(), stagingGroupId, companyId,
-				ddmStructureId, name, localizedName, localizedDescription,
-				getContent(fileName), cacheable);
+				groupId, companyId, ddmStructureId, name, nameMap,
+				descriptionMap, getContent(fileName), cacheable);
+
+			if (group.hasStagingGroup()) {
+				Group stagingGroup = group.getStagingGroup();
+
+				ddmStructureId = addDDMStructure(
+					stagingGroup.getGroupId(), companyId, name, nameMap,
+					descriptionMap, definition);
+
+				addDDMTemplate(
+					stagingGroup.getGroupId(), companyId, ddmStructureId, name,
+					nameMap, descriptionMap, getContent(fileName), cacheable);
+			}
+		}
+		catch (Exception e) {
+			_log.error(
+				"Unable to create the basic web content structure and " +
+					"template");
 		}
 
 		return name;
 	}
 
 	protected long addDDMStructure(
-			String uuid, long ddmStructureId, long groupId, long companyId,
-			String ddmStructureKey, String localizedName,
-			String localizedDescription, String definition, String layout,
-			String storageType)
+			long groupId, long companyId, String ddmStructureKey,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			String definition)
 		throws Exception {
 
-		Timestamp now = new Timestamp(System.currentTimeMillis());
+		ServiceContext serviceContext = new ServiceContext();
 
-		Connection con = null;
-		PreparedStatement ps = null;
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
 
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
+		long userId = _userLocalService.getDefaultUserId(companyId);
 
-			StringBundler sb = new StringBundler(6);
+		DDMStructure ddmStructure = _ddmStructureLocalService.addStructure(
+			userId, groupId,
+			DDMStructureManager.STRUCTURE_DEFAULT_PARENT_STRUCTURE_ID,
+			PortalUtil.getClassNameId(JournalArticle.class.getName()),
+			ddmStructureKey, nameMap, descriptionMap, definition,
+			StorageEngineManager.STORAGE_TYPE_DEFAULT,
+			DDMStructureManager.STRUCTURE_TYPE_DEFAULT, serviceContext);
 
-			sb.append("insert into DDMStructure (uuid_, structureId, ");
-			sb.append("groupId, companyId, userId, userName, createDate, ");
-			sb.append("modifiedDate, parentStructureId, classNameId, ");
-			sb.append("structureKey, version, name, description, definition, ");
-			sb.append("storageType, type_) values (?, ?, ?, ?, ?, ?, ?, ?, ");
-			sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?)");
-
-			String sql = sb.toString();
-
-			ps = con.prepareStatement(sql);
-
-			ps.setString(1, uuid);
-			ps.setLong(2, ddmStructureId);
-			ps.setLong(3, groupId);
-			ps.setLong(4, companyId);
-			ps.setLong(5, getDefaultUserId(companyId));
-			ps.setString(6, StringPool.BLANK);
-			ps.setTimestamp(7, now);
-			ps.setTimestamp(8, now);
-			ps.setLong(
-				9, DDMStructureManager.STRUCTURE_DEFAULT_PARENT_STRUCTURE_ID);
-			ps.setLong(
-				10,
-				PortalUtil.getClassNameId(
-					"com.liferay.portlet.journal.model.JournalArticle"));
-			ps.setString(11, ddmStructureKey);
-			ps.setString(12, DDMStructureManager.STRUCTURE_VERSION_DEFAULT);
-			ps.setString(13, localizedName);
-			ps.setString(14, localizedDescription);
-			ps.setString(15, definition);
-			ps.setString(16, storageType);
-			ps.setInt(17, DDMStructureManager.STRUCTURE_TYPE_DEFAULT);
-
-			ps.executeUpdate();
-
-			long ddmStructureVersionId = increment();
-
-			addDDMStructureVersion(
-				ddmStructureVersionId, groupId, companyId,
-				getDefaultUserId(companyId), StringPool.BLANK, now,
-				ddmStructureId,
-				DDMStructureManager.STRUCTURE_DEFAULT_PARENT_STRUCTURE_ID,
-				localizedName, localizedDescription, definition, storageType,
-				DDMStructureManager.STRUCTURE_TYPE_DEFAULT,
-				WorkflowConstants.STATUS_APPROVED, getDefaultUserId(companyId),
-				StringPool.BLANK, now);
-
-			addDDMStructureLayout(
-				PortalUUIDUtil.generate(), increment(), groupId, companyId,
-				getDefaultUserId(companyId), StringPool.BLANK, now, now,
-				ddmStructureVersionId, layout);
-
-			Map<String, Long> bitwiseValues = getBitwiseValues(
-				_CLASS_NAME_DDM_STRUCTURE);
-
-			List<String> actionIds = new ArrayList<>();
-
-			actionIds.add(ActionKeys.VIEW);
-
-			long bitwiseValue = getBitwiseValue(bitwiseValues, actionIds);
-
-			addResourcePermission(
-				companyId, _CLASS_NAME_DDM_STRUCTURE, ddmStructureId,
-				getRoleId(companyId, RoleConstants.GUEST), bitwiseValue);
-			addResourcePermission(
-				companyId, _CLASS_NAME_DDM_STRUCTURE, ddmStructureId,
-				getRoleId(companyId, RoleConstants.SITE_MEMBER), bitwiseValue);
-		}
-		catch (Exception e) {
-			_log.error("Unable to create the basic web content structure");
-
-			throw e;
-		}
-		finally {
-			DataAccess.cleanUp(con, ps);
-		}
-
-		return ddmStructureId;
-	}
-
-	protected void addDDMStructureLayout(
-			String uuid_, long structureLayoutId, long groupId, long companyId,
-			long userId, String userName, Timestamp createDate,
-			Timestamp modifiedDate, long structureVersionId, String definition)
-		throws Exception {
-
-		Connection con = null;
-		PreparedStatement ps = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("insert into DDMStructureLayout (uuid_, ");
-			sb.append("structureLayoutId, groupId, companyId, userId, ");
-			sb.append("userName, createDate, modifiedDate, ");
-			sb.append("structureVersionId, definition) values (?, ?, ?, ?, ");
-			sb.append("?, ?, ?, ?, ?, ?)");
-
-			String sql = sb.toString();
-
-			ps = con.prepareStatement(sql);
-
-			ps.setString(1, uuid_);
-			ps.setLong(2, structureLayoutId);
-			ps.setLong(3, groupId);
-			ps.setLong(4, companyId);
-			ps.setLong(5, userId);
-			ps.setString(6, userName);
-			ps.setTimestamp(7, createDate);
-			ps.setTimestamp(8, modifiedDate);
-			ps.setLong(9, structureVersionId);
-			ps.setString(10, definition);
-
-			ps.executeUpdate();
-		}
-		catch (Exception e) {
-			_log.error(
-				"Unable to upgrade dynamic data mapping structure layout " +
-					"with structure version ID " + structureVersionId);
-
-			throw e;
-		}
-		finally {
-			DataAccess.cleanUp(con, ps);
-		}
-	}
-
-	protected void addDDMStructureVersion(
-			long structureVersionId, long groupId, long companyId, long userId,
-			String userName, Timestamp createDate, long structureId,
-			long parentStructureId, String name, String description,
-			String definition, String storageType, int type, int status,
-			long statusByUserId, String statusByUserName, Timestamp statusDate)
-		throws Exception {
-
-		Connection con = null;
-		PreparedStatement ps = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			StringBundler sb = new StringBundler(6);
-
-			sb.append("insert into DDMStructureVersion (structureVersionId, ");
-			sb.append("groupId, companyId, userId, userName, createDate, ");
-			sb.append("structureId, version, parentStructureId, name, ");
-			sb.append("description, definition, storageType, type_, status, ");
-			sb.append("statusByUserId, statusByUserName, statusDate) values ");
-			sb.append("(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-
-			String sql = sb.toString();
-
-			ps = con.prepareStatement(sql);
-
-			ps.setLong(1, structureVersionId);
-			ps.setLong(2, groupId);
-			ps.setLong(3, companyId);
-			ps.setLong(4, userId);
-			ps.setString(5, userName);
-			ps.setTimestamp(6, createDate);
-			ps.setLong(7, structureId);
-			ps.setString(8, DDMStructureManager.STRUCTURE_VERSION_DEFAULT);
-			ps.setLong(9, parentStructureId);
-			ps.setString(10, name);
-			ps.setString(11, description);
-			ps.setString(12, definition);
-			ps.setString(13, storageType);
-			ps.setInt(14, type);
-			ps.setInt(15, status);
-			ps.setLong(16, statusByUserId);
-			ps.setString(17, statusByUserName);
-			ps.setTimestamp(18, statusDate);
-
-			ps.executeUpdate();
-		}
-		catch (Exception e) {
-			_log.error(
-				"Unable to upgrade dynamic data mapping structure version " +
-					"with structure ID " + structureId);
-
-			throw e;
-		}
-		finally {
-			DataAccess.cleanUp(con, ps);
-		}
+		return ddmStructure.getStructureId();
 	}
 
 	protected long addDDMTemplate(
-			String uuid, long ddmTemplateId, long groupId, long companyId,
-			long ddmStructureId, String templateKey, String localizedName,
-			String localizedDescription, String script, boolean cacheable)
+			long groupId, long companyId, long ddmStructureId,
+			String templateKey, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, String script,
+			boolean cacheable)
 		throws Exception {
 
-		Timestamp now = new Timestamp(System.currentTimeMillis());
+		ServiceContext serviceContext = new ServiceContext();
 
-		Connection con = null;
-		PreparedStatement ps = null;
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
 
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
+		long userId = _userLocalService.getDefaultUserId(companyId);
 
-			StringBundler sb = new StringBundler(7);
+		DDMTemplate ddmTemplate = _ddmTemplateLocalService.addTemplate(
+			userId, groupId,
+			PortalUtil.getClassNameId(_CLASS_NAME_DDM_STRUCTURE),
+			ddmStructureId,
+			PortalUtil.getClassNameId(JournalArticle.class.getName()),
+			templateKey, nameMap, descriptionMap,
+			DDMTemplateManager.TEMPLATE_TYPE_DISPLAY,
+			DDMTemplateManager.TEMPLATE_MODE_CREATE,
+			TemplateConstants.LANG_TYPE_FTL, script, cacheable, false, null,
+			null, serviceContext);
 
-			sb.append("insert into DDMTemplate (uuid_, templateId, groupId, ");
-			sb.append("companyId, userId, userName, createDate, modifiedDate,");
-			sb.append("classNameId, classPK, templateKey, version, name, ");
-			sb.append("description, type_, mode_, language, script, ");
-			sb.append("cacheable, smallImage, smallImageId, smallImageURL) ");
-			sb.append("values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
-			sb.append("?, ?, ?, ?, ?, ?, ?)");
-
-			String sql = sb.toString();
-
-			ps = con.prepareStatement(sql);
-
-			ps.setString(1, uuid);
-			ps.setLong(2, ddmTemplateId);
-			ps.setLong(3, groupId);
-			ps.setLong(4, companyId);
-			ps.setLong(5, getDefaultUserId(companyId));
-			ps.setString(6, StringPool.BLANK);
-			ps.setTimestamp(7, now);
-			ps.setTimestamp(8, now);
-			ps.setLong(9, PortalUtil.getClassNameId(_CLASS_NAME_DDM_STRUCTURE));
-			ps.setLong(10, ddmStructureId);
-			ps.setString(11, templateKey);
-			ps.setString(12, DDMTemplateManager.TEMPLATE_VERSION_DEFAULT);
-			ps.setString(13, localizedName);
-			ps.setString(14, localizedDescription);
-			ps.setString(15, DDMTemplateManager.TEMPLATE_TYPE_DISPLAY);
-			ps.setString(16, DDMTemplateManager.TEMPLATE_MODE_CREATE);
-			ps.setString(17, TemplateConstants.LANG_TYPE_FTL);
-			ps.setString(18, script);
-			ps.setBoolean(19, cacheable);
-			ps.setBoolean(20, false);
-			ps.setLong(21, 0);
-			ps.setString(22, StringPool.BLANK);
-
-			ps.executeUpdate();
-
-			addDDMTemplateVersion(
-				increment(), groupId, companyId, getDefaultUserId(companyId),
-				StringPool.BLANK, now,
-				PortalUtil.getClassNameId(_CLASS_NAME_DDM_STRUCTURE),
-				ddmStructureId, ddmTemplateId, localizedName,
-				localizedDescription, TemplateConstants.LANG_TYPE_FTL, script,
-				WorkflowConstants.STATUS_APPROVED, getDefaultUserId(companyId),
-				StringPool.BLANK, now);
-
-			Map<String, Long> bitwiseValues = getBitwiseValues(
-				_CLASS_NAME_DDM_TEMPLATE);
-
-			List<String> actionIds = new ArrayList<>();
-
-			actionIds.add(ActionKeys.VIEW);
-
-			long bitwiseValue = getBitwiseValue(bitwiseValues, actionIds);
-
-			addResourcePermission(
-				companyId, _CLASS_NAME_DDM_TEMPLATE, ddmTemplateId,
-				getRoleId(companyId, RoleConstants.GUEST), bitwiseValue);
-			addResourcePermission(
-				companyId, _CLASS_NAME_DDM_TEMPLATE, ddmTemplateId,
-				getRoleId(companyId, RoleConstants.SITE_MEMBER), bitwiseValue);
-		}
-		catch (Exception e) {
-			_log.error("Unable to create the basic web content template");
-
-			throw e;
-		}
-		finally {
-			DataAccess.cleanUp(con, ps);
-		}
-
-		return ddmTemplateId;
-	}
-
-	protected void addDDMTemplateLink(
-			long classNameId, long classPK, long templateId)
-		throws Exception {
-
-		Connection con = null;
-		PreparedStatement ps = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"insert into DDMTemplateLink (templateLinkId, classNameId, " +
-					"classPK, templateId) values (?, ?, ?, ?)");
-
-			ps.setLong(1, increment());
-			ps.setLong(2, classNameId);
-			ps.setLong(3, classPK);
-			ps.setLong(4, templateId);
-
-			ps.executeUpdate();
-		}
-		catch (Exception e) {
-			_log.error("Unable to create template link for journal article");
-
-			throw e;
-		}
-		finally {
-			DataAccess.cleanUp(con, ps);
-		}
+		return ddmTemplate.getTemplateId();
 	}
 
 	protected void addDDMTemplateLinks() throws Exception {
@@ -484,71 +229,12 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 				long templateId = rs.getLong("templateId");
 				long id_ = rs.getLong("id_");
 
-				addDDMTemplateLink(classNameId, id_, templateId);
+				_ddmTemplateLinkLocalService.addTemplateLink(
+					classNameId, id_, templateId);
 			}
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
-		}
-	}
-
-	protected void addDDMTemplateVersion(
-			long templateVersionId, long groupId, long companyId, long userId,
-			String userName, Timestamp createDate, long classNameId,
-			long classPK, long templateId, String name, String description,
-			String language, String script, int status, long statusByUserId,
-			String statusByUserName, Timestamp statusDate)
-		throws Exception {
-
-		Connection con = null;
-		PreparedStatement ps = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("insert into DDMTemplateVersion (templateVersionId, ");
-			sb.append("groupId, companyId, userId, userName, createDate, ");
-			sb.append("classNameId, classPK, templateId, version, name, ");
-			sb.append("description, language, script, status, ");
-			sb.append("statusByUserId, statusByUserName, statusDate) values (");
-			sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-
-			String sql = sb.toString();
-
-			ps = con.prepareStatement(sql);
-
-			ps.setLong(1, templateVersionId);
-			ps.setLong(2, groupId);
-			ps.setLong(3, companyId);
-			ps.setLong(4, userId);
-			ps.setString(5, userName);
-			ps.setTimestamp(6, createDate);
-			ps.setLong(7, classNameId);
-			ps.setLong(8, classPK);
-			ps.setLong(9, templateId);
-			ps.setString(10, DDMStructureManager.STRUCTURE_VERSION_DEFAULT);
-			ps.setString(11, name);
-			ps.setString(12, description);
-			ps.setString(13, language);
-			ps.setString(14, script);
-			ps.setInt(15, status);
-			ps.setLong(16, statusByUserId);
-			ps.setString(17, statusByUserName);
-			ps.setTimestamp(18, statusDate);
-
-			ps.executeUpdate();
-		}
-		catch (Exception e) {
-			_log.error(
-				"Unable to upgrade dynamic data mapping template version " +
-					"with template ID " + templateId);
-
-			throw e;
-		}
-		finally {
-			DataAccess.cleanUp(con, ps);
 		}
 	}
 
@@ -631,88 +317,11 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 		return rootElement.elements("structure");
 	}
 
-	protected long getStagingGroupId(long groupId) throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"select groupId from Group_ where liveGroupId = ?");
-
-			ps.setLong(1, groupId);
-
-			rs = ps.executeQuery();
-
-			if (rs.next()) {
-				return rs.getLong("groupId");
-			}
-
-			return 0;
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
-	}
-
-	protected int hasDDMStructure(long groupId, String ddmStructureKey)
-		throws Exception {
-
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"select count(*) from DDMStructure where groupId = ? and " +
-					"classNameId = ? and structureKey = ?");
-
-			ps.setLong(1, groupId);
-			ps.setLong(
-				2,
-				PortalUtil.getClassNameId(
-					"com.liferay.portlet.journal.model.JournalArticle"));
-			ps.setString(3, ddmStructureKey);
-
-			rs = ps.executeQuery();
-
-			if (rs.next()) {
-				int count = rs.getInt(1);
-
-				return count;
-			}
-
-			return 0;
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
-	}
-
 	protected void updateBasicWebContentStructure() throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		List<Company> companies = _companyLocalService.getCompanies();
 
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement("select companyId from Company");
-
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				long companyId = rs.getLong("companyId");
-
-				updateJournalArticles(companyId);
-			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
+		for (Company company : companies) {
+			updateJournalArticles(company.getCompanyId());
 		}
 	}
 
@@ -775,9 +384,13 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 	private static final String _CLASS_NAME_DDM_STRUCTURE =
 		"com.liferay.dynamic.data.mapping.model.DDMStructure";
 
-	private static final String _CLASS_NAME_DDM_TEMPLATE =
-		"com.liferay.dynamic.data.mapping.model.DDMTemplate";
-
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeJournal.class);
+
+	private final CompanyLocalService _companyLocalService;
+	private final DDMStructureLocalService _ddmStructureLocalService;
+	private final DDMTemplateLinkLocalService _ddmTemplateLinkLocalService;
+	private final DDMTemplateLocalService _ddmTemplateLocalService;
+	private final GroupLocalService _groupLocalService;
+	private final UserLocalService _userLocalService;
 
 }

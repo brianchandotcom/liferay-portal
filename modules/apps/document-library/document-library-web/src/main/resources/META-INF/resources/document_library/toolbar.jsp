@@ -94,17 +94,6 @@ int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repos
 
 			<aui:nav-item cssClass="item-remove" href="<%= taglibURL %>" iconCssClass="icon-remove" id="deleteAction" label="delete" />
 		</aui:nav-item>
-
-		<c:if test="<%= !user.isDefaultUser() %>">
-			<aui:nav-item dropdown="<%= true %>" label="manage">
-
-				<%
-				String taglibURL = "javascript:" + renderResponse.getNamespace() + "openFileEntryTypeView()";
-				%>
-
-				<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-file" label="document-types" />
-			</aui:nav-item>
-		</c:if>
 	</aui:nav>
 </aui:nav-bar>
 
@@ -118,25 +107,5 @@ int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repos
 				}
 			);
 		}
-	}
-
-	function <portlet:namespace />openFileEntryTypeView() {
-		Liferay.Util.openWindow(
-			{
-				dialog: {
-					destroyOnHide: true,
-					on: {
-						visibleChange: function(event) {
-							if (!event.newVal) {
-								Liferay.Portlet.refresh('#p_p_id_<%= portletDisplay.getId() %>_');
-							}
-						}
-					}
-				},
-				id: '<portlet:namespace />openFileEntryTypeView',
-				title: '<%= UnicodeLanguageUtil.get(request, "document-types") %>',
-				uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/document_library/view_file_entry_type.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></liferay-portlet:renderURL>'
-			}
-		);
 	}
 </aui:script>

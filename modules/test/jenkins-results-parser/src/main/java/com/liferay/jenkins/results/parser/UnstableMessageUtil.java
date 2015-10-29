@@ -81,8 +81,7 @@ public class UnstableMessageUtil {
 						JenkinsResultsParserUtil.getLocalURL(
 							runBuildURL + "api/json"));
 
-				String result = runBuildURLJSONObject.getString(
-					"result");
+				String result = runBuildURLJSONObject.getString("result");
 
 				if (!result.equals("SUCCESS")) {
 					runBuildURLs.add(runBuildURL);
@@ -106,11 +105,11 @@ public class UnstableMessageUtil {
 
 		return sb.toString();
 	}
-	
+
 	private static int _getUnstableMessage(
 			StringBuilder sb, List<String> runBuildURLs)
 		throws Exception {
-		
+
 		int failureCount = 0;
 
 		for (String runBuildURL : runBuildURLs) {
@@ -135,7 +134,7 @@ public class UnstableMessageUtil {
 
 					if (status.equals("FIXED") || status.equals("PASSED") ||
 						status.equals("SKIPPED")) {
-						
+
 						continue;
 					}
 
@@ -150,7 +149,7 @@ public class UnstableMessageUtil {
 					sb.append("<li><a href=\\\"");
 
 					String runBuildHREF = runBuildURL;
-					
+
 					runBuildHREF = runBuildHREF.replace("[", "_");
 					runBuildHREF = runBuildHREF.replace("]", "_");
 					runBuildHREF = runBuildHREF.replace("#", "_");
@@ -170,15 +169,13 @@ public class UnstableMessageUtil {
 
 					sb.append("/");
 
-					String testSimpleClassName = testClassName.substring(
-						x + 1);
+					String testSimpleClassName = testClassName.substring(x + 1);
 
 					sb.append(testSimpleClassName);
 
 					sb.append("/");
 
-					String testMethodName = caseJSONObject.getString(
-						"name");
+					String testMethodName = caseJSONObject.getString("name");
 
 					String testMethodNameURL = testMethodName;
 
@@ -202,9 +199,8 @@ public class UnstableMessageUtil {
 							JenkinsResultsParserUtil.getLocalURL(
 								runBuildURL + "api/json"));
 
-					String jobVariant =
-						JenkinsResultsParserUtil.getJobVariant(
-							runBuildURLJSONObject);
+					String jobVariant = JenkinsResultsParserUtil.getJobVariant(
+						runBuildURLJSONObject);
 
 					if (jobVariant.contains("functional") &&
 						testClassName.contains("EvaluateLogTest")) {

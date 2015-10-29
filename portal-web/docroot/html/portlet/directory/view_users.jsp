@@ -118,7 +118,10 @@ if (Validator.isNotNull(viewUsersRedirect)) {
 	}
 	%>
 
-	<liferay-ui:user-search-container-results userParams="<%= userParams %>" />
+	<liferay-ui:user-search-container-results
+		indexerDisabled="<%= !portletName.equals(PortletKeys.DIRECTORY) %>"
+		userParams="<%= userParams %>"
+	/>
 
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.model.User"

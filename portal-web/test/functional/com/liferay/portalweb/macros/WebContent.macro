@@ -305,7 +305,7 @@
 		<if>
 			<isset var="localizedTextBox" />
 			<then>
-				<var name="key_fieldName" value="Text_Box" />
+				<var name="key_fieldName" value="TextBox" />
 
 				<execute function="Type" locator1="CPWebcontentEditwebcontent#TEXT_BOX_FIELD" value1="${localizedTextBox}" />
 			</then>
@@ -578,7 +578,7 @@
 		<if>
 			<isset var="webContentTextBox" />
 			<then>
-				<var name="key_fieldName" value="Text_Box" />
+				<var name="key_fieldName" value="TextBox" />
 
 				<execute function="Type" locator1="DDMField#TEXT_BOX" value1="${webContentTextBox}" />
 			</then>
@@ -1561,7 +1561,7 @@
 
 		<execute function="AssertTextEquals" locator1="CPWebcontentEditwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
 
-		<var name="key_fieldName" value="Text_Box" />
+		<var name="key_fieldName" value="TextBox" />
 
 		<execute function="AssertTextEquals" locator1="CPWebcontentEditwebcontent#TEXT_BOX_FIELD" value1="${localizedTextBox}" />
 
@@ -1575,7 +1575,7 @@
 
 		<execute function="AssertTextEquals" locator1="CPWebcontentEditwebcontent#TEXT_FIELD" value1="${localizedText}" />
 
-		<var name="key_fieldName" value="Text_Box" />
+		<var name="key_fieldName" value="TextBox" />
 
 		<execute function="AssertTextEquals" locator1="CPWebcontentEditwebcontent#TEXT_BOX_FIELD" value1="${localizedTextBox}" />
 	</command>

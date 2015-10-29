@@ -36,12 +36,19 @@ public class PortletConfigurationIconTracker {
 		getPortletConfigurationIcons(String portletId) {
 
 		List<PortletConfigurationIconFactory>
-			portletConfigurationIconFactories =
-				_portletConfigurationIconFactoriesMap.get(StringPool.STAR);
+			portletConfigurationIconFactories = new ArrayList<>();
 
 		List<PortletConfigurationIconFactory>
 			portletPortletConfigurationIconFactories =
-				_portletConfigurationIconFactoriesMap.get(portletId);
+				_portletConfigurationIconFactoriesMap.get(StringPool.STAR);
+
+		if (portletPortletConfigurationIconFactories != null) {
+			portletConfigurationIconFactories.addAll(
+				portletPortletConfigurationIconFactories);
+		}
+
+		portletPortletConfigurationIconFactories =
+			_portletConfigurationIconFactoriesMap.get(portletId);
 
 		if (portletPortletConfigurationIconFactories != null) {
 			portletConfigurationIconFactories.addAll(

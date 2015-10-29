@@ -16,15 +16,15 @@
 
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %>
+<%@ taglib prefix="liferay-ui" uri="http://liferay.com/tld/ui" %>
 
 <liferay-theme:defineObjects />
 
 <div class="product-menu-tab-icon user-tab">
 	<div class="icon-monospaced">
-		<div class="user-icon">
-			<img alt="<%= HtmlUtil.escapeAttribute(user.getFullName()) %>" src="<%= HtmlUtil.escape(user.getPortraitURL(themeDisplay)) %>" />
-		</div>
+		<liferay-ui:user-portrait
+			userId="<%= user.getUserId() %>"
+		/>
 	</div>
 </div>
 

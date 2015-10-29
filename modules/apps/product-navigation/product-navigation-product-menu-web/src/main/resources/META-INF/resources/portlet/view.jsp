@@ -75,9 +75,9 @@
 	<div class="sidebar-footer">
 		<div class="nameplate">
 			<div class="nameplate-field">
-				<div class="user-icon user-icon-lg">
-					<img alt="<%= HtmlUtil.escapeAttribute(user.getFullName()) %>" src="<%= HtmlUtil.escape(user.getPortraitURL(themeDisplay)) %>" />
-				</div>
+				<liferay-ui:user-portrait
+					userId="<%= user.getUserId() %>"
+				/>
 			</div>
 
 			<div class="nameplate-content">

@@ -60,22 +60,22 @@ public class UserPortraitTag extends IncludeTag {
 		_userName = StringPool.BLANK;
 	}
 
-	@Override
-	protected String getPage() {
-		return _PAGE;
-	}
-
 	protected String getColorCssClass() {
 		String colorCssClass = "user-icon-defaul";
 
 		User user = getUser();
 
 		if (user != null) {
-			colorCssClass = "user-icon-color-" +
-				(Math.abs(user.getUserId()) % 10);
+			colorCssClass =
+				"user-icon-color-" + (Math.abs(user.getUserId()) % 10);
 		}
 
 		return colorCssClass;
+	}
+
+	@Override
+	protected String getPage() {
+		return _PAGE;
 	}
 
 	protected User getUser() {

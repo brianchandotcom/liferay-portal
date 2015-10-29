@@ -12,27 +12,30 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.runtime.action;
+package com.liferay.portal.workflow.kaleo.action.executor.script;
 
-import com.liferay.portal.kernel.bi.rules.Fact;
-import com.liferay.portal.kernel.bi.rules.Query;
-import com.liferay.portal.kernel.bi.rules.RulesEngineUtil;
-import com.liferay.portal.kernel.bi.rules.RulesResourceRetriever;
-import com.liferay.portal.kernel.resource.StringResourceRetriever;
+import com.liferay.portal.kernel.scripting.ScriptingUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoAction;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
-import com.liferay.portal.workflow.kaleo.runtime.util.RulesContextBuilder;
+import com.liferay.portal.workflow.kaleo.runtime.action.ActionExecutor;
+import com.liferay.portal.workflow.kaleo.runtime.action.ActionExecutorException;
+import com.liferay.portal.workflow.kaleo.runtime.util.ScriptingContextBuilderUtil;
 import com.liferay.portal.workflow.kaleo.util.WorkflowContextUtil;
 
 import java.io.Serializable;
 
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Michael C. Han
  */
-public class DRLActionExecutor implements ActionExecutor {
+public class ScriptActionExecutor implements ActionExecutor {
+
+	public ScriptActionExecutor() {
+		_outputObjects.add(WorkflowContextUtil.WORKFLOW_CONTEXT_NAME);
+	}
 
 	@Override
 	public void execute(
@@ -48,21 +51,21 @@ public class DRLActionExecutor implements ActionExecutor {
 		}
 	}
 
+	public void setOutputObjects(Set<String> outputObjects) {
+		_outputObjects.addAll(outputObjects);
+	}
+
 	protected void doExecute(
 			KaleoAction kaleoAction, ExecutionContext executionContext,
 			ClassLoader... classLoaders)
 		throws Exception {
 
-		List<Fact<?>> facts = RulesContextBuilder.buildRulesContext(
-			executionContext);
+		Map<String, Object> inputObjects =
+			ScriptingContextBuilderUtil.buildScriptingContext(executionContext);
 
-		RulesResourceRetriever rulesResourceRetriever =
-			new RulesResourceRetriever(
-				new StringResourceRetriever(kaleoAction.getScript()));
-
-		Map<String, ?> results = RulesEngineUtil.execute(
-			rulesResourceRetriever, facts, Query.createStandardQuery(),
-			classLoaders);
+		Map<String, Object> results = ScriptingUtil.eval(
+			null, inputObjects, _outputObjects, kaleoAction.getScriptLanguage(),
+			kaleoAction.getScript(), classLoaders);
 
 		Map<String, Serializable> resultsWorkflowContext =
 			(Map<String, Serializable>)results.get(
@@ -71,5 +74,7 @@ public class DRLActionExecutor implements ActionExecutor {
 		WorkflowContextUtil.mergeWorkflowContexts(
 			executionContext, resultsWorkflowContext);
 	}
+
+	private final Set<String> _outputObjects = new HashSet<>();
 
 }

@@ -14,11 +14,13 @@
 
 package com.liferay.dynamic.data.mapping.taglib.servlet.taglib;
 
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializerUtil;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.taglib.servlet.ServletContextUtil;
 import com.liferay.dynamic.data.mapping.taglib.servlet.taglib.base.BaseHTMLTag;
@@ -28,6 +30,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -138,6 +142,27 @@ public class HTMLTag extends BaseHTMLTag {
 		setNamespacedAttribute(request, "mode", getMode());
 		setNamespacedAttribute(
 			request, "randomNamespace", getRandomNamespace());
+	}
+
+	private DDMFormValues getDDMFormValuesFromRequest() {
+		String serializedDDMFormValues = ParamUtil.getString(
+			request, getDDMFormValuesInputName());
+
+		if (Validator.isNotNull(serializedDDMFormValues)) {
+			DDMForm ddmForm = getDDMForm();
+
+			try {
+				return DDMFormValuesJSONDeserializerUtil.deserialize(
+					ddmForm, serializedDDMFormValues);
+			}
+			catch (PortalException e) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(e, e);
+				}
+			}
+		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(HTMLTag.class);

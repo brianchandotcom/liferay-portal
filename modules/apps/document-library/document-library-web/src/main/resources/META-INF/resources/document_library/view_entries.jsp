@@ -175,6 +175,19 @@ else {
 }
 
 dlSearchContainer.setResults(results);
+
+if ((folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (folderId != rootFolderId)) {
+	String redirect = ParamUtil.getString(request, "redirect");
+
+	if (Validator.isNotNull(redirect)) {
+		portletDisplay.setShowBackIcon(true);
+		portletDisplay.setURLBack(redirect);
+	}
+
+	Folder folder = DLAppServiceUtil.getFolder(folderId);
+
+	renderResponse.setTitle(folder.getName());
+}
 %>
 
 <c:if test="<%= results.isEmpty() %>">

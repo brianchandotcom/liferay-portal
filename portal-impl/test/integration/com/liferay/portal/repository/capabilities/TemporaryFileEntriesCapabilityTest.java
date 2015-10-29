@@ -94,15 +94,6 @@ public class TemporaryFileEntriesCapabilityTest {
 		Assert.assertEquals(foldersAndFileEntriesAndFileShortcutsCount, 0);
 	}
 
-	protected InputStream getInputStream() {
-		Class<?> clazz = getClass();
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		return classLoader.getResourceAsStream(
-			"com/liferay/portal/util/dependencies/test.jpg");
-	}
-
 	protected int getFoldersAndFileEntriesAndFileShortcutsCount(
 			LocalRepository localRepository)
 		throws Exception {
@@ -118,6 +109,15 @@ public class TemporaryFileEntriesCapabilityTest {
 				WorkflowConstants.STATUS_ANY);
 
 		return foldersAndFileEntriesAndFileShortcutsCount;
+	}
+
+	protected InputStream getInputStream() {
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		return classLoader.getResourceAsStream(
+			"com/liferay/portal/util/dependencies/test.jpg");
 	}
 
 	@DeleteAfterTestRun

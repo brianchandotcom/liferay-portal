@@ -174,8 +174,6 @@ eclipseProject {
 
 idea {
 	module {
-		scopes.TEST.plus += [configurations.testIntegrationRuntime]
-
         iml {
             withXml {
                 provider ->
@@ -203,6 +201,8 @@ idea {
         }
 
 		excludeDirs += file('classes')
+
+		scopes.TEST.plus += [configurations.testIntegrationRuntime]
 	}
 }
 

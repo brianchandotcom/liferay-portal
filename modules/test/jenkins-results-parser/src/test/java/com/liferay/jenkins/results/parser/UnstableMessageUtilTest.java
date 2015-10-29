@@ -185,7 +185,7 @@ public class UnstableMessageUtilTest {
 			runJSONObject.put("url", _toURLString(runDir));
 		}
 
-		_write(jobJSONFile, jobJSONObject);
+		_write(jobJSONFile, jobJSONObject.toString(4));
 	}
 
 	private static void _downloadSampleURL(File dir, URL url, String urlSuffix)
@@ -236,12 +236,6 @@ public class UnstableMessageUtilTest {
 
 		return urlString.replace(
 			System.getProperty("user.dir"),  "${user.dir}");
-	}
-
-	private static void _write(File file, JSONObject jsonObject)
-		throws Exception {
-
-		_write(file, jsonObject.toString(4));
 	}
 
 	private static void _write(File file, String content) throws Exception {

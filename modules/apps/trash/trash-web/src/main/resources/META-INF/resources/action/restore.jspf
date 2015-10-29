@@ -30,7 +30,6 @@ TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(entry.getCl
 		%>
 
 		<liferay-ui:icon
-			iconCssClass="icon-undo"
 			message="restore"
 			onClick="<%= taglibOnClick %>"
 			url="javascript:;"
@@ -49,7 +48,6 @@ TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(entry.getCl
 		%>
 
 		<liferay-ui:icon
-			iconCssClass="icon-undo"
 			message="restore"
 			onClick="<%= taglibOnClick %>"
 			url="javascript:;"

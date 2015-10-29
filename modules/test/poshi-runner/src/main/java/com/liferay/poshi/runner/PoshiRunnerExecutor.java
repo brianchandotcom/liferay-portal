@@ -777,11 +777,18 @@ public class PoshiRunnerExecutor {
 
 				locator = PoshiRunnerVariablesUtil.replaceCommandVars(locator);
 
-				if (locator.contains("/input")) {
-					varValue = liferaySelenium.getElementValue(locator);
+				try {
+					if (locator.contains("/input")) {
+						varValue = liferaySelenium.getElementValue(locator);
+					}
+					else {
+						varValue = liferaySelenium.getElementText(locator);
+					}
 				}
-				else {
-					varValue = liferaySelenium.getElementText(locator);
+				catch (Exception e) {
+					XMLLoggerHandler.updateStatus(element, "fail");
+
+					throw e;
 				}
 			}
 			else if (element.attributeValue("method") != null) {
@@ -794,8 +801,17 @@ public class PoshiRunnerExecutor {
 						"TestPropsUtil", "PropsUtil");
 				}
 
-				varValue = PoshiRunnerGetterUtil.getVarMethodValue(
-					classCommandName);
+				try {
+					varValue = PoshiRunnerGetterUtil.getVarMethodValue(
+						classCommandName);
+				}
+				catch (Exception e) {
+					XMLLoggerHandler.updateStatus(element, "fail");
+
+					Throwable throwable = e.getCause();
+
+					throw new Exception(throwable.getMessage(), e);
+				}
 			}
 			else if (element.attributeValue("property-value") != null) {
 				varValue = PropsUtil.get(

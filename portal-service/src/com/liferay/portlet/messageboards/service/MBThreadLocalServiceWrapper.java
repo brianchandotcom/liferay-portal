@@ -244,16 +244,6 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService,
 		return _mbThreadLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _mbThreadLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public int getCategoryThreadsCount(long groupId, long categoryId, int status) {
 		return _mbThreadLocalService.getCategoryThreadsCount(groupId,
@@ -515,6 +505,16 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService,
 		return _mbThreadLocalService.getNoAssetThreads();
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _mbThreadLocalService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
@@ -650,16 +650,6 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbThreadLocalService.search(groupId, userId, creatorUserId,
 			status, start, end);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_mbThreadLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

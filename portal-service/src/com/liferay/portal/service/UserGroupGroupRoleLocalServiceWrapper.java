@@ -251,13 +251,13 @@ public class UserGroupGroupRoleLocalServiceWrapper
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the OSGi service identifier.
 	*
-	* @return the Spring bean ID for this bean
+	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _userGroupGroupRoleLocalService.getBeanIdentifier();
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _userGroupGroupRoleLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -347,16 +347,6 @@ public class UserGroupGroupRoleLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userGroupGroupRoleLocalService.hasUserGroupGroupRole(userGroupId,
 			groupId, roleName);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_userGroupGroupRoleLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

@@ -184,16 +184,16 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.shopping.model.ShoppingOrder getLatestOrder(
 		long userId, long groupId) throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.shopping.model.ShoppingOrder getOrder(
@@ -275,13 +275,6 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 	public void sendEmail(long orderId, java.lang.String emailType,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public com.liferay.shopping.model.ShoppingOrder updateLatestOrder(
 		long userId, long groupId, java.lang.String billingFirstName,

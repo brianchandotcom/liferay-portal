@@ -191,20 +191,20 @@ public class ShoppingItemFieldLocalServiceWrapper
 		return _shoppingItemFieldLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _shoppingItemFieldLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public java.util.List<com.liferay.shopping.model.ShoppingItemField> getItemFields(
 		long itemId) {
 		return _shoppingItemFieldLocalService.getItemFields(itemId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _shoppingItemFieldLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -253,16 +253,6 @@ public class ShoppingItemFieldLocalServiceWrapper
 	@Override
 	public int getShoppingItemFieldsCount() {
 		return _shoppingItemFieldLocalService.getShoppingItemFieldsCount();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_shoppingItemFieldLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

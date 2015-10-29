@@ -34,21 +34,21 @@ public class DDMStructureVersionServiceWrapper
 		_ddmStructureVersionService = ddmStructureVersionService;
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _ddmStructureVersionService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion getLatestStructureVersion(
 		long structureId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmStructureVersionService.getLatestStructureVersion(structureId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _ddmStructureVersionService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -71,16 +71,6 @@ public class DDMStructureVersionServiceWrapper
 	public int getStructureVersionsCount(long structureId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmStructureVersionService.getStructureVersionsCount(structureId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_ddmStructureVersionService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

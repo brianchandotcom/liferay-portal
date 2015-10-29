@@ -227,21 +227,21 @@ public class ShoppingOrderLocalServiceWrapper
 		return _shoppingOrderLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _shoppingOrderLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.shopping.model.ShoppingOrder getLatestOrder(
 		long userId, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingOrderLocalService.getLatestOrder(userId, groupId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _shoppingOrderLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -360,16 +360,6 @@ public class ShoppingOrderLocalServiceWrapper
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_shoppingOrderLocalService.sendEmail(orderId, emailType, serviceContext);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_shoppingOrderLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

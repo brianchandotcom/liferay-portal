@@ -831,16 +831,6 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _journalArticleService.getBeanIdentifier();
-	}
-
-	/**
 	* Returns the web content article matching the URL title that is currently
 	* displayed or next to be displayed if no article is currently displayed.
 	*
@@ -1122,6 +1112,16 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 		long resourcePrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalArticleService.getLatestArticle(resourcePrimKey);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _journalArticleService.getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -1763,16 +1763,6 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 		return _journalArticleService.searchCount(companyId, groupId,
 			folderIds, classNameId, keywords, version, ddmStructureKey,
 			ddmTemplateKey, displayDateGT, displayDateLT, status, reviewDate);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_journalArticleService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

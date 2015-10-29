@@ -68,15 +68,6 @@ public class JournalFolderServiceUtil {
 		return getService().fetchFolder(folderId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
 	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> getDDMStructures(
 		long[] groupIds, long folderId, int restrictionType)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -175,6 +166,15 @@ public class JournalFolderServiceUtil {
 	}
 
 	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	/**
 	* @deprecated As of 7.0.0, replaced by {@link
 	#getSubfolderIds(java.util.List, long, long, boolean)}
 	*/
@@ -219,15 +219,6 @@ public class JournalFolderServiceUtil {
 	public static void restoreFolderFromTrash(long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().restoreFolderFromTrash(folderId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static void subscribe(long groupId, long folderId)

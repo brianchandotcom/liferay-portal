@@ -221,15 +221,6 @@ public class SAPEntryLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
 	public static java.util.List<com.liferay.service.access.policy.model.SAPEntry> getCompanySAPEntries(
 		long companyId, int start, int end) {
 		return getService().getCompanySAPEntries(companyId, start, end);
@@ -253,6 +244,15 @@ public class SAPEntryLocalServiceUtil {
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext) {
 		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
@@ -317,15 +317,6 @@ public class SAPEntryLocalServiceUtil {
 		java.lang.String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getSAPEntryByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

@@ -75,16 +75,6 @@ public class CompanyServiceWrapper implements CompanyService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _companyService.getBeanIdentifier();
-	}
-
-	/**
 	* Returns the company with the primary key.
 	*
 	* @param companyId the primary key of the company
@@ -157,6 +147,16 @@ public class CompanyServiceWrapper implements CompanyService,
 	}
 
 	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _companyService.getOSGiServiceIdentifier();
+	}
+
+	/**
 	* Removes the values that match the keys of the company's preferences.
 	*
 	* This method is called by {@link
@@ -171,16 +171,6 @@ public class CompanyServiceWrapper implements CompanyService,
 	public void removePreferences(long companyId, java.lang.String[] keys)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_companyService.removePreferences(companyId, keys);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_companyService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

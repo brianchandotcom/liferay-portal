@@ -65,13 +65,6 @@ public interface JournalFolderService extends BaseService {
 	public com.liferay.journal.model.JournalFolder fetchFolder(long folderId)
 		throws PortalException;
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> getDDMStructures(
 		long[] groupIds, long folderId, int restrictionType)
@@ -142,6 +135,13 @@ public interface JournalFolderService extends BaseService {
 	public int getFoldersCount(long groupId, long parentFolderId, int status);
 
 	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	/**
 	* @deprecated As of 7.0.0, replaced by {@link
 	#getSubfolderIds(java.util.List, long, long, boolean)}
 	*/
@@ -172,13 +172,6 @@ public interface JournalFolderService extends BaseService {
 		long folderId) throws PortalException;
 
 	public void restoreFolderFromTrash(long folderId) throws PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public void subscribe(long groupId, long folderId)
 		throws PortalException;

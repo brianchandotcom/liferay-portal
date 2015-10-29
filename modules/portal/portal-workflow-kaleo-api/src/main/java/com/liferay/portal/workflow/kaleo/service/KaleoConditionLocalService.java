@@ -179,13 +179,6 @@ public interface KaleoConditionLocalService extends BaseLocalService,
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
-	/**
 	* Returns the kaleo condition with the primary key.
 	*
 	* @param kaleoConditionId the primary key of the kaleo condition
@@ -223,17 +216,17 @@ public interface KaleoConditionLocalService extends BaseLocalService,
 	public com.liferay.portal.workflow.kaleo.model.KaleoCondition getKaleoNodeKaleoCondition(
 		long kaleoNodeId) throws PortalException;
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj) throws PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	/**
 	* Updates the kaleo condition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

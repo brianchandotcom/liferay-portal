@@ -239,16 +239,6 @@ public class ExpandoRowLocalServiceWrapper implements ExpandoRowLocalService,
 		return _expandoRowLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _expandoRowLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public java.util.List<com.liferay.portlet.expando.model.ExpandoRow> getDefaultTableRows(
 		long companyId, java.lang.String className, int start, int end) {
@@ -314,6 +304,16 @@ public class ExpandoRowLocalServiceWrapper implements ExpandoRowLocalService,
 	@Override
 	public int getExpandoRowsCount() {
 		return _expandoRowLocalService.getExpandoRowsCount();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _expandoRowLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -412,16 +412,6 @@ public class ExpandoRowLocalServiceWrapper implements ExpandoRowLocalService,
 	@Override
 	public int getRowsCount(long tableId) {
 		return _expandoRowLocalService.getRowsCount(tableId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_expandoRowLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

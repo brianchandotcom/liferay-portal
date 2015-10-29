@@ -15,12 +15,12 @@
 package com.liferay.portlet.asset.service.base;
 
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.service.BaseServiceImpl;
 import com.liferay.portal.service.persistence.ClassNamePersistence;
 import com.liferay.portal.service.persistence.UserFinder;
@@ -55,7 +55,7 @@ import javax.sql.DataSource;
  * @generated
  */
 public abstract class AssetCategoryServiceBaseImpl extends BaseServiceImpl
-	implements AssetCategoryService, IdentifiableBean {
+	implements AssetCategoryService, IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -614,23 +614,13 @@ public abstract class AssetCategoryServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the Spring bean ID for this bean.
+	 * Returns the OSGi service identifier.
 	 *
-	 * @return the Spring bean ID for this bean
+	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getBeanIdentifier() {
-		return _beanIdentifier;
-	}
-
-	/**
-	 * Sets the Spring bean ID for this bean.
-	 *
-	 * @param beanIdentifier the Spring bean ID for this bean
-	 */
-	@Override
-	public void setBeanIdentifier(String beanIdentifier) {
-		_beanIdentifier = beanIdentifier;
+	public String getOSGiServiceIdentifier() {
+		return AssetCategoryService.class.getName();
 	}
 
 	protected Class<?> getModelClass() {
@@ -723,5 +713,4 @@ public abstract class AssetCategoryServiceBaseImpl extends BaseServiceImpl
 	protected AssetVocabularyPersistence assetVocabularyPersistence;
 	@BeanReference(type = AssetVocabularyFinder.class)
 	protected AssetVocabularyFinder assetVocabularyFinder;
-	private String _beanIdentifier;
 }

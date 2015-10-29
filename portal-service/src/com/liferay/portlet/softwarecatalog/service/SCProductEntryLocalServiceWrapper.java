@@ -320,16 +320,6 @@ public class SCProductEntryLocalServiceWrapper
 		return _scProductEntryLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _scProductEntryLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> getCompanyProductEntries(
 		long companyId, int start, int end) {
@@ -340,6 +330,16 @@ public class SCProductEntryLocalServiceWrapper
 	@Override
 	public int getCompanyProductEntriesCount(long companyId) {
 		return _scProductEntryLocalService.getCompanyProductEntriesCount(companyId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _scProductEntryLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -501,16 +501,6 @@ public class SCProductEntryLocalServiceWrapper
 		long productEntryId) {
 		return _scProductEntryLocalService.hasSCLicenseSCProductEntry(licenseId,
 			productEntryId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_scProductEntryLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

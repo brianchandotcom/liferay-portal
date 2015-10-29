@@ -287,16 +287,6 @@ public class KaleoLogLocalServiceWrapper implements KaleoLogLocalService,
 		return _kaleoLogLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _kaleoLogLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoLog> getKaleoInstanceKaleoLogs(
 		long kaleoInstanceId, java.util.List<java.lang.Integer> logTypes,
@@ -371,21 +361,21 @@ public class KaleoLogLocalServiceWrapper implements KaleoLogLocalService,
 			logTypes);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _kaleoLogLocalService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoLogLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_kaleoLogLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

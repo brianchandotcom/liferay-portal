@@ -68,13 +68,6 @@ public interface SAPEntryService extends BaseService {
 	public com.liferay.service.access.policy.model.SAPEntry fetchSAPEntry(
 		long companyId, java.lang.String name) throws PortalException;
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.service.access.policy.model.SAPEntry> getCompanySAPEntries(
 		long companyId, int start, int end);
@@ -87,6 +80,13 @@ public interface SAPEntryService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCompanySAPEntriesCount(long companyId);
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.service.access.policy.model.SAPEntry getSAPEntry(
 		long companyId, java.lang.String name) throws PortalException;
@@ -94,13 +94,6 @@ public interface SAPEntryService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.service.access.policy.model.SAPEntry getSAPEntry(
 		long sapEntryId) throws PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public com.liferay.service.access.policy.model.SAPEntry updateSAPEntry(
 		long sapEntryId, java.lang.String allowedServiceSignatures,

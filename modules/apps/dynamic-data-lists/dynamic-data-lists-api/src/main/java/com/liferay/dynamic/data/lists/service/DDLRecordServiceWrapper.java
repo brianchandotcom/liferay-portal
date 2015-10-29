@@ -78,13 +78,13 @@ public class DDLRecordServiceWrapper implements DDLRecordService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the OSGi service identifier.
 	*
-	* @return the Spring bean ID for this bean
+	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _ddlRecordService.getBeanIdentifier();
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _ddlRecordService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -111,16 +111,6 @@ public class DDLRecordServiceWrapper implements DDLRecordService,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_ddlRecordService.revertRecordVersion(recordId, version, serviceContext);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_ddlRecordService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

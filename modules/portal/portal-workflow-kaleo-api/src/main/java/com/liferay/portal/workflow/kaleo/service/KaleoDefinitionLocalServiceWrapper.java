@@ -248,16 +248,6 @@ public class KaleoDefinitionLocalServiceWrapper
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _kaleoDefinitionLocalService.getBeanIdentifier();
-	}
-
-	/**
 	* Returns the kaleo definition with the primary key.
 	*
 	* @param kaleoDefinitionId the primary key of the kaleo definition
@@ -379,6 +369,16 @@ public class KaleoDefinitionLocalServiceWrapper
 			serviceContext);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _kaleoDefinitionLocalService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
@@ -394,16 +394,6 @@ public class KaleoDefinitionLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoDefinitionLocalService.incrementKaleoDefinition(definition,
 			title, serviceContext);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_kaleoDefinitionLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

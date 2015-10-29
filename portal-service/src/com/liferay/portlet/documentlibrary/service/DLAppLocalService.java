@@ -305,13 +305,6 @@ public interface DLAppLocalService extends BaseLocalService {
 	public void deleteFolder(long folderId) throws PortalException;
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
-	/**
 	* Returns the file entry with the primary key.
 	*
 	* @param fileEntryId the primary key of the file entry
@@ -422,6 +415,13 @@ public interface DLAppLocalService extends BaseLocalService {
 		long repositoryId) throws PortalException;
 
 	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	/**
 	* Moves the file entry to the new folder.
 	*
 	* @param userId the primary key of the user
@@ -469,13 +469,6 @@ public interface DLAppLocalService extends BaseLocalService {
 	@java.lang.Deprecated
 	public void restoreFileEntryFromTrash(long userId, long fileEntryId)
 		throws PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	/**
 	* Subscribe the user to changes in documents of the file entry type. This

@@ -42,20 +42,19 @@ public class DDMTemplateVersionServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.dynamic.data.mapping.service.impl.DDMTemplateVersionServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplateVersion getLatestTemplateVersion(
 		long templateId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getLatestTemplateVersion(templateId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplateVersion getTemplateVersion(
@@ -76,15 +75,6 @@ public class DDMTemplateVersionServiceUtil {
 	public static int getTemplateVersionsCount(long templateId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getTemplateVersionsCount(templateId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static DDMTemplateVersionService getService() {

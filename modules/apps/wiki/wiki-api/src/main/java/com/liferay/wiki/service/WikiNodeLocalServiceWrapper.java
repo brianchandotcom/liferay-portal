@@ -276,16 +276,6 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 		return _wikiNodeLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _wikiNodeLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public java.util.List<com.liferay.wiki.model.WikiNode> getCompanyNodes(
 		long companyId, int start, int end) {
@@ -364,6 +354,16 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	@Override
 	public int getNodesCount(long groupId, int status) {
 		return _wikiNodeLocalService.getNodesCount(groupId, status);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _wikiNodeLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -487,16 +487,6 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 		com.liferay.wiki.model.WikiNode node)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_wikiNodeLocalService.restoreNodeFromTrash(userId, node);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_wikiNodeLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

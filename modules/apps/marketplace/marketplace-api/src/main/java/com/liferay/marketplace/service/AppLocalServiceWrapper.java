@@ -268,16 +268,6 @@ public class AppLocalServiceWrapper implements AppLocalService,
 		return _appLocalService.getAppsCount();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _appLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext) {
@@ -293,6 +283,16 @@ public class AppLocalServiceWrapper implements AppLocalService,
 	public java.util.List<com.liferay.marketplace.model.App> getInstalledApps(
 		java.lang.String category) {
 		return _appLocalService.getInstalledApps(category);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _appLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -317,16 +317,6 @@ public class AppLocalServiceWrapper implements AppLocalService,
 	public void processMarketplaceProperties(java.util.Properties properties)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_appLocalService.processMarketplaceProperties(properties);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_appLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

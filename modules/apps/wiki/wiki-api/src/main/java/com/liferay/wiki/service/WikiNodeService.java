@@ -57,13 +57,6 @@ public interface WikiNodeService extends BaseService {
 
 	public void deleteNode(long nodeId) throws PortalException;
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.wiki.model.WikiNode getNode(long groupId,
 		java.lang.String name) throws PortalException;
@@ -94,6 +87,13 @@ public interface WikiNodeService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getNodesCount(long groupId, int status);
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
 	public void importPages(long nodeId, java.lang.String importer,
 		java.io.InputStream[] inputStreams,
 		java.util.Map<java.lang.String, java.lang.String[]> options)
@@ -103,13 +103,6 @@ public interface WikiNodeService extends BaseService {
 		throws PortalException;
 
 	public void restoreNodeFromTrash(long nodeId) throws PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public void subscribeNode(long nodeId) throws PortalException;
 

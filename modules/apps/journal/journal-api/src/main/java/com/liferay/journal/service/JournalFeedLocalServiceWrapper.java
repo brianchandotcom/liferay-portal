@@ -275,16 +275,6 @@ public class JournalFeedLocalServiceWrapper implements JournalFeedLocalService,
 		return _journalFeedLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _journalFeedLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext) {
@@ -414,6 +404,16 @@ public class JournalFeedLocalServiceWrapper implements JournalFeedLocalService,
 		return _journalFeedLocalService.getJournalFeedsCount();
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _journalFeedLocalService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
@@ -452,16 +452,6 @@ public class JournalFeedLocalServiceWrapper implements JournalFeedLocalService,
 	public int searchCount(long companyId, long groupId,
 		java.lang.String keywords) {
 		return _journalFeedLocalService.searchCount(companyId, groupId, keywords);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_journalFeedLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

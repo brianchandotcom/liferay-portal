@@ -285,16 +285,6 @@ public class CalendarBookingLocalServiceWrapper
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _calendarBookingLocalService.getBeanIdentifier();
-	}
-
-	/**
 	* Returns the calendar booking with the primary key.
 	*
 	* @param calendarBookingId the primary key of the calendar booking
@@ -459,6 +449,16 @@ public class CalendarBookingLocalServiceWrapper
 		return _calendarBookingLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _calendarBookingLocalService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
@@ -536,16 +536,6 @@ public class CalendarBookingLocalServiceWrapper
 		return _calendarBookingLocalService.searchCount(companyId, groupIds,
 			calendarIds, calendarResourceIds, parentCalendarBookingId, title,
 			description, location, startTime, endTime, statuses, andOperator);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_calendarBookingLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

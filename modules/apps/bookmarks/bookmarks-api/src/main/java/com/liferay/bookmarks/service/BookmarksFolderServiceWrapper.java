@@ -55,16 +55,6 @@ public class BookmarksFolderServiceWrapper implements BookmarksFolderService,
 		_bookmarksFolderService.deleteFolder(folderId, includeTrashedEntries);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _bookmarksFolderService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.bookmarks.model.BookmarksFolder getFolder(long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -148,6 +138,16 @@ public class BookmarksFolderServiceWrapper implements BookmarksFolderService,
 	}
 
 	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _bookmarksFolderService.getOSGiServiceIdentifier();
+	}
+
+	/**
 	* @deprecated As of 7.0.0, replaced by {@link #getSubfolderIds(List, long,
 	long, boolean)}
 	*/
@@ -204,16 +204,6 @@ public class BookmarksFolderServiceWrapper implements BookmarksFolderService,
 	public void restoreFolderFromTrash(long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_bookmarksFolderService.restoreFolderFromTrash(folderId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_bookmarksFolderService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

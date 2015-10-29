@@ -497,13 +497,6 @@ public interface DLAppService extends BaseService {
 		throws PortalException;
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
-	/**
 	* Returns all the file entries in the folder.
 	*
 	* @param repositoryId the primary key of the file entry's repository
@@ -1396,6 +1389,13 @@ public interface DLAppService extends BaseService {
 		throws PortalException;
 
 	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	/**
 	* Returns all the descendant folders of the folder with the primary key.
 	*
 	* @param repositoryId the primary key of the repository
@@ -1668,13 +1668,6 @@ public interface DLAppService extends BaseService {
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		com.liferay.portal.kernel.search.Query query)
 		throws com.liferay.portal.kernel.search.SearchException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	/**
 	* Subscribe the user to changes in documents of the file entry type. This

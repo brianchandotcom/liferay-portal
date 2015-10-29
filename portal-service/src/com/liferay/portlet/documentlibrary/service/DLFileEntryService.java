@@ -121,13 +121,6 @@ public interface DLFileEntryService extends BaseService {
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry fetchFileEntryByImageId(
 		long imageId) throws PortalException;
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
 	public java.io.InputStream getFileAsStream(long fileEntryId,
 		java.lang.String version) throws PortalException;
 
@@ -229,6 +222,13 @@ public interface DLFileEntryService extends BaseService {
 		long rootFolderId, java.lang.String[] mimeTypes, int status)
 		throws PortalException;
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasFileEntryLock(long fileEntryId) throws PortalException;
 
@@ -263,13 +263,6 @@ public interface DLFileEntryService extends BaseService {
 	public com.liferay.portal.kernel.search.Hits search(long groupId,
 		long creatorUserId, int status, int start, int end)
 		throws PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry updateFileEntry(
 		long fileEntryId, java.lang.String sourceFileName,

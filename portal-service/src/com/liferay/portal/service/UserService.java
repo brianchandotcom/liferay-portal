@@ -428,13 +428,6 @@ public interface UserService extends BaseService {
 	*/
 	public void deleteUser(long userId) throws PortalException;
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.User> getCompanyUsers(
 		long companyId, int start, int end) throws PortalException;
@@ -468,6 +461,13 @@ public interface UserService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.User> getGroupUsers(
 		long groupId) throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Returns the primary keys of all the users belonging to the organization.
@@ -686,13 +686,6 @@ public interface UserService extends BaseService {
 	* @throws PortalException if a user with the user ID could not be found
 	*/
 	public boolean sendPasswordByUserId(long userId) throws PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	/**
 	* Sets the users in the role, removing and adding users to the role as

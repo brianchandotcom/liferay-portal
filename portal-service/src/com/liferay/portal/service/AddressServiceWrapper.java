@@ -80,23 +80,13 @@ public class AddressServiceWrapper implements AddressService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the OSGi service identifier.
 	*
-	* @return the Spring bean ID for this bean
+	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _addressService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_addressService.setBeanIdentifier(beanIdentifier);
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _addressService.getOSGiServiceIdentifier();
 	}
 
 	@Override

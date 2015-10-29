@@ -267,11 +267,11 @@ public interface DDMStructureService extends BaseService {
 		boolean includeAncestorStructures) throws PortalException;
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the OSGi service identifier.
 	*
-	* @return the Spring bean ID for this bean
+	* @return the OSGi service identifier
 	*/
-	public java.lang.String getBeanIdentifier();
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Returns the structure matching the class name ID, structure key, and
@@ -459,13 +459,6 @@ public interface DDMStructureService extends BaseService {
 	public int searchCount(long companyId, long[] groupIds, long classNameId,
 		java.lang.String name, java.lang.String description,
 		java.lang.String storageType, int type, int status, boolean andOperator);
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public com.liferay.dynamic.data.mapping.model.DDMStructure updateStructure(
 		long groupId, long parentStructureId, long classNameId,

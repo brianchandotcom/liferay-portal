@@ -268,16 +268,6 @@ public class JournalFolderLocalServiceWrapper
 		return _journalFolderLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _journalFolderLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public java.util.List<com.liferay.journal.model.JournalFolder> getCompanyFolders(
 		long companyId, int start, int end) {
@@ -497,6 +487,16 @@ public class JournalFolderLocalServiceWrapper
 		return _journalFolderLocalService.getNoAssetFolders();
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _journalFolderLocalService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public long getOverridedDDMStructuresFolderId(long folderId)
 		throws com.liferay.journal.exception.NoSuchFolderException {
@@ -559,16 +559,6 @@ public class JournalFolderLocalServiceWrapper
 	public void restoreFolderFromTrash(long userId, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_journalFolderLocalService.restoreFolderFromTrash(userId, folderId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_journalFolderLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

@@ -234,16 +234,6 @@ public class CalendarNotificationTemplateLocalServiceWrapper
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _calendarNotificationTemplateLocalService.getBeanIdentifier();
-	}
-
-	/**
 	* Returns the calendar notification template with the primary key.
 	*
 	* @param calendarNotificationTemplateId the primary key of the calendar notification template
@@ -339,21 +329,21 @@ public class CalendarNotificationTemplateLocalServiceWrapper
 		return _calendarNotificationTemplateLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _calendarNotificationTemplateLocalService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarNotificationTemplateLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_calendarNotificationTemplateLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

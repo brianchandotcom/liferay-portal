@@ -501,13 +501,6 @@ public interface SocialActivityLocalService extends BaseLocalService,
 		long activitySetId, int start, int end);
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
-	/**
 	* Returns a range of all the activities done in the group.
 	*
 	* <p>
@@ -595,6 +588,13 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.social.model.SocialActivity getMirrorActivity(
 		long mirrorActivityId) throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Returns a range of all the activities done in the organization. This
@@ -892,13 +892,6 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserOrganizationsActivitiesCount(long userId);
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	/**
 	* Updates the social activity in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

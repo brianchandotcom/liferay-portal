@@ -198,16 +198,6 @@ public class ShoppingCartLocalServiceWrapper implements ShoppingCartLocalService
 		return _shoppingCartLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _shoppingCartLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.shopping.model.ShoppingCart getCart(long userId,
 		long groupId)
@@ -219,6 +209,16 @@ public class ShoppingCartLocalServiceWrapper implements ShoppingCartLocalService
 	public java.util.Map<com.liferay.shopping.model.ShoppingCartItem, java.lang.Integer> getItems(
 		long groupId, java.lang.String itemIds) {
 		return _shoppingCartLocalService.getItems(groupId, itemIds);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _shoppingCartLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -266,16 +266,6 @@ public class ShoppingCartLocalServiceWrapper implements ShoppingCartLocalService
 	@Override
 	public int getShoppingCartsCount() {
 		return _shoppingCartLocalService.getShoppingCartsCount();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_shoppingCartLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

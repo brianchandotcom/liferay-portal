@@ -69,11 +69,11 @@ public interface SocialActivityInterpreterLocalService extends BaseLocalService 
 		java.lang.String selector);
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the OSGi service identifier.
 	*
-	* @return the Spring bean ID for this bean
+	* @return the OSGi service identifier
 	*/
-	public java.lang.String getBeanIdentifier();
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #interpret(String,
@@ -110,13 +110,6 @@ public interface SocialActivityInterpreterLocalService extends BaseLocalService 
 		java.lang.String selector,
 		com.liferay.portlet.social.model.SocialActivitySet activitySet,
 		com.liferay.portal.service.ServiceContext serviceContext);
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public void updateActivitySet(long activityId) throws PortalException;
 }

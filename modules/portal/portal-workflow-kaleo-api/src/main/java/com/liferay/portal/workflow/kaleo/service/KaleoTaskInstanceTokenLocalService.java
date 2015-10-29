@@ -195,13 +195,6 @@ public interface KaleoTaskInstanceTokenLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken> getCompanyKaleoTaskInstanceTokens(
 		long companyId, int start, int end);
@@ -293,6 +286,13 @@ public interface KaleoTaskInstanceTokenLocalService extends BaseLocalService,
 		java.util.List<java.lang.Long> roleIds, java.lang.Boolean completed,
 		com.liferay.portal.service.ServiceContext serviceContext);
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
@@ -370,13 +370,6 @@ public interface KaleoTaskInstanceTokenLocalService extends BaseLocalService,
 		java.lang.Boolean completed, java.lang.Boolean searchByUserRoles,
 		boolean andOperator,
 		com.liferay.portal.service.ServiceContext serviceContext);
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken updateDueDate(
 		long kaleoTaskInstanceTokenId, java.util.Date dueDate,

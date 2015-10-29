@@ -52,13 +52,13 @@ public class DDLRecordSetServiceWrapper implements DDLRecordSetService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the OSGi service identifier.
 	*
-	* @return the Spring bean ID for this bean
+	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _ddlRecordSetService.getBeanIdentifier();
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _ddlRecordSetService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -105,16 +105,6 @@ public class DDLRecordSetServiceWrapper implements DDLRecordSetService,
 		java.lang.String description, int scope, boolean andOperator) {
 		return _ddlRecordSetService.searchCount(companyId, groupId, name,
 			description, scope, andOperator);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_ddlRecordSetService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

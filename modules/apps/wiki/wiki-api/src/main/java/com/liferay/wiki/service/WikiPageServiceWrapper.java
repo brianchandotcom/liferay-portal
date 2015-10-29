@@ -176,16 +176,6 @@ public class WikiPageServiceWrapper implements WikiPageService,
 		return _wikiPageService.fetchPage(nodeId, title, version);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _wikiPageService.getBeanIdentifier();
-	}
-
 	@Override
 	public java.util.List<com.liferay.wiki.model.WikiPage> getChildren(
 		long groupId, long nodeId, boolean head, java.lang.String parentTitle)
@@ -229,6 +219,16 @@ public class WikiPageServiceWrapper implements WikiPageService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPageService.getNodePagesRSS(nodeId, max, type, version,
 			displayStyle, feedURL, entryURL, attachmentURLPrefix);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _wikiPageService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -424,16 +424,6 @@ public class WikiPageServiceWrapper implements WikiPageService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPageService.revertPage(nodeId, title, version,
 			serviceContext);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_wikiPageService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

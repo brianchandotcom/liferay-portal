@@ -55,13 +55,6 @@ public interface ThemeLocalService extends BaseLocalService {
 	public com.liferay.portal.model.Theme fetchTheme(long companyId,
 		java.lang.String themeId);
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.ColorScheme getColorScheme(long companyId,
 		java.lang.String themeId, java.lang.String colorSchemeId,
@@ -70,6 +63,13 @@ public interface ThemeLocalService extends BaseLocalService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Theme> getControlPanelThemes(
 		long companyId, long userId, boolean wapTheme);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Theme> getPageThemes(
@@ -111,13 +111,6 @@ public interface ThemeLocalService extends BaseLocalService {
 		java.lang.String themesPath, boolean loadFromServletContext,
 		java.lang.String[] xmls,
 		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage);
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public void uninstallThemes(
 		java.util.List<com.liferay.portal.model.Theme> themes);

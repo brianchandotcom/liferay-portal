@@ -479,13 +479,13 @@ public class BackgroundTaskLocalServiceWrapper
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the OSGi service identifier.
 	*
-	* @return the Spring bean ID for this bean
+	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _backgroundTaskLocalService.getBeanIdentifier();
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _backgroundTaskLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -498,16 +498,6 @@ public class BackgroundTaskLocalServiceWrapper
 	@Override
 	public void resumeBackgroundTask(long backgroundTaskId) {
 		_backgroundTaskLocalService.resumeBackgroundTask(backgroundTaskId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_backgroundTaskLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

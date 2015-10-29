@@ -746,13 +746,6 @@ public interface JournalArticleService extends BaseService {
 		java.lang.String ddmStructureKey);
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
-	/**
 	* Returns the web content article matching the URL title that is currently
 	* displayed or next to be displayed if no article is currently displayed.
 	*
@@ -999,6 +992,13 @@ public interface JournalArticleService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.journal.model.JournalArticle getLatestArticle(
 		long resourcePrimKey) throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Moves all versions of the web content article matching the group and
@@ -1575,13 +1575,6 @@ public interface JournalArticleService extends BaseService {
 		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
 		java.util.Date displayDateGT, java.util.Date displayDateLT, int status,
 		java.util.Date reviewDate);
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	/**
 	* Subscribes the user to changes in elements that belong to the web content

@@ -208,16 +208,6 @@ public class KaleoNodeLocalServiceWrapper implements KaleoNodeLocalService,
 		return _kaleoNodeLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _kaleoNodeLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoNode> getKaleoDefinitionKaleoNodes(
 		long kaleoDefinitionId) {
@@ -265,21 +255,21 @@ public class KaleoNodeLocalServiceWrapper implements KaleoNodeLocalService,
 		return _kaleoNodeLocalService.getKaleoNodesCount();
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _kaleoNodeLocalService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoNodeLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_kaleoNodeLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

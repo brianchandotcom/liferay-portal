@@ -38,16 +38,6 @@ public class AssetEntryServiceWrapper implements AssetEntryService,
 		return _assetEntryService.fetchEntry(entryId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _assetEntryService.getBeanIdentifier();
-	}
-
 	@Override
 	public java.util.List<com.liferay.portlet.asset.model.AssetEntry> getCompanyEntries(
 		long companyId, int start, int end) {
@@ -79,21 +69,21 @@ public class AssetEntryServiceWrapper implements AssetEntryService,
 		return _assetEntryService.getEntry(entryId);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _assetEntryService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.portlet.asset.model.AssetEntry incrementViewCounter(
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetEntryService.incrementViewCounter(className, classPK);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_assetEntryService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

@@ -260,16 +260,6 @@ public class MDRRuleLocalServiceWrapper implements MDRRuleLocalService,
 		return _mdrRuleLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _mdrRuleLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext) {
@@ -363,6 +353,16 @@ public class MDRRuleLocalServiceWrapper implements MDRRuleLocalService,
 		return _mdrRuleLocalService.getMDRRulesCount();
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _mdrRuleLocalService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
@@ -391,16 +391,6 @@ public class MDRRuleLocalServiceWrapper implements MDRRuleLocalService,
 	@Override
 	public int getRulesCount(long ruleGroupId) {
 		return _mdrRuleLocalService.getRulesCount(ruleGroupId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_mdrRuleLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

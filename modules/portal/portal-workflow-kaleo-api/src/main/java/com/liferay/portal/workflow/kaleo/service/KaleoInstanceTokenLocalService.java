@@ -184,13 +184,6 @@ public interface KaleoInstanceTokenLocalService extends BaseLocalService,
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
-	/**
 	* Returns the kaleo instance token with the primary key.
 	*
 	* @param kaleoInstanceTokenId the primary key of the kaleo instance token
@@ -243,6 +236,13 @@ public interface KaleoInstanceTokenLocalService extends BaseLocalService,
 	public int getKaleoInstanceTokensCount(long parentKaleoInstanceTokenId,
 		com.liferay.portal.service.ServiceContext serviceContext);
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
@@ -254,13 +254,6 @@ public interface KaleoInstanceTokenLocalService extends BaseLocalService,
 		java.util.Map<java.lang.String, java.io.Serializable> workflowContext,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	/**
 	* Updates the kaleo instance token in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

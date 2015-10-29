@@ -474,16 +474,6 @@ public class UserServiceWrapper implements UserService,
 		_userService.deleteUser(userId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _userService.getBeanIdentifier();
-	}
-
 	@Override
 	public java.util.List<com.liferay.portal.model.User> getCompanyUsers(
 		long companyId, int start, int end)
@@ -530,6 +520,16 @@ public class UserServiceWrapper implements UserService,
 		long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userService.getGroupUsers(groupId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _userService.getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -792,16 +792,6 @@ public class UserServiceWrapper implements UserService,
 	public boolean sendPasswordByUserId(long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userService.sendPasswordByUserId(userId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_userService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

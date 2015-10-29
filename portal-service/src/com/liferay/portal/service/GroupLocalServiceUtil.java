@@ -649,15 +649,6 @@ public class GroupLocalServiceUtil {
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
 	* Returns the company group.
 	*
 	* @param companyId the primary key of the company
@@ -1062,6 +1053,15 @@ public class GroupLocalServiceUtil {
 	*/
 	public static java.util.List<com.liferay.portal.model.Group> getNullFriendlyURLGroups() {
 		return getService().getNullFriendlyURLGroups();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -2464,15 +2464,6 @@ public class GroupLocalServiceUtil {
 		return getService()
 				   .searchCount(companyId, parentGroupId, name, description,
 			params, andOperator);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static void setOrganizationGroups(long organizationId,

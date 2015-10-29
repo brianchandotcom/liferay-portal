@@ -61,16 +61,6 @@ public class JournalFolderServiceWrapper implements JournalFolderService,
 		return _journalFolderService.fetchFolder(folderId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _journalFolderService.getBeanIdentifier();
-	}
-
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> getDDMStructures(
 		long[] groupIds, long folderId, int restrictionType)
@@ -187,6 +177,16 @@ public class JournalFolderServiceWrapper implements JournalFolderService,
 	}
 
 	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _journalFolderService.getOSGiServiceIdentifier();
+	}
+
+	/**
 	* @deprecated As of 7.0.0, replaced by {@link
 	#getSubfolderIds(java.util.List, long, long, boolean)}
 	*/
@@ -239,16 +239,6 @@ public class JournalFolderServiceWrapper implements JournalFolderService,
 	public void restoreFolderFromTrash(long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_journalFolderService.restoreFolderFromTrash(folderId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_journalFolderService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

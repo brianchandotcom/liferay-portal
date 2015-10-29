@@ -157,15 +157,6 @@ public class DLFileEntryServiceUtil {
 		return getService().fetchFileEntryByImageId(imageId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
 	public static java.io.InputStream getFileAsStream(long fileEntryId,
 		java.lang.String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -313,6 +304,15 @@ public class DLFileEntryServiceUtil {
 			mimeTypes, status);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
 	public static boolean hasFileEntryLock(long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().hasFileEntryLock(fileEntryId);
@@ -364,15 +364,6 @@ public class DLFileEntryServiceUtil {
 		long creatorUserId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().search(groupId, creatorUserId, status, start, end);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry updateFileEntry(

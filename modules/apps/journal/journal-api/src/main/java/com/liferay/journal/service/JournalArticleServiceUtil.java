@@ -822,15 +822,6 @@ public class JournalArticleServiceUtil {
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
 	* Returns the web content article matching the URL title that is currently
 	* displayed or next to be displayed if no article is currently displayed.
 	*
@@ -1100,6 +1091,15 @@ public class JournalArticleServiceUtil {
 		long resourcePrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getLatestArticle(resourcePrimKey);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -1733,15 +1733,6 @@ public class JournalArticleServiceUtil {
 				   .searchCount(companyId, groupId, folderIds, classNameId,
 			keywords, version, ddmStructureKey, ddmTemplateKey, displayDateGT,
 			displayDateLT, status, reviewDate);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

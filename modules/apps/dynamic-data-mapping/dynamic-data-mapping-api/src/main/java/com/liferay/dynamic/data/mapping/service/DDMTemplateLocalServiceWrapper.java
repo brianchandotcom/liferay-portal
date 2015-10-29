@@ -483,16 +483,6 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _ddmTemplateLocalService.getBeanIdentifier();
-	}
-
-	/**
 	* Returns the d d m template with the primary key.
 	*
 	* @param templateId the primary key of the d d m template
@@ -585,6 +575,16 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext) {
 		return _ddmTemplateLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _ddmTemplateLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -1242,16 +1242,6 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 		return _ddmTemplateLocalService.searchCount(companyId, groupIds,
 			classNameIds, classPKs, resourceClassNameId, name, description,
 			type, mode, language, status, andOperator);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_ddmTemplateLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

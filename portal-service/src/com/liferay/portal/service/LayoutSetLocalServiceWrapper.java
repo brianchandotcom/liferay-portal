@@ -204,16 +204,6 @@ public class LayoutSetLocalServiceWrapper implements LayoutSetLocalService,
 		return _layoutSetLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _layoutSetLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.portal.model.LayoutSet getLayoutSet(long groupId,
 		boolean privateLayout)
@@ -274,21 +264,21 @@ public class LayoutSetLocalServiceWrapper implements LayoutSetLocalService,
 		return _layoutSetLocalService.getLayoutSetsCount();
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _layoutSetLocalService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutSetLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_layoutSetLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

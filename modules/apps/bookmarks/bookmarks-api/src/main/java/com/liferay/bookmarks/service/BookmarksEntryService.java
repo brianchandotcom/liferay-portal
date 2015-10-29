@@ -58,13 +58,6 @@ public interface BookmarksEntryService extends BaseService {
 
 	public void deleteEntry(long entryId) throws PortalException;
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.bookmarks.model.BookmarksEntry> getEntries(
 		long groupId, long folderId, int start, int end);
@@ -113,6 +106,13 @@ public interface BookmarksEntryService extends BaseService {
 	public int getGroupEntriesCount(long groupId, long userId, long rootFolderId)
 		throws PortalException;
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
 	public com.liferay.bookmarks.model.BookmarksEntry moveEntry(long entryId,
 		long parentFolderId) throws PortalException;
 
@@ -135,13 +135,6 @@ public interface BookmarksEntryService extends BaseService {
 	public com.liferay.portal.kernel.search.Hits search(long groupId,
 		long creatorUserId, int status, int start, int end)
 		throws PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public void subscribeEntry(long entryId) throws PortalException;
 

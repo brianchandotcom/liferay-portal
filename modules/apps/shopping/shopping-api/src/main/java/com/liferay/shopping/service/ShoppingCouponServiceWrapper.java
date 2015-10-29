@@ -58,21 +58,21 @@ public class ShoppingCouponServiceWrapper implements ShoppingCouponService,
 		_shoppingCouponService.deleteCoupon(groupId, couponId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _shoppingCouponService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.shopping.model.ShoppingCoupon getCoupon(long groupId,
 		long couponId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingCouponService.getCoupon(groupId, couponId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _shoppingCouponService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -82,16 +82,6 @@ public class ShoppingCouponServiceWrapper implements ShoppingCouponService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingCouponService.search(groupId, companyId, code, active,
 			discountType, andOperator, start, end);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_shoppingCouponService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

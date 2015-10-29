@@ -45,13 +45,13 @@ public class StagingServiceWrapper implements StagingService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the OSGi service identifier.
 	*
-	* @return the Spring bean ID for this bean
+	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _stagingService.getBeanIdentifier();
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _stagingService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -74,16 +74,6 @@ public class StagingServiceWrapper implements StagingService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _stagingService.publishStagingRequest(stagingRequestId,
 			privateLayout, parameterMap);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_stagingService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

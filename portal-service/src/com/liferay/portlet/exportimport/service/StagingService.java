@@ -53,11 +53,11 @@ public interface StagingService extends BaseService {
 		throws PortalException;
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the OSGi service identifier.
 	*
-	* @return the Spring bean ID for this bean
+	* @return the OSGi service identifier
 	*/
-	public java.lang.String getBeanIdentifier();
+	public java.lang.String getOSGiServiceIdentifier();
 
 	public com.liferay.portlet.exportimport.lar.MissingReferences publishStagingRequest(
 		long stagingRequestId,
@@ -72,13 +72,6 @@ public interface StagingService extends BaseService {
 		long stagingRequestId, boolean privateLayout,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap)
 		throws PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public void updateStagingRequest(long stagingRequestId,
 		java.lang.String fileName, byte[] bytes) throws PortalException;

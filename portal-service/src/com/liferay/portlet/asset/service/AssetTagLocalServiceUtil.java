@@ -473,15 +473,6 @@ public class AssetTagLocalServiceUtil {
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
 	* Returns the asset tags of the asset entry.
 	*
 	* @param entryId the primary key of the asset entry
@@ -540,6 +531,15 @@ public class AssetTagLocalServiceUtil {
 	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> getGroupsTags(
 		long[] groupIds) {
 		return getService().getGroupsTags(groupIds);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
@@ -786,15 +786,6 @@ public class AssetTagLocalServiceUtil {
 
 	public static void setAssetEntryAssetTags(long entryId, long[] tagIds) {
 		getService().setAssetEntryAssetTags(entryId, tagIds);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

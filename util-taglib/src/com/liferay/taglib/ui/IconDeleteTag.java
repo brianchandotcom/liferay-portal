@@ -47,21 +47,13 @@ public class IconDeleteTag extends IconTag {
 
 		setCssClass(cssClass.concat(" item-remove"));
 
-		if (Validator.isNull(getImage())) {
+		if (Validator.isNull(getMessage())) {
 			if (_trash) {
-				setIconCssClass("icon-trash");
+				setMessage("move-to-the-recycle-bin");
 			}
 			else {
-				setIconCssClass("icon-remove");
-
-				if (Validator.isNull(getMessage())) {
-					setMessage("delete");
-				}
+				setMessage("delete");
 			}
-		}
-
-		if (_trash && Validator.isNull(getMessage())) {
-			setMessage("move-to-the-recycle-bin");
 		}
 
 		String url = getUrl();

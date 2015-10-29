@@ -65,6 +65,7 @@ public class MonitoringBottomDynamicInclude extends BaseDynamicInclude {
 
 		if (portalRequestDataSample != null) {
 			portalRequestDataSample.capture(RequestStatus.SUCCESS);
+
 			portalRequestDataSample.setStatusCode(response.getStatus());
 
 			DataSampleThreadLocal.addDataSample(portalRequestDataSample);

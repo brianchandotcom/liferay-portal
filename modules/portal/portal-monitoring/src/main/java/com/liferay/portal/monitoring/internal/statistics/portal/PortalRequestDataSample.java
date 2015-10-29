@@ -93,7 +93,7 @@ public class PortalRequestDataSample extends BaseDataSample {
 	private final String _referer;
 	private final String _remoteAddr;
 	private final String _requestURL;
-	private final String _userAgent;
 	private int _statusCode;
+	private final String _userAgent;
 
 }

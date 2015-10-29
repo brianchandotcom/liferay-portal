@@ -201,6 +201,8 @@ idea {
                 }
             }
         }
+
+		excludeDirs += file('classes')
 	}
 }
 

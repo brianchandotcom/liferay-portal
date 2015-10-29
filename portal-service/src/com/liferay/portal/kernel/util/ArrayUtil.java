@@ -1412,11 +1412,11 @@ public class ArrayUtil {
 		}
 	}
 
-	public static void reverse(String[] array) {
+	public static <T> void reverse(T[] array) {
 		for (int left = 0, right = array.length - 1; left < right;
 				left++, right--) {
 
-			String value = array[left];
+			T value = array[left];
 
 			array[left] = array[right];
 			array[right] = value;

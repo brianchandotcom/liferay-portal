@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.language;
-
-import com.liferay.portal.kernel.util.SetUtil;
+package com.liferay.portal.kernel.util;
 
 import java.util.ListResourceBundle;
 import java.util.ResourceBundle;
@@ -73,6 +71,26 @@ public class AggregateResourceBundleTest {
 			aggregateResourceBundle.keySet());
 	}
 
+	@Test
+	public void testOverriddenKeys() {
+		ResourceBundle resourceBundleA = _createResourceBundle(
+			"keyA", "valueA");
+		ResourceBundle resourceBundleB = _createResourceBundle(
+			"keyA", "valueB");
+
+		AggregateResourceBundle aggregateResourceBundle =
+			new AggregateResourceBundle(resourceBundleA, resourceBundleB);
+
+		Assert.assertEquals(
+			"valueA", aggregateResourceBundle.getString("keyA"));
+
+		aggregateResourceBundle = new AggregateResourceBundle(
+			resourceBundleB, resourceBundleA);
+
+		Assert.assertEquals(
+			"valueB", aggregateResourceBundle.getString("keyA"));
+	}
+
 	private ResourceBundle _createResourceBundle(
 		final String... keysAndValues) {
 
@@ -89,7 +107,7 @@ public class AggregateResourceBundleTest {
 
 				for (int i = 0; i < contents.length; i++) {
 					contents[i] = new Object[] {
-						keysAndValues[i / 2], keysAndValues[(i / 2) + 1]
+						keysAndValues[i * 2], keysAndValues[i * 2 + 1]
 					};
 				}
 

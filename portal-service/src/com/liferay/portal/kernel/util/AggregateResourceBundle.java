@@ -14,36 +14,57 @@
 
 package com.liferay.portal.kernel.util;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashSet;
-import java.util.List;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.Set;
 
 /**
- * @author Tomas Polesovsky
- * @author Brian Wing Shun Chan
+ * @author Carlos Sierra Andrés
  */
 public class AggregateResourceBundle extends ResourceBundle {
+
+	public AggregateResourceBundle(ResourceBundle... resourceBundles) {
+		_resourceBundles = resourceBundles;
+	}
+
+	@Override
+	public boolean containsKey(String key) {
+		if (key == null) {
+			throw new NullPointerException();
+		}
+
+		for (ResourceBundle resourceBundle : _resourceBundles) {
+			if (resourceBundle.containsKey(key)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
 
 	@Override
 	public Enumeration<String> getKeys() {
 		return Collections.enumeration(handleKeySet());
 	}
 
-	public List<ResourceBundle> getResourceBundles() {
-		return _resourceBundles;
-	}
-
 	@Override
 	protected Object handleGetObject(String key) {
-		for (int i = _resourceBundles.size() - 1; i >= 0; i--) {
-			ResourceBundle resourceBundle = _resourceBundles.get(i);
+		if (key == null) {
+			throw new NullPointerException();
+		}
 
-			if (resourceBundle.containsKey(key)) {
+		for (ResourceBundle resourceBundle : _resourceBundles) {
+			if (!resourceBundle.containsKey(key)) {
+				continue;
+			}
+
+			try {
 				return resourceBundle.getObject(key);
+			}
+			catch (MissingResourceException mre) {
 			}
 		}
 
@@ -52,17 +73,18 @@ public class AggregateResourceBundle extends ResourceBundle {
 
 	@Override
 	protected Set<String> handleKeySet() {
-		Set<String> keySet = new HashSet<>();
+		if (_keys == null) {
+			_keys = new HashSet<>();
 
-		for (int i = _resourceBundles.size() - 1; i >= 0; i--) {
-			ResourceBundle resourceBundle = _resourceBundles.get(i);
-
-			keySet.addAll(resourceBundle.keySet());
+			for (ResourceBundle resourceBundle : _resourceBundles) {
+				_keys.addAll(resourceBundle.keySet());
+			}
 		}
 
-		return keySet;
+		return _keys;
 	}
 
-	private final List<ResourceBundle> _resourceBundles = new ArrayList<>();
+	private Set<String> _keys;
+	private final ResourceBundle[] _resourceBundles;
 
 }

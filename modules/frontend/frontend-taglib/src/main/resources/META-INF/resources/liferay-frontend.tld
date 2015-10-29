@@ -412,13 +412,13 @@
 		<body-content>JSP</body-content>
 		<attribute>
 			<description>A CSS class for styling the small image</description>
-			<name>smallImageCSSClass</name>
+			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<description>A URL for the card's small image, if the card is vertical</description>
-			<name>smallImageUrl</name>
+			<name>src</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

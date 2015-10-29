@@ -149,6 +149,12 @@ public class DDLFormViewRecordsDisplayContext {
 		return _recordSearchContainer;
 	}
 
+	public int getStatus(DDLRecord ddlRecord) throws PortalException {
+		DDLRecordVersion recordVersion = ddlRecord.getRecordVersion();
+
+		return recordVersion.getStatus();
+	}
+
 	public int getTotalColumns() {
 		return _ddmFormFields.size();
 	}

@@ -241,9 +241,7 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 	}
 
 	@Override
-	protected void configureSourceSetMain(
-		Project project, boolean legacyDirStructure) {
-
+	protected void configureSourceSetMain(Project project) {
 		File classesDir = project.file("docroot/WEB-INF/classes");
 		File srcDir = project.file("docroot/WEB-INF/src");
 

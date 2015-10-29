@@ -1063,59 +1063,33 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		}
 	}
 
-	protected void configureSourceSetMain(
-		Project project, boolean legacyDirLayout) {
-
+	protected void configureSourceSetMain(Project project) {
 		File classesDir = project.file("classes");
 
-		File srcDir = null;
-
-		if (legacyDirLayout) {
-			srcDir = project.file("src");
-		}
-
 		configureSourceSet(
-			project, SourceSet.MAIN_SOURCE_SET_NAME, classesDir, srcDir);
+			project, SourceSet.MAIN_SOURCE_SET_NAME, classesDir, null);
 	}
 
 	protected void configureSourceSets(Project project) {
 		addSourceSetTestIntegration(project);
 
-		boolean legacyDirLayout = hasLegacyDirLayout(project);
-
-		configureSourceSetMain(project, legacyDirLayout);
-		configureSourceSetTest(project, legacyDirLayout);
-		configureSourceSetTestIntegration(project, legacyDirLayout);
+		configureSourceSetMain(project);
+		configureSourceSetTest(project);
+		configureSourceSetTestIntegration(project);
 	}
 
-	protected void configureSourceSetTest(
-		Project project, boolean legacyDirLayout) {
-
+	protected void configureSourceSetTest(Project project) {
 		File classesDir = project.file("test-classes/unit");
 
-		File srcDir = null;
-
-		if (legacyDirLayout) {
-			srcDir = project.file("test/unit");
-		}
-
 		configureSourceSet(
-			project, SourceSet.TEST_SOURCE_SET_NAME, classesDir, srcDir);
+			project, SourceSet.TEST_SOURCE_SET_NAME, classesDir, null);
 	}
 
-	protected void configureSourceSetTestIntegration(
-		Project project, boolean legacyDirLayout) {
-
+	protected void configureSourceSetTestIntegration(Project project) {
 		File classesDir = project.file("test-classes/integration");
 
-		File srcDir = null;
-
-		if (legacyDirLayout) {
-			srcDir = project.file("test/integration");
-		}
-
 		configureSourceSet(
-			project, TEST_INTEGRATION_SOURCE_SET_NAME, classesDir, srcDir);
+			project, TEST_INTEGRATION_SOURCE_SET_NAME, classesDir, null);
 	}
 
 	protected void configureTaskBuildCSS(
@@ -2285,28 +2259,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		Iterator<File> iterator = srcDirs.iterator();
 
 		return iterator.next();
-	}
-
-	protected boolean hasLegacyDirLayout(Project project) {
-		File dir = project.file("src/" + SourceSet.MAIN_SOURCE_SET_NAME);
-
-		if (dir.exists()) {
-			return false;
-		}
-
-		dir = project.file("src/" + SourceSet.TEST_SOURCE_SET_NAME);
-
-		if (dir.exists()) {
-			return false;
-		}
-
-		dir = project.file("src/" + TEST_INTEGRATION_SOURCE_SET_NAME);
-
-		if (dir.exists()) {
-			return false;
-		}
-
-		return true;
 	}
 
 	protected boolean isAddDefaultDependencies(Project project) {

@@ -263,7 +263,7 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
-	public void copyText(String locator) {
+	public void copyText(String locator) throws Exception {
 		throw new UnsupportedOperationException();
 	}
 
@@ -426,7 +426,7 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
-	public boolean isNotText(String locator, String value) {
+	public boolean isNotText(String locator, String value) throws Exception {
 		return LiferaySeleniumHelper.isNotText(this, locator, value);
 	}
 
@@ -461,8 +461,8 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
-	public boolean isText(String locator, String value) {
-		return value.equals(getText(locator, "1"));
+	public boolean isText(String locator, String value) throws Exception {
+		return value.equals(getElementText(locator, "1"));
 	}
 
 	@Override

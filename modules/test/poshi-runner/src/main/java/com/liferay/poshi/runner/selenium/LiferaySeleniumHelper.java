@@ -997,7 +997,8 @@ public class LiferaySeleniumHelper {
 	}
 
 	public static boolean isNotText(
-		LiferaySelenium liferaySelenium, String locator, String value) {
+			LiferaySelenium liferaySelenium, String locator, String value)
+		throws Exception {
 
 		return !liferaySelenium.isText(locator, value);
 	}

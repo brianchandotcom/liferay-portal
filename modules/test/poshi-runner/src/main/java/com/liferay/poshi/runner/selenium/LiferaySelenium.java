@@ -113,7 +113,7 @@ public interface LiferaySelenium extends Selenium {
 	public void connectToEmailAccount(String emailAddress, String emailPassword)
 		throws Exception;
 
-	public void copyText(String locator);
+	public void copyText(String locator) throws Exception;
 
 	public void copyValue(String locator);
 
@@ -169,7 +169,7 @@ public interface LiferaySelenium extends Selenium {
 
 	public boolean isNotSelectedLabel(String selectLocator, String pattern);
 
-	public boolean isNotText(String locator, String value);
+	public boolean isNotText(String locator, String value) throws Exception;
 
 	public boolean isNotValue(String locator, String value);
 
@@ -183,7 +183,7 @@ public interface LiferaySelenium extends Selenium {
 
 	public boolean isTCatEnabled();
 
-	public boolean isText(String locator, String value);
+	public boolean isText(String locator, String value) throws Exception;
 
 	public boolean isTextNotPresent(String pattern);
 

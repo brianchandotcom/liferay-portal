@@ -23,7 +23,7 @@
 		</div>
 	</c:when>
 	<c:otherwise>
-		<div class="<%= cssClass %> user-icon user-icon-default">
+		<div class="<%= colorCssClass %> <%= cssClass %> user-icon user-icon-default">
 			<span><%= userInitials %></span>
 		</div>
 	</c:otherwise>

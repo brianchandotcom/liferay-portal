@@ -1,6 +1,6 @@
 buildService {
-	apiDirName = "../microblogs-api/src"
-	testDirName = "../microblogs-test/test/integration"
+	apiDirName = "../microblogs-api/src/main/java"
+	testDirName = "../microblogs-test/src/testIntegration/java"
 }
 
 dependencies {

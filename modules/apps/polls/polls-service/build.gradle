@@ -1,7 +1,7 @@
 buildService {
-	apiDirName = "../polls-api/src"
+	apiDirName = "../polls-api/src/main/java"
 	autoNamespaceTables = false
-	testDirName = "../polls-test/test/integration"
+	testDirName = "../polls-test/src/testIntegration/java"
 }
 
 dependencies {

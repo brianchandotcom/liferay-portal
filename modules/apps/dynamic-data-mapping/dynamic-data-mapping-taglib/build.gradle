@@ -5,7 +5,7 @@ task buildTaglibs(type: BuildTaglibsTask)
 buildTaglibs {
 	classpath = configurations.alloyTaglib
 	componentsXmlFiles "liferay-ddm.xml"
-	javaDir = "src/com/liferay/dynamic/data/mapping/taglib/servlet"
+	javaDir = "src/main/java/com/liferay/dynamic/data/mapping/taglib/servlet"
 	javaPackage = "com.liferay.dynamic.data.mapping.taglib.servlet"
 }
 

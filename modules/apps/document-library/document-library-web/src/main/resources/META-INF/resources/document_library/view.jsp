@@ -68,14 +68,6 @@ if (!ArrayUtil.contains(displayViews, displayStyle)) {
 	displayStyle = displayViews[0];
 }
 
-int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_ANY, false);
-
-boolean showSelectAll = false;
-
-if (total > 0) {
-	showSelectAll = true;
-}
-
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
 
@@ -111,15 +103,10 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 
 <liferay-util:include page="/document_library/navigation.jsp" servletContext="<%= application %>" />
 
+<liferay-util:include page="/document_library/toolbar.jsp" servletContext="<%= application %>" />
+
 <div id="<portlet:namespace />documentLibraryContainer">
 	<div <%= portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
-		<liferay-ui:app-view-toolbar
-			includeDisplayStyle="<%= true %>"
-			includeSelectAll="<%= showSelectAll %>"
-		>
-			<liferay-util:include page="/document_library/toolbar.jsp" servletContext="<%= application %>" />
-		</liferay-ui:app-view-toolbar>
-
 		<div class="document-library-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
 			<c:if test='<%= !navigation.equals("recent") && !navigation.equals("mine") && Validator.isNull(browseBy) %>'>
 				<liferay-util:include page="/document_library/breadcrumb.jsp" servletContext="<%= application %>" />

@@ -93,13 +93,31 @@ public class UnstableMessageUtil {
 			runBuildURLs.add(buildURL);
 		}
 
+		int failureCount = _getUnstableMessage(sb, runBuildURLs);
+
+		sb.append("</ol>");
+
+		if (failureCount > 3) {
+			sb.append("<p><strong>Click <a href=\\\"");
+			sb.append(buildURL);
+			sb.append("/testReport/\\\">here</a> for more failures.</strong>");
+			sb.append("</p>");
+		}
+
+		return sb.toString();
+	}
+	
+	private static int _getUnstableMessage(
+			StringBuilder sb, List<String> runBuildURLs)
+		throws Exception {
+		
 		int failureCount = 0;
 
-		topLoop:
 		for (String runBuildURL : runBuildURLs) {
-			testReportJSONObject = JenkinsResultsParserUtil.toJSONObject(
-				JenkinsResultsParserUtil.getLocalURL(
-					runBuildURL + "testReport/api/json"));
+			JSONObject testReportJSONObject =
+				JenkinsResultsParserUtil.toJSONObject(
+					JenkinsResultsParserUtil.getLocalURL(
+						runBuildURL + "testReport/api/json"));
 
 			JSONArray suitesJSONArray = testReportJSONObject.getJSONArray(
 				"suites");
@@ -126,7 +144,7 @@ public class UnstableMessageUtil {
 
 						sb.append("<li>...</li>");
 
-						break topLoop;
+						return failureCount;
 					}
 
 					sb.append("<li><a href=\\\"");
@@ -229,16 +247,7 @@ public class UnstableMessageUtil {
 			}
 		}
 
-		sb.append("</ol>");
-
-		if (failureCount > 3) {
-			sb.append("<p><strong>Click <a href=\\\"");
-			sb.append(buildURL);
-			sb.append("/testReport/\\\">here</a> for more failures.</strong>");
-			sb.append("</p>");
-		}
-
-		return sb.toString();
+		return failureCount;
 	}
 
 }

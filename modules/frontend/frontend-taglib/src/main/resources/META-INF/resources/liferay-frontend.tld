@@ -407,6 +407,23 @@
 		<body-content>JSP</body-content>
 	</tag>
 	<tag>
+		<name>vertical-card-small-image</name>
+		<tag-class>com.liferay.frontend.taglib.servlet.taglib.VerticalCardSmallImageTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>A CSS class for styling the small image</description>
+			<name>smallImageCSSClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>A URL for the card's small image, if the card is vertical</description>
+			<name>smallImageUrl</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<name>vertical-card-sticker-bottom</name>
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.VerticalCardStickerBottomTag</tag-class>
 		<body-content>JSP</body-content>

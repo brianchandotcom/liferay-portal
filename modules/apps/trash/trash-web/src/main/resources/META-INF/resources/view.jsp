@@ -287,14 +287,16 @@ if (Validator.isNotNull(keywords)) {
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<portlet:actionURL name="emptyTrash" var="emptyTrashURL">
-			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-		</portlet:actionURL>
+		<c:if test="<%= Validator.isNull(keywords) %>">
+			<portlet:actionURL name="emptyTrash" var="emptyTrashURL">
+				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+			</portlet:actionURL>
 
-		<liferay-ui:trash-empty
-			portletURL="<%= emptyTrashURL %>"
-			totalEntries="<%= searchContainer.getTotal() %>"
-		/>
+			<liferay-ui:trash-empty
+				portletURL="<%= emptyTrashURL %>"
+				totalEntries="<%= searchContainer.getTotal() %>"
+			/>
+		</c:if>
 
 		<liferay-ui:breadcrumb
 			showCurrentGroup="<%= false %>"

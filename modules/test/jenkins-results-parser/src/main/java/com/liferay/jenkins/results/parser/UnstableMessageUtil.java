@@ -112,6 +112,7 @@ public class UnstableMessageUtil {
 						!status.equals("SKIPPED")) {
 
 						if (failureCount == 3) {
+							failureCount++;
 							sb.append("<li>...</li>");
 							break topLoop;
 						}

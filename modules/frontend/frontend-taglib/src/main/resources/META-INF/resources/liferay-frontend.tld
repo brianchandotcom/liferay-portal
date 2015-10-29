@@ -378,18 +378,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A CSS class for styling the small image</description>
-			<name>smallImageCSSClass</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>A URL for the card's small image, if the card is vertical</description>
-			<name>smallImageUrl</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<description>Text to add as a subtitle in the text zone, if the card is vertical</description>
 			<name>subtitle</name>
 			<required>false</required>
@@ -416,6 +404,11 @@
 	<tag>
 		<name>vertical-card-header</name>
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.VerticalCardHeaderTag</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
+	<tag>
+		<name>vertical-card-sticker-bottom</name>
+		<tag-class>com.liferay.frontend.taglib.servlet.taglib.VerticalCardStickerBottomTag</tag-class>
 		<body-content>JSP</body-content>
 	</tag>
 </taglib>

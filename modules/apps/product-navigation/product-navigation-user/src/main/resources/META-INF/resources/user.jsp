@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,27 +12,22 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.application.list;
+<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-import java.io.IOException;
+<%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %>
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+<liferay-theme:defineObjects />
 
-/**
- * @author Adolfo Pérez
- */
-public interface PanelCategory extends PanelEntry {
+<div class="product-menu-tab-icon user-tab">
+	<div class="icon-monospaced">
+		<div class="user-icon">
+			<img alt="<%= HtmlUtil.escapeAttribute(user.getFullName()) %>" src="<%= HtmlUtil.escape(user.getPortraitURL(themeDisplay)) %>" />
+		</div>
+	</div>
+</div>
 
-	public String getIconCssClass();
-
-	public boolean include(
-			HttpServletRequest request, HttpServletResponse response)
-		throws IOException;
-
-	public boolean includeHeader(
-			HttpServletRequest request, HttpServletResponse response)
-		throws IOException;
-
-}
+<div class="product-menu-tab-text">
+	<%= user.getFirstName() %>
+</div>

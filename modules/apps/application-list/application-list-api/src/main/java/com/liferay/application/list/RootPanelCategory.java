@@ -66,6 +66,14 @@ public class RootPanelCategory implements PanelCategory {
 		return false;
 	}
 
+	@Override
+	public boolean includeHeader(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
+
+		return false;
+	}
+
 	private RootPanelCategory() {
 	}
 

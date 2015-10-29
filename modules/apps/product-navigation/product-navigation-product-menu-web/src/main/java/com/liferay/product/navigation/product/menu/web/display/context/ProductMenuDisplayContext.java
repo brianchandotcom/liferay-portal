@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -147,6 +148,25 @@ public class ProductMenuDisplayContext {
 
 		return mySiteGroup.isShowSite(
 			_themeDisplay.getPermissionChecker(), privateLayout);
+	}
+
+	public boolean showProductMenu() {
+		Layout layout = _themeDisplay.getLayout();
+
+		if (layout.isTypeControlPanel()) {
+			return true;
+		}
+
+		List<PanelCategory> childPanelCategories = getChildPanelCategories();
+
+		// If only the Personal Panel is shown, then the product menu itself
+		// won't be shown to users
+
+		if (childPanelCategories.size() <= 1) {
+			return false;
+		}
+
+		return true;
 	}
 
 	protected String getGroupAdministrationURL(Group group) {

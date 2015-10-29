@@ -14,14 +14,26 @@
 
 package com.liferay.product.navigation.product.menu.web.control.menu;
 
+import com.liferay.application.list.PanelCategory;
+import com.liferay.application.list.PanelCategoryRegistry;
+import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.control.menu.BaseJSPControlMenuEntry;
 import com.liferay.control.menu.ControlMenuEntry;
 import com.liferay.control.menu.constants.ControlMenuCategoryKeys;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.WebKeys;
+
+import java.util.List;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  *
@@ -43,6 +55,32 @@ public class ProductMenuControlMenuEntry extends BaseJSPControlMenuEntry {
 	}
 
 	@Override
+	public boolean hasAccessPermission(HttpServletRequest request)
+		throws PortalException {
+
+		if (_panelCategoryRegistry == null) {
+			return false;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		List<PanelCategory> panelCategories =
+			_panelCategoryRegistry.getChildPanelCategories(
+				PanelCategoryKeys.ROOT, themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroup());
+
+		// If only the Personal Panel is shown, then the product menu link
+		// won't be shown to users
+
+		if (panelCategories.size() <= 1) {
+			return false;
+		}
+
+		return super.hasAccessPermission(request);
+	}
+
+	@Override
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.product.navigation.product.menu.web)",
 		unbind = "-"
@@ -50,5 +88,24 @@ public class ProductMenuControlMenuEntry extends BaseJSPControlMenuEntry {
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected void setPanelCategoryRegistry(
+		PanelCategoryRegistry panelCategoryRegistry) {
+
+		_panelCategoryRegistry = panelCategoryRegistry;
+	}
+
+	protected void unsetPanelCategoryRegistry(
+		PanelCategoryRegistry panelCategoryRegistry) {
+
+		_panelCategoryRegistry = null;
+	}
+
+	private PanelCategoryRegistry _panelCategoryRegistry;
 
 }

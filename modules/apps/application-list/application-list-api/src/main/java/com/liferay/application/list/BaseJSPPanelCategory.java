@@ -31,6 +31,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 public abstract class BaseJSPPanelCategory extends BasePanelCategory {
 
+	public String getHeaderJspPath() {
+		return null;
+	}
+
 	public abstract String getJspPath();
 
 	@Override
@@ -38,29 +42,43 @@ public abstract class BaseJSPPanelCategory extends BasePanelCategory {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
-		String jspPath = getJspPath();
+		return includeJSP(request, response, getJspPath());
+	}
+
+	@Override
+	public boolean includeHeader(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
+
+		return includeJSP(request, response, getHeaderJspPath());
+	}
+
+	public void setServletContext(ServletContext servletContext) {
+		_servletContext = servletContext;
+	}
+
+	protected boolean includeJSP(
+			HttpServletRequest request, HttpServletResponse response,
+			String jspPath)
+		throws IOException {
 
 		if (Validator.isNull(jspPath)) {
 			return false;
 		}
 
 		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(getJspPath());
+			_servletContext.getRequestDispatcher(jspPath);
 
 		try {
 			requestDispatcher.include(request, response);
 		}
 		catch (ServletException se) {
-			_log.error("Unable to include " + getJspPath(), se);
+			_log.error("Unable to include " + jspPath, se);
 
 			return false;
 		}
 
 		return true;
-	}
-
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

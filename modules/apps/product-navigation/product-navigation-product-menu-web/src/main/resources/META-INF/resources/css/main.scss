@@ -87,36 +87,50 @@ body {
 				display: block;
 			}
 		}
-	}
 
-	.user-heading {
-		margin: 0 8px;
-	}
-
-	.user-icon {
-		height: 32px;
-		line-height: 32px;
-		width: 32px;
-
-		@include sm() {
-			height: 48px;
-			line-height: 48px;
-			width: 48px;
+		.user-heading {
+			margin: 0 8px;
 		}
-	}
 
-	.user-subheading {
-		list-style: none;
-		margin: 0 8px;
-		padding: 0;
+		.user-icon {
+			height: 32px;
+			line-height: 32px;
+			width: 32px;
 
-		> li {
-			float: left;
-
-			&:last-child {
-				float: right;
+			@include sm() {
+				height: 48px;
+				line-height: 48px;
+				width: 48px;
 			}
 		}
+
+		.user-subheading {
+			list-style: none;
+			margin: 0 8px;
+			padding: 0;
+
+			> li {
+				float: left;
+
+				&:last-child {
+					float: right;
+				}
+			}
+		}
+	}
+
+	.user-tab {
+		.icon-monospaced {
+			padding-top: 10px;
+		}
+
+		.user-icon {
+			img {
+				display: block;
+				width: 100%;
+			}
+		}
+
 	}
 }
 

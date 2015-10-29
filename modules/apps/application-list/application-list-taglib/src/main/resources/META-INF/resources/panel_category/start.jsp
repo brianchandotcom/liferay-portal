@@ -18,7 +18,9 @@
 
 <c:if test="<%= !panelApps.isEmpty() || showHeader %>">
 	<a aria-expanded="false" class="collapse-icon <%= active ? StringPool.BLANK : "collapsed" %> list-group-heading" data-toggle="collapse" href="#<%= id %>">
-		<%= panelCategory.getLabel(themeDisplay.getLocale()) %>
+		<c:if test="<%= !panelCategory.includeHeader(request, new PipingServletResponse(pageContext)) %>">
+			<%= panelCategory.getLabel(themeDisplay.getLocale()) %>
+		</c:if>
 	</a>
 
 	<div class="collapse <%= active ? "in" : StringPool.BLANK %>" id="<%= id %>">

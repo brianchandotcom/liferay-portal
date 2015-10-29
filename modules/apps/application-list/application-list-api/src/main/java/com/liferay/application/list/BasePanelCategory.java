@@ -70,4 +70,12 @@ public abstract class BasePanelCategory implements PanelCategory {
 		return false;
 	}
 
+	@Override
+	public boolean includeHeader(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
+
+		return false;
+	}
+
 }

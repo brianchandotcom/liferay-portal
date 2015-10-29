@@ -28,7 +28,8 @@ page import="com.liferay.application.list.PanelCategory" %><%@
 page import="com.liferay.application.list.taglib.display.context.logic.PanelAppContentHelper" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
-page import="com.liferay.portal.kernel.util.Validator" %>
+page import="com.liferay.portal.kernel.util.Validator" %><%@
+page import="com.liferay.taglib.servlet.PipingServletResponse" %>
 
 <%@ page import="java.util.List" %><%@
 page import="java.util.Map" %>

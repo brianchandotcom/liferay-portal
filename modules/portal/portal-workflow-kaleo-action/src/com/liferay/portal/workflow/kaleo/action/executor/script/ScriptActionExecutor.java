@@ -28,9 +28,21 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portal.workflow.kaleo.action.script.language=beanshell",
+		"com.liferay.portal.workflow.kaleo.action.script.language=groovy",
+		"com.liferay.portal.workflow.kaleo.action.script.language=javascript",
+		"com.liferay.portal.workflow.kaleo.action.script.language=python",
+		"com.liferay.portal.workflow.kaleo.action.script.language=ruby"
+	}
+)
 public class ScriptActionExecutor implements ActionExecutor {
 
 	public ScriptActionExecutor() {

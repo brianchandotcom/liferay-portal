@@ -31,9 +31,15 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true,
+	property = {"com.liferay.portal.workflow.kaleo.action.script.language=drl"}
+)
 public class DRLActionExecutor implements ActionExecutor {
 
 	@Override

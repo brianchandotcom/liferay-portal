@@ -45,57 +45,53 @@ int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repos
 			<liferay-util:include page="/document_library/sort_button.jsp" servletContext="<%= application %>" />
 		</liferay-frontend:management-bar-filters>
 	</c:if>
+
+	<liferay-frontend:management-bar-action-buttons>
+
+		<%
+		Group scopeGroup = themeDisplay.getScopeGroup();
+		%>
+
+		<c:if test="<%= !scopeGroup.isStaged() || scopeGroup.isStagingGroup() || !scopeGroup.isStagedPortlet(DLPortletKeys.DOCUMENT_LIBRARY) %>">
+
+			<%
+			String taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CANCEL_CHECKOUT + "'}); void(0);";
+			%>
+
+			<aui:a cssClass="btn" href="<%= taglibURL %>" iconCssClass="icon-remove" />
+
+			<%
+			taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CHECKIN + "'}); void(0);";
+			%>
+
+			<aui:a cssClass="btn" href="<%= taglibURL %>" iconCssClass="icon-lock" />
+
+			<%
+			taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CHECKOUT + "'}); void(0);";
+			%>
+
+			<aui:a cssClass="btn" href="<%= taglibURL %>" iconCssClass="icon-unlock" />
+
+			<%
+			taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.MOVE + "'}); void(0);";
+			%>
+
+			<aui:a cssClass="btn" href="<%= taglibURL %>" iconCssClass="icon-move" />
+		</c:if>
+
+		<%
+		String taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.MOVE_TO_TRASH + "'}); void(0);";
+		%>
+
+		<aui:a cssClass="btn" href="<%= taglibURL %>" iconCssClass="icon-trash" id="moveToTrashAction" />
+
+		<%
+		taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteEntries();";
+		%>
+
+		<aui:a cssClass="btn" href="<%= taglibURL %>" iconCssClass="icon-remove" id="deleteAction" />
+	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
-
-<aui:nav-bar>
-	<aui:nav cssClass="navbar-nav" id="toolbarContainer">
-		<aui:nav-item cssClass="hide" dropdown="<%= true %>" id="actionsButtonContainer" label="actions">
-
-			<%
-			Group scopeGroup = themeDisplay.getScopeGroup();
-			%>
-
-			<c:if test="<%= !scopeGroup.isStaged() || scopeGroup.isStagingGroup() || !scopeGroup.isStagedPortlet(DLPortletKeys.DOCUMENT_LIBRARY) %>">
-
-				<%
-				String taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CANCEL_CHECKOUT + "'}); void(0);";
-				%>
-
-				<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-remove" label="cancel-checkout[document]" />
-
-				<%
-				taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CHECKIN + "'}); void(0);";
-				%>
-
-				<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-lock" label="checkin" />
-
-				<%
-				taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CHECKOUT + "'}); void(0);";
-				%>
-
-				<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-unlock" label="checkout[document]" />
-
-				<%
-				taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.MOVE + "'}); void(0);";
-				%>
-
-				<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-move" label="move" />
-			</c:if>
-
-			<%
-			String taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.MOVE_TO_TRASH + "'}); void(0);";
-			%>
-
-			<aui:nav-item cssClass="item-remove" href="<%= taglibURL %>" iconCssClass="icon-trash" id="moveToTrashAction" label="move-to-the-recycle-bin" />
-
-			<%
-			taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteEntries();";
-			%>
-
-			<aui:nav-item cssClass="item-remove" href="<%= taglibURL %>" iconCssClass="icon-remove" id="deleteAction" label="delete" />
-		</aui:nav-item>
-	</aui:nav>
-</aui:nav-bar>
 
 <aui:script>
 	function <portlet:namespace />deleteEntries() {

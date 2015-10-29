@@ -16,13 +16,13 @@ package com.liferay.dynamic.data.lists.web.display.context;
 
 import com.liferay.dynamic.data.lists.constants.DDLWebKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,10 +50,9 @@ public class DDLViewRecordsDisplayContext {
 
 	public List<DDMFormField> getDDMFormFields() {
 		if (_ddmFormFields == null) {
-			_ddmFormFields = new ArrayList<>();
+			DDMForm ddmForm = _ddmStructure.getDDMForm();
 
-			List<DDMFormField> ddmFormfields = _ddmStructure.getDDMFormFields(
-				false);
+			List<DDMFormField> ddmFormfields = ddmForm.getDDMFormFields();
 
 			int totalColumns = _TOTAL_COLUMNS;
 
@@ -61,9 +60,7 @@ public class DDLViewRecordsDisplayContext {
 				totalColumns = ddmFormfields.size();
 			}
 
-			for (int i = 0; i < totalColumns; i++) {
-				_ddmFormFields.add(ddmFormfields.get(i));
-			}
+			_ddmFormFields = ddmFormfields.subList(0, totalColumns);
 		}
 
 		return _ddmFormFields;

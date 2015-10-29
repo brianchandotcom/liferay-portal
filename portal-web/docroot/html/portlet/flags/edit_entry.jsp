@@ -94,22 +94,17 @@ long reportedUserId = ParamUtil.getLong(request, "reportedUserId");
 			reason = (otherReasonNode && otherReasonNode.val()) || '<%= UnicodeLanguageUtil.get(request, "no-reason-specified") %>';
 		}
 
-		var reporterEmailAddressNode = A.one('#<portlet:namespace />reporterEmailAddress');
-
-		var reporterEmailAddress = (reporterEmailAddressNode && reporterEmailAddressNode.val()) || '';
-
 		var flagsPopupNode = A.one('#<portlet:namespace />flagsPopup');
-		var errorMessageNode = A.one('#<portlet:namespace />error');
-		var confirmationMessageNode = A.one('#<portlet:namespace />confirmation');
-
-		var errorMessage = (errorMessageNode && errorMessageNode.html()) || '';
-		var confirmationMessage = (confirmationMessageNode && confirmationMessageNode.html()) || '';
 
 		var setDialogContent = function(message) {
 			var dialog = Liferay.Util.Window.getByChild(flagsPopupNode);
 
 			dialog.setStdModContent('body', message);
 		};
+
+		var reporterEmailAddressNode = A.one('#<portlet:namespace />reporterEmailAddress');
+
+		var reporterEmailAddress = (reporterEmailAddressNode && reporterEmailAddressNode.val()) || '';
 
 		var data = Liferay.Util.ns(
 			'<portlet:namespace />',
@@ -123,6 +118,12 @@ long reportedUserId = ParamUtil.getLong(request, "reportedUserId");
 				reporterEmailAddress: reporterEmailAddress
 			}
 		);
+
+		var confirmationMessageNode = A.one('#<portlet:namespace />confirmation');
+		var errorMessageNode = A.one('#<portlet:namespace />error');
+
+		var confirmationMessage = (confirmationMessageNode && confirmationMessageNode.html()) || '';
+		var errorMessage = (errorMessageNode && errorMessageNode.html()) || '';
 
 		A.io.request(
 			'<liferay-portlet:actionURL portletName="<%= PortletKeys.FLAGS %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/flags/edit_entry" /></liferay-portlet:actionURL>',

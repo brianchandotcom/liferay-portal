@@ -19,6 +19,7 @@ import aQute.bnd.annotation.metatype.Configurable;
 import com.liferay.portal.kernel.monitoring.DataSample;
 import com.liferay.portal.kernel.monitoring.DataSampleFactory;
 import com.liferay.portal.kernel.monitoring.DataSampleThreadLocal;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -59,8 +60,10 @@ public class MonitoringTopHeadDynamicInclude extends BaseDynamicInclude {
 		DataSample dataSample =
 			_dataSampleFactory.createPortalRequestDataSample(
 				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+				request.getHeader(HttpHeaders.REFERER), request.getRemoteAddr(),
 				request.getRemoteUser(), request.getRequestURI(),
-				request.getRequestURL().toString() + ".jsp_display");
+				request.getRequestURL().toString() + ".jsp_display",
+				request.getHeader(HttpHeaders.USER_AGENT));
 
 		dataSample.setDescription("Portal Request");
 

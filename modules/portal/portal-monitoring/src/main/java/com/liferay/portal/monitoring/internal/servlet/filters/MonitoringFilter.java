@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.portal.kernel.monitoring.DataSample;
 import com.liferay.portal.kernel.monitoring.DataSampleFactory;
 import com.liferay.portal.kernel.monitoring.DataSampleThreadLocal;
 import com.liferay.portal.kernel.monitoring.PortalMonitoringControl;
@@ -27,13 +26,18 @@ import com.liferay.portal.kernel.monitoring.PortletMonitoringControl;
 import com.liferay.portal.kernel.monitoring.RequestStatus;
 import com.liferay.portal.kernel.monitoring.ServiceMonitoringControl;
 import com.liferay.portal.kernel.servlet.BaseFilter;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.monitoring.internal.statistics.portal.PortalRequestDataSample;
 import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -92,6 +96,12 @@ public class MonitoringFilter extends BaseFilter
 		_monitorPortalRequest = monitorPortalRequest;
 	}
 
+	protected int decrementProcessFilterCount() {
+		AtomicInteger processFilterCount = _processFilterCount.get();
+
+		return processFilterCount.decrementAndGet();
+	}
+
 	protected long getGroupId(HttpServletRequest request) {
 		long groupId = ParamUtil.getLong(request, "groupId");
 
@@ -99,11 +109,17 @@ public class MonitoringFilter extends BaseFilter
 			return groupId;
 		}
 
+		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
+
+		if (layout != null) {
+			return layout.getGroupId();
+		}
+
 		long plid = ParamUtil.getLong(request, "p_l_id");
 
 		if ((plid > 0) && (_layoutLocalService != null)) {
 			try {
-				Layout layout = _layoutLocalService.getLayout(plid);
+				layout = _layoutLocalService.getLayout(plid);
 
 				groupId = layout.getGroupId();
 			}
@@ -122,6 +138,12 @@ public class MonitoringFilter extends BaseFilter
 		return _log;
 	}
 
+	protected void incrementProcessFilterCount() {
+		AtomicInteger processFilterCount = _processFilterCount.get();
+
+		processFilterCount.incrementAndGet();
+	}
+
 	@Override
 	protected void processFilter(
 			HttpServletRequest request, HttpServletResponse response,
@@ -131,32 +153,41 @@ public class MonitoringFilter extends BaseFilter
 		long companyId = PortalUtil.getCompanyId(request);
 		long groupId = getGroupId(request);
 
-		DataSample dataSample = null;
+		PortalRequestDataSample portalRequestDataSample = null;
+
+		incrementProcessFilterCount();
 
 		if (_monitorPortalRequest) {
-			dataSample = _dataSampleFactory.createPortalRequestDataSample(
-				companyId, groupId, request.getRemoteUser(),
-				request.getRequestURI(),
-				GetterUtil.getString(request.getRequestURL()));
+			portalRequestDataSample = (PortalRequestDataSample)
+				_dataSampleFactory.createPortalRequestDataSample(
+					companyId, groupId, request.getHeader(HttpHeaders.REFERER),
+					request.getRemoteAddr(), request.getRemoteUser(),
+					request.getRequestURI(),
+					GetterUtil.getString(request.getRequestURL()),
+					request.getHeader(HttpHeaders.USER_AGENT));
 
 			DataSampleThreadLocal.initialize();
 		}
 
 		try {
-			if (dataSample != null) {
-				dataSample.prepare();
+			if (portalRequestDataSample != null) {
+				portalRequestDataSample.prepare();
 			}
 
 			processFilter(
 				MonitoringFilter.class, request, response, filterChain);
 
-			if (dataSample != null) {
-				dataSample.capture(RequestStatus.SUCCESS);
+			if (portalRequestDataSample != null) {
+				portalRequestDataSample.capture(RequestStatus.SUCCESS);
+
+				portalRequestDataSample.setGroupId(getGroupId(request));
+
+				portalRequestDataSample.setStatusCode(response.getStatus());
 			}
 		}
 		catch (Exception e) {
-			if (dataSample != null) {
-				dataSample.capture(RequestStatus.ERROR);
+			if (portalRequestDataSample != null) {
+				portalRequestDataSample.capture(RequestStatus.ERROR);
 			}
 
 			if (e instanceof IOException) {
@@ -170,13 +201,17 @@ public class MonitoringFilter extends BaseFilter
 			}
 		}
 		finally {
-			if (dataSample != null) {
-				DataSampleThreadLocal.addDataSample(dataSample);
+			if (portalRequestDataSample != null) {
+				DataSampleThreadLocal.addDataSample(portalRequestDataSample);
 			}
 
-			MessageBusUtil.sendMessage(
-				DestinationNames.MONITORING,
-				DataSampleThreadLocal.getDataSamples());
+			if (decrementProcessFilterCount() == 0) {
+				MessageBusUtil.sendMessage(
+					DestinationNames.MONITORING,
+					DataSampleThreadLocal.getDataSamples());
+
+				_processFilterCount.remove();
+			}
 		}
 	}
 
@@ -218,6 +253,15 @@ public class MonitoringFilter extends BaseFilter
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MonitoringFilter.class);
+
+	private static final ThreadLocal<AtomicInteger> _processFilterCount =
+		new ThreadLocal<AtomicInteger>() {
+
+		protected AtomicInteger initialValue() {
+			return new AtomicInteger(0);
+		};
+
+	};
 
 	private DataSampleFactory _dataSampleFactory;
 	private volatile LayoutLocalService _layoutLocalService;

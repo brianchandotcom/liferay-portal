@@ -112,7 +112,7 @@ public class CopyStructureMVCActionCommand extends DDMBaseMVCActionCommand {
 		DDMStructure structure = copyStructure(actionRequest);
 
 		addSuccessMessage(actionRequest, actionResponse);
-		
+
 		setRedirectAttribute(actionRequest, structure);
 	}
 

@@ -37,6 +37,7 @@ create table JournalArticle (
 
 create table JournalArticleImage (
 	articleImageId LONG not null primary key,
+	companyId LONG,
 	groupId LONG,
 	articleId VARCHAR(75) null,
 	version DOUBLE,
@@ -49,6 +50,7 @@ create table JournalArticleImage (
 create table JournalArticleResource (
 	uuid_ VARCHAR(75) null,
 	resourcePrimKey LONG not null primary key,
+	companyId LONG,
 	groupId LONG,
 	articleId VARCHAR(75) null
 );

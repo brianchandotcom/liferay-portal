@@ -122,6 +122,8 @@ public class ShoppingOrderItemPersistenceTest {
 
 		ShoppingOrderItem newShoppingOrderItem = _persistence.create(pk);
 
+		newShoppingOrderItem.setCompanyId(RandomTestUtil.nextLong());
+
 		newShoppingOrderItem.setOrderId(RandomTestUtil.nextLong());
 
 		newShoppingOrderItem.setItemId(RandomTestUtil.randomString());
@@ -146,6 +148,8 @@ public class ShoppingOrderItemPersistenceTest {
 
 		Assert.assertEquals(existingShoppingOrderItem.getOrderItemId(),
 			newShoppingOrderItem.getOrderItemId());
+		Assert.assertEquals(existingShoppingOrderItem.getCompanyId(),
+			newShoppingOrderItem.getCompanyId());
 		Assert.assertEquals(existingShoppingOrderItem.getOrderId(),
 			newShoppingOrderItem.getOrderId());
 		Assert.assertEquals(existingShoppingOrderItem.getItemId(),
@@ -198,9 +202,9 @@ public class ShoppingOrderItemPersistenceTest {
 
 	protected OrderByComparator<ShoppingOrderItem> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ShoppingOrderItem",
-			"orderItemId", true, "orderId", true, "sku", true, "name", true,
-			"description", true, "properties", true, "price", true, "quantity",
-			true, "shippedDate", true);
+			"orderItemId", true, "companyId", true, "orderId", true, "sku",
+			true, "name", true, "description", true, "properties", true,
+			"price", true, "quantity", true, "shippedDate", true);
 	}
 
 	@Test
@@ -400,6 +404,8 @@ public class ShoppingOrderItemPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		ShoppingOrderItem shoppingOrderItem = _persistence.create(pk);
+
+		shoppingOrderItem.setCompanyId(RandomTestUtil.nextLong());
 
 		shoppingOrderItem.setOrderId(RandomTestUtil.nextLong());
 

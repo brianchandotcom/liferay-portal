@@ -57,5 +57,5 @@
 
 	<#assign mbStatsUserModel = dataFactory.newMBStatsUserModel(groupId)>
 
-	insert into MBStatsUser values (${mbStatsUserModel.statsUserId}, ${mbStatsUserModel.groupId}, ${mbStatsUserModel.userId}, ${mbStatsUserModel.messageCount}, '${dataFactory.getDateString(mbStatsUserModel.lastPostDate)}');
+	insert into MBStatsUser values (${mbStatsUserModel.statsUserId}, ${mbStatsUserModel.companyId}, ${mbStatsUserModel.groupId}, ${mbStatsUserModel.userId}, ${mbStatsUserModel.messageCount}, '${dataFactory.getDateString(mbStatsUserModel.lastPostDate)}');
 </#list>

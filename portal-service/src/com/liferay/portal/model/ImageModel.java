@@ -39,7 +39,7 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface ImageModel extends BaseModel<Image>, MVCCModel {
+public interface ImageModel extends BaseModel<Image>, MVCCModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -89,6 +89,22 @@ public interface ImageModel extends BaseModel<Image>, MVCCModel {
 	 * @param imageId the image ID of this image
 	 */
 	public void setImageId(long imageId);
+
+	/**
+	 * Returns the company ID of this image.
+	 *
+	 * @return the company ID of this image
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this image.
+	 *
+	 * @param companyId the company ID of this image
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the modified date of this image.

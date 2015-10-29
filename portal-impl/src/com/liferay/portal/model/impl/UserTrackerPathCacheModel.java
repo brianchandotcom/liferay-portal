@@ -79,12 +79,14 @@ public class UserTrackerPathCacheModel implements CacheModel<UserTrackerPath>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", userTrackerPathId=");
 		sb.append(userTrackerPathId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", userTrackerId=");
 		sb.append(userTrackerId);
 		sb.append(", path=");
@@ -102,6 +104,7 @@ public class UserTrackerPathCacheModel implements CacheModel<UserTrackerPath>,
 
 		userTrackerPathImpl.setMvccVersion(mvccVersion);
 		userTrackerPathImpl.setUserTrackerPathId(userTrackerPathId);
+		userTrackerPathImpl.setCompanyId(companyId);
 		userTrackerPathImpl.setUserTrackerId(userTrackerId);
 
 		if (path == null) {
@@ -127,6 +130,7 @@ public class UserTrackerPathCacheModel implements CacheModel<UserTrackerPath>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 		userTrackerPathId = objectInput.readLong();
+		companyId = objectInput.readLong();
 		userTrackerId = objectInput.readLong();
 		path = objectInput.readUTF();
 		pathDate = objectInput.readLong();
@@ -137,6 +141,7 @@ public class UserTrackerPathCacheModel implements CacheModel<UserTrackerPath>,
 		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(userTrackerPathId);
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userTrackerId);
 
 		if (path == null) {
@@ -151,6 +156,7 @@ public class UserTrackerPathCacheModel implements CacheModel<UserTrackerPath>,
 
 	public long mvccVersion;
 	public long userTrackerPathId;
+	public long companyId;
 	public long userTrackerId;
 	public String path;
 	public long pathDate;

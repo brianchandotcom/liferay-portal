@@ -60,6 +60,7 @@
 	</model>
 	<model name="com.liferay.journal.model.JournalArticleImage">
 		<field name="articleImageId" type="long" />
+		<field name="companyId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="articleId" type="String" />
 		<field name="version" type="double" />
@@ -71,6 +72,7 @@
 	<model name="com.liferay.journal.model.JournalArticleResource">
 		<field name="uuid" type="String" />
 		<field name="resourcePrimKey" type="long" />
+		<field name="companyId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="articleId" type="String" />
 	</model>

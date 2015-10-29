@@ -421,6 +421,10 @@
 
 		<column name="statsUserId" type="long" primary="true" />
 
+		<!-- Company instance -->
+
+		<column name="companyId" type="long" />
+
 		<!-- Group instance -->
 
 		<column name="groupId" type="long" />

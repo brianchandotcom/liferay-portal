@@ -2369,6 +2369,8 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 		dlContent.setNew(true);
 		dlContent.setPrimaryKey(contentId);
 
+		dlContent.setCompanyId(0);
+
 		return dlContent;
 	}
 

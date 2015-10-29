@@ -53,6 +53,7 @@ public class DDMTemplateLinkWrapper implements DDMTemplateLink,
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("templateLinkId", getTemplateLinkId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("templateId", getTemplateId());
@@ -66,6 +67,12 @@ public class DDMTemplateLinkWrapper implements DDMTemplateLink,
 
 		if (templateLinkId != null) {
 			setTemplateLinkId(templateLinkId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long classNameId = (Long)attributes.get("classNameId");
@@ -126,6 +133,16 @@ public class DDMTemplateLinkWrapper implements DDMTemplateLink,
 	@Override
 	public long getClassPK() {
 		return _ddmTemplateLink.getClassPK();
+	}
+
+	/**
+	* Returns the company ID of this d d m template link.
+	*
+	* @return the company ID of this d d m template link
+	*/
+	@Override
+	public long getCompanyId() {
+		return _ddmTemplateLink.getCompanyId();
 	}
 
 	@Override
@@ -227,6 +244,16 @@ public class DDMTemplateLinkWrapper implements DDMTemplateLink,
 	@Override
 	public void setClassPK(long classPK) {
 		_ddmTemplateLink.setClassPK(classPK);
+	}
+
+	/**
+	* Sets the company ID of this d d m template link.
+	*
+	* @param companyId the company ID of this d d m template link
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_ddmTemplateLink.setCompanyId(companyId);
 	}
 
 	@Override

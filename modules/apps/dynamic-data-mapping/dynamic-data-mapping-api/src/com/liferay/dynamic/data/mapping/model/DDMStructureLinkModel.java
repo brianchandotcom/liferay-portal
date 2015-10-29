@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.ShardedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -40,7 +41,7 @@ import java.io.Serializable;
  */
 @ProviderType
 public interface DDMStructureLinkModel extends AttachedModel,
-	BaseModel<DDMStructureLink> {
+	BaseModel<DDMStructureLink>, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -74,6 +75,22 @@ public interface DDMStructureLinkModel extends AttachedModel,
 	 * @param structureLinkId the structure link ID of this d d m structure link
 	 */
 	public void setStructureLinkId(long structureLinkId);
+
+	/**
+	 * Returns the company ID of this d d m structure link.
+	 *
+	 * @return the company ID of this d d m structure link
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this d d m structure link.
+	 *
+	 * @param companyId the company ID of this d d m structure link
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the fully qualified class name of this d d m structure link.

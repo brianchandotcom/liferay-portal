@@ -40,7 +40,7 @@ insert into DDMTemplate values ('${ddmTemplateModel.uuid}', ${ddmTemplateModel.t
 	<#list journalArticleCounts as journalArticleCount>
 		<#assign journalArticleResourceModel = dataFactory.newJournalArticleResourceModel(groupId)>
 
-		insert into JournalArticleResource values ('${journalArticleResourceModel.uuid}', ${journalArticleResourceModel.resourcePrimKey}, ${journalArticleResourceModel.groupId}, '${journalArticleResourceModel.articleId}');
+		insert into JournalArticleResource values ('${journalArticleResourceModel.uuid}', ${journalArticleResourceModel.resourcePrimKey}, ${journalArticleResourceModel.companyId}, ${journalArticleResourceModel.groupId}, '${journalArticleResourceModel.articleId}');
 
 		<#assign versionCounts = dataFactory.getSequence(dataFactory.maxJournalArticleVersionCount)>
 

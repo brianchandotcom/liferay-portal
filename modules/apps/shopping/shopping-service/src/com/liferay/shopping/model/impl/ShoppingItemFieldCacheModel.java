@@ -64,10 +64,12 @@ public class ShoppingItemFieldCacheModel implements CacheModel<ShoppingItemField
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{itemFieldId=");
 		sb.append(itemFieldId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", itemId=");
 		sb.append(itemId);
 		sb.append(", name=");
@@ -86,6 +88,7 @@ public class ShoppingItemFieldCacheModel implements CacheModel<ShoppingItemField
 		ShoppingItemFieldImpl shoppingItemFieldImpl = new ShoppingItemFieldImpl();
 
 		shoppingItemFieldImpl.setItemFieldId(itemFieldId);
+		shoppingItemFieldImpl.setCompanyId(companyId);
 		shoppingItemFieldImpl.setItemId(itemId);
 
 		if (name == null) {
@@ -117,6 +120,7 @@ public class ShoppingItemFieldCacheModel implements CacheModel<ShoppingItemField
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		itemFieldId = objectInput.readLong();
+		companyId = objectInput.readLong();
 		itemId = objectInput.readLong();
 		name = objectInput.readUTF();
 		values = objectInput.readUTF();
@@ -127,6 +131,7 @@ public class ShoppingItemFieldCacheModel implements CacheModel<ShoppingItemField
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(itemFieldId);
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(itemId);
 
 		if (name == null) {
@@ -152,6 +157,7 @@ public class ShoppingItemFieldCacheModel implements CacheModel<ShoppingItemField
 	}
 
 	public long itemFieldId;
+	public long companyId;
 	public long itemId;
 	public String name;
 	public String values;

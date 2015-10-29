@@ -108,6 +108,10 @@
 
 		<column name="browserTrackerId" type="long" primary="true" />
 
+		<!-- Company instance -->
+
+		<column name="companyId" type="long" />
+
 		<!-- Audit fields -->
 
 		<column name="userId" type="long" />
@@ -520,6 +524,10 @@
 		<!-- PK fields -->
 
 		<column name="imageId" type="long" primary="true" />
+
+		<!-- Company instance -->
+
+		<column name="companyId" type="long" />
 
 		<!-- Audit fields -->
 
@@ -1279,6 +1287,10 @@
 		<column name="groupId" type="long" primary="true" />
 		<column name="roleId" type="long" primary="true" />
 
+		<!-- Company instance -->
+
+		<column name="companyId" type="long" />
+
 		<!-- Finder methods -->
 
 		<finder name="GroupId" return-type="Collection">
@@ -1293,6 +1305,10 @@
 		<!-- PK fields -->
 
 		<column name="orgLaborId" type="long" primary="true" />
+
+		<!-- Company instance -->
+
+		<column name="companyId" type="long" />
 
 		<!-- Other fields -->
 
@@ -1401,6 +1417,10 @@
 
 		<column name="passwordPolicyRelId" type="long" primary="true" />
 
+		<!-- Company instance -->
+
+		<column name="companyId" type="long" />
+
 		<!-- Other fields -->
 
 		<column name="passwordPolicyId" type="long" />
@@ -1426,6 +1446,10 @@
 		<!-- PK fields -->
 
 		<column name="passwordTrackerId" type="long" primary="true" />
+
+		<!-- Company instance -->
+
+		<column name="companyId" type="long" />
 
 		<!-- Audit fields -->
 
@@ -1670,6 +1694,10 @@
 		<!-- PK fields -->
 
 		<column name="portletPreferencesId" type="long" primary="true" />
+
+		<!-- Company instance -->
+
+		<column name="companyId" type="long" />
 
 		<!-- Other fields -->
 
@@ -1976,6 +2004,10 @@
 
 		<column name="resourceBlockPermissionId" type="long" primary="true" />
 
+		<!-- Company instance -->
+
+		<column name="companyId" type="long" />
+
 		<!-- Other fields -->
 
 		<column name="resourceBlockId" type="long" />
@@ -2190,6 +2222,10 @@
 		<!-- PK fields -->
 
 		<column name="serviceComponentId" type="long" primary="true" />
+
+		<!-- Company instance -->
+
+		<column name="companyId" type="long" />
 
 		<!-- Other fields -->
 
@@ -2654,6 +2690,10 @@
 		<column name="groupId" type="long" primary="true" />
 		<column name="roleId" type="long" primary="true" />
 
+		<!-- Company instance -->
+
+		<column name="companyId" type="long" />
+
 		<!-- Finder methods -->
 
 		<finder name="UserGroupId" return-type="Collection">
@@ -2687,6 +2727,10 @@
 		<column name="groupId" type="long" primary="true" accessor="true" />
 		<column name="roleId" type="long" primary="true" accessor="true" />
 
+		<!-- Company instance -->
+
+		<column name="companyId" type="long" />
+
 		<!-- Finder methods -->
 
 		<finder name="UserId" return-type="Collection">
@@ -2718,6 +2762,10 @@
 		<!-- PK fields -->
 
 		<column name="userIdMapperId" type="long" primary="true" />
+
+		<!-- Company instance -->
+
+		<column name="companyId" type="long" />
 
 		<!-- Audit fields -->
 
@@ -2901,6 +2949,10 @@
 		<!-- PK fields -->
 
 		<column name="userTrackerPathId" type="long" primary="true" />
+
+		<!-- Company instance -->
+
+		<column name="companyId" type="long" />
 
 		<!-- Other fields -->
 

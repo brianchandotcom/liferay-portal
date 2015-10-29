@@ -64,12 +64,14 @@ public class WikiPageResourceCacheModel implements CacheModel<WikiPageResource>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
 		sb.append(", resourcePrimKey=");
 		sb.append(resourcePrimKey);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", nodeId=");
@@ -93,6 +95,7 @@ public class WikiPageResourceCacheModel implements CacheModel<WikiPageResource>,
 		}
 
 		wikiPageResourceImpl.setResourcePrimKey(resourcePrimKey);
+		wikiPageResourceImpl.setCompanyId(companyId);
 		wikiPageResourceImpl.setGroupId(groupId);
 		wikiPageResourceImpl.setNodeId(nodeId);
 
@@ -112,6 +115,7 @@ public class WikiPageResourceCacheModel implements CacheModel<WikiPageResource>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
 		resourcePrimKey = objectInput.readLong();
+		companyId = objectInput.readLong();
 		groupId = objectInput.readLong();
 		nodeId = objectInput.readLong();
 		title = objectInput.readUTF();
@@ -128,6 +132,7 @@ public class WikiPageResourceCacheModel implements CacheModel<WikiPageResource>,
 		}
 
 		objectOutput.writeLong(resourcePrimKey);
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(groupId);
 		objectOutput.writeLong(nodeId);
 
@@ -141,6 +146,7 @@ public class WikiPageResourceCacheModel implements CacheModel<WikiPageResource>,
 
 	public String uuid;
 	public long resourcePrimKey;
+	public long companyId;
 	public long groupId;
 	public long nodeId;
 	public String title;

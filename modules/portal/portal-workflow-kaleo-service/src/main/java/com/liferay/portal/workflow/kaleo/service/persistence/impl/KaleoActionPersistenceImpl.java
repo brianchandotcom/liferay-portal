@@ -2479,6 +2479,8 @@ public class KaleoActionPersistenceImpl extends BasePersistenceImpl<KaleoAction>
 		kaleoAction.setNew(true);
 		kaleoAction.setPrimaryKey(kaleoActionId);
 
+		kaleoAction.setCompanyId(0);
+
 		return kaleoAction;
 	}
 

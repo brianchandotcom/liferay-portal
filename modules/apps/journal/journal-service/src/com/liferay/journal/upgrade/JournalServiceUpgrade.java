@@ -21,6 +21,7 @@ import com.liferay.journal.upgrade.v1_0_0.UpgradeJournalDisplayPreferences;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeLastPublishDate;
 import com.liferay.journal.upgrade.v1_0_0.UpgradePortletSettings;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeSchema;
+import com.liferay.journal.upgrade.v1_0_0.UpgradeSharding;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.db.DBProcessContext;
@@ -67,8 +68,7 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 								dbProcessContext.getOutputStream(), true));
 					}
 				}
-
-			});
+			}, new UpgradeSharding());
 	}
 
 	protected void deleteTempImages() throws Exception {

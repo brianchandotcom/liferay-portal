@@ -4783,6 +4783,8 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 
 		assetTag.setUuid(uuid);
 
+		assetTag.setCompanyId(0);
+
 		return assetTag;
 	}
 

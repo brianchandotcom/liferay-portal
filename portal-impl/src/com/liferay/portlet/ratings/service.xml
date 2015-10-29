@@ -52,6 +52,10 @@
 
 		<column name="statsId" type="long" primary="true" />
 
+		<!-- Company instance -->
+
+		<column name="companyId" type="long" />
+
 		<!-- Other fields -->
 
 		<column name="classNameId" type="long" />

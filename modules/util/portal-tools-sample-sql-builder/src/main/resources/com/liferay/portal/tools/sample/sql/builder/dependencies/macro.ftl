@@ -39,7 +39,7 @@
 
 	<#local ddmStorageLinkModel = dataFactory.newDDMStorageLinkModel(_ddmStorageLinkId, ddmContentModel, _ddmStructureId)>
 
-	insert into DDMStorageLink values ('${ddmStorageLinkModel.uuid}', ${ddmStorageLinkModel.storageLinkId}, ${ddmStorageLinkModel.classNameId}, ${ddmStorageLinkModel.classPK}, ${ddmStorageLinkModel.structureId});
+	insert into DDMStorageLink values ('${ddmStorageLinkModel.uuid}', ${ddmStorageLinkModel.storageLinkId}, '${ddmStorageLinkModel.companyId}', ${ddmStorageLinkModel.classNameId}, ${ddmStorageLinkModel.classPK}, ${ddmStorageLinkModel.structureId});
 </#macro>
 
 <#macro insertDDMStructureLink
@@ -47,7 +47,7 @@
 >
 	<#local ddmStructureLinkModel = dataFactory.newDDMStructureLinkModel(_entry)>
 
-	insert into DDMStructureLink values (${ddmStructureLinkModel.structureLinkId},${ ddmStructureLinkModel.classNameId}, ${ddmStructureLinkModel.classPK}, ${ddmStructureLinkModel.structureId});
+	insert into DDMStructureLink values (${ddmStructureLinkModel.structureLinkId}, ${ddmStructureLinkModel.companyId}, ${ ddmStructureLinkModel.classNameId}, ${ddmStructureLinkModel.classPK}, ${ddmStructureLinkModel.structureId});
 </#macro>
 
 <#macro insertDLFolder
@@ -110,7 +110,7 @@
 
 				<#local dlFileEntryMetadataModel = dataFactory.newDLFileEntryMetadataModel(ddmStorageLinkId, _ddmStructureId, dlFileVersionModel)>
 
-				insert into DLFileEntryMetadata values ('${dlFileEntryMetadataModel.uuid}', ${dlFileEntryMetadataModel.fileEntryMetadataId}, ${dlFileEntryMetadataModel.DDMStorageId}, ${dlFileEntryMetadataModel.DDMStructureId}, ${dlFileEntryMetadataModel.fileEntryId}, ${dlFileEntryMetadataModel.fileVersionId});
+				insert into DLFileEntryMetadata values ('${dlFileEntryMetadataModel.uuid}', ${dlFileEntryMetadataModel.fileEntryMetadataId}, ${dlFileEntryMetadataModel.companyId}, ${dlFileEntryMetadataModel.DDMStorageId}, ${dlFileEntryMetadataModel.DDMStructureId}, ${dlFileEntryMetadataModel.fileEntryId}, ${dlFileEntryMetadataModel.fileVersionId});
 
 				<@insertDDMStructureLink
 					_entry = dlFileEntryMetadataModel
@@ -204,7 +204,7 @@
 <#macro insertPortletPreferences
 	_portletPreferencesModel
 >
-	insert into PortletPreferences values (${_portletPreferencesModel.mvccVersion}, ${_portletPreferencesModel.portletPreferencesId}, ${_portletPreferencesModel.ownerId}, ${_portletPreferencesModel.ownerType}, ${_portletPreferencesModel.plid}, '${_portletPreferencesModel.portletId}', '${_portletPreferencesModel.preferences}');
+	insert into PortletPreferences values (${_portletPreferencesModel.mvccVersion}, ${_portletPreferencesModel.portletPreferencesId}, ${_portletPreferencesModel.companyId}, ${_portletPreferencesModel.ownerId}, ${_portletPreferencesModel.ownerType}, ${_portletPreferencesModel.plid}, '${_portletPreferencesModel.portletId}', '${_portletPreferencesModel.preferences}');
 
 	<@insertResourcePermissions
 		_entry = _portletPreferencesModel

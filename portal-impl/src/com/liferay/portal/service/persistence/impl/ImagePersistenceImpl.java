@@ -655,6 +655,8 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 		image.setNew(true);
 		image.setPrimaryKey(imageId);
 
+		image.setCompanyId(0);
+
 		return image;
 	}
 
@@ -793,6 +795,7 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 
 		imageImpl.setMvccVersion(image.getMvccVersion());
 		imageImpl.setImageId(image.getImageId());
+		imageImpl.setCompanyId(image.getCompanyId());
 		imageImpl.setModifiedDate(image.getModifiedDate());
 		imageImpl.setType(image.getType());
 		imageImpl.setHeight(image.getHeight());

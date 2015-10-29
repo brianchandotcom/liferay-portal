@@ -33,9 +33,12 @@ import com.liferay.portal.upgrade.v7_0_0.util.ResourceActionTable;
 import com.liferay.portal.upgrade.v7_0_0.util.VirtualHostTable;
 import com.liferay.portal.util.PropsUtil;
 
+import java.io.IOException;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,8 +47,54 @@ import javax.sql.DataSource;
 
 /**
  * @author Manuel de la Peña
+ * @author Cristina González
  */
 public class UpgradeSharding extends UpgradeProcess {
+
+	protected void addCompanyIdColumn(String tableName)
+		throws IOException, SQLException {
+
+		runSQL("alter table " + tableName + " add companyId LONG default 0");
+	}
+
+	protected void addCompanyIdToTables() throws Exception {
+		addCompanyIdColumn("AnnouncementsFlag");
+		addCompanyIdColumn("AssetEntries_AssetCategories");
+		addCompanyIdColumn("AssetEntries_AssetTags");
+		addCompanyIdColumn("AssetTagStats");
+		addCompanyIdColumn("BrowserTracker");
+		addCompanyIdColumn("DLFileEntryMetadata");
+		addCompanyIdColumn("DLFileEntryTypes_DLFolders");
+		addCompanyIdColumn("DLSyncEvent");
+		addCompanyIdColumn("Groups_Orgs");
+		addCompanyIdColumn("Groups_Roles");
+		addCompanyIdColumn("Groups_UserGroups");
+		addCompanyIdColumn("Image");
+		addCompanyIdColumn("Marketplace_Module");
+		addCompanyIdColumn("MBStatsUser");
+		addCompanyIdColumn("OrgGroupRole");
+		addCompanyIdColumn("OrgLabor");
+		addCompanyIdColumn("PasswordPolicyRel");
+		addCompanyIdColumn("PasswordTracker");
+		addCompanyIdColumn("PortletPreferences");
+		addCompanyIdColumn("RatingsStats");
+		addCompanyIdColumn("ResourceBlockPermission");
+		addCompanyIdColumn("SCFrameworkVersi_SCProductVers");
+		addCompanyIdColumn("SCLicense");
+		addCompanyIdColumn("SCLicenses_SCProductEntries");
+		addCompanyIdColumn("ServiceComponent");
+		addCompanyIdColumn("TrashVersion");
+		addCompanyIdColumn("UserGroupGroupRole");
+		addCompanyIdColumn("UserGroupRole");
+		addCompanyIdColumn("UserGroups_Teams");
+		addCompanyIdColumn("UserIdMapper");
+		addCompanyIdColumn("Users_Groups");
+		addCompanyIdColumn("Users_Orgs");
+		addCompanyIdColumn("Users_Roles");
+		addCompanyIdColumn("Users_Teams");
+		addCompanyIdColumn("Users_UserGroups");
+		addCompanyIdColumn("UserTrackerPath");
+	}
 
 	protected void copyControlTable(
 			Connection sourceConnection, Connection targetConnection,
@@ -136,6 +185,8 @@ public class UpgradeSharding extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		addCompanyIdToTables();
+
 		List<String> shardNames = getShardNames();
 
 		if (shardNames.size() <= 1) {

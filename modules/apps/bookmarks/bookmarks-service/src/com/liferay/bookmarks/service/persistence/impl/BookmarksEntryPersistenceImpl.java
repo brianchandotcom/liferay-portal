@@ -12440,6 +12440,8 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 
 		bookmarksEntry.setUuid(uuid);
 
+		bookmarksEntry.setCompanyId(0);
+
 		return bookmarksEntry;
 	}
 

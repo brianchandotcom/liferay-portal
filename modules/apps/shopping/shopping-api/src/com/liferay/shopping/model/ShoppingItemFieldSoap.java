@@ -33,6 +33,7 @@ public class ShoppingItemFieldSoap implements Serializable {
 		ShoppingItemFieldSoap soapModel = new ShoppingItemFieldSoap();
 
 		soapModel.setItemFieldId(model.getItemFieldId());
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setItemId(model.getItemId());
 		soapModel.setName(model.getName());
 		soapModel.setValues(model.getValues());
@@ -100,6 +101,14 @@ public class ShoppingItemFieldSoap implements Serializable {
 		_itemFieldId = itemFieldId;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getItemId() {
 		return _itemId;
 	}
@@ -133,6 +142,7 @@ public class ShoppingItemFieldSoap implements Serializable {
 	}
 
 	private long _itemFieldId;
+	private long _companyId;
 	private long _itemId;
 	private String _name;
 	private String _values;

@@ -35,6 +35,7 @@ public class OrgLaborSoap implements Serializable {
 
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setOrgLaborId(model.getOrgLaborId());
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setOrganizationId(model.getOrganizationId());
 		soapModel.setTypeId(model.getTypeId());
 		soapModel.setSunOpen(model.getSunOpen());
@@ -117,6 +118,14 @@ public class OrgLaborSoap implements Serializable {
 
 	public void setOrgLaborId(long orgLaborId) {
 		_orgLaborId = orgLaborId;
+	}
+
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	public long getOrganizationId() {
@@ -249,6 +258,7 @@ public class OrgLaborSoap implements Serializable {
 
 	private long _mvccVersion;
 	private long _orgLaborId;
+	private long _companyId;
 	private long _organizationId;
 	private long _typeId;
 	private int _sunOpen;

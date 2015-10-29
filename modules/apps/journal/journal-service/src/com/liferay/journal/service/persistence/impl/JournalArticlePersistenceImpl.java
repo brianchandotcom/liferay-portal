@@ -30127,6 +30127,8 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 		journalArticle.setUuid(uuid);
 
+		journalArticle.setCompanyId(0);
+
 		return journalArticle;
 	}
 

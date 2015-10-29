@@ -64,10 +64,12 @@ public class JournalArticleImageCacheModel implements CacheModel<JournalArticleI
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{articleImageId=");
 		sb.append(articleImageId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", articleId=");
@@ -92,6 +94,7 @@ public class JournalArticleImageCacheModel implements CacheModel<JournalArticleI
 		JournalArticleImageImpl journalArticleImageImpl = new JournalArticleImageImpl();
 
 		journalArticleImageImpl.setArticleImageId(articleImageId);
+		journalArticleImageImpl.setCompanyId(companyId);
 		journalArticleImageImpl.setGroupId(groupId);
 
 		if (articleId == null) {
@@ -134,6 +137,7 @@ public class JournalArticleImageCacheModel implements CacheModel<JournalArticleI
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		articleImageId = objectInput.readLong();
+		companyId = objectInput.readLong();
 		groupId = objectInput.readLong();
 		articleId = objectInput.readUTF();
 		version = objectInput.readDouble();
@@ -147,6 +151,7 @@ public class JournalArticleImageCacheModel implements CacheModel<JournalArticleI
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(articleImageId);
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(groupId);
 
 		if (articleId == null) {
@@ -183,6 +188,7 @@ public class JournalArticleImageCacheModel implements CacheModel<JournalArticleI
 	}
 
 	public long articleImageId;
+	public long companyId;
 	public long groupId;
 	public String articleId;
 	public double version;

@@ -177,6 +177,8 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 		account.setNew(true);
 		account.setPrimaryKey(accountId);
 
+		account.setCompanyId(0);
+
 		return account;
 	}
 

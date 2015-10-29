@@ -300,8 +300,6 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 
 							<%
 							String articleImageURL = curArticle.getArticleImageURL(themeDisplay);
-
-							User userDisplay = UserLocalServiceUtil.fetchUserById(curArticle.getUserId());
 							%>
 
 							<liferay-frontend:vertical-card
@@ -311,11 +309,16 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 								imageUrl='<%= Validator.isNotNull(articleImageURL) ? articleImageURL : themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
 								resultRow="<%= row %>"
 								rowChecker="<%= entriesChecker %>"
-								smallImageCSSClass="user-icon user-icon-lg"
-								smallImageUrl="<%= userDisplay != null ? userDisplay.getPortraitURL(themeDisplay) : UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null) %>"
 								title="<%= curArticle.getTitle(locale) %>"
 								url="<%= rowURL != null ? rowURL.toString() : null %>"
 							>
+								<liferay-frontend:vertical-card-sticker-bottom>
+									<liferay-ui:user-portrait
+										cssClass="sticker sticker-bottom"
+										userId="<%= curArticle.getUserId() %>"
+									/>
+								</liferay-frontend:vertical-card-sticker-bottom>
+
 								<liferay-frontend:vertical-card-header>
 									<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - curArticle.getModifiedDate().getTime(), true), HtmlUtil.escape(curArticle.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
 								</liferay-frontend:vertical-card-header>

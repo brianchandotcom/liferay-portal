@@ -1,3 +1,9 @@
+$bg-color: #F5F7F8;
+
+body {
+	background-color: $bg-color;
+}
+
 #wrapper {
 	padding: 0;
 
@@ -10,7 +16,7 @@
 		}
 	}
 
-	.taglib-empty-message {
+	.container-decorate {
 		background-color: #FFF;
 
 		@include box-shadow(0 1px 3px 0 rgba(0, 0, 0, 0.2));

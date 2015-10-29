@@ -57,19 +57,17 @@ renderResponse.setTitle(((tag == null) ? LanguageUtil.get(request, "add-tag") : 
 
 	<aui:model-context bean="<%= tag %>" model="<%= AssetTag.class %>" />
 
-	<aui:fieldset>
-		<div>
-			<div class="add-tag-layer asset-tag-layer">
-				<aui:input name="tagId" type="hidden" value="<%= tagId %>" />
+	<div class="container-decorate row">
+		<aui:fieldset cssClass="col-md-4">
+			<aui:input name="tagId" type="hidden" value="<%= tagId %>" />
 
-				<aui:input autoFocus="<%= true %>" cssClass="tag-name" name="name" />
+			<aui:input autoFocus="<%= true %>" cssClass="tag-name" name="name" />
+		</aui:fieldset>
+	</div>
 
-				<aui:button-row>
-					<aui:button cssClass="btn-lg" type="submit" />
+	<aui:button-row>
+		<aui:button cssClass="btn-lg" type="submit" />
 
-					<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
-				</aui:button-row>
-			</div>
-		</div>
-	</aui:fieldset>
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+	</aui:button-row>
 </aui:form>

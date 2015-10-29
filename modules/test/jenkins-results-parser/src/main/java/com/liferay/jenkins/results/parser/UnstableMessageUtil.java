@@ -73,9 +73,12 @@ public class UnstableMessageUtil {
 				if (runBuildURL.endsWith(
 						"/" + jsonObject.getString("number") + "/")) {
 
-					String runResult = (JenkinsResultsParserUtil.toJSONObject(
-						JenkinsResultsParserUtil.getLocalURL(
-							runBuildURL + "api/json"))).getString("result");
+					JSONObject runJSONObject =
+						JenkinsResultsParserUtil.toJSONObject(
+							JenkinsResultsParserUtil.getLocalURL(
+								runBuildURL + "api/json"));
+
+					String runResult = runJSONObject.getString("result");
 
 					if (!runResult.equals("SUCCESS")) {
 						runBuildURLs.add(runBuildURL);

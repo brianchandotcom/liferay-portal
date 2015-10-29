@@ -23,7 +23,7 @@
 		String portraitURL = userDisplay.getPortraitURL(themeDisplay);
 		%>
 
-		<div class="<%= userIconCssClass %> user-icon user-icon-lg">
+		<div class="<%= cssClass %> user-icon user-icon-lg">
 			<img alt="thumbnail" class="img-responsive <%= imageCssClass %>" src="<%= HtmlUtil.escape(portraitURL) %>">
 		</div>
 	</c:when>
@@ -48,7 +48,7 @@
 		}
 		%>
 
-		<div class="<%= userIconCssClass %> user-icon user-icon-default">
+		<div class="<%= cssClass %> user-icon user-icon-default">
 			<span><%= sb.toString() %></span>
 		</div>
 	</c:otherwise>

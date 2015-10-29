@@ -46,7 +46,7 @@ if (entry.getPriority() > 0) {
 	<div class="user-portrait">
 		<span class="avatar">
 			<liferay-ui:user-portrait
-				userIconCssClass="user-icon-lg"
+				cssClass="user-icon-lg"
 				userId="<%= entry.getUserId() %>"
 			/>
 		</span>

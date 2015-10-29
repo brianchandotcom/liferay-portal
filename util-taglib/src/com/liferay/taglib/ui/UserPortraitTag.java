@@ -26,12 +26,12 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class UserPortraitTag extends IncludeTag {
 
-	public void setImageCssClass(String imageCssClass) {
-		_imageCssClass = imageCssClass;
+	public void setCssClass(String cssClass) {
+		_cssClass = cssClass;
 	}
 
-	public void setUserIconCssClass(String userIconCssClass) {
-		_userIconCssClass = userIconCssClass;
+	public void setImageCssClass(String imageCssClass) {
+		_imageCssClass = imageCssClass;
 	}
 
 	public void setUserId(long userId) {
@@ -44,8 +44,8 @@ public class UserPortraitTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		_cssClass = StringPool.BLANK;
 		_imageCssClass = StringPool.BLANK;
-		_userIconCssClass = StringPool.BLANK;
 		_userId = 0;
 		_userName = StringPool.BLANK;
 	}
@@ -61,10 +61,9 @@ public class UserPortraitTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		request.setAttribute("liferay-ui:user-portrait:cssClass", _cssClass);
 		request.setAttribute(
 			"liferay-ui:user-portrait:imageCssClass", _imageCssClass);
-		request.setAttribute(
-			"liferay-ui:user-portrait:userIconCssClass", _userIconCssClass);
 		request.setAttribute("liferay-ui:user-portrait:user", getUser());
 		request.setAttribute("liferay-ui:user-portrait:userName", _userName);
 	}
@@ -72,8 +71,8 @@ public class UserPortraitTag extends IncludeTag {
 	private static final String _PAGE =
 		"/html/taglib/ui/user_portrait/page.jsp";
 
+	private String _cssClass;
 	private String _imageCssClass;
-	private String _userIconCssClass;
 	private long _userId;
 	private String _userName;
 

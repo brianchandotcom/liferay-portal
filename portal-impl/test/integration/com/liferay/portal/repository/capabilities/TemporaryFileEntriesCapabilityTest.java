@@ -17,6 +17,7 @@ package com.liferay.portal.repository.capabilities;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Repository;
@@ -32,9 +34,13 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 
 import java.io.InputStream;
+
+import java.util.Date;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -61,10 +67,18 @@ public class TemporaryFileEntriesCapabilityTest {
 
 	@Test
 	public void testDeleteExpiredTemporaryFileEntries() throws Exception {
-		TempFileEntryUtil.addTempFileEntry(
+		FileEntry fileEntry = TempFileEntryUtil.addTempFileEntry(
 			_group.getGroupId(), _user.getUserId(),
 			RandomTestUtil.randomString(), "image.jpg", getInputStream(),
 			ContentTypes.IMAGE_JPEG);
+
+		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.getDLFileEntry(
+			fileEntry.getFileEntryId());
+
+		dlFileEntry.setCreateDate(
+			new Date(System.currentTimeMillis() - Time.WEEK));
+
+		DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);
 
 		Repository repository = RepositoryLocalServiceUtil.fetchRepository(
 			_group.getGroupId(), TempFileEntryUtil.class.getName(),
@@ -82,9 +96,7 @@ public class TemporaryFileEntriesCapabilityTest {
 		TemporaryFileEntriesCapability temporaryFileEntriesCapability =
 			localRepository.getCapability(TemporaryFileEntriesCapability.class);
 
-		temporaryFileEntriesCapability.setTemporaryFileEntriesTimeout(1);
-
-		Thread.sleep(2);
+		temporaryFileEntriesCapability.setTemporaryFileEntriesTimeout(Time.DAY);
 
 		temporaryFileEntriesCapability.deleteExpiredTemporaryFileEntries();
 

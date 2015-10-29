@@ -68,8 +68,7 @@ WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
 
 	<c:choose>
 		<c:when test="<%= workflowDefinition.isActive() %>">
-			<liferay-ui:icon
-				message="deactivate"
+			<liferay-ui:icon-deactivate
 				url="<%= deleteURL %>"
 			/>
 		</c:when>

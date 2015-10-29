@@ -73,7 +73,7 @@
 	<div class="nameplate">
 		<div class="nameplate-field">
 			<liferay-ui:user-portrait
-				userIconCssClass="user-icon-lg"
+				cssClass="user-icon-lg"
 				userId="<%= user.getUserId() %>"
 			/>
 		</div>

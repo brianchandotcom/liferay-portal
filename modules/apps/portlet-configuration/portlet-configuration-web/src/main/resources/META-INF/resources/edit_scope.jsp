@@ -88,7 +88,6 @@ for (Layout scopeGroupLayout : LayoutLocalServiceUtil.getScopeGroupLayouts(layou
 				</liferay-portlet:actionURL>
 
 				<liferay-ui:icon
-					iconCssClass="<%= availableGroup.getIconCssClass() %>"
 					id='<%= "scope" + availableGroup.getGroupId() %>'
 					localizeMessage="<%= false %>"
 					message="<%= HtmlUtil.escape(availableGroup.getDescriptiveName(locale)) %>"
@@ -111,7 +110,6 @@ for (Layout scopeGroupLayout : LayoutLocalServiceUtil.getScopeGroupLayouts(layou
 				</liferay-portlet:actionURL>
 
 				<liferay-ui:icon
-					iconCssClass="icon-plus"
 					id="scopeCurLayout"
 					message='<%= HtmlUtil.escape(layout.getName(locale)) + " (" + LanguageUtil.get(request, "create-new") + ")" %>'
 					method="post"

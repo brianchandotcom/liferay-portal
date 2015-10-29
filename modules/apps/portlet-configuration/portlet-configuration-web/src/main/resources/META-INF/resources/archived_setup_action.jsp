@@ -35,7 +35,6 @@ portletResource = (String)objects[1];
 	</portlet:actionURL>
 
 	<liferay-ui:icon
-		iconCssClass="icon-undo"
 		message="restore"
 		url="<%= restoreArchivedSetupURL %>"
 	/>

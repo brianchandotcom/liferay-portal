@@ -53,6 +53,10 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		return _fieldsNamespace;
 	}
 
+	public boolean getIgnoreRequestValue() {
+		return _ignoreRequestValue;
+	}
+
 	public boolean getReadOnly() {
 		return _readOnly;
 	}
@@ -99,6 +103,12 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("fieldsNamespace", fieldsNamespace);
 	}
 
+	public void setIgnoreRequestValue(boolean ignoreRequestValue) {
+		_ignoreRequestValue = ignoreRequestValue;
+
+		setScopedAttribute("ignoreRequestValue", ignoreRequestValue);
+	}
+
 	public void setReadOnly(boolean readOnly) {
 		_readOnly = readOnly;
 
@@ -139,6 +149,7 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		_classPK = 0;
 		_ddmFormValues = null;
 		_fieldsNamespace = null;
+		_ignoreRequestValue = false;
 		_readOnly = false;
 		_repeatable = true;
 		_requestedLocale = null;
@@ -162,6 +173,7 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "classPK", _classPK);
 		setNamespacedAttribute(request, "ddmFormValues", _ddmFormValues);
 		setNamespacedAttribute(request, "fieldsNamespace", _fieldsNamespace);
+		setNamespacedAttribute(request, "ignoreRequestValue", _ignoreRequestValue);
 		setNamespacedAttribute(request, "readOnly", _readOnly);
 		setNamespacedAttribute(request, "repeatable", _repeatable);
 		setNamespacedAttribute(request, "requestedLocale", _requestedLocale);
@@ -181,6 +193,7 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 	private long _classPK = 0;
 	private com.liferay.dynamic.data.mapping.storage.DDMFormValues _ddmFormValues = null;
 	private java.lang.String _fieldsNamespace = null;
+	private boolean _ignoreRequestValue = false;
 	private boolean _readOnly = false;
 	private boolean _repeatable = true;
 	private java.util.Locale _requestedLocale = null;

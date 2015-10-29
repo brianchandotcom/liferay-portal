@@ -39,6 +39,12 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
+			<name>ignoreRequestValue</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<name>readOnly</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

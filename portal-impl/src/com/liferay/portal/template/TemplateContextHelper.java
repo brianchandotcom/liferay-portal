@@ -52,7 +52,7 @@ import com.liferay.portal.kernel.util.StringUtil_IW;
 import com.liferay.portal.kernel.util.TimeZoneUtil_IW;
 import com.liferay.portal.kernel.util.UnicodeFormatter_IW;
 import com.liferay.portal.kernel.util.Validator_IW;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.service.GroupLocalService;
@@ -619,8 +619,8 @@ public class TemplateContextHelper {
 
 			try {
 				variables.put(
-					"saxReader",
-					utilLocator.findUtil(SAXReaderUtil.class.getName()));
+					"saxReaderUtil",
+					utilLocator.findUtil(SAXReader.class.getName()));
 			}
 			catch (SecurityException se) {
 				_log.error(se, se);

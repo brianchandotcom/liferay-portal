@@ -162,7 +162,7 @@
 		</for>
 	</command>
 
-	<command name="SubmitFormWithMulitpleFields" priority="4">
+	<command name="SubmitFormWithMultipleFields" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Forms" />
 		</execute>

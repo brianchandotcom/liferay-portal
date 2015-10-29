@@ -103,6 +103,7 @@
 			<isset var="pageType" />
 			<then>
 				<execute macro="SitePage#selectSitePageTypeRadioCP">
+					<var name="columnName" value="${columnName}" />
 					<var name="componentName" value="${componentName}" />
 					<var name="pageTypeDescription" value="${pageTypeDescription}" />
 					<var name="pageTypeURL" value="${pageTypeURL}" />

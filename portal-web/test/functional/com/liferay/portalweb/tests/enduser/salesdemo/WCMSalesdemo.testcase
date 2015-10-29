@@ -19,8 +19,13 @@
 
 	<command name="IFrameDemo" priority="4">
 		<execute macro="Page#addPG">
+			<var name="columnName" value="1_column" />
 			<var name="pageName" value="IFrame Page" />
-			<var name="pageType" value="1 Column" />
+			<var name="pageType" value="Empty Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="IFrame Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -32,7 +37,7 @@
 		</execute>
 
 		<execute macro="IFrame#addCP">
-			<var name="sourceURL" value="http://www.liferay.com/products/liferay-portal/overview" />
+			<var name="sourceURL" value="http://www.nba.com" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -43,13 +48,10 @@
 
 		<take-screenshot />
 
-		<execute function="SikuliAssertElementPresent" locator1="IFramePortlet#SCREENSHOTS_LIFERAY_PRODUCTS_LOGO_PNG" />
+		<execute function="SikuliAssertElementPresent" locator1="IFramePortlet#SCREENSHOTS_NBA_LOGO_PNG" />
 	</command>
 
 	<command name="SalesDemo" priority="4">
-		<var name="webContentContent" value="DHS Content" />
-		<var name="webContentTitle" value="DHS Title" />
-
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -57,15 +59,11 @@
 		<execute macro="WebContentNavigator#gotoAddCP" />
 
 		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="DHS Content" />
+			<var name="webContentTitle" value="DHS Title" />
 		</execute>
 
 		<execute macro="WebContent#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="${webContentTitle}" />
-		</execute>
 
 		<execute macro="Page#openURL" />
 
@@ -73,36 +71,19 @@
 			<var name="columnName" value="2_columns_i" />
 		</execute>
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Welcome" />
 		</execute>
-
-		<execute macro="Page#openURL" />
-
-		<execute macro="WebContentDisplayPortlet#searchWebContent">
-			<var name="addSearchedContent" value="true" />
-			<var name="webContentTitle" value="${webContentTitle}" />
-		</execute>
-
-		<execute macro="Page#openURL" />
 
 		<execute macro="Content#addPG">
-			<var name="assetTitle" value="${webContentTitle}" />
-			<var name="webContentContent" value="${webContentContent}" />
+			<var name="assetTitle" value="DHS Title" />
+			<var name="webContentContent" value="DHS Content" />
 		</execute>
 
 		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="DHS Content" />
+			<var name="webContentTitle" value="DHS Title" />
 		</execute>
-
-		<execute macro="Page#openURL" />
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="Page#openURL" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
@@ -124,8 +105,6 @@
 			<var name="userScreenName" value="test1" />
 		</execute>
 
-		<execute macro="Page#openURL" />
-
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test1@liferay.com" />
 			<var name="userLoginFullName" value="Test1 Last" />
@@ -136,14 +115,16 @@
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
-			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentContent" value="DHS Content" />
 		</execute>
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Sales Page" />
 		</execute>
 
-		<execute macro="Page#openURL" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Sales Page" />
+		</execute>
 
 		<execute macro="MobileDevice#previewPG">
 			<var name="deviceType" value="tablet" />
@@ -154,20 +135,5 @@
 		<execute macro="MobileDevice#previewPG">
 			<var name="deviceType" value="smartphone" />
 		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="mobilePreview" value="true" />
-			<var name="pageName" value="Welcome" />
-		</execute>
-
-		<execute macro="Page#viewPG">
-			<var name="mobilePreview" value="true" />
-			<var name="pageName" value="Welcome" />
-			<var name="portletName" value="Hello World" />
-		</execute>
-
-		<execute function="SikuliAssertElementPresent" locator1="BasePortlet#PORTLET_ORDER_SINGLE_COLUMN" />
-
-		<execute macro="Page#openURL" />
 	</command>
 </definition>

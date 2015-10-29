@@ -63,8 +63,6 @@
 			if (Validator.isNull(entryImageURL)) {
 				entryImageURL = entry.getSmallImageURL(themeDisplay);
 			}
-
-			User userDisplay = UserLocalServiceUtil.fetchUserById(entry.getUserId());
 			%>
 
 			<liferay-frontend:vertical-card
@@ -78,9 +76,8 @@
 				url="<%= rowURL.toString() %>"
 			>
 				<liferay-frontend:vertical-card-sticker-bottom>
-					<liferay-frontend:vertical-card-small-image
-						smallImageCSSClass="user-icon user-icon-lg"
-						smallImageUrl="<%= userDisplay != null ? userDisplay.getPortraitURL(themeDisplay) : UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null) %>"
+					<liferay-ui:user-portrait
+						userId="<%= entry.getUserId() %>"
 					/>
 				</liferay-frontend:vertical-card-sticker-bottom>
 

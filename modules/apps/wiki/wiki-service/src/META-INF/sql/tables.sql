@@ -48,6 +48,7 @@ create table WikiPageResource (
 	uuid_ VARCHAR(75) null,
 	resourcePrimKey LONG not null primary key,
 	groupId LONG,
+	companyId LONG,
 	nodeId LONG,
 	title VARCHAR(255) null
 );

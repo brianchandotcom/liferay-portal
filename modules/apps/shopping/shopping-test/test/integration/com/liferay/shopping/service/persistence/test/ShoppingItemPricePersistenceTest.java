@@ -121,6 +121,8 @@ public class ShoppingItemPricePersistenceTest {
 
 		ShoppingItemPrice newShoppingItemPrice = _persistence.create(pk);
 
+		newShoppingItemPrice.setCompanyId(RandomTestUtil.nextLong());
+
 		newShoppingItemPrice.setItemId(RandomTestUtil.nextLong());
 
 		newShoppingItemPrice.setMinQuantity(RandomTestUtil.nextInt());
@@ -145,6 +147,8 @@ public class ShoppingItemPricePersistenceTest {
 
 		Assert.assertEquals(existingShoppingItemPrice.getItemPriceId(),
 			newShoppingItemPrice.getItemPriceId());
+		Assert.assertEquals(existingShoppingItemPrice.getCompanyId(),
+			newShoppingItemPrice.getCompanyId());
 		Assert.assertEquals(existingShoppingItemPrice.getItemId(),
 			newShoppingItemPrice.getItemId());
 		Assert.assertEquals(existingShoppingItemPrice.getMinQuantity(),
@@ -196,9 +200,10 @@ public class ShoppingItemPricePersistenceTest {
 
 	protected OrderByComparator<ShoppingItemPrice> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ShoppingItemPrice",
-			"itemPriceId", true, "itemId", true, "minQuantity", true,
-			"maxQuantity", true, "price", true, "discount", true, "taxable",
-			true, "shipping", true, "useShippingFormula", true, "status", true);
+			"itemPriceId", true, "companyId", true, "itemId", true,
+			"minQuantity", true, "maxQuantity", true, "price", true,
+			"discount", true, "taxable", true, "shipping", true,
+			"useShippingFormula", true, "status", true);
 	}
 
 	@Test
@@ -398,6 +403,8 @@ public class ShoppingItemPricePersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		ShoppingItemPrice shoppingItemPrice = _persistence.create(pk);
+
+		shoppingItemPrice.setCompanyId(RandomTestUtil.nextLong());
 
 		shoppingItemPrice.setItemId(RandomTestUtil.nextLong());
 

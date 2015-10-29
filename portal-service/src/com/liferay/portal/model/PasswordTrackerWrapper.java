@@ -54,6 +54,7 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("passwordTrackerId", getPasswordTrackerId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("password", getPassword());
@@ -73,6 +74,12 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 
 		if (passwordTrackerId != null) {
 			setPasswordTrackerId(passwordTrackerId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -103,6 +110,16 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 	public int compareTo(
 		com.liferay.portal.model.PasswordTracker passwordTracker) {
 		return _passwordTracker.compareTo(passwordTracker);
+	}
+
+	/**
+	* Returns the company ID of this password tracker.
+	*
+	* @return the company ID of this password tracker
+	*/
+	@Override
+	public long getCompanyId() {
+		return _passwordTracker.getCompanyId();
 	}
 
 	/**
@@ -213,6 +230,16 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_passwordTracker.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this password tracker.
+	*
+	* @param companyId the company ID of this password tracker
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_passwordTracker.setCompanyId(companyId);
 	}
 
 	/**

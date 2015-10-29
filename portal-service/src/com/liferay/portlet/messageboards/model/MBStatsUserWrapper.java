@@ -55,6 +55,7 @@ public class MBStatsUserWrapper implements MBStatsUser,
 
 		attributes.put("statsUserId", getStatsUserId());
 		attributes.put("groupId", getGroupId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("messageCount", getMessageCount());
 		attributes.put("lastPostDate", getLastPostDate());
@@ -74,6 +75,12 @@ public class MBStatsUserWrapper implements MBStatsUser,
 
 		if (groupId != null) {
 			setGroupId(groupId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -104,6 +111,16 @@ public class MBStatsUserWrapper implements MBStatsUser,
 	public int compareTo(
 		com.liferay.portlet.messageboards.model.MBStatsUser mbStatsUser) {
 		return _mbStatsUser.compareTo(mbStatsUser);
+	}
+
+	/**
+	* Returns the company ID of this message boards stats user.
+	*
+	* @return the company ID of this message boards stats user
+	*/
+	@Override
+	public long getCompanyId() {
+		return _mbStatsUser.getCompanyId();
 	}
 
 	@Override
@@ -224,6 +241,16 @@ public class MBStatsUserWrapper implements MBStatsUser,
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_mbStatsUser.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this message boards stats user.
+	*
+	* @param companyId the company ID of this message boards stats user
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_mbStatsUser.setCompanyId(companyId);
 	}
 
 	@Override

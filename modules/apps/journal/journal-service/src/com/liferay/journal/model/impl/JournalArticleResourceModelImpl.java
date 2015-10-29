@@ -64,6 +64,7 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 			{ "uuid_", Types.VARCHAR },
 			{ "resourcePrimKey", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
 			{ "articleId", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -72,10 +73,11 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("resourcePrimKey", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("articleId", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table JournalArticleResource (uuid_ VARCHAR(75) null,resourcePrimKey LONG not null primary key,groupId LONG,articleId VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table JournalArticleResource (uuid_ VARCHAR(75) null,resourcePrimKey LONG not null primary key,groupId LONG,companyId LONG,articleId VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table JournalArticleResource";
 	public static final String ORDER_BY_JPQL = " ORDER BY journalArticleResource.resourcePrimKey ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY JournalArticleResource.resourcePrimKey ASC";
@@ -92,9 +94,10 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 				"value.object.column.bitmask.enabled.com.liferay.journal.model.JournalArticleResource"),
 			true);
 	public static final long ARTICLEID_COLUMN_BITMASK = 1L;
-	public static final long GROUPID_COLUMN_BITMASK = 2L;
-	public static final long UUID_COLUMN_BITMASK = 4L;
-	public static final long RESOURCEPRIMKEY_COLUMN_BITMASK = 8L;
+	public static final long COMPANYID_COLUMN_BITMASK = 2L;
+	public static final long GROUPID_COLUMN_BITMASK = 4L;
+	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static final long RESOURCEPRIMKEY_COLUMN_BITMASK = 16L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.journal.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.journal.model.JournalArticleResource"));
 
@@ -138,6 +141,7 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 		attributes.put("uuid", getUuid());
 		attributes.put("resourcePrimKey", getResourcePrimKey());
 		attributes.put("groupId", getGroupId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("articleId", getArticleId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -164,6 +168,12 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 
 		if (groupId != null) {
 			setGroupId(groupId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		String articleId = (String)attributes.get("articleId");
@@ -229,6 +239,28 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 	}
 
 	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
+	@Override
 	public String getArticleId() {
 		if (_articleId == null) {
 			return StringPool.BLANK;
@@ -259,7 +291,7 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			JournalArticleResource.class.getName(), getPrimaryKey());
 	}
 
@@ -287,6 +319,7 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 		journalArticleResourceImpl.setUuid(getUuid());
 		journalArticleResourceImpl.setResourcePrimKey(getResourcePrimKey());
 		journalArticleResourceImpl.setGroupId(getGroupId());
+		journalArticleResourceImpl.setCompanyId(getCompanyId());
 		journalArticleResourceImpl.setArticleId(getArticleId());
 
 		journalArticleResourceImpl.resetOriginalValues();
@@ -356,6 +389,10 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 
 		journalArticleResourceModelImpl._setOriginalGroupId = false;
 
+		journalArticleResourceModelImpl._originalCompanyId = journalArticleResourceModelImpl._companyId;
+
+		journalArticleResourceModelImpl._setOriginalCompanyId = false;
+
 		journalArticleResourceModelImpl._originalArticleId = journalArticleResourceModelImpl._articleId;
 
 		journalArticleResourceModelImpl._columnBitmask = 0;
@@ -377,6 +414,8 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 
 		journalArticleResourceCacheModel.groupId = getGroupId();
 
+		journalArticleResourceCacheModel.companyId = getCompanyId();
+
 		journalArticleResourceCacheModel.articleId = getArticleId();
 
 		String articleId = journalArticleResourceCacheModel.articleId;
@@ -390,7 +429,7 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -398,6 +437,8 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 		sb.append(getResourcePrimKey());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append(", articleId=");
 		sb.append(getArticleId());
 		sb.append("}");
@@ -407,7 +448,7 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.journal.model.JournalArticleResource");
@@ -424,6 +465,10 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>articleId</column-name><column-value><![CDATA[");
@@ -445,6 +490,9 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private String _articleId;
 	private String _originalArticleId;
 	private long _columnBitmask;

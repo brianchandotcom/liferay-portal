@@ -1652,6 +1652,7 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 		assetTagStatsImpl.setPrimaryKey(assetTagStats.getPrimaryKey());
 
 		assetTagStatsImpl.setTagStatsId(assetTagStats.getTagStatsId());
+		assetTagStatsImpl.setCompanyId(assetTagStats.getCompanyId());
 		assetTagStatsImpl.setTagId(assetTagStats.getTagId());
 		assetTagStatsImpl.setClassNameId(assetTagStats.getClassNameId());
 		assetTagStatsImpl.setAssetCount(assetTagStats.getAssetCount());

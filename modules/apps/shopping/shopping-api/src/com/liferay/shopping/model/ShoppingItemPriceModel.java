@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.ShardedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -38,7 +39,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface ShoppingItemPriceModel extends BaseModel<ShoppingItemPrice> {
+public interface ShoppingItemPriceModel extends BaseModel<ShoppingItemPrice>,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -72,6 +74,22 @@ public interface ShoppingItemPriceModel extends BaseModel<ShoppingItemPrice> {
 	 * @param itemPriceId the item price ID of this shopping item price
 	 */
 	public void setItemPriceId(long itemPriceId);
+
+	/**
+	 * Returns the company ID of this shopping item price.
+	 *
+	 * @return the company ID of this shopping item price
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this shopping item price.
+	 *
+	 * @param companyId the company ID of this shopping item price
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the item ID of this shopping item price.

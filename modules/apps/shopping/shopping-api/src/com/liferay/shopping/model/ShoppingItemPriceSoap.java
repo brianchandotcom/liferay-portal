@@ -33,6 +33,7 @@ public class ShoppingItemPriceSoap implements Serializable {
 		ShoppingItemPriceSoap soapModel = new ShoppingItemPriceSoap();
 
 		soapModel.setItemPriceId(model.getItemPriceId());
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setItemId(model.getItemId());
 		soapModel.setMinQuantity(model.getMinQuantity());
 		soapModel.setMaxQuantity(model.getMaxQuantity());
@@ -103,6 +104,14 @@ public class ShoppingItemPriceSoap implements Serializable {
 
 	public void setItemPriceId(long itemPriceId) {
 		_itemPriceId = itemPriceId;
+	}
+
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	public long getItemId() {
@@ -186,6 +195,7 @@ public class ShoppingItemPriceSoap implements Serializable {
 	}
 
 	private long _itemPriceId;
+	private long _companyId;
 	private long _itemId;
 	private int _minQuantity;
 	private int _maxQuantity;

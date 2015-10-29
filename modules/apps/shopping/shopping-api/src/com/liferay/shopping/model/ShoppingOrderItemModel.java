@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.ShardedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -41,7 +42,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface ShoppingOrderItemModel extends BaseModel<ShoppingOrderItem> {
+public interface ShoppingOrderItemModel extends BaseModel<ShoppingOrderItem>,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -75,6 +77,22 @@ public interface ShoppingOrderItemModel extends BaseModel<ShoppingOrderItem> {
 	 * @param orderItemId the order item ID of this shopping order item
 	 */
 	public void setOrderItemId(long orderItemId);
+
+	/**
+	 * Returns the company ID of this shopping order item.
+	 *
+	 * @return the company ID of this shopping order item
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this shopping order item.
+	 *
+	 * @param companyId the company ID of this shopping order item
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the order ID of this shopping order item.

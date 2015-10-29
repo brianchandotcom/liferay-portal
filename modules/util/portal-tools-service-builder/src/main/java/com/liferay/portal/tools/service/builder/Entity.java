@@ -787,6 +787,12 @@ public class Entity {
 	}
 
 	public boolean isShardedModel() {
+		if (_packagePath.equals("com.liferay.portal") &&
+			_name.equals("Company")) {
+
+			return false;
+		}
+
 		return hasColumn("companyId");
 	}
 

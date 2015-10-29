@@ -54,6 +54,7 @@ public class JournalArticleImageWrapper implements JournalArticleImage,
 
 		attributes.put("articleImageId", getArticleImageId());
 		attributes.put("groupId", getGroupId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("articleId", getArticleId());
 		attributes.put("version", getVersion());
 		attributes.put("elInstanceId", getElInstanceId());
@@ -76,6 +77,12 @@ public class JournalArticleImageWrapper implements JournalArticleImage,
 
 		if (groupId != null) {
 			setGroupId(groupId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		String articleId = (String)attributes.get("articleId");
@@ -144,6 +151,16 @@ public class JournalArticleImageWrapper implements JournalArticleImage,
 	@Override
 	public long getArticleImageId() {
 		return _journalArticleImage.getArticleImageId();
+	}
+
+	/**
+	* Returns the company ID of this journal article image.
+	*
+	* @return the company ID of this journal article image
+	*/
+	@Override
+	public long getCompanyId() {
+		return _journalArticleImage.getCompanyId();
 	}
 
 	/**
@@ -284,6 +301,16 @@ public class JournalArticleImageWrapper implements JournalArticleImage,
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_journalArticleImage.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this journal article image.
+	*
+	* @param companyId the company ID of this journal article image
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_journalArticleImage.setCompanyId(companyId);
 	}
 
 	/**

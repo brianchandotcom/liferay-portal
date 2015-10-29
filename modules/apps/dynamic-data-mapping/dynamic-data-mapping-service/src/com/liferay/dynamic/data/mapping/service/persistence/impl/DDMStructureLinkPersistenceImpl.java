@@ -2266,6 +2266,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 		ddmStructureLinkImpl.setPrimaryKey(ddmStructureLink.getPrimaryKey());
 
 		ddmStructureLinkImpl.setStructureLinkId(ddmStructureLink.getStructureLinkId());
+		ddmStructureLinkImpl.setCompanyId(ddmStructureLink.getCompanyId());
 		ddmStructureLinkImpl.setClassNameId(ddmStructureLink.getClassNameId());
 		ddmStructureLinkImpl.setClassPK(ddmStructureLink.getClassPK());
 		ddmStructureLinkImpl.setStructureId(ddmStructureLink.getStructureId());

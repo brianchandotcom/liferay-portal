@@ -2579,6 +2579,7 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 
 		journalArticleImageImpl.setArticleImageId(journalArticleImage.getArticleImageId());
 		journalArticleImageImpl.setGroupId(journalArticleImage.getGroupId());
+		journalArticleImageImpl.setCompanyId(journalArticleImage.getCompanyId());
 		journalArticleImageImpl.setArticleId(journalArticleImage.getArticleId());
 		journalArticleImageImpl.setVersion(journalArticleImage.getVersion());
 		journalArticleImageImpl.setElInstanceId(journalArticleImage.getElInstanceId());

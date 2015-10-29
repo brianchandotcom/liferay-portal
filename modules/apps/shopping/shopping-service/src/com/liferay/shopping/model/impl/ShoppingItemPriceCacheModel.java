@@ -63,10 +63,12 @@ public class ShoppingItemPriceCacheModel implements CacheModel<ShoppingItemPrice
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{itemPriceId=");
 		sb.append(itemPriceId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", itemId=");
 		sb.append(itemId);
 		sb.append(", minQuantity=");
@@ -95,6 +97,7 @@ public class ShoppingItemPriceCacheModel implements CacheModel<ShoppingItemPrice
 		ShoppingItemPriceImpl shoppingItemPriceImpl = new ShoppingItemPriceImpl();
 
 		shoppingItemPriceImpl.setItemPriceId(itemPriceId);
+		shoppingItemPriceImpl.setCompanyId(companyId);
 		shoppingItemPriceImpl.setItemId(itemId);
 		shoppingItemPriceImpl.setMinQuantity(minQuantity);
 		shoppingItemPriceImpl.setMaxQuantity(maxQuantity);
@@ -113,6 +116,7 @@ public class ShoppingItemPriceCacheModel implements CacheModel<ShoppingItemPrice
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		itemPriceId = objectInput.readLong();
+		companyId = objectInput.readLong();
 		itemId = objectInput.readLong();
 		minQuantity = objectInput.readInt();
 		maxQuantity = objectInput.readInt();
@@ -128,6 +132,7 @@ public class ShoppingItemPriceCacheModel implements CacheModel<ShoppingItemPrice
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(itemPriceId);
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(itemId);
 		objectOutput.writeInt(minQuantity);
 		objectOutput.writeInt(maxQuantity);
@@ -140,6 +145,7 @@ public class ShoppingItemPriceCacheModel implements CacheModel<ShoppingItemPrice
 	}
 
 	public long itemPriceId;
+	public long companyId;
 	public long itemId;
 	public int minQuantity;
 	public int maxQuantity;

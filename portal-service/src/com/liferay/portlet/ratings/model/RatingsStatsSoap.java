@@ -33,6 +33,7 @@ public class RatingsStatsSoap implements Serializable {
 		RatingsStatsSoap soapModel = new RatingsStatsSoap();
 
 		soapModel.setStatsId(model.getStatsId());
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setTotalEntries(model.getTotalEntries());
@@ -98,6 +99,14 @@ public class RatingsStatsSoap implements Serializable {
 		_statsId = statsId;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getClassNameId() {
 		return _classNameId;
 	}
@@ -139,6 +148,7 @@ public class RatingsStatsSoap implements Serializable {
 	}
 
 	private long _statsId;
+	private long _companyId;
 	private long _classNameId;
 	private long _classPK;
 	private int _totalEntries;

@@ -66,6 +66,7 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "statsUserId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "messageCount", Types.INTEGER },
 			{ "lastPostDate", Types.TIMESTAMP }
@@ -75,12 +76,13 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 	static {
 		TABLE_COLUMNS_MAP.put("statsUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("messageCount", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("lastPostDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table MBStatsUser (statsUserId LONG not null primary key,groupId LONG,userId LONG,messageCount INTEGER,lastPostDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table MBStatsUser (statsUserId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,messageCount INTEGER,lastPostDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table MBStatsUser";
 	public static final String ORDER_BY_JPQL = " ORDER BY mbStatsUser.messageCount DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY MBStatsUser.messageCount DESC";
@@ -141,6 +143,7 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 
 		attributes.put("statsUserId", getStatsUserId());
 		attributes.put("groupId", getGroupId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("messageCount", getMessageCount());
 		attributes.put("lastPostDate", getLastPostDate());
@@ -163,6 +166,12 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 
 		if (groupId != null) {
 			setGroupId(groupId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -230,6 +239,16 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	@Override
@@ -308,7 +327,7 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			MBStatsUser.class.getName(), getPrimaryKey());
 	}
 
@@ -335,6 +354,7 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 
 		mbStatsUserImpl.setStatsUserId(getStatsUserId());
 		mbStatsUserImpl.setGroupId(getGroupId());
+		mbStatsUserImpl.setCompanyId(getCompanyId());
 		mbStatsUserImpl.setUserId(getUserId());
 		mbStatsUserImpl.setMessageCount(getMessageCount());
 		mbStatsUserImpl.setLastPostDate(getLastPostDate());
@@ -431,6 +451,8 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 
 		mbStatsUserCacheModel.groupId = getGroupId();
 
+		mbStatsUserCacheModel.companyId = getCompanyId();
+
 		mbStatsUserCacheModel.userId = getUserId();
 
 		mbStatsUserCacheModel.messageCount = getMessageCount();
@@ -449,12 +471,14 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{statsUserId=");
 		sb.append(getStatsUserId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", messageCount=");
@@ -468,7 +492,7 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.messageboards.model.MBStatsUser");
@@ -481,6 +505,10 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -508,6 +536,7 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
+	private long _companyId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;

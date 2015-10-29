@@ -604,6 +604,7 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 		ratingsStatsImpl.setPrimaryKey(ratingsStats.getPrimaryKey());
 
 		ratingsStatsImpl.setStatsId(ratingsStats.getStatsId());
+		ratingsStatsImpl.setCompanyId(ratingsStats.getCompanyId());
 		ratingsStatsImpl.setClassNameId(ratingsStats.getClassNameId());
 		ratingsStatsImpl.setClassPK(ratingsStats.getClassPK());
 		ratingsStatsImpl.setTotalEntries(ratingsStats.getTotalEntries());

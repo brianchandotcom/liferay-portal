@@ -66,10 +66,12 @@ public class ShoppingOrderItemCacheModel implements CacheModel<ShoppingOrderItem
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{orderItemId=");
 		sb.append(orderItemId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", orderId=");
 		sb.append(orderId);
 		sb.append(", itemId=");
@@ -98,6 +100,7 @@ public class ShoppingOrderItemCacheModel implements CacheModel<ShoppingOrderItem
 		ShoppingOrderItemImpl shoppingOrderItemImpl = new ShoppingOrderItemImpl();
 
 		shoppingOrderItemImpl.setOrderItemId(orderItemId);
+		shoppingOrderItemImpl.setCompanyId(companyId);
 		shoppingOrderItemImpl.setOrderId(orderId);
 
 		if (itemId == null) {
@@ -153,6 +156,7 @@ public class ShoppingOrderItemCacheModel implements CacheModel<ShoppingOrderItem
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		orderItemId = objectInput.readLong();
+		companyId = objectInput.readLong();
 		orderId = objectInput.readLong();
 		itemId = objectInput.readUTF();
 		sku = objectInput.readUTF();
@@ -168,6 +172,7 @@ public class ShoppingOrderItemCacheModel implements CacheModel<ShoppingOrderItem
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(orderItemId);
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(orderId);
 
 		if (itemId == null) {
@@ -211,6 +216,7 @@ public class ShoppingOrderItemCacheModel implements CacheModel<ShoppingOrderItem
 	}
 
 	public long orderItemId;
+	public long companyId;
 	public long orderId;
 	public String itemId;
 	public String sku;

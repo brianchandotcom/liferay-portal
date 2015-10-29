@@ -63,6 +63,7 @@ public class TrashVersionModelImpl extends BaseModelImpl<TrashVersion>
 	public static final String TABLE_NAME = "TrashVersion";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "versionId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
 			{ "entryId", Types.BIGINT },
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
@@ -73,6 +74,7 @@ public class TrashVersionModelImpl extends BaseModelImpl<TrashVersion>
 
 	static {
 		TABLE_COLUMNS_MAP.put("versionId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("entryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
@@ -80,7 +82,7 @@ public class TrashVersionModelImpl extends BaseModelImpl<TrashVersion>
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table TrashVersion (versionId LONG not null primary key,entryId LONG,classNameId LONG,classPK LONG,typeSettings TEXT null,status INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table TrashVersion (versionId LONG not null primary key,companyId LONG,entryId LONG,classNameId LONG,classPK LONG,typeSettings TEXT null,status INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table TrashVersion";
 	public static final String ORDER_BY_JPQL = " ORDER BY trashVersion.versionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY TrashVersion.versionId ASC";
@@ -141,6 +143,7 @@ public class TrashVersionModelImpl extends BaseModelImpl<TrashVersion>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("versionId", getVersionId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("entryId", getEntryId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
@@ -159,6 +162,12 @@ public class TrashVersionModelImpl extends BaseModelImpl<TrashVersion>
 
 		if (versionId != null) {
 			setVersionId(versionId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long entryId = (Long)attributes.get("entryId");
@@ -200,6 +209,16 @@ public class TrashVersionModelImpl extends BaseModelImpl<TrashVersion>
 	@Override
 	public void setVersionId(long versionId) {
 		_versionId = versionId;
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	@Override
@@ -319,7 +338,7 @@ public class TrashVersionModelImpl extends BaseModelImpl<TrashVersion>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			TrashVersion.class.getName(), getPrimaryKey());
 	}
 
@@ -345,6 +364,7 @@ public class TrashVersionModelImpl extends BaseModelImpl<TrashVersion>
 		TrashVersionImpl trashVersionImpl = new TrashVersionImpl();
 
 		trashVersionImpl.setVersionId(getVersionId());
+		trashVersionImpl.setCompanyId(getCompanyId());
 		trashVersionImpl.setEntryId(getEntryId());
 		trashVersionImpl.setClassNameId(getClassNameId());
 		trashVersionImpl.setClassPK(getClassPK());
@@ -433,6 +453,8 @@ public class TrashVersionModelImpl extends BaseModelImpl<TrashVersion>
 
 		trashVersionCacheModel.versionId = getVersionId();
 
+		trashVersionCacheModel.companyId = getCompanyId();
+
 		trashVersionCacheModel.entryId = getEntryId();
 
 		trashVersionCacheModel.classNameId = getClassNameId();
@@ -454,10 +476,12 @@ public class TrashVersionModelImpl extends BaseModelImpl<TrashVersion>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{versionId=");
 		sb.append(getVersionId());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append(", entryId=");
 		sb.append(getEntryId());
 		sb.append(", classNameId=");
@@ -475,7 +499,7 @@ public class TrashVersionModelImpl extends BaseModelImpl<TrashVersion>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.trash.model.TrashVersion");
@@ -484,6 +508,10 @@ public class TrashVersionModelImpl extends BaseModelImpl<TrashVersion>
 		sb.append(
 			"<column><column-name>versionId</column-name><column-value><![CDATA[");
 		sb.append(getVersionId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>entryId</column-name><column-value><![CDATA[");
@@ -516,6 +544,7 @@ public class TrashVersionModelImpl extends BaseModelImpl<TrashVersion>
 			TrashVersion.class
 		};
 	private long _versionId;
+	private long _companyId;
 	private long _entryId;
 	private long _originalEntryId;
 	private boolean _setOriginalEntryId;

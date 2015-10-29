@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.ShardedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -39,7 +40,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface JournalArticleResourceModel extends BaseModel<JournalArticleResource> {
+public interface JournalArticleResourceModel extends BaseModel<JournalArticleResource>,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -102,6 +104,22 @@ public interface JournalArticleResourceModel extends BaseModel<JournalArticleRes
 	 * @param groupId the group ID of this journal article resource
 	 */
 	public void setGroupId(long groupId);
+
+	/**
+	 * Returns the company ID of this journal article resource.
+	 *
+	 * @return the company ID of this journal article resource
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this journal article resource.
+	 *
+	 * @param companyId the company ID of this journal article resource
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the article ID of this journal article resource.

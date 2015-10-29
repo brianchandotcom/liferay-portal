@@ -848,6 +848,7 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 		shoppingItemFieldImpl.setPrimaryKey(shoppingItemField.getPrimaryKey());
 
 		shoppingItemFieldImpl.setItemFieldId(shoppingItemField.getItemFieldId());
+		shoppingItemFieldImpl.setCompanyId(shoppingItemField.getCompanyId());
 		shoppingItemFieldImpl.setItemId(shoppingItemField.getItemId());
 		shoppingItemFieldImpl.setName(shoppingItemField.getName());
 		shoppingItemFieldImpl.setValues(shoppingItemField.getValues());

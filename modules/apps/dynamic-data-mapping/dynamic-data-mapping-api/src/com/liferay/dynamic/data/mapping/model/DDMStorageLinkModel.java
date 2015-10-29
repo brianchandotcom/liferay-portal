@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.ShardedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -41,7 +42,7 @@ import java.io.Serializable;
  */
 @ProviderType
 public interface DDMStorageLinkModel extends AttachedModel,
-	BaseModel<DDMStorageLink> {
+	BaseModel<DDMStorageLink>, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -90,6 +91,22 @@ public interface DDMStorageLinkModel extends AttachedModel,
 	 * @param storageLinkId the storage link ID of this d d m storage link
 	 */
 	public void setStorageLinkId(long storageLinkId);
+
+	/**
+	 * Returns the company ID of this d d m storage link.
+	 *
+	 * @return the company ID of this d d m storage link
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this d d m storage link.
+	 *
+	 * @param companyId the company ID of this d d m storage link
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the fully qualified class name of this d d m storage link.

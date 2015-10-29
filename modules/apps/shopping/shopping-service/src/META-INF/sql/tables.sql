@@ -85,6 +85,7 @@ create table ShoppingItem (
 
 create table ShoppingItemField (
 	itemFieldId LONG not null primary key,
+	companyId LONG,
 	itemId LONG,
 	name VARCHAR(75) null,
 	values_ STRING null,
@@ -93,6 +94,7 @@ create table ShoppingItemField (
 
 create table ShoppingItemPrice (
 	itemPriceId LONG not null primary key,
+	companyId LONG,
 	itemId LONG,
 	minQuantity INTEGER,
 	maxQuantity INTEGER,
@@ -160,6 +162,7 @@ create table ShoppingOrder (
 
 create table ShoppingOrderItem (
 	orderItemId LONG not null primary key,
+	companyId LONG,
 	orderId LONG,
 	itemId TEXT null,
 	sku VARCHAR(75) null,

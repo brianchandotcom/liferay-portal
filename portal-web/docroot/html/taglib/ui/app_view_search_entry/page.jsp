@@ -165,7 +165,9 @@ summary.setQueryTerms(queryTerms);
 			<div class="entry-discussion">
 				<aui:a class="lfr-discussion-details" href="<%= url %>">
 					<div class="image">
-						<img alt="<%= HtmlUtil.escapeAttribute(userDisplay.getFullName()) %>" class="avatar" src="<%= HtmlUtil.escape(userDisplay.getPortraitURL(themeDisplay)) %>" />
+						<liferay-ui:user-portrait
+							userId="<%= userDisplay.getUserId() %>"
+						/>
 					</div>
 
 					<span class="title">

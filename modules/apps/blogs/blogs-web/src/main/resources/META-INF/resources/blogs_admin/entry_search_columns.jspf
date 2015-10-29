@@ -63,8 +63,6 @@
 			if (Validator.isNull(entryImageURL)) {
 				entryImageURL = entry.getSmallImageURL(themeDisplay);
 			}
-
-			User userDisplay = UserLocalServiceUtil.fetchUserById(entry.getUserId());
 			%>
 
 			<liferay-frontend:vertical-card
@@ -74,11 +72,15 @@
 				imageUrl='<%= Validator.isNotNull(entryImageURL) ? entryImageURL : themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
 				resultRow="<%= row %>"
 				rowChecker="<%= searchContainer.getRowChecker() %>"
-				smallImageCSSClass="user-icon user-icon-lg"
-				smallImageUrl="<%= userDisplay != null ? userDisplay.getPortraitURL(themeDisplay) : UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null) %>"
 				title="<%= entry.getTitle() %>"
 				url="<%= rowURL.toString() %>"
 			>
+				<liferay-frontend:vertical-card-sticker-bottom>
+					<liferay-ui:user-portrait
+						userId="<%= entry.getUserId() %>"
+					/>
+				</liferay-frontend:vertical-card-sticker-bottom>
+
 				<liferay-frontend:vertical-card-footer>
 					<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
 				</liferay-frontend:vertical-card-footer>

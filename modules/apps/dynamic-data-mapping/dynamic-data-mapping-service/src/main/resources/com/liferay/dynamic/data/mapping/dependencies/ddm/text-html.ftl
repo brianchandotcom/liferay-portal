@@ -1,13 +1,15 @@
 <#include "../init.ftl">
 
 <#assign editorName = propsUtil.get("editor.wysiwyg.portal-impl.portlet.ddm.text_html.ftl")>
-<#assign fieldValue = paramUtil.getString(request, "${namespacedFieldName}Editor", fieldValue)>
+<#assign inputEditorName = "${namespacedFieldName}Editor">
+<#assign fieldValue = paramUtil.getString(request, "${inputEditorName}", fieldValue)>
 
-<@aui["field-wrapper"] data=data helpMessage=escape(fieldStructure.tip) label=escape(label) required=required>
+<@aui["field-wrapper"] cssClass="field-wrapper-html" data=data helpMessage=escape(fieldStructure.tip) label=escape(label) name=inputEditorName required=required>
 	<#assign skipEditorLoading = paramUtil.getBoolean(request, "p_p_isolated")>
 
 	<@liferay_ui["input-editor"]
 		contentsLanguageId="${requestedLocale}"
+		cssClass="form-control"
 		editorName="${editorName}"
 		initMethod=""
 		name="${namespacedFieldName}Editor"

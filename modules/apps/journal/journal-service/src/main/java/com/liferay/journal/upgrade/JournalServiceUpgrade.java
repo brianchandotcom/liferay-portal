@@ -14,6 +14,9 @@
 
 package com.liferay.journal.upgrade;
 
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeClassNames;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeCompanyId;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeJournal;
@@ -32,7 +35,14 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
+import com.liferay.portal.service.CompanyLocalService;
+import com.liferay.portal.service.GroupLocalService;
+import com.liferay.portal.service.LayoutLocalService;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portlet.asset.service.AssetCategoryLocalService;
+import com.liferay.portlet.asset.service.AssetEntryLocalService;
+import com.liferay.portlet.asset.service.AssetVocabularyLocalService;
 
 import java.io.PrintWriter;
 
@@ -50,8 +60,17 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"com.liferay.journal.service", "0.0.1", "1.0.0",
 			new UpgradeSchema(), new UpgradeClassNames(),
-			new UpgradeCompanyId(), new UpgradeJournal(),
-			new UpgradeJournalArticleType(), new UpgradeJournalArticles(),
+			new UpgradeCompanyId(), new UpgradeJournal(
+				_companyLocalService, _ddmStructureLocalService,
+				_ddmTemplateLinkLocalService, _ddmTemplateLocalService,
+				_groupLocalService, _userLocalService),
+			new UpgradeJournalArticleType(
+				_assetCategoryLocalService, _assetEntryLocalService,
+				_assetVocabularyLocalService, _companyLocalService,
+				_userLocalService),
+			new UpgradeJournalArticles(
+				_assetCategoryLocalService, _ddmStructureLocalService,
+				_groupLocalService, _layoutLocalService),
 			new UpgradeJournalDisplayPreferences(),
 			new UpgradeLastPublishDate(),
 			new UpgradePortletSettings(_settingsFactory),
@@ -88,6 +107,67 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 		db.runSQL("delete from JournalArticleImage where tempImage = TRUE");
 	}
 
+	@Reference(unbind = "-")
+	protected void setAssetCategoryLocalService(
+		AssetCategoryLocalService assetCategoryLocalService) {
+
+		_assetCategoryLocalService = assetCategoryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setAssetEntryLocalService(
+		AssetEntryLocalService assetEntryLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setAssetVocabularyLocalService(
+		AssetVocabularyLocalService assetVocabuaryLocalService) {
+
+		_assetVocabularyLocalService = assetVocabuaryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setCompanyLocalService(
+		CompanyLocalService companyLocalService) {
+
+		_companyLocalService = companyLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMStructureLocalService(
+		DDMStructureLocalService ddmStructureLocalService) {
+
+		_ddmStructureLocalService = ddmStructureLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMTemplateLinkLocalService(
+		DDMTemplateLinkLocalService ddmTemplateLinkLocalService) {
+
+		_ddmTemplateLinkLocalService = ddmTemplateLinkLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMTemplateLocalService(
+		DDMTemplateLocalService ddmTemplateLocalService) {
+
+		_ddmTemplateLocalService = ddmTemplateLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
@@ -98,9 +178,24 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 		_settingsFactory = settingsFactory;
 	}
 
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalServiceUpgrade.class);
 
+	private AssetCategoryLocalService _assetCategoryLocalService;
+	private AssetEntryLocalService _assetEntryLocalService;
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
+	private CompanyLocalService _companyLocalService;
+	private DDMStructureLocalService _ddmStructureLocalService;
+	private DDMTemplateLinkLocalService _ddmTemplateLinkLocalService;
+	private DDMTemplateLocalService _ddmTemplateLocalService;
+	private GroupLocalService _groupLocalService;
+	private LayoutLocalService _layoutLocalService;
 	private SettingsFactory _settingsFactory;
+	private UserLocalService _userLocalService;
 
 }

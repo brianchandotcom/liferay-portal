@@ -35,7 +35,8 @@ AUI.add(
 								btnCloseCaption: instance.get('closeCaption'),
 								caption: '',
 								links: '',
-								renderControls: false
+								renderControls: false,
+								renderSidebar: false
 							}
 						);
 

@@ -311,11 +311,16 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 								imageUrl='<%= Validator.isNotNull(articleImageURL) ? articleImageURL : themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
 								resultRow="<%= row %>"
 								rowChecker="<%= entriesChecker %>"
-								smallImageCSSClass="user-icon user-icon-lg"
-								smallImageUrl="<%= userDisplay != null ? userDisplay.getPortraitURL(themeDisplay) : UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null) %>"
 								title="<%= curArticle.getTitle(locale) %>"
 								url="<%= rowURL != null ? rowURL.toString() : null %>"
 							>
+								<liferay-frontend:vertical-card-sticker-bottom>
+									<liferay-frontend:vertical-card-small-image
+										smallImageCSSClass="user-icon user-icon-lg"
+										smallImageUrl="<%= userDisplay != null ? userDisplay.getPortraitURL(themeDisplay) : UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null) %>"
+									/>
+								</liferay-frontend:vertical-card-sticker-bottom>
+
 								<liferay-frontend:vertical-card-header>
 									<%= LanguageUtil.format(request, "x-ago-by-x", new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - curArticle.getModifiedDate().getTime(), true), HtmlUtil.escape(curArticle.getUserName())}, false) %>
 								</liferay-frontend:vertical-card-header>

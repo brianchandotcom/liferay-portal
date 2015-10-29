@@ -27,6 +27,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class OrganizationSearchContainerResultsTag<R> extends IncludeTag {
 
+	public void setIndexerDisabled(boolean indexerDisabled) {
+		_indexerDisabled = indexerDisabled;
+	}
+
 	public void setOrganizationParams(
 		LinkedHashMap<String, Object> organizationParams) {
 
@@ -39,6 +43,7 @@ public class OrganizationSearchContainerResultsTag<R> extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		_indexerDisabled = false;
 		_organizationParams = null;
 		_parentOrganizationId = 0;
 		_searchTerms = null;
@@ -61,6 +66,9 @@ public class OrganizationSearchContainerResultsTag<R> extends IncludeTag {
 		_searchTerms = searchContainer.getSearchTerms();
 
 		request.setAttribute(
+			"liferay-ui:organization-search-container-results:indexerDisabled",
+			_indexerDisabled);
+		request.setAttribute(
 			"liferay-ui:organization-search-container-results:searchContainer",
 			searchContainer);
 		request.setAttribute(
@@ -79,6 +87,7 @@ public class OrganizationSearchContainerResultsTag<R> extends IncludeTag {
 	private static final String _PAGE =
 		"/html/taglib/ui/organization_search_container_results/page.jsp";
 
+	private boolean _indexerDisabled = false;
 	private LinkedHashMap<String, Object> _organizationParams;
 	private long _parentOrganizationId;
 	private DisplayTerms _searchTerms;

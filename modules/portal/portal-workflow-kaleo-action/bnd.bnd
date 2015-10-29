@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Portal Workflow Kaleo Action Executor
+Bundle-SymbolicName: com.liferay.portal.workflow.kaleo.action.executor
+Bundle-Version: 1.0.0
+Export-Package: \
+	com.liferay.portal.workflow.kaleo.action.executor
+Include-Resource: \
+	classes

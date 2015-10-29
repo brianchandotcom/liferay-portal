@@ -1,0 +1,9 @@
+dependencies {
+	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	compile project(":core:osgi-service-tracker-map")
+	compile project(":portal:portal-workflow-kaleo-service")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/portal")
+}

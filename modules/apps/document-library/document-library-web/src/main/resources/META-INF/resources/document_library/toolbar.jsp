@@ -22,15 +22,26 @@ String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName
 String navigation = ParamUtil.getString(request, "navigation", "home");
 
 boolean search = mvcRenderCommandName.equals("/document_library/search");
+
+long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
+
+long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
+
+int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_ANY, false);
 %>
 
-<aui:nav-bar>
-	<aui:nav collapsible="<%= true %>" cssClass="nav-display-style-buttons navbar-nav" icon="th-list" id="displayStyleButtons">
+<liferay-frontend:management-bar
+	checkBoxContainerId="entriesContainer"
+	includeCheckBox="<%= total > 0 %>"
+>
+	<liferay-frontend:management-bar-buttons>
 		<c:if test="<%= !search %>">
 			<liferay-util:include page="/document_library/display_style_buttons.jsp" servletContext="<%= application %>" />
 		</c:if>
-	</aui:nav>
+	</liferay-frontend:management-bar-buttons>
+</liferay-frontend:management-bar>
 
+<aui:nav-bar>
 	<aui:nav cssClass="navbar-nav" id="toolbarContainer">
 		<aui:nav-item cssClass="hide" dropdown="<%= true %>" id="actionsButtonContainer" label="actions">
 

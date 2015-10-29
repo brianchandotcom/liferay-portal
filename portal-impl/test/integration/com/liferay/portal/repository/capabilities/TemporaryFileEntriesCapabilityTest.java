@@ -74,9 +74,10 @@ public class TemporaryFileEntriesCapabilityTest {
 			RepositoryProviderUtil.getLocalRepository(
 				repository.getRepositoryId());
 
-		int itemsCount = getItemsCount(localRepository);
+		int foldersAndFileEntriesAndFileShortcutsCount =
+			getFoldersAndFileEntriesAndFileShortcutsCount(localRepository);
 
-		Assert.assertTrue(itemsCount > 0);
+		Assert.assertTrue(foldersAndFileEntriesAndFileShortcutsCount > 0);
 
 		TemporaryFileEntriesCapability temporaryFileEntriesCapability =
 			localRepository.getCapability(TemporaryFileEntriesCapability.class);
@@ -87,9 +88,10 @@ public class TemporaryFileEntriesCapabilityTest {
 
 		temporaryFileEntriesCapability.deleteExpiredTemporaryFileEntries();
 
-		itemsCount = getItemsCount(localRepository);
+		foldersAndFileEntriesAndFileShortcutsCount =
+			getFoldersAndFileEntriesAndFileShortcutsCount(localRepository);
 
-		Assert.assertEquals(itemsCount, 0);
+		Assert.assertEquals(foldersAndFileEntriesAndFileShortcutsCount, 0);
 	}
 
 	protected InputStream getInputStream() {
@@ -101,18 +103,21 @@ public class TemporaryFileEntriesCapabilityTest {
 			"com/liferay/portal/util/dependencies/test.jpg");
 	}
 
-	protected int getItemsCount(LocalRepository localRepository)
+	protected int getFoldersAndFileEntriesAndFileShortcutsCount(
+			LocalRepository localRepository)
 		throws Exception {
 
-		int itemsCount = localRepository.getFileEntriesAndFileShortcutsCount(
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			WorkflowConstants.STATUS_ANY);
+		int foldersAndFileEntriesAndFileShortcutsCount =
+			localRepository.getFoldersCount(
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				WorkflowConstants.STATUS_ANY, true);
 
-		itemsCount += localRepository.getFoldersCount(
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			WorkflowConstants.STATUS_ANY, true);
+		foldersAndFileEntriesAndFileShortcutsCount +=
+			localRepository.getFileEntriesAndFileShortcutsCount(
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				WorkflowConstants.STATUS_ANY);
 
-		return itemsCount;
+		return foldersAndFileEntriesAndFileShortcutsCount;
 	}
 
 	@DeleteAfterTestRun

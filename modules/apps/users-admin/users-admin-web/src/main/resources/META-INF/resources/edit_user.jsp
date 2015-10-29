@@ -220,9 +220,10 @@ if (selUser != null) {
 		<c:if test="<%= selUser != null %>">
 			<div class="user-info">
 				<div class="float-container">
-					<img alt="<%= HtmlUtil.escapeAttribute(selUser.getFullName()) %>" class="user-logo" src="<%= selUser.getPortraitURL(themeDisplay) %>" />
-
-					<span class="user-name"><%= HtmlUtil.escape(selUser.getFullName()) %></span>
+					<liferay-ui:user-display
+						showUserName="<%= true %>"
+						userId="<%= selUser.getUserId() %>"
+					/>
 				</div>
 			</div>
 		</c:if>

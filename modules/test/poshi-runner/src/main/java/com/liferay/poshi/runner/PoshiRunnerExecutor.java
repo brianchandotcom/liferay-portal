@@ -781,7 +781,7 @@ public class PoshiRunnerExecutor {
 					varValue = liferaySelenium.getValue(locator);
 				}
 				else {
-					varValue = liferaySelenium.getText(locator);
+					varValue = liferaySelenium.getElementText(locator);
 				}
 			}
 			else if (element.attributeValue("method") != null) {

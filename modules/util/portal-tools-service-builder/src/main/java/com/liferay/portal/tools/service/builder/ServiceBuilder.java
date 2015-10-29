@@ -1695,6 +1695,10 @@ public class ServiceBuilder {
 		return SAXReaderFactory.getSAXReader(null, false, false);
 	}
 
+	private static void _mkdir(File dir) throws IOException {
+		Files.createDirectories(dir.toPath());
+	}
+
 	private static void _move(File sourceFile, File destinationFile)
 		throws IOException {
 
@@ -1745,10 +1749,6 @@ public class ServiceBuilder {
 	}
 
 	private static void _touch(File file) throws IOException {
-		Path path = file.toPath();
-
-		Files.createDirectories(path.getParent());
-
 		Files.createFile(file.toPath());
 	}
 
@@ -3193,7 +3193,7 @@ public class ServiceBuilder {
 		File sqlDir = new File(_sqlDirName);
 
 		if (!sqlDir.exists()) {
-			return;
+			_mkdir(sqlDir);
 		}
 
 		// indexes.sql loading
@@ -3395,7 +3395,7 @@ public class ServiceBuilder {
 		File sqlDir = new File(_sqlDirName);
 
 		if (!sqlDir.exists()) {
-			return;
+			_mkdir(sqlDir);
 		}
 
 		File sqlFile = new File(_sqlDirName + "/" + _sqlSequencesFileName);
@@ -3478,7 +3478,7 @@ public class ServiceBuilder {
 		File sqlDir = new File(_sqlDirName);
 
 		if (!sqlDir.exists()) {
-			return;
+			_mkdir(sqlDir);
 		}
 
 		File sqlFile = new File(_sqlDirName + "/" + _sqlFileName);

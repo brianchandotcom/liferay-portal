@@ -870,7 +870,7 @@
 
 		<execute function="Open" locator1="${blogEntryURL}" />
 
-		<execute macro="BlogsEntry#viewDetailsPG">
+		<execute macro="BlogsNavigator#gotoPG">
 			<var name="blogEntryURL" value="${blogEntryURL}" />
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="Blogs Entry Title" />

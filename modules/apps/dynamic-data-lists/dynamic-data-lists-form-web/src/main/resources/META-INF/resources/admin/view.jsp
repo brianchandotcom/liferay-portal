@@ -106,11 +106,16 @@ recordSetSearch.setOrderByType(orderByType);
 								imageUrl='<%= themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
 								resultRow="<%= row %>"
 								showCheckbox= "<%= false %>"
-								smallImageCSSClass="user-icon user-icon-lg"
-								smallImageUrl="<%= userDisplay != null ? userDisplay.getPortraitURL(themeDisplay) : UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null) %>"
 								title="<%= recordSet.getName(locale) %>"
 								url="<%= rowURL %>"
 							>
+								<liferay-frontend:vertical-card-sticker-bottom>
+									<liferay-frontend:vertical-card-small-image
+										smallImageCSSClass="user-icon user-icon-lg"
+										smallImageUrl="<%= userDisplay != null ? userDisplay.getPortraitURL(themeDisplay) : UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null) %>"
+									/>
+								</liferay-frontend:vertical-card-sticker-bottom>
+
 								<liferay-frontend:vertical-card-header>
 									<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - recordSet.getModifiedDate().getTime(), true), HtmlUtil.escape(recordSet.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
 								</liferay-frontend:vertical-card-header>

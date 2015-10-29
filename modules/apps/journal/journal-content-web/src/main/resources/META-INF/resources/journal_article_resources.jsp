@@ -34,11 +34,16 @@ if (article.getGroupId() != themeDisplay.getScopeGroupId()) {
 <liferay-frontend:vertical-card
 	cssClass="article-preview-content"
 	imageUrl="<%= HtmlUtil.escapeAttribute(assetRenderer.getThumbnailPath(liferayPortletRequest)) %>"
-	smallImageCSSClass="user-icon user-icon-lg"
-	smallImageUrl="<%= (assetRendererUser != null) ? assetRendererUser.getPortraitURL(themeDisplay) : UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null) %>"
 	subtitle="<%= assetRenderer.getSummary() %>"
 	title="<%= title %>"
 >
+	<liferay-frontend:vertical-card-sticker-bottom>
+		<liferay-frontend:vertical-card-small-image
+			smallImageCSSClass="user-icon user-icon-lg"
+			smallImageUrl="<%= (assetRendererUser != null) ? assetRendererUser.getPortraitURL(themeDisplay) : UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null) %>"
+		/>
+	</liferay-frontend:vertical-card-sticker-bottom>
+
 	<liferay-frontend:vertical-card-footer>
 		<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= article.getStatus() %>" />
 	</liferay-frontend:vertical-card-footer>

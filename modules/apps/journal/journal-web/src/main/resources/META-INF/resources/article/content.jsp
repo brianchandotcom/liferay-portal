@@ -200,6 +200,7 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 				classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
 				classPK="<%= ddmStructure.getStructureId() %>"
 				ddmFormValues="<%= ddmFormValues %>"
+				ignoreRequestValue="<%= changeStructure %>"
 				requestedLocale="<%= LocaleUtil.fromLanguageId(defaultLanguageId) %>"
 			/>
 

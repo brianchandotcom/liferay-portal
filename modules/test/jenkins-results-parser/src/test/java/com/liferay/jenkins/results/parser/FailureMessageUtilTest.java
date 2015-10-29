@@ -16,12 +16,15 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 import java.io.IOException;
+
 import java.net.URI;
 import java.net.URL;
+
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import org.apache.tools.ant.Project;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -53,9 +56,7 @@ public class FailureMessageUtilTest {
 		}
 	}
 
-	protected void assertSample(File caseDir)
-		throws Exception {
-
+	protected void assertSample(File caseDir) throws Exception {
 		System.out.print("Asserting sample " + caseDir.getName() + ": ");
 
 		File expectedFailureMessageFile = new File(
@@ -162,7 +163,7 @@ public class FailureMessageUtilTest {
 		throws Exception {
 
 		String urlString = url + urlSuffix;
-		
+
 		if (urlString.endsWith("json")) {
 			urlString += "?pretty";
 		}

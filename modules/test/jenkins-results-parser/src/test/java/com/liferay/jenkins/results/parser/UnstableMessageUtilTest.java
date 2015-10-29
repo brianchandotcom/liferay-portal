@@ -203,9 +203,9 @@ public class UnstableMessageUtilTest {
 
 	private static void _downloadSampleURL(File dir, URL url, String urlSuffix)
 		throws Exception {
-		
+
 		String urlString = url + urlSuffix;
-		
+
 		if (urlString.endsWith("json")) {
 			urlString += "?pretty";
 		}

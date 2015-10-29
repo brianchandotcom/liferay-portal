@@ -65,7 +65,7 @@ public class JenkinsResultsParserUtil {
 		if (url.contains("]")) {
 			url = url.replace("]", "%5D");
 		}
-		
+
 		return url;
 	}
 
@@ -193,7 +193,7 @@ public class JenkinsResultsParserUtil {
 		}
 
 		bufferedReader.close();
-		
+
 		return sb.toString();
 	}
 

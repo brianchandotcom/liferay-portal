@@ -143,7 +143,8 @@ public class UnstableMessageUtilTest {
 			_downloadSampleURL(sampleDir, url, "/api/json");
 			_downloadSampleURL(sampleDir, url, "/testReport/api/json");
 
-			_downloadSampleRuns(sampleDir, new File(sampleDir, "/api/json"));
+			_downloadSampleAxisURLs(
+				sampleDir, new File(sampleDir, "/api/json"));
 
 			_writeExpectedUnstableMessage(sampleDir);
 		}
@@ -154,37 +155,37 @@ public class UnstableMessageUtilTest {
 		}
 	}
 
-	private static void _downloadSampleRuns(File sampleDir, File sampleJSONFile)
+	private static void _downloadSampleAxisURLs(
+			File sampleDir, File jobJSONFile)
 		throws Exception {
 
-		JSONObject sampleJSONObject = JenkinsResultsParserUtil.toJSONObject(
-			_toURLString(sampleJSONFile));
+		JSONObject jobJSONObject = JenkinsResultsParserUtil.toJSONObject(
+			_toURLString(jobJSONFile));
 
-		JSONArray runsJSONArray = sampleJSONObject.getJSONArray("runs");
-		String sampleNumber = sampleJSONObject.getString("number");
+		String number = jobJSONObject.getString("number");
+
+		JSONArray runsJSONArray = jobJSONObject.getJSONArray("runs");
 
 		for (int i = 0; i < runsJSONArray.length(); i++) {
 			JSONObject runJSONObject = runsJSONArray.getJSONObject(i);
 
-			if (!sampleNumber.equals(runJSONObject.getString("number"))) {
+			if (!number.equals(runJSONObject.getString("number"))) {
 				continue;
 			}
 
-			String runKey = "run-" + i + "/" + sampleNumber + "/";
 			String runURLString = URLDecoder.decode(
 				runJSONObject.getString("url"), "UTF-8");
 
-			File runSubDir = new File(sampleDir, runKey);
+			File runDir = new File(sampleDir, "run-" + i + "/" + number + "/");
 
+			_downloadSampleURL(runDir, _createURL(runURLString), "/api/json");
 			_downloadSampleURL(
-				runSubDir, _createURL(runURLString), "/api/json");
-			_downloadSampleURL(
-				runSubDir, _createURL(runURLString), "/testReport/api/json");
+				runDir, _createURL(runURLString), "/testReport/api/json");
 
-			runJSONObject.put("url", _toURLString(runSubDir));
+			runJSONObject.put("url", _toURLString(runDir));
 		}
 
-		_write(sampleJSONFile, sampleJSONObject);
+		_write(jobJSONFile, jobJSONObject);
 	}
 
 	private static void _downloadSampleURL(File dir, URL url, String urlSuffix)

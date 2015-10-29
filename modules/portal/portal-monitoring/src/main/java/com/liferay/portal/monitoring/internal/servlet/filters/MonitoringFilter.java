@@ -97,7 +97,9 @@ public class MonitoringFilter extends BaseFilter
 	}
 
 	protected int decrementProcessFilterCount() {
-		return _processFilterCount.get().decrementAndGet();
+		AtomicInteger processFilterCount = _processFilterCount.get();
+
+		return processFilterCount.decrementAndGet();
 	}
 
 	protected long getGroupId(HttpServletRequest request) {
@@ -137,7 +139,9 @@ public class MonitoringFilter extends BaseFilter
 	}
 
 	protected void incrementProcessFilterCount() {
-		_processFilterCount.get().incrementAndGet();
+		AtomicInteger processFilterCount = _processFilterCount.get();
+
+		processFilterCount.incrementAndGet();
 	}
 
 	@Override
@@ -175,7 +179,9 @@ public class MonitoringFilter extends BaseFilter
 
 			if (portalRequestDataSample != null) {
 				portalRequestDataSample.capture(RequestStatus.SUCCESS);
+
 				portalRequestDataSample.setGroupId(getGroupId(request));
+
 				portalRequestDataSample.setStatusCode(response.getStatus());
 			}
 		}

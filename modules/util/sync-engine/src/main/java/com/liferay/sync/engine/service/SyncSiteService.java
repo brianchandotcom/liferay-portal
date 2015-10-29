@@ -69,6 +69,8 @@ public class SyncSiteService {
 			syncSite.setRemoteSyncTime(-1);
 			syncSite.setState(SyncSite.STATE_SYNCED);
 			syncSite.setUiEvent(SyncSite.UI_EVENT_NONE);
+
+			deleteSyncFiles(syncSite);
 		}
 
 		update(syncSite);

@@ -17,10 +17,12 @@ package com.liferay.sync.engine.documentlibrary.util;
 import com.liferay.sync.engine.documentlibrary.event.Event;
 import com.liferay.sync.engine.model.SyncFile;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Shinn Lok
@@ -38,7 +40,8 @@ public class FileEventManager {
 			Set<Event> events = _eventMap.get(syncFile.getSyncFileId());
 
 			if (events == null) {
-				events = new HashSet<>();
+				events = Collections.newSetFromMap(
+					new ConcurrentHashMap<Event, Boolean>());
 
 				_eventMap.put(syncFile.getSyncFileId(), events);
 			}

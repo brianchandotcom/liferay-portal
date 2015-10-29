@@ -90,7 +90,7 @@ Group group = layoutSetPrototype.getGroup();
 
 		<liferay-ui:icon
 			cssClass="export-layoutset-prototype layoutset-prototype-action"
-			iconCssClass="icon-arrow-down"
+			iconCssClass="icon-arrow-up"
 			message="export"
 			method="get"
 			url="<%= exportPagesURL.toString() %>"
@@ -111,7 +111,7 @@ Group group = layoutSetPrototype.getGroup();
 
 		<liferay-ui:icon
 			cssClass="import-layoutset-prototype layoutset-prototype-action"
-			iconCssClass="icon-arrow-up"
+			iconCssClass="icon-arrow-down"
 			message="import"
 			method="get"
 			url="<%= importPagesURL.toString() %>"

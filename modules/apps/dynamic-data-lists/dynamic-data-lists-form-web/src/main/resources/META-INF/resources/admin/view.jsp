@@ -94,11 +94,6 @@ recordSetSearch.setOrderByType(orderByType);
 						%>
 
 						<liferay-ui:search-container-column-text colspan="<%= 2 %>">
-
-							<%
-								User userDisplay = UserLocalServiceUtil.fetchUserById(recordSet.getUserId());
-							%>
-
 							<liferay-frontend:vertical-card
 								actionJsp="/admin/record_set_action.jsp"
 								actionJspServletContext="<%= application %>"
@@ -110,9 +105,8 @@ recordSetSearch.setOrderByType(orderByType);
 								url="<%= rowURL %>"
 							>
 								<liferay-frontend:vertical-card-sticker-bottom>
-									<liferay-frontend:vertical-card-small-image
-										smallImageCSSClass="user-icon user-icon-lg"
-										smallImageUrl="<%= userDisplay != null ? userDisplay.getPortraitURL(themeDisplay) : UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null) %>"
+									<liferay-ui:user-portrait
+										userId="<%= recordSet.getUserId() %>"
 									/>
 								</liferay-frontend:vertical-card-sticker-bottom>
 

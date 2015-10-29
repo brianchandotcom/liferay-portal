@@ -157,6 +157,12 @@ public class WikiNodeTrashHandler extends BaseWikiTrashHandler {
 				continue;
 			}
 
+			TrashEntry trashEntry = page.getTrashEntry();
+
+			if (page.getResourcePrimKey() == trashEntry.getClassPK()) {
+				continue;
+			}
+
 			TrashHandler trashHandler =
 				TrashHandlerRegistryUtil.getTrashHandler(
 					WikiPage.class.getName());

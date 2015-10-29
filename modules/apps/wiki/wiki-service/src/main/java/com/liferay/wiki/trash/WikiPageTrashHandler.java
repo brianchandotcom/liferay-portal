@@ -317,7 +317,7 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 
 	@Override
 	public boolean isMovable() {
-		return true;
+		return false;
 	}
 
 	@Override

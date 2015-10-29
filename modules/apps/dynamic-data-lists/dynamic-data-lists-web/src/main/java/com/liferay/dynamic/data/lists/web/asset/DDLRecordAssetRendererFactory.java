@@ -25,7 +25,6 @@ import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -68,9 +67,10 @@ public class DDLRecordAssetRendererFactory
 		throws PortalException {
 
 		DDLRecord record = _ddlRecordLocalService.fetchDDLRecord(classPK);
+
 		DDLRecordVersion recordVersion = null;
 
-		if (Validator.isNull(record)) {
+		if (record == null) {
 			recordVersion = _ddlRecordVersionLocalService.getRecordVersion(
 				classPK);
 

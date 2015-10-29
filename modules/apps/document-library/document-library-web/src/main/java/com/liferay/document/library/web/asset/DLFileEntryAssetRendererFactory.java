@@ -99,6 +99,7 @@ public class DLFileEntryAssetRendererFactory
 		}
 		catch (NoSuchFileEntryException nsfee) {
 			fileVersion = _dlAppLocalService.getFileVersion(classPK);
+
 			fileEntry = fileVersion.getFileEntry();
 		}
 

@@ -348,6 +348,36 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public String getElementText(String locator) throws Exception {
+		return getElementText(locator, null);
+	}
+
+	public String getElementText(String locator, String timeout)
+		throws Exception {
+
+		if (locator.contains("x:")) {
+			return getHtmlNodeText(locator);
+		}
+
+		WebElement webElement = getWebElement(locator, timeout);
+
+		if (webElement == null) {
+			throw new Exception(
+				"Element is not present at \"" + locator + "\"");
+		}
+
+		if (!webElement.isDisplayed()) {
+			scrollWebElementIntoView(webElement);
+		}
+
+		String text = webElement.getText();
+
+		text = text.trim();
+
+		return text.replace("\n", " ");
+	}
+
+	@Override
 	public String getEmailBody(String index) throws Exception {
 		return LiferaySeleniumHelper.getEmailBody(index);
 	}

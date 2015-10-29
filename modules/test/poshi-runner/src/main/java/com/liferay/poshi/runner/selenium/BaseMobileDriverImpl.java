@@ -18,6 +18,8 @@ import com.liferay.poshi.runner.util.PropsValues;
 
 import org.openqa.selenium.WebDriver;
 
+import org.openqa.selenium.WebElement;
+
 /**
  * @author Kenji Heigel
  */
@@ -298,6 +300,32 @@ public abstract class BaseMobileDriverImpl
 	@Override
 	public String getCurrentYear() {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public String getElementText(String locator) throws Exception {
+		return getElementText(locator, null);
+	}
+
+	public String getElementText(String locator, String timeout)
+		throws Exception {
+
+		WebElement webElement = getWebElement(locator, timeout);
+
+		if (webElement == null) {
+			throw new Exception(
+				"Element is not present at \"" + locator + "\"");
+		}
+
+		if (!isInViewport(locator)) {
+			swipeWebElementIntoView(locator);
+		}
+
+		String text = webElement.getText();
+
+		text = text.trim();
+
+		return text.replace("\n", " ");
 	}
 
 	@Override

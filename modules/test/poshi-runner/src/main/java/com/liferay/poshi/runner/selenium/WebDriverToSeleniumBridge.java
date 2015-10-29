@@ -715,17 +715,7 @@ public class WebDriverToSeleniumBridge
 
 	@Override
 	public String getValue(String locator) {
-		return getValue(locator, null);
-	}
-
-	public String getValue(String locator, String timeout) {
-		WebElement webElement = getWebElement(locator, timeout);
-
-		if (!webElement.isDisplayed()) {
-			scrollWebElementIntoView(webElement);
-		}
-
-		return webElement.getAttribute("value");
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

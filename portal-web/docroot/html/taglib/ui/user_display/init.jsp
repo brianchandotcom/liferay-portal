@@ -35,13 +35,4 @@ if (author) {
 if (Validator.isNull(url) && (userDisplay != null)) {
 	url = userDisplay.getDisplayURL(themeDisplay);
 }
-
-String taglibSrc = null;
-
-if (userDisplay != null) {
-	taglibSrc = userDisplay.getPortraitURL(themeDisplay);
-}
-else {
-	taglibSrc = UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null);
-}
 %>

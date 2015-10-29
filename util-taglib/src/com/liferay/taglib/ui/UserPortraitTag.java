@@ -14,9 +14,18 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -59,17 +68,63 @@ public class UserPortraitTag extends IncludeTag {
 		return UserLocalServiceUtil.fetchUser(_userId);
 	}
 
+	protected String getUserInitials(User user) {
+		String userName = _userName;
+
+		if (Validator.isNull(userName)) {
+			if (user != null) {
+				userName = user.getFullName();
+			}
+			else {
+				userName = LanguageUtil.get(request, "user");
+			}
+		}
+
+		String[] userNames = StringUtil.split(userName, StringPool.SPACE);
+
+		StringBundler sb = new StringBundler(userNames.length);
+
+		for (String curUserName : userNames) {
+			sb.append(
+				StringUtil.toUpperCase(StringUtil.shorten(curUserName, 1)));
+		}
+
+		return sb.toString();
+	}
+
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute("liferay-ui:user-portrait:cssClass", _cssClass);
 		request.setAttribute(
 			"liferay-ui:user-portrait:imageCssClass", _imageCssClass);
-		request.setAttribute("liferay-ui:user-portrait:user", getUser());
+
+		User user = getUser();
+
+		if ((user != null) && (user.getPortraitId() > 0)) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			try {
+				request.setAttribute(
+					"liferay-ui:user-portrait:portraitURL",
+					user.getPortraitURL(themeDisplay));
+			}
+			catch (PortalException pe) {
+				_log.error(pe);
+			}
+		}
+
+		request.setAttribute("liferay-ui:user-portrait:user", user);
+		request.setAttribute(
+			"liferay-ui:user-portrait:userInitials", getUserInitials(user));
 		request.setAttribute("liferay-ui:user-portrait:userName", _userName);
 	}
 
 	private static final String _PAGE =
 		"/html/taglib/ui/user_portrait/page.jsp";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UserPortraitTag.class);
 
 	private String _cssClass;
 	private String _imageCssClass;

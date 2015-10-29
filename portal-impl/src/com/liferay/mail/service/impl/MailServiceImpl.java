@@ -17,13 +17,13 @@ package com.liferay.mail.service.impl;
 import com.liferay.mail.model.Filter;
 import com.liferay.mail.service.MailService;
 import com.liferay.mail.util.Hook;
-import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mail.Account;
 import com.liferay.portal.kernel.mail.MailMessage;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -46,7 +46,7 @@ import javax.mail.Session;
  * @author Brian Wing Shun Chan
  */
 @DoPrivileged
-public class MailServiceImpl implements MailService, IdentifiableBean {
+public class MailServiceImpl implements MailService, IdentifiableOSGiService {
 
 	@Override
 	public void addForward(
@@ -126,8 +126,8 @@ public class MailServiceImpl implements MailService, IdentifiableBean {
 	}
 
 	@Override
-	public String getBeanIdentifier() {
-		return _beanIdentifier;
+	public String getOSGiServiceIdentifier() {
+		return MailService.class.getName();
 	}
 
 	@Override
@@ -259,11 +259,6 @@ public class MailServiceImpl implements MailService, IdentifiableBean {
 	}
 
 	@Override
-	public void setBeanIdentifier(String beanIdentifier) {
-		_beanIdentifier = beanIdentifier;
-	}
-
-	@Override
 	public void updateBlocked(
 		long companyId, long userId, List<String> blocked) {
 
@@ -326,7 +321,6 @@ public class MailServiceImpl implements MailService, IdentifiableBean {
 	private static final MethodKey _updatePasswordMethodKey = new MethodKey(
 		Hook.class, "updatePassword", long.class, long.class, String.class);
 
-	private String _beanIdentifier;
 	private Session _session;
 
 }

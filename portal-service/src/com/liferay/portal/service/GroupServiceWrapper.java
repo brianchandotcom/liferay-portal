@@ -217,16 +217,6 @@ public class GroupServiceWrapper implements GroupService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _groupService.getBeanIdentifier();
-	}
-
-	/**
 	* Returns the company group.
 	*
 	* @param companyId the primary key of the company
@@ -325,6 +315,16 @@ public class GroupServiceWrapper implements GroupService,
 		java.util.Collection<com.liferay.portal.model.Portlet> portlets, int max)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _groupService.getManageableSites(portlets, max);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _groupService.getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -735,16 +735,6 @@ public class GroupServiceWrapper implements GroupService,
 	public int searchCount(long companyId, java.lang.String name,
 		java.lang.String description, java.lang.String[] params) {
 		return _groupService.searchCount(companyId, name, description, params);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_groupService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

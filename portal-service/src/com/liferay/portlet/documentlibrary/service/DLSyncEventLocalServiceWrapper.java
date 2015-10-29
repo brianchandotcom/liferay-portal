@@ -201,16 +201,6 @@ public class DLSyncEventLocalServiceWrapper implements DLSyncEventLocalService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _dlSyncEventLocalService.getBeanIdentifier();
-	}
-
-	/**
 	* Returns the d l sync event with the primary key.
 	*
 	* @param syncEventId the primary key of the d l sync event
@@ -262,21 +252,21 @@ public class DLSyncEventLocalServiceWrapper implements DLSyncEventLocalService,
 		return _dlSyncEventLocalService.getLatestDLSyncEvents();
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _dlSyncEventLocalService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlSyncEventLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_dlSyncEventLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

@@ -38,16 +38,6 @@ public class MBThreadServiceWrapper implements MBThreadService,
 		_mbThreadService.deleteThread(threadId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _mbThreadService.getBeanIdentifier();
-	}
-
 	@Override
 	public java.util.List<com.liferay.portlet.messageboards.model.MBThread> getGroupThreads(
 		long groupId, long userId, java.util.Date modifiedDate, int status,
@@ -106,6 +96,16 @@ public class MBThreadServiceWrapper implements MBThreadService,
 		boolean subscribed, boolean includeAnonymous) {
 		return _mbThreadService.getGroupThreadsCount(groupId, userId, status,
 			subscribed, includeAnonymous);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _mbThreadService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -168,16 +168,6 @@ public class MBThreadServiceWrapper implements MBThreadService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbThreadService.search(groupId, creatorUserId, status, start,
 			end);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_mbThreadService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

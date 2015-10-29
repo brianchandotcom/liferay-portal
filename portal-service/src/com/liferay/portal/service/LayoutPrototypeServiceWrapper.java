@@ -83,21 +83,21 @@ public class LayoutPrototypeServiceWrapper implements LayoutPrototypeService,
 		return _layoutPrototypeService.fetchLayoutPrototype(layoutPrototypeId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _layoutPrototypeService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.portal.model.LayoutPrototype getLayoutPrototype(
 		long layoutPrototypeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutPrototypeService.getLayoutPrototype(layoutPrototypeId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _layoutPrototypeService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -106,16 +106,6 @@ public class LayoutPrototypeServiceWrapper implements LayoutPrototypeService,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutPrototype> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutPrototypeService.search(companyId, active, obc);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_layoutPrototypeService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

@@ -12,54 +12,50 @@
  * details.
  */
 
-package com.liferay.portal.bean;
+package com.liferay.portal.kernel.module.framework.service;
 
-import com.liferay.portal.kernel.bean.IdentifiableBean;
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
-import com.liferay.portal.util.PortalUtil;
 
-import org.aopalliance.intercept.MethodInvocation;
+import java.lang.reflect.Method;
 
 /**
  * @author Shuyang Zhou
  */
-public class IdentifiableBeanInvokerUtil {
+public class IdentifiableOSGiServiceInvokerUtil {
 
 	public static MethodHandler createMethodHandler(
-		MethodInvocation methodInvocation) {
+		Object targetObject, Method method, Object[] args) {
 
-		MethodHandler methodHandler = new MethodHandler(
-			methodInvocation.getMethod(), methodInvocation.getArguments());
+		MethodHandler methodHandler = new MethodHandler(method, args);
 
 		String threadContextServletContextName = ClassLoaderPool.getContextName(
 			ClassLoaderUtil.getContextClassLoader());
 
-		IdentifiableBean identifiableBean =
-			(IdentifiableBean)methodInvocation.getThis();
-
-		Class<?> identifiableBeanClass = identifiableBean.getClass();
-
-		String identifiableBeanServletContextName =
-			ClassLoaderPool.getContextName(
-				identifiableBeanClass.getClassLoader());
-
-		String beanIdentifier = identifiableBean.getBeanIdentifier();
+		IdentifiableOSGiService identifiableOSGiService =
+			(IdentifiableOSGiService)targetObject;
 
 		return new MethodHandler(
 			_invokeMethodKey, methodHandler, threadContextServletContextName,
-			identifiableBeanServletContextName, beanIdentifier);
+			identifiableOSGiService.getOSGiServiceIdentifier());
 	}
 
 	@SuppressWarnings("unused")
 	private static Object _invoke(
 			MethodHandler methodHandler, String threadContextServletContextName,
-			String identifiableBeanServletContextName, String beanIdentifier)
+			String osgiServiceIdentifier)
 		throws Exception {
+
+		Object osgiService =
+			IdentifiableOSGiServiceUtil.getIdentifiableOSGiService(
+				osgiServiceIdentifier);
+
+		if (osgiService == null) {
+			throw new Exception(
+				"Unable to load osgi service " + osgiServiceIdentifier);
+		}
 
 		ClassLoader contextClassLoader =
 			ClassLoaderUtil.getContextClassLoader();
@@ -70,19 +66,7 @@ public class IdentifiableBeanInvokerUtil {
 		ClassLoaderUtil.setContextClassLoader(classLoader);
 
 		try {
-			Object bean = null;
-
-			if (identifiableBeanServletContextName.equals(
-					PortalUtil.getServletContextName())) {
-
-				bean = PortalBeanLocatorUtil.locate(beanIdentifier);
-			}
-			else {
-				bean = PortletBeanLocatorUtil.locate(
-					identifiableBeanServletContextName, beanIdentifier);
-			}
-
-			return methodHandler.invoke(bean);
+			return methodHandler.invoke(osgiService);
 		}
 		finally {
 			ClassLoaderUtil.setContextClassLoader(contextClassLoader);
@@ -90,7 +74,7 @@ public class IdentifiableBeanInvokerUtil {
 	}
 
 	private static final MethodKey _invokeMethodKey = new MethodKey(
-		IdentifiableBeanInvokerUtil.class, "_invoke", MethodHandler.class,
-		String.class, String.class, String.class);
+		IdentifiableOSGiServiceInvokerUtil.class, "_invoke",
+		MethodHandler.class, String.class, String.class);
 
 }

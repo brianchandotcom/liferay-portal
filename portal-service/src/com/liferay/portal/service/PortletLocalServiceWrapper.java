@@ -280,16 +280,6 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 		return _portletLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _portletLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public java.util.List<com.liferay.portlet.expando.model.CustomAttributesDisplay> getCustomAttributesDisplays() {
 		return _portletLocalService.getCustomAttributesDisplays();
@@ -309,6 +299,16 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 	@Override
 	public java.util.List<com.liferay.portal.kernel.portlet.FriendlyURLMapper> getFriendlyURLMappers() {
 		return _portletLocalService.getFriendlyURLMappers();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _portletLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -451,16 +451,6 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 	@Override
 	public void removeCompanyPortletsPool(long companyId) {
 		_portletLocalService.removeCompanyPortletsPool(companyId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_portletLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

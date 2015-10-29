@@ -22,12 +22,14 @@ import com.liferay.portal.kernel.cal.Recurrence;
 import com.liferay.portal.kernel.cal.RecurrenceSerializer;
 import com.liferay.portal.kernel.cluster.ClusterLink;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
+import com.liferay.portal.kernel.cluster.ClusterableProxyFactory;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.scheduler.JobState;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
@@ -752,7 +754,12 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 			clusterSchedulerEngine.setProps(_props);
 			clusterSchedulerEngine.setSchedulerEngineHelper(this);
 
-			_schedulerEngine = clusterSchedulerEngine;
+			_serviceRegistration = _bundleContext.registerService(
+				IdentifiableOSGiService.class, clusterSchedulerEngine,
+				new HashMapDictionary<String, Object>());
+
+			_schedulerEngine = ClusterableProxyFactory.createClusterableProxy(
+				clusterSchedulerEngine);
 		}
 
 		if (GetterUtil.getBoolean(_props.get(PropsKeys.SCHEDULER_ENABLED))) {
@@ -782,6 +789,10 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 			_serviceTracker.close();
 
 			_serviceTracker = null;
+		}
+
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
 		}
 
 		try {
@@ -859,6 +870,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		_messageListenerServiceRegistrations = new HashMap<>();
 	private Props _props;
 	private SchedulerEngine _schedulerEngine;
+	private ServiceRegistration<IdentifiableOSGiService> _serviceRegistration;
 	private final Map
 		<MessageListener, ServiceRegistration<SchedulerEventMessageListener>>
 			_serviceRegistrations = new HashMap<>();

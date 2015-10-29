@@ -226,16 +226,6 @@ public class SocialActivityServiceWrapper implements SocialActivityService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _socialActivityService.getBeanIdentifier();
-	}
-
-	/**
 	* Returns a range of all the activities done in the group.
 	*
 	* <p>
@@ -338,6 +328,16 @@ public class SocialActivityServiceWrapper implements SocialActivityService,
 		long mirrorActivityId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _socialActivityService.getMirrorActivity(mirrorActivityId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _socialActivityService.getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -649,16 +649,6 @@ public class SocialActivityServiceWrapper implements SocialActivityService,
 	@Override
 	public int getUserOrganizationsActivitiesCount(long userId) {
 		return _socialActivityService.getUserOrganizationsActivitiesCount(userId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_socialActivityService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

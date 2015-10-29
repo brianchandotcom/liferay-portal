@@ -44,30 +44,21 @@ public class PortalServiceUtil {
 		return getService().getAutoDeployDirectory();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
 	public static int getBuildNumber() {
 		return getService().getBuildNumber();
 	}
 
-	public static java.lang.String getVersion() {
-		return getService().getVersion();
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
+	public static java.lang.String getVersion() {
+		return getService().getVersion();
 	}
 
 	public static void testAddClassNameAndTestTransactionPortletBar_PortalRollback(

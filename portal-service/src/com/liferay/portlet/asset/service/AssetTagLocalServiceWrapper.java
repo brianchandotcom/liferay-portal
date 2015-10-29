@@ -506,16 +506,6 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _assetTagLocalService.getBeanIdentifier();
-	}
-
-	/**
 	* Returns the asset tags of the asset entry.
 	*
 	* @param entryId the primary key of the asset entry
@@ -580,6 +570,16 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getGroupsTags(
 		long[] groupIds) {
 		return _assetTagLocalService.getGroupsTags(groupIds);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _assetTagLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -849,16 +849,6 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	@Override
 	public void setAssetEntryAssetTags(long entryId, long[] tagIds) {
 		_assetTagLocalService.setAssetEntryAssetTags(entryId, tagIds);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_assetTagLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

@@ -295,16 +295,6 @@ public class ResourceBlockLocalServiceWrapper
 		return _resourceBlockLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _resourceBlockLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public java.util.List<java.lang.String> getCompanyScopePermissions(
 		com.liferay.portal.model.ResourceBlock resourceBlock, long roleId) {
@@ -317,6 +307,16 @@ public class ResourceBlockLocalServiceWrapper
 		com.liferay.portal.model.ResourceBlock resourceBlock, long roleId) {
 		return _resourceBlockLocalService.getGroupScopePermissions(resourceBlock,
 			roleId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _resourceBlockLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -552,16 +552,6 @@ public class ResourceBlockLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_resourceBlockLocalService.removeIndividualScopePermissions(companyId,
 			groupId, name, primKey, roleId, actionIdsLong);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_resourceBlockLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

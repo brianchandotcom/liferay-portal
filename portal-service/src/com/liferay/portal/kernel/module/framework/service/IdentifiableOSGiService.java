@@ -12,15 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.kernel.bean;
+package com.liferay.portal.kernel.module.framework.service;
 
 /**
- * @author Shuyang Zhou
+ * @author Tina Tian
  */
-public interface IdentifiableBean {
+public interface IdentifiableOSGiService {
 
-	public String getBeanIdentifier();
-
-	public void setBeanIdentifier(String beanIdentifier);
+	public String getOSGiServiceIdentifier();
 
 }

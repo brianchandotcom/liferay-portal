@@ -34,21 +34,21 @@ public class DDMTemplateVersionServiceWrapper
 		_ddmTemplateVersionService = ddmTemplateVersionService;
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _ddmTemplateVersionService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMTemplateVersion getLatestTemplateVersion(
 		long templateId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmTemplateVersionService.getLatestTemplateVersion(templateId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _ddmTemplateVersionService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -71,16 +71,6 @@ public class DDMTemplateVersionServiceWrapper
 	public int getTemplateVersionsCount(long templateId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmTemplateVersionService.getTemplateVersionsCount(templateId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_ddmTemplateVersionService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

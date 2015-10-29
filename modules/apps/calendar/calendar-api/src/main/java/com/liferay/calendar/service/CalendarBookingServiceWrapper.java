@@ -111,16 +111,6 @@ public class CalendarBookingServiceWrapper implements CalendarBookingService,
 		return _calendarBookingService.fetchCalendarBooking(calendarBookingId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _calendarBookingService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.calendar.model.CalendarBooking getCalendarBooking(
 		long calendarBookingId)
@@ -191,6 +181,16 @@ public class CalendarBookingServiceWrapper implements CalendarBookingService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarBookingService.getNewStartTimeAndDurationCalendarBooking(calendarBookingId,
 			offset, duration);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _calendarBookingService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -271,16 +271,6 @@ public class CalendarBookingServiceWrapper implements CalendarBookingService,
 			calendarIds, calendarResourceIds, parentCalendarBookingId, title,
 			description, location, startTime, endTime, recurring, statuses,
 			andOperator);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_calendarBookingService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

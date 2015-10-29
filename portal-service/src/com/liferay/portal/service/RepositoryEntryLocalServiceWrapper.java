@@ -229,20 +229,20 @@ public class RepositoryEntryLocalServiceWrapper
 		return _repositoryEntryLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _repositoryEntryLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext) {
 		return _repositoryEntryLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _repositoryEntryLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -360,16 +360,6 @@ public class RepositoryEntryLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _repositoryEntryLocalService.getRepositoryEntryByUuidAndGroupId(uuid,
 			groupId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_repositoryEntryLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

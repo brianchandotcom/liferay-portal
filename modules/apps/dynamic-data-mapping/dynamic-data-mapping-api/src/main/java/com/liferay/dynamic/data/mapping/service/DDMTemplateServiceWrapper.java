@@ -225,13 +225,13 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the OSGi service identifier.
 	*
-	* @return the Spring bean ID for this bean
+	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _ddmTemplateService.getBeanIdentifier();
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _ddmTemplateService.getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -774,16 +774,6 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 		return _ddmTemplateService.searchCount(companyId, groupIds,
 			classNameIds, classPKs, resourceClassNameId, name, description,
 			type, mode, language, status, andOperator);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_ddmTemplateService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

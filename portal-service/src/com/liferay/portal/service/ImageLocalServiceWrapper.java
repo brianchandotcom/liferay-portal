@@ -182,16 +182,6 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 		return _imageLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _imageLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.portal.model.Image getCompanyLogo(long imageId) {
 		return _imageLocalService.getCompanyLogo(imageId);
@@ -253,6 +243,16 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 		return _imageLocalService.getImagesCount();
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _imageLocalService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
@@ -264,16 +264,6 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 	public com.liferay.portal.model.Image moveImage(long imageId, byte[] bytes)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _imageLocalService.moveImage(imageId, bytes);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_imageLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

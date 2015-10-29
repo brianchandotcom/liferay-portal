@@ -272,16 +272,6 @@ public class PasswordPolicyLocalServiceWrapper
 		return _passwordPolicyLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _passwordPolicyLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.portal.model.PasswordPolicy getDefaultPasswordPolicy(
 		long companyId)
@@ -293,6 +283,16 @@ public class PasswordPolicyLocalServiceWrapper
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext) {
 		return _passwordPolicyLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _passwordPolicyLocalService.getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -396,16 +396,6 @@ public class PasswordPolicyLocalServiceWrapper
 	@Override
 	public int searchCount(long companyId, java.lang.String name) {
 		return _passwordPolicyLocalService.searchCount(companyId, name);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_passwordPolicyLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

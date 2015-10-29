@@ -194,16 +194,6 @@ public class BrowserTrackerLocalServiceWrapper
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _browserTrackerLocalService.getBeanIdentifier();
-	}
-
-	/**
 	* Returns the browser tracker with the primary key.
 	*
 	* @param browserTrackerId the primary key of the browser tracker
@@ -250,21 +240,21 @@ public class BrowserTrackerLocalServiceWrapper
 		return _browserTrackerLocalService.getBrowserTrackersCount();
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _browserTrackerLocalService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _browserTrackerLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_browserTrackerLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

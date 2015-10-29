@@ -57,15 +57,6 @@ public class BookmarksEntryServiceUtil {
 		getService().deleteEntry(entryId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
 	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> getEntries(
 		long groupId, long folderId, int start, int end) {
 		return getService().getEntries(groupId, folderId, start, end);
@@ -132,6 +123,15 @@ public class BookmarksEntryServiceUtil {
 		return getService().getGroupEntriesCount(groupId, userId, rootFolderId);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
 	public static com.liferay.bookmarks.model.BookmarksEntry moveEntry(
 		long entryId, long parentFolderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -171,15 +171,6 @@ public class BookmarksEntryServiceUtil {
 		long creatorUserId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().search(groupId, creatorUserId, status, start, end);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static void subscribeEntry(long entryId)

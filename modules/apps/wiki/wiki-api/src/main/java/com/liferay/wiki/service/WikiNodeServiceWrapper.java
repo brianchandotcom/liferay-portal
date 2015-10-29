@@ -46,16 +46,6 @@ public class WikiNodeServiceWrapper implements WikiNodeService,
 		_wikiNodeService.deleteNode(nodeId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _wikiNodeService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.wiki.model.WikiNode getNode(long groupId,
 		java.lang.String name)
@@ -105,6 +95,16 @@ public class WikiNodeServiceWrapper implements WikiNodeService,
 		return _wikiNodeService.getNodesCount(groupId, status);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _wikiNodeService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public void importPages(long nodeId, java.lang.String importer,
 		java.io.InputStream[] inputStreams,
@@ -123,16 +123,6 @@ public class WikiNodeServiceWrapper implements WikiNodeService,
 	public void restoreNodeFromTrash(long nodeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_wikiNodeService.restoreNodeFromTrash(nodeId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_wikiNodeService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

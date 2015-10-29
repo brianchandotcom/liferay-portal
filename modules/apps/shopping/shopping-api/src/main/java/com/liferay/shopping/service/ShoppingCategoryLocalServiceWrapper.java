@@ -254,16 +254,6 @@ public class ShoppingCategoryLocalServiceWrapper
 		return _shoppingCategoryLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _shoppingCategoryLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public java.util.List<com.liferay.shopping.model.ShoppingCategory> getCategories(
 		long groupId) {
@@ -294,6 +284,16 @@ public class ShoppingCategoryLocalServiceWrapper
 	public com.liferay.shopping.model.ShoppingCategory getCategory(
 		long groupId, java.lang.String categoryName) {
 		return _shoppingCategoryLocalService.getCategory(groupId, categoryName);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _shoppingCategoryLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -370,16 +370,6 @@ public class ShoppingCategoryLocalServiceWrapper
 		long groupId, long categoryId) {
 		_shoppingCategoryLocalService.getSubcategoryIds(categoryIds, groupId,
 			categoryId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_shoppingCategoryLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

@@ -225,16 +225,6 @@ public class ShoppingCouponLocalServiceWrapper
 		return _shoppingCouponLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _shoppingCouponLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.shopping.model.ShoppingCoupon getCoupon(
 		java.lang.String code)
@@ -246,6 +236,16 @@ public class ShoppingCouponLocalServiceWrapper
 	public com.liferay.shopping.model.ShoppingCoupon getCoupon(long couponId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingCouponLocalService.getCoupon(couponId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _shoppingCouponLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -309,16 +309,6 @@ public class ShoppingCouponLocalServiceWrapper
 		boolean active, java.lang.String discountType, boolean andOperator) {
 		return _shoppingCouponLocalService.searchCount(groupId, companyId,
 			code, active, discountType, andOperator);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_shoppingCouponLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

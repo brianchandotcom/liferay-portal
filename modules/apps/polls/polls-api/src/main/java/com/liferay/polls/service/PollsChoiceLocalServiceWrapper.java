@@ -209,16 +209,6 @@ public class PollsChoiceLocalServiceWrapper implements PollsChoiceLocalService,
 		return _pollsChoiceLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _pollsChoiceLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.polls.model.PollsChoice getChoice(long choiceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -240,6 +230,16 @@ public class PollsChoiceLocalServiceWrapper implements PollsChoiceLocalService,
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext) {
 		return _pollsChoiceLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _pollsChoiceLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -335,16 +335,6 @@ public class PollsChoiceLocalServiceWrapper implements PollsChoiceLocalService,
 	@Override
 	public int getPollsChoicesCount() {
 		return _pollsChoiceLocalService.getPollsChoicesCount();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_pollsChoiceLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

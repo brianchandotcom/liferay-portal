@@ -242,13 +242,13 @@ public class WikiPageResourceLocalServiceWrapper
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the OSGi service identifier.
 	*
-	* @return the Spring bean ID for this bean
+	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _wikiPageResourceLocalService.getBeanIdentifier();
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _wikiPageResourceLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -377,16 +377,6 @@ public class WikiPageResourceLocalServiceWrapper
 	@Override
 	public int getWikiPageResourcesCount() {
 		return _wikiPageResourceLocalService.getWikiPageResourcesCount();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_wikiPageResourceLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

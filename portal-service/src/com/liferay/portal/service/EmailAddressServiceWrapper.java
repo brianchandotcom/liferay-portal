@@ -76,16 +76,6 @@ public class EmailAddressServiceWrapper implements EmailAddressService,
 		return _emailAddressService.fetchEmailAddress(emailAddressId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _emailAddressService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.portal.model.EmailAddress getEmailAddress(
 		long emailAddressId)
@@ -101,13 +91,13 @@ public class EmailAddressServiceWrapper implements EmailAddressService,
 	}
 
 	/**
-	* Sets the Spring bean ID for this bean.
+	* Returns the OSGi service identifier.
 	*
-	* @param beanIdentifier the Spring bean ID for this bean
+	* @return the OSGi service identifier
 	*/
 	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_emailAddressService.setBeanIdentifier(beanIdentifier);
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _emailAddressService.getOSGiServiceIdentifier();
 	}
 
 	@Override

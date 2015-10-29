@@ -273,16 +273,6 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _ddlRecordSetLocalService.getBeanIdentifier();
-	}
-
-	/**
 	* Returns the d d l record set with the primary key.
 	*
 	* @param recordSetId the primary key of the d d l record set
@@ -377,6 +367,16 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 		return _ddlRecordSetLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _ddlRecordSetLocalService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
@@ -440,16 +440,6 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 		java.lang.String description, int scope, boolean andOperator) {
 		return _ddlRecordSetLocalService.searchCount(companyId, groupId, name,
 			description, scope, andOperator);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_ddlRecordSetLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

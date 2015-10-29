@@ -422,16 +422,6 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 		return _wikiPageLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _wikiPageLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public java.util.List<com.liferay.wiki.model.WikiPage> getChildren(
 		long nodeId, boolean head, java.lang.String parentTitle) {
@@ -520,6 +510,16 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	@Override
 	public java.util.List<com.liferay.wiki.model.WikiPage> getNoAssetPages() {
 		return _wikiPageLocalService.getNoAssetPages();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _wikiPageLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -1004,16 +1004,6 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPageLocalService.revertPage(userId, nodeId, title, version,
 			serviceContext);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_wikiPageLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

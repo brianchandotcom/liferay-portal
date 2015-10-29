@@ -50,16 +50,6 @@ public class MicroblogsEntryServiceWrapper implements MicroblogsEntryService,
 		return _microblogsEntryService.deleteMicroblogsEntry(microblogsEntryId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _microblogsEntryService.getBeanIdentifier();
-	}
-
 	@Override
 	public java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
 		java.lang.String assetTagName, int start, int end)
@@ -94,6 +84,16 @@ public class MicroblogsEntryServiceWrapper implements MicroblogsEntryService,
 		return _microblogsEntryService.getMicroblogsEntry(microblogsEntryId);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _microblogsEntryService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getUserMicroblogsEntries(
 		long microblogsEntryUserId, int start, int end)
@@ -121,16 +121,6 @@ public class MicroblogsEntryServiceWrapper implements MicroblogsEntryService,
 		int type) throws com.liferay.portal.kernel.exception.PortalException {
 		return _microblogsEntryService.getUserMicroblogsEntriesCount(microblogsEntryUserId,
 			type);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_microblogsEntryService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

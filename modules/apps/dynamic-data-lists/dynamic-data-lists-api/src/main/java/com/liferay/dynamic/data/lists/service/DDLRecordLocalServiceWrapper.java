@@ -266,16 +266,6 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 		return _ddlRecordLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _ddlRecordLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getCompanyRecords(
 		long companyId, int status, int scope, int start, int end,
@@ -412,6 +402,16 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 			status, scope, minRecordId, maxRecordId);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _ddlRecordLocalService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
@@ -535,16 +535,6 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.dynamic.data.lists.model.DDLRecord> searchDDLRecords(
 		com.liferay.portal.kernel.search.SearchContext searchContext) {
 		return _ddlRecordLocalService.searchDDLRecords(searchContext);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_ddlRecordLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

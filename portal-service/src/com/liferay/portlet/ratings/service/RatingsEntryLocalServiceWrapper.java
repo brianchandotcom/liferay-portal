@@ -224,16 +224,6 @@ public class RatingsEntryLocalServiceWrapper implements RatingsEntryLocalService
 		return _ratingsEntryLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _ratingsEntryLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public java.util.List<com.liferay.portlet.ratings.model.RatingsEntry> getEntries(
 		java.lang.String className, long classPK) {
@@ -271,6 +261,16 @@ public class RatingsEntryLocalServiceWrapper implements RatingsEntryLocalService
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext) {
 		return _ratingsEntryLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _ratingsEntryLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -335,16 +335,6 @@ public class RatingsEntryLocalServiceWrapper implements RatingsEntryLocalService
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ratingsEntryLocalService.getRatingsEntryByUuidAndCompanyId(uuid,
 			companyId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_ratingsEntryLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

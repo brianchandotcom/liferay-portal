@@ -594,16 +594,6 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _ddmStructureLocalService.getBeanIdentifier();
-	}
-
-	/**
 	* Returns all the structures matching the class name ID.
 	*
 	* @param companyId the primary key of the structure's company
@@ -757,6 +747,16 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext) {
 		return _ddmStructureLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _ddmStructureLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -1196,16 +1196,6 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 		return _ddmStructureLocalService.searchCount(companyId, groupIds,
 			classNameId, name, description, storageType, type, status,
 			andOperator);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_ddmStructureLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

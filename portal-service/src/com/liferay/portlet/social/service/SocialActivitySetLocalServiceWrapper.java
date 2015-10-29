@@ -211,16 +211,6 @@ public class SocialActivitySetLocalServiceWrapper
 		return _socialActivitySetLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _socialActivitySetLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.portlet.social.model.SocialActivitySet getClassActivitySet(
 		long classNameId, long classPK, int type) {
@@ -245,6 +235,16 @@ public class SocialActivitySetLocalServiceWrapper
 	@Override
 	public int getGroupActivitySetsCount(long groupId) {
 		return _socialActivitySetLocalService.getGroupActivitySetsCount(groupId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _socialActivitySetLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -375,16 +375,6 @@ public class SocialActivitySetLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_socialActivitySetLocalService.incrementActivityCount(activitySetId,
 			activityId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_socialActivitySetLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

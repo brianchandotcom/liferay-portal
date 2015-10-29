@@ -190,16 +190,6 @@ public class ListTypeLocalServiceWrapper implements ListTypeLocalService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _listTypeLocalService.getBeanIdentifier();
-	}
-
-	/**
 	* Returns the list type with the primary key.
 	*
 	* @param listTypeId the primary key of the list type
@@ -245,21 +235,21 @@ public class ListTypeLocalServiceWrapper implements ListTypeLocalService,
 		return _listTypeLocalService.getListTypesCount();
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _listTypeLocalService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _listTypeLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_listTypeLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

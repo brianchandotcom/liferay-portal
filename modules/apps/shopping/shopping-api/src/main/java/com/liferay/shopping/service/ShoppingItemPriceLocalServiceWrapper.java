@@ -191,20 +191,20 @@ public class ShoppingItemPriceLocalServiceWrapper
 		return _shoppingItemPriceLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _shoppingItemPriceLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public java.util.List<com.liferay.shopping.model.ShoppingItemPrice> getItemPrices(
 		long itemId) throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingItemPriceLocalService.getItemPrices(itemId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _shoppingItemPriceLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -253,16 +253,6 @@ public class ShoppingItemPriceLocalServiceWrapper
 	@Override
 	public int getShoppingItemPricesCount() {
 		return _shoppingItemPriceLocalService.getShoppingItemPricesCount();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_shoppingItemPriceLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

@@ -30,16 +30,6 @@ public class ContactServiceWrapper implements ContactService,
 		_contactService = contactService;
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _contactService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.portal.model.Contact getContact(long contactId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -62,13 +52,13 @@ public class ContactServiceWrapper implements ContactService,
 	}
 
 	/**
-	* Sets the Spring bean ID for this bean.
+	* Returns the OSGi service identifier.
 	*
-	* @param beanIdentifier the Spring bean ID for this bean
+	* @return the OSGi service identifier
 	*/
 	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_contactService.setBeanIdentifier(beanIdentifier);
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _contactService.getOSGiServiceIdentifier();
 	}
 
 	/**

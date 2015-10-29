@@ -65,19 +65,19 @@ public class ShoppingCouponServiceUtil {
 		getService().deleteCoupon(groupId, couponId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
 	public static com.liferay.shopping.model.ShoppingCoupon getCoupon(
 		long groupId, long couponId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCoupon(groupId, couponId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static java.util.List<com.liferay.shopping.model.ShoppingCoupon> search(
@@ -87,15 +87,6 @@ public class ShoppingCouponServiceUtil {
 		return getService()
 				   .search(groupId, companyId, code, active, discountType,
 			andOperator, start, end);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static com.liferay.shopping.model.ShoppingCoupon updateCoupon(

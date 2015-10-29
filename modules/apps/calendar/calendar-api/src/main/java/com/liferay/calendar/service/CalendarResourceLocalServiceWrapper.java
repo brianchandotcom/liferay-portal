@@ -240,16 +240,6 @@ public class CalendarResourceLocalServiceWrapper
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _calendarResourceLocalService.getBeanIdentifier();
-	}
-
-	/**
 	* Returns the calendar resource with the primary key.
 	*
 	* @param calendarResourceId the primary key of the calendar resource
@@ -350,6 +340,16 @@ public class CalendarResourceLocalServiceWrapper
 		return _calendarResourceLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _calendarResourceLocalService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
@@ -393,16 +393,6 @@ public class CalendarResourceLocalServiceWrapper
 		long[] classNameIds, java.lang.String keywords, boolean active) {
 		return _calendarResourceLocalService.searchCount(companyId, groupIds,
 			classNameIds, keywords, active);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_calendarResourceLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

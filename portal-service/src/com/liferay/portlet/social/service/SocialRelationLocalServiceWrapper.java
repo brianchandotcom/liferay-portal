@@ -290,16 +290,6 @@ public class SocialRelationLocalServiceWrapper
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _socialRelationLocalService.getBeanIdentifier();
-	}
-
-	/**
 	* Returns a range of all the inverse relations of the given type for which
 	* the user is User2 of the relation.
 	*
@@ -337,6 +327,16 @@ public class SocialRelationLocalServiceWrapper
 	@Override
 	public int getInverseRelationsCount(long userId, int type) {
 		return _socialRelationLocalService.getInverseRelationsCount(userId, type);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _socialRelationLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -548,16 +548,6 @@ public class SocialRelationLocalServiceWrapper
 	@Override
 	public boolean isRelatable(long userId1, long userId2, int type) {
 		return _socialRelationLocalService.isRelatable(userId1, userId2, type);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_socialRelationLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

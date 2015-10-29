@@ -45,11 +45,11 @@ public interface CalendarImporterLocalService extends BaseLocalService {
 	 */
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the OSGi service identifier.
 	*
-	* @return the Spring bean ID for this bean
+	* @return the OSGi service identifier
 	*/
-	public java.lang.String getBeanIdentifier();
+	public java.lang.String getOSGiServiceIdentifier();
 
 	public void importCalEvent(
 		com.liferay.portlet.calendar.model.CalEvent calEvent)
@@ -58,11 +58,4 @@ public interface CalendarImporterLocalService extends BaseLocalService {
 	public void importCalEvents() throws PortalException;
 
 	public void importRolePermissions();
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 }

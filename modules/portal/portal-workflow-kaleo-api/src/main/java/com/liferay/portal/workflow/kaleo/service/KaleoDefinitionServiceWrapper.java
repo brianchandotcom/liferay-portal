@@ -33,16 +33,6 @@ public class KaleoDefinitionServiceWrapper implements KaleoDefinitionService,
 		_kaleoDefinitionService = kaleoDefinitionService;
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _kaleoDefinitionService.getBeanIdentifier();
-	}
-
 	@Override
 	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoDefinition> getKaleoDefinitions(
 		long companyId, int start, int end) {
@@ -56,13 +46,13 @@ public class KaleoDefinitionServiceWrapper implements KaleoDefinitionService,
 	}
 
 	/**
-	* Sets the Spring bean ID for this bean.
+	* Returns the OSGi service identifier.
 	*
-	* @param beanIdentifier the Spring bean ID for this bean
+	* @return the OSGi service identifier
 	*/
 	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_kaleoDefinitionService.setBeanIdentifier(beanIdentifier);
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _kaleoDefinitionService.getOSGiServiceIdentifier();
 	}
 
 	/**

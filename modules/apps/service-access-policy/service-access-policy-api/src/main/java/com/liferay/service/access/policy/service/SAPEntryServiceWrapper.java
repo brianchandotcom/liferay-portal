@@ -64,16 +64,6 @@ public class SAPEntryServiceWrapper implements SAPEntryService,
 		return _sapEntryService.fetchSAPEntry(companyId, name);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _sapEntryService.getBeanIdentifier();
-	}
-
 	@Override
 	public java.util.List<com.liferay.service.access.policy.model.SAPEntry> getCompanySAPEntries(
 		long companyId, int start, int end) {
@@ -92,6 +82,16 @@ public class SAPEntryServiceWrapper implements SAPEntryService,
 		return _sapEntryService.getCompanySAPEntriesCount(companyId);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _sapEntryService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.service.access.policy.model.SAPEntry getSAPEntry(
 		long companyId, java.lang.String name)
@@ -104,16 +104,6 @@ public class SAPEntryServiceWrapper implements SAPEntryService,
 		long sapEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sapEntryService.getSAPEntry(sapEntryId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_sapEntryService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

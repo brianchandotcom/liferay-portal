@@ -71,15 +71,6 @@ public class SAPEntryServiceUtil {
 		return getService().fetchSAPEntry(companyId, name);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
 	public static java.util.List<com.liferay.service.access.policy.model.SAPEntry> getCompanySAPEntries(
 		long companyId, int start, int end) {
 		return getService().getCompanySAPEntries(companyId, start, end);
@@ -95,6 +86,15 @@ public class SAPEntryServiceUtil {
 		return getService().getCompanySAPEntriesCount(companyId);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
 	public static com.liferay.service.access.policy.model.SAPEntry getSAPEntry(
 		long companyId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -105,15 +105,6 @@ public class SAPEntryServiceUtil {
 		long sapEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getSAPEntry(sapEntryId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static com.liferay.service.access.policy.model.SAPEntry updateSAPEntry(

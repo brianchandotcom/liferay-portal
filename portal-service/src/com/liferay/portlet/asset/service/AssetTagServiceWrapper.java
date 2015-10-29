@@ -52,16 +52,6 @@ public class AssetTagServiceWrapper implements AssetTagService,
 		_assetTagService.deleteTags(tagIds);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _assetTagService.getBeanIdentifier();
-	}
-
 	@Override
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getGroupTags(
 		long groupId) {
@@ -102,6 +92,16 @@ public class AssetTagServiceWrapper implements AssetTagService,
 		long groupId, java.lang.String name, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetTagService.getJSONGroupTags(groupId, name, start, end);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _assetTagService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -196,16 +196,6 @@ public class AssetTagServiceWrapper implements AssetTagService,
 	public com.liferay.portal.kernel.json.JSONArray search(long[] groupIds,
 		java.lang.String name, int start, int end) {
 		return _assetTagService.search(groupIds, name, start, end);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_assetTagService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

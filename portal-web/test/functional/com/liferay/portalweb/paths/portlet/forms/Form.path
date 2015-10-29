@@ -77,8 +77,8 @@
 </tr>
 <!--ADD_FIELD-->
 <tr>
-	<td>ADD_FIELD</td>
-	<td>//div[@class='col col-md-${key_columnSize}']//label[@class='form-builder-field-list-add-button-label' and contains(text(),'+ ADD FIELD')]/../../div</td>
+	<td>ADD_ADDITIONAL_FIELD</td>
+	<td>//div[contains(@class,'col col-md-${key_columnSize}')]//div[contains(@data-fieldname,'${key_previousFieldName}')]/../following-sibling::div//label[@class='form-builder-field-list-add-button-label']/label</td>
 	<td></td>
 </tr>
 <tr>

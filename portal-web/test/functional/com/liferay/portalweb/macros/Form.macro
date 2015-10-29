@@ -35,10 +35,11 @@
 		<execute function="Type" locator1="Form#PAGE_TITLE_FIELD" value1="${formPageName}" />
 	</command>
 
-	<command name="gotoAddField">
+	<command name="gotoAddAdditionalField">
 		<var name="key_columnSize" value="${columnSize}" />
+		<var name="key_previousFieldName" value="${previousFieldName}" />
 
-		<execute function="Click#makeVisibleClickAt" locator1="Form#ADD_FIELD" />
+		<execute function="Click#makeVisibleClickAt" locator1="Form#ADD_ADDITIONAL_FIELD" />
 
 		<var name="key_fieldType" value="${fieldType}" />
 

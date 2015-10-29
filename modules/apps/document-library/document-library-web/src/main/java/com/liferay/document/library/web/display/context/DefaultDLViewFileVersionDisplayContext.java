@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
@@ -100,72 +98,11 @@ public class DefaultDLViewFileVersionDisplayContext
 	public Menu getMenu() throws PortalException {
 		Menu menu = new Menu();
 
-		String direction = "left-side";
-
-		if (_dlVisualizationHelper.isShowMinimalActionsButton() &&
-			Validator.equals(
-				_dlVisualizationHelper.getDisplayStyle(), "icon")) {
-
-			direction = "down";
-		}
-
-		menu.setDirection(direction);
-
-		if (!Validator.equals(
-				_dlVisualizationHelper.getDisplayStyle(), "icon")) {
-
-			menu.setShowExpanded(true);
-		}
-
-		boolean extended = true;
-
-		if (_dlVisualizationHelper.isShowMinimalActionsButton() ||
-			!Validator.equals(
-				_dlVisualizationHelper.getDisplayStyle(), "icon")) {
-
-			extended = false;
-		}
-
-		menu.setExtended(extended);
-
-		String icon = null;
-
-		if (_dlVisualizationHelper.isShowMinimalActionsButton()) {
-			icon = StringPool.BLANK;
-		}
-
-		menu.setIcon(icon);
-
+		menu.setDirection("left-side");
+		menu.setMarkupView("lexicon");
 		menu.setMenuItems(_getMenuItems());
-
-		String message = "actions";
-
-		if (_dlVisualizationHelper.isShowMinimalActionsButton()) {
-			message = StringPool.BLANK;
-		}
-
-		menu.setMessage(message);
-
-		if (!Validator.equals(
-				_dlVisualizationHelper.getDisplayStyle(), "icon")) {
-
-			menu.setScroll(true);
-		}
-
-		menu.setShowWhenSingleIcon(
-			_dlVisualizationHelper.isShowWhenSingleIconActionButton());
-
-		if (Validator.equals(
-				_dlVisualizationHelper.getDisplayStyle(), "icon")) {
-
-			menu.setTriggerCssClass("btn btn-default");
-		}
-
-		if (!Validator.equals(
-				_dlVisualizationHelper.getDisplayStyle(), "icon")) {
-
-			menu.setMarkupView("lexicon");
-		}
+		menu.setScroll(false);
+		menu.setShowWhenSingleIcon(true);
 
 		return menu;
 	}

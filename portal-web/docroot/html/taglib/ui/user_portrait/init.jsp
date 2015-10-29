@@ -17,6 +17,7 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
+String colorCssClass = (String)request.getAttribute("liferay-ui:user-portrait:colorCssClass");
 String cssClass = (String)request.getAttribute("liferay-ui:user-portrait:cssClass");
 String imageCssClass = (String)request.getAttribute("liferay-ui:user-portrait:imageCssClass");
 String portraitURL = (String)request.getAttribute("liferay-ui:user-portrait:portraitURL");

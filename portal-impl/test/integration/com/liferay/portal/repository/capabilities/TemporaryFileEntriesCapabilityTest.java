@@ -91,7 +91,7 @@ public class TemporaryFileEntriesCapabilityTest {
 		foldersAndFileEntriesAndFileShortcutsCount =
 			getFoldersAndFileEntriesAndFileShortcutsCount(localRepository);
 
-		Assert.assertEquals(foldersAndFileEntriesAndFileShortcutsCount, 0);
+		Assert.assertEquals(0, foldersAndFileEntriesAndFileShortcutsCount);
 	}
 
 	protected int getFoldersAndFileEntriesAndFileShortcutsCount(

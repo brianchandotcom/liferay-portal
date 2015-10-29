@@ -70,6 +70,19 @@ public class ConfiguratorExtension implements Extension {
 		}
 	}
 
+	private boolean _configurationExists(String filter)
+		throws InvalidSyntaxException, IOException {
+
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			filter);
+
+		if (ArrayUtil.isNotEmpty(configurations)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private void _createConfiguration(
 			NamedConfigurationContent namedConfigurationContent)
 		throws Exception {
@@ -117,7 +130,9 @@ public class ConfiguratorExtension implements Extension {
 
 		String configuratorUrl = _namespace + "#" + pid;
 
-		if (configurationExists("(configurator.url=" + configuratorUrl + ")")) {
+		if (_configurationExists(
+				"(configurator.url=" + configuratorUrl + ")")) {
+
 			return;
 		}
 
@@ -153,7 +168,7 @@ public class ConfiguratorExtension implements Extension {
 
 		String pid = description.getPid();
 
-		if (configurationExists("(service.pid=" + pid + ")")) {
+		if (_configurationExists("(service.pid=" + pid + ")")) {
 			return;
 		}
 
@@ -179,19 +194,6 @@ public class ConfiguratorExtension implements Extension {
 		}
 
 		configuration.update(properties);
-	}
-
-	private boolean configurationExists(String filter)
-		throws InvalidSyntaxException, IOException {
-
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			filter);
-
-		if (ArrayUtil.isNotEmpty(configurations)) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private final ConfigurationAdmin _configurationAdmin;

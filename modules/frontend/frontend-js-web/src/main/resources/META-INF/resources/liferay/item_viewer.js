@@ -45,6 +45,8 @@ AUI.add(
 
 		var STR_RENDER_CONTROLS = 'renderControls';
 
+		var STR_RENDER_SIDEBAR = 'renderSidebar';
+
 		var TPL_CLOSE = '<button class="close image-viewer-base-control image-viewer-close lfr-item-viewer-close" type="button"><span class="glyphicon glyphicon-chevron-left ' + CSS_ICON_MONOSPACED + '"></span><span>{0}</span></button>';
 
 		var TPL_INFO_ICON = '<span class="glyphicon glyphicon-info-sign lfr-item-viewer-icon-info"></span>';
@@ -78,6 +80,11 @@ AUI.add(
 					},
 
 					renderControls: {
+						validator: Lang.isBoolean,
+						value: true
+					},
+
+					renderSidebar: {
 						validator: Lang.isBoolean,
 						value: true
 					},
@@ -196,18 +203,20 @@ AUI.add(
 					_bindSidebarEvents: function() {
 						var instance = this;
 
-						var sidebarNode = AUI.$(STR_DOT + CSS_SIDENAV_CONTAINER);
+						if (instance.get(STR_RENDER_SIDEBAR)) {
+							var sidebarNode = AUI.$(STR_DOT + CSS_SIDENAV_CONTAINER);
 
-						sidebarNode.sideNavigation(
-							{
-								content: sidebarNode.find('.image-viewer-base-image'),
-								equalHeight: false,
-								position: 'right',
-								toggler: instance._infoIconEl.getDOMNode(),
-								useDelegate: false,
-								width: '300px'
-							}
-						);
+							sidebarNode.sideNavigation(
+								{
+									content: sidebarNode.find('.image-viewer-base-image'),
+									equalHeight: false,
+									position: 'right',
+									toggler: instance._infoIconEl.getDOMNode(),
+									useDelegate: false,
+									width: '300px'
+								}
+							);
+						}
 					},
 
 					_getImageInfoNodes: function() {
@@ -314,11 +323,13 @@ AUI.add(
 							container.append(instance.get('controlNext'));
 						}
 
-						var infoIconEl = A.Node.create(TPL_INFO_ICON);
+						if (instance.get(STR_RENDER_SIDEBAR)) {
+							var infoIconEl = A.Node.create(TPL_INFO_ICON);
 
-						container.append(infoIconEl);
+							container.append(infoIconEl);
 
-						instance._infoIconEl = infoIconEl;
+							instance._infoIconEl = infoIconEl;
+						}
 					},
 
 					_setLinks: function(val) {

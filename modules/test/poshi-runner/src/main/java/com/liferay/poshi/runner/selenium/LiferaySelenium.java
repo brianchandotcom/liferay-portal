@@ -129,6 +129,8 @@ public interface LiferaySelenium extends Selenium {
 
 	public String getCurrentYear();
 
+	public String getElementText(String locator) throws Exception;
+
 	public String getEmailBody(String index) throws Exception;
 
 	public String getEmailSubject(String index) throws Exception;

@@ -50,6 +50,23 @@ DDLRecordSet recordSet = (DDLRecordSet)row.getObject();
 		/>
 	</c:if>
 
+	<c:if test="<%= ddlFormAdminDisplayContext.isShowPermissionsIcon(recordSet) %>">
+		<liferay-security:permissionsURL
+			modelResource="<%= DDLRecordSet.class.getName() %>"
+			modelResourceDescription="<%= recordSet.getName(locale) %>"
+			resourcePrimKey="<%= String.valueOf(recordSet.getRecordSetId()) %>"
+			var="permissionsRecordSetURL"
+			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+		/>
+
+		<liferay-ui:icon
+			message="permissions"
+			method="get"
+			url="<%= permissionsRecordSetURL %>"
+			useDialog="<%= true %>"
+		/>
+	</c:if>
+
 	<c:if test="<%= ddlFormAdminDisplayContext.isShowDeleteRecordSetIcon(recordSet) %>">
 		<portlet:actionURL name="deleteRecordSet" var="deleteURL">
 			<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />

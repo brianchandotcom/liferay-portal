@@ -14,7 +14,6 @@
 
 package com.liferay.portal.repository.capabilities;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;

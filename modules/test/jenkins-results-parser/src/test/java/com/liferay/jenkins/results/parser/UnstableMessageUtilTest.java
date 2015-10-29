@@ -160,7 +160,7 @@ public class UnstableMessageUtilTest {
 		throws Exception {
 
 		JSONObject jobJSONObject = JenkinsResultsParserUtil.toJSONObject(
-			_toURLString(jobJSONFile));
+			JenkinsResultsParserUtil.getLocalURL(_toURLString(jobJSONFile)));
 
 		String number = jobJSONObject.getString("number");
 
@@ -199,7 +199,8 @@ public class UnstableMessageUtilTest {
 
 		_write(
 			new File(dir, urlSuffix),
-			JenkinsResultsParserUtil.toString(urlString));
+			JenkinsResultsParserUtil.toString(
+				JenkinsResultsParserUtil.getLocalURL(urlString)));
 	}
 
 	private static URL _encode(URL url) throws Exception {
@@ -225,13 +226,16 @@ public class UnstableMessageUtilTest {
 
 		return string.replace("${" + token + "}", value);
 	}
-
+	
 	private static String _toURLString(File file) throws Exception {
 		URI uri = file.toURI();
 
 		URL url = uri.toURL();
+		
+		String urlString = url.toString();
 
-		return url.toString();
+		return urlString.replace(
+			System.getProperty("user.dir"),  "${user.dir}");
 	}
 
 	private static void _write(File file, JSONObject jsonObject)

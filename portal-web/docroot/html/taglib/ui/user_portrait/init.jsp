@@ -19,6 +19,7 @@
 <%
 String cssClass = (String)request.getAttribute("liferay-ui:user-portrait:cssClass");
 String imageCssClass = (String)request.getAttribute("liferay-ui:user-portrait:imageCssClass");
-User userDisplay = (User)request.getAttribute("liferay-ui:user-portrait:user");
+String portraitURL = (String)request.getAttribute("liferay-ui:user-portrait:portraitURL");
+User userInitials = (User)request.getAttribute("liferay-ui:user-portrait:userInitials");
 String userName = (String)request.getAttribute("liferay-ui:user-portrait:userName");
 %>

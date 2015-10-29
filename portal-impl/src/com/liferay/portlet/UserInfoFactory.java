@@ -123,25 +123,27 @@ public class UserInfoFactory {
 		Map<String, String> customUserAttributesClassNames =
 			portletApp.getCustomUserAttributes();
 
+		CustomUserAttributes customUserAttributes;
+
 		for (Map.Entry<String, String> entry :
 				customUserAttributesClassNames.entrySet()) {
 
 			String userAttributeName = entry.getKey();
 			String customUserAttributesClassName = entry.getValue();
 
-			CustomUserAttributes customUserAttributes =
-				customUserAttributesMap.get(customUserAttributesClassName);
+			if (portletApp.isWARFile()) {
+				PortletContextBag portletContextBag = PortletContextBagPool.get(
+					portletApp.getServletContextName());
 
-			if (customUserAttributes == null) {
-				if (portletApp.isWARFile()) {
-					PortletContextBag portletContextBag =
-						PortletContextBagPool.get(
-							portletApp.getServletContextName());
+				Map<String, CustomUserAttributes>
+					portletContextBagCustomUserAttributes =
+						portletContextBag.getCustomUserAttributes();
 
-					Map<String, CustomUserAttributes>
-						portletContextBagCustomUserAttributes =
-							portletContextBag.getCustomUserAttributes();
+				customUserAttributes =
+					portletContextBagCustomUserAttributes.get(
+						customUserAttributesClassName);
 
+				if (customUserAttributes == null) {
 					customUserAttributes =
 						portletContextBagCustomUserAttributes.get(
 							customUserAttributesClassName);
@@ -161,6 +163,13 @@ public class UserInfoFactory {
 						customUserAttributesClassName, customUserAttributes);
 				}
 			}
+			else {
+				customUserAttributes = newInstance(
+					customUserAttributesClassName);
+			}
+
+			customUserAttributesMap.put(
+				customUserAttributesClassName, customUserAttributes);
 
 			if (customUserAttributes != null) {
 				String attrValue = customUserAttributes.getValue(

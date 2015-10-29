@@ -36,7 +36,6 @@ MembershipRequest membershipRequest = (MembershipRequest)objArray[2];
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-reply"
 			message="reply"
 			url="<%= replyRequestURL %>"
 		/>

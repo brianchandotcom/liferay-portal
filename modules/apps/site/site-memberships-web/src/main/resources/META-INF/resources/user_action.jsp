@@ -37,7 +37,6 @@ boolean userGroupUser = GetterUtil.getBoolean(row.getParameter("userGroupUser"))
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-signin"
 			message="assign-site-roles"
 			url="<%= assignURL %>"
 		/>
@@ -51,7 +50,6 @@ boolean userGroupUser = GetterUtil.getBoolean(row.getParameter("userGroupUser"))
 		</portlet:actionURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-signout"
 			message="remove-membership"
 			url="<%= removeURL %>"
 		/>

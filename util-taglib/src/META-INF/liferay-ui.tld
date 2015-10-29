@@ -3551,6 +3551,13 @@
 		<tag-class>com.liferay.taglib.ui.OrganizationSearchContainerResultsTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>Whether the use of the indexed search is disabled. The default value is <![CDATA[<code>false</code>]]></description>
+			<name>indexerDisabled</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<name>organizationParams</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -5728,6 +5735,13 @@
 		<tag-class>com.liferay.taglib.ui.UserGroupSearchContainerResultsTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>Whether the use of the indexed search is disabled. The default value is <![CDATA[<code>false</code>]]></description>
+			<name>indexerDisabled</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<name>searchTerms</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -5812,6 +5826,13 @@
 		<name>user-search-container-results</name>
 		<tag-class>com.liferay.taglib.ui.UserSearchContainerResultsTag</tag-class>
 		<body-content>JSP</body-content>
+		<attribute>
+			<description>Whether the use of the indexed search is disabled. The default value is <![CDATA[<code>false</code>]]></description>
+			<name>indexerDisabled</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
 		<attribute>
 			<name>userParams</name>
 			<required>true</required>

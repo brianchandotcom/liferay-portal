@@ -236,7 +236,7 @@ String[] types = LayoutTypeControllerTracker.getTypes();
 	A.on(
 		'domready',
 		function(event) {
-			togglerDelegate = new A.TogglerDelegate(
+			new A.TogglerDelegate(
 				{
 					animated: true,
 					closeAllOnExpand: true,

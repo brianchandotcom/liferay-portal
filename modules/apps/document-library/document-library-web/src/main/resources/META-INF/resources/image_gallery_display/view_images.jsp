@@ -292,7 +292,7 @@ embeddedPlayerURL.setWindowState(LiferayWindowState.POP_UP);
 		var maxHeight = (viewportRegion.height / 2);
 		var maxWidth = (viewportRegion.width / 2);
 
-		var imageGallery = new A.ImageViewer(
+		new A.ImageViewer(
 			{
 				after: {
 					<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">

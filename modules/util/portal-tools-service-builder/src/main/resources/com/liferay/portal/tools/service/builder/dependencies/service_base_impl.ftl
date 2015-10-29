@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
@@ -36,7 +37,6 @@ import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.Base${sessionTypeName}ServiceImpl;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
-import com.liferay.portal.util.IdentifiableOSGIService;
 import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
@@ -105,7 +105,7 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 </#if>
 
 	@ProviderType
-	public abstract class ${entity.name}LocalServiceBaseImpl extends BaseLocalServiceImpl implements ${entity.name}LocalService, IdentifiableOSGIService {
+	public abstract class ${entity.name}LocalServiceBaseImpl extends BaseLocalServiceImpl implements ${entity.name}LocalService, IdentifiableOSGiService {
 
 		/*
 		 * NOTE FOR DEVELOPERS:
@@ -133,7 +133,7 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 	@Deprecated
 </#if>
 
-	public abstract class ${entity.name}ServiceBaseImpl extends BaseServiceImpl implements ${entity.name}Service, IdentifiableOSGIService {
+	public abstract class ${entity.name}ServiceBaseImpl extends BaseServiceImpl implements ${entity.name}Service, IdentifiableOSGiService {
 
 		/*
 		 * NOTE FOR DEVELOPERS:
@@ -1035,12 +1035,12 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 	}
 
 	/**
-	 * Returns the OSGI service identifier.
+	 * Returns the OSGi service identifier.
 	 *
-	 * @return the OSGI service identifier
+	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getOSGIServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		<#if sessionTypeName == "Local">
 			return ${entity.name}LocalService.class.getName();
 		<#else>

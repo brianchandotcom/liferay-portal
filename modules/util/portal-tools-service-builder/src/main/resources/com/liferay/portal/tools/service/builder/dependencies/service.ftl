@@ -120,7 +120,7 @@ public interface ${entity.name}${sessionTypeName}Service
 				@Override
 			</#if>
 
-			<#if serviceBuilder.isServiceReadOnlyMethod(method, entity.txRequiredList) && (method.name != "getOSGIServiceIdentifier")>
+			<#if serviceBuilder.isServiceReadOnlyMethod(method, entity.txRequiredList) && (method.name != "getOSGiServiceIdentifier")>
 				@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 			</#if>
 			public

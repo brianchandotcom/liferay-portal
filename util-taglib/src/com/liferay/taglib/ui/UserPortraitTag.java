@@ -53,6 +53,7 @@ public class UserPortraitTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		_colorCssClass = StringPool.BLANK;
 		_cssClass = StringPool.BLANK;
 		_imageCssClass = StringPool.BLANK;
 		_userId = 0;
@@ -62,6 +63,17 @@ public class UserPortraitTag extends IncludeTag {
 	@Override
 	protected String getPage() {
 		return _PAGE;
+	}
+
+	protected String getColorCssClass() {
+		String colorCssClass = "user-icon-defaul";
+
+		if (getUser() != null) {
+			colorCssClass = "user-icon-color-" +
+				(Math.abs(userDisplay.getUserId()) % 10);
+		}
+
+		return colorCssClass;
 	}
 
 	protected User getUser() {
@@ -94,6 +106,8 @@ public class UserPortraitTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		request.setAttribute(
+			"liferay-ui:user-portrait:colorCssClass", getColorCssClass());
 		request.setAttribute("liferay-ui:user-portrait:cssClass", _cssClass);
 		request.setAttribute(
 			"liferay-ui:user-portrait:imageCssClass", _imageCssClass);
@@ -126,6 +140,7 @@ public class UserPortraitTag extends IncludeTag {
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserPortraitTag.class);
 
+	private String _colorCssClass;
 	private String _cssClass;
 	private String _imageCssClass;
 	private long _userId;

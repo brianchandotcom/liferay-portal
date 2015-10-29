@@ -50,11 +50,11 @@
     "culprits": [],
     "description": null,
     "duration": 1615077,
-    "estimatedDuration": 926701,
+    "estimatedDuration": 1431282,
     "executor": null,
     "fullDisplayName": "test-portal-acceptance-pullrequest-batch(master) #3415",
     "id": "2015-10-27_00-51-50",
-    "keepLog": true,
+    "keepLog": false,
     "number": 3415,
     "result": "UNSTABLE",
     "runs": [
@@ -120,49 +120,37 @@
         },
         {
             "number": 1401,
-            "url": "https://test-1-18.liferay.com/job/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=CPBlogs%23AddBlogsEntries,label_exp=!master/1401/"
+            "url": "https://test-1-18.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPBlogs%23AddBlogsEntries,label_exp=!master/1401/"
         },
         {
             "number": 3388,
-            "url": "https://test-1-18.liferay.com/job/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=CPCategories%23AddCategory,label_exp=!master/3388/"
+            "url": "https://test-1-18.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPCategories%23AddCategory,label_exp=!master/3388/"
         },
         {
             "number": 3388,
-            "url": "https://test-1-18.liferay.com/job/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=CPDynamicdatalists%23AddDisplayTemplateVelocity,label_exp=!master/3388/"
+            "url": "https://test-1-18.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=CPDynamicdatalists%23AddDisplayTemplateVelocity,label_exp=!master/3388/"
         },
         {
             "number": 3388,
-            "url": "https://test-1-18.liferay.com/job/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=PortalSmoke%23Smoke,label_exp=!master/3388/"
-        },
-        {
-            "number": 1296,
-            "url": "https://test-1-18.liferay.com/job/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=PortalSmokeMobile%23Smoke,label_exp=!master/1296/"
-        },
-        {
-            "number": 1330,
-            "url": "https://test-1-18.liferay.com/job/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=SetupWizard%23Hypersonic,label_exp=!master/1330/"
+            "url": "https://test-1-18.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=PortalSmoke%23Smoke,label_exp=!master/3388/"
         },
         {
             "number": 3400,
-            "url": "https://test-1-18.liferay.com/job/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=SetupWizard%23HypersonicToHypersonic,label_exp=!master/3400/"
+            "url": "https://test-1-18.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=SetupWizard%23HypersonicToHypersonic,label_exp=!master/3400/"
         },
         {
             "number": 3388,
-            "url": "https://test-1-18.liferay.com/job/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=SetupWizard%23HypersonicToMySQL,label_exp=!master/3388/"
-        },
-        {
-            "number": 1256,
-            "url": "https://test-1-18.liferay.com/job/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=SetupWizardHSQL%23HSQLtoHSQL,label_exp=!master/1256/"
+            "url": "https://test-1-18.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=SetupWizard%23HypersonicToMySQL,label_exp=!master/3388/"
         },
         {
             "number": 3388,
-            "url": "https://test-1-18.liferay.com/job/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=TestRuntimePortlet%23Smoke,label_exp=!master/3388/"
+            "url": "https://test-1-18.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=TestRuntimePortlet%23Smoke,label_exp=!master/3388/"
         },
         {
             "number": 3388,
-            "url": "https://test-1-18.liferay.com/job/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=UIInfrastructureUsecase%23Smoke,label_exp=!master/3388/"
+            "url": "https://test-1-18.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=UIInfrastructureUsecase%23Smoke,label_exp=!master/3388/"
         }
     ],
     "timestamp": 1445932310000,
-    "url": "https://test-1-18.liferay.com/job/test-portal-acceptance-pullrequest-batch(master)/3415/"
+    "url": "https://test-1-18.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/3415/"
 }

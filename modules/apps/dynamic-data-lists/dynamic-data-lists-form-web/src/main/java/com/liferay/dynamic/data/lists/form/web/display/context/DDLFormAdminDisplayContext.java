@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.lists.form.web.display.context.util.DDLFormAdmin
 import com.liferay.dynamic.data.lists.form.web.display.context.util.DDLFormWebRequestHelper;
 import com.liferay.dynamic.data.lists.form.web.search.RecordSetSearchTerms;
 import com.liferay.dynamic.data.lists.form.web.util.DDLFormPortletUtil;
+import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
@@ -43,6 +44,9 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowEngineManagerUtil;
+import com.liferay.portal.kernel.workflow.WorkflowHandler;
+import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.util.PortalUtil;
 
@@ -233,6 +237,22 @@ public class DDLFormAdminDisplayContext {
 		return DDMFormLayoutJSONSerializerUtil.serialize(ddmFormLayout);
 	}
 
+	public boolean isDDLRecordWorkflowHandlerDeployed() {
+		if (!WorkflowEngineManagerUtil.isDeployed()) {
+			return false;
+		}
+
+		WorkflowHandler<DDLRecord> ddlRecordWorkflowHandler =
+			WorkflowHandlerRegistryUtil.getWorkflowHandler(
+				DDLRecord.class.getName());
+
+		if (ddlRecordWorkflowHandler != null) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isShowAddRecordSetButton() {
 		return DDLPermission.contains(
 			_ddlFormAdminRequestHelper.getPermissionChecker(),
@@ -250,6 +270,12 @@ public class DDLFormAdminDisplayContext {
 		return DDLRecordSetPermission.contains(
 			_ddlFormAdminRequestHelper.getPermissionChecker(), recordSet,
 			ActionKeys.UPDATE);
+	}
+
+	public boolean isShowPermissionsIcon(DDLRecordSet recordSet) {
+		return DDLRecordSetPermission.contains(
+			_ddlFormAdminRequestHelper.getPermissionChecker(), recordSet,
+			ActionKeys.PERMISSIONS);
 	}
 
 	public boolean isShowViewEntriesRecordSetIcon(DDLRecordSet recordSet) {

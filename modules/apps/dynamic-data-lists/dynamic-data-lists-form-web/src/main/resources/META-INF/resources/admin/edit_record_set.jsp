@@ -26,6 +26,11 @@ long groupId = BeanParamUtil.getLong(recordSet, request, "groupId", scopeGroupId
 long ddmStructureId = BeanParamUtil.getLong(recordSet, request, "DDMStructureId");
 String name = BeanParamUtil.getString(recordSet, request, "name");
 String description = BeanParamUtil.getString(recordSet, request, "description");
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-form") : recordSet.getName(locale));
 %>
 
 <portlet:actionURL name="addRecordSet" var="addRecordSetURL">

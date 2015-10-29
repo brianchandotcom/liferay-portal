@@ -701,25 +701,7 @@ public class WebDriverToSeleniumBridge
 
 	@Override
 	public String getText(String locator) {
-		return getText(locator, null);
-	}
-
-	public String getText(String locator, String timeout) {
-		if (locator.contains("x:")) {
-			return getHtmlNodeText(locator);
-		}
-
-		WebElement webElement = getWebElement(locator, timeout);
-
-		if (!webElement.isDisplayed()) {
-			scrollWebElementIntoView(webElement);
-		}
-
-		String text = webElement.getText();
-
-		text = text.trim();
-
-		return text.replace("\n", " ");
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

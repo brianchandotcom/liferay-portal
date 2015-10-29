@@ -103,7 +103,7 @@ public class TemporaryFileEntriesCapabilityTest {
 	}
 
 	protected int getItemsCount(LocalRepository localRepository)
-		throws PortalException {
+		throws Exception {
 
 		int itemsCount = localRepository.getFileEntriesAndFileShortcutsCount(
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,

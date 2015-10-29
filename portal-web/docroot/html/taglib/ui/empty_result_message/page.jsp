@@ -21,7 +21,17 @@ String message = GetterUtil.getString((String)request.getAttribute("liferay-ui:e
 %>
 
 <c:if test="<%= Validator.isNotNull(message) %>">
-	<div class="taglib-empty-message text-center">
-		<span><liferay-ui:message key="<%= message %>" /></span>
+	<div class="card-horizontal main-content-card">
+		<div class="card-row card-row-padded">
+			<div class="text-center">
+				<img src="<%= themeDisplay.getPathThemeImages() + "/emoticons/happy_wink.gif" %>" width="200px" />
+			</div>
+
+			<div class="card-footer">
+				<div class="card-dm-details">
+					<div class="card-dm-text text-center"><liferay-ui:message key="<%= message %>" /></div>
+				</div>
+			</div>
+		</div>
 	</div>
 </c:if>

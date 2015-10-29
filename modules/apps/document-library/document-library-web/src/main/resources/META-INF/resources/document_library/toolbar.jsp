@@ -21,10 +21,6 @@ String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName
 
 String navigation = ParamUtil.getString(request, "navigation", "home");
 
-long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
-
-long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
-
 boolean search = mvcRenderCommandName.equals("/document_library/search");
 %>
 
@@ -103,29 +99,6 @@ boolean search = mvcRenderCommandName.equals("/document_library/search");
 			</aui:nav-item>
 		</c:if>
 	</aui:nav>
-
-	<c:if test="<%= dlPortletInstanceSettings.isShowFoldersSearch() %>">
-		<aui:nav-bar-search>
-			<div class="form-search">
-				<liferay-portlet:renderURL varImpl="searchURL">
-					<portlet:param name="mvcRenderCommandName" value="/document_library/search" />
-					<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
-					<portlet:param name="searchRepositoryId" value="<%= String.valueOf(repositoryId) %>" />
-					<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-					<portlet:param name="searchFolderId" value="<%= String.valueOf(folderId) %>" />
-					<portlet:param name="showRepositoryTabs" value="<%= (folderId == 0) ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" />
-					<portlet:param name="showSearchInfo" value="<%= Boolean.TRUE.toString() %>" />
-				</liferay-portlet:renderURL>
-
-				<aui:form action="<%= searchURL %>" method="get" name="fm1">
-					<liferay-portlet:renderURLParams varImpl="searchURL" />
-					<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-
-					<liferay-ui:input-search />
-				</aui:form>
-			</div>
-		</aui:nav-bar-search>
-	</c:if>
 </aui:nav-bar>
 
 <aui:script>

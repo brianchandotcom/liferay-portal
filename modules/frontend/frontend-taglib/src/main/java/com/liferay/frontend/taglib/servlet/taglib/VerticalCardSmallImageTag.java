@@ -36,6 +36,10 @@ public class VerticalCardSmallImageTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	public void setCssClass(String cssClass) {
+		_cssClass = cssClass;
+	}
+
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
@@ -43,18 +47,14 @@ public class VerticalCardSmallImageTag extends IncludeTag {
 		servletContext = ServletContextUtil.getServletContext();
 	}
 
-	public void setSmallImageCSSClass(String smallImageCSSClass) {
-		_smallImageCSSClass = smallImageCSSClass;
-	}
-
-	public void setSmallImageUrl(String smallImageUrl) {
-		_smallImageUrl = smallImageUrl;
+	public void setSrc(String src) {
+		_src = src;
 	}
 
 	@Override
 	protected void cleanUp() {
-		_smallImageCSSClass = null;
-		_smallImageUrl = null;
+		_cssClass = null;
+		_src = null;
 	}
 
 	@Override
@@ -67,14 +67,12 @@ public class VerticalCardSmallImageTag extends IncludeTag {
 		super.setAttributes(request);
 
 		request.setAttribute(
-			"liferay-frontend:vertical-card-small-image:smallImageCSSClass",
-			_smallImageCSSClass);
+			"liferay-frontend:vertical-card-small-image:cssClass", _cssClass);
 		request.setAttribute(
-			"liferay-frontend:vertical-card-small-image:smallImageUrl",
-			_smallImageUrl);
+			"liferay-frontend:vertical-card-small-image:src", _src);
 	}
 
-	private String _smallImageCSSClass;
-	private String _smallImageUrl;
+	private String _cssClass;
+	private String _src;
 
 }

@@ -76,14 +76,15 @@ public class UnstableMessageUtil {
 					continue;
 				}
 
-				JSONObject runJSONObject =
+				JSONObject runBuildURLJSONObject =
 					JenkinsResultsParserUtil.toJSONObject(
 						JenkinsResultsParserUtil.getLocalURL(
 							runBuildURL + "api/json"));
 
-				String runResult = runJSONObject.getString("result");
+				String result = runBuildURLJSONObject.getString(
+					"result");
 
-				if (!runResult.equals("SUCCESS")) {
+				if (!result.equals("SUCCESS")) {
 					runBuildURLs.add(runBuildURL);
 				}
 			}
@@ -94,10 +95,11 @@ public class UnstableMessageUtil {
 
 		int failureCount = 0;
 
-		topLoop: for (String runBuildURLString : runBuildURLs) {
+		topLoop:
+		for (String runBuildURL : runBuildURLs) {
 			testReportJSONObject = JenkinsResultsParserUtil.toJSONObject(
 				JenkinsResultsParserUtil.getLocalURL(
-					runBuildURLString + "testReport/api/json"));
+					runBuildURL + "testReport/api/json"));
 
 			JSONArray suitesJSONArray = testReportJSONObject.getJSONArray(
 				"suites");
@@ -113,107 +115,116 @@ public class UnstableMessageUtil {
 
 					String status = caseJSONObject.getString("status");
 
-					if (!status.equals("FIXED") && !status.equals("PASSED") &&
-						!status.equals("SKIPPED")) {
-
-						if (failureCount == 3) {
-							failureCount++;
-							sb.append("<li>...</li>");
-							break topLoop;
-						}
-
-						JSONObject jobJSONObject =
-							JenkinsResultsParserUtil.toJSONObject(
-								JenkinsResultsParserUtil.getLocalURL(
-									runBuildURLString + "api/json"));
-
-						String testClassName = caseJSONObject.getString(
-							"className");
-						String testMethodName = caseJSONObject.getString(
-							"name");
-
-						int x = testClassName.lastIndexOf(".");
-
-						String testPackageName = testClassName.substring(0, x);
-						String testSimpleClassName = testClassName.substring(
-							x + 1);
-
-						runBuildURLString = runBuildURLString.replace("[", "_");
-						runBuildURLString = runBuildURLString.replace("]", "_");
-						runBuildURLString = runBuildURLString.replace("#", "_");
-
-						sb.append("<li><a href=\\\"");
-						sb.append(runBuildURLString);
-						sb.append("/testReport/");
-						sb.append(testPackageName);
-						sb.append("/");
-						sb.append(testSimpleClassName);
-						sb.append("/");
-
-						String testMethodNameURLString = testMethodName;
-
-						testMethodNameURLString =
-							testMethodNameURLString.replace("[", "_");
-						testMethodNameURLString =
-							testMethodNameURLString.replace("]", "_");
-						testMethodNameURLString =
-							testMethodNameURLString.replace("#", "_");
-
-						if (testPackageName.equals("junit.framework")) {
-							testMethodNameURLString =
-								testMethodNameURLString.replace(".", "_");
-						}
-
-						sb.append(testMethodNameURLString);
-						sb.append("\\\">");
-						sb.append(testSimpleClassName);
-						sb.append(".");
-						sb.append(testMethodName);
-
-						String jobVariant =
-							JenkinsResultsParserUtil.getJobVariant(
-								jobJSONObject);
-
-						if (jobVariant.contains("functional") &&
-							testClassName.contains("EvaluateLogTest")) {
-
-							sb.append("[");
-							sb.append(
-								JenkinsResultsParserUtil.getAxisVariable(
-									jobJSONObject));
-							sb.append("]");
-						}
-
-						sb.append("</a>");
-
-						if (jobVariant.contains("functional")) {
-							sb.append(" - ");
-
-							String description = jobJSONObject.getString(
-								"description");
-
-							x = description.indexOf(">Jenkins Report<");
-
-							x = x + 22;
-
-							if (description.length() > x) {
-								description = description.substring(x);
-
-								description = description.replace("\"", "\\\"");
-
-								sb.append(description);
-								sb.append(" - ");
-							}
-
-							sb.append("<a href=\\\"");
-							sb.append(runBuildURLString);
-							sb.append("/console\\\">Console Output</a>");
-						}
-
-						sb.append("</li>");
-
-						failureCount++;
+					if (status.equals("FIXED") || status.equals("PASSED") ||
+						status.equals("SKIPPED")) {
+						
+						continue;
 					}
+
+					if (failureCount == 3) {
+						failureCount++;
+
+						sb.append("<li>...</li>");
+
+						break topLoop;
+					}
+
+					sb.append("<li><a href=\\\"");
+
+					String runBuildHREF = runBuildURL;
+					
+					runBuildHREF = runBuildHREF.replace("[", "_");
+					runBuildHREF = runBuildHREF.replace("]", "_");
+					runBuildHREF = runBuildHREF.replace("#", "_");
+
+					sb.append(runBuildHREF);
+
+					sb.append("/testReport/");
+
+					String testClassName = caseJSONObject.getString(
+						"className");
+
+					int x = testClassName.lastIndexOf(".");
+
+					String testPackageName = testClassName.substring(0, x);
+
+					sb.append(testPackageName);
+
+					sb.append("/");
+
+					String testSimpleClassName = testClassName.substring(
+						x + 1);
+
+					sb.append(testSimpleClassName);
+
+					sb.append("/");
+
+					String testMethodName = caseJSONObject.getString(
+						"name");
+
+					String testMethodNameURL = testMethodName;
+
+					testMethodNameURL = testMethodNameURL.replace("[", "_");
+					testMethodNameURL = testMethodNameURL.replace("]", "_");
+					testMethodNameURL = testMethodNameURL.replace("#", "_");
+
+					if (testPackageName.equals("junit.framework")) {
+						testMethodNameURL = testMethodNameURL.replace(".", "_");
+					}
+
+					sb.append(testMethodNameURL);
+
+					sb.append("\\\">");
+					sb.append(testSimpleClassName);
+					sb.append(".");
+					sb.append(testMethodName);
+
+					JSONObject runBuildURLJSONObject =
+						JenkinsResultsParserUtil.toJSONObject(
+							JenkinsResultsParserUtil.getLocalURL(
+								runBuildURL + "api/json"));
+
+					String jobVariant =
+						JenkinsResultsParserUtil.getJobVariant(
+							runBuildURLJSONObject);
+
+					if (jobVariant.contains("functional") &&
+						testClassName.contains("EvaluateLogTest")) {
+
+						sb.append("[");
+						sb.append(
+							JenkinsResultsParserUtil.getAxisVariable(
+								runBuildURLJSONObject));
+						sb.append("]");
+					}
+
+					sb.append("</a>");
+
+					if (jobVariant.contains("functional")) {
+						sb.append(" - ");
+
+						String description = runBuildURLJSONObject.getString(
+							"description");
+
+						x = description.indexOf(">Jenkins Report<") + 22;
+
+						if (description.length() > x) {
+							description = description.substring(x);
+
+							description = description.replace("\"", "\\\"");
+
+							sb.append(description);
+							sb.append(" - ");
+						}
+
+						sb.append("<a href=\\\"");
+						sb.append(runBuildURL);
+						sb.append("/console\\\">Console Output</a>");
+					}
+
+					sb.append("</li>");
+
+					failureCount++;
 				}
 			}
 		}

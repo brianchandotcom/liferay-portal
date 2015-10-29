@@ -16,15 +16,12 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 import java.io.IOException;
-
 import java.net.URI;
 import java.net.URL;
-
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import org.apache.tools.ant.Project;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -170,7 +167,8 @@ public class FailureMessageUtilTest {
 
 		_write(
 			new File(dir, urlSuffix),
-			JenkinsResultsParserUtil.toString(urlString));
+			JenkinsResultsParserUtil.toString(
+				JenkinsResultsParserUtil.getLocalURL(urlString)));
 	}
 
 	private static URL _encode(URL url) throws Exception {
@@ -202,7 +200,10 @@ public class FailureMessageUtilTest {
 
 		URL url = uri.toURL();
 
-		return url.toString();
+		String urlString = url.toString();
+
+		return urlString.replace(
+			System.getProperty("user.dir"),  "${user.dir}");
 	}
 
 	private static void _write(File file, String content) throws Exception {

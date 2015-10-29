@@ -109,59 +109,53 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 	portletURL="<%= restoreTrashEntriesURL %>"
 />
 
+<liferay-util:include page="/document_library/navigation.jsp" servletContext="<%= application %>" />
+
 <div id="<portlet:namespace />documentLibraryContainer">
 	<div <%= portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
-		<aui:row cssClass="lfr-app-column-view">
-			<aui:col cssClass="navigation-pane" width="<%= 25 %>">
-				<liferay-util:include page="/document_library/view_folders.jsp" servletContext="<%= application %>" />
-			</aui:col>
+		<liferay-ui:app-view-toolbar
+			includeDisplayStyle="<%= true %>"
+			includeSelectAll="<%= showSelectAll %>"
+		>
+			<liferay-util:include page="/document_library/toolbar.jsp" servletContext="<%= application %>" />
+		</liferay-ui:app-view-toolbar>
 
-			<aui:col cssClass="context-pane" width="<%= dlPortletInstanceSettingsHelper.isFolderMenuVisible() ? 75 : 100 %>">
-				<liferay-ui:app-view-toolbar
-					includeDisplayStyle="<%= true %>"
-					includeSelectAll="<%= showSelectAll %>"
-				>
-					<liferay-util:include page="/document_library/toolbar.jsp" servletContext="<%= application %>" />
-				</liferay-ui:app-view-toolbar>
+		<div class="document-library-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
+			<c:if test='<%= !navigation.equals("recent") && !navigation.equals("mine") && Validator.isNull(browseBy) %>'>
+				<liferay-util:include page="/document_library/breadcrumb.jsp" servletContext="<%= application %>" />
+			</c:if>
+		</div>
 
-				<div class="document-library-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
-					<c:if test='<%= !navigation.equals("recent") && !navigation.equals("mine") && Validator.isNull(browseBy) %>'>
-						<liferay-util:include page="/document_library/breadcrumb.jsp" servletContext="<%= application %>" />
-					</c:if>
-				</div>
+		<c:if test="<%= portletDisplay.isWebDAVEnabled() && BrowserSnifferUtil.isIeOnWin32(request) %>">
+			<div class="alert alert-danger hide" id="<portlet:namespace />openMSOfficeError"></div>
+		</c:if>
 
-				<c:if test="<%= portletDisplay.isWebDAVEnabled() && BrowserSnifferUtil.isIeOnWin32(request) %>">
-					<div class="alert alert-danger hide" id="<portlet:namespace />openMSOfficeError"></div>
-				</c:if>
+		<liferay-portlet:renderURL varImpl="editFileEntryURL">
+			<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_entry" />
+		</liferay-portlet:renderURL>
 
-				<liferay-portlet:renderURL varImpl="editFileEntryURL">
-					<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_entry" />
-				</liferay-portlet:renderURL>
+		<aui:form action="<%= editFileEntryURL.toString() %>" method="get" name="fm2">
+			<aui:input name="<%= Constants.CMD %>" type="hidden" />
+			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+			<aui:input name="repositoryId" type="hidden" value="<%= repositoryId %>" />
+			<aui:input name="newFolderId" type="hidden" />
+			<aui:input name="folderIds" type="hidden" />
+			<aui:input name="fileEntryIds" type="hidden" />
+			<aui:input name="fileShortcutIds" type="hidden" />
 
-				<aui:form action="<%= editFileEntryURL.toString() %>" method="get" name="fm2">
-					<aui:input name="<%= Constants.CMD %>" type="hidden" />
-					<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-					<aui:input name="repositoryId" type="hidden" value="<%= repositoryId %>" />
-					<aui:input name="newFolderId" type="hidden" />
-					<aui:input name="folderIds" type="hidden" />
-					<aui:input name="fileEntryIds" type="hidden" />
-					<aui:input name="fileShortcutIds" type="hidden" />
+			<div class="document-container">
+				<c:choose>
+					<c:when test='<%= mvcRenderCommandName.equals("/document_library/search") %>'>
+						<liferay-util:include page="/document_library/search_resources.jsp" servletContext="<%= application %>" />
+					</c:when>
+					<c:otherwise>
+						<liferay-util:include page="/document_library/view_entries.jsp" servletContext="<%= application %>" />
+					</c:otherwise>
+				</c:choose>
 
-					<div class="document-container">
-						<c:choose>
-							<c:when test='<%= mvcRenderCommandName.equals("/document_library/search") %>'>
-								<liferay-util:include page="/document_library/search_resources.jsp" servletContext="<%= application %>" />
-							</c:when>
-							<c:otherwise>
-								<liferay-util:include page="/document_library/view_entries.jsp" servletContext="<%= application %>" />
-							</c:otherwise>
-						</c:choose>
-
-						<%@ include file="/document_library/file_entries_template.jspf" %>
-					</div>
-				</aui:form>
-			</aui:col>
-		</aui:row>
+				<%@ include file="/document_library/file_entries_template.jspf" %>
+			</div>
+		</aui:form>
 	</div>
 </div>
 

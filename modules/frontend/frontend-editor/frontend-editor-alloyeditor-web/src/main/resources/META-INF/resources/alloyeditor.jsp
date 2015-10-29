@@ -26,7 +26,7 @@ if (Validator.isNull(doAsUserId)) {
 }
 
 boolean autoCreate = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:autoCreate"));
-String contents = (String)request.getAttribute("liferay-ui:input-editor:contents");
+String contents = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:contents"));
 String contentsLanguageId = (String)request.getAttribute("liferay-ui:input-editor:contentsLanguageId");
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:cssClass"));
 Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-ui:input-editor:data");
@@ -108,14 +108,6 @@ if (data != null) {
 <liferay-util:buffer var="editor">
 	<c:choose>
 		<c:when test="<%= showSource %>">
-			<div class="alloy-editor-switch">
-				<button class="btn btn-default btn-xs hide icon-fullscreen" id="<%= name %>Fullscreen" type="button"></button>
-
-				<button class="btn btn-default btn-xs" id="<%= name %>Switch" type="button">
-					&lt;&#47;&gt;
-				</button>
-			</div>
-
 			<div class="alloy-editor-wrapper" id="<%= name %>Wrapper">
 				<div class="wrapper">
 					<%= alloyEditor %>
@@ -124,6 +116,13 @@ if (data != null) {
 						<div class="lfr-source-editor-code"></div>
 					</div>
 				</div>
+			</div>
+			<div class="alloy-editor-switch">
+				<button class="btn btn-default btn-xs hide icon-fullscreen" id="<%= name %>Fullscreen" type="button"></button>
+
+				<button class="btn btn-default btn-xs" id="<%= name %>Switch" type="button">
+					&lt;&#47;&gt;
+				</button>
 			</div>
 		</c:when>
 		<c:otherwise>

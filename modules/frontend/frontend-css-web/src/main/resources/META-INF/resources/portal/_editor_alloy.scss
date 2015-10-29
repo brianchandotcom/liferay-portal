@@ -1,25 +1,32 @@
+* [class*="ae-toolbar-"][role="toolbar"] {
+	z-index: 501;
+}
+
 .alloy-editor {
 	&.alloy-editor-placeholder {
-		padding-left: 10px;
-
-		&:empty:not(:focus) {
-			border-left: 2px solid transparent;
+		&:empty:not(:focus):not(.form-control) {
+			border-left: 2px solid;
+			padding-left: 10px;
 		}
 	}
 
 	a {
 		cursor: auto;
 	}
+
+	p:only-child {
+		margin-bottom: 0;
+	}
+
+	&.form-control {
+		height: auto;
+	}
 }
 
 .alloy-editor-switch {
-	position: relative;
-
-	.btn {
-		bottom: 25px;
-		float: right;
-		position: relative;
-	}
+	position: absolute;
+	right: 0;
+	top: 0;
 }
 
 .alloy-editor-wrapper {

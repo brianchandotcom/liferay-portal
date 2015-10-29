@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGIService;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.scheduler.JobState;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
@@ -755,7 +755,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 			clusterSchedulerEngine.setSchedulerEngineHelper(this);
 
 			_serviceRegistration = _bundleContext.registerService(
-				IdentifiableOSGIService.class, clusterSchedulerEngine,
+				IdentifiableOSGiService.class, clusterSchedulerEngine,
 				new HashMapDictionary<String, Object>());
 
 			_schedulerEngine = ClusterableProxyFactory.createClusterableProxy(
@@ -870,7 +870,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		_messageListenerServiceRegistrations = new HashMap<>();
 	private Props _props;
 	private SchedulerEngine _schedulerEngine;
-	private ServiceRegistration<IdentifiableOSGIService> _serviceRegistration;
+	private ServiceRegistration<IdentifiableOSGiService> _serviceRegistration;
 	private final Map
 		<MessageListener, ServiceRegistration<SchedulerEventMessageListener>>
 			_serviceRegistrations = new HashMap<>();

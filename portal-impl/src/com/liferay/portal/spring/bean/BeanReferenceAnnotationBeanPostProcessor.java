@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGIService;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -72,13 +72,13 @@ public class BeanReferenceAnnotationBeanPostProcessor
 	public Object postProcessBeforeInitialization(Object bean, String beanName)
 		throws BeansException {
 
-		if (!(bean instanceof IdentifiableOSGIService) &&
+		if (!(bean instanceof IdentifiableOSGiService) &&
 			beanName.endsWith("Service") && _log.isWarnEnabled()) {
 
 			_log.warn(
 				beanName + " should implement " +
-					IdentifiableOSGIService.class.getName() +
-						" for " + ClusterableAdvice.class.getName());
+					IdentifiableOSGiService.class.getName() + " for " +
+						ClusterableAdvice.class.getName());
 		}
 
 		_autoInject(bean, beanName, bean.getClass());

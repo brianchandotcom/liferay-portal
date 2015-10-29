@@ -23,7 +23,7 @@ import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGIService;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -65,7 +65,7 @@ import java.util.Map;
 /**
  * @author Raymond Augé
  */
-public class LayoutLocalServiceHelper implements IdentifiableOSGIService {
+public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 
 	public String getFriendlyURL(
 			long groupId, boolean privateLayout, long layoutId, String name,
@@ -179,7 +179,7 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGIService {
 	}
 
 	@Override
-	public String getOSGIServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return LayoutLocalServiceHelper.class.getName();
 	}
 

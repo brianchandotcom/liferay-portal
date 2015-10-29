@@ -26,75 +26,75 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Tina Tian
  */
-public class IdentifiableOSGIServiceUtil {
+public class IdentifiableOSGiServiceUtil {
 
-	public static IdentifiableOSGIService getIdentifiableOSGIService(
+	public static IdentifiableOSGiService getIdentifiableOSGiService(
 		String osgiServiceIdentifier) {
 
-		return _identifiableOSGIServices.get(osgiServiceIdentifier);
+		return _identifiableOSGiServices.get(osgiServiceIdentifier);
 	}
 
-	private IdentifiableOSGIServiceUtil() {
+	private IdentifiableOSGiServiceUtil() {
 	}
 
-	private static final Map<String, IdentifiableOSGIService>
-		_identifiableOSGIServices = new ConcurrentHashMap<>();
+	private static final Map<String, IdentifiableOSGiService>
+		_identifiableOSGiServices = new ConcurrentHashMap<>();
 	private static final
-		ServiceTracker<IdentifiableOSGIService, IdentifiableOSGIService>
+		ServiceTracker<IdentifiableOSGiService, IdentifiableOSGiService>
 			_serviceTracker;
 
 	static {
 		Registry registry = RegistryUtil.getRegistry();
 
 		_serviceTracker = registry.trackServices(
-			IdentifiableOSGIService.class,
-			new IdentifiableOSGIServiceServiceTrackerCustomizer());
+			IdentifiableOSGiService.class,
+			new IdentifiableOSGiServiceServiceTrackerCustomizer());
 
 		_serviceTracker.open();
 	}
 
-	private static class IdentifiableOSGIServiceServiceTrackerCustomizer
+	private static class IdentifiableOSGiServiceServiceTrackerCustomizer
 		implements
 			ServiceTrackerCustomizer
-				<IdentifiableOSGIService, IdentifiableOSGIService> {
+				<IdentifiableOSGiService, IdentifiableOSGiService> {
 
 		@Override
-		public IdentifiableOSGIService addingService(
-			ServiceReference<IdentifiableOSGIService> serviceReference) {
+		public IdentifiableOSGiService addingService(
+			ServiceReference<IdentifiableOSGiService> serviceReference) {
 
 			Registry registry = RegistryUtil.getRegistry();
 
-			IdentifiableOSGIService identifiableOSGIService =
+			IdentifiableOSGiService identifiableOSGiService =
 				registry.getService(serviceReference);
 
-			_identifiableOSGIServices.put(
-				identifiableOSGIService.getOSGIServiceIdentifier(),
-				identifiableOSGIService);
+			_identifiableOSGiServices.put(
+				identifiableOSGiService.getOSGiServiceIdentifier(),
+				identifiableOSGiService);
 
-			return identifiableOSGIService;
+			return identifiableOSGiService;
 		}
 
 		@Override
 		public void modifiedService(
-			ServiceReference<IdentifiableOSGIService> serviceReference,
-			IdentifiableOSGIService identifiableOSGIService) {
+			ServiceReference<IdentifiableOSGiService> serviceReference,
+			IdentifiableOSGiService identifiableOSGiService) {
 
-			_identifiableOSGIServices.put(
-				identifiableOSGIService.getOSGIServiceIdentifier(),
-				identifiableOSGIService);
+			_identifiableOSGiServices.put(
+				identifiableOSGiService.getOSGiServiceIdentifier(),
+				identifiableOSGiService);
 		}
 
 		@Override
 		public void removedService(
-			ServiceReference<IdentifiableOSGIService> serviceReference,
-			IdentifiableOSGIService identifiableOSGIService) {
+			ServiceReference<IdentifiableOSGiService> serviceReference,
+			IdentifiableOSGiService identifiableOSGiService) {
 
 			Registry registry = RegistryUtil.getRegistry();
 
 			registry.ungetService(serviceReference);
 
-			_identifiableOSGIServices.remove(
-				identifiableOSGIService.getOSGIServiceIdentifier());
+			_identifiableOSGiServices.remove(
+				identifiableOSGiService.getOSGiServiceIdentifier());
 		}
 
 	}

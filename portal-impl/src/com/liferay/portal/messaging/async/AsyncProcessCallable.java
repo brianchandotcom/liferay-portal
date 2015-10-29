@@ -14,7 +14,7 @@
 
 package com.liferay.portal.messaging.async;
 
-import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGIServiceInvokerUtil;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServiceInvokerUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.util.MethodHandler;
 
@@ -77,7 +77,7 @@ public class AsyncProcessCallable
 
 		if (methodHandler == null) {
 			methodHandler =
-				IdentifiableOSGIServiceInvokerUtil.createMethodHandler(
+				IdentifiableOSGiServiceInvokerUtil.createMethodHandler(
 					_methodInvocation.getThis(), _methodInvocation.getMethod(),
 					_methodInvocation.getArguments());
 		}

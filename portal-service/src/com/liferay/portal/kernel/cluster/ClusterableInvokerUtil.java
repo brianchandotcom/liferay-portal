@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.cluster;
 
-import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGIServiceInvokerUtil;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServiceInvokerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
@@ -50,7 +50,7 @@ public class ClusterableInvokerUtil {
 		Object targetObject, Method method, Object[] args) {
 
 		MethodHandler methodHandler =
-			IdentifiableOSGIServiceInvokerUtil.createMethodHandler(
+			IdentifiableOSGiServiceInvokerUtil.createMethodHandler(
 				targetObject, method, args);
 
 		Map<String, Serializable> context =

@@ -17,8 +17,8 @@ package com.liferay.portal.kernel.module.framework.service;
 /**
  * @author Tina Tian
  */
-public interface IdentifiableOSGIService {
+public interface IdentifiableOSGiService {
 
-	public String getOSGIServiceIdentifier();
+	public String getOSGiServiceIdentifier();
 
 }

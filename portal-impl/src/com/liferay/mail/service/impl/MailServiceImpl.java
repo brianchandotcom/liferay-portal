@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.mail.Account;
 import com.liferay.portal.kernel.mail.MailMessage;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGIService;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -46,7 +46,7 @@ import javax.mail.Session;
  * @author Brian Wing Shun Chan
  */
 @DoPrivileged
-public class MailServiceImpl implements MailService, IdentifiableOSGIService {
+public class MailServiceImpl implements MailService, IdentifiableOSGiService {
 
 	@Override
 	public void addForward(
@@ -126,7 +126,7 @@ public class MailServiceImpl implements MailService, IdentifiableOSGIService {
 	}
 
 	@Override
-	public String getOSGIServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return MailService.class.getName();
 	}
 

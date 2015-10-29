@@ -24,7 +24,7 @@ import java.lang.reflect.Method;
 /**
  * @author Shuyang Zhou
  */
-public class IdentifiableOSGIServiceInvokerUtil {
+public class IdentifiableOSGiServiceInvokerUtil {
 
 	public static MethodHandler createMethodHandler(
 		Object targetObject, Method method, Object[] args) {
@@ -34,12 +34,12 @@ public class IdentifiableOSGIServiceInvokerUtil {
 		String threadContextServletContextName = ClassLoaderPool.getContextName(
 			ClassLoaderUtil.getContextClassLoader());
 
-		IdentifiableOSGIService identifiableOSGIService =
-			(IdentifiableOSGIService)targetObject;
+		IdentifiableOSGiService identifiableOSGiService =
+			(IdentifiableOSGiService)targetObject;
 
 		return new MethodHandler(
 			_invokeMethodKey, methodHandler, threadContextServletContextName,
-			identifiableOSGIService.getOSGIServiceIdentifier());
+			identifiableOSGiService.getOSGiServiceIdentifier());
 	}
 
 	@SuppressWarnings("unused")
@@ -49,7 +49,7 @@ public class IdentifiableOSGIServiceInvokerUtil {
 		throws Exception {
 
 		Object osgiService =
-			IdentifiableOSGIServiceUtil.getIdentifiableOSGIService(
+			IdentifiableOSGiServiceUtil.getIdentifiableOSGiService(
 				osgiServiceIdentifier);
 
 		if (osgiService == null) {
@@ -74,7 +74,7 @@ public class IdentifiableOSGIServiceInvokerUtil {
 	}
 
 	private static final MethodKey _invokeMethodKey = new MethodKey(
-		IdentifiableOSGIServiceInvokerUtil.class, "_invoke",
+		IdentifiableOSGiServiceInvokerUtil.class, "_invoke",
 		MethodHandler.class, String.class, String.class);
 
 }

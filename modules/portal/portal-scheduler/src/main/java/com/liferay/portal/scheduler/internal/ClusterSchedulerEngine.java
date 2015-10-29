@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
-import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGIService;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
@@ -55,7 +55,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * @author Tina Tian
  */
 public class ClusterSchedulerEngine
-	implements IdentifiableOSGIService, SchedulerEngine {
+	implements IdentifiableOSGiService, SchedulerEngine {
 
 	public ClusterSchedulerEngine(SchedulerEngine schedulerEngine) {
 		_schedulerEngine = schedulerEngine;
@@ -118,7 +118,7 @@ public class ClusterSchedulerEngine
 	}
 
 	@Override
-	public String getOSGIServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return ClusterSchedulerEngine.class.getName();
 	}
 

@@ -68,4 +68,16 @@
 			</then>
 		</if>
 	</command>
+
+	<command name="viewNoSite">
+		<var name="key_site" value="${site}" />
+
+		<execute function="AssertElementNotPresent" locator1="ProductMenu#SITE" value1="${site}" />
+	</command>
+
+	<command name="viewSite">
+		<var name="key_site" value="${site}" />
+
+		<execute function="AssertTextEquals" locator1="ProductMenu#SITE" value1="${site}" />
+	</command>
 </definition>

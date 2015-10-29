@@ -149,6 +149,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>IMAGE_URL</td>
+	<td>//div[label[contains(.,'Image URL')]]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INITIAL_URL</td>
 	<td>//input[contains(@id,'_initUrl')]</td>
 	<td></td>

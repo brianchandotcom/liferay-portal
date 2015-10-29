@@ -11,6 +11,32 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
+	<command name="AddWebContentArticleWithImageViaURL" priority="4">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute function="Type#mouseOverFocusType" locator1="TextInput#TITLE" value1="Web Content Title" />
+
+		<execute function="Click#pauseClickAt" locator1="CKEditor#CONTENT_IMAGE_LINK" />
+
+		<execute macro="ItemSelector#addFromURL">
+			<var name="imageSourceURL" value="https://raw.githubusercontent.com/liferay/liferay-portal/master/portal-web/test/functional/com/liferay/portalweb/dependencies/Document_1.jpg" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContentNavigator#gotoPreviewCP">
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute function="AssertElementPresent" locator1="//img[contains(@src,'Document_1.jpg')]" />
+	</command>
+
 	<command name="AddWikiFrontPageWithImageViaAttachments" priority="4" >
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
@@ -44,32 +70,6 @@
 		<execute macro="DMDocument#linkImage">
 			<var name="documentName" value="Document_1.jpg" />
 		</execute>
-
-		<execute function="AssertClick#assertTextClickAtAndWaitCKEditor" locator1="Button#PUBLISH" value1="Publish" />
-
-		<var name="key_htmlTags" value="p/img[contains(@src,'Document_1.jpg')]" />
-
-		<execute function="AssertElementPresent" locator1="Wiki#HTML_BODY" />
-	</command>
-
-	<command name="AddWikiFrontPageWithImageViaURL" priority="4">
-		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Wiki" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute function="AssertClick" locator1="Wiki#FRONTPAGE_DEFAULT_MESSAGE" value1="This page is empty. Edit it to add some text." />
-
-		<execute function="Click#pauseClickAt" locator1="CKEditor#CONTENT_IMAGE_LINK" />
-		<execute function="Type" locator1="CKEditor#CONTENT_IMAGE_LINK_URL_FIELD" value1="https://raw.githubusercontent.com/liferay/liferay-portal/master/portal-web/test/functional/com/liferay/portalweb/dependencies/Document_1.jpg" />
-		<execute function="AssertClick" locator1="CKEditor#CONTENT_IMAGE_LINK_OK_BUTTON" value1="OK" />
 
 		<execute function="AssertClick#assertTextClickAtAndWaitCKEditor" locator1="Button#PUBLISH" value1="Publish" />
 

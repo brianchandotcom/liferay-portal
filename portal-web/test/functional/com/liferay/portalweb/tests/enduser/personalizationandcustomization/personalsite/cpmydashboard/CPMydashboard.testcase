@@ -216,6 +216,7 @@
 		<execute macro="Page#gotoMyDashboard" />
 
 		<execute macro="Site#viewMySitesViaMySitesPG">
+			<var name="memberCount" value="2" />
 			<var name="siteName" value="Site Name" />
 		</execute>
 

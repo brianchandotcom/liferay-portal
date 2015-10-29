@@ -273,8 +273,8 @@
 	</command>
 
 	<command name="MultipleUsersandOrganizations" priority="4">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="User#addCP">
@@ -312,8 +312,8 @@
 			<var name="userScreenName" value="usersn5" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="Organization#addCP">
@@ -321,8 +321,8 @@
 			<var name="orgType" value="Regular Organization" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="Organization#addCategorizationCP">
@@ -335,8 +335,8 @@
 			<var name="orgType" value="Regular Organization" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="Organization#addSiteCP">
@@ -344,8 +344,8 @@
 			<var name="orgName" value="Organization Name 2" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="Organization#addCategorizationCP">
@@ -359,8 +359,8 @@
 				<var name="orgType" value="Regular Organization" />
 			</execute>
 
-			<execute macro="Page#gotoCP">
-				<var name="portletName" value="Users and Organizations" />
+			<execute macro="ProductMenu#gotoControlPanelUsers">
+				<var name="portlet" value="Users and Organizations" />
 			</execute>
 
 			<execute macro="Organization#selectParentOrganizationCP">
@@ -368,8 +368,8 @@
 				<var name="parentOrgName" value="Organization Name 2" />
 			</execute>
 
-			<execute macro="Page#gotoCP">
-				<var name="portletName" value="Users and Organizations" />
+			<execute macro="ProductMenu#gotoControlPanelUsers">
+				<var name="portlet" value="Users and Organizations" />
 			</execute>
 
 			<execute macro="Organization#viewParentOrganizationCP">
@@ -380,8 +380,8 @@
 			</execute>
 		</for>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="Organization#viewCP">
@@ -389,17 +389,15 @@
 			<var name="orgType" value="Regular Organization" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
+		<execute macro="Navigator#gotoBack" />
 
 		<execute macro="Organization#viewCP">
 			<var name="orgName" value="Organization Name 2" />
 			<var name="orgType" value="Regular Organization" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
 		<for list="usersn1,usersn2,usersn3,usersn4,usersn5" param="userScreenName">
@@ -408,8 +406,8 @@
 			<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 		</for>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="Organization#addMemberCP">
@@ -419,8 +417,8 @@
 			<var name="userScreenName" value="usersn1" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="Organization#addMemberCP">
@@ -430,8 +428,8 @@
 			<var name="userScreenName" value="usersn3" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="Organization#addMemberCP">
@@ -441,8 +439,8 @@
 			<var name="userScreenName" value="usersn5" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
 		<for list="usersn2,usersn4" param="userScreenName">
@@ -467,28 +465,26 @@
 
 		<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_NAME" value1="Organization Name 2" />
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
+		<execute macro="ProductMenu#viewNoSite">
+			<var name="site" value="Organization Name 1" />
 		</execute>
 
-		<execute function="Click" locator1="Home#SCOPE_SELECTOR" />
+		<execute macro="ProductMenu#viewNoSite">
+			<var name="site" value="Organization Name 2" />
+		</execute>
 
-		<var name="key_siteScopeName" value="Organization Name 1" />
+		<execute macro="Page#gotoMyDashboard" />
 
-		<execute function="AssertTextNotPresent" locator1="Home#SCOPE_SELECTOR_MENULIST_ITEM" value1="${siteScopeName}" />
+		<execute macro="Site#viewNoMySitesViaMySitesPG">
+			<var name="siteName" value="Organization Name 1" />
+		</execute>
 
-		<var name="key_siteScopeName" value="Organization Name 2" />
+		<execute macro="Site#viewNoMySitesViaMySitesPG">
+			<var name="siteName" value="Organization Name 2" />
+		</execute>
 
-		<execute function="AssertTextEquals" locator1="Home#SCOPE_SELECTOR_MENULIST_ITEM" value1="Organization Name 2" />
-
-		<execute macro="Page#openURL" />
-
-		<execute function="AssertClick" locator1="ControlMenu#MY_SITES" value1="My Sites" />
-		<execute function="AssertTextNotPresent" locator1="ControlMenu#MY_SITES_SITE_NAME" value1="Organization Name 1" />
-		<execute function="AssertTextNotPresent" locator1="ControlMenu#MY_SITES_SITE_NAME" value1="Organization Name 2" />
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="Organization#addMemberCP">
@@ -498,37 +494,35 @@
 			<var name="userScreenName" value="test" />
 		</execute>
 
-		<execute function="AssertClick" locator1="ControlMenu#MY_SITES" value1="My Sites" />
-		<execute function="AssertTextNotPresent" locator1="ControlMenu#MY_SITES_SITE_NAME" value1="Organization Name 1" />
-		<execute function="AssertTextPresent" locator1="ControlMenu#MY_SITES_SITE_NAME" value1="Organization Name 2" />
+		<execute macro="Page#gotoMyDashboard" />
 
-		<var name="key_siteName" value="Organization Name 2" />
+		<execute macro="Site#viewNoMySitesViaMySitesPG">
+			<var name="siteName" value="Organization Name 1" />
+		</execute>
 
-		<execute function="AssertClick" locator1="ControlMenu#MY_SITES_PUBLIC_SITE" value1="Organization Name 2" />
+		<execute macro="Site#viewMySitesViaMySitesPG">
+			<var name="memberCount" value="1" />
+			<var name="siteName" value="Organization Name 2" />
+		</execute>
 
-		<execute function="Click" locator1="Home#PAGE_NAVIGATION_BAR" />
+		<execute macro="Site#gotoSiteViaMySitesPG">
+			<var name="siteName" value="Organization Name 2" />
+		</execute>
 
-		<var name="key_pageName" value="Home" />
+		<execute function="SelectWindow" locator1="Home - Organization Name 2 - Liferay" />
 
-		<execute function="AssertTextEquals" locator1="Home#PAGE_TEMPLATE_1" value1="Home" />
-		<execute function="AssertTextEquals" locator1="Home#PAGE_TEMPLATE_2" value1="Wiki" />
+		<execute macro="Page#viewSpecificPG">
+			<var name="pageNameList" value="Home,Wiki" />
+		</execute>
 
-		<for list="Message Boards,User Statistics,Upcoming Events" param="portletTitleName">
+		<for list="Message Boards,User Statistics" param="portletTitleName">
 			<var name="key_portletTitleName" value="${portletTitleName}" />
 
 			<execute function="AssertTextEquals" locator1="BasePortlet#SPECIFIC_TITLE" value1="${portletTitleName}" />
 		</for>
 
-		<execute function="AssertClick" locator1="Home#PAGE_TEMPLATE_2" value1="Wiki" />
-
-		<for list="Wiki,Categories Navigation,Tag Cloud" param="portletTitleName">
-			<var name="key_portletTitleName" value="${portletTitleName}" />
-
-			<execute function="AssertTextEquals" locator1="BasePortlet#SPECIFIC_TITLE" value1="${portletTitleName}" />
-		</for>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="User#basicSearchCP">

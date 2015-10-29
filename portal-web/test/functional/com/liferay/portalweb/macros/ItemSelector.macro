@@ -8,17 +8,15 @@
 
 		<execute function="AssertElementPresent" locator1="ItemSelector#URL_LABEL" />
 
-		<execute function="Type" locator1="TextInput#URL" />
+		<execute function="Type#typeAceEditor" locator1="TextInput#URL" value1="${imageSourceURL}" />
 
 		<execute function="AssertClick" locator1="Button#ENTER" value1="Enter" />
 
 		<execute function="AssertElementPresent" locator1="ItemSelector#URL_IMAGE_SOURCE" value1="${imageSourceURL}" />
 
-		<execute function="SelectFrame" locator1="ItemSelector#ITEM_SELECTOR_IFRAME" />
-
-		<execute function="AssertClick" locator1="ItemSelector#ADD_BUTTON" value1="Add" />
-
 		<execute function="SelectFrameTop" value1="relative=top" />
+
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#ADD" value1="Add" />
 	</command>
 
 	<command name="selectBlogImage">

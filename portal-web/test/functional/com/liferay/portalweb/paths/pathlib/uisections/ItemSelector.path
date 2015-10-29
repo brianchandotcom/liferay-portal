@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>ITEM_SELECTOR_IFRAME</td>
-	<td>//iframe[contains(@id,'selectImage')]</td>
+	<td>//iframe[contains(@src,'ItemSelectorPortlet')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -51,7 +51,7 @@
 </tr>
 <tr>
 	<td>NAVIGATION_URL</td>
-	<td>//ul[contains(@class,'navbar')]//span[contains(.,'Blogs')]</td>
+	<td>//ul[contains(@class,'navbar')]//span[contains(.,'URL')]</td>
 	<td></td>
 </tr>
 <tr>

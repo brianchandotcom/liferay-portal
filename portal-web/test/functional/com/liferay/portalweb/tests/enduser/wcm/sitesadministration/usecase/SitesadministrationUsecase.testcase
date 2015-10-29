@@ -188,8 +188,7 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
-		<execute macro="Site#viewMySitesViaMySitesPG">
-			<var name="organizationSite" value="true" />
+		<execute macro="Site#viewNoMySitesViaMySitesPG">
 			<var name="siteName" value="Organization Name 2" />
 		</execute>
 

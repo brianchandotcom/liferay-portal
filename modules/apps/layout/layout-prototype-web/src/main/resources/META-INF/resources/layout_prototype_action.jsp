@@ -34,7 +34,6 @@ LayoutPrototype layoutPrototype = (LayoutPrototype)row.getObject();
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-edit"
 			message="edit"
 			url="<%= editURL %>"
 		/>
@@ -50,7 +49,6 @@ LayoutPrototype layoutPrototype = (LayoutPrototype)row.getObject();
 		/>
 
 		<liferay-ui:icon
-			iconCssClass="icon-lock"
 			message="permissions"
 			method="get"
 			url="<%= permissionsURL %>"
@@ -74,7 +72,6 @@ LayoutPrototype layoutPrototype = (LayoutPrototype)row.getObject();
 
 		<liferay-ui:icon
 			cssClass="export-layout-prototype layout-prototype-action"
-			iconCssClass="icon-arrow-down"
 			message="export"
 			method="get"
 			url="<%= exportURL.toString() %>"
@@ -95,7 +92,6 @@ LayoutPrototype layoutPrototype = (LayoutPrototype)row.getObject();
 
 		<liferay-ui:icon
 			cssClass="import-layout-prototype layout-prototype-action"
-			iconCssClass="icon-arrow-up"
 			message="import"
 			method="get"
 			url="<%= importURL.toString() %>"

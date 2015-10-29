@@ -226,16 +226,15 @@ public class UnstableMessageUtilTest {
 
 		return string.replace("${" + token + "}", value);
 	}
-	
+
 	private static String _toURLString(File file) throws Exception {
 		URI uri = file.toURI();
 
 		URL url = uri.toURL();
-		
+
 		String urlString = url.toString();
 
-		return urlString.replace(
-			System.getProperty("user.dir"),  "${user.dir}");
+		return urlString.replace(System.getProperty("user.dir"), "${user.dir}");
 	}
 
 	private static void _write(File file, String content) throws Exception {

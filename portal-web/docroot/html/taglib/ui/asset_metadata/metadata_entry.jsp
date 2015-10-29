@@ -107,7 +107,9 @@ else if (metadataField.equals("view-count")) {
 
 		<div class="metadata-author">
 			<div class="asset-avatar">
-				<img alt="<%= HtmlUtil.escapeAttribute(assetRendererUser.getFullName()) %>" class="avatar img-circle" src="<%= HtmlUtil.escape(assetRendererUser.getPortraitURL(themeDisplay)) %>" />
+				<liferay-ui:user-portrait
+					userId="<%= assetRendererUser.getUserId() %>"
+				/>
 			</div>
 
 			<div class="asset-user-info">

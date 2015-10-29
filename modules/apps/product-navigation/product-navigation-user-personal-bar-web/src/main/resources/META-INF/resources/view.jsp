@@ -21,18 +21,9 @@
 		<b class="alert-icon icon-warning-sign"></b>
 	</c:if>
 
-	<%
-	String portraitURL = HtmlUtil.escape(user.getPortraitURL(themeDisplay));
-	%>
-
-	<c:choose>
-		<c:when test="<%= BrowserSnifferUtil.isIe(request) && (BrowserSnifferUtil.getMajorVersion(request) < 9) %>">
-			<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="user-portrait" />" class="user-avatar-image" src="<%= portraitURL %>" />
-		</c:when>
-		<c:otherwise>
-			<span class="user-avatar-image" style="background-image: url('<%= portraitURL %>');"></span>
-		</c:otherwise>
-	</c:choose>
+	<liferay-ui:user-portrait
+		userId="<%= user.getUserId() %>"
+	/>
 
 	<span class="user-full-name">
 		<%= HtmlUtil.escape(user.getFullName()) %>

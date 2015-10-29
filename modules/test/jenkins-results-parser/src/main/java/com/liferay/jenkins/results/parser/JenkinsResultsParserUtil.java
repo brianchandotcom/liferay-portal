@@ -17,9 +17,7 @@ package com.liferay.jenkins.results.parser;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
 import java.net.URL;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -138,6 +136,9 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static String getLocalURL(String remoteURL) {
+		remoteURL = remoteURL.replace(
+			"${user.dir}", System.getProperty("user.dir"));
+
 		Matcher matcher = _localURLPattern1.matcher(remoteURL);
 
 		if (matcher.find()) {

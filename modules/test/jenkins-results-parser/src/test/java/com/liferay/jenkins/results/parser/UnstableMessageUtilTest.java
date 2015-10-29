@@ -27,9 +27,7 @@ import java.nio.file.Paths;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -49,18 +47,6 @@ public class UnstableMessageUtilTest {
 		_downloadSample(
 			"6-of-6", "1287",
 			"test-portal-acceptance-pullrequest-batch(master)", "test-1-19");
-	}
-
-	@Before
-	public void setUp() throws Exception {
-		_replaceInAllFiles(
-			_dependenciesDir, "${user.dir}", System.getProperty("user.dir"));
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_replaceInAllFiles(
-			_dependenciesDir, System.getProperty("user.dir"), "${user.dir}");
 	}
 
 	@Test
@@ -227,37 +213,6 @@ public class UnstableMessageUtilTest {
 
 	private static String _read(File file) throws IOException {
 		return new String(Files.readAllBytes(Paths.get(file.toURI())));
-	}
-
-	private static void _replaceInAllFiles(
-			File rootDir, String token, String value)
-		throws Exception {
-
-		File[] childFileArray = rootDir.listFiles();
-
-		for (File childFile : childFileArray) {
-			if (childFile.isDirectory()) {
-				_replaceInAllFiles(childFile, token, value);
-			}
-			else {
-				_replaceInFile(childFile, token, value);
-			}
-		}
-	}
-
-	private static void _replaceInFile(
-			File targetFile, String token, String value)
-		throws Exception {
-
-		String fileContents = _read(targetFile);
-
-		if (!fileContents.contains(token)) {
-			return;
-		}
-
-		fileContents = fileContents.replace(token, value);
-
-		_write(targetFile, fileContents);
 	}
 
 	private static String _replaceToken(

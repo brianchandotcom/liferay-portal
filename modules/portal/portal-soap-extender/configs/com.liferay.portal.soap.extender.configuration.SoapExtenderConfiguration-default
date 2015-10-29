@@ -1,0 +1,2 @@
+contextPaths=/soap
+jaxWsServiceFilterStrings=(jaxws.endpoint=true)

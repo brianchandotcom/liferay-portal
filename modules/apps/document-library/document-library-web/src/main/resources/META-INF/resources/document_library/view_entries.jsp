@@ -17,14 +17,10 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-boolean emailFileEntryAnyEventEnabled = dlGroupServiceSettings.isEmailFileEntryAddedEnabled() || dlGroupServiceSettings.isEmailFileEntryUpdatedEnabled();
-
 String navigation = ParamUtil.getString(request, "navigation", "home");
 
 String currentFolder = ParamUtil.getString(request, "curFolder");
 String deltaFolder = ParamUtil.getString(request, "deltaFolder");
-
-Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
 
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 
@@ -180,87 +176,6 @@ else {
 
 dlSearchContainer.setResults(results);
 %>
-
-<div class="subscribe-action">
-	<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.SUBSCRIBE) && ((folder == null) || folder.isSupportsSubscribing()) && emailFileEntryAnyEventEnabled %>">
-
-		<%
-		boolean subscribed = false;
-		boolean unsubscribable = true;
-
-		if (fileEntryTypeId == DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL) {
-			subscribed = DLUtil.isSubscribedToFolder(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), folderId);
-
-			if (subscribed) {
-				if (!DLUtil.isSubscribedToFolder(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), folderId, false)) {
-					unsubscribable = false;
-				}
-			}
-		}
-		else {
-			subscribed = DLUtil.isSubscribedToFileEntryType(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), fileEntryTypeId);
-		}
-		%>
-
-		<c:choose>
-			<c:when test="<%= subscribed %>">
-				<c:choose>
-					<c:when test="<%= unsubscribable %>">
-						<portlet:actionURL name='<%= (fileEntryTypeId == DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL) ? "/document_library/edit_folder" : "/document_library/edit_file_entry_type" %>' var="unsubscribeURL">
-							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
-							<portlet:param name="redirect" value="<%= currentURL %>" />
-
-							<c:choose>
-								<c:when test="<%= fileEntryTypeId == DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL %>">
-									<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-								</c:when>
-								<c:otherwise>
-									<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryTypeId) %>" />
-								</c:otherwise>
-							</c:choose>
-						</portlet:actionURL>
-
-						<liferay-ui:icon
-							iconCssClass="icon-remove-sign"
-							label="<%= true %>"
-							message="unsubscribe"
-							url="<%= unsubscribeURL %>"
-						/>
-					</c:when>
-					<c:otherwise>
-						<liferay-ui:icon
-							iconCssClass="icon-remove-sign"
-							label="<%= true %>"
-							message="subscribed-to-a-parent-folder"
-						/>
-					</c:otherwise>
-				</c:choose>
-			</c:when>
-			<c:otherwise>
-				<portlet:actionURL name='<%= (fileEntryTypeId == DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL) ? "/document_library/edit_folder" : "/document_library/edit_file_entry_type" %>' var="subscribeURL">
-					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-
-					<c:choose>
-						<c:when test="<%= fileEntryTypeId == DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL %>">
-							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-						</c:when>
-						<c:otherwise>
-							<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryTypeId) %>" />
-						</c:otherwise>
-					</c:choose>
-				</portlet:actionURL>
-
-				<liferay-ui:icon
-					iconCssClass="icon-ok-sign"
-					label="<%= true %>"
-					message="subscribe"
-					url="<%= subscribeURL %>"
-				/>
-			</c:otherwise>
-		</c:choose>
-	</c:if>
-</div>
 
 <c:if test="<%= results.isEmpty() %>">
 	<div class="alert alert-info entries-empty">

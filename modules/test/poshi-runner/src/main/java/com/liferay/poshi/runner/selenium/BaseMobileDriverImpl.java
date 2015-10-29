@@ -268,7 +268,7 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
-	public void copyValue(String locator) {
+	public void copyValue(String locator) throws Exception {
 		throw new UnsupportedOperationException();
 	}
 
@@ -453,7 +453,7 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
-	public boolean isNotValue(String locator, String value) {
+	public boolean isNotValue(String locator, String value) throws Exception {
 		return LiferaySeleniumHelper.isNotValue(this, locator, value);
 	}
 
@@ -493,8 +493,8 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
-	public boolean isValue(String locator, String value) {
-		return value.equals(getValue(locator, "1"));
+	public boolean isValue(String locator, String value) throws Exception {
+		return value.equals(getElementValue(locator, "1"));
 	}
 
 	@Override

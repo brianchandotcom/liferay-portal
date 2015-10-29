@@ -778,7 +778,7 @@ public class PoshiRunnerExecutor {
 				locator = PoshiRunnerVariablesUtil.replaceCommandVars(locator);
 
 				if (locator.contains("/input")) {
-					varValue = liferaySelenium.getValue(locator);
+					varValue = liferaySelenium.getElementValue(locator);
 				}
 				else {
 					varValue = liferaySelenium.getElementText(locator);

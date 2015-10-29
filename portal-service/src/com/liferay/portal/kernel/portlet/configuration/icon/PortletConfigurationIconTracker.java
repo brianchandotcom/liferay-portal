@@ -14,14 +14,18 @@
 
 package com.liferay.portal.kernel.portlet.configuration.icon;
 
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Eudaldo Alonso
@@ -29,9 +33,22 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class PortletConfigurationIconTracker {
 
 	public static List<PortletConfigurationIconFactory>
-		getPortletConfigurationIcons() {
+		getPortletConfigurationIcons(String portletId) {
 
-		return _portletConfigurationIconFactories;
+		List<PortletConfigurationIconFactory>
+			portletConfigurationIconFactories =
+				_portletConfigurationIconFactoryMap.get(StringPool.STAR);
+
+		List<PortletConfigurationIconFactory>
+			curPortletConfigurationIconFactories =
+				_portletConfigurationIconFactoryMap.get(portletId);
+
+		if (curPortletConfigurationIconFactories != null) {
+			portletConfigurationIconFactories.addAll(
+				curPortletConfigurationIconFactories);
+		}
+
+		return portletConfigurationIconFactories;
 	}
 
 	public PortletConfigurationIconTracker() {
@@ -44,8 +61,8 @@ public class PortletConfigurationIconTracker {
 		_serviceTracker.open();
 	}
 
-	private static final List<PortletConfigurationIconFactory>
-		_portletConfigurationIconFactories = new CopyOnWriteArrayList<>();
+	private static final Map<String, List<PortletConfigurationIconFactory>>
+		_portletConfigurationIconFactoryMap = new ConcurrentHashMap<>();
 
 	private final ServiceTracker
 		<PortletConfigurationIconFactory, PortletConfigurationIconFactory>
@@ -65,7 +82,25 @@ public class PortletConfigurationIconTracker {
 			PortletConfigurationIconFactory portletConfigurationIconFactory =
 				registry.getService(serviceReference);
 
-			_portletConfigurationIconFactories.add(
+			String portletId = (String)serviceReference.getProperty(
+				"javax.portlet.name");
+
+			if (Validator.isNull(portletId)) {
+				portletId = StringPool.STAR;
+			}
+
+			List<PortletConfigurationIconFactory>
+				portletConfigurationIconFactories =
+					_portletConfigurationIconFactoryMap.get(portletId);
+
+			if (portletConfigurationIconFactories == null) {
+				portletConfigurationIconFactories = new ArrayList<>();
+
+				_portletConfigurationIconFactoryMap.put(
+					portletId, portletConfigurationIconFactories);
+			}
+
+			portletConfigurationIconFactories.add(
 				portletConfigurationIconFactory);
 
 			return portletConfigurationIconFactory;
@@ -86,7 +121,22 @@ public class PortletConfigurationIconTracker {
 
 			registry.ungetService(serviceReference);
 
-			_portletConfigurationIconFactories.remove(
+			String portletId = (String)serviceReference.getProperty(
+				"javax.portlet.name");
+
+			if (Validator.isNull(portletId)) {
+				portletId = StringPool.STAR;
+			}
+
+			List<PortletConfigurationIconFactory>
+				portletConfigurationIconFactories =
+					_portletConfigurationIconFactoryMap.get(portletId);
+
+			if (portletConfigurationIconFactories == null) {
+				return;
+			}
+
+			portletConfigurationIconFactories.remove(
 				portletConfigurationIconFactory);
 		}
 

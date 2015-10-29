@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.lists.web.portlet.configuration.icon;
 
+import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIconFactory;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
@@ -27,7 +28,11 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rafael Praxedes
  */
-@Component(immediate = true, service = PortletConfigurationIconFactory.class)
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS},
+	service = PortletConfigurationIconFactory.class
+)
 public class DDMStructuresPortletConfigurationIconFactory
 	extends BaseJSPPortletConfigurationIconFactory {
 

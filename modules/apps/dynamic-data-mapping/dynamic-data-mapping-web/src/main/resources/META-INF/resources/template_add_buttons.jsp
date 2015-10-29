@@ -42,7 +42,7 @@ String message = "add";
 				}
 				%>
 
-				<portlet:renderURL var="addTemplateURL">
+				<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="addTemplateURL">
 					<portlet:param name="mvcPath" value="/edit_template.jsp" />
 					<portlet:param name="redirect" value="<%= redirect %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
@@ -67,7 +67,7 @@ String message = "add";
 				}
 				%>
 
-				<portlet:renderURL var="addTemplateURL">
+				<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="addTemplateURL">
 					<portlet:param name="mvcPath" value="/edit_template.jsp" />
 					<portlet:param name="redirect" value="<%= redirect %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
@@ -115,7 +115,7 @@ String message = "add";
 					ListUtil.sort(templateHandlers, new TemplateHandlerComparator(locale));
 				%>
 
-					<liferay-portlet:renderURL varImpl="addPortletDisplayTemplateURL">
+					<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" varImpl="addPortletDisplayTemplateURL">
 						<portlet:param name="mvcPath" value="/edit_template.jsp" />
 						<portlet:param name="redirect" value="<%= redirect %>" />
 						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />

@@ -138,6 +138,9 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static String getLocalURL(String remoteURL) {
+		remoteURL = remoteURL.replace(
+			"${user.dir}", System.getProperty("user.dir"));
+
 		Matcher matcher = _localURLPattern1.matcher(remoteURL);
 
 		if (matcher.find()) {
@@ -168,10 +171,12 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static JSONObject toJSONObject(String url) throws Exception {
-		return new JSONObject(toString(fixURL(url)));
+		return new JSONObject(toString(url));
 	}
 
 	public static String toString(String url) throws IOException {
+		url = fixURL(url);
+
 		System.out.println("Downloading " + url);
 
 		StringBuilder sb = new StringBuilder();

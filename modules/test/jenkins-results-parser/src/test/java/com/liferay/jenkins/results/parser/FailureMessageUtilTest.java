@@ -52,13 +52,11 @@ public class FailureMessageUtilTest {
 		File[] files = _dependenciesDir.listFiles();
 
 		for (File file : files) {
-			assertSample(_project, file);
+			assertSample(file);
 		}
 	}
 
-	protected void assertSample(Project project, File caseDir)
-		throws Exception {
-
+	protected void assertSample(File caseDir) throws Exception {
 		System.out.print("Asserting sample " + caseDir.getName() + ": ");
 
 		File expectedFailureMessageFile = new File(
@@ -67,7 +65,7 @@ public class FailureMessageUtilTest {
 		String expectedFailureMessage = _read(expectedFailureMessageFile);
 
 		String actualFailureMessage = FailureMessageUtil.getFailureMessage(
-			project, _toExternalForm(caseDir));
+			_project, _toURLString(caseDir));
 
 		boolean value = expectedFailureMessage.equals(actualFailureMessage);
 
@@ -152,7 +150,7 @@ public class FailureMessageUtilTest {
 			_downloadSampleURL(sampleDir, url, "/api/json");
 			_downloadSampleURL(sampleDir, url, "/logText/progressiveText");
 
-			_writeExpectedFailureMessage(_project, sampleDir);
+			_writeExpectedFailureMessage(sampleDir);
 		}
 		catch (IOException ioe) {
 			_deleteFile(sampleDir);
@@ -164,9 +162,16 @@ public class FailureMessageUtilTest {
 	private static void _downloadSampleURL(File dir, URL url, String urlSuffix)
 		throws Exception {
 
+		String urlString = url + urlSuffix;
+
+		if (urlString.endsWith("json")) {
+			urlString += "?pretty";
+		}
+
 		_write(
 			new File(dir, urlSuffix),
-			JenkinsResultsParserUtil.toString(url + urlSuffix));
+			JenkinsResultsParserUtil.toString(
+				JenkinsResultsParserUtil.getLocalURL(urlString)));
 	}
 
 	private static URL _encode(URL url) throws Exception {
@@ -174,7 +179,9 @@ public class FailureMessageUtilTest {
 			url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(),
 			url.getPath(), url.getQuery(), url.getRef());
 
-		return new URL(uri.toASCIIString());
+		String uriASCIIString = uri.toASCIIString();
+
+		return new URL(uriASCIIString.replace("#", "%23"));
 	}
 
 	private static String _read(File file) throws IOException {
@@ -191,12 +198,14 @@ public class FailureMessageUtilTest {
 		return string.replace("${" + token + "}", value);
 	}
 
-	private static String _toExternalForm(File file) throws Exception {
+	private static String _toURLString(File file) throws Exception {
 		URI uri = file.toURI();
 
 		URL url = uri.toURL();
 
-		return url.toExternalForm();
+		String urlString = url.toString();
+
+		return urlString.replace(System.getProperty("user.dir"), "${user.dir}");
 	}
 
 	private static void _write(File file, String content) throws Exception {
@@ -214,14 +223,13 @@ public class FailureMessageUtilTest {
 		Files.write(Paths.get(file.toURI()), content.getBytes());
 	}
 
-	private static void _writeExpectedFailureMessage(
-			Project project, File sampleDir)
+	private static void _writeExpectedFailureMessage(File sampleDir)
 		throws Exception {
 
 		File expectedFailureMessageFile = new File(
 			sampleDir, "expected_failure_message.html");
 		String expectedFailureMessage = FailureMessageUtil.getFailureMessage(
-			project, _toExternalForm(sampleDir));
+			_project, _toURLString(sampleDir));
 
 		_write(expectedFailureMessageFile, expectedFailureMessage);
 	}

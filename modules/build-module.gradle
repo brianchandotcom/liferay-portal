@@ -174,33 +174,37 @@ eclipseProject {
 
 idea {
 	module {
-        iml {
-            withXml {
-                provider ->
+		excludeDirs += sourceSets.main.output.classesDir
 
-                if (FileUtil.exists(project, "src/main/resources/META-INF/resources")) {
-                    def builder = new NodeBuilder()
+		iml {
+			withXml {
+				XmlProvider xmlProvider ->
 
-                    def node = provider.node.component.find { it.@name == 'NewModuleRootManager' }
+				if (!FileUtil.exists(project, "src/main/resources/META-INF/resources")) {
+					return
+				}
 
-                    node.plus {
-                        builder.module(name: 'NewModuleRootManager') {
-							component(name: 'FacetManager') {
-								facet(type: "web", name: "Web") {
-									configuration {
-										webroots {
-											root(url: 'file://$MODULE_DIR$/src/main/resources/META-INF/resources', relative: '/')
-										}
+				Node node = xmlProvider.node.component.find {
+					it.@name == "NewModuleRootManager"
+				}
+
+				node.plus {
+					NodeBuilder nodeBuilder = new NodeBuilder()
+
+					nodeBuilder.module(name: "NewModuleRootManager") {
+						component(name: "FacetManager") {
+							facet(name: "Web", type: "web") {
+								configuration {
+									webroots {
+										root relative: "/", url: 'file://$MODULE_DIR$/src/main/resources/META-INF/resources'
 									}
 								}
 							}
-                        }
-                    }
-                }
-            }
-        }
-
-		excludeDirs += file('classes')
+						}
+					}
+				}
+			}
+		}
 
 		scopes.TEST.plus += [configurations.testIntegrationRuntime]
 	}

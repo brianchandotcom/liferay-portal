@@ -239,6 +239,8 @@ public class ActionURLTag extends ParamAndPropertyAncestorTagImpl {
 	public void setCopyCurrentRenderParameters(
 		boolean copyCurrentRenderParameters) {
 
+		super.setCopyCurrentRenderParameters(copyCurrentRenderParameters);
+
 		_copyCurrentRenderParameters = Boolean.valueOf(
 			copyCurrentRenderParameters);
 	}

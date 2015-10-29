@@ -29,7 +29,6 @@ String tabs1 = (String)request.getAttribute("view.jsp-tabs1");
 		<c:when test='<%= tabs1.equals("my-sites") %>'>
 			<c:if test="<%= group.getPublicLayoutsPageCount() > 0 %>">
 				<liferay-ui:icon
-					iconCssClass="icon-search"
 					message="go-to-public-pages"
 					target="_blank"
 					url="<%= group.getDisplayURL(themeDisplay, false) %>"
@@ -38,7 +37,6 @@ String tabs1 = (String)request.getAttribute("view.jsp-tabs1");
 
 			<c:if test="<%= group.getPrivateLayoutsPageCount() > 0 %>">
 				<liferay-ui:icon
-					iconCssClass="icon-search"
 					message="go-to-private-pages"
 					target="_blank"
 					url="<%= group.getDisplayURL(themeDisplay, true) %>"
@@ -53,7 +51,6 @@ String tabs1 = (String)request.getAttribute("view.jsp-tabs1");
 				</portlet:actionURL>
 
 				<liferay-ui:icon
-					iconCssClass="icon-external-link-sign"
 					message="leave"
 					url="<%= leaveURL %>"
 				/>
@@ -71,7 +68,6 @@ String tabs1 = (String)request.getAttribute("view.jsp-tabs1");
 							</portlet:actionURL>
 
 							<liferay-ui:icon
-								iconCssClass="icon-group"
 								message="join"
 								url="<%= joinURL %>"
 							/>
@@ -83,14 +79,12 @@ String tabs1 = (String)request.getAttribute("view.jsp-tabs1");
 							</portlet:renderURL>
 
 							<liferay-ui:icon
-								iconCssClass="icon-pencil"
 								message="request-membership"
 								url="<%= membershipRequestURL %>"
 							/>
 						</c:when>
 						<c:when test="<%= MembershipRequestLocalServiceUtil.hasMembershipRequest(user.getUserId(), group.getGroupId(), MembershipRequestConstants.STATUS_PENDING) %>">
 							<liferay-ui:icon
-								iconCssClass="icon-check"
 								message="membership-requested"
 							/>
 						</c:when>
@@ -105,7 +99,6 @@ String tabs1 = (String)request.getAttribute("view.jsp-tabs1");
 						</portlet:actionURL>
 
 						<liferay-ui:icon
-							iconCssClass="icon-external-link-sign"
 							message="leave"
 							url="<%= leaveURL %>"
 						/>

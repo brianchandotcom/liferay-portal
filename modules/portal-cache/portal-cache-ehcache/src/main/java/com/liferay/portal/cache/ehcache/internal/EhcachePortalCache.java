@@ -46,7 +46,7 @@ public class EhcachePortalCache<K extends Serializable, V>
 			ehcache.getCacheEventNotificationService();
 
 		registeredEventListeners.registerListener(
-			new PortalCacheCacheEventListener<K, V>(
+			new PortalCacheCacheEventListener<>(
 				aggregatedPortalCacheListener, this),
 			NotificationScope.ALL);
 	}

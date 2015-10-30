@@ -90,8 +90,6 @@ public abstract class BaseMessageUtilTestCase {
 		throws Exception;
 
 	protected void downloadSample(String sampleKey, URL url) throws Exception {
-		System.out.println("Downloading sample " + sampleKey);
-
 		String sampleDirName = dependenciesDir.getPath() + "/" + sampleKey;
 
 		File sampleDir = new File(sampleDirName);
@@ -99,6 +97,8 @@ public abstract class BaseMessageUtilTestCase {
 		if (sampleDir.exists()) {
 			return;
 		}
+
+		System.out.println("Downloading sample " + sampleKey);
 
 		try {
 			downloadSample(sampleDir, url);

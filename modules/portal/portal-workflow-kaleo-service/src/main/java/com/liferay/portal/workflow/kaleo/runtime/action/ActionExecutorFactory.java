@@ -24,4 +24,8 @@ public interface ActionExecutorFactory {
 	public ActionExecutor getActionExecutor(String scriptLanguage)
 		throws WorkflowException;
 
+	public ActionExecutor getActionExecutor(
+			String scriptLanguage, String filter)
+		throws WorkflowException;
+
 }

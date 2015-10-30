@@ -9,35 +9,70 @@ AUI.add(
 				var instance = this;
 
 				instance._eventHandlers.push(
-					instance.after('containerChange', instance._bindEvents)
+					instance.after(instance._afterEventsRender, instance, 'render')
 				);
 
+				instance._domEvents = [];
+
 				instance._bindEvents();
+			},
+
+			bindContainerEvent: function(eventName, callback, selector) {
+				var instance = this;
+
+				var container = instance.get('container');
+
+				var query = selector;
+
+				if (query.call) {
+					query = query.call(instance);
+				}
+
+				var handler = container.delegate(eventName, A.bind(callback, instance), query);
+
+				instance._domEvents.push(
+					{
+						callback: callback,
+						handler: handler,
+						name: eventName,
+						selector: selector
+					}
+				);
+
+				return handler;
+			},
+
+			bindInputEvent: function(eventName, callback) {
+				var instance = this;
+
+				return instance.bindContainerEvent(eventName, callback, instance.getInputSelector);
+			},
+
+			_afterEventsRender: function() {
+				var instance = this;
+
+				var events = [];
+
+				while (instance._domEvents.length > 0) {
+					var event = instance._domEvents.shift();
+
+					event.handler.detach();
+
+					events.push(event);
+				}
+
+				events.forEach(
+					function(event) {
+						instance.bindContainerEvent(event.name, event.callback, event.selector);
+					}
+				);
 			},
 
 			_bindEvents: function() {
 				var instance = this;
 
-				instance._eventHandlers.push(
-					instance._bindOnBlur(),
-					instance._bindOnChange()
-				);
-			},
-
-			_bindOnBlur: function() {
-				var instance = this;
-
-				var container = instance.get('container');
-
-				return container.delegate('blur', A.bind('_onInputBlur', instance), instance.getInputSelector());
-			},
-
-			_bindOnChange: function() {
-				var instance = this;
-
-				var container = instance.get('container');
-
-				return container.delegate('change', A.bind('_onInputChange', instance), instance.getInputSelector());
+				instance.bindInputEvent('blur', instance._onInputBlur);
+				instance.bindInputEvent('change', instance._onInputChange);
 			},
 
 			_onInputBlur: function(event) {

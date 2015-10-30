@@ -47,11 +47,6 @@ public class WidgetPortletConfigurationIcon
 	}
 
 	@Override
-	public String getIconCssClass() {
-		return "icon-plus-sign";
-	}
-
-	@Override
 	public String getMessage() {
 		return "add-to-any-website";
 	}

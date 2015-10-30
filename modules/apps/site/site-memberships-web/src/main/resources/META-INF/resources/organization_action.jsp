@@ -33,7 +33,6 @@ Group group = (Group)row.getParameter("group");
 		</portlet:actionURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-signout"
 			message="remove-membership"
 			url="<%= removeURL %>"
 		/>

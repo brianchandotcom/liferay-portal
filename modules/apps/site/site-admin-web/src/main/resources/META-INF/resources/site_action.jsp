@@ -61,7 +61,6 @@ boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, gr
 
 	<c:if test="<%= siteAdministrationURL != null %>">
 		<liferay-ui:icon
-			iconCssClass="icon-cog"
 			message="site-administration"
 			method="get"
 			url="<%= siteAdministrationURL.toString() %>"
@@ -81,7 +80,6 @@ boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, gr
 			</liferay-portlet:renderURL>
 
 			<liferay-ui:icon
-				iconCssClass="icon-search"
 				message="view-child-sites"
 				url="<%= viewSubsitesURL %>"
 			/>
@@ -94,7 +92,6 @@ boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, gr
 			</liferay-portlet:renderURL>
 
 			<liferay-ui:icon
-				iconCssClass="icon-plus"
 				message="add-child-site"
 				method="get"
 				url="<%= addSiteURL.toString() %>"
@@ -112,7 +109,6 @@ boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, gr
 		</liferay-portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-arrow-down"
 			message="export"
 			method="get"
 			url="<%= exportURL.toString() %>"
@@ -128,7 +124,6 @@ boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, gr
 		</liferay-portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-arrow-up"
 			message="import"
 			method="get"
 			url="<%= importURL.toString() %>"
@@ -144,7 +139,6 @@ boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, gr
 			</liferay-portlet:renderURL>
 
 			<liferay-ui:icon
-				iconCssClass="icon-share-alt"
 				message="publish"
 				method="get"
 				url="<%= publishURL.toString() %>"
@@ -155,7 +149,6 @@ boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, gr
 
 	<c:if test="<%= group.getPublicLayoutsPageCount() > 0 %>">
 		<liferay-ui:icon
-			iconCssClass="icon-search"
 			message="go-to-public-pages"
 			target="_blank"
 			url="<%= group.getDisplayURL(themeDisplay, false) %>"
@@ -164,7 +157,6 @@ boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, gr
 
 	<c:if test="<%= group.getPrivateLayoutsPageCount() > 0 %>">
 		<liferay-ui:icon
-			iconCssClass="icon-search"
 			message="go-to-private-pages"
 			target="_blank"
 			url="<%= group.getDisplayURL(themeDisplay, true) %>"
@@ -179,7 +171,6 @@ boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, gr
 		</portlet:actionURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-external-link-sign"
 			message="leave"
 			url="<%= leaveURL %>"
 		/>
@@ -202,7 +193,6 @@ boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, gr
 				</portlet:actionURL>
 
 				<liferay-ui:icon
-					iconCssClass="icon-ok-sign"
 					message="activate"
 					url="<%= activateURL %>"
 				/>

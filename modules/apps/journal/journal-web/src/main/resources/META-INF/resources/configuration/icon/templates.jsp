@@ -21,7 +21,6 @@ String taglibOnClick = renderResponse.getNamespace() + "openTemplatesView()";
 %>
 
 <liferay-ui:icon
-	iconCssClass="icon-list-alt"
 	message="templates"
 	onClick="<%= taglibOnClick %>"
 	url="javascript:;"

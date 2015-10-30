@@ -38,11 +38,6 @@ public class ExportImportPortletConfigurationIcon
 	}
 
 	@Override
-	public String getImage() {
-		return "../aui/download-alt";
-	}
-
-	@Override
 	public String getMessage() {
 		return "export-import";
 	}

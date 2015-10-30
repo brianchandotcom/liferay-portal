@@ -30,11 +30,6 @@ public class EditDefaultsPortletConfigurationIcon
 	}
 
 	@Override
-	public String getImage() {
-		return "../aui/edit-sign";
-	}
-
-	@Override
 	public String getMessage() {
 		return "default-preferences";
 	}

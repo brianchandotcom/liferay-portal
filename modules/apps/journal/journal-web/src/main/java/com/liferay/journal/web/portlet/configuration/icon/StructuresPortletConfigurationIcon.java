@@ -30,11 +30,6 @@ public class StructuresPortletConfigurationIcon
 	}
 
 	@Override
-	public String getImage() {
-		return "../aui/th-large";
-	}
-
-	@Override
 	public String getMessage() {
 		return "structures";
 	}

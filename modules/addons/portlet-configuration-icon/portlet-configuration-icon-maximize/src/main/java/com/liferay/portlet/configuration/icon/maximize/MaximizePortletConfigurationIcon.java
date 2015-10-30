@@ -36,11 +36,6 @@ public class MaximizePortletConfigurationIcon
 	}
 
 	@Override
-	public String getImage() {
-		return "../aui/plus";
-	}
-
-	@Override
 	public String getMessage() {
 		return "maximize";
 	}

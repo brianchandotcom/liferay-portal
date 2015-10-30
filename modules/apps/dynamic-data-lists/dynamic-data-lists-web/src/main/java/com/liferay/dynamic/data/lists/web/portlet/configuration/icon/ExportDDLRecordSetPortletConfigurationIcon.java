@@ -36,11 +36,6 @@ public class ExportDDLRecordSetPortletConfigurationIcon
 	}
 
 	@Override
-	public String getImage() {
-		return "../aui/icon-arrow-down";
-	}
-
-	@Override
 	public String getMessage() {
 		return "export";
 	}

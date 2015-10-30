@@ -31,7 +31,6 @@ AssetCategory category = (AssetCategory)row.getObject();
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-edit"
 			message="edit"
 			url="<%= editCategoryURL %>"
 		/>
@@ -45,7 +44,6 @@ AssetCategory category = (AssetCategory)row.getObject();
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-plus"
 			message="add-subcategory"
 			url="<%= addSubcategoryCategoryURL %>"
 		/>
@@ -59,7 +57,6 @@ AssetCategory category = (AssetCategory)row.getObject();
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-move"
 			message="move"
 			url="<%= moveCategoryURL %>"
 		/>
@@ -75,7 +72,6 @@ AssetCategory category = (AssetCategory)row.getObject();
 		/>
 
 		<liferay-ui:icon
-			iconCssClass="icon-lock"
 			message="permissions"
 			method="get"
 			url="<%= permissionsCategoryURL %>"

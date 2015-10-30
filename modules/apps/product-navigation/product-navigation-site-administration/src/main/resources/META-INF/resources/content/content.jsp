@@ -64,7 +64,6 @@ PanelCategory panelCategory = (PanelCategory)request.getAttribute(ApplicationLis
 
 							<liferay-ui:icon
 								data="<%= data %>"
-								iconCssClass="<%= curSite.getIconCssClass() %>"
 								message="default-scope"
 								url="<%= portletURL.toString() %>"
 							/>
@@ -78,7 +77,6 @@ PanelCategory panelCategory = (PanelCategory)request.getAttribute(ApplicationLis
 
 								<liferay-ui:icon
 									data="<%= data %>"
-									iconCssClass="<%= scopeGroup.getIconCssClass() %>"
 									message="<%= HtmlUtil.escape(curScopeLayout.getName(locale)) %>"
 									url="<%= portletURL.toString() %>"
 								/>

@@ -35,17 +35,6 @@ public class MinimizePortletConfigurationIcon
 	}
 
 	@Override
-	public String getImage() {
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		if (portletDisplay.isStateMin()) {
-			return "../aui/resize-vertical";
-		}
-
-		return "../aui/minus";
-	}
-
-	@Override
 	public String getMessage() {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 

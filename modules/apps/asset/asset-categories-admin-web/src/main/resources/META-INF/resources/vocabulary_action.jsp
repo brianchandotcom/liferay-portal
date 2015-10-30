@@ -30,7 +30,6 @@ AssetVocabulary vocabulary = (AssetVocabulary)row.getObject();
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-edit"
 			message="edit"
 			url="<%= editVocabularyURL %>"
 		/>
@@ -43,7 +42,6 @@ AssetVocabulary vocabulary = (AssetVocabulary)row.getObject();
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-plus"
 			message="add-category"
 			url="<%= addCategoryURL %>"
 		/>
@@ -59,7 +57,6 @@ AssetVocabulary vocabulary = (AssetVocabulary)row.getObject();
 		/>
 
 		<liferay-ui:icon
-			iconCssClass="icon-lock"
 			message="permissions"
 			method="get"
 			url="<%= permissionsVocabularyURL %>"

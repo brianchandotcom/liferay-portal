@@ -32,11 +32,6 @@ public class DDMStructuresPortletConfigurationIcon
 	}
 
 	@Override
-	public String getImage() {
-		return "../aui/th-large";
-	}
-
-	@Override
 	public String getMessage() {
 		return "data-definitions";
 	}

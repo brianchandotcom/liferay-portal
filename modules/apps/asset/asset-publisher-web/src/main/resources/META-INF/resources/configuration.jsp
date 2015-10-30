@@ -137,7 +137,6 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 						</liferay-portlet:actionURL>
 
 						<liferay-ui:icon
-							iconCssClass="<%= group.getIconCssClass() %>"
 							id='<%= "scope" + group.getGroupId() %>'
 							message="<%= group.getScopeDescriptiveName(themeDisplay) %>"
 							method="post"
@@ -171,7 +170,6 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 						<liferay-ui:icon
 							cssClass="highlited scope-selector"
 							data="<%= data %>"
-							iconCssClass="icon-plus"
 							id="selectGroup"
 							message='<%= LanguageUtil.get(request, "pages") + StringPool.TRIPLE_PERIOD %>'
 							method="get"
@@ -220,7 +218,6 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 						<liferay-ui:icon
 							cssClass="highlited scope-selector"
 							data="<%= data %>"
-							iconCssClass="icon-plus"
 							id="selectManageableGroup"
 							message='<%= LanguageUtil.get(request, "other-site") + StringPool.TRIPLE_PERIOD %>'
 							method="get"

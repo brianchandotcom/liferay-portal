@@ -34,7 +34,6 @@ Group group = (Group)row.getParameter("group");
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-signin"
 			message="assign-site-roles"
 			url="<%= assignURL %>"
 		/>
@@ -48,7 +47,6 @@ Group group = (Group)row.getParameter("group");
 		</portlet:actionURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-signout"
 			message="remove-membership"
 			url="<%= removeURL %>"
 		/>

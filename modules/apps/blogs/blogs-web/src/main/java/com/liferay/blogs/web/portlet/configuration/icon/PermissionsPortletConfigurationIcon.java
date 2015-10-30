@@ -36,11 +36,6 @@ public class PermissionsPortletConfigurationIcon
 	}
 
 	@Override
-	public String getImage() {
-		return "../aui/lock";
-	}
-
-	@Override
 	public String getMessage() {
 		return "permissions";
 	}

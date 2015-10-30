@@ -29,11 +29,6 @@ public class EditPortletConfigurationIcon extends BasePortletConfigurationIcon {
 	}
 
 	@Override
-	public String getImage() {
-		return "../aui/edit";
-	}
-
-	@Override
 	public String getMessage() {
 		return "preferences";
 	}

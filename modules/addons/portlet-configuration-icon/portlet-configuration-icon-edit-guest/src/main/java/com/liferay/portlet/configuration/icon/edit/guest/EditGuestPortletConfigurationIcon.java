@@ -30,11 +30,6 @@ public class EditGuestPortletConfigurationIcon
 	}
 
 	@Override
-	public String getImage() {
-		return "../aui/edit-sign";
-	}
-
-	@Override
 	public String getMessage() {
 		return "guest-preferences";
 	}

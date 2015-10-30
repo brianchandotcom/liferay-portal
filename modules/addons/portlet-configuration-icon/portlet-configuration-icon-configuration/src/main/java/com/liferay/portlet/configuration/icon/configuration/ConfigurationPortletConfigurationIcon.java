@@ -35,11 +35,6 @@ public class ConfigurationPortletConfigurationIcon
 	}
 
 	@Override
-	public String getImage() {
-		return "../aui/wrench";
-	}
-
-	@Override
 	public String getMessage() {
 		return "configuration";
 	}

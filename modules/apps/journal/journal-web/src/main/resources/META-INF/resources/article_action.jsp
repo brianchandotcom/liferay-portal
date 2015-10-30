@@ -46,7 +46,6 @@ else {
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-edit"
 			message="edit"
 			url="<%= editURL %>"
 		/>
@@ -61,7 +60,6 @@ else {
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-move"
 			message="move"
 			url="<%= moveURL %>"
 		/>
@@ -77,7 +75,6 @@ else {
 		/>
 
 		<liferay-ui:icon
-			iconCssClass="icon-lock"
 			message="permissions"
 			method="get"
 			url="<%= permissionsURL %>"
@@ -98,7 +95,6 @@ else {
 		%>
 
 		<liferay-ui:icon
-			iconCssClass="icon-search"
 			message="preview"
 			onClick="<%= taglibOnClick %>"
 			url="javascript:;"
@@ -113,7 +109,6 @@ else {
 			</portlet:renderURL>
 
 			<liferay-ui:icon
-				iconCssClass="icon-time"
 				message="view-history"
 				url="<%= viewHistoryURL.toString() %>"
 			/>
@@ -129,7 +124,6 @@ else {
 			</portlet:renderURL>
 
 			<liferay-ui:icon
-				iconCssClass="icon-copy"
 				message="copy"
 				url="<%= copyURL.toString() %>"
 			/>
@@ -144,7 +138,6 @@ else {
 		</portlet:actionURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-time"
 			message="expire"
 			url="<%= expireURL %>"
 		/>

@@ -35,11 +35,6 @@ public class RefreshPortletConfigurationIcon
 	}
 
 	@Override
-	public String getImage() {
-		return "../aui/refresh";
-	}
-
-	@Override
 	public String getMessage() {
 		return "refresh";
 	}

@@ -36,11 +36,6 @@ public class FacebookPortletConfigurationIcon
 	}
 
 	@Override
-	public String getIconCssClass() {
-		return "icon-facebook";
-	}
-
-	@Override
 	public String getMessage() {
 		return "add-to-facebook";
 	}

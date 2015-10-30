@@ -26,18 +26,33 @@ public interface ConfigurationProvider<T> {
 
 	public T getConfiguration(long companyId);
 
+	public T getConfiguration(long companyId, boolean useDefault);
+
 	public T getConfiguration(long companyId, long index);
+
+	public T getConfiguration(long companyId, long index, boolean useDefault);
 
 	public Dictionary<String, Object> getConfigurationProperties(
 		long companyId);
+
+	public Dictionary<String, Object> getConfigurationProperties(
+		long companyId, boolean useDefault);
 
 	public Dictionary<String, Object> getConfigurationProperties(
 		long companyId, long index);
 
+	public Dictionary<String, Object> getConfigurationProperties(
+		long companyId, long index, boolean useDefault);
+
 	public List<T> getConfigurations(long companyId);
+
+	public List<T> getConfigurations(long companyId, boolean useDefault);
 
 	public List<Dictionary<String, Object>> getConfigurationsProperties(
 		long companyId);
+
+	public List<Dictionary<String, Object>> getConfigurationsProperties(
+		long companyId, boolean useDefault);
 
 	public Class<T> getMetatype();
 

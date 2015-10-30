@@ -74,11 +74,7 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 		if (Boolean.valueOf(
 				properties.getProperty(PortalCacheReplicator.REPLICATOR))) {
 
-			if (_clusterEnabled) {
-				return true;
-			}
-
-			return false;
+			return _clusterEnabled;
 		}
 
 		return super.isValidCacheEventListener(properties, usingDefault);

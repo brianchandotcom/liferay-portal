@@ -136,10 +136,10 @@ request.setAttribute("view.jsp-tabs1", tabs1);
 					</c:otherwise>
 				</c:choose>
 
-				<c:if test='<%= !tabs1.equals("my-sites") && Validator.isNotNull(group.getDescription()) %>'>
+				<c:if test='<%= !tabs1.equals("my-sites") && Validator.isNotNull(group.getDescription(locale)) %>'>
 					<br />
 
-					<em><%= HtmlUtil.escape(group.getDescription()) %></em>
+					<em><%= HtmlUtil.escape(group.getDescription(locale)) %></em>
 				</c:if>
 			</liferay-ui:search-container-column-text>
 

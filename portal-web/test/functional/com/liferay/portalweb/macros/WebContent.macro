@@ -1115,7 +1115,7 @@
 	</command>
 
 	<command name="viewAvailableLanguagesPGViaWCD">
-		<execute function="Click" locator1="Translation#ADD_MENULIST_LANGUAGE" />
+		<execute function="Click" locator1="Translation#ADD" />
 
 		<var name="key_localizedLanguage" value="${webContentTranslationLanguage1}" />
 

@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -96,9 +97,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -173,15 +174,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		throws Exception {
 
 		List<Portlet> portlets = _portletLocalService.getPortlets(companyId);
+		List<Tuple> rankedPortlets = new ArrayList<>();
 
-		Iterator<Portlet> itr = portlets.iterator();
-
-		while (itr.hasNext()) {
-			Portlet portlet = itr.next();
-
+		for (Portlet portlet : portlets) {
 			if (!portlet.isActive()) {
-				itr.remove();
-
 				continue;
 			}
 
@@ -193,11 +189,30 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				(excludeDataAlwaysStaged &&
 				 portletDataHandler.isDataAlwaysStaged())) {
 
-				itr.remove();
+				continue;
 			}
+
+			rankedPortlets.add(
+				new Tuple(portletDataHandler.getRank(), portlet));
 		}
 
-		return portlets;
+		Collections.sort(rankedPortlets, new Comparator<Tuple>() {
+			@Override
+			public int compare(Tuple tuple1, Tuple tuple2) {
+				int rank1 = (int)tuple1.getObject(0);
+				int rank2 = (int)tuple2.getObject(0);
+
+				return rank1 - rank2;
+			}
+		});
+
+		List<Portlet> dataSiteLevelPortlets = new ArrayList<>();
+
+		for (Tuple tuple : rankedPortlets) {
+			dataSiteLevelPortlets.add((Portlet)tuple.getObject(1));
+		}
+
+		return dataSiteLevelPortlets;
 	}
 
 	/**

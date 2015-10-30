@@ -14,6 +14,7 @@
 
 package com.liferay.portal.xuggler;
 
+import com.liferay.portal.XugglerInstallException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
@@ -41,11 +42,7 @@ public class XugglerImpl implements Xuggler {
 		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
 
 		if (!(classLoader instanceof URLClassLoader)) {
-			_log.error(
-				"Unable to install JAR because the portal class loader is " +
-					"not an instance of URLClassLoader");
-
-			return;
+			throw new XugglerInstallException.MuseBeURLClassLoader();
 		}
 
 		try {
@@ -57,9 +54,7 @@ public class XugglerImpl implements Xuggler {
 			_isNativeLibraryCopied = true;
 		}
 		catch (Exception e) {
-			_log.error("Unable to install jar " + name, e);
-
-			throw e;
+			throw new XugglerInstallException.MustInstallJar(name, e);
 		}
 	}
 

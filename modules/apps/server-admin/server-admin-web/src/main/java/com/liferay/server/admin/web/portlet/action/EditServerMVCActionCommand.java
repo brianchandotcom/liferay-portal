@@ -15,6 +15,7 @@
 package com.liferay.server.admin.web.portlet.action;
 
 import com.liferay.mail.service.MailService;
+import com.liferay.portal.XugglerInstallException;
 import com.liferay.portal.captcha.CaptchaImpl;
 import com.liferay.portal.captcha.recaptcha.ReCaptchaImpl;
 import com.liferay.portal.captcha.simplecaptcha.SimpleCaptchaImpl;
@@ -186,7 +187,14 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			gc();
 		}
 		else if (cmd.equals("installXuggler")) {
-			installXuggler(actionRequest, actionResponse);
+			try {
+				installXuggler(actionRequest, actionResponse);
+			}
+			catch (XugglerInstallException xie) {
+				SessionErrors.add(
+					actionRequest, XugglerInstallException.class.getName(),
+					xie);
+			}
 		}
 		else if (cmd.equals("reindex")) {
 			reindex(actionRequest);

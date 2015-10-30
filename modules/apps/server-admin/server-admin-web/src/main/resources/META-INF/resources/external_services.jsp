@@ -48,6 +48,24 @@
 		</liferay-ui:panel>
 
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="adminXugglerPanel" persistState="<%= true %>" title="enabling-xuggler-provides-video-conversion-functionality">
+			<liferay-ui:error exception="<%= XugglerInstallException.class %>">
+
+				<%
+					XugglerInstallException xie = (XugglerInstallException)errorException;
+
+					StringBundler sb = new StringBundler();
+
+					sb.append(LanguageUtil.get(locale, "an-unexpected-error-occurred-while-installing-xuggler"));
+					sb.append(StringPool.SPACE);
+					sb.append(StringPool.COLON);
+					sb.append(StringPool.SPACE);
+					sb.append(xie.getMessage());
+				%>
+
+				<liferay-ui:message key="<%= sb.toString() %>" localizeKey="<%= false %>" />
+
+			</liferay-ui:error>
+
 			<c:choose>
 				<c:when test="<%= XugglerUtil.isNativeLibraryInstalled() %>">
 					<div class="alert alert-info">

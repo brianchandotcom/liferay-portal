@@ -22,9 +22,15 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
+						var labelField = instance.getField('label');
+
 						instance._eventHandlers.push(
-							instance.after('render', instance._afterSettingsFormRender)
+							instance.after('render', instance._afterSettingsFormRender),
+							labelField.on('keyChange', A.bind('_onLabelFieldKeyChange', instance)),
+							labelField.on(A.bind('_onLabelFieldNormalizeKey', instance), labelField, 'normalizeKey')
 						);
+
+						instance._createModeToggler();
 					},
 
 					submit: function(callback) {
@@ -77,7 +83,7 @@ AUI.add(
 
 						container.append(TPL_SUBMIT_BUTTON);
 
-						instance._renderModeToggler();
+						instance._syncModeToggler();
 
 						var formName = A.guid();
 
@@ -97,6 +103,48 @@ AUI.add(
 						instance._eventHandlers.push(
 							container.on('submit', A.bind('_onDOMSubmitForm', instance))
 						);
+
+						var labelField = instance.getField('label');
+						var nameField = instance.getField('name');
+
+						labelField.set('key', nameField.getValue());
+					},
+
+					_createModeToggler: function() {
+						var instance = this;
+
+						var modeToggler = A.Node.create('<a class="settings-toggler" href="javascript:;"></a>');
+
+						modeToggler.on('click', A.bind('_onClickModeToggler', instance));
+
+						instance.modeToggler = modeToggler;
+					},
+
+					_generateFieldName: function(key) {
+						var instance = this;
+
+						var counter = 0;
+
+						var field = instance.get('field');
+
+						var builder = field.get('builder');
+
+						var existingField;
+
+						var name = key;
+
+						do {
+							if (counter > 0) {
+								name = key + counter;
+							}
+
+							existingField = builder.getField(name);
+
+							counter++;
+						}
+						while (existingField !== undefined && existingField !== field);
+
+						return name;
 					},
 
 					_getModalStdModeNode: function(mode) {
@@ -124,15 +172,15 @@ AUI.add(
 
 						var builder = field.get('builder');
 
-						var nameSettingsField = instance.getField('name');
+						var nameField = instance.getField('name');
 
-						var sameNameField = builder.getField(nameSettingsField.getValue());
+						var sameNameField = builder.getField(nameField.getValue());
 
 						if (!!sameNameField && sameNameField !== field) {
-							nameSettingsField.showErrorMessage(Liferay.Language.get('field-name-is-already-in-use'));
-							nameSettingsField.showValidationStatus();
+							nameField.showErrorMessage(Liferay.Language.get('field-name-is-already-in-use'));
+							nameField.showValidationStatus();
 
-							nameSettingsField.focus();
+							nameField.focus();
 
 							hasErrors = true;
 						}
@@ -140,12 +188,15 @@ AUI.add(
 						return hasErrors;
 					},
 
-					_onClickModeToggler: function() {
+					_onClickModeToggler: function(event) {
 						var instance = this;
 
 						var advancedSettingsNode = instance.getPageNode(2);
 
+						var basicSettingsNode = instance.getPageNode(1);
+
 						advancedSettingsNode.toggleClass('active');
+						basicSettingsNode.toggleClass('active');
 
 						var field = instance.get('field');
 
@@ -164,20 +215,18 @@ AUI.add(
 						instance.submit();
 					},
 
-					_renderModeToggler: function() {
+					_onLabelFieldKeyChange: function(event) {
 						var instance = this;
 
-						var basicSettingsNode = instance.getPageNode(1);
+						var nameField = instance.getField('name');
 
-						var modeToggler = A.Node.create('<a class="settings-toggler" href="javascript:;"></a>');
+						nameField.setValue(event.newVal);
+					},
 
-						modeToggler.on('click', A.bind('_onClickModeToggler', instance));
+					_onLabelFieldNormalizeKey: function(key) {
+						var instance = this;
 
-						basicSettingsNode.insert(modeToggler, 'after');
-
-						instance.modeToggler = modeToggler;
-
-						instance._syncModeToggler();
+						return new A.Do.AlterArgs(null, [instance._generateFieldName(key)]);
 					},
 
 					_syncModeToggler: function() {
@@ -188,10 +237,18 @@ AUI.add(
 						var modeToggler = instance.modeToggler;
 
 						if (advancedSettingsNode.hasClass('active')) {
+							modeToggler.addClass('active');
 							modeToggler.html(Liferay.Language.get('hide-options'));
+
+							advancedSettingsNode.insert(modeToggler, 'before');
 						}
 						else {
+							modeToggler.removeClass('active');
 							modeToggler.html(Liferay.Language.get('show-more-options'));
+
+							var bodyNode = instance._getModalStdModeNode(A.WidgetStdMod.BODY);
+
+							bodyNode.insert(modeToggler, 'after');
 						}
 					},
 

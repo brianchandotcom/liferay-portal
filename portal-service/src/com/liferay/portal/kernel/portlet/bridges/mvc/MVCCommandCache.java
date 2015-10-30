@@ -222,7 +222,12 @@ public class MVCCommandCache {
 
 				String mvcCommandClassName = ClassUtil.getClassName(mvcCommand);
 
-				_mvcCommandKeys.remove(mvcCommandClassName);
+				List<String> mvcCommandKeys = _mvcCommandKeys.remove(
+					mvcCommandClassName);
+
+				for (String mvcCommandKey : mvcCommandKeys) {
+					_mvcCommandCache.remove(mvcCommandKey);
+				}
 			}
 		}
 

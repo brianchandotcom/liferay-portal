@@ -547,12 +547,8 @@ if ((folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (folderId != roo
 			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" paginate="<%= false %>" resultRowSplitter="<%= new DLResultRowSplitter() %>" searchContainer="<%= dlSearchContainer %>" />
+		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" resultRowSplitter="<%= new DLResultRowSplitter() %>" searchContainer="<%= dlSearchContainer %>" />
 	</liferay-ui:search-container>
-</div>
-
-<div class="document-entries-pagination">
-	<liferay-ui:search-paginator searchContainer="<%= dlSearchContainer %>" />
 </div>
 
 <%!

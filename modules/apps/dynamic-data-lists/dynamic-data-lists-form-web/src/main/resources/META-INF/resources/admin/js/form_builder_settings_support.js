@@ -78,7 +78,15 @@ AUI.add(
 
 				var builder = instance.get('builder');
 
-				return builder._fieldSettingsModal;
+				var settingsModal = builder._fieldSettingsModal;
+
+				if (!instance._settingsModalEventHandlers) {
+					instance._settingsModalEventHandlers = [
+						settingsModal._modal.on('xyChange', instance._onSettingsModalXYChange)
+					];
+				}
+
+				return settingsModal;
 			},
 
 			renderSettingsPanel: function() {
@@ -86,17 +94,17 @@ AUI.add(
 
 				var settingsForm = instance.get('settingsForm');
 
-				settingsForm.render();
-
 				instance._updateSettingsFormValues();
+
+				settingsForm.render();
 
 				var settingsModal = instance.getSettingsModal();
 
 				settingsModal._modal.get('boundingBox').addClass(CSS_FIELD_SETTINGS_MODAL);
 
-				var builder = instance.get('builder');
+				var portletNode = A.one('#p_p_id' + instance.get('portletNamespace'));
 
-				settingsModal._modal.render(builder.get('boundingBox'));
+				settingsModal._modal.set('centered', portletNode);
 			},
 
 			saveSettings: function() {
@@ -135,6 +143,14 @@ AUI.add(
 				settingsForm.submit(callback);
 
 				return false;
+			},
+
+			_onSettingsModalXYChange: function(event) {
+				var xy = event.newVal;
+
+				if (xy[1] < 90) {
+					xy[1] = 90;
+				}
 			},
 
 			_renderFormBuilderField: function() {

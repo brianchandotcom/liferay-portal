@@ -18,31 +18,14 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.workflow.kaleo.definition.ExecutionType;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
- * @author Michael C. Han
+ * @author Leonardo Barros
  */
-@Component(immediate = true, service = Object.class)
-public class ActionExecutorUtil {
+public interface ActionExecutorManager {
 
-	public static void executeKaleoActions(
+	public void executeKaleoActions(
 			String kaleoClassName, long kaleoClassPK,
 			ExecutionType executionType, ExecutionContext executionContext)
-		throws PortalException {
-
-		_actionExecutorManager.executeKaleoActions(
-			kaleoClassName, kaleoClassPK, executionType, executionContext);
-	}
-
-	@Reference(unbind = "-")
-	protected void setActionExecutorManager(
-		ActionExecutorManager actionExecutorManager) {
-
-		_actionExecutorManager = actionExecutorManager;
-	}
-
-	private static ActionExecutorManager _actionExecutorManager;
+		throws PortalException;
 
 }

@@ -21,10 +21,14 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
 
 import java.util.Locale;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -54,6 +58,15 @@ public abstract class BasePanelApp implements PanelApp {
 	}
 
 	@Override
+	public PortletURL getPortletURL(HttpServletRequest request)
+		throws PortalException {
+
+		return PortalUtil.getControlPanelPortletURL(
+			request, getGroup(request), getPortletId(), 0,
+			PortletRequest.RENDER_PHASE);
+	}
+
+	@Override
 	public boolean hasAccessPermission(
 			PermissionChecker permissionChecker, Group group)
 		throws PortalException {
@@ -72,6 +85,10 @@ public abstract class BasePanelApp implements PanelApp {
 	@Override
 	public void setPortlet(Portlet portlet) {
 		_portlet = portlet;
+	}
+
+	protected Group getGroup(HttpServletRequest request) {
+		return null;
 	}
 
 	private Portlet _portlet;

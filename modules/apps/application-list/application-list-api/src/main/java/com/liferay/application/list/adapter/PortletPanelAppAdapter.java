@@ -91,16 +91,6 @@ public class PortletPanelAppAdapter extends BasePanelApp {
 	}
 
 	@Override
-	public PortletURL getPortletURL(HttpServletRequest request) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return PortalUtil.getControlPanelPortletURL(
-			request, getPortletId(), themeDisplay.getPlid(),
-			PortletRequest.RENDER_PHASE);
-	}
-
-	@Override
 	public boolean hasAccessPermission(
 			PermissionChecker permissionChecker, Group group)
 		throws PortalException {

@@ -32,15 +32,6 @@ import javax.servlet.http.HttpServletRequest;
 public abstract class BaseControlPanelEntryPanelApp extends BasePanelApp {
 
 	@Override
-	public PortletURL getPortletURL(HttpServletRequest request)
-		throws PortalException {
-
-		return PortalUtil.getControlPanelPortletURL(
-			request, getGroup(request), getPortletId(), 0,
-			PortletRequest.RENDER_PHASE);
-	}
-
-	@Override
 	public boolean hasAccessPermission(
 			PermissionChecker permissionChecker, Group group)
 		throws PortalException {
@@ -71,10 +62,6 @@ public abstract class BaseControlPanelEntryPanelApp extends BasePanelApp {
 		}
 
 		return portlet.getControlPanelEntryInstance();
-	}
-
-	protected Group getGroup(HttpServletRequest request) {
-		return null;
 	}
 
 }

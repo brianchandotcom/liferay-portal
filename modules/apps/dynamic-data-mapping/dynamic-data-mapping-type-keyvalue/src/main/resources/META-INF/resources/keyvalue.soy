@@ -1,0 +1,52 @@
+{namespace ddm}
+
+/**
+ * Prints the DDM form text field.
+ *
+ * @param dir
+ * @param editing
+ * @param key
+ * @param label
+ * @param name
+ * @param placeholder
+ * @param required
+ * @param showLabel
+ * @param strings
+ * @param tip
+ * @param value
+ * @param visible
+ */
+{template .keyvalue}
+	<div class="form-group{$visible ? '' : ' hide'} liferay-ddm-form-field-keyvalue liferay-ddm-form-field-text" data-fieldname="{$name}">
+		{if $showLabel}
+			<label class="control-label" for="{$name}">
+				{$label}
+
+				{if $required}
+					<b>*</b>
+				{/if}
+			</label>
+		{/if}
+
+		<div class="input-group-container {if $tip}input-group-default{/if}">
+			<input class="field form-control" dir="{$dir}" id="{$name}" name="{$name}" placeholder="{$placeholder}" type="text" value="{$value}" />
+
+			{if $tip}
+				<span class="input-group-addon">
+					<span class="input-group-addon-content">
+						<a class="help-icon help-icon-default icon-monospaced icon-question" data-original-title="{$tip}" data-toggle="popover" href="javascript:;" title="{$tip}"></a>
+					</span>
+				</span>
+			{/if}
+		</div>
+
+		<div class="{$editing ? 'active ' : ''}keyvalue-editor">
+			<label class="control-label keyvalue-label">{$strings.keyLabel}:</label>
+			<span class="keyvalue-output">{$key}</span>
+			<input class="keyvalue-input" placeholder="{$key}" />
+
+			<a class="keyvalue-done" href="javascript:;">{$strings.done}</a>
+			<a class="keyvalue-cancel" href="javascript:;">{$strings.cancel}</a>
+		</div>
+	</div>
+{/template}

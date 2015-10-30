@@ -460,8 +460,6 @@
 	</command>
 
 	<command name="ResubmitTaskByDetails" priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 

@@ -822,9 +822,9 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewOrderedFieldPG">
-			<var name="firstAsset" value="Web Content3 Title" />
+			<var name="firstAsset" value="Web Content2 Title" />
 			<var name="secondAsset" value="Web Content1 Title" />
-			<var name="thirdAsset" value="Web Content2 Title" />
+			<var name="thirdAsset" value="Web Content3 Title" />
 		</execute>
 
 		<execute macro="Portlet#addPG">

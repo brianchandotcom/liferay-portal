@@ -80,7 +80,8 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE);
 
 		if (ExportImportThreadLocal.isStagingInProcess() &&
-			updateLastPublishDate) {
+			updateLastPublishDate &&
+			(stagedModel instanceof StagedGroupedModel)) {
 
 			ExportImportProcessCallbackRegistryUtil.registerCallback(
 				new UpdateStagedModelLastPublishDateCallable(
@@ -168,14 +169,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 			_companyId = stagedModel.getCompanyId();
 			_dateRange = dateRange;
-
-			if (stagedModel instanceof StagedGroupedModel) {
-				_groupId = ((StagedGroupedModel)stagedModel).getGroupId();
-			}
-			else {
-				_groupId = 0L;
-			}
-
+			_groupId = ((StagedGroupedModel)stagedModel).getGroupId();
 			_uuid = stagedModel.getUuid();
 		}
 
@@ -188,22 +182,9 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 				return null;
 			}
 
-			T stagedModel = null;
-
-			if (_groupId > 0) {
-				stagedModel =
-					stagedModelRepository.fetchStagedModelByUuidAndGroupId(
-						_uuid, _groupId);
-			}
-			else {
-				List<T> stagedModels =
-					stagedModelRepository.fetchStagedModelsByUuidAndCompanyId(
-						_uuid, _companyId);
-
-				if (!stagedModels.isEmpty()) {
-					stagedModel = stagedModels.get(0);
-				}
-			}
+			T stagedModel =
+				stagedModelRepository.fetchStagedModelByUuidAndGroupId(
+					_uuid, _groupId);
 
 			if (stagedModel == null) {
 				return null;
@@ -216,7 +197,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			}
 
 			ExportImportDateUtil.updateLastPublishDate(
-				stagedModel, _dateRange, endDate);
+				(StagedGroupedModel)stagedModel, _dateRange, endDate);
 
 			stagedModelRepository.saveStagedModel(stagedModel);
 

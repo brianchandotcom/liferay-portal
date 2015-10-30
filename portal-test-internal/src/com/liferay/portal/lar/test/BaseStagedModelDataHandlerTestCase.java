@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
@@ -160,10 +161,11 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
 			new HashMap<>();
 
-		StagedModel stagedModel = addStagedModel(
-			stagingGroup, dependentStagedModelsMap);
+		StagedGroupedModel stagedGroupedModel =
+			(StagedGroupedModel)addStagedModel(
+				stagingGroup, dependentStagedModelsMap);
 
-		Assert.assertNull(stagedModel.getLastPublishDate());
+		Assert.assertNull(stagedGroupedModel.getLastPublishDate());
 
 		initExport();
 
@@ -180,18 +182,19 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 			ExportImportThreadLocal.setPortletStagingInProcess(true);
 
 			StagedModelDataHandlerUtil.exportStagedModel(
-				portletDataContext, stagedModel);
+				portletDataContext, stagedGroupedModel);
 		}
 		finally {
 			ExportImportThreadLocal.setPortletStagingInProcess(false);
 		}
 
 		Assert.assertEquals(
-			portletDataContext.getEndDate(), stagedModel.getLastPublishDate());
+			portletDataContext.getEndDate(),
+			stagedGroupedModel.getLastPublishDate());
 
 		// Do not update last publish date
 
-		Date originalLastPublishDate = stagedModel.getLastPublishDate();
+		Date originalLastPublishDate = stagedGroupedModel.getLastPublishDate();
 
 		parameterMap.put(
 			PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE,
@@ -201,14 +204,14 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 			ExportImportThreadLocal.setPortletStagingInProcess(true);
 
 			StagedModelDataHandlerUtil.exportStagedModel(
-				portletDataContext, stagedModel);
+				portletDataContext, stagedGroupedModel);
 		}
 		finally {
 			ExportImportThreadLocal.setPortletStagingInProcess(false);
 		}
 
 		Assert.assertEquals(
-			originalLastPublishDate, stagedModel.getLastPublishDate());
+			originalLastPublishDate, stagedGroupedModel.getLastPublishDate());
 	}
 
 	@Test

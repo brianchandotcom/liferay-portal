@@ -14,7 +14,7 @@
 
 package com.liferay.layout.set.prototype.web.application.list;
 
-import com.liferay.application.list.BaseControlPanelEntryPanelApp;
+import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.layout.set.prototype.web.constants.LayoutSetPrototypePortletKeys;
@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = PanelApp.class
 )
-public class SiteTemplatesPanelApp extends BaseControlPanelEntryPanelApp {
+public class SiteTemplatesPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {

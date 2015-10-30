@@ -18,9 +18,6 @@ import java.io.File;
 
 import java.net.URL;
 
-import java.util.Iterator;
-
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.junit.Assert;
@@ -147,7 +144,8 @@ public class JenkinsResultsParserUtilTest extends BaseMessageUtilTestCase {
 		JSONObject actualJSONObject = JenkinsResultsParserUtil.toJSONObject(
 			JenkinsResultsParserUtil.getLocalURL(toURLString(jsonFile)));
 
-		Assert.assertTrue(_equals(expectedJSONObject, actualJSONObject));
+		Assert.assertEquals(
+			expectedJSONObject.toString(), actualJSONObject.toString());
 	}
 
 	protected void assertToStringSample(File jsonFile) throws Exception {
@@ -201,88 +199,6 @@ public class JenkinsResultsParserUtilTest extends BaseMessageUtilTestCase {
 
 		// Do nothing
 
-	}
-
-	private static boolean _equals(JSONArray jsonArray1, JSONArray jsonArray2)
-		throws Exception {
-
-		if (((jsonArray1 == null) && (jsonArray2 != null)) ||
-			((jsonArray1 != null) && (jsonArray2 == null))) {
-				return false;
-		}
-
-		if (jsonArray1.length() != jsonArray2.length()) {
-			return false;
-		}
-
-		for (int i = 0; i<jsonArray1.length(); i++) {
-			Object obj1Child = jsonArray1.get(i);
-			Object obj2Child = jsonArray2.get(i);
-
-			if (!_equalsJSONChildObjectHandler(obj1Child, obj2Child)) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	private static boolean _equals(JSONObject jsonObj1, JSONObject jsonObj2)
-		throws Exception {
-
-		if (((jsonObj1 == null) && (jsonObj2 != null)) ||
-			((jsonObj1 != null) && (jsonObj2 == null))) {
-				return false;
-		}
-
-		if (jsonObj1.length() != jsonObj2.length()) {
-			return false;
-		}
-
-		Iterator<?> iterator = jsonObj1.keys();
-
-		while (iterator.hasNext()) {
-			String key = (String)iterator.next();
-
-			Object obj1Child = jsonObj1.get(key);
-			Object obj2Child = jsonObj2.get(key);
-
-			if (!_equalsJSONChildObjectHandler(obj1Child, obj2Child)) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	private static boolean _equalsJSONChildObjectHandler(
-		Object obj1, Object obj2)
-			throws
-				Exception {
-
-		if ((obj1 == null) && (obj2 == null)) {
-			return true;
-		}
-
-		if (((obj1 == null) && (obj2 != null)) ||
-			((obj1 != null) && (obj2 == null))) {
-
-			return false;
-		}
-
-		if (obj1.getClass() != obj2.getClass()) {
-			return false;
-		}
-
-		if (obj1 instanceof JSONObject) {
-			return _equals((JSONObject)obj1, (JSONObject)obj2);
-		}
-
-		if (obj1 instanceof JSONArray) {
-			return _equals((JSONArray)obj1, (JSONArray)obj2);
-		}
-
-		return obj1.equals(obj2);
 	}
 
 }

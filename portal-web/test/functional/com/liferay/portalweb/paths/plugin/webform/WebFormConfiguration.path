@@ -81,6 +81,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SETUP_FORM_FIELDS_PARAGRAPH_FIELD</td>
+	<td>//div[contains(@class,'field-row') and contains(.,'${key_wfNewFieldName}')]//textarea[contains(@id,'fieldParagraph')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SETUP_FORM_FIELDS_ADD_ROW_BUTTON</td>
 	<td>//div[@class='field-title' and contains(.,'${key_wfPreviousFieldName}')]/../../..//button[contains(@class,'add-row')]</td>
 	<td></td>

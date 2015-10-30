@@ -1623,7 +1623,9 @@
 	</command>
 
 	<command name="viewRSS">
-		<execute function="Open" locator1="http://localhost:8080/web/guest/blogs-page/-/blogs/rss" />
+		<execute function="AssertClick" locator1="Link#RSS" value1="RSS" />
+
+		<execute function="SelectWindow" locator1="title=Liferay" />
 
 		<execute function="AssertTextEquals" locator1="Blogs#RSS_FEED_TITLE" value1="Liferay" />
 		<execute function="AssertTextEquals" locator1="Blogs#RSS_FEED_SUBTITLE" value1="Liferay" />

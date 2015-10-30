@@ -490,6 +490,74 @@
 		<execute macro="WebForm#sendPG" />
 	</command>
 
+	<command name="EditWebFormAndViewParagraphField" priority="4">
+		<execute macro="WebForm#viewPG">
+			<var name="wfInformationDescription" value="Your input is valuable to us. Please send us your suggestions." />
+			<var name="wfInformationTitle" value="Suggestions" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WebFormPortlet#configureSetupFormFieldsPG" />
+
+		<execute macro="WebFormPortlet#deleteEditableField">
+			<var name="wfFieldName" value="Name" />
+		</execute>
+
+		<execute macro="WebFormPortlet#deleteEditableField">
+			<var name="wfFieldName" value="Rating" />
+		</execute>
+
+		<execute macro="WebFormPortlet#deleteEditableField">
+			<var name="wfFieldName" value="Comments" />
+		</execute>
+
+		<execute macro="WebFormPortlet#editField">
+			<var name="wfFieldName" value="New Item" />
+			<var name="wfFieldType" value="Paragraph" />
+			<var name="wfNewFieldName" value="Test Paragraph Field" />
+		</execute>
+
+		<execute macro="WebFormPortlet#editParagraphField">
+			<var name="wfNewFieldName" value="Test Paragraph Field" />
+			<var name="wfParagraphFieldText" value="Hello Liferay. This is the Test Paragraph Field." />
+		</execute>
+
+		<execute macro="WebFormPortlet#addField">
+			<var name="wfFieldType" value="Text" />
+			<var name="wfNewFieldName" value="Test Text Field" />
+			<var name="wfPreviousFieldName" value="Test Paragraph Field" />
+		</execute>
+
+		<execute macro="WebFormPortlet#saveConfiguration" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WebForm#viewPG">
+			<var name="wfInformationDescription" value="Your input is valuable to us. Please send us your suggestions." />
+			<var name="wfInformationTitle" value="Suggestions" />
+		</execute>
+
+		<execute macro="WebForm#viewFormFieldParagraph">
+			<var name="wfParagraphFieldText" value="Hello Liferay. This is the Test Paragraph Field." />
+		</execute>
+
+		<execute macro="WebForm#viewFormFieldText">
+			<var name="wfFieldName" value="Test Text Field" />
+		</execute>
+
+		<execute macro="WebForm#populateFieldText">
+			<var name="wfFieldName" value="Test Text Field" />
+			<var name="wfFieldValue" value="Welcome to Liferay." />
+		</execute>
+
+		<execute macro="WebForm#sendPG" />
+	</command>
+
 	<command name="EditWebFormAndViewRequiredCheckBoxField" priority="3">
 		<execute macro="WebForm#viewPG">
 			<var name="wfInformationDescription" value="Your input is valuable to us. Please send us your suggestions." />

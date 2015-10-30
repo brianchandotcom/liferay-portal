@@ -275,11 +275,14 @@
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
+		<execute macro="BlogsNavigator#gotoEntryPG">
+			<var name="entryContent" value="Blogs Entry1 Content" />
+			<var name="entryTitle" value="Blogs Entry1 Title" />
+		</execute>
+
 		<execute macro="BlogsEntryComment#viewPG">
 			<var name="commentCount" value="1" />
 			<var name="entryComment" value="[...] Blogs Entry2 Content [...] Read More" />
-			<var name="entryContent" value="Blogs Entry1 Content" />
-			<var name="entryTitle" value="Blogs Entry1 Title" />
 			<var name="userFullName" value="Test Test" />
 		</execute>
 
@@ -412,8 +415,6 @@
 
 		<execute macro="BlogsEntryComment#viewPG">
 			<var name="entryComment" value="[...] Blogs Entry6 Content [...] Read More" />
-			<var name="entryContent" value="Blogs Entry5 Content" />
-			<var name="entryTitle" value="Blogs Entry5 Title" />
 			<var name="userFullName" value="Test Test" />
 		</execute>
 
@@ -471,11 +472,14 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
+		<execute macro="BlogsNavigator#gotoEntryPG">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
 		<execute macro="BlogsEntryComment#viewPG">
 			<var name="commentCount" value="1" />
 			<var name="entryComment" value="Blogs Entry Comment" />
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
 			<var name="userFullName" value="Test Test" />
 		</execute>
 
@@ -525,8 +529,8 @@
 		</execute>
 
 		<execute macro="BlogsEntryComment#viewPG">
+			<var name="commentCount" value="1" />
 			<var name="entryComment" value="Blogs Entry Comment" />
-			<var name="entryTitle" value="Blogs Entry Title" />
 			<var name="userFullName" value="Test Test" />
 		</execute>
 	</command>
@@ -687,9 +691,8 @@
 			<var name="virtualHostsURL" value="http://www.able.com:8080" />
 		</execute>
 
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Site Settings" />
-			<var name="virtualHostsURL" value="http://www.able.com:8080" />
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Site Settings" />
 		</execute>
 
 		<execute macro="Site#addVirtualHostsURLCP">
@@ -697,9 +700,8 @@
 			<var name="privateVirtualHosts" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
-			<var name="virtualHostsURL" value="http://www.able.com:8080" />
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
@@ -714,12 +716,11 @@
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Public Blogs Page" />
-			<var name="siteName" value="http://www.able.com:8080" />
-			<var name="siteURL" value="true" />
-			<var name="virtualHostsURL" value="http://www.able.com:8080" />
-		</execute>
+		<execute function="Click" locator1="ProductMenu#BACK_ARROW" />
+
+		<var name="key_site" value="www.able.com" />
+
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="ProductMenu#PRIVATE_SITE_LINK" value1="Private" />
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Blogs" />
@@ -748,12 +749,11 @@
 			<var name="virtualHostsURL" value="http://www.baker.com:8080" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Private Blogs Page" />
-			<var name="siteName" value="http://www.baker.com:8080" />
-			<var name="siteURL" value="true" />
-			<var name="virtualHostsURL" value="http://www.baker.com:8080" />
-		</execute>
+		<execute function="Click" locator1="ProductMenu#BACK_ARROW" />
+
+		<var name="key_site" value="www.able.com" />
+
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="ProductMenu#PRIVATE_SITE_LINK" value1="Private" />
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Blogs" />
@@ -768,10 +768,6 @@
 			<var name="entryContent" value="Blogs Entry2 Content" />
 			<var name="entryTitle"><![CDATA[Blogs Entry Title `~!@#$%^&*(){}[],.<>/?|]]></var>
 		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginPG" />
 	</command>
 
 	<command name="ViewBlogsEntryAsPublishedViaAP" priority="3">
@@ -804,7 +800,6 @@
 		<execute macro="BlogsEntry#viewEntryViaAPPG">
 			<var name="assetTitle" value="Blogs Entry Title" />
 			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
@@ -812,15 +807,20 @@
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
-		<execute macro="Blogs#editEntryAndSaveDraftPG">
+		<execute macro="BlogsNavigator#gotoEditPG">
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="BlogsEntry#editEntryContent">
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryContentEdit" value="Blogs Entry Content Edit" />
-			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
+			<var name="entrySubtitle" value="" />
 			<var name="entrySubtitleEdit" value="Blogs Entry Subtitle Edit" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 			<var name="entryTitleEdit" value="Blogs Entry Title Edit" />
-			<var name="saveAsDraft" value="true" />
 		</execute>
+
+		<execute macro="BlogsEntry#saveAsDraft" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Asset Publisher Page" />

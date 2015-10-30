@@ -51,21 +51,19 @@ AUI.add(
 			_afterEventsRender: function() {
 				var instance = this;
 
-				var events = [];
+				var events = instance._domEvents;
 
-				while (instance._domEvents.length > 0) {
-					var event = instance._domEvents.shift();
+				instance._domEvents = [];
+
+				var length = events.length;
+
+				while (length--) {
+					var event = events[length];
 
 					event.handler.detach();
 
-					events.push(event);
+					instance.bindContainerEvent(event.name, event.callback, event.selector);
 				}
-
-				events.forEach(
-					function(event) {
-						instance.bindContainerEvent(event.name, event.callback, event.selector);
-					}
-				);
 			},
 
 			_bindEvents: function() {

@@ -122,17 +122,8 @@
 		}
 	}
 
-	.document-container, .document-entries-pagination {
+	.document-container {
 		clear: both;
-	}
-
-	.document-entries-pagination {
-		margin: 10px 0;
-		text-align: center;
-
-		.pagination-content {
-			margin: 0;
-		}
 	}
 
 	.folder.error:hover {

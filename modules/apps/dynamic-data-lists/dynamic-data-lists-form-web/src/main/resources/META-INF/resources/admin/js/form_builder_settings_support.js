@@ -104,11 +104,10 @@ AUI.add(
 
 				settingsModalBoundingBox.addClass(CSS_FIELD_SETTINGS_MODAL);
 
-				var settingsModalFooter = settingsModal._modal.getToolbar('footer')
+				var settingsModalToolbar = settingsModal._modal.getToolbar('footer');
 
-				settingsModalFooter.item(0).set('cssClass', 'btn-lg btn-primary');
-
-				settingsModalFooter.item(1).set('cssClass', 'btn-lg btn-link');
+				settingsModalToolbar.item(0).set('cssClass', 'btn-lg btn-primary');
+				settingsModalToolbar.item(1).set('cssClass', 'btn-lg btn-link');
 
 				var portletNode = A.one('#p_p_id' + instance.get('portletNamespace'));
 

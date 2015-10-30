@@ -18,6 +18,12 @@
 
 <%
 PortletURL displayStyleURL = renderResponse.createRenderURL();
+
+int delta = ParamUtil.getInteger(request, "delta");
+
+if (delta > 0) {
+	displayStyleURL.setParameter("delta", String.valueOf(delta));
+}
 %>
 
 <liferay-frontend:management-bar-display-buttons

@@ -438,7 +438,8 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 
 				sb.append(valueParts[0]);
 				sb.append(CharPool.EQUAL);
-				sb.append(_unescape(valueParts[1]));
+				sb.append(
+					StringUtil.replace(valueParts[1], "&", ";", _unescapeMap));
 				sb.append(propertySeparator);
 			}
 
@@ -487,10 +488,6 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 	}
 
 	protected Props props;
-
-	private String _unescape(String text) {
-		return StringUtil.replace(text, "&", ";", _unescapeMap);
-	}
 
 	private static final String _PORTAL_PROPERTY_KEY = "portalPropertyKey";
 

@@ -105,14 +105,6 @@
 						<liferay-ui:message key="<%= xugglerHelp %>" />
 					</div>
 
-					<div id="<portlet:namespace />xugglerProgressInfo"></div>
-
-					<liferay-ui:progress
-						id='<%= renderResponse.getNamespace() + "xugglerProgressInfo" %>'
-						message="preparing-the-installation"
-						sessionKey="<%= ProgressTracker.PERCENT + WebKeys.XUGGLER_INSTALL_STATUS %>"
-					/>
-
 					<aui:select label="jar-file" name="jarName">
 
 						<%

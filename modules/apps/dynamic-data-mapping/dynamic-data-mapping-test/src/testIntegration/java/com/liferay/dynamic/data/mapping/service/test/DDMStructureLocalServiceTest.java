@@ -57,7 +57,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
  * @author Eduardo Garcia
  */
 @RunWith(Arquillian.class)
-public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
+public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 
 	@ClassRule
 	@Rule

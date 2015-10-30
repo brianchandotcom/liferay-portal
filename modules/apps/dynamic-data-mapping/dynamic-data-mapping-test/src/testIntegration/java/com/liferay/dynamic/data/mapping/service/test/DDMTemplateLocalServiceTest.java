@@ -50,7 +50,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 @Sync
-public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
+public class DDMTemplateLocalServiceTest extends BaseDDMServiceTestCase {
 
 	@ClassRule
 	@Rule

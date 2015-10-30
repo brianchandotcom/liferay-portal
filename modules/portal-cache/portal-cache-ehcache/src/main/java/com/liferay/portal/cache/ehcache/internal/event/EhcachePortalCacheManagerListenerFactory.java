@@ -20,8 +20,6 @@ import com.liferay.portal.cache.ehcache.event.EhcachePortalCacheManagerListenerA
 import com.liferay.portal.cache.ehcache.internal.EhcachePortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -75,8 +73,5 @@ public class EhcachePortalCacheManagerListenerFactory
 
 		return clazz.getClassLoader();
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		EhcachePortalCacheManagerListenerFactory.class);
 
 }

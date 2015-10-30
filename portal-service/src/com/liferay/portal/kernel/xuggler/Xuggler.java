@@ -14,16 +14,12 @@
 
 package com.liferay.portal.kernel.xuggler;
 
-import com.liferay.portal.kernel.util.ProgressTracker;
-
 /**
  * @author Alexander Chow
  */
 public interface Xuggler {
 
-	public void installNativeLibraries(
-			String name, ProgressTracker progressTracker)
-		throws Exception;
+	public void installNativeLibraries(String name) throws Exception;
 
 	public boolean isEnabled();
 

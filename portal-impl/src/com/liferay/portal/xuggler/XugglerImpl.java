@@ -17,8 +17,6 @@ package com.liferay.portal.xuggler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
-import com.liferay.portal.kernel.util.ProgressStatusConstants;
-import com.liferay.portal.kernel.util.ProgressTracker;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.xuggler.Xuggler;
@@ -39,10 +37,7 @@ import java.net.URLClassLoader;
 public class XugglerImpl implements Xuggler {
 
 	@Override
-	public void installNativeLibraries(
-			String name, ProgressTracker progressTracker)
-		throws Exception {
-
+	public void installNativeLibraries(String name) throws Exception {
 		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
 
 		if (!(classLoader instanceof URLClassLoader)) {
@@ -54,10 +49,6 @@ public class XugglerImpl implements Xuggler {
 		}
 
 		try {
-			if (progressTracker != null) {
-				progressTracker.setStatus(ProgressStatusConstants.DOWNLOADING);
-			}
-
 			JarUtil.downloadAndInstallJar(
 				new URL(PropsValues.XUGGLER_JAR_URL + name),
 				PropsValues.LIFERAY_LIB_PORTAL_DIR, name,
@@ -161,7 +152,7 @@ public class XugglerImpl implements Xuggler {
 	private static final Log _log = LogFactoryUtil.getLog(XugglerImpl.class);
 
 	private static boolean _informAdministrator = true;
-	private static boolean _nativeLibraryInstalled;
 	private static boolean _isNativeLibraryCopied;
+	private static boolean _nativeLibraryInstalled;
 
 }

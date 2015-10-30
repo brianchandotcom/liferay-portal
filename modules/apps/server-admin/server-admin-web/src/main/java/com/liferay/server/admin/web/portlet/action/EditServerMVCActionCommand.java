@@ -33,8 +33,6 @@ import com.liferay.portal.kernel.image.GhostscriptUtil;
 import com.liferay.portal.kernel.image.ImageMagickUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.log.SanitizerLogWrapper;
@@ -44,7 +42,6 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
-import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.scripting.ScriptingException;
@@ -60,8 +57,6 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.ProgressStatusConstants;
-import com.liferay.portal.kernel.util.ProgressTracker;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -86,7 +81,6 @@ import com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyFac
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceComponentLocalService;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.upload.UploadServletRequestImpl;
 import com.liferay.portal.util.MaintenanceUtil;
@@ -193,11 +187,6 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		}
 		else if (cmd.equals("installXuggler")) {
 			installXuggler(actionRequest, actionResponse);
-
-			actionResponse.setRenderParameter(
-				"mvcPath", ActionConstants.COMMON_NULL);
-
-			return;
 		}
 		else if (cmd.equals("reindex")) {
 			reindex(actionRequest);
@@ -347,45 +336,9 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ProgressTracker progressTracker = new ProgressTracker(
-			WebKeys.XUGGLER_INSTALL_STATUS);
-
-		progressTracker.addProgress(
-			ProgressStatusConstants.DOWNLOADING, 15, "downloading-xuggler");
-		progressTracker.addProgress(
-			ProgressStatusConstants.COPYING, 70, "copying-xuggler-files");
-
-		progressTracker.initialize(actionRequest);
-
 		String jarName = ParamUtil.getString(actionRequest, "jarName");
 
-		try {
-			XugglerUtil.installNativeLibraries(jarName, progressTracker);
-
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			jsonObject.put("success", Boolean.TRUE);
-
-			JSONPortletResponseUtil.writeJSON(
-				actionRequest, actionResponse, jsonObject);
-
-			actionResponse.setRenderParameter(
-				"mvcPath", ActionConstants.COMMON_NULL);
-		}
-		catch (Exception e) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			jsonObject.put("exception", e.getMessage());
-			jsonObject.put("success", Boolean.FALSE);
-
-			JSONPortletResponseUtil.writeJSON(
-				actionRequest, actionResponse, jsonObject);
-
-			actionResponse.setRenderParameter(
-				"mvcPath", ActionConstants.COMMON_NULL);
-		}
-
-		progressTracker.finish(actionRequest);
+		XugglerUtil.installNativeLibraries(jarName);
 	}
 
 	protected void reindex(ActionRequest actionRequest) throws Exception {

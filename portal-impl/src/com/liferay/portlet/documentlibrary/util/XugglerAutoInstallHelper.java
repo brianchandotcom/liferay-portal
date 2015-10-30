@@ -83,7 +83,7 @@ public class XugglerAutoInstallHelper {
 			Xuggler xuggler = new XugglerImpl();
 
 			try {
-				xuggler.installNativeLibraries(xugglerJarFile, null);
+				xuggler.installNativeLibraries(xugglerJarFile);
 			}
 			catch (Exception e) {
 				throw new ProcessException(e);

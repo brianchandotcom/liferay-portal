@@ -43,6 +43,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.FolderNameException;
@@ -182,8 +183,9 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 			actionResponse.setRenderParameter(
 				"mvcPath", "/document_library/error.jsp");
 		}
-		catch (DuplicateFileException | DuplicateFolderNameException |
-			   FolderNameException | RequiredFileEntryTypeException e) {
+		catch (DuplicateFileException | DuplicateFileEntryException |
+			   DuplicateFolderNameException | FolderNameException |
+			   RequiredFileEntryTypeException e) {
 
 			SessionErrors.add(actionRequest, e.getClass());
 		}

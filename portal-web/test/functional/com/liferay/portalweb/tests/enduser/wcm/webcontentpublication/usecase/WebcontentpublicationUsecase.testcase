@@ -1938,13 +1938,21 @@
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
-		<execute macro="Blogs#addEntry">
-			<var name="assetTitle" value="WC WebContent Title" />
-			<var name="assetType" value="Basic Web Content" />
-			<var name="entryAddRelatedAsset" value="true" />
+		<execute macro="BlogsNavigator#gotoAddEntry" />
+
+		<execute macro="BlogsEntry#addEntryContent">
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
+
+		<execute macro="BlogsNavigator#gotoSettings" />
+
+		<execute macro="BlogsEntry#addRelatedAssetPG">
+			<var name="assetTitle" value="WC WebContent Title" />
+			<var name="assetType" value="Basic Web Content" />
+		</execute>
+
+		<execute macro="BlogsEntry#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Asset Publisher Page" />

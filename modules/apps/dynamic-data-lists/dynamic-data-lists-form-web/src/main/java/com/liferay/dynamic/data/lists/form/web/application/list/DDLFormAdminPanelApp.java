@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.lists.form.web.application.list;
 
-import com.liferay.application.list.BaseControlPanelEntryPanelApp;
+import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = PanelApp.class
 )
-public class DDLFormAdminPanelApp extends BaseControlPanelEntryPanelApp {
+public class DDLFormAdminPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {

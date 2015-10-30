@@ -1,7 +1,13 @@
 AUI.add(
 	'liferay-ddm-form-field-text',
 	function(A) {
-		var Lang = A.Lang;
+		new A.TooltipDelegate(
+			{
+				position: 'left',
+				trigger: '.liferay-ddm-form-field-text .help-icon',
+				visible: false
+			}
+		);
 
 		var TextField = A.Component.create(
 			{
@@ -12,10 +18,6 @@ AUI.add(
 
 					placeholder: {
 						value: ''
-					},
-
-					tooltip: {
-						valueFn: '_valueTooltip'
 					},
 
 					type: {
@@ -39,24 +41,6 @@ AUI.add(
 								tip: instance.getLocalizedValue(instance.get('tip'))
 							}
 						);
-					},
-
-					render: function() {
-						var instance = this;
-
-						TextField.superclass.render.apply(instance, arguments);
-
-						var container = instance.get('container');
-
-						var helpIcon = container.one('.help-icon');
-
-						if (helpIcon) {
-							var tooltip = instance.get('tooltip');
-
-							tooltip.set('trigger', helpIcon);
-						}
-
-						return instance;
 					},
 
 					_renderErrorMessage: function() {
@@ -90,17 +74,6 @@ AUI.add(
 
 							inputGroupContainer.placeAfter(feedBack);
 						}
-					},
-
-					_valueTooltip: function() {
-						var instance = this;
-
-						return new A.Tooltip(
-							{
-								position: 'left',
-								visible: false
-							}
-						).render();
 					}
 				}
 			}

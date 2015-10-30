@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.action.executor;
+package com.liferay.portal.workflow.kaleo.action.executor.internal;
 
 import com.liferay.osgi.service.tracker.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
@@ -20,8 +20,8 @@ import com.liferay.osgi.service.tracker.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowException;
-import com.liferay.portal.workflow.kaleo.runtime.action.ActionExecutor;
-import com.liferay.portal.workflow.kaleo.runtime.action.ActionExecutorFactory;
+import com.liferay.portal.workflow.kaleo.action.executor.ActionExecutor;
+import com.liferay.portal.workflow.kaleo.action.executor.ActionExecutorFactory;
 
 import java.util.List;
 

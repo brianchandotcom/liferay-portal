@@ -12,20 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.runtime.action;
+package com.liferay.portal.workflow.kaleo.action.executor;
 
-import com.liferay.portal.kernel.workflow.WorkflowException;
+import com.liferay.portal.workflow.kaleo.model.KaleoAction;
+import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 
 /**
  * @author Michael C. Han
  */
-public interface ActionExecutorFactory {
+public interface ActionExecutor {
 
-	public ActionExecutor getActionExecutor(String scriptLanguage)
-		throws WorkflowException;
-
-	public ActionExecutor getActionExecutor(
-			String scriptLanguage, String filter)
-		throws WorkflowException;
+	public void execute(
+			KaleoAction kaleoAction, ExecutionContext executionContext,
+			ClassLoader... classLoaders)
+		throws ActionExecutorException;
 
 }

@@ -12,28 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.runtime.action;
+package com.liferay.portal.workflow.kaleo.action.executor;
 
 import com.liferay.portal.kernel.workflow.WorkflowException;
 
 /**
  * @author Michael C. Han
  */
-public class ActionExecutorException extends WorkflowException {
+public interface ActionExecutorFactory {
 
-	public ActionExecutorException() {
-	}
+	public ActionExecutor getActionExecutor(String scriptLanguage)
+		throws WorkflowException;
 
-	public ActionExecutorException(String msg) {
-		super(msg);
-	}
-
-	public ActionExecutorException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
-
-	public ActionExecutorException(Throwable cause) {
-		super(cause);
-	}
+	public ActionExecutor getActionExecutor(
+			String scriptLanguage, String filter)
+		throws WorkflowException;
 
 }

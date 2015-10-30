@@ -67,7 +67,7 @@ Group group = themeDisplay.getSiteGroup();
 			Group stagingGroup = StagingUtil.getStagingGroup(group.getGroupId());
 
 			if (stagingGroup != null) {
-				stagingGroupURL = stagingGroup.getDisplayURL(themeDisplay);
+				stagingGroupURL = stagingGroup.getDisplayURL(themeDisplay, layout.isPrivateLayout());
 
 				if (Validator.isNull(stagingGroupURL)) {
 					PortletURL groupAdministrationURL = null;
@@ -103,7 +103,7 @@ Group group = themeDisplay.getSiteGroup();
 				Group liveGroup = StagingUtil.getLiveGroup(group.getGroupId());
 
 				if (liveGroup != null) {
-					liveGroupURL = liveGroup.getDisplayURL(themeDisplay);
+					liveGroupURL = liveGroup.getDisplayURL(themeDisplay, layout.isPrivateLayout());
 
 					if (Validator.isNull(liveGroupURL)) {
 						PortletURL groupAdministrationURL = null;

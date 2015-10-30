@@ -190,7 +190,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 			T stagedModel = null;
 
-			if (stagedModel instanceof StagedGroupedModel) {
+			if (_groupId > 0) {
 				stagedModel =
 					stagedModelRepository.fetchStagedModelByUuidAndGroupId(
 						_uuid, _groupId);

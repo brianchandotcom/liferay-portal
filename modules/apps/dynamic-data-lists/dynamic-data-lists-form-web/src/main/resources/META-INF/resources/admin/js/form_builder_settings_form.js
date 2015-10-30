@@ -265,6 +265,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-ddm-form-renderer']
+		requires: ['liferay-ddm-form-renderer', 'liferay-form']
 	}
 );

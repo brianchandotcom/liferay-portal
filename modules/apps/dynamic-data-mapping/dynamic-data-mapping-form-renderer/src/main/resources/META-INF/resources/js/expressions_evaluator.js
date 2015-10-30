@@ -107,6 +107,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-component', 'aui-request']
+		requires: ['aui-component', 'aui-io-request']
 	}
 );

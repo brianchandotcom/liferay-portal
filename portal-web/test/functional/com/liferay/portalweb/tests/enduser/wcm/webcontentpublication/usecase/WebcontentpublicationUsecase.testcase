@@ -1745,14 +1745,6 @@
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Related Assets" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
 		<execute macro="Blogs#addEntry">
 			<var name="entryContent" value="Blogs Entry1 Content" />
 			<var name="entryTitle" value="Blogs Entry1 Title" />
@@ -1810,12 +1802,10 @@
 			<var name="entryTitle" value="Blogs Entry2 Title" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="RelatedAssets#viewPG">
+		<execute macro="BlogsEntry#viewRelatedAssetPG">
 			<var name="assetTitle" value="Blogs Entry1 Title" />
+			<var name="assetType" value="Blogs Entry" />
+			<var name="entryTitle" value="Blogs Entry2 Title" />
 		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="Relatedassets#ASSET_TITLE_IMAGE_2" />

@@ -236,6 +236,7 @@
 		</execute>
 
 		<execute macro="WebContent#viewCP">
+			<var name="webContentText" value="Text" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 

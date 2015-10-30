@@ -117,30 +117,6 @@
 		<property name="workflowModelParser" ref="com.liferay.portal.workflow.kaleo.parser.WorkflowModelParser" />
 		<property name="workflowValidator" ref="com.liferay.portal.workflow.kaleo.parser.WorkflowValidator" />
 	</bean>
-	<bean id="com.liferay.portal.workflow.kaleo.runtime.action.ActionExecutorFactory" class="com.liferay.portal.workflow.kaleo.runtime.action.ActionExecutorFactory">
-		<property name="actionExecutors">
-			<util:map>
-				<entry key="beanshell">
-					<bean class="com.liferay.portal.workflow.kaleo.runtime.action.ScriptActionExecutor" />
-				</entry>
-				<entry key="drl">
-					<bean class="com.liferay.portal.workflow.kaleo.runtime.action.DRLActionExecutor" />
-				</entry>
-				<entry key="groovy">
-					<bean class="com.liferay.portal.workflow.kaleo.runtime.action.ScriptActionExecutor" />
-				</entry>
-				<entry key="javascript">
-					<bean class="com.liferay.portal.workflow.kaleo.runtime.action.ScriptActionExecutor" />
-				</entry>
-				<entry key="python">
-					<bean class="com.liferay.portal.workflow.kaleo.runtime.action.ScriptActionExecutor" />
-				</entry>
-				<entry key="ruby">
-					<bean class="com.liferay.portal.workflow.kaleo.runtime.action.ScriptActionExecutor" />
-				</entry>
-			</util:map>
-		</property>
-	</bean>
 	<bean id="com.liferay.portal.workflow.kaleo.runtime.assignment.CompositeTaskAssignmentSelector" class="com.liferay.portal.workflow.kaleo.runtime.assignment.CompositeTaskAssignmentSelector">
 		<property name="taskAssignmentSelectors">
 			<util:map>

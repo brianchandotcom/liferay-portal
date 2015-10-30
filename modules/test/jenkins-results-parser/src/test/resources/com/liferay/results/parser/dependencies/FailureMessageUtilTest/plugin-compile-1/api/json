@@ -78,7 +78,7 @@
   "executor" : null,
   "fullDisplayName" : "test-portal-acceptance-pullrequest-batch(ee-6.2.x) » 9,!master #233",
   "id" : "2015-10-26_17-02-52",
-  "keepLog" : true,
+  "keepLog" : false,
   "number" : 233,
   "result" : "FAILURE",
   "timestamp" : 1445904172000,

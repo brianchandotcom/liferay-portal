@@ -26,74 +26,71 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("tabs1", tabs1);
 %>
 
-<form action="<portlet:renderURL />" method="post" name="<portlet:namespace />fm" onSubmit="submitForm(this); return false;">
-<input name="<portlet:namespace /><%= Constants.CMD %>" type="hidden" value="<%= Constants.SEARCH %>" />
-<input name="<portlet:namespace />tabs1" type="hidden" value="<%= HtmlUtil.escapeAttribute(tabs1) %>" />
+<aui:form action="<%= portletURL.toString() %>">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.SEARCH %>" />
+	<aui:input name="tabs1" type="hidden" value="<%= HtmlUtil.escapeAttribute(tabs1) %>" />
 
-<liferay-ui:tabs
-	names="dns-lookup,whois"
-	url="<%= portletURL.toString() %>"
-/>
+	<liferay-ui:tabs
+		names="dns-lookup,whois"
+		url="<%= portletURL.toString() %>"
+	/>
 
-<c:choose>
-	<c:when test='<%= tabs1.equals("dns-lookup") %>'>
+	<c:choose>
+		<c:when test='<%= tabs1.equals("dns-lookup") %>'>
 
-		<%
-		String domain = ParamUtil.getString(request, "domain");
+			<%
+			String domain = ParamUtil.getString(request, "domain");
 
-		DNSLookup dnsLookup = null;
+			DNSLookup dnsLookup = null;
 
-		if (cmd.equals(Constants.SEARCH)) {
-			dnsLookup = NetworkUtil.getDNSLookup(domain);
+			if (cmd.equals(Constants.SEARCH)) {
+				dnsLookup = NetworkUtil.getDNSLookup(domain);
 
-			if (dnsLookup == null) {
-				SessionErrors.add(renderRequest, DNSLookup.class.getName());
+				if (dnsLookup == null) {
+					SessionErrors.add(renderRequest, DNSLookup.class.getName());
+				}
 			}
-		}
-		%>
+			%>
 
-		<liferay-ui:error exception="<%= DNSLookup.class %>" message="please-enter-a-valid-host-name-or-ip" />
+			<liferay-ui:error exception="<%= DNSLookup.class %>" message="please-enter-a-valid-host-name-or-ip" />
 
-		<input name="<portlet:namespace />domain" size="30" type="text" value="<%= HtmlUtil.escape(domain) %>" /> <input type="submit" value="<liferay-ui:message key="search" />" />
+			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="domain" />
 
-		<c:if test="<%= dnsLookup != null %>">
+			<c:if test="<%= dnsLookup != null %>">
+				<liferay-ui:panel collapsible="<%= false %>" title="<%= HtmlUtil.escape(domain) %>">
 <pre>
 <%= dnsLookup.getResults() %>
 </pre>
-		</c:if>
-	</c:when>
-	<c:when test='<%= tabs1.equals("whois") %>'>
+				</liferay-ui:panel>
+			</c:if>
+		</c:when>
+		<c:when test='<%= tabs1.equals("whois") %>'>
 
-		<%
-		String domain = ParamUtil.getString(request, "domain");
+			<%
+			String domain = ParamUtil.getString(request, "domain");
 
-		Whois whois = null;
+			Whois whois = null;
 
-		if (cmd.equals(Constants.SEARCH)) {
-			whois = NetworkUtil.getWhois(domain);
+			if (cmd.equals(Constants.SEARCH)) {
+				whois = NetworkUtil.getWhois(domain);
 
-			if (whois == null) {
-				SessionErrors.add(renderRequest, Whois.class.getName());
+				if (whois == null) {
+					SessionErrors.add(renderRequest, Whois.class.getName());
+				}
 			}
-		}
-		%>
+			%>
 
-		<liferay-ui:error exception="<%= Whois.class %>" message="an-unexpected-error-occurred" />
+			<liferay-ui:error exception="<%= Whois.class %>" message="an-unexpected-error-occurred" />
 
-		<input name="<portlet:namespace />domain" size="30" type="text" value="<%= HtmlUtil.escape(domain) %>" /> <input type="submit" value="<liferay-ui:message key="search" />" />
+			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="domain" />
 
-		<c:if test="<%= whois != null %>">
+			<c:if test="<%= whois != null %>">
+				<liferay-ui:panel collapsible="<%= false %>" title="<%= HtmlUtil.escape(domain) %>">
 <pre>
 <%= whois.getResults() %>
 </pre>
-		</c:if>
-	</c:when>
-</c:choose>
-
-</form>
-
-<c:if test='<%= windowState.equals(WindowState.MAXIMIZED) && (tabs1.equals("dns-lookup") || tabs1.equals("whois")) %>'>
-	<aui:script>
-		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />domain);
-	</aui:script>
-</c:if>
+				</liferay-ui:panel>
+			</c:if>
+		</c:when>
+	</c:choose>
+</aui:form>

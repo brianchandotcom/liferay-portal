@@ -14,10 +14,15 @@
 
 package com.liferay.portal.servlet.jsp.compiler.internal;
 
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLCodec;
+
 import java.io.IOException;
 
 import java.net.JarURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -113,6 +118,78 @@ public class JspResourceResolver implements ResourceResolver {
 		return resources;
 	}
 
+	protected String decodePath(String path) {
+		path = StringUtil.replace(
+			path, StringPool.SLASH, "_LIFERAY_TEMP_SLASH_");
+		path = URLCodec.decodeURL(path, StringPool.UTF8);
+		path = StringUtil.replace(
+			path, "_LIFERAY_TEMP_SLASH_", StringPool.SLASH);
+
+		return path;
+	}
+
+	protected JarFile getJarFile(URL url) throws IOException {
+		URLConnection urlConnection = url.openConnection();
+
+		String fileName = url.getFile();
+
+		if (urlConnection instanceof JarURLConnection) {
+			JarURLConnection jarURLConnection = (JarURLConnection)urlConnection;
+
+			URL jarFileURL = jarURLConnection.getJarFileURL();
+
+			fileName = jarFileURL.getFile();
+		}
+		else if ("wsjar".equals(url.getProtocol())) {
+
+			// WebSphere uses a custom wsjar protocol to represent JAR files
+
+			fileName = url.getFile();
+
+			String protocol = "file:/";
+
+			int index = fileName.indexOf(protocol);
+
+			if (index > -1) {
+				fileName = fileName.substring(protocol.length());
+			}
+
+			index = fileName.indexOf('!');
+
+			if (index > -1) {
+				fileName = fileName.substring(0, index);
+			}
+
+			fileName = decodePath(fileName);
+		}
+		else if ("zip".equals(url.getProtocol())) {
+
+			// Weblogic uses a custom zip protocol to represent JAR files
+
+			fileName = url.getFile();
+
+			int index = fileName.indexOf('!');
+
+			if (index > 0) {
+				fileName = fileName.substring(0, index);
+			}
+		}
+		else if ("vfs".equals(url.getProtocol())) {
+
+			// JBoss uses a custom vfs protocol to represent JAR files
+
+			fileName = url.getFile();
+
+			int index = fileName.indexOf(".jar");
+
+			if (index > 0) {
+				fileName = fileName.substring(0, index + 4);
+			}
+		}
+
+		return new JarFile(fileName);
+	}
+
 	protected Collection<String> handleSystemBundle(
 		BundleWiring bundleWiring, final String path, final String fileRegex,
 		int options) {
@@ -170,10 +247,7 @@ public class JspResourceResolver implements ResourceResolver {
 
 		for (URL url : urls) {
 			try {
-				JarURLConnection jarUrlConnection =
-					(JarURLConnection)url.openConnection();
-
-				JarFile jarFile = jarUrlConnection.getJarFile();
+				JarFile jarFile = getJarFile(url);
 
 				Enumeration<? extends ZipEntry> enumeration = jarFile.entries();
 

@@ -12,16 +12,35 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.runtime.action;
+package com.liferay.portal.workflow.kaleo.action.executor;
 
 import com.liferay.portal.kernel.workflow.WorkflowException;
+import com.liferay.portal.workflow.kaleo.runtime.action.ActionExecutor;
+import com.liferay.portal.workflow.kaleo.runtime.action.ActionExecutorFactory;
+
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Michael C. Han
+ * @author Leonardo Barros
  */
-public interface ActionExecutorFactory {
+@Component(immediate = true)
+public class ActionExecutorFactoryImpl implements ActionExecutorFactory {
 
 	public ActionExecutor getActionExecutor(String scriptLanguage)
-		throws WorkflowException;
+		throws WorkflowException {
+
+		ActionExecutor actionExecutor = _actionExecutors.get(scriptLanguage);
+
+		if (actionExecutor == null) {
+			throw new WorkflowException(
+				"Invalid script language " + scriptLanguage);
+		}
+
+		return actionExecutor;
+	}
+
+	private Map<String, ActionExecutor> _actionExecutors;
 
 }

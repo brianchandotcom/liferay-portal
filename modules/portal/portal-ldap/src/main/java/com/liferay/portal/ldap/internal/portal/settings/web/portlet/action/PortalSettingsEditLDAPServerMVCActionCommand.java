@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.settings.web.portlet.action;
+package com.liferay.portal.ldap.internal.portal.settings.web.portlet.action;
 
 import com.liferay.counter.service.CounterLocalService;
 import com.liferay.portal.kernel.ldap.DuplicateLDAPServerNameException;
@@ -61,7 +61,8 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 
 )
-public class EditLDAPServerMVCActionCommand extends BaseMVCActionCommand {
+public class PortalSettingsEditLDAPServerMVCActionCommand
+	extends BaseMVCActionCommand {
 
 	@Override
 	public void doProcessAction(

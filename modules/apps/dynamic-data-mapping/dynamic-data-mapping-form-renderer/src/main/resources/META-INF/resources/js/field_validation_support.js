@@ -11,6 +11,10 @@ AUI.add(
 		};
 
 		FieldValidationSupport.ATTRS = {
+			enableEvaluations: {
+				value: true
+			},
+
 			evaluator: {
 				valueFn: '_valueEvaluator'
 			},
@@ -155,6 +159,7 @@ AUI.add(
 
 				return new Renderer.ExpressionsEvaluator(
 					{
+						enabled: instance.get('enableEvaluations'),
 						form: instance.getRoot()
 					}
 				);

@@ -45,6 +45,9 @@ AUI.add(
 						value: []
 					},
 
+					portletNamespace: {
+					},
+
 					visitor: {
 						getter: '_getVisitor',
 						valueFn: '_valueVisitor'
@@ -101,7 +104,8 @@ AUI.add(
 							A.merge(
 								fieldType.get('defaultConfig'),
 								{
-									builder: instance
+									builder: instance,
+									portletNamespace: instance.get('portletNamespace')
 								}
 							)
 						);

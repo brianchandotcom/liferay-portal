@@ -7,11 +7,10 @@
  * @param name
  * @param required
  * @param showLabel
- * @param value
  * @param visible
  */
 {template .options}
-	<div class="form-group{$visible ? '' : ' hide'}" data-fieldname="{$name}">
+	<div class="form-group{$visible ? '' : ' hide'} liferay-ddm-form-field-options" data-fieldname="{$name}">
 		{if $showLabel}
 			<label class="control-label">
 				{$label}
@@ -24,54 +23,6 @@
 
 		<input name="{$name}" type="hidden" />
 
-		<div class="auto-fields">
-			{if length($value) == 0}
-				{call ddm.option data="all"}
-					{param label: '' /}
-					{param value: '' /}
-				{/call}
-			{else}
-				{foreach $option in $value}
-					{call ddm.option data="all"}
-						{param label: $option.label /}
-						{param value: $option.value /}
-					{/call}
-				{/foreach}
-			{/if}
-		</div>
-	</div>
-{/template}
-
-/**
- * Prints one option.
- *
- * @param label
- * @param value
- */
-{template .option}
-	<div class="ddm-options-row lfr-form-row">
-		<div class="row">
-			<div class="col-md-5">
-				<label>Label</label>
-			</div>
-
-			<div class="col-md-5">
-				<label>Value</label>
-			</div>
-
-			<div class="col-md-2"></div>
-		</div>
-
-		<div class="row">
-			<div class="col-md-5">
-				<input class="ddm-options-field-label form-control" name="label" type="text" value="{$label}" />
-			</div>
-
-			<div class="col-md-5">
-				<input class="ddm-options-field-value form-control" name="value" type="text" value="{$value}" />
-			</div>
-
-			<div class="col-md-2"></div>
-		</div>
+		<div class="options"></div>
 	</div>
 {/template}

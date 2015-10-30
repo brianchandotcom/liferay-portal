@@ -9,6 +9,12 @@ AUI.add(
 
 				return A.Component.create(
 					{
+						ATTRS: {
+							enableEvaluations: {
+								value: false
+							}
+						},
+
 						AUGMENTS: [Liferay.DDL.FormBuilderSettingsSupport],
 
 						EXTENDS: fieldClass,

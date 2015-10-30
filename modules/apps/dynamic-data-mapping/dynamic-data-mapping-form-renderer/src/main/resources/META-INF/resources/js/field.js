@@ -213,6 +213,16 @@ AUI.add(
 						return instance.get('container').one('label');
 					},
 
+					getLocalizedValue: function(localizedValue) {
+						var instance = this;
+
+						if (Lang.isObject(localizedValue)) {
+							localizedValue = localizedValue[instance.get('locale')];
+						}
+
+						return localizedValue;
+					},
+
 					getQualifiedName: function() {
 						var instance = this;
 

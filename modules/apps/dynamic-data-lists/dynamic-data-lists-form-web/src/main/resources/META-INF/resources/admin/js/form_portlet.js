@@ -121,7 +121,8 @@ AUI.add(
 						return new Liferay.DDL.FormBuilder(
 							{
 								definition: instance.get('definition'),
-								pagesJSON: layout.pages
+								pagesJSON: layout.pages,
+								portletNamespace: instance.get('namespace')
 							}
 						);
 					}

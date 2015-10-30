@@ -176,6 +176,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-ddm-form-renderer-types', 'liferay-ddm-form-renderer-util']
+		requires: ['array-invoke', 'liferay-ddm-form-renderer-types', 'liferay-ddm-form-renderer-util']
 	}
 );

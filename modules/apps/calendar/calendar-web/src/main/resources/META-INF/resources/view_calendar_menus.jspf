@@ -293,9 +293,9 @@ String backURL = PortalUtil.getCurrentURL(request);
 							uri: A.Lang.sub(
 								decodeURIComponent('<%= permissionsURL %>'),
 								{
+									modelResourceDescription: activeCalendar.get('name'),
 									resourceGroupId: activeCalendar.get('groupId'),
-									resourcePrimKey: activeCalendar.get('calendarId'),
-									modelResourceDescription: activeCalendar.get('name')
+									resourcePrimKey: activeCalendar.get('calendarId')
 								}
 							)
 						}

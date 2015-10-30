@@ -14,54 +14,8 @@
 
 package com.liferay.application.list;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.ControlPanelEntry;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
-
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Adolfo Pérez
  */
 public abstract class BaseControlPanelEntryPanelApp extends BasePanelApp {
-
-	@Override
-	public boolean hasAccessPermission(
-			PermissionChecker permissionChecker, Group group)
-		throws PortalException {
-
-		try {
-			ControlPanelEntry controlPanelEntry = getControlPanelEntry();
-
-			if (controlPanelEntry == null) {
-				return false;
-			}
-
-			return controlPanelEntry.hasAccessPermission(
-				permissionChecker, group, getPortlet());
-		}
-		catch (PortalException | RuntimeException e) {
-			throw e;
-		}
-		catch (Exception e) {
-			throw new PortalException(e);
-		}
-	}
-
-	protected ControlPanelEntry getControlPanelEntry() {
-		Portlet portlet = getPortlet();
-
-		if (portlet == null) {
-			return null;
-		}
-
-		return portlet.getControlPanelEntryInstance();
-	}
-
 }

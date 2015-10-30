@@ -15,27 +15,16 @@
 package com.liferay.application.list.adapter;
 
 import com.liferay.application.list.BasePanelApp;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.ControlPanelEntry;
 import com.liferay.portlet.PortletConfigFactoryUtil;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletConfig;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Adolfo Pérez
@@ -88,28 +77,6 @@ public class PortletPanelAppAdapter extends BasePanelApp {
 	@Override
 	public String getPortletId() {
 		return _portletId;
-	}
-
-	@Override
-	public boolean hasAccessPermission(
-			PermissionChecker permissionChecker, Group group)
-		throws PortalException {
-
-		try {
-			Portlet portlet = getPortlet();
-
-			ControlPanelEntry controlPanelEntry =
-				portlet.getControlPanelEntryInstance();
-
-			return controlPanelEntry.hasAccessPermission(
-				permissionChecker, group, portlet);
-		}
-		catch (PortalException | RuntimeException e) {
-			throw e;
-		}
-		catch (Exception e) {
-			throw new PortalException(e);
-		}
 	}
 
 	private final String _portletId;

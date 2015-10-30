@@ -22,6 +22,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.ControlPanelEntry;
 
 import java.io.IOException;
 
@@ -71,7 +72,22 @@ public abstract class BasePanelApp implements PanelApp {
 			PermissionChecker permissionChecker, Group group)
 		throws PortalException {
 
-		return true;
+		try {
+			ControlPanelEntry controlPanelEntry = getControlPanelEntry();
+
+			if (controlPanelEntry == null) {
+				return true;
+			}
+
+			return controlPanelEntry.hasAccessPermission(
+				permissionChecker, group, getPortlet());
+		}
+		catch (PortalException | RuntimeException e) {
+			throw e;
+		}
+		catch (Exception e) {
+			throw new PortalException(e);
+		}
 	}
 
 	@Override
@@ -85,6 +101,16 @@ public abstract class BasePanelApp implements PanelApp {
 	@Override
 	public void setPortlet(Portlet portlet) {
 		_portlet = portlet;
+	}
+
+	protected ControlPanelEntry getControlPanelEntry() {
+		Portlet portlet = getPortlet();
+
+		if (portlet == null) {
+			return null;
+		}
+
+		return portlet.getControlPanelEntryInstance();
 	}
 
 	protected Group getGroup(HttpServletRequest request) {

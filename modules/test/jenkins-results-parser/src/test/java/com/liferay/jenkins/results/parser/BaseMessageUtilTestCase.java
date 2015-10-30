@@ -54,7 +54,7 @@ public abstract class BaseMessageUtilTestCase {
 	}
 
 	protected void assertSamples() throws Exception {
-		File[] files = _dependenciesDir.listFiles();
+		File[] files = dependenciesDir.listFiles();
 
 		for (File file : files) {
 			assertSample(file);
@@ -92,7 +92,7 @@ public abstract class BaseMessageUtilTestCase {
 	protected void downloadSample(String sampleKey, URL url) throws Exception {
 		System.out.println("Downloading sample " + sampleKey);
 
-		String sampleDirName = _dependenciesDir.getPath() + "/" + sampleKey;
+		String sampleDirName = dependenciesDir.getPath() + "/" + sampleKey;
 
 		File sampleDir = new File(sampleDirName);
 
@@ -189,7 +189,7 @@ public abstract class BaseMessageUtilTestCase {
 		write(expectedMessageFile, expectedMessage);
 	}
 
-	private final File _dependenciesDir = new File(
+	protected final File dependenciesDir = new File(
 		"src/test/resources/com/liferay/results/parser/dependencies/" +
 			getSimpleClassName());
 

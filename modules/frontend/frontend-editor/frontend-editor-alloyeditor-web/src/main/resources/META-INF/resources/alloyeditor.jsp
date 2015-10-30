@@ -73,6 +73,12 @@ EditorOptions editorOptions = null;
 if (data != null) {
 	editorOptions = (EditorOptions)data.get("editorOptions");
 }
+
+Map<String, Object> editorOptionsDynamicAttributes = null;
+
+if (editorOptions != null) {
+	editorOptionsDynamicAttributes = editorOptions.getDynamicAttributes();
+}
 %>
 
 <c:if test="<%= !skipEditorLoading %>">
@@ -236,6 +242,19 @@ if (showSource) {
 				textMode: <%= (editorOptions != null) ? editorOptions.isTextMode() : Boolean.FALSE.toString() %>
 			}
 		).render();
+
+		<%
+		boolean useCustomDataProcessor = (editorOptionsDynamicAttributes != null) && GetterUtil.getBoolean(editorOptionsDynamicAttributes.get("useCustomDataProcessor"));
+		%>
+
+		<c:if test="<%= useCustomDataProcessor %>">
+			alloyEditor.getNativeEditor().on(
+				'customDataProcessorLoaded',
+				function() {
+					alloyEditor.setHTML(getInitialContent());
+				}
+			);
+		</c:if>
 
 		<liferay-util:dynamic-include key='<%= "com.liferay.frontend.editor.alloyeditor.web#" + editorName + "#onEditorCreate" %>' />
 	};

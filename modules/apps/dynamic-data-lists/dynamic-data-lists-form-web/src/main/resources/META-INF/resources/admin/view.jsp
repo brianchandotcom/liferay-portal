@@ -20,9 +20,7 @@
 String displayStyle = ddlFormAdminDisplayContext.getDisplayStyle();
 PortletURL portletURL = ddlFormAdminDisplayContext.getPortletURL();
 
-if (Validator.isNotNull(displayStyle)) {
-	portletURL.setParameter("displayStyle", displayStyle);
-}
+portletURL.setParameter("displayStyle", displayStyle);
 
 RecordSetSearch recordSetSearch = new RecordSetSearch(renderRequest, portletURL);
 

@@ -50,7 +50,6 @@ page import="com.liferay.portal.kernel.util.OrderByComparator" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
-page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowDefinition" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil" %><%@
 page import="com.liferay.portal.model.WorkflowDefinitionLink" %><%@

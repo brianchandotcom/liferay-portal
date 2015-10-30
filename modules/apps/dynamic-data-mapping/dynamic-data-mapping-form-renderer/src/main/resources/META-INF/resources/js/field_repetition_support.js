@@ -110,6 +110,7 @@ AUI.add(
 					A.merge(
 						config,
 						{
+							enableEvaluations: instance.get('enableEvaluations'),
 							parent: instance.get('parent'),
 							portletNamespace: instance.get('portletNamespace'),
 							repeatedIndex: instance.getRepeatedSiblings().length,

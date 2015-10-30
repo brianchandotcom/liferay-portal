@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = PanelApp.class
 )
-public class MyWorkflowInstancesPanelApp extends BaseControlPanelEntryPanelApp {
+public class MyWorkflowInstancePanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
 	public String getPortletId() {

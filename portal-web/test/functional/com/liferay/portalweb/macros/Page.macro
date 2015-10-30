@@ -645,7 +645,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_TABS_MY_SPACE_NAVIGATION" value1="My Space" />
+		<execute function="Click" locator1="ProductMenu#PRODUCT_MENU_TABS_USER_NAVIGATION" />
 
 		<var name="key_portletName" value="${portletName}" />
 

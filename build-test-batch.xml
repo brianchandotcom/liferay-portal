@@ -1108,7 +1108,7 @@
 		</run-batch-test>
 	</target>
 
-	<target name="plugins">
+	<target name="plugins-compiler">
 		<property name="testray.main.component.name" value="Plugins" />
 		<property name="testray.testcase.priority" value="4" />
 

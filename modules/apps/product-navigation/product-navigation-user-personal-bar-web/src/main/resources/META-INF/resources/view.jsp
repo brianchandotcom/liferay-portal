@@ -21,9 +21,11 @@
 		<b class="alert-icon icon-warning-sign"></b>
 	</c:if>
 
-	<liferay-ui:user-portrait
-		userId="<%= user.getUserId() %>"
-	/>
+	<span class="user-avatar-image">
+		<liferay-ui:user-portrait
+			userId="<%= user.getUserId() %>"
+		/>
+	</span>
 
 	<span class="user-full-name">
 		<%= HtmlUtil.escape(user.getFullName()) %>

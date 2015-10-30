@@ -16,6 +16,8 @@ Include-Resource:\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ToolsUtil.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/util/EntityResolver.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/xml/SAXReaderFactory.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/exception/NestableRuntimeException.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/exception/SystemException.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/io/unsync/UnsyncBufferedReader.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/io/unsync/UnsyncByteArrayInputStream.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/io/unsync/UnsyncByteArrayOutputStream.class,\

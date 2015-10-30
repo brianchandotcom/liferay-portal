@@ -112,7 +112,7 @@
 			<var name="pageTemplateNameList" value="Blog,Content Display Page,Wiki" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoMySpaceMyAccount">
+		<execute macro="ProductMenu#gotoUserMyAccount">
 			<var name="portlet" value="Account Settings" />
 		</execute>
 
@@ -137,10 +137,9 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoLocalizedMySpaceMyAccount">
+		<execute macro="ProductMenu#gotoLocalizedUserMyAccount">
 			<var name="category" value="Mi cuenta" />
 			<var name="portlet" value="Mi cuenta" />
-			<var name="tab" value="Mi espacio" />
 		</execute>
 
 		<execute macro="MyAccount#changeUserLanguage">

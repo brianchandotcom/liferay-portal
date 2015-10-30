@@ -225,7 +225,9 @@ public class DDMFormEvaluatorHelper {
 
 		String dataType = ddmFormField.getDataType();
 
-		if (Validator.isNull(valueString)) {
+		if (Validator.isNull(valueString) ||
+			Validator.isNull(valueString.trim())) {
+
 			return true;
 		}
 		else if (Validator.equals(dataType, "boolean") &&

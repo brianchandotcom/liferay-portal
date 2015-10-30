@@ -33,7 +33,7 @@ public class JenkinsResultsParserUtil {
 
 	public static String fixJSON(String json) {
 		json = json.replaceAll("\t", "&#09;");
-		json = json.replaceAll("\\\"", "&#34; ");
+		json = json.replaceAll("\\\"", "&#34;");
 		json = json.replaceAll("'", "&#39;");
 		json = json.replaceAll("\\(", "&#40;");
 		json = json.replaceAll("\\)", "&#41;");

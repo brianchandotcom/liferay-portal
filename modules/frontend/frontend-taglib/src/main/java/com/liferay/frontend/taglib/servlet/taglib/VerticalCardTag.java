@@ -35,12 +35,8 @@ public class VerticalCardTag extends CardTag {
 		_header = header;
 	}
 
-	public void setSmallImageCSSClass(String smallImageCSSClass) {
-		_smallImageCSSClass = smallImageCSSClass;
-	}
-
-	public void setSmallImageUrl(String smallImageUrl) {
-		_smallImageUrl = smallImageUrl;
+	public void setStickerBottom(String stickerBottom) {
+		_stickerBottom = stickerBottom;
 	}
 
 	public void setSubtitle(String subtitle) {
@@ -56,8 +52,7 @@ public class VerticalCardTag extends CardTag {
 		_backgroundImage = true;
 		_footer = null;
 		_header = null;
-		_smallImageCSSClass = null;
-		_smallImageUrl = null;
+		_stickerBottom = null;
 		_subtitle = null;
 		_title = null;
 	}
@@ -76,9 +71,7 @@ public class VerticalCardTag extends CardTag {
 		request.setAttribute("liferay-frontend:card:footer", _footer);
 		request.setAttribute("liferay-frontend:card:header", _header);
 		request.setAttribute(
-			"liferay-frontend:card:smallImageCSSClass", _smallImageCSSClass);
-		request.setAttribute(
-			"liferay-frontend:card:smallImageUrl", _smallImageUrl);
+			"liferay-frontend:card:stickerBottom", _stickerBottom);
 		request.setAttribute("liferay-frontend:card:subtitle", _subtitle);
 		request.setAttribute("liferay-frontend:card:title", _title);
 	}
@@ -86,8 +79,7 @@ public class VerticalCardTag extends CardTag {
 	private boolean _backgroundImage = true;
 	private String _footer;
 	private String _header;
-	private String _smallImageCSSClass;
-	private String _smallImageUrl;
+	private String _stickerBottom;
 	private String _subtitle;
 	private String _title;
 

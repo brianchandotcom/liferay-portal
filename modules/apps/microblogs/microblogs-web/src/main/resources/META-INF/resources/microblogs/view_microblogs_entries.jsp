@@ -51,14 +51,12 @@ if (microblogsEntries != null) {
 	for (MicroblogsEntry microblogsEntry : microblogsEntries) {
 		String userDisplayURL = StringPool.BLANK;
 		String userFullName = HtmlUtil.escape(PortalUtil.getUserName(microblogsEntry));
-		String userPortaitURL = StringPool.BLANK;
 		String userScreenName = StringPool.BLANK;
 
 		try {
 			User curUser = UserLocalServiceUtil.getUserById(microblogsEntry.getUserId());
 
 			userDisplayURL = curUser.getDisplayURL(themeDisplay);
-			userPortaitURL = curUser.getPortraitURL(themeDisplay);
 			userScreenName = curUser.getScreenName();
 		}
 		catch (NoSuchUserException nsue) {
@@ -67,7 +65,9 @@ if (microblogsEntries != null) {
 
 		<div class="microblogs-entry" id="<portlet:namespace />microblogsEntry<%= microblogsEntry.getMicroblogsEntryId() %>">
 			<span class="thumbnail">
-				<a href="<%= userDisplayURL %>"><img alt="<%= HtmlUtil.escapeAttribute(userFullName) %>" src="<%= userPortaitURL %>" /></a>
+				<liferay-ui:user-portrait
+					userId="<%= microblogsEntry.getUserId() %>"
+				/>
 			</span>
 
 			<div class="entry-bubble">

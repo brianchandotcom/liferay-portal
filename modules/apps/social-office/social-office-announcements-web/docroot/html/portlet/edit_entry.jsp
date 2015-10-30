@@ -136,16 +136,15 @@ if (entry == null) {
 	<div class="clearfix entry hide" id="<portlet:namespace />preview">
 		<div class="user-portrait">
 			<span class="avatar">
-
-				<%
-				User currentUser = UserLocalServiceUtil.getUserById(themeDisplay.getUserId());
-				%>
-
-				<a href="<%= currentUser.getDisplayURL(themeDisplay) %>">
-					<img alt="<%= HtmlUtil.escapeAttribute(currentUser.getFullName()) %>" src="<%= currentUser.getPortraitURL(themeDisplay) %>" />
-				</a>
+				<liferay-ui:user-portrait
+					userId="<%= themeDisplay.getUserId() %>"
+				/>
 			</span>
 		</div>
+
+		<%
+		User currentUser = UserLocalServiceUtil.getUserById(themeDisplay.getUserId());
+		%>
 
 		<div class="entry-header">
 			<div class="entry-action">

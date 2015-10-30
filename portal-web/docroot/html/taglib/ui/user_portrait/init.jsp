@@ -14,13 +14,13 @@
  */
 --%>
 
-<%@ include file="/card/init.jsp" %>
+<%@ include file="/html/taglib/init.jsp" %>
 
 <%
-boolean backgroundImage = GetterUtil.getBoolean(request.getAttribute("liferay-frontend:card:backgroundImage"));
-String footer = (String)request.getAttribute("liferay-frontend:card:footer");
-String header = (String)request.getAttribute("liferay-frontend:card:header");
-String stickerBottom = GetterUtil.getString(request.getAttribute("liferay-frontend:card:stickerBottom"));
-String subtitle = (String)request.getAttribute("liferay-frontend:card:subtitle");
-String title = (String)request.getAttribute("liferay-frontend:card:title");
+String colorCssClass = (String)request.getAttribute("liferay-ui:user-portrait:colorCssClass");
+String cssClass = (String)request.getAttribute("liferay-ui:user-portrait:cssClass");
+String imageCssClass = (String)request.getAttribute("liferay-ui:user-portrait:imageCssClass");
+String portraitURL = (String)request.getAttribute("liferay-ui:user-portrait:portraitURL");
+String userInitials = (String)request.getAttribute("liferay-ui:user-portrait:userInitials");
+String userName = (String)request.getAttribute("liferay-ui:user-portrait:userName");
 %>

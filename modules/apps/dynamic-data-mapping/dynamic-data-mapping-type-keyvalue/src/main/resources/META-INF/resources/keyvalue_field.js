@@ -135,16 +135,6 @@ AUI.add(
 						instance._uiSetKey(event.newVal);
 					},
 
-					_getAutoGenerateKey: function() {
-						var instance = this;
-
-						var value = instance.getValue();
-
-						console.log(instance.normalizeKey(value), instance.get('key'));
-
-						return instance.normalizeKey(value) === instance.get('key');
-					},
-
 					_getMaxInputSize: function(str) {
 						var size = str.length;
 

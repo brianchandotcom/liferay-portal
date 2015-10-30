@@ -502,8 +502,9 @@
 			<var name="feedTitle" value="Asset Publisher" />
 		</execute>
 
-		<execute macro="RSS#viewFeedContentTitle">
-			<var name="feedContentTitle" value="Web Content Title" />
+		<execute macro="AssetPublisherPortlet#viewAssetPG">
+			<var name="assetContent" value="This is the web content test for rss feed" />
+			<var name="assetTitle" value="Web Content Title" />
 		</execute>
 	</command>
 

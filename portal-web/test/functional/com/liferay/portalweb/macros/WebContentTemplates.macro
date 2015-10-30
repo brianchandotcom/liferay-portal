@@ -319,7 +319,7 @@
 		<if>
 			<isset var="templateScript" />
 			<then>
-				<execute function="AssertTextEquals" locator1="DDMEditTemplate#SCRIPT_CONTENT_FIELD" value1="${templateScript}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="DDMEditTemplate#SCRIPT_CONTENT_FIELD" value1="${templateScript}" />
 			</then>
 		</if>
 	</command>

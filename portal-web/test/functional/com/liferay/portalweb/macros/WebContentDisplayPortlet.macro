@@ -146,7 +146,7 @@
 			</then>
 			<else>
 				<execute function="Pause" locator1="2000" />
-				<execute function="SikuliClick" locator1="Button#CLOSE_IFRAME" />
+				<execute function="Click" locator1="Button#CLOSE_IFRAME" />
 
 				<execute function="SelectFrame" value1="relative=top" />
 				<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />

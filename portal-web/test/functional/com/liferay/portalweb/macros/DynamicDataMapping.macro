@@ -83,6 +83,7 @@
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="DDMEditStructure#SETTINGS_NAME" value1="${fieldName}" />
+
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="DDMEditStructure#FIELDS_LINK" value1="Fields" />
 
 		<execute function="SelectFrame" value1="relative=top" />

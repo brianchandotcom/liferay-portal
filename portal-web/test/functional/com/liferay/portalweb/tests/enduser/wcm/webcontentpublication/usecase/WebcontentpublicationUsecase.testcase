@@ -691,7 +691,7 @@
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
+			<var name="webContentTitle" value="Web Content1 Title" />
 		</execute>
 
 		<execute macro="WebContent#addTranslation">
@@ -729,7 +729,7 @@
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
+			<var name="webContentTitle" value="Web Content2 Title" />
 		</execute>
 
 		<execute macro="WebContent#addTranslation">
@@ -767,7 +767,7 @@
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
+			<var name="webContentTitle" value="Web Content3 Title" />
 		</execute>
 
 		<execute macro="WebContent#addTranslation">

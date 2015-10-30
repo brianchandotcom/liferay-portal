@@ -14,13 +14,17 @@
  */
 --%>
 
-<%@ include file="/card/init.jsp" %>
+<%@ include file="/html/taglib/ui/user_portrait/init.jsp" %>
 
-<%
-boolean backgroundImage = GetterUtil.getBoolean(request.getAttribute("liferay-frontend:card:backgroundImage"));
-String footer = (String)request.getAttribute("liferay-frontend:card:footer");
-String header = (String)request.getAttribute("liferay-frontend:card:header");
-String stickerBottom = GetterUtil.getString(request.getAttribute("liferay-frontend:card:stickerBottom"));
-String subtitle = (String)request.getAttribute("liferay-frontend:card:subtitle");
-String title = (String)request.getAttribute("liferay-frontend:card:title");
-%>
+<c:choose>
+	<c:when test="<%= Validator.isNotNull(portraitURL) %>">
+		<div class="<%= cssClass %> user-icon user-icon-lg">
+			<img alt="thumbnail" class="img-responsive <%= imageCssClass %>" src="<%= HtmlUtil.escape(portraitURL) %>">
+		</div>
+	</c:when>
+	<c:otherwise>
+		<div class="<%= colorCssClass %> <%= cssClass %> user-icon user-icon-default">
+			<span><%= userInitials %></span>
+		</div>
+	</c:otherwise>
+</c:choose>

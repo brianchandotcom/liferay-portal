@@ -73,20 +73,6 @@
 		</execute>
 	</command>
 
-	<command name="gotoLocalizedMySpaceMyAccount" summary="Navigate to Product Menu > My Space > My Account > ${portlet}">
-		<execute macro="ProductMenuHelper#gotoTab">
-			<var name="tab" value="${tab}" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="${category}" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#gotoPortlet">
-			<var name="portlet" value="${portlet}" />
-		</execute>
-	</command>
-
 	<command name="gotoLocalizedSitesAdministration" summary="Navigate to Product Menu > Sites > ${category} > ${portlet}">
 		<execute macro="ProductMenuHelper#gotoTab">
 			<var name="tab" value="${tab}" />
@@ -103,11 +89,11 @@
 		</execute>
 	</command>
 
-	<command name="gotoMySpaceMyAccount" summary="Navigate to Product Menu > My Space > My Account > ${portlet}">
-		<execute macro="ProductMenuHelper#gotoMySpace" />
+	<command name="gotoLocalizedUserMyAccount" summary="Navigate to Product Menu > User > My Account > ${portlet}">
+		<execute macro="ProductMenuHelper#gotoUser" />
 
 		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="My Account" />
+			<var name="category" value="${category}" />
 		</execute>
 
 		<execute macro="ProductMenuHelper#gotoPortlet">
@@ -190,6 +176,18 @@
 
 		<execute macro="ProductMenuHelper#expandCategory">
 			<var name="category" value="Users" />
+		</execute>
+
+		<execute macro="ProductMenuHelper#gotoPortlet">
+			<var name="portlet" value="${portlet}" />
+		</execute>
+	</command>
+
+	<command name="gotoUserMyAccount" summary="Navigate to Product Menu > User > My Account > ${portlet}">
+		<execute macro="ProductMenuHelper#gotoUser" />
+
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="My Account" />
 		</execute>
 
 		<execute macro="ProductMenuHelper#gotoPortlet">

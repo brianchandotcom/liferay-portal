@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
+import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
@@ -306,6 +307,23 @@ public class ExportImportDateUtil {
 		LayoutSetLocalServiceUtil.updateSettings(
 			layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
 			settingsProperties.toString());
+	}
+
+	public static void updateLastPublishDate(
+		StagedGroupedModel stagedGroupedModel, DateRange dateRange,
+		Date lastPublishDate) {
+
+		Date originalLastPublishDate = stagedGroupedModel.getLastPublishDate();
+
+		if (!isValidDateRange(dateRange, originalLastPublishDate)) {
+			return;
+		}
+
+		if (lastPublishDate == null) {
+			lastPublishDate = new Date();
+		}
+
+		stagedGroupedModel.setLastPublishDate(lastPublishDate);
 	}
 
 	public static void updateLastPublishDate(

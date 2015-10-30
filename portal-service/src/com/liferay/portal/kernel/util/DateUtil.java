@@ -59,10 +59,10 @@ public class DateUtil {
 	}
 
 	public static String formatDate(
-			String fromPattern, String dateString, Locale locale)
+			String pattern, String dateString, Locale locale)
 		throws ParseException {
 
-		Date dateValue = parseDate(fromPattern, dateString, locale);
+		Date dateValue = parseDate(pattern, dateString, locale);
 
 		Format dateFormat = FastDateFormatFactoryUtil.getDate(locale);
 

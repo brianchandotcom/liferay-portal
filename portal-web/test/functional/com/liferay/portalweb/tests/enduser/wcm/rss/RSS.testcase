@@ -498,6 +498,10 @@
 			<var name="feedTitle" value="Web Asset Publisher" />
 		</execute>
 
+		<execute macro="RSS#openFeed">
+			<var name="feedTitle" value="Asset Publisher" />
+		</execute>
+
 		<execute macro="RSS#viewFeedContentTitle">
 			<var name="feedContentTitle" value="Web Content Title" />
 		</execute>

@@ -3,20 +3,21 @@
 /**
  * Prints the DDM form text field.
  *
- * @param childElementsHTML
  * @param dir
- * @param displayStyle
+ * @param editing
+ * @param key
  * @param label
  * @param name
  * @param placeholder
  * @param required
  * @param showLabel
+ * @param strings
  * @param tip
  * @param value
  * @param visible
  */
-{template .text}
-	<div class="form-group{$visible ? '' : ' hide'} liferay-ddm-form-field-text" data-fieldname="{$name}">
+{template .keyvalue}
+	<div class="form-group{$visible ? '' : ' hide'} liferay-ddm-form-field-keyvalue liferay-ddm-form-field-text" data-fieldname="{$name}">
 		{if $showLabel}
 			<label class="control-label" for="{$name}">
 				{$label}
@@ -28,13 +29,7 @@
 		{/if}
 
 		<div class="input-group-container {if $tip}input-group-default{/if}">
-			{if $displayStyle == 'multiline'}
-				<textarea class="field form-control" dir="{$dir}" id="{$name}" name="{$name}" placeholder="{$placeholder}">
-					{$value}
-				</textarea>
-			{else}
-				<input class="field form-control" dir="{$dir}" id="{$name}" name="{$name}" placeholder="{$placeholder}" type="text" value="{$value}">
-			{/if}
+			<input class="field form-control" dir="{$dir}" id="{$name}" name="{$name}" placeholder="{$placeholder}" type="text" value="{$value}" />
 
 			{if $tip}
 				<span class="input-group-addon">
@@ -45,6 +40,13 @@
 			{/if}
 		</div>
 
-		{$childElementsHTML|noAutoescape}
+		<div class="{$editing ? 'active ' : ''}keyvalue-editor">
+			<label class="control-label keyvalue-label">{$strings.keyLabel}:</label>
+			<span class="keyvalue-output">{$key}</span>
+			<input class="keyvalue-input" placeholder="{$key}" />
+
+			<a class="keyvalue-done" href="javascript:;">{$strings.done}</a>
+			<a class="keyvalue-cancel" href="javascript:;">{$strings.cancel}</a>
+		</div>
 	</div>
 {/template}

@@ -37,9 +37,7 @@ public interface SelectDDMFormFieldTypeSettings
 
 	@DDMFormField(
 		dataType = "ddm-options", label = "%options",
-		properties = {
-			"setting.category=basic", "setting.weight=0", "showLabel=false"
-		},
+		properties = {"setting.category=basic", "setting.weight=0"},
 		type = "options"
 	)
 	public DDMFormFieldOptions options();

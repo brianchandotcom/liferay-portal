@@ -28,8 +28,8 @@ public interface DDMFormFieldTypeSettings {
 
 	@DDMFormField(
 		label = "%name",
-		properties = {"setting.category=basic", "setting.weight=2"},
-		required = true
+		properties = {"setting.category=advanced", "setting.weight=2"},
+		required = true, visibilityExpression = "false"
 	)
 	public String name();
 

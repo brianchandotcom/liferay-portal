@@ -17,11 +17,13 @@ package com.liferay.portal.ldap.configuration;
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.ldap.constants.LDAPConstants;
 
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
@@ -38,8 +40,13 @@ public abstract class CompanyScopedConfigurationProvider
 
 	@Override
 	public T getConfiguration(long companyId) {
+		return getConfiguration(companyId, true);
+	}
+
+	@Override
+	public T getConfiguration(long companyId, boolean useDefault) {
 		Dictionary<String, Object> properties = getConfigurationProperties(
-			companyId);
+			companyId, useDefault);
 
 		T configurable = Configurable.createConfigurable(
 			getMetatype(), properties);
@@ -49,17 +56,32 @@ public abstract class CompanyScopedConfigurationProvider
 
 	@Override
 	public T getConfiguration(long companyId, long index) {
-		return getConfiguration(companyId);
+		return getConfiguration(companyId, true);
+	}
+
+	@Override
+	public T getConfiguration(long companyId, long index, boolean useDefault) {
+		return getConfiguration(companyId, useDefault);
 	}
 
 	@Override
 	public Dictionary<String, Object> getConfigurationProperties(
 		long companyId) {
 
+		return getConfigurationProperties(companyId, true);
+	}
+
+	@Override
+	public Dictionary<String, Object> getConfigurationProperties(
+		long companyId, boolean useDefault) {
+
 		Configuration configuration = _configurations.get(companyId);
 
-		if (configuration == null) {
+		if (useDefault && (configuration == null)) {
 			configuration = _configurations.get(0L);
+		}
+		else if (!useDefault && (configuration == null)) {
+			return new HashMapDictionary<>();
 		}
 
 		if (configuration == null) {
@@ -79,35 +101,76 @@ public abstract class CompanyScopedConfigurationProvider
 	public Dictionary<String, Object> getConfigurationProperties(
 		long companyId, long index) {
 
-		return getConfigurationProperties(companyId);
+		return getConfigurationProperties(companyId, index, true);
+	}
+
+	@Override
+	public Dictionary<String, Object> getConfigurationProperties(
+		long companyId, long index, boolean useDefault) {
+
+		return getConfigurationProperties(companyId, useDefault);
 	}
 
 	@Override
 	public List<T> getConfigurations(long companyId) {
-		List<T> configurations = new ArrayList<>();
+		return getConfigurations(companyId, true);
+	}
 
-		T t = getConfiguration(companyId);
+	@Override
+	public List<T> getConfigurations(long companyId, boolean useDefault) {
+		List<Dictionary<String, Object>> configurationsProperties =
+			getConfigurationsProperties(companyId, useDefault);
 
-		configurations.add(t);
+		List<T> configurables = new ArrayList<>(
+			configurationsProperties.size());
 
-		return configurations;
+		for (Dictionary<String, Object> configurationProperties :
+				configurationsProperties) {
+
+			T configurable = Configurable.createConfigurable(
+				getMetatype(), configurationProperties);
+
+			configurables.add(configurable);
+		}
+
+		return configurables;
 	}
 
 	@Override
 	public List<Dictionary<String, Object>> getConfigurationsProperties(
 		long companyId) {
 
-		List<Dictionary<String, Object>> configurationsProperties =
-			new ArrayList<>();
+		return getConfigurationsProperties(companyId, true);
+	}
 
-		for (Configuration configuration : _configurations.values()) {
-			Dictionary<String, Object> properties =
-				configuration.getProperties();
+	@Override
+	public List<Dictionary<String, Object>> getConfigurationsProperties(
+		long companyId, boolean useDefault) {
 
-			configurationsProperties.add(properties);
+		Configuration configuration = _configurations.get(companyId);
+
+		if (!useDefault && (configuration == null)) {
+			return Collections.emptyList();
+		}
+		else if (configuration == null) {
+			configuration = _configurations.get(0L);
 		}
 
-		return configurationsProperties;
+		if (configuration == null) {
+			Class<?> clazz = getMetatype();
+
+			throw new IllegalArgumentException(
+				"No instance of " + clazz.getName() + " for company " +
+					companyId);
+		}
+
+		List<Dictionary<String, Object>> configurations = new ArrayList<>();
+
+		Dictionary<String, Object> properties = configuration.getProperties();
+
+		configurations.add(properties);
+
+		return configurations;
 	}
 
 	@Override
@@ -154,7 +217,8 @@ public abstract class CompanyScopedConfigurationProvider
 		try {
 			if (configuration == null) {
 				configuration = configurationAdmin.createFactoryConfiguration(
-					defaultConfiguration.getFactoryPid());
+					defaultConfiguration.getFactoryPid(),
+					defaultConfiguration.getBundleLocation());
 			}
 
 			properties.put(LDAPConstants.COMPANY_ID, companyId);

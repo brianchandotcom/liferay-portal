@@ -56,6 +56,11 @@
 
 					<aui:input label="enabled" name="xugglerEnabled" type="checkbox" value="<%= XugglerUtil.isEnabled() %>" />
 				</c:when>
+				<c:when test="<%= XugglerUtil.isNativeLibraryCopied() %>">
+					<div class="alert alert-info">
+						<liferay-ui:message key="xuggler-has-been-installed-you-need-to-reboot-your-server-to-apply-changes" />
+					</div>
+				</c:when>
 				<c:otherwise>
 
 					<%

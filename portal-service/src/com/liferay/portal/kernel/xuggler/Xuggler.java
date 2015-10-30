@@ -29,6 +29,8 @@ public interface Xuggler {
 
 	public boolean isEnabled(boolean checkNativeLibraries);
 
+	public boolean isNativeLibraryCopied();
+
 	public boolean isNativeLibraryInstalled();
 
 }

@@ -43,6 +43,10 @@ public class XugglerUtil {
 		return getXuggler().isEnabled(checkNativeLibraries);
 	}
 
+	public static boolean isNativeLibraryCopied() {
+		return getXuggler().isNativeLibraryCopied();
+	}
+
 	public static boolean isNativeLibraryInstalled() {
 		return getXuggler().isNativeLibraryInstalled();
 	}

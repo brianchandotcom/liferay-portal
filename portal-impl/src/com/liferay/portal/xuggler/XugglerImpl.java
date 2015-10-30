@@ -62,6 +62,8 @@ public class XugglerImpl implements Xuggler {
 				new URL(PropsValues.XUGGLER_JAR_URL + name),
 				PropsValues.LIFERAY_LIB_PORTAL_DIR, name,
 				(URLClassLoader)classLoader);
+
+			_isNativeLibraryCopied = true;
 		}
 		catch (Exception e) {
 			_log.error("Unable to install jar " + name, e);
@@ -98,6 +100,11 @@ public class XugglerImpl implements Xuggler {
 		}
 
 		return false;
+	}
+
+	@Override
+	public boolean isNativeLibraryCopied() {
+		return _isNativeLibraryCopied;
 	}
 
 	@Override
@@ -155,5 +162,6 @@ public class XugglerImpl implements Xuggler {
 
 	private static boolean _informAdministrator = true;
 	private static boolean _nativeLibraryInstalled;
+	private static boolean _isNativeLibraryCopied;
 
 }

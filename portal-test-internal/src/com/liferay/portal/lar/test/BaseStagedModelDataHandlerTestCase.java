@@ -150,10 +150,6 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 	}
 
 	public void testLastPublishDate() throws Exception {
-
-		// Temporary solution to not fail on Staged Models don't have repository
-		// support yet
-
 		if (!supportLastPublishDateUpdate()) {
 			return;
 		}

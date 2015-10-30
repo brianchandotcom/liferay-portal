@@ -111,6 +111,8 @@
 			<var name="privateVirtualHosts" value="true" />
 		</execute>
 
+		<execute macro="User#logoutPG" />
+
 		<execute macro="User#firstLoginPG">
 			<var name="loginViaDockbar" value="true" />
 			<var name="password" value="test" />

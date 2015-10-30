@@ -15,7 +15,6 @@
 package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.upgrade.BaseUpgradeLastPublishDate;
-import com.liferay.portal.util.PortletKeys;
 
 /**
  * @author Levente Hudák
@@ -50,7 +49,7 @@ public class UpgradeLastPublishDate extends BaseUpgradeLastPublishDate {
 	protected void upgradeBlogs() throws Exception {
 		runSQL("alter table BlogsEntry add lastPublishDate DATE null");
 
-		updateLastPublishDates(PortletKeys.BLOGS, "BlogsEntry");
+		updateLastPublishDates("33", "BlogsEntry");
 	}
 
 	protected void upgradeDocumentLibrary() throws Exception {
@@ -86,11 +85,11 @@ public class UpgradeLastPublishDate extends BaseUpgradeLastPublishDate {
 	protected void upgradeLayoutsAdmin() throws Exception {
 		runSQL("alter table Layout add lastPublishDate DATE null");
 
-		updateLastPublishDates(PortletKeys.LAYOUTS_ADMIN, "Layout");
+		updateLastPublishDates("88", "Layout");
 
 		runSQL("alter table LayoutFriendlyURL add lastPublishDate DATE null");
 
-		updateLastPublishDates(PortletKeys.LAYOUTS_ADMIN, "LayoutFriendlyURL");
+		updateLastPublishDates("88", "LayoutFriendlyURL");
 	}
 
 	protected void upgradeMessageBoards() throws Exception {
@@ -141,7 +140,7 @@ public class UpgradeLastPublishDate extends BaseUpgradeLastPublishDate {
 	protected void upgradeSiteAdmin() throws Exception {
 		runSQL("alter table Team add lastPublishDate DATE null");
 
-		updateLastPublishDates(PortletKeys.SITE_ADMIN, "Team");
+		updateLastPublishDates("134", "Team");
 	}
 
 }

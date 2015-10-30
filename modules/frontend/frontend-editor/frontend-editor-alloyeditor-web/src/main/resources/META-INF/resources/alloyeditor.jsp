@@ -91,6 +91,30 @@ if (data != null) {
 			AlloyEditor.regexBasePath = /(^|.*[\\\/])(?:liferay-alloy-editor[^/]+|liferay-alloy-editor)\.js(?:\?.*|;.*)?$/i;
 
 			Liferay.namespace('EDITORS')['<%= editorName %>'] = true;
+
+			CKEDITOR.scriptLoader.loadScripts = function(scripts, success, failure) {
+				AUI().use(
+					'aui-base',
+					function(A) {
+						scripts = scripts.filter(
+							function(item) {
+								return !A.one('script[src=' + item + ']');
+							}
+						);
+
+						if (scripts.length) {
+							CKEDITOR.scriptLoader.load(scripts, success, failure);
+						}
+						else {
+							success();
+						}
+					}
+				);
+			};
+
+			CKEDITOR.getNextZIndex = function() {
+				return CKEDITOR.dialog._.currentZIndex ? CKEDITOR.dialog._.currentZIndex + 10 : Liferay.zIndex.WINDOW + 10;
+			};
 		</script>
 	</liferay-util:html-top>
 </c:if>

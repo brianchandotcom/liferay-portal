@@ -155,7 +155,7 @@
 </tr>
 <tr>
 	<td>NESTED_FIELD</td>
-	<td>//div[@data-fieldname='${key_fieldName}']/div[@data-fieldname='${key_nestedField}']/input</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/div[@data-fieldname='${key_nestedFieldName}']/input</td>
 	<td></td>
 </tr>
 <tr>

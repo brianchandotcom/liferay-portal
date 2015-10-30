@@ -1097,7 +1097,7 @@
 							dialog:	{
 								bodyContent: changeDeleteText,
 								destroyOnHide: true,
-								height: 250,
+								height: 400,
 								hideOn: [],
 								resizable: false,
 								toolbars: {

@@ -285,7 +285,7 @@ if ((category != null) && layout.isTypeControlPanel()) {
 								<liferay-ui:search-container-column-user
 									date="<%= thread.getLastPostDate() %>"
 									name="last-post"
-									userId="<%= thread.getLastPostByUserId() %>"
+									property="lastPostByUserId"
 								/>
 
 								<liferay-ui:search-container-column-status

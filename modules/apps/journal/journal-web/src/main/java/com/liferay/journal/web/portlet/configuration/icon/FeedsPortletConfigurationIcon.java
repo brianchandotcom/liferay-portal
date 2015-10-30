@@ -37,11 +37,6 @@ public class FeedsPortletConfigurationIcon
 	}
 
 	@Override
-	public String getImage() {
-		return "../aui/rss";
-	}
-
-	@Override
 	public String getMessage() {
 		return "feeds";
 	}

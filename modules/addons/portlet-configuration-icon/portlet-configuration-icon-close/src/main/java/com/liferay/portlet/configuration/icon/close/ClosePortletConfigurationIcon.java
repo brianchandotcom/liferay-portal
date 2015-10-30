@@ -35,11 +35,6 @@ public class ClosePortletConfigurationIcon
 	}
 
 	@Override
-	public String getImage() {
-		return "../aui/remove";
-	}
-
-	@Override
 	public String getMessage() {
 		return "remove";
 	}

@@ -35,11 +35,6 @@ public class PrintPortletConfigurationIcon
 	}
 
 	@Override
-	public String getImage() {
-		return "../aui/print";
-	}
-
-	@Override
 	public String getMessage() {
 		return "print";
 	}

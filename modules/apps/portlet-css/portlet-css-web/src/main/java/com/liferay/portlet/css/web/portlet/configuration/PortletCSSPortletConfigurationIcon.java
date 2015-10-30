@@ -41,11 +41,6 @@ public class PortletCSSPortletConfigurationIcon
 	}
 
 	@Override
-	public String getImage() {
-		return "../aui/picture";
-	}
-
-	@Override
 	public String getMessage() {
 		return "look-and-feel";
 	}

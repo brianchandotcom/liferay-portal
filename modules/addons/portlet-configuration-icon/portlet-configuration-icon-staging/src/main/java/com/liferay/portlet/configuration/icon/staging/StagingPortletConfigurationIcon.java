@@ -38,11 +38,6 @@ public class StagingPortletConfigurationIcon
 	}
 
 	@Override
-	public String getImage() {
-		return "../aui/share";
-	}
-
-	@Override
 	public String getMessage() {
 		return "staging";
 	}

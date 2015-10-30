@@ -46,11 +46,6 @@ public class NetvibesPortletConfigurationIcon
 	}
 
 	@Override
-	public String getIconCssClass() {
-		return "icon-plus-sign";
-	}
-
-	@Override
 	public String getMessage() {
 		return "add-to-netvibes";
 	}

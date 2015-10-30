@@ -34,11 +34,6 @@ public class HelpPortletConfigurationIcon extends BasePortletConfigurationIcon {
 	}
 
 	@Override
-	public String getImage() {
-		return "../aui/question-sign";
-	}
-
-	@Override
 	public String getMessage() {
 		return "help";
 	}

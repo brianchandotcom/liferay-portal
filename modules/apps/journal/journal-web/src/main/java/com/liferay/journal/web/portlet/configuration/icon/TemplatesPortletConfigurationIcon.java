@@ -30,11 +30,6 @@ public class TemplatesPortletConfigurationIcon
 	}
 
 	@Override
-	public String getImage() {
-		return "../aui/list-alt";
-	}
-
-	@Override
 	public String getMessage() {
 		return "templates";
 	}

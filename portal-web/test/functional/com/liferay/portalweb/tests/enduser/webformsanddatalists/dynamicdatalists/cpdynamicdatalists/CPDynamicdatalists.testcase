@@ -99,6 +99,8 @@
 	</command>
 
 	<command name="AddFormTemplate" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlFormTemplateName" value="Data Definition Form Template Name" />
 		<var name="field" value="Text" />
@@ -1145,6 +1147,8 @@
 	</command>
 
 	<command name="AddListRecordWithHTMLField" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="Record HTML" />
@@ -2480,6 +2484,8 @@
 	</command>
 
 	<command name="EditBooleanFieldFieldLabel" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="Yes" />
@@ -2833,6 +2839,8 @@
 	</command>
 
 	<command name="EditDataDefinition" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
 		<var name="ddlDataDefinitionDescriptionEdit" value="Data Definition Description Edit" />
 		<var name="ddlDataDefinitionName" value="Data Definition" />
@@ -3176,6 +3184,8 @@
 	</command>
 
 	<command name="EditListRecord" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="field" value="Text" />
@@ -3445,6 +3455,8 @@
 	</command>
 
 	<command name="EditSelectFieldOptions" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="field" value="Select" />
 		<var name="fieldFieldLabel" value="Select" />

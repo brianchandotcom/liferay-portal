@@ -15,6 +15,7 @@
 package com.liferay.application.list.taglib.servlet.taglib;
 
 import com.liferay.application.list.PanelApp;
+import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -24,6 +25,9 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.taglib.servlet.PipingServletResponse;
+
+import java.io.IOException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,11 +35,33 @@ import java.util.Map;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
 
 /**
  * @author Adolfo Pérez
  */
 public class PanelAppTag extends BasePanelTag {
+
+	@Override
+	public int doEndTag() throws JspException {
+		if (_panelApp != null) {
+			request.setAttribute(ApplicationListWebKeys.PANEL_APP, _panelApp);
+
+			try {
+				boolean include = _panelApp.include(
+					request, new PipingServletResponse(pageContext));
+
+				if (include) {
+					return EVAL_PAGE;
+				}
+			}
+			catch (IOException ioe) {
+				_log.error(ioe);
+			}
+		}
+
+		return super.doEndTag();
+	}
 
 	public void setActive(Boolean active) {
 		_active = active;

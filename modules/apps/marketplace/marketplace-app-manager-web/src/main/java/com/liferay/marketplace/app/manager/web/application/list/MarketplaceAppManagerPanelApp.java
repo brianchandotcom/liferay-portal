@@ -14,7 +14,7 @@
 
 package com.liferay.marketplace.app.manager.web.application.list;
 
-import com.liferay.application.list.BaseControlPanelEntryPanelApp;
+import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.marketplace.app.manager.web.constants.MarketplaceAppManagerPortletKeys;
@@ -38,8 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = PanelApp.class
 )
-public class MarketplaceAppManagerPanelApp
-	extends BaseControlPanelEntryPanelApp {
+public class MarketplaceAppManagerPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {

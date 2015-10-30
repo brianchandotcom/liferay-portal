@@ -14,7 +14,7 @@
 
 package com.liferay.mobile.device.rules.web.application.list;
 
-import com.liferay.application.list.BaseControlPanelEntryPanelApp;
+import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
@@ -34,8 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = PanelApp.class
 )
-public class MobileDeviceFamiliesPanelApp
-	extends BaseControlPanelEntryPanelApp {
+public class MobileDeviceFamiliesPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {

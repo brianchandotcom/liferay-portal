@@ -14,7 +14,7 @@
 
 package com.liferay.password.policies.admin.web.application.list;
 
-import com.liferay.application.list.BaseControlPanelEntryPanelApp;
+import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.password.policies.admin.web.constants.PasswordPoliciesAdminPortletKeys;
@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = PanelApp.class
 )
-public class PasswordPoliciesPanelApp extends BaseControlPanelEntryPanelApp {
+public class PasswordPoliciesPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {

@@ -17,9 +17,10 @@ package com.liferay.portal.upgrade.v7_0_0;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -36,6 +37,11 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
+
+			DatabaseMetaData databaseMetaData = con.getMetaData();
+
+			boolean supportsBatchUpdates =
+				databaseMetaData.supportsBatchUpdates();
 
 			ps = con.prepareStatement(
 				"select resourcePermissionId, primKey, primKeyId, actionIds, " +
@@ -58,23 +64,49 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 					continue;
 				}
 
-				StringBundler sb = new StringBundler(6);
+				PreparedStatement ps2 = null;
 
-				sb.append("update ResourcePermission set primKeyId = ");
-				sb.append(newPrimKeyId);
-				sb.append(", viewActionId = ");
+				try {
+					ps2 = con.prepareStatement(
+						"update ResourcePermission set primKeyId = ?," +
+							"viewActionId = ?  where resourcePermissionId = ?");
 
-				if (newViewActionId) {
-					sb.append("[$TRUE$]");
+					ps2.setLong(1, newPrimKeyId);
+
+					if (newViewActionId) {
+						ps2.setBoolean(2, true);
+					}
+					else {
+						ps2.setBoolean(2, false);
+					}
+
+					ps2.setLong(3, resourcePermissionId);
+
+					int count = 0;
+
+					if (supportsBatchUpdates) {
+						ps2.addBatch();
+
+						if (count == PropsValues.HIBERNATE_JDBC_BATCH_SIZE) {
+							ps2.executeBatch();
+
+							count = 0;
+						}
+						else {
+							count++;
+						}
+					}
+					else {
+						ps2.executeUpdate();
+					}
+
+					if (supportsBatchUpdates && (count > 0)) {
+						ps2.executeBatch();
+					}
 				}
-				else {
-					sb.append("[$FALSE$]");
+				finally {
+					DataAccess.cleanUp(ps2);
 				}
-
-				sb.append(" where resourcePermissionId = ");
-				sb.append(resourcePermissionId);
-
-				runSQL(sb.toString());
 			}
 		}
 		finally {

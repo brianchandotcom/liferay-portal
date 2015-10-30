@@ -239,9 +239,18 @@
 
 			.drag-handle {
 				color: #C3CFD8;
+				cursor: pointer;
 				font-size: 22px;
 				position: absolute;
 				top: 12px;
+
+				&:hover {
+					font-weight: bold;
+				}
+			}
+
+			.drag-placeholder {
+				opacity: 0.5;
 			}
 
 			.last-option .close {

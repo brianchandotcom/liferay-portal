@@ -3,7 +3,11 @@ AUI.add(
 	function(A) {
 		var AArray = A.Array;
 
-		var TPL_DRAG_HELPER = '<div class="drag-handle icon-reorder"><span aria-hidden="true"></span></div>';
+		var TPL_DRAG_HANDLE = '<div class="drag-handle icon-reorder"><span aria-hidden="true"></span></div>';
+
+		var TPL_DRAG_HELPER = '<div class="drag-helper"></div>';
+
+		var TPL_DRAG_PLACEHOLDER = '<div class="drag-placeholder"></div>';
 
 		var TPL_REMOVE_BUTTON = '<button class="close close-modal" type="button"><span aria-hidden="true">×</span></button>';
 
@@ -161,6 +165,12 @@ AUI.add(
 						var dragNode = event.target.get('node');
 
 						instance._dragStartIndex = instance._getNodeIndex(dragNode);
+
+						var sortableList = instance.get('sortableList');
+
+						var placeholderNode = sortableList.get('placeholder');
+
+						placeholderNode.setContent(dragNode.clone().show());
 					},
 
 					_bindFieldUI: function(field) {
@@ -225,7 +235,7 @@ AUI.add(
 
 						var options = container.one('.options');
 
-						var siblings = options.all('.lfr-ddm-form-field-container');
+						var siblings = options.all('> .lfr-ddm-form-field-container');
 
 						return siblings.indexOf(node);
 					},
@@ -293,7 +303,7 @@ AUI.add(
 
 						var container = field.get('container');
 
-						container.append(TPL_DRAG_HELPER);
+						container.append(TPL_DRAG_HANDLE);
 						container.append(TPL_REMOVE_BUTTON);
 					},
 
@@ -324,7 +334,8 @@ AUI.add(
 								dd: {
 									handles: ['.drag-handle']
 								},
-								helper: A.Node.create('<div></div>'),
+								helper: A.Node.create(TPL_DRAG_HELPER),
+								placeholder: A.Node.create(TPL_DRAG_PLACEHOLDER),
 								sortCondition: A.bind('_canSortNode', instance)
 							}
 						);

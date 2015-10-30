@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -70,6 +71,7 @@ import com.liferay.portlet.exportimport.lar.MissingReference;
 import com.liferay.portlet.exportimport.lar.MissingReferences;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataContextFactoryUtil;
+import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.portlet.exportimport.lar.UserIdStrategy;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalServiceUtil;
@@ -182,6 +184,28 @@ public class ExportImportHelperUtilTest {
 		_referrerStagedModel = JournalTestUtil.addArticle(
 			_stagingGroup.getGroupId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString());
+	}
+
+	@Test
+	public void testDataSiteLevelPortletsRank() throws Exception {
+		List<Portlet> portlets =
+			ExportImportHelperUtil.getDataSiteLevelPortlets(
+				TestPropsValues.getCompanyId());
+
+		Integer previousRank = null;
+
+		for (Portlet portlet : portlets) {
+			PortletDataHandler portletDataHandler =
+				portlet.getPortletDataHandlerInstance();
+
+			int actualRank = portletDataHandler.getRank();
+
+			if ((previousRank != null) && (actualRank < previousRank)) {
+				Assert.fail();
+			}
+
+			previousRank = actualRank;
+		}
 	}
 
 	@Ignore

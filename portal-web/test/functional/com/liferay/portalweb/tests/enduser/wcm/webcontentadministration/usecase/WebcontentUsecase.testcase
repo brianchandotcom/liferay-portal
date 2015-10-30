@@ -810,8 +810,6 @@
 		</execute>
 
 		<execute macro="WebContent#addWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateName" value="WC Template1 Name" />
 			<var name="webContentText" value="WC WebContent Text" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
@@ -831,7 +829,7 @@
 		</execute>
 
 		<execute macro="WebContent#selectTemplateCP">
-			<var name="templateName" value="WC Template2 Name" />
+			<var name="templateName" value="WC Template1 Name" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
@@ -844,7 +842,7 @@
 		</execute>
 
 		<execute macro="WebContent#viewSelectedTemplateCP">
-			<var name="templateName" value="WC Template2 Name" />
+			<var name="templateName" value="WC Template1 Name" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 	</command>

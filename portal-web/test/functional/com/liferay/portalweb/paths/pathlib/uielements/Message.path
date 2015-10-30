@@ -119,6 +119,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INFO_NO_RESULTS_FOUND</td>
+	<td>//div[contains(@id,'EmptyResultsMessage') and contains(@class,'alert-info')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INFO_PAGE_DOES_NOT_EXIST</td>
 	<td>//div[@class='alert alert-info' and contains(.,'This page does not exist yet. Use the form below to create it')]</td>
 	<td></td>

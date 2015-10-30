@@ -36,6 +36,7 @@ page import="com.liferay.dynamic.data.lists.model.DDLRecord" %><%@
 page import="com.liferay.dynamic.data.lists.model.DDLRecordSet" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.StructureDefinitionException" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.StructureLayoutException" %><%@
+page import="com.liferay.dynamic.data.mapping.exception.StructureNameException" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMStructure" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMStructureVersion" %><%@
 page import="com.liferay.dynamic.data.mapping.storage.DDMFormValues" %><%@

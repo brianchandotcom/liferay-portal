@@ -1,11 +1,16 @@
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask
 import com.liferay.gradle.util.FileUtil
-import com.liferay.gradle.util.copy.StripPathSegmentsAction
+import com.liferay.gradle.util.copy.ReplaceLeadingPathAction
+
+configurations {
+	bourbon
+}
 
 task buildBourbon(type: Copy)
 task buildCssCommon(type: Copy)
 task publishNodeModule(type: PublishNodeModuleTask)
 
+String bourbonVersion = "4.2.3"
 File commonCssDestinationDir = file("tmp/META-INF/resources")
 
 buildBourbon {
@@ -20,9 +25,12 @@ buildBourbon {
 	into commonCssDestinationDir
 
 	into(bourbonDestinationDir.name) {
-		eachFile new StripPathSegmentsAction(8)
-		from ({ zipTree(configurations.compile.fileCollection { it.name.startsWith("bourbon") }.singleFile) })
-		include "**/app/assets/stylesheets/**/*"
+		eachFile new ReplaceLeadingPathAction("bourbon/META-INF/resources/webjars/bourbon/${bourbonVersion}/app/assets/stylesheets": "bourbon")
+
+		from {
+			zipTree(configurations.bourbon.singleFile)
+		}
+
 		includeEmptyDirs = false
 	}
 }
@@ -38,9 +46,10 @@ classes {
 }
 
 dependencies {
+	bourbon group: "org.webjars.bower", name: "bourbon", transitive: false, version: bourbonVersion
+
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
-	compile group: "org.webjars.bower", name: "bourbon", version: "4.2.3"
 }
 
 liferay {

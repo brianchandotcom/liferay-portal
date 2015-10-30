@@ -39,7 +39,6 @@ String modifiedDate = StringPool.BLANK;
 
 String receiverUserDisplayURL = StringPool.BLANK;
 String receiverUserFullName = StringPool.BLANK;
-String receiverUserPortaitURL = StringPool.BLANK;
 String receiverUserScreenName = StringPool.BLANK;
 
 boolean edit = ParamUtil.getBoolean(request, "edit");
@@ -54,7 +53,6 @@ if ((microblogsEntry != null) && !edit) {
 		User receiverUser = UserLocalServiceUtil.getUserById(microblogsEntry.getUserId());
 
 		receiverUserDisplayURL = receiverUser.getDisplayURL(themeDisplay);
-		receiverUserPortaitURL = receiverUser.getPortraitURL(themeDisplay);
 		receiverUserScreenName = receiverUser.getScreenName();
 	}
 	catch (NoSuchUserException nsue) {
@@ -92,7 +90,11 @@ if (comment) {
 		<c:otherwise>
 			<div class="microblogs-entry">
 				<span class="thumbnail">
-					<a href="<%= receiverUserDisplayURL %>"><img alt="<%= HtmlUtil.escapeAttribute(receiverUserFullName) %>" src="<%= receiverUserPortaitURL %>" /></a>
+					<a href="<%= receiverUserDisplayURL %>">
+						<liferay-ui:user-portrait
+							userId="<%= (microblogsEntry != null) ? microblogsEntry.getUserId() : 0 %>"
+						/>
+					</a>
 				</span>
 
 				<div class="entry-bubble">
@@ -141,7 +143,9 @@ if (comment) {
 	<c:if test="<%= !repost %>">
 		<c:if test="<%= comment %>">
 			<span class="thumbnail">
-				<a href="<%= user.getDisplayURL(themeDisplay) %>"><img alt="<%= HtmlUtil.escapeAttribute(user.getFullName()) %>" src="<%= user.getPortraitURL(themeDisplay) %>" /></a>
+				<liferay-ui:user-portrait
+					userId="<%= user.getUserId() %>"
+				/>
 			</span>
 		</c:if>
 

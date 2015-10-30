@@ -107,15 +107,13 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 								<%
 								User parentMessageUser = parentDiscussionComment.getUser();
-
-								boolean male = (parentMessageUser == null) ? true : parentMessageUser.isMale();
-								long portraitId = (parentMessageUser == null) ? 0 : parentMessageUser.getPortraitId();
-								String userUuid = (parentMessageUser == null) ? null : parentMessageUser.getUserUuid();
 								%>
 
 								<span>
 									<div class="lfr-discussion-reply-user-avatar">
-										<img alt="<%= HtmlUtil.escapeAttribute(parentDiscussionComment.getUserName()) %>" class="user-status-avatar-image" src="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), male, portraitId, userUuid) %>" width="30" />
+										<liferay-ui:user-portrait
+											userId="<%= parentMessageUser.getUserId() %>"
+										/>
 									</div>
 
 									<div class="lfr-discussion-reply-user-name">

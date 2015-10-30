@@ -33,10 +33,8 @@
 					<img alt="" class="<%= imageCSSClass %><%= backgroundImage ? " sr-only" : "" %>" src="<%= imageUrl %>" />
 				</aui:a>
 
-				<c:if test="<%= Validator.isNotNull(smallImageUrl) %>">
-					<div class="sticker sticker-bottom <%= smallImageCSSClass %>">
-						<img alt="thumbnail" class="img-responsive" src="<%= smallImageUrl %>">
-					</div>
+				<c:if test="<%= Validator.isNotNull(stickerBottom) %>">
+					<%= stickerBottom %>
 				</c:if>
 			</div>
 

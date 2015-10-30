@@ -1985,38 +1985,6 @@
 		<execute macro="RelatedAssets#viewPG">
 			<var name="assetTitle" value="WC WebContent Title" />
 		</execute>
-
-		<execute macro="PermissionsInline#gotoBlogsEntryPG">
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Role#removePermissionPG">
-			<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_VIEW" />
-			<var name="roleName" value="Guest" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewPG">
-			<var name="assetContent" value="WC WebContent Content" />
-			<var name="assetTitle" value="WC WebContent Title" />
-			<var name="relatedAssetTitleHidden" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewNoEntryAsGuestPG">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="User#loginPG" />
 	</command>
 
 	<command name="ViewRelatedAssetViaDMPortlet" priority="3">

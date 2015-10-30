@@ -304,8 +304,7 @@ AUI.add(
 
 						var container = field.get('container');
 
-						container.append(TPL_DRAG_HANDLE);
-						container.append(TPL_REMOVE_BUTTON);
+						container.append(TPL_DRAG_HANDLE + TPL_REMOVE_BUTTON);
 					},
 
 					_restoreField: function(field, contextValue) {

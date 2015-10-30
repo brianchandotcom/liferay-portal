@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.settings.web.portlet.action;
+package com.liferay.portal.ldap.internal.portal.settings.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
@@ -31,7 +31,8 @@ import org.osgi.service.component.annotations.Component;
 		"mvc.command.name=/portal_settings/edit_ldap_server"
 	}
 )
-public class EditLDAPServerMVCRenderCommand implements MVCRenderCommand {
+public class PortalSettingsEditLDAPServerMVCRenderCommand
+	implements MVCRenderCommand {
 
 	@Override
 	public String render(

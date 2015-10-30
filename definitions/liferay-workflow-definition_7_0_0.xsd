@@ -425,6 +425,7 @@
 			<xs:enumeration value="beanshell" />
 			<xs:enumeration value="drl" />
 			<xs:enumeration value="groovy" />
+			<xs:enumeration value="java" />
 			<xs:enumeration value="javascript" />
 			<xs:enumeration value="python" />
 			<xs:enumeration value="ruby" />

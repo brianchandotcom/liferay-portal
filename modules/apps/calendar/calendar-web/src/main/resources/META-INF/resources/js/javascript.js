@@ -1864,7 +1864,7 @@ AUI.add(
 								declineLinkEnabled: instance._hasWorkflowStatusPermission(schedulerEvent, CalendarWorkflow.STATUS_DENIED),
 								editing: editing,
 								endTime: templateData.endDate,
-								hasWorkflowInstanceLink:  schedulerEvent.get('hasWorkflowInstanceLink'),
+								hasWorkflowInstanceLink: schedulerEvent.get('hasWorkflowInstanceLink'),
 								instanceIndex: schedulerEvent.get('instanceIndex'),
 								maybeLinkEnabled: instance._hasWorkflowStatusPermission(schedulerEvent, CalendarWorkflow.STATUS_MAYBE),
 								permissions: permissions,

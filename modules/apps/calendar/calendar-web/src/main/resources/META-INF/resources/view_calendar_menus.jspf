@@ -101,8 +101,49 @@ String backURL = PortalUtil.getCurrentURL(request);
 					},
 					icon: 'icon-calendar',
 					id: 'manage'
+				},
+				{
+					caption: '<liferay-ui:message key="permissions" />',
+					fn: function(event) {
+						var instance = this;
+
+						<liferay-security:permissionsURL
+							modelResource="<%= CalendarPortletPermission.RESOURCE_NAME %>"
+							modelResourceDescription=""
+							resourcePrimKey="<%= String.valueOf(scopeGroupId) %>"
+							var="permissionsURL"
+							windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+						/>
+
+						Liferay.Util.openWindow(
+							{
+								dialog: {
+									destroyOnHide: true,
+									modal: true
+								},
+								refreshWindow: window,
+								title: '<liferay-ui:message key="permissions" />',
+								uri: decodeURIComponent('<%= permissionsURL %>')
+							}
+						);
+					},
+					icon: 'icon-lock',
+					id: 'permissions'
 				}
 			],
+			on: {
+				visibleChange: function(event) {
+					var instance = this;
+
+					var hiddenItems = [];
+
+					if (instance.calendarResourceId !== '<%= groupCalendarResource.getCalendarResourceId() %>') {
+						hiddenItems.push('permissions');
+					}
+
+					instance.set('hiddenItems', hiddenItems);
+				}
+			},
 			visible: false,
 			width: 290,
 			zIndex: 500
@@ -252,9 +293,9 @@ String backURL = PortalUtil.getCurrentURL(request);
 							uri: A.Lang.sub(
 								decodeURIComponent('<%= permissionsURL %>'),
 								{
+									modelResourceDescription: activeCalendar.get('name'),
 									resourceGroupId: activeCalendar.get('groupId'),
-									resourcePrimKey: activeCalendar.get('calendarId'),
-									modelResourceDescription: activeCalendar.get('name')
+									resourcePrimKey: activeCalendar.get('calendarId')
 								}
 							)
 						}
@@ -424,14 +465,14 @@ String backURL = PortalUtil.getCurrentURL(request);
 		function(event) {
 			var currentTarget = event.currentTarget;
 
+			window.<portlet:namespace />calendarListsMenu.calendarResourceId = currentTarget.getAttribute('data-calendarResourceId');
+
 			window.<portlet:namespace />calendarListsMenu.setAttrs(
 				{
 					alignNode: currentTarget,
 					visible: !window.<portlet:namespace />calendarListsMenu.get('visible')
 				}
 			);
-
-			window.<portlet:namespace />calendarListsMenu.calendarResourceId = currentTarget.getAttribute('data-calendarResourceId');
 
 			event.stopImmediatePropagation();
 		},

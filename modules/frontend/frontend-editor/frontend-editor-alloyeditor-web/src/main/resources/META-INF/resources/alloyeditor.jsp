@@ -73,6 +73,12 @@ EditorOptions editorOptions = null;
 if (data != null) {
 	editorOptions = (EditorOptions)data.get("editorOptions");
 }
+
+Map<String, Object> editorOptionsDynamicAttributes = null;
+
+if (editorOptions != null) {
+	editorOptionsDynamicAttributes = editorOptions.getDynamicAttributes();
+}
 %>
 
 <c:if test="<%= !skipEditorLoading %>">
@@ -91,6 +97,30 @@ if (data != null) {
 			AlloyEditor.regexBasePath = /(^|.*[\\\/])(?:liferay-alloy-editor[^/]+|liferay-alloy-editor)\.js(?:\?.*|;.*)?$/i;
 
 			Liferay.namespace('EDITORS')['<%= editorName %>'] = true;
+
+			CKEDITOR.scriptLoader.loadScripts = function(scripts, success, failure) {
+				AUI().use(
+					'aui-base',
+					function(A) {
+						scripts = scripts.filter(
+							function(item) {
+								return !A.one('script[src=' + item + ']');
+							}
+						);
+
+						if (scripts.length) {
+							CKEDITOR.scriptLoader.load(scripts, success, failure);
+						}
+						else {
+							success();
+						}
+					}
+				);
+			};
+
+			CKEDITOR.getNextZIndex = function() {
+				return CKEDITOR.dialog._.currentZIndex ? CKEDITOR.dialog._.currentZIndex + 10 : Liferay.zIndex.WINDOW + 10;
+			};
 		</script>
 	</liferay-util:html-top>
 </c:if>
@@ -212,6 +242,19 @@ if (showSource) {
 				textMode: <%= (editorOptions != null) ? editorOptions.isTextMode() : Boolean.FALSE.toString() %>
 			}
 		).render();
+
+		<%
+		boolean useCustomDataProcessor = (editorOptionsDynamicAttributes != null) && GetterUtil.getBoolean(editorOptionsDynamicAttributes.get("useCustomDataProcessor"));
+		%>
+
+		<c:if test="<%= useCustomDataProcessor %>">
+			alloyEditor.getNativeEditor().on(
+				'customDataProcessorLoaded',
+				function() {
+					alloyEditor.setHTML(getInitialContent());
+				}
+			);
+		</c:if>
 
 		<liferay-util:dynamic-include key='<%= "com.liferay.frontend.editor.alloyeditor.web#" + editorName + "#onEditorCreate" %>' />
 	};

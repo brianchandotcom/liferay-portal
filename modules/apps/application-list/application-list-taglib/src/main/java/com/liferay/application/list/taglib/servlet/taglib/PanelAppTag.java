@@ -44,18 +44,20 @@ public class PanelAppTag extends BasePanelTag {
 
 	@Override
 	public int doEndTag() throws JspException {
-		request.setAttribute(ApplicationListWebKeys.PANEL_APP, _panelApp);
+		if (_panelApp != null) {
+			request.setAttribute(ApplicationListWebKeys.PANEL_APP, _panelApp);
 
-		try {
-			boolean include = _panelApp.include(
-				request, new PipingServletResponse(pageContext));
+			try {
+				boolean include = _panelApp.include(
+					request, new PipingServletResponse(pageContext));
 
-			if (include) {
-				return EVAL_PAGE;
+				if (include) {
+					return EVAL_PAGE;
+				}
 			}
-		}
-		catch (IOException ioe) {
-			_log.error(ioe);
+			catch (IOException ioe) {
+				_log.error(ioe);
+			}
 		}
 
 		return super.doEndTag();

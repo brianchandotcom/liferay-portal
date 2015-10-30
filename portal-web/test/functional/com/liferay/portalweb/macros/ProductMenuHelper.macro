@@ -58,6 +58,16 @@
 
 	<command name="openProductMenu">
 		<if>
+			<and>
+				<condition function="IsElementPresent" locator1="DockbarAddpanelcontent#CONTENT_TAB" />
+				<condition function="IsVisible" locator1="DockbarAddpanelcontent#CONTENT_TAB" />
+			</and>
+			<then>
+				<execute function="Click#clickAt" locator1="Dockbar#ADD_ICON" />
+			</then>
+		</if>
+
+		<if>
 			<not>
 				<condition function="IsElementPresent" locator1="ProductMenu#PRODUCT_MENU_OPENED" />
 			</not>

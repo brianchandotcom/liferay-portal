@@ -827,72 +827,63 @@ public class PoshiRunnerContext {
 	}
 
 	private static void _writeTestGeneratedProperties() throws Exception {
-		String testName = PropsValues.TEST_NAME;
-
-		String className =
-			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(testName);
-
 		StringBuilder sb = new StringBuilder();
 
-		Element rootElement = getTestCaseRootElement(className);
+		for (String className : _testCaseClassNames) {
+			Element rootElement = getTestCaseRootElement(className);
 
-		List<Element> rootPropertyElements = rootElement.elements("property");
-
-		for (Element rootPropertyElement : rootPropertyElements) {
-			sb.append(className);
-			sb.append("TestCase.all.");
-			sb.append(rootPropertyElement.attributeValue("name"));
-			sb.append("=");
-			sb.append(rootPropertyElement.attributeValue("value"));
-			sb.append("\n");
-		}
-
-		List<Element> commandElements = new ArrayList<>();
-
-		if (testName.contains("#")) {
-			commandElements.add(getTestCaseCommandElement(testName));
-		}
-		else {
-			commandElements.addAll(rootElement.elements("command"));
-		}
-
-		for (Element commandElement : commandElements) {
-			String commandName = commandElement.attributeValue("name");
-
-			List<Element> commandPropertyElements = commandElement.elements(
+			List<Element> rootPropertyElements = rootElement.elements(
 				"property");
 
-			for (Element commandPropertyElement : commandPropertyElements) {
+			for (Element rootPropertyElement : rootPropertyElements) {
 				sb.append(className);
-				sb.append("TestCase.test");
-				sb.append(commandName);
-				sb.append(".");
-				sb.append(commandPropertyElement.attributeValue("name"));
+				sb.append("TestCase.all.");
+				sb.append(rootPropertyElement.attributeValue("name"));
 				sb.append("=");
-				sb.append(commandPropertyElement.attributeValue("value"));
+				sb.append(rootPropertyElement.attributeValue("value"));
 				sb.append("\n");
 			}
 
-			List<Attribute> commandAttributes = commandElement.attributes();
+			List<Element> commandElements = rootElement.elements("command");
 
-			for (Attribute commandAttribute : commandAttributes) {
-				String commandAttributeName = StringUtil.replace(
-					commandAttribute.getName(), "-", ".");
+			for (Element commandElement : commandElements) {
+				String commandName = commandElement.attributeValue("name");
 
-				if (commandAttributeName.equals("line.number") ||
-					commandAttributeName.equals("name")) {
+				List<Element> commandPropertyElements = commandElement.elements(
+					"property");
 
-					continue;
+				for (Element commandPropertyElement : commandPropertyElements) {
+					sb.append(className);
+					sb.append("TestCase.test");
+					sb.append(commandName);
+					sb.append(".");
+					sb.append(commandPropertyElement.attributeValue("name"));
+					sb.append("=");
+					sb.append(commandPropertyElement.attributeValue("value"));
+					sb.append("\n");
 				}
 
-				sb.append(className);
-				sb.append("TestCase.test");
-				sb.append(commandName);
-				sb.append(".");
-				sb.append(commandAttributeName);
-				sb.append("=");
-				sb.append(commandAttribute.getValue());
-				sb.append("\n");
+				List<Attribute> commandAttributes = commandElement.attributes();
+
+				for (Attribute commandAttribute : commandAttributes) {
+					String commandAttributeName = StringUtil.replace(
+						commandAttribute.getName(), "-", ".");
+
+					if (commandAttributeName.equals("line.number") ||
+						commandAttributeName.equals("name")) {
+
+						continue;
+					}
+
+					sb.append(className);
+					sb.append("TestCase.test");
+					sb.append(commandName);
+					sb.append(".");
+					sb.append(commandAttributeName);
+					sb.append("=");
+					sb.append(commandAttribute.getValue());
+					sb.append("\n");
+				}
 			}
 		}
 

@@ -35,8 +35,8 @@ AUI.add(
 							TextField.superclass.getTemplateContext.apply(instance, arguments),
 							{
 								displayStyle: instance.get('displayStyle'),
-								placeholder: instance._getLocalizedValue(instance.get('placeholder')),
-								tip: instance._getLocalizedValue(instance.get('tip'))
+								placeholder: instance.getLocalizedValue(instance.get('placeholder')),
+								tip: instance.getLocalizedValue(instance.get('tip'))
 							}
 						);
 					},
@@ -57,16 +57,6 @@ AUI.add(
 						}
 
 						return instance;
-					},
-
-					_getLocalizedValue: function(localizedValue) {
-						var instance = this;
-
-						if (Lang.isObject(localizedValue)) {
-							localizedValue = localizedValue[instance.get('locale')];
-						}
-
-						return localizedValue;
 					},
 
 					_renderErrorMessage: function() {

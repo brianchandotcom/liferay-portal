@@ -27,8 +27,8 @@ public interface TextDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
 
 	@DDMFormField(
-		label = "%my-text-field-is",
-		optionLabels = {"%single-line", "%multiple-lines"},
+		label = "%my-text-field-has",
+		optionLabels = {"%a-single-line", "%multiple-lines"},
 		optionValues = {"singleline", "multiline"},
 		properties = {
 			"inline=true", "setting.category=basic", "setting.weight=2"

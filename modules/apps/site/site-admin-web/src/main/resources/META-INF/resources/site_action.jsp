@@ -112,7 +112,7 @@ boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, gr
 		</liferay-portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-arrow-down"
+			iconCssClass="icon-arrow-up"
 			message="export"
 			method="get"
 			url="<%= exportURL.toString() %>"
@@ -128,7 +128,7 @@ boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, gr
 		</liferay-portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-arrow-up"
+			iconCssClass="icon-arrow-down"
 			message="import"
 			method="get"
 			url="<%= importURL.toString() %>"

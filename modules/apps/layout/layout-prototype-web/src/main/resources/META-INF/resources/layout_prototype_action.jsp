@@ -74,7 +74,7 @@ LayoutPrototype layoutPrototype = (LayoutPrototype)row.getObject();
 
 		<liferay-ui:icon
 			cssClass="export-layout-prototype layout-prototype-action"
-			iconCssClass="icon-arrow-down"
+			iconCssClass="icon-arrow-up"
 			message="export"
 			method="get"
 			url="<%= exportURL.toString() %>"
@@ -95,7 +95,7 @@ LayoutPrototype layoutPrototype = (LayoutPrototype)row.getObject();
 
 		<liferay-ui:icon
 			cssClass="import-layout-prototype layout-prototype-action"
-			iconCssClass="icon-arrow-up"
+			iconCssClass="icon-arrow-down"
 			message="import"
 			method="get"
 			url="<%= importURL.toString() %>"

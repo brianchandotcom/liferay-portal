@@ -20,6 +20,8 @@
 String displayStyle = ddlFormAdminDisplayContext.getDisplayStyle();
 PortletURL portletURL = ddlFormAdminDisplayContext.getPortletURL();
 
+portletURL.setParameter("displayStyle", displayStyle);
+
 RecordSetSearch recordSetSearch = new RecordSetSearch(renderRequest, portletURL);
 
 String orderByCol = ParamUtil.getString(request, "orderByCol", "modified-date");

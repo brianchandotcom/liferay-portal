@@ -2238,6 +2238,8 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		<sequential>
 			<fail message="Please set the property ${mobile.android.home}." unless="mobile.android.home" />
 
+			<echo file="${user.home}/.android/ddms.cfg">pingId=0</echo>
+
 			<execute>
 				echo no | ${mobile.android.home}/tools/android create avd -f -n deviceName -t android-19
 			</execute>

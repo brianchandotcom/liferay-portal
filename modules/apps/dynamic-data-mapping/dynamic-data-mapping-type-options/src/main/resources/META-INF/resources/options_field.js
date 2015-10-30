@@ -96,6 +96,7 @@ AUI.add(
 						field.get('repetitions').forEach(
 							function(item) {
 								var key = item.get('key');
+
 								var label = {};
 
 								if (key) {
@@ -176,7 +177,7 @@ AUI.add(
 					_bindFieldUI: function(field) {
 						var instance = this;
 
-						field.after('render', A.bind(instance._renderFieldUI, instance, field));
+						field.after('render', A.bind('_renderFieldUI', instance, field));
 
 						field.bindContainerEvent('click', A.bind('_onFieldClickClose', instance, field), '.close');
 						field.bindInputEvent('valuechange', A.bind('_onFieldValueChange', instance, field));

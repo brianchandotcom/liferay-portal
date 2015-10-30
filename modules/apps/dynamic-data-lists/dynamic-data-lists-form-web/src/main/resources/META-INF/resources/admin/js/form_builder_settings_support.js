@@ -148,9 +148,7 @@ AUI.add(
 			_onSettingsModalXYChange: function(event) {
 				var xy = event.newVal;
 
-				if (xy[1] < 90) {
-					xy[1] = 90;
-				}
+				xy[1] = Math.max(90, xy[1]);
 			},
 
 			_renderFormBuilderField: function() {

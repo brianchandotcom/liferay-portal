@@ -52,6 +52,8 @@
 	</command>
 
 	<command name="AddChildSite" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -253,6 +255,8 @@
 	</command>
 
 	<command name="DeleteSite" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -271,6 +275,8 @@
 	</command>
 
 	<command name="EditSite" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -397,6 +403,8 @@
 	</command>
 
 	<command name="SearchSite" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

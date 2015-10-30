@@ -71,6 +71,8 @@
 	</command>
 
 	<command name="JoinSitePrivateNo" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<var name="membershipType" value="Private" />
 		<var name="password" value="test" />
 		<var name="siteName" value="Site Name" />

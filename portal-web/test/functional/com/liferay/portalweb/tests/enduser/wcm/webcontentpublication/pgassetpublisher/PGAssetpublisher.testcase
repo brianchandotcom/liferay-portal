@@ -774,6 +774,8 @@
 	</command>
 
 	<command name="ConfigureAPPortletDisplayPage" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="AssetPublisherPortlet#configureDisplayPagePG" />
 	</command>
 
@@ -1077,6 +1079,8 @@
 	</command>
 
 	<command name="ConfigureAPPortletSelectedWebContent" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="AssetPublisherPortlet#configureSelectedPG">
 			<var name="selectedAsset" value="Web Content Article" />
 		</execute>

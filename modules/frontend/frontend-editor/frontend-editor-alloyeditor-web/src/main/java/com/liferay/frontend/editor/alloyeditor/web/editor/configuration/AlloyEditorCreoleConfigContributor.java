@@ -18,27 +18,24 @@ import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.RequestBackedPortletURLFactory;
 
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Sergio González
- * @author Roberto Díaz
  */
 @Component(
-	property = {"editor.name=alloyeditor"},
+	property = {"editor.name=alloyeditor_creole"},
 	service = EditorConfigContributor.class
 )
-public class AlloyEditorConfigContributor
+public class AlloyEditorCreoleConfigContributor
 	extends BaseAlloyEditorConfigContributor {
 
 	@Override
@@ -51,110 +48,41 @@ public class AlloyEditorConfigContributor
 			jsonObject, inputEditorTaglibAttributes, themeDisplay,
 			requestBackedPortletURLFactory);
 
+		String extraPlugins = jsonObject.getString("extraPlugins");
+
+		extraPlugins = extraPlugins.replace(
+			",ae_tableresize", StringPool.BLANK);
+		extraPlugins = extraPlugins.concat(",creole");
+
+		jsonObject.put("extraPlugins", extraPlugins);
+
+		Map<String, String> fileBrowserParams =
+			(Map<String, String>)inputEditorTaglibAttributes.get(
+				"liferay-ui:input-editor:fileBrowserParams");
+
+		String attachmentURLPrefix = fileBrowserParams.get(
+			"attachmentURLPrefix");
+
+		jsonObject.put("attachmentURLPrefix", attachmentURLPrefix);
+
+		jsonObject.put("decodeLinks", Boolean.TRUE);
+		jsonObject.put("disableObjectResizing", Boolean.TRUE);
+		jsonObject.put("format_tags", "p;h1;h2;h3;h4;h5;h6;pre");
+
+		String removePlugins = jsonObject.getString("removePlugins");
+
+		StringBundler sb = new StringBundler();
+
+		sb.append("bidi,colorbutton,colordialog,div,flash,font,forms,");
+		sb.append("indentblock,justify,keystrokes,maximize,newpage,pagebreak,");
+		sb.append("preview,print,save,showblocks,smiley,stylescombo,");
+		sb.append("templates,video");
+
 		jsonObject.put(
-			"allowedContent",
-			"b strong i hr h1 h2 h3 h4 h5 h6 em ul ol li pre table tr th; " +
-				"img a[*]");
+			"removePlugins", removePlugins.concat(",").concat(sb.toString()));
 
 		jsonObject.put(
 			"toolbars", getToolbarsJSONObject(themeDisplay.getLocale()));
-	}
-
-	protected JSONObject getStyleFormatJSONObject(
-		String styleFormatName, String element, String cssClass, int type) {
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put("name", styleFormatName);
-		jsonObject.put("style", getStyleJSONObject(element, cssClass, type));
-
-		return jsonObject;
-	}
-
-	protected JSONArray getStyleFormatsJSONArray(Locale locale) {
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
-		jsonArray.put(
-			getStyleFormatJSONObject(
-				LanguageUtil.get(resourceBundle, "normal"), "p", null,
-				_CKEDITOR_STYLE_BLOCK));
-		jsonArray.put(
-			getStyleFormatJSONObject(
-				LanguageUtil.format(resourceBundle, "heading-x", "1"), "h1",
-				null, _CKEDITOR_STYLE_BLOCK));
-		jsonArray.put(
-			getStyleFormatJSONObject(
-				LanguageUtil.format(resourceBundle, "heading-x", "2"), "h2",
-				null, _CKEDITOR_STYLE_BLOCK));
-		jsonArray.put(
-			getStyleFormatJSONObject(
-				LanguageUtil.format(resourceBundle, "heading-x", "3"), "h3",
-				null, _CKEDITOR_STYLE_BLOCK));
-		jsonArray.put(
-			getStyleFormatJSONObject(
-				LanguageUtil.format(resourceBundle, "heading-x", "4"), "h4",
-				null, _CKEDITOR_STYLE_BLOCK));
-		jsonArray.put(
-			getStyleFormatJSONObject(
-				LanguageUtil.get(resourceBundle, "preformatted-text"), "pre",
-				null, _CKEDITOR_STYLE_BLOCK));
-		jsonArray.put(
-			getStyleFormatJSONObject(
-				LanguageUtil.get(resourceBundle, "cited-work"), "cite", null,
-				_CKEDITOR_STYLE_INLINE));
-		jsonArray.put(
-			getStyleFormatJSONObject(
-				LanguageUtil.get(resourceBundle, "computer-code"), "code", null,
-				_CKEDITOR_STYLE_INLINE));
-		jsonArray.put(
-			getStyleFormatJSONObject(
-				LanguageUtil.get(resourceBundle, "info-message"), "div",
-				"portlet-msg-info", _CKEDITOR_STYLE_BLOCK));
-		jsonArray.put(
-			getStyleFormatJSONObject(
-				LanguageUtil.get(resourceBundle, "alert-message"), "div",
-				"portlet-msg-alert", _CKEDITOR_STYLE_BLOCK));
-		jsonArray.put(
-			getStyleFormatJSONObject(
-				LanguageUtil.get(resourceBundle, "error-message"), "div",
-				"portlet-msg-error", _CKEDITOR_STYLE_BLOCK));
-
-		return jsonArray;
-	}
-
-	protected JSONObject getStyleFormatsJSONObject(Locale locale) {
-		JSONObject stylesJSONObject = JSONFactoryUtil.createJSONObject();
-
-		stylesJSONObject.put("styles", getStyleFormatsJSONArray(locale));
-
-		JSONObject styleFormatsJSONObject = JSONFactoryUtil.createJSONObject();
-		styleFormatsJSONObject.put("name", "styles");
-		styleFormatsJSONObject.put("cfg", stylesJSONObject);
-
-		return styleFormatsJSONObject;
-	}
-
-	protected JSONObject getStyleJSONObject(
-		String element, String cssClass, int type) {
-
-		JSONObject styleJSONObject = JSONFactoryUtil.createJSONObject();
-
-		if (Validator.isNotNull(cssClass)) {
-			JSONObject attributesJSONObject =
-				JSONFactoryUtil.createJSONObject();
-
-			attributesJSONObject.put("class", cssClass);
-
-			styleJSONObject.put("attributes", attributesJSONObject);
-		}
-
-		styleJSONObject.put("element", element);
-		styleJSONObject.put("type", type);
-
-		return styleJSONObject;
 	}
 
 	protected JSONObject getToolbarsAddJSONObject() {
@@ -185,21 +113,10 @@ public class AlloyEditorConfigContributor
 		return jsonObject;
 	}
 
-	protected JSONObject getToolbarsStylesSelectionsImageJSONObject() {
-		JSONObject jsonNObject = JSONFactoryUtil.createJSONObject();
-
-		jsonNObject.put("buttons", toJSONArray("['imageLeft', 'imageRight']"));
-		jsonNObject.put("name", "image");
-		jsonNObject.put("test", "AlloyEditor.SelectionTest.image");
-
-		return jsonNObject;
-	}
-
 	protected JSONArray getToolbarsStylesSelectionsJSONArray(Locale locale) {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		jsonArray.put(getToolbarsStylesSelectionsLinkJSONObject());
-		jsonArray.put(getToolbarsStylesSelectionsImageJSONObject());
 		jsonArray.put(getToolbarsStylesSelectionsTextJSONObject(locale));
 		jsonArray.put(getToolbarsStylesSelectionsTableJSONObject());
 
@@ -241,12 +158,12 @@ public class AlloyEditorConfigContributor
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		jsonArray.put(getStyleFormatsJSONObject(locale));
 		jsonArray.put("bold");
 		jsonArray.put("italic");
-		jsonArray.put("underline");
+		jsonArray.put("ul");
+		jsonArray.put("ol");
 		jsonArray.put("link");
-		jsonArray.put("twitter");
+		jsonArray.put("removeFormat");
 
 		jsonObject.put("buttons", jsonArray);
 

@@ -88,10 +88,10 @@ public interface WikiGroupServiceConfiguration {
 	@Meta.AD(deflt = "FrontPage", required = false)
 	public String frontPageName();
 
-	@Meta.AD(deflt = "ckeditor_creole", required = false)
+	@Meta.AD(deflt = "alloyeditor_creole", required = false)
 	public String getCreoleEditor();
 
-	@Meta.AD(deflt = "ckeditor", required = false)
+	@Meta.AD(deflt = "alloyeditor", required = false)
 	public String getHTMLEditor();
 
 	@Meta.AD(deflt = "simple", required = false)

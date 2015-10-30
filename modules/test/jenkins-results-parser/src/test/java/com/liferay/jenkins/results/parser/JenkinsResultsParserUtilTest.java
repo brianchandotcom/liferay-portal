@@ -15,41 +15,31 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
-
 import java.net.URL;
 
-import org.apache.tools.ant.Project;
-
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Peter Yoo
  */
-public class FailureMessageUtilTest extends BaseMessageUtilTestCase {
+public class JenkinsResultsParserUtilTest extends BaseMessageUtilTestCase {
 
 	@Before
 	public void setUp() throws Exception {
 		downloadSample(
-			"generic-1", "0,label_exp=!master", "129",
+			"axis-functional-1", "0,label_exp=!master", "129",
 			"test-portal-acceptance-pullrequest-batch(master)", "test-4-1");
 		downloadSample(
-			"rebase-1", null, "267",
-			"test-portal-acceptance-pullrequest-source(ee-6.2.x)", "test-1-1");
-		downloadSample(
-			"plugin-compile-1", "9,label_exp=!master", "233",
+			"axis-plugin", "9,label_exp=!master", "233",
 			"test-portal-acceptance-pullrequest-batch(ee-6.2.x)", "test-1-20");
+		downloadSample(
+			"job-1", null, "267",
+			"test-portal-acceptance-pullrequest-source(ee-6.2.x)", "test-1-1");
 	}
-
-	@Test
-	public void testGetFailureMessage() throws Exception {
-		assertSamples();
-	}
-
+	
 	@Override
 	protected void downloadSample(File sampleDir, URL url) throws Exception {
 		downloadSampleURL(sampleDir, url, "/api/json");
-		downloadSampleURL(sampleDir, url, "/logText/progressiveText");
 	}
 
 	protected void downloadSample(
@@ -80,18 +70,18 @@ public class FailureMessageUtilTest extends BaseMessageUtilTestCase {
 
 	@Override
 	protected String getMessage(String urlString) throws Exception {
-		Project project = new Project();
-
-		project.setProperty(
-			"github.pull.request.head.branch", "junit-pr-head-branch");
-		project.setProperty(
-			"github.pull.request.head.username", "junit-pr-head-username");
-		project.setProperty("plugins.branch.name", "junit-plugins-branch-name");
-		project.setProperty("plugins.repository", "junit-plugins-repository");
-		project.setProperty("portal.repository", "junit-portal-repository");
-		project.setProperty("repository", "junit-repository");
-
-		return FailureMessageUtil.getFailureMessage(project, urlString);
+		
+		return null;
+		
 	}
+
+	@Override
+	protected void writeExpectedMessage(File sampleDir) throws Exception {
+		
+		// Do nothing
+		
+	}
+	
+	
 
 }

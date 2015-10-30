@@ -70,6 +70,7 @@ public class AssetCategoryPortletDataHandler extends BasePortletDataHandler {
 				NAMESPACE, "vocabularies", true, false, null,
 				AssetVocabulary.class.getName()));
 		setPublishToLiveByDefault(true);
+		setRank(110);
 
 		XStreamAliasRegistryUtil.register(
 			AssetCategoryImpl.class, "AssetCategory");

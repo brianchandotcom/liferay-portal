@@ -112,6 +112,8 @@
 	</command>
 
 	<command name="ActivateStagingPageVersioningWithCustomDefaultLanguage" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
 			<var name="siteName" value="Site Name" />
@@ -193,6 +195,8 @@
 	</command>
 
 	<command name="DeleteLivePage" priority="5">
+		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="true" />
 		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />
@@ -2854,6 +2858,8 @@
 	</command>
 
 	<command name="StagingOrganizations" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>

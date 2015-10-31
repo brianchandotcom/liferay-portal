@@ -24,10 +24,9 @@
 	</command>
 
 	<command name="configureDisplaySettingsLanguageLocalized">
-		<execute macro="ProductMenu#gotoLocalizedMySpaceMyAccount">
+		<execute macro="ProductMenu#gotoLocalizedUserMyAccount">
 			<var name="category" value="${category}" />
 			<var name="portlet" value="${portlet}" />
-			<var name="tab" value="${tab}" />
 		</execute>
 
 		<execute function="Select" locator1="MyAccount#LANGUAGE_SELECT" value1="${languageName}" />

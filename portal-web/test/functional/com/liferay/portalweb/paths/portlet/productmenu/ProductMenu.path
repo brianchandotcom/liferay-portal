@@ -95,8 +95,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PRODUCT_MENU_TABS_MY_SPACE_NAVIGATION</td>
-	<td>//div[contains(.,'My Space')]/../div[contains(@class,'tab-text')]</td>
+	<td>PRODUCT_MENU_TABS_USER_NAVIGATION</td>
+	<td>//div[contains(@class,'user-tab')]//div[contains(@class,'user-icon')]</td>
 	<td></td>
 </tr>
 <tr>

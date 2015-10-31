@@ -20,14 +20,6 @@
 		</execute>
 	</command>
 
-	<command name="gotoMySpace">
-		<execute macro="ProductMenuHelper#openProductMenu" />
-
-		<execute macro="ProductMenuHelper#gotoTab">
-			<var name="tab" value="My Space" />
-		</execute>
-	</command>
-
 	<command name="gotoPortlet">
 		<var name="key_portlet" value="${portlet}" />
 
@@ -56,7 +48,23 @@
 		<execute function="Click" locator1="ProductMenu#TAB" />
 	</command>
 
+	<command name="gotoUser">
+		<execute macro="ProductMenuHelper#openProductMenu" />
+
+		<execute function="Click" locator1="ProductMenu#PRODUCT_MENU_TABS_USER_NAVIGATION" />
+	</command>
+
 	<command name="openProductMenu">
+		<if>
+			<and>
+				<condition function="IsElementPresent" locator1="DockbarAddpanelcontent#CONTENT_TAB" />
+				<condition function="IsVisible" locator1="DockbarAddpanelcontent#CONTENT_TAB" />
+			</and>
+			<then>
+				<execute function="Click#clickAt" locator1="Dockbar#ADD_ICON" />
+			</then>
+		</if>
+
 		<if>
 			<not>
 				<condition function="IsElementPresent" locator1="ProductMenu#PRODUCT_MENU_OPENED" />

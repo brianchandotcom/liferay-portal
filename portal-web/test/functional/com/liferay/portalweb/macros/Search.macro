@@ -206,7 +206,7 @@
 	</command>
 
 	<command name="viewSearchResultWithNoPermissions">
-		<execute function="AssertTextEquals" locator1="PGSearchResults#ASSET_ENTRY_TABLE_TITLE" value1="No results were found that matched the keywords: ${searchTerm}." />
+		<execute function="AssertTextEquals" locator1="Message#INFO_NO_RESULTS_FOUND" value1="No results were found that matched the keywords: ${searchTerm}." />
 	</command>
 
 	<command name="viewUserFacetPG">

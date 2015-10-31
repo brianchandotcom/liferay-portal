@@ -918,12 +918,6 @@
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Dynamic Data Lists Display Page" />
-		</execute>
-
-		<execute macro="DDLTemplate#viewWithNoPermissions" />
-
 		<execute macro="Search#searchPG">
 			<var name="searchTerm" value="Record Text" />
 		</execute>

@@ -6246,6 +6246,7 @@ if (ppstate.equals("normal")) {
 			<then>
 				<antcall inheritAll="false" target="prepare-poshi-runner-properties">
 					<param name="test.base.dir.name" value="${test.base.dir.name}" />
+					<param name="test.class" value="${test.class}" />
 				</antcall>
 			</then>
 			<else>

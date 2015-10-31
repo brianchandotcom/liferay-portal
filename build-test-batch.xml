@@ -1125,6 +1125,10 @@
 		</run-batch-test>
 	</target>
 
+	<target name="plugins-functional-tomcat-mysql">
+		<run-functional-test app.server.type="tomcat" database.type="mysql" />
+	</target>
+
 	<target name="portal-web">
 		<property name="testray.main.component.name" value="Portal Web" />
 		<property name="testray.testcase.priority" value="4" />

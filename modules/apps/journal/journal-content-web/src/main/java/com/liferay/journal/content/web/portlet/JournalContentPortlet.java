@@ -18,7 +18,7 @@ import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleLocalService;
-import com.liferay.journal.util.JournalContentUtil;
+import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.web.util.ExportArticleUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
@@ -119,8 +119,8 @@ public class JournalContentPortlet extends MVCPortlet {
 				if (Validator.isNull(ddmTemplateKey)) {
 					ddmTemplateKey = article.getDDMTemplateKey();
 				}
-
-				articleDisplay = JournalContentUtil.getDisplay(
+				
+				articleDisplay = _journalContent.getDisplay(
 					articleGroupId, articleId, version, ddmTemplateKey,
 					viewMode, languageId, page,
 					new PortletRequestModel(renderRequest, renderResponse),
@@ -129,7 +129,7 @@ public class JournalContentPortlet extends MVCPortlet {
 			catch (Exception e) {
 				renderRequest.removeAttribute(WebKeys.JOURNAL_ARTICLE);
 
-				articleDisplay = JournalContentUtil.getDisplay(
+				articleDisplay = _journalContent.getDisplay(
 					articleGroupId, articleId, ddmTemplateKey, viewMode,
 					languageId, page,
 					new PortletRequestModel(renderRequest, renderResponse),
@@ -169,10 +169,19 @@ public class JournalContentPortlet extends MVCPortlet {
 	}
 
 	@Reference
+	protected void setJournalContent(JournalContent journalContent) {
+		_journalContent = journalContent;
+	}
+
+	@Reference
 	protected void setJournalContentSearchLocal(
 		JournalArticleLocalService journalArticleLocalService) {
 
 		_journalArticleLocalService = journalArticleLocalService;
+	}
+
+	protected void unsetJournalContent(JournalContent journalContent) {
+		_journalContent = null;
 	}
 
 	protected void unsetJournalContentSearchLocal(
@@ -182,5 +191,6 @@ public class JournalContentPortlet extends MVCPortlet {
 	}
 
 	private JournalArticleLocalService _journalArticleLocalService;
+	private JournalContent _journalContent;
 
 }

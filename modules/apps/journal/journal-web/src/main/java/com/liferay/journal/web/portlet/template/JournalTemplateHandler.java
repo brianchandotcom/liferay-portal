@@ -24,7 +24,7 @@ import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleService;
-import com.liferay.journal.util.JournalContentUtil;
+import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.web.configuration.JournalWebConfigurationUtil;
 import com.liferay.journal.web.configuration.JournalWebConfigurationValues;
 import com.liferay.portal.kernel.configuration.Filter;
@@ -45,6 +45,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jorge Ferrer
@@ -66,8 +67,7 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 		Map<String, Object> contextObjects = new HashMap<>();
 
 		try {
-			contextObjects.put(
-				"journalContentUtil", JournalContentUtil.getJournalContent());
+			contextObjects.put("journalContent", _journalContent);
 		}
 		catch (SecurityException se) {
 			_log.error(se, se);
@@ -119,8 +119,7 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 			new TemplateVariableGroup("journal-util", restrictedVariables);
 
 		journalUtilTemplateVariableGroup.addVariable(
-			"journal-content-util", JournalContentUtil.class,
-			"journalContentUtil");
+			"journal-content", JournalContent.class, "journalContent");
 
 		templateVariableGroups.put(
 			"journal-util", journalUtilTemplateVariableGroup);
@@ -147,9 +146,15 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 		return _templateVariableCodeHandler;
 	}
 
+	@Reference
+	protected void setJournalContent(JournalContent journalContent) {
+		_journalContent = journalContent;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalTemplateHandler.class);
 
+	private JournalContent _journalContent;
 	private final TemplateVariableCodeHandler _templateVariableCodeHandler =
 		new DDMTemplateVariableCodeHandler(
 			JournalTemplateHandler.class.getClassLoader(),

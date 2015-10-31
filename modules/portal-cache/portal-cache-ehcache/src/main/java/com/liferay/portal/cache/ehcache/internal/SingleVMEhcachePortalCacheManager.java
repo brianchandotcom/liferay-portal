@@ -16,6 +16,7 @@ package com.liferay.portal.cache.ehcache.internal;
 
 import com.liferay.portal.cache.PortalCacheListenerFactory;
 import com.liferay.portal.cache.PortalCacheManagerListenerFactory;
+import com.liferay.portal.cache.ehcache.internal.configurator.SingleVMEhcachePortalCacheManagerConfigurator;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.cache.configurator.PortalCacheConfiguratorSettings;
@@ -107,6 +108,15 @@ public class SingleVMEhcachePortalCacheManager<K extends Serializable, V>
 	@Reference(unbind = "-")
 	protected void setProps(Props props) {
 		this.props = props;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSingleVMEhcachePortalCacheManagerConfigurator(
+		SingleVMEhcachePortalCacheManagerConfigurator
+			singleVMEhcachePortalCacheManagerConfigurator) {
+
+		this.abstractEhcachePortalCacheManagerConfigurator =
+			singleVMEhcachePortalCacheManagerConfigurator;
 	}
 
 	protected void unsetPortalCacheConfiguratorSettings(

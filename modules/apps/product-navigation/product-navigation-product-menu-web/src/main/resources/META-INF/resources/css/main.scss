@@ -63,19 +63,12 @@ body {
 }
 
 .product-menu {
-	.sidebar-footer {
-		bottom: 0;
+	.sidebar-user {
 		padding: 10px 24px;
-		position: absolute;
-		width: 100%;
 
 		@include sm() {
 			padding-bottom: 16px;
 			padding-top: 16px;
-		}
-
-		@include media-query(null, 320px) {
-			position: static;
 		}
 
 		.nameplate-content,
@@ -100,20 +93,6 @@ body {
 				height: 48px;
 				line-height: 48px;
 				width: 48px;
-			}
-		}
-
-		.user-subheading {
-			list-style: none;
-			margin: 0 8px;
-			padding: 0;
-
-			> li {
-				float: left;
-
-				&:last-child {
-					float: right;
-				}
 			}
 		}
 	}

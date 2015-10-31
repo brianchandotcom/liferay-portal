@@ -7,7 +7,7 @@
 		vertical-align: text-top;
 	}
 
-	.sidebar-footer .user-icon img {
+	.sidebar-user .user-icon img {
 		display: block;
 		width: 100%;
 	}
@@ -87,31 +87,13 @@
 }
 
 .product-menu {
-	.sidebar-footer {
-		color: $product-menu-footer-color;
+	.sidebar-user {
+		color: $product-menu-nav-link-color;
 	}
 
 	.user-heading {
 		font-size: 19px;
 		font-weight: 500;
-	}
-
-	.user-signout {
-		background-color: $product-menu-user-signout-bg;
-		border-radius: $product-menu-user-signout-border-radius;
-		color: $product-menu-user-signout-icon-color;
-	}
-
-	.user-subheading {
-		a {
-			color: $product-menu-footer-link-color;
-			font-size: 14px;
-			font-weight: 500;
-
-			&:focus, &:hover {
-				color: $product-menu-footer-link-hover-color;
-			}
-		}
 	}
 }
 

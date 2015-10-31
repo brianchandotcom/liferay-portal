@@ -6237,8 +6237,6 @@ if (ppstate.equals("normal")) {
 	</target>
 
 	<target name="record-test-generated-properties">
-		<fail message="Please set the property ${test.class}." unless="test.class" />
-
 		<delete failonerror="false" file="${test.ext.properties.file}" />
 
 		<if>
@@ -6262,14 +6260,67 @@ if (ppstate.equals("normal")) {
 
 		<move file="portal-web/test.generated.properties" tofile="test.generated.properties" />
 
-		<loadfile failonerror="false" property="test.generated.properties.content" srcfile="test.generated.properties" />
+		<if>
+			<isset property="test.class" />
+			<then>
+				<loadfile failonerror="false" property="test.generated.properties.content" srcfile="test.generated.properties" />
 
-		<echo>##</echo>
-		<echo>## test.generated.properties</echo>
-		<echo>##</echo>
-		<echo></echo>
-		<echo>${test.generated.properties.content}</echo>
-		<echo></echo>
+				<get-poshi-class-name />
+
+				<if>
+					<contains string="${test.class}" substring="#" />
+					<then>
+						<get-poshi-method-name />
+					</then>
+				</if>
+
+				<beanshell>
+					<![CDATA[
+						import java.util.regex.Matcher;
+						import java.util.regex.Pattern;
+
+						String content = project.getProperty("test.generated.properties.content");
+						String className = project.getProperty("poshi.class.name");
+						String methodName = project.getProperty("poshi.method.name");
+
+						StringBuilder sb = new StringBuilder();
+
+						sb.append("(");
+						sb.append(className);
+						sb.append("TestCase\\.(test");
+
+						if (methodName != null) {
+							sb.append(methodName);
+							sb.append("\\.|");
+						}
+						else {
+							sb.append("[^\\.]*\\.|");
+						}
+
+						sb.append("all\\.).*)\\\n");
+
+						Pattern pattern = Pattern.compile(sb.toString());
+
+						Matcher matcher = pattern.matcher(content);
+
+						sb = new StringBuilder();
+
+						while (matcher.find()) {
+							sb.append(matcher.group());
+						}
+
+						project.setProperty("test.generated.properties.content", sb.toString());
+					]]>
+				</beanshell>
+
+				<echo>##</echo>
+				<echo>## test.generated.properties</echo>
+				<echo>##</echo>
+				<echo></echo>
+				<echo>${test.generated.properties.content}</echo>
+				<echo></echo>
+			</then>
+		</if>
 	</target>
 
 	<target name="record-test-plugin-names">

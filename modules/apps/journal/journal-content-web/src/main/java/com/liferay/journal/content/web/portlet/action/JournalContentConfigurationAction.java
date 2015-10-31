@@ -14,8 +14,10 @@
 
 package com.liferay.journal.content.web.portlet.action;
 
+import com.liferay.journal.constants.JournalWebKeys;
 import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.web.asset.JournalArticleAssetRenderer;
 import com.liferay.journal.web.asset.JournalArticleAssetRendererFactory;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,6 +37,7 @@ import javax.portlet.PortletRequest;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -57,6 +60,17 @@ public class JournalContentConfigurationAction
 	@Override
 	public String getJspPath(HttpServletRequest request) {
 		return "/configuration.jsp";
+	}
+
+	@Override
+	public void include(
+			PortletConfig portletConfig, HttpServletRequest request,
+			HttpServletResponse response)
+		throws Exception {
+
+		request.setAttribute(JournalWebKeys.JOURNAL_CONTENT, _journalContent);
+
+		super.include(portletConfig, request, response);
 	}
 
 	@Override
@@ -134,12 +148,22 @@ public class JournalContentConfigurationAction
 		_assetEntryLocalService = assetEntryLocalService;
 	}
 
+	@Reference
+	protected void setJournalContent(JournalContent journalContent) {
+		_journalContent = journalContent;
+	}
+
 	protected void unsetAssetEntryLocalService(
 		AssetEntryLocalService assetEntryLocalService) {
 
 		_assetEntryLocalService = null;
 	}
 
+	protected void unsetJournalContent(JournalContent journalContent) {
+		_journalContent = null;
+	}
+
 	private AssetEntryLocalService _assetEntryLocalService;
+	private JournalContent _journalContent;
 
 }

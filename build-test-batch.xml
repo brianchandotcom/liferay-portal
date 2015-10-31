@@ -1108,7 +1108,7 @@
 		</run-batch-test>
 	</target>
 
-	<target name="plugins">
+	<target name="plugins-compiler">
 		<property name="testray.main.component.name" value="Plugins" />
 		<property name="testray.testcase.priority" value="4" />
 
@@ -1123,6 +1123,10 @@
 				<prepare-test-build />
 			</test-set-up>
 		</run-batch-test>
+	</target>
+
+	<target name="plugins-functional-tomcat-mysql">
+		<run-functional-test app.server.type="tomcat" database.type="mysql" />
 	</target>
 
 	<target name="portal-web">

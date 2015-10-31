@@ -286,7 +286,6 @@
 		<exception>CalendarBookingEndTime</exception>
 		<exception>CalendarBookingRecurrence</exception>
 		<exception>CalendarBookingStartTime</exception>
-		<exception>CalendarBookingTitle</exception>
 		<exception>CalendarName</exception>
 		<exception>CalendarResourceCode</exception>
 		<exception>CalendarResourceName</exception>

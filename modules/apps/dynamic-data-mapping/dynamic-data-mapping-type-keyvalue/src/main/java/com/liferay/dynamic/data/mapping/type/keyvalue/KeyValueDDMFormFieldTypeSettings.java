@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.type.text;
+package com.liferay.dynamic.data.mapping.type.keyvalue;
 
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.registry.DefaultDDMFormFieldTypeSettings;
@@ -20,22 +20,11 @@ import com.liferay.dynamic.data.mapping.registry.annotations.DDMForm;
 import com.liferay.dynamic.data.mapping.registry.annotations.DDMFormField;
 
 /**
- * @author Lino Alves
+ * @author Bruno Basto
 */
 @DDMForm
-public interface TextDDMFormFieldTypeSettings
+public interface KeyValueDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
-
-	@DDMFormField(
-		label = "%my-text-field-has",
-		optionLabels = {"%a-single-line", "%multiple-lines"},
-		optionValues = {"singleline", "multiline"},
-		properties = {
-			"inline=true", "setting.category=basic", "setting.weight=2"
-		},
-		type = "radio"
-	)
-	public String displayStyle();
 
 	@DDMFormField(
 		dataType = "string", label = "%field-tip",

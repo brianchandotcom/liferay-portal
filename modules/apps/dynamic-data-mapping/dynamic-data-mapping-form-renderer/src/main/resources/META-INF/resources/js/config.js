@@ -34,7 +34,8 @@
 						'liferay-ddm-form-renderer-expressions-evaluator': {
 							path: 'expressions_evaluator.js',
 							requires: [
-								'aui-request'
+								'aui-component',
+								'aui-io-request'
 							]
 						},
 						'liferay-ddm-form-renderer-feedback': {
@@ -92,6 +93,7 @@
 						'liferay-ddm-form-renderer-nested-fields': {
 							path: 'nested_fields_support.js',
 							requires: [
+								'array-invoke',
 								'liferay-ddm-form-renderer-types',
 								'liferay-ddm-form-renderer-util'
 							]

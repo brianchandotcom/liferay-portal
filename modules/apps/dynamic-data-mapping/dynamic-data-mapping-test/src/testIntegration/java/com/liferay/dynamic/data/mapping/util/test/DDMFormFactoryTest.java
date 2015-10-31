@@ -74,7 +74,7 @@ public class DDMFormFactoryTest {
 
 		Assert.assertNotNull(labelDDMFormField);
 		Assert.assertEquals("string", labelDDMFormField.getDataType());
-		Assert.assertEquals("text", labelDDMFormField.getType());
+		Assert.assertEquals("keyvalue", labelDDMFormField.getType());
 		Assert.assertEquals(true, labelDDMFormField.isLocalizable());
 
 		DDMFormField localizableDDMFormField = ddmFormFieldsMap.get(

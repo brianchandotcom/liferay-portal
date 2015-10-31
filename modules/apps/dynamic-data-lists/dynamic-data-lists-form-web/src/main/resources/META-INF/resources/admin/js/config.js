@@ -60,7 +60,8 @@
 						'liferay-ddl-form-builder-settings-form': {
 							path: 'form_builder_settings_form.js',
 							requires: [
-								'liferay-ddm-form-renderer'
+								'liferay-ddm-form-renderer',
+								'liferay-form'
 							]
 						},
 						'liferay-ddl-form-builder-settings-support': {

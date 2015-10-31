@@ -13,7 +13,8 @@
 							},
 							path: 'options_field.js',
 							requires: [
-								'liferay-auto-fields',
+								'aui-sortable-list',
+								'liferay-ddm-form-field-keyvalue',
 								'liferay-ddm-form-renderer-field'
 							]
 						},

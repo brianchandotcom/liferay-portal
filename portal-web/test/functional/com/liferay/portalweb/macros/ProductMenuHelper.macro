@@ -20,14 +20,6 @@
 		</execute>
 	</command>
 
-	<command name="gotoMySpace">
-		<execute macro="ProductMenuHelper#openProductMenu" />
-
-		<execute macro="ProductMenuHelper#gotoTab">
-			<var name="tab" value="My Space" />
-		</execute>
-	</command>
-
 	<command name="gotoPortlet">
 		<var name="key_portlet" value="${portlet}" />
 
@@ -54,6 +46,12 @@
 		<var name="key_tab" value="${tab}" />
 
 		<execute function="Click" locator1="ProductMenu#TAB" />
+	</command>
+
+	<command name="gotoUser">
+		<execute macro="ProductMenuHelper#openProductMenu" />
+
+		<execute function="Click" locator1="ProductMenu#PRODUCT_MENU_TABS_USER_NAVIGATION" />
 	</command>
 
 	<command name="openProductMenu">

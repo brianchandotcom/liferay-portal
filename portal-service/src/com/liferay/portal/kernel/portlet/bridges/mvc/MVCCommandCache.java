@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -222,7 +223,14 @@ public class MVCCommandCache {
 
 				String mvcCommandClassName = ClassUtil.getClassName(mvcCommand);
 
-				_mvcCommandKeys.remove(mvcCommandClassName);
+				List<String> mvcCommandKeys = _mvcCommandKeys.remove(
+					mvcCommandClassName);
+
+				if (ListUtil.isNotEmpty(mvcCommandKeys)) {
+					for (String mvcCommandKey : mvcCommandKeys) {
+						_mvcCommandCache.remove(mvcCommandKey);
+					}
+				}
 			}
 		}
 

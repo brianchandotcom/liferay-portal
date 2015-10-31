@@ -134,6 +134,8 @@
 	</command>
 
 	<command name="AddWCWithTranslation" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Site Name" />

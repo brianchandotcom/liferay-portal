@@ -1000,6 +1000,8 @@
 	</command>
 
 	<command name="AssetPublisherSiteAndGlobalScopeAccessibility" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>

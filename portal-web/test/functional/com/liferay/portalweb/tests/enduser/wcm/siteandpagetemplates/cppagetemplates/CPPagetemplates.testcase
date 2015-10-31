@@ -11,6 +11,8 @@
 	</tear-down>
 
 	<command name="AddPageTemplate" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Page Templates" />
 		</execute>
@@ -22,6 +24,8 @@
 	</command>
 
 	<command name="AddSitePageTemplate" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Page Templates" />
 		</execute>
@@ -88,6 +92,8 @@
 	</command>
 
 	<command name="EditPageTemplate" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Page Templates" />
 		</execute>

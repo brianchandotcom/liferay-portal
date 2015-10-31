@@ -222,6 +222,8 @@
 	</command>
 
 	<command name="AddTagViaBlogs" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -312,6 +314,8 @@
 	</command>
 
 	<command name="DisplayTagCloud" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Tags Navigation Page" />
 		</execute>
@@ -628,6 +632,8 @@
 	</command>
 
 	<command name="RemoveTagViaBlogs" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -816,6 +822,8 @@
 	</command>
 
 	<command name="ViewTagCloudDisplayConfiguration" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Tag Cloud Page" />
 		</execute>
@@ -838,6 +846,8 @@
 	</command>
 
 	<command name="ViewTagCloudIncrease" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Tags Navigation Page" />
 		</execute>

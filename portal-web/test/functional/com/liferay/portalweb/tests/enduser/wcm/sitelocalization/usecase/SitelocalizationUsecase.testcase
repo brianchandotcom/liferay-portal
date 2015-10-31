@@ -12,6 +12,8 @@
 	</tear-down>
 
 	<command name="AvailableSiteLocalesSubsetOfAvailablePortalLocales" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Language Test Page" />
 		</execute>
@@ -511,6 +513,8 @@
 	</command>
 
 	<command name="SiteTemplateLocalization" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Site Templates" />
 		</execute>
@@ -665,6 +669,8 @@
 	</command>
 
 	<command name="ViewSiteLocalizationAfterDeletingOriginalLocale" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Portal Settings" />
 		</execute>

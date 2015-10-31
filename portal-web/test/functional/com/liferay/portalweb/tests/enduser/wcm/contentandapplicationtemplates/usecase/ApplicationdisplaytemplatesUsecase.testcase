@@ -244,6 +244,8 @@
 	</command>
 
 	<command name="ADTBreadcrumb" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="ADT Test Page" />
 			<var name="siteName" value="Test Site Name" />
@@ -279,6 +281,8 @@
 	</command>
 
 	<command name="ADTCategoriesNavigation" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<var name="siteName" value="${siteName}" />
 
 		<execute macro="Page#gotoContentCP">
@@ -618,6 +622,8 @@
 	</command>
 
 	<command name="ADTTagsNavigationPortlet" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<var name="siteName" value="${siteName}" />
 
 		<execute macro="Page#gotoPublishingTools">

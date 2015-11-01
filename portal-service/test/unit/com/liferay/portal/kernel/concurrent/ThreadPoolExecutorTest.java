@@ -1110,7 +1110,9 @@ public class ThreadPoolExecutorTest {
 		finally {
 			TestUtil.closePool(threadPoolExecutor);
 
-			Thread.sleep(TestUtil.SHORT_WAIT);
+			for (Thread thread : threadFactory.getCreatedThreads()) {
+				thread.join();
+			}
 		}
 
 		Assert.assertEquals(1, threadPoolExecutor.getLargestPoolSize());

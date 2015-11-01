@@ -14,7 +14,7 @@
 							path: 'options_field.js',
 							requires: [
 								'aui-sortable-list',
-								'liferay-ddm-form-field-keyvalue',
+								'liferay-ddm-form-field-key-value',
 								'liferay-ddm-form-renderer-field'
 							]
 						},

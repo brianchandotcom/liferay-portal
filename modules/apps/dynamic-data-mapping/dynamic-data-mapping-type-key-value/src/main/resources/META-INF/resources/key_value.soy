@@ -16,8 +16,8 @@
  * @param value
  * @param visible
  */
-{template .keyvalue}
-	<div class="form-group{$visible ? '' : ' hide'} liferay-ddm-form-field-keyvalue liferay-ddm-form-field-text" data-fieldname="{$name}">
+{template .key_value}
+	<div class="form-group{$visible ? '' : ' hide'} liferay-ddm-form-field-key-value liferay-ddm-form-field-text" data-fieldname="{$name}">
 		{if $showLabel}
 			<label class="control-label" for="{$name}">
 				{$label}
@@ -40,13 +40,13 @@
 			{/if}
 		</div>
 
-		<div class="{$editing ? 'active ' : ''}keyvalue-editor">
-			<label class="control-label keyvalue-label">{$strings.keyLabel}:</label>
-			<span class="keyvalue-output">{$key}</span>
-			<input class="keyvalue-input" placeholder="{$key}" />
+		<div class="{$editing ? 'active ' : ''}key-value-editor">
+			<label class="control-label key-value-label">{$strings.keyLabel}:</label>
+			<span class="key-value-output">{$key}</span>
+			<input class="key-value-input" placeholder="{$key}" />
 
-			<a class="keyvalue-done" href="javascript:;">{$strings.done}</a>
-			<a class="keyvalue-cancel" href="javascript:;">{$strings.cancel}</a>
+			<a class="key-value-done" href="javascript:;">{$strings.done}</a>
+			<a class="key-value-cancel" href="javascript:;">{$strings.cancel}</a>
 		</div>
 	</div>
 {/template}

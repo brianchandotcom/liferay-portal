@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.type.keyvalue;
+package com.liferay.dynamic.data.mapping.type.key.value;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Bruno Basto
  */
 @Component(
-	immediate = true, property = "ddm.form.field.type.name=keyvalue",
+	immediate = true, property = "ddm.form.field.type.name=key-value",
 	service = DDMFormFieldRenderer.class
 )
 public class KeyValueDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
@@ -46,7 +46,7 @@ public class KeyValueDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 
 	@Override
 	public String getTemplateNamespace() {
-		return "ddm.keyvalue";
+		return "ddm.key_value";
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class KeyValueDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_templateResource = getTemplateResource(
-			"/META-INF/resources/keyvalue.soy");
+			"/META-INF/resources/key_value.soy");
 	}
 
 	@Deactivate

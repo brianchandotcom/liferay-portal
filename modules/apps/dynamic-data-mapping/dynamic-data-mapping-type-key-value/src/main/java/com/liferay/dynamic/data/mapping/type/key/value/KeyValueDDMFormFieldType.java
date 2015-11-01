@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.type.keyvalue;
+package com.liferay.dynamic.data.mapping.type.key.value;
 
 import com.liferay.dynamic.data.mapping.registry.BaseDDMFormFieldType;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldType;
@@ -28,8 +28,8 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"ddm.form.field.type.icon=icon-font",
 		"ddm.form.field.type.js.class.name=Liferay.DDM.Field.KeyValue",
-		"ddm.form.field.type.js.module=liferay-ddm-form-field-keyvalue",
-		"ddm.form.field.type.name=keyvalue", "ddm.form.field.type.system=true"
+		"ddm.form.field.type.js.module=liferay-ddm-form-field-key-value",
+		"ddm.form.field.type.name=key-value", "ddm.form.field.type.system=true"
 	},
 	service = DDMFormFieldType.class
 )
@@ -44,7 +44,7 @@ public class KeyValueDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
 	public String getName() {
-		return "keyvalue";
+		return "key-value";
 	}
 
 }

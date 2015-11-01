@@ -1,5 +1,5 @@
 AUI.add(
-	'liferay-ddm-form-field-keyvalue',
+	'liferay-ddm-form-field-key-value',
 	function(A) {
 		var KeyValueField = A.Component.create(
 			{
@@ -21,13 +21,13 @@ AUI.add(
 					},
 
 					type: {
-						value: 'keyvalue'
+						value: 'key-value'
 					}
 				},
 
 				EXTENDS: Liferay.DDM.Field.Text,
 
-				NAME: 'liferay-ddm-form-field-keyvalue',
+				NAME: 'liferay-ddm-form-field-key-value',
 
 				prototype: {
 					initializer: function() {
@@ -36,11 +36,11 @@ AUI.add(
 						instance._eventHandlers.push(
 							instance.after('editingChange', instance._afterEditingChange),
 							instance.after('keyChange', instance._afterKeyChange),
-							instance.bindContainerEvent('click', instance._onClickCancel, '.keyvalue-cancel'),
-							instance.bindContainerEvent('click', instance._onClickDone, '.keyvalue-done'),
-							instance.bindContainerEvent('click', instance._onClickEditor, '.keyvalue-output'),
-							instance.bindContainerEvent('keypress', instance._onKeyPressEditorInput, '.keyvalue-input'),
-							instance.bindContainerEvent('valuechange', instance._onValueChangeEditorInput, '.keyvalue-input'),
+							instance.bindContainerEvent('click', instance._onClickCancel, '.key-value-cancel'),
+							instance.bindContainerEvent('click', instance._onClickDone, '.key-value-done'),
+							instance.bindContainerEvent('click', instance._onClickEditor, '.key-value-output'),
+							instance.bindContainerEvent('keypress', instance._onKeyPressEditorInput, '.key-value-input'),
+							instance.bindContainerEvent('valuechange', instance._onValueChangeEditorInput, '.key-value-input'),
 							instance.bindInputEvent('valuechange', instance._onValueChangeInput)
 						);
 					},
@@ -94,7 +94,7 @@ AUI.add(
 
 						var container = instance.get('container');
 
-						var editorInput = container.one('.keyvalue-input');
+						var editorInput = container.one('.key-value-input');
 
 						var value = editorInput.val();
 
@@ -122,7 +122,7 @@ AUI.add(
 
 									instance._eventOutsideHandler = null;
 								},
-								'.keyvalue-input'
+								'.key-value-input'
 							);
 						}
 
@@ -207,7 +207,7 @@ AUI.add(
 
 						var container = instance.get('container');
 
-						var editorNode = container.one('.keyvalue-editor');
+						var editorNode = container.one('.key-value-editor');
 
 						editorNode.insert(container.one('.validation-message'), 'after');
 					},
@@ -217,12 +217,12 @@ AUI.add(
 
 						var container = instance.get('container');
 
-						var editorNode = container.one('.keyvalue-editor');
+						var editorNode = container.one('.key-value-editor');
 
 						editorNode.toggleClass('active', editing);
 
 						if (editing) {
-							var editorInput = container.one('.keyvalue-input');
+							var editorInput = container.one('.key-value-input');
 
 							editorInput.val('');
 							editorInput.focus();
@@ -234,12 +234,12 @@ AUI.add(
 
 						var container = instance.get('container');
 
-						var editorInput = container.one('.keyvalue-input');
+						var editorInput = container.one('.key-value-input');
 
 						editorInput.attr('placeholder', key);
 						editorInput.attr('size', instance._getMaxInputSize(key) + 1);
 
-						container.one('.keyvalue-output').html(key);
+						container.one('.key-value-output').html(key);
 					},
 
 					_valueKey: function() {

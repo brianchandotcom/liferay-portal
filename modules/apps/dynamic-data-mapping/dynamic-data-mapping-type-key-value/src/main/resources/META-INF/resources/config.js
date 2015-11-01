@@ -1,28 +1,28 @@
 ;(function() {
-	var PATH_DDM_TYPE_KEYVALUE = Liferay.ThemeDisplay.getPathContext() + '/o/ddm-type-keyvalue';
+	var PATH_DDM_TYPE_KEYVALUE = Liferay.ThemeDisplay.getPathContext() + '/o/ddm-type-key-value';
 
 	AUI().applyConfig(
 		{
 			groups: {
-				'field-keyvalue': {
+				'field-key-value': {
 					base: PATH_DDM_TYPE_KEYVALUE + '/',
 					modules: {
-						'liferay-ddm-form-field-keyvalue': {
+						'liferay-ddm-form-field-key-value': {
 							condition: {
 								trigger: 'liferay-ddm-form-renderer'
 							},
-							path: 'keyvalue_field.js',
+							path: 'key_value_field.js',
 							requires: [
 								'aui-text-unicode',
 								'liferay-ddm-form-field-text',
 								'liferay-ddm-form-renderer-field'
 							]
 						},
-						'liferay-ddm-form-field-keyvalue-template': {
+						'liferay-ddm-form-field-key-value-template': {
 							condition: {
 								trigger: 'liferay-ddm-form-renderer'
 							},
-							path: 'keyvalue.soy.js',
+							path: 'key_value.soy.js',
 							requires: [
 								'soyutils'
 							]

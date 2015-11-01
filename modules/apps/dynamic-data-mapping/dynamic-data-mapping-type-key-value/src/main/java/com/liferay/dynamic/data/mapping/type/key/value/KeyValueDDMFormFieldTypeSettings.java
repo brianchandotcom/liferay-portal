@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.type.keyvalue;
+package com.liferay.dynamic.data.mapping.type.key.value;
 
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.registry.DefaultDDMFormFieldTypeSettings;

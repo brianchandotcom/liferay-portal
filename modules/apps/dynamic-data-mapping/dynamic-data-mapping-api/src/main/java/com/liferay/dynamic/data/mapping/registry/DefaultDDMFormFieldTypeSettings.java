@@ -46,7 +46,7 @@ public interface DefaultDDMFormFieldTypeSettings
 			"placeholder=%type-your-question", "setting.category=basic",
 			"setting.weight=4"
 		},
-		required = true, tip = "%type-what-you-want-to-ask", type = "keyvalue"
+		required = true, tip = "%type-what-you-want-to-ask", type = "key-value"
 	)
 	public LocalizedValue label();
 

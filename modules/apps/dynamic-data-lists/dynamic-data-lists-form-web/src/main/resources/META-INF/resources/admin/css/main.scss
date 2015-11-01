@@ -179,52 +179,52 @@
 	width: 720px;
 
 	.form-builder-field-settings-content {
-		.has-error .keyvalue-editor {
+		.has-error .key-value-editor {
 			display: none
 		}
 
-		.keyvalue-editor {
+		.key-value-editor {
 			&.active {
-				.keyvalue-cancel, .keyvalue-done, .keyvalue-input {
+				.key-value-cancel, .key-value-done, .key-value-input {
 					display: inline-block;
 				}
 
-				.keyvalue-output {
+				.key-value-output {
 					display: none;
 				}
 			}
 
-			.keyvalue-cancel, .keyvalue-done, .keyvalue-input {
+			.key-value-cancel, .key-value-done, .key-value-input {
 				display: none;
 			}
 
-			.keyvalue-cancel, .keyvalue-done {
+			.key-value-cancel, .key-value-done {
 				font-weight: bold;
 				margin-left: 25px;
 				text-transform: uppercase;
 			}
 
-			.keyvalue-label {
+			.key-value-label {
 				color: #C4CFD6;
 				margin-right: 5px;
 			}
 
-			.keyvalue-cancel, .keyvalue-done, .keyvalue-input, .keyvalue-label, .keyvalue-output {
+			.key-value-cancel, .key-value-done, .key-value-input, .key-value-label, .key-value-output {
 				font-size: 11px;
 			}
 
-			.keyvalue-input {
+			.key-value-input {
 				border-width: 0;
 				margin: 0;
 				outline: none;
 			}
 
-			.keyvalue-input, .keyvalue-output {
+			.key-value-input, .key-value-output {
 				color: #869CAD;
 			}
 		}
 
-		.liferay-ddm-form-field-keyvalue .validation-message {
+		.liferay-ddm-form-field-key-value .validation-message {
 			height: 22px;
 			position: relative;
 		}
@@ -257,7 +257,7 @@
 				display: none;
 			}
 
-			.liferay-ddm-form-field-keyvalue {
+			.liferay-ddm-form-field-key-value {
 				margin-left: 30px;
 			}
 

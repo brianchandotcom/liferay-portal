@@ -154,7 +154,9 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 	</div>
 </div>
 
-<liferay-util:include page="/document_library/add_button.jsp" servletContext="<%= application %>" />
+<c:if test="<%= portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) %>">
+	<liferay-util:include page="/document_library/add_button.jsp" servletContext="<%= application %>" />
+</c:if>
 
 <%
 if (!defaultFolderView && (folder != null) && (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY) || portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN))) {

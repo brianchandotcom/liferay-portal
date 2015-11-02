@@ -68,7 +68,9 @@ if (group != null) {
 >
 	<liferay-frontend:management-bar-buttons>
 		<c:if test="<%= Validator.isNull(keywords) && (group != null) %>">
-			<aui:a cssClass="btn infoPanelToggler" href="javascript:;" iconCssClass="icon-info-sign" />
+			<li>
+				<aui:a cssClass="btn infoPanelToggler" href="javascript:;" iconCssClass="icon-info-sign" />
+			</li>
 		</c:if>
 
 		<liferay-frontend:management-bar-display-buttons

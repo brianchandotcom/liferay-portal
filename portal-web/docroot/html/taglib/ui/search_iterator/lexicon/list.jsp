@@ -81,7 +81,7 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 					if (!entries.isEmpty()) {
 						if (rowChecker != null) {
 							if (i == 0) {
-								cssClass = "checkbox-cell checkbox-default";
+								cssClass = "checkbox-cell checkbox-default list-group-item-field";
 							}
 							else {
 								com.liferay.portal.kernel.dao.search.SearchEntry entry = (com.liferay.portal.kernel.dao.search.SearchEntry)entries.get(i - 1);

@@ -32,7 +32,7 @@ AssetTag tag = AssetTagLocalServiceUtil.fetchAssetTag(tagId);
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle(((tag == null) ? LanguageUtil.get(request, "add-tag") : tag.getName()));
+renderResponse.setTitle(((tag == null) ? LanguageUtil.get(request, "new-tag") : tag.getName()));
 %>
 
 <portlet:actionURL name="editTag" var="editTagURL">
@@ -42,34 +42,32 @@ renderResponse.setTitle(((tag == null) ? LanguageUtil.get(request, "add-tag") : 
 <aui:form action="<%= editTagURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
-	<liferay-ui:error exception="<%= AssetTagException.class %>">
+	<div class="row">
+		<liferay-ui:error exception="<%= AssetTagException.class %>">
 
-		<%
-		AssetTagException ate = (AssetTagException)errorException;
-		%>
+			<%
+			AssetTagException ate = (AssetTagException)errorException;
+			%>
 
-		<c:if test="<%= ate.getType() == AssetTagException.INVALID_CHARACTER %>">
-			<liferay-ui:message key="please-enter-a-valid-name" />
-		</c:if>
-	</liferay-ui:error>
+			<c:if test="<%= ate.getType() == AssetTagException.INVALID_CHARACTER %>">
+				<liferay-ui:message key="please-enter-a-valid-name" />
+			</c:if>
+		</liferay-ui:error>
 
-	<liferay-ui:error exception="<%= DuplicateTagException.class %>" message="a-tag-with-that-name-already-exists" />
+		<liferay-ui:error exception="<%= DuplicateTagException.class %>" message="a-tag-with-that-name-already-exists" />
 
-	<aui:model-context bean="<%= tag %>" model="<%= AssetTag.class %>" />
+		<aui:model-context bean="<%= tag %>" model="<%= AssetTag.class %>" />
 
-	<aui:fieldset>
-		<div>
-			<div class="add-tag-layer asset-tag-layer">
-				<aui:input name="tagId" type="hidden" value="<%= tagId %>" />
+		<aui:fieldset cssClass="col-md-4">
+			<aui:input name="tagId" type="hidden" value="<%= tagId %>" />
 
-				<aui:input autoFocus="<%= true %>" cssClass="tag-name" name="name" />
+			<aui:input autoFocus="<%= true %>" cssClass="tag-name" name="name" />
+		</aui:fieldset>
 
-				<aui:button-row>
-					<aui:button cssClass="btn-lg" type="submit" />
+		<aui:button-row>
+			<aui:button cssClass="btn-lg" type="submit" />
 
-					<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
-				</aui:button-row>
-			</div>
-		</div>
-	</aui:fieldset>
+			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+		</aui:button-row>
+	</div>
 </aui:form>

@@ -22,9 +22,6 @@ String randomNamespace = null;
 if (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY)) {
 	randomNamespace = PortalUtil.generateRandomKey(request, "portlet_document_library_folder_action") + StringPool.UNDERLINE;
 }
-else if (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_DISPLAY)) {
-	randomNamespace = PortalUtil.generateRandomKey(request, "portlet_document_library_display_folder_action") + StringPool.UNDERLINE;
-}
 else {
 	randomNamespace = PortalUtil.generateRandomKey(request, "portlet_image_gallery_display_folder_action") + StringPool.UNDERLINE;
 }
@@ -51,7 +48,7 @@ if (row != null) {
 	}
 }
 else {
-	if (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
+	if (portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 		folder = (Folder)request.getAttribute("view.jsp-folder");
 
 		folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
@@ -108,7 +105,7 @@ if ((row == null) || dlVisualizationHelper.isShowWhenSingleIconActionButton()) {
 
 boolean view = false;
 
-if ((row == null) && ((portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_DISPLAY) && !dlVisualizationHelper.isShowMinimalActionsButton()) || portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY))) {
+if ((row == null) && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 	view = true;
 }
 
@@ -329,7 +326,7 @@ String iconMenuId = null;
 		</c:if>
 
 		<c:choose>
-			<c:when test="<%= portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY) %>">
+			<c:when test="<%= portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY) %>">
 				<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) && ((folder == null) || !folder.isMountPoint()) %>">
 					<c:if test="<%= (folder == null) || folder.isSupportsMultipleUpload() %>">
 						<portlet:renderURL var="editFileEntryURL">
@@ -347,36 +344,6 @@ String iconMenuId = null;
 							url="<%= editFileEntryURL %>"
 						/>
 					</c:if>
-
-					<%
-					int fileEntryTypesCount = DLFileEntryTypeServiceUtil.getFileEntryTypesCount(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId));
-					%>
-
-					<liferay-portlet:renderURL var="editFileEntryURL" windowState="<%= (((folder == null) || folder.isSupportsMetadata()) && (fileEntryTypesCount > 0)) ? LiferayWindowState.POP_UP.toString() : WindowState.NORMAL.toString() %>">
-						<c:choose>
-							<c:when test="<%= ((folder == null) || folder.isSupportsMetadata()) && (fileEntryTypesCount > 0) %>">
-								<portlet:param name="mvcPath" value="/document_library_display/select_add_file_entry_type.jsp" />
-							</c:when>
-							<c:otherwise>
-								<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_entry" />
-							</c:otherwise>
-						</c:choose>
-
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="backURL" value="<%= currentURL %>" />
-						<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
-						<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-					</liferay-portlet:renderURL>
-
-					<%
-					String taglibEditURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + "selectFileEntryType', title: '" + HtmlUtil.escapeJS(LanguageUtil.get(request, portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY) ? "select-media-type" : "select-document-type")) + "', uri:'" + HtmlUtil.escapeJS(editFileEntryURL.toString()) + "'});";
-					%>
-
-					<liferay-ui:icon
-						iconCssClass="icon-plus"
-						message='<%= portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY) ? "add-media" : "add-document" %>'
-						url="<%= (((folder == null) || folder.isSupportsMetadata()) && (fileEntryTypesCount > 0)) ? taglibEditURL : editFileEntryURL %>"
-					/>
 				</c:if>
 
 				<c:if test="<%= hasViewPermission && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY) && (DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(repositoryId, folderId, status) > 0) %>">
@@ -458,20 +425,7 @@ String iconMenuId = null;
 	</liferay-ui:icon-menu>
 </liferay-util:buffer>
 
-<c:choose>
-	<c:when test="<%= (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) && !dlVisualizationHelper.isShowMinimalActionsButton() %>">
-
-		<%= iconMenu %>
-
-	</c:when>
-	<c:otherwise>
-		<span class="<%= (row != null) ? StringPool.BLANK : "entry-action overlay" %>">
-
-			<%= iconMenu %>
-
-		</span>
-	</c:otherwise>
-</c:choose>
+<%= iconMenu %>
 
 <div id="<%= randomNamespace %>webDav" style="display: none;">
 	<div class="portlet-document-library">

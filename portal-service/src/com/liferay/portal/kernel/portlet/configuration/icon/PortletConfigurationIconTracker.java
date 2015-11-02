@@ -42,6 +42,8 @@ public class PortletConfigurationIconTracker {
 		List<PortletConfigurationIconFactory>
 			portletConfigurationIconFactories = new ArrayList<>();
 
+		String portletId = getPortletId(portletRequest);
+
 		for (String path : getPaths(portletRequest)) {
 			List<PortletConfigurationIconFactory>
 				portletPortletConfigurationIconFactories =
@@ -52,8 +54,6 @@ public class PortletConfigurationIconTracker {
 				portletConfigurationIconFactories.addAll(
 					portletPortletConfigurationIconFactories);
 			}
-
-			String portletId = getPortletId(portletRequest);
 
 			portletPortletConfigurationIconFactories =
 				_serviceTrackerMap.getService(_getKey(portletId, path));
@@ -70,6 +70,8 @@ public class PortletConfigurationIconTracker {
 	protected static Set<String> getPaths(PortletRequest portletRequest) {
 		Set<String> paths = new HashSet<>();
 
+		String portletId = getPortletId(portletRequest);
+
 		for (PortletConfigurationIconLocator portletConfigurationIconLocator :
 				_serviceTrackerList) {
 
@@ -81,12 +83,6 @@ public class PortletConfigurationIconTracker {
 
 				continue;
 			}
-
-			paths.addAll(
-				portletConfigurationIconLocator.getDefaultViews(
-					StringPool.STAR));
-
-			String portletId = getPortletId(portletRequest);
 
 			paths.addAll(
 				portletConfigurationIconLocator.getDefaultViews(portletId));

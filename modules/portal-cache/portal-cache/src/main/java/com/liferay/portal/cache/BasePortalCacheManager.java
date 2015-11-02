@@ -40,7 +40,7 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * @author Tina Tian
  */
-public abstract class AbstractPortalCacheManager<K extends Serializable, V>
+public abstract class BasePortalCacheManager<K extends Serializable, V>
 	implements PortalCacheManager<K, V> {
 
 	@Override

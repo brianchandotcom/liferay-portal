@@ -24,10 +24,10 @@ import java.io.Serializable;
 /**
  * @author Tina Tian
  */
-public abstract class AbstractPortalCache<K extends Serializable, V>
+public abstract class BasePortalCache<K extends Serializable, V>
 	implements LowLevelCache<K, V> {
 
-	public AbstractPortalCache(PortalCacheManager<K, V> portalCacheManager) {
+	public BasePortalCache(PortalCacheManager<K, V> portalCacheManager) {
 		_portalCacheManager = portalCacheManager;
 	}
 

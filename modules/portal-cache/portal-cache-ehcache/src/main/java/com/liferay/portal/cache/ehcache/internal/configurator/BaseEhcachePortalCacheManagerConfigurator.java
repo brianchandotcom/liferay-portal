@@ -57,7 +57,7 @@ import net.sf.ehcache.event.NotificationScope;
 /**
  * @author Tina Tian
  */
-public abstract class AbstractEhcachePortalCacheManagerConfigurator {
+public abstract class BaseEhcachePortalCacheManagerConfigurator {
 
 	public ObjectValuePair
 		<Configuration, PortalCacheManagerConfiguration>
@@ -493,7 +493,7 @@ public abstract class AbstractEhcachePortalCacheManagerConfigurator {
 	private static final String _PORTAL_PROPERTY_KEY = "portalPropertyKey";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AbstractEhcachePortalCacheManagerConfigurator.class);
+		BaseEhcachePortalCacheManagerConfigurator.class);
 
 	private static final Map<NotificationScope, PortalCacheListenerScope>
 		_portalCacheListenerScopes = new EnumMap<>(NotificationScope.class);

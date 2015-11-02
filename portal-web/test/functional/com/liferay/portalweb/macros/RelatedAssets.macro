@@ -145,6 +145,8 @@
 	</command>
 
 	<command name="viewDefaultPG">
+		<var name="key_portletName" value="Related Assets" />
+
 		<execute function="AssertTextEquals" locator1="PGRelatedassets#TITLE" value1="Related Assets" />
 		<execute function="AssertTextEquals" locator1="PGRelatedassets#INFO_MESSAGE" value1="There are no related assets available. This application will show all assets related to the main asset of the current page." />
 	</command>

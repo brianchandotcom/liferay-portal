@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>ASSET_TITLE</td>
-	<td>//h4[@class='asset-title']/a</td>
+	<td>//h4[@class='asset-title']/a[contains(.,'${key_assetTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>ASSET_CONTENT</td>
-	<td>//div[@class='asset-content']</td>
+	<td>//div[@class='asset-content']/div[contains(.,'${key_assetContent}')]</td>
 	<td></td>
 </tr>
 <tr>

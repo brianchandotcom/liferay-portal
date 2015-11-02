@@ -111,6 +111,8 @@
 			<var name="privateVirtualHosts" value="true" />
 		</execute>
 
+		<execute macro="User#logoutPG" />
+
 		<execute macro="User#firstLoginPG">
 			<var name="loginViaDockbar" value="true" />
 			<var name="password" value="test" />
@@ -689,12 +691,13 @@
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
+			<var name="webContentTitle" value="Web Content1 Title" />
 		</execute>
 
 		<execute macro="WebContent#addTranslation">
 			<var name="localizedInteger" value="3" />
 			<var name="localizedLanguage" value="German (Germany)" />
+			<var name="localizedTitle" value="Netz Inhalt1 Titel" />
 			<var name="webContentTitle" value="Web Content1 Title" />
 		</execute>
 
@@ -727,12 +730,13 @@
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
+			<var name="webContentTitle" value="Web Content2 Title" />
 		</execute>
 
 		<execute macro="WebContent#addTranslation">
 			<var name="localizedInteger" value="2" />
 			<var name="localizedLanguage" value="German (Germany)" />
+			<var name="localizedTitle" value="Netz Inhalt2 Titel" />
 			<var name="webContentTitle" value="Web Content2 Title" />
 		</execute>
 
@@ -765,12 +769,13 @@
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
+			<var name="webContentTitle" value="Web Content3 Title" />
 		</execute>
 
 		<execute macro="WebContent#addTranslation">
 			<var name="localizedInteger" value="8" />
 			<var name="localizedLanguage" value="German (Germany)" />
+			<var name="localizedTitle" value="Netz Inhalt3 Titel" />
 			<var name="webContentTitle" value="Web Content3 Title" />
 		</execute>
 
@@ -817,9 +822,9 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewOrderedFieldPG">
-			<var name="firstAsset" value="Web Content3 Title" />
+			<var name="firstAsset" value="Web Content2 Title" />
 			<var name="secondAsset" value="Web Content1 Title" />
-			<var name="thirdAsset" value="Web Content2 Title" />
+			<var name="thirdAsset" value="Web Content3 Title" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -835,9 +840,9 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewOrderedFieldPG">
-			<var name="firstAsset" value="Web Content2 Title" />
-			<var name="secondAsset" value="Web Content1 Title" />
-			<var name="thirdAsset" value="Web Content3 Title" />
+			<var name="firstAsset" value="Netz Inhalt2 Titel" />
+			<var name="secondAsset" value="Netz Inhalt1 Titel" />
+			<var name="thirdAsset" value="Netz Inhalt3 Titel" />
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
@@ -1740,14 +1745,6 @@
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Related Assets" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
 		<execute macro="Blogs#addEntry">
 			<var name="entryContent" value="Blogs Entry1 Content" />
 			<var name="entryTitle" value="Blogs Entry1 Title" />
@@ -1805,12 +1802,10 @@
 			<var name="entryTitle" value="Blogs Entry2 Title" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="RelatedAssets#viewPG">
+		<execute macro="BlogsEntry#viewRelatedAssetPG">
 			<var name="assetTitle" value="Blogs Entry1 Title" />
+			<var name="assetType" value="Blogs Entry" />
+			<var name="entryTitle" value="Blogs Entry2 Title" />
 		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="Relatedassets#ASSET_TITLE_IMAGE_2" />
@@ -1943,13 +1938,21 @@
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
-		<execute macro="Blogs#addEntry">
-			<var name="assetTitle" value="WC WebContent Title" />
-			<var name="assetType" value="Basic Web Content" />
-			<var name="entryAddRelatedAsset" value="true" />
+		<execute macro="BlogsNavigator#gotoAddEntry" />
+
+		<execute macro="BlogsEntry#addEntryContent">
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
+
+		<execute macro="BlogsNavigator#gotoSettings" />
+
+		<execute macro="BlogsEntry#addRelatedAssetPG">
+			<var name="assetTitle" value="WC WebContent Title" />
+			<var name="assetType" value="Basic Web Content" />
+		</execute>
+
+		<execute macro="BlogsEntry#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Asset Publisher Page" />
@@ -1982,38 +1985,6 @@
 		<execute macro="RelatedAssets#viewPG">
 			<var name="assetTitle" value="WC WebContent Title" />
 		</execute>
-
-		<execute macro="PermissionsInline#gotoBlogsEntryPG">
-			<var name="entryTitle" value="Blogs Entry Title" />
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="Role#removePermissionPG">
-			<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_VIEW" />
-			<var name="roleName" value="Guest" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewPG">
-			<var name="assetContent" value="WC WebContent Content" />
-			<var name="assetTitle" value="WC WebContent Title" />
-			<var name="relatedAssetTitleHidden" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewNoEntryAsGuestPG">
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="User#loginPG" />
 	</command>
 
 	<command name="ViewRelatedAssetViaDMPortlet" priority="3">

@@ -53,8 +53,6 @@ if (workflowEnabled) {
 %>
 
 <div <%= portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
-	<liferay-util:include page="/document_library/top_links.jsp" servletContext="<%= application %>" />
-
 	<liferay-util:buffer var="removeFileEntryTypeIcon">
 		<liferay-ui:icon
 			iconCssClass="icon-remove"

@@ -21,10 +21,13 @@ import com.liferay.item.selector.ItemSelectorViewRenderer;
 import com.liferay.item.selector.web.util.ItemSelectorCriterionSerializer;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
@@ -37,6 +40,7 @@ import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -48,6 +52,7 @@ import org.powermock.api.mockito.PowerMockito;
 
 /**
  * @author Iván Zaera
+ * @author Roberto Díaz
  */
 public class ItemSelectorImplTest extends PowerMockito {
 
@@ -96,12 +101,30 @@ public class ItemSelectorImplTest extends PowerMockito {
 		Portal portal = mock(Portal.class);
 
 		LiferayPortletResponse liferayPortletResponse =
-			getMockPortletResponse();
+			mock(LiferayPortletResponse.class);
+
+		LiferayPortletRequest liferayPortletRequest =
+			getMockPortletRequest(liferayPortletResponse);
 
 		when(
 			portal.getLiferayPortletResponse(Mockito.any(PortletResponse.class))
 		).thenReturn(
 			liferayPortletResponse
+		);
+
+		when(
+			portal.getLiferayPortletRequest(Mockito.any(PortletRequest.class))
+		).thenReturn(
+			liferayPortletRequest
+		);
+
+		Layout layout = mock(Layout.class);
+
+		when(
+			portal.getControlPanelLayout(
+				Mockito.anyLong(), Mockito.any(Group.class))
+		).thenReturn(
+			layout
 		);
 
 		PortalUtil portalUtil = new PortalUtil();
@@ -114,8 +137,8 @@ public class ItemSelectorImplTest extends PowerMockito {
 
 		when(
 			portletURLFactory.create(
-				Mockito.any(PortletRequest.class), Mockito.anyString(),
-				Mockito.anyLong(), Mockito.anyString())
+				Mockito.any(HttpServletRequest.class), Mockito.anyString(),
+				Mockito.any(Layout.class), Mockito.anyString())
 		).thenReturn(
 			mockLiferayPortletURL
 		);
@@ -152,7 +175,7 @@ public class ItemSelectorImplTest extends PowerMockito {
 	public void testGetItemSelectorRendering() {
 		setUpItemSelectionCriterionHandlers();
 
-		PortletResponse portletResponse = getMockPortletResponse();
+		PortletResponse portletResponse = mock(PortletResponse.class);
 
 		PortletRequest portletRequest = getMockPortletRequest(portletResponse);
 
@@ -202,13 +225,15 @@ public class ItemSelectorImplTest extends PowerMockito {
 		Assert.assertEquals(2, itemSelectorViewRenderers.size());
 	}
 
-	protected PortletRequest getMockPortletRequest(
+	protected LiferayPortletRequest getMockPortletRequest(
 		PortletResponse portletResponse) {
 
-		PortletRequest portletRequest = mock(PortletRequest.class);
+		LiferayPortletRequest liferayPortletRequest = mock(
+			LiferayPortletRequest.class);
 
 		when(
-			portletRequest.getAttribute(JavaConstants.JAVAX_PORTLET_RESPONSE)
+			liferayPortletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE)
 		).thenReturn(
 			portletResponse
 		);
@@ -216,7 +241,7 @@ public class ItemSelectorImplTest extends PowerMockito {
 		ThemeDisplay themeDisplay = mock(ThemeDisplay.class);
 
 		when(
-			portletRequest.getAttribute(WebKeys.THEME_DISPLAY)
+			liferayPortletRequest.getAttribute(WebKeys.THEME_DISPLAY)
 		).thenReturn(
 			themeDisplay
 		);
@@ -227,27 +252,52 @@ public class ItemSelectorImplTest extends PowerMockito {
 				_flickrItemSelectorCriterion);
 
 		when(
-			portletRequest.getParameterMap()
+			liferayPortletRequest.getParameterMap()
 		).thenReturn(
 			parameters
 		);
 
-		return portletRequest;
-	}
-
-	protected LiferayPortletResponse getMockPortletResponse() {
-		LiferayPortletResponse liferayPortletResponse = mock(
-			LiferayPortletResponse.class);
-
-		LiferayPortletURL liferayPortletURL = mock(LiferayPortletURL.class);
+		HttpServletRequest request = mock(HttpServletRequest.class);
 
 		when(
-			liferayPortletResponse.createRenderURL(Mockito.anyString())
+			liferayPortletRequest.getHttpServletRequest()
 		).thenReturn(
-			liferayPortletURL
+			request
 		);
 
-		return liferayPortletResponse;
+		when(
+			request.getAttribute(WebKeys.THEME_DISPLAY)
+		).thenReturn(
+			themeDisplay
+		);
+
+		Group group = mock(Group.class);
+
+		when(
+			themeDisplay.getScopeGroup()
+		).thenReturn(
+			group
+		);
+
+		when(
+			group.getGroupId()
+		).thenReturn(
+			12345L
+		);
+
+		when(
+			themeDisplay.getScopeGroupId()
+		).thenReturn(
+			12345L
+		);
+
+		when(
+			themeDisplay.getCompanyId()
+		).thenReturn(
+			12345L
+		);
+
+		return liferayPortletRequest;
 	}
 
 	protected void setUpItemSelectionCriterionHandlers() {

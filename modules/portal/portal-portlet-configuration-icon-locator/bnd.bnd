@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Portal Portlet Configuration Icon Locator
+Bundle-SymbolicName: com.liferay.portal.portlet.configuration.icon.locator
+Bundle-Version: 1.0.0
+Include-Resource: classes

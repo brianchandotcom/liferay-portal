@@ -29,7 +29,7 @@
 >
 
 	<%
-	List<PortletConfigurationIconFactory> portletConfigurationIconFactories = ListUtil.copy(PortletConfigurationIconTracker.getPortletConfigurationIcons(portletDisplay.getRootPortletId()));
+	List<PortletConfigurationIconFactory> portletConfigurationIconFactories = ListUtil.copy(PortletConfigurationIconTracker.getPortletConfigurationIcons(portletRequest));
 
 	portletConfigurationIconFactories = ListUtil.sort(portletConfigurationIconFactories, new PropertyComparator("weight", false, false));
 

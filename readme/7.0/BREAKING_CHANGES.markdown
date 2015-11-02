@@ -2345,7 +2345,8 @@ this tag.
 #### How should I update my code?
 
 Embedding another portlet is only supported from a template. You should embed
-the portlet by passing its name in a call to `theme.runtime`.
+the portlet by passing its name in a call to `theme.runtime` or using the right
+taglib in freemarker.
 
 **Example**
 
@@ -2355,7 +2356,9 @@ In Velocity:
 
 In FreeMarker:
 
-    ${theme.runtime("145")
+    <#assign liferay_portlet = PortalJspTagLibs["/WEB-INF/tld/liferay-portlet-ext.tld"] />
+
+    <@liferay_portlet["runtime"] portletName="145" />
 
 #### Why was this change made?
 

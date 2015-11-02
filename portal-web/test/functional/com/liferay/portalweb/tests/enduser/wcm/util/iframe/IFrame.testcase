@@ -17,7 +17,7 @@
 		</execute>
 	</set-up>
 
-	<command name="ViewIFramePortlet" priority="4">
+	<command name="ViewIFramePortlet" priority="3">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="IFrame Page" />
 		</execute>

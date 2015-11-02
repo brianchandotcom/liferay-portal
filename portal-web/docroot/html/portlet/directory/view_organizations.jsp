@@ -78,9 +78,9 @@ if (parentOrganizationId > 0) {
 	%>
 
 	<liferay-ui:organization-search-container-results
-		indexerDisabled="<%= !portletName.equals(PortletKeys.DIRECTORY) %>"
 		organizationParams="<%= organizationParams %>"
 		parentOrganizationId="<%= parentOrganizationId %>"
+		useIndexer="<%= portletName.equals(PortletKeys.DIRECTORY) %>"
 	/>
 
 	<liferay-ui:search-container-row

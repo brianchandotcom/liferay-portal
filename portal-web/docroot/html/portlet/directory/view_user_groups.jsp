@@ -49,8 +49,8 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 	%>
 
 	<liferay-ui:user-group-search-container-results
-		indexerDisabled="<%= !portletName.equals(PortletKeys.DIRECTORY) %>"
 		searchTerms="<%= searchTerms %>"
+		useIndexer="<%= portletName.equals(PortletKeys.DIRECTORY) %>"
 		userGroupParams="<%= userGroupParams %>"
 	/>
 

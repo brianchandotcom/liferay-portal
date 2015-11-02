@@ -27,12 +27,12 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class UserGroupSearchContainerResultsTag<R> extends IncludeTag {
 
-	public void setIndexerDisabled(boolean indexerDisabled) {
-		_indexerDisabled = indexerDisabled;
-	}
-
 	public void setSearchTerms(DisplayTerms searchTerms) {
 		_searchTerms = searchTerms;
+	}
+
+	public void setUseIndexer(boolean useIndexer) {
+		_useIndexer = useIndexer;
 	}
 
 	public void setUserGroupParams(
@@ -43,7 +43,7 @@ public class UserGroupSearchContainerResultsTag<R> extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
-		_indexerDisabled = false;
+		_useIndexer = true;
 		_searchTerms = null;
 		_userGroupParams = null;
 	}
@@ -63,8 +63,8 @@ public class UserGroupSearchContainerResultsTag<R> extends IncludeTag {
 			searchContainerTag.getSearchContainer();
 
 		request.setAttribute(
-			"liferay-ui:user-group-search-container-results:indexerDisabled",
-			_indexerDisabled);
+			"liferay-ui:user-group-search-container-results:useIndexer",
+			_useIndexer);
 		request.setAttribute(
 			"liferay-ui:user-group-search-container-results:searchContainer",
 			searchContainer);
@@ -79,8 +79,8 @@ public class UserGroupSearchContainerResultsTag<R> extends IncludeTag {
 	private static final String _PAGE =
 		"/html/taglib/ui/user_group_search_container_results/page.jsp";
 
-	private boolean _indexerDisabled = false;
 	private DisplayTerms _searchTerms;
+	private boolean _useIndexer = true;
 	private LinkedHashMap<String, Object> _userGroupParams;
 
 }

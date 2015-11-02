@@ -42,8 +42,8 @@ public class UserSearchContainerResultsTag<R> extends IncludeTag {
 		return super.doStartTag();
 	}
 
-	public void setIndexerDisabled(boolean indexerDisabled) {
-		_indexerDisabled = indexerDisabled;
+	public void setUseIndexer(boolean useIndexer) {
+		_useIndexer = useIndexer;
 	}
 
 	public void setUserParams(LinkedHashMap<String, Object> userParams) {
@@ -52,7 +52,7 @@ public class UserSearchContainerResultsTag<R> extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
-		_indexerDisabled = false;
+		_useIndexer = true;
 		_searchContainer = null;
 		_searchTerms = null;
 		_userParams = null;
@@ -74,8 +74,7 @@ public class UserSearchContainerResultsTag<R> extends IncludeTag {
 		_searchTerms = _searchContainer.getSearchTerms();
 
 		request.setAttribute(
-			"liferay-ui:user-search-container-results:indexerDisabled",
-			_indexerDisabled);
+			"liferay-ui:user-search-container-results:useIndexer", _useIndexer);
 		request.setAttribute(
 			"liferay-ui:user-search-container-results:searchContainer",
 			_searchContainer);
@@ -89,9 +88,9 @@ public class UserSearchContainerResultsTag<R> extends IncludeTag {
 	private static final String _PAGE =
 		"/html/taglib/ui/user_search_container_results/page.jsp";
 
-	private boolean _indexerDisabled = false;
 	private SearchContainer<R> _searchContainer;
 	private DisplayTerms _searchTerms;
+	private boolean _useIndexer = true;
 	private LinkedHashMap<String, Object> _userParams;
 
 }

@@ -3551,13 +3551,6 @@
 		<tag-class>com.liferay.taglib.ui.OrganizationSearchContainerResultsTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>Whether the use of the indexed search is disabled. The default value is <![CDATA[<code>false</code>]]></description>
-			<name>indexerDisabled</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>boolean</type>
-		</attribute>
-		<attribute>
 			<name>organizationParams</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3566,6 +3559,13 @@
 			<name>parentOrganizationId</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Whether to use indexer for search. The default value is <![CDATA[<code>true</code>]]></description>
+			<name>useIndexer</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 	</tag>
 	<tag>
@@ -5735,16 +5735,16 @@
 		<tag-class>com.liferay.taglib.ui.UserGroupSearchContainerResultsTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>Whether the use of the indexed search is disabled. The default value is <![CDATA[<code>false</code>]]></description>
-			<name>indexerDisabled</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>boolean</type>
-		</attribute>
-		<attribute>
 			<name>searchTerms</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Whether to use indexer for search. The default value is <![CDATA[<code>true</code>]]></description>
+			<name>useIndexer</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<name>userGroupParams</name>
@@ -5827,8 +5827,8 @@
 		<tag-class>com.liferay.taglib.ui.UserSearchContainerResultsTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>Whether the use of the indexed search is disabled. The default value is <![CDATA[<code>false</code>]]></description>
-			<name>indexerDisabled</name>
+			<description>Whether to use indexer for search. The default value is <![CDATA[<code>true</code>]]></description>
+			<name>useIndexer</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>

@@ -10,8 +10,8 @@
 	<#assign label = label + " (" + languageUtil.get(requestedLocale, "required") + ")">
 </#if>
 
-<@aui["field-wrapper"] data=data>
+<div class="lfr-ddm-field-group">
 	<@aui.select cssClass=cssClass helpMessage=escape(fieldStructure.tip) label=escape(label) multiple=multiple name=namespacedFieldName>
 		${fieldStructure.children}
 	</@aui.select>
-</@>
+</div>

@@ -1,6 +1,6 @@
 <#include "../init.ftl">
 
-<@aui["field-wrapper"] data=data>
+<div class="lfr-ddm-field-group">
 	<@aui.input
 		cssClass=cssClass
 		helpMessage=escape(fieldStructure.tip)
@@ -11,4 +11,4 @@
 	/>
 
 	${fieldStructure.children}
-</@>
+</div>

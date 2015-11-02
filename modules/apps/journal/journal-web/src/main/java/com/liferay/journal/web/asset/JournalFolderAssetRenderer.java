@@ -115,6 +115,8 @@ public class JournalFolderAssetRenderer
 	@Override
 	public String getJspPath(HttpServletRequest request, String template) {
 		if (template.equals(TEMPLATE_FULL_CONTENT)) {
+			request.setAttribute(WebKeys.JOURNAL_FOLDER, _folder);
+
 			return "/asset/folder_" + template + ".jsp";
 		}
 		else {

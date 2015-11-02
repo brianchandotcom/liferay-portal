@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+journalContentDisplayContext.clearCache();
+
 String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
 
 Portlet selPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), referringPortletResource);

@@ -90,6 +90,15 @@ public class JournalContentDisplayContext {
 		}
 	}
 
+	public void clearCache() throws PortalException {
+		String articleId = getArticleId();
+
+		if (Validator.isNotNull(articleId)) {
+			JournalContentUtil.clearCache(
+				getArticleGroupId(), getArticleId(), getDDMTemplateKey());
+		}
+	}
+
 	public JournalArticle getArticle() {
 		if (_article != null) {
 			return _article;
@@ -270,11 +279,11 @@ public class JournalContentDisplayContext {
 			_portletRequest, "ddmTemplateKey",
 			_journalContentPortletInstanceConfiguration.ddmTemplateKey());
 
-		if (getDDMTemplates().isEmpty()) {
+		if (Validator.isNotNull(_ddmTemplateKey)) {
 			return _ddmTemplateKey;
 		}
 
-		if (Validator.isNull(_ddmTemplateKey)) {
+		if (!getDDMTemplates().isEmpty()) {
 			JournalArticle article = getArticle();
 
 			_ddmTemplateKey = article.getDDMTemplateKey();

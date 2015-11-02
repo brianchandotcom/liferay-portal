@@ -817,21 +817,27 @@
 	</command>
 
 	<command name="selectPGViaKBArticle">
-		<execute function="AssertClick" locator1="Message#INFO" value1="Please configure this portlet to make it visible to all users." />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="${portletNameBorderless}" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="Configuration#CONFIGURATION_IFRAME" />
+
 		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
 
-		<execute function="SelectWindow" locator1="title=Knowledge Base Article" />
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute function="SelectFrame" locator1="KnowledgeBaseSelectParent#SELECT_PARENT_DISPLAY_IFRAME" />
 
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="AssertClickNoError" locator1="KnowledgeBaseSelectParent#CHOOSE_BUTTON" value1="Choose" />
-
-		<execute function="SelectWindow" locator1="title=${pageName} - Liferay" />
+		<execute function="AssertClick" locator1="KnowledgeBaseSelectParent#CHOOSE_BUTTON" value1="Choose" />
 
 		<execute function="SelectFrame" locator1="Configuration#CONFIGURATION_IFRAME" />
+
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 

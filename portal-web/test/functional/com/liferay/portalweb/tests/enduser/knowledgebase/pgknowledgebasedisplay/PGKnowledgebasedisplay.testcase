@@ -254,7 +254,7 @@
 	</command>
 
 	<command name="ChangeSocialBookmarkSitesForKBArticle" priority="4">
-		<property name="hook.plugins.includes" value="social-bookmark-hook" />
+		<property name="hook.plugins.includes" value="social-bookmarks-hook" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />

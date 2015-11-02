@@ -23,10 +23,14 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -95,6 +99,19 @@ public class FacetedSearcher extends BaseSearcher {
 			}
 
 			searchQuery.addTerms(Field.KEYWORDS, keywords);
+		}
+
+		List<Group> inactiveGroups = new ArrayList<>();
+
+		inactiveGroups = GroupLocalServiceUtil.getActiveGroups(
+			searchContext.getCompanyId(), false);
+
+		for (Group inactiveGroup : inactiveGroups) {
+			String groupIdString = Long.toString(inactiveGroup.getGroupId());
+
+			searchQuery.addTerm(
+				Field.GROUP_ID, groupIdString, false,
+				BooleanClauseOccur.MUST_NOT);
 		}
 
 		for (String entryClassName : searchContext.getEntryClassNames()) {

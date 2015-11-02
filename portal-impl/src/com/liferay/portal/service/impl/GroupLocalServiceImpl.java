@@ -1133,6 +1133,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			companyId, classNameId, defaultUserId);
 	}
 
+	@Override
+	public List<Group> getActiveGroups(long companyId, boolean active) {
+		return groupPersistence.findByC_A(companyId, active);
+	}
+
 	/**
 	 * Returns the company group.
 	 *

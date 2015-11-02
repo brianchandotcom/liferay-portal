@@ -29,7 +29,9 @@ boolean search = Validator.isNotNull(keywords) || advancedSearch;
 	includeCheckBox="<%= !user.isDefaultUser() && journalDisplayContext.isShowEditActions() %>"
 >
 	<liferay-frontend:management-bar-buttons>
-		<aui:a cssClass="btn infoPanelToggler" href="javascript:;" iconCssClass="icon-info-sign" />
+		<li>
+			<aui:a cssClass="btn infoPanelToggler" href="javascript:;" iconCssClass="icon-info-sign" />
+		</li>
 
 		<c:if test="<%= !search %>">
 			<liferay-util:include page="/display_style_buttons.jsp" servletContext="<%= application %>" />

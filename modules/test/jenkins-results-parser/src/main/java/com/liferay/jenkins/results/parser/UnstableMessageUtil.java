@@ -71,7 +71,7 @@ public class UnstableMessageUtil {
 				String runBuildURL = runJSONObject.getString("url");
 
 				if (!runBuildURL.endsWith(
-						"/" + jsonObject.getString("number") + "/")) {
+						"/" + jsonObject.getInt("number") + "/")) {
 
 					continue;
 				}

@@ -79,14 +79,14 @@ public class UnstableMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 		JSONObject jobJSONObject = JenkinsResultsParserUtil.toJSONObject(
 			JenkinsResultsParserUtil.getLocalURL(toURLString(jobJSONFile)));
 
-		String number = jobJSONObject.getString("number");
+		int number = jobJSONObject.getInt("number");
 
 		JSONArray runsJSONArray = jobJSONObject.getJSONArray("runs");
 
 		for (int i = 0; i < runsJSONArray.length(); i++) {
 			JSONObject runJSONObject = runsJSONArray.getJSONObject(i);
 
-			if (!number.equals(runJSONObject.getString("number"))) {
+			if (number != runJSONObject.getInt("number")) {
 				continue;
 			}
 

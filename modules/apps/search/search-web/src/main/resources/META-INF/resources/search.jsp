@@ -39,6 +39,11 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 	<portlet:param name="mvcPath" value="/search.jsp" />
 </liferay-portlet:renderURL>
 
+<liferay-ui:header
+	backURL="<%= redirect %>"
+	title="search"
+/>
+
 <aui:form action="<%= searchURL %>" method="get" name="fm" onSubmit="event.preventDefault();">
 	<liferay-portlet:renderURLParams varImpl="searchURL" />
 	<aui:input name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" type="hidden" value="<%= ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_CUR) %>" />

@@ -103,7 +103,7 @@ public class MultiVMEhcachePortalCacheManager
 		MultiVMEhcachePortalCacheManagerConfigurator
 			multiVMEhcachePortalCacheManagerConfigurator) {
 
-		this.abstractEhcachePortalCacheManagerConfigurator =
+		this.baseEhcachePortalCacheManagerConfigurator =
 			multiVMEhcachePortalCacheManagerConfigurator;
 	}
 

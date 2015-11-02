@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = SingleVMEhcachePortalCacheManagerConfigurator.class
 )
 public class SingleVMEhcachePortalCacheManagerConfigurator
-	extends AbstractEhcachePortalCacheManagerConfigurator {
+	extends BaseEhcachePortalCacheManagerConfigurator {
 
 	@Override
 	protected boolean isClearCacheManagerPeerConfigurations() {

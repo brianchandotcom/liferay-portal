@@ -14,11 +14,11 @@
 
 package com.liferay.portal.cache.ehcache.internal;
 
-import com.liferay.portal.cache.AbstractPortalCacheManager;
+import com.liferay.portal.cache.BasePortalCacheManager;
 import com.liferay.portal.cache.configuration.PortalCacheConfiguration;
 import com.liferay.portal.cache.configuration.PortalCacheManagerConfiguration;
 import com.liferay.portal.cache.ehcache.EhcacheUnwrapUtil;
-import com.liferay.portal.cache.ehcache.internal.configurator.AbstractEhcachePortalCacheManagerConfigurator;
+import com.liferay.portal.cache.ehcache.internal.configurator.BaseEhcachePortalCacheManagerConfigurator;
 import com.liferay.portal.cache.ehcache.internal.event.PortalCacheManagerEventListener;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.configurator.PortalCacheConfiguratorSettings;
@@ -60,7 +60,7 @@ import net.sf.ehcache.util.FailSafeTimer;
  * @author Edward Han
  */
 public class EhcachePortalCacheManager<K extends Serializable, V>
-	extends AbstractPortalCacheManager<K, V> {
+	extends BasePortalCacheManager<K, V> {
 
 	public CacheManager getEhcacheManager() {
 		return _cacheManager;
@@ -70,7 +70,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	public void reconfigurePortalCaches(URL configurationURL) {
 		ObjectValuePair<Configuration, PortalCacheManagerConfiguration>
 			configurationObjectValuePair =
-				abstractEhcachePortalCacheManagerConfigurator.
+				baseEhcachePortalCacheManagerConfigurator.
 					getConfigurationObjectValuePair(
 						getPortalCacheManagerName(), configurationURL,
 						_usingDefault);
@@ -198,7 +198,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		}
 
 		URL configFileURL =
-			AbstractEhcachePortalCacheManagerConfigurator.class.getResource(
+			BaseEhcachePortalCacheManagerConfigurator.class.getResource(
 				_configFile);
 
 		if (configFileURL == null) {
@@ -211,7 +211,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 		ObjectValuePair<Configuration, PortalCacheManagerConfiguration>
 			configurationObjectValuePair =
-				abstractEhcachePortalCacheManagerConfigurator.
+				baseEhcachePortalCacheManagerConfigurator.
 					getConfigurationObjectValuePair(
 						getPortalCacheManagerName(), configFileURL,
 						_usingDefault);
@@ -335,8 +335,8 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		return true;
 	}
 
-	protected AbstractEhcachePortalCacheManagerConfigurator
-		abstractEhcachePortalCacheManagerConfigurator;
+	protected BaseEhcachePortalCacheManagerConfigurator
+		baseEhcachePortalCacheManagerConfigurator;
 	protected MBeanServer mBeanServer;
 	protected volatile Props props;
 

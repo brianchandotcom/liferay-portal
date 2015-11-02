@@ -14,7 +14,7 @@
 
 package com.liferay.portal.cache.memory.internal;
 
-import com.liferay.portal.cache.AbstractPortalCacheManager;
+import com.liferay.portal.cache.BasePortalCacheManager;
 import com.liferay.portal.cache.PortalCacheReplicator;
 import com.liferay.portal.cache.configuration.PortalCacheConfiguration;
 import com.liferay.portal.cache.configuration.PortalCacheManagerConfiguration;
@@ -39,7 +39,7 @@ import java.util.concurrent.ConcurrentMap;
  * @author Tina Tian
  */
 public class MemoryPortalCacheManager<K extends Serializable, V>
-	extends AbstractPortalCacheManager<K, V> {
+	extends BasePortalCacheManager<K, V> {
 
 	@Override
 	public void reconfigurePortalCaches(URL configurationURL) {

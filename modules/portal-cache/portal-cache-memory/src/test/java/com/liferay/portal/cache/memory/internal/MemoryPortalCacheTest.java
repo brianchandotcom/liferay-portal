@@ -14,7 +14,7 @@
 
 package com.liferay.portal.cache.memory.internal;
 
-import com.liferay.portal.cache.AbstractPortalCache;
+import com.liferay.portal.cache.BasePortalCache;
 import com.liferay.portal.cache.test.TestPortalCacheListener;
 import com.liferay.portal.cache.test.TestPortalCacheManager;
 import com.liferay.portal.cache.test.TestPortalCacheReplicator;
@@ -41,7 +41,7 @@ public class MemoryPortalCacheTest {
 
 			@Override
 			public void appendAssertClasses(List<Class<?>> assertClasses) {
-				assertClasses.add(AbstractPortalCache.class);
+				assertClasses.add(BasePortalCache.class);
 			}
 
 		};

@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = MultiVMEhcachePortalCacheManagerConfigurator.class
 )
 public class MultiVMEhcachePortalCacheManagerConfigurator
-	extends AbstractEhcachePortalCacheManagerConfigurator {
+	extends BaseEhcachePortalCacheManagerConfigurator {
 
 	@Activate
 	protected void activate() {

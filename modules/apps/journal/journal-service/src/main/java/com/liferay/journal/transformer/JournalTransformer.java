@@ -55,6 +55,7 @@ import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.xsl.XSLTemplateResource;
 import com.liferay.portal.xsl.XSLURIResolver;
+import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.io.IOException;
 
@@ -363,6 +364,10 @@ public class JournalTransformer {
 					templateManager.addTaglibRequest(
 						template, "Request", request,
 						themeDisplay.getResponse());
+					templateManager.addTaglibTheme(
+						template, "taglibLiferay", request,
+						new PipingServletResponse(
+							themeDisplay.getResponse(), unsyncStringWriter));
 				}
 
 				// Deprecated variables

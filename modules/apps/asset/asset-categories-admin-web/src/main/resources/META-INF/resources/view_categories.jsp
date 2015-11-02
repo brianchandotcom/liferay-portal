@@ -172,7 +172,7 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 			/>
 
 			<liferay-ui:search-container-column-jsp
-				cssClass="checkbox-cell entry-action"
+				cssClass="list-group-item-field"
 				path="/category_action.jsp"
 			/>
 		</liferay-ui:search-container-row>

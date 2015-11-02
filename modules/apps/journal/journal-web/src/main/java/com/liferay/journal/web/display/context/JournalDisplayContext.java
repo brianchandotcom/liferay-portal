@@ -80,6 +80,12 @@ public class JournalDisplayContext {
 			return _folder;
 		}
 
+		_folder = (JournalFolder)_request.getAttribute(WebKeys.JOURNAL_FOLDER);
+
+		if (_folder != null) {
+			return _folder;
+		}
+
 		_folder = ActionUtil.getFolder(_request);
 
 		return _folder;

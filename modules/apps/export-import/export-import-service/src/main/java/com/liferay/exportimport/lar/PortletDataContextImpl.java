@@ -93,7 +93,6 @@ import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
 import com.liferay.portlet.exportimport.lar.UserIdStrategy;
 import com.liferay.portlet.exportimport.xstream.XStreamAlias;
-import com.liferay.portlet.exportimport.xstream.XStreamAliasRegistryUtil;
 import com.liferay.portlet.exportimport.xstream.XStreamConverter;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.ratings.model.RatingsEntry;
@@ -2530,7 +2529,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		_xStream = new XStream(
 			null, new XppDriver(),
 			new ClassLoaderReference(
-				XStreamAliasRegistryUtil.getAliasesClassLoader(
+				XStreamConfiguratorRegistryUtil.getConfiguratorsClassLoader(
 					XStream.class.getClassLoader())));
 
 		_xStream.omitField(HashMap.class, "cache_bitmask");

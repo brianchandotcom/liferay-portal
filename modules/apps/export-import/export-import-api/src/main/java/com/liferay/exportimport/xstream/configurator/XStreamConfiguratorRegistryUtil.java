@@ -35,6 +35,23 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 @ProviderType
 public class XStreamConfiguratorRegistryUtil {
 
+	public static ClassLoader getConfiguratorsClassLoader(
+		ClassLoader masterClassLoader) {
+
+		Set<ClassLoader> classLoaders = new HashSet<>();
+
+		Set<XStreamConfigurator> xStreamConfigurators =
+			_instance._getXStreamConfigurators();
+
+		for (XStreamConfigurator xStreamConfigurator : xStreamConfigurators) {
+			classLoaders.add(xStreamConfigurator.getClass().getClassLoader());
+		}
+
+		return AggregateClassLoader.getAggregateClassLoader(
+			masterClassLoader,
+			classLoaders.toArray(new ClassLoader[classLoaders.size()]));
+	}
+
 	public static Set<XStreamConfigurator> getXStreamConfigurators() {
 		return _instance._getXStreamConfigurators();
 	}

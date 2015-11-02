@@ -7,4 +7,4 @@ Include-Resource:\
 	META-INF/resources=src/main/resources/META-INF/resources
 Web-ContextPath: /frontend-editor-simple-web
 
--donotcopy: (\.touch|.*_diffs.*)
+-donotcopy: (\.touch|.*_diffs.*|.*.properties)

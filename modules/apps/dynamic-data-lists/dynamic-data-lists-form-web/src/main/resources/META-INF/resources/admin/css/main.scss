@@ -62,6 +62,15 @@
 		display: inline-block;
 		margin: -2px 0 0 4px;
 	}
+
+	label.radio-inline {
+		margin-right: 125px;
+	}
+
+	.validation-message {
+		font-size: 14px;
+		position: absolute;
+	}
 }
 
 .portal-popup, .portlet-forms-admin {
@@ -170,24 +179,91 @@
 	width: 720px;
 
 	.form-builder-field-settings-content {
-		.auto-fields {
-			.lfr-form-row {
-				padding: 0;
+		.has-error .key-value-editor {
+			display: none
+		}
 
-				&:hover {
-					background: transparent;
-					background-color: transparent;
-					border-color: transparent;
+		.key-value-editor {
+			&.active {
+				.key-value-cancel, .key-value-done, .key-value-input {
+					display: inline-block;
 				}
+
+				.key-value-output {
+					display: none;
+				}
+			}
+
+			.key-value-cancel, .key-value-done, .key-value-input {
+				display: none;
+			}
+
+			.key-value-cancel, .key-value-done {
+				font-weight: bold;
+				margin-left: 25px;
+				text-transform: uppercase;
+			}
+
+			.key-value-label {
+				color: #C4CFD6;
+				margin-right: 5px;
+			}
+
+			.key-value-cancel, .key-value-done, .key-value-input, .key-value-label, .key-value-output {
+				font-size: 11px;
+			}
+
+			.key-value-input {
+				border-width: 0;
+				margin: 0;
+				outline: none;
+			}
+
+			.key-value-input, .key-value-output {
+				color: #869CAD;
 			}
 		}
 
-		.modal-body {
-			background-color: #FFF;
-			max-height: 500px;
-			overflow-x: hidden;
-			overflow-y: auto;
-			padding: 0;
+		.liferay-ddm-form-field-key-value .validation-message {
+			height: 22px;
+			position: relative;
+		}
+
+		.liferay-ddm-form-field-options {
+			.close {
+				font-size: 22px;
+				position: absolute;
+				right: 8px;
+				top: 8px;
+			}
+
+			.drag-handle {
+				color: #C3CFD8;
+				cursor: pointer;
+				font-size: 22px;
+				position: absolute;
+				top: 12px;
+
+				&:hover {
+					font-weight: bold;
+				}
+			}
+
+			.drag-placeholder {
+				opacity: 0.5;
+			}
+
+			.last-option .close {
+				display: none;
+			}
+
+			.liferay-ddm-form-field-key-value {
+				margin-left: 30px;
+			}
+
+			.lfr-ddm-form-field-repeatable-toolbar {
+				display: none;
+			}
 		}
 
 		.lfr-ddm-form-container {
@@ -231,26 +307,48 @@
 			}
 
 			.lfr-ddm-form-page {
-				display: none;
-
 				&.active {
-					display: block;
+					&.advanced {
+						display: block;
+					}
+
+					&.basic {
+						padding-bottom: 40px;
+					}
 				}
 
 				&.advanced {
 					background-color: #F5F8FA;
+					display: none;
 					margin: 0 -50px;
 					padding: 20px 50px;
 				}
 			}
+		}
 
-			.settings-toggler {
-				background-color: #F5F8FA;
-				color: #879CB5;
-				display: block;
+		.modal-body {
+			background-color: #FFF;
+			max-height: 500px;
+			overflow-x: hidden;
+			overflow-y: auto;
+			padding: 0;
+		}
+
+		.settings-toggler {
+			background-color: #F5F8FA;
+			bottom: 87px;
+			color: #879CB5;
+			display: block;
+			margin: 0;
+			padding: 10px 50px;
+			position: absolute;
+			text-decoration: none;
+			width: 100%;
+
+			&.active {
 				margin: 0 -50px;
-				padding: 10px 50px;
-				text-decoration: none;
+				position: static;
+				width: auto;
 			}
 		}
 	}

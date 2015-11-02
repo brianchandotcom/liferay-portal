@@ -76,11 +76,14 @@ AUI.add(
 					_deserializeField: function(deserializedColumn, fieldName) {
 						var instance = this;
 
+						var builder = instance.get('builder');
+
 						var definition = instance.get('definition');
 
 						var fieldDefinition = RendererUtil.getFieldByKey(definition, fieldName);
 
-						fieldDefinition.parent = instance.get('builder');
+						fieldDefinition.parent = builder;
+						fieldDefinition.portletNamespace = builder.get('portletNamespace');
 
 						var fieldClass = FormBuilderUtil.getFieldClass(fieldDefinition.type);
 

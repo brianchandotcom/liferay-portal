@@ -28,21 +28,12 @@ AUI.add(
 					getContextValue: function() {
 						var instance = this;
 
-						var value = instance.get('value');
-
-						if (Lang.isObject(value)) {
-							value = value[instance.get('locale')];
-						}
+						var value = instance.getLocalizedValue(instance.get('value'));
 
 						var predefinedValue = instance.get('predefinedValue');
 
 						if (!value && predefinedValue) {
-							if (Lang.isObject(predefinedValue)) {
-								value = predefinedValue[instance.get('locale')];
-							}
-							else {
-								value = predefinedValue;
-							}
+							value = instance.getLocalizedValue(predefinedValue);
 						}
 
 						if (!Lang.isArray(value)) {

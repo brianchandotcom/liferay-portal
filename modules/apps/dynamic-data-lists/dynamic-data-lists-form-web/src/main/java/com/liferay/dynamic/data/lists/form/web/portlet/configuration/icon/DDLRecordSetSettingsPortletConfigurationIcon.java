@@ -65,16 +65,6 @@ public class DDLRecordSetSettingsPortletConfigurationIcon
 
 	@Override
 	public boolean isShow() {
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		String rootPortletId = portletDisplay.getRootPortletId();
-
-		if (!rootPortletId.equals(
-				DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN)) {
-
-			return false;
-		}
-
 		long recordSetId = getRecordSetId();
 
 		if (recordSetId == 0) {

@@ -17,7 +17,7 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
-boolean indexerDisabled = (boolean)request.getAttribute("liferay-ui:organization-search-container-results:indexerDisabled");
+boolean indexerDisabled = GetterUtil.getBoolean(request.getAttribute("liferay-ui:organization-search-container-results:indexerDisabled"));
 OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)request.getAttribute("liferay-ui:organization-search-container-results:searchTerms");
 LinkedHashMap<String, Object> organizationParams = (LinkedHashMap<String, Object>)request.getAttribute("liferay-ui:organization-search-container-results:organizationParams");
 long parentOrganizationId = GetterUtil.getLong(request.getAttribute("liferay-ui:organization-search-container-results:parentOrganizationId"));

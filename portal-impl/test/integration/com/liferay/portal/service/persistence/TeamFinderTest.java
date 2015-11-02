@@ -101,10 +101,10 @@ public class TeamFinderTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
-	
+
 	@DeleteAfterTestRun
 	private User _user;
-	
+
 	@DeleteAfterTestRun
 	private UserGroup _userGroup;
 

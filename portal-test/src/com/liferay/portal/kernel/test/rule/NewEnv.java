@@ -32,6 +32,16 @@ public @interface NewEnv {
 
 	public Type type();
 
+	@Documented
+	@Inherited
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target({ElementType.METHOD, ElementType.TYPE})
+	public @interface JVMArgs {
+
+		public String value();
+
+	}
+
 	public enum Type {
 
 		CLASSLOADER, JVM, NONE

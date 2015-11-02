@@ -25,11 +25,13 @@ import com.liferay.portal.kernel.process.local.LocalProcessExecutor;
 import com.liferay.portal.kernel.process.local.LocalProcessLauncher.ProcessContext;
 import com.liferay.portal.kernel.process.local.LocalProcessLauncher.ShutdownHook;
 import com.liferay.portal.kernel.test.rule.BaseTestRule.StatementWrapper;
+import com.liferay.portal.kernel.test.rule.NewEnv.JVMArgs;
 import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -43,6 +45,7 @@ import java.net.MalformedURLException;
 import java.net.URLClassLoader;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -145,6 +148,24 @@ public class NewEnvTestRule implements TestRule {
 
 	protected List<String> createArguments(Description description) {
 		List<String> arguments = new ArrayList<>();
+
+		Class<?> testClass = description.getTestClass();
+
+		JVMArgs jvmArgs = testClass.getAnnotation(JVMArgs.class);
+
+		if (jvmArgs != null) {
+			arguments.addAll(
+				Arrays.asList(
+					StringUtil.split(jvmArgs.value(), StringPool.SPACE)));
+		}
+
+		jvmArgs = description.getAnnotation(JVMArgs.class);
+
+		if (jvmArgs != null) {
+			arguments.addAll(
+				Arrays.asList(
+					StringUtil.split(jvmArgs.value(), StringPool.SPACE)));
+		}
 
 		arguments.add("-Djava.net.preferIPv4Stack=true");
 

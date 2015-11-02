@@ -68,6 +68,10 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 
 		try {
 			contextObjects.put("journalContent", _journalContent);
+
+			// Deprecated
+
+			contextObjects.put("journalContentUtil", _journalContent);
 		}
 		catch (SecurityException se) {
 			_log.error(se, se);

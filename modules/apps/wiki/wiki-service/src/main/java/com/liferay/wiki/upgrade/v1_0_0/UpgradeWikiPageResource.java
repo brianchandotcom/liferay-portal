@@ -23,6 +23,8 @@ public class UpgradeWikiPageResource extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		runSQL("alter table WikiPageResource add groupId LONG default 0");
+
 		runSQL(
 			"update WikiPageResource set groupId = (select max(groupId) from " +
 				"WikiPage where WikiPage.resourcePrimKey = " +

@@ -205,7 +205,7 @@ public class ExportImportHelperUtilTest {
 			if (previousRank != null) {
 				Assert.assertTrue(
 					"Portlets should be in ascending order by their ranks",
-					actualRank < previousRank);
+					actualRank <= previousRank);
 			}
 
 			previousRank = actualRank;

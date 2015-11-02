@@ -122,11 +122,15 @@
 		<execute function="Select" locator1="APConfiguration#FILTER_CATEGORIZATION_SELECT" value1="Categories" />
 		<execute function="Click" locator1="APConfiguration#FILTER_CATEGORIES_SELECT_BUTTON" />
 
+		<execute function="SelectFrameTop" />
+
 		<var name="key_categoryName" value="${categoryName}" />
 
 		<execute function="Click" locator1="APConfiguration#FILTER_CATEGORIES_CATEGORY_CHECKBOX" />
 
-		<execute function="Click" locator1="Button#CLOSE" />
+		<execute function="Click" locator1="Button#CLOSE_IFRAME" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />

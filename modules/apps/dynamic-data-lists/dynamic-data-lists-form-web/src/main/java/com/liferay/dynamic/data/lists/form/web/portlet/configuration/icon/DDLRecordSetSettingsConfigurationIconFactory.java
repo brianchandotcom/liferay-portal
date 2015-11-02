@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.lists.form.web.portlet.configuration.icon;
 
+import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIconFactory;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
@@ -25,7 +26,14 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true, service = PortletConfigurationIconFactory.class)
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN,
+		"path=/admin/edit_record_set.jsp"
+	},
+	service = PortletConfigurationIconFactory.class
+)
 public class DDLRecordSetSettingsConfigurationIconFactory
 	extends BasePortletConfigurationIconFactory {
 

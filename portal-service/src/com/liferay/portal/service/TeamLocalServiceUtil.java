@@ -329,11 +329,6 @@ public class TeamLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static java.util.List<com.liferay.portal.model.Team> getRecursiveUserTeams(
-		long groupId, long userId) {
-		return getService().getRecursiveUserTeams(groupId, userId);
-	}
-
 	public static com.liferay.portal.model.Team getTeam(long groupId,
 		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -380,6 +375,11 @@ public class TeamLocalServiceUtil {
 	public static java.util.List<com.liferay.portal.model.Team> getTeams(
 		int start, int end) {
 		return getService().getTeams(start, end);
+	}
+
+	public static java.util.List<com.liferay.portal.model.Team> getTeamsByUserOrUserGroups(
+		long groupId, long userId) {
+		return getService().getTeamsByUserOrUserGroups(groupId, userId);
 	}
 
 	/**

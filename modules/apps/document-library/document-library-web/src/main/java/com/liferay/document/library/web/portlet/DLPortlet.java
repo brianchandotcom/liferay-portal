@@ -37,6 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.footer-portlet-javascript=/document_library/js/upload.js",
 		"com.liferay.portlet.header-portlet-css=/document_library/css/main.css",
 		"com.liferay.portlet.icon=/document_library/icons/document_library.png",
+		"com.liferay.portlet.instanceable=true",
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.private-session-attributes=false",

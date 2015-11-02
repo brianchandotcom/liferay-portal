@@ -3,7 +3,7 @@
 <#assign layoutLocalService = serviceLocator.findService("com.liferay.portal.service.LayoutLocalService")>
 <#assign layoutService = serviceLocator.findService("com.liferay.portal.service.LayoutService")>
 
-<@aui["field-wrapper"] data=data>
+<div class="lfr-ddm-field-group">
 	<#assign selectedPlid = 0>
 
 	<#assign fieldRawValue = paramUtil.getString(request, "${namespacedFieldName}", fieldRawValue)>
@@ -51,7 +51,7 @@
 	</@aui.select>
 
 	${fieldStructure.children}
-</@>
+</div>
 
 <#macro getLayoutOption
 	layout

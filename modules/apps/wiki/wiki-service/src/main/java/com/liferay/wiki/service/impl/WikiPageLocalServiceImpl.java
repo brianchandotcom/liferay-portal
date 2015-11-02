@@ -240,7 +240,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Workflow
 
-		startWorkflowInstance(userId, page, serviceContext);
+		page = startWorkflowInstance(userId, page, serviceContext);
 
 		return page;
 	}
@@ -3080,7 +3080,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			expandoBridge.getAttributes());
 	}
 
-	protected void startWorkflowInstance(
+	protected WikiPage startWorkflowInstance(
 			long userId, WikiPage page, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -3091,7 +3091,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		workflowContext.put(
 			WorkflowConstants.CONTEXT_URL, getPageURL(page, serviceContext));
 
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
+		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			page.getCompanyId(), page.getGroupId(), userId,
 			WikiPage.class.getName(), page.getPageId(), page, serviceContext,
 			workflowContext);
@@ -3235,7 +3235,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Workflow
 
-		startWorkflowInstance(userId, page, serviceContext);
+		page = startWorkflowInstance(userId, page, serviceContext);
 
 		return page;
 	}

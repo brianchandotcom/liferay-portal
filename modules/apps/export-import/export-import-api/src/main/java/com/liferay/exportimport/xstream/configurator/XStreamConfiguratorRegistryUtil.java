@@ -18,8 +18,11 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portlet.exportimport.xstream.XStreamAliasRegistryUtil;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.osgi.framework.Bundle;
@@ -45,6 +48,16 @@ public class XStreamConfiguratorRegistryUtil {
 
 		for (XStreamConfigurator xStreamConfigurator : xStreamConfigurators) {
 			classLoaders.add(xStreamConfigurator.getClass().getClassLoader());
+		}
+
+		// Temporary code to fetch classloaders from old framework too
+
+		Map<Class<?>, String> aliases = XStreamAliasRegistryUtil.getAliases();
+
+		if (MapUtil.isNotEmpty(aliases)) {
+			for (Class<?> clazz : aliases.keySet()) {
+				classLoaders.add(clazz.getClassLoader());
+			}
 		}
 
 		return AggregateClassLoader.getAggregateClassLoader(

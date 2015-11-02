@@ -1348,6 +1348,12 @@ public class JournalPortlet extends MVCPortlet {
 
 		Layout layout = themeDisplay.getLayout();
 
+		long referingPlid = ParamUtil.getLong(actionRequest, "referringPlid");
+
+		if (referingPlid > 0) {
+			layout = _layoutLocalService.getLayout(referingPlid);
+		}
+
 		_journalContentSearchLocalService.updateContentSearch(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			portletResource, articleId, true);

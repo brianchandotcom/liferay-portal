@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -135,7 +136,7 @@ public class ConfigurationModelToDDMFormValuesConverter {
 	protected void addDDMFormFieldValues(
 		String name, String[] defaultValues, DDMFormValues ddmFormValues) {
 
-		if (defaultValues == null || defaultValues.length == 0) {
+		if (ArrayUtil.isEmpty(defaultValues)) {
 			addDDMFormFieldValue(name, StringPool.BLANK, ddmFormValues);
 
 			return;

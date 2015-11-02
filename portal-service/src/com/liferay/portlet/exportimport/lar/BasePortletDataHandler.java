@@ -333,6 +333,11 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	}
 
 	@Override
+	public int getRank() {
+		return _rank;
+	}
+
+	@Override
 	public String getServiceName() {
 		return null;
 	}
@@ -499,6 +504,11 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	@Override
 	public void setPortletId(String portletId) {
 		_portletId = portletId;
+	}
+
+	@Override
+	public void setRank(int rank) {
+		_rank = rank;
 	}
 
 	protected Element addExportDataRootElement(
@@ -800,6 +810,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		new PortletDataHandlerControl[0];
 	private String _portletId;
 	private boolean _publishToLiveByDefault;
+	private int _rank = 100;
 	private boolean _supportsDataStrategyCopyAsNew = true;
 
 }

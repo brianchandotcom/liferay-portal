@@ -197,6 +197,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		}
 
 		Collections.sort(rankedPortlets, new Comparator<Tuple>() {
+
 			@Override
 			public int compare(Tuple tuple1, Tuple tuple2) {
 				int rank1 = (int)tuple1.getObject(0);
@@ -204,6 +205,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 				return rank1 - rank2;
 			}
+
 		});
 
 		List<Portlet> dataSiteLevelPortlets = new ArrayList<>();

@@ -3560,6 +3560,13 @@
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<attribute>
+			<description>Whether to use indexer for search. The default value is <![CDATA[<code>true</code>]]></description>
+			<name>useIndexer</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
 	</tag>
 	<tag>
 		<name>organization-search-form</name>
@@ -5733,6 +5740,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether to use indexer for search. The default value is <![CDATA[<code>true</code>]]></description>
+			<name>useIndexer</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<name>userGroupParams</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -5812,6 +5826,13 @@
 		<name>user-search-container-results</name>
 		<tag-class>com.liferay.taglib.ui.UserSearchContainerResultsTag</tag-class>
 		<body-content>JSP</body-content>
+		<attribute>
+			<description>Whether to use indexer for search. The default value is <![CDATA[<code>true</code>]]></description>
+			<name>useIndexer</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
 		<attribute>
 			<name>userParams</name>
 			<required>true</required>

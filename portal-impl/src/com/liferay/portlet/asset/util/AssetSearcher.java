@@ -159,7 +159,7 @@ public class AssetSearcher extends BaseSearcher {
 			allTagIdList.addAll(ListUtil.toList(allTagIds));
 		}
 
-		if (allTagIdList.size() == 0) {
+		if (allTagIdList.isEmpty()) {
 			return;
 		}
 
@@ -361,21 +361,30 @@ public class AssetSearcher extends BaseSearcher {
 			return;
 		}
 
-		BooleanFilter tagIdsArrayBooleanFilter = new BooleanFilter();
+		List<Long> notAllTagIdList = new ArrayList<>();
 
 		for (long[] notAllTagIds : notAllTagIdsArray) {
 			if (notAllTagIds.length == 0) {
 				continue;
 			}
 
-			TermsFilter tagIdsTermsFilter = new TermsFilter(
-				Field.ASSET_TAG_IDS);
-
-			tagIdsTermsFilter.addValues(ArrayUtil.toStringArray(notAllTagIds));
-
-			tagIdsArrayBooleanFilter.add(
-				tagIdsTermsFilter, BooleanClauseOccur.MUST);
+			notAllTagIdList.addAll(ListUtil.toList(notAllTagIds));
 		}
+
+		if (notAllTagIdList.isEmpty()) {
+			return;
+		}
+
+		long[] notAllTagIds = ArrayUtil.toLongArray(notAllTagIdList);
+
+		BooleanFilter tagIdsArrayBooleanFilter = new BooleanFilter();
+
+		TermsFilter tagIdsTermsFilter = new TermsFilter(Field.ASSET_TAG_IDS);
+
+		tagIdsTermsFilter.addValues(ArrayUtil.toStringArray(notAllTagIds));
+
+		tagIdsArrayBooleanFilter.add(
+			tagIdsTermsFilter, BooleanClauseOccur.MUST);
 
 		queryBooleanFilter.add(
 			tagIdsArrayBooleanFilter, BooleanClauseOccur.MUST_NOT);

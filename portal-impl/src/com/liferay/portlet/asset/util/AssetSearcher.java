@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
@@ -148,21 +149,30 @@ public class AssetSearcher extends BaseSearcher {
 			return;
 		}
 
-		BooleanFilter tagIdsArrayBooleanFilter = new BooleanFilter();
+		List<Long> allTagIdList = new ArrayList<>();
 
 		for (long[] allTagIds : allTagIdsArray) {
 			if (allTagIds.length == 0) {
 				continue;
 			}
 
-			TermsFilter tagIdsTermsFilter = new TermsFilter(
-				Field.ASSET_TAG_IDS);
-
-			tagIdsTermsFilter.addValues(ArrayUtil.toStringArray(allTagIds));
-
-			tagIdsArrayBooleanFilter.add(
-				tagIdsTermsFilter, BooleanClauseOccur.MUST);
+			allTagIdList.addAll(ListUtil.toList(allTagIds));
 		}
+
+		if (allTagIdList.isEmpty()) {
+			return;
+		}
+
+		long[] allTagIds = ArrayUtil.toLongArray(allTagIdList);
+
+		BooleanFilter tagIdsArrayBooleanFilter = new BooleanFilter();
+
+		TermsFilter tagIdsTermsFilter = new TermsFilter(Field.ASSET_TAG_IDS);
+
+		tagIdsTermsFilter.addValues(ArrayUtil.toStringArray(allTagIds));
+
+		tagIdsArrayBooleanFilter.add(
+			tagIdsTermsFilter, BooleanClauseOccur.MUST);
 
 		queryBooleanFilter.add(
 			tagIdsArrayBooleanFilter, BooleanClauseOccur.MUST);
@@ -351,21 +361,30 @@ public class AssetSearcher extends BaseSearcher {
 			return;
 		}
 
-		BooleanFilter tagIdsArrayBooleanFilter = new BooleanFilter();
+		List<Long> notAllTagIdList = new ArrayList<>();
 
 		for (long[] notAllTagIds : notAllTagIdsArray) {
 			if (notAllTagIds.length == 0) {
 				continue;
 			}
 
-			TermsFilter tagIdsTermsFilter = new TermsFilter(
-				Field.ASSET_TAG_IDS);
-
-			tagIdsTermsFilter.addValues(ArrayUtil.toStringArray(notAllTagIds));
-
-			tagIdsArrayBooleanFilter.add(
-				tagIdsTermsFilter, BooleanClauseOccur.MUST);
+			notAllTagIdList.addAll(ListUtil.toList(notAllTagIds));
 		}
+
+		if (notAllTagIdList.isEmpty()) {
+			return;
+		}
+
+		long[] notAllTagIds = ArrayUtil.toLongArray(notAllTagIdList);
+
+		BooleanFilter tagIdsArrayBooleanFilter = new BooleanFilter();
+
+		TermsFilter tagIdsTermsFilter = new TermsFilter(Field.ASSET_TAG_IDS);
+
+		tagIdsTermsFilter.addValues(ArrayUtil.toStringArray(notAllTagIds));
+
+		tagIdsArrayBooleanFilter.add(
+			tagIdsTermsFilter, BooleanClauseOccur.MUST);
 
 		queryBooleanFilter.add(
 			tagIdsArrayBooleanFilter, BooleanClauseOccur.MUST_NOT);

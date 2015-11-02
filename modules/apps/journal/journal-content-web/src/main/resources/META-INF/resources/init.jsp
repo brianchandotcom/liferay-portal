@@ -35,7 +35,6 @@ page import="com.liferay.journal.content.web.display.context.JournalContentDispl
 page import="com.liferay.journal.exception.NoSuchArticleException" %><%@
 page import="com.liferay.journal.model.JournalArticle" %><%@
 page import="com.liferay.journal.model.JournalArticleDisplay" %><%@
-page import="com.liferay.journal.util.JournalContentUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProvider" %><%@

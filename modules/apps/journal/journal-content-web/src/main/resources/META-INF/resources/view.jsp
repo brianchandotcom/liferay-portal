@@ -120,9 +120,6 @@ AssetRendererFactory<JournalArticle> assetRendererFactory = AssetRendererFactory
 		<div class="lfr-icon-actions">
 			<liferay-portlet:renderURL varImpl="redirectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 				<portlet:param name="mvcPath" value="/update_journal_article_redirect.jsp" />
-				<portlet:param name="articleId" value="<%= journalContentDisplayContext.getArticleId() %>" />
-				<portlet:param name="articleGroupId" value="<%= String.valueOf(journalContentDisplayContext.getArticleGroupId()) %>" />
-				<portlet:param name="ddmTemplateKey" value="<%= journalContentDisplayContext.getDDMTemplateKey() %>" />
 				<portlet:param name="referringPortletResource" value="<%= portletDisplay.getId() %>" />
 			</liferay-portlet:renderURL>
 

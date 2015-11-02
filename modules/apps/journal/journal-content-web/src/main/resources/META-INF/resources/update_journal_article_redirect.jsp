@@ -17,19 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
+journalContentDisplayContext.clearCache();
+
 String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
 
 Portlet selPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), referringPortletResource);
-
-String articleId = ParamUtil.getString(request, "articleId");
-
-long articleGroupId = ParamUtil.getLong(request, "articleGroupId");
-
-String ddmTemplateKey = ParamUtil.getString(request, "ddmTemplateKey");
-
-if (Validator.isNotNull(articleId)) {
-	JournalContentUtil.clearCache(articleGroupId, articleId, ddmTemplateKey);
-}
 %>
 
 <aui:script>

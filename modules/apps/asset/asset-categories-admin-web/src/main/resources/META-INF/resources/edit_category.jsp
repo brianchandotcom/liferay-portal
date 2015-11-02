@@ -104,55 +104,56 @@ renderResponse.setTitle(((category == null) ? LanguageUtil.get(request, "add-new
 
 	<aui:model-context bean="<%= category %>" model="<%= AssetCategory.class %>" />
 
-	<aui:fieldset>
-		<aui:input autoFocus="<%= true %>" label="name" name="title" />
+	<aui:fieldset-group>
+		<aui:fieldset>
+			<aui:input autoFocus="<%= true %>" label="name" name="title" />
 
-		<aui:input name="description" />
+			<aui:input name="description" />
+		</aui:fieldset>
 
-		<liferay-ui:panel-container extended="<%= false %>" id="assetCategoryPanelContainer" persistState="<%= true %>">
-			<c:if test="<%= category == null %>">
-				<liferay-ui:panel collapsible="<%= true %>" cssClass="category-permissions-actions" defaultState="open" extended="<%= true %>" id="assetCategoryPermissionsPanel" persistState="<%= true %>" title="permissions">
-					<liferay-ui:input-permissions
-						modelName="<%= AssetCategory.class.getName() %>"
-					/>
-				</liferay-ui:panel>
-			</c:if>
+		<aui:fieldset id="categoryPropertiesId" label="properties">
+			<p class="text-muted">
+				<liferay-ui:message key="properties-are-a-way-to-add-more-detailed-information-to-a-specific-category" />
+			</p>
 
-			<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= true %>" helpMessage="properties-are-a-way-to-add-more-detailed-information-to-a-specific-category" id="assetCategoryPropertiesPanel" persistState="<%= true %>" title="properties">
-				<aui:fieldset id="categoryPropertiesId">
+			<%
+			for (int i = 0; i < categoryPropertiesIndexes.length; i++) {
+				int categoryPropertiesIndex = categoryPropertiesIndexes[i];
 
-					<%
-					for (int i = 0; i < categoryPropertiesIndexes.length; i++) {
-						int categoryPropertiesIndex = categoryPropertiesIndexes[i];
+				AssetCategoryProperty categoryProperty = categoryProperties.get(i);
+			%>
 
-						AssetCategoryProperty categoryProperty = categoryProperties.get(i);
-					%>
+				<aui:model-context bean="<%= categoryProperty %>" model="<%= AssetCategoryProperty.class %>" />
 
-						<aui:model-context bean="<%= categoryProperty %>" model="<%= AssetCategoryProperty.class %>" />
+				<div class="lfr-form-row lfr-form-row-inline">
+					<div class="row-fields">
+						<aui:input fieldParam='<%= "key" + categoryPropertiesIndex %>' id='<%= "key" + categoryPropertiesIndex %>' name="key" />
 
-						<div class="lfr-form-row lfr-form-row-inline">
-							<div class="row-fields">
-								<aui:input fieldParam='<%= "key" + categoryPropertiesIndex %>' id='<%= "key" + categoryPropertiesIndex %>' name="key" />
+						<aui:input fieldParam='<%= "value" + categoryPropertiesIndex %>' id='<%= "value" + categoryPropertiesIndex %>' name="value" />
+					</div>
+				</div>
 
-								<aui:input fieldParam='<%= "value" + categoryPropertiesIndex %>' id='<%= "value" + categoryPropertiesIndex %>' name="value" />
-							</div>
-						</div>
+			<%
+			}
+			%>
 
-					<%
-					}
-					%>
+			<aui:input name="categoryPropertiesIndexes" type="hidden" value="<%= StringUtil.merge(categoryPropertiesIndexes) %>" />
+		</aui:fieldset>
 
-					<aui:input name="categoryPropertiesIndexes" type="hidden" value="<%= StringUtil.merge(categoryPropertiesIndexes) %>" />
-				</aui:fieldset>
-			</liferay-ui:panel>
-		</liferay-ui:panel-container>
+		<c:if test="<%= category == null %>">
+			<aui:fieldset label="permissions">
+				<liferay-ui:input-permissions
+					modelName="<%= AssetCategory.class.getName() %>"
+				/>
+			</aui:fieldset>
+		</c:if>
+	</aui:fieldset-group>
 
-		<aui:button-row>
-			<aui:button cssClass="btn-lg" type="submit" />
+	<aui:button-row>
+		<aui:button cssClass="btn-lg" type="submit" />
 
-			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
-		</aui:button-row>
-	</aui:fieldset>
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+	</aui:button-row>
 </aui:form>
 
 <aui:script use="liferay-auto-fields">

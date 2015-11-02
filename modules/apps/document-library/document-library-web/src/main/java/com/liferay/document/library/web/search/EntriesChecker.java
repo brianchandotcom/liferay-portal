@@ -14,7 +14,6 @@
 
 package com.liferay.document.library.web.search;
 
-import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -62,31 +61,15 @@ public class EntriesChecker extends RowChecker {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		String portletName = portletDisplay.getPortletName();
-
-		if (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_DISPLAY)) {
-			_documentLibraryDisplayPortlet = true;
-		}
-		else {
-			_documentLibraryDisplayPortlet = false;
-		}
 	}
 
 	@Override
 	public String getAllRowsCheckBox() {
-		if (_documentLibraryDisplayPortlet) {
-			return getAllRowsCheckbox(null, getAllRowIds(), getEntryRowIds());
-		}
-
 		return null;
 	}
 
 	@Override
 	public String getAllRowsCheckBox(HttpServletRequest request) {
-		if (_documentLibraryDisplayPortlet) {
-			return getAllRowsCheckbox(
-				request, getAllRowIds(), getEntryRowIds());
-		}
-
 		return null;
 	}
 
@@ -186,18 +169,9 @@ public class EntriesChecker extends RowChecker {
 
 		String checkBoxRowIds = getEntryRowIds();
 
-		String checkBoxAllRowIds = StringPool.BLANK;
-		String checkBoxPostOnClick = StringPool.BLANK;
-
-		if (_documentLibraryDisplayPortlet) {
-			checkBoxAllRowIds = "'" + getAllRowIds() + "'";
-		}
-		else {
-			checkBoxAllRowIds = "'#" + getAllRowIds() + "'";
-			checkBoxPostOnClick =
-				_liferayPortletResponse.getNamespace() +
-					"toggleActionsButton();";
-		}
+		String checkBoxAllRowIds = "'#" + getAllRowIds() + "'";
+		String checkBoxPostOnClick =
+			_liferayPortletResponse.getNamespace() + "toggleActionsButton();";
 
 		return getRowCheckBox(
 			request, checked, disabled,
@@ -225,7 +199,6 @@ public class EntriesChecker extends RowChecker {
 		return sb.toString();
 	}
 
-	private final boolean _documentLibraryDisplayPortlet;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final PermissionChecker _permissionChecker;
 

@@ -14,26 +14,23 @@
 
 package com.liferay.dynamic.data.lists.form.web.portlet.configuration.icon;
 
-import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.model.User;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.theme.PortletDisplay;
-import com.liferay.portal.util.PortalUtil;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
-import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Marcellus Tavares
+ * @author Rafael Praxedes
  */
-public class DDLRecordSetSettingsPortletConfigurationIcon
+public class ExportDDLRecordSetPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public DDLRecordSetSettingsPortletConfigurationIcon(
+	public ExportDDLRecordSetPortletConfigurationIcon(
 		HttpServletRequest request) {
 
 		super(request);
@@ -41,54 +38,44 @@ public class DDLRecordSetSettingsPortletConfigurationIcon
 
 	@Override
 	public String getMessage() {
-		return "settings";
+		return "export";
 	}
 
 	@Override
 	public String getURL() {
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			request, DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN, 0,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcPath", "/admin/record_set_settings.jsp");
-		portletURL.setParameter(
-			"recordSetId", String.valueOf(getRecordSetId()));
-
-		try {
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-		}
-		catch (WindowStateException wse) {
-		}
-
-		return portletURL.toString();
+		return "javascript:;";
 	}
 
 	@Override
 	public boolean isShow() {
-		long recordSetId = getRecordSetId();
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		long recordSetId = ParamUtil.getLong(
+			request, portletDisplay.getNamespace() + "recordSetId");
 
 		if (recordSetId == 0) {
 			return false;
 		}
 
-		return true;
+		User user = themeDisplay.getUser();
+
+		if (user.isDefaultUser()) {
+			return false;
+		}
+
+		try {
+			return DDLRecordSetPermission.contains(
+				themeDisplay.getPermissionChecker(), recordSetId,
+				ActionKeys.VIEW);
+		}
+		catch (PortalException pe) {
+			return false;
+		}
 	}
 
 	@Override
 	public boolean isToolTip() {
 		return false;
-	}
-
-	@Override
-	public boolean isUseDialog() {
-		return true;
-	}
-
-	protected long getRecordSetId() {
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		return ParamUtil.getLong(
-			request, portletDisplay.getNamespace() + "recordSetId");
 	}
 
 }

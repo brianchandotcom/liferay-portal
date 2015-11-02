@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.web.portlet.configuration.icon;
+package com.liferay.dynamic.data.lists.form.web.portlet.configuration.icon;
 
-import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
+import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIconFactory;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
@@ -31,8 +31,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS,
-		"path=/view_record_set.jsp"
+		"javax.portlet.name=" + DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN,
+		"path=/admin/view_records.jsp"
 	},
 	service = PortletConfigurationIconFactory.class
 )
@@ -46,7 +46,7 @@ public class ExportDDLRecordSetPortletConfigurationIconFactory
 
 	@Override
 	public String getJspPath() {
-		return "/configuration/icon/export_record_set.jsp";
+		return "/admin/configuration/icon/export_record_set.jsp";
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class ExportDDLRecordSetPortletConfigurationIconFactory
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.dynamic.data.lists.web)"
+		target = "(osgi.web.symbolicname=com.liferay.dynamic.data.lists.form.web)"
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);

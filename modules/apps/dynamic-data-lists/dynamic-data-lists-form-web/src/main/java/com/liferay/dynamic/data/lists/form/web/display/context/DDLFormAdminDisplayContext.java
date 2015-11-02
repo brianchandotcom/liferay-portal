@@ -272,6 +272,12 @@ public class DDLFormAdminDisplayContext {
 			ActionKeys.UPDATE);
 	}
 
+	public boolean isShowExportRecordSetIcon(DDLRecordSet recordSet) {
+		return DDLRecordSetPermission.contains(
+			_ddlFormAdminRequestHelper.getPermissionChecker(), recordSet,
+			ActionKeys.VIEW);
+	}
+
 	public boolean isShowPermissionsIcon(DDLRecordSet recordSet) {
 		return DDLRecordSetPermission.contains(
 			_ddlFormAdminRequestHelper.getPermissionChecker(), recordSet,

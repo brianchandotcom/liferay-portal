@@ -46,31 +46,55 @@ if (vocabulary != null) {
 }
 %>
 
-<aui:input helpMessage="multi-valued-help" label="allow-multiple-categories" name="multiValued" type="checkbox" value="<%= (vocabulary != null) ? vocabulary.isMultiValued() : true %>" />
+<aui:fieldset id="extraFields" label="associated-asset-types">
 
-<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" id="vocabularyExtraFieldsPanelContainer" persistState="<%= true %>" title="associated-asset-types">
-	<aui:fieldset id="extraFields">
+	<%
+	List<String> indexes = new ArrayList<String>();
 
-		<%
-		List<String> indexes = new ArrayList<String>();
+	for (int index = 0; index < selectedClassNameIds.length; index++) {
+		indexes.add(String.valueOf(index));
 
-		for (int index = 0; index < selectedClassNameIds.length; index++) {
-			indexes.add(String.valueOf(index));
+		long classNameId = selectedClassNameIds[index];
+		long classTypePK = selectedClassTypePKs[index];
+	%>
 
-			long classNameId = selectedClassNameIds[index];
-			long classTypePK = selectedClassTypePKs[index];
-		%>
+		<div class="lfr-form-row lfr-form-row-inline">
+			<div class="row-fields">
+				<aui:select inlineField="<%= true %>" label="choose-asset-type" name='<%= "classNameId" + index %>'>
+					<aui:option label="all-asset-types" value="<%= AssetCategoryConstants.ALL_CLASS_NAME_ID %>" />
 
-			<div class="lfr-form-row lfr-form-row-inline">
-				<div class="row-fields">
-					<aui:select cssClass="vocabulary-asset-type-select" inlineField="<%= true %>" label="choose-asset-type" name='<%= "classNameId" + index %>'>
-						<aui:option label="all-asset-types" value="<%= AssetCategoryConstants.ALL_CLASS_NAME_ID %>" />
+					<%
+					for (AssetRendererFactory<?> assetRendererFactory : availableAssetRendererFactories) {
+					%>
+
+						<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, assetRendererFactory.getClassName()) %>" selected="<%= classNameId == assetRendererFactory.getClassNameId() %>" value="<%= assetRendererFactory.getClassNameId() %>" />
+
+					<%
+					}
+					%>
+
+				</aui:select>
+
+				<%
+				for (AssetRendererFactory<?> assetRendererFactory : classTypedAssetRendererFactories) {
+				%>
+
+					<aui:select inlineField="<%= true %>" label="" name='<%= "subtype" + assetRendererFactory.getClassNameId() + "-classNameId" + index %>' wrapperCssClass='<%= (classNameId != assetRendererFactory.getClassNameId() ? "hide " : "") + "subtype-select" %>'>
+						<aui:option label="all-asset-subtypes" selected="<%= false %>" value="<%= AssetCategoryConstants.ALL_CLASS_TYPE_PK %>" />
 
 						<%
-						for (AssetRendererFactory<?> assetRendererFactory : availableAssetRendererFactories) {
+						ClassTypeReader classTypeReader = assetRendererFactory.getClassTypeReader();
+
+						List<ClassType> classTypes = classTypeReader.getAvailableClassTypes(new long[] {themeDisplay.getCompanyGroupId(), scopeGroupId}, themeDisplay.getLocale());
+
+						if (classTypes.isEmpty()) {
+							continue;
+						}
+
+						for (ClassType classType : classTypes) {
 						%>
 
-							<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, assetRendererFactory.getClassName()) %>" selected="<%= classNameId == assetRendererFactory.getClassNameId() %>" value="<%= assetRendererFactory.getClassNameId() %>" />
+							<aui:option label="<%= classType.getName() %>" selected="<%= (classNameId == assetRendererFactory.getClassNameId()) && (classTypePK == (classType.getClassTypeId())) %>" value="<%= classType.getClassTypeId() %>" />
 
 						<%
 						}
@@ -78,48 +102,20 @@ if (vocabulary != null) {
 
 					</aui:select>
 
-					<%
-					for (AssetRendererFactory<?> assetRendererFactory : classTypedAssetRendererFactories) {
-					%>
+				<%
+				}
+				%>
 
-						<aui:select inlineField="<%= true %>" label="" name='<%= "subtype" + assetRendererFactory.getClassNameId() + "-classNameId" + index %>' wrapperCssClass='<%= (classNameId != assetRendererFactory.getClassNameId() ? "hide " : "") + "subtype-select" %>'>
-							<aui:option label="all-asset-subtypes" selected="<%= false %>" value="<%= AssetCategoryConstants.ALL_CLASS_TYPE_PK %>" />
-
-							<%
-							ClassTypeReader classTypeReader = assetRendererFactory.getClassTypeReader();
-
-							List<ClassType> classTypes = classTypeReader.getAvailableClassTypes(new long[] {themeDisplay.getCompanyGroupId(), scopeGroupId}, themeDisplay.getLocale());
-
-							if (classTypes.isEmpty()) {
-								continue;
-							}
-
-							for (ClassType classType : classTypes) {
-							%>
-
-								<aui:option label="<%= classType.getName() %>" selected="<%= (classNameId == assetRendererFactory.getClassNameId()) && (classTypePK == (classType.getClassTypeId())) %>" value="<%= classType.getClassTypeId() %>" />
-
-							<%
-							}
-							%>
-
-						</aui:select>
-
-					<%
-					}
-					%>
-
-					<aui:input label="required" name='<%= "required" + index %>' type="checkbox" value="<%= (vocabulary != null) ? vocabulary.isRequired(classNameId, classTypePK) : false %>" />
-				</div>
+				<aui:input label="required" name='<%= "required" + index %>' type="toggle-switch" value="<%= (vocabulary != null) ? vocabulary.isRequired(classNameId, classTypePK) : false %>" />
 			</div>
+		</div>
 
-		<%
-		}
-		%>
+	<%
+	}
+	%>
 
-		<aui:input name="indexes" type="hidden" value="<%= indexes.toString() %>" />
-	</aui:fieldset>
-</liferay-ui:panel>
+	<aui:input name="indexes" type="hidden" value="<%= indexes.toString() %>" />
+</aui:fieldset>
 
 <aui:script use="liferay-auto-fields">
 	var extraFields = A.one('#<portlet:namespace />extraFields');

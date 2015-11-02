@@ -56,7 +56,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item cssClass="active" label="vocabularies" />
+		<aui:nav-item cssClass="active" label="vocabularies" selected="<%= true %>" />
 	</aui:nav>
 
 	<c:if test="<%= Validator.isNotNull(keywords) || (totalVar > 0) %>">
@@ -115,7 +115,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 
 			<liferay-ui:search-container-column-text
 				href="<%= (AssetCategoryServiceUtil.getVocabularyCategoriesCount(scopeGroupId, vocabulary.getVocabularyId()) > 0) ? rowURL : null %>"
-				name="vocabulary"
+				name="name"
 				value="<%= HtmlUtil.escape(vocabulary.getTitle(locale)) %>"
 			/>
 
@@ -127,11 +127,8 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 			<liferay-ui:search-container-column-text
 				cssClass="text-left"
 				name="number-of-categories"
-			>
-				<span class="badge">
-					<%= String.valueOf(vocabulary.getCategoriesCount()) %>
-				</span>
-			</liferay-ui:search-container-column-text>
+				value="<%= String.valueOf(vocabulary.getCategoriesCount()) %>"
+			/>
 
 			<liferay-ui:search-container-column-text
 				name="asset-type"
@@ -185,7 +182,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-jsp
-				cssClass="checkbox-cell entry-action"
+				cssClass="list-group-item-field"
 				path="/vocabulary_action.jsp"
 			/>
 		</liferay-ui:search-container-row>

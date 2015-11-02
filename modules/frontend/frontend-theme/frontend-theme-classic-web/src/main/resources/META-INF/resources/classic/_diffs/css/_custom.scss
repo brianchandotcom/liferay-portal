@@ -17,6 +17,21 @@ body {
 	background-color: transparent;
 }
 
+.navbar-blank > li {
+	& > a {
+		color: $solid-color;
+	}
+
+	&:hover > a, &.hover > a, &.active > a {
+		background-color: none;
+		color: #000;
+	}
+
+	.dropdown-menu .active > a {
+		color: #FFF;
+	}
+}
+
 #navigation .input-container {
 	position: relative;
 }
@@ -78,21 +93,6 @@ body {
 						display: none;
 					}
 				}
-			}
-		}
-
-		#navigation .nav > li {
-			& > a {
-				color: $solid-color;
-			}
-
-			&:hover > a, &.hover > a, &.active > a {
-				background-color: none;
-				color: #000;
-			}
-
-			.dropdown-menu .active > a {
-				color: #FFF;
 			}
 		}
 

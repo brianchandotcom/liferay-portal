@@ -27,8 +27,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.counter.service.CounterLocalServiceUtil" %><%@
-page import="com.liferay.portal.AccountNameException" %><%@
+<%@ page import="com.liferay.portal.AccountNameException" %><%@
 page import="com.liferay.portal.CompanyMxException" %><%@
 page import="com.liferay.portal.CompanyVirtualHostException" %><%@
 page import="com.liferay.portal.LocaleException" %><%@
@@ -62,7 +61,6 @@ page import="com.liferay.portal.kernel.util.StringBundler" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.TextFormatter" %><%@
-page import="com.liferay.portal.kernel.util.UnicodeProperties" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.model.*" %><%@
 page import="com.liferay.portal.model.impl.*" %><%@

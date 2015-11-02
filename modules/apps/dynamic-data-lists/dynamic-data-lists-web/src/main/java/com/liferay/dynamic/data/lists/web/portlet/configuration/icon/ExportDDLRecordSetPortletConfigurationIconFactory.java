@@ -30,7 +30,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS},
+	property = {
+		"javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS,
+		"path=/view_record_set.jsp"
+	},
 	service = PortletConfigurationIconFactory.class
 )
 public class ExportDDLRecordSetPortletConfigurationIconFactory

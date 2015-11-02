@@ -15,12 +15,14 @@
 package com.liferay.document.library.web.portlet.action;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
+import com.liferay.document.library.web.portlet.toolbar.item.DLPortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Iván Zaera
@@ -40,7 +42,19 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		renderRequest.setAttribute(
+			"dlPortletToolbarContributor", _dlPortletToolbarContributor);
+
 		return "/document_library/view.jsp";
 	}
+
+	@Reference(unbind = "-")
+	protected void setDLPortletToolbarContributor(
+		DLPortletToolbarContributor dlPortletToolbarContributor) {
+
+		_dlPortletToolbarContributor = dlPortletToolbarContributor;
+	}
+
+	private DLPortletToolbarContributor _dlPortletToolbarContributor;
 
 }

@@ -1320,6 +1320,40 @@
 				(lower(Team.description) LIKE ? OR ? IS NULL)
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.service.persistence.TeamFinder.findByG_U">
+		<![CDATA[
+			SELECT
+				DISTINCT {Team.*}
+			FROM
+				Team
+			WHERE
+				Team.groupId = ? AND
+				(
+					Team.teamId IN
+						(
+							SELECT
+								UserGroups_Teams.teamId
+							FROM
+								Users_UserGroups, UserGroups_Teams
+							WHERE
+								Users_UserGroups.userId = ?
+							AND
+								Users_UserGroups.userGroupId = UserGroups_Teams.userGroupId
+						) OR
+					Team.teamId IN
+						(
+							SELECT
+								Users_Teams.teamId
+							FROM
+								User_, Users_Teams
+							WHERE
+								User_.userId = ?
+							AND
+								User_.userId = Users_Teams.userId
+						)
+				)
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.service.persistence.TeamFinder.findByG_N_D">
 		<![CDATA[
 			SELECT

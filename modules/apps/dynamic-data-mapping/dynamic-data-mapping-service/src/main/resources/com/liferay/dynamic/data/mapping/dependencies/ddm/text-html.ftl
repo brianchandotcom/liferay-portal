@@ -34,4 +34,31 @@
 	</@>
 
 	${fieldStructure.children}
+
+	<@aui.script>
+		Liferay.provide(
+			window,
+			'${portletNamespace}${namespacedFieldName}OnChangeEditor',
+			function() {
+				var A = AUI();
+
+				var field = A.one('#${portletNamespace}${namespacedFieldName}');
+
+				field.val(window['${portletNamespace}${namespacedFieldName}Editor'].getHTML());
+
+				var form = field.get('form');
+
+				if (form) {
+					var formName = form.get('name');
+
+					var formValidator = Liferay.Form.get(formName).formValidator;
+
+					if (formValidator) {
+						formValidator.validateField(field);
+					}
+				}
+			},
+			['liferay-form']
+		);
+	</@>
 </div>

@@ -17,5 +17,5 @@
 <liferay-ui:search-container-column-user
 	date="<%= thread.getLastPostDate() %>"
 	name="last-post"
-	userId="<%= thread.getLastPostByUserId() %>"
+	property="lastPostByUserId"
 />

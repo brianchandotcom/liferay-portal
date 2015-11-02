@@ -56,6 +56,8 @@ public class NavTag extends BaseNavTag implements BodyTag {
 
 			setCollapsible(true);
 
+			navBarTag.setDataTarget(_getNamespacedId());
+
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 

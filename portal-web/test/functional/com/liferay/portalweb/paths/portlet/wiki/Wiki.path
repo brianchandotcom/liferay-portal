@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CUSTOM_FIELD_CONTENT</td>
+	<td>//div[contains(@class,'custom-attributes')]/div/span[contains(.,'${key_customFieldContent}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CUSTOM_FIELD_TEXT_FIELD</td>
 	<td>//span[contains(.,'Wiki Custom Field Here')]/../..//input[@type='text']</td>
 	<td></td>

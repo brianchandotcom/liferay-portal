@@ -751,7 +751,7 @@
 		<if>
 			<isset var="customFieldTextEdit" />
 			<then>
-				<execute function="Type" locator1="Wiki#CUSTOM_FIELD_TEXT_FIELD" value1="${customFieldTextEdit}" />
+				<execute function="Type" locator1="TextInput#CUSTOM_FIELD" value1="${customFieldTextEdit}" />
 			</then>
 		</if>
 
@@ -1456,7 +1456,9 @@
 		<if>
 			<isset var="customFieldText" />
 			<then>
-				<execute function="AssertTextEquals" locator1="TextInput#CUSTOM_FIELD" value1="${customFieldText}" />
+				<var name="key_customFieldContent" value="${customFieldText}" />
+
+				<execute function="AssertTextEquals" locator1="Wiki#CUSTOM_FIELD_CONTENT" value1="${customFieldText}" />
 			</then>
 		</if>
 	</command>

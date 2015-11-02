@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>CUSTOM_FIELD</td>
-	<td>//input[contains(@name,'ExpandoAttribute')] | //textarea[contains(@name,'ExpandoAttribute')]</td>
+	<td>//input[@type='text' and contains(@name,'ExpandoAttribute')] | //textarea[contains(@name,'ExpandoAttribute')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -19,8 +19,21 @@ package com.liferay.portal.ldap.constants;
  */
 public class LDAPConstants {
 
+	public static final String AUTH_ENABLED = "enabled";
+
+	public static final String AUTH_REQUIRED = "required";
+
 	public static final String COMPANY_ID = "companyId";
 
+	public static final String EXPORT_ENABLED = "exportEnabled";
+
+	public static final String IMPORT_ENABLED = "importEnabled";
+
+	public static final String IMPORT_ON_STARTUP = "importOnStartup";
+
 	public static final String LDAP_SERVER_ID = "ldapServerId";
+
+	public static final String PASSWORD_POLICY_ENABLED =
+		"passwordPolicyEnabled";
 
 }

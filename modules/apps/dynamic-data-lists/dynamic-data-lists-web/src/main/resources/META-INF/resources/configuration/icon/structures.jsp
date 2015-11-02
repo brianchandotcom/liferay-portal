@@ -17,7 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <liferay-ui:icon
-	iconCssClass="icon-th-large"
 	message="manage-data-definitions"
 	onClick='<%= renderResponse.getNamespace() + "manageDDMStructuresLink();" %>'
 	url="javascript:;"

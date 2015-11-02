@@ -36,7 +36,6 @@ sb.append("');");
 %>
 
 <liferay-ui:icon
-	iconCssClass="icon-arrow-down"
 	message="export"
 	url="<%= sb.toString() %>"
 />

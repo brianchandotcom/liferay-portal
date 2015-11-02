@@ -135,7 +135,7 @@ public class ConfigurationModelToDDMFormValuesConverter {
 	protected void addDDMFormFieldValues(
 		String name, String[] defaultValues, DDMFormValues ddmFormValues) {
 
-		if (defaultValues == null) {
+		if (defaultValues == null || defaultValues.length == 0) {
 			addDDMFormFieldValue(name, StringPool.BLANK, ddmFormValues);
 
 			return;

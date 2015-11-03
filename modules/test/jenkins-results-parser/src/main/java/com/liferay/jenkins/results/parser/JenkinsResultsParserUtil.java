@@ -20,6 +20,8 @@ import java.io.InputStreamReader;
 
 import java.net.URL;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -179,13 +181,17 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static String downloadToString(String url) throws IOException {
-		url = fixURL(url);
+		URL urlObject = new URL(fixURL(url));
+
+		String key = _convertToCacheKey(urlObject.toString());
+
+		if (_cache.containsKey(key)) {
+			return _cache.get(key);
+		}
 
 		System.out.println("Downloading " + url);
 
 		StringBuilder sb = new StringBuilder();
-
-		URL urlObject = new URL(fixURL(url));
 
 		InputStreamReader inputStreamReader = new InputStreamReader(
 			urlObject.openStream());
@@ -201,9 +207,17 @@ public class JenkinsResultsParserUtil {
 
 		bufferedReader.close();
 
+		_cache.put(key, sb.toString());
+
 		return sb.toString();
 	}
 
+	private static String _convertToCacheKey(String url) {
+		return url.replace("//", "/");
+	}
+
+	private static final Map<String, String> _cache =
+		new HashMap<String, String>();
 	private static final Pattern _localURLPattern1 = Pattern.compile(
 		"https://test.liferay.com/([0-9]+)/");
 	private static final Pattern _localURLPattern2 = Pattern.compile(

@@ -12,15 +12,16 @@
  * details.
  */
 
-package com.liferay.document.library.item.selector.web.file;
+package com.liferay.document.library.item.selector.web.video;
 
 import com.liferay.document.library.item.selector.web.BaseDLItemSelectorView;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
-import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
+import com.liferay.item.selector.criteria.video.criterion.VideoItemSelectorCriterion;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Collections;
 import java.util.List;
@@ -37,12 +38,17 @@ import org.osgi.service.component.annotations.Reference;
 	property = {"service.ranking:Integer=100"},
 	service = ItemSelectorView.class
 )
-public class DLFileItemSelectorView
-	extends BaseDLItemSelectorView<FileItemSelectorCriterion> {
+public class DLVideoItemSelectorView
+	extends BaseDLItemSelectorView<VideoItemSelectorCriterion> {
 
 	@Override
-	public Class<FileItemSelectorCriterion> getItemSelectorCriterionClass() {
-		return FileItemSelectorCriterion.class;
+	public Class<VideoItemSelectorCriterion> getItemSelectorCriterionClass() {
+		return VideoItemSelectorCriterion.class;
+	}
+
+	@Override
+	public String[] getMimeTypes() {
+		return PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_MIME_TYPES;
 	}
 
 	@Override

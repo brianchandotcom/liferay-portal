@@ -303,14 +303,8 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 
 		var searchContainer = new Liferay.SearchContainer(
 			{
-				classNameHover: '<%= _CLASS_NAME_HOVER %>',
-				hover: <%= searchContainer.isHover() %>,
 				id: '<%= namespace + id %>',
-				plugins: plugins,
-				rowClassNameAlternate: '<%= _ROW_CLASS_NAME_ALTERNATE %>',
-				rowClassNameAlternateHover: '<%= _ROW_CLASS_NAME_ALTERNATE_HOVER %>',
-				rowClassNameBody: '<%= _ROW_CLASS_NAME_BODY %>',
-				rowClassNameBodyHover: '<%= _ROW_CLASS_NAME_BODY %>'
+				plugins: plugins
 			}
 		).render();
 
@@ -327,13 +321,3 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 		Liferay.on('destroyPortlet', destroySearchContainer);
 	</aui:script>
 </c:if>
-
-<%!
-private static final String _CLASS_NAME_HOVER = "hover";
-
-private static final String _ROW_CLASS_NAME_ALTERNATE = "";
-
-private static final String _ROW_CLASS_NAME_ALTERNATE_HOVER = "-hover";
-
-private static final String _ROW_CLASS_NAME_BODY = "";
-%>

@@ -2512,7 +2512,7 @@ implementations.
 #### Who is affected?
 
 Any caller of the `addFileEntry` methods in `DLApp` and `DLFileEntry`
-local and remote services are affected.
+local and remote services is affected.
 
 #### How should I update my code?
 

@@ -208,9 +208,12 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(articleSearchCo
 
 <%
 String displayStyle = journalDisplayContext.getDisplayStyle();
+
+String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 %>
 
 <liferay-ui:search-container
+	id="<%= searchContainerId %>"
 	searchContainer="<%= articleSearchContainer %>"
 	total="<%= total %>"
 	totalVar="articleSearchContainerTotal"
@@ -293,7 +296,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 					<c:when test='<%= displayStyle.equals("icon") %>'>
 
 						<%
-						row.setCssClass("col-md-2 col-sm-4 col-xs-6");
+						row.setCssClass("col-md-2 col-sm-4 col-xs-6 " + row.getCssClass());
 						%>
 
 						<liferay-ui:search-container-column-text>
@@ -305,7 +308,6 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 							<liferay-frontend:vertical-card
 								actionJsp='<%= journalDisplayContext.isShowEditActions() ? "/article_action.jsp" : null %>'
 								actionJspServletContext="<%= application %>"
-								cssClass="entry-display-style"
 								imageUrl='<%= Validator.isNotNull(articleImageURL) ? articleImageURL : themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
 								resultRow="<%= row %>"
 								rowChecker="<%= entriesChecker %>"
@@ -437,7 +439,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 					<c:when test='<%= displayStyle.equals("icon") %>'>
 
 						<%
-						row.setCssClass("col-md-3 col-sm-4 col-xs-12");
+						row.setCssClass("col-md-3 col-sm-4 col-xs-12 " + row.getCssClass());
 						%>
 
 						<liferay-ui:search-container-column-text colspan="<%= 2 %>">

@@ -14,7 +14,7 @@
 
 package com.liferay.layout.admin.web.application.list;
 
-import com.liferay.application.list.BasePanelApp;
+import com.liferay.application.list.BaseJSPPanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys;
@@ -28,6 +28,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 
 import javax.portlet.PortletURL;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -44,7 +45,12 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = PanelApp.class
 )
-public class GroupPagesPanelApp extends BasePanelApp {
+public class GroupPagesPanelApp extends BaseJSPPanelApp {
+
+	@Override
+	public String getJspPath() {
+		return "/panel/app/sites.jsp";
+	}
 
 	@Override
 	public String getPortletId() {
@@ -82,6 +88,15 @@ public class GroupPagesPanelApp extends BasePanelApp {
 	)
 	public void setPortlet(Portlet portlet) {
 		super.setPortlet(portlet);
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 }

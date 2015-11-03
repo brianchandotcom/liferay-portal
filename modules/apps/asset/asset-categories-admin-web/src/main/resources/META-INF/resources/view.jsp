@@ -19,11 +19,26 @@
 <%
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 
+String orderByCol = ParamUtil.getString(request, "orderByCol", "create-date");
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
 String keywords = ParamUtil.getString(request, "keywords");
+
+boolean orderByAsc = false;
+
+if (orderByType.equals("asc")) {
+	orderByAsc = true;
+}
+
+OrderByComparator<AssetVocabulary> orderByComparator = new AssetVocabularyCreateDateComparator(orderByAsc);
 
 PortletURL iteratorURL = renderResponse.createRenderURL();
 
 SearchContainer vocabulariesSearchContainer = new SearchContainer(renderRequest, iteratorURL, null, "there-are-no-vocabularies.-you-can-add-a-vocabulary-by-clicking-the-plus-button-on-the-right-bottom-corner");
+
+vocabulariesSearchContainer.setOrderByCol(orderByCol);
+vocabulariesSearchContainer.setOrderByComparator(orderByComparator);
+vocabulariesSearchContainer.setOrderByType(orderByType);
 
 vocabulariesSearchContainer.setRowChecker(new EmptyOnClickRowChecker(renderResponse));
 
@@ -31,7 +46,7 @@ List<AssetVocabulary> vocabularies = null;
 int totalVar = 0;
 
 if (Validator.isNotNull(keywords)) {
-	AssetVocabularyDisplay assetVocabularyDisplay = AssetVocabularyServiceUtil.searchVocabulariesDisplay(scopeGroupId, keywords, vocabulariesSearchContainer.getStart(), vocabulariesSearchContainer.getEnd(), true);
+	AssetVocabularyDisplay assetVocabularyDisplay = AssetVocabularyServiceUtil.searchVocabulariesDisplay(scopeGroupId, keywords, vocabulariesSearchContainer.getStart(), vocabulariesSearchContainer.getEnd(), vocabulariesSearchContainer.getOrderByComparator(), true);
 
 	totalVar = assetVocabularyDisplay.getTotal();
 
@@ -44,7 +59,7 @@ else {
 
 	vocabulariesSearchContainer.setTotal(totalVar);
 
-	vocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(scopeGroupId, true, vocabulariesSearchContainer.getStart(), vocabulariesSearchContainer.getEnd(), null);
+	vocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(scopeGroupId, true, vocabulariesSearchContainer.getStart(), vocabulariesSearchContainer.getEnd(), vocabulariesSearchContainer.getOrderByComparator());
 }
 
 vocabulariesSearchContainer.setResults(vocabularies);
@@ -77,6 +92,13 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 			<liferay-frontend:management-bar-filters>
 				<liferay-frontend:management-bar-navigation
 					navigationKeys='<%= new String[] {"all"} %>'
+					portletURL="<%= renderResponse.createRenderURL() %>"
+				/>
+
+				<liferay-frontend:management-bar-sort
+					orderByCol="<%= orderByCol %>"
+					orderByType="<%= orderByType %>"
+					orderColumns='<%= new String[] {"create-date"} %>'
 					portletURL="<%= renderResponse.createRenderURL() %>"
 				/>
 			</liferay-frontend:management-bar-filters>
@@ -129,6 +151,11 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 			<liferay-ui:search-container-column-text
 				name="description"
 				value="<%= vocabulary.getDescription(locale) %>"
+			/>
+
+			<liferay-ui:search-container-column-date
+				name="create-date"
+				property="createDate"
 			/>
 
 			<liferay-ui:search-container-column-text

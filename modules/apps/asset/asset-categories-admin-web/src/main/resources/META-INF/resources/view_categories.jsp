@@ -46,13 +46,28 @@ if (Validator.isNull(redirect)) {
 	redirect = backURL.toString();
 }
 
+String orderByCol = ParamUtil.getString(request, "orderByCol", "create-date");
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 
 String keywords = ParamUtil.getString(request, "keywords");
 
+boolean orderByAsc = false;
+
+if (orderByType.equals("asc")) {
+	orderByAsc = true;
+}
+
+OrderByComparator<AssetCategory> orderByComparator = new AssetCategoryCreateDateComparator(orderByAsc);
+
 PortletURL iteratorURL = renderResponse.createRenderURL();
 
 SearchContainer categoriesSearchContainer = new SearchContainer(renderRequest, iteratorURL, null, "there-are-no-categories.-you-can-add-a-category-by-clicking-the-plus-button-on-the-right-bottom-corner");
+
+categoriesSearchContainer.setOrderByCol(orderByCol);
+categoriesSearchContainer.setOrderByComparator(orderByComparator);
+categoriesSearchContainer.setOrderByType(orderByType);
 
 categoriesSearchContainer.setRowChecker(new EmptyOnClickRowChecker(renderResponse));
 
@@ -60,7 +75,7 @@ List<AssetCategory> categories = null;
 int totalVar = 0;
 
 if (Validator.isNotNull(keywords)) {
-	AssetCategoryDisplay assetCategoryDisplay = AssetCategoryServiceUtil.searchCategoriesDisplay(scopeGroupId, keywords, categoryId, vocabularyId, categoriesSearchContainer.getStart(), categoriesSearchContainer.getEnd());
+	AssetCategoryDisplay assetCategoryDisplay = AssetCategoryServiceUtil.searchCategoriesDisplay(scopeGroupId, keywords, categoryId, vocabularyId, categoriesSearchContainer.getStart(), categoriesSearchContainer.getEnd(), categoriesSearchContainer.getOrderByComparator());
 
 	totalVar = assetCategoryDisplay.getTotal();
 
@@ -73,7 +88,7 @@ else {
 
 	categoriesSearchContainer.setTotal(totalVar);
 
-	categories = AssetCategoryServiceUtil.getVocabularyCategories(scopeGroupId, categoryId, vocabularyId, categoriesSearchContainer.getStart(), categoriesSearchContainer.getEnd(), null);
+	categories = AssetCategoryServiceUtil.getVocabularyCategories(scopeGroupId, categoryId, vocabularyId, categoriesSearchContainer.getStart(), categoriesSearchContainer.getEnd(), categoriesSearchContainer.getOrderByComparator());
 }
 
 categoriesSearchContainer.setResults(categories);
@@ -117,6 +132,13 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 			<liferay-frontend:management-bar-filters>
 				<liferay-frontend:management-bar-navigation
 					navigationKeys='<%= new String[] {"all"} %>'
+					portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+				/>
+
+				<liferay-frontend:management-bar-sort
+					orderByCol="<%= orderByCol %>"
+					orderByType="<%= orderByType %>"
+					orderColumns='<%= new String[] {"create-date"} %>'
 					portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 				/>
 			</liferay-frontend:management-bar-filters>
@@ -176,6 +198,11 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 			<liferay-ui:search-container-column-text
 				name="description"
 				value="<%= curCategory.getDescription(locale) %>"
+			/>
+
+			<liferay-ui:search-container-column-date
+				name="create-date"
+				property="createDate"
 			/>
 
 			<liferay-ui:search-container-column-jsp

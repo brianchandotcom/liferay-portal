@@ -16,12 +16,14 @@ package com.liferay.journal.web.asset;
 
 import com.liferay.journal.configuration.JournalServiceConfigurationValues;
 import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.journal.constants.JournalWebKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.JournalContentSearchLocalServiceUtil;
 import com.liferay.journal.service.permission.JournalArticlePermission;
+import com.liferay.journal.util.JournalContent;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -82,8 +84,11 @@ public class JournalArticleAssetRenderer
 		}
 	}
 
-	public JournalArticleAssetRenderer(JournalArticle article) {
+	public JournalArticleAssetRenderer(
+		JournalArticle article, JournalContent journalContent) {
+
 		_article = article;
+		_journalContent = journalContent;
 	}
 
 	public JournalArticle getArticle() {
@@ -411,6 +416,8 @@ public class JournalArticleAssetRenderer
 
 		request.setAttribute(WebKeys.JOURNAL_ARTICLE, _article);
 
+		request.setAttribute(JournalWebKeys.JOURNAL_CONTENT, _journalContent);
+
 		return super.include(request, response, template);
 	}
 
@@ -454,5 +461,6 @@ public class JournalArticleAssetRenderer
 	}
 
 	private final JournalArticle _article;
+	private final JournalContent _journalContent;
 
 }

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
+<%@ include file="/html/taglib/ui/search_iterator/init.jsp" %>
 
 <%
 SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:search:searchContainer");
@@ -130,17 +130,56 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 <c:if test="<%= Validator.isNotNull(id) %>">
 	<input id="<%= namespace + id %>PrimaryKeys" name="<%= namespace + id %>PrimaryKeys" type="hidden" value="" />
 
-	<aui:script use="liferay-search-container">
+	<aui:script use="liferay-search-container,liferay-search-container-move,liferay-search-container-select">
+		var plugins = [];
+
+		var rowSelector = 'li.selectable';
+
+		plugins.push(
+			{
+				cfg: {
+					rowSelector: rowSelector
+				},
+				fn: A.Plugin.SearchContainerSelect
+			}
+		);
+
+		plugins.push(
+			{
+				cfg: {
+					dropTargets: [
+						{
+							action: 'move-to-folder',
+							activeCSSClass: 'active',
+							container: null,
+							infoCSSCLass: null,
+							selector: '[data-folder="true"]'
+						},
+						{
+							action: 'move-to-trash',
+							activeCSSClass: 'active',
+							container: A.getBody(),
+							infoCSSClass: 'app-view-drop-active',
+							selector: '#<%= TrashUtil.isTrashEnabled(scopeGroupId) ? ("_" + PortletProviderUtil.getPortletId(PortalProductMenuApplicationType.ProductMenu.CLASS_NAME, PortletProvider.Action.VIEW) + "_portlet_" + PortletProviderUtil.getPortletId(TrashEntry.class.getName(), PortletProvider.Action.VIEW)) : StringPool.BLANK %>',
+							title: 'Recycle Bin'
+						}
+					],
+					rowSelector: rowSelector
+				},
+				fn: A.Plugin.SearchContainerMove
+			}
+		);
+
 		var searchContainer = new Liferay.SearchContainer(
 			{
 				classNameHover: '<%= _CLASS_NAME_HOVER %>',
 				hover: <%= searchContainer.isHover() %>,
 				id: '<%= namespace + id %>',
+				plugins: plugins,
 				rowClassNameAlternate: '<%= _ROW_CLASS_NAME_ALTERNATE %>',
 				rowClassNameAlternateHover: '<%= _ROW_CLASS_NAME_ALTERNATE_HOVER %>',
 				rowClassNameBody: '<%= _ROW_CLASS_NAME_BODY %>',
-				rowClassNameBodyHover: '<%= _ROW_CLASS_NAME_BODY %>',
-				rowSelector: 'li.selectable'
+				rowClassNameBodyHover: '<%= _ROW_CLASS_NAME_BODY %>'
 			}
 		).render();
 

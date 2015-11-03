@@ -46,22 +46,22 @@
 <!--CREATE ACCOUNT-->
 <tr>
 	<td>CREATE_ACCOUNT_FIRST_NAME</td>
-	<td>//input[@id='_58_firstName']</td>
+	<td>//input[@id='_com_liferay_login_web_portlet_LoginPortlet_firstName']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CREATE_ACCOUNT_LAST_NAME</td>
-	<td>//input[@id='_58_lastName']</td>
+	<td>//input[@id='_com_liferay_login_web_portlet_LoginPortlet_lastName']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CREATE_ACCOUNT_SCREEN_NAME</td>
-	<td>//input[@id='_58_screenName']</td>
+	<td>//input[@id='_com_liferay_login_web_portlet_LoginPortlet_screenName']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CREATE_ACCOUNT_EMAIL_ADDRESS</td>
-	<td>//input[@id='_58_emailAddress']</td>
+	<td>//input[@id='_com_liferay_login_web_portlet_LoginPortlet_emailAddress']</td>
 	<td></td>
 </tr>
 </tbody>

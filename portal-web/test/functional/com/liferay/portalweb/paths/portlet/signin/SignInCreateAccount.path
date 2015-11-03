@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>CAPTCHA_IMAGE</td>
-	<td>//img[@id='_58_captcha']</td>
+	<td>//img[@id='_com_liferay_login_web_portlet_LoginPortlet_captcha']</td>
 	<td></td>
 </tr>
 <tr>

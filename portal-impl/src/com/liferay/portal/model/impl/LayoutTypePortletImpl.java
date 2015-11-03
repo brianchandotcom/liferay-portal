@@ -1342,7 +1342,9 @@ public class LayoutTypePortletImpl
 		}
 
 		try {
-			if (_enablePortletLayoutListener) {
+			if (_enablePortletLayoutListener &&
+				!portlet.isUndeployedPortlet()) {
+
 				PortletLayoutListener portletLayoutListener =
 					portlet.getPortletLayoutListenerInstance();
 

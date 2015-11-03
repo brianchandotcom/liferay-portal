@@ -42,6 +42,7 @@ FileTree fileTree = fileTree(rootDir) {
 		include "apps/journal/journal-content-asset-addon-entry/*/build.gradle"
 		include "apps/layout/*/build.gradle"
 		include "apps/loan-calculator/*/build.gradle"
+		include "apps/login/*/build.gradle"
 		include "apps/marketplace/*/build.gradle"
 		include "apps/mentions/*/build.gradle"
 		include "apps/message-boards/*/build.gradle"

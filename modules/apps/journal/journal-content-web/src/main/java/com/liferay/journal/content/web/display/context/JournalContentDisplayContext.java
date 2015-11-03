@@ -95,7 +95,9 @@ public class JournalContentDisplayContext {
 		String articleId = getArticleId();
 
 		if (Validator.isNotNull(articleId)) {
-			JournalContentUtil.clearCache(
+			JournalContent journalContent = getJournalContent();
+
+			journalContent.clearCache(
 				getArticleGroupId(), getArticleId(), getDDMTemplateKey());
 		}
 	}
@@ -150,9 +152,7 @@ public class JournalContentDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		if (article.isApproved()) {
-			JournalContent journalContent =
-				(JournalContent) _portletRequest.getAttribute(
-					JournalWebKeys.JOURNAL_CONTENT);
+			JournalContent journalContent = getJournalContent();
 
 			_articleDisplay = journalContent.getDisplay(
 				article.getGroupId(), article.getArticleId(), null, null,
@@ -721,6 +721,11 @@ public class JournalContentDisplayContext {
 			portletDisplay.getId(), ActionKeys.CONFIGURATION);
 
 		return _showSelectArticleIcon;
+	}
+
+	protected JournalContent getJournalContent() {
+		return (JournalContent) _portletRequest.getAttribute(
+			JournalWebKeys.JOURNAL_CONTENT);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

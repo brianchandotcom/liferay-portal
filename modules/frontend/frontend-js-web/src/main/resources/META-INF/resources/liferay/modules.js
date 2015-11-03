@@ -679,8 +679,7 @@
 						path: 'search_container.js',
 						requires: [
 							'aui-base',
-							'aui-datatable-core',
-							'event-mouseenter'
+							'aui-datatable-core'
 						]
 					},
 					'liferay-search-container-move': {

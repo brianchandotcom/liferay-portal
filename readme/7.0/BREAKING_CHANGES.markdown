@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `1adcc25`.*
+*This document has been reviewed through commit `1641223`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -1795,8 +1795,8 @@ New code:
         ddmStructureIndexer.reindexDDMStructures(...);
     }
 
-Any code calling Indexer.getQueryString(...) should call
-SearchEngineUtil.getQueryString(...)
+Any code calling `Indexer.getQueryString(...)` should call
+`SearchEngineUtil.getQueryString(...)`.
 
 Old code:
 
@@ -2346,7 +2346,7 @@ this tag.
 
 Embedding another portlet is only supported from a template. You should embed
 the portlet by passing its name in a call to `theme.runtime` or using the right
-taglib in freemarker.
+tag in FreeMarker.
 
 **Example**
 
@@ -2717,3 +2717,4 @@ declarative services in an OSGI container. The new approach allows for proper
 injection of dependencies into scheduled event message listeners.
 
 ---------------------------------------
+

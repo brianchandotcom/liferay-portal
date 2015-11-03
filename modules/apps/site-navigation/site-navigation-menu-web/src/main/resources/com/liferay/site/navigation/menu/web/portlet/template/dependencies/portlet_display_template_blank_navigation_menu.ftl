@@ -6,7 +6,7 @@
 <#assign navbarId = "navbar_" + portletDisplay.getId() />
 
 <div class="navbar" id="${navbarId}">
-	<ul aria-label="#language ("site-pages")" class="nav navbar-nav navbar-site" role="menubar">
+	<ul aria-label="#language ("site-pages")" class="nav navbar-blank navbar-nav navbar-site" role="menubar">
 		<h1 class="hide-accessible">#language ("navigation")</h1>
 
 		<#assign rootNavigationItems = navItem.fromLayouts(request, themeDisplay.getLayouts(), null) />

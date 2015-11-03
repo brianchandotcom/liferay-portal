@@ -22,13 +22,8 @@ body {
 		color: $solid-color;
 	}
 
-	&:hover > a, &.hover > a, &.active > a {
-		background-color: none;
+	&:hover > a, &.hover > a, &.active > a, .dropdown-menu .active > a  {
 		color: #000;
-	}
-
-	.dropdown-menu .active > a {
-		color: #FFF;
 	}
 }
 

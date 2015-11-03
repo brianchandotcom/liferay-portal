@@ -146,4 +146,27 @@ Group group = layoutsAdminDisplayContext.getGroup();
 		selPlid="<%= layoutsAdminDisplayContext.getSelPlid() %>"
 		treeId="privateLayoutsTree"
 	/>
+
+	<%
+	Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
+
+	boolean privateLayout = layoutsAdminDisplayContext.isPrivateLayout();
+
+	if (selGroup.isLayoutSetPrototype()) {
+		privateLayout = true;
+	}
+	%>
+
+	<c:if test="<%= ((selLayout == null) && GroupPermissionUtil.contains(permissionChecker, selGroup, ActionKeys.ADD_LAYOUT)) || ((selLayout != null) && LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.ADD_LAYOUT)) %>">
+		<liferay-portlet:renderURL portletName="<%= LayoutAdminPortletKeys.GROUP_PAGES %>" var="addPagesURL">
+			<portlet:param name="mvcPath" value="/add_layout.jsp" />
+			<portlet:param name="groupId" value="<%= String.valueOf(selGroup.getGroupId()) %>" />
+			<portlet:param name="selPlid" value="<%= (selLayout != null) ? String.valueOf(selLayout.getPlid()) : StringPool.BLANK %>" />
+			<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+		</liferay-portlet:renderURL>
+
+		<aui:button-row>
+			<aui:button cssClass="btn-block btn-primary" href="<%= addPagesURL %>" value="add-page" />
+		</aui:button-row>
+	</c:if>
 </c:if>

@@ -15,13 +15,12 @@
 package com.liferay.item.selector;
 
 import com.liferay.portal.model.Group;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.RequestBackedPortletURLFactory;
 
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 /**
@@ -34,7 +33,8 @@ public interface ItemSelector {
 		Map<String, String[]> parameters);
 
 	public ItemSelectorRendering getItemSelectorRendering(
-		PortletRequest portletRequest, PortletResponse portletResponse);
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory,
+		Map<String, String[]> parameters, ThemeDisplay themeDisplay);
 
 	public PortletURL getItemSelectorURL(
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory,

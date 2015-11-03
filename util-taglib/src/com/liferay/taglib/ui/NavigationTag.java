@@ -37,10 +37,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class NavigationTag extends IncludeTag {
 
-	public void setBulletStyle(String bulletStyle) {
-		_bulletStyle = bulletStyle;
-	}
-
 	public void setDdmTemplateGroupId(long ddmTemplateGroupId) {
 		_ddmTemplateGroupId = ddmTemplateGroupId;
 	}
@@ -49,16 +45,8 @@ public class NavigationTag extends IncludeTag {
 		_ddmTemplateKey = ddmTemplateKey;
 	}
 
-	public void setHeaderType(String headerType) {
-		_headerType = headerType;
-	}
-
 	public void setIncludedLayouts(String includedLayouts) {
 		_includedLayouts = includedLayouts;
-	}
-
-	public void setNestedChildren(boolean nestedChildren) {
-		_nestedChildren = nestedChildren;
 	}
 
 	public void setPreview(boolean preview) {
@@ -75,12 +63,9 @@ public class NavigationTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
-		_bulletStyle = "1";
 		_ddmTemplateGroupId = 0;
 		_ddmTemplateKey = null;
-		_headerType = "none";
 		_includedLayouts = "auto";
-		_nestedChildren = true;
 		_preview = false;
 		_rootLayoutLevel = 1;
 		_rootLayoutType = "absolute";
@@ -134,13 +119,11 @@ public class NavigationTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-ui:navigation:bulletStyle", _bulletStyle);
 		request.setAttribute(
 			"liferay-ui:navigation:displayStyle", getDisplayStyle());
 		request.setAttribute(
 			"liferay-ui:navigation:displayStyleGroupId",
 			String.valueOf(getDisplayStyleGroupId()));
-		request.setAttribute("liferay-ui:navigation:headerType", _headerType);
 		request.setAttribute(
 			"liferay-ui:navigation:includedLayouts", _includedLayouts);
 
@@ -154,9 +137,6 @@ public class NavigationTag extends IncludeTag {
 		}
 
 		request.setAttribute(
-			"liferay-ui:navigation:nestedChildren",
-			String.valueOf(_nestedChildren));
-		request.setAttribute(
 			"liferay-ui:navigation:preview", String.valueOf(_preview));
 		request.setAttribute(
 			"liferay-ui:navigation:rootLayoutLevel",
@@ -169,12 +149,9 @@ public class NavigationTag extends IncludeTag {
 
 	private static final Log _log = LogFactoryUtil.getLog(NavigationTag.class);
 
-	private String _bulletStyle = "1";
 	private long _ddmTemplateGroupId;
 	private String _ddmTemplateKey;
-	private String _headerType = "none";
 	private String _includedLayouts = "auto";
-	private boolean _nestedChildren = true;
 	private boolean _preview;
 	private int _rootLayoutLevel = 1;
 	private String _rootLayoutType = "absolute";

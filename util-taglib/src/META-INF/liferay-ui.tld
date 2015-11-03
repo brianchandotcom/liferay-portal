@@ -3562,7 +3562,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Whether to use indexer for search. The default value is <![CDATA[<code>true</code>]]></description>
+			<description>Whether to use indexer for search. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>useIndexer</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -5741,7 +5741,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Whether to use indexer for search. The default value is <![CDATA[<code>true</code>]]></description>
+			<description>Whether to use indexer for search. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>useIndexer</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -5828,7 +5828,7 @@
 		<tag-class>com.liferay.taglib.ui.UserSearchContainerResultsTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>Whether to use indexer for search. The default value is <![CDATA[<code>true</code>]]></description>
+			<description>Whether to use indexer for search. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>useIndexer</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

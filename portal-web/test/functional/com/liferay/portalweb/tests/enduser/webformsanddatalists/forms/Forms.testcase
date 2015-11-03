@@ -222,8 +222,6 @@
 			<var name="fieldValue" value="Radio Field Label" />
 		</execute>
 
-		<execute macro="FormFields#enableAdvancedOptions" />
-
 		<execute macro="FormFields#editOptionsRow">
 			<var name="optionLabel" value="Option 1" />
 			<var name="optionValue" value="Option 1 Value" />
@@ -253,8 +251,6 @@
 			<var name="fieldName" value="label" />
 			<var name="fieldValue" value="Select Field Label" />
 		</execute>
-
-		<execute macro="FormFields#enableAdvancedOptions" />
 
 		<execute macro="FormFields#editOptionsRow">
 			<var name="optionLabel" value="Select 1" />
@@ -490,8 +486,6 @@
 			<var name="fieldName" value="label" />
 			<var name="fieldValue" value="RadioLabel" />
 		</execute>
-
-		<execute macro="FormFields#enableAdvancedOptions" />
 
 		<execute macro="FormFields#editOptionsRow">
 			<var name="optionLabel" value="Option 1" />

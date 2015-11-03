@@ -52,6 +52,7 @@ import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.service.JournalContentSearchLocalService;
 import com.liferay.journal.service.JournalFeedService;
 import com.liferay.journal.service.JournalFolderService;
+import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.impl.JournalUtil;
 import com.liferay.journal.web.asset.JournalArticleAssetRenderer;
 import com.liferay.journal.web.portlet.action.ActionUtil;
@@ -378,6 +379,9 @@ public class JournalPortlet extends MVCPortlet {
 			renderRequest.setAttribute(
 				JournalWebKeys.ITEM_SELECTOR, _itemSelector);
 		}
+
+		renderRequest.setAttribute(
+			JournalWebKeys.JOURNAL_CONTENT, _journalContent);
 
 		super.render(renderRequest, renderResponse);
 	}
@@ -1266,6 +1270,11 @@ public class JournalPortlet extends MVCPortlet {
 	}
 
 	@Reference
+	protected void setJournalContent(JournalContent journalContent) {
+		_journalContent = journalContent;
+	}
+
+	@Reference
 	protected void setJournalContentSearchLocalService(
 		JournalContentSearchLocalService journalContentSearchLocalService) {
 
@@ -1308,6 +1317,10 @@ public class JournalPortlet extends MVCPortlet {
 		JournalArticleService journalArticleService) {
 
 		_journalArticleService = null;
+	}
+
+	protected void unsetJournalContent(JournalContent journalContent) {
+		_journalContent = null;
 	}
 
 	protected void unsetJournalContentSearchLocalService(
@@ -1364,6 +1377,7 @@ public class JournalPortlet extends MVCPortlet {
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private ItemSelector _itemSelector;
 	private JournalArticleService _journalArticleService;
+	private JournalContent _journalContent;
 	private JournalContentSearchLocalService _journalContentSearchLocalService;
 	private JournalFeedService _journalFeedService;
 	private JournalFolderService _journalFolderService;

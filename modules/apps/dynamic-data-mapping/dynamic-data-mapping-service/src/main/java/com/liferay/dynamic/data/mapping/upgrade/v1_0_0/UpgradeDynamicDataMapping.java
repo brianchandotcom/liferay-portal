@@ -507,9 +507,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				DDMForm ddmForm = getDDMForm(ddmStructureId);
 
-				DDMFormValues ddmFormValues =
-					DDMFormValuesJSONDeserializerUtil.deserialize(
-						ddmForm, data_);
+				DDMFormValues ddmFormValues = getDDMFormValues(ddmForm, data_);
 
 				transformFileUploadDDMFormFields(
 					groupId, companyId, userId, userName, createDate, entryId,
@@ -562,9 +560,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				DDMForm ddmForm = getDDMForm(ddmStructureId);
 
-				DDMFormValues ddmFormValues =
-					DDMFormValuesJSONDeserializerUtil.deserialize(
-						ddmForm, data_);
+				DDMFormValues ddmFormValues = getDDMFormValues(ddmForm, data_);
 
 				transformFileUploadDDMFormFields(
 					groupId, companyId, userId, userName, createDate, entryId,

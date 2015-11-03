@@ -22,6 +22,7 @@ SearchContext searchContext = SearchContextFactory.getInstance(request);
 mainSearchSearchContainer.setEmptyResultsMessage(LanguageUtil.format(request, "no-results-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(searchContext.getKeywords()) + "</strong>", false));
 
 searchContext.setAttribute("paginationType", "more");
+searchContext.setKeywords(keywords);
 searchContext.setEnd(mainSearchSearchContainer.getEnd());
 
 QueryConfig queryConfig = searchContext.getQueryConfig();

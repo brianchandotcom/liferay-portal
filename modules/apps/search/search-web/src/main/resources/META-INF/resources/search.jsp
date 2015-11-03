@@ -25,7 +25,7 @@ if (Validator.isNotNull(redirect)) {
 
 long groupId = ParamUtil.getLong(request, "groupId");
 
-String keywords = ParamUtil.getString(request, "keywords");
+String keywords = StringUtil.unquote(ParamUtil.getString(request, "keywords"));
 
 String format = ParamUtil.getString(request, "format");
 

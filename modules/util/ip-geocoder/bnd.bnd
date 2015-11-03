@@ -4,4 +4,6 @@ Bundle-Version: 1.0.5
 Export-Package: com.liferay.ip.geocoder
 Private-Package: com.liferay.ip.geocoder.internal
 
-Include-Resource: classes
+Include-Resource:\
+	@lib/xz.jar,\
+	classes

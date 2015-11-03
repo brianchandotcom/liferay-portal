@@ -66,7 +66,11 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 
 		portletURL.setParameter("mvcPath", "/edit_article.jsp");
 		portletURL.setParameter("redirect", redirectURL);
-		portletURL.setParameter("backURL", backURL);
+
+		if (Validator.isNotNull(backURL)) {
+			portletURL.setParameter("backURL", backURL);
+		}
+
 		portletURL.setParameter(
 			"groupId", String.valueOf(structure.getGroupId()));
 		portletURL.setParameter(

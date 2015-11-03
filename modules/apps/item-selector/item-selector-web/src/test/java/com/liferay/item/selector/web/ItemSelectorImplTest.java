@@ -21,26 +21,15 @@ import com.liferay.item.selector.ItemSelectorViewRenderer;
 import com.liferay.item.selector.web.util.ItemSelectorCriterionSerializer;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
-import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.impl.GroupImpl;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.Portal;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.PortletURLFactory;
-import com.liferay.portlet.PortletURLFactoryUtil;
+import com.liferay.portlet.RequestBackedPortletURLFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -97,56 +86,6 @@ public class ItemSelectorImplTest extends PowerMockito {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
-
-		Portal portal = mock(Portal.class);
-
-		LiferayPortletResponse liferayPortletResponse =
-			mock(LiferayPortletResponse.class);
-
-		LiferayPortletRequest liferayPortletRequest =
-			getMockPortletRequest(liferayPortletResponse);
-
-		when(
-			portal.getLiferayPortletResponse(Mockito.any(PortletResponse.class))
-		).thenReturn(
-			liferayPortletResponse
-		);
-
-		when(
-			portal.getLiferayPortletRequest(Mockito.any(PortletRequest.class))
-		).thenReturn(
-			liferayPortletRequest
-		);
-
-		Layout layout = mock(Layout.class);
-
-		when(
-			portal.getControlPanelLayout(
-				Mockito.anyLong(), Mockito.any(Group.class))
-		).thenReturn(
-			layout
-		);
-
-		PortalUtil portalUtil = new PortalUtil();
-
-		portalUtil.setPortal(portal);
-
-		PortletURLFactory portletURLFactory = mock(PortletURLFactory.class);
-
-		LiferayPortletURL mockLiferayPortletURL = mock(LiferayPortletURL.class);
-
-		when(
-			portletURLFactory.create(
-				Mockito.any(HttpServletRequest.class), Mockito.anyString(),
-				Mockito.any(Layout.class), Mockito.anyString())
-		).thenReturn(
-			mockLiferayPortletURL
-		);
-
-		PortletURLFactoryUtil portletURLFactoryUtil =
-			new PortletURLFactoryUtil();
-
-		portletURLFactoryUtil.setPortletURLFactory(portletURLFactory);
 	}
 
 	@Test
@@ -175,13 +114,8 @@ public class ItemSelectorImplTest extends PowerMockito {
 	public void testGetItemSelectorRendering() {
 		setUpItemSelectionCriterionHandlers();
 
-		PortletResponse portletResponse = mock(PortletResponse.class);
-
-		PortletRequest portletRequest = getMockPortletRequest(portletResponse);
-
 		ItemSelectorRendering itemSelectorRendering =
-			_itemSelectorImpl.getItemSelectorRendering(
-				portletRequest, portletResponse);
+			getItemSelectorRendering();
 
 		Assert.assertEquals(
 			"itemSelectedEventName",
@@ -225,25 +159,18 @@ public class ItemSelectorImplTest extends PowerMockito {
 		Assert.assertEquals(2, itemSelectorViewRenderers.size());
 	}
 
-	protected LiferayPortletRequest getMockPortletRequest(
-		PortletResponse portletResponse) {
+	protected ItemSelectorRendering getItemSelectorRendering() {
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory = mock(
+			RequestBackedPortletURLFactory.class);
 
-		LiferayPortletRequest liferayPortletRequest = mock(
-			LiferayPortletRequest.class);
-
-		when(
-			liferayPortletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_RESPONSE)
-		).thenReturn(
-			portletResponse
-		);
-
-		ThemeDisplay themeDisplay = mock(ThemeDisplay.class);
+		LiferayPortletURL mockLiferayPortletURL = mock(LiferayPortletURL.class);
 
 		when(
-			liferayPortletRequest.getAttribute(WebKeys.THEME_DISPLAY)
+			requestBackedPortletURLFactory.createControlPanelRenderURL(
+				Mockito.anyString(), Mockito.any(Group.class),
+				Mockito.anyLong(), Mockito.anyLong())
 		).thenReturn(
-			themeDisplay
+			mockLiferayPortletURL
 		);
 
 		Map<String, String[]> parameters =
@@ -251,53 +178,18 @@ public class ItemSelectorImplTest extends PowerMockito {
 				"itemSelectedEventName", _mediaItemSelectorCriterion,
 				_flickrItemSelectorCriterion);
 
-		when(
-			liferayPortletRequest.getParameterMap()
-		).thenReturn(
-			parameters
-		);
+		ThemeDisplay themeDisplay = mock(ThemeDisplay.class);
 
-		HttpServletRequest request = mock(HttpServletRequest.class);
-
-		when(
-			liferayPortletRequest.getHttpServletRequest()
-		).thenReturn(
-			request
-		);
-
-		when(
-			request.getAttribute(WebKeys.THEME_DISPLAY)
-		).thenReturn(
-			themeDisplay
-		);
-
-		Group group = mock(Group.class);
+		themeDisplay.setScopeGroupId(12345);
 
 		when(
 			themeDisplay.getScopeGroup()
 		).thenReturn(
-			group
+			new GroupImpl()
 		);
 
-		when(
-			group.getGroupId()
-		).thenReturn(
-			12345L
-		);
-
-		when(
-			themeDisplay.getScopeGroupId()
-		).thenReturn(
-			12345L
-		);
-
-		when(
-			themeDisplay.getCompanyId()
-		).thenReturn(
-			12345L
-		);
-
-		return liferayPortletRequest;
+		return _itemSelectorImpl.getItemSelectorRendering(
+			requestBackedPortletURLFactory, parameters, themeDisplay);
 	}
 
 	protected void setUpItemSelectionCriterionHandlers() {

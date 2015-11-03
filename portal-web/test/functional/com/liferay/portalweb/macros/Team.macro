@@ -153,7 +153,7 @@
 	<command name="viewDefaultCP">
 		<var name="key_teamName" value="${teamName}" />
 
-		<execute function="AssertTextEquals" locator1="Message#INFO_5" value1="No teams were found." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No teams were found." />
 		<execute function="AssertTextNotPresent" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />
 	</command>
 

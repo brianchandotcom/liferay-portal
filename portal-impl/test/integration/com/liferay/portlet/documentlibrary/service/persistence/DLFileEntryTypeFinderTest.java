@@ -81,7 +81,7 @@ public class DLFileEntryTypeFinderTest {
 	}
 
 	@Test
-	public void testFilterCountByKeywordsWithoutKeywords() throws Exception {
+	public void testFilterCountByKeywordsWithBlankKeywords() throws Exception {
 		int initialCount = DLFileEntryTypeFinderUtil.countByKeywords(
 			_group.getCompanyId(), new long[] {_group.getGroupId()},
 			StringPool.BLANK, true);
@@ -97,7 +97,7 @@ public class DLFileEntryTypeFinderTest {
 	}
 
 	@Test
-	public void testFilterCountByKeywordsWithPowerUser() throws Exception {
+	public void testFilterCountByKeywordsAsAPowerUser() throws Exception {
 		User user = UserTestUtil.addGroupUser(_group, RoleConstants.POWER_USER);
 
 		PermissionChecker permissionChecker =
@@ -148,7 +148,7 @@ public class DLFileEntryTypeFinderTest {
 	}
 
 	@Test
-	public void testFilterFindByKeywordsWithoutKeywords() throws Exception {
+	public void testFilterFindByKeywordsWithBlankKeywords() throws Exception {
 		DLFileEntryType fileEntryType = addFileEntryType();
 
 		List<DLFileEntryType> fileEntryTypes =
@@ -167,7 +167,7 @@ public class DLFileEntryTypeFinderTest {
 	}
 
 	@Test
-	public void testFilterFindByKeywordsWithPowerUser() throws Exception {
+	public void testFilterFindByKeywordsAsAPowerUser() throws Exception {
 		User user = UserTestUtil.addGroupUser(_group, RoleConstants.POWER_USER);
 
 		PermissionChecker permissionChecker =
@@ -219,9 +219,9 @@ public class DLFileEntryTypeFinderTest {
 		"DLFileEntryTypeFinderTest";
 
 	@DeleteAfterTestRun
-	private static Group _group;
+	private Group _group;
 
 	@DeleteAfterTestRun
-	private static User _user;
+	private User _user;
 
 }

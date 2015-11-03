@@ -227,8 +227,6 @@
 			<var name="optionValue" value="Option 1 Value" />
 		</execute>
 
-		<execute macro="FormFields#addOptionsRow" />
-
 		<execute macro="FormFields#editOptionsRow">
 			<var name="optionLabel" value="Option 2" />
 			<var name="optionValue" value="Option 2 Value" />
@@ -256,8 +254,6 @@
 			<var name="optionLabel" value="Select 1" />
 			<var name="optionValue" value="Select 1 Value" />
 		</execute>
-
-		<execute macro="FormFields#addOptionsRow" />
 
 		<execute macro="FormFields#editOptionsRow">
 			<var name="optionLabel" value="Select 2" />
@@ -491,8 +487,6 @@
 			<var name="optionLabel" value="Option 1" />
 			<var name="optionValue" value="Option 1 Value" />
 		</execute>
-
-		<execute macro="FormFields#addOptionsRow" />
 
 		<execute macro="FormFields#editOptionsRow">
 			<var name="optionLabel" value="Option 2" />

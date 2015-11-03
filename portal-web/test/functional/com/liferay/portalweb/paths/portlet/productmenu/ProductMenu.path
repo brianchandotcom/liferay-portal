@@ -131,6 +131,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCT_MENU_PANEL_SCOPE</td>
+	<td>//div[contains(@class,'nav-equal-height-heading')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT_MENU_PANEL_SCOPE_COG</td>
+	<td>//div[contains(@class,'nav-equal-height-heading')]//i[contains(@class,'icon-cog')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRODUCT_MENU_PANEL_MENU_ITEM</td>
 	<td>//div[contains(@class,'active')]//a[.='${key_portletName}']</td>
 	<td></td>

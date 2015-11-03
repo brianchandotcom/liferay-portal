@@ -296,11 +296,18 @@
 		</execute>
 
 		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="WC Structure Name" />
 			<var name="templateFieldNames" value="Text" />
 			<var name="templateLanguage" value="ftl" />
 			<var name="templateName" value="WC Template Name" />
 		</execute>
+
+		<execute macro="WebContentTemplates#addStructure">
+			<var name="structureName" value="WC Structure Name" />
+			<var name="templateFieldNames" value="Text" />
+			<var name="templateLanguage" value="ftl" />
+		</execute>
+
+		<execute macro="WebContentTemplates#save" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Display Page" />
@@ -346,11 +353,18 @@
 		</execute>
 
 		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="Basic Web Content" />
 			<var name="templateFieldNames" value="Content,Content,Content" />
 			<var name="templateLanguage" value="ftl" />
 			<var name="templateName" value="Second Basic Template" />
 		</execute>
+
+		<execute macro="WebContentTemplates#addStructure">
+			<var name="structureName" value="Basic Web Content" />
+			<var name="templateFieldNames" value="Content,Content,Content" />
+			<var name="templateLanguage" value="ftl" />
+		</execute>
+
+		<execute macro="WebContentTemplates#save" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Display Page" />

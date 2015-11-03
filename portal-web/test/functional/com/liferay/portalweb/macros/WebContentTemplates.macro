@@ -1,78 +1,17 @@
 <definition>
 	<command name="addCP">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-		<execute function="AssertClick" locator1="MenuItem#TEMPLATES" value1="Templates" />
+		<execute macro="WebContentNavigator#gotoManageTemplates" />
 
-		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
-		<execute function="Click" locator1="Button#PLUS" />
-		<execute function="SelectFrame" />
+		<execute macro="WebContentNavigator#gotoAddTemplate" />
 
-		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
 		<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${templateName}" />
 
-		<if>
-			<isset var="localization1NameKey" />
-			<then>
-				<var name="key_localizationName" value="${localization1NameKey}" />
-
-				<execute function="Click" locator1="Translation#LOCALIZATION_NAME" />
-				<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${localization1Name}" />
-
-				<if>
-					<isset var="localization2NameKey" />
-					<then>
-						<var name="key_localizationName" value="${localization2NameKey}" />
-
-						<execute function="Click" locator1="Translation#LOCALIZATION_NAME" />
-						<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${localization2Name}" />
-					</then>
-				</if>
-			</then>
-		</if>
-
-		<execute macro="CPWebcontentTemplatesAddtemplate#showDetails" />
+		<execute macro="WebContentNavigator#showTemplateDetails" />
 
 		<if>
 			<isset var="templateDescription" />
 			<then>
 				<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${templateDescription}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="structureName" />
-			<then>
-				<execute function="AssertClick" locator1="DDMEditTemplate#DETAILS_SELECT_STRUCTURE" value1="Select" />
-
-				<execute function="SelectFrameTop" />
-				<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
-
-				<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${structureName}" />
-
-				<execute function="Click" locator1="Icon#BASIC_SEARCH" />
-
-				<var name="key_ddlDatadefinitionName" value="${structureName}" />
-
-				<execute function="AssertTextEquals" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_1" value1="${structureName}" />
-				<execute function="AssertClickNoError" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_CHOOSE_BUTTON_1" value1="Choose" />
-				<execute function="Confirm" value1="Selecting a new structure changes the available input fields and available templates. Do you want to proceed?" />
-
-				<execute function="SelectFrameTop" />
-				<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
-
-				<execute function="AssertTextEquals#assertValue" locator1="TextInput#STRUCTURE" value1="${structureName}" />
-
-				<if>
-					<equals arg1="${templateLanguage}" arg2="ftl" />
-					<then>
-						<for list="${templateFieldNames}" param="templateFieldName">
-							<execute macro="WebContentTemplates#addField">
-								<var name="fieldName" value="${templateFieldName}" />
-								<var name="fieldNameLabel" value="${fieldNameLabel}" />
-							</execute>
-						</for>
-					</then>
-				</if>
 			</then>
 		</if>
 
@@ -105,30 +44,6 @@
 				<execute function="Type#typeAceEditor" locator1="DDMEditTemplate#SCRIPT_CONTENT_FIELD" value1="${templateScript}" />
 			</then>
 		</if>
-
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="SelectFrame" />
-		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-
-		<if>
-			<isset var="addRoleViewPermissions" />
-			<then>
-				<var name="key_listEntry" value="${templateName}" />
-
-				<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
-				<execute function="AssertClick" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
-
-				<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
-					<var name="addOrRemoveViewPermission" value="Add" />
-					<var name="key_roleName" value="${key_roleName}" />
-					<var name="roleList" value="${addRoleViewPermissions}" />
-					<var name="roleName" value="${roleName}" />
-				</execute>
-
-				<execute function="SelectFrameTop" />
-			</then>
-		</if>
 	</command>
 
 	<command name="addField">
@@ -140,14 +55,10 @@
 	</command>
 
 	<command name="addNullCP">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-		<execute function="AssertClick" locator1="MenuItem#TEMPLATES" value1="Templates" />
+		<execute macro="WebContentNavigator#gotoManageTemplates" />
 
-		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
-		<execute function="Click" locator1="Button#PLUS" />
-		<execute function="SelectFrame" value1="relative=top" />
+		<execute macro="WebContentNavigator#gotoAddTemplate" />
 
-		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
 		<execute function="AssertElementNotPresent" locator1="TextInput#REQUIRED_ALERT" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="AssertTextEquals" locator1="Message#ERROR_FIELD_REQUIRED" value1="This field is required." />
@@ -155,11 +66,61 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
-	<command name="advancedSearchCP">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-		<execute function="AssertClick" locator1="MenuItem#TEMPLATES" value1="Templates" />
+	<command name="addRoleViewPermissions">
+		<var name="key_listEntry" value="${templateName}" />
+
+		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
+
+		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
+			<var name="addOrRemoveViewPermission" value="Add" />
+			<var name="roleList" value="${roles}" />
+		</execute>
+
+		<execute function="SelectFrameTop" />
+	</command>
+
+	<command name="addStructure">
+		<execute function="AssertClick" locator1="DDMEditTemplate#DETAILS_SELECT_STRUCTURE" value1="Select" />
+
+		<execute function="SelectFrameTop" />
+
+		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
+
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${structureName}" />
+
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+
+		<var name="key_ddlDatadefinitionName" value="${structureName}" />
+
+		<execute function="AssertTextEquals" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_1" value1="${structureName}" />
+
+		<execute function="AssertClickNoError" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_CHOOSE_BUTTON_1" value1="Choose" />
+
+		<execute function="Confirm" value1="Selecting a new structure changes the available input fields and available templates. Do you want to proceed?" />
+
+		<execute function="SelectFrameTop" />
 
 		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
+
+		<execute function="AssertTextEquals#assertValue" locator1="TextInput#STRUCTURE" value1="${structureName}" />
+
+		<if>
+			<equals arg1="${templateLanguage}" arg2="ftl" />
+			<then>
+				<for list="${templateFieldNames}" param="templateFieldName">
+					<execute macro="WebContentTemplates#addField">
+						<var name="fieldName" value="${templateFieldName}" />
+						<var name="fieldNameLabel" value="${fieldNameLabel}" />
+					</execute>
+				</for>
+			</then>
+		</if>
+	</command>
+
+	<command name="advancedSearchCP">
+		<execute macro="WebContentNavigator#gotoManageTemplates" />
 
 		<var name="key_ddlTemplateName" value="${templateName}" />
 
@@ -186,12 +147,10 @@
 	</command>
 
 	<command name="deleteCP">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-		<execute function="AssertClick" locator1="MenuItem#TEMPLATES" value1="Templates" />
+		<execute macro="WebContentNavigator#gotoManageTemplates" />
 
 		<var name="key_ddlTemplateName" value="${templateName}" />
 
-		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
 		<execute function="Type" locator1="DDMSelectTemplate#TOOLBAR_SEARCH_FIELD" value1="${templateName}" />
 		<execute function="AssertClick" locator1="DDMSelectTemplate#TOOLBAR_SEARCH_BUTTON" value1="Search" />
 		<execute function="Click" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ELLIPSIS" />
@@ -210,15 +169,56 @@
 		</if>
 	</command>
 
+	<command name="localizeTemplateName">
+		<var name="key_localizationName" value="${localization1NameKey}" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoManageTemplates" />
+
+		<execute function="AssertTextEquals" locator1="DDMSelectTemplate#TEMPLATE_TABLE_NAME" value1="${templateName}" />
+
+		<execute function="AssertClick" locator1="DDMSelectTemplate#TEMPLATE_TABLE_NAME" value1="${templateName}" />
+
+		<execute function="SelectFrame" />
+
+		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
+
+		<execute function="AssertTextEquals" locator1="TextInput#NAME" value1="${templateName}" />
+
+		<execute function="Click" locator1="Translation#LOCALIZATION_NAME" />
+
+		<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${localization1Name}" />
+
+		<if>
+			<isset var="localization2NameKey" />
+			<then>
+				<var name="key_localizationName" value="${localization2NameKey}" />
+
+				<execute function="Click" locator1="Translation#LOCALIZATION_NAME" />
+				<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${localization2Name}" />
+			</then>
+		</if>
+	</command>
+
+	<command name="save">
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute function="SelectFrame" />
+
+		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+	</command>
+
 	<command name="tearDownCP">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-		<execute function="AssertClick" locator1="MenuItem#TEMPLATES" value1="Templates" />
-
-		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
+		<execute macro="WebContentNavigator#gotoManageTemplates" />
 
 		<execute function="Type" locator1="DDMSelectTemplate#TOOLBAR_SEARCH_FIELD" value1="2" />
 		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
@@ -250,10 +250,7 @@
 	</command>
 
 	<command name="viewCP">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-		<execute function="AssertClick" locator1="MenuItem#TEMPLATES" value1="Templates" />
-
-		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
+		<execute macro="WebContentNavigator#gotoManageTemplates" />
 
 		<var name="key_ddlTemplateName" value="${templateName}" />
 
@@ -289,7 +286,7 @@
 		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
 		<execute function="AssertTextEquals" locator1="TextInput#NAME" value1="${templateName}" />
 
-		<execute macro="CPWebcontentTemplatesAddtemplate#showDetails" />
+		<execute macro="WebContentNavigator#showTemplateDetails" />
 
 		<execute function="AssertTextEquals" locator1="TextArea#DESCRIPTION" value1="${templateDescription}" />
 

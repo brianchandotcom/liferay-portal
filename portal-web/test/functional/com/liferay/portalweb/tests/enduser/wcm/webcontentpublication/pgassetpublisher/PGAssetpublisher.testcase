@@ -441,7 +441,6 @@
 		</execute>
 
 		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="Advertisement WC Structure Name" />
 			<var name="templateDescription" value="Advertisement Template Description" />
 			<var name="templateLanguage" value="Velocity (.vm)" />
 			<var name="templateName" value="Advertisement Template Name" />
@@ -452,6 +451,12 @@
 			]]>
 			</var>
 		</execute>
+
+		<execute macro="WebContentTemplates#addStructure">
+			<var name="structureName" value="Advertisement WC Structure Name" />
+		</execute>
+
+		<execute macro="WebContentTemplates#save" />
 
 		<var name="key_ddlTemplateName" value="Advertisement Template Name" />
 
@@ -474,7 +479,6 @@
 		</execute>
 
 		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="Press Release Structure Name" />
 			<var name="templateDescription" value="Press Release Template Description" />
 			<var name="templateLanguage" value="Velocity (.vm)" />
 			<var name="templateName" value="Press Release Template Name" />
@@ -485,6 +489,12 @@
 			]]>
 			</var>
 		</execute>
+
+		<execute macro="WebContentTemplates#addStructure">
+			<var name="structureName" value="Press Release Structure Name" />
+		</execute>
+
+		<execute macro="WebContentTemplates#save" />
 
 		<var name="key_ddlTemplateName" value="Press Release Template Name" />
 

@@ -25,15 +25,25 @@
 		<execute function="Pause" locator1="3000" />
 
 		<execute function="Click" locator1="Button#PLUS" />
+
 		<execute function="AssertClick" locator1="MenuItem#BASIC_WEB_CONTENT" value1="Basic Web Content" />
 
 		<execute function="Pause" locator1="3000" />
+	</command>
+
+	<command name="gotoAddTemplate">
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="SelectFrame" />
+
+		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
 	</command>
 
 	<command name="gotoAddWithStructureCP">
 		<var name="key_structureName" value="${structureName}" />
 
 		<execute function="Click" locator1="Button#PLUS" />
+
 		<execute function="AssertClick" locator1="MenuItem#STRUCTURE_NAME" value1="${structureName}" />
 	</command>
 
@@ -49,14 +59,23 @@
 	<command name="gotoEditPGViaWCD">
 		<execute function="Click" locator1="WCD#EDIT_WEB_CONTENT" />
 
-		<execute function="SelectFrame" locator1="PGWebcontentdisplayEditwebcontent#WEB_CONTENT_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
 	</command>
 
 	<command name="gotoManageStructures">
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
 		<execute function="AssertClick" locator1="MenuItem#STRUCTURES" value1="Structures" />
 
 		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
+	</command>
+
+	<command name="gotoManageTemplates">
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#TEMPLATES" value1="Templates" />
+
+		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
 	</command>
 
 	<command name="gotoPreviewCP">
@@ -77,6 +96,25 @@
 
 		<execute function="AssertElementPresent#pauseAssertVisible" locator1="WC#ENTRY_DESCRIPTIVE_THUMBNAIL" />
 		<execute function="AssertTextEquals" locator1="WC#ENTRY_DESCRIPTIVE_WORKFLOW_STATUS" value1="${webContentStatus}" />
+
 		<execute function="AssertClick" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
+	</command>
+
+	<command name="showStructureDetails">
+		<if>
+			<condition function="IsElementNotPresent#isNotVisible" locator1="TextInput#DESCRIPTION" />
+			<then>
+				<execute function="Click" locator1="DDMEditStructure#DETAILS" />
+			</then>
+		</if>
+	</command>
+
+	<command name="showTemplateDetails">
+		<if>
+			<condition function="IsElementNotPresent#isNotVisible" locator1="TextArea#DESCRIPTION" />
+			<then>
+				<execute function="Click" locator1="DDMEditTemplate#DETAILS" />
+			</then>
+		</if>
 	</command>
 </definition>

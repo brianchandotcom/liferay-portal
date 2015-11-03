@@ -29,7 +29,7 @@
 		</if>
 
 		<execute function="AssertClick" locator1="PGTagsNavigationPortletConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="PGAssetpublisherConfigurationDisplaysettings#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 	</command>
 
 	<command name="configureFlaggableSettingsPG">
@@ -56,7 +56,7 @@
 		</if>
 
 		<execute function="AssertClick" locator1="PGTagsNavigationPortletConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="PGAssetpublisherConfigurationDisplaysettings#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 	</command>
 
 	<command name="viewADTColorByPopularityPG">

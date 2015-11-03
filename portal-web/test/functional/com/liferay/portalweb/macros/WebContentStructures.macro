@@ -26,7 +26,7 @@
 			</then>
 		</if>
 
-		<execute macro="CPWebcontentStructuresAddstructure#showDetails" />
+		<execute macro="WebContentNavigator#showStructureDetails" />
 
 		<if>
 			<isset var="structureDescription" />
@@ -322,7 +322,7 @@
 		<execute function="SelectFrameTop" />
 		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
 
-		<execute macro="CPWebcontentStructuresAddstructure#showDetails" />
+		<execute macro="WebContentNavigator#showStructureDetails" />
 
 		<if>
 			<isset var="structureDescription" />

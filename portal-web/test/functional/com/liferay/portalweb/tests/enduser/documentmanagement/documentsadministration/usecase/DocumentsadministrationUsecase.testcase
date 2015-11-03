@@ -470,7 +470,7 @@
 	</command>
 
 	<command name="ConfigureXugglerVideoPreviewSizePG" priority="3">
-		<property name="custom.properties" value="dl.file.entry.preview.video.width=0${line.separator}dl.file.entry.preview.video.height=0" />
+		<property name="custom.properties" value="xuggler.enabled=true${line.separator}dl.file.entry.preview.video.width=0${line.separator}dl.file.entry.preview.video.height=0" />
 
 		<var name="videoGenerationTimeCounter" value="0" />
 		<var name="videoGenerationTimeMaxWaitTime" value="6" />
@@ -489,6 +489,11 @@
 		<execute macro="Portlet#startServer" />
 
 		<execute macro="Page#openURL" />
+
+		<execute macro="User#loginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSystem">
 			<var name="portlet" value="Server Administration" />
@@ -571,7 +576,7 @@
 	</command>
 
 	<command name="ImportDocumentWithDBStore" priority="3">
-		<property name="custom.properties" value="dl.store.impl=com.liferay.portlet.documentlibrary.store.DBStore" />
+		<property name="custom.properties" value="dl.store.impl=com.liferay.portal.store.db.DBStore" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />

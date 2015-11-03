@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT</td>
+	<td>//div[contains(@id,'cke__')]//iframe</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COPY_STRUCTURE</td>
 	<td>//iframe[contains(@id,'copyStructure_iframe_')]</td>
 	<td></td>

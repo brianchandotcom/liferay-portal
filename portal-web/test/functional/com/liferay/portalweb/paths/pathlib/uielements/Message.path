@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>CATEGORY_ALERT</td>
+	<td>//div[contains(@id,'categorization')]/div[contains(@class,'alert-danger')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHECKOUT_SUCCESS</td>
 	<td>//div[contains(@class,'lfr-asset-column-details')]/div[contains(@class,'alert-success')]</td>
 	<td></td>

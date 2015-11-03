@@ -91,13 +91,14 @@
 
 	<command name="selectScopeCP">
 		<var name="key_scopeDefault" value="${scopeDefault}" />
-		<var name="key_scopeSelection" value="${scopeSelection}" />
 
-		<execute function="Click#pauseClickAt" locator1="MenuItem#SCOPE_DEFAULT" />
+		<execute function="Click#pauseClickAt" locator1="ProductMenu#PRODUCT_MENU_PANEL_SCOPE_COG" />
+
+		<var name="key_scopeSelection" value="${scopeSelection}" />
 
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="MenuItem#SCOPE_SELECTION" value1="${scopeSelection}" />
 
-		<execute function="AssertTextEquals" locator1="MenuItem#SCOPE" value1="${scopeSelection}" />
+		<execute function="AssertTextEquals" locator1="ProductMenu#PRODUCT_MENU_PANEL_SCOPE" value1="${scopeSelection}" />
 	</command>
 
 	<command name="selectScopePG">
@@ -198,9 +199,9 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Home#CONTENT_SCOPE_SELECTOR" value1="${contentScopeName}" />
+		<execute function="AssertTextEquals" locator1="ProductMenu#PRODUCT_MENU_PANEL_SCOPE" value1="${contentScopeName}" />
 
-		<execute function="AssertTextEquals" locator1="CPBlogs#INFO_MESSAGE" value1="No entries were found." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY" value1="No entries were found." />
 	</command>
 
 	<command name="viewScopePG">

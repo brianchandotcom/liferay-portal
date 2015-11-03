@@ -38,6 +38,42 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--ENABLE_CONVERSION-->
+<tr>
+	<td>ENABLE_CONVERSION_DOC_CHECKBOX</td>
+	<td>//input[contains(@id,'extensionsdoc')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_CONVERSION_ODT_CHECKBOX</td>
+	<td>//input[contains(@id,'extensionsodt')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_CONVERSION_PDF_CHECKBOX</td>
+	<td>//input[contains(@id,'extensionspdf')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_CONVERSION_RTF_CHECKBOX</td>
+	<td>//input[contains(@id,'extensionsrtf')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_CONVERSION_SXW_CHECKBOX</td>
+	<td>//input[contains(@id,'extensionssxw')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_CONVERSION_TXT_CHECKBOX</td>
+	<td>//input[contains(@id,'extensionstxt')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SHOW_METADATA-->
 <tr>
 	<td>SHOW_METADATA_CURRENT_FIELD_SELECT</td>

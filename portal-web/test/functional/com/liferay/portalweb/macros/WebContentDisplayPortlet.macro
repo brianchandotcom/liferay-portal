@@ -282,7 +282,7 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="WCD#RELATED_ASSETS" value1="${relatedAssetTitle}" />
 
-		<execute function="Type#typeAlloyEditor" locator1="PGWebcontentdisplay#COMMENT_EDITOR" value1="Hello!" />
+		<execute function="Type#typeAlloyEditor" locator1="Comments#COMMENT_FIELD" value1="Hello!" />
 
 		<execute function="AssertClick" locator1="Button#REPLY" value1="Reply" />
 

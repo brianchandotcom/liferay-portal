@@ -74,12 +74,18 @@
 		</execute>
 
 		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="${structureName}" />
 			<var name="templateDescription" value="${templateDescription}" />
-			<var name="templateFieldNames" value="${structureFieldNames}" />
 			<var name="templateLanguage" value="ftl" />
 			<var name="templateName" value="${templateName}" />
 		</execute>
+
+		<execute macro="WebContentTemplates#addStructure">
+			<var name="structureName" value="${structureName}" />
+			<var name="templateFieldNames" value="${structureFieldNames}" />
+			<var name="templateLanguage" value="ftl" />
+		</execute>
+
+		<execute macro="WebContentTemplates#save" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />

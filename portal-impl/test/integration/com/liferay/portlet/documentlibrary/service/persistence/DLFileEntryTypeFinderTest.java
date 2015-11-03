@@ -81,41 +81,6 @@ public class DLFileEntryTypeFinderTest {
 	}
 
 	@Test
-	public void testFilterCountByKeywordsWithBlankKeywords() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId());
-
-		addFileEntryType(serviceContext);
-
-		Assert.assertEquals(
-			2,
-			DLFileEntryTypeFinderUtil.filterCountByKeywords(
-				_group.getCompanyId(), new long[] {_group.getGroupId()},
-				StringPool.BLANK, true)
-		);
-	}
-
-	@Test
-	public void
-		testFilterCountByKeywordsWithBlankKeywordsNotIncludingBasicType()
-			throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId());
-
-		addFileEntryType(serviceContext);
-
-		Assert.assertEquals(
-			1,
-			DLFileEntryTypeFinderUtil.filterCountByKeywords(
-				_group.getCompanyId(), new long[] {_group.getGroupId()},
-				StringPool.BLANK, false)
-		);
-	}
-
-	@Test
 	public void testFilterCountByKeywordsAsAPowerUser() throws Exception {
 		User user = UserTestUtil.addGroupUser(_group, RoleConstants.POWER_USER);
 
@@ -185,6 +150,40 @@ public class DLFileEntryTypeFinderTest {
 	}
 
 	@Test
+	public void testFilterCountByKeywordsWithBlankKeywords() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _user.getUserId());
+
+		addFileEntryType(serviceContext);
+
+		Assert.assertEquals(
+			2,
+			DLFileEntryTypeFinderUtil.filterCountByKeywords(
+				_group.getCompanyId(), new long[] {_group.getGroupId()},
+				StringPool.BLANK, true)
+		);
+	}
+
+	@Test
+	public void testFilterCountByKeywordsWithBlankKeywordsNotIncludingBasicType()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _user.getUserId());
+
+		addFileEntryType(serviceContext);
+
+		Assert.assertEquals(
+			1,
+			DLFileEntryTypeFinderUtil.filterCountByKeywords(
+				_group.getCompanyId(), new long[] {_group.getGroupId()},
+				StringPool.BLANK, false)
+		);
+	}
+
+	@Test
 	public void testFilterFindByKeywords() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -197,50 +196,6 @@ public class DLFileEntryTypeFinderTest {
 				_group.getCompanyId(), new long[] {_group.getGroupId()},
 				_DL_FILE_ENTRY_TYPE_NAME, true, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
-
-		Assert.assertEquals(1, fileEntryTypes.size());
-		Assert.assertTrue(fileEntryTypes.contains(fileEntryType));
-	}
-
-	@Test
-	public void testFilterFindByKeywordsWithBlankKeywords() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId());
-
-		DLFileEntryType fileEntryType = addFileEntryType(serviceContext);
-
-		List<DLFileEntryType> fileEntryTypes =
-			DLFileEntryTypeFinderUtil.filterFindByKeywords(
-				_group.getCompanyId(), new long[]{_group.getGroupId()},
-				StringPool.BLANK, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				null);
-
-		Assert.assertEquals(2, fileEntryTypes.size());
-		Assert.assertTrue(fileEntryTypes.contains(fileEntryType));
-
-		DLFileEntryType basicFileEntryType =
-			DLFileEntryTypeLocalServiceUtil.getFileEntryType(
-				0, "BASIC-DOCUMENT");
-
-		Assert.assertTrue(fileEntryTypes.contains(basicFileEntryType));
-	}
-
-	@Test
-	public void testFilterFindByKeywordsWithBlankKeywordsNotIncludingBasicType()
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId());
-
-		DLFileEntryType fileEntryType = addFileEntryType(serviceContext);
-
-		List<DLFileEntryType> fileEntryTypes =
-			DLFileEntryTypeFinderUtil.filterFindByKeywords(
-				_group.getCompanyId(), new long[]{_group.getGroupId()},
-				StringPool.BLANK, false, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				null);
 
 		Assert.assertEquals(1, fileEntryTypes.size());
 		Assert.assertTrue(fileEntryTypes.contains(fileEntryType));
@@ -317,6 +272,50 @@ public class DLFileEntryTypeFinderTest {
 			PermissionThreadLocal.setPermissionChecker(
 				originalPermissionChecker);
 		}
+	}
+
+	@Test
+	public void testFilterFindByKeywordsWithBlankKeywords() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _user.getUserId());
+
+		DLFileEntryType fileEntryType = addFileEntryType(serviceContext);
+
+		List<DLFileEntryType> fileEntryTypes =
+			DLFileEntryTypeFinderUtil.filterFindByKeywords(
+				_group.getCompanyId(), new long[] {_group.getGroupId()},
+				StringPool.BLANK, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null);
+
+		Assert.assertEquals(2, fileEntryTypes.size());
+		Assert.assertTrue(fileEntryTypes.contains(fileEntryType));
+
+		DLFileEntryType basicFileEntryType =
+			DLFileEntryTypeLocalServiceUtil.getFileEntryType(
+				0, "BASIC-DOCUMENT");
+
+		Assert.assertTrue(fileEntryTypes.contains(basicFileEntryType));
+	}
+
+	@Test
+	public void testFilterFindByKeywordsWithBlankKeywordsNotIncludingBasicType()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _user.getUserId());
+
+		DLFileEntryType fileEntryType = addFileEntryType(serviceContext);
+
+		List<DLFileEntryType> fileEntryTypes =
+			DLFileEntryTypeFinderUtil.filterFindByKeywords(
+				_group.getCompanyId(), new long[] {_group.getGroupId()},
+				StringPool.BLANK, false, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null);
+
+		Assert.assertEquals(1, fileEntryTypes.size());
+		Assert.assertTrue(fileEntryTypes.contains(fileEntryType));
 	}
 
 	protected DLFileEntryType addFileEntryType(ServiceContext serviceContext)

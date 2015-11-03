@@ -135,7 +135,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portlet.asset.model.AssetVocabulary"
-			cssClass="selectable"
 			keyProperty="vocabularyId"
 			modelVar="vocabulary"
 		>

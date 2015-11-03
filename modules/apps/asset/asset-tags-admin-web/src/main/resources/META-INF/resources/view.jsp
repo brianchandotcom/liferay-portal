@@ -124,7 +124,6 @@ tagsSearchContainer.setResults(tags);
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portlet.asset.model.AssetTag"
-			cssClass="selectable"
 			keyProperty="tagId"
 			modelVar="tag"
 		>

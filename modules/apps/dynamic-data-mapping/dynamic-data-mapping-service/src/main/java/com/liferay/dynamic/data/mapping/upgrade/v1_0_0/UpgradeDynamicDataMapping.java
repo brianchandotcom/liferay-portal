@@ -16,7 +16,6 @@ package com.liferay.dynamic.data.mapping.upgrade.v1_0_0;
 
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializerUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializerUtil;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializerUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializerUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializerUtil;
 import com.liferay.dynamic.data.mapping.model.DDMContent;
@@ -46,6 +45,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -76,6 +76,7 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import java.util.ArrayList;
@@ -324,11 +325,12 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		}
 	}
 
-	protected DDMFormValues getDDMFormValues(DDMForm ddmForm, String xml)
+	protected DDMFormValues getDDMFormValues(
+			long companyId, DDMForm ddmForm, String xml)
 		throws Exception {
 
 		DDMFormValuesXSDDeserializer ddmFormValuesXSDDeserializer =
-			new DDMFormValuesXSDDeserializer();
+			new DDMFormValuesXSDDeserializer(companyId);
 
 		return ddmFormValuesXSDDeserializer.deserialize(ddmForm, xml);
 	}
@@ -395,16 +397,18 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"select data_ from DDMContent where contentId = ?");
+				"select companyId, data_ from DDMContent where contentId = ?");
 
 			ps.setLong(1, contentId);
 
 			rs = ps.executeQuery();
 
 			if (rs.next()) {
+				long companyId = rs.getLong("companyId");
 				String xml = rs.getString("data_");
 
-				DDMFormValues ddmFormValues = getDDMFormValues(ddmForm, xml);
+				DDMFormValues ddmFormValues = getDDMFormValues(
+					companyId, ddmForm, xml);
 
 				updateContent(contentId, toJSON(ddmFormValues));
 			}
@@ -507,7 +511,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				DDMForm ddmForm = getDDMForm(ddmStructureId);
 
-				DDMFormValues ddmFormValues = getDDMFormValues(ddmForm, data_);
+				DDMFormValues ddmFormValues = getDDMFormValues(
+					companyId, ddmForm, data_);
 
 				transformFileUploadDDMFormFields(
 					groupId, companyId, userId, userName, createDate, entryId,
@@ -560,7 +565,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				DDMForm ddmForm = getDDMForm(ddmStructureId);
 
-				DDMFormValues ddmFormValues = getDDMFormValues(ddmForm, data_);
+				DDMFormValues ddmFormValues = getDDMFormValues(
+					companyId, ddmForm, data_);
 
 				transformFileUploadDDMFormFields(
 					groupId, companyId, userId, userName, createDate, entryId,
@@ -935,6 +941,10 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 	private class DDMFormValuesXSDDeserializer {
 
+		public DDMFormValuesXSDDeserializer(long companyId) {
+			_companyId = companyId;
+		}
+
 		public DDMFormValues deserialize(DDMForm ddmForm, String xml)
 			throws PortalException {
 
@@ -1169,6 +1179,25 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		}
 
 		protected Locale getDefaultLocale(Element dynamicElementElement) {
+			if (dynamicElementElement == null) {
+				String locale = null;
+
+				try {
+					locale = UpgradeProcessUtil.getDefaultLanguageId(
+						_companyId);
+				}
+				catch (SQLException sqle) {
+					_log.error(
+						"Unexpected error while retrieving default locale " +
+							"for company " + _companyId,
+						sqle);
+
+					throw new RuntimeException(sqle);
+				}
+
+				return LocaleUtil.fromLanguageId(locale);
+			}
+
 			String defaultLanguageId = dynamicElementElement.attributeValue(
 				"default-language-id");
 
@@ -1319,7 +1348,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			Element dynamicElement = getDynamicElementElementByName(
 				rootElement, fieldName);
 
-			if (Validator.isNotNull(ddmFormField.getDataType())) {
+			if (Validator.isNotNull(ddmFormField.getDataType()) &&
+				Validator.isNotNull(dynamicElement)) {
+
 				if (ddmFormField.isLocalizable()) {
 					setDDMFormFieldValueLocalizedValue(
 						ddmFormFieldValue, dynamicElement,
@@ -1394,6 +1425,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				}
 			}
 		}
+
+		private long _companyId;
 
 	}
 

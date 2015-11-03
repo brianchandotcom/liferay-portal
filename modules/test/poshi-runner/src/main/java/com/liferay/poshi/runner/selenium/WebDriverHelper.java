@@ -575,11 +575,7 @@ public class WebDriverHelper {
 			targetURL = url;
 		}
 
-		for (int second = 0;; second++) {
-			if (second >= PropsValues.TIMEOUT_IMPLICIT_WAIT) {
-				break;
-			}
-
+		for (int i = 0; i < 2; i++) {
 			try {
 				webDriver.get(targetURL);
 

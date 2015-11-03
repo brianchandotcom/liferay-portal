@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.asset.publisher.web.util;
+package com.liferay.asset.entry.query.processor.custom.user.attributes;
 
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
+import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;

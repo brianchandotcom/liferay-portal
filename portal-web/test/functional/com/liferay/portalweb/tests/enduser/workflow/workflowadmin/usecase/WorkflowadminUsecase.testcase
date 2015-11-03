@@ -698,7 +698,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewWorkflowSubmissionsFromDifferentUsers">
+	<command name="ViewWorkflowSubmissionsFromDifferentUsers" priority="4">
 		<description message="This is a use case for LRQA-13519." />
 
 		<execute macro="Page#gotoCP">

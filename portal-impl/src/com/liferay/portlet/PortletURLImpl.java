@@ -388,6 +388,12 @@ public class PortletURLImpl
 		return _secure;
 	}
 
+	public void removeParameter(String name) {
+		if (_params.containsKey(name)) {
+			_params.remove(name);
+		}
+	}
+
 	@Override
 	public void removePublicRenderParameter(String name) {
 		if (name == null) {
@@ -521,8 +527,14 @@ public class PortletURLImpl
 
 	@Override
 	public void setParameter(String name, String value, boolean append) {
-		if ((name == null) || (value == null)) {
+		if (name == null) {
 			throw new IllegalArgumentException();
+		}
+
+		if (value == null) {
+			removeParameter(name);
+
+			return;
 		}
 
 		setParameter(name, new String[] {value}, append);

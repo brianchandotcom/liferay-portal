@@ -175,10 +175,10 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static JSONObject toJSONObject(String url) throws Exception {
-		return new JSONObject(toString(url));
+		return new JSONObject(downloadToString(url));
 	}
 
-	public static String toString(String url) throws IOException {
+	public static String downloadToString(String url) throws IOException {
 		url = fixURL(url);
 
 		System.out.println("Downloading " + url);

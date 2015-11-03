@@ -23,4 +23,6 @@ public class JournalWebKeys {
 
 	public static final String JOURNAL_CONTENT = "JOURNAL_CONTENT";
 
+	public static final String JOURNAL_CONVERTER = "JOURNAL_CONVERTER";
+
 }

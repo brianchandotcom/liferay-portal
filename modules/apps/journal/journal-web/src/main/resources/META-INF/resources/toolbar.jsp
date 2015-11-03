@@ -18,11 +18,14 @@
 
 <%
 String keywords = ParamUtil.getString(request, "keywords");
+
+String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 %>
 
 <liferay-frontend:management-bar
 	checkBoxContainerId="entriesContainer"
 	includeCheckBox="<%= !user.isDefaultUser() && journalDisplayContext.isShowEditActions() %>"
+	searchContainerId="<%= searchContainerId %>"
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-button cssClass="infoPanelToggler" href="javascript:;" iconCssClass="icon-info-sign" />

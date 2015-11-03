@@ -120,7 +120,7 @@ public class JournalContentPortlet extends MVCPortlet {
 				if (Validator.isNull(ddmTemplateKey)) {
 					ddmTemplateKey = article.getDDMTemplateKey();
 				}
-				
+
 				articleDisplay = _journalContent.getDisplay(
 					articleGroupId, articleId, version, ddmTemplateKey,
 					viewMode, languageId, page,
@@ -173,7 +173,7 @@ public class JournalContentPortlet extends MVCPortlet {
 			resourceRequest.getResourceID());
 
 		if (resourceID.equals("exportArticle")) {
-			ExportArticleUtil.sendFile(resourceRequest, resourceResponse);
+			_exportArticleUtil.sendFile(resourceRequest, resourceResponse);
 		}
 		else {
 			resourceRequest.setAttribute(
@@ -181,6 +181,11 @@ public class JournalContentPortlet extends MVCPortlet {
 
 			super.serveResource(resourceRequest, resourceResponse);
 		}
+	}
+
+	@Reference
+	protected void setExportArticleUtil(ExportArticleUtil exportArticleUtil) {
+		_exportArticleUtil = exportArticleUtil;
 	}
 
 	@Reference
@@ -195,6 +200,10 @@ public class JournalContentPortlet extends MVCPortlet {
 		_journalArticleLocalService = journalArticleLocalService;
 	}
 
+	protected void unsetExportArticleUtil(ExportArticleUtil exportArticleUtil) {
+		_exportArticleUtil = exportArticleUtil;
+	}
+
 	protected void unsetJournalContent(JournalContent journalContent) {
 		_journalContent = null;
 	}
@@ -205,6 +214,7 @@ public class JournalContentPortlet extends MVCPortlet {
 		_journalArticleLocalService = null;
 	}
 
+	private ExportArticleUtil _exportArticleUtil;
 	private JournalArticleLocalService _journalArticleLocalService;
 	private JournalContent _journalContent;
 

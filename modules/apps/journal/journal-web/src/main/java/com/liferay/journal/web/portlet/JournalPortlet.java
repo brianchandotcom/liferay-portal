@@ -467,7 +467,7 @@ public class JournalPortlet extends MVCPortlet {
 		}
 		else if (resourceID.equals("rss")) {
 			try {
-				byte[] xml = JournalRSSUtil.getRSS(
+				byte[] xml = _journalRSSUtil.getRSS(
 					resourceRequest, resourceResponse);
 
 				ServletResponseUtil.sendFile(
@@ -1305,6 +1305,11 @@ public class JournalPortlet extends MVCPortlet {
 	}
 
 	@Reference
+	protected void setJournalRSSUtil(JournalRSSUtil journalRSSUtil) {
+		_journalRSSUtil = journalRSSUtil;
+	}
+
+	@Reference
 	protected void setLayoutLocalService(
 		LayoutLocalService layoutLocalService) {
 
@@ -1354,6 +1359,10 @@ public class JournalPortlet extends MVCPortlet {
 		_journalFolderService = null;
 	}
 
+	protected void unsetJournalRSSUtil(JournalRSSUtil journalRSSUtil) {
+		_journalRSSUtil = null;
+	}
+
 	protected void unsetLayoutLocalService(
 		LayoutLocalService layoutLocalService) {
 
@@ -1395,6 +1404,7 @@ public class JournalPortlet extends MVCPortlet {
 	private JournalConverter _journalConverter;
 	private JournalFeedService _journalFeedService;
 	private JournalFolderService _journalFolderService;
+	private JournalRSSUtil _journalRSSUtil;
 	private LayoutLocalService _layoutLocalService;
 	private TrashEntryService _trashEntryService;
 

@@ -187,7 +187,7 @@ public class DDMPortlet extends MVCPortlet {
 	protected void setDDMStructureLocalService(
 		DDMStructureLocalService ddmStructureLocalService) {
 
-		_ddmStructureLocalService = ddmStructureLocalService;
+		this.ddmStructureLocalService = ddmStructureLocalService;
 	}
 
 	protected void setDDMStructureRequestAttribute(RenderRequest renderRequest)
@@ -203,7 +203,7 @@ public class DDMPortlet extends MVCPortlet {
 				DDMStructure.class);
 
 			if ((structureClassNameId == classNameId) && (classPK > 0)) {
-				structure = _ddmStructureLocalService.getStructure(classPK);
+				structure = ddmStructureLocalService.getStructure(classPK);
 			}
 
 			renderRequest.setAttribute(
@@ -215,7 +215,7 @@ public class DDMPortlet extends MVCPortlet {
 	protected void setDDMTemplateLocalService(
 		DDMTemplateLocalService ddmTemplateLocalService) {
 
-		_ddmTemplateLocalService = ddmTemplateLocalService;
+		this.ddmTemplateLocalService = ddmTemplateLocalService;
 	}
 
 	protected void setDDMTemplateRequestAttribute(RenderRequest renderRequest)
@@ -224,7 +224,7 @@ public class DDMPortlet extends MVCPortlet {
 		long templateId = ParamUtil.getLong(renderRequest, "templateId");
 
 		if (templateId > 0) {
-			DDMTemplate template = _ddmTemplateLocalService.getDDMTemplate(
+			DDMTemplate template = ddmTemplateLocalService.getDDMTemplate(
 				templateId);
 
 			renderRequest.setAttribute(
@@ -232,9 +232,9 @@ public class DDMPortlet extends MVCPortlet {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(DDMPortlet.class);
+	protected DDMStructureLocalService ddmStructureLocalService;
+	protected DDMTemplateLocalService ddmTemplateLocalService;
 
-	private DDMStructureLocalService _ddmStructureLocalService;
-	private DDMTemplateLocalService _ddmTemplateLocalService;
+	private static final Log _log = LogFactoryUtil.getLog(DDMPortlet.class);
 
 }

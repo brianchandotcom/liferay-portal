@@ -9,7 +9,7 @@ AUI.add(
 					},
 
 					evaluationURL: {
-						value: '/o/ddm-form-evaluator/'
+						value: '/o/dynamic-data-mapping-form-evaluator/'
 					},
 
 					form: {

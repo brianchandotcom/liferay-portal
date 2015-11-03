@@ -1,5 +1,5 @@
 ;(function() {
-	var PATH_DDM_WEB = Liferay.ThemeDisplay.getPathContext() + '/o/ddm-web';
+	var PATH_DDM_WEB = Liferay.ThemeDisplay.getPathContext() + '/o/dynamic-data-mapping-web';
 
 	AUI().applyConfig(
 		{

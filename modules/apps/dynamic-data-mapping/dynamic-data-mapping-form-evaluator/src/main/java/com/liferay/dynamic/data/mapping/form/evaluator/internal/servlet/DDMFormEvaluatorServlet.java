@@ -46,9 +46,9 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"osgi.http.whiteboard.context.path=/ddm-form-evaluator",
+		"osgi.http.whiteboard.context.path=/dynamic-data-mapping-form-evaluator",
 		"osgi.http.whiteboard.servlet.name=Dynamic Data Mapping Form Evaluator Servlet",
-		"osgi.http.whiteboard.servlet.pattern=/ddm-form-evaluator/*"
+		"osgi.http.whiteboard.servlet.pattern=/dynamic-data-mapping-form-evaluator/*"
 	},
 	service = Servlet.class
 )

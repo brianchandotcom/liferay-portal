@@ -1,5 +1,5 @@
 ;(function() {
-	var PATH_DDM_TYPE_RADIO = Liferay.ThemeDisplay.getPathContext() + '/o/ddm-type-radio';
+	var PATH_DDM_TYPE_RADIO = Liferay.ThemeDisplay.getPathContext() + '/o/dynamic-data-mapping-type-radio';
 
 	AUI().applyConfig(
 		{

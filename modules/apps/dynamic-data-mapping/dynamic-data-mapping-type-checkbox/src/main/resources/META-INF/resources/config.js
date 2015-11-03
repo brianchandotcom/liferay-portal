@@ -1,5 +1,5 @@
 ;(function() {
-	var PATH_DDM_TYPE_CHECKBOX = Liferay.ThemeDisplay.getPathContext() + '/o/ddm-type-checkbox';
+	var PATH_DDM_TYPE_CHECKBOX = Liferay.ThemeDisplay.getPathContext() + '/o/dynamic-data-mapping-type-checkbox';
 
 	AUI().applyConfig(
 		{

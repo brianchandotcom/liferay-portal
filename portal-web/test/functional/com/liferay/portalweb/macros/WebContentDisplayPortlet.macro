@@ -56,6 +56,8 @@
 			<then>
 				<execute function="Click" locator1="WCDConfiguration#USER_TOOLS_SELECT_BUTTON" />
 
+				<execute function="SelectFrameTop" />
+
 				<for list="${userToolNameList}" param="userToolName">
 					<var name="key_userToolName" value="${userToolName}" />
 
@@ -74,6 +76,8 @@
 		<if>
 			<isset var="metadataNameList" />
 			<then>
+				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
 				<execute function="Click" locator1="WCDConfiguration#CONTENT_METADATA_SELECT" />
 
 				<for list="${metadataNameList}" param="metadataName">

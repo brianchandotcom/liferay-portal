@@ -168,16 +168,20 @@ public class JenkinsResultsParserUtil {
 	public static JSONObject toJSONObject(String url) throws Exception {
 		return toJSONObject(url, true);
 	}
-	
-	public static JSONObject toJSONObject(String url, boolean cacheFlag) throws Exception {
-		return new JSONObject(toString(url, cacheFlag));		
+
+	public static JSONObject toJSONObject(String url, boolean cacheFlag)
+		throws Exception {
+
+		return new JSONObject(toString(url, cacheFlag));
 	}
-	
+
 	public static String toString(String url) throws IOException {
 		return toString(url, true);
 	}
 
-	public static String toString(String url, boolean cacheFlag) throws IOException {
+	public static String toString(String url, boolean cacheFlag)
+		throws IOException {
+
 		url = fixURL(url);
 
 		String key = url.replace("//", "/");
@@ -187,7 +191,7 @@ public class JenkinsResultsParserUtil {
 
 			return _toStringCache.get(key);
 		}
-		
+
 		System.out.println("Downloading " + url);
 
 		StringBuilder sb = new StringBuilder();

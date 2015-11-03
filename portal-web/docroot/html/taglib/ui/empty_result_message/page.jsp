@@ -21,11 +21,9 @@ String message = GetterUtil.getString((String)request.getAttribute("liferay-ui:e
 %>
 
 <c:if test="<%= Validator.isNotNull(message) %>">
-	<div class="card-horizontal main-content-card">
+	<div class="card-horizontal main-content-card taglib-empty-result-message">
 		<div class="card-row card-row-padded">
-			<div class="text-center">
-				<img src="<%= themeDisplay.getPathThemeImages() + "/emoticons/happy_wink.gif" %>" width="200px" />
-			</div>
+			<div class="taglib-empty-result-message-header"></div>
 
 			<div class="card-footer">
 				<div class="card-dm-details">

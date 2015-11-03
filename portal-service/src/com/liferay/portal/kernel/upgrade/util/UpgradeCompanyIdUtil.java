@@ -99,6 +99,79 @@ public class UpgradeCompanyIdUtil {
 			DataAccess.cleanUp(con, ps2);
 			DataAccess.cleanUp(con, ps, rs);
 		}
+
+		checkNotUpdated(tableName, columnNames);
+	}
+
+	protected static void checkNotUpdated(
+			String tableName, String... columnNames)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			StringBuilder sbSelect = new StringBuilder();
+
+			sbSelect.append("select ");
+
+			for (String columnName : columnNames) {
+				sbSelect.append(columnName);
+				sbSelect.append(", ");
+			}
+
+			sbSelect.setLength(sbSelect.length() - 2);
+
+			sbSelect.append(" from ");
+			sbSelect.append(tableName);
+			sbSelect.append(" where companyId IS NULL");
+
+			ps = con.prepareStatement(sbSelect.toString());
+
+			rs = ps.executeQuery();
+
+			if (!rs.next()) {
+				return;
+			}
+
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("Has not be posible to update the companyId of ");
+			sb.append("the following rows in the table ");
+			sb.append(tableName);
+
+			while (rs.next()) {
+				sb.append(" {");
+
+				for (String columnName : columnNames) {
+					long columnValue = rs.getLong(columnName);
+
+					sb.append(columnName);
+					sb.append(": ");
+					sb.append(columnValue);
+					sb.append(", ");
+				}
+
+				sb.setLength(sb.length() - 2);
+
+				sb.append("}");
+			}
+
+			if (_log.isInfoEnabled()) {
+				_log.info(sb);
+			}
+		}
+		catch (SQLException sqle) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(sqle.getMessage(), sqle);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

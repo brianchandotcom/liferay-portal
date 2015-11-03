@@ -123,7 +123,7 @@ public abstract class BaseJenkinsResultsParserTestCase {
 
 		write(
 			new File(dir, urlSuffix),
-			JenkinsResultsParserUtil.toString(
+			JenkinsResultsParserUtil.downloadToString(
 				JenkinsResultsParserUtil.getLocalURL(urlString)));
 	}
 

@@ -178,7 +178,7 @@ public class JenkinsResultsParserUtilTest
 
 	protected void testToString(File file) throws Exception {
 		String expectedJSONString = read(file);
-		String actualJSONString = JenkinsResultsParserUtil.toString(
+		String actualJSONString = JenkinsResultsParserUtil.downloadToString(
 			JenkinsResultsParserUtil.getLocalURL(toURLString(file)));
 
 		Assert.assertEquals(

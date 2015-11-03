@@ -57,6 +57,10 @@ AUI.add(
 						value: 'li.selectable,tr.selectable'
 					},
 
+					searchContainerId: {
+						validator: Lang.isString
+					},
+
 					secondaryBar: {
 						setter: 'one'
 					},
@@ -86,47 +90,42 @@ AUI.add(
 						(new A.EventHandle(instance._eventHandles)).detach();
 					},
 
+					_addSearchContainerEvents: function() {
+						var instance = this;
+
+						instance._eventHandles.push(
+							instance._searchContainer.on(
+								'rowToggled',
+								instance._onSearchContainerToggle,
+								instance
+							)
+						);
+					},
+
 					_bindUI: function() {
 						var instance = this;
 
 						instance._eventHandles = [
 							instance.get('rootNode').delegate(STR_CLICK, instance._toggleSelectAll, instance.get(STR_SELECT_ALL_CHECKBOXES_SELECTOR), instance),
-							instance.get(STR_CHECKBOX_CONTAINER).delegate(STR_CLICK, instance._toggleSelect, instance.get(STR_CHECKBOXES_SELECTOR), instance),
-							instance.get(STR_CHECKBOX_CONTAINER).delegate(STR_CLICK, instance._toggleSelect, instance.get('rowCheckerSelector'), instance),
 							Liferay.on('surfaceStartNavigate', instance._onSurfaceStartNavigate, instance)
 						];
-					},
 
-					_getAllCheckedCheckBoxes: function() {
-						var instance = this;
-
-						return instance._getAllEnabledCheckBoxes().filter(STR_CHECKED_SELECTOR);
-					},
-
-					_getAllEnabledCheckBoxes: function() {
-						var instance = this;
-
-						var checkBoxes = instance._checkBoxes;
-
-						if (!checkBoxes) {
-							checkBoxes = instance.get(STR_CHECKBOX_CONTAINER).all(instance.get(STR_CHECKBOXES_SELECTOR) + ':enabled');
-
-							instance._checkBoxes = checkBoxes;
+						if (!instance._searchContainer) {
+							instance._eventHandles.push(
+								Liferay.on(
+									'search-container:registered',
+									function(event) {
+										if (event.searchContainer.get('id') === instance.get('searchContainerId')) {
+											instance._searchContainer = event.searchContainer;
+											instance._addSearchContainerEvents();
+										}
+									}
+								)
+							);
 						}
-
-						return checkBoxes;
-					},
-
-					_getPageCheckBoxes: function() {
-						var instance = this;
-
-						return instance._getAllEnabledCheckBoxes().filter(STR_VISIBLE_SELECTOR);
-					},
-
-					_getPageCheckedCheckBoxes: function() {
-						var instance = this;
-
-						return instance._getAllEnabledCheckBoxes().filter(STR_CHECKED_SELECTOR + STR_VISIBLE_SELECTOR);
+						else {
+							instance._addSearchContainerEvents();
+						}
 					},
 
 					_getSelectAllCheckBox: function() {
@@ -141,6 +140,24 @@ AUI.add(
 						}
 
 						return selectAllCheckBox;
+					},
+
+					_onSearchContainerToggle: function(event) {
+						var instance = this;
+
+						var elements = event.elements;
+
+						var numberAllSelectedElements = elements.allSelectedElements.size();
+
+						var numberCurrentPageSelectedElements = elements.currentPageSelectedElements.size();
+
+						var numberCurrentPageElements = elements.currentPageElements.size();
+
+						instance._updateItemsCount(numberAllSelectedElements);
+
+						instance._toggleSelectAllCheckBox(numberCurrentPageSelectedElements > 0, numberCurrentPageSelectedElements < numberCurrentPageElements);
+
+						instance._toggleSecondaryBar(numberAllSelectedElements > 0);
 					},
 
 					_onSurfaceStartNavigate: function(event) {
@@ -167,22 +184,6 @@ AUI.add(
 						instance.get('secondaryBar').toggleClass(STR_ON, show);
 					},
 
-					_toggleSelect: function() {
-						var instance = this;
-
-						var totalPageCheckboxes = instance._getPageCheckBoxes().size();
-
-						var totalSelectedItems = instance._getAllCheckedCheckBoxes().size();
-
-						var totalPageOn = instance._getPageCheckedCheckBoxes().size();
-
-						instance._toggleSecondaryBar(totalSelectedItems > 0);
-
-						instance._toggleSelectAllCheckBox(totalPageOn > 0, totalPageCheckboxes !== totalPageOn);
-
-						instance._updateItemsCount(totalSelectedItems);
-					},
-
 					_toggleSelectAll: function(event) {
 						var instance = this;
 
@@ -192,11 +193,13 @@ AUI.add(
 
 						var checked = event.currentTarget.attr(ATTR_CHECKED);
 
-						instance._getPageCheckBoxes().attr(ATTR_CHECKED, checked);
+						var totalSelected = instance._searchContainer.select.toggleAllRows(checked).size();
 
-						instance.get(STR_CHECKBOX_CONTAINER).all(instance.get('rowSelector')).toggleClass(instance.get('rowClassNameActive'), checked);
+						instance._updateItemsCount(totalSelected);
 
-						instance._toggleSelect();
+						instance._toggleSelectAllCheckBox(checked, false);
+
+						instance._toggleSecondaryBar(totalSelected > 0);
 					},
 
 					_toggleSelectAllCheckBox: function(checked, partial) {
@@ -224,6 +227,18 @@ AUI.add(
 				},
 
 				restoreTask: function(state, params, node) {
+					var totalSelectedItems = state.data.elements.length;
+
+					var itemsCountContainer = node.all('.' + params.itemsCountContainerSelector);
+
+					itemsCountContainer.html(totalSelectedItems);
+
+					var secondaryBar = node.one(STR_HASH + params.secondaryBarId);
+
+					if (totalSelectedItems > 0) {
+						secondaryBar.addClass(STR_ON);
+					}
+
 					var checkBoxContainer = node.one(STR_HASH + params.checkBoxContainerId);
 
 					var selectedElements = A.Array.partition(
@@ -239,22 +254,12 @@ AUI.add(
 
 					var checkBoxes = checkBoxContainer.all(params.checkBoxesSelector);
 
-					var selectAllCheckBoxesCheckBox = node.all(params.selectAllCheckBoxesSelector);
+					var selectAllCheckBoxesCheckBox = secondaryBar.one(params.selectAllCheckBoxesSelector);
 
 					selectAllCheckBoxesCheckBox.attr(ATTR_CHECKED, onscreenSelectedItems);
 
 					if (onscreenSelectedItems !== checkBoxes.size()) {
 						selectAllCheckBoxesCheckBox.addClass(STR_SELECTED_PARTIAL);
-					}
-
-					var totalSelectedItems = onscreenSelectedItems + selectedElements.rejects.length;
-
-					if (totalSelectedItems) {
-						var itemsCountContainer = node.all('.' + params.itemsCountContainerSelector);
-						var secondaryBar = node.one(STR_HASH + params.secondaryBarId);
-
-						itemsCountContainer.html(totalSelectedItems);
-						secondaryBar.addClass(STR_ON);
 					}
 				},
 

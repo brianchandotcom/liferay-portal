@@ -16,13 +16,21 @@ package com.liferay.portal.ldap.configuration;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.ldap.constants.LDAPConstants;
+
+import java.io.IOException;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
  * @author Michael C. Han
@@ -32,13 +40,51 @@ public abstract class CompanyScopedConfigurationProvider
 
 	@Override
 	public T getConfiguration(long companyId) {
-		T t = _configurations.get(companyId);
+		return getConfiguration(companyId, true);
+	}
 
-		if (t == null) {
-			t = _configurations.get(0L);
+	@Override
+	public T getConfiguration(long companyId, boolean useDefault) {
+		Dictionary<String, Object> properties = getConfigurationProperties(
+			companyId, useDefault);
+
+		T configurable = Configurable.createConfigurable(
+			getMetatype(), properties);
+
+		return configurable;
+	}
+
+	@Override
+	public T getConfiguration(long companyId, long index) {
+		return getConfiguration(companyId, true);
+	}
+
+	@Override
+	public T getConfiguration(long companyId, long index, boolean useDefault) {
+		return getConfiguration(companyId, useDefault);
+	}
+
+	@Override
+	public Dictionary<String, Object> getConfigurationProperties(
+		long companyId) {
+
+		return getConfigurationProperties(companyId, true);
+	}
+
+	@Override
+	public Dictionary<String, Object> getConfigurationProperties(
+		long companyId, boolean useDefault) {
+
+		Configuration configuration = _configurations.get(companyId);
+
+		if (useDefault && (configuration == null)) {
+			configuration = _configurations.get(0L);
+		}
+		else if (!useDefault && (configuration == null)) {
+			return new HashMapDictionary<>();
 		}
 
-		if (t == null) {
+		if (configuration == null) {
 			Class<?> clazz = getMetatype();
 
 			throw new IllegalArgumentException(
@@ -46,21 +92,83 @@ public abstract class CompanyScopedConfigurationProvider
 					companyId);
 		}
 
-		return t;
+		Dictionary<String, Object> properties = configuration.getProperties();
+
+		return properties;
 	}
 
 	@Override
-	public T getConfiguration(long companyId, long index) {
-		return getConfiguration(companyId);
+	public Dictionary<String, Object> getConfigurationProperties(
+		long companyId, long index) {
+
+		return getConfigurationProperties(companyId, index, true);
+	}
+
+	@Override
+	public Dictionary<String, Object> getConfigurationProperties(
+		long companyId, long index, boolean useDefault) {
+
+		return getConfigurationProperties(companyId, useDefault);
 	}
 
 	@Override
 	public List<T> getConfigurations(long companyId) {
-		List<T> configurations = new ArrayList<>();
+		return getConfigurations(companyId, true);
+	}
 
-		T t = getConfiguration(companyId);
+	@Override
+	public List<T> getConfigurations(long companyId, boolean useDefault) {
+		List<Dictionary<String, Object>> configurationsProperties =
+			getConfigurationsProperties(companyId, useDefault);
 
-		configurations.add(t);
+		List<T> configurables = new ArrayList<>(
+			configurationsProperties.size());
+
+		for (Dictionary<String, Object> configurationProperties :
+				configurationsProperties) {
+
+			T configurable = Configurable.createConfigurable(
+				getMetatype(), configurationProperties);
+
+			configurables.add(configurable);
+		}
+
+		return configurables;
+	}
+
+	@Override
+	public List<Dictionary<String, Object>> getConfigurationsProperties(
+		long companyId) {
+
+		return getConfigurationsProperties(companyId, true);
+	}
+
+	@Override
+	public List<Dictionary<String, Object>> getConfigurationsProperties(
+		long companyId, boolean useDefault) {
+
+		Configuration configuration = _configurations.get(companyId);
+
+		if (!useDefault && (configuration == null)) {
+			return Collections.emptyList();
+		}
+		else if (configuration == null) {
+			configuration = _configurations.get(0L);
+		}
+
+		if (configuration == null) {
+			Class<?> clazz = getMetatype();
+
+			throw new IllegalArgumentException(
+				"No instance of " + clazz.getName() + " for company " +
+					companyId);
+		}
+
+		List<Dictionary<String, Object>> configurations = new ArrayList<>();
+
+		Dictionary<String, Object> properties = configuration.getProperties();
+
+		configurations.add(properties);
 
 		return configurations;
 	}
@@ -76,7 +184,7 @@ public abstract class CompanyScopedConfigurationProvider
 
 		long companyId = configurable.companyId();
 
-		_configurations.put(companyId, configurable);
+		_configurations.put(companyId, configuration);
 	}
 
 	@Override
@@ -93,6 +201,47 @@ public abstract class CompanyScopedConfigurationProvider
 		_configurations.remove(companyId);
 	}
 
-	private final Map<Long, T> _configurations = new HashMap<>();
+	@Override
+	public void updateProperties(
+		long companyId, Dictionary<String, Object> properties) {
+
+		Configuration configuration = _configurations.get(companyId);
+
+		Configuration defaultConfiguration = _configurations.get(0L);
+
+		if (defaultConfiguration == null) {
+			throw new IllegalArgumentException(
+				"No default configuration for " + getMetatype().getName());
+		}
+
+		try {
+			if (configuration == null) {
+				configuration = configurationAdmin.createFactoryConfiguration(
+					defaultConfiguration.getFactoryPid(),
+					defaultConfiguration.getBundleLocation());
+			}
+
+			properties.put(LDAPConstants.COMPANY_ID, companyId);
+
+			configuration.update(properties);
+		}
+		catch (IOException ioe) {
+			throw new SystemException("Unable to update configuration", ioe);
+		}
+	}
+
+	@Override
+	public void updateProperties(
+		long companyId, long index, Dictionary<String, Object> properties) {
+
+		updateProperties(companyId, properties);
+	}
+
+	protected abstract void setConfigurationAdmin(
+		ConfigurationAdmin configurationAdmin);
+
+	protected ConfigurationAdmin configurationAdmin;
+
+	private final Map<Long, Configuration> _configurations = new HashMap<>();
 
 }

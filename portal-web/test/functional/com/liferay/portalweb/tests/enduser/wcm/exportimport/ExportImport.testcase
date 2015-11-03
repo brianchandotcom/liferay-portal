@@ -883,6 +883,8 @@
 	</command>
 
 	<command name="ImportCorruptedFile" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Bookmarks" />
 		</execute>

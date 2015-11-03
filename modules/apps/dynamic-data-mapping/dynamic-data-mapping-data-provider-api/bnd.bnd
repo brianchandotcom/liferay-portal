@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Dynamic Data Mapping Data Provider API
+Bundle-SymbolicName: com.liferay.dynamic.data.mapping.data.provider.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.dynamic.data.mapping.data.provider
+Include-Resource: classes

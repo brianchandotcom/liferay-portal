@@ -73,16 +73,6 @@ String displayStyle = ParamUtil.getString(request, "displayStyle");
 <c:if test="<%= !group.isLayoutPrototype() && (selLayout != null) %>">
 	<aui:nav-bar>
 		<aui:nav cssClass="navbar-nav" id="layoutsNav">
-			<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.ADD_LAYOUT) %>">
-				<portlet:renderURL var="addPagesURL">
-					<portlet:param name="mvcPath" value="/add_layout.jsp" />
-					<portlet:param name="groupId" value="<%= String.valueOf(selGroup.getGroupId()) %>" />
-					<portlet:param name="selPlid" value="<%= String.valueOf(selLayout.getPlid()) %>" />
-					<portlet:param name="privateLayout" value="<%= String.valueOf(selLayout.isPrivateLayout()) %>" />
-				</portlet:renderURL>
-
-				<aui:nav-item href="<%= addPagesURL %>" iconCssClass="icon-plus" label="add-child-page" />
-			</c:if>
 			<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.PERMISSIONS) %>">
 				<liferay-security:permissionsURL
 					modelResource="<%= Layout.class.getName() %>"

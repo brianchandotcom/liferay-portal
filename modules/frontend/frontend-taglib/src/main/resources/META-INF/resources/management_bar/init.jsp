@@ -22,4 +22,5 @@ String buttons = (String)request.getAttribute("liferay-frontend:management-bar:b
 String checkBoxContainerId = (String)request.getAttribute("liferay-frontend:management-bar:checkBoxContainerId");
 String filters = (String)request.getAttribute("liferay-frontend:management-bar:filters");
 boolean includeCheckBox = GetterUtil.getBoolean(request.getAttribute("liferay-frontend:management-bar:includeCheckBox"));
+String searchContainerId = (String)request.getAttribute("liferay-frontend:management-bar:searchContainerId");
 %>

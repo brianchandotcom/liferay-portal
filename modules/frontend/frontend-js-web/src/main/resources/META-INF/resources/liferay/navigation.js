@@ -130,10 +130,6 @@ AUI.add(
 											cssClassBuffer.push('lfr-nav-sortable');
 										}
 
-										if (layoutConfig.updateable) {
-											cssClassBuffer.push('lfr-nav-updateable');
-										}
-
 										if (cssClassBuffer.length) {
 											item.addClass(cssClassBuffer.join(' '));
 
@@ -343,7 +339,7 @@ AUI.add(
 							}
 						}
 						else {
-							listItem.addClass('lfr-nav-deletable lfr-nav-sortable lfr-nav-updateable sortable-item');
+							listItem.addClass('lfr-nav-deletable lfr-nav-sortable sortable-item');
 
 							instance._createDeleteButton(listItem);
 

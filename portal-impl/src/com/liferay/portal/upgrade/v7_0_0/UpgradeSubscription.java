@@ -49,91 +49,79 @@ public class UpgradeSubscription extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		updateSubscriptionClassNames(
-			Folder.class.getName(), DLFolder.class.getName());
-		updateSubscriptionClassNames(
-			"com.liferay.portlet.journal.model.JournalArticle",
-			"com.liferay.portlet.journal.model.JournalFolder");
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
+			updateSubscriptionClassNames(
+				con, Folder.class.getName(), DLFolder.class.getName());
+			updateSubscriptionClassNames(
+				con, "com.liferay.portlet.journal.model.JournalArticle",
+				"com.liferay.portlet.journal.model.JournalFolder");
 
-		updateSubscriptionGroupIds();
+			updateSubscriptionGroupIds(con);
+		}
 	}
 
-	protected long getGroupId(long classNameId, long classPK) throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+	protected long getGroupId(Connection con, long classNameId, long classPK)
+		throws Exception {
 
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
+		String className = PortalUtil.getClassName(classNameId);
 
-			String className = PortalUtil.getClassName(classNameId);
+		String[] groupIdSQLParts = StringUtil.split(
+			_getGroupIdSQLPartsMap.get(className));
 
-			String[] groupIdSQLParts = StringUtil.split(
-				_getGroupIdSQLPartsMap.get(className));
-
-			if (ArrayUtil.isEmpty(groupIdSQLParts)) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to determine the group ID for the class name " +
-							className);
-				}
-
-				return 0;
+		if (ArrayUtil.isEmpty(groupIdSQLParts)) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to determine the group ID for the class name " +
+						className);
 			}
 
-			String sql =
-				"select " + groupIdSQLParts[1] + " from " + groupIdSQLParts[0] +
-					" where " + groupIdSQLParts[2] + " = ?";
+			return 0;
+		}
 
-			ps = con.prepareStatement(sql);
+		StringBundler sb = new StringBundler(8);
 
-			ps.setLong(1, classPK);
+		sb.append("select ");
+		sb.append(groupIdSQLParts[1]);
+		sb.append(" from ");
+		sb.append(groupIdSQLParts[0]);
+		sb.append(" where ");
+		sb.append(groupIdSQLParts[2]);
+		sb.append(" = ");
+		sb.append(classPK);
 
-			rs = ps.executeQuery();
+		try (PreparedStatement ps = con.prepareStatement(sb.toString());
+			ResultSet rs = ps.executeQuery()) {
 
 			if (rs.next()) {
 				return rs.getLong("groupId");
 			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
 
-		return 0;
+			return 0;
+		}
 	}
 
-	protected boolean hasGroup(long groupId) throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+	protected boolean hasGroup(Connection con, long groupId) throws Exception {
+		String sql = "select count(*) from Group_ where groupId = ?";
 
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"select count(*) from Group_ where groupId = ?");
-
+		try (PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setLong(1, groupId);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					int count = rs.getInt(1);
 
-			if (rs.next()) {
-				int count = rs.getInt(1);
-
-				if (count > 0) {
-					return true;
+					if (count > 0) {
+						return true;
+					}
 				}
 			}
 
 			return false;
 		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
 	}
 
 	protected void updateSubscriptionClassNames(
-			String oldClassName, String newClassName)
+			Connection con, String oldClassName, String newClassName)
 		throws Exception {
 
 		StringBundler sb = new StringBundler(4);
@@ -143,50 +131,42 @@ public class UpgradeSubscription extends UpgradeProcess {
 		sb.append(" where classNameId = ");
 		sb.append(PortalUtil.getClassNameId(oldClassName));
 
-		runSQL(sb.toString());
+		runSQL(con, sb.toString());
 	}
 
 	protected void updateSubscriptionGroupId(
-			long subscriptionId, long classNameId, long classPK)
+			Connection con, long subscriptionId, long classNameId, long classPK)
 		throws Exception {
 
-		long groupId = getGroupId(classNameId, classPK);
+		long groupId = getGroupId(con, classNameId, classPK);
 
-		if ((groupId == 0) && hasGroup(classPK)) {
+		if ((groupId == 0) && hasGroup(con, classPK)) {
 			groupId = classPK;
 		}
 
 		if (groupId != 0) {
 			runSQL(
+				con,
 				"update Subscription set groupId = " + groupId + " where " +
 					"subscriptionId = " + subscriptionId);
 		}
 	}
 
-	protected void updateSubscriptionGroupIds() throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+	protected void updateSubscriptionGroupIds(Connection con) throws Exception {
+		String sql =
+			"select subscriptionId, classNameId, classPK from Subscription";
 
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"select subscriptionId, classNameId, classPK from " +
-					"Subscription");
-
-			rs = ps.executeQuery();
+		try (PreparedStatement ps = con.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long subscriptionId = rs.getLong("subscriptionId");
 				long classNameId = rs.getLong("classNameId");
 				long classPK = rs.getLong("classPK");
 
-				updateSubscriptionGroupId(subscriptionId, classNameId, classPK);
+				updateSubscriptionGroupId(
+					con, subscriptionId, classNameId, classPK);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
 

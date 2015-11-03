@@ -38,31 +38,31 @@ import java.util.List;
 public class UpgradeMVCCVersion extends UpgradeProcess {
 
 	public void upgradeMVCCVersion(
-			DatabaseMetaData databaseMetaData, String tableName)
+			Connection con, DatabaseMetaData databaseMetaData, String tableName)
 		throws Exception {
 
 		tableName = normalizeName(tableName, databaseMetaData);
 
-		ResultSet tableResultSet = databaseMetaData.getTables(
-			null, null, tableName, null);
+		try (ResultSet tableResultSet = databaseMetaData.getTables(
+				null, null, tableName, null)) {
 
-		try {
 			if (!tableResultSet.next()) {
 				_log.error("Table " + tableName + " does not exist");
 
 				return;
 			}
 
-			ResultSet columnResultSet = databaseMetaData.getColumns(
-				null, null, tableName,
-				normalizeName("mvccVersion", databaseMetaData));
+			String columnName = normalizeName("mvccVersion", databaseMetaData);
 
-			try {
+			try (ResultSet columnResultSet = databaseMetaData.getColumns(
+					null, null, tableName, columnName)) {
+
 				if (columnResultSet.next()) {
 					return;
 				}
 
 				runSQL(
+					con,
 					"alter table " + tableName +
 						" add mvccVersion LONG default 0");
 
@@ -71,23 +71,13 @@ public class UpgradeMVCCVersion extends UpgradeProcess {
 						"Added column mvccVersion to table " + tableName);
 				}
 			}
-			finally {
-				DataAccess.cleanUp(columnResultSet);
-			}
-		}
-		finally {
-			DataAccess.cleanUp(tableResultSet);
 		}
 	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		Connection connection = null;
-
-		try {
-			connection = DataAccess.getUpgradeOptimizedConnection();
-
-			DatabaseMetaData databaseMetaData = connection.getMetaData();
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
+			DatabaseMetaData databaseMetaData = con.getMetaData();
 
 			List<Element> classElements = getClassElements();
 
@@ -96,17 +86,16 @@ public class UpgradeMVCCVersion extends UpgradeProcess {
 					continue;
 				}
 
-				upgradeMVCCVersion(databaseMetaData, classElement);
+				upgradeMVCCVersion(
+					con, databaseMetaData,
+					classElement.attributeValue("table"));
 			}
 
 			String[] moduleTableNames = getModuleTableNames();
 
 			for (String moduleTableName : moduleTableNames) {
-				upgradeMVCCVersion(databaseMetaData, moduleTableName);
+				upgradeMVCCVersion(con, databaseMetaData, moduleTableName);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(connection);
 		}
 	}
 
@@ -142,15 +131,6 @@ public class UpgradeMVCCVersion extends UpgradeProcess {
 		}
 
 		return name;
-	}
-
-	protected void upgradeMVCCVersion(
-			DatabaseMetaData databaseMetaData, Element classElement)
-		throws Exception {
-
-		String tableName = classElement.attributeValue("table");
-
-		upgradeMVCCVersion(databaseMetaData, tableName);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

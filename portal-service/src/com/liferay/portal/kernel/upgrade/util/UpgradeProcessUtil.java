@@ -54,35 +54,27 @@ public class UpgradeProcessUtil {
 			return languageId;
 		}
 
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		String sql =
+			"select languageId from User_ where companyId = ? and " +
+				"defaultUser = ?";
 
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"select languageId from User_ where companyId = ? and " +
-					"defaultUser = ?");
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
+			PreparedStatement ps = con.prepareStatement(sql)) {
 
 			ps.setLong(1, companyId);
 			ps.setBoolean(2, true);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					languageId = rs.getString("languageId");
 
-			if (rs.next()) {
-				languageId = rs.getString("languageId");
+					_languageIds.put(companyId, languageId);
 
-				_languageIds.put(companyId, languageId);
+					return languageId;
+				}
 
-				return languageId;
-			}
-			else {
 				return LocaleUtil.toLanguageId(LocaleUtil.US);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
 

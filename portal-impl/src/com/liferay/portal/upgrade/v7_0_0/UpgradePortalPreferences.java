@@ -118,52 +118,37 @@ public class UpgradePortalPreferences extends UpgradeProcess {
 	}
 
 	protected void upgradePortalPreferences() throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		String sql =
+			"select portalPreferencesId, preferences from PortalPreferences";
 
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"select portalPreferencesId, preferences from " +
-					"PortalPreferences");
-
-			rs = ps.executeQuery();
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
+			PreparedStatement ps = con.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long portalPreferencesId = rs.getLong("portalPreferencesId");
 
 				String preferences = rs.getString("preferences");
 
-				upgradeUserStagingPreferences(portalPreferencesId, preferences);
+				upgradeUserStagingPreferences(
+					con, portalPreferencesId, preferences);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
 
 	protected void upgradeUserStagingPreferences(
-			long portalPreferencesId, String preferences)
+			Connection con, long portalPreferencesId, String preferences)
 		throws Exception {
 
-		Connection con = null;
-		PreparedStatement ps = null;
+		String sql =
+			"update PortalPreferences set preferences = ? where " +
+				"portalPreferencesId = ?";
 
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"update PortalPreferences set preferences = ? where " +
-					"portalPreferencesId = ?");
-
+		try (PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setString(1, convertStagingPreferencesToJSON(preferences));
 			ps.setLong(2, portalPreferencesId);
+
 			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(con, ps);
 		}
 	}
 

@@ -49,11 +49,13 @@ public abstract class UpgradeProcess
 	}
 
 	public boolean hasTable(String tableName) throws Exception {
-		if (doHasTable(StringUtil.toLowerCase(tableName)) ||
-			doHasTable(StringUtil.toUpperCase(tableName)) ||
-			doHasTable(tableName)) {
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
+			if (doHasTable(con, StringUtil.toLowerCase(tableName)) ||
+				doHasTable(con, StringUtil.toUpperCase(tableName)) ||
+				doHasTable(con, tableName)) {
 
-			return true;
+				return true;
+			}
 		}
 
 		return false;
@@ -98,16 +100,11 @@ public abstract class UpgradeProcess
 	public boolean tableHasColumn(String tableName, String columnName)
 		throws Exception {
 
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		String sql = "select * from " + tableName;
 
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement("select * from " + tableName);
-
-			rs = ps.executeQuery();
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
+			PreparedStatement ps = con.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery()) {
 
 			ResultSetMetaData rsmd = rs.getMetaData();
 
@@ -121,24 +118,16 @@ public abstract class UpgradeProcess
 		}
 		catch (Exception e) {
 		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
 
 		return false;
 	}
 
 	public boolean tableHasData(String tableName) throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		String sql = "select count(*) from " + tableName;
 
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement("select count(*) from " + tableName);
-
-			rs = ps.executeQuery();
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
+			PreparedStatement ps = con.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				int count = rs.getInt(1);
@@ -149,9 +138,6 @@ public abstract class UpgradeProcess
 			}
 		}
 		catch (Exception e) {
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
 		}
 
 		return false;
@@ -204,24 +190,15 @@ public abstract class UpgradeProcess
 		upgradeProcess.upgrade();
 	}
 
-	protected boolean doHasTable(String tableName) throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+	protected boolean doHasTable(Connection con, String tableName)
+		throws Exception {
 
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
+		DatabaseMetaData metadata = con.getMetaData();
 
-			DatabaseMetaData metadata = con.getMetaData();
-
-			rs = metadata.getTables(null, null, tableName, null);
-
-			while (rs.next()) {
+		try (ResultSet rs = metadata.getTables(null, null, tableName, null)) {
+			if (rs.next()) {
 				return true;
 			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
 		}
 
 		return false;

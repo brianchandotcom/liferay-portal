@@ -20,6 +20,8 @@ import com.liferay.portal.verify.VerifyUUID;
 import com.liferay.portal.verify.model.VerifiableUUIDModel;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
+import java.sql.Connection;
+
 import javax.portlet.PortletPreferences;
 
 /**
@@ -54,8 +56,8 @@ public class UpgradeScopes extends BaseUpgradePortletPreferences {
 
 	@Override
 	protected String upgradePreferences(
-			long companyId, long ownerId, int ownerType, long plid,
-			String portletId, String xml)
+			Connection con, long companyId, long ownerId, int ownerType,
+			long plid, String portletId, String xml)
 		throws Exception {
 
 		PortletPreferences portletPreferences =
@@ -66,7 +68,7 @@ public class UpgradeScopes extends BaseUpgradePortletPreferences {
 			portletPreferences.getValue("lfr-scope-layout-id", null));
 
 		if (linkToLayoutId > 0) {
-			String uuid = getLayoutUuid(plid, linkToLayoutId);
+			String uuid = getLayoutUuid(con, plid, linkToLayoutId);
 
 			if (uuid != null) {
 				portletPreferences.setValue("lfr-scope-layout-uuid", uuid);
@@ -76,6 +78,14 @@ public class UpgradeScopes extends BaseUpgradePortletPreferences {
 		}
 
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
+	}
+
+	@Override
+	protected String upgradePreferences(
+		long companyId, long ownerId, int ownerType, long plid,
+		String portletId, String xml) {
+
+		return null;
 	}
 
 }

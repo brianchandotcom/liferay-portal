@@ -14,9 +14,11 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.v7_0_0.util.BackgroundTaskTable;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
@@ -26,9 +28,11 @@ public class UpgradeBackgroundTask extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
-			runSQL("alter_column_type BackgroundTask name VARCHAR(255) null");
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
 			runSQL(
+				con, "alter_column_type BackgroundTask name VARCHAR(255) null");
+			runSQL(
+				con,
 				"alter_column_name BackgroundTask taskContext taskContextMap " +
 					"TEXT null");
 		}

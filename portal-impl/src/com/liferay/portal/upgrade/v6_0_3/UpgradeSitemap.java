@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
+import java.sql.Connection;
+
 import javax.portlet.PortletPreferences;
 
 /**
@@ -33,8 +35,8 @@ public class UpgradeSitemap extends BaseUpgradePortletPreferences {
 
 	@Override
 	protected String upgradePreferences(
-			long companyId, long ownerId, int ownerType, long plid,
-			String portletId, String xml)
+			Connection con, long companyId, long ownerId, int ownerType,
+			long plid, String portletId, String xml)
 		throws Exception {
 
 		PortletPreferences portletPreferences =
@@ -45,7 +47,7 @@ public class UpgradeSitemap extends BaseUpgradePortletPreferences {
 			portletPreferences.getValue("root-layout-id", StringPool.BLANK));
 
 		if (rootLayoutId > 0) {
-			String uuid = getLayoutUuid(plid, rootLayoutId);
+			String uuid = getLayoutUuid(con, plid, rootLayoutId);
 
 			if (uuid != null) {
 				portletPreferences.setValue("root-layout-uuid", uuid);
@@ -55,6 +57,14 @@ public class UpgradeSitemap extends BaseUpgradePortletPreferences {
 		}
 
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
+	}
+
+	@Override
+	protected String upgradePreferences(
+		long companyId, long ownerId, int ownerType, long plid,
+		String portletId, String xml) {
+
+		return null;
 	}
 
 }

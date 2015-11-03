@@ -34,6 +34,9 @@ public class FailureMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 			"generic-1", "0,label_exp=!master", "129",
 			"test-portal-acceptance-pullrequest-batch(master)", "test-4-1");
 		downloadSample(
+			"generic-2", "1,label_exp=!master", "4961",
+			"test-portal-acceptance-pullrequest-batch(master)", "test-1-13");
+		downloadSample(
 			"rebase-1", null, "267",
 			"test-portal-acceptance-pullrequest-source(ee-6.2.x)", "test-1-1");
 		downloadSample(

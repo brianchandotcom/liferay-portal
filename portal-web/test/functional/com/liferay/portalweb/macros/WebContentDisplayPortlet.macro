@@ -62,7 +62,10 @@
 					<var name="key_userToolName" value="${userToolName}" />
 
 					<if>
-						<condition function="IsElementPresent#isVisible" locator1="WCDConfiguration#USER_TOOLS_TOGGLE_OFF" />
+						<and>
+							<condition function="IsElementPresent" locator1="WCDConfiguration#USER_TOOLS_TOGGLE_OFF" />
+							<condition function="IsVisible" locator1="WCDConfiguration#USER_TOOLS_TOGGLE_OFF" />
+						</and>
 						<then>
 							<execute function="Click" locator1="WCDConfiguration#USER_TOOLS_TOGGLE" />
 						</then>
@@ -91,7 +94,10 @@
 					<execute function="SelectFrameTop" />
 
 					<if>
-						<condition function="IsElementPresent#isVisible" locator1="WCDConfiguration#CONTENT_METADATA_TOGGLE_OFF" />
+						<and>
+							<condition function="IsElementPresent" locator1="WCDConfiguration#CONTENT_METADATA_TOGGLE_OFF" />
+							<condition function="IsVisible" locator1="WCDConfiguration#CONTENT_METADATA_TOGGLE_OFF" />
+						</and>
 						<then>
 							<execute function="Click" locator1="WCDConfiguration#CONTENT_METADATA_TOGGLE" />
 						</then>

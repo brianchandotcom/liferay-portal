@@ -78,7 +78,7 @@ public class FailureMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 
 		URL url = createURL(urlString);
 
-		downloadSample(sampleKey, url);
+		downloadSample(sampleKey + "-" + jobName, url);
 	}
 
 	@Override

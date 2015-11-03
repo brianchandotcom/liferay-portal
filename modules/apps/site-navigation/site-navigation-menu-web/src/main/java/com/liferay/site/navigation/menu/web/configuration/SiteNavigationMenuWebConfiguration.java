@@ -30,9 +30,6 @@ public interface SiteNavigationMenuWebConfiguration {
 	@Meta.AD(deflt = "blank-navigation-menu-ftl", required = false)
 	public String ddmTemplateKeyDefault();
 
-	@Meta.AD(deflt = "dots", required = false)
-	public String defaultBulletStyle();
-
 	@Meta.AD(deflt = "relative-with-breadcrumb", required = false)
 	public String defaultDisplayStyle();
 

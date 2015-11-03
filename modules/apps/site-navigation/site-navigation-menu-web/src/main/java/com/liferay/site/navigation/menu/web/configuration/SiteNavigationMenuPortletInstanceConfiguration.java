@@ -36,14 +36,8 @@ public interface SiteNavigationMenuPortletInstanceConfiguration {
 	@Meta.AD(deflt = "0", required = false)
 	public long displayStyleGroupId();
 
-	@Meta.AD(deflt = "root-layout", required = false)
-	public String headerType();
-
 	@Meta.AD(deflt = "current", required = false)
 	public String includedLayouts();
-
-	@Meta.AD(deflt = "true", required = false)
-	public boolean nestedChildren();
 
 	@Meta.AD(deflt = "preview", required = false)
 	public boolean preview();

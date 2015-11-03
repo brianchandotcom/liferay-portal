@@ -15,7 +15,6 @@
 package com.liferay.site.navigation.menu.web.display.context;
 
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -48,27 +47,6 @@ public class SiteNavigationMenuDisplayContext {
 		_siteNavigationMenuPortletInstanceConfiguration =
 			portletDisplay.getPortletInstanceConfiguration(
 				SiteNavigationMenuPortletInstanceConfiguration.class);
-	}
-
-	public String getBulletStyle() {
-		if (_bulletStyle != null) {
-			return _bulletStyle;
-		}
-
-		_bulletStyle = ParamUtil.getString(
-			_request, "bulletStyle",
-			_siteNavigationMenuPortletInstanceConfiguration.bulletStyle());
-
-		if (Validator.isNull(_bulletStyle)) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-			_bulletStyle = GetterUtil.getString(
-				themeDisplay.getThemeSetting("bullet-style"),
-				_siteNavigationMenuWebConfiguration.defaultBulletStyle());
-		}
-
-		return _bulletStyle;
 	}
 
 	public String getDDMTemplateKey() {
@@ -127,18 +105,6 @@ public class SiteNavigationMenuDisplayContext {
 		return _displayStyleGroupId;
 	}
 
-	public String getHeaderType() {
-		if (_headerType != null) {
-			return _headerType;
-		}
-
-		_headerType = ParamUtil.getString(
-			_request, "headerType",
-			_siteNavigationMenuPortletInstanceConfiguration.headerType());
-
-		return _headerType;
-	}
-
 	public String getIncludedLayouts() {
 		if (_includedLayouts != null) {
 			return _includedLayouts;
@@ -175,18 +141,6 @@ public class SiteNavigationMenuDisplayContext {
 		return _rootLayoutType;
 	}
 
-	public boolean isNestedChildren() {
-		if (_nestedChildren != null) {
-			return _nestedChildren;
-		}
-
-		_nestedChildren = ParamUtil.getBoolean(
-			_request, "nestedChildren",
-			_siteNavigationMenuPortletInstanceConfiguration.nestedChildren());
-
-		return _nestedChildren;
-	}
-
 	public boolean isPreview() {
 		if (_preview != null) {
 			return _preview;
@@ -199,13 +153,10 @@ public class SiteNavigationMenuDisplayContext {
 		return _preview;
 	}
 
-	private String _bulletStyle;
 	private String _ddmTemplateKey;
 	private String _displayStyle;
 	private long _displayStyleGroupId;
-	private String _headerType;
 	private String _includedLayouts;
-	private Boolean _nestedChildren;
 	private Boolean _preview;
 	private final HttpServletRequest _request;
 	private Integer _rootLayoutLevel;

@@ -614,6 +614,8 @@
 							}
 						},
 						requires: [
+							'aui-base',
+							'aui-component',
 							'event-mouseenter',
 							'node-focusmanager',
 							'plugin'

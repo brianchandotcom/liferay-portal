@@ -67,7 +67,7 @@ public class DLFileEntryTypeFinderTest {
 
 	@Test
 	public void testFilterCountByKeywords() throws Exception {
-		int initialCount = DLFileEntryTypeFinderUtil.countByKeywords(
+		int initialCount = DLFileEntryTypeFinderUtil.filterCountByKeywords(
 			_group.getCompanyId(), new long[] {_group.getGroupId()},
 			_DL_FILE_ENTRY_TYPE_NAME, true);
 
@@ -82,7 +82,7 @@ public class DLFileEntryTypeFinderTest {
 
 	@Test
 	public void testFilterCountByKeywordsWithBlankKeywords() throws Exception {
-		int initialCount = DLFileEntryTypeFinderUtil.countByKeywords(
+		int initialCount = DLFileEntryTypeFinderUtil.filterCountByKeywords(
 			_group.getCompanyId(), new long[] {_group.getGroupId()},
 			StringPool.BLANK, true);
 
@@ -133,7 +133,7 @@ public class DLFileEntryTypeFinderTest {
 		DLFileEntryType fileEntryType = addFileEntryType();
 
 		List<DLFileEntryType> fileEntryTypes =
-			DLFileEntryTypeFinderUtil.findByKeywords(
+			DLFileEntryTypeFinderUtil.filterFindByKeywords(
 				_group.getCompanyId(), new long[] {_group.getGroupId()},
 				_DL_FILE_ENTRY_TYPE_NAME, true, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);

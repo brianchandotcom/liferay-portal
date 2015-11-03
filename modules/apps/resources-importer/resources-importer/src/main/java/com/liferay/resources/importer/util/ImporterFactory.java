@@ -14,6 +14,7 @@
 
 package com.liferay.resources.importer.util;
 
+import com.liferay.journal.util.JournalConverter;
 import com.liferay.portal.kernel.deploy.DeployManagerUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.util.TextFormatter;
@@ -28,9 +29,13 @@ import java.util.Set;
 
 import javax.servlet.ServletContext;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  */
+@Component(service = ImporterFactory.class)
 public class ImporterFactory {
 
 	public static final String RESOURCES_DIR =
@@ -38,10 +43,6 @@ public class ImporterFactory {
 
 	public static final String TEMPLATES_DIR =
 		"/WEB-INF/classes/templates-importer/";
-
-	public static ImporterFactory getInstance() {
-		return _instance;
-	}
 
 	public Importer createImporter(
 			long companyId, ServletContext servletContext,
@@ -93,12 +94,12 @@ public class ImporterFactory {
 			importer = larImporter;
 		}
 		else if ((resourcePaths != null) && !resourcePaths.isEmpty()) {
-			importer = getResourceImporter();
+			importer = getResourceImporter(_journalConverter);
 
 			importer.setResourcesDir(RESOURCES_DIR);
 		}
 		else if ((templatePaths != null) && !templatePaths.isEmpty()) {
-			importer = getResourceImporter();
+			importer = getResourceImporter(_journalConverter);
 
 			Group group = GroupLocalServiceUtil.getCompanyGroup(companyId);
 
@@ -106,7 +107,7 @@ public class ImporterFactory {
 			importer.setResourcesDir(TEMPLATES_DIR);
 		}
 		else if (Validator.isNotNull(resourcesDir)) {
-			importer = getFileSystemImporter();
+			importer = getFileSystemImporter(_journalConverter);
 
 			importer.setResourcesDir(resourcesDir);
 		}
@@ -160,18 +161,27 @@ public class ImporterFactory {
 		importer.afterPropertiesSet();
 	}
 
-	protected FileSystemImporter getFileSystemImporter() {
-		return new FileSystemImporter();
+	protected FileSystemImporter getFileSystemImporter(
+		JournalConverter journalConverter) {
+
+		return new FileSystemImporter(journalConverter);
 	}
 
 	protected LARImporter getLARImporter() {
 		return new LARImporter();
 	}
 
-	protected ResourceImporter getResourceImporter() {
-		return new ResourceImporter();
+	protected ResourceImporter getResourceImporter(
+		JournalConverter journalConverter) {
+
+		return new ResourceImporter(journalConverter);
 	}
 
-	private static final ImporterFactory _instance = new ImporterFactory();
+	@Reference
+	protected void setJournalConverter(JournalConverter journalConverter) {
+		_journalConverter = journalConverter;
+	}
+
+	private JournalConverter _journalConverter;
 
 }

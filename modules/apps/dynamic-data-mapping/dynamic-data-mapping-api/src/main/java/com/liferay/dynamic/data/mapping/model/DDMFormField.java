@@ -39,9 +39,14 @@ public class DDMFormField implements Serializable {
 
 		setDDMFormFieldOptions(
 			new DDMFormFieldOptions(ddmFormField.getDDMFormFieldOptions()));
-		setDDMFormFieldValidation(
-			new DDMFormFieldValidation(
-				ddmFormField.getDDMFormFieldValidation()));
+
+		DDMFormFieldValidation ddmFormFieldValidation =
+			ddmFormField.getDDMFormFieldValidation();
+
+		if (ddmFormFieldValidation != null) {
+			setDDMFormFieldValidation(ddmFormFieldValidation);
+		}
+
 		setLabel(new LocalizedValue(ddmFormField.getLabel()));
 		setPredefinedValue(
 			new LocalizedValue(ddmFormField.getPredefinedValue()));

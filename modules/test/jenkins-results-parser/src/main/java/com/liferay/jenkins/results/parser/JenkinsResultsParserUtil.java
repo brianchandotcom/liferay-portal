@@ -33,6 +33,38 @@ import org.json.JSONObject;
  */
 public class JenkinsResultsParserUtil {
 
+	public static String downloadToString(String url) throws IOException {
+		URL urlObject = new URL(fixURL(url));
+
+		String key = _convertToCacheKey(urlObject.toString());
+
+		if (_cache.containsKey(key)) {
+			return _cache.get(key);
+		}
+
+		System.out.println("Downloading " + url);
+
+		StringBuilder sb = new StringBuilder();
+
+		InputStreamReader inputStreamReader = new InputStreamReader(
+			urlObject.openStream());
+
+		BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+		String line = null;
+
+		while ((line = bufferedReader.readLine()) != null) {
+			sb.append(line);
+			sb.append("\n");
+		}
+
+		bufferedReader.close();
+
+		_cache.put(key, sb.toString());
+
+		return sb.toString();
+	}
+
 	public static String fixJSON(String json) {
 		json = json.replaceAll("\t", "&#09;");
 		json = json.replaceAll("\\\"", "&#34;");
@@ -180,44 +212,11 @@ public class JenkinsResultsParserUtil {
 		return new JSONObject(downloadToString(url));
 	}
 
-	public static String downloadToString(String url) throws IOException {
-		URL urlObject = new URL(fixURL(url));
-
-		String key = _convertToCacheKey(urlObject.toString());
-
-		if (_cache.containsKey(key)) {
-			return _cache.get(key);
-		}
-
-		System.out.println("Downloading " + url);
-
-		StringBuilder sb = new StringBuilder();
-
-		InputStreamReader inputStreamReader = new InputStreamReader(
-			urlObject.openStream());
-
-		BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-
-		String line = null;
-
-		while ((line = bufferedReader.readLine()) != null) {
-			sb.append(line);
-			sb.append("\n");
-		}
-
-		bufferedReader.close();
-
-		_cache.put(key, sb.toString());
-
-		return sb.toString();
-	}
-
 	private static String _convertToCacheKey(String url) {
 		return url.replace("//", "/");
 	}
 
-	private static final Map<String, String> _cache =
-		new HashMap<String, String>();
+	private static final Map<String, String> _cache = new HashMap<>();
 	private static final Pattern _localURLPattern1 = Pattern.compile(
 		"https://test.liferay.com/([0-9]+)/");
 	private static final Pattern _localURLPattern2 = Pattern.compile(

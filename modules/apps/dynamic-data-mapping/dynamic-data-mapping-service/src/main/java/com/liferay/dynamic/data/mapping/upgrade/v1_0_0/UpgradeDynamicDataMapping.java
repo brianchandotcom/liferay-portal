@@ -334,7 +334,11 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	}
 
 	protected String getDefaultDDMFormLayoutDefinition(DDMForm ddmForm) {
+		new DDMUtil().setDDM(new DDMImpl());
+
 		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
+
+		new DDMUtil().setDDM(null);
 
 		return DDMFormLayoutJSONSerializerUtil.serialize(ddmFormLayout);
 	}

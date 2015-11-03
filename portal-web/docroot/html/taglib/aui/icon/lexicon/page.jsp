@@ -17,8 +17,8 @@
 <%@ include file="/html/taglib/aui/icon/init.jsp" %>
 
 <liferay-util:buffer var="iconContent">
-	<svg class="lexicon-icon" role="img" title="<%= image %>">
-	    <use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#<%= image %>" />
+	<svg class="lexicon-icon lexicon-icon-<%= image %>" role="img" title="<%= image %>">
+		<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#<%= image %>" />
 	</svg>
 
 	<liferay-ui:message key="<%= label %>" />
@@ -27,14 +27,22 @@
 <c:choose>
 	<c:when test="<%= Validator.isNotNull(url) %>">
 		<aui:a cssClass="<%= cssClass %>" data="<%= data %>" href="<%= url %>" id="<%= id %>" target="<%= target %>">
-			<span class="<%= image %>">
-				<%= iconContent %>
-			</span>
+			<%= iconContent %>
 		</aui:a>
 	</c:when>
 	<c:otherwise>
-		<span class="<%= cssClass %> <%= image %>" <%= AUIUtil.buildData(data) %> id="<%= id %>">
+		<span class="<%= cssClass %>" <%= AUIUtil.buildData(data) %> id="<%= id %>">
 			<%= iconContent %>
 		</span>
 	</c:otherwise>
 </c:choose>
+
+<liferay-util:html-bottom outputKey="taglib_aui_icon_lexicon">
+	<aui:script>
+		svg4everybody(
+			{
+				polyfill: true
+			}
+		);
+	</aui:script>
+</liferay-util:html-bottom>

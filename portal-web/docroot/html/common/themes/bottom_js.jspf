@@ -58,8 +58,6 @@
 	}
 	%>
 
-	svg4everybody();
-
 </aui:script>
 
 <aui:script use="aui-base">

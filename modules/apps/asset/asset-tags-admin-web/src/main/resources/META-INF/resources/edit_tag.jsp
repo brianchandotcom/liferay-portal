@@ -58,11 +58,15 @@ renderResponse.setTitle(((tag == null) ? LanguageUtil.get(request, "new-tag") : 
 
 		<aui:model-context bean="<%= tag %>" model="<%= AssetTag.class %>" />
 
-		<aui:fieldset cssClass="col-md-4">
-			<aui:input name="tagId" type="hidden" value="<%= tagId %>" />
+		<div class="card-horizontal main-content-card">
+			<div class="card-row card-row-padded">
+				<aui:fieldset cssClass="col-md-4">
+					<aui:input name="tagId" type="hidden" value="<%= tagId %>" />
 
-			<aui:input autoFocus="<%= true %>" cssClass="tag-name" name="name" />
-		</aui:fieldset>
+					<aui:input autoFocus="<%= true %>" cssClass="tag-name" name="name" />
+				</aui:fieldset>
+			</div>
+		</div>
 
 		<aui:button-row>
 			<aui:button cssClass="btn-lg" type="submit" />

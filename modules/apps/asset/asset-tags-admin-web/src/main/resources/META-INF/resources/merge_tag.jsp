@@ -54,34 +54,38 @@ renderResponse.setTitle(LanguageUtil.get(request, "merge-tags"));
 	<aui:input name="groupId" type="hidden" value="<%= scopeGroupId %>" />
 
 	<div class="row">
-		<aui:fieldset cssClass="col-md-4">
-			<label for="<portlet:namespace />assetTagsSelector">
-				<liferay-ui:message key="tags" />
-			</label>
+		<div class="card-horizontal main-content-card">
+			<div class="card-row card-row-padded">
+				<aui:fieldset cssClass="col-md-4">
+					<label for="<portlet:namespace />assetTagsSelector">
+						<liferay-ui:message key="tags" />
+					</label>
 
-			<liferay-ui:asset-tags-selector
-				addCallback="onAddTag"
-				allowAddEntry="<%= false %>"
-				curTags="<%= StringUtil.merge(mergeTagNames) %>"
-				hiddenInput="mergeTagNames"
-				id="assetTagsSelector"
-				removeCallback="onRemoveTag"
-			/>
+					<liferay-ui:asset-tags-selector
+						addCallback="onAddTag"
+						allowAddEntry="<%= false %>"
+						curTags="<%= StringUtil.merge(mergeTagNames) %>"
+						hiddenInput="mergeTagNames"
+						id="assetTagsSelector"
+						removeCallback="onRemoveTag"
+					/>
 
-			<aui:select cssClass="target-tag" label="into-this-tag" name="targetTagName">
+					<aui:select cssClass="target-tag" label="into-this-tag" name="targetTagName">
 
-				<%
-				for (String tagName : mergeTagNames) {
-				%>
+						<%
+						for (String tagName : mergeTagNames) {
+						%>
 
-					<aui:option label="<%= tagName %>" />
+							<aui:option label="<%= tagName %>" />
 
-				<%
-				}
-				%>
+						<%
+						}
+						%>
 
-			</aui:select>
-		</aui:fieldset>
+					</aui:select>
+				</aui:fieldset>
+			</div>
+		</div>
 
 		<aui:button-row>
 			<aui:button cssClass="btn-lg" type="submit" />

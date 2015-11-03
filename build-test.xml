@@ -2044,10 +2044,6 @@ module.framework.base.dir=${liferay.home}/osgi]]></echo>
 			<setup-testable-tomcat-manager />
 
 			<setup-testable-tomcat-osgi-modules />
-
-			<gradle-execute dir="${project.dir}/modules/util/ip-geocoder" task="deploy" />
-
-			<gradle-execute dir="${project.dir}/modules/apps/social" task="deploy" />
 		</sequential>
 	</macrodef>
 

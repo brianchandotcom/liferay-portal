@@ -84,6 +84,7 @@
 			{
 				checkBoxContainer: '#<%= checkBoxContainerId %>',
 				namespace: '<%= namespace %>',
+				searchContainerId: '<%= namespace + searchContainerId %>',
 				secondaryBar: '#actionButtons'
 			}
 		);

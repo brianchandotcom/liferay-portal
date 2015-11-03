@@ -35,6 +35,11 @@ request.setAttribute("search.jsp-portletURL", portletURL);
 request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack());
 %>
 
+<liferay-ui:header
+	backURL="<%= redirect %>"
+	title="search"
+/>
+
 <liferay-portlet:renderURL varImpl="searchURL">
 	<portlet:param name="mvcPath" value="/search.jsp" />
 </liferay-portlet:renderURL>

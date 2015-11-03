@@ -5106,6 +5106,17 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		reindex(user);
 
+		Group group = user.getGroup();
+
+		if (status == WorkflowConstants.STATUS_INACTIVE) {
+			group.setActive(false);
+		}
+		else {
+			group.setActive(true);
+		}
+
+		groupLocalService.updateGroup(group);
+
 		return user;
 	}
 

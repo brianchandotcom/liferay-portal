@@ -27,7 +27,11 @@ if (Validator.isNull(redirect)) {
 
 long layoutPrototypeId = ParamUtil.getLong(request, "layoutPrototypeId");
 
-LayoutPrototype layoutPrototype = LayoutPrototypeServiceUtil.fetchLayoutPrototype(layoutPrototypeId);
+LayoutPrototype layoutPrototype = null;
+
+if (layoutPrototypeId > 0) {
+	layoutPrototype = LayoutPrototypeServiceUtil.fetchLayoutPrototype(layoutPrototypeId);
+}
 
 if (layoutPrototype == null) {
 	layoutPrototype = new LayoutPrototypeImpl();

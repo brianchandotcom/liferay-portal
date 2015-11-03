@@ -23,7 +23,11 @@ String backURL = ParamUtil.getString(request, "backURL", redirect);
 
 long userGroupId = ParamUtil.getLong(request, "userGroupId");
 
-UserGroup userGroup = UserGroupServiceUtil.fetchUserGroup(userGroupId);
+UserGroup userGroup = null;
+
+if (userGroupId > 0) {
+	userGroup = UserGroupServiceUtil.fetchUserGroup(userGroupId);
+}
 
 boolean hasUserGroupUpdatePermission = true;
 

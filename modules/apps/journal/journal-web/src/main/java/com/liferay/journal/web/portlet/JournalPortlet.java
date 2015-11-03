@@ -19,6 +19,8 @@ import com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException;
 import com.liferay.dynamic.data.mapping.exception.StorageFieldRequiredException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.storage.Fields;
+import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.constants.JournalWebKeys;
@@ -611,8 +613,17 @@ public class JournalPortlet extends MVCPortlet {
 			PortalUtil.getClassNameId(JournalArticle.class), ddmStructureKey,
 			true);
 
-		Object[] contentAndImages = ActionUtil.getContentAndImages(
-			ddmStructure, serviceContext);
+		Fields fields = DDMUtil.getFields(
+			ddmStructure.getStructureId(), serviceContext);
+
+		String structureContent = _journalConverter.getContent(
+			ddmStructure, fields);
+
+		Map<String, byte[]> structureImages = ActionUtil.getImages(
+			structureContent, fields);
+
+		Object[] contentAndImages =
+			new Object[] {structureContent, structureImages};
 
 		String content = (String)contentAndImages[0];
 		Map<String, byte[]> images =

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/admin/init.jsp" %>
 
 <%
 long recordSetId = ParamUtil.getLong(request, renderResponse.getNamespace() + "recordSetId");

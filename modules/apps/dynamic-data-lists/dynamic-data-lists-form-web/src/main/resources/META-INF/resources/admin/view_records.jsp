@@ -94,3 +94,5 @@ DDLRecordSet ddlRecordSet = ddlFormViewRecordsDisplayContext.getDDLRecordSet();
 <div class="container-fluid-1280">
 	<liferay-ui:search-paginator searchContainer="<%= ddlFormViewRecordsDisplayContext.getRecordSearchContainer() %>" />
 </div>
+
+<%@ include file="/admin/export_record_set.jspf" %>

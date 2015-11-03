@@ -14,11 +14,12 @@
 
 package com.liferay.dynamic.data.lists.web.portlet.configuration.icon;
 
-import com.liferay.dynamic.data.lists.constants.DDLActionKeys;
-import com.liferay.dynamic.data.lists.service.permission.DDLPermission;
+import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.theme.PortletDisplay;
 
 import javax.servlet.http.HttpServletRequest;
@@ -62,9 +63,14 @@ public class ExportDDLRecordSetPortletConfigurationIcon
 			return false;
 		}
 
-		return DDLPermission.contains(
-			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
-			DDLActionKeys.ADD_RECORD_SET);
+		try {
+			return DDLRecordSetPermission.contains(
+				themeDisplay.getPermissionChecker(), recordSetId,
+				ActionKeys.VIEW);
+		}
+		catch (PortalException pe) {
+			return false;
+		}
 	}
 
 	@Override

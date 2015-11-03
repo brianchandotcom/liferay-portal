@@ -1749,6 +1749,8 @@ public class ServiceBuilder {
 	}
 
 	private static void _touch(File file) throws IOException {
+		_mkdir(file.getParentFile());
+
 		Files.createFile(file.toPath());
 	}
 

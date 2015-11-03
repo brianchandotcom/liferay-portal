@@ -326,9 +326,9 @@ public class CalendarBookingLocalServiceImpl
 		// Workflow
 
 		workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
-				calendarBooking.getCompanyId(), calendarBooking.getGroupId(),
-				CalendarBooking.class.getName(),
-				calendarBooking.getCalendarBookingId());
+			calendarBooking.getCompanyId(), calendarBooking.getGroupId(),
+			CalendarBooking.class.getName(),
+			calendarBooking.getCalendarBookingId());
 
 		return calendarBooking;
 	}
@@ -602,6 +602,8 @@ public class CalendarBookingLocalServiceImpl
 			userId, calendarBooking,
 			CalendarBookingWorkflowConstants.STATUS_IN_TRASH, serviceContext);
 
+		// Social
+
 		socialActivityCounterLocalService.disableActivityCounters(
 			CalendarBooking.class.getName(),
 			calendarBooking.getCalendarBookingId());
@@ -613,10 +615,12 @@ public class CalendarBookingLocalServiceImpl
 			SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			getExtraDataJSON(calendarBooking), 0);
 
+		// Workflow
+
 		workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
-				calendarBooking.getCompanyId(), calendarBooking.getGroupId(),
-				CalendarBooking.class.getName(),
-				calendarBooking.getCalendarBookingId());
+			calendarBooking.getCompanyId(), calendarBooking.getGroupId(),
+			CalendarBooking.class.getName(),
+			calendarBooking.getCalendarBookingId());
 
 		return calendarBooking;
 	}
@@ -653,6 +657,8 @@ public class CalendarBookingLocalServiceImpl
 		calendarBookingLocalService.updateStatus(
 			userId, calendarBookingId, trashEntry.getStatus(), serviceContext);
 
+		// Social
+
 		socialActivityCounterLocalService.enableActivityCounters(
 			CalendarBooking.class.getName(), calendarBookingId);
 
@@ -662,11 +668,13 @@ public class CalendarBookingLocalServiceImpl
 			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			getExtraDataJSON(calendarBooking), 0);
 
+		// Workflow
+
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-				calendarBooking.getCompanyId(), calendarBooking.getGroupId(),
-				userId, CalendarBooking.class.getName(),
-				calendarBooking.getCalendarBookingId(), calendarBooking,
-				serviceContext);
+			calendarBooking.getCompanyId(), calendarBooking.getGroupId(),
+			userId, CalendarBooking.class.getName(),
+			calendarBooking.getCalendarBookingId(), calendarBooking,
+			serviceContext);
 
 		return calendarBooking;
 	}

@@ -3,19 +3,12 @@ AUI.add(
 	function(A) {
 		var ANode = A.Node;
 		var Lang = A.Lang;
-		var Util = Liferay.Util;
 
 		var STATUS_CODE = Liferay.STATUS_CODE;
 
 		var STR_EMPTY = '';
 
 		var STR_LAYOUT_ID = 'layoutId';
-
-		var TPL_EDITOR = '<div class="add-page-editor">' +
-				'<div class="input-group"></div>' +
-			'</div>';
-
-		var TPL_FIELD_INPUT = '<input class="add-page-editor-input form-control" type="text" value="{0}" />';
 
 		var TPL_LINK = '<a href="{url}">{pageTitle}</a>';
 
@@ -158,18 +151,12 @@ AUI.add(
 
 							instance._makeDeletable();
 							instance._makeSortable();
-							instance._makeEditable();
 
 							instance._tempTab = instance._createTempTab(TPL_TAB_LINK);
 							instance._tempChildTab = instance._createTempTab(TPL_LINK);
 
-							instance.on('savePage', A.bind('_savePage', instance));
-							instance.on('cancelPage', instance._cancelPage);
-
 							Liferay.on('dockbaraddpage:addPage', instance._onAddPage, instance);
 							Liferay.on('dockbaraddpage:previewPageTitle', instance._onPreviewPageTitle, instance);
-
-							navBlock.delegate('keypress', A.bind('_onKeypress', instance), '.lfr-nav-item input');
 						}
 					},
 
@@ -315,58 +302,6 @@ AUI.add(
 						}
 					},
 
-					_makeEditable: function() {
-						var instance = this;
-
-						if (instance.get('isModifiable')) {
-							var currentItem = instance.get('navBlock').one('li.selected.lfr-nav-updateable');
-
-							if (currentItem) {
-								var currentLink = currentItem.one('a');
-
-								if (currentLink) {
-									var currentSpan = currentLink.one('span');
-
-									if (currentSpan) {
-										currentLink.on(
-											'click',
-											function(event) {
-												if (event.shiftKey) {
-													event.halt();
-												}
-											}
-										);
-
-										currentSpan.on(
-											'click',
-											function(event) {
-												if (themeDisplay.isStateMaximized() && !event.shiftKey || event.target.ancestor('.lfr-nav-child-toggle', true, '.lfr-nav-updateable')) {
-													return;
-												}
-
-												event.halt();
-
-												var textNode = event.currentTarget;
-
-												var actionNode = textNode.get('parentNode');
-												var currentText = textNode.text();
-
-												instance._createEditor(
-													currentItem,
-													{
-														actionNode: actionNode,
-														prevVal: currentText,
-														textNode: textNode
-													}
-												);
-											}
-										);
-									}
-								}
-							}
-						}
-					},
-
 					_onAddPage: function(event) {
 						var instance = this;
 
@@ -424,22 +359,6 @@ AUI.add(
 						);
 					},
 
-					_onKeypress: function(event) {
-						var instance = this;
-
-						if (event.isKeyInSet('ENTER', 'ESC')) {
-							var eventType = 'savePage';
-
-							if (event.isKey('ESC')) {
-								eventType = 'cancelPage';
-							}
-
-							var listItem = event.currentTarget.ancestor('li');
-
-							listItem._toolbar.fire(eventType);
-						}
-					},
-
 					_onPreviewPageTitle: function(event) {
 						var instance = this;
 
@@ -476,174 +395,6 @@ AUI.add(
 					_updateURL: STR_EMPTY
 				}
 			}
-		);
-
-		Liferay.provide(
-			Navigation,
-			'_createEditor',
-			function(listItem, options) {
-				var instance = this;
-
-				var prototypeTemplate = instance._prototypeMenuTemplate || STR_EMPTY;
-
-				var prevVal = options.prevVal.trim();
-
-				if (options.actionNode) {
-					options.actionNode.hide();
-				}
-
-				var relayEvent = function(event) {
-					if (docClick) {
-						docClick.detach();
-					}
-
-					var eventName = event.type.split(':');
-
-					eventName = eventName[1] || eventName[0];
-
-					instance.fire(eventName, options);
-				};
-
-				var icons = [
-					{
-						icon: 'icon-ok',
-						on: {
-							click: function(event) {
-								toolbar.fire('savePage', options);
-							}
-						},
-						title: Liferay.Language.get('save')
-					}
-				];
-
-				if (prototypeTemplate && !prevVal) {
-					icons.unshift(
-						{
-							icon: 'icon-cog',
-							on: {
-								click: function(event) {
-									var button = event.currentTarget.get('boundingBox');
-
-									var active = button.hasClass('active');
-
-									optionsPopover.set('visible', !active);
-
-									button.toggleClass('active');
-								}
-							},
-							title: Liferay.Language.get('options')
-						}
-					);
-				}
-
-				var editorContainer = ANode.create(TPL_EDITOR);
-
-				var docClick = editorContainer.on(
-					'clickoutside',
-					function(event) {
-						docClick.detach();
-
-						instance.fire('cancelPage', options);
-					}
-				);
-
-				var toolbarBoundingBox = editorContainer.one('.input-group');
-
-				var toolbar = new A.Toolbar(
-					{
-						after: {
-							destroy: function(event) {
-								instance.fire('stopEditing');
-
-								optionsPopover.destroy();
-
-								editorContainer.remove(true);
-
-								if (docClick) {
-									docClick.detach();
-								}
-							},
-							render: function(event) {
-								instance.fire('startEditing');
-							}
-						},
-						boundingBox: toolbarBoundingBox,
-						children: icons
-					}
-				).render(editorContainer);
-
-				toolbar.get('contentBox').swallowEvent('click');
-
-				var optionItem;
-
-				var optionsPopover = new A.Popover(
-					{
-						align: {
-							points: ['tc', 'bc']
-						},
-						bodyContent: prototypeTemplate,
-						on: {
-							visibleChange: function(event) {
-								var instance = this;
-
-								if (event.newVal && !instance.get('rendered')) {
-									instance.set('align.node', optionItem);
-
-									instance.render(editorContainer);
-								}
-							}
-						},
-						position: 'bottom',
-						zIndex: 200
-					}
-				);
-
-				var popoverContentBox = optionsPopover.get('contentBox');
-
-				popoverContentBox.addClass('lfr-menu-list lfr-page-templates');
-
-				popoverContentBox.swallowEvent('click');
-
-				var toolbarField = ANode.create(Lang.sub(TPL_FIELD_INPUT, [prevVal]));
-
-				toolbarBoundingBox.prepend(toolbarField);
-
-				listItem.prepend(editorContainer);
-
-				if (prototypeTemplate && instance._optionsOpen && !prevVal) {
-					optionItem = toolbar.item(1).get('boundingBox');
-
-					optionItem.addClass('active');
-
-					optionsPopover.show();
-				}
-
-				options.listItem = listItem;
-				options.optionsPopover = optionsPopover;
-				options.toolbar = toolbar;
-
-				options.field = editorContainer.one('input');
-
-				toolbar.on(['cancelPage', 'savePage'], relayEvent);
-
-				toolbar._optionsPopover = optionsPopover;
-
-				listItem._toolbar = toolbar;
-
-				Util.focusFormField(toolbarField);
-
-				var realign = A.bind('fire', optionsPopover, 'align');
-
-				optionsPopover.on('visibleChange', realign);
-
-				instance.on(['startEditing', 'stopEditing'], realign);
-
-				if (prevVal) {
-					instance.fire('editPage');
-				}
-			},
-			['aui-toolbar', 'aui-popover', 'event-outside'],
-			true
 		);
 
 		Liferay.provide(
@@ -764,86 +515,6 @@ AUI.add(
 				}
 			},
 			['aui-io-request', 'liferay-notice'],
-			true
-		);
-
-		Liferay.provide(
-			Navigation,
-			'_savePage',
-			function(event, obj) {
-				var instance = this;
-
-				var actionNode = event.actionNode;
-				var field = event.field;
-				var listItem = event.listItem;
-				var textNode = event.textNode;
-				var toolbar = event.toolbar;
-
-				var pageTitle = field.get('value').trim();
-
-				var prevVal = event.prevVal.trim();
-
-				var data = null;
-				var onSuccess = null;
-
-				if (pageTitle) {
-					if (actionNode) {
-						if (!pageTitle || pageTitle != prevVal) {
-							data = {
-								cmd: 'name',
-								doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
-								groupId: themeDisplay.getSiteGroupId(),
-								languageId: themeDisplay.getLanguageId(),
-								layoutId: themeDisplay.getLayoutId(),
-								name: pageTitle,
-								p_auth: Liferay.authToken,
-								privateLayout: themeDisplay.isPrivateLayout()
-							};
-
-							onSuccess = function(event, id, obj) {
-								var doc = A.getDoc();
-
-								var navChildToggle = textNode.all(instance._navItemChildToggleSelector);
-
-								textNode.text(pageTitle);
-
-								textNode.append(navChildToggle);
-
-								actionNode.show();
-
-								toolbar.destroy();
-
-								var oldTitle = doc.get('title');
-
-								var regex = new RegExp(prevVal, 'g');
-
-								var newTitle = oldTitle.replace(regex, pageTitle);
-
-								doc.attr('title', newTitle);
-							};
-						}
-						else {
-							// The new name is the same as the old one
-
-							toolbar.fire('cancelPage');
-						}
-					}
-
-					if (data) {
-						A.io.request(
-							instance._updateURL,
-							{
-								data: data,
-								dataType: 'JSON',
-								on: {
-									success: onSuccess
-								}
-							}
-						);
-					}
-				}
-			},
-			['aui-io-request'],
 			true
 		);
 

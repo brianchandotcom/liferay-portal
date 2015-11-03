@@ -1,47 +1,18 @@
 AUI.add(
 	'liferay-search-container',
 	function(A) {
-		var AArray = A.Array;
 		var Lang = A.Lang;
 
 		var CSS_TEMPLATE = 'lfr-template';
 
 		var STR_BLANK = '';
 
-		var STR_CLICK = 'click';
-
 		var STR_CONTENT_BOX = 'contentBox';
-
-		var STR_ROW_SELECTOR = 'rowSelector';
 
 		var SearchContainer = A.Component.create(
 			{
 				ATTRS: {
-					classNameHover: {
-						value: STR_BLANK
-					},
-
-					hover: {
-						value: STR_BLANK
-					},
-
 					id: {
-						value: STR_BLANK
-					},
-
-					rowClassNameAlternate: {
-						value: STR_BLANK
-					},
-
-					rowClassNameAlternateHover: {
-						value: STR_BLANK
-					},
-
-					rowClassNameBody: {
-						value: STR_BLANK
-					},
-
-					rowClassNameBodyHover: {
 						value: STR_BLANK
 					}
 				},
@@ -133,12 +104,6 @@ AUI.add(
 								defaultFn: instance._deleteRow
 							}
 						);
-
-						instance._eventHandles = [];
-
-						if (instance.get('hover')) {
-							instance._eventHandles.push(instance.get(STR_CONTENT_BOX).delegate(['mouseenter', 'mouseleave'], instance._onContentHover, 'tr', instance));
-						}
 					},
 
 					syncUI: function() {
@@ -153,12 +118,6 @@ AUI.add(
 
 							instance.updateDataStore(initialIds);
 						}
-					},
-
-					destructor: function() {
-						var instance = this;
-
-						(new A.EventHandle(instance._eventHandles)).detach();
 					},
 
 					addRow: function(arr, id) {
@@ -333,34 +292,6 @@ AUI.add(
 						}
 
 						instance._parentContainer[action]();
-					},
-
-					_onContentHover: function(event) {
-						var instance = this;
-
-						var mouseenter = event.type == 'mouseenter';
-						var row = event.currentTarget;
-
-						var endAlternate = instance.get('rowClassNameAlternateHover');
-						var endBody = instance.get('rowClassNameAlternateHover');
-						var startAlternate = instance.get('rowClassNameAlternate');
-						var startBody = instance.get('rowClassNameBody');
-
-						if (mouseenter) {
-							endAlternate = instance.get('rowClassNameAlternate');
-							endBody = instance.get('rowClassNameBody');
-							startAlternate = instance.get('rowClassNameAlternateHover');
-							startBody = instance.get('rowClassNameBodyHover');
-						}
-
-						if (row.hasClass(startAlternate)) {
-							row.replaceClass(startAlternate, endAlternate);
-						}
-						else if (row.hasClass(startBody)) {
-							row.replaceClass(startBody, endBody);
-						}
-
-						row.toggleClass(instance.get('classNameHover'), mouseenter);
 					}
 				},
 
@@ -387,6 +318,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-component', 'event-mouseenter']
+		requires: ['aui-base', 'aui-component']
 	}
 );

@@ -46,13 +46,35 @@ if (Validator.isNull(redirect)) {
 	redirect = backURL.toString();
 }
 
+String orderByCol = ParamUtil.getString(request, "orderByCol", "create-date");
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 
 String keywords = ParamUtil.getString(request, "keywords");
 
+boolean orderByAsc = false;
+
+if (orderByType.equals("asc")) {
+	orderByAsc = true;
+}
+
+OrderByComparator<AssetCategory> orderByComparator = new AssetCategoryCreateDateComparator(orderByAsc);
+
 PortletURL iteratorURL = renderResponse.createRenderURL();
 
+iteratorURL.setParameter("mvcPath", "/view_categories.jsp");
+iteratorURL.setParameter("redirect", currentURL);
+iteratorURL.setParameter("categoryId", String.valueOf(categoryId));
+iteratorURL.setParameter("vocabularyId", String.valueOf(vocabularyId));
+iteratorURL.setParameter("displayStyle", displayStyle);
+iteratorURL.setParameter("keywords", keywords);
+
 SearchContainer categoriesSearchContainer = new SearchContainer(renderRequest, iteratorURL, null, "there-are-no-categories.-you-can-add-a-category-by-clicking-the-plus-button-on-the-right-bottom-corner");
+
+categoriesSearchContainer.setOrderByCol(orderByCol);
+categoriesSearchContainer.setOrderByComparator(orderByComparator);
+categoriesSearchContainer.setOrderByType(orderByType);
 
 categoriesSearchContainer.setRowChecker(new EmptyOnClickRowChecker(renderResponse));
 
@@ -60,7 +82,9 @@ List<AssetCategory> categories = null;
 int totalVar = 0;
 
 if (Validator.isNotNull(keywords)) {
-	AssetCategoryDisplay assetCategoryDisplay = AssetCategoryServiceUtil.searchCategoriesDisplay(scopeGroupId, keywords, categoryId, vocabularyId, categoriesSearchContainer.getStart(), categoriesSearchContainer.getEnd());
+	Sort sort = new Sort("createDate", Sort.LONG_TYPE, orderByAsc);
+
+	AssetCategoryDisplay assetCategoryDisplay = AssetCategoryServiceUtil.searchCategoriesDisplay(scopeGroupId, keywords, vocabularyId, categoryId, categoriesSearchContainer.getStart(), categoriesSearchContainer.getEnd(), sort);
 
 	totalVar = assetCategoryDisplay.getTotal();
 
@@ -73,18 +97,10 @@ else {
 
 	categoriesSearchContainer.setTotal(totalVar);
 
-	categories = AssetCategoryServiceUtil.getVocabularyCategories(scopeGroupId, categoryId, vocabularyId, categoriesSearchContainer.getStart(), categoriesSearchContainer.getEnd(), null);
+	categories = AssetCategoryServiceUtil.getVocabularyCategories(scopeGroupId, categoryId, vocabularyId, categoriesSearchContainer.getStart(), categoriesSearchContainer.getEnd(), categoriesSearchContainer.getOrderByComparator());
 }
 
 categoriesSearchContainer.setResults(categories);
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcPath", "/view_categories.jsp");
-portletURL.setParameter("redirect", currentURL);
-portletURL.setParameter("categoryId", String.valueOf(categoryId));
-portletURL.setParameter("vocabularyId", String.valueOf(vocabularyId));
-portletURL.setParameter("displayStyle", displayStyle);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
@@ -100,6 +116,14 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 	</aui:nav>
 
 	<c:if test="<%= Validator.isNotNull(keywords) || (totalVar > 0) %>">
+		<portlet:renderURL var="portletURL">
+			<portlet:param name="mvcPath" value="/view_categories.jsp" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" />
+			<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabularyId) %>" />
+			<portlet:param name="displayStyle" value="<%= displayStyle %>" />
+		</portlet:renderURL>
+
 		<aui:nav-bar-search>
 			<aui:form action="<%= portletURL %>" name="searchFm">
 				<liferay-ui:input-search markupView="lexicon" />
@@ -117,20 +141,20 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 			<liferay-frontend:management-bar-filters>
 				<liferay-frontend:management-bar-navigation
 					navigationKeys='<%= new String[] {"all"} %>'
-					portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+					portletURL="<%= PortletURLUtil.clone(iteratorURL, liferayPortletResponse) %>"
+				/>
+
+				<liferay-frontend:management-bar-sort
+					orderByCol="<%= orderByCol %>"
+					orderByType="<%= orderByType %>"
+					orderColumns='<%= new String[] {"create-date"} %>'
+					portletURL="<%= PortletURLUtil.clone(iteratorURL, liferayPortletResponse) %>"
 				/>
 			</liferay-frontend:management-bar-filters>
 
-			<liferay-portlet:renderURL varImpl="displayStyleURL">
-				<liferay-portlet:param name="mvcPath" value="/view_categories.jsp" />
-				<liferay-portlet:param name="redirect" value="<%= currentURL %>" />
-				<liferay-portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" />
-				<liferay-portlet:param name="vocabularyId" value="<%= String.valueOf(vocabularyId) %>" />
-			</liferay-portlet:renderURL>
-
 			<liferay-frontend:management-bar-display-buttons
 				displayViews='<%= new String[] {"list"} %>'
-				portletURL="<%= displayStyleURL %>"
+				portletURL="<%= PortletURLUtil.clone(iteratorURL, liferayPortletResponse) %>"
 				selectedDisplayStyle="<%= displayStyle %>"
 			/>
 		</liferay-frontend:management-bar-buttons>
@@ -176,6 +200,11 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 			<liferay-ui:search-container-column-text
 				name="description"
 				value="<%= curCategory.getDescription(locale) %>"
+			/>
+
+			<liferay-ui:search-container-column-date
+				name="create-date"
+				property="createDate"
 			/>
 
 			<liferay-ui:search-container-column-jsp

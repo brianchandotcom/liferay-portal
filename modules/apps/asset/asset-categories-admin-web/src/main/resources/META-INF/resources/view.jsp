@@ -19,11 +19,26 @@
 <%
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 
+String orderByCol = ParamUtil.getString(request, "orderByCol", "create-date");
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
 String keywords = ParamUtil.getString(request, "keywords");
+
+boolean orderByAsc = false;
+
+if (orderByType.equals("asc")) {
+	orderByAsc = true;
+}
+
+OrderByComparator<AssetVocabulary> orderByComparator = new AssetVocabularyCreateDateComparator(orderByAsc);
 
 PortletURL iteratorURL = renderResponse.createRenderURL();
 
 SearchContainer vocabulariesSearchContainer = new SearchContainer(renderRequest, iteratorURL, null, "there-are-no-vocabularies.-you-can-add-a-vocabulary-by-clicking-the-plus-button-on-the-right-bottom-corner");
+
+vocabulariesSearchContainer.setOrderByCol(orderByCol);
+vocabulariesSearchContainer.setOrderByComparator(orderByComparator);
+vocabulariesSearchContainer.setOrderByType(orderByType);
 
 vocabulariesSearchContainer.setRowChecker(new EmptyOnClickRowChecker(renderResponse));
 
@@ -31,7 +46,9 @@ List<AssetVocabulary> vocabularies = null;
 int totalVar = 0;
 
 if (Validator.isNotNull(keywords)) {
-	AssetVocabularyDisplay assetVocabularyDisplay = AssetVocabularyServiceUtil.searchVocabulariesDisplay(scopeGroupId, keywords, vocabulariesSearchContainer.getStart(), vocabulariesSearchContainer.getEnd(), true);
+	Sort sort = new Sort("createDate", Sort.LONG_TYPE, orderByAsc);
+
+	AssetVocabularyDisplay assetVocabularyDisplay = AssetVocabularyServiceUtil.searchVocabulariesDisplay(scopeGroupId, keywords, vocabulariesSearchContainer.getStart(), vocabulariesSearchContainer.getEnd(), sort, true);
 
 	totalVar = assetVocabularyDisplay.getTotal();
 
@@ -44,7 +61,7 @@ else {
 
 	vocabulariesSearchContainer.setTotal(totalVar);
 
-	vocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(scopeGroupId, true, vocabulariesSearchContainer.getStart(), vocabulariesSearchContainer.getEnd(), null);
+	vocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(scopeGroupId, true, vocabulariesSearchContainer.getStart(), vocabulariesSearchContainer.getEnd(), vocabulariesSearchContainer.getOrderByComparator());
 }
 
 vocabulariesSearchContainer.setResults(vocabularies);
@@ -52,14 +69,14 @@ vocabulariesSearchContainer.setResults(vocabularies);
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabularies"), null);
 %>
 
-<liferay-portlet:renderURL varImpl="portletURL" />
-
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<aui:nav-item cssClass="active" label="vocabularies" selected="<%= true %>" />
 	</aui:nav>
 
 	<c:if test="<%= Validator.isNotNull(keywords) || (totalVar > 0) %>">
+		<liferay-portlet:renderURL varImpl="portletURL" />
+
 		<aui:nav-bar-search>
 			<aui:form action="<%= portletURL %>" name="searchFm">
 				<liferay-ui:input-search markupView="lexicon" />
@@ -77,13 +94,20 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 			<liferay-frontend:management-bar-filters>
 				<liferay-frontend:management-bar-navigation
 					navigationKeys='<%= new String[] {"all"} %>'
-					portletURL="<%= renderResponse.createRenderURL() %>"
+					portletURL="<%= PortletURLUtil.clone(iteratorURL, liferayPortletResponse) %>"
+				/>
+
+				<liferay-frontend:management-bar-sort
+					orderByCol="<%= orderByCol %>"
+					orderByType="<%= orderByType %>"
+					orderColumns='<%= new String[] {"create-date"} %>'
+					portletURL="<%= PortletURLUtil.clone(iteratorURL, liferayPortletResponse) %>"
 				/>
 			</liferay-frontend:management-bar-filters>
 
 			<liferay-frontend:management-bar-display-buttons
 				displayViews='<%= new String[] {"list"} %>'
-				portletURL="<%= portletURL %>"
+				portletURL="<%= PortletURLUtil.clone(iteratorURL, liferayPortletResponse) %>"
 				selectedDisplayStyle="<%= displayStyle %>"
 			/>
 		</liferay-frontend:management-bar-buttons>
@@ -129,6 +153,11 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 			<liferay-ui:search-container-column-text
 				name="description"
 				value="<%= vocabulary.getDescription(locale) %>"
+			/>
+
+			<liferay-ui:search-container-column-date
+				name="create-date"
+				property="createDate"
 			/>
 
 			<liferay-ui:search-container-column-text

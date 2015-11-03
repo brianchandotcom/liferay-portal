@@ -65,6 +65,10 @@ public class ManagementBarTag extends IncludeTag implements BodyTag {
 		servletContext = ServletContextUtil.getServletContext();
 	}
 
+	public void setSearchContainerId(String searchContainerId) {
+		_searchContainerId = searchContainerId;
+	}
+
 	@Override
 	protected void cleanUp() {
 		_actionButtons = null;
@@ -72,6 +76,7 @@ public class ManagementBarTag extends IncludeTag implements BodyTag {
 		_checkBoxContainerId = StringPool.BLANK;
 		_filters = null;
 		_includeCheckBox = false;
+		_searchContainerId = null;
 	}
 
 	@Override
@@ -103,6 +108,9 @@ public class ManagementBarTag extends IncludeTag implements BodyTag {
 		request.setAttribute(
 			"liferay-frontend:management-bar:includeCheckBox",
 			_includeCheckBox);
+		request.setAttribute(
+			"liferay-frontend:management-bar:searchContainerId",
+			_searchContainerId);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
@@ -114,5 +122,6 @@ public class ManagementBarTag extends IncludeTag implements BodyTag {
 	private String _checkBoxContainerId = StringPool.BLANK;
 	private String _filters;
 	private boolean _includeCheckBox;
+	private String _searchContainerId;
 
 }

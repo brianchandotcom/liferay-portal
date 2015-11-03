@@ -189,9 +189,7 @@ public class DLPortletInstanceSettingsHelper {
 		String portletName = _dlRequestHelper.getPortletName();
 		String portletResource = _dlRequestHelper.getPortletResource();
 
-		if (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY) ||
-			portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) ||
-			portletResource.equals(DLPortletKeys.DOCUMENT_LIBRARY) ||
+		if (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) ||
 			portletResource.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
 
 			return true;
@@ -203,12 +201,23 @@ public class DLPortletInstanceSettingsHelper {
 		return dlPortletInstanceSettings.isShowActions();
 	}
 
+	public boolean isShowSearch() {
+		String portletName = _dlRequestHelper.getPortletName();
+
+		if (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
+			return true;
+		}
+
+		DLPortletInstanceSettings dlPortletInstanceSettings =
+			_dlRequestHelper.getDLPortletInstanceSettings();
+
+		return dlPortletInstanceSettings.isShowFoldersSearch();
+	}
+
 	public boolean isShowTabs() {
 		String portletName = _dlRequestHelper.getPortletName();
 
-		if (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY) ||
-			portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
-
+		if (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
 			return true;
 		}
 

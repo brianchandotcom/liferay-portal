@@ -19,8 +19,6 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
-
 long newFolderId = ParamUtil.getLong(request, "newFolderId");
 
 String fileShortcutIds = ParamUtil.getString(request, "fileShortcutIds");
@@ -86,10 +84,6 @@ for (FileShortcut curFileShortcut : fileShortcuts) {
 %>
 
 <div <%= portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
-	<c:if test="<%= Validator.isNull(referringPortletResource) %>">
-		<liferay-util:include page="/document_library/top_links.jsp" servletContext="<%= application %>" />
-	</c:if>
-
 	<portlet:actionURL name="/document_library/move_entry" var="moveFileEntryURL">
 		<portlet:param name="mvcRenderCommandName" value="/document_library/move_entry" />
 	</portlet:actionURL>

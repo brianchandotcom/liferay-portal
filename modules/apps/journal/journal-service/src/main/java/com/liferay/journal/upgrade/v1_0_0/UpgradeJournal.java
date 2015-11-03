@@ -610,6 +610,7 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 	@Override
 	protected void doUpgrade() throws Exception {
 		updateBasicWebContentStructure();
+		updateJournalArticlesDateFieldValueFormat();
 
 		addDDMTemplateLinks();
 	}
@@ -727,7 +728,6 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 				long companyId = rs.getLong("companyId");
 
 				updateJournalArticles(companyId);
-				updateJournalArticlesDateFieldValueFormat(companyId);
 			}
 		}
 		finally {
@@ -791,7 +791,7 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 		}
 	}
 
-	protected void updateJournalArticlesDateFieldValueFormat(long companyId)
+	protected void updateJournalArticlesDateFieldValueFormat()
 		throws Exception {
 
 		Connection con = null;
@@ -803,8 +803,8 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"select id_, content from JournalArticle where companyId = " +
-					companyId + " and content like '%type=_ddm-date_%'");
+				"select id_, content from JournalArticle where content like " +
+					"'%type=_ddm-date_%'");
 
 			rs = ps.executeQuery();
 

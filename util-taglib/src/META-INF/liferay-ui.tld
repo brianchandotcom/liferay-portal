@@ -3078,7 +3078,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The time format for the time displayed. Acceptable values include <![CDATA[<code>24-hour</code>]]> for 24 hour format (i.e. 13:00 for 1:00 PM) , <![CDATA[<code>am-pm</code>]]> for AM/PM format (i.e. 1:00 PM and 1:00 AM), and <![CDATA[<code>locale</code>]]> for default locale time format.</description>
+			<description>The time format for the time displayed. Acceptable values include <![CDATA[<code>24-hour</code>]]> for 24 hour format (i.e., 13:00 for 1:00 PM) , <![CDATA[<code>am-pm</code>]]> for 12 hour format (i.e., 1:00 PM and 1:00 AM), and <![CDATA[<code>locale</code>]]> for the locale's default time format.</description>
 			<name>timeFormat</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

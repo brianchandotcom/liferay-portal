@@ -34,25 +34,10 @@ public class UpgradeCalendar extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (!tableHasColumn("CalendarBooking", "vEventUid")) {
-			runSQL(
-				"alter table Calendar add timeZoneId STRING null after " +
-					"description");
+			runSQL("alter table Calendar add timeZoneId STRING default null");
 		}
 
 		updateCalendarTimeZoneIds();
-	}
-
-	protected void updateCalendarTimeZoneId(
-			Connection connection, long calendarId, String timeZoneId)
-		throws Exception {
-
-		PreparedStatement ps = connection.prepareStatement(
-			"update Calendar set timeZoneId = ? where calendarId = ?");
-
-		ps.setString(1, timeZoneId);
-		ps.setLong(2, calendarId);
-
-		ps.execute();
 	}
 
 	protected void updateCalendarTimeZoneId(long calendarId, String timeZoneId)

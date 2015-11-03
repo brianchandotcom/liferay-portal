@@ -542,7 +542,7 @@ public class LiferaySeleniumHelper {
 		liferaySelenium.assertElementPresent(locator);
 
 		if (liferaySelenium.isValue(locator, pattern)) {
-			String value = liferaySelenium.getValue(locator);
+			String value = liferaySelenium.getElementValue(locator);
 
 			throw new Exception(
 				"Pattern \"" + pattern + "\" matches \"" + value + "\" at \"" +
@@ -645,7 +645,7 @@ public class LiferaySeleniumHelper {
 		liferaySelenium.assertElementPresent(locator);
 
 		if (liferaySelenium.isNotValue(locator, pattern)) {
-			String value = liferaySelenium.getValue(locator);
+			String value = liferaySelenium.getElementValue(locator);
 
 			throw new Exception(
 				"Pattern \"" + pattern + "\" does not match \"" + value +
@@ -997,13 +997,15 @@ public class LiferaySeleniumHelper {
 	}
 
 	public static boolean isNotText(
-		LiferaySelenium liferaySelenium, String locator, String value) {
+			LiferaySelenium liferaySelenium, String locator, String value)
+		throws Exception {
 
 		return !liferaySelenium.isText(locator, value);
 	}
 
 	public static boolean isNotValue(
-		LiferaySelenium liferaySelenium, String locator, String value) {
+			LiferaySelenium liferaySelenium, String locator, String value)
+		throws Exception {
 
 		return !liferaySelenium.isValue(locator, value);
 	}

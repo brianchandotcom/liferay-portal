@@ -89,32 +89,6 @@
 								<liferay-util:include page="/add_application.jsp" servletContext="<%= application %>" />
 							</liferay-ui:section>
 						</c:if>
-
-						<c:if test="<%= hasLayoutAddPermission && themeDisplay.isShowSiteAdministrationIcon() %>">
-
-							<%
-							long selPlid = ParamUtil.getLong(request, "selPlid", LayoutConstants.DEFAULT_PLID);
-							%>
-
-							<liferay-ui:section>
-
-								<%
-								PortletURL newPageURL = PortletProviderUtil.getPortletURL(request, groupDisplayContextHelper.getLiveGroup(), Layout.class.getName(), PortletProvider.Action.EDIT);
-
-								newPageURL.setParameter("tabs1", layout.isPrivateLayout() ? "private-pages" : "public-pages");
-								newPageURL.setParameter("groupId", String.valueOf(groupDisplayContextHelper.getLiveGroupId()));
-								newPageURL.setParameter("selPlid", String.valueOf(selPlid));
-								newPageURL.setParameter("treeId", "layoutsTree");
-								newPageURL.setParameter("viewLayout", Boolean.TRUE.toString());
-
-								String newPageURLString = HttpUtil.setParameter(newPageURL.toString(), "refererPlid", String.valueOf(selPlid));
-								%>
-
-								<aui:button-row>
-									<aui:button href="<%= newPageURLString %>"  primary="<%= true %>" value="new-page" />
-								</aui:button-row>
-							</liferay-ui:section>
-						</c:if>
 					</liferay-ui:tabs>
 
 					<span class="added-message hide" id="<portlet:namespace />addedMessage">

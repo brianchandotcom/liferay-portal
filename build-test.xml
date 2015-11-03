@@ -4307,6 +4307,8 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 		<if>
 			<equals arg1="${browser.type}" arg2="android" />
 			<then>
+				<stop-android-device />
+
 				<start-android-device />
 			</then>
 		</if>
@@ -6750,6 +6752,8 @@ jdbc.default.password=${database.mysql.password}</echo>
 				<move file="${jenkins.results.xml.file}" todir="${project.dir}/portal-web/test-results/functional" />
 			</then>
 		</if>
+
+		<antcall target="clean-up-mobile-device" />
 	</target>
 
 	<target name="run-simple-server">
@@ -7038,8 +7042,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 				<var name="app.server.bundle.index" unset="true" />
 			</then>
 		</if>
-
-		<antcall target="clean-up-mobile-device" />
 
 		<antcall target="clean-up-selenium-driver" />
 

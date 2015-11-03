@@ -1133,6 +1133,13 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			companyId, classNameId, defaultUserId);
 	}
 
+	/**
+	 * Returns all the active or inactive groups in the company.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  active whether the group is active
+	 * @return groups associated with the company, based on the active parameter
+	 */
 	@Override
 	public List<Group> getActiveGroups(long companyId, boolean active) {
 		return groupPersistence.findByC_A(companyId, active);

@@ -5,13 +5,6 @@ dependencies {
 	compile group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 }
 
-deploy {
-	from("lib") {
-		include "com.liferay.ip.geocoder.jar"
-		include "geoip-api.jar"
-	}
-}
-
 liferay {
 	deployDir = file("${liferayHome}/osgi/modules")
 }

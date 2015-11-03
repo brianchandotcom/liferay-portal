@@ -1058,7 +1058,7 @@
 
 		<execute function="KeyPress" locator1="NavBar#BASIC_SEARCH_FIELD" value1="\RETURN" />
 
-		<execute function="AssertTextEquals" locator1="Message#EMPTY" value1="No entries were found." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No entries were found." />
 		<execute function="AssertElementNotPresent" locator1="Blogs#ICON_VIEW_ENTRY_TITLE" value1="${entryTitle}" />
 	</command>
 
@@ -1247,7 +1247,7 @@
 	</command>
 
 	<command name="viewDefaultCP">
-		<execute function="AssertTextEquals" locator1="Message#INFO_5" value1="No entries were found." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No entries were found." />
 		<execute function="AssertElementNotPresent" locator1="Blogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
 	</command>
 

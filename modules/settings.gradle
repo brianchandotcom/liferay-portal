@@ -5,7 +5,11 @@ FileTree fileTree = fileTree(rootDir) {
 	if (Boolean.getBoolean("portal.build")) {
 		exclude "apps/journal/journal-content-asset-addon-entry/build.gradle"
 		exclude "apps/mentions/mentions-editor-config/build.gradle"
-		exclude "apps/social/social-networking-*/build.gradle"
+
+		if (!System.getenv("JENKINS_HOME")) {
+			exclude "apps/social/social-networking-*/build.gradle"
+		}
+
 		exclude "frontend/frontend-editor/frontend-editor-lang/build.gradle"
 		exclude "portal/portal-scripting-beanshell/build.gradle"
 		exclude "portal/portal-scripting-javascript/build.gradle"
@@ -96,6 +100,11 @@ FileTree fileTree = fileTree(rootDir) {
 		include "portal-security/*/build.gradle"
 		include "portal-store/*/build.gradle"
 		include "portal/*/build.gradle"
+
+		if (System.getenv("JENKINS_HOME")) {
+			include "util/ip-geocoder/build.gradle"
+		}
+
 		include "util/pmd/build.gradle"
 		include "util/portal-tools-sample-sql-builder/build.gradle"
 		include "util/sass-compiler-jni/build.gradle"

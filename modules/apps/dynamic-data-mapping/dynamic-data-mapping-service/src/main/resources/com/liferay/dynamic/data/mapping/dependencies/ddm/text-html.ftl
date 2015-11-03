@@ -10,6 +10,7 @@
 	<#assign skipEditorLoading = paramUtil.getBoolean(request, "p_p_isolated")>
 
 	<@liferay_ui["input-editor"]
+		contents="${fieldValue}"
 		contentsLanguageId="${requestedLocale}"
 		cssClass="form-control"
 		editorName="${editorName}"

@@ -26,82 +26,82 @@ Group group = layoutsAdminDisplayContext.getGroup();
 	Group stagingGroup = layoutsAdminDisplayContext.getStagingGroup();
 	%>
 
-	<c:if test="<%= stagingGroup.isStaged() && (selGroup.getGroupId() == stagingGroup.getGroupId()) %>">
+	<c:if test="<%= stagingGroup.isStaged() && (themeDisplay.getScopeGroupId() == stagingGroup.getGroupId()) %>">
 
-	<%
-	long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
+		<%
+		long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
 
-	if (layoutSetBranchId <= 0) {
-		LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
+		if (layoutSetBranchId <= 0) {
+			LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 
-		layoutSetBranchId = StagingUtil.getRecentLayoutSetBranchId(user, selLayoutSet.getLayoutSetId());
-	}
-
-	LayoutSetBranch layoutSetBranch = null;
-
-	if (layoutSetBranchId > 0) {
-		layoutSetBranch = LayoutSetBranchLocalServiceUtil.fetchLayoutSetBranch(layoutSetBranchId);
-	}
-
-	if (layoutSetBranch == null) {
-		try {
-			layoutSetBranch = LayoutSetBranchLocalServiceUtil.getMasterLayoutSetBranch(layoutsAdminDisplayContext.getStagingGroupId(), layoutsAdminDisplayContext.isPrivateLayout());
+			layoutSetBranchId = StagingUtil.getRecentLayoutSetBranchId(user, selLayoutSet.getLayoutSetId());
 		}
-		catch (NoSuchLayoutSetBranchException nslsbe) {
+
+		LayoutSetBranch layoutSetBranch = null;
+
+		if (layoutSetBranchId > 0) {
+			layoutSetBranch = LayoutSetBranchLocalServiceUtil.fetchLayoutSetBranch(layoutSetBranchId);
 		}
-	}
 
-	List<LayoutSetBranch> layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(layoutsAdminDisplayContext.getStagingGroupId(), layoutsAdminDisplayContext.isPrivateLayout());
-	%>
+		if (layoutSetBranch == null) {
+			try {
+				layoutSetBranch = LayoutSetBranchLocalServiceUtil.getMasterLayoutSetBranch(layoutsAdminDisplayContext.getStagingGroupId(), layoutsAdminDisplayContext.isPrivateLayout());
+			}
+			catch (NoSuchLayoutSetBranchException nslsbe) {
+			}
+		}
 
-	<c:choose>
-		<c:when test="<%= layoutSetBranches.size() > 1 %>">
-			<ul class="nav nav-equal-height nav-nested">
-				<li>
-					<div class="nav-equal-height-heading">
-						<span><%= HtmlUtil.escape(LanguageUtil.get(request, layoutSetBranch.getName())) %></span>
+		List<LayoutSetBranch> layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(layoutsAdminDisplayContext.getStagingGroupId(), layoutsAdminDisplayContext.isPrivateLayout());
+		%>
 
-						<span class="nav-equal-height-heading-field">
-							<liferay-ui:icon-menu direction="down" icon="../aui/cog" message="" showArrow="<%= false %>">
+		<c:choose>
+			<c:when test="<%= layoutSetBranches.size() > 1 %>">
+				<ul class="nav nav-equal-height nav-nested">
+					<li>
+						<div class="nav-equal-height-heading">
+							<span><%= HtmlUtil.escape(LanguageUtil.get(request, layoutSetBranch.getName())) %></span>
 
-								<%
-								Map<String, Object> data = new HashMap<String, Object>();
+							<span class="nav-equal-height-heading-field">
+								<liferay-ui:icon-menu direction="down" icon="../aui/cog" message="" showArrow="<%= false %>">
 
-								data.put("navigation", Boolean.TRUE.toString());
+									<%
+									Map<String, Object> data = new HashMap<String, Object>();
 
-								for (int i = 0; i < layoutSetBranches.size(); i++) {
-									LayoutSetBranch curLayoutSetBranch = layoutSetBranches.get(i);
+									data.put("navigation", Boolean.TRUE.toString());
 
-									boolean selected = (curLayoutSetBranch.getLayoutSetBranchId() == layoutSetBranch.getLayoutSetBranchId());
+									for (int i = 0; i < layoutSetBranches.size(); i++) {
+										LayoutSetBranch curLayoutSetBranch = layoutSetBranches.get(i);
 
-									PortletURL layoutSetBranchURL = PortalUtil.getControlPanelPortletURL(request, LayoutAdminPortletKeys.GROUP_PAGES, PortletRequest.RENDER_PHASE);
+										boolean selected = (curLayoutSetBranch.getLayoutSetBranchId() == layoutSetBranch.getLayoutSetBranchId());
 
-									layoutSetBranchURL.setParameter("mvcPath", "/view.jsp");
-									layoutSetBranchURL.setParameter("redirect", String.valueOf(layoutsAdminDisplayContext.getRedirectURL()));
-									layoutSetBranchURL.setParameter("groupId", String.valueOf(curLayoutSetBranch.getGroupId()));
-									layoutSetBranchURL.setParameter("privateLayout", String.valueOf(layoutsAdminDisplayContext.isPrivateLayout()));
-									layoutSetBranchURL.setParameter("layoutSetBranchId", String.valueOf(curLayoutSetBranch.getLayoutSetBranchId()));
-								%>
+										PortletURL layoutSetBranchURL = PortalUtil.getControlPanelPortletURL(request, LayoutAdminPortletKeys.GROUP_PAGES, PortletRequest.RENDER_PHASE);
 
-									<liferay-ui:icon
-										cssClass='<%= selected ? "disabled" : StringPool.BLANK %>'
-										data="<%= data %>"
-										message="<%= HtmlUtil.escape(curLayoutSetBranch.getName()) %>"
-										url="<%= selected ? null : layoutSetBranchURL.toString() %>"
-									/>
+										layoutSetBranchURL.setParameter("mvcPath", "/view.jsp");
+										layoutSetBranchURL.setParameter("redirect", String.valueOf(layoutsAdminDisplayContext.getRedirectURL()));
+										layoutSetBranchURL.setParameter("groupId", String.valueOf(curLayoutSetBranch.getGroupId()));
+										layoutSetBranchURL.setParameter("privateLayout", String.valueOf(layoutsAdminDisplayContext.isPrivateLayout()));
+										layoutSetBranchURL.setParameter("layoutSetBranchId", String.valueOf(curLayoutSetBranch.getLayoutSetBranchId()));
+									%>
 
-								<%
-								}
-								%>
+										<liferay-ui:icon
+											cssClass='<%= selected ? "disabled" : StringPool.BLANK %>'
+											data="<%= data %>"
+											message="<%= HtmlUtil.escape(curLayoutSetBranch.getName()) %>"
+											url="<%= selected ? null : layoutSetBranchURL.toString() %>"
+										/>
 
-							</liferay-ui:icon-menu>
-						</span>
-					</div>
-				</li>
-			</ul>
-		</c:when>
-	</c:choose>
-</c:if>
+									<%
+									}
+									%>
+
+								</liferay-ui:icon-menu>
+							</span>
+						</div>
+					</li>
+				</ul>
+			</c:when>
+		</c:choose>
+	</c:if>
 
 	<%
 	String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
@@ -112,15 +112,19 @@ Group group = layoutsAdminDisplayContext.getGroup();
 	%>
 
 	<c:if test="<%= !selGroup.isLayoutSetPrototype() %>">
-		<liferay-portlet:renderURL varImpl="editPublicLayoutURL">
-			<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
-			<portlet:param name="redirect" value="<%= layoutsAdminDisplayContext.getRedirect() %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(layoutsAdminDisplayContext.getLiveGroupId()) %>" />
-			<portlet:param name="viewLayout" value="<%= Boolean.TRUE.toString() %>" />
-		</liferay-portlet:renderURL>
+
+		<%
+		PortletURL editPublicLayoutURL = PortalUtil.getControlPanelPortletURL(request, LayoutAdminPortletKeys.GROUP_PAGES, 0, PortletRequest.RENDER_PHASE);
+
+		editPublicLayoutURL.setParameter("privateLayout", Boolean.FALSE.toString());
+		editPublicLayoutURL.setParameter("redirect", layoutsAdminDisplayContext.getRedirect());
+		editPublicLayoutURL.setParameter("groupId", String.valueOf(layoutsAdminDisplayContext.getLiveGroupId()));
+		editPublicLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
+		%>
 
 		<liferay-ui:layouts-tree
 			groupId="<%= selGroup.getGroupId() %>"
+			portletNamespace="<%= StringPool.UNDERLINE + LayoutAdminPortletKeys.GROUP_PAGES + StringPool.UNDERLINE %>"
 			portletURL="<%= editPublicLayoutURL %>"
 			privateLayout="<%= false %>"
 			rootNodeName="<%= liveGroup.getLayoutRootNodeName(false, themeDisplay.getLocale()) %>"
@@ -130,15 +134,18 @@ Group group = layoutsAdminDisplayContext.getGroup();
 		/>
 	</c:if>
 
-	<liferay-portlet:renderURL varImpl="editPrivateLayoutURL">
-		<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
-		<portlet:param name="redirect" value="<%= layoutsAdminDisplayContext.getRedirect() %>" />
-		<portlet:param name="groupId" value="<%= String.valueOf(layoutsAdminDisplayContext.getLiveGroupId()) %>" />
-		<portlet:param name="viewLayout" value="<%= Boolean.TRUE.toString() %>" />
-	</liferay-portlet:renderURL>
+	<%
+	PortletURL editPrivateLayoutURL = PortalUtil.getControlPanelPortletURL(request, LayoutAdminPortletKeys.GROUP_PAGES, 0, PortletRequest.RENDER_PHASE);
+
+	editPrivateLayoutURL.setParameter("privateLayout", Boolean.TRUE.toString());
+	editPrivateLayoutURL.setParameter("redirect", layoutsAdminDisplayContext.getRedirect());
+	editPrivateLayoutURL.setParameter("groupId", String.valueOf(layoutsAdminDisplayContext.getLiveGroupId()));
+	editPrivateLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
+	%>
 
 	<liferay-ui:layouts-tree
 		groupId="<%= selGroup.getGroupId() %>"
+		portletNamespace="<%= StringPool.UNDERLINE + LayoutAdminPortletKeys.GROUP_PAGES + StringPool.UNDERLINE %>"
 		portletURL="<%= editPrivateLayoutURL %>"
 		privateLayout="<%= true %>"
 		rootNodeName="<%= liveGroup.getLayoutRootNodeName(true, themeDisplay.getLocale()) %>"
@@ -158,15 +165,18 @@ Group group = layoutsAdminDisplayContext.getGroup();
 	%>
 
 	<c:if test="<%= ((selLayout == null) && GroupPermissionUtil.contains(permissionChecker, selGroup, ActionKeys.ADD_LAYOUT)) || ((selLayout != null) && LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.ADD_LAYOUT)) %>">
-		<liferay-portlet:renderURL portletName="<%= LayoutAdminPortletKeys.GROUP_PAGES %>" var="addPagesURL">
-			<portlet:param name="mvcPath" value="/add_layout.jsp" />
-			<portlet:param name="groupId" value="<%= String.valueOf(selGroup.getGroupId()) %>" />
-			<portlet:param name="selPlid" value="<%= (selLayout != null) ? String.valueOf(selLayout.getPlid()) : StringPool.BLANK %>" />
-			<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-		</liferay-portlet:renderURL>
+
+		<%
+		PortletURL addPagesURL = PortalUtil.getControlPanelPortletURL(request, LayoutAdminPortletKeys.GROUP_PAGES, 0, PortletRequest.RENDER_PHASE);
+
+		addPagesURL.setParameter("mvcPath", "/add_layout.jsp");
+		addPagesURL.setParameter("groupId", String.valueOf(selGroup.getGroupId()));
+		addPagesURL.setParameter("selPlid", (selLayout != null) ? String.valueOf(selLayout.getPlid()) : StringPool.BLANK);
+		addPagesURL.setParameter("privateLayout", String.valueOf(privateLayout));
+		%>
 
 		<aui:button-row>
-			<aui:button cssClass="btn-block btn-primary" href="<%= addPagesURL %>" value="add-page" />
+			<aui:button cssClass="btn-block btn-primary" href="<%= addPagesURL.toString() %>" value="add-page" />
 		</aui:button-row>
 	</c:if>
 </c:if>

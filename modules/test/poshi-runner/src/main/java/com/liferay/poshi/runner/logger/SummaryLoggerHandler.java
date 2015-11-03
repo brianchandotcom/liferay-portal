@@ -514,9 +514,10 @@ public final class SummaryLoggerHandler {
 		}
 
 		if (summary != null) {
-			summary = PoshiRunnerVariablesUtil.replaceCommandVars(summary);
+			summary = HtmlUtil.escape(
+				PoshiRunnerVariablesUtil.replaceCommandVars(summary));
 
-			return HtmlUtil.escape(_replaceCommandVars(summary, element));
+			return _replaceExecuteVars(summary, element);
 		}
 
 		return null;
@@ -737,7 +738,7 @@ public final class SummaryLoggerHandler {
 		return sb.toString();
 	}
 
-	private static String _replaceCommandVars(String token, Element element)
+	private static String _replaceExecuteVars(String token, Element element)
 		throws Exception {
 
 		Matcher matcher = _pattern.matcher(token);
@@ -748,8 +749,8 @@ public final class SummaryLoggerHandler {
 
 			String varName = matcher.group(1);
 
-			String varValue = PoshiRunnerVariablesUtil.getValueFromExecuteMap(
-				varName);
+			String varValue = HtmlUtil.escape(
+				PoshiRunnerVariablesUtil.getValueFromExecuteMap(varName));
 
 			if ((element.attributeValue("function") != null) &&
 				varName.startsWith("locator")) {

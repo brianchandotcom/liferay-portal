@@ -925,8 +925,8 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 
 				schedule(
 					schedulerEntry.getTrigger(), storageType,
-					schedulerEntry.getDescription(),
-					DestinationNames.SCHEDULER_DISPATCH, message, 0);
+					schedulerEntry.getDescription(), destinationName, message,
+					0);
 
 				Dictionary<String, Object> properties =
 					new HashMapDictionary<>();

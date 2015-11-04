@@ -771,6 +771,27 @@ AUI.add(
 						return inputNode.val() ? String(timestamp) : '';
 					},
 
+					repeat: function() {
+						var instance = this;
+
+						instance._getTemplate(
+							function(fieldTemplate) {
+								var field = instance.createField(fieldTemplate);
+
+								var inputNode = field.getInputNode();
+
+								Liferay.after(
+									inputNode.attr('id') + 'DatePicker:registered',
+									function() {
+										field.renderUI();
+									}
+								);
+
+								instance._addFieldValidation(field, instance);
+							}
+						);
+					},
+
 					setValue: function(value) {
 						var instance = this;
 

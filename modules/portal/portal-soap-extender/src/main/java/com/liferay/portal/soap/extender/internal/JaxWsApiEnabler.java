@@ -18,6 +18,8 @@ import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.portal.soap.extender.configuration.JaxWsApiConfiguration;
 
+import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.Map;
 
 import javax.xml.ws.spi.Provider;
@@ -67,11 +69,10 @@ public class JaxWsApiEnabler {
 
 		_serviceTracker.open();
 
-		Bus bus = _serviceTracker.waitForService(
-			jaxWsApiConfiguration.timeout());
+		_bus = _serviceTracker.waitForService(jaxWsApiConfiguration.timeout());
 
-		if (bus != null) {
-			BusFactory.setDefaultBus(bus);
+		if (_bus != null) {
+			BusFactory.setDefaultBus(_bus);
 
 			ProviderImpl providerImpl = new ProviderImpl();
 
@@ -102,9 +103,12 @@ public class JaxWsApiEnabler {
 
 		deactivate();
 
+		BusFactory.clearDefaultBusForAnyThread(_bus);
+
 		activate(bundleContext, properties);
 	}
 
+	private Bus _bus;
 	private ServiceRegistration<Provider> _serviceRegistration;
 	private ServiceTracker<Bus, Bus> _serviceTracker;
 

@@ -390,6 +390,10 @@
 			<var name="webContentTranslationTitle" value="Titre de Contenu Web1" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
 		<execute macro="AssetPublisherPortlet#configureShowMetadataFieldsPG">
 			<var name="addMetadata" value="true" />
 			<var name="metadataField" value="Categories" />

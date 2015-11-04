@@ -1,8 +1,38 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
 package com.liferay.jenkins.results.parser;
 
+import java.io.File;
+import java.io.IOException;
+
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.tools.ant.Project;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+/**
+ * @author Peter Yoo
+ */
 public class FailedJobsMessageUtil {
 
-	public static void getFailedJobsMessage(Project project) {
+	public static void getFailedJobsMessage(Project project) throws Exception {
 		StringBuilder sb = new StringBuilder();
 
 		String buildURL = project.getProperty("build.url");
@@ -23,13 +53,13 @@ public class FailedJobsMessageUtil {
 			if (jsonObject.has("runs")) {
 				JSONArray runsJSONArray = jsonObject.getJSONArray("runs");
 
-				List runBuildURLs = new ArrayList();
-				List failureBuildURLs = new ArrayList();
+				List<String> runBuildURLs = new ArrayList<>();
+				List<String> failureBuildURLs = new ArrayList<>();
 
 				for (int i = 0; i < runsJSONArray.length(); i++) {
-					JSONObject runsJSONObject = runsJSONArray.get(i);
+					JSONObject runsJSONObject = runsJSONArray.getJSONObject(i);
 
-					String runBuildURL = runsJSONObject.get("url");
+					String runBuildURL = runsJSONObject.getString("url");
 
 					if (runBuildURL.endsWith(
 							"/"+ jsonObject.get("number") + "/")) {
@@ -108,8 +138,7 @@ public class FailedJobsMessageUtil {
 			sb.append("<p>0 Tests Passed.<br />1 Test Failed.</p>");
 			sb.append("<pre>");
 
-			String javacOutputFileContent =
-				FileUtils.readFileToString(javacOutputFile);
+			String javacOutputFileContent = _read(javacOutputFile);
 
 			if (javacOutputFileContent.length() > 5000) {
 				javacOutputFileContent = javacOutputFileContent.substring(
@@ -122,4 +151,8 @@ public class FailedJobsMessageUtil {
 
 		project.setProperty("report.html.content", sb.toString());		
 	}
+	
+	private static String _read(File file) throws IOException {
+		return new String(Files.readAllBytes(Paths.get(file.toURI())));
+	}	
 }

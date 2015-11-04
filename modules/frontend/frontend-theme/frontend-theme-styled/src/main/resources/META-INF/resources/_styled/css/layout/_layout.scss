@@ -1,0 +1,21 @@
+/* ---------- Column widths ---------- */
+
+.portlet-column-content.empty {
+	padding: $portlet-column-content-empty-padding;
+}
+
+/* ---------- Wrapper ---------- */
+
+#wrapper {
+	padding-bottom: $wrapper-padding-bottom;
+	padding-top: $wrapper-padding-top;
+	position: relative;
+}
+
+.signed-in #wrapper {
+	margin-top: $wrapper-signed-in-margin-top-mobile;
+
+	@include sm() {
+		margin-top: $wrapper-signed-in-margin-top-desktop;
+	}
+}

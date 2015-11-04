@@ -46,6 +46,7 @@ public class JenkinsResultsParserUtil {
 		json = json.replaceAll("\\{", "&#123;");
 		json = json.replaceAll("\\}", "&#125;");
 		json = json.replaceAll("\n", "<br />");
+		json = json.replaceAll("\u00BB", "&raquo;");
 
 		return json;
 	}

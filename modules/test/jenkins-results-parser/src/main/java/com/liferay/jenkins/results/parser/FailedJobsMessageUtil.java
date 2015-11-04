@@ -111,7 +111,8 @@ public class FailedJobsMessageUtil {
 					sb.append("<li><strong><a href=\\\"");
 					sb.append(failureBuildURL);
 					sb.append("\\\">");
-					sb.append(failureJSONObject.get("fullDisplayName"));
+					sb.append(JenkinsResultsParserUtil.fixJSON(
+						failureJSONObject.getString("fullDisplayName")));
 					sb.append("</a></strong>");
 					sb.append(
 						FailureMessageUtil.getFailureMessage(

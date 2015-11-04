@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.dao.db;
 
 import java.io.IOException;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
 import javax.naming.NamingException;
@@ -33,14 +34,24 @@ public abstract class BaseDBProcess implements DBProcess {
 	public void runSQL(String template) throws IOException, SQLException {
 		DB db = DBFactoryUtil.getDB();
 
-		db.runSQL(template);
+		if (connection == null) {
+			db.runSQL(template);
+		}
+		else {
+			db.runSQL(connection, template);
+		}
 	}
 
 	@Override
 	public void runSQL(String[] templates) throws IOException, SQLException {
 		DB db = DBFactoryUtil.getDB();
 
-		db.runSQL(templates);
+		if (connection == null) {
+			db.runSQL(templates);
+		}
+		else {
+			db.runSQL(connection, templates);
+		}
 	}
 
 	@Override
@@ -68,7 +79,15 @@ public abstract class BaseDBProcess implements DBProcess {
 
 		DB db = DBFactoryUtil.getDB();
 
-		db.runSQLTemplateString(template, evaluate, failOnError);
+		if (connection == null) {
+			db.runSQLTemplateString(template, evaluate, failOnError);
+		}
+		else {
+			db.runSQLTemplateString(
+				connection, template, evaluate, failOnError);
+		}
 	}
+
+	protected Connection connection;
 
 }

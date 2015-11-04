@@ -30,6 +30,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -68,12 +69,18 @@ public abstract class VerifyProcess extends BaseDBProcess {
 				_log.info("Verifying " + ClassUtil.getClassName(this));
 			}
 
-			doVerify();
+			try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
+				connection = con;
+
+				doVerify();
+			}
 		}
 		catch (Exception e) {
 			throw new VerifyException(e);
 		}
 		finally {
+			connection = null;
+
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					"Completed verification process " +

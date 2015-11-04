@@ -15,6 +15,12 @@
 package com.liferay.portal.verify;
 
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -26,7 +32,11 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ContactLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.impl.UserImpl;
 
 import java.util.List;
 import java.util.Locale;
@@ -39,6 +49,47 @@ public class VerifyUser extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
+		verifyInactive();
+		verifyNoContacts();
+	}
+
+	protected void verifyInactive() throws Exception {
+		StringBundler sb = null;
+
+		DB db = DBManagerUtil.getDB();
+
+		if (db.getDBType() == DBType.MYSQL) {
+			sb = new StringBundler(7);
+
+			sb.append("update Group_ inner join User_ on Group_.companyId = ");
+			sb.append("User_.companyId and Group_.classPK = User_.userId ");
+			sb.append("set active_ = [$FALSE$] ");
+			sb.append("where Group_.classNameId = ");
+			sb.append(PortalUtil.getClassNameId(User.class));
+			sb.append(" and User_.status = ");
+			sb.append(WorkflowConstants.STATUS_INACTIVE);
+		}
+		else {
+			sb = new StringBundler(9);
+
+			sb.append("update Group_ set active_ = [$FALSE$] where groupId in");
+			sb.append(" (select Group_.groupId from Group_ inner join User_ ");
+			sb.append("on Group_.companyId = User_.companyId and ");
+			sb.append("Group_.classPK = User_.userId ");
+			sb.append("where Group_.classNameId = ");
+			sb.append(PortalUtil.getClassNameId(User.class));
+			sb.append(" and User_.status = ");
+			sb.append(WorkflowConstants.STATUS_INACTIVE);
+			sb.append(")");
+		}
+
+		runSQL(sb.toString());
+
+		EntityCacheUtil.clearCache(UserImpl.class);
+		FinderCacheUtil.clearCache(UserImpl.class.getName());
+	}
+
+	protected void verifyNoContacts() throws PortalException {
 		List<User> users = UserLocalServiceUtil.getNoContacts();
 
 		if (_log.isDebugEnabled()) {

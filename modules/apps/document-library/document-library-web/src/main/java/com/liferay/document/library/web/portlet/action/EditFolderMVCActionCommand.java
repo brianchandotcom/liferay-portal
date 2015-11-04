@@ -183,7 +183,7 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 			actionResponse.setRenderParameter(
 				"mvcPath", "/document_library/error.jsp");
 		}
-		catch (DuplicateFileException | DuplicateFileEntryException |
+		catch (DuplicateFileEntryException | DuplicateFileException |
 			   DuplicateFolderNameException | FolderNameException |
 			   RequiredFileEntryTypeException e) {
 

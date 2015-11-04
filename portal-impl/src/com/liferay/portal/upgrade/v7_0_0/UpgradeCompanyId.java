@@ -30,10 +30,10 @@ public class UpgradeCompanyId
 			"MBStatsUser", "OrgGroupRole", "OrgLabor", "PasswordPolicyRel",
 			"PasswordTracker", "PortletPreferences", "RatingsStats",
 			"ResourceBlockPermission", "SCFrameworkVersi_SCProductVers",
-			"SCLicense", "SCLicenses_SCProductEntries", "ServiceComponent",
-			"TrashVersion", "UserGroupGroupRole", "UserGroupRole",
-			"UserGroups_Teams", "UserIdMapper", "Users_Groups", "Users_Orgs",
-			"Users_Roles", "Users_Teams", "Users_UserGroups", "UserTrackerPath"
+			"SCLicense", "SCLicenses_SCProductEntries", "TrashVersion",
+			"UserGroupGroupRole", "UserGroupRole", "UserGroups_Teams",
+			"UserIdMapper", "Users_Groups", "Users_Orgs", "Users_Roles",
+			"Users_Teams", "Users_UserGroups", "UserTrackerPath"
 		};
 	}
 

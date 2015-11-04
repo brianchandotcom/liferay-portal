@@ -2214,10 +2214,6 @@
 
 		<column name="serviceComponentId" type="long" primary="true" />
 
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-
 		<!-- Other fields -->
 
 		<column name="buildNamespace" type="String" />

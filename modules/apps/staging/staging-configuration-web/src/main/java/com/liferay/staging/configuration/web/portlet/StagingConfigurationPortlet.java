@@ -14,11 +14,15 @@
 
 package com.liferay.staging.configuration.web.portlet;
 
+import com.liferay.portal.NoSuchBackgroundTaskException;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
@@ -67,6 +71,30 @@ import org.osgi.service.component.annotations.Reference;
 	service = Portlet.class
 )
 public class StagingConfigurationPortlet extends MVCPortlet {
+
+	public void deleteBackgroundTask(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws IOException, PortalException {
+
+		try {
+			long backgroundTaskId = ParamUtil.getLong(
+				actionRequest, "backgroundTaskId");
+
+			BackgroundTaskManagerUtil.deleteBackgroundTask(backgroundTaskId);
+
+			sendRedirect(actionRequest, actionResponse);
+		}
+		catch (Exception e) {
+			if (e instanceof NoSuchBackgroundTaskException ||
+				e instanceof PrincipalException) {
+
+				SessionErrors.add(actionRequest, e.getClass());
+			}
+			else {
+				throw e;
+			}
+		}
+	}
 
 	public void editStagingConfiguration(
 			ActionRequest actionRequest, ActionResponse actionResponse)

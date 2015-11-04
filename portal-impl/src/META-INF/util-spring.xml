@@ -585,16 +585,6 @@
 			<bean class="com.liferay.portlet.expando.util.ExpandoBridgeIndexerImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portlet.login.action.CaptchaMVCResourceCommand" class="com.liferay.portlet.login.action.CaptchaMVCResourceCommand" />
-	<bean id="com.liferay.portlet.login.action.CreateAccountMVCActionCommand" class="com.liferay.portlet.login.action.CreateAccountMVCActionCommand" />
-	<bean id="com.liferay.portlet.login.action.CreateAccountMVCRenderCommand" class="com.liferay.portlet.login.action.CreateAccountMVCRenderCommand" />
-	<bean id="com.liferay.portlet.login.action.CreateAnonymousAccountMVCActionCommand" class="com.liferay.portlet.login.action.CreateAnonymousAccountMVCActionCommand" />
-	<bean id="com.liferay.portlet.login.action.CreateAnonymousAccountMVCRenderCommand" class="com.liferay.portlet.login.action.CreateAnonymousAccountMVCRenderCommand" />
-	<bean id="com.liferay.portlet.login.action.ForgotPasswordMVCActionCommand" class="com.liferay.portlet.login.action.ForgotPasswordMVCActionCommand" />
-	<bean id="com.liferay.portlet.login.action.ForgotPasswordMVCRenderCommand" class="com.liferay.portlet.login.action.ForgotPasswordMVCRenderCommand" />
-	<bean id="com.liferay.portlet.login.action.LoginMVCActionCommand" class="com.liferay.portlet.login.action.LoginMVCActionCommand" />
-	<bean id="com.liferay.portlet.login.action.LoginMVCRenderCommand" class="com.liferay.portlet.login.action.LoginMVCRenderCommand" />
-	<bean id="com.liferay.portlet.login.action.LoginRedirectMVCRenderCommand" class="com.liferay.portlet.login.action.LoginRedirectMVCRenderCommand" />
 	<bean id="com.liferay.portlet.rolesadmin.util.RolesAdmin" class="com.liferay.portlet.rolesadmin.util.RolesAdminImpl" />
 	<bean id="com.liferay.portlet.rolesadmin.util.RolesAdminUtil" class="com.liferay.portlet.rolesadmin.util.RolesAdminUtil">
 		<property name="rolesAdmin" ref="com.liferay.portlet.rolesadmin.util.RolesAdmin" />

@@ -1,5 +1,5 @@
 ;(function() {
-	var PATH_FORM_RENDERER = Liferay.ThemeDisplay.getPathContext() + '/o/ddm-form-renderer';
+	var PATH_FORM_RENDERER = Liferay.ThemeDisplay.getPathContext() + '/o/dynamic-data-mapping-form-renderer';
 
 	AUI().applyConfig(
 		{

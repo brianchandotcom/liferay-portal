@@ -24,11 +24,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EMPTY</td>
-	<td>//div[contains(@class,'empty-message')]/span</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ERROR</td>
 	<td>//div[contains(@class,'alert') and (contains(@class,'alert-error') or contains(@class,'alert-danger'))]</td>
 	<td></td>
@@ -160,7 +155,7 @@
 </tr>
 <tr>
 	<td>EMPTY_INFO</td>
-	<td>//div[contains(@class,'empty-message') and contains(@class,'text-center')]/span</td>
+	<td>//div[contains(@class,'empty-result-message')]//div[@class='card-footer']/div/div</td>
 	<td></td>
 </tr>
 <tr>

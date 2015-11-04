@@ -122,7 +122,9 @@ public class FailureMessageUtil {
 		if (x == -1) {
 			x = consoleOutput.indexOf("BUILD FAILED");
 
-			x = consoleOutput.indexOf("Total time:", x);
+			if (x != -1) {
+				x = consoleOutput.indexOf("Total time:", x);
+			}
 		}
 
 		if (x != -1) {

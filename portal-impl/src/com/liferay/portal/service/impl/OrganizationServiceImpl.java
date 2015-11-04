@@ -393,7 +393,7 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 
 		if (organization != null) {
 			OrganizationPermissionUtil.check(
-				getPermissionChecker(), organizationId, ActionKeys.VIEW);
+				getPermissionChecker(), organization, ActionKeys.VIEW);
 		}
 
 		return organization;

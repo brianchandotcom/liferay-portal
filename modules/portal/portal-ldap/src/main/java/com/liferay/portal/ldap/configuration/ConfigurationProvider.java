@@ -14,6 +14,7 @@
 
 package com.liferay.portal.ldap.configuration;
 
+import java.util.Dictionary;
 import java.util.List;
 
 import org.osgi.service.cm.Configuration;
@@ -25,14 +26,44 @@ public interface ConfigurationProvider<T> {
 
 	public T getConfiguration(long companyId);
 
+	public T getConfiguration(long companyId, boolean useDefault);
+
 	public T getConfiguration(long companyId, long index);
 
+	public T getConfiguration(long companyId, long index, boolean useDefault);
+
+	public Dictionary<String, Object> getConfigurationProperties(
+		long companyId);
+
+	public Dictionary<String, Object> getConfigurationProperties(
+		long companyId, boolean useDefault);
+
+	public Dictionary<String, Object> getConfigurationProperties(
+		long companyId, long index);
+
+	public Dictionary<String, Object> getConfigurationProperties(
+		long companyId, long index, boolean useDefault);
+
 	public List<T> getConfigurations(long companyId);
+
+	public List<T> getConfigurations(long companyId, boolean useDefault);
+
+	public List<Dictionary<String, Object>> getConfigurationsProperties(
+		long companyId);
+
+	public List<Dictionary<String, Object>> getConfigurationsProperties(
+		long companyId, boolean useDefault);
 
 	public Class<T> getMetatype();
 
 	public void registerConfiguration(Configuration configuration);
 
 	public void unregisterConfiguration(Configuration configuration);
+
+	public void updateProperties(
+		long companyId, Dictionary<String, Object> properties);
+
+	public void updateProperties(
+		long companyId, long index, Dictionary<String, Object> properties);
 
 }

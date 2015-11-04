@@ -7,4 +7,4 @@ Include-Resource:\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/ContentUtil.class
 JS-Config: /META-INF/resources/js/config.js
 Require-SchemaVersion: 1.0.0
-Web-ContextPath: /ddm-web
+Web-ContextPath: /dynamic-data-mapping-web

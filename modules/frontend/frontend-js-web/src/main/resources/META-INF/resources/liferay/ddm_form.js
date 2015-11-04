@@ -1095,7 +1095,7 @@ AUI.add(
 						else if (value.uuid) {
 							imagePreviewURL = [
 								themeDisplay.getPathContext(),
-								'/documents',
+								'documents',
 								value.groupId,
 								value.uuid
 							].join('/');

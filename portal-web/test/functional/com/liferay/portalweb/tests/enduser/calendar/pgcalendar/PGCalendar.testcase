@@ -1011,7 +1011,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarEventRepeatingWithEndDateBeforeStartDate">
+	<command name="AddCalendarEventRepeatingWithEndDateBeforeStartDate" priority="3">
 		<description message="This is a use case for LPS-56337." />
 
 		<execute macro="Page#gotoPG">
@@ -4580,7 +4580,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewUserCanAddSiteCalendarsWithCalendarPermissions">
+	<command name="ViewUserCanAddSiteCalendarsWithCalendarPermissions" priority="3">
 		<description message="This is a use case for LPS-56229." />
 
 		<execute macro="Page#gotoCP">

@@ -40,9 +40,23 @@ public class TestCluster {
 		_prefix = clazz.getSimpleName();
 	}
 
+	public ElasticsearchFixture createNode(int index) throws Exception {
+		ElasticsearchFixture elasticsearchFixture = new ElasticsearchFixture(
+			_prefix + "-" + index, _elasticsearchConfigurationProperties);
+
+		elasticsearchFixture.setClusterSettingsContext(
+			new TestClusterSettingsContext());
+
+		elasticsearchFixture.createNode();
+
+		_elasticsearchFixtures[index] = elasticsearchFixture;
+
+		return elasticsearchFixture;
+	}
+
 	public void createNodes() throws Exception {
 		for (int i = 0; i < _elasticsearchFixtures.length; i++) {
-			_createNode(i);
+			createNode(i);
 		}
 	}
 
@@ -90,20 +104,6 @@ public class TestCluster {
 		properties.put("transportTcpPort", range);
 
 		return properties;
-	}
-
-	private ElasticsearchFixture _createNode(int index) throws Exception {
-		ElasticsearchFixture elasticsearchFixture = new ElasticsearchFixture(
-			_prefix + "-" + index, _elasticsearchConfigurationProperties);
-
-		elasticsearchFixture.setClusterSettingsContext(
-			new TestClusterSettingsContext());
-
-		elasticsearchFixture.createNode();
-
-		_elasticsearchFixtures[index] = elasticsearchFixture;
-
-		return elasticsearchFixture;
 	}
 
 	private final HashMap<String, Object> _elasticsearchConfigurationProperties;

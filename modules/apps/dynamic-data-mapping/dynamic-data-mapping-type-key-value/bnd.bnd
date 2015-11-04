@@ -5,4 +5,4 @@ Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources
 JS-Config: /META-INF/resources/config.js
-Web-ContextPath: /ddm-type-key-value
+Web-ContextPath: /dynamic-data-mapping-type-key-value

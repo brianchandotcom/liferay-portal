@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.dao.db;
 
 import java.io.IOException;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
 import javax.naming.NamingException;
@@ -26,9 +25,6 @@ import javax.naming.NamingException;
  * @author Brian Wing Shun Chan
  */
 public interface DBProcess {
-
-	public void runSQL(Connection connection, String template)
-		throws IOException, SQLException;
 
 	public void runSQL(String template) throws IOException, SQLException;
 

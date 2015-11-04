@@ -326,9 +326,9 @@ public class CalendarBookingLocalServiceImpl
 		// Workflow
 
 		workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
-				calendarBooking.getCompanyId(), calendarBooking.getGroupId(),
-				CalendarBooking.class.getName(),
-				calendarBooking.getCalendarBookingId());
+			calendarBooking.getCompanyId(), calendarBooking.getGroupId(),
+			CalendarBooking.class.getName(),
+			calendarBooking.getCalendarBookingId());
 
 		return calendarBooking;
 	}
@@ -590,6 +590,8 @@ public class CalendarBookingLocalServiceImpl
 			long userId, CalendarBooking calendarBooking)
 		throws PortalException {
 
+		// Calendar booking
+
 		if (!calendarBooking.isMasterBooking()) {
 			return calendarBooking;
 		}
@@ -602,6 +604,8 @@ public class CalendarBookingLocalServiceImpl
 			userId, calendarBooking,
 			CalendarBookingWorkflowConstants.STATUS_IN_TRASH, serviceContext);
 
+		// Social
+
 		socialActivityCounterLocalService.disableActivityCounters(
 			CalendarBooking.class.getName(),
 			calendarBooking.getCalendarBookingId());
@@ -612,6 +616,13 @@ public class CalendarBookingLocalServiceImpl
 			calendarBooking.getCalendarBookingId(),
 			SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			getExtraDataJSON(calendarBooking), 0);
+
+		// Workflow
+
+		workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
+			calendarBooking.getCompanyId(), calendarBooking.getGroupId(),
+			CalendarBooking.class.getName(),
+			calendarBooking.getCalendarBookingId());
 
 		return calendarBooking;
 	}
@@ -632,6 +643,8 @@ public class CalendarBookingLocalServiceImpl
 			long userId, long calendarBookingId)
 		throws PortalException {
 
+		// Calendar booking
+
 		CalendarBooking calendarBooking = getCalendarBooking(calendarBookingId);
 
 		if (!calendarBooking.isMasterBooking()) {
@@ -648,6 +661,8 @@ public class CalendarBookingLocalServiceImpl
 		calendarBookingLocalService.updateStatus(
 			userId, calendarBookingId, trashEntry.getStatus(), serviceContext);
 
+		// Social
+
 		socialActivityCounterLocalService.enableActivityCounters(
 			CalendarBooking.class.getName(), calendarBookingId);
 
@@ -656,6 +671,14 @@ public class CalendarBookingLocalServiceImpl
 			CalendarBooking.class.getName(), calendarBookingId,
 			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			getExtraDataJSON(calendarBooking), 0);
+
+		// Workflow
+
+		WorkflowHandlerRegistryUtil.startWorkflowInstance(
+			calendarBooking.getCompanyId(), calendarBooking.getGroupId(),
+			userId, CalendarBooking.class.getName(),
+			calendarBooking.getCalendarBookingId(), calendarBooking,
+			serviceContext);
 
 		return calendarBooking;
 	}

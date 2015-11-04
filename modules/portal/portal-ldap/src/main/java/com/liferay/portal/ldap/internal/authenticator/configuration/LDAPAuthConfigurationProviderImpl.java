@@ -18,7 +18,9 @@ import com.liferay.portal.ldap.authenticator.configuration.LDAPAuthConfiguration
 import com.liferay.portal.ldap.configuration.CompanyScopedConfigurationProvider;
 import com.liferay.portal.ldap.configuration.ConfigurationProvider;
 
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -36,6 +38,13 @@ public class LDAPAuthConfigurationProviderImpl
 	@Override
 	public Class<LDAPAuthConfiguration> getMetatype() {
 		return LDAPAuthConfiguration.class;
+	}
+
+	@Reference(unbind = "-")
+	protected void setConfigurationAdmin(
+		ConfigurationAdmin configurationAdmin) {
+
+		super.configurationAdmin = configurationAdmin;
 	}
 
 }

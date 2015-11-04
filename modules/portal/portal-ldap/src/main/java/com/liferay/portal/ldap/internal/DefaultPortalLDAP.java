@@ -88,12 +88,6 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			_ldapServerConfigurationProvider.getConfiguration(
 				companyId, ldapServerId);
 
-		if (ldapServerConfiguration == null) {
-			throw new IllegalArgumentException(
-				"No LDAP server configuration found for company " + companyId +
-					" and LDAP server " + ldapServerId);
-		}
-
 		String baseProviderURL = ldapServerConfiguration.baseProviderURL();
 		String securityPrincipal = ldapServerConfiguration.securityPrincipal();
 		String securityCredential =

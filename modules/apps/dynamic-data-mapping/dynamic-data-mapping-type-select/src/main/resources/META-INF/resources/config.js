@@ -1,5 +1,5 @@
 ;(function() {
-	var PATH_DDM_TYPE_SELECT = Liferay.ThemeDisplay.getPathContext() + '/o/ddm-type-select';
+	var PATH_DDM_TYPE_SELECT = Liferay.ThemeDisplay.getPathContext() + '/o/dynamic-data-mapping-type-select';
 
 	AUI().applyConfig(
 		{

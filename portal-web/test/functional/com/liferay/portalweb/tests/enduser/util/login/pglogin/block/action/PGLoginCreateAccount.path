@@ -15,32 +15,32 @@
 </tr>
 <tr>
 	<td>FIRST_NAME_FIELD</td>
-	<td>//input[@id='_58_firstName']</td>
+	<td>//input[@id='_com_liferay_login_web_portlet_LoginPortlet_firstName']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MIDDLE_NAME_FIELD</td>
-	<td>//input[@id='_58_middleName']</td>
+	<td>//input[@id='_com_liferay_login_web_portlet_LoginPortlet_middleName']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LAST_NAME_FIELD</td>
-	<td>//input[@id='_58_lastName']</td>
+	<td>//input[@id='_com_liferay_login_web_portlet_LoginPortlet_lastName']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SCREEN_NAME_FIELD</td>
-	<td>//input[@id='_58_screenName']</td>
+	<td>//input[@id='_com_liferay_login_web_portlet_LoginPortlet_screenName']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EMAIL_ADDRESS_FIELD</td>
-	<td>//input[@id='_58_emailAddress']</td>
+	<td>//input[@id='_com_liferay_login_web_portlet_LoginPortlet_emailAddress']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CAPTCHA_IMAGE</td>
-	<td>//img[@id='_58_captcha']</td>
+	<td>//img[@id='_com_liferay_login_web_portlet_LoginPortlet_captcha']</td>
 	<td></td>
 </tr>
 <tr>
@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>TEXT_VERIFICATION_FIELD</td>
-	<td>//input[@id='_58_captchaText']</td>
+	<td>//input[@id='_com_liferay_login_web_portlet_LoginPortlet_captchaText']</td>
 	<td></td>
 </tr>
 <tr>

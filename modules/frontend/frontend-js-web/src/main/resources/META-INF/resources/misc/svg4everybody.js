@@ -1,4 +1,3 @@
-;(function(jQuery){
 !function(root, factory) {
     false && "function" == typeof define && define.amd ? define([], function() {
         return root.svg4everybody = factory();
@@ -49,4 +48,4 @@
         polyfill && oninterval();
     }
     return svg4everybody;
-});})(AUI.$);
+});

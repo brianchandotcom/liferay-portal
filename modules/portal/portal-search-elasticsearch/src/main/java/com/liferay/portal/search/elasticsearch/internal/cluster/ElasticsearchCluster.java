@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.model.Company;
+import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch.connection.OperationMode;
@@ -112,13 +113,16 @@ public class ElasticsearchCluster {
 		public String[] getTargetIndexNames() {
 			List<Company> companies = _companyLocalService.getCompanies();
 
-			String[] targetIndexNames = new String[companies.size()];
+			String[] targetIndexNames = new String[companies.size() + 1];
 
-			for (int i = 0; i < targetIndexNames.length; i++) {
+			for (int i = 0; i < targetIndexNames.length - 1; i++) {
 				Company company = companies.get(i);
 
 				targetIndexNames[i] = String.valueOf(company.getCompanyId());
 			}
+
+			targetIndexNames[targetIndexNames.length - 1] =
+				CompanyConstants.SYSTEM_STRING;
 
 			return targetIndexNames;
 		}

@@ -44,7 +44,7 @@
 		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#INFO_5" value1="No" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#EMPTY_INFO" value1="No" />
 	</command>
 
 	<command name="deleteRepeatableField">
@@ -192,7 +192,7 @@
 	<command name="populateFieldHTML">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="DDLEditRecord#HTML_FIELD" value1="${ddlRecordFieldData}" />
+		<execute function="Type#typeAlloyEditor" locator1="DDLEditRecord#HTML_FIELD" value1="${ddlRecordFieldData}" />
 	</command>
 
 	<command name="populateFieldInteger">

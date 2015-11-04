@@ -72,12 +72,7 @@
 </tr>
 <tr>
 	<td>SELECT_FILE_UPLOAD_IMAGE</td>
-	<td>//div[@id='itemSelectorUploadContainer']//label[contains(.,'Select File')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECT_FILE_DM_UPLOAD</td>
-	<td>//div[contains(@id,'ItemSelectorContainer')]//label[contains(.,'Select File')]</td>
+	<td>//div[@id='itemSelectorUploadContainer']//label[contains(.,'Select File')] | //div[contains(@id,'ItemSelectorContainer')]//label[contains(.,'Select File')]</td>
 	<td></td>
 </tr>
 <tr>

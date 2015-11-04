@@ -6,4 +6,4 @@ Include-Resource:\
 	classes,\
 	META-INF=src/main/resources/META-INF
 JS-Config: /META-INF/resources/js/config.js
-Web-ContextPath: /ddm-form-renderer
+Web-ContextPath: /dynamic-data-mapping-form-renderer

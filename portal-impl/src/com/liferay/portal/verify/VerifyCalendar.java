@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.Connection;
@@ -39,30 +38,35 @@ public class VerifyCalendar extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
-			verifyEndDate(con);
-			verifyRecurrence(con);
-		}
-
+		verifyEndDate();
 		verifyNoAssets();
+		verifyRecurrence();
 	}
 
-	protected void updateEvent(Connection con, long eventId, String recurrence)
+	protected void updateEvent(long eventId, String recurrence)
 		throws Exception {
 
-		String sql = "update CalEvent set recurrence = ? where eventId = ?";
+		Connection con = null;
+		PreparedStatement ps = null;
 
-		try (PreparedStatement ps = con.prepareStatement(sql)) {
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"update CalEvent set recurrence = ? where eventId = ?");
+
 			ps.setString(1, recurrence);
 			ps.setLong(2, eventId);
 
 			ps.executeUpdate();
 		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
 	}
 
-	protected void verifyEndDate(Connection con) throws Exception {
+	protected void verifyEndDate() throws Exception {
 		runSQL(
-			con,
 			"update CalEvent set endDate = null where endDate is not null " +
 				"and (recurrence like '%\"until\":null%' or recurrence like " +
 					"'null')");
@@ -97,19 +101,24 @@ public class VerifyCalendar extends VerifyProcess {
 		}
 	}
 
-	protected void verifyRecurrence(Connection con) throws Exception {
+	protected void verifyRecurrence() throws Exception {
 		JSONSerializer jsonSerializer = new JSONSerializer();
 
 		jsonSerializer.registerDefaultSerializers();
 
-		StringBundler sb = new StringBundler(3);
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
 
-		sb.append("select eventId, recurrence from CalEvent where ");
-		sb.append("(CAST_TEXT(recurrence) != '') and recurrence not like ");
-		sb.append("'%serializable%'");
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
 
-		try (PreparedStatement ps = con.prepareStatement(sb.toString());
-			ResultSet rs = ps.executeQuery()) {
+			ps = con.prepareStatement(
+				"select eventId, recurrence from CalEvent where (CAST_TEXT(" +
+					"recurrence) != '') and recurrence not like " +
+						"'%serializable%'");
+
+			rs = ps.executeQuery();
 
 			while (rs.next()) {
 				long eventId = rs.getLong("eventId");
@@ -124,8 +133,11 @@ public class VerifyCalendar extends VerifyProcess {
 
 				String newRecurrence = JSONFactoryUtil.serialize(recurrenceObj);
 
-				updateEvent(con, eventId, newRecurrence);
+				updateEvent(eventId, newRecurrence);
 			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
 

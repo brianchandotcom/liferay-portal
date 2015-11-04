@@ -1,5 +1,5 @@
 ;(function() {
-	var PATH_DDM_TYPE_VALIDATION = Liferay.ThemeDisplay.getPathContext() + '/o/ddm-type-validation';
+	var PATH_DDM_TYPE_VALIDATION = Liferay.ThemeDisplay.getPathContext() + '/o/dynamic-data-mapping-type-validation';
 
 	AUI().applyConfig(
 		{

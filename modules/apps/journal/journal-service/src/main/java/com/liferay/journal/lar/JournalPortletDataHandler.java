@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.journal.web.lar;
+package com.liferay.journal.lar;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
+import com.liferay.journal.configuration.JournalServiceConfigurationValues;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFeed;
@@ -30,7 +31,6 @@ import com.liferay.journal.service.JournalFeedLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.journal.service.permission.JournalPermission;
 import com.liferay.journal.util.JournalContent;
-import com.liferay.journal.web.configuration.JournalWebConfigurationValues;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -123,7 +123,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 						NAMESPACE, "referenced-content"),
 					new PortletDataHandlerBoolean(
 						NAMESPACE, "version-history",
-						JournalWebConfigurationValues.
+						JournalServiceConfigurationValues.
 							PUBLISH_VERSION_HISTORY_BY_DEFAULT)
 				},
 				JournalArticle.class.getName()),
@@ -140,7 +140,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 				NAMESPACE, "folders", true, false, null,
 				JournalFolder.class.getName()));
 		setPublishToLiveByDefault(
-			JournalWebConfigurationValues.PUBLISH_TO_LIVE_BY_DEFAULT);
+			JournalServiceConfigurationValues.PUBLISH_TO_LIVE_BY_DEFAULT);
 
 		XStreamAliasRegistryUtil.register(
 			JournalArticleImpl.class, "JournalArticle");

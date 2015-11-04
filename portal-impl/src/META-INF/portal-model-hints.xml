@@ -848,7 +848,6 @@
 	<model name="com.liferay.portal.model.ServiceComponent">
 		<field name="mvccVersion" type="long" />
 		<field name="serviceComponentId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="buildNamespace" type="String" />
 		<field name="buildNumber" type="long" />
 		<field name="buildDate" type="long" />

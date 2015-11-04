@@ -53,7 +53,6 @@ public class ServiceComponentWrapper implements ServiceComponent,
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("serviceComponentId", getServiceComponentId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("buildNamespace", getBuildNamespace());
 		attributes.put("buildNumber", getBuildNumber());
 		attributes.put("buildDate", getBuildDate());
@@ -74,12 +73,6 @@ public class ServiceComponentWrapper implements ServiceComponent,
 
 		if (serviceComponentId != null) {
 			setServiceComponentId(serviceComponentId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		String buildNamespace = (String)attributes.get("buildNamespace");
@@ -146,16 +139,6 @@ public class ServiceComponentWrapper implements ServiceComponent,
 	@Override
 	public long getBuildNumber() {
 		return _serviceComponent.getBuildNumber();
-	}
-
-	/**
-	* Returns the company ID of this service component.
-	*
-	* @return the company ID of this service component
-	*/
-	@Override
-	public long getCompanyId() {
-		return _serviceComponent.getCompanyId();
 	}
 
 	/**
@@ -281,16 +264,6 @@ public class ServiceComponentWrapper implements ServiceComponent,
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_serviceComponent.setCachedModel(cachedModel);
-	}
-
-	/**
-	* Sets the company ID of this service component.
-	*
-	* @param companyId the company ID of this service component
-	*/
-	@Override
-	public void setCompanyId(long companyId) {
-		_serviceComponent.setCompanyId(companyId);
 	}
 
 	/**

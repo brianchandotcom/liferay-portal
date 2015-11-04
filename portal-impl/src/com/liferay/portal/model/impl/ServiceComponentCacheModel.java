@@ -77,14 +77,12 @@ public class ServiceComponentCacheModel implements CacheModel<ServiceComponent>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", serviceComponentId=");
 		sb.append(serviceComponentId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", buildNamespace=");
 		sb.append(buildNamespace);
 		sb.append(", buildNumber=");
@@ -104,7 +102,6 @@ public class ServiceComponentCacheModel implements CacheModel<ServiceComponent>,
 
 		serviceComponentImpl.setMvccVersion(mvccVersion);
 		serviceComponentImpl.setServiceComponentId(serviceComponentId);
-		serviceComponentImpl.setCompanyId(companyId);
 
 		if (buildNamespace == null) {
 			serviceComponentImpl.setBuildNamespace(StringPool.BLANK);
@@ -132,7 +129,6 @@ public class ServiceComponentCacheModel implements CacheModel<ServiceComponent>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 		serviceComponentId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		buildNamespace = objectInput.readUTF();
 		buildNumber = objectInput.readLong();
 		buildDate = objectInput.readLong();
@@ -144,7 +140,6 @@ public class ServiceComponentCacheModel implements CacheModel<ServiceComponent>,
 		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(serviceComponentId);
-		objectOutput.writeLong(companyId);
 
 		if (buildNamespace == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -166,7 +161,6 @@ public class ServiceComponentCacheModel implements CacheModel<ServiceComponent>,
 
 	public long mvccVersion;
 	public long serviceComponentId;
-	public long companyId;
 	public String buildNamespace;
 	public long buildNumber;
 	public long buildDate;

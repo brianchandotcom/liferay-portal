@@ -27,7 +27,9 @@ String message = GetterUtil.getString((String)request.getAttribute("liferay-ui:e
 
 			<div class="card-footer">
 				<div class="card-dm-details">
-					<div class="card-dm-text text-center"><liferay-ui:message key="<%= message %>" /></div>
+					<p class="text-center text-muted">
+						<liferay-ui:message key="<%= message %>" />
+					</p>
 				</div>
 			</div>
 		</div>

@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD_NAME</td>
+	<td>//div[@class='key-value-editor']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -62,7 +67,12 @@
 </tr>
 <tr>
 	<td>OPTIONS_OPTION_VALUE_FIELD</td>
-	<td>//div[contains(@class,'ddm-options-row')][${key_rowNumber}]//input[contains(@name,'value')]</td>
+	<td>//div[@class='options']//div[contains(@class,'form-field-container')][${key_rowNumber}]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTIONS_OPTION_NAME_FIELD</td>
+	<td>//div[@class='options']//div[contains(@class,'form-field-container')][${key_rowNumber}]//div[@class='key-value-editor']</td>
 	<td></td>
 </tr>
 <tr>
@@ -104,7 +114,7 @@
 </tr>
 <tr>
 	<td>TEXT_LABEL_2</td>
-	<td>xpath=(//input[@type='text' and contains(@id,'${key_fieldName}')]/../label[contains(@class,'control-label')])[2]</td>
+	<td>xpath=(//div[contains(@class,'form-field-container')][2]//label[contains(.,'${key_fieldLabel}')])</td>
 	<td></td>
 </tr>
 <tr>

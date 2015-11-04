@@ -37,7 +37,7 @@
 	</command>
 
 	<command name="viewFormEntry">
-		<var name="key_fieldName" value="${fieldName}" />
+		<var name="key_fieldLabel" value="${fieldLabel}" />
 		<var name="key_fieldValue" value="${fieldValue}" />
 
 		<execute function="AssertTextEquals" locator1="FormsAdmin#FORM_ENTRY_TABLE_ENTRY" value1="${fieldValue}" />

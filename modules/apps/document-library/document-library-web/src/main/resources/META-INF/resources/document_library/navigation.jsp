@@ -18,6 +18,7 @@
 
 <%
 String navigation = ParamUtil.getString(request, "navigation", "home");
+
 long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
 
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));

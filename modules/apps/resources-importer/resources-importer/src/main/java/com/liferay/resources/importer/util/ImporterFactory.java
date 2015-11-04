@@ -94,21 +94,24 @@ public class ImporterFactory {
 			importer = larImporter;
 		}
 		else if ((resourcePaths != null) && !resourcePaths.isEmpty()) {
-			importer = getResourceImporter(_journalConverter);
+			importer = getResourceImporter();
 
 			importer.setResourcesDir(RESOURCES_DIR);
+			importer.setJournalConverter(_journalConverter);
 		}
 		else if ((templatePaths != null) && !templatePaths.isEmpty()) {
-			importer = getResourceImporter(_journalConverter);
+			importer = getResourceImporter();
 
 			Group group = GroupLocalServiceUtil.getCompanyGroup(companyId);
 
 			importer.setGroupId(group.getGroupId());
+			importer.setJournalConverter(_journalConverter);
 			importer.setResourcesDir(TEMPLATES_DIR);
 		}
 		else if (Validator.isNotNull(resourcesDir)) {
-			importer = getFileSystemImporter(_journalConverter);
+			importer = getFileSystemImporter();
 
+			importer.setJournalConverter(_journalConverter);
 			importer.setResourcesDir(resourcesDir);
 		}
 

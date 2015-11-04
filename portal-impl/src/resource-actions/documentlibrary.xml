@@ -115,8 +115,8 @@
 	<model-resource>
 		<model-name>com.liferay.portlet.documentlibrary.model.DLFileShortcut</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_document_library_web_portlet_DLPortlet</portlet-name>
 			<portlet-name>com_liferay_document_library_web_portlet_DLAdminPortlet</portlet-name>
+			<portlet-name>com_liferay_document_library_web_portlet_DLPortlet</portlet-name>
 			<portlet-name>com_liferay_document_library_web_portlet_IGDisplayPortlet</portlet-name>
 		</portlet-ref>
 		<weight>4</weight>

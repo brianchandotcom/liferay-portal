@@ -21,18 +21,16 @@ String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName
 
 String navigation = ParamUtil.getString(request, "navigation", "home");
 
-boolean search = mvcRenderCommandName.equals("/document_library/search");
-
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 
 long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
 
-int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_ANY, false);
+boolean search = mvcRenderCommandName.equals("/document_library/search");
 %>
 
 <liferay-frontend:management-bar
 	checkBoxContainerId="entriesContainer"
-	includeCheckBox="<%= total > 0 %>"
+	includeCheckBox="<%= DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_ANY, false) > 0 %>"
 >
 	<liferay-frontend:management-bar-buttons>
 		<aui:a cssClass="btn infoPanelToggler" href="javascript:;" iconCssClass="icon-info-sign" />

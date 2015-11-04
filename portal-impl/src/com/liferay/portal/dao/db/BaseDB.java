@@ -516,6 +516,9 @@ public abstract class BaseDB implements DB {
 			}
 		}
 
+		indexesSQL = applyMaxStringIndexLengthLimitation(
+			_columnLengthPattern.matcher(indexesSQL));
+
 		addIndexes(con, indexesSQL, validIndexNames);
 	}
 

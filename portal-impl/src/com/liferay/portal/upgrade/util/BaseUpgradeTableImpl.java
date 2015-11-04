@@ -131,7 +131,8 @@ public abstract class BaseUpgradeTableImpl extends Table {
 				}
 
 				try {
-					db.runSQL(targetConnection, indexSQL);
+					db.runSQLTemplateString(
+						targetConnection, indexSQL, false, false);
 				}
 				catch (Exception e) {
 					if (_log.isWarnEnabled()) {

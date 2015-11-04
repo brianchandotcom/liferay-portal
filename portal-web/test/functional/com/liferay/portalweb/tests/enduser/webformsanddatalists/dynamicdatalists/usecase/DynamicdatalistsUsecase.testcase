@@ -2024,6 +2024,8 @@
 
 		<execute macro="DynamicDataMapping#addFieldNested">
 			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#editFieldNestedWithDuplicateName">
@@ -2055,6 +2057,8 @@
 
 		<execute macro="DynamicDataMapping#addFieldNested">
 			<var name="field" value="Integer" />
+			<var name="fieldFieldLabel" value="Integer" />
+			<var name="fieldName" value="Integer" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#saveCP" />
@@ -2413,6 +2417,8 @@
 
 		<execute macro="DynamicDataMapping#addFieldNested">
 			<var name="field" value="Documents and Media" />
+			<var name="fieldFieldLabel" value="Documents and Media" />
+			<var name="fieldName" value="DocumentsAndMedia" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#editFieldRepeatable">

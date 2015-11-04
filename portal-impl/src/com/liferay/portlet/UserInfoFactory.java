@@ -156,12 +156,12 @@ public class UserInfoFactory {
 					customUserAttributes = newInstance(
 						customUserAttributesClassName);
 				}
-
-				customUserAttributesMap.put(
-					customUserAttributesClassName, customUserAttributes);
 			}
 
 			if (customUserAttributes != null) {
+				customUserAttributesMap.put(
+					customUserAttributesClassName, customUserAttributes);
+
 				String attrValue = customUserAttributes.getValue(
 					userAttributeName, unmodifiableUserInfo);
 

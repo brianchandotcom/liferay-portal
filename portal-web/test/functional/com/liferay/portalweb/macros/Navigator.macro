@@ -43,6 +43,10 @@
 		</execute>
 	</command>
 
+	<command name="gotoStaging">
+		<execute function="Click" locator1="Radio#STAGING" />
+	</command>
+
 	<command name="gotoStagingPage">
 		<execute macro="Navigator#openStagingURL" />
 

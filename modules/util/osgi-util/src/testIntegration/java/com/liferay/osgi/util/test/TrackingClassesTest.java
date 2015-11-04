@@ -16,13 +16,16 @@ package com.liferay.osgi.util.test;
 
 import com.liferay.arquillian.deploymentscenario.annotations.BndFile;
 import com.liferay.osgi.util.service.ReflectionServiceTracker;
+
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
@@ -42,8 +45,13 @@ public class TrackingClassesTest {
 		_bundleContext = _bundle.getBundleContext();
 	}
 
+	@After
+	public void tearDown() throws BundleException {
+		_bundle.stop();
+	}
+
 	@Test
-	public void shouldInjectNullWhenNoServicesAreRegistered() {
+	public void testInjectNullWhenNoServicesAreRegistered() {
 		TestInstance testInstance = new TestInstance();
 
 		ReflectionServiceTracker reflectionServiceTracker =
@@ -56,7 +64,7 @@ public class TrackingClassesTest {
 	}
 
 	@Test
-	public void shouldInjectNullWhenUnregisteringServices() {
+	public void testInjectNullWhenUnregisteringServices() {
 		TestInstance testInstance = new TestInstance();
 
 		ReflectionServiceTracker reflectionServiceTracker =
@@ -81,11 +89,6 @@ public class TrackingClassesTest {
 		Assert.assertNull(testInstance.getTrackedTwo());
 
 		reflectionServiceTracker.close();
-	}
-
-	@After
-	public void tearDown() throws BundleException {
-		_bundle.stop();
 	}
 
 	@ArquillianResource

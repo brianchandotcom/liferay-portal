@@ -17,20 +17,23 @@ package com.liferay.osgi.util.test;
 import com.liferay.arquillian.deploymentscenario.annotations.BndFile;
 import com.liferay.osgi.util.service.ReflectionServiceTracker;
 import com.liferay.osgi.util.service.UnavailableServiceException;
+
+import java.util.Dictionary;
+import java.util.Hashtable;
+
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
 import org.osgi.framework.ServiceRegistration;
-
-import java.util.Dictionary;
-import java.util.Hashtable;
 
 /**
 * @author Carlos Sierra Andrés
@@ -46,10 +49,13 @@ public class TrackingInterfacesTest {
 		_bundleContext = _bundle.getBundleContext();
 	}
 
-	@Test
-	public void
-		shouldInjectHighestRankingWhenSeveralServicesAreRegistered() {
+	@After
+	public void tearDown() throws BundleException {
+		_bundle.stop();
+	}
 
+	@Test
+	public void testInjectHighestRankingWhenSeveralServicesAreRegistered() {
 		TestInterface testInterface = new TestInterface();
 
 		ReflectionServiceTracker reflectionServiceTracker =
@@ -92,7 +98,7 @@ public class TrackingInterfacesTest {
 
 	@Test
 	public void
-		shouldInjectNextServiceWithHighestRankingWhenUnregisteringServices() {
+		testInjectNextServiceWithHighestRankingWhenUnregisteringServices() {
 
 		TestInterface testInterface = new TestInterface();
 
@@ -150,7 +156,7 @@ public class TrackingInterfacesTest {
 	}
 
 	@Test
-	public void shouldInjectServicesWhenTheyAreRegistered() {
+	public void testInjectServicesWhenTheyAreRegistered() {
 		TestInterface testInterface = new TestInterface();
 
 		ReflectionServiceTracker reflectionServiceTracker =
@@ -178,9 +184,7 @@ public class TrackingInterfacesTest {
 	}
 
 	@Test
-	public void
-		shouldInjectUnavailableServiceProxyWhenNoServicesAreRegistered() {
-
+	public void testInjectUnavailableServiceProxyWhenNoServicesAreRegistered() {
 		TestInterface testInterface = new TestInterface();
 
 		ReflectionServiceTracker reflectionServiceTracker =
@@ -213,9 +217,7 @@ public class TrackingInterfacesTest {
 	}
 
 	@Test
-	public void
-		shouldInjectUnavailableServiceProxyWhenUnregisteringServices() {
-
+	public void testInjectUnavailableServiceProxyWhenUnregisteringServices() {
 		TestInterface testInterface = new TestInterface();
 
 		ReflectionServiceTracker reflectionServiceTracker =
@@ -263,7 +265,7 @@ public class TrackingInterfacesTest {
 	}
 
 	@Test
-	public void shouldUpdateInjectionPointWhenChangingServiceProperties() {
+	public void testUpdateInjectionPointWhenChangingServiceProperties() {
 		TestInterface testInterface = new TestInterface();
 
 		ReflectionServiceTracker reflectionServiceTracker =
@@ -293,8 +295,7 @@ public class TrackingInterfacesTest {
 			ReflectionServiceTrackerTestUtil.registerServiceWithRanking(
 				_bundleContext, InterfaceTwo.class, trackedTwo2, 1);
 
-		Dictionary<String, Object> properties =
-			new Hashtable<String, Object>();
+		Dictionary<String, Object> properties = new Hashtable<String, Object>();
 
 		properties.put("service.ranking", 3);
 
@@ -310,11 +311,6 @@ public class TrackingInterfacesTest {
 		serviceRegistration4.unregister();
 
 		reflectionServiceTracker.close();
-	}
-
-	@After
-	public void tearDown() throws BundleException {
-		_bundle.stop();
 	}
 
 	@ArquillianResource

@@ -414,6 +414,14 @@ if (portletTitleBasedNavigation) {
 
 				</c:if>
 
+				<c:if test="<%= (fileEntry != null) && !checkedOut %>">
+					<aui:input
+						label="i-want-to-customize-the-version-number-increment-and-describe-my-changes"
+						name="updateVersionDetails"
+						type="checkbox"
+					/>
+				</c:if>
+
 				<liferay-ui:custom-attributes-available className="<%= DLFileEntryConstants.getClassName() %>">
 					<liferay-ui:custom-attribute-list
 						className="<%= DLFileEntryConstants.getClassName() %>"

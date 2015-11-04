@@ -470,6 +470,21 @@ public interface DDLRecordSetModel extends BaseModel<DDLRecordSet>,
 	public void setScope(int scope);
 
 	/**
+	 * Returns the type settings of this d d l record set.
+	 *
+	 * @return the type settings of this d d l record set
+	 */
+	@AutoEscape
+	public String getTypeSettings();
+
+	/**
+	 * Sets the type settings of this d d l record set.
+	 *
+	 * @param typeSettings the type settings of this d d l record set
+	 */
+	public void setTypeSettings(String typeSettings);
+
+	/**
 	 * Returns the last publish date of this d d l record set.
 	 *
 	 * @return the last publish date of this d d l record set

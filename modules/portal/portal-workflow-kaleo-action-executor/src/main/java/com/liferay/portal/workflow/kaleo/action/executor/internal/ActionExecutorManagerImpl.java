@@ -15,12 +15,10 @@
 package com.liferay.portal.workflow.kaleo.action.executor.internal;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.workflow.kaleo.action.executor.ActionExecutor;
 import com.liferay.portal.workflow.kaleo.model.KaleoAction;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.action.ActionExecutorManager;
-import com.liferay.portal.workflow.kaleo.runtime.util.ClassLoaderUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -36,26 +34,11 @@ public class ActionExecutorManagerImpl implements ActionExecutorManager {
 			KaleoAction kaleoAction, ExecutionContext executionContext)
 		throws PortalException {
 
-		String[] scriptRequiredContexts = StringUtil.split(
-			kaleoAction.getScriptRequiredContexts());
-
-		ClassLoader[] classLoaders = ClassLoaderUtil.getClassLoaders(
-			scriptRequiredContexts);
-
-		ActionExecutor actionExecutor = null;
-
-		String scriptLanguage = kaleoAction.getScriptLanguage();
-
-		if (scriptLanguage.equals(_LANGUAGE_JAVA)) {
-			actionExecutor = _actionExecutorTracker.getActionExecutor(
+		ActionExecutor actionExecutor =
+			_actionExecutorTracker.getActionExecutor(
 				kaleoAction.getScriptLanguage(), kaleoAction.getScript());
-		}
-		else {
-			actionExecutor = _actionExecutorTracker.getActionExecutor(
-				kaleoAction.getScriptLanguage());
-		}
 
-		actionExecutor.execute(kaleoAction, executionContext, classLoaders);
+		actionExecutor.execute(kaleoAction, executionContext);
 	}
 
 	@Reference(unbind = "-")
@@ -64,8 +47,6 @@ public class ActionExecutorManagerImpl implements ActionExecutorManager {
 
 		_actionExecutorTracker = actionExecutorTracker;
 	}
-
-	private static final String _LANGUAGE_JAVA = "java";
 
 	private ActionExecutorTracker _actionExecutorTracker;
 

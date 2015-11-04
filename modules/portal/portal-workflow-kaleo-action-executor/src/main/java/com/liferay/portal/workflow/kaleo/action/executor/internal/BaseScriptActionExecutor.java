@@ -12,18 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.action.executor;
+package com.liferay.portal.workflow.kaleo.action.executor.internal;
 
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.workflow.kaleo.action.executor.ActionExecutor;
 import com.liferay.portal.workflow.kaleo.model.KaleoAction;
-import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
+import com.liferay.portal.workflow.kaleo.runtime.util.ClassLoaderUtil;
 
 /**
- * @author Michael C. Han
+ * @author Marcellus Tavares
  */
-public interface ActionExecutor {
+public abstract class BaseScriptActionExecutor implements ActionExecutor {
 
-	public void execute(
-			KaleoAction kaleoAction, ExecutionContext executionContext)
-		throws ActionExecutorException;
+	public ClassLoader[] getScriptClassLoaders(KaleoAction kaleoAction) {
+		String[] scriptRequiredContexts = StringUtil.split(
+			kaleoAction.getScriptRequiredContexts());
+
+		return ClassLoaderUtil.getClassLoaders(scriptRequiredContexts);
+	}
 
 }

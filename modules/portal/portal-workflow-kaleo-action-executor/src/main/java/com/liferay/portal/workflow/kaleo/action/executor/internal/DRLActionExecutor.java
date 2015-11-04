@@ -38,18 +38,18 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"com.liferay.portal.workflow.kaleo.action.script.language=drl"}
+	property = {"com.liferay.portal.workflow.kaleo.action.executor.language=drl"},
+	service = ActionExecutor.class
 )
-public class DRLActionExecutor implements ActionExecutor {
+public class DRLActionExecutor extends BaseScriptActionExecutor {
 
 	@Override
 	public void execute(
-			KaleoAction kaleoAction, ExecutionContext executionContext,
-			ClassLoader... classLoaders)
+			KaleoAction kaleoAction, ExecutionContext executionContext)
 		throws ActionExecutorException {
 
 		try {
-			doExecute(kaleoAction, executionContext, classLoaders);
+			doExecute(kaleoAction, executionContext);
 		}
 		catch (Exception e) {
 			throw new ActionExecutorException(e);
@@ -57,8 +57,7 @@ public class DRLActionExecutor implements ActionExecutor {
 	}
 
 	protected void doExecute(
-			KaleoAction kaleoAction, ExecutionContext executionContext,
-			ClassLoader... classLoaders)
+			KaleoAction kaleoAction, ExecutionContext executionContext)
 		throws Exception {
 
 		List<Fact<?>> facts = RulesContextBuilder.buildRulesContext(
@@ -70,7 +69,7 @@ public class DRLActionExecutor implements ActionExecutor {
 
 		Map<String, ?> results = RulesEngineUtil.execute(
 			rulesResourceRetriever, facts, Query.createStandardQuery(),
-			classLoaders);
+			getScriptClassLoaders(kaleoAction));
 
 		Map<String, Serializable> resultsWorkflowContext =
 			(Map<String, Serializable>)results.get(

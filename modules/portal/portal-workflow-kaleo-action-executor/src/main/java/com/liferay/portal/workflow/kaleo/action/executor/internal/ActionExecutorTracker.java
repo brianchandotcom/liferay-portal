@@ -16,11 +16,9 @@ package com.liferay.portal.workflow.kaleo.action.executor.internal;
 
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMapFactory;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.kaleo.action.executor.ActionExecutor;
-
-import java.util.List;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
@@ -34,46 +32,30 @@ import org.osgi.service.component.annotations.Deactivate;
 @Component(immediate = true, service = ActionExecutorTracker.class)
 public class ActionExecutorTracker {
 
-	public ActionExecutor getActionExecutor(String scriptLanguage)
-		throws WorkflowException {
-
-		List<ActionExecutor> actionExecutors = getActionExecutors(
-			scriptLanguage);
-
-		return actionExecutors.get(0);
-	}
-
 	public ActionExecutor getActionExecutor(
-			String scriptLanguage, String filter)
+			String scriptLanguage, String script)
 		throws WorkflowException {
 
-		if (Validator.isNull(filter)) {
-			throw new WorkflowException("Empty filter is not allowed");
+		String key = _actionExecutorServiceReferenceMapper.getKey(
+			scriptLanguage, StringUtil.trim(script));
+
+		ActionExecutor actionExecutor = _serviceTrackerMap.getService(key);
+
+		if (actionExecutor == null) {
+			throw new WorkflowException(
+				"No Action executor registered with key " + key);
 		}
 
-		List<ActionExecutor> actionExecutors = getActionExecutors(
-			scriptLanguage);
-
-		for (ActionExecutor actionExecutor : actionExecutors) {
-			Class<?> clazz = actionExecutor.getClass();
-
-			String className = clazz.getName();
-
-			if (className.equals(filter.trim())) {
-				return actionExecutor;
-			}
-		}
-
-		throw new WorkflowException("No Action executor found");
+		return actionExecutor;
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext)
 		throws InvalidSyntaxException {
 
-		_serviceTrackerMap = ServiceTrackerMapFactory.multiValueMap(
-			bundleContext, ActionExecutor.class,
-			"com.liferay.portal.workflow.kaleo.action.script.language");
+		_serviceTrackerMap = ServiceTrackerMapFactory.singleValueMap(
+			bundleContext, ActionExecutor.class, null,
+			_actionExecutorServiceReferenceMapper);
 
 		_serviceTrackerMap.open();
 	}
@@ -83,20 +65,9 @@ public class ActionExecutorTracker {
 		_serviceTrackerMap.close();
 	}
 
-	protected List<ActionExecutor> getActionExecutors(String scriptLanguage)
-		throws WorkflowException {
-
-		List<ActionExecutor> actionExecutors = _serviceTrackerMap.getService(
-			scriptLanguage);
-
-		if (actionExecutors.isEmpty()) {
-			throw new WorkflowException(
-				"Invalid script language " + scriptLanguage);
-		}
-
-		return actionExecutors;
-	}
-
-	private ServiceTrackerMap<String, List<ActionExecutor>> _serviceTrackerMap;
+	private final ActionExecutorServiceReferenceMapper
+		_actionExecutorServiceReferenceMapper =
+			new ActionExecutorServiceReferenceMapper();
+	private ServiceTrackerMap<String, ActionExecutor> _serviceTrackerMap;
 
 }

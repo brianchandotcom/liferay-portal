@@ -36,14 +36,15 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"com.liferay.portal.workflow.kaleo.action.script.language=beanshell",
-		"com.liferay.portal.workflow.kaleo.action.script.language=groovy",
-		"com.liferay.portal.workflow.kaleo.action.script.language=javascript",
-		"com.liferay.portal.workflow.kaleo.action.script.language=python",
-		"com.liferay.portal.workflow.kaleo.action.script.language=ruby"
-	}
+		"com.liferay.portal.workflow.kaleo.action.executor.language=beanshell",
+		"com.liferay.portal.workflow.kaleo.action.executor.language=groovy",
+		"com.liferay.portal.workflow.kaleo.action.executor.language=javascript",
+		"com.liferay.portal.workflow.kaleo.action.executor.language=python",
+		"com.liferay.portal.workflow.kaleo.action.executor.language=ruby"
+	},
+	service = ActionExecutor.class
 )
-public class ScriptActionExecutor implements ActionExecutor {
+public class ScriptActionExecutor extends BaseScriptActionExecutor {
 
 	public ScriptActionExecutor() {
 		_outputObjects.add(WorkflowContextUtil.WORKFLOW_CONTEXT_NAME);
@@ -51,12 +52,11 @@ public class ScriptActionExecutor implements ActionExecutor {
 
 	@Override
 	public void execute(
-			KaleoAction kaleoAction, ExecutionContext executionContext,
-			ClassLoader... classLoaders)
+			KaleoAction kaleoAction, ExecutionContext executionContext)
 		throws ActionExecutorException {
 
 		try {
-			doExecute(kaleoAction, executionContext, classLoaders);
+			doExecute(kaleoAction, executionContext);
 		}
 		catch (Exception e) {
 			throw new ActionExecutorException(e);
@@ -68,8 +68,7 @@ public class ScriptActionExecutor implements ActionExecutor {
 	}
 
 	protected void doExecute(
-			KaleoAction kaleoAction, ExecutionContext executionContext,
-			ClassLoader... classLoaders)
+			KaleoAction kaleoAction, ExecutionContext executionContext)
 		throws Exception {
 
 		Map<String, Object> inputObjects =
@@ -77,7 +76,7 @@ public class ScriptActionExecutor implements ActionExecutor {
 
 		Map<String, Object> results = ScriptingUtil.eval(
 			null, inputObjects, _outputObjects, kaleoAction.getScriptLanguage(),
-			kaleoAction.getScript(), classLoaders);
+			kaleoAction.getScript(), getScriptClassLoaders(kaleoAction));
 
 		Map<String, Serializable> resultsWorkflowContext =
 			(Map<String, Serializable>)results.get(

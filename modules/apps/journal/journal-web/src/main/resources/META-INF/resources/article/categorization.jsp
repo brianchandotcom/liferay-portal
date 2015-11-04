@@ -19,8 +19,6 @@
 <%
 String defaultLanguageId = (String)request.getAttribute("edit_article.jsp-defaultLanguageId");
 
-JournalArticle article = ActionUtil.getArticle(request);
-
 DDMStructure ddmStructure = (DDMStructure)request.getAttribute("edit_article.jsp-structure");
 
 boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_article.jsp-changeStructure"));
@@ -28,7 +26,7 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 
 <liferay-ui:error-marker key="errorSection" value="categorization" />
 
-<aui:model-context bean="<%= article %>" model="<%= JournalArticle.class %>" />
+<aui:model-context bean="<%= journalDisplayContext.getArticle() %>" model="<%= JournalArticle.class %>" />
 
 <h3><liferay-ui:message key="categorization" /></h3>
 
@@ -41,6 +39,8 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 	<%
 	long classPK = 0;
 	double priority = 0;
+
+	JournalArticle article = journalDisplayContext.getArticle();
 
 	if (article != null) {
 		classPK = article.getResourcePrimKey();

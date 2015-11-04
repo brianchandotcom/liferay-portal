@@ -955,9 +955,14 @@
 			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
+		<execute macro="Page#gotoContentCP">
+			<var name="pageStaging" value="true" />
+			<var name="portletName" value="Web Content" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
 
-		<execute macro="WebContent#expirePGViaWCD">
+		<execute macro="WebContent#expireSpecificVersionCP">
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 

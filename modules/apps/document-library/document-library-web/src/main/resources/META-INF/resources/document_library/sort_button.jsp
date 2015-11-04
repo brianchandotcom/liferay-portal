@@ -28,11 +28,11 @@ String orderByType = ParamUtil.getString(request, "orderByType");
 
 Map<String, String> orderColumns = new HashMap<String, String>();
 
-orderColumns.put("title", "title");
+orderColumns.put("downloads", "downloads");
 orderColumns.put("creationDate", "create-date");
 orderColumns.put("modifiedDate", "modified-date");
-orderColumns.put("downloads", "downloads");
 orderColumns.put("size", "size");
+orderColumns.put("title", "title");
 
 PortletURL sortURL = renderResponse.createRenderURL();
 

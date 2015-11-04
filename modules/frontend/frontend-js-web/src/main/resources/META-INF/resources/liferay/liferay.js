@@ -248,6 +248,8 @@ Liferay = window.Liferay || {};
 		}
 		else {
 			retVal = (components[id] = value);
+
+			Liferay.fire(id + ':registered');
 		}
 
 		return retVal;

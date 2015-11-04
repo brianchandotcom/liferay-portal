@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
@@ -258,8 +259,10 @@ public class CalendarSearcherTest {
 			false, serviceContext);
 	}
 
-	protected void assertSearch(final String keywords, final int length)
+	protected void assertSearch(String keywords, final int length)
 		throws Exception {
+
+		final String preparedKeywords = StringUtil.toLowerCase(keywords);
 
 		IdempotentRetryAssert.retryAssert(
 			3, TimeUnit.SECONDS,
@@ -267,7 +270,7 @@ public class CalendarSearcherTest {
 
 				@Override
 				public Void call() throws Exception {
-					_searchContext.setKeywords(keywords);
+					_searchContext.setKeywords(preparedKeywords);
 
 					Indexer<?> indexer = CalendarSearcher.getInstance();
 

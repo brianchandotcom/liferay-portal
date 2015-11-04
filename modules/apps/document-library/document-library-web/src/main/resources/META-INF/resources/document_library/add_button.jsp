@@ -17,7 +17,7 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-DLPortletToolbarContributor dlPortletToolbarContributor = (DLPortletToolbarContributor)request.getAttribute("dlPortletToolbarContributor");
+DLPortletToolbarContributor dlPortletToolbarContributor = (DLPortletToolbarContributor)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_PORTLET_TOOLBAR_CONTRIBUTOR);
 
 List<Menu> menus = dlPortletToolbarContributor.getPortletTitleMenus(renderRequest);
 %>

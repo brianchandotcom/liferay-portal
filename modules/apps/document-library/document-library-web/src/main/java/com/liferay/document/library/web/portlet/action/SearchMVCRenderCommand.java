@@ -15,6 +15,7 @@
 package com.liferay.document.library.web.portlet.action;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
+import com.liferay.document.library.web.constants.DLWebKeys;
 import com.liferay.document.library.web.portlet.toolbar.item.DLPortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
@@ -43,7 +44,8 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		renderRequest.setAttribute(
-			"dlPortletToolbarContributor", _dlPortletToolbarContributor);
+			DLWebKeys.DOCUMENT_LIBRARY_PORTLET_TOOLBAR_CONTRIBUTOR,
+			_dlPortletToolbarContributor);
 
 		return "/document_library/view.jsp";
 	}

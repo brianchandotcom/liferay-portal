@@ -15,6 +15,7 @@
 package com.liferay.document.library.web.portlet.action;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
+import com.liferay.document.library.web.constants.DLWebKeys;
 import com.liferay.document.library.web.portlet.toolbar.item.DLPortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
@@ -44,7 +45,8 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 		throws PortletException {
 
 		renderRequest.setAttribute(
-			"dlPortletToolbarContributor", _dlPortletToolbarContributor);
+			DLWebKeys.DOCUMENT_LIBRARY_PORTLET_TOOLBAR_CONTRIBUTOR,
+			_dlPortletToolbarContributor);
 
 		return super.render(renderRequest, renderResponse);
 	}

@@ -28,6 +28,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.document.library.web.constants.DLPortletKeys" %><%@
+page import="com.liferay.document.library.web.constants.DLWebKeys" %><%@
 page import="com.liferay.document.library.web.dao.search.DLResultRowSplitter" %><%@
 page import="com.liferay.document.library.web.display.context.DLDisplayContextProvider" %><%@
 page import="com.liferay.document.library.web.display.context.IGDisplayContextProvider" %><%@

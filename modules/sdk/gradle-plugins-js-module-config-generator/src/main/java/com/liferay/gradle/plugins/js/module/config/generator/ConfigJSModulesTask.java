@@ -29,7 +29,6 @@ import java.util.Set;
 
 import org.gradle.api.Action;
 import org.gradle.api.Project;
-import org.gradle.api.Task;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
@@ -58,25 +57,6 @@ public class ConfigJSModulesTask extends ExecuteNodeTask {
 				DOWNLOAD_LFR_MODULE_CONFIG_GENERATOR_TASK_NAME);
 		dependsOn(
 			BasePlugin.CLEAN_TASK_NAME + StringUtil.capitalize(getName()));
-
-		onlyIf(
-			new Spec<Task>() {
-
-				@Override
-				public boolean isSatisfiedBy(Task task) {
-					ConfigJSModulesTask configJSModulesTask =
-						(ConfigJSModulesTask)task;
-
-					File file = configJSModulesTask.getModuleConfigFile();
-
-					if ((file != null) && file.exists()) {
-						return true;
-					}
-
-					return false;
-				}
-
-			});
 	}
 
 	public ConfigJSModulesTask exclude(Closure<?> closure) {

@@ -20,15 +20,19 @@ import com.liferay.gradle.util.GradleUtil;
 
 import java.io.File;
 
+import java.util.Collections;
 import java.util.concurrent.Callable;
 
+import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.file.FileCollection;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
+import org.gradle.api.tasks.TaskContainer;
 
 /**
  * @author Andrea Di Giorgi
@@ -54,6 +58,16 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 		addTaskDownloadBabel(project, jsTranspilerExtension);
 		addTaskDownloadLfrAmdLoader(project, jsTranspilerExtension);
 		addTaskTranspileJS(project);
+
+		project.afterEvaluate(
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project project) {
+					configureTasksTranspileJS(project);
+				}
+
+			});
 	}
 
 	protected DownloadNodeModuleTask addTaskDownloadBabel(
@@ -127,6 +141,32 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 		classesTask.dependsOn(transpileJSTask);
 
 		return transpileJSTask;
+	}
+
+	protected void configureTasksTranspileJS(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			TranspileJSTask.class,
+			new Action<TranspileJSTask>() {
+
+				@Override
+				public void execute(TranspileJSTask transpileJSTask) {
+					configureTaskTranspileJSEnabled(transpileJSTask);
+				}
+
+			});
+	}
+
+	protected void configureTaskTranspileJSEnabled(
+		TranspileJSTask transpileJSTask) {
+
+		FileCollection fileCollection = transpileJSTask.getSourceFiles();
+
+		if (fileCollection.isEmpty()) {
+			transpileJSTask.setDependsOn(Collections.emptySet());
+			transpileJSTask.setEnabled(false);
+		}
 	}
 
 }

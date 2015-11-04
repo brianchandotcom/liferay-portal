@@ -20,25 +20,7 @@
 AssetRendererFactory<?> assetRendererFactory = (AssetRendererFactory<?>)request.getAttribute(WebKeys.ASSET_RENDERER_FACTORY);
 
 JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_ARTICLE);
-JournalArticleResource articleResource = JournalArticleResourceLocalServiceUtil.getArticleResource(article.getResourcePrimKey());
-
-String ddmTemplateKey = (String)request.getAttribute(WebKeys.JOURNAL_TEMPLATE_ID);
-String languageId = LanguageUtil.getLanguageId(request);
-int articlePage = ParamUtil.getInteger(request, "page", 1);
-String viewMode = ParamUtil.getString(request, "viewMode", Constants.VIEW);
-
-boolean workflowAssetPreview = GetterUtil.getBoolean((Boolean)request.getAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW));
-
-JournalArticleDisplay articleDisplay = null;
-
-if (!workflowAssetPreview && article.isApproved()) {
-	JournalContent journalContent = (JournalContent)request.getAttribute(JournalWebKeys.JOURNAL_CONTENT);
-
-	articleDisplay = journalContent.getDisplay(articleResource.getGroupId(), articleResource.getArticleId(), article.getVersion(), ddmTemplateKey, viewMode, languageId, articlePage, new PortletRequestModel(renderRequest, renderResponse), themeDisplay);
-}
-else {
-	articleDisplay = JournalArticleLocalServiceUtil.getArticleDisplay(article, null, viewMode, languageId, 1, (PortletRequestModel)null, themeDisplay);
-}
+JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribute(WebKeys.JOURNAL_ARTICLE_DISPLAY);
 %>
 
 <div class="journal-content-article">

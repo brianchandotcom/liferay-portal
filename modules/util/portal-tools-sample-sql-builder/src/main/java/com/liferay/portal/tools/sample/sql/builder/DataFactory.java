@@ -56,6 +56,7 @@ import com.liferay.journal.model.impl.JournalArticleModelImpl;
 import com.liferay.journal.model.impl.JournalArticleResourceModelImpl;
 import com.liferay.journal.model.impl.JournalContentSearchModelImpl;
 import com.liferay.journal.social.JournalActivityKeys;
+import com.liferay.login.web.constants.LoginPortletKeys;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
@@ -2000,7 +2001,8 @@ public class DataFactory {
 	public List<LayoutModel> newPublicLayoutModels(long groupId) {
 		List<LayoutModel> layoutModels = new ArrayList<>();
 
-		layoutModels.add(newLayoutModel(groupId, "welcome", "58,", "47,"));
+		layoutModels.add(newLayoutModel(groupId, "welcome",
+			LoginPortletKeys.LOGIN + ",", "47,"));
 		layoutModels.add(
 			newLayoutModel(groupId, "blogs", "", BlogsPortletKeys.BLOGS + ","));
 		layoutModels.add(

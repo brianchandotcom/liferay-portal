@@ -1290,6 +1290,7 @@
 	</command>
 
 	<command name="viewLinkedAssetPGViaAP">
+		<var name="key_assetContent" value="${webContentContent}" />
 		<var name="key_assetTitle" value="${webContentTitle}" />
 
 		<execute function="AssertClick#assertPartialTextClickAtAndWait" locator1="AP#ASSET_ABSTRACT_VIEW" value1="${webContentTitle}" />
@@ -1364,6 +1365,7 @@
 	</command>
 
 	<command name="viewPGViaAP">
+		<var name="key_assetContent" value="${webContentContent}" />
 		<var name="key_assetTitle" value="${webContentTitle}" />
 
 		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${webContentTitle}" />

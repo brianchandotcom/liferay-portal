@@ -1157,6 +1157,7 @@
 	</command>
 
 	<command name="viewAbstractEntryViaAPPG">
+		<var name="key_assetContent" value="${entryContent}" />
 		<var name="key_assetTitle" value="${assetTitle}" />
 
 		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
@@ -1383,6 +1384,7 @@
 	</command>
 
 	<command name="viewEntryViaAPPG">
+		<var name="key_assetContent" value="${entryContent}" />
 		<var name="key_assetTitle" value="${assetTitle}" />
 
 		<execute function="AssertClick" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
@@ -1533,6 +1535,7 @@
 	</command>
 
 	<command name="viewPGViaAP">
+		<var name="key_assetContent" value="${entryContent}" />
 		<var name="key_assetTitle" value="${entryTitle}" />
 
 		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />

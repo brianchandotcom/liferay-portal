@@ -2238,6 +2238,7 @@
 	</command>
 
 	<command name="viewPGViaAP">
+		<var name="key_assetContent" value="${dmDocumentDescription}" />
 		<var name="key_assetTitle" value="${dmDocumentTitle}" />
 
 		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${dmDocumentTitle}" />

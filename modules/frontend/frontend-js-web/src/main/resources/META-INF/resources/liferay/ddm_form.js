@@ -299,7 +299,7 @@ AUI.add(
 
 						var fieldNode = A.Node.create(fieldTemplate);
 
-						instance.get('container').insert(fieldNode, 'after');
+						instance.get('container').placeAfter(fieldNode);
 
 						var parent = instance.get('parent');
 

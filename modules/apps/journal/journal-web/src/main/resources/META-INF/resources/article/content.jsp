@@ -31,21 +31,7 @@ DDMTemplate ddmTemplate = (DDMTemplate)request.getAttribute("edit_article.jsp-te
 
 String defaultLanguageId = (String)request.getAttribute("edit_article.jsp-defaultLanguageId");
 
-DDMFormValues ddmFormValues = null;
-
-if (article != null) {
-	String content = article.getContent();
-
-	if (Validator.isNotNull(content)) {
-		JournalConverter journalConverter = (JournalConverter)request.getAttribute(JournalWebKeys.JOURNAL_CONVERTER);
-
-		Fields fields = journalConverter.getDDMFields(ddmStructure, content);
-
-		if (fields != null) {
-			ddmFormValues = FieldsToDDMFormValuesConverterUtil.convert(ddmStructure, fields);
-		}
-	}
-}
+DDMFormValues ddmFormValues = journalDisplayContext.getDDMFormValues(ddmStructure);
 
 Locale[] availableLocales = new Locale[] {LocaleUtil.fromLanguageId(defaultLanguageId)};
 

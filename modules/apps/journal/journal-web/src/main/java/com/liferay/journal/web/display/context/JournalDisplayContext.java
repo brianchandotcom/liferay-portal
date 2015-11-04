@@ -14,10 +14,16 @@
 
 package com.liferay.journal.web.display.context;
 
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.storage.Fields;
+import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverterUtil;
 import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.journal.constants.JournalWebKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalFolderConstants;
+import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.web.configuration.JournalWebConfigurationValues;
 import com.liferay.journal.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
@@ -64,6 +70,34 @@ public class JournalDisplayContext {
 		_article = ActionUtil.getArticle(_request);
 
 		return _article;
+	}
+
+	public DDMFormValues getDDMFormValues(DDMStructure ddmStructure)
+		throws PortalException {
+
+		if (_ddmFormValues != null) {
+			return _ddmFormValues;
+		}
+
+		JournalArticle article = getArticle();
+
+		if (article != null) {
+			String content = article.getContent();
+
+			if (Validator.isNotNull(content)) {
+				JournalConverter journalConverter = getJournalConverter();
+
+				Fields fields = journalConverter.getDDMFields(
+					ddmStructure, content);
+
+				if (fields != null) {
+					_ddmFormValues = FieldsToDDMFormValuesConverterUtil.convert(
+						ddmStructure, fields);
+				}
+			}
+		}
+
+		return _ddmFormValues;
 	}
 
 	public String getDisplayStyle() {
@@ -114,6 +148,11 @@ public class JournalDisplayContext {
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		return _folderId;
+	}
+
+	public JournalConverter getJournalConverter() {
+		return (JournalConverter)_request.getAttribute(
+			JournalWebKeys.JOURNAL_CONVERTER);
 	}
 
 	public String getNavigation() {
@@ -256,6 +295,7 @@ public class JournalDisplayContext {
 	}
 
 	private JournalArticle _article;
+	private DDMFormValues _ddmFormValues;
 	private String _displayStyle;
 	private String[] _displayViews;
 	private JournalFolder _folder;

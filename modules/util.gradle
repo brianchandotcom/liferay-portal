@@ -11,7 +11,7 @@ buildscript {
 	}
 
 	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.22"
+		classpath group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.23"
 	}
 }
 

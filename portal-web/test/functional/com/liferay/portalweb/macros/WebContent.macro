@@ -915,11 +915,21 @@
 
 		<execute function="AssertClick" locator1="MenuItem#VIEW_HISTORY" value1="View History" />
 
-		<for list="${webContentList}" param="webContentTitle">
-			<var name="key_webContentTitle" value="${webContentTitle}" />
+		<if>
+			<isset var="webContentList" />
+			<then>
+				<for list="${webContentList}" param="webContentTitle">
+					<var name="key_webContentTitle" value="${webContentTitle}" />
 
-			<execute function="Check" locator1="WCEditWebContent#VIEW_HISTORY_VERSION_CHECKBOX" />
-		</for>
+					<execute function="Check" locator1="WCEditWebContent#VIEW_HISTORY_VERSION_CHECKBOX" />
+				</for>
+			</then>
+			<else>
+				<var name="key_webContentTitle" value="${webContentTitle}" />
+
+				<execute function="Check" locator1="WCEditWebContent#VIEW_HISTORY_VERSION_CHECKBOX" />
+			</else>
+		</if>
 
 		<execute function="AssertClickNoError" locator1="Button#EXPIRE" value1="Expire" />
 		<execute function="Confirm" value1="Are you sure you want to expire the selected version?" />

@@ -23,7 +23,6 @@ import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoTimer;
 import com.liferay.portal.workflow.kaleo.model.KaleoTimerInstanceToken;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
-import com.liferay.portal.workflow.kaleo.runtime.action.ActionExecutorUtil;
 import com.liferay.portal.workflow.kaleo.runtime.graph.PathElement;
 import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationUtil;
 import com.liferay.portal.workflow.kaleo.runtime.util.ExecutionUtil;
@@ -48,7 +47,7 @@ public abstract class BaseNodeExecutor
 
 		boolean performExecute = doEnter(currentKaleoNode, executionContext);
 
-		ActionExecutorUtil.executeKaleoActions(
+		actionExecutorManagerHelper.executeKaleoActions(
 			KaleoNode.class.getName(), currentKaleoNode.getKaleoNodeId(),
 			ExecutionType.ON_ENTRY, executionContext);
 
@@ -93,7 +92,7 @@ public abstract class BaseNodeExecutor
 
 		KaleoTimer kaleoTimer = kaleoTimerInstanceToken.getKaleoTimer();
 
-		ActionExecutorUtil.executeKaleoActions(
+		actionExecutorManagerHelper.executeKaleoActions(
 			KaleoTimer.class.getName(), kaleoTimer.getKaleoTimerId(),
 			ExecutionType.ON_TIMER, executionContext);
 
@@ -120,7 +119,7 @@ public abstract class BaseNodeExecutor
 
 		doExit(currentKaleoNode, executionContext, remainingPathElements);
 
-		ActionExecutorUtil.executeKaleoActions(
+		actionExecutorManagerHelper.executeKaleoActions(
 			KaleoNode.class.getName(), currentKaleoNode.getKaleoNodeId(),
 			ExecutionType.ON_EXIT, executionContext);
 

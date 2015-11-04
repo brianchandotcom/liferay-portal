@@ -36,7 +36,6 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTimer;
 import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskAssignmentImpl;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
-import com.liferay.portal.workflow.kaleo.runtime.action.ActionExecutorUtil;
 import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignerUtil;
 import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelector;
 import com.liferay.portal.workflow.kaleo.runtime.calendar.DueDateCalculator;
@@ -163,7 +162,7 @@ public class TaskNodeExecutor extends BaseNodeExecutor {
 
 		executionContext.setKaleoTaskInstanceToken(kaleoTaskInstanceToken);
 
-		ActionExecutorUtil.executeKaleoActions(
+		actionExecutorManagerHelper.executeKaleoActions(
 			KaleoNode.class.getName(), currentKaleoNode.getKaleoNodeId(),
 			ExecutionType.ON_ASSIGNMENT, executionContext);
 

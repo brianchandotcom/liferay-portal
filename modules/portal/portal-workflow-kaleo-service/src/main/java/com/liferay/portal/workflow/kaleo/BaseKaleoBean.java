@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.kaleo;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.workflow.kaleo.runtime.action.ActionExecutorManagerHelper;
 import com.liferay.portal.workflow.kaleo.service.KaleoActionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoConditionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
@@ -35,6 +36,9 @@ import com.liferay.portal.workflow.kaleo.service.KaleoTransitionLocalService;
  * @author Brian Wing Shun Chan
  */
 public class BaseKaleoBean {
+
+	@BeanReference(type = ActionExecutorManagerHelper.class)
+	protected ActionExecutorManagerHelper actionExecutorManagerHelper;
 
 	@BeanReference(type = KaleoActionLocalService.class)
 	protected KaleoActionLocalService kaleoActionLocalService;

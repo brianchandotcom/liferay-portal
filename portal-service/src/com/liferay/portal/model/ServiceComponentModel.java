@@ -38,7 +38,7 @@ import java.io.Serializable;
  */
 @ProviderType
 public interface ServiceComponentModel extends BaseModel<ServiceComponent>,
-	MVCCModel, ShardedModel {
+	MVCCModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -88,22 +88,6 @@ public interface ServiceComponentModel extends BaseModel<ServiceComponent>,
 	 * @param serviceComponentId the service component ID of this service component
 	 */
 	public void setServiceComponentId(long serviceComponentId);
-
-	/**
-	 * Returns the company ID of this service component.
-	 *
-	 * @return the company ID of this service component
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this service component.
-	 *
-	 * @param companyId the company ID of this service component
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the build namespace of this service component.

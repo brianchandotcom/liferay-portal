@@ -1424,7 +1424,6 @@ create table SCProductVersion (
 create table ServiceComponent (
 	mvccVersion LONG default 0,
 	serviceComponentId LONG not null primary key,
-	companyId LONG,
 	buildNamespace VARCHAR(75) null,
 	buildNumber LONG,
 	buildDate LONG,

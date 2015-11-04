@@ -61,7 +61,6 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "mvccVersion", Types.BIGINT },
 			{ "serviceComponentId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "buildNamespace", Types.VARCHAR },
 			{ "buildNumber", Types.BIGINT },
 			{ "buildDate", Types.BIGINT },
@@ -72,14 +71,13 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("serviceComponentId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("buildNamespace", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("buildNumber", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("buildDate", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("data_", Types.CLOB);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table ServiceComponent (mvccVersion LONG default 0,serviceComponentId LONG not null primary key,companyId LONG,buildNamespace VARCHAR(75) null,buildNumber LONG,buildDate LONG,data_ TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table ServiceComponent (mvccVersion LONG default 0,serviceComponentId LONG not null primary key,buildNamespace VARCHAR(75) null,buildNumber LONG,buildDate LONG,data_ TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table ServiceComponent";
 	public static final String ORDER_BY_JPQL = " ORDER BY serviceComponent.buildNamespace DESC, serviceComponent.buildNumber DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY ServiceComponent.buildNamespace DESC, ServiceComponent.buildNumber DESC";
@@ -139,7 +137,6 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("serviceComponentId", getServiceComponentId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("buildNamespace", getBuildNamespace());
 		attributes.put("buildNumber", getBuildNumber());
 		attributes.put("buildDate", getBuildDate());
@@ -163,12 +160,6 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 
 		if (serviceComponentId != null) {
 			setServiceComponentId(serviceComponentId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		String buildNamespace = (String)attributes.get("buildNamespace");
@@ -214,16 +205,6 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 	@Override
 	public void setServiceComponentId(long serviceComponentId) {
 		_serviceComponentId = serviceComponentId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	@Override
@@ -304,7 +285,7 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
 			ServiceComponent.class.getName(), getPrimaryKey());
 	}
 
@@ -331,7 +312,6 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 
 		serviceComponentImpl.setMvccVersion(getMvccVersion());
 		serviceComponentImpl.setServiceComponentId(getServiceComponentId());
-		serviceComponentImpl.setCompanyId(getCompanyId());
 		serviceComponentImpl.setBuildNamespace(getBuildNamespace());
 		serviceComponentImpl.setBuildNumber(getBuildNumber());
 		serviceComponentImpl.setBuildDate(getBuildDate());
@@ -432,8 +412,6 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 
 		serviceComponentCacheModel.serviceComponentId = getServiceComponentId();
 
-		serviceComponentCacheModel.companyId = getCompanyId();
-
 		serviceComponentCacheModel.buildNamespace = getBuildNamespace();
 
 		String buildNamespace = serviceComponentCacheModel.buildNamespace;
@@ -459,14 +437,12 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
 		sb.append(", serviceComponentId=");
 		sb.append(getServiceComponentId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", buildNamespace=");
 		sb.append(getBuildNamespace());
 		sb.append(", buildNumber=");
@@ -482,7 +458,7 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.ServiceComponent");
@@ -495,10 +471,6 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 		sb.append(
 			"<column><column-name>serviceComponentId</column-name><column-value><![CDATA[");
 		sb.append(getServiceComponentId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>buildNamespace</column-name><column-value><![CDATA[");
@@ -528,7 +500,6 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 		};
 	private long _mvccVersion;
 	private long _serviceComponentId;
-	private long _companyId;
 	private String _buildNamespace;
 	private String _originalBuildNamespace;
 	private long _buildNumber;

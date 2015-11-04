@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_0_0;
+package com.liferay.marketplace.upgrade.v1_0_0;
 
 /**
  * @author Brian Wing Shun Chan
@@ -22,19 +22,7 @@ public class UpgradeCompanyId
 
 	@Override
 	protected String[] getTableNames() {
-		return new String[] {
-			"AnnouncementsFlag", "AssetEntries_AssetCategories",
-			"AssetEntries_AssetTags", "AssetTagStats", "BrowserTracker",
-			"DLFileEntryMetadata", "DLFileEntryTypes_DLFolders", "DLSyncEvent",
-			"Groups_Orgs", "Groups_Roles", "Groups_UserGroups", "Image",
-			"MBStatsUser", "OrgGroupRole", "OrgLabor", "PasswordPolicyRel",
-			"PasswordTracker", "PortletPreferences", "RatingsStats",
-			"ResourceBlockPermission", "SCFrameworkVersi_SCProductVers",
-			"SCLicense", "SCLicenses_SCProductEntries", "TrashVersion",
-			"UserGroupGroupRole", "UserGroupRole", "UserGroups_Teams",
-			"UserIdMapper", "Users_Groups", "Users_Orgs", "Users_Roles",
-			"Users_Teams", "Users_UserGroups", "UserTrackerPath"
-		};
+		return new String[] {"Marketplace_Module"};
 	}
 
 }

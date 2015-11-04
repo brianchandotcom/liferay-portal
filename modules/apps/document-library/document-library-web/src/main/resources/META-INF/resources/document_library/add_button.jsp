@@ -17,121 +17,32 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-Folder folder = (Folder)request.getAttribute("view.jsp-folder");
+DLPortletToolbarContributor dlPortletToolbarContributor = (DLPortletToolbarContributor)request.getAttribute("dlPortletToolbarContributor");
 
-long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
-
-long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
-
-List<DLFileEntryType> fileEntryTypes = Collections.emptyList();
-
-boolean inherited = true;
-
-if ((folder != null) && (folder.getModel() instanceof DLFolder)) {
-	DLFolder dlFolder = (DLFolder)folder.getModel();
-
-	if (dlFolder.getRestrictionType() == DLFolderConstants.RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW) {
-		inherited = false;
-	}
-}
-
-if ((folder == null) || folder.isSupportsMetadata()) {
-	fileEntryTypes = DLFileEntryTypeServiceUtil.getFolderFileEntryTypes(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), folderId, inherited);
-}
-
-boolean hasAddDocumentPermission = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT);
+List<Menu> menus = dlPortletToolbarContributor.getPortletTitleMenus(renderRequest);
 %>
 
-<aui:nav-item dropdown="<%= true %>" id="addButtonContainer" label="add">
-	<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER) %>">
-		<portlet:renderURL var="addFolderURL">
-			<portlet:param name="mvcRenderCommandName" value="/document_library/edit_folder" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
-			<portlet:param name="parentFolderId" value="<%= String.valueOf(folderId) %>" />
-			<portlet:param name="ignoreRootFolder" value="<%= Boolean.TRUE.toString() %>" />
-		</portlet:renderURL>
+<div id="addButtonContainer">
 
-		<%
-		AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
-		%>
+	<%
+	for (Menu menu : menus) {
+		List<URLMenuItem> urlMenuItems = (List<URLMenuItem>)(List<?>)menu.getMenuItems();
 
-		<aui:nav-item href="<%= addFolderURL %>" iconCssClass="<%= assetRendererFactory.getIconCssClass() %>" label='<%= (folder != null) ? "subfolder" : "folder" %>' />
-	</c:if>
+		List<AddMenuItem> addMenuItems = new ArrayList<AddMenuItem>();
 
-	<c:if test="<%= ((folder == null) || folder.isSupportsShortcuts()) && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_SHORTCUT) %>">
-		<portlet:renderURL var="editFileShortcutURL">
-			<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_shortcut" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
-			<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-		</portlet:renderURL>
+		for (URLMenuItem urlMenuItem : urlMenuItems) {
+			addMenuItems.add(new AddMenuItem(urlMenuItem.getLabel(), urlMenuItem.getURL()));
 
-		<aui:nav-item href="<%= editFileShortcutURL %>" iconCssClass="icon-external-link" label="shortcut" />
-	</c:if>
+		}
+	%>
 
-	<c:if test="<%= (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_REPOSITORY) %>">
-		<portlet:renderURL var="addRepositoryURL">
-			<portlet:param name="mvcRenderCommandName" value="/document_library/edit_repository" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-		</portlet:renderURL>
+		<liferay-frontend:add-menu addMenuItems="<%= addMenuItems %>" />
 
-		<aui:nav-item href="<%= addRepositoryURL %>" iconCssClass="icon-hdd" label="repository" />
-	</c:if>
+	<%
+	}
+	%>
 
-	<c:if test="<%= ((folder == null) || folder.isSupportsMultipleUpload()) && hasAddDocumentPermission && !fileEntryTypes.isEmpty() %>">
-		<portlet:renderURL var="editFileEntryURL">
-			<portlet:param name="mvcPath" value="/document_library/upload_multiple_file_entries.jsp" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="backURL" value="<%= currentURL %>" />
-			<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
-			<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-		</portlet:renderURL>
-
-		<aui:nav-item href="<%= editFileEntryURL %>" iconCssClass="icon-copy" label="multiple-documents" />
-	</c:if>
-
-	<c:choose>
-		<c:when test="<%= hasAddDocumentPermission && (repositoryId != scopeGroupId) %>">
-			<portlet:renderURL var="editFileEntryURL">
-				<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_entry" />
-				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="backURL" value="<%= currentURL %>" />
-				<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
-				<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-			</portlet:renderURL>
-
-			<aui:nav-item href="<%= editFileEntryURL %>" iconCssClass="icon-file" label="basic-document" />
-		</c:when>
-		<c:when test="<%= !fileEntryTypes.isEmpty() && hasAddDocumentPermission %>">
-
-			<%
-			for (DLFileEntryType fileEntryType : fileEntryTypes) {
-			%>
-
-				<portlet:renderURL var="addFileEntryTypeURL">
-					<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_entry" />
-					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
-					<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-					<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryType.getFileEntryTypeId()) %>" />
-				</portlet:renderURL>
-
-				<%
-				AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
-				%>
-
-				<aui:nav-item href="<%= addFileEntryTypeURL %>" iconCssClass="<%= assetRendererFactory.getIconCssClass() %>" label="<%= HtmlUtil.escape(fileEntryType.getUnambiguousName(fileEntryTypes, themeDisplay.getScopeGroupId(), locale)) %>" localizeLabel="<%= false %>" />
-
-			<%
-			}
-			%>
-
-		</c:when>
-	</c:choose>
-</aui:nav-item>
+</div>
 
 <aui:script use="aui-base,uploader">
 	if (!A.UA.ios && (A.Uploader.TYPE != 'none')) {

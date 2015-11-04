@@ -19,8 +19,6 @@
 <%
 String backURL = ParamUtil.getString(request, "backURL");
 
-String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
-
 long repositoryId = ParamUtil.getLong(request, "repositoryId");
 
 if (repositoryId <= 0) {
@@ -34,10 +32,6 @@ long folderId = ParamUtil.getLong(request, "folderId");
 %>
 
 <div <%= portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
-	<c:if test="<%= Validator.isNull(referringPortletResource) %>">
-		<liferay-util:include page="/document_library/top_links.jsp" servletContext="<%= application %>" />
-	</c:if>
-
 	<liferay-ui:header
 		backURL="<%= backURL %>"
 		title='<%= portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY) ? "add-multiple-media" : "add-multiple-documents" %>'

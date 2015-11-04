@@ -55,7 +55,7 @@ if (row != null) {
 	}
 }
 else {
-	if (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
+	if (portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 		if (request.getAttribute("search.jsp-fileEntry") != null) {
 			fileEntry = (FileEntry)request.getAttribute("search.jsp-fileEntry");
 		}
@@ -83,13 +83,4 @@ else {
 DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlRequestHelper);
 %>
 
-<c:choose>
-	<c:when test="<%= portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_DISPLAY) && !dlVisualizationHelper.isShowMinimalActionsButton() %>">
-		<liferay-ui:menu menu="<%= dlViewFileVersionDisplayContext.getMenu() %>" />
-	</c:when>
-	<c:otherwise>
-		<span class="<%= (row != null) ? StringPool.BLANK : "entry-action overlay" %>">
-			<liferay-ui:menu menu="<%= dlViewFileVersionDisplayContext.getMenu() %>" />
-		</span>
-	</c:otherwise>
-</c:choose>
+<liferay-ui:menu menu="<%= dlViewFileVersionDisplayContext.getMenu() %>" />

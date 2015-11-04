@@ -117,6 +117,7 @@
 		<property name="workflowModelParser" ref="com.liferay.portal.workflow.kaleo.parser.WorkflowModelParser" />
 		<property name="workflowValidator" ref="com.liferay.portal.workflow.kaleo.parser.WorkflowValidator" />
 	</bean>
+	<bean id="com.liferay.portal.workflow.kaleo.runtime.action.ActionExecutorManagerHelper" class="com.liferay.portal.workflow.kaleo.runtime.action.ActionExecutorManagerHelper" />
 	<bean id="com.liferay.portal.workflow.kaleo.runtime.assignment.CompositeTaskAssignmentSelector" class="com.liferay.portal.workflow.kaleo.runtime.assignment.CompositeTaskAssignmentSelector">
 		<property name="taskAssignmentSelectors">
 			<util:map>

@@ -451,13 +451,19 @@ public class FileUtil {
 		Project project, final String url, File destinationFile,
 		final boolean ignoreErrors) {
 
+		final File tmpFile = new File(
+			destinationFile.getParentFile(),
+			destinationFile.getName() + ".tmp");
+
+		project.delete(destinationFile, tmpFile);
+
 		Closure<Void> closure = new Closure<Void>(null) {
 
 			@SuppressWarnings("unused")
 			public void doCall(AntBuilder antBuilder) {
 				Map<String, Object> args = new HashMap<>();
 
-				args.put("dest", destinationFile);
+				args.put("dest", tmpFile);
 				args.put("ignoreerrors", ignoreErrors);
 				args.put("src", url);
 
@@ -467,6 +473,11 @@ public class FileUtil {
 		};
 
 		project.ant(closure);
+
+		if (!tmpFile.renameTo(destinationFile)) {
+			throw new GradleException(
+				"Unable to rename " + tmpFile + " to " + destinationFile);
+		}
 	}
 
 	private static long _getLastModified(File file) throws IOException {

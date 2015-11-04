@@ -84,10 +84,6 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 			<%
 			String keywords = ParamUtil.getString(request, "keywords", null);
 
-			if (Validator.isNotNull(keywords)) {
-				keywords = StringUtil.quote(keywords, StringPool.PERCENT);
-			}
-
 			OrderByComparator<AssetTag> orderByComparator = null;
 
 			boolean orderByAsc = false;

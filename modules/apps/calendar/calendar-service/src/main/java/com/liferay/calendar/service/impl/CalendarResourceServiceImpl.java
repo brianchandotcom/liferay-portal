@@ -69,14 +69,13 @@ public class CalendarResourceServiceImpl
 		throws PortalException {
 
 		CalendarResource calendarResource =
-			calendarResourcePersistence.fetchByC_C(classNameId, classPK);
+			calendarResourceLocalService.fetchCalendarResource(
+				classNameId, classPK);
 
-		if (calendarResource == null) {
-			return null;
+		if (calendarResource != null) {
+			CalendarResourcePermission.check(
+				getPermissionChecker(), calendarResource, ActionKeys.VIEW);
 		}
-
-		CalendarResourcePermission.check(
-			getPermissionChecker(), calendarResource, ActionKeys.VIEW);
 
 		return calendarResource;
 	}

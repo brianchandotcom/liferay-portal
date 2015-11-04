@@ -325,6 +325,18 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 	}
 
 	@Override
+	public MBMessage fetchMBMessage(long messageId) throws PortalException {
+		MBMessage mbMessage = mbMessageLocalService.fetchMBMessage(messageId);
+
+		if (mbMessage != null) {
+			MBMessagePermission.check(
+				getPermissionChecker(), mbMessage, ActionKeys.VIEW);
+		}
+
+		return mbMessage;
+	}
+
+	@Override
 	public List<MBMessage> getCategoryMessages(
 			long groupId, long categoryId, int status, int start, int end)
 		throws PortalException {

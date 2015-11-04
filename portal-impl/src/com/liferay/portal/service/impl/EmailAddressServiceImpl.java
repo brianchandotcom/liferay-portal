@@ -87,7 +87,7 @@ public class EmailAddressServiceImpl extends EmailAddressServiceBaseImpl {
 	public EmailAddress fetchEmailAddress(long emailAddressId)
 		throws PortalException {
 
-		EmailAddress emailAddress = emailAddressPersistence.fetchByPrimaryKey(
+		EmailAddress emailAddress = emailAddressLocalService.fetchEmailAddress(
 			emailAddressId);
 
 		if (emailAddress != null) {

@@ -572,6 +572,15 @@ public class ClusterSchedulerEngine
 
 		ClusterableContextThreadLocal.putThreadLocalContext(
 			PLUGIN_READY, pluginReady);
+
+		boolean schedulerClusterInvoking = true;
+
+		if (!SchedulerClusterInvokingThreadLocal.isEnabled()) {
+			schedulerClusterInvoking = false;
+		}
+
+		ClusterableContextThreadLocal.putThreadLocalContext(
+			SCHEDULER_CLUSTER_INVOKING, schedulerClusterInvoking);
 	}
 
 	protected void setClusterMasterExecutor(
@@ -619,6 +628,9 @@ public class ClusterSchedulerEngine
 	protected static final String PLUGIN_READY = "plugin.ready";
 
 	protected static final String PORTAL_READY = "portal.ready";
+
+	protected static final String SCHEDULER_CLUSTER_INVOKING =
+		"scheduler.cluster.invoking";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClusterSchedulerEngine.class);

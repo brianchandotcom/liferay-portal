@@ -51,6 +51,13 @@ public class SchedulerClusterInvokeAcceptor implements ClusterInvokeAcceptor {
 			return false;
 		}
 
+		boolean schedulerClusterInvoking = (Boolean)context.get(
+			ClusterSchedulerEngine.SCHEDULER_CLUSTER_INVOKING);
+
+		if (!schedulerClusterInvoking) {
+			return false;
+		}
+
 		StorageType storageType = (StorageType)context.get(
 			SchedulerEngine.STORAGE_TYPE);
 

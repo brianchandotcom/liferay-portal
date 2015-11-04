@@ -916,6 +916,8 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 				destinationName = DestinationNames.SCHEDULER_DISPATCH;
 			}
 
+			SchedulerClusterInvokingThreadLocal.setEnabled(false);
+
 			try {
 				Message message = new Message();
 
@@ -946,6 +948,9 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 			}
 			catch (SchedulerException se) {
 				_log.error(se, se);
+			}
+			finally {
+				SchedulerClusterInvokingThreadLocal.setEnabled(true);
 			}
 
 			return null;
@@ -984,11 +989,16 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 				storageType = storageTypeAware.getStorageType();
 			}
 
+			SchedulerClusterInvokingThreadLocal.setEnabled(false);
+
 			try {
 				unschedule(schedulerEntry, storageType);
 			}
 			catch (SchedulerException se) {
 				_log.error(se, se);
+			}
+			finally {
+				SchedulerClusterInvokingThreadLocal.setEnabled(true);
 			}
 
 			ServiceRegistration<MessageListener>

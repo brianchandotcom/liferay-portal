@@ -18,6 +18,7 @@ import com.liferay.marketplace.upgrade.v1_0_0.UpgradeExpando;
 import com.liferay.marketplace.upgrade.v1_0_0.UpgradeModule;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portal.upgrade.v7_0_0.UpgradeCompanyId;
 import com.liferay.portlet.expando.service.ExpandoColumnLocalService;
 import com.liferay.portlet.expando.service.ExpandoTableLocalService;
 import com.liferay.portlet.expando.service.ExpandoValueLocalService;
@@ -39,7 +40,7 @@ public class MarketplaceServiceUpgrade implements UpgradeStepRegistrator {
 			new UpgradeExpando(
 				_expandoColumnLocalService, _expandoTableLocalService,
 				_expandoValueLocalService),
-			new UpgradeModule());
+			new UpgradeModule(), new UpgradeCompanyId());
 	}
 
 	@Reference(unbind = "-")

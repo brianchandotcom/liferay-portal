@@ -105,12 +105,12 @@ public class FileUtil {
 	public static File get(Project project, String url, File destinationFile)
 		throws IOException {
 
-		return get(project, url, destinationFile, false, true, false);
+		return get(project, url, destinationFile, false, true);
 	}
 
 	public static synchronized File get(
 			Project project, String url, File destinationFile,
-			boolean ignoreErrors, boolean tryLocalNetwork, boolean verbose)
+			boolean ignoreErrors, boolean tryLocalNetwork)
 		throws IOException {
 
 		String mirrorsCacheArtifactSubdir = url.replaceFirst(
@@ -134,18 +134,14 @@ public class FileUtil {
 				try {
 					_get(
 						project, mirrorsUrl, mirrorsCacheArtifactFile,
-						ignoreErrors, verbose);
+						ignoreErrors);
 				}
 				catch (Exception e) {
-					_get(
-						project, url, mirrorsCacheArtifactFile, ignoreErrors,
-						verbose);
+					_get(project, url, mirrorsCacheArtifactFile, ignoreErrors);
 				}
 			}
 			else {
-				_get(
-					project, url, mirrorsCacheArtifactFile, ignoreErrors,
-					verbose);
+				_get(project, url, mirrorsCacheArtifactFile, ignoreErrors);
 			}
 		}
 
@@ -452,8 +448,8 @@ public class FileUtil {
 	}
 
 	private static void _get(
-		Project project, final String url, final File destinationFile,
-		final boolean ignoreErrors, final boolean verbose) {
+		Project project, final String url, File destinationFile,
+		final boolean ignoreErrors) {
 
 		Closure<Void> closure = new Closure<Void>(null) {
 
@@ -464,7 +460,6 @@ public class FileUtil {
 				args.put("dest", destinationFile);
 				args.put("ignoreerrors", ignoreErrors);
 				args.put("src", url);
-				args.put("verbose", verbose);
 
 				antBuilder.invokeMethod("get", args);
 			}

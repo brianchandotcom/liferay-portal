@@ -133,7 +133,7 @@
 					</aui:select>
 
 					<aui:button-row>
-						<aui:button name="installXugglerButton" value="install" />
+						<aui:button name="installXugglerButton" data-cmd="installXuggler" value="install" />
 					</aui:button-row>
 				</c:otherwise>
 			</c:choose>

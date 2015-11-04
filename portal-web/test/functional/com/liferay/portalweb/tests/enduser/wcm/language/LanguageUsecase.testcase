@@ -312,6 +312,27 @@
 		</execute>
 	</command>
 
+	<command name="ViewChangedDefaultPortalLanguageViaWebContent" priority="4">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Portal Settings" />
+		</execute>
+
+		<execute macro="PortalSettings#configureCurrentLanguagesCP">
+			<var name="defaultPortalLanguage" value="Spanish (Spain)" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#viewDefaultLanguage">
+			<var name="localizedLanguage" value="Spanish (Spain)" />
+		</execute>
+	</command>
+
 	<command name="ViewRemovedCurrentPortalLanguagesViaLanguagePortlet" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page Name" />

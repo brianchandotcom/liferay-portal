@@ -16,7 +16,6 @@ package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -24,7 +23,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 
-import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -47,13 +45,11 @@ public class VerifyMySQL extends VerifyProcess {
 			return;
 		}
 
-		try (Connection connection = DataAccess.getUpgradeOptimizedConnection();
-			Statement statement = connection.createStatement()) {
+		Statement statement = connection.createStatement();
 
-			verifyTableEngine(statement);
+		verifyTableEngine(statement);
 
-			verifyDatetimePrecision(connection.getMetaData(), statement);
-		}
+		verifyDatetimePrecision(connection.getMetaData(), statement);
 	}
 
 	protected String getActualColumnType(

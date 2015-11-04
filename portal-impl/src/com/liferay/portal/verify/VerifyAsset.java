@@ -23,7 +23,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -33,15 +32,12 @@ import java.sql.ResultSet;
 public class VerifyAsset extends VerifyProcess {
 
 	protected void deleteOrphanedAssetEntries() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
 			long classNameId = PortalUtil.getClassNameId(
 				DLFileEntryConstants.getClassName());
-
-			con = DataAccess.getUpgradeOptimizedConnection();
 
 			StringBundler sb = new StringBundler(5);
 
@@ -51,7 +47,7 @@ public class VerifyAsset extends VerifyProcess {
 			sb.append(" and classPK not in (select fileVersionId from ");
 			sb.append("DLFileVersion)");
 
-			ps = con.prepareStatement(sb.toString());
+			ps = connection.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
 
@@ -68,7 +64,7 @@ public class VerifyAsset extends VerifyProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 
@@ -79,14 +75,11 @@ public class VerifyAsset extends VerifyProcess {
 	}
 
 	protected void rebuildTree() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select distinct groupId from AssetCategory where " +
 					"(leftCategoryId is null) or (rightCategoryId is null)");
 
@@ -99,7 +92,7 @@ public class VerifyAsset extends VerifyProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 

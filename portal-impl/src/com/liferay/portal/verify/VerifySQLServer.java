@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -38,13 +37,10 @@ public class VerifySQLServer extends VerifyProcess {
 	protected void convertColumnsToUnicode() {
 		dropNonunicodeTableIndexes();
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(12);
 
 			sb.append("select sysobjects.name as table_name, syscolumns.name ");
@@ -62,7 +58,7 @@ public class VerifySQLServer extends VerifyProcess {
 
 			String sql = sb.toString();
 
-			ps = con.prepareStatement(sql);
+			ps = connection.prepareStatement(sql);
 
 			rs = ps.executeQuery();
 
@@ -95,7 +91,7 @@ public class VerifySQLServer extends VerifyProcess {
 			_log.error(e, e);
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 
@@ -178,13 +174,10 @@ public class VerifySQLServer extends VerifyProcess {
 	}
 
 	protected void dropNonunicodeTableIndexes() {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(15);
 
 			sb.append("select distinct sysobjects.name as table_name, ");
@@ -205,7 +198,7 @@ public class VerifySQLServer extends VerifyProcess {
 
 			String sql = sb.toString();
 
-			ps = con.prepareStatement(sql);
+			ps = connection.prepareStatement(sql);
 
 			rs = ps.executeQuery();
 
@@ -245,20 +238,17 @@ public class VerifySQLServer extends VerifyProcess {
 			_log.error(e, e);
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 
 	protected List<String> getPrimaryKeyColumnNames(String indexName) {
 		List<String> columnNames = new ArrayList<>();
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(10);
 
 			sb.append("select distinct syscolumns.name as column_name from ");
@@ -274,7 +264,7 @@ public class VerifySQLServer extends VerifyProcess {
 
 			String sql = sb.toString();
 
-			ps = con.prepareStatement(sql);
+			ps = connection.prepareStatement(sql);
 
 			rs = ps.executeQuery();
 
@@ -288,7 +278,7 @@ public class VerifySQLServer extends VerifyProcess {
 			_log.error(e, e);
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 
 		return columnNames;

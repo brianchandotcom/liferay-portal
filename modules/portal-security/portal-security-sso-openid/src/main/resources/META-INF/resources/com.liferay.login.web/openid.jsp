@@ -21,7 +21,7 @@ String openId = ParamUtil.getString(request, "openId");
 %>
 
 <portlet:actionURL var="openIdURL">
-	<portlet:param name="struts_action" value="/login/openid" />
+	<portlet:param name="<%= ActionRequest.ACTION_NAME %>" value="/login/openid" />
 </portlet:actionURL>
 
 <aui:form action="<%= openIdURL %>" method="post" name="fm">

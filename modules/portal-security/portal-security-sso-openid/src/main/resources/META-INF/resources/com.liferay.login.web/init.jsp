@@ -23,7 +23,8 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.portal.UserEmailAddressException" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %>
 
-<%@ page import="javax.portlet.WindowState" %>
+<%@ page import="javax.portlet.ActionRequest" %><%@
+page import="javax.portlet.WindowState" %>
 
 <%@ page import="org.openid4java.association.AssociationException" %><%@
 page import="org.openid4java.consumer.ConsumerException" %><%@

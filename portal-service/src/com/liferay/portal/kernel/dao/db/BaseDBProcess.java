@@ -31,6 +31,15 @@ public abstract class BaseDBProcess implements DBProcess {
 	}
 
 	@Override
+	public void runSQL(Connection connection, String template)
+		throws IOException, SQLException {
+
+		DB db = DBFactoryUtil.getDB();
+
+		db.runSQL(connection, template);
+	}
+
+	@Override
 	public void runSQL(String template) throws IOException, SQLException {
 		DB db = DBFactoryUtil.getDB();
 

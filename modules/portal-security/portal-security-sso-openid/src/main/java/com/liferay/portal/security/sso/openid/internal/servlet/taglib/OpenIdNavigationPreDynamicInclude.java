@@ -75,7 +75,7 @@ public class OpenIdNavigationPreDynamicInclude extends BaseDynamicInclude {
 		DynamicInclude.DynamicIncludeRegistry dynamicIncludeRegistry) {
 
 		dynamicIncludeRegistry.register(
-			"/html/portlet/login/navigation.jsp#pre");
+			"com.liferay.login.web:/navigation.jsp#pre");
 	}
 
 	@Reference(unbind = "-")

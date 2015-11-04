@@ -80,6 +80,7 @@ if (workflowEnabled) {
 			title='<%= (folder == null) ? (rootFolder ? "home" : "new-folder") : folder.getName() %>'
 		/>
 
+		<liferay-ui:error exception="<%= DuplicateFileEntryException.class %>" message="please-enter-a-unique-folder-name" />
 		<liferay-ui:error exception="<%= DuplicateFolderNameException.class %>" message="please-enter-a-unique-folder-name" />
 
 		<liferay-ui:error exception="<%= FolderNameException.class %>">

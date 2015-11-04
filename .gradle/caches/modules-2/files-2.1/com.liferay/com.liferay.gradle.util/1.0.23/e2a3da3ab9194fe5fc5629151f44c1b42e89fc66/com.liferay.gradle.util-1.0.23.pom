@@ -3,8 +3,8 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.liferay</groupId>
-  <artifactId>com.liferay.gradle.plugins.js.transpiler</artifactId>
-  <version>1.0.13</version>
+  <artifactId>com.liferay.gradle.util</artifactId>
+  <version>1.0.23</version>
   <licenses>
     <license>
       <name>LGPL 2.1</name>
@@ -23,12 +23,4 @@
     <developerConnection>scm:git:git@github.com:liferay/liferay-portal.git</developerConnection>
     <url>http://github.com/liferay/liferay-portal</url>
   </scm>
-  <dependencies>
-    <dependency>
-      <groupId>com.liferay</groupId>
-      <artifactId>com.liferay.gradle.plugins.node</artifactId>
-      <version>1.0.6</version>
-      <scope>compile</scope>
-    </dependency>
-  </dependencies>
 </project>

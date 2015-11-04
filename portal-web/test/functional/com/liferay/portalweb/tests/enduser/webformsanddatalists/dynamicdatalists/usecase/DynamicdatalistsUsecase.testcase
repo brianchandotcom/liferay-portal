@@ -2228,7 +2228,6 @@
 			<var name="field" value="Integer" />
 			<var name="fieldFieldLabel" value="Integer" />
 			<var name="fieldName" value="Integer" />
-			<var name="parentField" value="Text" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#saveCP" />
@@ -2306,7 +2305,6 @@
 			<var name="field" value="Integer" />
 			<var name="fieldFieldLabel" value="Integer" />
 			<var name="fieldName" value="Integer" />
-			<var name="parentField" value="Text" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#saveCP" />

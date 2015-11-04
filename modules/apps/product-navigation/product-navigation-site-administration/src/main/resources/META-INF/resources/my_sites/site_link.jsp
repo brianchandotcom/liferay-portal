@@ -36,7 +36,7 @@ if (Validator.isNull(groupDisplayURL)) {
 	String portletId = panelCategoryHelper.getFirstPortletId(PanelCategoryKeys.SITE_ADMINISTRATION, permissionChecker, siteGroup);
 
 	if (Validator.isNotNull(portletId)) {
-		groupAdministrationURL = PortalUtil.getControlPanelPortletURL(request, siteGroup, portletId, 0, PortletRequest.RENDER_PHASE);
+		groupAdministrationURL = PortalUtil.getControlPanelPortletURL(request, siteGroup, portletId, 0, 0, PortletRequest.RENDER_PHASE);
 
 		if (groupAdministrationURL != null) {
 			groupDisplayURL = groupAdministrationURL.toString();

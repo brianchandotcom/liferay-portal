@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
+import com.liferay.portal.kernel.messaging.Destination;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.repository.LocalRepository;
@@ -64,7 +66,8 @@ public class TempFileEntriesMessageListener
 				_dlConfiguration.temporaryFileEntriesCheckInterval(),
 				TimeUnit.HOUR));
 
-		_schedulerEngineHelper.register(this, schedulerEntryImpl);
+		_schedulerEngineHelper.register(
+			this, schedulerEntryImpl, DestinationNames.SCHEDULER_DISPATCH);
 	}
 
 	@Deactivate
@@ -128,6 +131,13 @@ public class TempFileEntriesMessageListener
 			});
 
 		actionableDynamicQuery.performActions();
+	}
+
+	@Reference(
+		target = "(destination.name=" + DestinationNames.SCHEDULER_DISPATCH + ")",
+		unbind = "-"
+	)
+	protected void setDestination(Destination destination) {
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

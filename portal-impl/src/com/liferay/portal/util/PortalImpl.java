@@ -1711,8 +1711,7 @@ public class PortalImpl implements Portal {
 		if (group == null) {
 			group = getControlPanelDisplayGroup(
 				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
-				themeDisplay.getDoAsGroupId(), portletId
-			);
+				themeDisplay.getDoAsGroupId(), portletId);
 		}
 
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
@@ -1741,8 +1740,7 @@ public class PortalImpl implements Portal {
 		if (group == null) {
 			group = getControlPanelDisplayGroup(
 				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
-				themeDisplay.getDoAsGroupId(), portletId
-			);
+				themeDisplay.getDoAsGroupId(), portletId);
 		}
 
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =

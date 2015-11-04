@@ -228,11 +228,11 @@ public class SchedulerEngineHelperUtil {
 		getSchedulerEngineHelper().pause(jobName, groupName, storageType);
 	}
 
-	public static String register(
+	public static void register(
 		MessageListener messageListener, SchedulerEntry schedulerEntry,
 		String destinationName) {
 
-		return getSchedulerEngineHelper().register(
+		getSchedulerEngineHelper().register(
 			messageListener, schedulerEntry, destinationName);
 	}
 

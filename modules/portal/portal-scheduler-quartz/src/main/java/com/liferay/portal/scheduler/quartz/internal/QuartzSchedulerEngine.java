@@ -19,18 +19,14 @@ import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.Destination;
-import com.liferay.portal.kernel.messaging.InvokerMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
-import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.scheduler.JobState;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TriggerState;
-import com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -104,8 +100,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 				GroupMatcher.jobGroupEquals(groupName));
 
 			for (JobKey jobKey : jobKeys) {
-				unregisterMessageListener(scheduler, jobKey);
-
 				scheduler.deleteJob(jobKey);
 			}
 		}
@@ -132,8 +126,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 				groupName, _groupNameMaxLength, storageType);
 
 			JobKey jobKey = new JobKey(jobName, groupName);
-
-			unregisterMessageListener(scheduler, jobKey);
 
 			scheduler.deleteJob(jobKey);
 		}
@@ -861,8 +853,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 				SchedulerEngine.JOB_STATE,
 				JobStateSerializeUtil.serialize(jobState));
 
-			unregisterMessageListener(scheduler, trigger.getJobKey());
-
 			synchronized (this) {
 				scheduler.deleteJob(trigger.getJobKey());
 				scheduler.scheduleJob(jobDetail, trigger);
@@ -932,72 +922,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		_schedulerEngineHelper = schedulerEngineHelper;
 	}
 
-	protected void unregisterMessageListener(Scheduler scheduler, JobKey jobKey)
-		throws Exception {
-
-		JobDetail jobDetail = scheduler.getJobDetail(jobKey);
-
-		if (jobDetail == null) {
-			return;
-		}
-
-		JobDataMap jobDataMap = jobDetail.getJobDataMap();
-
-		if (jobDataMap == null) {
-			return;
-		}
-
-		Message message = getMessage(jobDataMap);
-
-		String messageListenerUUID = message.getString(
-			SchedulerEngine.MESSAGE_LISTENER_UUID);
-
-		if (messageListenerUUID == null) {
-			return;
-		}
-
-		String destinationName = jobDataMap.getString(
-			SchedulerEngine.DESTINATION_NAME);
-
-		Destination destination = _messageBus.getDestination(destinationName);
-
-		if (destination == null) {
-			return;
-		}
-
-		Set<MessageListener> messageListeners =
-			destination.getMessageListeners();
-
-		for (MessageListener messageListener : messageListeners) {
-			if (!(messageListener instanceof InvokerMessageListener)) {
-				continue;
-			}
-
-			InvokerMessageListener invokerMessageListener =
-				(InvokerMessageListener)messageListener;
-
-			messageListener = invokerMessageListener.getMessageListener();
-
-			if (!(messageListener instanceof
-					SchedulerEventMessageListenerWrapper)) {
-
-				continue;
-			}
-
-			SchedulerEventMessageListenerWrapper schedulerMessageListener =
-				(SchedulerEventMessageListenerWrapper)messageListener;
-
-			if (messageListenerUUID.equals(
-					schedulerMessageListener.getMessageListenerUUID())) {
-
-				_messageBus.unregisterMessageListener(
-					destinationName, schedulerMessageListener);
-
-				return;
-			}
-		}
-	}
-
 	protected void unschedule(Scheduler scheduler, JobKey jobKey)
 		throws Exception {
 
@@ -1009,8 +933,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		if (jobDetail == null) {
 			return;
 		}
-
-		unregisterMessageListener(scheduler, jobKey);
 
 		JobDataMap jobDataMap = jobDetail.getJobDataMap();
 

@@ -568,7 +568,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	}
 
 	@Override
-	public String register(
+	public void register(
 		MessageListener messageListener, SchedulerEntry schedulerEntry,
 		String destinationName) {
 
@@ -593,8 +593,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		synchronized (_serviceRegistrations) {
 			_serviceRegistrations.put(messageListener, serviceRegistration);
 		}
-
-		return schedulerEventMessageListenerWrapper.getMessageListenerUUID();
 	}
 
 	@Override
@@ -920,16 +918,9 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 			SchedulerClusterInvokingThreadLocal.setEnabled(false);
 
 			try {
-				Message message = new Message();
-
-				message.put(
-					SchedulerEngine.MESSAGE_LISTENER_UUID,
-					schedulerEventMessageListener.getMessageListenerUUID());
-
 				schedule(
 					schedulerEntry.getTrigger(), storageType,
-					schedulerEntry.getDescription(), destinationName, message,
-					0);
+					schedulerEntry.getDescription(), destinationName, null, 0);
 
 				Dictionary<String, Object> properties =
 					new HashMapDictionary<>();

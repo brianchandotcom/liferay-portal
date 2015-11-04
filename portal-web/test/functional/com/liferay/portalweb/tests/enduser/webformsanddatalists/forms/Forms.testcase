@@ -179,10 +179,10 @@
 
 		<execute macro="FormsAdminNavigator#gotoViewEntries" />
 
-		<for list="one,two,three,four,five" param="fieldName">
+		<for list="one,two,three,four,five" param="fieldLabel">
 			<execute macro="FormsAdmin#viewFormEntry">
-				<var name="fieldName" value="${fieldName}" />
-				<var name="fieldValue" value="Field ${fieldName}" />
+				<var name="fieldLabel" value="${fieldLabel}" />
+				<var name="fieldValue" value="Field ${fieldLabel}" />
 			</execute>
 		</for>
 	</command>
@@ -356,22 +356,22 @@
 		<execute macro="FormsAdminNavigator#gotoViewEntries" />
 
 		<execute macro="FormsAdmin#viewFormEntry">
-			<var name="fieldName" value="TextField" />
+			<var name="fieldLabel" value="Text Field" />
 			<var name="fieldValue" value="Text Field Value" />
 		</execute>
 
 		<execute macro="FormsAdmin#viewFormEntry">
-			<var name="fieldName" value="CheckboxField" />
+			<var name="fieldLabel" value="Checkbox Field" />
 			<var name="fieldValue" value="Yes" />
 		</execute>
 
 		<execute macro="FormsAdmin#viewFormEntry">
-			<var name="fieldName" value="RadioField" />
+			<var name="fieldLabel" value="Radio Field" />
 			<var name="fieldValue" value="Option 1" />
 		</execute>
 
 		<execute macro="FormsAdmin#viewFormEntry">
-			<var name="fieldName" value="SelectField" />
+			<var name="fieldLabel" value="Select Field" />
 			<var name="fieldValue" value="Select 2" />
 		</execute>
 	</command>
@@ -446,7 +446,7 @@
 		<execute macro="FormsAdminNavigator#gotoViewEntries" />
 
 		<execute macro="FormsAdmin#viewFormEntry">
-			<var name="fieldName" value="TextField" />
+			<var name="fieldLabel" value="Text Field" />
 			<var name="fieldValue" value="Text Field Value" />
 		</execute>
 	</command>
@@ -607,17 +607,17 @@
 		<execute macro="FormsAdminNavigator#gotoViewEntries" />
 
 		<execute macro="FormsAdmin#viewFormEntry">
-			<var name="fieldName" value="Text" />
+			<var name="fieldLabel" value="Text" />
 			<var name="fieldValue" value="Text Field Value" />
 		</execute>
 
 		<execute macro="FormsAdmin#viewFormEntry">
-			<var name="fieldName" value="Radio" />
+			<var name="fieldLabel" value="Radio" />
 			<var name="fieldValue" value="Option 2" />
 		</execute>
 
 		<execute macro="FormsAdmin#viewFormEntry">
-			<var name="fieldName" value="Checkbox" />
+			<var name="fieldLabel" value="Checkbox" />
 			<var name="fieldValue" value="Yes" />
 		</execute>
 	</command>

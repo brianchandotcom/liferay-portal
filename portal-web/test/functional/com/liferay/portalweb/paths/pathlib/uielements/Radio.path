@@ -68,6 +68,11 @@
 	<td>//label[contains(.,'Remote Live')]/input[@type='radio']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>STAGING</td>
+	<td>//a[contains(@title,'Staging')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -138,6 +138,8 @@
 	</command>
 
 	<command name="addPublishTemplate">
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="StagingPublishtolivenow#SWITCH_TO_ADVANCED" value1="Switch to Advanced Publication" />
+
 		<execute function="AssertClick" locator1="StagingPublishToLive#PUBLISH_TEMPLATES_BUTTON" value1="Publish Templates" />
 		<execute function="AssertClick" locator1="Button#NEW_TEMPLATE" value1="New" />
 		<execute function="Type" locator1="StagingPublishToLive#PUBLISH_TEMPLATES_NAME_FIELD" value1="${publishTemplateName}" />
@@ -815,7 +817,7 @@
 				<execute function="AssertTextNotEquals" locator1="Staging#HISTORY_VERSION" value1="${historyVersion}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="Staging#HISTORY_VERSION" value1="${historyVersion}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Staging#HISTORY_VERSION" value1="${historyVersion}" />
 			</else>
 		</if>
 	</command>

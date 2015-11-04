@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 
@@ -65,7 +66,7 @@ public class ItemSelectorRepositoryEntryBrowserReturnTypeUtil
 			return getFileEntryValue(fileEntry, themeDisplay);
 		}
 		else if (className.equals(URLItemSelectorReturnType.class.getName())) {
-			return getURLValue(fileEntry, themeDisplay);
+			return getPreviewURL(fileEntry, themeDisplay);
 		}
 
 		return StringPool.BLANK;
@@ -80,8 +81,7 @@ public class ItemSelectorRepositoryEntryBrowserReturnTypeUtil
 		fileEntryJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
 		fileEntryJSONObject.put("groupId", fileEntry.getGroupId());
 		fileEntryJSONObject.put("title", fileEntry.getTitle());
-		fileEntryJSONObject.put(
-			"url", DLUtil.getImagePreviewURL(fileEntry, themeDisplay));
+		fileEntryJSONObject.put("url", getPreviewURL(fileEntry, themeDisplay));
 		fileEntryJSONObject.put("uuid", fileEntry.getUuid());
 
 		return fileEntryJSONObject.toString();
@@ -108,11 +108,19 @@ public class ItemSelectorRepositoryEntryBrowserReturnTypeUtil
 		return null;
 	}
 
-	protected static String getURLValue(
+	protected static String getPreviewURL(
 			FileEntry fileEntry, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		return DLUtil.getImagePreviewURL(fileEntry, themeDisplay);
+		String previewURL = DLUtil.getPreviewURL(
+			fileEntry, fileEntry.getFileVersion(), themeDisplay,
+			StringPool.BLANK, false, false);
+
+		if (Validator.isNull(previewURL)) {
+			return DLUtil.getImagePreviewURL(fileEntry, themeDisplay);
+		}
+
+		return previewURL;
 	}
 
 	private static final List<String> _draggableFileReturnTypeNames =

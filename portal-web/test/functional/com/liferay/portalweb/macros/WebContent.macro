@@ -908,20 +908,6 @@
 		<execute function="Click" locator1="Icon#EXPIRE" />
 	</command>
 
-	<command name="expirePGViaWCD">
-		<execute function="Pause" locator1="5000" />
-
-		<var name="key_webContentTitle" value="${webContentTitle}" />
-
-		<execute function="AssertClick" locator1="Button#VIEW_HISTORY" value1="View History" />
-
-		<var name="key_historyStatus" value="Expired" />
-
-		<execute function="Click" locator1="WCViewHistory#VERSIONS_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="MenuItem#EXPIRE" value1="Expire" />
-		<execute function="AssertTextEquals" locator1="WCViewHistory#VERSIONS_TABLE_STATUS" value1="Expired" />
-	</command>
-
 	<command name="expireSpecificVersionCP">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 

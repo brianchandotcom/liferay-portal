@@ -45,11 +45,6 @@ gradle.taskGraph.useFilter {
 			return false
 		}
 	}
-	else if (task.name == "configJSModules") {
-		if (!FileUtil.exists(task.project, "bower.json")) {
-			return false
-		}
-	}
 	else if (task.name == "test") {
 		if (!_hasTestClasses(task.project, "src/test/java") && !_hasTestClasses(task.project, "test/unit")) {
 			return false
@@ -57,13 +52,6 @@ gradle.taskGraph.useFilter {
 	}
 	else if (task.name == "testIntegration") {
 		if (!_hasTestClasses(task.project, "src/testIntegration/java") && !_hasTestClasses(task.project, "test/integration")) {
-			return false
-		}
-	}
-	else if (task.name == "transpileJS") {
-		FileTree esJsFileTree = fileTree(dir: task.project.projectDir, exclude: "**/samples/**", include: "src/**/*.es.js")
-
-		if (esJsFileTree.empty) {
 			return false
 		}
 	}

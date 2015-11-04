@@ -12,24 +12,23 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.upgrade.v1_0_0;
+package com.liferay.dynamic.data.mapping.upgrade.v1_0_0.util.companyId;
 
-import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.util.companyId.DDMStorageLinkUpgradeCompanyId;
-import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.util.companyId.DDMStructureLinkUpgradeCompanyId;
 import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdInTable;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Cristina González
  */
-public class UpgradeCompanyId
-	extends com.liferay.portal.upgrade.util.UpgradeCompanyId {
+public class DDMStructureLinkUpgradeCompanyId
+	implements UpgradeCompanyIdInTable {
 
 	@Override
-	protected UpgradeCompanyIdInTable[] getUpgradeCompanyIdInTable() {
-		return new UpgradeCompanyIdInTable[] {
-			new DDMStorageLinkUpgradeCompanyId(),
-			new DDMStructureLinkUpgradeCompanyId()
-		};
+	public String getTableName() {
+		return "DDMStructureLink";
+	}
+
+	@Override
+	public void upgradeProcess() {
 	}
 
 }

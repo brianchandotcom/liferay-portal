@@ -84,6 +84,12 @@ public class AnnouncementsEntryServiceUtil {
 		getService().deleteEntry(entryId);
 	}
 
+	public static com.liferay.portlet.announcements.model.AnnouncementsEntry fetchAnnouncementsEntry(
+		long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().fetchAnnouncementsEntry(entryId);
+	}
+
 	public static com.liferay.portlet.announcements.model.AnnouncementsEntry getEntry(
 		long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {

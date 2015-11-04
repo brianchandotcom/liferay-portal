@@ -267,6 +267,17 @@ public interface DDMStructureService extends BaseService {
 		boolean includeAncestorStructures) throws PortalException;
 
 	/**
+	* Returns the structure with the ID.
+	*
+	* @param structureId the primary key of the structure
+	* @return the structure with the structure ID, or <code>null</code> if a
+	matching structure could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.dynamic.data.mapping.model.DDMStructure fetchStructure(
+		long structureId) throws PortalException;
+
+	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier

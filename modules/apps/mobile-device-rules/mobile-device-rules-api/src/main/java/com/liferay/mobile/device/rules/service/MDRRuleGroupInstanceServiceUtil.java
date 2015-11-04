@@ -67,6 +67,12 @@ public class MDRRuleGroupInstanceServiceUtil {
 		getService().deleteRuleGroupInstance(ruleGroupInstanceId);
 	}
 
+	public static com.liferay.mobile.device.rules.model.MDRRuleGroupInstance fetchRuleGroupInstance(
+		long ruleGroupInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().fetchRuleGroupInstance(ruleGroupInstanceId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

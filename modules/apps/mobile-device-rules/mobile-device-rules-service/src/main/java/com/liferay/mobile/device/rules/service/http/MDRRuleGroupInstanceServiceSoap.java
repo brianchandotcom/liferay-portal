@@ -115,6 +115,21 @@ public class MDRRuleGroupInstanceServiceSoap {
 		}
 	}
 
+	public static com.liferay.mobile.device.rules.model.MDRRuleGroupInstanceSoap fetchRuleGroupInstance(
+		long ruleGroupInstanceId) throws RemoteException {
+		try {
+			com.liferay.mobile.device.rules.model.MDRRuleGroupInstance returnValue =
+				MDRRuleGroupInstanceServiceUtil.fetchRuleGroupInstance(ruleGroupInstanceId);
+
+			return com.liferay.mobile.device.rules.model.MDRRuleGroupInstanceSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.mobile.device.rules.model.MDRRuleGroupInstanceSoap[] getRuleGroupInstances(
 		java.lang.String className, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.mobile.device.rules.model.MDRRuleGroupInstance> orderByComparator)

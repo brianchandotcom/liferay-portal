@@ -423,6 +423,27 @@ public class DDMStructureServiceSoap {
 	}
 
 	/**
+	* Returns the structure with the ID.
+	*
+	* @param structureId the primary key of the structure
+	* @return the structure with the structure ID, or <code>null</code> if a
+	matching structure could not be found
+	*/
+	public static com.liferay.dynamic.data.mapping.model.DDMStructureSoap fetchStructure(
+		long structureId) throws RemoteException {
+		try {
+			com.liferay.dynamic.data.mapping.model.DDMStructure returnValue = DDMStructureServiceUtil.fetchStructure(structureId);
+
+			return com.liferay.dynamic.data.mapping.model.DDMStructureSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
 	* Returns the structure matching the class name ID, structure key, and
 	* group.
 	*

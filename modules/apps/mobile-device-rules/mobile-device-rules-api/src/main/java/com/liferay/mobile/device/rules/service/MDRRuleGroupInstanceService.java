@@ -65,6 +65,10 @@ public interface MDRRuleGroupInstanceService extends BaseService {
 	public void deleteRuleGroupInstance(long ruleGroupInstanceId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.mobile.device.rules.model.MDRRuleGroupInstance fetchRuleGroupInstance(
+		long ruleGroupInstanceId) throws PortalException;
+
 	/**
 	* Returns the OSGi service identifier.
 	*

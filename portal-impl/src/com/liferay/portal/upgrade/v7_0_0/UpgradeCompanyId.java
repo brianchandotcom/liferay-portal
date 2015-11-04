@@ -14,6 +14,42 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
+import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdInTable;
+import com.liferay.portal.upgrade.v7_0_0.util.companyId.AnnouncementsFlagUpgradeCompanyId;
+import com.liferay.portal.upgrade.v7_0_0.util.companyId.AssetEntriesAssetCategoriesUpgradeCompanyId;
+import com.liferay.portal.upgrade.v7_0_0.util.companyId.AssetEntriesAssetTagsUpgradeCompanyId;
+import com.liferay.portal.upgrade.v7_0_0.util.companyId.AssetTagStatsUpgradeCompanyId;
+import com.liferay.portal.upgrade.v7_0_0.util.companyId.BrowserTrackerUpgradeCompanyId;
+import com.liferay.portal.upgrade.v7_0_0.util.companyId.DLFileEntryMetadataUpgradeCompanyId;
+import com.liferay.portal.upgrade.v7_0_0.util.companyId.DLFileEntryTypesDLFoldersUpgradeCompanyId;
+import com.liferay.portal.upgrade.v7_0_0.util.companyId.DLSyncEventUpgradeCompanyId;
+import com.liferay.portal.upgrade.v7_0_0.util.companyId.GroupOrgsUpgradeCompanyId;
+import com.liferay.portal.upgrade.v7_0_0.util.companyId.GroupRolesUpgradeCompanyId;
+import com.liferay.portal.upgrade.v7_0_0.util.companyId.GroupUserGroupsUpgradeCompanyId;
+import com.liferay.portal.upgrade.v7_0_0.util.companyId.ImageUpgradeCompanyId;
+import com.liferay.portal.upgrade.v7_0_0.util.companyId.MBStatsUserUpgradeCompanyId;
+import com.liferay.portal.upgrade.v7_0_0.util.companyId.OrgGroupRoleUpgradeCompanyId;
+import com.liferay.portal.upgrade.v7_0_0.util.companyId.OrgLaborUpgradeCompanyId;
+import com.liferay.portal.upgrade.v7_0_0.util.companyId.PasswordPasswordTrackerUpgradeCompanyId;
+import com.liferay.portal.upgrade.v7_0_0.util.companyId.PasswordPolicyRelUpgradeCompanyId;
+import com.liferay.portal.upgrade.v7_0_0.util.companyId.PortletPreferencesUpgradeCompanyId;
+import com.liferay.portal.upgrade.v7_0_0.util.companyId.RatingsStatsUpgradeCompanyId;
+import com.liferay.portal.upgrade.v7_0_0.util.companyId.ResourceBlockPermissionUpgradeCompanyId;
+import com.liferay.portal.upgrade.v7_0_0.util.companyId.SCFrameworkVersiSCProductVersUpgradeCompanyId;
+import com.liferay.portal.upgrade.v7_0_0.util.companyId.SCLicenseUpgradeCompanyId;
+import com.liferay.portal.upgrade.v7_0_0.util.companyId.SCLicensesSCProductEntriesUpgradeCompanyId;
+import com.liferay.portal.upgrade.v7_0_0.util.companyId.TrashVersionUpgradeCompanyId;
+import com.liferay.portal.upgrade.v7_0_0.util.companyId.UserGroupGroupRoleUpgradeCompanyId;
+import com.liferay.portal.upgrade.v7_0_0.util.companyId.UserGroupRoleUpgradeCompanyId;
+import com.liferay.portal.upgrade.v7_0_0.util.companyId.UserGroupsTeamsUpgradeCompanyId;
+import com.liferay.portal.upgrade.v7_0_0.util.companyId.UserIdMapperUpgradeCompanyId;
+import com.liferay.portal.upgrade.v7_0_0.util.companyId.UserTrackerPathUpgradeCompanyId;
+import com.liferay.portal.upgrade.v7_0_0.util.companyId.UsersGroupsUpgradeCompanyId;
+import com.liferay.portal.upgrade.v7_0_0.util.companyId.UsersOrgsUpgradeCompanyId;
+import com.liferay.portal.upgrade.v7_0_0.util.companyId.UsersRolesUpgradeCompanyId;
+import com.liferay.portal.upgrade.v7_0_0.util.companyId.UsersTeamsUpgradeCompanyId;
+import com.liferay.portal.upgrade.v7_0_0.util.companyId.UsersUserGroupsUpgradeCompanyId;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -21,19 +57,37 @@ public class UpgradeCompanyId
 	extends com.liferay.portal.upgrade.util.UpgradeCompanyId {
 
 	@Override
-	protected String[] getTableNames() {
-		return new String[] {
-			"AnnouncementsFlag", "AssetEntries_AssetCategories",
-			"AssetEntries_AssetTags", "AssetTagStats", "BrowserTracker",
-			"DLFileEntryMetadata", "DLFileEntryTypes_DLFolders", "DLSyncEvent",
-			"Groups_Orgs", "Groups_Roles", "Groups_UserGroups", "Image",
-			"MBStatsUser", "OrgGroupRole", "OrgLabor", "PasswordPolicyRel",
-			"PasswordTracker", "PortletPreferences", "RatingsStats",
-			"ResourceBlockPermission", "SCFrameworkVersi_SCProductVers",
-			"SCLicense", "SCLicenses_SCProductEntries", "TrashVersion",
-			"UserGroupGroupRole", "UserGroupRole", "UserGroups_Teams",
-			"UserIdMapper", "Users_Groups", "Users_Orgs", "Users_Roles",
-			"Users_Teams", "Users_UserGroups", "UserTrackerPath"
+	protected UpgradeCompanyIdInTable[] getUpgradeCompanyIdInTable() {
+		return new UpgradeCompanyIdInTable[] {
+			new AnnouncementsFlagUpgradeCompanyId(),
+			new AssetEntriesAssetCategoriesUpgradeCompanyId(),
+			new AssetEntriesAssetTagsUpgradeCompanyId(),
+			new AssetTagStatsUpgradeCompanyId(),
+			new BrowserTrackerUpgradeCompanyId(),
+			new DLFileEntryMetadataUpgradeCompanyId(),
+			new DLFileEntryTypesDLFoldersUpgradeCompanyId(),
+			new DLSyncEventUpgradeCompanyId(), new GroupOrgsUpgradeCompanyId(),
+			new GroupRolesUpgradeCompanyId(),
+			new GroupUserGroupsUpgradeCompanyId(), new ImageUpgradeCompanyId(),
+			new MBStatsUserUpgradeCompanyId(),
+			new OrgGroupRoleUpgradeCompanyId(), new OrgLaborUpgradeCompanyId(),
+			new PasswordPolicyRelUpgradeCompanyId(),
+			new PasswordPasswordTrackerUpgradeCompanyId(),
+			new PortletPreferencesUpgradeCompanyId(),
+			new RatingsStatsUpgradeCompanyId(),
+			new ResourceBlockPermissionUpgradeCompanyId(),
+			new SCFrameworkVersiSCProductVersUpgradeCompanyId(),
+			new SCLicenseUpgradeCompanyId(),
+			new SCLicensesSCProductEntriesUpgradeCompanyId(),
+			new TrashVersionUpgradeCompanyId(),
+			new UserGroupGroupRoleUpgradeCompanyId(),
+			new UserGroupRoleUpgradeCompanyId(),
+			new UserGroupsTeamsUpgradeCompanyId(),
+			new UserIdMapperUpgradeCompanyId(),
+			new UsersGroupsUpgradeCompanyId(), new UsersOrgsUpgradeCompanyId(),
+			new UsersRolesUpgradeCompanyId(), new UsersTeamsUpgradeCompanyId(),
+			new UsersUserGroupsUpgradeCompanyId(),
+			new UserTrackerPathUpgradeCompanyId()
 		};
 	}
 

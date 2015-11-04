@@ -184,8 +184,8 @@ AUI.add(
 				portletURL.setParameter('fieldName', instance.get('name'));
 				portletURL.setParameter('mode', instance.get('mode'));
 				portletURL.setParameter('namespace', instance.get('namespace'));
-				portletURL.setParameter('portletNamespace', instance.get('portletNamespace'));
 				portletURL.setParameter('p_p_isolated', true);
+				portletURL.setParameter('portletNamespace', instance.get('portletNamespace'));
 				portletURL.setParameter('readOnly', instance.get('readOnly'));
 				portletURL.setPlid(instance.get('p_l_id'));
 				portletURL.setPortletId(Liferay.PortletKeys.DYNAMIC_DATA_MAPPING);

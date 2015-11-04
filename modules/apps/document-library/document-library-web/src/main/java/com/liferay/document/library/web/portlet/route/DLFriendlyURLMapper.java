@@ -25,18 +25,18 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"com.liferay.portlet.friendly-url-routes=META-INF/friendly-url-routes/document-library-display-routes.xml",
-		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_DISPLAY
+		"com.liferay.portlet.friendly-url-routes=META-INF/friendly-url-routes/document-library-routes.xml",
+		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY
 	},
 	service = FriendlyURLMapper.class
 )
-public class DLDisplayFriendlyURLMapper extends DefaultFriendlyURLMapper {
+public class DLFriendlyURLMapper extends DefaultFriendlyURLMapper {
 
 	@Override
 	public String getMapping() {
 		return _MAPPING;
 	}
 
-	private static final String _MAPPING = "document_library_display";
+	private static final String _MAPPING = "document_library";
 
 }

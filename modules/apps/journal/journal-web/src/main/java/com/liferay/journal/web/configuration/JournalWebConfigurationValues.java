@@ -58,13 +58,4 @@ public class JournalWebConfigurationValues {
 			JournalWebConfigurationUtil.get(
 				"journal.feed.force.autogenerate.id"));
 
-	public static final Boolean PUBLISH_TO_LIVE_BY_DEFAULT =
-		GetterUtil.getBoolean(
-			JournalWebConfigurationUtil.get("publish.to.live.by.default"));
-
-	public static final Boolean PUBLISH_VERSION_HISTORY_BY_DEFAULT =
-		GetterUtil.getBoolean(
-			JournalWebConfigurationUtil.get(
-				"publish.version.history.by.default"));
-
 }

@@ -208,6 +208,17 @@ public class JournalServiceConfigurationValues {
 		JournalServiceConfigurationUtil.get(
 			JournalServiceConfigurationKeys.LAR_CREATION_STRATEGY);
 
+	public static final Boolean PUBLISH_TO_LIVE_BY_DEFAULT =
+		GetterUtil.getBoolean(
+			JournalServiceConfigurationUtil.get(
+				JournalServiceConfigurationKeys.PUBLISH_TO_LIVE_BY_DEFAULT));
+
+	public static final Boolean PUBLISH_VERSION_HISTORY_BY_DEFAULT =
+		GetterUtil.getBoolean(
+			JournalServiceConfigurationUtil.get(
+				JournalServiceConfigurationKeys.
+					PUBLISH_VERSION_HISTORY_BY_DEFAULT));
+
 	public static final boolean SYNC_CONTENT_SEARCH_ON_STARTUP =
 		GetterUtil.getBoolean(
 			JournalServiceConfigurationKeys.SYNC_CONTENT_SEARCH_ON_STARTUP);

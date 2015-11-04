@@ -93,6 +93,7 @@
 			border-width: 0;
 			color: white;
 			margin: 0;
+			padding-left: 0;
 
 			.help-block {
 				position: absolute;
@@ -384,18 +385,35 @@
 
 	.form-builder-controls-trigger  {
 		$height: 48px;
-
+		
 		display: block;
 		font-size: 20px;
 		height: $height;
 		margin-top: - $height / 2;
-		padding: 8px;
+		padding: 12px;
 		position: absolute;
-		right: 20px;
+		right: 0;
 		top: 50%;
+		
+		.icon-monospaced {
+			color: #b0bec9;
+		}
+
+		&:hover {
+			.icon-monospaced {
+				color: inherit;
+			}
+		}
+	}
+	
+	.form-builder-field-list-empty {
+		.form-builder-field-list-add-container {
+			margin-top: initial;	
+		}
 	}
 
-	.form-builder-field-list-add-container {
+	.form-builder-field-list-add-container,
+	.form-builder-field + .form-builder-field-list-add-container {
 		margin-top: -36px;
 	}
 
@@ -408,10 +426,20 @@
 	.form-builder-pages-header {
 		margin-bottom: 0;
 		margin-top: 0;
+		padding-left: 34px;
+		padding-right: 34px;
 		width: auto;
 
 		input {
 			border-width: 0;
+			padding-left: 0;
+			padding-right: 0;
+
+			&.form-builder-page-header-title,
+			&.form-builder-page-header-description {
+				display: block;
+				width: 100%;
+			}
 
 			&.form-builder-page-header-description {
 				padding-top: 0;
@@ -430,15 +458,25 @@
 	}
 
 	.form-builder-layout {
-		margin: 0 auto;
 		width: auto;
+		margin: 0 auto;
+	
+		.form-builder-field-list-container {
+			padding: 26px 0 0 0;
+		}
+
+		.form-builder-field-list-empty {
+			.form-builder-field-list-container {
+				padding-bottom: 26px;
+			}
+		}
 
 		.layout-builder-add-row-area {
 			margin: 0;
 		}
 
 		.layout-row-container-row {
-			margin-bottom: 2px;
+			margin-bottom: 0;
 
 			.layout-row {
 				border-width: 0;
@@ -452,15 +490,31 @@
 						min-height: 40px;
 					}
 
-					&:first-of-type {
+					.layout-col-content {
+						padding-left: 15px;
+						padding-right: 15px;
+					}
+
+					@media screen and (max-width: 990px) {
 						.layout-col-content {
-							padding-left: 21px;
+							padding-left: 34px;
+							padding-right: 34px;
+						}
+					}
+
+					&:first-of-type {
+						@media screen and (min-width: 990px) {
+							.layout-col-content {
+								padding-left: 34px;
+							}
 						}
 					}
 
 					&.last-col {
-						.layout-col-content {
-							padding-right: 21px;
+						@media screen and (min-width: 990px) {
+							.layout-col-content {
+								padding-right: 34px;
+							}
 						}
 					}
 				}

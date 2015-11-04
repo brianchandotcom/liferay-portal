@@ -66,6 +66,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>OPTIONS_OPTION_NAME_FIELD</td>
+	<td>//div[@class='options']//div[contains(@class,'form-field-container')][${key_rowNumber}]//div[@class='key-value-editor']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OPTIONS_LABEL</td>
 	<td>//div[contains(@data-fieldname,'${key_fieldName}')]/span[contains(.,'${key_fieldLabel}')]</td>
 	<td></td>

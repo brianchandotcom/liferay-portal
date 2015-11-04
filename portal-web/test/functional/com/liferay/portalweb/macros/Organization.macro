@@ -519,7 +519,10 @@
 				<execute function="AssertClick" locator1="UsersAndOrganizationsAssignUsers#CURRENT_TAB" value1="Current" />
 
 				<if>
-					<condition function="IsElementPresent#isVisible" locator1="Checkbox#SELECT_ALL" />
+					<and>
+						<condition function="IsElementPresent" locator1="Checkbox#SELECT_ALL" />
+						<condition function="IsVisible" locator1="Checkbox#SELECT_ALL" />
+					</and>
 					<then>
 						<execute function="Uncheck" locator1="Checkbox#SELECT_ALL" />
 						<execute function="AssertClick" locator1="Button#UPDATE_ASSOCIATIONS" value1="Update Associations" />

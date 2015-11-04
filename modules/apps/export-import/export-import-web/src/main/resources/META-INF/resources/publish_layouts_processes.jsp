@@ -113,8 +113,15 @@ String taskExecutorClassName = localPublishing ? BackgroundTaskExecutorNames.LAY
 				</c:if>
 
 				<strong class="label label-default">
+
+					<%
+					long exportImportConfigurationId = MapUtil.getLong(backgroundTask.getTaskContextMap(), "exportImportConfigurationId");
+
+					ExportImportConfiguration exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.getExportImportConfiguration(exportImportConfigurationId);
+					%>
+
 					<c:choose>
-						<c:when test='<%= MapUtil.getBoolean(backgroundTask.getTaskContextMap(), "privateLayout") %>'>
+						<c:when test='<%= MapUtil.getBoolean(exportImportConfiguration.getSettingsMap(), "privateLayout") %>'>
 							<liferay-ui:message key="private-pages" />
 						</c:when>
 						<c:otherwise>

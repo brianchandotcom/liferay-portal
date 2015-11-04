@@ -16,11 +16,16 @@ package com.liferay.portal.soap.extender.test.activator;
 
 import com.liferay.portal.soap.extender.test.activator.configuration.ConfigurationAdminBundleActivator;
 import com.liferay.portal.soap.extender.test.service.GreeterImpl;
+import com.liferay.portal.soap.extender.test.util.WaiterUtil;
+
+import java.util.concurrent.TimeoutException;
 
 import javax.xml.ws.Endpoint;
+import javax.xml.ws.spi.Provider;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 
 /**
  * @author Carlos Sierra Andrés
@@ -33,6 +38,15 @@ public class JaxWsApiBundleActivator implements BundleActivator {
 			new ConfigurationAdminBundleActivator();
 
 		_configurationAdminBundleActivator.start(bundleContext);
+
+		String filterString =
+			"(&(objectClass=" + Provider.class.getName() + ")" +
+				"("+ HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH +
+					"=/soap-test))";
+
+		if (!WaiterUtil.waitForFilter(bundleContext, filterString, 10000)) {
+			throw new TimeoutException("Provider register waiting timeout");
+		}
 
 		try {
 			_endpoint = Endpoint.publish("/greeterApi", new GreeterImpl());

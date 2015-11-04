@@ -2111,12 +2111,12 @@ different actions, which means you can register both with the same key.
 
 #### Who is affected?
 
-This affects developers that were using the `ActionCommand` for `actionURLs` and
-`resourceURLs`.
+This affects developers that were using the `ActionCommand` for `actionURL`s and
+`resourceURL`s.
 
 #### How should I update my code?
 
-You should replace the `ActionCommand`s used for `actionURLs` and `resourceURLs`
+You should replace the `ActionCommand`s used for `actionURL`s and `resourceURL`s
 to use `MVCActionCommand` and `MVCResourceCommand`, respectively. For example,
 for the new `MVCResourceCommand`, you'll need to use the `resourceID` of the
 `resourceURL` instead of using `ActionRequest.ACTION_NAME`.
@@ -2137,7 +2137,7 @@ New Code:
 #### Why was this change made?
 
 This change was made to extend the MVC framework to have better support for
-`actionURLs` and `resourceURLs`.
+`actionURL`s and `resourceURL`s.
 
 ---------------------------------------
 

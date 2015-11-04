@@ -31,7 +31,7 @@
 		</execute>
 
 		<execute macro="FormFields#editText">
-			<var name="fieldName" value="name" />
+			<var name="fieldName" value="label" />
 			<var name="fieldValue" value="one" />
 		</execute>
 
@@ -47,7 +47,7 @@
 		</execute>
 
 		<execute macro="FormFields#editText">
-			<var name="fieldName" value="name" />
+			<var name="fieldName" value="label" />
 			<var name="fieldValue" value="two" />
 		</execute>
 
@@ -63,7 +63,7 @@
 		</execute>
 
 		<execute macro="FormFields#editText">
-			<var name="fieldName" value="name" />
+			<var name="fieldName" value="label" />
 			<var name="fieldValue" value="three" />
 		</execute>
 
@@ -75,7 +75,7 @@
 		</execute>
 
 		<execute macro="FormFields#editText">
-			<var name="fieldName" value="name" />
+			<var name="fieldName" value="label" />
 			<var name="fieldValue" value="four" />
 		</execute>
 
@@ -92,7 +92,7 @@
 		</execute>
 
 		<execute macro="FormFields#editText">
-			<var name="fieldName" value="name" />
+			<var name="fieldName" value="label" />
 			<var name="fieldValue" value="five" />
 		</execute>
 
@@ -109,7 +109,7 @@
 		</execute>
 
 		<execute macro="FormFields#editText">
-			<var name="fieldName" value="name" />
+			<var name="fieldName" value="label" />
 			<var name="fieldValue" value="six" />
 		</execute>
 
@@ -179,47 +179,32 @@
 		</execute>
 
 		<execute macro="FormFields#editText">
-			<var name="fieldName" value="name" />
-			<var name="fieldValue" value="TextName" />
-		</execute>
-
-		<execute macro="FormFields#editText">
 			<var name="fieldName" value="label" />
-			<var name="fieldValue" value="Text Field Label" />
+			<var name="fieldValue" value="Text Field" />
 		</execute>
 
 		<execute macro="FormFields#save" />
 
 		<execute macro="Form#gotoAddAdditionalField">
 			<var name="fieldType" value="checkbox" />
-			<var name="previousFieldName" value="TextName" />
-		</execute>
-
-		<execute macro="FormFields#editText">
-			<var name="fieldName" value="name" />
-			<var name="fieldValue" value="CheckboxName" />
+			<var name="previousFieldName" value="TextField" />
 		</execute>
 
 		<execute macro="FormFields#editText">
 			<var name="fieldName" value="label" />
-			<var name="fieldValue" value="Checkbox Field Label" />
+			<var name="fieldValue" value="Checkbox Field" />
 		</execute>
 
 		<execute macro="FormFields#save" />
 
 		<execute macro="Form#gotoAddAdditionalField">
 			<var name="fieldType" value="radio" />
-			<var name="previousFieldName" value="CheckboxName" />
-		</execute>
-
-		<execute macro="FormFields#editText">
-			<var name="fieldName" value="name" />
-			<var name="fieldValue" value="RadioName" />
+			<var name="previousFieldName" value="CheckboxField" />
 		</execute>
 
 		<execute macro="FormFields#editText">
 			<var name="fieldName" value="label" />
-			<var name="fieldValue" value="Radio Field Label" />
+			<var name="fieldValue" value="Radio Field" />
 		</execute>
 
 		<execute macro="FormFields#editOptionsRow">
@@ -237,17 +222,12 @@
 
 		<execute macro="Form#gotoAddAdditionalField">
 			<var name="fieldType" value="select" />
-			<var name="previousFieldName" value="RadioName" />
-		</execute>
-
-		<execute macro="FormFields#editText">
-			<var name="fieldName" value="name" />
-			<var name="fieldValue" value="SelectName" />
+			<var name="previousFieldName" value="RadioField" />
 		</execute>
 
 		<execute macro="FormFields#editText">
 			<var name="fieldName" value="label" />
-			<var name="fieldValue" value="Select Field Label" />
+			<var name="fieldValue" value="Select Field" />
 		</execute>
 
 		<execute macro="FormFields#editOptionsRow">
@@ -289,41 +269,41 @@
 		</execute>
 
 		<execute macro="FormFields#viewTextLabel">
-			<var name="fieldLabel" value="Text Field Label" />
-			<var name="fieldName" value="TextName" />
+			<var name="fieldLabel" value="Text Field" />
+			<var name="fieldName" value="TextField" />
 		</execute>
 
 		<execute macro="FormFields#editText">
-			<var name="fieldName" value="Name" />
+			<var name="fieldName" value="TextField" />
 			<var name="fieldValue" value="Text Field Value" />
 		</execute>
 
 		<execute macro="FormFields#viewCheckboxLabel">
-			<var name="fieldLabel" value="Checkbox Field Label" />
-			<var name="fieldName" value="CheckboxName" />
+			<var name="fieldLabel" value="Checkbox Field" />
+			<var name="fieldName" value="CheckboxField" />
 		</execute>
 
 		<execute macro="FormFields#enableCheckbox">
-			<var name="fieldName" value="CheckboxName" />
+			<var name="fieldName" value="CheckboxField" />
 		</execute>
 
 		<execute macro="FormFields#viewRadioLabel">
-			<var name="fieldLabel" value="Radio Field Label" />
-			<var name="fieldName" value="RadioName" />
+			<var name="fieldLabel" value="Radio Field" />
+			<var name="fieldName" value="RadioField" />
 		</execute>
 
 		<execute macro="FormFields#selectRadioOption">
-			<var name="fieldName" value="RadioName" />
+			<var name="fieldName" value="RadioField" />
 			<var name="radioOption" value="Option 1" />
 		</execute>
 
 		<execute macro="FormFields#viewSelectLabel">
-			<var name="fieldLabel" value="Select Field Label" />
-			<var name="fieldName" value="SelectName" />
+			<var name="fieldLabel" value="Select Field" />
+			<var name="fieldName" value="SelectField" />
 		</execute>
 
 		<execute macro="FormFields#selectSelectOption">
-			<var name="fieldName" value="SelectName" />
+			<var name="fieldName" value="SelectField" />
 			<var name="selectOption" value="Select 2" />
 		</execute>
 
@@ -336,22 +316,22 @@
 		<execute macro="FormsAdminNavigator#gotoViewEntries" />
 
 		<execute macro="FormsAdmin#viewFormEntry">
-			<var name="fieldName" value="TextName" />
+			<var name="fieldName" value="TextField" />
 			<var name="fieldValue" value="Text Field Value" />
 		</execute>
 
 		<execute macro="FormsAdmin#viewFormEntry">
-			<var name="fieldName" value="CheckboxName" />
+			<var name="fieldName" value="CheckboxField" />
 			<var name="fieldValue" value="Yes" />
 		</execute>
 
 		<execute macro="FormsAdmin#viewFormEntry">
-			<var name="fieldName" value="RadioName" />
+			<var name="fieldName" value="RadioField" />
 			<var name="fieldValue" value="Option 1" />
 		</execute>
 
 		<execute macro="FormsAdmin#viewFormEntry">
-			<var name="fieldName" value="SelectName" />
+			<var name="fieldName" value="SelectField" />
 			<var name="fieldValue" value="Select 2" />
 		</execute>
 	</command>
@@ -372,13 +352,8 @@
 		</execute>
 
 		<execute macro="FormFields#editText">
-			<var name="fieldName" value="name" />
-			<var name="fieldValue" value="Name" />
-		</execute>
-
-		<execute macro="FormFields#editText">
 			<var name="fieldName" value="label" />
-			<var name="fieldValue" value="Text Field Label" />
+			<var name="fieldValue" value="Text Field" />
 		</execute>
 
 		<execute macro="FormFields#save" />
@@ -409,12 +384,12 @@
 		</execute>
 
 		<execute macro="FormFields#viewTextLabel">
-			<var name="fieldLabel" value="Text Field Label" />
-			<var name="fieldName" value="Name" />
+			<var name="fieldLabel" value="Text Field" />
+			<var name="fieldName" value="TextField" />
 		</execute>
 
 		<execute macro="FormFields#editText">
-			<var name="fieldName" value="Name" />
+			<var name="fieldName" value="TextField" />
 			<var name="fieldValue" value="Text Field Value" />
 		</execute>
 
@@ -427,7 +402,7 @@
 		<execute macro="FormsAdminNavigator#gotoViewEntries" />
 
 		<execute macro="FormsAdmin#viewFormEntry">
-			<var name="fieldName" value="Name" />
+			<var name="fieldName" value="TextField" />
 			<var name="fieldValue" value="Text Field Value" />
 		</execute>
 	</command>
@@ -452,13 +427,8 @@
 		</execute>
 
 		<execute macro="FormFields#editText">
-			<var name="fieldName" value="name" />
-			<var name="fieldValue" value="TextName" />
-		</execute>
-
-		<execute macro="FormFields#editText">
 			<var name="fieldName" value="label" />
-			<var name="fieldValue" value="TextLabel" />
+			<var name="fieldValue" value="Text" />
 		</execute>
 
 		<execute macro="FormFields#save" />
@@ -474,13 +444,8 @@
 		</execute>
 
 		<execute macro="FormFields#editText">
-			<var name="fieldName" value="name" />
-			<var name="fieldValue" value="RadioName" />
-		</execute>
-
-		<execute macro="FormFields#editText">
 			<var name="fieldName" value="label" />
-			<var name="fieldValue" value="RadioLabel" />
+			<var name="fieldValue" value="Radio" />
 		</execute>
 
 		<execute macro="FormFields#editOptionsRow">
@@ -507,13 +472,8 @@
 		</execute>
 
 		<execute macro="FormFields#editText">
-			<var name="fieldName" value="name" />
-			<var name="fieldValue" value="CheckboxName" />
-		</execute>
-
-		<execute macro="FormFields#editText">
 			<var name="fieldName" value="label" />
-			<var name="fieldValue" value="CheckboxLabel" />
+			<var name="fieldValue" value="Checkbox" />
 		</execute>
 
 		<execute macro="FormFields#save" />
@@ -544,12 +504,12 @@
 		</execute>
 
 		<execute macro="FormFields#viewTextLabel">
-			<var name="fieldLabel" value="TextLabel" />
-			<var name="fieldName" value="TextName" />
+			<var name="fieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
 		</execute>
 
 		<execute macro="FormFields#editText">
-			<var name="fieldName" value="TextName" />
+			<var name="fieldName" value="Text" />
 			<var name="fieldValue" value="Text Field Value" />
 		</execute>
 
@@ -559,12 +519,12 @@
 		</execute>
 
 		<execute macro="FormFields#viewRadioLabel">
-			<var name="fieldLabel" value="RadioLabel" />
-			<var name="fieldName" value="RadioName" />
+			<var name="fieldLabel" value="Radio" />
+			<var name="fieldName" value="Radio" />
 		</execute>
 
 		<execute macro="FormFields#selectRadioOption">
-			<var name="fieldName" value="RadioName" />
+			<var name="fieldName" value="Radio" />
 			<var name="radioOption" value="Option 2" />
 		</execute>
 
@@ -574,12 +534,12 @@
 		</execute>
 
 		<execute macro="FormFields#viewCheckboxLabel">
-			<var name="fieldLabel" value="CheckboxLabel" />
-			<var name="fieldName" value="CheckboxName" />
+			<var name="fieldLabel" value="Checkbox" />
+			<var name="fieldName" value="Checkbox" />
 		</execute>
 
 		<execute macro="FormFields#enableCheckbox">
-			<var name="fieldName" value="CheckboxName" />
+			<var name="fieldName" value="Checkbox" />
 		</execute>
 
 		<execute macro="FormPortlet#submit" />
@@ -591,17 +551,17 @@
 		<execute macro="FormsAdminNavigator#gotoViewEntries" />
 
 		<execute macro="FormsAdmin#viewFormEntry">
-			<var name="fieldName" value="TextName" />
+			<var name="fieldName" value="Text" />
 			<var name="fieldValue" value="Text Field Value" />
 		</execute>
 
 		<execute macro="FormsAdmin#viewFormEntry">
-			<var name="fieldName" value="RadioName" />
+			<var name="fieldName" value="Radio" />
 			<var name="fieldValue" value="Option 2" />
 		</execute>
 
 		<execute macro="FormsAdmin#viewFormEntry">
-			<var name="fieldName" value="CheckboxName" />
+			<var name="fieldName" value="Checkbox" />
 			<var name="fieldValue" value="Yes" />
 		</execute>
 	</command>
@@ -622,13 +582,8 @@
 		</execute>
 
 		<execute macro="FormFields#editText">
-			<var name="fieldName" value="name" />
-			<var name="fieldValue" value="Name" />
-		</execute>
-
-		<execute macro="FormFields#editText">
 			<var name="fieldName" value="label" />
-			<var name="fieldValue" value="Text Field Label" />
+			<var name="fieldValue" value="Text Field" />
 		</execute>
 
 		<execute macro="FormFields#enableAdvancedOptions" />
@@ -665,13 +620,13 @@
 		</execute>
 
 		<execute macro="FormFields#addRepeatableField">
-			<var name="fieldLabel" value="Text Field Label" />
-			<var name="fieldName" value="Name" />
+			<var name="fieldLabel" value="Text Field" />
+			<var name="fieldName" value="TextField" />
 		</execute>
 
 		<execute macro="FormFields#viewRepeatableTextFieldLabel">
-			<var name="fieldLabel" value="Text Field Label" />
-			<var name="fieldName" value="Name" />
+			<var name="fieldLabel" value="Text Field" />
+			<var name="fieldName" value="TextField" />
 		</execute>
 	</command>
 </definition>

@@ -30,7 +30,7 @@ import org.json.JSONObject;
 /**
  * @author Peter Yoo
  */
-public class FailedJobsMessageUtil {
+public class FailedJobMessageUtil {
 
 	public static void getFailedJobsMessage(Project project) throws Exception {
 		StringBuilder sb = new StringBuilder();

@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 
-public class FailedJobsMessageUtilTest extends BaseJenkinsResultsParserTestCase {
+public class FailedJobMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 
 	@Before
 	public void setUp() throws Exception {
@@ -112,7 +112,7 @@ public class FailedJobsMessageUtilTest extends BaseJenkinsResultsParserTestCase 
 		Project project = _getProject(
 			urlString, _urlToFile(urlString).getPath());
 		
-		FailedJobsMessageUtil.getFailedJobsMessage(project);
+		FailedJobMessageUtil.getFailedJobsMessage(project);
 		
 		return project.getProperty("report.html.content");
 	}

@@ -77,7 +77,7 @@
 		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="Web Content Content" />
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="AssetCategorization#VOCABULARY" value1="${vocabularyName} Required" />
+		<execute function="AssertElementPresent" locator1="Icon#ASTERISK" />
 
 		<execute function="AssertTextEquals" locator1="Message#ERROR_REQUEST_FAILED_TO_COMPLETE" value1="Your request failed to complete." />
 		<execute function="AssertTextEquals" locator1="Message#CATEGORY_ALERT" value1="Please select at least one category for ${vocabularyName}." />

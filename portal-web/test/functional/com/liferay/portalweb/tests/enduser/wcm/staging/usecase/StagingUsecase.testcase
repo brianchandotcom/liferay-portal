@@ -314,7 +314,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
-			 <var name="site" value="Site Name" />
+			<var name="site" value="Site Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoStaging" />
@@ -344,7 +344,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
-			 <var name="site" value="Site Name" />
+			<var name="site" value="Site Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoStaging" />
@@ -389,7 +389,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
-			 <var name="site" value="Site Name" />
+			<var name="site" value="Site Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoStaging" />
@@ -1043,7 +1043,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
-			 <var name="site" value="Site Name" />
+			<var name="site" value="Site Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoStaging" />
@@ -1282,7 +1282,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
-			 <var name="site" value="Site Name" />
+			<var name="site" value="Site Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoStaging" />
@@ -3111,7 +3111,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
-			 <var name="site" value="Site Name" />
+			<var name="site" value="Site Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoStaging" />
@@ -3286,7 +3286,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
-			 <var name="site" value="Community Site Name" />
+			<var name="site" value="Community Site Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoStaging" />
@@ -3951,7 +3951,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
-			 <var name="site" value="Site Name" />
+			<var name="site" value="Site Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoStaging" />
@@ -3982,7 +3982,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
-			 <var name="site" value="Site Name" />
+			<var name="site" value="Site Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoStaging" />
@@ -4282,7 +4282,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
-			 <var name="site" value="Site Name" />
+			<var name="site" value="Site Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoStaging" />

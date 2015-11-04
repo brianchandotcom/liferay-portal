@@ -32,7 +32,7 @@ if (Validator.isNull(redirect)) {
 
 long teamId = ParamUtil.getLong(request, "teamId");
 
-Team team = TeamLocalServiceUtil.fetchTeam(teamId);
+Team team = TeamServiceUtil.fetchTeam(teamId);
 
 Group group = GroupLocalServiceUtil.getGroup(team.getGroupId());
 

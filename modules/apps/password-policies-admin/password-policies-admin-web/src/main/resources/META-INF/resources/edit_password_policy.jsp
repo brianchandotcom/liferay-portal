@@ -23,7 +23,7 @@ String backURL = ParamUtil.getString(request, "backURL", redirect);
 
 long passwordPolicyId = ParamUtil.getLong(request, "passwordPolicyId");
 
-PasswordPolicy passwordPolicy = PasswordPolicyLocalServiceUtil.fetchPasswordPolicy(passwordPolicyId);
+PasswordPolicy passwordPolicy = PasswordPolicyServiceUtil.fetchPasswordPolicy(passwordPolicyId);
 
 boolean defaultPolicy = BeanParamUtil.getBoolean(passwordPolicy, request, "defaultPolicy");
 %>

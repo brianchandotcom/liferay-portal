@@ -27,11 +27,7 @@ if (Validator.isNull(redirect)) {
 
 long vocabularyId = ParamUtil.getLong(request, "vocabularyId");
 
-AssetVocabulary vocabulary = null;
-
-if (vocabularyId > 0) {
-	vocabulary = AssetVocabularyServiceUtil.fetchVocabulary(vocabularyId);
-}
+AssetVocabulary vocabulary = AssetVocabularyServiceUtil.fetchVocabulary(vocabularyId);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);

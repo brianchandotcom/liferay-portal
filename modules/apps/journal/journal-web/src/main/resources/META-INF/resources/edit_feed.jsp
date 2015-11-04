@@ -32,16 +32,12 @@ if (Validator.isNull(ddmStructureKey) && (feed != null)) {
 	ddmStructureKey = feed.getDDMStructureKey();
 }
 
-DDMStructure ddmStructure = null;
-
 String ddmStructureName = StringPool.BLANK;
 
-if (Validator.isNotNull(ddmStructureKey)) {
-	ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(themeDisplay.getSiteGroupId(), PortalUtil.getClassNameId(JournalArticle.class), ddmStructureKey, true);
+DDMStructure ddmStructure = DDMStructureServiceUtil.fetchStructure(themeDisplay.getSiteGroupId(), PortalUtil.getClassNameId(JournalArticle.class), ddmStructureKey, true);
 
-	if (ddmStructure != null) {
-		ddmStructureName = ddmStructure.getName(locale);
-	}
+if (ddmStructure != null) {
+	ddmStructureName = ddmStructure.getName(locale);
 }
 
 List<DDMTemplate> ddmTemplates = new ArrayList<DDMTemplate>();
@@ -56,18 +52,16 @@ if (Validator.isNull(ddmTemplateKey) && (feed != null)) {
 	ddmTemplateKey = feed.getDDMTemplateKey();
 }
 
-if ((ddmStructure == null) && Validator.isNotNull(ddmTemplateKey)) {
-	DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(themeDisplay.getSiteGroupId(), PortalUtil.getClassNameId(DDMStructure.class), ddmTemplateKey, true);
+if (ddmStructure == null) {
+	DDMTemplate ddmTemplate = DDMTemplateServiceUtil.fetchTemplate(themeDisplay.getSiteGroupId(), PortalUtil.getClassNameId(DDMStructure.class), ddmTemplateKey, true);
 
-	if (ddmTemplate != null) {
-		ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(ddmTemplate.getClassPK());
+	ddmStructure = DDMStructureServiceUtil.fetchStructure(ddmTemplate.getClassPK());
 
-		if (ddmStructure != null) {
-			ddmStructureKey = ddmStructure.getStructureKey();
-			ddmStructureName = ddmStructure.getName(locale);
+	if (ddmStructure != null) {
+		ddmStructureKey = ddmStructure.getStructureKey();
+		ddmStructureName = ddmStructure.getName(locale);
 
-			ddmTemplates = DDMTemplateLocalServiceUtil.getTemplates(themeDisplay.getSiteGroupId(), PortalUtil.getClassNameId(DDMStructure.class), ddmTemplate.getClassPK());
-		}
+		ddmTemplates = DDMTemplateLocalServiceUtil.getTemplates(themeDisplay.getSiteGroupId(), PortalUtil.getClassNameId(DDMStructure.class), ddmTemplate.getClassPK());
 	}
 }
 

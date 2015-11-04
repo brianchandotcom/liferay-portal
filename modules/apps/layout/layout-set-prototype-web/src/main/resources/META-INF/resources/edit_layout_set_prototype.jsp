@@ -25,18 +25,15 @@ if (Validator.isNull(redirect)) {
 	redirect = portletURL.toString();
 }
 
-LayoutSetPrototype layoutSetPrototype = null;
-
 long layoutSetPrototypeId = ParamUtil.getLong(request, "layoutSetPrototypeId");
 
-if (layoutSetPrototypeId > 0) {
-	layoutSetPrototype = LayoutSetPrototypeServiceUtil.fetchLayoutSetPrototype(layoutSetPrototypeId);
-}
-else {
+LayoutSetPrototype layoutSetPrototype = LayoutSetPrototypeServiceUtil.fetchLayoutSetPrototype(layoutSetPrototypeId);
+
+if (layoutSetPrototype == null) {
 	Group group = themeDisplay.getScopeGroup();
 
 	if (group.isLayoutSetPrototype()) {
-		layoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.fetchLayoutSetPrototype(group.getClassPK());
+		layoutSetPrototype = LayoutSetPrototypeServiceUtil.fetchLayoutSetPrototype(group.getClassPK());
 
 		layoutSetPrototypeId = layoutSetPrototype.getLayoutSetPrototypeId();
 	}

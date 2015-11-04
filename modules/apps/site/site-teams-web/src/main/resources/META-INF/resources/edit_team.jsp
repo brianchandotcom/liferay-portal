@@ -27,7 +27,7 @@ if (Validator.isNull(redirect)) {
 
 long teamId = ParamUtil.getLong(request, "teamId");
 
-Team team = TeamLocalServiceUtil.fetchTeam(teamId);
+Team team = TeamServiceUtil.fetchTeam(teamId);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);

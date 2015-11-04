@@ -13,6 +13,7 @@ public class FailedJobsMessageUtilTest extends BaseJenkinsResultsParserTestCase 
 	protected void downloadSample(File sampleDir, URL url) throws Exception {
 		downloadSampleURL(sampleDir, url, "/api/json");
 		downloadSampleURL(sampleDir, url, "/testReport/api/json");
+		downloadSampleURL(sampleDir, url, "/logText/progressiveText");
 
 		downloadSampleAxisURLs(sampleDir, new File(sampleDir, "/api/json"));
 	}
@@ -51,14 +52,14 @@ public class FailedJobsMessageUtilTest extends BaseJenkinsResultsParserTestCase 
 				continue;
 			}
 
-			String runURLString = URLDecoder.decode(
-				runJSONObject.getString("url"), "UTF-8");
+			URL runURL = createURL(URLDecoder.decode(
+				runJSONObject.getString("url"), "UTF-8"));
 
 			File runDir = new File(sampleDir, "run-" + i + "/" + number + "/");
 
-			downloadSampleURL(runDir, createURL(runURLString), "/api/json");
-			downloadSampleURL(
-				runDir, createURL(runURLString), "/testReport/api/json");
+			downloadSampleURL(runDir, runURL, "/api/json");
+			downloadSampleURL(runDir, runURL, "/logText/progressiveText");
+			downloadSampleURL(runDir, runURL, "/testReport/api/json");
 
 			runJSONObject.put("url", toURLString(runDir));
 		}

@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD_NAME</td>
+	<td>//div[@class='key-value-editor']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

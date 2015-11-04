@@ -5,7 +5,7 @@
 	</command>
 
 	<command name="addCategoryPGViaWCD">
-		<execute function="AssertClick#assertTextClickAtViewHistory" locator1="WCEditWebContent#MENU_CATEGORIZATION" value1="Categorization" />
+		<execute function="AssertClick" locator1="NavListItem#CATEGORIZATION" value1="Categorization" />
 
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_vocabularyName" value="${vocabularyName}" />
@@ -234,7 +234,7 @@
 
 	<command name="addTagPGViaWCD">
 		<execute function="AssertElementPresent" locator1="Button#BASIC_PREVIEW" />
-		<execute function="AssertClick#assertTextClickAtViewHistory" locator1="WCEditWebContent#MENU_CATEGORIZATION" value1="Categorization" />
+		<execute function="AssertClick" locator1="NavListItem#CATEGORIZATION" value1="Categorization" />
 
 		<var name="key_tagName" value="${tagName}" />
 
@@ -365,7 +365,7 @@
 	<command name="addWithCategoryCP">
 		<execute function="Type" locator1="TextInput#TITLE" value1="${webContentTitle}" />
 		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${webContentContent}" />
-		<execute function="AssertClick" locator1="WCEditWebContent#MENU_CATEGORIZATION" value1="Categorization" />
+		<execute function="AssertClick" locator1="NavListItem#CATEGORIZATION" value1="Categorization" />
 
 		<if>
 			<isset var="userSegmentDetailTitle" />
@@ -440,7 +440,7 @@
 	<command name="addWithMultipleCategories">
 		<execute function="Type" locator1="TextInput#TITLE" value1="${webContentTitle}" />
 		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${webContentContent}" />
-		<execute function="AssertClick" locator1="WCEditWebContent#MENU_CATEGORIZATION" value1="Categorization" />
+		<execute function="AssertClick" locator1="NavListItem#CATEGORIZATION" value1="Categorization" />
 
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
@@ -605,7 +605,7 @@
 	<command name="addWithTagCP">
 		<execute function="Type" locator1="TextInput#TITLE" value1="${webContentTitle}" />
 		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${webContentContent}" />
-		<execute function="AssertClick" locator1="WCEditWebContent#MENU_CATEGORIZATION" value1="Categorization" />
+		<execute function="AssertClick" locator1="NavListItem#CATEGORIZATION" value1="Categorization" />
 
 		<for list="${tagNameList}" param="tagName">
 			<execute function="Click" locator1="AssetCategorization#TAGS_ADD_BUTTON" />
@@ -1143,7 +1143,7 @@
 	<command name="viewCategorizationCategoryNotVisibleCP">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
-		<execute function="Click" locator1="WCEditWebContent#MENU_CATEGORIZATION" />
+		<execute function="Click" locator1="NavListItem#CATEGORIZATION" />
 
 		<var name="key_categoryName" value="${categoryName}" />
 
@@ -1153,7 +1153,7 @@
 	<command name="viewCategorizationVocabularyCP">
 		<var name="count" value="1" />
 
-		<execute function="Click" locator1="WCEditWebContent#MENU_CATEGORIZATION" />
+		<execute function="Click" locator1="NavListItem#CATEGORIZATION" />
 
 		<for list="${vocabularyNameList}" param="vocabularyName">
 			<var name="key_count" value="${count}" />

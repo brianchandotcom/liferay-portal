@@ -961,10 +961,13 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 	@Override
 	public List<Layout> getLayouts(
-		long groupId, boolean privateLayout, long parentLayoutId) {
+			long groupId, boolean privateLayout, long parentLayoutId)
+		throws PortalException {
 
-		return layoutPersistence.filterFindByG_P_P(
+		List<Layout> layouts = layoutLocalService.getLayouts(
 			groupId, privateLayout, parentLayoutId);
+
+		return filterLayouts(layouts);
 	}
 
 	@Override

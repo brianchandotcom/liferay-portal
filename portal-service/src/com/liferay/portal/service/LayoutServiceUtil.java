@@ -652,7 +652,8 @@ public class LayoutServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.model.Layout> getLayouts(
-		long groupId, boolean privateLayout, long parentLayoutId) {
+		long groupId, boolean privateLayout, long parentLayoutId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getLayouts(groupId, privateLayout, parentLayoutId);
 	}
 

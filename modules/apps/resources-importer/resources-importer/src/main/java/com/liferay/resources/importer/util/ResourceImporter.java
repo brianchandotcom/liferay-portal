@@ -18,7 +18,6 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
-import com.liferay.journal.util.JournalConverter;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -42,10 +41,6 @@ import java.util.Set;
  * @author Ryan Park
  */
 public class ResourceImporter extends FileSystemImporter {
-
-	public ResourceImporter(JournalConverter journalConverter) {
-		super(journalConverter);
-	}
 
 	@Override
 	public void importResources() throws Exception {

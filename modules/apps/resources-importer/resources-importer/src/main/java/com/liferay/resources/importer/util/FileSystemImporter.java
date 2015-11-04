@@ -123,10 +123,6 @@ import javax.portlet.PortletPreferences;
  */
 public class FileSystemImporter extends BaseImporter {
 
-	public FileSystemImporter(JournalConverter journalConverter) {
-		this.journalConverter = journalConverter;
-	}
-
 	@Override
 	public void importResources() throws Exception {
 		_resourcesDir = new File(resourcesDir);
@@ -137,6 +133,10 @@ public class FileSystemImporter extends BaseImporter {
 		}
 
 		doImportResources();
+	}
+
+	public void setJournalConverter(JournalConverter journalConverter) {
+		this.journalConverter = journalConverter;
 	}
 
 	protected void addApplicationDisplayTemplate(

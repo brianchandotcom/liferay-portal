@@ -47,7 +47,7 @@ public class DDLRecordSetSettingsPortletConfigurationIcon
 	@Override
 	public String getURL() {
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			request, DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN, 0,
+			request, DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/admin/record_set_settings.jsp");

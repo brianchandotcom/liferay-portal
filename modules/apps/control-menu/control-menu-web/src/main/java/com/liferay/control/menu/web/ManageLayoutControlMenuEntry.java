@@ -65,7 +65,7 @@ public class ManageLayoutControlMenuEntry
 			Layout.class.getName(), PortletProvider.Action.EDIT);
 
 		PortletURL editPageURL = PortalUtil.getControlPanelPortletURL(
-			request, portletId, 0, PortletRequest.RENDER_PHASE);
+			request, portletId, PortletRequest.RENDER_PHASE);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);

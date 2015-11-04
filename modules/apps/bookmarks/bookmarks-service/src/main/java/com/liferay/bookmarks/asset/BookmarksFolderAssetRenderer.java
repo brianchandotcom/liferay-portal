@@ -179,7 +179,7 @@ public class BookmarksFolderAssetRenderer
 		throws Exception {
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, BookmarksPortletKeys.BOOKMARKS_ADMIN, 0,
+			liferayPortletRequest, BookmarksPortletKeys.BOOKMARKS_ADMIN,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(

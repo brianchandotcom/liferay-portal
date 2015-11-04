@@ -934,7 +934,7 @@ public class ThemeDisplay
 				PortletProvider.Action.VIEW);
 
 			_urlMyAccount = PortalUtil.getControlPanelPortletURL(
-				getRequest(), portletId, 0, PortletRequest.RENDER_PHASE);
+				getRequest(), portletId, PortletRequest.RENDER_PHASE);
 		}
 
 		return _urlMyAccount;
@@ -951,7 +951,7 @@ public class ThemeDisplay
 				Layout.class.getName(), PortletProvider.Action.EDIT);
 
 			_urlPageSettings = PortalUtil.getControlPanelPortletURL(
-				getRequest(), portletId, 0, PortletRequest.RENDER_PHASE);
+				getRequest(), portletId, PortletRequest.RENDER_PHASE);
 		}
 
 		return _urlPageSettings;
@@ -978,7 +978,7 @@ public class ThemeDisplay
 	public PortletURL getURLUpdateManager() {
 		if (_urlUpdateManager == null) {
 			_urlUpdateManager = PortalUtil.getControlPanelPortletURL(
-				getRequest(), PortletKeys.MARKETPLACE_STORE, 0,
+				getRequest(), PortletKeys.MARKETPLACE_STORE,
 				PortletRequest.RENDER_PHASE);
 		}
 

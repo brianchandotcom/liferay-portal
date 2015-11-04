@@ -177,7 +177,7 @@ public class JournalArticleAssetRendererFactory
 		LiferayPortletResponse liferayPortletResponse, long classTypeId) {
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, JournalPortletKeys.JOURNAL, 0,
+			liferayPortletRequest, JournalPortletKeys.JOURNAL,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/edit_article.jsp");

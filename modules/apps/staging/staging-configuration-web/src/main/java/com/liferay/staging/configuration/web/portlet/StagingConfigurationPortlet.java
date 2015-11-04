@@ -157,10 +157,20 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 		if (!stagedGroup) {
-			PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-				actionRequest, liveGroup.getStagingGroup(),
-				StagingConfigurationPortletKeys.STAGING_CONFIGURATION, 0,
-				PortletRequest.RENDER_PHASE);
+			PortletURL portletURL = null;
+
+			if (stagingType == StagingConstants.TYPE_LOCAL_STAGING) {
+				portletURL = PortalUtil.getControlPanelPortletURL(
+					actionRequest, liveGroup.getStagingGroup(),
+					StagingConfigurationPortletKeys.STAGING_CONFIGURATION, 0,
+					PortletRequest.RENDER_PHASE);
+			}
+			else if (stagingType == StagingConstants.TYPE_REMOTE_STAGING) {
+				portletURL = PortalUtil.getControlPanelPortletURL(
+					actionRequest, liveGroup,
+					StagingConfigurationPortletKeys.STAGING_CONFIGURATION, 0,
+					PortletRequest.RENDER_PHASE);
+			}
 
 			if (portletURL != null) {
 				redirect = portletURL.toString();

@@ -909,10 +909,11 @@
 	</command>
 
 	<command name="expireSpecificVersionCP">
-		<var name="key_webContentTitle" value="${webContentTitle}" />
+		<var name="key_assetEntry" value="${webContentTitle}" />
 
-		<execute function="AssertClick" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
-		<execute function="AssertClick" locator1="Button#VIEW_HISTORY" value1="View History" />
+		<execute function="Click" locator1="Icon#DESCRIPTIVE_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#VIEW_HISTORY" value1="View History" />
 
 		<for list="${webContentList}" param="webContentTitle">
 			<var name="key_webContentTitle" value="${webContentTitle}" />
@@ -933,7 +934,7 @@
 	</command>
 
 	<command name="gotoViewSpecificVersionHistoryCP">
-		<execute function="AssertClick" locator1="Button#VIEW_HISTORY" value1="View History" />
+		<execute function="AssertClick" locator1="MenuItem#VIEW_HISTORY" value1="View History" />
 	</command>
 
 	<command name="moveToRecycleBinCP">

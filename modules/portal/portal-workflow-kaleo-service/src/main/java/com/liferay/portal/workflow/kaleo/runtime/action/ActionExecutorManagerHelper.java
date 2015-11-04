@@ -49,7 +49,7 @@ public class ActionExecutorManagerHelper {
 			String comment = _COMMENT_ACTION_SUCCESS;
 
 			try {
-				_actionExecutorManager.executeKaleoAction(
+				actionExecutorManager.executeKaleoAction(
 					kaleoAction, executionContext);
 
 				KaleoInstanceToken kaleoInstanceToken =
@@ -76,14 +76,14 @@ public class ActionExecutorManagerHelper {
 		}
 	}
 
+	@ServiceReference(type = ActionExecutorManager.class)
+	protected ActionExecutorManager actionExecutorManager;
+
 	private static final String _COMMENT_ACTION_SUCCESS =
 		"Action completed successfully.";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ActionExecutorManagerHelper.class);
-
-	@ServiceReference(type = ActionExecutorManager.class)
-	private final ActionExecutorManager _actionExecutorManager;
 
 	@BeanReference(type = KaleoActionLocalService.class)
 	private KaleoActionLocalService _kaleoActionLocalService;

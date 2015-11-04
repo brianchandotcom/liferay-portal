@@ -3,6 +3,8 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	<bean id="com.liferay.dynamic.data.mapping.service.DDMContentLocalService" class="com.liferay.dynamic.data.mapping.service.impl.DDMContentLocalServiceImpl" />
 	<bean id="com.liferay.dynamic.data.mapping.service.persistence.DDMContentPersistence" class="com.liferay.dynamic.data.mapping.service.persistence.impl.DDMContentPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.dynamic.data.mapping.service.DDMDataProviderLocalService" class="com.liferay.dynamic.data.mapping.service.impl.DDMDataProviderLocalServiceImpl" />
+	<bean id="com.liferay.dynamic.data.mapping.service.persistence.DDMDataProviderPersistence" class="com.liferay.dynamic.data.mapping.service.persistence.impl.DDMDataProviderPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService" class="com.liferay.dynamic.data.mapping.service.impl.DDMStorageLinkLocalServiceImpl" />
 	<bean id="com.liferay.dynamic.data.mapping.service.persistence.DDMStorageLinkPersistence" class="com.liferay.dynamic.data.mapping.service.persistence.impl.DDMStorageLinkPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.dynamic.data.mapping.service.DDMStructureLocalService" class="com.liferay.dynamic.data.mapping.service.impl.DDMStructureLocalServiceImpl" />

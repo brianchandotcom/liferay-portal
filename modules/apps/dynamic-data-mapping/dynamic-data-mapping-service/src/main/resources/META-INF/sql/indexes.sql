@@ -3,6 +3,11 @@ create index IX_50BF1038 on DDMContent (groupId);
 create index IX_3A9C0626 on DDMContent (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_EB9BDE28 on DDMContent (uuid_[$COLUMN_LENGTH:75$], groupId);
 
+create index IX_EEC5697A on DDMDataProvider (companyId);
+create index IX_5BAE067C on DDMDataProvider (groupId);
+create index IX_11A3DC62 on DDMDataProvider (uuid_[$COLUMN_LENGTH:75$], companyId);
+create unique index IX_51DC1364 on DDMDataProvider (uuid_[$COLUMN_LENGTH:75$], groupId);
+
 create unique index IX_702D1AD5 on DDMStorageLink (classPK);
 create index IX_81776090 on DDMStorageLink (structureId);
 create index IX_DB81EB42 on DDMStorageLink (uuid_[$COLUMN_LENGTH:75$], companyId);

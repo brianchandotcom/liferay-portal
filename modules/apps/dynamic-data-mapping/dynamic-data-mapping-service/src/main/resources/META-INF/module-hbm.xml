@@ -3,6 +3,7 @@
 
 <hibernate-mapping default-lazy="false" auto-import="false">
 	<import class="com.liferay.dynamic.data.mapping.model.DDMContent" />
+	<import class="com.liferay.dynamic.data.mapping.model.DDMDataProvider" />
 	<import class="com.liferay.dynamic.data.mapping.model.DDMStorageLink" />
 	<import class="com.liferay.dynamic.data.mapping.model.DDMStructure" />
 	<import class="com.liferay.dynamic.data.mapping.model.DDMStructureLayout" />
@@ -25,6 +26,21 @@
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="data" type="com.liferay.portal.dao.orm.hibernate.StringClobType" column="data_" />
+	</class>
+	<class name="com.liferay.dynamic.data.mapping.model.impl.DDMDataProviderImpl" table="DDMDataProvider">
+		<id name="dataProviderId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property name="definition" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 	</class>
 	<class name="com.liferay.dynamic.data.mapping.model.impl.DDMStorageLinkImpl" table="DDMStorageLink">
 		<id name="storageLinkId" type="long">

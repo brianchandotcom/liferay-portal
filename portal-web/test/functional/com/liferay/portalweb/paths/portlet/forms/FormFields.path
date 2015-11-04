@@ -62,7 +62,7 @@
 </tr>
 <tr>
 	<td>OPTIONS_OPTION_VALUE_FIELD</td>
-	<td>//div[contains(@class,'ddm-options-row')][${key_rowNumber}]//input[contains(@name,'value')]</td>
+	<td>//div[@class='options']//div[contains(@class,'form-field-container')][${key_rowNumber}]//input</td>
 	<td></td>
 </tr>
 <tr>

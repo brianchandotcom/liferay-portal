@@ -15,7 +15,7 @@
 package com.liferay.portal.workflow.kaleo.runtime.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.workflow.kaleo.definition.ExecutionType;
+import com.liferay.portal.workflow.kaleo.model.KaleoAction;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 
 /**
@@ -23,9 +23,8 @@ import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
  */
 public interface ActionExecutorManager {
 
-	public void executeKaleoActions(
-			String kaleoClassName, long kaleoClassPK,
-			ExecutionType executionType, ExecutionContext executionContext)
+	public void executeKaleoAction(
+			KaleoAction kaleoAction, ExecutionContext executionContext)
 		throws PortalException;
 
 }

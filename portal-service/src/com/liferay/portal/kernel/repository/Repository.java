@@ -70,6 +70,17 @@ public interface Repository extends DocumentRepository {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * Cancels the check out of the file entry. If a user has not checked out
+	 * the specified file entry, invoking this method will result in no changes.
+	 *
+	 * @param  fileEntryId the primary key of the file entry to cancel the
+	 *         checkout
+	 * @return the file entry if the cancel checkout operation was successful;
+	 *         <code>null</code> if the file entry was not checked out
+	 * @see    #checkInFileEntry(long, long, boolean, String, ServiceContext)
+	 * @see    #checkOutFileEntry(long, ServiceContext)
+	 */
 	public FileVersion cancelCheckOut(long fileEntryId) throws PortalException;
 
 	/**

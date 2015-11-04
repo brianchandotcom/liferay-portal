@@ -24,13 +24,14 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(
-	immediate = true,
-	property = {"portal.settings.authentication.tabs.name=ldap"},
-	service = DynamicInclude.class
-)
-public class PortalSettingsLDAPAuthenticationDynamicInclude
+@Component(immediate = true, service = DynamicInclude.class)
+public class PortalSettingsEditLDAPServerDynamicInclude
 	extends PortalSettingsBaseDynamicInclude {
+
+	@Override
+	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
+		dynamicIncludeRegistry.register(_JSP_PATH);
+	}
 
 	@Override
 	protected String getJSPPath() {
@@ -42,6 +43,7 @@ public class PortalSettingsLDAPAuthenticationDynamicInclude
 		super.servletContext = servletContext;
 	}
 
-	private static final String _JSP_PATH = "/portal-settings/ldap.jsp";
+	private static final String _JSP_PATH =
+		"/portal-settings/edit_ldap_server.jsp";
 
 }

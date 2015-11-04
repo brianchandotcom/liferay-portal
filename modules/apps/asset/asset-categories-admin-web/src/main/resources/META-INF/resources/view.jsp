@@ -19,6 +19,36 @@
 <%
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 
+String keywords = ParamUtil.getString(request, "keywords");
+
+PortletURL iteratorURL = renderResponse.createRenderURL();
+
+SearchContainer vocabulariesSearchContainer = new SearchContainer(renderRequest, iteratorURL, null, "there-are-no-vocabularies.-you-can-add-a-vocabulary-by-clicking-the-plus-button-on-the-bottom-right-corner");
+
+vocabulariesSearchContainer.setRowChecker(new EmptyOnClickRowChecker(renderResponse));
+
+List<AssetVocabulary> vocabularies = null;
+int vocabulariesCount = 0;
+
+if (Validator.isNotNull(keywords)) {
+	AssetVocabularyDisplay assetVocabularyDisplay = AssetVocabularyServiceUtil.searchVocabulariesDisplay(scopeGroupId, keywords, vocabulariesSearchContainer.getStart(), vocabulariesSearchContainer.getEnd(), true);
+
+	vocabulariesCount = assetVocabularyDisplay.getTotal();
+
+	vocabulariesSearchContainer.setTotal(vocabulariesCount);
+
+	vocabularies = assetVocabularyDisplay.getVocabularies();
+}
+else {
+	vocabulariesCount = AssetVocabularyServiceUtil.getGroupVocabulariesCount(scopeGroupId);
+
+	vocabulariesSearchContainer.setTotal(vocabulariesCount);
+
+	vocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(scopeGroupId, true, vocabulariesSearchContainer.getStart(), vocabulariesSearchContainer.getEnd(), null);
+}
+
+vocabulariesSearchContainer.setResults(vocabularies);
+
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabularies"), null);
 %>
 
@@ -29,36 +59,40 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 		<aui:nav-item cssClass="active" label="vocabularies" />
 	</aui:nav>
 
-	<aui:nav-bar-search>
-		<aui:form action="<%= portletURL %>" name="searchFm">
-			<liferay-ui:input-search markupView="lexicon" />
-		</aui:form>
-	</aui:nav-bar-search>
+	<c:if test="<%= Validator.isNotNull(keywords) || (vocabulariesCount > 0) %>">
+		<aui:nav-bar-search>
+			<aui:form action="<%= portletURL %>" name="searchFm">
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:form>
+		</aui:nav-bar-search>
+	</c:if>
 </aui:nav-bar>
 
-<liferay-frontend:management-bar
-	checkBoxContainerId="assetVocabulariesSearchContainer"
-	includeCheckBox="<%= true %>"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all"} %>'
-				portletURL="<%= renderResponse.createRenderURL() %>"
+<c:if test="<%= Validator.isNotNull(keywords) || (vocabulariesCount > 0) %>">
+	<liferay-frontend:management-bar
+		checkBoxContainerId="assetVocabulariesSearchContainer"
+		includeCheckBox="<%= true %>"
+	>
+		<liferay-frontend:management-bar-buttons>
+			<liferay-frontend:management-bar-filters>
+				<liferay-frontend:management-bar-navigation
+					navigationKeys='<%= new String[] {"all"} %>'
+					portletURL="<%= renderResponse.createRenderURL() %>"
+				/>
+			</liferay-frontend:management-bar-filters>
+	
+			<liferay-frontend:management-bar-display-buttons
+				displayViews='<%= new String[] {"list"} %>'
+				portletURL="<%= portletURL %>"
+				selectedDisplayStyle="<%= displayStyle %>"
 			/>
-		</liferay-frontend:management-bar-filters>
+		</liferay-frontend:management-bar-buttons>
 
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= portletURL %>"
-			selectedDisplayStyle="<%= displayStyle %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-trash" id="deleteSelectedVocabularies" />
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
+		<liferay-frontend:management-bar-action-buttons>
+			<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-trash" id="deleteSelectedVocabularies" />
+		</liferay-frontend:management-bar-action-buttons>
+	</liferay-frontend:management-bar>
+</c:if>
 
 <aui:form cssClass="container-fluid-1280" name="fm">
 	<aui:input name="deleteVocabularyIds" type="hidden" />
@@ -71,39 +105,9 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 	/>
 
 	<liferay-ui:search-container
-		emptyResultsMessage="there-are-no-vocabularies.-you-can-add-a-vocabulary-by-clicking-the-plus-button-on-the-bottom-right-corner"
 		id="assetVocabularies"
-		rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
+		searchContainer="<%= vocabulariesSearchContainer %>"
 	>
-
-		<liferay-ui:search-container-results>
-
-			<%
-			String keywords = ParamUtil.getString(request, "keywords");
-
-			List<AssetVocabulary> vocabularies = null;
-
-			if (Validator.isNotNull(keywords)) {
-				AssetVocabularyDisplay assetVocabularyDisplay = AssetVocabularyServiceUtil.searchVocabulariesDisplay(scopeGroupId, keywords, searchContainer.getStart(), searchContainer.getEnd(), true);
-
-				total = assetVocabularyDisplay.getTotal();
-
-				searchContainer.setTotal(total);
-
-				vocabularies = assetVocabularyDisplay.getVocabularies();
-			}
-			else {
-				total = AssetVocabularyServiceUtil.getGroupVocabulariesCount(scopeGroupId);
-
-				searchContainer.setTotal(total);
-
-				vocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(scopeGroupId, true, searchContainer.getStart(), searchContainer.getEnd(), null);
-			}
-
-			searchContainer.setResults(vocabularies);
-			%>
-
-		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portlet.asset.model.AssetVocabulary"

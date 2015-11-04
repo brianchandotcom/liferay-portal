@@ -50,6 +50,34 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 
 String keywords = ParamUtil.getString(request, "keywords");
 
+PortletURL iteratorURL = renderResponse.createRenderURL();
+
+SearchContainer categoriesSearchContainer = new SearchContainer(renderRequest, iteratorURL, null, "there-are-no-categories.-you-can-add-a-category-by-clicking-the-plus-button-on-the-bottom-right-corner");
+
+categoriesSearchContainer.setRowChecker(new EmptyOnClickRowChecker(renderResponse));
+
+List<AssetCategory> categories = null;
+int categoriesCount = 0;
+
+if (Validator.isNotNull(keywords)) {
+	AssetCategoryDisplay assetCategoryDisplay = AssetCategoryServiceUtil.searchCategoriesDisplay(scopeGroupId, keywords, categoryId, vocabularyId, categoriesSearchContainer.getStart(), categoriesSearchContainer.getEnd());
+
+	categoriesCount = assetCategoryDisplay.getTotal();
+
+	categoriesSearchContainer.setTotal(categoriesCount);
+
+	categories = assetCategoryDisplay.getCategories();
+}
+else {
+	categoriesCount = AssetCategoryServiceUtil.getVocabularyCategoriesCount(scopeGroupId, categoryId, vocabularyId);
+
+	categoriesSearchContainer.setTotal(categoriesCount);
+
+	categories = AssetCategoryServiceUtil.getVocabularyCategories(scopeGroupId, categoryId, vocabularyId, categoriesSearchContainer.getStart(), categoriesSearchContainer.getEnd(), null);
+}
+
+categoriesSearchContainer.setResults(categories);
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/view_categories.jsp");
@@ -71,43 +99,47 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 		<aui:nav-item cssClass="active" label="categories" />
 	</aui:nav>
 
-	<aui:nav-bar-search>
-		<aui:form action="<%= portletURL %>" name="searchFm">
-			<liferay-ui:input-search markupView="lexicon" />
-		</aui:form>
-	</aui:nav-bar-search>
+	<c:if test="<%= Validator.isNotNull(keywords) || (categoriesCount > 0) %>">
+		<aui:nav-bar-search>
+			<aui:form action="<%= portletURL %>" name="searchFm">
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:form>
+		</aui:nav-bar-search>
+	</c:if>
 </aui:nav-bar>
 
-<liferay-frontend:management-bar
-	checkBoxContainerId="assetCategoriesSearchContainer"
-	includeCheckBox="<%= true %>"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all"} %>'
-				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+<c:if test="<%= Validator.isNotNull(keywords) || (categoriesCount > 0) %>">
+	<liferay-frontend:management-bar
+		checkBoxContainerId="assetCategoriesSearchContainer"
+		includeCheckBox="<%= true %>"
+	>
+		<liferay-frontend:management-bar-buttons>
+			<liferay-frontend:management-bar-filters>
+				<liferay-frontend:management-bar-navigation
+					navigationKeys='<%= new String[] {"all"} %>'
+					portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+				/>
+			</liferay-frontend:management-bar-filters>
+	
+			<liferay-portlet:renderURL varImpl="displayStyleURL">
+				<liferay-portlet:param name="mvcPath" value="/view_categories.jsp" />
+				<liferay-portlet:param name="redirect" value="<%= currentURL %>" />
+				<liferay-portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" />
+				<liferay-portlet:param name="vocabularyId" value="<%= String.valueOf(vocabularyId) %>" />
+			</liferay-portlet:renderURL>
+
+			<liferay-frontend:management-bar-display-buttons
+				displayViews='<%= new String[] {"list"} %>'
+				portletURL="<%= displayStyleURL %>"
+				selectedDisplayStyle="<%= displayStyle %>"
 			/>
-		</liferay-frontend:management-bar-filters>
+		</liferay-frontend:management-bar-buttons>
 
-		<liferay-portlet:renderURL varImpl="displayStyleURL">
-			<liferay-portlet:param name="mvcPath" value="/view_categories.jsp" />
-			<liferay-portlet:param name="redirect" value="<%= currentURL %>" />
-			<liferay-portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" />
-			<liferay-portlet:param name="vocabularyId" value="<%= String.valueOf(vocabularyId) %>" />
-		</liferay-portlet:renderURL>
-
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= displayStyleURL %>"
-			selectedDisplayStyle="<%= displayStyle %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-trash" id="deleteSelectedCategories" />
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
+		<liferay-frontend:management-bar-action-buttons>
+			<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-trash" id="deleteSelectedCategories" />
+		</liferay-frontend:management-bar-action-buttons>
+	</liferay-frontend:management-bar>
+</c:if>
 
 <aui:form cssClass="container-fluid-1280" name="fm">
 	<aui:input name="deleteCategoryIds" type="hidden" />
@@ -120,38 +152,9 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 	/>
 
 	<liferay-ui:search-container
-		emptyResultsMessage="there-are-no-categories.-you-can-add-a-category-by-clicking-the-plus-button-on-the-bottom-right-corner"
 		id="assetCategories"
-		iteratorURL="<%= portletURL %>"
-		rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
+		searchContainer="<%= categoriesSearchContainer %>"
 	>
-
-		<liferay-ui:search-container-results>
-
-			<%
-			List<AssetCategory> categories = null;
-
-			if (Validator.isNotNull(keywords)) {
-				AssetCategoryDisplay assetCategoryDisplay = AssetCategoryServiceUtil.searchCategoriesDisplay(scopeGroupId, keywords, categoryId, vocabularyId, searchContainer.getStart(), searchContainer.getEnd());
-
-				total = assetCategoryDisplay.getTotal();
-
-				searchContainer.setTotal(total);
-
-				categories = assetCategoryDisplay.getCategories();
-			}
-			else {
-				total = AssetCategoryServiceUtil.getVocabularyCategoriesCount(scopeGroupId, categoryId, vocabularyId);
-
-				searchContainer.setTotal(total);
-
-				categories = AssetCategoryServiceUtil.getVocabularyCategories(scopeGroupId, categoryId, vocabularyId, searchContainer.getStart(), searchContainer.getEnd(), null);
-			}
-
-			searchContainer.setResults(categories);
-			%>
-
-		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portlet.asset.model.AssetCategory"

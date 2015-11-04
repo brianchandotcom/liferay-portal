@@ -17,7 +17,6 @@ package com.liferay.portal.workflow.kaleo.action.executor.internal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.workflow.kaleo.action.executor.ActionExecutor;
-import com.liferay.portal.workflow.kaleo.action.executor.ActionExecutorFactory;
 import com.liferay.portal.workflow.kaleo.model.KaleoAction;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.action.ActionExecutorManager;
@@ -48,11 +47,11 @@ public class ActionExecutorManagerImpl implements ActionExecutorManager {
 		String scriptLanguage = kaleoAction.getScriptLanguage();
 
 		if (scriptLanguage.equals(_LANGUAGE_JAVA)) {
-			actionExecutor = _actionExecutorFactory.getActionExecutor(
+			actionExecutor = _actionExecutorTracker.getActionExecutor(
 				kaleoAction.getScriptLanguage(), kaleoAction.getScript());
 		}
 		else {
-			actionExecutor = _actionExecutorFactory.getActionExecutor(
+			actionExecutor = _actionExecutorTracker.getActionExecutor(
 				kaleoAction.getScriptLanguage());
 		}
 
@@ -60,14 +59,14 @@ public class ActionExecutorManagerImpl implements ActionExecutorManager {
 	}
 
 	@Reference(unbind = "-")
-	protected void setActionExecutorFactory(
-		ActionExecutorFactory actionExecutorFactory) {
+	protected void setActionExecutorTracker(
+		ActionExecutorTracker actionExecutorTracker) {
 
-		_actionExecutorFactory = actionExecutorFactory;
+		_actionExecutorTracker = actionExecutorTracker;
 	}
 
 	private static final String _LANGUAGE_JAVA = "java";
 
-	private ActionExecutorFactory _actionExecutorFactory;
+	private ActionExecutorTracker _actionExecutorTracker;
 
 }

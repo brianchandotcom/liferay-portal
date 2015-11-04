@@ -19,7 +19,6 @@ import com.liferay.osgi.service.tracker.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.kaleo.action.executor.ActionExecutor;
-import com.liferay.portal.workflow.kaleo.action.executor.ActionExecutorFactory;
 
 import java.util.List;
 
@@ -32,8 +31,8 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Leonardo Barros
  */
-@Component(immediate = true)
-public class ActionExecutorFactoryImpl implements ActionExecutorFactory {
+@Component(immediate = true, service = ActionExecutorTracker.class)
+public class ActionExecutorTracker {
 
 	public ActionExecutor getActionExecutor(String scriptLanguage)
 		throws WorkflowException {

@@ -84,11 +84,8 @@ public class JournalArticleAssetRenderer
 		}
 	}
 
-	public JournalArticleAssetRenderer(
-		JournalArticle article, JournalContent journalContent) {
-
+	public JournalArticleAssetRenderer(JournalArticle article) {
 		_article = article;
-		_journalContent = journalContent;
 	}
 
 	public JournalArticle getArticle() {
@@ -426,6 +423,10 @@ public class JournalArticleAssetRenderer
 		return true;
 	}
 
+	public void setJournalContent(JournalContent journalContent) {
+		_journalContent = journalContent;
+	}
+
 	@Override
 	public boolean isDisplayable() {
 		Date now = new Date();
@@ -461,6 +462,6 @@ public class JournalArticleAssetRenderer
 	}
 
 	private final JournalArticle _article;
-	private final JournalContent _journalContent;
+	private JournalContent _journalContent;
 
 }

@@ -57,21 +57,6 @@ public class MessagingConfigurator {
 			DestinationConfiguration.class, destinationConfiguration,
 			new HashMapDictionary<String, Object>());
 
-		try {
-			_schedulerEngineHelper.unschedule(
-				UserImportMessageListener.class.getName(),
-				UserImportMessageListener.class.getName(),
-				StorageType.MEMORY_CLUSTERED);
-		}
-		catch (SchedulerException se) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to unschedule " +
-						UserImportMessageListener.class.getName(),
-					se);
-			}
-		}
-
 		LDAPImportConfiguration ldapImportConfiguration =
 			_ldapImportConfigurationProvider.getConfiguration(0L);
 

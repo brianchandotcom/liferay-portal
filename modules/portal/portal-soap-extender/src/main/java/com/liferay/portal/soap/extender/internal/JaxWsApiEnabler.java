@@ -75,8 +75,14 @@ public class JaxWsApiEnabler {
 
 			ProviderImpl providerImpl = new ProviderImpl();
 
+			Dictionary<String, Object> providerProperties = new Hashtable<>();
+
+			providerProperties.put(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH,
+				contextPath);
+
 			_serviceRegistration = bundleContext.registerService(
-				Provider.class, providerImpl, null);
+				Provider.class, providerImpl, providerProperties);
 		}
 	}
 

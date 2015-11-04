@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.scheduler.config;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
@@ -54,6 +55,10 @@ public class PluginSchedulingConfigurator
 							PortletClassLoaderUtil.getClassLoader(),
 							schedulerEntry.getEventListenerClass());
 
+					SchedulerEngineHelperUtil.register(
+						messageListener, schedulerEntry,
+						DestinationNames.SCHEDULER_DISPATCH);
+
 					messageListeners.put(
 						schedulerEntry.getEventListenerClass(),
 						messageListener);
@@ -71,22 +76,12 @@ public class PluginSchedulingConfigurator
 	}
 
 	public void destroy() {
-		for (SchedulerEntry schedulerEntry : schedulerEntries) {
-			try {
-				SchedulerEngineHelperUtil.delete(schedulerEntry, storageType);
-			}
-			catch (Exception e) {
-				_log.error("Unable to unschedule " + schedulerEntry, e);
-			}
-		}
-
-		schedulerEntries.clear();
-
 		for (MessageListener messageListener : messageListeners.values()) {
 			SchedulerEngineHelperUtil.unregister(messageListener);
 		}
 
 		messageListeners.clear();
+		schedulerEntries.clear();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

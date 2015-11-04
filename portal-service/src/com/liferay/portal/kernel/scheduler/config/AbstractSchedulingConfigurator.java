@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.scheduler.config;
 
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
-import com.liferay.portal.kernel.scheduler.StorageType;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -34,21 +33,11 @@ public abstract class AbstractSchedulingConfigurator
 		configure();
 	}
 
-	public void setExceptionsMaxSize(int exceptionsMaxSize) {
-		this.exceptionsMaxSize = exceptionsMaxSize;
-	}
-
 	public void setSchedulerEntries(List<SchedulerEntry> schedulerEntries) {
 		this.schedulerEntries = schedulerEntries;
 	}
 
-	public void setStorageType(StorageType storageType) {
-		this.storageType = storageType;
-	}
-
-	protected int exceptionsMaxSize = 0;
 	protected Map<String, MessageListener> messageListeners = new HashMap<>();
 	protected List<SchedulerEntry> schedulerEntries = Collections.emptyList();
-	protected StorageType storageType = StorageType.MEMORY_CLUSTERED;
 
 }

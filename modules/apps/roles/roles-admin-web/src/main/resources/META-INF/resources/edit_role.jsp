@@ -23,7 +23,11 @@ String backURL = ParamUtil.getString(request, "backURL", redirect);
 
 long roleId = ParamUtil.getLong(request, "roleId");
 
-Role role = RoleServiceUtil.fetchRole(roleId);
+Role role = null;
+
+if (roleId > 0) {
+	role = RoleServiceUtil.fetchRole(roleId);
+}
 
 int type = ParamUtil.getInteger(request, "type");
 String subtype = BeanParamUtil.getString(role, request, "subtype");

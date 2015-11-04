@@ -14,8 +14,6 @@
 
 package com.liferay.portal.workflow.kaleo.action.executor.internal;
 
-import com.liferay.osgi.service.tracker.map.ServiceTrackerCustomizerFactory;
-import com.liferay.osgi.service.tracker.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.util.Validator;
@@ -40,73 +38,66 @@ public class ActionExecutorFactoryImpl implements ActionExecutorFactory {
 	public ActionExecutor getActionExecutor(String scriptLanguage)
 		throws WorkflowException {
 
-		List<ServiceWrapper<ActionExecutor>> serviceWrappers =
-			getServiceWrappers(scriptLanguage);
+		List<ActionExecutor> actionExecutors = getActionExecutors(
+			scriptLanguage);
 
-		return serviceWrappers.get(0).getService();
+		return actionExecutors.get(0);
 	}
 
 	public ActionExecutor getActionExecutor(
 			String scriptLanguage, String filter)
 		throws WorkflowException {
 
-		List<ServiceWrapper<ActionExecutor>> serviceWrappers =
-			getServiceWrappers(scriptLanguage);
-
 		if (Validator.isNull(filter)) {
-			return serviceWrappers.get(0).getService();
+			throw new WorkflowException("Empty filter is not allowed");
 		}
-		else {
-			for (ServiceWrapper<ActionExecutor>
-				serviceWrapper : serviceWrappers) {
 
-				ActionExecutor actionExecutor = serviceWrapper.getService();
+		List<ActionExecutor> actionExecutors = getActionExecutors(
+			scriptLanguage);
 
-				String className = actionExecutor.getClass().getName();
+		for (ActionExecutor actionExecutor : actionExecutors) {
+			Class<?> clazz = actionExecutor.getClass();
 
-				if (className.equals(filter)) {
-					return actionExecutor;
-				}
+			String className = clazz.getName();
+
+			if (className.equals(filter.trim())) {
+				return actionExecutor;
 			}
-
-			throw new WorkflowException("Action executor not found");
 		}
+
+		throw new WorkflowException("No Action executor found");
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext)
 		throws InvalidSyntaxException {
 
-		_actionExecutors = ServiceTrackerMapFactory.multiValueMap(
-				bundleContext, ActionExecutor.class,
-				"com.liferay.portal.workflow.kaleo.action.script.language",
-				ServiceTrackerCustomizerFactory.<ActionExecutor>
-					serviceWrapper(bundleContext));
+		_serviceTrackerMap = ServiceTrackerMapFactory.multiValueMap(
+			bundleContext, ActionExecutor.class,
+			"com.liferay.portal.workflow.kaleo.action.script.language");
 
-		_actionExecutors.open();
+		_serviceTrackerMap.open();
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_actionExecutors.close();
+		_serviceTrackerMap.close();
 	}
 
-	protected List<ServiceWrapper<ActionExecutor>> getServiceWrappers(
-			String scriptLanguage)
+	protected List<ActionExecutor> getActionExecutors(String scriptLanguage)
 		throws WorkflowException {
 
-		List<ServiceWrapper<ActionExecutor>> serviceWrappers =
-			_actionExecutors.getService(scriptLanguage);
+		List<ActionExecutor> actionExecutors = _serviceTrackerMap.getService(
+			scriptLanguage);
 
-		if (serviceWrappers.isEmpty()) {
+		if (actionExecutors.isEmpty()) {
 			throw new WorkflowException(
 				"Invalid script language " + scriptLanguage);
 		}
 
-		return serviceWrappers;
+		return actionExecutors;
 	}
 
-	private ServiceTrackerMap <String, List<ServiceWrapper<ActionExecutor>>>
-		_actionExecutors;
+	private ServiceTrackerMap<String, List<ActionExecutor>> _serviceTrackerMap;
 
 }

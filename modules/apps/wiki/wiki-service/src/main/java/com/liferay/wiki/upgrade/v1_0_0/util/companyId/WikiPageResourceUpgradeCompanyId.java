@@ -12,22 +12,23 @@
  * details.
  */
 
-package com.liferay.wiki.upgrade.v1_0_0;
+package com.liferay.wiki.upgrade.v1_0_0.util.companyId;
 
 import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdInTable;
-import com.liferay.wiki.upgrade.v1_0_0.util.companyId.WikiPageResourceUpgradeCompanyId;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Cristina González
  */
-public class UpgradeCompanyId
-	extends com.liferay.portal.upgrade.util.UpgradeCompanyId {
+public class WikiPageResourceUpgradeCompanyId
+	implements UpgradeCompanyIdInTable {
 
 	@Override
-	protected UpgradeCompanyIdInTable[] getUpgradeCompanyIdInTable() {
-		return new UpgradeCompanyIdInTable[] {
-			new WikiPageResourceUpgradeCompanyId()
-		};
+	public String getTableName() {
+		return "WikiPageResource";
+	}
+
+	@Override
+	public void upgradeProcess() {
 	}
 
 }

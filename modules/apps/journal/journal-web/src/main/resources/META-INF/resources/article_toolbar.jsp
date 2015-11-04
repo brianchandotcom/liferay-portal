@@ -16,19 +16,11 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String redirect = ParamUtil.getString(request, "redirect");
-
-String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
-
-JournalArticle article = ActionUtil.getArticle(request);
-%>
-
 <div class="article-toolbar toolbar" id="<portlet:namespace />articleToolbar">
 	<div class="btn-group">
 		<aui:button data-title='<%= LanguageUtil.get(request, "in-order-to-preview-your-changes,-the-web-content-is-saved-as-a-draft") %>' disabled="<%= true %>" icon="icon-search" name="basicPreviewButton" value="basic-preview" />
 
-		<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.PERMISSIONS) %>">
+		<c:if test="<%= JournalArticlePermission.contains(permissionChecker, journalDisplayContext.getArticle(), ActionKeys.PERMISSIONS) %>">
 			<aui:button disabled="<%= true %>" icon="icon-lock" name="articlePermissionsButton" value="permissions" />
 		</c:if>
 	</div>

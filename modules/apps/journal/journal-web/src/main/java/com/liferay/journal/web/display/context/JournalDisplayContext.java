@@ -15,6 +15,7 @@
 package com.liferay.journal.web.display.context;
 
 import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.web.configuration.JournalWebConfigurationValues;
@@ -53,6 +54,16 @@ public class JournalDisplayContext {
 		_request = request;
 		_liferayPortletResponse = liferayPortletResponse;
 		_portletPreferences = portletPreferences;
+	}
+
+	public JournalArticle getArticle() throws PortalException {
+		if (_article != null) {
+			return _article;
+		}
+
+		_article = ActionUtil.getArticle(_request);
+
+		return _article;
 	}
 
 	public String getDisplayStyle() {
@@ -244,6 +255,7 @@ public class JournalDisplayContext {
 		return displayStyle;
 	}
 
+	private JournalArticle _article;
 	private String _displayStyle;
 	private String[] _displayViews;
 	private JournalFolder _folder;

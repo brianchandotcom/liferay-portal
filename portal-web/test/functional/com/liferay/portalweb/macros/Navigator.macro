@@ -43,7 +43,7 @@
 		</execute>
 	</command>
 
-	<command name="gotoStaging">
+	<command name="gotoStagedView">
 		<execute function="Click" locator1="Radio#STAGING" />
 	</command>
 

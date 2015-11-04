@@ -317,7 +317,7 @@
 			<var name="site" value="Site Name" />
 		</execute>
 
-		<execute macro="Navigator#gotoStaging" />
+		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="Staging#gotoPublishToLive" />
 
@@ -347,7 +347,7 @@
 			<var name="site" value="Site Name" />
 		</execute>
 
-		<execute macro="Navigator#gotoStaging" />
+		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="Staging#gotoPublishToLive" />
 
@@ -392,7 +392,7 @@
 			<var name="site" value="Site Name" />
 		</execute>
 
-		<execute macro="Navigator#gotoStaging" />
+		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="Staging#gotoPublishToLive" />
 
@@ -538,7 +538,7 @@
 			<var name="site" value="Site Name" />
 		</execute>
 
-		<execute macro="Navigator#gotoStaging" />
+		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="Staging#gotoPublishToLive" />
 
@@ -563,7 +563,7 @@
 			<var name="site" value="Site Name" />
 		</execute>
 
-		<execute macro="Navigator#gotoStaging" />
+		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="Staging#gotoPublishToLive" />
 
@@ -576,7 +576,7 @@
 			<var name="site" value="Site Name" />
 		</execute>
 
-		<execute macro="Navigator#gotoStaging" />
+		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="Staging#gotoPublishToLive" />
 
@@ -605,7 +605,7 @@
 			<var name="site" value="Site Name" />
 		</execute>
 
-		<execute macro="Navigator#gotoStaging" />
+		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="Staging#gotoPublishToLive" />
 
@@ -1035,7 +1035,7 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute macro="Navigator#gotoStaging" />
+		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="Blogs#addEntry">
 			<var name="entryContent" value="Blogs Entry Content" />
@@ -1046,7 +1046,7 @@
 			<var name="site" value="Site Name" />
 		</execute>
 
-		<execute macro="Navigator#gotoStaging" />
+		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="Staging#gotoPublishToLive" />
 
@@ -1285,7 +1285,7 @@
 			<var name="site" value="Site Name" />
 		</execute>
 
-		<execute macro="Navigator#gotoStaging" />
+		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="Staging#gotoPublishToLive" />
 
@@ -3114,7 +3114,7 @@
 			<var name="site" value="Site Name" />
 		</execute>
 
-		<execute macro="Navigator#gotoStaging" />
+		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="Staging#configurePublishToLive">
 			<var name="checkPageName" value="Page 2" />
@@ -3289,7 +3289,7 @@
 			<var name="site" value="Community Site Name" />
 		</execute>
 
-		<execute macro="Navigator#gotoStaging" />
+		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="Staging#gotoPublishToLive" />
 
@@ -3824,7 +3824,7 @@
 			<var name="portletName" value="Sites" />
 		</execute>
 
-		<execute macro="Navigator#gotoStaging" />
+		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="SitePage#addCP">
 			<var name="siteName" value="Site Name" />
@@ -3954,7 +3954,7 @@
 			<var name="site" value="Site Name" />
 		</execute>
 
-		<execute macro="Navigator#gotoStaging" />
+		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="Staging#gotoPublishToLive" />
 
@@ -3985,7 +3985,7 @@
 			<var name="site" value="Site Name" />
 		</execute>
 
-		<execute macro="Navigator#gotoStaging" />
+		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="Staging#gotoPublishToLive" />
 
@@ -4252,7 +4252,7 @@
 			<var name="portletName" value="Sites" />
 		</execute>
 
-		<execute macro="Navigator#gotoStaging" />
+		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="SitePage#addCP">
 			<var name="siteName" value="${siteName}" />
@@ -4285,7 +4285,7 @@
 			<var name="site" value="Site Name" />
 		</execute>
 
-		<execute macro="Navigator#gotoStaging" />
+		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="Staging#gotoPublishToLive" />
 

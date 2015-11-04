@@ -95,8 +95,8 @@ Liferay = window.Liferay || {};
 				if (!ioConfig.success) {
 					var callbacks = _.filter(args, _.isFunction);
 
-					var callbackSuccess = callbacks[0];
 					var callbackException = callbacks[1];
+					var callbackSuccess = callbacks[0];
 
 					if (!callbackException) {
 						callbackException = callbackSuccess;

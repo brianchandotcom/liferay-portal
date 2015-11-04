@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
-import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.InvokerMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
@@ -394,13 +393,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			return;
 		}
 
-		if (destination.equals(DestinationNames.SCHEDULER_DISPATCH) &&
-			Validator.isNull(
-				message.get(SchedulerEngine.MESSAGE_LISTENER_UUID))) {
-
-			throw new IllegalArgumentException("Message listener UUID is null");
-		}
-
 		try {
 			Scheduler scheduler = getScheduler(storageType);
 
@@ -413,12 +405,10 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			description = fixMaxLength(
 				description, _descriptionMaxLength, storageType);
 
-			if (message == null) {
-				message = new Message();
-			}
-			else {
-				message = message.clone();
-			}
+			message = message.clone();
+
+			message.put(SchedulerEngine.JOB_NAME, trigger.getJobName());
+			message.put(SchedulerEngine.GROUP_NAME, trigger.getGroupName());
 
 			schedule(
 				scheduler, storageType, quartzTrigger, description, destination,
@@ -821,9 +811,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 				JobDataMap jobDataMap = jobDetail.getJobDataMap();
 
 				Message message = getMessage(jobDataMap);
-
-				message.put(SchedulerEngine.JOB_NAME, jobKey.getName());
-				message.put(SchedulerEngine.GROUP_NAME, jobKey.getGroup());
 
 				if (_schedulerEngineHelper != null) {
 					_schedulerEngineHelper.auditSchedulerJobs(

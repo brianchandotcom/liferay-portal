@@ -32,6 +32,6 @@ ExportImportConfiguration exportImportConfiguration = ExportImportConfigurationL
 	</liferay-ui:panel>
 
 	<liferay-ui:panel collapsible="<%= false %>" extended="<%= true %>" title="description">
-		<liferay-ui:message key="<%= exportImportConfiguration.getDescription() %>" />
+		<liferay-ui:message key="<%= HtmlUtil.escape(exportImportConfiguration.getDescription()) %>" />
 	</liferay-ui:panel>
 </liferay-ui:panel-container>

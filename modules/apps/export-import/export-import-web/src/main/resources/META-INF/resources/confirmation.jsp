@@ -53,13 +53,13 @@ long[] layoutIds = GetterUtil.getLongValues(settingsMap.get("layoutIds"));
 <c:if test="<%= !publishOnLayout %>">
 	<liferay-ui:header
 		backURL="<%= backURL %>"
-		title="<%= exportImportConfiguration.getName() %>"
+		title="<%= HtmlUtil.escape(exportImportConfiguration.getName()) %>"
 	/>
 </c:if>
 
 <div id="confirmationSection">
 	<span class="selected-labels" id="<portlet:namespace />exportImportConfigurationDescription">
-		<liferay-ui:message key="<%= exportImportConfiguration.getDescription() %>" />
+		<liferay-ui:message key="<%= HtmlUtil.escape(exportImportConfiguration.getDescription()) %>" />
 	</span>
 
 	<aui:fieldset cssClass="options-group" label="user">

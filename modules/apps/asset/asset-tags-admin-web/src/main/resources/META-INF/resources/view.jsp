@@ -21,6 +21,45 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 
 String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
+String keywords = ParamUtil.getString(request, "keywords", null);
+
+if (Validator.isNotNull(keywords)) {
+	keywords = StringUtil.quote(keywords, StringPool.PERCENT);
+}
+
+OrderByComparator<AssetTag> orderByComparator = null;
+
+boolean orderByAsc = false;
+
+if (orderByType.equals("asc")) {
+	orderByAsc = true;
+}
+
+if (orderByCol.equals("name")) {
+	orderByComparator = new AssetTagNameComparator(orderByAsc);
+}
+else if (orderByCol.equals("usages")) {
+	orderByComparator = new AssetTagAssetCountComparator(orderByAsc);
+}
+
+PortletURL iteratorURL = renderResponse.createRenderURL();
+
+SearchContainer tagsSearchContainer = new SearchContainer(renderRequest, iteratorURL, null, "there-are-no-tags.-you-can-add-a-tag-by-clicking-the-plus-button-on-the-right-bottom-corner");
+
+tagsSearchContainer.setOrderByCol(orderByCol);
+tagsSearchContainer.setOrderByComparator(orderByComparator);
+tagsSearchContainer.setOrderByType(orderByType);
+
+tagsSearchContainer.setRowChecker(new EmptyOnClickRowChecker(renderResponse));
+
+int totalVar = AssetTagServiceUtil.getTagsCount(scopeGroupId, keywords);
+
+tagsSearchContainer.setTotal(totalVar);
+
+List<AssetTag> tags = AssetTagServiceUtil.getTags(scopeGroupId, keywords, tagsSearchContainer.getStart(), tagsSearchContainer.getEnd(), tagsSearchContainer.getOrderByComparator());
+
+tagsSearchContainer.setResults(tags);
 %>
 
 <liferay-portlet:renderURL varImpl="portletURL" />
@@ -30,93 +69,57 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 		<aui:nav-item cssClass="active" label="tags" />
 	</aui:nav>
 
-	<aui:nav-bar-search>
-		<aui:form action="<%= portletURL %>" name="searchFm">
-			<liferay-ui:input-search markupView="lexicon" />
-		</aui:form>
-	</aui:nav-bar-search>
+	<c:if test="<%= Validator.isNotNull(keywords) || (totalVar > 0) %>">
+		<aui:nav-bar-search>
+			<aui:form action="<%= portletURL %>" name="searchFm">
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:form>
+		</aui:nav-bar-search>
+	</c:if>
 </aui:nav-bar>
 
-<liferay-frontend:management-bar
-	checkBoxContainerId="assetTagsSearchContainer"
-	includeCheckBox="<%= true %>"
->
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= renderResponse.createRenderURL() %>"
-		/>
+<c:if test="<%= Validator.isNotNull(keywords) || (totalVar > 0) %>">
+	<liferay-frontend:management-bar
+		checkBoxContainerId="assetTagsSearchContainer"
+		includeCheckBox="<%= true %>"
+	>
+		<liferay-frontend:management-bar-filters>
+			<liferay-frontend:management-bar-navigation
+				navigationKeys='<%= new String[] {"all"} %>'
+				portletURL="<%= renderResponse.createRenderURL() %>"
+			/>
 
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= orderByCol %>"
-			orderByType="<%= orderByType %>"
-			orderColumns='<%= new String[] {"name", "usages"} %>'
-			portletURL="<%= renderResponse.createRenderURL() %>"
-		/>
-	</liferay-frontend:management-bar-filters>
+			<liferay-frontend:management-bar-sort
+				orderByCol="<%= orderByCol %>"
+				orderByType="<%= orderByType %>"
+				orderColumns='<%= new String[] {"name", "usages"} %>'
+				portletURL="<%= renderResponse.createRenderURL() %>"
+			/>
+		</liferay-frontend:management-bar-filters>
 
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= portletURL %>"
-			selectedDisplayStyle="<%= displayStyle %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-buttons>
+			<liferay-frontend:management-bar-display-buttons
+				displayViews='<%= new String[] {"list"} %>'
+				portletURL="<%= portletURL %>"
+				selectedDisplayStyle="<%= displayStyle %>"
+			/>
+		</liferay-frontend:management-bar-buttons>
 
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-random" id="mergeSelectedTags" />
+		<liferay-frontend:management-bar-action-buttons>
+			<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-random" id="mergeSelectedTags" />
 
-		<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-trash" id="deleteSelectedTags" />
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
+			<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-trash" id="deleteSelectedTags" />
+		</liferay-frontend:management-bar-action-buttons>
+	</liferay-frontend:management-bar>
+</c:if>
 
 <aui:form cssClass="container-fluid-1280" name="fm">
 	<aui:input name="deleteTagIds" type="hidden" />
 
 	<liferay-ui:search-container
-		emptyResultsMessage="there-are-no-tags.-you-can-add-a-tag-by-clicking-the-plus-button-on-the-right-bottom-corner"
 		id="assetTags"
-		rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
+		searchContainer="<%= tagsSearchContainer %>"
 	>
-
-		<liferay-ui:search-container-results>
-
-			<%
-			String keywords = ParamUtil.getString(request, "keywords", null);
-
-			if (Validator.isNotNull(keywords)) {
-				keywords = StringUtil.quote(keywords, StringPool.PERCENT);
-			}
-
-			OrderByComparator<AssetTag> orderByComparator = null;
-
-			boolean orderByAsc = false;
-
-			if (orderByType.equals("asc")) {
-				orderByAsc = true;
-			}
-
-			if (orderByCol.equals("name")) {
-				orderByComparator = new AssetTagNameComparator(orderByAsc);
-			}
-			else if (orderByCol.equals("usages")) {
-				orderByComparator = new AssetTagAssetCountComparator(orderByAsc);
-			}
-
-			searchContainer.setOrderByCol(orderByCol);
-			searchContainer.setOrderByComparator(orderByComparator);
-			searchContainer.setOrderByType(orderByType);
-
-			total = AssetTagServiceUtil.getTagsCount(scopeGroupId, keywords);
-
-			searchContainer.setTotal(total);
-
-			results = AssetTagServiceUtil.getTags(scopeGroupId, keywords, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-
-			searchContainer.setResults(results);
-			%>
-
-		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portlet.asset.model.AssetTag"

@@ -229,10 +229,11 @@ public class SchedulerEngineHelperUtil {
 	}
 
 	public static String register(
-		MessageListener messageListener, SchedulerEntry schedulerEntry) {
+		MessageListener messageListener, SchedulerEntry schedulerEntry,
+		String destinationName) {
 
 		return getSchedulerEngineHelper().register(
-			messageListener, schedulerEntry);
+			messageListener, schedulerEntry, destinationName);
 	}
 
 	public static void resume(String groupName, StorageType storageType)

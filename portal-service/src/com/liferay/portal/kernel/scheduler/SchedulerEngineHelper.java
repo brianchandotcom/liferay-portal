@@ -119,7 +119,8 @@ public interface SchedulerEngineHelper {
 		throws SchedulerException;
 
 	public String register(
-		MessageListener messageListener, SchedulerEntry schedulerEntry);
+		MessageListener messageListener, SchedulerEntry schedulerEntry,
+		String destinationName);
 
 	public void resume(String groupName, StorageType storageType)
 		throws SchedulerException;

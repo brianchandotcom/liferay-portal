@@ -18,4 +18,5 @@
 	date="<%= thread.getLastPostDate() %>"
 	name="last-post"
 	property="lastPostByUserId"
+	userId="<%= thread.getLastPostByUserId() %>"
 />

@@ -18,53 +18,55 @@
 	<#assign name = fileJSONObject.getString("name")>
 </#if>
 
-<@aui["field-wrapper"] data=data>
-	<div class="hide" id="${portletNamespace}${namespacedFieldName}UploadContainer"></div>
+<div class="lfr-ddm-field-group">
+	<@aui["field-wrapper"] data=data>
+		<div class="hide" id="${portletNamespace}${namespacedFieldName}UploadContainer"></div>
 
-	<div class="hide" id="${portletNamespace}${namespacedFieldName}PreviewContainer">
-		<a href="${themeDisplay.getPathContext()}${imageData}">
-			<img src="${themeDisplay.getPathContext()}${imageData}" />
-		</a>
-	</div>
+		<div class="hide" id="${portletNamespace}${namespacedFieldName}PreviewContainer">
+			<a href="${themeDisplay.getPathContext()}${imageData}">
+				<img src="${themeDisplay.getPathContext()}${imageData}" />
+			</a>
+		</div>
 
-	<@aui.input helpMessage=escape(fieldStructure.tip) inlineField=true label=escape(label) name="${namespacedFieldName}Title" readonly="readonly" type="text" value=(name?has_content)?string(name, languageUtil.get(locale, "drag-file-here"))>
-		<#if required>
-			<@aui.validator name="required" />
-		</#if>
-	</@aui.input>
+		<@aui.input helpMessage=escape(fieldStructure.tip) inlineField=true label=escape(label) name="${namespacedFieldName}Title" readonly="readonly" type="text" value=(name?has_content)?string(name, languageUtil.get(locale, "drag-file-here"))>
+			<#if required>
+				<@aui.validator name="required" />
+			</#if>
+		</@aui.input>
 
-	<@aui.input
-		name=namespacedFieldName
-		type="hidden"
-		value=fieldRawValue
-	/>
-
-	<@aui["button-row"]>
-		<@aui.button
-			cssClass="select-button"
-			id="${namespacedFieldName}SelectButton"
-			value="choose-from-document-library"
+		<@aui.input
+			name=namespacedFieldName
+			type="hidden"
+			value=fieldRawValue
 		/>
 
-		<@aui.button
-			cssClass="clear-button ${(imageData?has_content)?string('', 'hide')}"
-			id="${namespacedFieldName}ClearButton"
-			value="clear"
-		/>
+		<@aui["button-row"]>
+			<@aui.button
+				cssClass="select-button"
+				id="${namespacedFieldName}SelectButton"
+				value="choose-from-document-library"
+			/>
 
-		<@aui.button
-			cssClass="preview-button ${(imageData?has_content)?string('', 'hide')}"
-			id="${namespacedFieldName}PreviewButton"
-			value="preview"
+			<@aui.button
+				cssClass="clear-button ${(imageData?has_content)?string('', 'hide')}"
+				id="${namespacedFieldName}ClearButton"
+				value="clear"
+			/>
+
+			<@aui.button
+				cssClass="preview-button ${(imageData?has_content)?string('', 'hide')}"
+				id="${namespacedFieldName}PreviewButton"
+				value="preview"
+			/>
+		</@>
+
+		<@aui.input
+			label="image-description"
+			name="${namespacedFieldName}Alt"
+			type="text"
+			value="${alt}"
 		/>
 	</@>
 
-	<@aui.input
-		label="image-description"
-		name="${namespacedFieldName}Alt"
-		type="text"
-		value="${alt}"
-	/>
-
 	${fieldStructure.children}
-</@>
+</div>

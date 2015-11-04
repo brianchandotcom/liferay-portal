@@ -16,6 +16,7 @@ package com.liferay.journal.util;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.Fields;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.xml.Document;
 
 import java.util.Locale;
@@ -30,10 +31,10 @@ public interface JournalConverter {
 		throws Exception;
 
 	public Fields getDDMFields(DDMStructure ddmStructure, Document document)
-		throws Exception;
+		throws PortalException;
 
 	public Fields getDDMFields(DDMStructure ddmStructure, String content)
-		throws Exception;
+		throws PortalException;
 
 	public String getDDMXSD(String journalXSD) throws Exception;
 

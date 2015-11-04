@@ -37,7 +37,7 @@ for (JournalFolder curFolder : folders) {
 	}
 }
 
-JournalArticle article = ActionUtil.getArticle(request);
+JournalArticle article = journalDisplayContext.getArticle();
 
 List<JournalArticle> articles = null;
 

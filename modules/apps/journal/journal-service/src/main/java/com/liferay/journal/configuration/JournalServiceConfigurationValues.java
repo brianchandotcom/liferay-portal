@@ -221,7 +221,9 @@ public class JournalServiceConfigurationValues {
 
 	public static final boolean SYNC_CONTENT_SEARCH_ON_STARTUP =
 		GetterUtil.getBoolean(
-			JournalServiceConfigurationKeys.SYNC_CONTENT_SEARCH_ON_STARTUP);
+			JournalServiceConfigurationUtil.get(
+				JournalServiceConfigurationKeys.
+					SYNC_CONTENT_SEARCH_ON_STARTUP));
 
 	public static final long TERMS_OF_USE_JOURNAL_ARTICLE_GROUP_ID =
 		GetterUtil.getLong(

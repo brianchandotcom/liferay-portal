@@ -188,7 +188,7 @@ public class QuartzSchedulerEngineTest {
 			TimeUnit.SECOND);
 
 		_quartzSchedulerEngine.schedule(
-			trigger, StringPool.BLANK, _TEST_DESTINATION_NAME, null,
+			trigger, StringPool.BLANK, _TEST_DESTINATION_NAME, new Message(),
 			StorageType.MEMORY);
 
 		schedulerResponses = _quartzSchedulerEngine.getScheduledJobs();
@@ -308,7 +308,7 @@ public class QuartzSchedulerEngineTest {
 			null, _DEFAULT_INTERVAL, TimeUnit.SECOND);
 
 		_quartzSchedulerEngine.schedule(
-			trigger, StringPool.BLANK, _TEST_DESTINATION_NAME, null,
+			trigger, StringPool.BLANK, _TEST_DESTINATION_NAME, new Message(),
 			StorageType.MEMORY);
 
 		schedulerResponses = _quartzSchedulerEngine.getScheduledJobs(
@@ -332,7 +332,7 @@ public class QuartzSchedulerEngineTest {
 			null, _DEFAULT_INTERVAL, TimeUnit.SECOND);
 
 		_quartzSchedulerEngine.schedule(
-			trigger, StringPool.BLANK, _TEST_DESTINATION_NAME, null,
+			trigger, StringPool.BLANK, _TEST_DESTINATION_NAME, new Message(),
 			StorageType.MEMORY);
 
 		schedulerResponses = _quartzSchedulerEngine.getScheduledJobs(
@@ -459,7 +459,7 @@ public class QuartzSchedulerEngineTest {
 			TimeUnit.SECOND);
 
 		_quartzSchedulerEngine.schedule(
-			trigger, StringPool.BLANK, _TEST_DESTINATION_NAME, null,
+			trigger, StringPool.BLANK, _TEST_DESTINATION_NAME, new Message(),
 			StorageType.MEMORY);
 
 		SchedulerResponse schedulerResponse =

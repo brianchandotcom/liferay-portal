@@ -943,7 +943,7 @@
 				<then>
 					<var name="key_userScreenName" value="${userScreenName}" />
 
-					<execute function="Check" locator1="Checkbox#CHECK_ALL_NAME" />
+					<execute function="Check" locator1="Checkbox#SELECT_ALL" />
 
 					<execute function="AssertClickNoError" locator1="Button#DEACTIVATE" value1="Deactivate" />
 
@@ -953,9 +953,9 @@
 				</then>
 			</elseif>
 			<elseif>
-				<condition function="IsElementPresent" locator1="Checkbox#CHECK_ALL_NAME" />
+				<condition function="IsElementPresent" locator1="Checkbox#SELECT_ALL" />
 				<then>
-					<execute function="Check" locator1="Checkbox#CHECK_ALL_NAME" />
+					<execute function="Check" locator1="Checkbox#SELECT_ALL" />
 
 					<execute function="AssertClickNoError" locator1="Button#DEACTIVATE" value1="Deactivate" />
 
@@ -978,9 +978,9 @@
 			<then>
 				<execute function="Select" locator1="Select#USER_STATUS" value1="Inactive" />
 				<if>
-					<condition function="IsElementPresent" locator1="Checkbox#CHECK_ALL_NAME" />
+					<condition function="IsElementPresent" locator1="Checkbox#SELECT_ALL" />
 					<then>
-						<execute function="Check" locator1="Checkbox#CHECK_ALL_NAME" />
+						<execute function="Check" locator1="Checkbox#SELECT_ALL" />
 						<execute function="AssertClickNoError" locator1="Button#DELETE" value1="Delete" />
 						<execute function="Confirm" value1="Are you sure you want to permanently delete the selected users?" />
 						<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />

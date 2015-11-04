@@ -5,7 +5,7 @@
 	<command name="addAllMembersCP">
 		<execute function="AssertClick" locator1="SiteMemberships#TOOLBAR_ADD_MEMBERS" value1="Add Members" />
 		<execute function="AssertClick" locator1="MenuItem#USER" value1="User" />
-		<execute function="Check" locator1="Checkbox#CHECK_ALL_NAME" />
+		<execute function="Check" locator1="Checkbox#SELECT_ALL" />
 		<execute function="Click" locator1="Button#SAVE" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
@@ -858,7 +858,7 @@
 		<if>
 			<condition function="IsElementNotPresent" locator1="Message#EMPTY_INFO" />
 			<then>
-				<execute function="Check#checkAll" locator1="Checkbox#CHECK_ALL_NAME" />
+				<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
 				<execute function="ClickNoError" locator1="Icon#DELETE" value1="Delete" />
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />

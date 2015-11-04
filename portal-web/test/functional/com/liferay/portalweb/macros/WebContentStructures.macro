@@ -277,7 +277,7 @@
 		<while>
 			<condition function="IsElementNotPresent" locator1="Message#EMPTY_INFO" />
 			<then>
-				<execute function="Check#checkAll" locator1="Checkbox#CHECK_ALL_NAME" />
+				<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
 				<execute function="ClickNoError" locator1="Icon#DELETE" />
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
@@ -290,7 +290,7 @@
 		<while>
 			<condition function="IsElementNotPresent" locator1="Message#EMPTY_INFO" />
 			<then>
-				<execute function="Check#checkAll" locator1="Checkbox#CHECK_ALL_NAME" />
+				<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
 				<execute function="ClickNoError" locator1="Icon#DELETE" />
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />

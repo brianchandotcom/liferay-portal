@@ -17,22 +17,31 @@
 <%@ include file="/init.jsp" %>
 
 <%
-Group group = layoutsAdminDisplayContext.getGroup();
+boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
+long selPlid = ParamUtil.getLong(request, "selPlid");
+
+Layout selLayout = LayoutLocalServiceUtil.fetchLayout(selPlid);
+
+Group selGroup = themeDisplay.getScopeGroup();
+
+Group stagingGroup = StagingUtil.getStagingGroup(selGroup.getGroupId());
+Group liveGroup = StagingUtil.getLiveGroup(selGroup.getGroupId());
+
+Group group = stagingGroup;
+
+if (group == null) {
+	group = liveGroup;
+}
 %>
 
 <c:if test="<%= !group.isLayoutPrototype() %>">
-
-	<%
-	Group stagingGroup = layoutsAdminDisplayContext.getStagingGroup();
-	%>
-
-	<c:if test="<%= stagingGroup.isStaged() && (themeDisplay.getScopeGroupId() == stagingGroup.getGroupId()) %>">
+	<c:if test="<%= stagingGroup.isStaged() && (selGroup.getGroupId() == stagingGroup.getGroupId()) %>">
 
 		<%
 		long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
 
 		if (layoutSetBranchId <= 0) {
-			LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
+			LayoutSet selLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(group.getGroupId(), privateLayout);
 
 			layoutSetBranchId = StagingUtil.getRecentLayoutSetBranchId(user, selLayoutSet.getLayoutSetId());
 		}
@@ -45,13 +54,13 @@ Group group = layoutsAdminDisplayContext.getGroup();
 
 		if (layoutSetBranch == null) {
 			try {
-				layoutSetBranch = LayoutSetBranchLocalServiceUtil.getMasterLayoutSetBranch(layoutsAdminDisplayContext.getStagingGroupId(), layoutsAdminDisplayContext.isPrivateLayout());
+				layoutSetBranch = LayoutSetBranchLocalServiceUtil.getMasterLayoutSetBranch(stagingGroup.getGroupId(), privateLayout);
 			}
 			catch (NoSuchLayoutSetBranchException nslsbe) {
 			}
 		}
 
-		List<LayoutSetBranch> layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(layoutsAdminDisplayContext.getStagingGroupId(), layoutsAdminDisplayContext.isPrivateLayout());
+		List<LayoutSetBranch> layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(stagingGroup.getGroupId(), privateLayout);
 		%>
 
 		<c:choose>
@@ -77,9 +86,8 @@ Group group = layoutsAdminDisplayContext.getGroup();
 										PortletURL layoutSetBranchURL = PortalUtil.getControlPanelPortletURL(request, LayoutAdminPortletKeys.GROUP_PAGES, PortletRequest.RENDER_PHASE);
 
 										layoutSetBranchURL.setParameter("mvcPath", "/view.jsp");
-										layoutSetBranchURL.setParameter("redirect", String.valueOf(layoutsAdminDisplayContext.getRedirectURL()));
 										layoutSetBranchURL.setParameter("groupId", String.valueOf(curLayoutSetBranch.getGroupId()));
-										layoutSetBranchURL.setParameter("privateLayout", String.valueOf(layoutsAdminDisplayContext.isPrivateLayout()));
+										layoutSetBranchURL.setParameter("privateLayout", String.valueOf(privateLayout));
 										layoutSetBranchURL.setParameter("layoutSetBranchId", String.valueOf(curLayoutSetBranch.getLayoutSetBranchId()));
 									%>
 
@@ -105,10 +113,6 @@ Group group = layoutsAdminDisplayContext.getGroup();
 
 	<%
 	String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
-
-	Group liveGroup = layoutsAdminDisplayContext.getLiveGroup();
-
-	Group selGroup = layoutsAdminDisplayContext.getSelGroup();
 	%>
 
 	<c:if test="<%= !selGroup.isLayoutSetPrototype() %>">
@@ -117,8 +121,7 @@ Group group = layoutsAdminDisplayContext.getGroup();
 		PortletURL editPublicLayoutURL = PortalUtil.getControlPanelPortletURL(request, LayoutAdminPortletKeys.GROUP_PAGES, 0, PortletRequest.RENDER_PHASE);
 
 		editPublicLayoutURL.setParameter("privateLayout", Boolean.FALSE.toString());
-		editPublicLayoutURL.setParameter("redirect", layoutsAdminDisplayContext.getRedirect());
-		editPublicLayoutURL.setParameter("groupId", String.valueOf(layoutsAdminDisplayContext.getLiveGroupId()));
+		editPublicLayoutURL.setParameter("groupId", String.valueOf(liveGroup.getLiveGroupId()));
 		editPublicLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
 		%>
 
@@ -128,7 +131,7 @@ Group group = layoutsAdminDisplayContext.getGroup();
 			privateLayout="<%= false %>"
 			rootNodeName="<%= liveGroup.getLayoutRootNodeName(false, themeDisplay.getLocale()) %>"
 			selectedLayoutIds="<%= selectedLayoutIds %>"
-			selPlid="<%= layoutsAdminDisplayContext.getSelPlid() %>"
+			selPlid="<%= selPlid %>"
 			treeId="publicLayoutsTree"
 		/>
 	</c:if>
@@ -137,8 +140,7 @@ Group group = layoutsAdminDisplayContext.getGroup();
 	PortletURL editPrivateLayoutURL = PortalUtil.getControlPanelPortletURL(request, LayoutAdminPortletKeys.GROUP_PAGES, 0, PortletRequest.RENDER_PHASE);
 
 	editPrivateLayoutURL.setParameter("privateLayout", Boolean.TRUE.toString());
-	editPrivateLayoutURL.setParameter("redirect", layoutsAdminDisplayContext.getRedirect());
-	editPrivateLayoutURL.setParameter("groupId", String.valueOf(layoutsAdminDisplayContext.getLiveGroupId()));
+	editPrivateLayoutURL.setParameter("groupId", String.valueOf(liveGroup.getLiveGroupId()));
 	editPrivateLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
 	%>
 
@@ -148,15 +150,11 @@ Group group = layoutsAdminDisplayContext.getGroup();
 		privateLayout="<%= true %>"
 		rootNodeName="<%= liveGroup.getLayoutRootNodeName(true, themeDisplay.getLocale()) %>"
 		selectedLayoutIds="<%= selectedLayoutIds %>"
-		selPlid="<%= layoutsAdminDisplayContext.getSelPlid() %>"
+		selPlid="<%= selPlid %>"
 		treeId="privateLayoutsTree"
 	/>
 
 	<%
-	Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
-
-	boolean privateLayout = layoutsAdminDisplayContext.isPrivateLayout();
-
 	if (selGroup.isLayoutSetPrototype()) {
 		privateLayout = true;
 	}

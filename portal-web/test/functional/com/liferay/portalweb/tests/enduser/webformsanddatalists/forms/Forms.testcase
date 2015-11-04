@@ -223,13 +223,13 @@
 		</execute>
 
 		<execute macro="FormFields#editOptionsRow">
-			<var name="optionLabel" value="Option 1" />
-			<var name="optionValue" value="Option 1 Value" />
+			<var name="optionValue" value="Option 1" />
+			<var name="optionName" value="Option1" />
 		</execute>
 
 		<execute macro="FormFields#editOptionsRow">
-			<var name="optionLabel" value="Option 2" />
-			<var name="optionValue" value="Option 2 Value" />
+			<var name="optionValue" value="Option 2" />
+			<var name="optionName" value="Option2" />
 			<var name="rowNumber" value="2" />
 		</execute>
 
@@ -251,13 +251,13 @@
 		</execute>
 
 		<execute macro="FormFields#editOptionsRow">
-			<var name="optionLabel" value="Select 1" />
-			<var name="optionValue" value="Select 1 Value" />
+			<var name="optionValue" value="Select 1" />
+			<var name="optionName" value="Select1" />
 		</execute>
 
 		<execute macro="FormFields#editOptionsRow">
-			<var name="optionLabel" value="Select 2" />
-			<var name="optionValue" value="Select 2 Value" />
+			<var name="optionValue" value="Select 2" />
+			<var name="optionName" value="Select2" />
 			<var name="rowNumber" value="2" />
 		</execute>
 
@@ -484,13 +484,13 @@
 		</execute>
 
 		<execute macro="FormFields#editOptionsRow">
-			<var name="optionLabel" value="Option 1" />
-			<var name="optionValue" value="Option 1 Value" />
+			<var name="optionValue" value="Option 1" />
+			<var name="optionName" value="Option1" />
 		</execute>
 
 		<execute macro="FormFields#editOptionsRow">
-			<var name="optionLabel" value="Option 2" />
-			<var name="optionValue" value="Option 2 Value" />
+			<var name="optionValue" value="Option 2" />
+			<var name="optionName" value="Option2" />
 			<var name="rowNumber" value="2" />
 		</execute>
 

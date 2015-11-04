@@ -19,7 +19,6 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.FieldConstants;
 import com.liferay.dynamic.data.mapping.storage.Fields;
-import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
@@ -31,7 +30,6 @@ import com.liferay.journal.service.JournalArticleServiceUtil;
 import com.liferay.journal.service.JournalFeedServiceUtil;
 import com.liferay.journal.service.JournalFolderServiceUtil;
 import com.liferay.journal.service.permission.JournalPermission;
-import com.liferay.journal.util.JournalConverterUtil;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.journal.util.impl.JournalUtil;
 import com.liferay.journal.web.portlet.JournalPortlet;
@@ -376,20 +374,6 @@ public class ActionUtil {
 		return getArticles(request);
 	}
 
-	public static Object[] getContentAndImages(
-			DDMStructure ddmStructure, ServiceContext serviceContext)
-		throws Exception {
-
-		Fields fields = DDMUtil.getFields(
-			ddmStructure.getStructureId(), serviceContext);
-
-		String content = JournalConverterUtil.getContent(ddmStructure, fields);
-
-		Map<String, byte[]> images = getImages(content, fields);
-
-		return new Object[] {content, images};
-	}
-
 	public static JournalFeed getFeed(HttpServletRequest request)
 		throws Exception {
 
@@ -476,6 +460,57 @@ public class ActionUtil {
 		return getFolders(request);
 	}
 
+	public static Map<String, byte[]> getImages(String content, Fields fields)
+		throws Exception {
+
+		Map<String, byte[]> images = new HashMap<>();
+
+		for (Field field : fields) {
+			String dataType = field.getDataType();
+
+			if (!dataType.equals(FieldConstants.IMAGE)) {
+				continue;
+			}
+
+			Map<Locale, List<Serializable>> valuesMap = field.getValuesMap();
+
+			for (Locale locale : valuesMap.keySet()) {
+				List<Serializable> values = valuesMap.get(locale);
+
+				for (int i = 0; i < values.size(); i++) {
+					StringBundler sb = new StringBundler(6);
+
+					sb.append(
+						getElementInstanceId(content, field.getName(), i));
+					sb.append(StringPool.UNDERLINE);
+					sb.append(field.getName());
+					sb.append(StringPool.UNDERLINE);
+					sb.append(i);
+					sb.append(StringPool.UNDERLINE);
+					sb.append(LanguageUtil.getLanguageId(locale));
+					JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+						(String)values.get(i));
+
+					String uuid = jsonObject.getString("uuid");
+					long groupId = jsonObject.getLong("groupId");
+
+					if (Validator.isNotNull(uuid) && (groupId > 0)) {
+						FileEntry fileEntry =
+							DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+								uuid, groupId);
+
+						byte[] bytes = FileUtil.getBytes(
+							fileEntry.getContentStream());
+
+						images.put(sb.toString(), bytes);
+					}
+				}
+			}
+		}
+
+		return images;
+	}
+
 	public static JournalArticle getPreviewArticle(
 			PortletRequest portletRequest)
 		throws Exception {
@@ -549,58 +584,6 @@ public class ActionUtil {
 		Element dynamicElementElement = (Element)nodes.get(index);
 
 		return dynamicElementElement.attributeValue("instance-id");
-	}
-
-	protected static Map<String, byte[]> getImages(
-			String content, Fields fields)
-		throws Exception {
-
-		Map<String, byte[]> images = new HashMap<>();
-
-		for (Field field : fields) {
-			String dataType = field.getDataType();
-
-			if (!dataType.equals(FieldConstants.IMAGE)) {
-				continue;
-			}
-
-			Map<Locale, List<Serializable>> valuesMap = field.getValuesMap();
-
-			for (Locale locale : valuesMap.keySet()) {
-				List<Serializable> values = valuesMap.get(locale);
-
-				for (int i = 0; i < values.size(); i++) {
-					StringBundler sb = new StringBundler(6);
-
-					sb.append(
-						getElementInstanceId(content, field.getName(), i));
-					sb.append(StringPool.UNDERLINE);
-					sb.append(field.getName());
-					sb.append(StringPool.UNDERLINE);
-					sb.append(i);
-					sb.append(StringPool.UNDERLINE);
-					sb.append(LanguageUtil.getLanguageId(locale));
-					JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-						(String)values.get(i));
-
-					String uuid = jsonObject.getString("uuid");
-					long groupId = jsonObject.getLong("groupId");
-
-					if (Validator.isNotNull(uuid) && (groupId > 0)) {
-						FileEntry fileEntry =
-							DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
-								uuid, groupId);
-
-						byte[] bytes = FileUtil.getBytes(
-							fileEntry.getContentStream());
-
-						images.put(sb.toString(), bytes);
-					}
-				}
-			}
-		}
-
-		return images;
 	}
 
 	protected static String getLanguageId(

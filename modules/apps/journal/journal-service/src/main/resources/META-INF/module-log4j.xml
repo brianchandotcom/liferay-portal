@@ -22,7 +22,7 @@
 		<priority value="INFO" />
 	</category>
 
-	<category name="com.liferay.journal.util.JournalContentUtil">
+	<category name="com.liferay.journal.util.JournalContent">
 		<priority value="ERROR" />
 	</category>
 

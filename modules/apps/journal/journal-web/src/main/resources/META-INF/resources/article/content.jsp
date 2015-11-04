@@ -37,7 +37,9 @@ if (article != null) {
 	String content = article.getContent();
 
 	if (Validator.isNotNull(content)) {
-		Fields fields = JournalConverterUtil.getDDMFields(ddmStructure, content);
+		JournalConverter journalConverter = (JournalConverter)request.getAttribute(JournalWebKeys.JOURNAL_CONVERTER);
+
+		Fields fields = journalConverter.getDDMFields(ddmStructure, content);
 
 		if (fields != null) {
 			ddmFormValues = FieldsToDDMFormValuesConverterUtil.convert(ddmStructure, fields);

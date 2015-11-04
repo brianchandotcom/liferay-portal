@@ -19,6 +19,8 @@ import com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException;
 import com.liferay.dynamic.data.mapping.exception.StorageFieldRequiredException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.storage.Fields;
+import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.constants.JournalWebKeys;
@@ -52,6 +54,8 @@ import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.service.JournalContentSearchLocalService;
 import com.liferay.journal.service.JournalFeedService;
 import com.liferay.journal.service.JournalFolderService;
+import com.liferay.journal.util.JournalContent;
+import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.util.impl.JournalUtil;
 import com.liferay.journal.web.asset.JournalArticleAssetRenderer;
 import com.liferay.journal.web.portlet.action.ActionUtil;
@@ -379,6 +383,12 @@ public class JournalPortlet extends MVCPortlet {
 				JournalWebKeys.ITEM_SELECTOR, _itemSelector);
 		}
 
+		renderRequest.setAttribute(
+			JournalWebKeys.JOURNAL_CONTENT, _journalContent);
+
+		renderRequest.setAttribute(
+			JournalWebKeys.JOURNAL_CONVERTER, _journalConverter);
+
 		super.render(renderRequest, renderResponse);
 	}
 
@@ -459,7 +469,7 @@ public class JournalPortlet extends MVCPortlet {
 		}
 		else if (resourceID.equals("rss")) {
 			try {
-				byte[] xml = JournalRSSUtil.getRSS(
+				byte[] xml = _journalRSSUtil.getRSS(
 					resourceRequest, resourceResponse);
 
 				ServletResponseUtil.sendFile(
@@ -603,8 +613,17 @@ public class JournalPortlet extends MVCPortlet {
 			PortalUtil.getClassNameId(JournalArticle.class), ddmStructureKey,
 			true);
 
-		Object[] contentAndImages = ActionUtil.getContentAndImages(
-			ddmStructure, serviceContext);
+		Fields fields = DDMUtil.getFields(
+			ddmStructure.getStructureId(), serviceContext);
+
+		String structureContent = _journalConverter.getContent(
+			ddmStructure, fields);
+
+		Map<String, byte[]> structureImages = ActionUtil.getImages(
+			structureContent, fields);
+
+		Object[] contentAndImages =
+			new Object[] {structureContent, structureImages};
 
 		String content = (String)contentAndImages[0];
 		Map<String, byte[]> images =
@@ -1266,10 +1285,20 @@ public class JournalPortlet extends MVCPortlet {
 	}
 
 	@Reference
+	protected void setJournalContent(JournalContent journalContent) {
+		_journalContent = journalContent;
+	}
+
+	@Reference
 	protected void setJournalContentSearchLocalService(
 		JournalContentSearchLocalService journalContentSearchLocalService) {
 
 		_journalContentSearchLocalService = journalContentSearchLocalService;
+	}
+
+	@Reference
+	protected void setJournalConverter(JournalConverter journalConverter) {
+		_journalConverter = journalConverter;
 	}
 
 	@Reference
@@ -1284,6 +1313,11 @@ public class JournalPortlet extends MVCPortlet {
 		JournalFolderService journalFolderService) {
 
 		_journalFolderService = journalFolderService;
+	}
+
+	@Reference
+	protected void setJournalRSSUtil(JournalRSSUtil journalRSSUtil) {
+		_journalRSSUtil = journalRSSUtil;
 	}
 
 	@Reference
@@ -1310,10 +1344,18 @@ public class JournalPortlet extends MVCPortlet {
 		_journalArticleService = null;
 	}
 
+	protected void unsetJournalContent(JournalContent journalContent) {
+		_journalContent = null;
+	}
+
 	protected void unsetJournalContentSearchLocalService(
 		JournalContentSearchLocalService journalContentSearchLocalService) {
 
 		_journalContentSearchLocalService = null;
+	}
+
+	protected void unsetJournalConverter(JournalConverter journalConverter) {
+		_journalConverter = null;
 	}
 
 	protected void unsetJournalFeedService(
@@ -1326,6 +1368,10 @@ public class JournalPortlet extends MVCPortlet {
 		JournalFolderService journalFolderService) {
 
 		_journalFolderService = null;
+	}
+
+	protected void unsetJournalRSSUtil(JournalRSSUtil journalRSSUtil) {
+		_journalRSSUtil = null;
 	}
 
 	protected void unsetLayoutLocalService(
@@ -1364,9 +1410,12 @@ public class JournalPortlet extends MVCPortlet {
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private ItemSelector _itemSelector;
 	private JournalArticleService _journalArticleService;
+	private JournalContent _journalContent;
 	private JournalContentSearchLocalService _journalContentSearchLocalService;
+	private JournalConverter _journalConverter;
 	private JournalFeedService _journalFeedService;
 	private JournalFolderService _journalFolderService;
+	private JournalRSSUtil _journalRSSUtil;
 	private LayoutLocalService _layoutLocalService;
 	private TrashEntryService _trashEntryService;
 

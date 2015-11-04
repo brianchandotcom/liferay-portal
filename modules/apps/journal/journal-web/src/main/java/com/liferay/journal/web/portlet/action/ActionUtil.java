@@ -254,7 +254,7 @@ public class ActionUtil {
 	}
 
 	public static JournalArticle getArticle(HttpServletRequest request)
-		throws Exception {
+		throws PortalException {
 
 		String actionName = ParamUtil.getString(
 			request, ActionRequest.ACTION_NAME);

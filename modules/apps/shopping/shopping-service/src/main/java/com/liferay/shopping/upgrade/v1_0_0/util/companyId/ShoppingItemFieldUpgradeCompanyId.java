@@ -12,26 +12,23 @@
  * details.
  */
 
-package com.liferay.shopping.upgrade.v1_0_0;
+package com.liferay.shopping.upgrade.v1_0_0.util.companyId;
 
 import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdInTable;
-import com.liferay.shopping.upgrade.v1_0_0.util.companyId.ShoppingItemFieldUpgradeCompanyId;
-import com.liferay.shopping.upgrade.v1_0_0.util.companyId.ShoppingItemPriceUpgradeCompanyId;
-import com.liferay.shopping.upgrade.v1_0_0.util.companyId.ShoppingOrderItemUpgradeCompanyId;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Cristina González
  */
-public class UpgradeCompanyId
-	extends com.liferay.portal.upgrade.util.UpgradeCompanyId {
+public class ShoppingItemFieldUpgradeCompanyId
+	implements UpgradeCompanyIdInTable {
 
 	@Override
-	protected UpgradeCompanyIdInTable[] getUpgradeCompanyIdInTable() {
-		return new UpgradeCompanyIdInTable[] {
-			new ShoppingItemFieldUpgradeCompanyId(),
-			new ShoppingItemPriceUpgradeCompanyId(),
-			new ShoppingOrderItemUpgradeCompanyId()
-		};
+	public String getTableName() {
+		return "ShoppingItemField";
+	}
+
+	@Override
+	public void upgradeProcess() {
 	}
 
 }

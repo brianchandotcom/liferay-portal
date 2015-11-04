@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.portlet.configuration.icon.locator.PortletConfigurationIconLocator;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -82,14 +83,20 @@ public class PortletConfigurationIconTracker {
 			String path = portletConfigurationIconLocator.getPath(
 				portletRequest);
 
-			if (Validator.isNotNull(path)) {
+			List<String> defaultViews =
+				portletConfigurationIconLocator.getDefaultViews(portletId);
+
+			String[] defaultViewsArray = ArrayUtil.toStringArray(defaultViews);
+
+			if (Validator.isNotNull(path) &&
+				!ArrayUtil.contains(defaultViewsArray, path)) {
+
 				paths.add(path);
 
 				continue;
 			}
 
-			paths.addAll(
-				portletConfigurationIconLocator.getDefaultViews(portletId));
+			paths.addAll(defaultViews);
 		}
 
 		return paths;

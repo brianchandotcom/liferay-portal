@@ -21,17 +21,19 @@
 <@aui["field-wrapper"] data=data>
 	<div class="hide" id="${portletNamespace}${namespacedFieldName}UploadContainer"></div>
 
-	<@aui.input helpMessage=escape(fieldStructure.tip) inlineField=true label=escape(label) name="${namespacedFieldName}Title" readonly="readonly" type="text" value=(fileEntryTitle?has_content)?string(fileEntryTitle, '')>
+	<@aui.input
+		helpMessage=escape(fieldStructure.tip)
+		inlineField=true label=escape(label)
+		name="${namespacedFieldName}Title"
+		readonly="readonly" type="text"
+		value=(fileEntryTitle?has_content)?string(fileEntryTitle, '')
+	/>
+
+	<@aui.input name=namespacedFieldName type="hidden" value=fieldRawValue>
 		<#if required>
 			<@aui.validator name="required" />
 		</#if>
-	</@aui.input>
-
-	<@aui.input
-		name=namespacedFieldName
-		type="hidden"
-		value=fieldRawValue
-	/>
+	</@>
 
 	<@aui["button-row"]>
 		<@aui.button

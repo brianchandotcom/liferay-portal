@@ -30,11 +30,17 @@ import java.sql.ResultSet;
 public class VerifyWorkflow extends VerifyProcess {
 
 	protected void deleteOrphanedWorkflowDefinitionLinks() throws Exception {
-		String sql = "select distinct classNameId from WorkflowDefinitionLink";
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
 
-		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
-			PreparedStatement ps = con.prepareStatement(sql);
-			ResultSet rs = ps.executeQuery()) {
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select distinct classNameId from WorkflowDefinitionLink");
+
+			rs = ps.executeQuery();
 
 			while (rs.next()) {
 				long classNameId = rs.getLong("classNameId");
@@ -58,15 +64,18 @@ public class VerifyWorkflow extends VerifyProcess {
 						String orphanedColumnName = orphanedAttachedModel[2];
 
 						deleteOrphanedWorkflowDefinitionLinks(
-							con, orphanedTableName, orphanedColumnName);
+							orphanedTableName, orphanedColumnName);
 					}
 				}
 			}
 		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
 	}
 
 	protected void deleteOrphanedWorkflowDefinitionLinks(
-			Connection con, String tableName, String columnName)
+			String tableName, String columnName)
 		throws Exception {
 
 		StringBundler sb = new StringBundler(6);
@@ -78,7 +87,7 @@ public class VerifyWorkflow extends VerifyProcess {
 		sb.append(tableName);
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 
-		runSQL(con, sb.toString());
+		runSQL(sb.toString());
 	}
 
 	@Override

@@ -254,7 +254,11 @@ public abstract class BaseDB implements DB {
 	public void runSQL(Connection con, String[] sqls)
 		throws IOException, SQLException {
 
-		try (Statement s = con.createStatement()) {
+		Statement s = null;
+
+		try {
+			s = con.createStatement();
+
 			for (int i = 0; i < sqls.length; i++) {
 				String sql = buildSQL(sqls[i]);
 
@@ -280,6 +284,9 @@ public abstract class BaseDB implements DB {
 				}
 			}
 		}
+		finally {
+			DataAccess.cleanUp(s);
+		}
 	}
 
 	@Override
@@ -289,8 +296,13 @@ public abstract class BaseDB implements DB {
 
 	@Override
 	public void runSQL(String[] sqls) throws IOException, SQLException {
-		try (Connection con = DataAccess.getConnection()) {
+		Connection con = DataAccess.getConnection();
+
+		try {
 			runSQL(con, sqls);
+		}
+		finally {
+			DataAccess.cleanUp(con);
 		}
 	}
 

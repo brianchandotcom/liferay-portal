@@ -65,8 +65,10 @@ public class OpenIdLoginMVCRenderCommand implements MVCRenderCommand {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (!_openId.isEnabled(themeDisplay.getCompanyId())) {
-			return "/";
+		if (!_openId.isEnabled(themeDisplay.getCompanyId()) ||
+			themeDisplay.isSignedIn()) {
+
+			return "/login.jsp";
 		}
 
 		RequestDispatcher requestDispatcher =

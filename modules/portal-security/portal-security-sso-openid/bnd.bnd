@@ -17,5 +17,7 @@ Include-Resource:\
 	@lib/httpcore.jar,\
 	@lib/nekohtml.jar,\
 	@lib/openid4java.jar,\
-	@lib/org.apache.xml.resolver.jar
+	@lib/org.apache.xml.resolver.jar,\
+	@lib/xercesImpl.jar,\
+	@lib/xml-apis.jar
 Web-ContextPath: /portal-security-sso-openid

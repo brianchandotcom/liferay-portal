@@ -1,0 +1,12 @@
+dependencies {
+	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
+	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-data-provider")
+	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-renderer")
+	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-values-factory")
+	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-io")
+	compile project(":core:osgi-service-tracker-map")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}

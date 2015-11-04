@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
@@ -57,10 +56,6 @@ public class EntriesChecker extends RowChecker {
 				WebKeys.THEME_DISPLAY);
 
 		_permissionChecker = themeDisplay.getPermissionChecker();
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		String portletName = portletDisplay.getPortletName();
 	}
 
 	@Override

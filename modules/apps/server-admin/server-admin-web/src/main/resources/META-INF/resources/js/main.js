@@ -21,6 +21,16 @@ AUI.add(
 						value: null
 					},
 
+					redirectUrl: {
+						validator: Lang.isString,
+						value: null
+					},
+
+					submitButtonSelector: {
+						validator: Lang.isString,
+						value: null
+					},
+
 					url: {
 						value: null
 					}
@@ -38,20 +48,26 @@ AUI.add(
 
 						instance._errorCount = 0;
 
-						var eventHandles = [];
+						instance._eventHandles = [];
+
+						var submitButton = instance.one(instance.get('submitButtonSelector'));
+
+						if (submitButton) {
+							instance._eventHandles.push(
+								submitButton.on(STR_CLICK, instance._submitForm, instance)
+							);
+						}
 
 						var installXugglerButton = instance.one('#installXugglerButton');
 
 						if (installXugglerButton) {
-							eventHandles.push(
+							instance._eventHandles.push(
 								installXugglerButton.on(STR_CLICK, instance._installXuggler, instance)
 							);
 
 							instance._installXugglerButton = installXugglerButton;
 
 							instance._xugglerProgressInfo = instance.one('#xugglerProgressInfo');
-
-							instance._eventHandles = eventHandles;
 						}
 					},
 
@@ -63,7 +79,21 @@ AUI.add(
 						Poller.removeListener(instance.ID);
 					},
 
-					_installXuggler: function() {
+					_addInputsFromData: function(node) {
+						var instance = this;
+
+						var form = instance.get('form');
+
+						var data = node.getData();
+
+						for (var key in data) {
+							if (data.hasOwnProperty(key)) {
+								form.append('<input id="' + instance.ns(key) + '" name="' + instance.ns(key) + '" type="hidden" value="' + data[key] + '" />');
+							}
+						}
+					},
+
+					_installXuggler: function(event) {
 						var instance = this;
 
 						var xugglerProgressInfo = instance._xugglerProgressInfo;
@@ -72,7 +102,9 @@ AUI.add(
 
 						var form = instance.get('form');
 
-						form.get(instance.ns('cmd')).val('installXuggler');
+						var currentTarget = event.currentTarget;
+
+						instance._addInputsFromData(currentTarget);
 
 						var ioRequest = A.io.request(
 							instance.get('url'),
@@ -119,6 +151,20 @@ AUI.add(
 						xugglerProgressInfo.html(message);
 
 						xugglerProgressInfo.addClass(cssClass);
+					},
+
+					_submitForm: function(event) {
+						var instance = this;
+
+						var currentTarget = event.currentTarget;
+
+						var form = instance.get('form');
+
+						form.one('#' + instance.ns('redirect')).val(instance.get('redirectURL'));
+
+						instance._addInputsFromData(currentTarget);
+
+						submitForm(form, instance.get('url'));
 					}
 				}
 			}

@@ -37,6 +37,8 @@
 			<portlet:param name="cur" value="<%= String.valueOf(cur) %>" />
 		</portlet:renderURL>
 
+		<portlet:actionURL name="/server_admin/edit_server" var="editServerURL" />
+
 		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 			<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
 			<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
@@ -52,16 +54,6 @@
 			<c:choose>
 				<c:when test='<%= tabs1.equals("server") %>'>
 					<liferay-util:include page="/server.jsp" servletContext="<%= application %>" />
-
-					<aui:script use="liferay-admin">
-						new Liferay.Portlet.Admin(
-							{
-								form: document.<portlet:namespace />fm,
-								namespace: '<portlet:namespace />',
-								url: '<portlet:actionURL name="/server_admin/edit_server" />'
-							}
-						);
-					</aui:script>
 				</c:when>
 			</c:choose>
 		</aui:form>
@@ -74,28 +66,14 @@
 			<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= String.valueOf(delta) %>" />
 		</portlet:renderURL>
 
-		<portlet:actionURL name="/server_admin/edit_server" var="editServerURL" />
-
-		<aui:script>
-			AUI.$('#<portlet:namespace />fm').on(
-				'click',
-				'.save-server-button',
-				function(event) {
-					var currentTarget = AUI.$(event.currentTarget);
-
-					var form = AUI.$('#<portlet:namespace />fm');
-
-					var data = currentTarget.data();
-
-					form.children('#<portlet:namespace />redirect').val('<%= redirectURL %>');
-
-					for (var key in data) {
-						if (data.hasOwnProperty(key)) {
-							form.append('<input id="<portlet:namespace />' + key + '" name="<portlet:namespace />' + key + '" type="hidden" value="' + data[key] + '" />');
-						}
-					};
-
-					submitForm(document.<portlet:namespace />fm, '<%= editServerURL %>');
+		<aui:script use="liferay-admin">
+			new Liferay.Portlet.Admin(
+				{
+					form: document.<portlet:namespace />fm,
+					namespace: '<portlet:namespace />',
+					redirectUrl: '<%= redirectURL %>',
+					submitButtonSelector: '.save-server-button', 
+					url: '<%= editServerURL %>'
 				}
 			);
 		</aui:script>

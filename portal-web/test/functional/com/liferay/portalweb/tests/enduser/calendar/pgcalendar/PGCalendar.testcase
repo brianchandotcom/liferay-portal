@@ -1781,8 +1781,8 @@
 		<execute macro="CalendarEvent#setDatesToday" />
 
 		<execute macro="CalendarEvent#setTimes">
-			<var name="endDateTime" value="02:00 PM" />
-			<var name="startDateTime" value="01:00 PM" />
+			<var name="endDateTime" value="10:00 AM" />
+			<var name="startDateTime" value="09:00 AM" />
 		</execute>
 
 		<execute macro="CalendarEvent#publish" />
@@ -1797,15 +1797,15 @@
 		</execute>
 
 		<execute macro="CalendarScheduler#viewEventTimesViaDialogBox">
-			<var name="endDateTime" value="2:00pm" />
-			<var name="startDateTime" value="1:00pm" />
+			<var name="endDateTime" value="10:00am" />
+			<var name="startDateTime" value="9:00am" />
 		</execute>
 
 		<execute macro="CalendarScheduler#_gotoDetailsViaDialogBox" />
 
 		<execute macro="CalendarEvent#viewTimesViaDetails">
-			<var name="endDateTime" value="02:00 PM" />
-			<var name="startDateTime" value="01:00 PM" />
+			<var name="endDateTime" value="10:00 AM" />
+			<var name="startDateTime" value="09:00 AM" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1817,8 +1817,8 @@
 		</execute>
 
 		<execute macro="CalendarEvent#viewTimes">
-			<var name="endDateTime" value="02:00 PM" />
-			<var name="startDateTime" value="01:00 PM" />
+			<var name="endDateTime" value="10:00 AM" />
+			<var name="startDateTime" value="09:00 AM" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1841,28 +1841,15 @@
 		</execute>
 
 		<execute macro="CalendarScheduler#viewEventTimesViaDialogBox">
-			<var name="endDateTime" value="9:00pm" />
-			<var name="startDateTime" value="8:00pm" />
+			<var name="endDateTime" value="pm" />
+			<var name="startDateTime" value="pm" />
 		</execute>
 
 		<execute macro="CalendarScheduler#_gotoDetailsViaDialogBox" />
 
 		<execute macro="CalendarEvent#viewTimesViaDetails">
-			<var name="endDateTime" value="09:00 PM" />
-			<var name="startDateTime" value="08:00 PM" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="CalendarScheduler#gotoEdit">
-			<var name="eventTitle" value="Calendar Event Title" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewTimes">
-			<var name="endDateTime" value="09:00 PM" />
-			<var name="startDateTime" value="08:00 PM" />
+			<var name="endDateTime" value="PM" />
+			<var name="startDateTime" value="PM" />
 		</execute>
 	</command>
 

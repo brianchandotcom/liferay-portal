@@ -110,9 +110,10 @@ public class JournalArticleAssetRendererFactory
 		}
 
 		JournalArticleAssetRenderer journalArticleAssetRenderer =
-			new JournalArticleAssetRenderer(article, _journalContent);
+			new JournalArticleAssetRenderer(article);
 
 		journalArticleAssetRenderer.setAssetRendererType(type);
+		journalArticleAssetRenderer.setJournalContent(_journalContent);
 		journalArticleAssetRenderer.setServletContext(_servletContext);
 
 		return journalArticleAssetRenderer;
@@ -127,7 +128,7 @@ public class JournalArticleAssetRendererFactory
 			_journalArticleService.getDisplayArticleByUrlTitle(
 				groupId, urlTitle);
 
-		return new JournalArticleAssetRenderer(article, _journalContent);
+		return new JournalArticleAssetRenderer(article);
 	}
 
 	@Override

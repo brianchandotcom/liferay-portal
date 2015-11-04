@@ -79,8 +79,8 @@
 
 		<execute function="AssertElementPresent" locator1="Icon#ASTERISK" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR_REQUEST_FAILED_TO_COMPLETE" value1="Your request failed to complete." />
-		<execute function="AssertTextEquals" locator1="Message#CATEGORY_ALERT" value1="Please select at least one category for ${vocabularyName}." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="Your request failed to complete." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please select at least one category for ${vocabularyName}." />
 	</command>
 
 	<command name="addNullCP">

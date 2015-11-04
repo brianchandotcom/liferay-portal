@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.web.lar.lifecycle;
+package com.liferay.journal.exportimport.lifecycle;
 
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.util.JournalContent;

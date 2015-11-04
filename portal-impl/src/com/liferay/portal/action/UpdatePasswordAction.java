@@ -64,6 +64,8 @@ public class UpdatePasswordAction extends Action {
 
 		Ticket ticket = getTicket(request);
 
+		request.setAttribute(WebKeys.TICKET, ticket);
+
 		String cmd = ParamUtil.getString(request, Constants.CMD);
 
 		if (Validator.isNull(cmd)) {
@@ -79,8 +81,6 @@ public class UpdatePasswordAction extends Action {
 				catch (UserLockoutException ule) {
 					SessionErrors.add(request, ule.getClass(), ule);
 				}
-
-				request.setAttribute(WebKeys.TICKET, ticket);
 			}
 
 			return actionMapping.findForward("portal.update_password");

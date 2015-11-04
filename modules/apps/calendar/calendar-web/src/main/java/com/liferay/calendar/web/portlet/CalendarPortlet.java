@@ -874,6 +874,8 @@ public class CalendarPortlet extends MVCPortlet {
 
 		SearchContext searchContext = new SearchContext();
 
+		keywords = StringUtil.toLowerCase(keywords);
+
 		searchContext.setAttribute(Field.NAME, keywords);
 		searchContext.setAttribute("resourceName", keywords);
 		searchContext.setCompanyId(companyId);

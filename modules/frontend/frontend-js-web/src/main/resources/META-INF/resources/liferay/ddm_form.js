@@ -294,6 +294,28 @@ AUI.add(
 						);
 					},
 
+					createField: function(fieldTemplate) {
+						var instance = this;
+
+						var fieldNode = A.Node.create(fieldTemplate);
+
+						instance.get('container').insert(fieldNode, 'after');
+
+						var parent = instance.get('parent');
+
+						var siblings = instance.getSiblings();
+
+						var field = parent._getField(fieldNode);
+
+						var index = siblings.indexOf(instance);
+
+						siblings.splice(++index, 0, field);
+
+						field.set('parent', parent);
+
+						return field;
+					},
+
 					getFieldDefinition: function() {
 						var instance = this;
 
@@ -406,21 +428,7 @@ AUI.add(
 
 						instance._getTemplate(
 							function(fieldTemplate) {
-								var fieldNode = A.Node.create(fieldTemplate);
-
-								instance.get('container').placeAfter(fieldNode);
-
-								var parent = instance.get('parent');
-
-								var siblings = instance.getSiblings();
-
-								var field = parent._getField(fieldNode);
-
-								var index = siblings.indexOf(instance);
-
-								siblings.splice(++index, 0, field);
-
-								field.set('parent', parent);
+								var field = instance.createField(fieldTemplate);
 
 								field.renderUI();
 

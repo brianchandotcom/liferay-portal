@@ -21,6 +21,7 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.plugins.BasePlugin;
+import org.gradle.api.tasks.TaskContainer;
 
 /**
  * @author Andrea Di Giorgi
@@ -33,9 +34,12 @@ public class ServiceBuilderPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		addServiceBuilderConfiguration(project);
+		Configuration serviceBuilderConfiguration =
+			addServiceBuilderConfiguration(project);
 
 		addBuildServiceTask(project);
+
+		configureTasksBuildService(project, serviceBuilderConfiguration);
 	}
 
 	protected BuildServiceTask addBuildServiceTask(Project project) {
@@ -76,6 +80,31 @@ public class ServiceBuilderPlugin implements Plugin<Project> {
 		GradleUtil.addDependency(
 			project, CONFIGURATION_NAME, "com.liferay",
 			"com.liferay.portal.tools.service.builder", "latest.release");
+	}
+
+	protected void configureTaskBuildServiceClasspath(
+		BuildServiceTask buildServiceTask,
+		Configuration serviceBuilderConfiguration) {
+
+		buildServiceTask.setClasspath(serviceBuilderConfiguration);
+	}
+
+	protected void configureTasksBuildService(
+		Project project, final Configuration serviceBuilderConfiguration) {
+
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			BuildServiceTask.class,
+			new Action<BuildServiceTask>() {
+
+				@Override
+				public void execute(BuildServiceTask buildServiceTask) {
+					configureTaskBuildServiceClasspath(
+						buildServiceTask, serviceBuilderConfiguration);
+				}
+
+			});
 	}
 
 }

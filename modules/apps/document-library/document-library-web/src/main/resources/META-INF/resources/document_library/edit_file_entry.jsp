@@ -530,14 +530,71 @@ if (portletTitleBasedNavigation) {
 		submitForm(document.hrefFm, '<portlet:actionURL name="/document_library/edit_file_entry"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CANCEL_CHECKOUT %>" /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntryId) %>" /></portlet:actionURL>');
 	}
 
+	function <portlet:namespace />checkIn() {
+		var form = AUI.$(document.<portlet:namespace />fm);
+
+		form.fm('<%= Constants.CMD %>').val('<%= Constants.UPDATE_AND_CHECKIN %>');
+
+		<portlet:namespace />showVersionDetailsDialog(form);
+	}
+
+	function <portlet:namespace />checkOut() {
+		submitForm(document.hrefFm, '<portlet:actionURL name="/document_library/edit_file_entry"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CHECKOUT %>" /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntryId) %>" /></portlet:actionURL>');
+	}
+
+	function <portlet:namespace />getSuggestionsContent() {
+		var form = AUI.$(document.<portlet:namespace />fm);
+
+		return form.fm('title').val() + ' ' + form.fm('description').val();
+	}
+
+	function <portlet:namespace />saveFileEntry(draft) {
+		var $ = AUI.$;
+
+		var className = 'alert alert-danger';
+
+		var fileTitleErrorNode = $('#<portlet:namespace />fileTitleError');
+
+		var form = $(document.<portlet:namespace />fm);
+
+		fileTitleErrorNode.addClass(className + ' hide');
+
+		var fileValue = form.fm('file').val();
+
+		var hasFieldValue = !!(fileValue || form.fm('title').val());
+
+		if (hasFieldValue) {
+			if (fileValue) {
+				<%= HtmlUtil.escape(uploadProgressId) %>.startProgress();
+			}
+
+			form.fm('<%= Constants.CMD %>').val('<%= (fileEntry == null) ? Constants.ADD : Constants.UPDATE %>');
+
+			var checkedOut = <%= (fileEntry != null) && checkedOut %>;
+			var showModalDialog = form.fm('updateVersionDetails').is(':checked');
+
+			if (draft || !showModalDialog) {
+				if (draft) {
+					form.fm('workflowAction').val('<%= WorkflowConstants.ACTION_SAVE_DRAFT %>');
+				}
+
+				submitForm(form);
+			}
+			else if (!checkedOut) {
+				<portlet:namespace />showVersionDetailsDialog(form);
+			}
+		}
+		else {
+			fileTitleErrorNode.addClass(className + ' show');
+
+			window.location.hash = '<portlet:namespace />fileTitleError';
+		}
+	}
+
 	Liferay.provide(
 		window,
-		'<portlet:namespace />checkIn',
-		function() {
-			var form = AUI.$(document.<portlet:namespace />fm);
-
-			form.fm('<%= Constants.CMD %>').val('<%= Constants.UPDATE_AND_CHECKIN %>');
-
+		'<portlet:namespace />showVersionDetailsDialog',
+		function(form) {
 			var versionDetailsDialog = Liferay.Util.Window.getWindow(
 				{
 					dialog: {
@@ -558,7 +615,7 @@ if (portletTitleBasedNavigation) {
 				function(event) {
 					var changeLog = versionDetailsDialogBoundingBox.one('#<portlet:namespace /><%= randomNamespace %>changeLog');
 
-					form.fm('majorVersion').val(majorVersion.val());
+					form.fm('majorVersion').val(majorVersion.attr('checked'));
 					form.fm('changeLog').val(changeLog.val());
 
 					submitForm(form);
@@ -582,107 +639,6 @@ if (portletTitleBasedNavigation) {
 			);
 
 			versionDetailsDialog.render();
-		},
-		['liferay-util-window']
-	);
-
-	function <portlet:namespace />checkOut() {
-		submitForm(document.hrefFm, '<portlet:actionURL name="/document_library/edit_file_entry"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CHECKOUT %>" /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntryId) %>" /></portlet:actionURL>');
-	}
-
-	function <portlet:namespace />getSuggestionsContent() {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		return form.fm('title').val() + ' ' + form.fm('description').val();
-	}
-
-	Liferay.provide(
-		window,
-		'<portlet:namespace />saveFileEntry',
-		function(draft) {
-			var $ = AUI.$;
-
-			var className = 'alert alert-danger';
-
-			var fileTitleErrorNode = $('#<portlet:namespace />fileTitleError');
-
-			var form = $(document.<portlet:namespace />fm);
-
-			fileTitleErrorNode.addClass(className + ' hide');
-
-			var fileValue = form.fm('file').val();
-
-			var hasFieldValue = !!(fileValue || form.fm('title').val());
-
-			if (hasFieldValue) {
-				if (fileValue) {
-					<%= HtmlUtil.escape(uploadProgressId) %>.startProgress();
-				}
-
-				form.fm('<%= Constants.CMD %>').val('<%= (fileEntry == null) ? Constants.ADD : Constants.UPDATE %>');
-
-				var checkedOut = <%= (fileEntry != null) && checkedOut %>;
-				var showModalDialog = form.fm('updateVersionDetails').is(':checked');
-
-				if (draft || !showModalDialog) {
-					if (draft) {
-						form.fm('workflowAction').val('<%= WorkflowConstants.ACTION_SAVE_DRAFT %>');
-					}
-
-					submitForm(form);
-				}
-				else if (!checkedOut) {
-					var versionDetailsDialog = Liferay.Util.Window.getWindow(
-						{
-							dialog: {
-								bodyContent: $('#<portlet:namespace />versionDetails').html(),
-								destroyOnHide: true
-							},
-							title: '<%= UnicodeLanguageUtil.get(request, "describe-your-changes") %>'
-						}
-					);
-
-					var versionDetailsDialogBoundingBox = versionDetailsDialog.get('boundingBox');
-
-					var majorVersion = versionDetailsDialogBoundingBox.one('#<portlet:namespace /><%= randomNamespace %>majorVersion');
-					var saveButton = versionDetailsDialogBoundingBox.one('#<portlet:namespace /><%= randomNamespace %>save');
-
-					saveButton.on(
-						'click',
-						function(event) {
-							var changeLog = versionDetailsDialogBoundingBox.one('#<portlet:namespace /><%= randomNamespace %>changeLog');
-
-							form.fm('majorVersion').val(majorVersion.val());
-							form.fm('changeLog').val(changeLog.val());
-
-							submitForm(form);
-						}
-					);
-
-					var cancelButton = versionDetailsDialogBoundingBox.one('#<portlet:namespace /><%= randomNamespace %>cancel');
-
-					cancelButton.on(
-						'click',
-						function(event) {
-							versionDetailsDialog.destroy();
-						}
-					);
-
-					versionDetailsDialog.after(
-						'render',
-						function(event) {
-							majorVersion.focus();
-						}
-					);
-
-					versionDetailsDialog.render();
-				}
-			}
-			else {
-				fileTitleErrorNode.addClass(className + ' show');
-
-				window.location.hash = '<portlet:namespace />fileTitleError';
-			}
 		},
 		['liferay-util-window']
 	);

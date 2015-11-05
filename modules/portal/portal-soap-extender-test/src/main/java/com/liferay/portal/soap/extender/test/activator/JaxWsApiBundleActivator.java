@@ -44,7 +44,7 @@ public class JaxWsApiBundleActivator implements BundleActivator {
 				"("+ HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH +
 					"=/soap-test))";
 
-		if (!WaiterUtil.waitForFilter(bundleContext, filterString, 10000)) {
+		if (!WaiterUtil.waitForFilter(bundleContext, filterString, 10_000)) {
 			throw new TimeoutException("Provider register waiting timeout");
 		}
 

@@ -64,7 +64,7 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 			properties = new Hashtable<>();
 
 			properties.put("contextPath", "/soap-test");
-			properties.put("timeout", 10000);
+			properties.put("timeout", 10_000);
 
 			_jaxWsApiConfiguration.update(properties);
 
@@ -90,7 +90,7 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 							"=soap-test))";
 
 			if (!WaiterUtil.waitForFilter(
-					bundleContext, _filterString, 10000)) {
+					bundleContext, _filterString, 10_000)) {
 
 				_cleanUp();
 

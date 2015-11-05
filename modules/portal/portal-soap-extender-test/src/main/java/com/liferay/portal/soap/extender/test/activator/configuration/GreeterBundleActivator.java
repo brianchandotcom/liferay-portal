@@ -61,7 +61,7 @@ public class GreeterBundleActivator implements BundleActivator {
 
 		serviceTracker.open();
 
-		Bus bus = serviceTracker.waitForService(10000L);
+		Bus bus = serviceTracker.waitForService(10_000);
 
 		if (bus == null) {
 			throw new IllegalStateException(

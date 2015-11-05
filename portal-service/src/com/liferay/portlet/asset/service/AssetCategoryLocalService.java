@@ -480,6 +480,13 @@ public interface AssetCategoryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portlet.asset.model.AssetCategory> searchCategories(
 		long companyId, long[] groupIds, java.lang.String title,
+		long[] vocabularyIds, long[] parentCategoryIds, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> obc)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portlet.asset.model.AssetCategory> searchCategories(
+		long companyId, long[] groupIds, java.lang.String title,
 		long[] vocabularyIds, int start, int end) throws PortalException;
 
 	public void setAssetEntryAssetCategories(long entryId, long[] categoryIds);

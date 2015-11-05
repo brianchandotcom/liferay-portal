@@ -230,6 +230,16 @@ public class AssetVocabularyServiceUtil {
 			addDefaultVocabulary);
 	}
 
+	public static com.liferay.portlet.asset.model.AssetVocabularyDisplay searchVocabulariesDisplay(
+		long groupId, java.lang.String title, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> obc,
+		boolean addDefaultVocabulary)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .searchVocabulariesDisplay(groupId, title, start, end, obc,
+			addDefaultVocabulary);
+	}
+
 	public static com.liferay.portlet.asset.model.AssetVocabulary updateVocabulary(
 		long vocabularyId, java.lang.String title,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,

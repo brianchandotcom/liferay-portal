@@ -573,7 +573,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 		return is;
 	}
 
-	protected Object[] getImage(long imageId) throws Exception {
+	protected Image getImage(long imageId) throws Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -582,15 +582,22 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"select type_, size_ from Image where imageId = " + imageId);
+				"select imageId, modifiedDate, type_, height, width, size_ " +
+					"from Image where imageId = " + imageId);
 
 			rs = ps.executeQuery();
 
 			if (rs.next()) {
-				String type = rs.getString("type_");
-				long size = rs.getInt("size_");
+				Image image = ImageLocalServiceUtil.createImage(
+					rs.getLong("imageId"));
 
-				return new Object[] {type, size};
+				image.setModifiedDate(rs.getTimestamp("modifiedDate"));
+				image.setType(rs.getString("type_"));
+				image.setHeight(rs.getInt("height"));
+				image.setWidth(rs.getInt("width"));
+				image.setSize(rs.getInt("size_"));
+
+				return image;
 			}
 
 			return null;
@@ -946,13 +953,13 @@ public class UpgradeImageGallery extends UpgradeProcess {
 				long custom1ImageId = rs.getLong("custom1ImageId");
 				long custom2ImageId = rs.getLong("custom2ImageId");
 
-				Object[] image = getImage(largeImageId);
+				Image image = getImage(largeImageId);
 
 				if (image == null) {
 					continue;
 				}
 
-				String extension = (String)image[0];
+				String extension = image.getType();
 
 				String mimeType = MimeTypesUtil.getExtensionContentType(
 					extension);
@@ -960,7 +967,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 				String name = String.valueOf(
 					increment(DLFileEntry.class.getName()));
 
-				long size = (Long)image[1];
+				long size = image.getSize();
 
 				try {
 					addDLFileEntry(

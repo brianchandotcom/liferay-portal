@@ -36,6 +36,7 @@ import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputDirectories;
+import org.gradle.api.tasks.OutputFiles;
 import org.gradle.api.tasks.SkipWhenEmpty;
 import org.gradle.process.JavaExecSpec;
 
@@ -190,6 +191,23 @@ public class BuildCSSTask extends JavaExec {
 	@Optional
 	public String getSassCompilerClassName() {
 		return _cssBuilderArgs.getSassCompilerClassName();
+	}
+
+	@OutputFiles
+	public FileCollection getSourceMapFiles() {
+		List<File> sourceMapFiles = new ArrayList<>();
+
+		if (isGenerateSourceMap()) {
+			FileCollection cssFiles = getCSSFiles();
+
+			for (File cssFile : cssFiles) {
+				File sourceMapFile = _project.file(cssFile + ".map");
+
+				sourceMapFiles.add(sourceMapFile);
+			}
+		}
+
+		return _project.files(sourceMapFiles);
 	}
 
 	@Override

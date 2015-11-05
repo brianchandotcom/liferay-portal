@@ -37,17 +37,17 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.util.CalendarFactoryImpl;
+import com.liferay.portal.util.DateFormatFactoryImpl;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 import com.liferay.portal.util.HtmlImpl;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-
-import java.util.Calendar;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -67,6 +67,7 @@ public class DDMFormFieldValueRendererTest extends BaseDDMTestCase {
 	public void setUp() throws Exception {
 		setUpCalendarFactoryUtil();
 		setUpDLAppLocalServiceUtil();
+		setUpDateFormatFactoryUtil();
 		setUpFastDateFormatFactoryUtil();
 		setUpHtmlUtil();
 		setUpJSONFactoryUtil();
@@ -124,11 +125,7 @@ public class DDMFormFieldValueRendererTest extends BaseDDMTestCase {
 
 	@Test
 	public void testDateFieldValueRenderer() {
-		Calendar calendar = CalendarFactoryUtil.getCalendar();
-
-		calendar.set(2014, Calendar.OCTOBER, 22);
-
-		String valueString = String.valueOf(calendar.getTimeInMillis());
+		String valueString = "2014-10-22";
 
 		DDMFormFieldValue ddmFormFieldValue = createDDMFormFieldValue(
 			"Date", new UnlocalizedValue(valueString));
@@ -436,6 +433,13 @@ public class DDMFormFieldValueRendererTest extends BaseDDMTestCase {
 		CalendarFactoryUtil calendarFactoryUtil = new CalendarFactoryUtil();
 
 		calendarFactoryUtil.setCalendarFactory(new CalendarFactoryImpl());
+	}
+
+	protected void setUpDateFormatFactoryUtil() {
+		DateFormatFactoryUtil dateFormatFactoryUtil =
+			new DateFormatFactoryUtil();
+
+		dateFormatFactoryUtil.setDateFormatFactory(new DateFormatFactoryImpl());
 	}
 
 	protected void setUpDLAppLocalServiceUtil() throws Exception {

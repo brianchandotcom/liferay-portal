@@ -30,6 +30,12 @@ public class DateUtil_IW {
 		return DateUtil.equals(date1, date2);
 	}
 
+	public java.lang.String formatDate(java.lang.String pattern,
+			java.lang.String dateString,
+			java.util.Locale locale) throws java.text.ParseException {
+		return DateUtil.formatDate(pattern, dateString, locale);
+	}
+
 	public java.lang.String getCurrentDate(java.lang.String pattern,
 		java.util.Locale locale) {
 		return DateUtil.getCurrentDate(pattern, locale);
@@ -100,6 +106,13 @@ public class DateUtil_IW {
 		java.util.Locale locale) throws java.text.ParseException {
 		return DateUtil.parseDate(dateString, locale);
 	}
+
+	public java.util.Date parseDate(java.lang.String pattern,
+			java.lang.String dateString,
+			java.util.Locale locale) throws java.text.ParseException {
+		return DateUtil.parseDate(pattern, dateString, locale);
+	}
+
 
 	private DateUtil_IW() {
 	}

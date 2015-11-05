@@ -67,7 +67,9 @@ vocabulariesSearchContainer.setResults(vocabularies);
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabularies"), null);
 %>
 
-<liferay-portlet:renderURL varImpl="portletURL" />
+<liferay-portlet:renderURL varImpl="portletURL">
+	<portlet:param name="keywords" value="<%= keywords %>" />
+</liferay-portlet:renderURL>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
@@ -92,20 +94,20 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 			<liferay-frontend:management-bar-filters>
 				<liferay-frontend:management-bar-navigation
 					navigationKeys='<%= new String[] {"all"} %>'
-					portletURL="<%= renderResponse.createRenderURL() %>"
+					portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 				/>
 
 				<liferay-frontend:management-bar-sort
 					orderByCol="<%= orderByCol %>"
 					orderByType="<%= orderByType %>"
 					orderColumns='<%= new String[] {"create-date"} %>'
-					portletURL="<%= renderResponse.createRenderURL() %>"
+					portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 				/>
 			</liferay-frontend:management-bar-filters>
 
 			<liferay-frontend:management-bar-display-buttons
 				displayViews='<%= new String[] {"list"} %>'
-				portletURL="<%= portletURL %>"
+				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 				selectedDisplayStyle="<%= displayStyle %>"
 			/>
 		</liferay-frontend:management-bar-buttons>

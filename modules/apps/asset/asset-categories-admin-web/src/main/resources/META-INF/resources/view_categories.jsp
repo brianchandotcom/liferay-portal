@@ -100,6 +100,7 @@ portletURL.setParameter("redirect", currentURL);
 portletURL.setParameter("categoryId", String.valueOf(categoryId));
 portletURL.setParameter("vocabularyId", String.valueOf(vocabularyId));
 portletURL.setParameter("displayStyle", displayStyle);
+portletURL.setParameter("keywords", keywords);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);

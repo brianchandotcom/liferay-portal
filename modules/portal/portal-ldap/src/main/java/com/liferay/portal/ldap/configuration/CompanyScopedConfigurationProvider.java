@@ -39,6 +39,29 @@ public abstract class CompanyScopedConfigurationProvider
 	<T extends CompanyScopedConfiguration> implements ConfigurationProvider<T> {
 
 	@Override
+	public boolean delete(long companyId) {
+		Configuration configuration = _configurations.get(companyId);
+
+		if (configuration == null) {
+			return false;
+		}
+
+		try {
+			configuration.delete();
+		}
+		catch (IOException ie) {
+			throw new SystemException(ie);
+		}
+
+		return true;
+	}
+
+	@Override
+	public boolean delete(long companyId, long index) {
+		return delete(companyId);
+	}
+
+	@Override
 	public T getConfiguration(long companyId) {
 		return getConfiguration(companyId, true);
 	}

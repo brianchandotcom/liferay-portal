@@ -996,14 +996,20 @@
 		<execute function="AssertClick" locator1="MediaGallery#IMAGE_TITLE" value1="${mgDocumentTitle}" />
 
 		<execute function="AssertTextEquals" locator1="MediaGallery#MEDIA_CAPTION" value1="${mgDocumentTitle} - ${mgDocumentDescription}" />
+
+		<execute function="Click" locator1="PGMediagalleryMedia#CLOSE" />
+
 		<execute function="Click" locator1="MediaGallery#ENTRY_EDIT_ICON" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${mgDocumentTitleEdit}" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${mgDocumentTitleEdit}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${mgDocumentDescriptionEdit}" />
-		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-		<execute function="AssertTextEquals" locator1="MediaGallery#IMAGE_TITLE" value1="${mgDocumentTitleEdit}" />
+
+		<var name="key_mgDocumentTitle" value="${mgDocumentTitleEdit}" />
+
+		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="${mgDocumentTitleEdit}" />
 	</command>
 
 	<command name="editPublishPG">

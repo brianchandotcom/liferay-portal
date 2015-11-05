@@ -29,9 +29,13 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="DMFolder#tearDownPGViaMG" />
+		<execute macro="DMFolder#tearDownPGViaMG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
 
-		<execute macro="Page#tearDownPG" />
+		<execute macro="Page#tearDownPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
 	</tear-down>
 
 	<command name="AddFolder" priority="5">

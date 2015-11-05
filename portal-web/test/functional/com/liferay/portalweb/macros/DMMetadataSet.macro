@@ -23,7 +23,7 @@
 	<command name="addPG">
 		<execute macro="DMMetadataSet#selectMetadataSetsFrame" />
 
-		<execute function="AssertClick" locator1="DocumentsAndMediaMetadataSets#TOOLBAR_ADD" value1="Add" />
+		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${metadataSetName}" />
 
@@ -34,10 +34,6 @@
 				<var method="StringUtil#replace('${dmMetadataSetFieldName}', ' ', '')" name="fieldName" />
 			</execute>
 		</for>
-
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-		<execute function="SelectFrameTop" value1="relative=top" />
 	</command>
 
 	<command name="deletePG">
@@ -84,10 +80,20 @@
 		<execute function="AssertClick" locator1="MenuItem#METADATA_SETS" value1="Metadata Sets" />
 	</command>
 
+	<command name="save">
+		<execute function="SelectFrameTop" />
+
+		<execute function="SelectFrame" locator1="DocumentsAndMediaMetadataSets#METADATA_SETS_IFRAME" />
+
+		<execute function="AssertClick" locator1="DocumentsAndMediaMetadataSets#SAVE_BUTTON" value1="Save" />
+	</command>
+
 	<command name="selectMetadataSetsFrame">
 		<if>
 			<condition function="IsElementPresent" locator1="DocumentsAndMediaMetadataSets#METADATA_SETS_IFRAME" />
 			<then>
+				<execute function="SelectFrameTop" />
+
 				<execute function="SelectFrame" locator1="DocumentsAndMediaMetadataSets#METADATA_SETS_IFRAME" />
 			</then>
 		</if>

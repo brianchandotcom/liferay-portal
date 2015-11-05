@@ -2255,7 +2255,7 @@ AUI.add(
 											var results = AArray.partition(
 													data,
 													function(item) {
-														return item.classNameId === CalendarUtil.USER_CLASS_NAME_ID;
+														return Lang.toInt(item.classNameId) === CalendarUtil.USER_CLASS_NAME_ID;
 													}
 											);
 

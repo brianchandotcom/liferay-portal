@@ -15,7 +15,7 @@
 		<div class="container-fluid-1280">
 			<div class="toolbar-group">
 				<div class="toolbar-group-content">
-					<a class="sidenav-toggler" data-content="body" data-toggle="sidenav" data-type="fixed-push" data-type-mobile="fixed" data-use-delegate="true" href="#sidenavSliderId" id="sidenavToggleId"><span class="icon-align-justify icon-monospaced"></span></a>
+					<a class="sidenav-toggler" data-content="body" data-target="#sidenavSliderId,#wrapper" data-toggle="sidenav" data-type="fixed-push" data-type-mobile="fixed" data-use-delegate="true" href="#sidenavSliderId" id="sidenavToggleId"><span class="icon-align-justify icon-monospaced"></span></a>
 				</div>
 
 				#if ($portlet_display.isShowBackIcon())

@@ -1,15 +1,17 @@
 @import "mixins";
 
 body {
-	&.open {
+	&.open #wrapper {
 		@include sm() {
 			padding-left: 320px;
 		}
 	}
 
 	&.open, &.sidenav-transition {
-		@include sm() {
-			overflow-x: hidden;
+		#wrapper {
+			@include sm() {
+				overflow-x: hidden;
+			}
 		}
 	}
 }

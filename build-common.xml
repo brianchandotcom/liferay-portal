@@ -1481,6 +1481,7 @@ rerun your task.
 				nodejs.npm.password=${nodejs.npm.password}
 				nodejs.npm.user=${nodejs.npm.user}
 				sass.compiler.class.name=${sass.compiler.class.name}
+				sass.generate.source.map=${sass.generate.source.map}
 				upgrade.table.dir=${upgrade.table.dir}
 			</echo>
 		</sequential>

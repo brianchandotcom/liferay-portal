@@ -733,7 +733,6 @@
 		<if>
 			<or>
 				<equals arg1="${field}" arg2="Decimal" />
-				<equals arg1="${field}" arg2="HTML" />
 				<equals arg1="${field}" arg2="Integer" />
 				<equals arg1="${field}" arg2="Number" />
 				<equals arg1="${field}" arg2="Text" />

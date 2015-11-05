@@ -196,6 +196,12 @@
 	<td>//div[contains(.,'Applications') and contains(@class,'permission-navigation-item-header')]/following-sibling::ul//span[contains(@class,'permission-navigation-item')]/a[contains(.,'Web Content Display')]</td>
 	<td></td>
 </tr>
+<!--USER_MY_ACCOUNT-->
+<tr>
+	<td>USER_MY_ACCOUNT_MY_WORKFLOW_TASKS</td>
+	<td>//div[contains(.,'User')and contains(@class,'permission-navigation-item-header')]/following-sibling::div//span[contains(@class,'permission-navigation-item')]/a[contains(.,'My Workflow Tasks')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

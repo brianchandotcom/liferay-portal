@@ -458,6 +458,13 @@
 						<var name="permissionNavigationValue" value="Wiki" />
 					</then>
 				</elseif>
+				<elseif>
+					<contains string="${permissionDefinitionKey}" substring="USER_MY_ACCOUNT_MY_WORKFLOW_TASKS" />
+					<then>
+						<var name="permissionNavigationKey" value="USER_MY_ACCOUNT_MY_WORKFLOW_TASKS" />
+						<var name="permissionNavigationValue" value="My Workflow Tasks" />
+					</then>
+				</elseif>
 			</if>
 
 			<if>

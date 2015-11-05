@@ -850,7 +850,7 @@
 	<command name="viewNoRSS">
 		<execute function="Open" locator1="${rssURL}" />
 
-		<execute function="AssertTextEquals" locator1="CalendarConfiguration#ERROR_HEADER"  value1="Not Found" />
+		<execute function="AssertElementPresent" locator1="CalendarConfiguration#ERROR_HEADER" />
 	</command>
 
 	<command name="viewOtherCalendarMenulist">

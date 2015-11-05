@@ -1048,6 +1048,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--USER_MY_ACCOUNT_MY_WORKFLOW_TASKS_GENERAL_PERMISSIONS-->
+<tr>
+	<td>USER_MY_ACCOUNT_MY_WORKFLOW_TASKS_ACCESS_IN_MY_ACCOUNT_CHECKBOX</td>
+	<td>//input[contains(@value,'ACCESS_IN_CONTROL_PANEL')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_MY_ACCOUNT_MY_WORKFLOW_TASKS_VIEW_CHECKBOX</td>
+	<td>//input[contains(@value,'VIEW')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

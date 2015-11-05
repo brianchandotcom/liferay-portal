@@ -1074,7 +1074,7 @@
 	</command>
 
 	<command name="publish">
-		<execute function="Click" locator1="Button#PUBLISH" />
+		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Publish" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>

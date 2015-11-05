@@ -17,6 +17,8 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
+String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_document_library_edit_file_entry") + StringPool.UNDERLINE;
+
 String cmd = ParamUtil.getString(request, Constants.CMD, Constants.EDIT);
 
 String redirect = ParamUtil.getString(request, "redirect");
@@ -182,8 +184,10 @@ if (portletTitleBasedNavigation) {
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="uploadProgressId" type="hidden" value="<%= uploadProgressId %>" />
 		<aui:input name="repositoryId" type="hidden" value="<%= repositoryId %>" />
+		<aui:input name="changeLog" type="hidden" />
 		<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
 		<aui:input name="fileEntryId" type="hidden" value="<%= fileEntryId %>" />
+		<aui:input name="majorVersion" type="hidden" />
 		<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_PUBLISH) %>" />
 
 		<liferay-ui:error exception="<%= AntivirusScannerException.class %>">
@@ -503,6 +507,16 @@ if (portletTitleBasedNavigation) {
 	/>
 </div>
 
+<div id="<portlet:namespace />versionDetails" style="display: none">
+	<aui:fieldset>
+		<aui:input label="i-want-my-changes-to-create-a-major-version" name='<%= randomNamespace + "majorVersion" %>' type="checkbox" />
+		<aui:input label="change-log" name='<%= randomNamespace + "changeLog" %>' type="textarea" />
+
+		<aui:button name='<%= randomNamespace + "save" %>' primary="true" value="save" />
+		<aui:button name='<%= randomNamespace + "cancel" %>' type="cancel" value="cancel" />
+	</aui:fieldset>
+</div>
+
 <aui:script>
 	function <portlet:namespace />changeFileEntryType() {
 		var form = AUI.$(document.<portlet:namespace />fm);
@@ -534,40 +548,96 @@ if (portletTitleBasedNavigation) {
 		return form.fm('title').val() + ' ' + form.fm('description').val();
 	}
 
-	function <portlet:namespace />saveFileEntry(draft) {
-		var $ = AUI.$;
+	Liferay.provide(
+		window,
+		'<portlet:namespace />saveFileEntry',
+		function(draft) {
+			var $ = AUI.$;
 
-		var className = 'alert alert-danger';
+			var className = 'alert alert-danger';
 
-		var fileTitleErrorNode = $('#<portlet:namespace />fileTitleError');
+			var fileTitleErrorNode = $('#<portlet:namespace />fileTitleError');
 
-		var form = $(document.<portlet:namespace />fm);
+			var form = $(document.<portlet:namespace />fm);
 
-		fileTitleErrorNode.addClass(className + ' hide');
+			fileTitleErrorNode.addClass(className + ' hide');
 
-		var fileValue = form.fm('file').val();
+			var fileValue = form.fm('file').val();
 
-		var hasFieldValue = !!(fileValue || form.fm('title').val());
+			var hasFieldValue = !!(fileValue || form.fm('title').val());
 
-		if (hasFieldValue) {
-			if (fileValue) {
-				<%= HtmlUtil.escape(uploadProgressId) %>.startProgress();
+			if (hasFieldValue) {
+				if (fileValue) {
+					<%= HtmlUtil.escape(uploadProgressId) %>.startProgress();
+				}
+
+				form.fm('<%= Constants.CMD %>').val('<%= (fileEntry == null) ? Constants.ADD : Constants.UPDATE %>');
+
+				var checkedOut = <%= (fileEntry != null) && checkedOut %>;
+				var showModalDialog = form.fm('updateVersionDetails').is(':checked');
+
+				if (draft || !showModalDialog) {
+					if (draft) {
+						form.fm('workflowAction').val('<%= WorkflowConstants.ACTION_SAVE_DRAFT %>');
+					}
+
+					submitForm(form);
+				}
+				else if (!checkedOut) {
+					var versionDetailsDialog = Liferay.Util.Window.getWindow(
+						{
+							dialog: {
+								bodyContent: $('#<portlet:namespace />versionDetails').html(),
+								destroyOnHide: true
+							},
+							title: '<%= UnicodeLanguageUtil.get(request, "describe-your-changes") %>'
+						}
+					);
+
+					var versionDetailsDialogBoundingBox = versionDetailsDialog.get('boundingBox');
+
+					var majorVersion = versionDetailsDialogBoundingBox.one('#<portlet:namespace /><%= randomNamespace %>majorVersion');
+					var saveButton = versionDetailsDialogBoundingBox.one('#<portlet:namespace /><%= randomNamespace %>save');
+
+					saveButton.on(
+						'click',
+						function(event) {
+							var changeLog = versionDetailsDialogBoundingBox.one('#<portlet:namespace /><%= randomNamespace %>changeLog');
+
+							form.fm('majorVersion').val(majorVersion.val());
+							form.fm('changeLog').val(changeLog.val());
+
+							submitForm(form);
+						}
+					);
+
+					var cancelButton = versionDetailsDialogBoundingBox.one('#<portlet:namespace /><%= randomNamespace %>cancel');
+
+					cancelButton.on(
+						'click',
+						function(event) {
+							versionDetailsDialog.destroy();
+						}
+					);
+
+					versionDetailsDialog.after(
+						'render',
+						function(event) {
+							majorVersion.focus();
+						}
+					);
+
+					versionDetailsDialog.render();
+				}
 			}
+			else {
+				fileTitleErrorNode.addClass(className + ' show');
 
-			form.fm('<%= Constants.CMD %>').val('<%= (fileEntry == null) ? Constants.ADD : Constants.UPDATE %>');
-
-			if (draft) {
-				form.fm('workflowAction').val('<%= WorkflowConstants.ACTION_SAVE_DRAFT %>');
+				window.location.hash = '<portlet:namespace />fileTitleError';
 			}
-
-			submitForm(form);
-		}
-		else {
-			fileTitleErrorNode.addClass(className + ' show');
-
-			window.location.hash = '<portlet:namespace />fileTitleError';
-		}
-	}
+		},
+		['liferay-util-window']
+	);
 
 	function <portlet:namespace />validateTitle() {
 		Liferay.Form.get('<portlet:namespace />fm').formValidator.validateField('<portlet:namespace />title');

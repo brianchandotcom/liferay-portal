@@ -90,6 +90,7 @@ public class BuildCSSTask extends JavaExec {
 
 		args.add(
 			"sass.docroot.dir=" + _removeTrailingSlash(getDocrootDirName()));
+		args.add("sass.generate.source.map=" + isGenerateSourceMap());
 		args.add("sass.portal.common.dir=" + getPortalCommonDirName());
 		args.add(
 			"sass.rtl.excluded.path.regexps=" +
@@ -196,6 +197,11 @@ public class BuildCSSTask extends JavaExec {
 		return _project.getProjectDir();
 	}
 
+	@Input
+	public boolean isGenerateSourceMap() {
+		return _cssBuilderArgs.isGenerateSourceMap();
+	}
+
 	@Override
 	public JavaExec setArgs(Iterable<?> applicationArgs) {
 		throw new UnsupportedOperationException();
@@ -212,6 +218,10 @@ public class BuildCSSTask extends JavaExec {
 
 	public void setDocrootDirName(String docrootDirName) {
 		_cssBuilderArgs.setDocrootDirName(docrootDirName);
+	}
+
+	public void setGenerateSourceMap(boolean generateSourceMap) {
+		_cssBuilderArgs.setGenerateSourceMap(generateSourceMap);
 	}
 
 	public void setPortalCommonDirName(String portalCommonDirName) {

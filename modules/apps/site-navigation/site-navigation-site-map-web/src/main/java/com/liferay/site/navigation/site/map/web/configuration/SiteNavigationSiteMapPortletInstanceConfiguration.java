@@ -27,7 +27,7 @@ public interface SiteNavigationSiteMapPortletInstanceConfiguration {
 	@Meta.AD(deflt = "0", required = false)
 	public int displayDepth();
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(required = false)
 	public String displayStyle();
 
 	@Meta.AD(deflt = "0", required = false)
@@ -36,7 +36,7 @@ public interface SiteNavigationSiteMapPortletInstanceConfiguration {
 	@Meta.AD(deflt = "false", required = false)
 	public boolean includeRootInTree();
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(required = false)
 	public String rootLayoutUuid();
 
 	@Meta.AD(deflt = "false", required = false)

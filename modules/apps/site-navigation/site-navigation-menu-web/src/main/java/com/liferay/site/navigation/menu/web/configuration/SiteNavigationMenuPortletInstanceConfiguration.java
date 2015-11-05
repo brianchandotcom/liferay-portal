@@ -24,10 +24,10 @@ import aQute.bnd.annotation.metatype.Meta;
 )
 public interface SiteNavigationMenuPortletInstanceConfiguration {
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(required = false)
 	public String bulletStyle();
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(required = false)
 	public String displayStyle();
 
 	@Meta.AD(deflt = "0", required = false)

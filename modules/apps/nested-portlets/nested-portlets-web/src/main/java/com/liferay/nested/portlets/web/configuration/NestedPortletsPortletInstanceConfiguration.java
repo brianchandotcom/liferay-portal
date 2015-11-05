@@ -24,7 +24,7 @@ import aQute.bnd.annotation.metatype.Meta;
 )
 public interface NestedPortletsPortletInstanceConfiguration {
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(required = false)
 	public String layoutTemplateId();
 
 }

@@ -700,7 +700,7 @@
 		<execute function="AssertClick" locator1="Translation#CHANGE_DEFAULT_LANGUAGE" value1="Change" />
 
 		<execute function="Select" locator1="Select#DEFAULT_LANGUAGE" value1="${localizedLanguage}" />
-		
+
 		<execute function="AssertTextEquals" locator1="WCEditWebContent#DEFAULT_LANGUAGE" value1="${localizedLanguage}" />
 	</command>
 

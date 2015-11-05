@@ -150,7 +150,7 @@
 
 	<command name="viewDisplayTemplateShortText">
 		<var name="key_languageKey" value="${languageKey}" />
-		
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="Language#SHORT_TEXT_LINK" value1="${languageKey}" />
 	</command>
 

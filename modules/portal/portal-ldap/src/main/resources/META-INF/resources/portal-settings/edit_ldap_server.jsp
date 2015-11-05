@@ -1,3 +1,4 @@
+
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -14,7 +15,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/portal-settings/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -23,34 +24,28 @@ String backURL = ParamUtil.getString(request, "backURL", redirect);
 
 long ldapServerId = ParamUtil.getLong(request, "ldapServerId", 0);
 
-String postfix = LDAPSettingsUtil.getPropertyPostfix(ldapServerId);
+LDAPServerConfiguration ldapServerConfiguration = ldapServerConfigurationProvider.getConfiguration(themeDisplay.getCompanyId(), ldapServerId, true);
 
-String ldapServerName = PrefsPropsUtil.getString(company.getCompanyId(), "ldap.server.name" + postfix, StringPool.BLANK);
-String ldapBaseProviderUrl = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.LDAP_BASE_PROVIDER_URL + postfix);
-String ldapBaseDN = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.LDAP_BASE_DN + postfix);
-String ldapSecurityPrincipal = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.LDAP_SECURITY_PRINCIPAL + postfix);
+String ldapServerName = ldapServerConfiguration.serverName();
+String ldapBaseProviderUrl = ldapServerConfiguration.baseProviderURL();
+String ldapBaseDN = ldapServerConfiguration.baseDN();
+String ldapSecurityPrincipal = ldapServerConfiguration.securityPrincipal();
 
-String ldapSecurityCredentials = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.LDAP_SECURITY_CREDENTIALS + postfix);
+String ldapSecurityCredentials = ldapServerConfiguration.securityCredential();
 
 if (Validator.isNotNull(ldapSecurityCredentials)) {
 	ldapSecurityCredentials = Portal.TEMP_OBFUSCATION_VALUE;
 }
 
-String ldapAuthSearchFilter = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.LDAP_AUTH_SEARCH_FILTER + postfix);
-String ldapImportUserSearchFilter = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.LDAP_IMPORT_USER_SEARCH_FILTER + postfix);
-String ldapImportGroupSearchFilter = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.LDAP_IMPORT_GROUP_SEARCH_FILTER + postfix);
-String ldapUsersDN = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.LDAP_USERS_DN + postfix);
-String ldapUserDefaultObjectClasses = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.LDAP_USER_DEFAULT_OBJECT_CLASSES + postfix);
-String ldapGroupsDN = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.LDAP_GROUPS_DN + postfix);
-String ldapGroupDefaultObjectClasses = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.LDAP_GROUP_DEFAULT_OBJECT_CLASSES + postfix);
+String ldapAuthSearchFilter = ldapServerConfiguration.authSearchFilter();
+String ldapImportUserSearchFilter = ldapServerConfiguration.userSearchFilter();
+String ldapImportGroupSearchFilter = ldapServerConfiguration.groupSearchFilter();
+String ldapUsersDN = ldapServerConfiguration.usersDN();
+String[] ldapUserDefaultObjectClasses = ldapServerConfiguration.userDefaultObjectClasses();
+String ldapGroupsDN = ldapServerConfiguration.groupsDN();
+String[] ldapGroupDefaultObjectClasses = ldapServerConfiguration.groupDefaultObjectClasses();
 
-String ldapUserMappings = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.LDAP_USER_MAPPINGS + postfix);
-
-String[] userMappingArray = new String[0];
-
-if (ldapUserMappings != null) {
-	userMappingArray = ldapUserMappings.split("\n");
-}
+String[] userMappingArray = ldapServerConfiguration.userMappings();
 
 String userMappingEmailAddress = StringPool.BLANK;
 String userMappingFirstName = StringPool.BLANK;
@@ -116,13 +111,7 @@ for (int i = 0; i < userMappingArray.length; i++) {
 	mapping[1] = "";
 }
 
-String ldapGroupMappings = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.LDAP_GROUP_MAPPINGS + postfix);
-
-String[] groupMappingArray = new String[0];
-
-if (ldapGroupMappings != null) {
-	groupMappingArray = ldapGroupMappings.split("\n");
-}
+String[] groupMappingArray = ldapServerConfiguration.groupMappings();
 
 String groupMappingDescription = StringPool.BLANK;
 String groupMappingGroupName = StringPool.BLANK;
@@ -170,7 +159,7 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 	<liferay-ui:error key="ldapAuthentication" message="failed-to-bind-to-the-ldap-server-with-given-values" />
 
 	<aui:fieldset>
-		<aui:input cssClass="lfr-input-text-container" label="server-name" name='<%= "settings--ldap.server.name" + postfix + "--" %>' type="text" value="<%= ldapServerName %>" />
+		<aui:input cssClass="lfr-input-text-container" label="server-name" name='<%= "ldap--" + LDAPConstants.SERVER_NAME + "--" %>' type="text" value="<%= ldapServerName %>" />
 	</aui:fieldset>
 
 	<h3><liferay-ui:message key="default-values" /></h3>
@@ -193,13 +182,13 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 	<h3><liferay-ui:message key="connection" /></h3>
 
 	<aui:fieldset>
-		<aui:input cssClass="lfr-input-text-container" helpMessage="the-ldap-url-format-is" label="base-provider-url" name='<%= "settings--" + PropsKeys.LDAP_BASE_PROVIDER_URL + postfix + "--" %>' type="text" value="<%= ldapBaseProviderUrl %>" />
+		<aui:input cssClass="lfr-input-text-container" helpMessage="the-ldap-url-format-is" label="base-provider-url" name='<%= "ldap--" + LDAPConstants.BASE_PROVIDER_URL + "--" %>' type="text" value="<%= ldapBaseProviderUrl %>" />
 
-		<aui:input cssClass="lfr-input-text-container" helpMessage="the-ldap-url-format-is" label="base-dn" name='<%= "settings--" + PropsKeys.LDAP_BASE_DN + postfix + "--" %>' type="text" value="<%= ldapBaseDN %>" />
+		<aui:input cssClass="lfr-input-text-container" helpMessage="the-ldap-url-format-is" label="base-dn" name='<%= "ldap--" + LDAPConstants.BASE_DN + "--" %>' type="text" value="<%= ldapBaseDN %>" />
 
-		<aui:input cssClass="lfr-input-text-container" label="principal" name='<%= "settings--" + PropsKeys.LDAP_SECURITY_PRINCIPAL + postfix + "--" %>' type="text" value="<%= ldapSecurityPrincipal %>" />
+		<aui:input cssClass="lfr-input-text-container" label="principal" name='<%= "ldap--" + LDAPConstants.SECURITY_PRINCIPAL + "--" %>' type="text" value="<%= ldapSecurityPrincipal %>" />
 
-		<aui:input cssClass="lfr-input-text-container" label="credentials" name='<%= "settings--" + PropsKeys.LDAP_SECURITY_CREDENTIALS + postfix + "--" %>' type="password" value="<%= ldapSecurityCredentials %>" />
+		<aui:input cssClass="lfr-input-text-container" label="credentials" name='<%= "ldap--" + LDAPConstants.SECURITY_CREDENTIAL + "--" %>' type="password" value="<%= ldapSecurityCredentials %>" />
 
 		<aui:button-row>
 
@@ -214,9 +203,9 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 	<h3><liferay-ui:message key="users" /></h3>
 
 	<aui:fieldset>
-		<aui:input cssClass="lfr-input-text-container" helpMessage="enter-the-search-filter-that-is-used-to-test-the-validity-of-a-user" label="authentication-search-filter" name='<%= "settings--" + PropsKeys.LDAP_AUTH_SEARCH_FILTER + postfix + "--" %>' type="text" value="<%= ldapAuthSearchFilter %>" />
+		<aui:input cssClass="lfr-input-text-container" helpMessage="enter-the-search-filter-that-is-used-to-test-the-validity-of-a-user" label="authentication-search-filter" name='<%= "ldap--" + LDAPConstants.AUTH_SEARCH_FILTER + "--" %>' type="text" value="<%= ldapAuthSearchFilter %>" />
 
-		<aui:input cssClass="lfr-input-text-container" label="import-search-filter" name='<%= "settings--" + PropsKeys.LDAP_IMPORT_USER_SEARCH_FILTER + postfix + "--" %>' type="text" value="<%= ldapImportUserSearchFilter %>" />
+		<aui:input cssClass="lfr-input-text-container" label="import-search-filter" name='<%= "ldap--" + LDAPConstants.IMPORT_USER_SEARCH_FILTER + "--" %>' type="text" value="<%= ldapImportUserSearchFilter %>" />
 
 		<h4><liferay-ui:message key="user-mapping" /></h4>
 
@@ -228,7 +217,7 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 
 		<aui:input cssClass="lfr-input-text-container" label="password" name="userMappingPassword" type="text" value="<%= userMappingPassword %>" />
 
-		<%@ include file="/edit_ldap_server_user_name.jspf" %>
+		<%@ include file="/portal-settings/edit_ldap_server_user_name.jspf" %>
 
 		<aui:input cssClass="lfr-input-text-container" label="job-title" name="userMappingJobTitle" type="text" value="<%= userMappingJobTitle %>" />
 
@@ -238,13 +227,13 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 
 		<aui:input cssClass="lfr-input-text-container" label="portrait" name="userMappingPortrait" type="text" value="<%= userMappingPortrait %>" />
 
-		<aui:input cssClass="lfr-textarea" label="custom-user-mapping" name='<%= "settings--" + PropsKeys.LDAP_USER_CUSTOM_MAPPINGS + postfix + "--" %>' type="textarea" value="<%= PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.LDAP_USER_CUSTOM_MAPPINGS + postfix, PropsUtil.get(PropsKeys.LDAP_USER_CUSTOM_MAPPINGS)) %>" />
+		<aui:input cssClass="lfr-textarea" label="custom-user-mapping" name='<%= "ldap--" + LDAPConstants.USER_CUSTOM_MAPPINGS + "--" %>' type="textarea" value="<%= StringUtil.merge(ldapServerConfiguration.userCustomMappings(), StringPool.COMMA) %>" />
 
-		<aui:input cssClass="lfr-textarea" label="custom-contact-mapping" name='<%= "settings--" + PropsKeys.LDAP_CONTACT_CUSTOM_MAPPINGS + postfix + "--" %>' type="textarea" value="<%= PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.LDAP_CONTACT_CUSTOM_MAPPINGS + postfix, PropsUtil.get(PropsKeys.LDAP_CONTACT_CUSTOM_MAPPINGS)) %>" />
+		<aui:input cssClass="lfr-textarea" label="custom-contact-mapping" name='<%= "ldap--" + LDAPConstants.CONTACT_CUSTOM_MAPPINGS + "--" %>' type="textarea" value="<%= StringUtil.merge(ldapServerConfiguration.contactCustomMappings(), StringPool.COMMA) %>" />
 
-		<aui:input name='<%= "settings--" + PropsKeys.LDAP_USER_MAPPINGS + postfix + "--" %>' type="hidden" />
+		<aui:input name='<%= "ldap--" + LDAPConstants.USER_MAPPINGS + "--" %>' type="hidden" />
 
-		<aui:input name='<%= "settings--" + PropsKeys.LDAP_CONTACT_MAPPINGS + postfix + "--" %>' type="hidden" value="<%= PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.LDAP_CONTACT_MAPPINGS + postfix, PropsUtil.get(PropsKeys.LDAP_CONTACT_MAPPINGS)) %>" />
+		<aui:input name='<%= "ldap--" + LDAPConstants.CONTACT_MAPPINGS + "--" %>' type="hidden" value="<%= StringUtil.merge(ldapServerConfiguration.contactMappings(), StringPool.COMMA) %>" />
 
 		<aui:button-row>
 
@@ -259,7 +248,7 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 	<h3><liferay-ui:message key="groups" /></h3>
 
 	<aui:fieldset>
-		<aui:input cssClass="lfr-input-text-container" label="import-search-filter" name='<%= "settings--" + PropsKeys.LDAP_IMPORT_GROUP_SEARCH_FILTER + postfix + "--" %>' type="text" value="<%= ldapImportGroupSearchFilter %>" />
+		<aui:input cssClass="lfr-input-text-container" label="import-search-filter" name='<%= "ldap--" + LDAPConstants.IMPORT_GROUP_SEARCH_FILTER + "--" %>' type="text" value="<%= ldapImportGroupSearchFilter %>" />
 
 		<h4><liferay-ui:message key="group-mapping" /></h4>
 
@@ -269,7 +258,7 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 
 		<aui:input cssClass="lfr-input-text-container" label="user" name="groupMappingUser" type="text" value="<%= groupMappingUser %>" />
 
-		<aui:input name='<%= "settings--" + PropsKeys.LDAP_GROUP_MAPPINGS + postfix + "--" %>' type="hidden" />
+		<aui:input name='<%= "ldap--" + LDAPConstants.GROUP_MAPPINGS + "--" %>' type="hidden" />
 
 		<aui:button-row>
 
@@ -284,13 +273,13 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 	<h3><liferay-ui:message key="export" /></h3>
 
 	<aui:fieldset>
-		<aui:input cssClass="lfr-input-text-container" label="users-dn" name='<%= "settings--" + PropsKeys.LDAP_USERS_DN + postfix + "--" %>' type="text" value="<%= ldapUsersDN %>" />
+		<aui:input cssClass="lfr-input-text-container" label="users-dn" name='<%= "ldap--" + LDAPConstants.USERS_DN + "--" %>' type="text" value="<%= ldapUsersDN %>" />
 
-		<aui:input cssClass="lfr-input-text-container" label="user-default-object-classes" name='<%= "settings--" + PropsKeys.LDAP_USER_DEFAULT_OBJECT_CLASSES + postfix + "--" %>' type="text" value="<%= ldapUserDefaultObjectClasses %>" />
+		<aui:input cssClass="lfr-input-text-container" label="user-default-object-classes" name='<%= "ldap--" + LDAPConstants.USER_DEFAULT_OBJECT_CLASSES + "--" %>' type="text" value="<%= StringUtil.merge(ldapUserDefaultObjectClasses, StringPool.COMMA) %>" />
 
-		<aui:input cssClass="lfr-input-text-container" label="groups-dn" name='<%= "settings--" + PropsKeys.LDAP_GROUPS_DN + postfix + "--" %>' type="text" value="<%= ldapGroupsDN %>" />
+		<aui:input cssClass="lfr-input-text-container" label="groups-dn" name='<%= "ldap--" + LDAPConstants.GROUPS_DN + "--" %>' type="text" value="<%= ldapGroupsDN %>" />
 
-		<aui:input cssClass="lfr-input-text-container" label="group-default-object-classes" name='<%= "settings--" + PropsKeys.LDAP_GROUP_DEFAULT_OBJECT_CLASSES + postfix + "--" %>' type="text" value="<%= ldapGroupDefaultObjectClasses %>" />
+		<aui:input cssClass="lfr-input-text-container" label="group-default-object-classes" name='<%= "ldap--" + LDAPConstants.GROUP_DEFAULT_OBJECT_CLASSES + "--" %>' type="text" value="<%= StringUtil.merge(ldapGroupDefaultObjectClasses, StringPool.COMMA) %>" />
 	</aui:fieldset>
 
 	<aui:button-row>
@@ -315,7 +304,7 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 				var mappingValue = form.fm(fieldValues[index]).val();
 
 				if (mappingValue) {
-					prev += item + '=' + mappingValue + '\n';
+					prev += item + '=' + mappingValue + ',';
 				}
 
 				return prev;
@@ -332,14 +321,14 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 
 		var userMapping = <portlet:namespace />mapValues(userMappingFields, userMappingFieldValues);
 
-		form.fm('settings--<%= PropsKeys.LDAP_USER_MAPPINGS + postfix %>--').val(userMapping);
+		form.fm('ldap--<%= LDAPConstants.USER_MAPPINGS %>--').val(userMapping);
 
 		var groupMappingFields = ['description', 'groupName', 'user'];
 		var groupMappingFieldValues = ['groupMappingDescription', 'groupMappingGroupName', 'groupMappingUser'];
 
 		var groupMapping = <portlet:namespace />mapValues(groupMappingFields, groupMappingFieldValues);
 
-		form.fm('settings--<%= PropsKeys.LDAP_GROUP_MAPPINGS + postfix %>--').val(groupMapping);
+		form.fm('ldap--<%= LDAPConstants.GROUP_MAPPINGS %>--').val(groupMapping);
 
 		form.fm('<%= Constants.CMD %>').val('<%= ldapServerId <= 0 ? Constants.ADD : Constants.UPDATE %>');
 
@@ -507,12 +496,12 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 			exportMappingGroupDefaultObjectClass = '';
 		}
 
-		form.fm('settings--<%= PropsKeys.LDAP_BASE_PROVIDER_URL + postfix %>--').val(baseProviderURL);
-		form.fm('settings--<%= PropsKeys.LDAP_BASE_DN + postfix %>--').val(baseDN);
-		form.fm('settings--<%= PropsKeys.LDAP_SECURITY_PRINCIPAL + postfix %>--').val(principal);
-		form.fm('settings--<%= PropsKeys.LDAP_SECURITY_CREDENTIALS + postfix %>--').val(credentials);
-		form.fm('settings--<%= PropsKeys.LDAP_AUTH_SEARCH_FILTER + postfix %>--').val(searchFilter);
-		form.fm('settings--<%= PropsKeys.LDAP_IMPORT_USER_SEARCH_FILTER + postfix %>--').val(importUserSearchFilter);
+		form.fm('ldap--<%= LDAPConstants.BASE_PROVIDER_URL %>--').val(baseProviderURL);
+		form.fm('ldap--<%= LDAPConstants.BASE_DN %>--').val(baseDN);
+		form.fm('ldap--<%= LDAPConstants.SECURITY_PRINCIPAL %>--').val(principal);
+		form.fm('ldap--<%= LDAPConstants.SECURITY_CREDENTIAL %>--').val(credentials);
+		form.fm('ldap--<%= LDAPConstants.AUTH_SEARCH_FILTER %>--').val(searchFilter);
+		form.fm('ldap--<%= LDAPConstants.IMPORT_USER_SEARCH_FILTER %>--').val(importUserSearchFilter);
 		form.fm('userMappingEmailAddress').val(userMappingEmailAddress);
 		form.fm('userMappingFirstName').val(userMappingFirstName);
 		form.fm('userMappingFullName').val(userMappingFullName);
@@ -525,14 +514,14 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 		form.fm('userMappingScreenName').val(userMappingScreenName);
 		form.fm('userMappingStatus').val(userMappingStatus);
 		form.fm('userMappingUuid').val(userMappingUuid);
-		form.fm('settings--<%= PropsKeys.LDAP_IMPORT_GROUP_SEARCH_FILTER + postfix %>--').val(importGroupSearchFilter);
+		form.fm('ldap--<%= LDAPConstants.IMPORT_GROUP_SEARCH_FILTER %>--').val(importGroupSearchFilter);
 		form.fm('groupMappingDescription').val(groupMappingDescription);
 		form.fm('groupMappingGroupName').val(groupMappingGroupName);
 		form.fm('groupMappingUser').val(groupMappingUser);
-		form.fm('settings--<%= PropsKeys.LDAP_USERS_DN + postfix %>--').val(baseDN);
-		form.fm('settings--<%= PropsKeys.LDAP_USER_DEFAULT_OBJECT_CLASSES + postfix %>--').val(exportMappingUserDefaultObjectClass);
-		form.fm('settings--<%= PropsKeys.LDAP_GROUPS_DN + postfix %>--').val(baseDN);
-		form.fm('settings--<%= PropsKeys.LDAP_GROUP_DEFAULT_OBJECT_CLASSES + postfix %>--').val(exportMappingGroupDefaultObjectClass);
+		form.fm('ldap--<%= LDAPConstants.USERS_DN %>--').val(baseDN);
+		form.fm('ldap--<%= LDAPConstants.USER_DEFAULT_OBJECT_CLASSES %>--').val(exportMappingUserDefaultObjectClass);
+		form.fm('ldap--<%= LDAPConstants.GROUPS_DN %>--').val(baseDN);
+		form.fm('ldap--<%= LDAPConstants.GROUP_DEFAULT_OBJECT_CLASSES %>--').val(exportMappingGroupDefaultObjectClass);
 	}
 
 	Liferay.provide(
@@ -551,7 +540,7 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 			else if (type == 'ldapGroups') {
 				url = '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcRenderCommandName" value="/portal_settings/test_ldap_groups" /></portlet:renderURL>';
 
-				data.<portlet:namespace />importGroupSearchFilter = document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.LDAP_IMPORT_GROUP_SEARCH_FILTER + postfix %>--'].value;
+				data.<portlet:namespace />importGroupSearchFilter = document.<portlet:namespace />fm['<portlet:namespace />ldap--<%= LDAPConstants.IMPORT_GROUP_SEARCH_FILTER %>--'].value;
 				data.<portlet:namespace />groupMappingDescription = document.<portlet:namespace />fm['<portlet:namespace />groupMappingDescription'].value;
 				data.<portlet:namespace />groupMappingGroupName = document.<portlet:namespace />fm['<portlet:namespace />groupMappingGroupName'].value;
 				data.<portlet:namespace />groupMappingUser = document.<portlet:namespace />fm['<portlet:namespace />groupMappingUser'].value;
@@ -559,7 +548,7 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 			else if (type == 'ldapUsers') {
 				url = '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcRenderCommandName" value="/portal_settings/test_ldap_users" /></portlet:renderURL>';
 
-				data.<portlet:namespace />importUserSearchFilter = document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.LDAP_IMPORT_USER_SEARCH_FILTER + postfix %>--'].value;
+				data.<portlet:namespace />importUserSearchFilter = document.<portlet:namespace />fm['<portlet:namespace />ldap--<%= LDAPConstants.IMPORT_USER_SEARCH_FILTER %>--'].value;
 				data.<portlet:namespace />userMappingEmailAddress = document.<portlet:namespace />fm['<portlet:namespace />userMappingEmailAddress'].value;
 				data.<portlet:namespace />userMappingFirstName = document.<portlet:namespace />fm['<portlet:namespace />userMappingFirstName'].value;
 				data.<portlet:namespace />userMappingFullName = document.<portlet:namespace />fm['<portlet:namespace />userMappingFullName'].value;
@@ -576,10 +565,10 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 
 			if (url != null) {
 				data.<portlet:namespace />ldapServerId = document.<portlet:namespace />fm['<portlet:namespace />ldapServerId'].value;
-				data.<portlet:namespace />baseProviderURL = document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.LDAP_BASE_PROVIDER_URL + postfix %>--'].value;
-				data.<portlet:namespace />baseDN = document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.LDAP_BASE_DN + postfix %>--'].value;
-				data.<portlet:namespace />principal = document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.LDAP_SECURITY_PRINCIPAL + postfix %>--'].value;
-				data.<portlet:namespace />credentials = document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.LDAP_SECURITY_CREDENTIALS + postfix %>--'].value;
+				data.<portlet:namespace />baseProviderURL = document.<portlet:namespace />fm['<portlet:namespace />ldap--<%= LDAPConstants.BASE_PROVIDER_URL %>--'].value;
+				data.<portlet:namespace />baseDN = document.<portlet:namespace />fm['<portlet:namespace />ldap--<%= LDAPConstants.BASE_DN %>--'].value;
+				data.<portlet:namespace />principal = document.<portlet:namespace />fm['<portlet:namespace />ldap--<%= LDAPConstants.SECURITY_PRINCIPAL %>--'].value;
+				data.<portlet:namespace />credentials = document.<portlet:namespace />fm['<portlet:namespace />ldap--<%= LDAPConstants.SECURITY_CREDENTIAL %>--'].value;
 
 				var dialog = Liferay.Util.Window.getWindow(
 					{

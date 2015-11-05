@@ -49,7 +49,7 @@ public class GroupPagesPanelApp extends BaseJSPPanelApp {
 
 	@Override
 	public String getJspPath() {
-		return "/panel/app/sites.jsp";
+		return "/panel/app/layouts_tree.jsp";
 	}
 
 	@Override

@@ -16,17 +16,32 @@
 
 <%@ include file="/html/taglib/aui/fieldset/init.jsp" %>
 
-<fieldset class="fieldset <%= cssClass %>" <%= Validator.isNotNull(id) ? "id=\"" + namespace + id + "\"" : StringPool.BLANK %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
+<fieldset class="fieldset <%= collapsible ? "panel panel-default" : StringPool.BLANK %> <%= cssClass %>" <%= Validator.isNotNull(id) ? "id=\"" + namespace + id + "\"" : StringPool.BLANK %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
 	<c:if test="<%= Validator.isNotNull(label) %>">
-		<legend class="fieldset-legend">
-			<span class="legend">
-				<liferay-ui:message key="<%= label %>" localizeKey="<%= localizeLabel %>" />
+		<liferay-util:buffer var="header">
+			<liferay-ui:message key="<%= label %>" localizeKey="<%= localizeLabel %>" />
 
-				<c:if test="<%= Validator.isNotNull(helpMessage) %>">
-					<liferay-ui:icon-help message="<%= helpMessage %>" />
-				</c:if>
-			</span>
-		</legend>
+			<c:if test="<%= Validator.isNotNull(helpMessage) %>">
+				<liferay-ui:icon-help message="<%= helpMessage %>" />
+			</c:if>
+		</liferay-util:buffer>
+
+		<c:choose>
+			<c:when test="<%= collapsible %>">
+				<legend class="fieldset-legend panel-heading">
+					<a aria-controls="collapseOne" aria-expanded="<%= !collapsed %>" class="<%= !collapsed ? "collapsed" : StringPool.BLANK %>" data-toggle="collapse" href="#<%= panelId %>" role="button">
+						<%= header %>
+					</a>
+				</legend>
+			</c:when>
+			<c:otherwise>
+				<legend class="fieldset-legend">
+					<span class="legend">
+						<%= header %>
+					</span>
+				</legend>
+			</c:otherwise>
+		</c:choose>
 	</c:if>
 
-	<div class="<%= column ? "row-fluid" : StringPool.BLANK %>">
+	<div class="<%= !collapsed ? "in" : StringPool.BLANK %> <%= collapsible ? "panel-collapse collapse" : StringPool.BLANK %> <%= column ? "row-fluid" : StringPool.BLANK %>" id="<%= panelId %>">

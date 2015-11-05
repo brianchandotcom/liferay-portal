@@ -14,8 +14,15 @@
 
 package com.liferay.taglib.aui;
 
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.taglib.aui.base.BaseFieldsetTag;
 
+import javax.portlet.PortletResponse;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspWriter;
 
 /**
@@ -37,6 +44,36 @@ public class FieldsetTag extends BaseFieldsetTag {
 		jspWriter.write("</div></fieldset>");
 
 		return EVAL_PAGE;
+	}
+
+	@Override
+	protected void setAttributes(HttpServletRequest request) {
+		super.setAttributes(request);
+
+		String panelId = StringPool.BLANK;
+
+		if (Validator.isNotNull(getLabel()) && getCollapsible()) {
+			panelId = PortalUtil.getUniqueElementId(
+				request, _getNamespace(), AUIUtil.normalizeId(getLabel()));
+		}
+
+		setNamespacedAttribute(request, "panelId", panelId);
+	}
+
+	private String _getNamespace() {
+		HttpServletRequest request =
+			(HttpServletRequest)pageContext.getRequest();
+
+		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		String namespace = StringPool.BLANK;
+
+		if (portletResponse != null) {
+			namespace = portletResponse.getNamespace();
+		}
+
+		return namespace;
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;

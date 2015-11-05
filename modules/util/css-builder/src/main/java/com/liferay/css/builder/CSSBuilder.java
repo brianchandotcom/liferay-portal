@@ -79,7 +79,8 @@ public class CSSBuilder {
 
 		String docrootDirName = GetterUtil.getString(
 			arguments.get("sass.docroot.dir"), CSSBuilderArgs.DOCROOT_DIR_NAME);
-		String generateSourceMap = arguments.get("sass.generate.source.map");
+		boolean generateSourceMap = GetterUtil.getBoolean(
+			arguments.get("sass.generate.source.map"));
 		String portalCommonDirName = arguments.get("sass.portal.common.dir");
 		String[] rtlExcludedPathRegexps = StringUtil.split(
 			arguments.get("sass.rtl.excluded.path.regexps"));
@@ -88,9 +89,8 @@ public class CSSBuilder {
 
 		try {
 			CSSBuilder cssBuilder = new CSSBuilder(
-				docrootDirName, Boolean.valueOf(generateSourceMap),
-				portalCommonDirName, rtlExcludedPathRegexps,
-				sassCompilerClassName);
+				docrootDirName, generateSourceMap, portalCommonDirName,
+				rtlExcludedPathRegexps, sassCompilerClassName);
 
 			cssBuilder.execute(dirNames);
 		}

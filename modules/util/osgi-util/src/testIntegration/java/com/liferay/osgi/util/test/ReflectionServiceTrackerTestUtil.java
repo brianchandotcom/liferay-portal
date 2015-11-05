@@ -28,8 +28,7 @@ public class ReflectionServiceTrackerTestUtil {
 	protected static <T> ServiceRegistration<T> registerServiceWithRanking(
 		BundleContext bundleContext, Class<T> clazz, T service, int ranking) {
 
-		Dictionary<String, Integer> properties =
-			new Hashtable<String, Integer>();
+		Dictionary<String, Integer> properties = new Hashtable<>();
 
 		properties.put("service.ranking", ranking);
 

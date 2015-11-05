@@ -54,41 +54,39 @@ public class TrackingClassesTest {
 	public void testInjectNullWhenNoServicesAreRegistered() {
 		TestInstance testInstance = new TestInstance();
 
-		ReflectionServiceTracker reflectionServiceTracker =
-			new ReflectionServiceTracker(testInstance);
+		try (ReflectionServiceTracker reflectionServiceTracker =
+			new ReflectionServiceTracker(testInstance)) {
 
-		Assert.assertNull(testInstance.getTrackedOne());
-		Assert.assertNull(testInstance.getTrackedTwo());
-
-		reflectionServiceTracker.close();
+			Assert.assertNull(testInstance.getTrackedOne());
+			Assert.assertNull(testInstance.getTrackedTwo());
+		}
 	}
 
 	@Test
 	public void testInjectNullWhenUnregisteringServices() {
 		TestInstance testInstance = new TestInstance();
 
-		ReflectionServiceTracker reflectionServiceTracker =
-			new ReflectionServiceTracker(testInstance);
+		try (ReflectionServiceTracker reflectionServiceTracker =
+			new ReflectionServiceTracker(testInstance)) {
 
-		TrackedOne trackedOne = new TrackedOne();
+			TrackedOne trackedOne = new TrackedOne();
 
-		ServiceRegistration<TrackedOne> serviceRegistration1 =
-			ReflectionServiceTrackerTestUtil.registerServiceWithRanking(
-				_bundleContext, TrackedOne.class, trackedOne, 0);
+			ServiceRegistration<TrackedOne> serviceRegistration1 =
+				ReflectionServiceTrackerTestUtil.registerServiceWithRanking(
+					_bundleContext, TrackedOne.class, trackedOne, 0);
 
-		TrackedTwo trackedTwo = new TrackedTwo();
+			TrackedTwo trackedTwo = new TrackedTwo();
 
-		ServiceRegistration<TrackedTwo> serviceRegistration2 =
-			ReflectionServiceTrackerTestUtil.registerServiceWithRanking(
-				_bundleContext, TrackedTwo.class, trackedTwo, 0);
+			ServiceRegistration<TrackedTwo> serviceRegistration2 =
+				ReflectionServiceTrackerTestUtil.registerServiceWithRanking(
+					_bundleContext, TrackedTwo.class, trackedTwo, 0);
 
-		serviceRegistration1.unregister();
-		serviceRegistration2.unregister();
+			serviceRegistration1.unregister();
+			serviceRegistration2.unregister();
 
-		Assert.assertNull(testInstance.getTrackedOne());
-		Assert.assertNull(testInstance.getTrackedTwo());
-
-		reflectionServiceTracker.close();
+			Assert.assertNull(testInstance.getTrackedOne());
+			Assert.assertNull(testInstance.getTrackedTwo());
+		}
 	}
 
 	@ArquillianResource

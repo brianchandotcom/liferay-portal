@@ -39,7 +39,12 @@ public class TrashControlPanelEntry extends BaseControlPanelEntry {
 			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws Exception {
 
-		return !TrashUtil.isTrashEnabled(group.getGroupId());
+		if (!TrashUtil.isTrashEnabled(group.getGroupId())) {
+			return true;
+		}
+
+		return super.hasAccessPermissionDenied(
+			permissionChecker, group, portlet);
 	}
 
 }

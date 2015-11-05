@@ -46,7 +46,8 @@ public class GroupPagesControlPanelEntry extends BaseControlPanelEntry {
 			return true;
 		}
 
-		return false;
+		return super.hasAccessPermissionDenied(
+			permissionChecker, group, portlet);
 	}
 
 	@Override
@@ -54,8 +55,14 @@ public class GroupPagesControlPanelEntry extends BaseControlPanelEntry {
 			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws Exception {
 
-		return GroupPermissionUtil.contains(
-			permissionChecker, group, ActionKeys.MANAGE_LAYOUTS);
+		if (GroupPermissionUtil.contains(
+				permissionChecker, group, ActionKeys.MANAGE_LAYOUTS)) {
+
+			return true;
+		}
+
+		return super.hasPermissionImplicitlyGranted(
+			permissionChecker, group, portlet);
 	}
 
 }

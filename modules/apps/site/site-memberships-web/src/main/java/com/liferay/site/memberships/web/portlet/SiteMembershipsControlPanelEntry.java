@@ -47,7 +47,8 @@ public class SiteMembershipsControlPanelEntry extends BaseControlPanelEntry {
 			return true;
 		}
 
-		return false;
+		return super.hasAccessPermissionDenied(
+			permissionChecker, group, portlet);
 	}
 
 	@Override
@@ -61,7 +62,8 @@ public class SiteMembershipsControlPanelEntry extends BaseControlPanelEntry {
 			return true;
 		}
 
-		return false;
+		return super.hasPermissionImplicitlyGranted(
+			permissionChecker, group, portlet);
 	}
 
 }

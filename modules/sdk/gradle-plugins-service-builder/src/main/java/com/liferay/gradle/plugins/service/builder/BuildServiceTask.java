@@ -18,8 +18,6 @@ import com.liferay.gradle.util.StringUtil;
 import com.liferay.gradle.util.Validator;
 import com.liferay.portal.tools.service.builder.ServiceBuilderArgs;
 
-import java.io.File;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +41,6 @@ public class BuildServiceTask extends JavaExec {
 		setArgs(getCompleteArgs());
 
 		super.setClasspath(getClasspath());
-		super.setWorkingDir(getWorkingDir());
 
 		super.exec();
 	}
@@ -146,13 +143,6 @@ public class BuildServiceTask extends JavaExec {
 
 	public String getTestDirName() {
 		return _serviceBuilderArgs.getTestDirName();
-	}
-
-	@Override
-	public File getWorkingDir() {
-		Project project = getProject();
-
-		return project.getProjectDir();
 	}
 
 	public boolean isAutoImportDefaultReferences() {
@@ -290,11 +280,6 @@ public class BuildServiceTask extends JavaExec {
 
 	public void setTestDirName(String testDirName) {
 		_serviceBuilderArgs.setTestDirName(testDirName);
-	}
-
-	@Override
-	public void setWorkingDir(Object dir) {
-		throw new UnsupportedOperationException();
 	}
 
 	protected List<String> getCompleteArgs() {

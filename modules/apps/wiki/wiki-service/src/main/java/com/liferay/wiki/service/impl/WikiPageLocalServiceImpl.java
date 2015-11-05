@@ -3202,34 +3202,38 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Social
 
-		WikiGroupServiceOverriddenConfiguration
-			wikiGroupServiceOverriddenConfiguration =
-				configurationFactory.getConfiguration(
-					WikiGroupServiceOverriddenConfiguration.class,
-					new GroupServiceSettingsLocator(
-						node.getGroupId(), WikiConstants.SERVICE_NAME));
+		if (serviceContext.getWorkflowAction() !=
+				WorkflowConstants.ACTION_SAVE_DRAFT) {
 
-		if (!page.isMinorEdit() ||
-			wikiGroupServiceOverriddenConfiguration.
-				pageMinorEditAddSocialActivity()) {
+			WikiGroupServiceOverriddenConfiguration
+				wikiGroupServiceOverriddenConfiguration =
+					configurationFactory.getConfiguration(
+						WikiGroupServiceOverriddenConfiguration.class,
+						new GroupServiceSettingsLocator(
+							node.getGroupId(), WikiConstants.SERVICE_NAME));
 
-			if (oldPage.getVersion() == newVersion) {
-				Date createDate = new Date(now.getTime() + 1);
+			if (!page.isMinorEdit() ||
+				wikiGroupServiceOverriddenConfiguration.
+					pageMinorEditAddSocialActivity()) {
 
-				SocialActivityManagerUtil.updateLastSocialActivity(
-					serviceContext.getUserId(), page,
-					WikiActivityKeys.UPDATE_PAGE, createDate);
-			}
-			else {
-				JSONObject extraDataJSONObject =
-					JSONFactoryUtil.createJSONObject();
+				if (oldPage.getVersion() == newVersion) {
+					Date createDate = new Date(now.getTime() + 1);
 
-				extraDataJSONObject.put("title", page.getTitle());
-				extraDataJSONObject.put("version", page.getVersion());
+					SocialActivityManagerUtil.updateLastSocialActivity(
+						serviceContext.getUserId(), page,
+						WikiActivityKeys.UPDATE_PAGE, createDate);
+				}
+				else {
+					JSONObject extraDataJSONObject =
+						JSONFactoryUtil.createJSONObject();
 
-				SocialActivityManagerUtil.addActivity(
-					userId, page, WikiActivityKeys.UPDATE_PAGE,
-					extraDataJSONObject.toString(), 0);
+					extraDataJSONObject.put("title", page.getTitle());
+					extraDataJSONObject.put("version", page.getVersion());
+
+					SocialActivityManagerUtil.addActivity(
+						userId, page, WikiActivityKeys.UPDATE_PAGE,
+						extraDataJSONObject.toString(), 0);
+				}
 			}
 		}
 

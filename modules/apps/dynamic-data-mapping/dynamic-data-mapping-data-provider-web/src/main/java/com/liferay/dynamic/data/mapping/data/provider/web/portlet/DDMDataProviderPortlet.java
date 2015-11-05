@@ -15,9 +15,16 @@
 package com.liferay.dynamic.data.mapping.data.provider.web.portlet;
 
 import com.liferay.dynamic.data.mapping.data.provider.web.constants.DDMDataProviderPortletKeys;
+import com.liferay.dynamic.data.mapping.data.provider.web.display.context.DDMDataProviderDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.io.IOException;
 
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -50,4 +57,19 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class DDMDataProviderPortlet extends MVCPortlet {
+
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		DDMDataProviderDisplayContext ddmDataProviderDisplayContext =
+			new DDMDataProviderDisplayContext(renderRequest, renderResponse);
+
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT, ddmDataProviderDisplayContext);
+
+		super.render(renderRequest, renderResponse);
+	}
+
 }

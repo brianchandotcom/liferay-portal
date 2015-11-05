@@ -100,9 +100,9 @@ public class CalendarIndexer extends BaseIndexer<Calendar> {
 	protected Document doGetDocument(Calendar calendar) throws Exception {
 		Document document = getBaseModelDocument(CLASS_NAME, calendar);
 
-		document.addLocalizedText(
-			Field.DESCRIPTION, calendar.getDescriptionMap());
-		document.addLocalizedText(Field.NAME, calendar.getNameMap());
+		document.addLocalizedKeyword(
+			Field.DESCRIPTION, calendar.getDescriptionMap(), true);
+		document.addLocalizedKeyword(Field.NAME, calendar.getNameMap(), true);
 		document.addKeyword("calendarId", calendar.getCalendarId());
 
 		Locale defaultLocale = LocaleUtil.getSiteDefault();
@@ -113,8 +113,8 @@ public class CalendarIndexer extends BaseIndexer<Calendar> {
 
 		CalendarResource calendarResource = calendar.getCalendarResource();
 
-		document.addLocalizedText(
-			"resourceName", calendarResource.getNameMap());
+		document.addLocalizedKeyword(
+			"resourceName", calendarResource.getNameMap(), true);
 
 		return document;
 	}

@@ -31,10 +31,15 @@ else {
 String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
+int delta = ParamUtil.getInteger(request, "delta");
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 portletURL.setParameter("navigation", "images");
+portletURL.setParameter("delta", String.valueOf(delta));
+portletURL.setParameter("orderBycol", orderByCol);
+portletURL.setParameter("orderByType", orderByType);
 
 String keywords = ParamUtil.getString(request, "keywords");
 %>

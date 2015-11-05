@@ -36,14 +36,22 @@ else {
 String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
+int delta = ParamUtil.getInteger(request, "delta");
+
 PortletURL navigationPortletURL = renderResponse.createRenderURL();
 
 navigationPortletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
+navigationPortletURL.setParameter("delta", String.valueOf(delta));
+navigationPortletURL.setParameter("orderBycol", orderByCol);
+navigationPortletURL.setParameter("orderByType", orderByType);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 portletURL.setParameter("entriesNavigation", entriesNavigation);
+portletURL.setParameter("delta", String.valueOf(delta));
+portletURL.setParameter("orderBycol", orderByCol);
+portletURL.setParameter("orderByType", orderByType);
 
 String keywords = ParamUtil.getString(request, "keywords");
 %>

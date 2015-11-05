@@ -74,8 +74,6 @@ SearchContainer searchContainer = new GroupSearch(liferayPortletRequest, iterato
 
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="icon" markupView="lexicon" paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
-
-		<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" />
+		<liferay-ui:search-iterator displayStyle="icon" markupView="lexicon" searchContainer="<%= searchContainer %>" />
 	</liferay-ui:search-container>
 </div>

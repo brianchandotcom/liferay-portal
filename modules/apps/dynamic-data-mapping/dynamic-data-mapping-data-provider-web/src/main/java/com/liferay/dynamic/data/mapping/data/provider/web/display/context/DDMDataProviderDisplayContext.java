@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.data.provider.web.display.context;
 
 import com.liferay.dynamic.data.mapping.data.provider.web.display.context.util.DDMDataProviderRequestHelper;
 
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -27,10 +28,26 @@ public class DDMDataProviderDisplayContext {
 	public DDMDataProviderDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		_renderRequest = renderRequest;
+		_renderResponse = renderResponse;
+
 		_ddmDataProviderRequestHelper = new DDMDataProviderRequestHelper(
 			renderRequest);
 	}
 
+	public PortletURL getPortletURL() {
+		PortletURL portletURL = _renderResponse.createRenderURL();
+
+		portletURL.setParameter("mvcPath", "/view.jsp");
+		portletURL.setParameter(
+			"groupId",
+			String.valueOf(_ddmDataProviderRequestHelper.getScopeGroupId()));
+
+		return portletURL;
+	}
+
 	private final DDMDataProviderRequestHelper _ddmDataProviderRequestHelper;
+	private final RenderRequest _renderRequest;
+	private final RenderResponse _renderResponse;
 
 }

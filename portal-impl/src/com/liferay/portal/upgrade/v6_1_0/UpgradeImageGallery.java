@@ -641,7 +641,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 	}
 
 	protected void migrateImage(long imageId) throws Exception {
-		Image image = ImageLocalServiceUtil.getImage(imageId);
+		Image image = getImage(imageId);
 
 		try {
 			migrateFile(0, 0, null, image);
@@ -666,7 +666,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 		Image largeImage = null;
 
 		if (largeImageId != 0) {
-			largeImage = ImageLocalServiceUtil.getImage(largeImageId);
+			largeImage = getImage(largeImageId);
 
 			long repositoryId = DLFolderConstants.getDataRepositoryId(
 				groupId, folderId);
@@ -697,7 +697,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 		Image thumbnailImage = null;
 
 		if (thumbnailImageId != 0) {
-			thumbnailImage = ImageLocalServiceUtil.getImage(thumbnailImageId);
+			thumbnailImage = getImage(thumbnailImageId);
 
 			Connection con = null;
 			PreparedStatement ps = null;

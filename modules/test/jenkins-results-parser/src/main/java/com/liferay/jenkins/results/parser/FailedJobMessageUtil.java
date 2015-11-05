@@ -43,10 +43,13 @@ public class FailedJobMessageUtil {
 
 		String result = jsonObject.getString("result");
 
-		File javacOutputFile =
-			new File(
-				project.getProperty("top.level.shared.dir") +
-					"/javac.output.txt");
+		String topLevelSharedDir = project.getProperty("top.level.shared.dir");
+
+		topLevelSharedDir = topLevelSharedDir.replace(
+			"${user.dir}", System.getProperty("user.dir"));
+
+		File javacOutputFile = new File(
+			topLevelSharedDir + "/javac.output.txt");
 
 		if (result.equals("ABORTED")) {
 			sb.append("<pre>Build was aborted</pre>");

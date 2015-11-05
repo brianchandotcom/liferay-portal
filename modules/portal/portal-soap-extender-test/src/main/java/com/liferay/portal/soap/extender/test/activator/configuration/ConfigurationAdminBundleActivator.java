@@ -109,7 +109,7 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 
 		_cleanUp();
 
-		if (!waiter.waitFor(10_000)) {
+		if (!waiter.waitFor(10_000 * 60)) {
 			throw new TimeoutException("Service unregister waiting timeout");
 		}
 	}

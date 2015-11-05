@@ -155,7 +155,7 @@
 </tr>
 <tr>
 	<td>EMPTY_INFO</td>
-	<td>//div[contains(@class,'empty-result-message')]//div[@class='card-footer']/div/div</td>
+	<td>//div[contains(@class,'empty-result-message')]//div[@class='card-footer']</td>
 	<td></td>
 </tr>
 <tr>

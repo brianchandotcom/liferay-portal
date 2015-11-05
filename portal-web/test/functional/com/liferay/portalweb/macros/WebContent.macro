@@ -977,7 +977,7 @@
 			<var name="displayStyle" value="Descriptive" />
 		</execute>
 
-		<execute function="Check" locator1="Checkbox#SELECT_ALL" />
+		<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
 
 		<execute function="Click" locator1="Icon#DELETE" />
 
@@ -1080,7 +1080,7 @@
 		<while>
 			<condition function="IsElementPresent#pauseIsElementPresent" locator1="WC#ENTRY_DESCRIPTIVE_THUMBNAIL_GENERIC" />
 			<then>
-				<execute function="Check" locator1="Checkbox#SELECT_ALL" />
+				<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
 				<execute function="Click" locator1="Icon#DELETE" />
 				<execute function="AssertTextEquals#assertPartialText" locator1="Message#RECYCLE_BIN_SUCCESS" value1="moved to the Recycle Bin. Undo" />
 			</then>

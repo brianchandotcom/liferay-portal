@@ -19,6 +19,8 @@ import com.liferay.item.selector.taglib.servlet.item.selector.ItemSelectorUtil;
 import com.liferay.item.selector.web.constants.ItemSelectorPortletKeys;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -111,6 +113,8 @@ public class GroupSelectorTag extends IncludeTag {
 			return groups.size();
 		}
 		catch (Exception e) {
+			_log.error(e, e);
+
 			return 0;
 		}
 	}
@@ -159,6 +163,8 @@ public class GroupSelectorTag extends IncludeTag {
 				groups, searchContainer.getStart(), searchContainer.getEnd());
 		}
 		catch (Exception e) {
+			_log.error(e, e);
+
 			return new ArrayList<>();
 		}
 	}
@@ -179,6 +185,9 @@ public class GroupSelectorTag extends IncludeTag {
 			"liferay-item-selector:group-selector:itemSelector",
 			ItemSelectorUtil.getItemSelector());
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		GroupSelectorTag.class);
 
 	private int _groupCount;
 	private List<Group> _groups = null;

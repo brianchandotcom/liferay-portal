@@ -55,22 +55,6 @@ SearchContainer searchContainer = new GroupSearch(liferayPortletRequest, iterato
 			<%
 			row.setCssClass("col-md-3");
 
-			if (curGroup.hasStagingGroup()) {
-				Group stagingGroup = curGroup.getStagingGroup();
-
-				long doAsGroupId = themeDisplay.getDoAsGroupId();
-
-				String portletId = ParamUtil.getString(request, "p_p_id");
-
-				if ((layout.isTypeControlPanel() ||
-					(stagingGroup.getGroupId() == doAsGroupId)) &&
-					 curGroup.isStagedPortlet(portletId) &&
-					 !curGroup.isStagedRemotely()) {
-
-					curGroup = stagingGroup;
-				}
-			}
-
 			long refererGroupId = themeDisplay.getRefererGroupId() != 0 ? themeDisplay.getRefererGroupId() : themeDisplay.getScopeGroupId();
 
 			PortletURL viewGroupURL = itemSelector.getItemSelectorURL(requestBackedPortletURLFactory, curGroup, refererGroupId, itemSelectedEventName, criteria.toArray(new ItemSelectorCriterion[criteria.size()]));

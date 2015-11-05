@@ -37,6 +37,10 @@ public abstract class BaseFieldsetTag extends com.liferay.taglib.util.IncludeTag
 		return _column;
 	}
 
+	public boolean getCollapsed() {
+		return _collapsed;
+	}
+
 	public java.lang.String getCssClass() {
 		return _cssClass;
 	}
@@ -61,6 +65,12 @@ public abstract class BaseFieldsetTag extends com.liferay.taglib.util.IncludeTag
 		_column = column;
 
 		setScopedAttribute("column", column);
+	}
+
+	public void setCollapsed(boolean collapsed) {
+		_collapsed = collapsed;
+
+		setScopedAttribute("collapsed", collapsed);
 	}
 
 	public void setCssClass(java.lang.String cssClass) {
@@ -98,6 +108,7 @@ public abstract class BaseFieldsetTag extends com.liferay.taglib.util.IncludeTag
 		super.cleanUp();
 
 		_column = false;
+		_collapsed = false;
 		_cssClass = null;
 		_helpMessage = null;
 		_id = null;
@@ -113,6 +124,7 @@ public abstract class BaseFieldsetTag extends com.liferay.taglib.util.IncludeTag
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		setNamespacedAttribute(request, "column", _column);
+		setNamespacedAttribute(request, "collapsed", _collapsed);
 		setNamespacedAttribute(request, "cssClass", _cssClass);
 		setNamespacedAttribute(request, "helpMessage", _helpMessage);
 		setNamespacedAttribute(request, "id", _id);
@@ -126,6 +138,7 @@ public abstract class BaseFieldsetTag extends com.liferay.taglib.util.IncludeTag
 		"/html/taglib/aui/fieldset/start.jsp";
 
 	private boolean _column = false;
+	private boolean _collapsed = false;
 	private java.lang.String _cssClass = null;
 	private java.lang.String _helpMessage = null;
 	private java.lang.String _id = null;

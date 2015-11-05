@@ -3842,11 +3842,11 @@
 		<execute macro="CalendarNavigator#gotoAddEvent" />
 
 		<execute macro="CalendarEvent#viewAvailableCalendars">
-			<var name="availableCalendarList" value="Liferay,Test Test" />
+			<var name="availableCalendarList" value="Liferay,Test Test,${siteName}" />
 		</execute>
 
 		<execute macro="CalendarEvent#viewUnavailableCalendarsNotPresent">
-			<var name="unavailableCalendarList" value="${userLoginFullName},${siteName}" />
+			<var name="unavailableCalendarList" value="${userLoginFullName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -3854,18 +3854,14 @@
 		</execute>
 
 		<execute macro="Calendar#add">
-			<var name="calendarName" value="${siteName}" />
+			<var name="calendarName" value="${userLoginFullName}" />
 			<var name="calendarType" value="Other Calendars" />
 		</execute>
 
 		<execute macro="CalendarNavigator#gotoAddEvent" />
 
 		<execute macro="CalendarEvent#viewAvailableCalendars">
-			<var name="availableCalendarList" value="Liferay,Test Test,${siteName}" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewUnavailableCalendarsNotPresent">
-			<var name="unavailableCalendarList" value="${userLoginFullName}" />
+			<var name="availableCalendarList" value="Liferay,Test Test,${siteName},${userLoginFullName}" />
 		</execute>
 	</command>
 

@@ -40,9 +40,9 @@
 		<var name="key_siteCalendarName" value="${siteCalendarName}" />
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="AssertTextEquals" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR" value1="${siteCalendarName}" />
+		<execute function="AssertTextEquals" locator1="Calendar#CURRENT_SITE_CALENDARS_CALENDAR" value1="${siteCalendarName}" />
 
-		<execute function="Click" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR_MENULIST_ARROW" value1="${siteCalendarName}" />
+		<execute function="Click" locator1="Calendar#CURRENT_SITE_CALENDARS_CALENDAR_MENULIST_ARROW" value1="${siteCalendarName}" />
 	</command>
 
 	<command name="_viewCalendarHidden">

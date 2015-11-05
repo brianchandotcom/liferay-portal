@@ -20,6 +20,8 @@
 
 <%
 boolean column = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:fieldset:column")));
+boolean collapsed = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:fieldset:collapsed")));
+boolean collapsible = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:fieldset:collapsible")));
 java.lang.String cssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:fieldset:cssClass"));
 java.lang.String helpMessage = GetterUtil.getString((java.lang.String)request.getAttribute("aui:fieldset:helpMessage"));
 java.lang.String id = GetterUtil.getString((java.lang.String)request.getAttribute("aui:fieldset:id"));

@@ -1488,6 +1488,18 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<name>collapsed</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<name>collapsible</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<description><![CDATA[A CSS class for styling the component]]></description>
 			<name>cssClass</name>
 			<required>false</required>

@@ -1,4 +1,6 @@
 <definition>
+	<var name="siteName" value="Liferay" />
+
 	<command name="_deleteCalendar">
 		<var name="key_menuListOption" value="Delete" />
 

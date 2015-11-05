@@ -1,4 +1,6 @@
 <definition>
+	<var name="siteName" value="Liferay" />
+
 	<command name="add">
 		<if>
 			<equals arg1="${calendarType}" arg2="My Calendars" />

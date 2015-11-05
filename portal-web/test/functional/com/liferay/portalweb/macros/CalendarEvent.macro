@@ -1,4 +1,6 @@
 <definition>
+	<var name="siteName" value="Liferay" />
+
 	<command name="_assertDialogBoxPresent">
 		<if>
 			<equals arg1="${schedulerEventDialogBox}" arg2="false" />

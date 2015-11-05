@@ -52,6 +52,8 @@ public class PanelAppTag extends BasePanelTag {
 					request, new PipingServletResponse(pageContext));
 
 				if (include) {
+					doClearTag();
+
 					return EVAL_PAGE;
 				}
 			}
@@ -61,6 +63,11 @@ public class PanelAppTag extends BasePanelTag {
 		}
 
 		return super.doEndTag();
+	}
+
+	@Override
+	public int doStartTag() throws JspException {
+		return EVAL_BODY_INCLUDE;
 	}
 
 	public void setActive(Boolean active) {

@@ -24,11 +24,17 @@ import com.liferay.portal.theme.ThemeDisplay;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
 
 /**
  * @author Adolfo Pérez
  */
 public class PanelTag extends BasePanelTag {
+
+	@Override
+	public int doStartTag() throws JspException {
+		return EVAL_BODY_INCLUDE;
+	}
 
 	public void setPanelCategory(PanelCategory panelCategory) {
 		_panelCategory = panelCategory;

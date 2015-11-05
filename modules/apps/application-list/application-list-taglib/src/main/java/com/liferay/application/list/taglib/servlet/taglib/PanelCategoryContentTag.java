@@ -40,6 +40,8 @@ public class PanelCategoryContentTag extends BasePanelTag {
 				request, new PipingServletResponse(pageContext));
 
 			if (include) {
+				doClearTag();
+
 				return EVAL_PAGE;
 			}
 		}
@@ -48,6 +50,11 @@ public class PanelCategoryContentTag extends BasePanelTag {
 		}
 
 		return super.doEndTag();
+	}
+
+	@Override
+	public int doStartTag() throws JspException {
+		return EVAL_BODY_INCLUDE;
 	}
 
 	public void setPanelCategory(PanelCategory panelCategory) {

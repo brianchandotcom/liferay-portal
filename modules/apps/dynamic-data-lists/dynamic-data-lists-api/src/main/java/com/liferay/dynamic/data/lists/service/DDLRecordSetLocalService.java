@@ -373,4 +373,8 @@ public interface DDLRecordSetLocalService extends BaseLocalService,
 		int minDisplayRows,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
+
+	public com.liferay.dynamic.data.lists.model.DDLRecordSet updateRecordSet(
+		long recordSetId, java.lang.String typeSettings)
+		throws PortalException;
 }

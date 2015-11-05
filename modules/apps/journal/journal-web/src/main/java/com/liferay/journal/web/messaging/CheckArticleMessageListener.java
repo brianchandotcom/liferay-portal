@@ -17,7 +17,6 @@ package com.liferay.journal.web.messaging;
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.journal.service.JournalArticleLocalService;
-import com.liferay.journal.upgrade.JournalServiceUpgrade;
 import com.liferay.journal.web.configuration.JournalWebConfiguration;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
@@ -77,11 +76,6 @@ public class CheckArticleMessageListener
 		JournalArticleLocalService journalArticleLocalService) {
 
 		_journalArticleLocalService = journalArticleLocalService;
-	}
-
-	@Reference
-	protected void setJournalServiceUpgrade(
-		JournalServiceUpgrade journalServiceUpgrade) {
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

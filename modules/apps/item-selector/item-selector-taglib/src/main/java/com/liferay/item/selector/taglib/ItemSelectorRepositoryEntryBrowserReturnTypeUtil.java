@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 
@@ -115,10 +114,6 @@ public class ItemSelectorRepositoryEntryBrowserReturnTypeUtil
 		String previewURL = DLUtil.getPreviewURL(
 			fileEntry, fileEntry.getFileVersion(), themeDisplay,
 			StringPool.BLANK, false, false);
-
-		if (Validator.isNull(previewURL)) {
-			return DLUtil.getImagePreviewURL(fileEntry, themeDisplay);
-		}
 
 		return previewURL;
 	}

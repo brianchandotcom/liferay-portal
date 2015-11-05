@@ -32,7 +32,7 @@
 		<execute function="AssertClick" locator1="NavListItem#ADD_BOOKMARK" value1="Add Bookmark" />
 
 		<if>
-			<condition function="IsElementPresent#pauseIsElementPresent" locator1="AssetRelatedAssets#HEADER_COLLAPSED" />
+			<condition function="IsElementPresent#waitForVisible" locator1="AssetRelatedAssets#HEADER_COLLAPSED" />
 			<then>
 				<execute function="Click" locator1="AssetRelatedAssets#HEADER_COLLAPSED" />
 				<execute function="AssertElementPresent" locator1="AssetRelatedAssets#HEADER_EXPANDED" />

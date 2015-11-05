@@ -20,12 +20,12 @@
 </tr>
 <tr>
 	<td>HEADER_COLLAPSED</td>
-	<td>//div[contains(@class,'toggler-header-collapsed') and contains(.,'Related Assets')]/div/span</td>
+	<td>//div[contains(@class,'toggler-header-collapsed')]//span[contains(.,'Related Assets')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>HEADER_EXPANDED</td>
-	<td>//div[contains(@class,'toggler-header-expanded') and contains(.,'Related Assets')]/div/span</td>
+	<td>//div[contains(@class,'toggler-header-expanded')]//span[contains(.,'Related Assets')]</td>
 	<td></td>
 </tr>
 <tr>

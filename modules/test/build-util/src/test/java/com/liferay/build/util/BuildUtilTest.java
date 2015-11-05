@@ -12,26 +12,28 @@
  * details.
  */
 
-package com.liferay.build.utility;
+package com.liferay.build.util;
 
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.liferay.build.util.BuildUtil;
+
 /**
 * @author Peter Yoo
 */
-public class BuildUtilityTest {
+public class BuildUtilTest {
 
 	@Test
 	public void testExpandSlaveRange() {
 		Assert.assertEquals(
 			"cloud-10-50-0-151,cloud-10-50-0-152, cloud-10-50-0-153," +
 				"cloud-10-50-0-154,cloud-10-50-0-155,cloud-10-50-0-156",
-			BuildUtility.expandSlaveRange("cloud-10-50-0-151..156"));		
+			BuildUtil.expandSlaveRange("cloud-10-50-0-151..156"));		
 		Assert.assertEquals(
 			"cloud-10-50-0-47,cloud-10-50-0-0,cloud-10-50-0-1," +
 				"cloud-10-50-0-2,cloud-10-50-0-49,cloud-10-50-0-50",
-			BuildUtility.expandSlaveRange(
+			BuildUtil.expandSlaveRange(
 				"cloud-10-50-0-47, cloud-10-50-0-0..2, cloud-10-50-0-49..50"));
 	}
 }

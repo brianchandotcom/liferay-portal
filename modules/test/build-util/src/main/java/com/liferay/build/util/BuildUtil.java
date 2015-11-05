@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.build.utility;
+package com.liferay.build.util;
 
 /**
  * @author Peter Yoo
  */
-public class BuildUtility {
+public class BuildUtil {
 	
 	public static String expandSlaveRange(String value) {
 		StringBuilder sb = new StringBuilder();

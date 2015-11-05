@@ -385,7 +385,7 @@
 
 	.form-builder-controls-trigger  {
 		$height: 48px;
-		
+
 		display: block;
 		font-size: 20px;
 		height: $height;
@@ -396,20 +396,16 @@
 		top: 50%;
 		
 		.icon-monospaced {
-			color: #b0bec9;
+			color: #B0BEC9;
 		}
 
-		&:hover {
-			.icon-monospaced {
-				color: inherit;
-			}
+		&:hover .icon-monospaced {
+			color: inherit;
 		}
 	}
 	
-	.form-builder-field-list-empty {
-		.form-builder-field-list-add-container {
-			margin-top: initial;	
-		}
+	.form-builder-field-list-empty .form-builder-field-list-add-container {
+		margin-top: initial;
 	}
 
 	.form-builder-field-list-add-container,
@@ -458,8 +454,8 @@
 	}
 
 	.form-builder-layout {
-		width: auto;
 		margin: 0 auto;
+		width: auto;
 	
 		.form-builder-field-list-container {
 			padding: 26px 0 0 0;

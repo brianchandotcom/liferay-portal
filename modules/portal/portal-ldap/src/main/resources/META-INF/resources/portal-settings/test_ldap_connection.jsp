@@ -14,12 +14,10 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/portal-settings/init.jsp" %>
 
 <%
 long ldapServerId = ParamUtil.getLong(request, "ldapServerId", 0);
-
-String postfix = LDAPSettingsUtil.getPropertyPostfix(ldapServerId);
 
 String baseProviderURL = ParamUtil.getString(request, "baseProviderURL");
 String principal = ParamUtil.getString(request, "principal");
@@ -27,7 +25,9 @@ String principal = ParamUtil.getString(request, "principal");
 String credentials = request.getParameter("credentials");
 
 if (credentials.equals(Portal.TEMP_OBFUSCATION_VALUE)) {
-	credentials = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.LDAP_SECURITY_CREDENTIALS + postfix);
+	LDAPServerConfiguration ldapServerConfiguration = ldapServerConfigurationProvider.getConfiguration(themeDisplay.getCompanyId(), ldapServerId, true);
+
+	credentials = ldapServerConfiguration.securityCredential();
 }
 
 LdapContext ldapContext = PortalLDAPUtil.getContext(themeDisplay.getCompanyId(), baseProviderURL, principal, credentials);

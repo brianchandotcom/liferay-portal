@@ -1,0 +1,33 @@
+{
+  "duration" : 226.658,
+  "empty" : false,
+  "failCount" : 0,
+  "passCount" : 1,
+  "skipCount" : 0,
+  "suites" : [
+    {
+      "cases" : [
+        {
+          "age" : 0,
+          "className" : "com.liferay.poshi.runner.PoshiRunner",
+          "duration" : 226.658,
+          "errorDetails" : null,
+          "errorStackTrace" : null,
+          "failedSince" : 0,
+          "name" : "test[ApplicationdisplaytemplatesUsecase#ADTCategoriesNavigation]",
+          "skipped" : false,
+          "skippedMessage" : null,
+          "status" : "PASSED",
+          "stderr" : "\n\n",
+          "stdout" : "\n-- listing properties --\nbrowser.type=firefox\ncompany.id=1\ncomponent.names=extra-apps-content-targeting,extra-apps-known-issues,liferay-connected-services-fix-packs,liferay-connected-services-known-issues,liferay-connected-services-notifications,liferay-connected-services-project-administration,liferay-connected-services-subscriptions,liferay-connected-services-user-management,marketplace,marketplace-known-issues,marketplace-plugins-1-2-1-columns-layouttpl,marketplace-plugins-1-3-1-columns-layo\n...[truncated 7262 chars]...\n-wordbreak-min.js&/o/frontend-js-web/aui/text-wordbreak/text-wordbreak-min.js&/o/frontend-js-web/aui/autocomplete-filters/autocomplete-filters-min.js&/o/frontend-js-web/aui/aui-ace-autocomplete-templateprocessor/aui-ace-autocomplete-templateprocessor-min.js&/o/frontend-js-web/aui/aui-ace-autocomplete-freemarker/aui-ace-autocomplete-freemarker-min.js&/o/frontend-js-web/aui/aui-popover/aui-popover-min.js&/o/frontend-js-web/aui/aui-ace-autocomplete-velocity/aui-ace-autocomplete-velocity-min.js:9]\n\n"
+        }
+      ],
+      "duration" : 226.658,
+      "id" : "0",
+      "name" : "com.liferay.poshi.runner.PoshiRunner",
+      "stderr" : "\n\n",
+      "stdout" : "\n-- listing properties --\nbrowser.type=firefox\ncompany.id=1\ncomponent.names=extra-apps-content-targeting,extra-apps-known-issues,liferay-connected-services-fix-packs,liferay-connected-services-known-issues,liferay-connected-services-notifications,liferay-connected-services-project-administration,liferay-connected-services-subscriptions,liferay-connected-services-user-management,marketplace,marketplace-known-issues,marketplace-plugins-1-2-1-columns-layouttpl,marketplace-plugins-1-3-1-columns-layo\n...[truncated 7262 chars]...\n-wordbreak-min.js&/o/frontend-js-web/aui/text-wordbreak/text-wordbreak-min.js&/o/frontend-js-web/aui/autocomplete-filters/autocomplete-filters-min.js&/o/frontend-js-web/aui/aui-ace-autocomplete-templateprocessor/aui-ace-autocomplete-templateprocessor-min.js&/o/frontend-js-web/aui/aui-ace-autocomplete-freemarker/aui-ace-autocomplete-freemarker-min.js&/o/frontend-js-web/aui/aui-popover/aui-popover-min.js&/o/frontend-js-web/aui/aui-ace-autocomplete-velocity/aui-ace-autocomplete-velocity-min.js:9]\n\n",
+      "timestamp" : "2015-11-04T19:11:54"
+    }
+  ]
+}

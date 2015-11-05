@@ -1,0 +1,26 @@
+Started by remote host 10.0.16.21
+[EnvInject] - Loading node environment variables.
+[EnvInject] - Preparing an environment for the build.
+[EnvInject] - Keeping Jenkins system variables.
+[EnvInject] - Keeping Jenkins build variables.
+[EnvInject] - Injecting as environment variables the properties file path '/mnt/mfs-ssd1-10.0.10/jenkins/test-1-1/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/1550/test-portal-acceptance-pullrequest-batch(master)/functional-tomcat-mysql/0/start.properties'
+[EnvInject] - Variables injected successfully.
+[EnvInject] - Injecting as environment variables the properties content 
+MASTER_HOSTNAME=test-1-19
+
+[EnvInject] - Variables injected successfully.
+[EnvInject] - Injecting contributions.
+Building remotely on cloud-10-0-112-241 in workspace /opt/dev/projects/github/liferay-jenkins-ee
+Triggering SetupWizard#HypersonicToMySQL,!master
+Triggering UIInfrastructureUsecase#Smoke,!master
+Triggering TestRuntimePortlet#Smoke,!master
+Triggering PortalSmoke#Smoke,!master
+Triggering CPCategories#AddCategory,!master
+Triggering CPDynamicdatalists#AddDisplayTemplateVelocity,!master
+SetupWizard#HypersonicToMySQL,!master completed with result UNSTABLE
+UIInfrastructureUsecase#Smoke,!master completed with result UNSTABLE
+TestRuntimePortlet#Smoke,!master completed with result UNSTABLE
+PortalSmoke#Smoke,!master completed with result UNSTABLE
+CPCategories#AddCategory,!master completed with result UNSTABLE
+CPDynamicdatalists#AddDisplayTemplateVelocity,!master completed with result UNSTABLE
+Finished: UNSTABLE

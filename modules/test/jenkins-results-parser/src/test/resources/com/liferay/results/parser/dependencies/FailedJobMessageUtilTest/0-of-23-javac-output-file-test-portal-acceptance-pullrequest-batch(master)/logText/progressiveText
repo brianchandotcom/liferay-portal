@@ -1,0 +1,61 @@
+Started by remote host 10.0.14.247
+[EnvInject] - Loading node environment variables.
+[EnvInject] - Preparing an environment for the build.
+[EnvInject] - Keeping Jenkins system variables.
+[EnvInject] - Keeping Jenkins build variables.
+[EnvInject] - Injecting as environment variables the properties file path '/mnt/mfs-ssd1-10.0.10/jenkins/test-1-1/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/1607/test-portal-acceptance-pullrequest-batch(master)/functional-tomcat-mysql/1/start.properties'
+[EnvInject] - Variables injected successfully.
+[EnvInject] - Injecting as environment variables the properties content 
+MASTER_HOSTNAME=test-1-19
+
+[EnvInject] - Variables injected successfully.
+[EnvInject] - Injecting contributions.
+Building remotely on cloud-10-0-112-241 in workspace /opt/dev/projects/github/liferay-jenkins-ee
+Triggering CPDynamicdatalists#EditBooleanFieldFieldLabel,!master
+Triggering CPRolesPGBlogs#AddBlogsEntryOrgRole,!master
+Triggering CPTags#AddTag,!master
+Triggering PGStaging#AddPageVariation,!master
+Triggering CPWebcontent#SearchWebContent,!master
+Triggering PGBlogs#EditBlogsEntryComment,!master
+Triggering CPUsersandorganizations#EditOrganizationSite,!master
+Triggering CPCategories#AddCategory,!master
+Triggering CPBookmarks#AddFolder,!master
+Triggering CPSitepages#AddSitePublicChildPage,!master
+Triggering CPPagetemplates#AddSitePageTemplate,!master
+Triggering PGAnnouncements#HideAnnouncementsEntry,!master
+Triggering CPSitememberships#AddSiteTeams,!master
+Triggering CPSites#DeleteSite,!master
+Triggering UIInfrastructureUsecase#Smoke,!master
+Triggering PortalSmoke#Smoke,!master
+Triggering PGBookmarks#EditFolder,!master
+Triggering ApplicationdisplaytemplatesUsecase#ADTCategoriesNavigation,!master
+Triggering CPCategories#EditVocabulary,!master
+Triggering PGCalendar#SearchForOtherCalendars,!master
+Triggering PGTags#ViewTagCloudDisplayConfiguration,!master
+Triggering SitelocalizationUsecase#SiteTemplateLocalization,!master
+Triggering CPUsergroups#EditUserGroup,!master
+Configuration CPDynamicdatalists#EditBooleanFieldFieldLabel,!master is still in the queue: Waiting for next available executor on !master
+CPDynamicdatalists#EditBooleanFieldFieldLabel,!master completed with result SUCCESS
+CPRolesPGBlogs#AddBlogsEntryOrgRole,!master completed with result SUCCESS
+CPTags#AddTag,!master completed with result SUCCESS
+PGStaging#AddPageVariation,!master completed with result SUCCESS
+CPWebcontent#SearchWebContent,!master completed with result SUCCESS
+PGBlogs#EditBlogsEntryComment,!master completed with result SUCCESS
+CPUsersandorganizations#EditOrganizationSite,!master completed with result SUCCESS
+CPCategories#AddCategory,!master completed with result SUCCESS
+CPBookmarks#AddFolder,!master completed with result SUCCESS
+CPSitepages#AddSitePublicChildPage,!master completed with result SUCCESS
+CPPagetemplates#AddSitePageTemplate,!master completed with result SUCCESS
+PGAnnouncements#HideAnnouncementsEntry,!master completed with result SUCCESS
+CPSitememberships#AddSiteTeams,!master completed with result SUCCESS
+CPSites#DeleteSite,!master completed with result SUCCESS
+UIInfrastructureUsecase#Smoke,!master completed with result SUCCESS
+PortalSmoke#Smoke,!master completed with result SUCCESS
+PGBookmarks#EditFolder,!master completed with result SUCCESS
+ApplicationdisplaytemplatesUsecase#ADTCategoriesNavigation,!master completed with result SUCCESS
+CPCategories#EditVocabulary,!master completed with result SUCCESS
+PGCalendar#SearchForOtherCalendars,!master completed with result SUCCESS
+PGTags#ViewTagCloudDisplayConfiguration,!master completed with result SUCCESS
+SitelocalizationUsecase#SiteTemplateLocalization,!master completed with result SUCCESS
+CPUsergroups#EditUserGroup,!master completed with result SUCCESS
+Finished: SUCCESS

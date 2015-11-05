@@ -516,9 +516,13 @@ public class DDMImpl implements DDM {
 
 			Field existingField = existingFields.get(newField.getName());
 
-			if ((existingField == null) || newField.isPrivate()) {
+			if (existingField == null) {
 				existingFields.put(newField);
 
+				continue;
+			}
+
+			if (newField.isPrivate()) {
 				continue;
 			}
 

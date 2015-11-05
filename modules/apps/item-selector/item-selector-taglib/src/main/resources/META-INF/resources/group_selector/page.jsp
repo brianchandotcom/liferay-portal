@@ -30,7 +30,7 @@ List<ItemSelectorCriterion> criteria = itemSelector.getItemSelectorCriteria(life
 PortletURL iteratorURL = itemSelector.getItemSelectorURL(requestBackedPortletURLFactory, itemSelectedEventName, criteria.toArray(new ItemSelectorCriterion[criteria.size()]));
 
 iteratorURL.setParameter("selectedTab", ParamUtil.getString(request, "selectedTab"));
-iteratorURL.setParameter("showGroupSelector", String.valueOf(true));
+iteratorURL.setParameter("showGroupSelector", Boolean.TRUE.toString());
 
 SearchContainer searchContainer = new GroupSearch(liferayPortletRequest, iteratorURL);
 %>
@@ -55,7 +55,7 @@ SearchContainer searchContainer = new GroupSearch(liferayPortletRequest, iterato
 			<%
 			row.setCssClass("col-md-3");
 
-			long refererGroupId = themeDisplay.getRefererGroupId() != 0 ? themeDisplay.getRefererGroupId() : themeDisplay.getScopeGroupId();
+			long refererGroupId = (themeDisplay.getRefererGroupId() != 0) ? themeDisplay.getRefererGroupId() : themeDisplay.getScopeGroupId();
 
 			PortletURL viewGroupURL = itemSelector.getItemSelectorURL(requestBackedPortletURLFactory, curGroup, refererGroupId, itemSelectedEventName, criteria.toArray(new ItemSelectorCriterion[criteria.size()]));
 

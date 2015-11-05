@@ -23,9 +23,11 @@ import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
 
 import java.security.SecureRandom;
 
+import java.util.Random;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -72,25 +74,17 @@ public class SecureRandomUtilTest {
 
 		Thread reloadThread = new Thread(futureTask);
 
-		long gapValue = -1;
-
 		synchronized (secureRandom) {
 			reloadThread.start();
 
 			while (reloadThread.getState() != Thread.State.BLOCKED);
 
-			long gapSeed = getGapSeed();
-
-			gapValue = reload();
-
-			Assert.assertEquals(getFirstLong() ^ gapSeed, gapValue);
-			Assert.assertEquals(gapValue, getGapSeed());
+			Assert.assertEquals(getLong(0), reload());
 		}
 
 		reloadThread.join();
 
-		Assert.assertEquals(
-			(Long)(getFirstLong() ^ gapValue), futureTask.get());
+		Assert.assertEquals((Long)(getLong(0) ^ 1), futureTask.get());
 	}
 
 	@NewEnv(type = NewEnv.Type.NONE)
@@ -134,12 +128,7 @@ public class SecureRandomUtilTest {
 
 		// Gap number
 
-		long firstLong = getFirstLong();
-		long gapSeed = getGapSeed();
-
-		long result = firstLong ^ gapSeed;
-
-		if ((byte)result < 0) {
+		if ((byte)getLong(7) < 0) {
 			Assert.assertFalse(SecureRandomUtil.nextBoolean());
 		}
 		else {
@@ -158,6 +147,15 @@ public class SecureRandomUtilTest {
 				Assert.assertTrue(SecureRandomUtil.nextBoolean());
 			}
 		}
+
+		// Gap number
+
+		if ((byte)(getLong(7) ^ 1) < 0) {
+			Assert.assertFalse(SecureRandomUtil.nextBoolean());
+		}
+		else {
+			Assert.assertTrue(SecureRandomUtil.nextBoolean());
+		}
 	}
 
 	@Test
@@ -173,18 +171,18 @@ public class SecureRandomUtilTest {
 
 		// Gap number
 
-		long firstLong = getFirstLong();
-		long gapSeed = getGapSeed();
-
-		long result = firstLong ^ gapSeed;
-
-		Assert.assertEquals((byte)result, SecureRandomUtil.nextByte());
+		Assert.assertEquals((byte)getLong(7), SecureRandomUtil.nextByte());
 
 		// Second load
 
 		for (int i = 0; i < 2048; i++) {
 			Assert.assertEquals((byte)i, SecureRandomUtil.nextByte());
 		}
+
+		// Gap number
+
+		Assert.assertEquals(
+			(byte)(getLong(7) ^ 1), SecureRandomUtil.nextByte());
 	}
 
 	@Test
@@ -210,13 +208,9 @@ public class SecureRandomUtilTest {
 
 		// Gap number
 
-		long firstLong = getFirstLong();
-		long gapSeed = getGapSeed();
-
-		long result = firstLong ^ gapSeed;
-
 		Assert.assertEquals(
-			Double.longBitsToDouble(result), SecureRandomUtil.nextDouble(), 0);
+			Double.longBitsToDouble(getLong(7)), SecureRandomUtil.nextDouble(),
+			0);
 
 		// Second load
 
@@ -233,6 +227,12 @@ public class SecureRandomUtilTest {
 				BigEndianCodec.getDouble(bytes, 0),
 				SecureRandomUtil.nextDouble(), 0);
 		}
+
+		// Gap number
+
+		Assert.assertEquals(
+			Double.longBitsToDouble(getLong(7) ^ 1),
+			SecureRandomUtil.nextDouble(), 0);
 	}
 
 	@Test
@@ -258,13 +258,9 @@ public class SecureRandomUtilTest {
 
 		// Gap number
 
-		long firstLong = getFirstLong();
-		long gapSeed = getGapSeed();
-
-		long result = firstLong ^ gapSeed;
-
 		Assert.assertEquals(
-			Float.intBitsToFloat((int)result), SecureRandomUtil.nextFloat(), 0);
+			Float.intBitsToFloat((int)getLong(7)), SecureRandomUtil.nextFloat(),
+			0);
 
 		// Second load
 
@@ -281,6 +277,12 @@ public class SecureRandomUtilTest {
 				BigEndianCodec.getFloat(bytes, 0), SecureRandomUtil.nextFloat(),
 				0);
 		}
+
+		// Gap number
+
+		Assert.assertEquals(
+			Float.intBitsToFloat((int)getLong(7) ^ 1),
+			SecureRandomUtil.nextFloat(), 0);
 	}
 
 	@Test
@@ -305,12 +307,7 @@ public class SecureRandomUtilTest {
 
 		// Gap number
 
-		long firstLong = getFirstLong();
-		long gapSeed = getGapSeed();
-
-		long result = firstLong ^ gapSeed;
-
-		Assert.assertEquals((int)result, SecureRandomUtil.nextInt(), 0);
+		Assert.assertEquals((int)getLong(7), SecureRandomUtil.nextInt(), 0);
 
 		// Second load
 
@@ -326,6 +323,11 @@ public class SecureRandomUtilTest {
 			Assert.assertEquals(
 				BigEndianCodec.getInt(bytes, 0), SecureRandomUtil.nextInt(), 0);
 		}
+
+		// Gap number
+
+		Assert.assertEquals(
+			(int)(getLong(7) ^ 1), SecureRandomUtil.nextInt(), 0);
 	}
 
 	@Test
@@ -351,12 +353,7 @@ public class SecureRandomUtilTest {
 
 		// Gap number
 
-		long firstLong = getFirstLong();
-		long gapSeed = getGapSeed();
-
-		long result = firstLong ^ gapSeed;
-
-		Assert.assertEquals(result, SecureRandomUtil.nextLong(), 0);
+		Assert.assertEquals(getLong(7), SecureRandomUtil.nextLong(), 0);
 
 		// Second load
 
@@ -373,21 +370,35 @@ public class SecureRandomUtilTest {
 				BigEndianCodec.getLong(bytes, 0), SecureRandomUtil.nextLong(),
 				0);
 		}
+
+		// Gap number
+
+		Assert.assertEquals(getLong(7) ^ 1, SecureRandomUtil.nextLong(), 0);
 	}
 
-	protected long getFirstLong() {
+	protected long getLong(int offset) {
 		byte[] bytes = ReflectionTestUtil.getFieldValue(
 			SecureRandomUtil.class, "_bytes");
 
-		return BigEndianCodec.getLong(bytes, 0);
-	}
-
-	protected long getGapSeed() {
-		return ReflectionTestUtil.getFieldValue(
-			SecureRandomUtil.class, "_gapSeed");
+		return BigEndianCodec.getLong(bytes, offset);
 	}
 
 	protected SecureRandom installPredictableRandom() {
+		ReflectionTestUtil.setFieldValue(
+			SecureRandomUtil.class, "_gapRandom",
+			new Random() {
+
+				@Override
+				public long nextLong() {
+					return _counter.getAndIncrement();
+				}
+
+				private static final long serialVersionUID = 1L;
+
+				private final AtomicLong _counter = new AtomicLong();
+
+			});
+
 		SecureRandom predictableRandom = new PredictableRandom();
 
 		ReflectionTestUtil.setFieldValue(
@@ -403,7 +414,7 @@ public class SecureRandomUtilTest {
 
 	protected long reload() {
 		return ReflectionTestUtil.invoke(
-			SecureRandomUtil.class, "_reload", new Class<?>[0]);
+			SecureRandomUtil.class, "_reload", new Class<?>[] {int.class}, 0);
 	}
 
 	private static final String _KEY_BUFFER_SIZE =
@@ -417,6 +428,13 @@ public class SecureRandomUtilTest {
 				bytes[i] = (byte)_counter.getAndIncrement();
 			}
 		}
+
+		@Override
+		public long nextLong() {
+			return 0;
+		}
+
+		private static final long serialVersionUID = 1L;
 
 		private final AtomicInteger _counter = new AtomicInteger();
 

@@ -41,8 +41,6 @@ public class FailedJobMessageUtil {
 		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
 			JenkinsResultsParserUtil.getLocalURL(buildURL + "api/json"));
 
-		String result = jsonObject.getString("result");
-
 		String topLevelSharedDir = project.getProperty("top.level.shared.dir");
 
 		topLevelSharedDir = topLevelSharedDir.replace(
@@ -50,6 +48,8 @@ public class FailedJobMessageUtil {
 
 		File javacOutputFile = new File(
 			topLevelSharedDir + "/javac.output.txt");
+
+		String result = jsonObject.getString("result");
 
 		if (result.equals("ABORTED")) {
 			sb.append("<pre>Build was aborted</pre>");

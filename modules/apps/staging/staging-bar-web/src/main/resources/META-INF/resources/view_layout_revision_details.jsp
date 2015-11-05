@@ -170,63 +170,62 @@ else {
 			</c:if>
 
 			<%
-			String label = null;
-
-			if (layoutRevision.isIncomplete()) {
-				label = LanguageUtil.format(request, "enable-in-x", layoutSetBranch.getName(), false);
-			}
-			else {
-				if (workflowEnabled) {
-					label = "submit-for-publication";
-				}
-				else {
-					label = "mark-as-ready-for-publication";
-				}
-			}
-			%>
-
-			<portlet:actionURL name="updateLayoutRevision" var="publishURL">
-				<portlet:param name="redirect" value="<%= PortalUtil.getLayoutFullURL(themeDisplay) %>" />
-				<portlet:param name="layoutRevisionId" value="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
-				<portlet:param name="major" value="true" />
-				<portlet:param name="workflowAction" value="<%= String.valueOf(layoutRevision.isIncomplete() ? WorkflowConstants.ACTION_SAVE_DRAFT : WorkflowConstants.ACTION_PUBLISH) %>" />
-			</portlet:actionURL>
-
-			<%
 			List<LayoutRevision> pendingLayoutRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(layoutRevision.getLayoutSetBranchId(), layoutRevision.getPlid(), WorkflowConstants.STATUS_PENDING);
-
-			String taglibURL = null;
-
-			if (!workflowEnabled || pendingLayoutRevisions.isEmpty()) {
-				taglibURL = "javascript:Liferay.fire('" + liferayPortletResponse.getNamespace() + "submit', {incomplete: " + layoutRevision.isIncomplete() + ", publishURL: '" + publishURL + "', currentURL: '" + currentURL + "'}); void(0);";
-			}
 			%>
 
-			<a href="<%= taglibURL %>" id="submitLink">
-				<liferay-ui:message key="<%= label %>" />
-			</a>
+			<c:choose>
+				<c:when test="<%= workflowEnabled && !pendingLayoutRevisions.isEmpty() %>">
 
-			<c:if test="<%= workflowEnabled && !pendingLayoutRevisions.isEmpty() %>">
+					<%
+					String submitMessage = "you-cannot-submit-your-changes-because-someone-else-has-submitted-changes-for-approval";
 
-				<%
-				String submitMessage = "you-cannot-submit-your-changes-because-someone-else-has-submitted-changes-for-approval";
+					LayoutRevision pendingLayoutRevision = pendingLayoutRevisions.get(0);
 
-				LayoutRevision pendingLayoutRevision = pendingLayoutRevisions.get(0);
+					if ((pendingLayoutRevision != null) && (pendingLayoutRevision.getUserId() == user.getUserId())) {
+						submitMessage = "you-cannot-submit-your-changes-because-your-previous-submission-is-still-waiting-for-approval";
+					}
+					%>
 
-				if ((pendingLayoutRevision != null) && (pendingLayoutRevision.getUserId() == user.getUserId())) {
-					submitMessage = "you-cannot-submit-your-changes-because-your-previous-submission-is-still-waiting-for-approval";
-				}
-				%>
+					<aui:script>
+						AUI.$('.submit-link').on(
+							'mouseenter',
+							function(event) {
+								Liferay.Portal.ToolTip.show(event.currentTarget, '<liferay-ui:message key="<%= submitMessage %>" />');
+							}
+						);
+					</aui:script>
+				</c:when>
+				<c:otherwise>
+					<portlet:actionURL name="updateLayoutRevision" var="publishURL">
+						<portlet:param name="redirect" value="<%= PortalUtil.getLayoutFullURL(themeDisplay) %>" />
+						<portlet:param name="layoutRevisionId" value="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
+						<portlet:param name="major" value="true" />
+						<portlet:param name="workflowAction" value="<%= String.valueOf(layoutRevision.isIncomplete() ? WorkflowConstants.ACTION_SAVE_DRAFT : WorkflowConstants.ACTION_PUBLISH) %>" />
+					</portlet:actionURL>
 
-				<aui:script>
-					AUI.$('.submit-link').on(
-						'mouseenter',
-						function(event) {
-							Liferay.Portal.ToolTip.show(event.currentTarget, '<liferay-ui:message key="<%= submitMessage %>" />');
+					<%
+					String taglibURL = "javascript:Liferay.fire('" + liferayPortletResponse.getNamespace() + "submit', {incomplete: " + layoutRevision.isIncomplete() + ", publishURL: '" + publishURL + "', currentURL: '" + currentURL + "'}); void(0);";
+
+					String label = null;
+
+					if (layoutRevision.isIncomplete()) {
+						label = LanguageUtil.format(request, "enable-in-x", layoutSetBranch.getName(), false);
+					}
+					else {
+						if (workflowEnabled) {
+							label = "submit-for-publication";
 						}
-					);
-				</aui:script>
-			</c:if>
+						else {
+							label = "mark-as-ready-for-publication";
+						}
+					}
+					%>
+
+					<a href="<%= taglibURL %>" id="submitLink">
+						<liferay-ui:message key="<%= label %>" />
+					</a>
+				</c:otherwise>
+			</c:choose>
 		</c:if>
 	</c:if>
 </li>

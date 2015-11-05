@@ -128,11 +128,18 @@
 					function(event) {
 						var dialogName = event.data.name;
 
-						if (dialogName === 'image') {
-							var dialogDefinition = event.data.definition;
+						var dialogDefinition = event.data.definition;
 
-							instance._bindBrowseButton(editor, dialogDefinition, 'info');
-							instance._bindBrowseButton(editor, dialogDefinition, 'Link');
+						if (dialogName === 'audio') {
+							instance._bindBrowseButton(editor, dialogDefinition, 'info', 'audioselector', 'url');
+						}
+						else if (dialogName === 'image') {
+
+							instance._bindBrowseButton(editor, dialogDefinition, 'info', 'imageselector', 'txtUrl');
+							instance._bindBrowseButton(editor, dialogDefinition, 'Link', 'imageselector', 'txtUrl');
+						}
+						else if (dialogName === 'video') {
+							instance._bindBrowseButton(editor, dialogDefinition, 'info', 'videoselector', 'poster');
 						}
 					}
 				);
@@ -147,7 +154,7 @@
 				);
 			},
 
-			_bindBrowseButton: function(editor, dialogDefinition, tabName) {
+			_bindBrowseButton: function(editor, dialogDefinition, tabName, commandName, targetField) {
 				var tab = dialogDefinition.getContents(tabName);
 
 				if (tab) {
@@ -156,9 +163,9 @@
 					if (browseButton) {
 						browseButton.onClick = function() {
 							editor.execCommand(
-								'imageselector',
+								commandName,
 								function(newVal) {
-									dialogDefinition.dialog.setValueOf(tabName, 'txtUrl', newVal);
+									dialogDefinition.dialog.setValueOf(tabName, targetField, newVal);
 								}
 							);
 						};

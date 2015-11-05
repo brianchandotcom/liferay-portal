@@ -12,22 +12,23 @@
  * details.
  */
 
-package com.liferay.marketplace.upgrade.v1_0_0;
+package com.liferay.marketplace.upgrade.v1_0_0.util.companyId;
 
-import com.liferay.marketplace.upgrade.v1_0_0.util.companyId.MarketplaceModuleUpgradeCompanyId;
 import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdInTable;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Cristina González
  */
-public class UpgradeCompanyId
-	extends com.liferay.portal.upgrade.util.UpgradeCompanyId {
+public class MarketplaceModuleUpgradeCompanyId
+	implements UpgradeCompanyIdInTable {
 
 	@Override
-	protected UpgradeCompanyIdInTable[] getUpgradeCompanyIdInTable() {
-		return new UpgradeCompanyIdInTable[] {
-			new MarketplaceModuleUpgradeCompanyId()
-		};
+	public String getTableName() {
+		return "Marketplace_Module";
+	}
+
+	@Override
+	public void upgradeProcess() {
 	}
 
 }

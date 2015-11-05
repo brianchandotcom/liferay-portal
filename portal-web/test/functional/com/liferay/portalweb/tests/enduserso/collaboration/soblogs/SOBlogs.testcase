@@ -2420,7 +2420,6 @@
 		</execute>
 
 		<execute macro="BlogsEntry#flagPG">
-			<var name="entryTitle" value="${entryTitle}" />
 			<var name="flagReason" value="${flagReason}" />
 		</execute>
 

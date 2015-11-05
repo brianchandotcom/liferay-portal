@@ -252,8 +252,8 @@
 </tr>
 <tr>
 	<td>ENTRY_FLAG</td>
-	<td>//div[contains(@class,'entry') and contains(@class,'approved') and contains(.,'${key_entryTitle}')]//span/a[contains(.,'Flag')]</td>
-	<td>Vocabulary 1</td>
+	<td>//div[contains(@class,'taglib-flags')]//span[contains(@class,'taglib-text') and contains(.,'Flag')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_TAG</td>

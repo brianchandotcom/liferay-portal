@@ -153,7 +153,7 @@ public class FailedJobMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 		Project project = _getProject(
 			urlString, _urlToFile(urlString).getPath());
 
-		FailedJobMessageUtil.getFailedJobsMessage(project);
+		FailedJobMessageUtil.getFailedJobMessage(project);
 
 		return project.getProperty("report.html.content");
 	}

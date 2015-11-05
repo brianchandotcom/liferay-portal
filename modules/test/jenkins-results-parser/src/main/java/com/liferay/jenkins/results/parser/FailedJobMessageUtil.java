@@ -33,7 +33,7 @@ import org.json.JSONObject;
  */
 public class FailedJobMessageUtil {
 
-	public static void getFailedJobsMessage(Project project) throws Exception {
+	public static void getFailedJobMessage(Project project) throws Exception {
 		StringBuilder sb = new StringBuilder();
 
 		String buildURL = project.getProperty("build.url");

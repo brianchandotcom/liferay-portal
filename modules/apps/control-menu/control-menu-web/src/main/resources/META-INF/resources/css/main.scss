@@ -24,15 +24,13 @@ body.open {
 
 .control-menu-level-1 {
 	padding-bottom: 8px;
-    padding-top: 8px;
+	padding-top: 8px;
 
-    @include sm() {
-	    padding-bottom: 16px;
+	@include sm() {
+		padding-bottom: 16px;
 		padding-top: 16px;
-	}
 
-	.container-fluid-1280 {
-		@include sm() {
+		.container-fluid-1280 {
 			padding-left: 24px;
 			padding-right: 24px;
 		}

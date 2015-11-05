@@ -38,7 +38,7 @@ DDMStructure structure = (DDMStructure)row.getObject();
 	</c:if>
 
 	<%
-	String editStructureDefaultValuesURL = ddmDisplay.getEditStructureDefaultValuesURL(liferayPortletRequest, liferayPortletResponse, structure, currentURL, "");
+	String editStructureDefaultValuesURL = ddmDisplay.getEditStructureDefaultValuesURL(liferayPortletRequest, liferayPortletResponse, structure, currentURL);
 	%>
 
 	<c:if test="<%= Validator.isNotNull(editStructureDefaultValuesURL) && DDMStructurePermission.contains(permissionChecker, structure, refererPortletName, ActionKeys.UPDATE) %>">

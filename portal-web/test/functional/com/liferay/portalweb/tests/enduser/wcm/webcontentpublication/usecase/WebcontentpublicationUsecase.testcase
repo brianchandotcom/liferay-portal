@@ -94,7 +94,10 @@
 		</execute>
 
 		<execute macro="Page#gotoConfigurationCP">
+			<var name="pageAccess" value="Private" />
 			<var name="portletName" value="Site Settings" />
+			<var name="siteName" value="Organization Name" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Site#addVirtualHostsURLCP">
@@ -103,7 +106,10 @@
 		</execute>
 
 		<execute macro="Page#gotoConfigurationCP">
+			<var name="pageAccess" value="Private" />
 			<var name="portletName" value="Site Settings" />
+			<var name="siteName" value="Organization Name" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Site#addVirtualHostsURLCP">
@@ -147,6 +153,9 @@
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Web Content Page" />
+			<var name="siteName" value="http://www.able.com:8080" />
+			<var name="siteURL" value="true" />
+			<var name="virtualHostsURL" value="http://www.able.com:8080" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

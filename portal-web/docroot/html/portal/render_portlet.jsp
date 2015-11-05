@@ -679,7 +679,7 @@ PortletURLImpl urlStaging = new PortletURLImpl(request, PortletKeys.EXPORT_IMPOR
 
 urlStaging.setWindowState(LiferayWindowState.POP_UP);
 
-urlStaging.setParameter("mvcRenderCommandName", "staging");
+urlStaging.setParameter("mvcRenderCommandName", "publishPortlet");
 urlStaging.setParameter("cmd", Constants.PUBLISH_TO_LIVE);
 urlStaging.setParameter("redirect", currentURL);
 urlStaging.setParameter("returnToFullPageURL", currentURL);

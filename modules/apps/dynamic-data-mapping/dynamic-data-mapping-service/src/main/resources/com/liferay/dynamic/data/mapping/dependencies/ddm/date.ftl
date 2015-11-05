@@ -26,19 +26,21 @@
 <#assign yearValue = paramUtil.getInteger(request, "${namespacedFieldName}Year", fieldValue.get(YEAR))>
 
 <@aui["field-wrapper"] data=data helpMessage=escape(fieldStructure.tip) label=escape(label) name=namespacedFieldName>
-	<@liferay_ui["input-date"]
-		cssClass=cssClass
-		dayParam="${namespacedFieldName}Day"
-		dayValue=dayValue
-		disabled=false
-		monthParam="${namespacedFieldName}Month"
-		monthValue=monthValue
-		name="${namespacedFieldName}"
-		nullable=nullable
-		required=required
-		yearParam="${namespacedFieldName}Year"
-		yearValue=yearValue
-	/>
+	<div class="form-group">
+		<@liferay_ui["input-date"]
+			cssClass=cssClass
+			dayParam="${namespacedFieldName}Day"
+			dayValue=dayValue
+			disabled=false
+			monthParam="${namespacedFieldName}Month"
+			monthValue=monthValue
+			name="${namespacedFieldName}"
+			nullable=nullable
+			required=required
+			yearParam="${namespacedFieldName}Year"
+			yearValue=yearValue
+		/>
+	</div>
 
 	${fieldStructure.children}
 </@>

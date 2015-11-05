@@ -1,17 +1,26 @@
 .management-bar-container {
-	overflow: hidden;
 	position: relative;
 
 	.management-bar {
 		&.management-bar-no-collapse {
+			height: 0;
 			left: 0;
+			min-height: 0;
+			overflow: hidden;
 			position: absolute;
 			right: 0;
-			top: -100%;
+			top: 0;
 			@include transition(all 300ms ease);
 
 			&.on {
+				height: 48px;
+				min-height: 48px;
 				top: 0;
+
+				@include md() {
+					height: 60px;
+					min-height: 60px;
+				}
 			}
 		}
 

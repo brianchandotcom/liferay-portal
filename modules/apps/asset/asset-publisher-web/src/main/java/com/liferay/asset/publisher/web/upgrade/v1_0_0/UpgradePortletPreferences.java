@@ -112,10 +112,11 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 			portletPreferences.setValues("assetEntryXml", assetEntryXmls);
 		}
 
-		String subtypeFieldsFilterEnabled = portletPreferences.getValue(
-			"subtypeFieldsFilterEnabled", Boolean.FALSE.toString());
+		boolean subtypeFieldsFilterEnabled = GetterUtil.getBoolean(
+			portletPreferences.getValue(
+				"subtypeFieldsFilterEnabled", Boolean.FALSE.toString()));
 
-		if (subtypeFieldsFilterEnabled.equals(Boolean.TRUE.toString())) {
+		if (subtypeFieldsFilterEnabled) {
 			boolean dlFilterByFieldEnable = isFilterByFieldEnable(
 				portletPreferences, _DL_FILTER_BY_FIELD_ENABLED_KEY);
 			boolean journalFilterByFieldEnable = isFilterByFieldEnable(
@@ -163,39 +164,41 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 	}
 
 	private JSONObject findFieldByName(
-		JSONArray fields, String selectedFieldName) {
+		JSONArray fieldsJSONArray, String selectedFieldName) {
 
-		JSONObject result = null;
+		JSONObject fieldJSONObject = null;
 
-		for (int i = 0; i < fields.length(); i++) {
-			JSONObject field = fields.getJSONObject(i);
+		for (int i = 0; i < fieldsJSONArray.length(); i++) {
+			JSONObject curFieldJSONObject = fieldsJSONArray.getJSONObject(i);
 
-			String fieldName = field.getString("name");
+			String fieldName = curFieldJSONObject.getString("name");
 
 			if (fieldName.equals(selectedFieldName)) {
-				result = field;
+				fieldJSONObject = curFieldJSONObject;
 				break;
 			}
 
-			if (field.has("nestedFields")) {
-				JSONArray nestedFields = field.getJSONArray("nestedFields");
+			if (curFieldJSONObject.has("nestedFields")) {
+				JSONArray nestedFieldsJSONArray =
+					curFieldJSONObject.getJSONArray("nestedFields");
 
-				result = findFieldByName(nestedFields, selectedFieldName);
+				fieldJSONObject = findFieldByName(
+					nestedFieldsJSONArray, selectedFieldName);
 
-				if (result != null) {
+				if (fieldJSONObject != null) {
 					break;
 				}
 			}
 		}
 
-		return result;
+		return fieldJSONObject;
 	}
 
 	private JSONObject getStructureJSON(long structureId) throws Exception {
-		JSONObject ddmStructureJSON = _structures.get(structureId);
+		JSONObject ddmStructureJSONObject = _structures.get(structureId);
 
-		if (ddmStructureJSON != null) {
-			return ddmStructureJSON;
+		if (ddmStructureJSONObject != null) {
+			return ddmStructureJSONObject;
 		}
 
 		Connection con = null;
@@ -216,11 +219,12 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 			if (rs.next()) {
 				String definition = rs.getString("definition");
 
-				ddmStructureJSON = JSONFactoryUtil.createJSONObject(definition);
+				ddmStructureJSONObject = JSONFactoryUtil.createJSONObject(
+					definition);
 
-				_structures.put(structureId, ddmStructureJSON);
+				_structures.put(structureId, ddmStructureJSONObject);
 
-				return ddmStructureJSON;
+				return ddmStructureJSONObject;
 			}
 
 			throw new UpgradeException(
@@ -235,9 +239,9 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 	private boolean isDateField(
 		JSONObject ddmStructureJSON, String selectedFieldName) {
 
-		JSONArray fields = ddmStructureJSON.getJSONArray("fields");
+		JSONArray fieldsJSONArray = ddmStructureJSON.getJSONArray("fields");
 
-		JSONObject field = findFieldByName(fields, selectedFieldName);
+		JSONObject field = findFieldByName(fieldsJSONArray, selectedFieldName);
 
 		if ((field != null) && field.getString("type").equals("ddm-date")) {
 			return true;

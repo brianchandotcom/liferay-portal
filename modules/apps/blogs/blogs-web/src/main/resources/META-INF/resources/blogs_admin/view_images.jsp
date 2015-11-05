@@ -84,7 +84,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 			id="images"
 			orderByComparator="<%= DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType) %>"
 			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
-			searchContainer="<%= new EntrySearch(renderRequest, PortletURLUtil.clone(portletURL, liferayPortletResponse)) %>"
+			searchContainer="<%= new SearchContainer(renderRequest, PortletURLUtil.clone(portletURL, liferayPortletResponse), null, "no-images-were-found") %>"
 		>
 
 			<%

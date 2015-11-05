@@ -110,12 +110,8 @@ String keywords = ParamUtil.getString(request, "keywords");
 			id="blogEntries"
 			orderByComparator="<%= BlogsUtil.getOrderByComparator(orderByCol, orderByType) %>"
 			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
-			searchContainer="<%= new EntrySearch(renderRequest, portletURL) %>"
+			searchContainer="<%= new SearchContainer(renderRequest, PortletURLUtil.clone(portletURL, liferayPortletResponse), null, "no-entries-were-found") %>"
 		>
-
-			<%
-			EntrySearchTerms searchTerms = (EntrySearchTerms)searchContainer.getSearchTerms();
-			%>
 
 			<liferay-ui:search-container-results>
 				<%@ include file="/blogs_admin/entry_search_results.jspf" %>

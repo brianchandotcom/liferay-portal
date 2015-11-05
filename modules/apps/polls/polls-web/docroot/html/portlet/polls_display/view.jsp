@@ -121,6 +121,9 @@ boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototyp
 <c:if test="<%= hasViewPermission && showIconsActions %>">
 
 	<%
+	
+	themeDisplay.setRefererPlid(plid);
+	
 	PortletURL redirectURL = liferayPortletResponse.createRenderURL();
 
 	redirectURL.setParameter("struts_action", "/polls_display/add_question_redirect");

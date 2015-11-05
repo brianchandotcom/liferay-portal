@@ -181,7 +181,6 @@ if (Validator.isNotNull(keywords)) {
 		<liferay-ui:search-container
 			searchContainer="<%= searchContainer %>"
 			total="<%= searchContainer.getTotal() %>"
-			var="listSearchContainer"
 		>
 			<liferay-ui:search-container-results
 				results="<%= searchContainer.getResults() %>"

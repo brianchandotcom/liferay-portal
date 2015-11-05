@@ -41,7 +41,6 @@ SearchContainer searchContainer = new GroupSearch(liferayPortletRequest, iterato
 	<liferay-ui:search-container
 		searchContainer="<%= searchContainer %>"
 		total="<%= groupsCount %>"
-		var="listSearchContainer"
 	>
 		<liferay-ui:search-container-results
 			results="<%= groups %>"

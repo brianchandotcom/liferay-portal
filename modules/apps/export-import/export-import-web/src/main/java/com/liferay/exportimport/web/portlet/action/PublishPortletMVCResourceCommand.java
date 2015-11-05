@@ -27,17 +27,17 @@ import javax.portlet.ResourceResponse;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Daniel Kocsis
+ * @author Mate Thurzo
  */
 @Component(
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ExportImportPortletKeys.EXPORT_IMPORT,
-		"mvc.command.name=exportImport"
+		"mvc.command.name=publishPortlet"
 	},
 	service = MVCResourceCommand.class
 )
-public class ExportImportMVCResourceCommand extends BaseMVCResourceCommand {
+public class PublishPortletMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Override
 	protected void doServeResource(
@@ -46,20 +46,13 @@ public class ExportImportMVCResourceCommand extends BaseMVCResourceCommand {
 
 		String cmd = ParamUtil.getString(resourceRequest, Constants.CMD);
 
-		PortletRequestDispatcher portletRequestDispatcher = null;
+		if (!cmd.equals(Constants.PUBLISH)) {
+			return;
+		}
 
-		if (cmd.equals(Constants.EXPORT)) {
-			portletRequestDispatcher = getPortletRequestDispatcher(
-				resourceRequest, "/export_portlet_processes.jsp");
-		}
-		else if (cmd.equals(Constants.IMPORT)) {
-			portletRequestDispatcher = getPortletRequestDispatcher(
-				resourceRequest, "/import_portlet_processes.jsp");
-		}
-		else {
-			portletRequestDispatcher = getPortletRequestDispatcher(
-				resourceRequest, "/import_portlet_resources.jsp");
-		}
+		PortletRequestDispatcher portletRequestDispatcher =
+			getPortletRequestDispatcher(
+				resourceRequest, "/publish_portlet_processes.jsp");
 
 		resourceRequest = ActionUtil.getWrappedResourceRequest(
 			resourceRequest, null);

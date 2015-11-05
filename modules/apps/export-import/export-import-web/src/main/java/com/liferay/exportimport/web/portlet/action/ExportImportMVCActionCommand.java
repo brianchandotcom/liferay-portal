@@ -128,9 +128,6 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 					ExportImportHelper.TEMP_FOLDER_NAME +
 						portlet.getPortletId());
 			}
-			else if (cmd.equals("copy_from_live")) {
-				StagingUtil.copyFromLive(actionRequest, portlet);
-			}
 			else if (cmd.equals(Constants.DELETE_TEMP)) {
 				_importLayoutsMVCActionCommand.deleteTempFileEntry(
 					actionRequest, actionResponse,
@@ -159,11 +156,6 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 					portlet.getPortletId());
 
 				sendRedirect(actionRequest, actionResponse, redirect);
-			}
-			else if (cmd.equals(Constants.PUBLISH_TO_LIVE)) {
-				hideDefaultSuccessMessage(actionRequest);
-
-				StagingUtil.publishToLive(actionRequest, portlet);
 			}
 		}
 		catch (Exception e) {

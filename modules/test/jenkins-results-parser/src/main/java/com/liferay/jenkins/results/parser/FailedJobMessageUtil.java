@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
@@ -43,8 +44,9 @@ public class FailedJobMessageUtil {
 		String result = jsonObject.getString("result");
 
 		File javacOutputFile =
-			new File(project.getProperty("top.level.shared.dir")
-				+ "/javac.output.txt");
+			new File(
+				project.getProperty("top.level.shared.dir") +
+					"/javac.output.txt");
 
 		if (result.equals("ABORTED")) {
 			sb.append("<pre>Build was aborted</pre>");
@@ -111,8 +113,9 @@ public class FailedJobMessageUtil {
 					sb.append("<li><strong><a href=\\\"");
 					sb.append(failureBuildURL);
 					sb.append("\\\">");
-					sb.append(JenkinsResultsParserUtil.fixJSON(
-						failureJSONObject.getString("fullDisplayName")));
+					sb.append(
+						JenkinsResultsParserUtil.fixJSON(
+							failureJSONObject.getString("fullDisplayName")));
 					sb.append("</a></strong>");
 					sb.append(
 						FailureMessageUtil.getFailureMessage(
@@ -150,10 +153,11 @@ public class FailedJobMessageUtil {
 			sb.append("</pre>");
 		}
 
-		project.setProperty("report.html.content", sb.toString());		
+		project.setProperty("report.html.content", sb.toString());
 	}
-	
+
 	private static String _read(File file) throws IOException {
 		return new String(Files.readAllBytes(Paths.get(file.toURI())));
-	}	
+	}
+
 }

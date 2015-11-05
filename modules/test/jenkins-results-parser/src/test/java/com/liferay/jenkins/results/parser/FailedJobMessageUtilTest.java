@@ -1,15 +1,35 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
+
 import java.net.URL;
 import java.net.URLDecoder;
 
 import org.apache.tools.ant.Project;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * @author Peter Yoo
+ */
 public class FailedJobMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 
 	@Before
@@ -31,18 +51,18 @@ public class FailedJobMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 			"test-portal-acceptance-pullrequest-batch(master)", "test-1-19",
 			true);
 	}
-	
+
 	@Test
 	public void testGetFailedJobsMessage() throws Exception {
 		assertSamples();
 	}
-	
+
 	@Override
 	protected void downloadSample(File sampleDir, URL url) throws Exception {
 		downloadSampleURL(sampleDir, url, "/api/json");
 		downloadSampleURL(sampleDir, url, "/logText/progressiveText");
 		downloadSampleURL(sampleDir, url, "/testReport/api/json");
-		
+
 		generateJavacOutputFile(sampleDir);
 
 		downloadSampleAxisURLs(sampleDir, new File(sampleDir, "/api/json"));
@@ -61,18 +81,18 @@ public class FailedJobMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 		urlString = replaceToken(urlString, "jobName", jobName);
 
 		URL url = createURL(urlString);
-		
+
 		downloadSample(sampleKey + "-" + jobName, url);
-		
+
 		if (!generateJavacOutputFile) {
-			File javacOutputFile = 
-				new File(dependenciesDir, 
-					sampleKey + "-" + jobName + "/" + _JAVAC_OUTPUT_FILE_NAME);
+			File javacOutputFile = new File(
+				dependenciesDir,
+				sampleKey + "-" + jobName + "/" + _JAVAC_OUTPUT_FILE_NAME);
+
 			if (javacOutputFile.exists()) {
 				javacOutputFile.delete();
 			}
 		}
-
 	}
 
 	protected void downloadSampleAxisURLs(File sampleDir, File jobJSONFile)
@@ -92,8 +112,8 @@ public class FailedJobMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 				continue;
 			}
 
-			URL runURL = createURL(URLDecoder.decode(
-				runJSONObject.getString("url"), "UTF-8"));
+			URL runURL = createURL(
+				URLDecoder.decode(runJSONObject.getString("url"), "UTF-8"));
 
 			File runDir = new File(sampleDir, "run-" + i + "/" + number + "/");
 
@@ -106,51 +126,41 @@ public class FailedJobMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 
 		write(jobJSONFile, jobJSONObject.toString(4));
 	}
-	
+
+	protected void generateJavacOutputFile(File caseDir) throws Exception {
+		File javacOutputFile = new File(caseDir, _JAVAC_OUTPUT_FILE_NAME);
+
+		int maxLineCount = 4000;
+		StringBuilder sb = new StringBuilder();
+
+		for (int i = 0; i < maxLineCount; i++) {
+			sb.append("line: ");
+
+			sb.append(i+1);
+
+			sb.append(" of " );
+
+			sb.append(maxLineCount);
+
+			sb.append("\n");
+		}
+
+		write(javacOutputFile, sb.toString());
+	}
+
 	@Override
 	protected String getMessage(String urlString) throws Exception {
 		Project project = _getProject(
 			urlString, _urlToFile(urlString).getPath());
-		
+
 		FailedJobMessageUtil.getFailedJobsMessage(project);
-		
+
 		return project.getProperty("report.html.content");
 	}
 
-	protected void generateJavacOutputFile(File caseDir) throws Exception {
-		File javacOutputFile = new File(caseDir, _JAVAC_OUTPUT_FILE_NAME);
-		
-		int maxLineCount = 4000;
-		StringBuilder sb = new StringBuilder();
-		
-		for (int i = 0; i < maxLineCount; i++) {
-			sb.append("line: ");
-			
-			sb.append(i+1);
-			
-			sb.append(" of " );
-			
-			sb.append(maxLineCount);
-			
-			sb.append("\n");
-		}
-		
-		write(javacOutputFile, sb.toString());
-		
-	}
-	
-	private File _urlToFile(String urlString) throws Exception {
-		if (!urlString.startsWith("file:")) {
-			throw new Exception("Only file URLs are allowed.");
-		}
-		String localURL = JenkinsResultsParserUtil.getLocalURL(urlString);
-		
-		return new File(localURL.substring("file:".length()));
-	}
-	
 	private Project _getProject(
 		String buildURLString, String topLevelSharedDir) {
-		
+
 		Project project = new Project();
 
 		project.setProperty("build.url", buildURLString);
@@ -163,10 +173,20 @@ public class FailedJobMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 		project.setProperty("portal.repository", "junit-portal-repository");
 		project.setProperty("repository", "junit-repository");
 		project.setProperty("top.level.shared.dir", topLevelSharedDir);
-		
+
 		return project;
 	}
-	
+
+	private File _urlToFile(String urlString) throws Exception {
+		if (!urlString.startsWith("file:")) {
+			throw new Exception("Only file URLs are allowed.");
+		}
+
+		String localURL = JenkinsResultsParserUtil.getLocalURL(urlString);
+
+		return new File(localURL.substring("file:".length()));
+	}
+
 	private static final String _JAVAC_OUTPUT_FILE_NAME = "javac.output.txt";
 
 }

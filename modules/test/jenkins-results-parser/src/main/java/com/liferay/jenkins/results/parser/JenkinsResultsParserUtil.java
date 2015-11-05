@@ -188,7 +188,7 @@ public class JenkinsResultsParserUtil {
 
 		if (checkCache && _toStringCache.containsKey(key) &&
 			!url.startsWith("file:")) {
-			
+
 			System.out.println("Loading " + url);
 
 			return _toStringCache.get(key);

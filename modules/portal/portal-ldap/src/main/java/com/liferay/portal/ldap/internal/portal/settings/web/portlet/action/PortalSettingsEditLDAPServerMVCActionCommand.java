@@ -23,28 +23,27 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.ldap.configuration.ConfigurationProvider;
+import com.liferay.portal.ldap.configuration.LDAPServerConfiguration;
+import com.liferay.portal.ldap.constants.LDAPConstants;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.security.ldap.LDAPSettingsUtil;
-import com.liferay.portal.service.CompanyService;
 import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.Portal;
-import com.liferay.portal.util.PrefsPropsUtil;
-import com.liferay.portal.util.WebKeys;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Dictionary;
+import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -105,57 +104,6 @@ public class PortalSettingsEditLDAPServerMVCActionCommand
 		}
 	}
 
-	protected UnicodeProperties addLDAPServer(
-			long companyId, UnicodeProperties properties)
-		throws Exception {
-
-		String defaultPostfix = LDAPSettingsUtil.getPropertyPostfix(0);
-
-		Set<String> defaultKeys = new HashSet<>(_KEYS.length);
-
-		for (String key : _KEYS) {
-			defaultKeys.add(key + defaultPostfix);
-		}
-
-		long ldapServerId = _counterLocalService.increment();
-
-		String postfix = LDAPSettingsUtil.getPropertyPostfix(ldapServerId);
-
-		Set<String> keysSet = properties.keySet();
-
-		String[] keys = keysSet.toArray(new String[keysSet.size()]);
-
-		for (String key : keys) {
-			if (defaultKeys.contains(key)) {
-				String value = properties.remove(key);
-
-				if (key.equals(
-						PropsKeys.LDAP_SECURITY_CREDENTIALS + defaultPostfix) &&
-					value.equals(Portal.TEMP_OBFUSCATION_VALUE)) {
-
-					value = PrefsPropsUtil.getString(
-						PropsKeys.LDAP_SECURITY_CREDENTIALS);
-				}
-
-				properties.setProperty(
-					key.replace(defaultPostfix, postfix), value);
-			}
-		}
-
-		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences(
-			companyId, true);
-
-		String ldapServerIds = portletPreferences.getValue(
-			"ldap.server.ids", StringPool.BLANK);
-
-		ldapServerIds = StringUtil.add(
-			ldapServerIds, String.valueOf(ldapServerId));
-
-		properties.setProperty("ldap.server.ids", ldapServerIds);
-
-		return properties;
-	}
-
 	protected void deleteLDAPServer(ActionRequest actionRequest)
 		throws Exception {
 
@@ -164,40 +112,8 @@ public class PortalSettingsEditLDAPServerMVCActionCommand
 
 		long ldapServerId = ParamUtil.getLong(actionRequest, "ldapServerId");
 
-		// Remove portletPreferences
-
-		String postfix = LDAPSettingsUtil.getPropertyPostfix(ldapServerId);
-
-		String[] keys = new String[_KEYS.length];
-
-		for (int i = 0; i < _KEYS.length; i++) {
-			keys[i] = _KEYS[i] + postfix;
-		}
-
-		_companyService.removePreferences(themeDisplay.getCompanyId(), keys);
-
-		// Update portletPreferences
-
-		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences(
-			themeDisplay.getCompanyId(), true);
-
-		UnicodeProperties properties = new UnicodeProperties();
-
-		String ldapServerIds = portletPreferences.getValue(
-			"ldap.server.ids", StringPool.BLANK);
-
-		ldapServerIds = StringUtil.removeFromList(
-			ldapServerIds, String.valueOf(ldapServerId));
-
-		properties.put("ldap.server.ids", ldapServerIds);
-
-		_companyService.updatePreferences(
-			themeDisplay.getCompanyId(), properties);
-	}
-
-	@Reference(unbind = "-")
-	protected void setCompanyService(CompanyService companyService) {
-		_companyService = companyService;
+		_ldapServerConfigurationProvider.delete(
+			themeDisplay.getCompanyId(), ldapServerId);
 	}
 
 	@Reference(unbind = "-")
@@ -207,53 +123,87 @@ public class PortalSettingsEditLDAPServerMVCActionCommand
 		_counterLocalService = counterLocalService;
 	}
 
+	@Reference(
+		target = "(factoryPid=com.liferay.portal.ldap.configuration.LDAPServerConfiguration)",
+		unbind = "-"
+	)
+	protected void setLDAPServerConfigurationProvider(
+		ConfigurationProvider<LDAPServerConfiguration>
+			ldapServerConfigurationProvider) {
+
+		_ldapServerConfigurationProvider = ldapServerConfigurationProvider;
+	}
+
 	protected void updateLDAPServer(ActionRequest actionRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long ldapServerId = ParamUtil.getLong(actionRequest, "ldapServerId");
+		long ldapServerId = ParamUtil.getLong(
+			actionRequest, LDAPConstants.LDAP_SERVER_ID);
 
 		UnicodeProperties properties = PropertiesParamUtil.getProperties(
-			actionRequest, "settings--");
+			actionRequest, "ldap--");
 
 		validateLDAPServerName(
 			ldapServerId, themeDisplay.getCompanyId(), properties);
 
 		validateSearchFilters(actionRequest);
 
+		Dictionary<String, Object> dictionary = null;
+
 		if (ldapServerId <= 0) {
-			properties = addLDAPServer(themeDisplay.getCompanyId(), properties);
+			ldapServerId = _counterLocalService.increment();
+
+			dictionary = new HashMapDictionary<>();
+		}
+		else {
+			dictionary =
+				_ldapServerConfigurationProvider.getConfigurationProperties(
+					themeDisplay.getCompanyId(), ldapServerId, false);
 		}
 
-		_companyService.updatePreferences(
-			themeDisplay.getCompanyId(), properties);
+		for (Map.Entry<String, String> entry : properties.entrySet()) {
+			dictionary.put(entry.getKey(), entry.getValue());
+		}
+
+		splitStringArrays(dictionary, LDAPConstants.CONTACT_CUSTOM_MAPPINGS);
+		splitStringArrays(dictionary, LDAPConstants.CONTACT_MAPPINGS);
+		splitStringArrays(
+			dictionary, LDAPConstants.GROUP_DEFAULT_OBJECT_CLASSES);
+		splitStringArrays(dictionary, LDAPConstants.GROUP_MAPPINGS);
+		splitStringArrays(dictionary, LDAPConstants.USER_CUSTOM_MAPPINGS);
+		splitStringArrays(
+			dictionary, LDAPConstants.USER_DEFAULT_OBJECT_CLASSES);
+		splitStringArrays(dictionary, LDAPConstants.USER_MAPPINGS);
+
+		_ldapServerConfigurationProvider.updateProperties(
+			themeDisplay.getCompanyId(), ldapServerId, dictionary);
 	}
 
 	protected void validateLDAPServerName(
 			long ldapServerId, long companyId, UnicodeProperties properties)
 		throws Exception {
 
-		String ldapServerName = properties.getProperty(
-			"ldap.server.name." + ldapServerId);
+		String serverName = properties.getProperty(LDAPConstants.SERVER_NAME);
 
-		if (Validator.isNull(ldapServerName)) {
+		if (Validator.isNull(serverName)) {
 			throw new LDAPServerNameException();
 		}
 
-		long[] existingLDAPServerIds = StringUtil.split(
-			PrefsPropsUtil.getString(companyId, "ldap.server.ids"), 0L);
+		List<LDAPServerConfiguration> ldapServerConfigurations =
+			_ldapServerConfigurationProvider.getConfigurations(
+				companyId, false);
 
-		for (long existingLDAPServerId : existingLDAPServerIds) {
-			if (ldapServerId == existingLDAPServerId) {
-				continue;
-			}
+		for (LDAPServerConfiguration ldapServerConfiguration :
+				ldapServerConfigurations) {
 
-			String existingLDAPServerName = PrefsPropsUtil.getString(
-				companyId, "ldap.server.name." + existingLDAPServerId);
+			String existingServerName = ldapServerConfiguration.serverName();
 
-			if (ldapServerName.equals(existingLDAPServerName)) {
+			if (serverName.equals(existingServerName) &&
+				(ldapServerId != ldapServerConfiguration.ldapServerId())) {
+
 				throw new DuplicateLDAPServerNameException();
 			}
 		}
@@ -273,21 +223,22 @@ public class PortalSettingsEditLDAPServerMVCActionCommand
 		LDAPUtil.validateFilter(groupFilter, "importGroupSearchFilter");
 	}
 
-	private static final String[] _KEYS = {
-		PropsKeys.LDAP_AUTH_SEARCH_FILTER, PropsKeys.LDAP_BASE_DN,
-		PropsKeys.LDAP_BASE_PROVIDER_URL,
-		PropsKeys.LDAP_CONTACT_CUSTOM_MAPPINGS, PropsKeys.LDAP_CONTACT_MAPPINGS,
-		PropsKeys.LDAP_GROUP_DEFAULT_OBJECT_CLASSES,
-		PropsKeys.LDAP_GROUP_MAPPINGS, PropsKeys.LDAP_GROUPS_DN,
-		PropsKeys.LDAP_IMPORT_GROUP_SEARCH_FILTER,
-		PropsKeys.LDAP_IMPORT_USER_SEARCH_FILTER,
-		PropsKeys.LDAP_SECURITY_CREDENTIALS, PropsKeys.LDAP_SECURITY_PRINCIPAL,
-		PropsKeys.LDAP_SERVER_NAME, PropsKeys.LDAP_USER_CUSTOM_MAPPINGS,
-		PropsKeys.LDAP_USER_DEFAULT_OBJECT_CLASSES,
-		PropsKeys.LDAP_USER_MAPPINGS, PropsKeys.LDAP_USERS_DN
-	};
+	private void splitStringArrays(
+		Dictionary<String, Object> dictionary, String property) {
 
-	private CompanyService _companyService;
+		Object propertyValue = dictionary.get(property);
+
+		if (propertyValue instanceof String) {
+			String[] propertyValues = StringUtil.split(
+				(String)propertyValue, StringPool.COMMA);
+
+			dictionary.put(property, propertyValues);
+		}
+	}
+
+	private static ConfigurationProvider<LDAPServerConfiguration>
+		_ldapServerConfigurationProvider;
+
 	private CounterLocalService _counterLocalService;
 
 }

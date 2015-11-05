@@ -326,6 +326,13 @@
 					</then>
 				</elseif>
 				<elseif>
+					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_APPLICATIONS_BLOGS" />
+					<then>
+						<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_BLOGS" />
+						<var name="permissionNavigationValue" value="Blogs" />
+					</then>
+				</elseif>
+				<elseif>
 					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_APPLICATIONS_BOOKMARKS" />
 					<then>
 						<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_BOOKMARKS" />
@@ -875,6 +882,13 @@
 				<then>
 					<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_ASSET_PUBLISHER" />
 					<var name="permissionNavigationValue" value="Asset Publisher" />
+				</then>
+			</elseif>
+			<elseif>
+				<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_APPLICATIONS_BLOGS" />
+				<then>
+					<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_BLOGS" />
+					<var name="permissionNavigationValue" value="Blogs" />
 				</then>
 			</elseif>
 			<elseif>

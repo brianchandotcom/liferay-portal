@@ -168,11 +168,29 @@
 	</command>
 
 	<command name="viewNoPermissionPG">
-		<execute function="AssertElementNotPresent" locator1="Portlet#TITLE" />
 		<execute function="AssertElementNotPresent" locator1="PGBlogs#ADD_ENTRY_BUTTON" value1="Add Blog Entry" />
-		<execute function="AssertElementNotPresent" locator1="PGBlogs#PERMISSIONS_BUTTON" value1="Permissions" />
 		<execute function="AssertElementNotPresent" locator1="PGBlogs#SUBSCRIBE_LINK" />
 		<execute function="AssertTextEquals" locator1="PGBlogs#RSS_LINK" value1="RSS" />
+
+		<if>
+			<condition function="IsElementPresent" locator1="BasePortlet#OPTIONS_ICON" />
+			<then>
+				<execute function="Click#mouseOverClick" locator1="BasePortlet#OPTIONS_ICON" />
+
+				<execute function="AssertElementNotPresent" locator1="PGBlogs#PERMISSIONS_BUTTON" value1="Permissions" />
+
+				<if>
+					<condition function="IsElementPresent" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" />
+					<then>
+						<execute function="Click" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" />
+
+						<execute function="SelectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
+
+						<execute function="AssertElementNotPresent" locator1="PGBlogs#PERMISSIONS_BUTTON" value1="Permissions" />
+					</then>
+				</if>
+			</then>
+		</if>
 	</command>
 
 	<command name="viewNoSubscribePG">
@@ -180,6 +198,17 @@
 	</command>
 
 	<command name="viewPermissionsPG">
+		<execute function="Click#mouseOverClick" locator1="BasePortlet#OPTIONS_ICON" />
+
+		<if>
+			<condition function="IsElementPresent" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" />
+			<then>
+				<execute function="Click" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" />
+
+				<execute function="SelectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
+			</then>
+		</if>
+
 		<execute function="AssertTextEquals" locator1="PGBlogs#PERMISSIONS_BUTTON" value1="Permissions" />
 	</command>
 

@@ -821,47 +821,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--SITE_ADMIN_APPLICATIONS_KALEO_FORMS-->
-<tr>
-	<td>SITE_ADMIN_APPLICATIONS_KALEO_FORMS_APPLICATION_PERMISSIONS_ALL_CHECKBOX</td>
-	<td>//input[contains(@name,'allRowIds')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SITE_ADMIN_APPLICATIONS_KALEO_FORMS_APPLICATION_PERMISSIONS_VIEW</td>
-	<td>//input[@value='1_WAR_kaleoformsportletVIEW']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SITE_ADMIN_APPLICATIONS_KALEO_FORMS_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_ALL_CHECKBOX</td>
-	<td>xpath=(//input[contains(@name,'allRowIds')])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SITE_ADMIN_APPLICATIONS_KALEO_FORMS_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_COMPLETE_FORM</td>
-	<td>//input[contains(@value,'KaleoProcessCOMPLETE_FORM')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SITE_ADMIN_APPLICATIONS_KALEO_FORMS_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_SUBMIT</td>
-	<td>//input[contains(@value,'KaleoProcessSUBMIT')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SITE_ADMIN_APPLICATIONS_KALEO_FORMS_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_UPDATE</td>
-	<td>//input[contains(@value,'KaleoProcessUPDATE')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SITE_ADMIN_APPLICATIONS_KALEO_FORMS_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_VIEW</td>
-	<td>//input[contains(@value,'KaleoProcessVIEW')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SITE_ADMIN_APPLICATIONS_ASSET_PUBLISHER_APPLICATION_PERIMISSIONS-->
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_ASSET_PUBLISHER_APPLICATION_PERIMISSIONS_ADD_TO_PAGE_CHECKBOX</td>
@@ -881,6 +840,22 @@
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_ASSET_PUBLISHER_APPLICATION_PERIMISSIONS_VIEW_CHECKBOX</td>
 	<td>//input[contains(@value,'AssetPublisherPortletVIEW')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SITE_ADMIN_APPLICATIONS_BLOGS-->
+<tr>
+	<td>SITE_ADMIN_APPLICATIONS_BLOGS_APPLICATION_PERMISSIONS_CONFIGURATION_CHECKBOX</td>
+	<td>//input[contains(@value,'BlogsPortletCONFIGURATION')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_APPLICATIONS_BLOGS_APPLICATION_PERMISSIONS_PERMISSIONS_CHECKBOX</td>
+	<td>//input[contains(@value,'BlogsPortletPERMISSIONS')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -909,7 +884,7 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--SITE_ADMIN_CALENDAR_RESOURCE_PERMISSIONS_CALENDAR-->
+<!--SITE_ADMIN_APPLICATIONS_CALENDAR_RESOURCE_PERMISSIONS_CALENDAR-->
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_CALENDAR_MANAGE_EVENTS_CHECKBOX</td>
 	<td>//input[contains(@value,'CalendarMANAGE')]</td>
@@ -978,6 +953,69 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--SITE_ADMIN_APPLICATIONS_KALEO_FORMS-->
+<tr>
+	<td>SITE_ADMIN_APPLICATIONS_KALEO_FORMS_APPLICATION_PERMISSIONS_ALL_CHECKBOX</td>
+	<td>//input[contains(@name,'allRowIds')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_APPLICATIONS_KALEO_FORMS_APPLICATION_PERMISSIONS_VIEW</td>
+	<td>//input[@value='1_WAR_kaleoformsportletVIEW']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_APPLICATIONS_KALEO_FORMS_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_ALL_CHECKBOX</td>
+	<td>xpath=(//input[contains(@name,'allRowIds')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_APPLICATIONS_KALEO_FORMS_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_COMPLETE_FORM</td>
+	<td>//input[contains(@value,'KaleoProcessCOMPLETE_FORM')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_APPLICATIONS_KALEO_FORMS_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_SUBMIT</td>
+	<td>//input[contains(@value,'KaleoProcessSUBMIT')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_APPLICATIONS_KALEO_FORMS_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_UPDATE</td>
+	<td>//input[contains(@value,'KaleoProcessUPDATE')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_APPLICATIONS_KALEO_FORMS_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_VIEW</td>
+	<td>//input[contains(@value,'KaleoProcessVIEW')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SITE_ADMIN_APPLICATIONS_LANGUAGE_APPLICATIONS_PERMISSIONS-->
+<tr>
+	<td>SITE_ADMIN_APPLICATIONS_LANGUAGE_APPLICATION_PERMISSIONS_ADD_TO_PAGE_CHECKBOX</td>
+	<td>//input[contains(@value,'LanguagePortletADD_TO_PAGE')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SITE_ADMIN_APPLICATIONS_MESSAGE_BOARDS_APPLICATIONS_PERMISSIONS-->
+<tr>
+	<td>SITE_ADMIN_APPLICATIONS_MESSAGE_BOARDS_APPLICATION_PERMISSIONS_ADD_TO_PAGE_CHECKBOX</td>
+	<td>//input[contains(@value,'MBPortletADD_TO_PAGE')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SITE_ADMIN_APPLICATIONS_SOCIAL_OFFICE_ANNOUNCEMENTS_APPLICATIONS_PERMISSIONS-->
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_SOCIAL_OFFICE_ANNOUNCEMENTS_APPLICATIONS_PERMISSIONS_ACTION_CHECKBOX</td>
@@ -1008,19 +1046,6 @@
 <tr>
 	<td></td>
 	<td></td>
-	<td></td>
-</tr>
-<!--SITE_ADMIN_APPLICATIONS_MESSAGE_BOARDS_APPLICATIONS_PERMISSIONS-->
-<tr>
-	<td>SITE_ADMIN_APPLICATIONS_MESSAGE_BOARDS_APPLICATION_PERMISSIONS_ADD_TO_PAGE_CHECKBOX</td>
-	<td>//input[contains(@value,'MBPortletADD_TO_PAGE')]</td>
-	<td></td>
-</tr>
-<!---->
-<!--SITE_ADMIN_APPLICATIONS_LANGUAGE_APPLICATIONS_PERMISSIONS-->
-<tr>
-	<td>SITE_ADMIN_APPLICATIONS_LANGUAGE_APPLICATION_PERMISSIONS_ADD_TO_PAGE_CHECKBOX</td>
-	<td>//input[contains(@value,'LanguagePortletADD_TO_PAGE')]</td>
 	<td></td>
 </tr>
 </tbody>

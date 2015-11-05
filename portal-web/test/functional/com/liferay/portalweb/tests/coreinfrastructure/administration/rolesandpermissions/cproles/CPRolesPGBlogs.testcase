@@ -145,11 +145,11 @@
 		<execute macro="PermissionsInline#gotoBlogsCP">
 			<var name="pageName" value="Blogs Page" />
 			<var name="siteName" value="Organization Name" />
-			<var name="siteURLTemp" value="true" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Role#definePermissionPG">
-			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
+			<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_ADD_ENTRY_CHECKBOX" />
 			<var name="roleName" value="Roles Orgrole Name" />
 		</execute>
 
@@ -177,11 +177,11 @@
 		<execute macro="PermissionsInline#gotoBlogsCP">
 			<var name="pageName" value="Blogs Page" />
 			<var name="siteName" value="Organization Name" />
-			<var name="siteURLTemp" value="true" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Role#removePermissionPG">
-			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
+			<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_ADD_ENTRY_CHECKBOX" />
 			<var name="roleName" value="Roles Orgrole Name" />
 		</execute>
 
@@ -441,7 +441,7 @@
 		<execute macro="PermissionsInline#gotoBlogsCP">
 			<var name="pageName" value="Blogs Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURLTemp" value="true" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Role#definePermissionPG">
@@ -473,7 +473,7 @@
 		<execute macro="PermissionsInline#gotoBlogsCP">
 			<var name="pageName" value="Blogs Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURLTemp" value="true" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Role#removePermissionPG">
@@ -533,7 +533,7 @@
 		<execute macro="PermissionsInline#gotoBlogsCP">
 			<var name="pageName" value="Blogs Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURLTemp" value="true" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Team#definePermissionPG">
@@ -565,7 +565,7 @@
 		<execute macro="PermissionsInline#gotoBlogsCP">
 			<var name="pageName" value="Blogs Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURLTemp" value="true" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Team#removePermissionPG">
@@ -1384,7 +1384,7 @@
 			<var name="entryTitle" value="Blogs Entry Title" />
 			<var name="pageName" value="Blogs Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURLTemp" value="true" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Team#removePermissionPG">
@@ -1625,7 +1625,7 @@
 		<execute macro="PermissionsInline#gotoBlogsCP">
 			<var name="pageName" value="Blogs Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURLTemp" value="true" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Role#removePermissionPG">
@@ -1812,7 +1812,15 @@
 		<execute macro="BlogsConfiguration#viewNoPermissionPG" />
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_PERMISSIONS_CHECKBOX" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_BLOGS_APPLICATION_PERMISSIONS_CONFIGURATION_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Configuration" />
+			<var name="roleName" value="Regrole Name" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
+		</execute>
+
+		<execute macro="Permissions#definePermissionLoginUserCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_BLOGS_APPLICATION_PERMISSIONS_PERMISSIONS_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Permissions" />
 			<var name="roleName" value="Regrole Name" />
 			<var name="userLoginEmailAddress" value="userea@liferay.com" />
@@ -1826,7 +1834,15 @@
 		<execute macro="BlogsConfiguration#viewPermissionsPG" />
 
 		<execute macro="Permissions#removePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_PERMISSIONS_CHECKBOX" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_BLOGS_APPLICATION_PERMISSIONS_CONFIGURATION_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Configuration" />
+			<var name="roleName" value="Regrole Name" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
+		</execute>
+
+		<execute macro="Permissions#removePermissionLoginUserCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_BLOGS_APPLICATION_PERMISSIONS_PERMISSIONS_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Permissions" />
 			<var name="roleName" value="Regrole Name" />
 			<var name="userLoginEmailAddress" value="userea@liferay.com" />
@@ -2016,7 +2032,7 @@
 		<execute macro="PermissionsInline#gotoBlogsCP">
 			<var name="pageName" value="Blogs Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURLTemp" value="true" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Role#definePermissionPG">
@@ -2045,7 +2061,7 @@
 		<execute macro="PermissionsInline#gotoBlogsCP">
 			<var name="pageName" value="Blogs Page" />
 			<var name="siteName" value="Site Name" />
-			<var name="siteURLTemp" value="true" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Role#removePermissionPG">

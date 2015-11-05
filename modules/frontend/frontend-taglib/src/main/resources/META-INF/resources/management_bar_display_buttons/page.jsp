@@ -41,13 +41,11 @@ for (String displayStyle : displayViews) {
 	}
 %>
 
-	<li class="<%= displayStyle.equals(selectedDisplayStyle) ? "active" : StringPool.BLANK %>">
-		<aui:a
-			cssClass="btn"
-			href="<%= displayStyleURL.toString() %>"
-			iconCssClass="<%= iconCssClass %>"
-		/>
-	</li>
+	<liferay-frontend:management-bar-button
+		active="<%= displayStyle.equals(selectedDisplayStyle) %>"
+		href="<%= displayStyleURL.toString() %>"
+		iconCssClass="<%= iconCssClass %>"
+	/>
 
 <%
 }

@@ -49,19 +49,19 @@ boolean search = Validator.isNotNull(keywords) || advancedSearch;
 		String taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteEntries();";
 		%>
 
-		<aui:a cssClass="btn" href="<%= taglibURL %>" iconCssClass='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "icon-trash" : "icon-remove" %>' />
+		<liferay-frontend:management-bar-button href="<%= taglibURL %>" iconCssClass='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "icon-trash" : "icon-remove" %>' />
 
 		<%
 		taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: 'expireEntries'}); void(0);";
 		%>
 
-		<aui:a cssClass="btn" href="<%= taglibURL %>" iconCssClass="icon-time" />
+		<liferay-frontend:management-bar-button href="<%= taglibURL %>" iconCssClass="icon-time" />
 
 		<%
 		taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: 'moveEntries'}); void(0);";
 		%>
 
-		<aui:a cssClass="btn" href="<%= taglibURL %>" iconCssClass="icon-move" />
+		<liferay-frontend:management-bar-button href="<%= taglibURL %>" iconCssClass="icon-move" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 

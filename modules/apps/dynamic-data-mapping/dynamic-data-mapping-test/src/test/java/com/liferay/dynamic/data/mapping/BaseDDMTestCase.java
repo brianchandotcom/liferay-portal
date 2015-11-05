@@ -175,6 +175,13 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		return availableLocales;
 	}
 
+	protected Field createBRField(
+		long ddmStructureId, String fieldName, List<Serializable> ptValues) {
+
+		return new MockField(
+			ddmStructureId, fieldName, ptValues, LocaleUtil.BRAZIL);
+	}
+
 	protected DDMForm createDDMForm(
 		Set<Locale> availableLocales, Locale defaultLocale) {
 

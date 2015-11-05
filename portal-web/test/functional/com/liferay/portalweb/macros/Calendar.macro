@@ -37,7 +37,8 @@
 	</command>
 
 	<command name="_gotoSiteCalendarMenulist">
-		<var name="key_calendarName" value="${calendarName}" />
+		<var name="key_siteCalendarName" value="${siteCalendarName}" />
+		<var name="key_siteName" value="${siteName}" />
 
 		<execute function="AssertTextEquals" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR" value1="${calendarName}" />
 
@@ -579,6 +580,8 @@
 	</command>
 
 	<command name="gotoCurrentSiteCalendarsManage">
+		<var name="key_siteName" value="${siteName}" />
+
 		<execute function="Click" locator1="Calendar#CURRENT_SITE_CALENDARS_MENULIST_ARROW" />
 		<execute function="AssertClick" locator1="Calendar#CURRENT_SITE_CALENDARS_MENULIST_MANAGE_CALENDAR" value1="Manage Calendars" />
 	</command>

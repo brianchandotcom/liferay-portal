@@ -12,6 +12,8 @@
 	</command>
 
 	<command name="gotoAddCurrentSiteCalendars">
+		<var name="key_siteName" value="${siteName}" />
+
 		<execute function="Click" locator1="Calendar#CURRENT_SITE_CALENDARS_MENULIST_ARROW" />
 
 		<execute function="AssertClick" locator1="Calendar#CURRENT_SITE_CALENDARS_MENULIST_ADD_CALENDAR" value1="Add Calendar" />

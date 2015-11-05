@@ -212,17 +212,17 @@
 <!--CURRENT_SITE_CALENDARS-->
 <tr>
 	<td>CURRENT_SITE_CALENDARS_HEADER</td>
-	<td>//div[contains(@class,'toggler-header-expanded') and contains(.,'Current Site Calendars')]/span[@class='calendar-portlet-list-text']</td>
+	<td>//div[contains(@class,'toggler-header-expanded') and contains(.,"${key_siteName}'s Calendars")]/span[@class='calendar-portlet-list-text']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CURRENT_SITE_CALENDARS_CALENDAR</td>
-	<td>//div[contains(@class,'toggler-header-expanded') and contains(.,'Current Site Calendars')]/following-sibling::div[contains(.,'${key_siteCalendarName}')]//span</td>
+	<td>//div[contains(@class,'toggler-header-expanded') and contains(.,"${key_siteName}'s Calendars")]/following-sibling::div[contains(.,'${key_siteCalendarName}')]//span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CURRENT_SITE_CALENDARS_MENULIST_ARROW</td>
-	<td>//div[contains(@class,'toggler-header-expanded') and contains(.,'Current Site Calendars')]/span[@class='calendar-list-item-arrow']</td>
+	<td>//div[contains(@class,'toggler-header-expanded') and contains(.,"${key_siteName}'s Calendars")]/span[@class='calendar-list-item-arrow']</td>
 	<td></td>
 </tr>
 <tr>
@@ -279,7 +279,7 @@
 </tr>
 <tr>
 	<td>CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL</td>
-	<td>//div[contains(@id,'CalendarPortlet_siteCalendarList')]/div/div/span[contains(.,'${key_site} - ${key_calendarName}')]</td>
+	<td>//div[contains(@id,'CalendarPortlet_siteCalendarList')]/div/div/span[contains(.,'${key_site} - ${key_siteCalendarName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -294,7 +294,7 @@
 </tr>
 <tr>
 	<td>CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL_MENULIST_ARROW</td>
-	<td>//div[contains(@id,'CalendarPortlet_siteCalendarList')]/div/div[contains(., '${key_site} - ${key_calendarName}')]/div[@class='calendar-list-item-arrow']/i[@class='icon-caret-down']</td>
+	<td>//div[contains(@id,'CalendarPortlet_siteCalendarList')]/div/div[contains(., '${key_site} - ${key_siteCalendarName}')]/div[@class='calendar-list-item-arrow']/i[@class='icon-caret-down']</td>
 	<td></td>
 </tr>
 <tr>

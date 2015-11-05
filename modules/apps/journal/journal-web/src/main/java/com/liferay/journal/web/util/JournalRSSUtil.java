@@ -22,7 +22,7 @@ import com.liferay.journal.model.JournalFeedConstants;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.JournalContentSearchLocalServiceUtil;
 import com.liferay.journal.service.JournalFeedLocalServiceUtil;
-import com.liferay.journal.util.JournalContentUtil;
+import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.comparator.ArticleDisplayDateComparator;
 import com.liferay.journal.util.comparator.ArticleModifiedDateComparator;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -85,12 +85,16 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Raymond Augé
  */
+@Component(service = JournalRSSUtil.class)
 public class JournalRSSUtil {
 
-	public static List<JournalArticle> getArticles(JournalFeed feed) {
+	public List<JournalArticle> getArticles(JournalFeed feed) {
 		long companyId = feed.getCompanyId();
 		long groupId = feed.getGroupId();
 		List<Long> folderIds = Collections.emptyList();
@@ -139,9 +143,7 @@ public class JournalRSSUtil {
 			start, end, obc);
 	}
 
-	public static List<SyndEnclosure> getDLEnclosures(
-		String portalURL, String url) {
-
+	public List<SyndEnclosure> getDLEnclosures(String portalURL, String url) {
 		List<SyndEnclosure> syndEnclosures = new ArrayList<>();
 
 		FileEntry fileEntry = getFileEntry(url);
@@ -161,7 +163,7 @@ public class JournalRSSUtil {
 		return syndEnclosures;
 	}
 
-	public static List<SyndLink> getDLLinks(String portalURL, String url) {
+	public List<SyndLink> getDLLinks(String portalURL, String url) {
 		List<SyndLink> syndLinks = new ArrayList<>();
 
 		FileEntry fileEntry = getFileEntry(url);
@@ -182,7 +184,7 @@ public class JournalRSSUtil {
 		return syndLinks;
 	}
 
-	public static FileEntry getFileEntry(String url) {
+	public FileEntry getFileEntry(String url) {
 		FileEntry fileEntry = null;
 
 		String queryString = HttpUtil.getQueryString(url);
@@ -261,9 +263,7 @@ public class JournalRSSUtil {
 		return fileEntry;
 	}
 
-	public static List<SyndEnclosure> getIGEnclosures(
-		String portalURL, String url) {
-
+	public List<SyndEnclosure> getIGEnclosures(String portalURL, String url) {
 		List<SyndEnclosure> syndEnclosures = new ArrayList<>();
 
 		Object[] imageProperties = getImageProperties(url);
@@ -285,7 +285,7 @@ public class JournalRSSUtil {
 		return syndEnclosures;
 	}
 
-	public static List<SyndLink> getIGLinks(String portalURL, String url) {
+	public List<SyndLink> getIGLinks(String portalURL, String url) {
 		List<SyndLink> syndLinks = new ArrayList<>();
 
 		Object[] imageProperties = getImageProperties(url);
@@ -308,7 +308,7 @@ public class JournalRSSUtil {
 		return syndLinks;
 	}
 
-	public static Image getImage(String url) {
+	public Image getImage(String url) {
 		Image image = null;
 
 		String queryString = HttpUtil.getQueryString(url);
@@ -345,7 +345,7 @@ public class JournalRSSUtil {
 		return image;
 	}
 
-	public static byte[] getRSS(
+	public byte[] getRSS(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
@@ -388,7 +388,7 @@ public class JournalRSSUtil {
 		return rss.getBytes(StringPool.UTF8);
 	}
 
-	protected static String exportToRSS(
+	protected String exportToRSS(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
 			JournalFeed feed, String languageId, Layout layout,
 			ThemeDisplay themeDisplay)
@@ -402,7 +402,7 @@ public class JournalRSSUtil {
 
 		syndFeed.setEntries(syndEntries);
 
-		List<JournalArticle> articles = JournalRSSUtil.getArticles(feed);
+		List<JournalArticle> articles = getArticles(feed);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Syndicating " + articles.size() + " articles");
@@ -485,7 +485,7 @@ public class JournalRSSUtil {
 		}
 	}
 
-	protected static String getEntryURL(
+	protected String getEntryURL(
 			ResourceRequest resourceRequest, JournalFeed feed,
 			JournalArticle article, Layout layout, ThemeDisplay themeDisplay)
 		throws Exception {
@@ -523,7 +523,7 @@ public class JournalRSSUtil {
 		return entryURL.toString();
 	}
 
-	protected static Object[] getImageProperties(String url) {
+	protected Object[] getImageProperties(String url) {
 		String type = null;
 		long size = 0;
 
@@ -553,7 +553,7 @@ public class JournalRSSUtil {
 		return null;
 	}
 
-	protected static String processContent(
+	protected String processContent(
 			JournalFeed feed, JournalArticle article, String languageId,
 			ThemeDisplay themeDisplay, SyndEntry syndEntry,
 			SyndContent syndContent)
@@ -570,19 +570,18 @@ public class JournalRSSUtil {
 				ddmRendererTemplateKey = feed.getDDMRendererTemplateKey();
 			}
 
-			JournalArticleDisplay articleDisplay =
-				JournalContentUtil.getDisplay(
-					feed.getGroupId(), article.getArticleId(),
-					ddmRendererTemplateKey, null, languageId, 1,
-					new PortletRequestModel() {
+			JournalArticleDisplay articleDisplay = _journalContent.getDisplay(
+				feed.getGroupId(), article.getArticleId(),
+				ddmRendererTemplateKey, null, languageId, 1,
+				new PortletRequestModel() {
 
-						@Override
-						public String toXML() {
-							return _XML_REQUUEST;
-						}
+					@Override
+					public String toXML() {
+						return _XML_REQUUEST;
+					}
 
-					},
-					themeDisplay);
+				},
+				themeDisplay);
 
 			if (articleDisplay != null) {
 				content = articleDisplay.getContent();
@@ -636,7 +635,7 @@ public class JournalRSSUtil {
 		return content;
 	}
 
-	protected static String processURL(
+	protected String processURL(
 		JournalFeed feed, String url, ThemeDisplay themeDisplay,
 		SyndEntry syndEntry) {
 
@@ -648,23 +647,26 @@ public class JournalRSSUtil {
 			}
 		);
 
-		List<SyndEnclosure> syndEnclosures = JournalRSSUtil.getDLEnclosures(
+		List<SyndEnclosure> syndEnclosures = getDLEnclosures(
 			themeDisplay.getURLPortal(), url);
 
 		syndEnclosures.addAll(
-			JournalRSSUtil.getIGEnclosures(themeDisplay.getURLPortal(), url));
+			getIGEnclosures(themeDisplay.getURLPortal(), url));
 
 		syndEntry.setEnclosures(syndEnclosures);
 
-		List<SyndLink> syndLinks = JournalRSSUtil.getDLLinks(
-			themeDisplay.getURLPortal(), url);
+		List<SyndLink> syndLinks = getDLLinks(themeDisplay.getURLPortal(), url);
 
-		syndLinks.addAll(
-			JournalRSSUtil.getIGLinks(themeDisplay.getURLPortal(), url));
+		syndLinks.addAll(getIGLinks(themeDisplay.getURLPortal(), url));
 
 		syndEntry.setLinks(syndLinks);
 
 		return url;
+	}
+
+	@Reference
+	protected void setJournalContent(JournalContent journalContent) {
+		_journalContent = journalContent;
 	}
 
 	private static final String _XML_REQUUEST =
@@ -672,5 +674,7 @@ public class JournalRSSUtil {
 			"</parameter></parameters></request>";
 
 	private static final Log _log = LogFactoryUtil.getLog(JournalRSSUtil.class);
+
+	private JournalContent _journalContent;
 
 }

@@ -26,6 +26,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bruno Farache
@@ -47,7 +48,7 @@ public class ExportArticleMVCResourceCommand extends BaseMVCResourceCommand {
 		throws Exception {
 
 		try {
-			ExportArticleUtil.sendFile(resourceRequest, resourceResponse);
+			_exportArticleUtil.sendFile(resourceRequest, resourceResponse);
 		}
 		catch (Exception e) {
 			PortalUtil.sendError(
@@ -55,5 +56,12 @@ public class ExportArticleMVCResourceCommand extends BaseMVCResourceCommand {
 				(ActionResponse)resourceResponse);
 		}
 	}
+
+	@Reference
+	protected void setExportArticleUtil(ExportArticleUtil exportArticleUtil) {
+		_exportArticleUtil = exportArticleUtil;
+	}
+
+	private ExportArticleUtil _exportArticleUtil;
 
 }

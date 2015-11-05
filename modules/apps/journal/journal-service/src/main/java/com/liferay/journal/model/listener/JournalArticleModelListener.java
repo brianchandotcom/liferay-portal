@@ -15,12 +15,13 @@
 package com.liferay.journal.model.listener;
 
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.util.JournalContentUtil;
+import com.liferay.journal.util.JournalContent;
 import com.liferay.portal.model.BaseModelListener;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -48,7 +49,7 @@ public class JournalArticleModelListener
 
 		// Journal content
 
-		JournalContentUtil.clearCache(
+		_journalContent.clearCache(
 			article.getGroupId(), article.getArticleId(),
 			article.getDDMTemplateKey());
 
@@ -56,5 +57,12 @@ public class JournalArticleModelListener
 
 		CacheUtil.clearCache(article.getCompanyId());
 	}
+
+	@Reference
+	protected void setJournalContent(JournalContent journalContent) {
+		_journalContent = journalContent;
+	}
+
+	private JournalContent _journalContent;
 
 }

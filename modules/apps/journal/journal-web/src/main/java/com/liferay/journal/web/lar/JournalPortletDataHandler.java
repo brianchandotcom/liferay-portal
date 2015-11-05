@@ -29,7 +29,7 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalFeedLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.journal.service.permission.JournalPermission;
-import com.liferay.journal.util.JournalContentUtil;
+import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.web.configuration.JournalWebConfigurationValues;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
@@ -324,7 +324,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 					portletDataContext, articleElement);
 			}
 
-			JournalContentUtil.clearCache();
+			journalContent.clearCache();
 		}
 
 		return portletPreferences;
@@ -553,6 +553,11 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Reference(unbind = "-")
+	protected void setJournalContent(JournalContent journalContent) {
+		this.journalContent = journalContent;
+	}
+
+	@Reference(unbind = "-")
 	protected void setJournalFeedLocalService(
 		JournalFeedLocalService journalFeedLocalService) {
 
@@ -574,6 +579,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 	protected DDMStructureLocalService ddmStructureLocalService;
 	protected DDMTemplateLocalService ddmTemplateLocalService;
 	protected JournalArticleLocalService journalArticleLocalService;
+	protected JournalContent journalContent;
 	protected JournalFeedLocalService journalFeedLocalService;
 	protected JournalFolderLocalService journalFolderLocalService;
 

@@ -669,6 +669,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VIEW_HISTORY</td>
+	<td>//div[contains(@class,'open')]//a[contains(.,'View History')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VIEW_ENTRIES</td>
 	<td>//li[contains(.,'${key_formName}')]//a[@role='menuitem' and contains(.,'View Entries')]</td>
 	<td></td>

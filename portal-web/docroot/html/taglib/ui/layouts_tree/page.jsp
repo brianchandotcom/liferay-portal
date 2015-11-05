@@ -37,7 +37,7 @@ long selPlid = GetterUtil.getLong((String)request.getAttribute("liferay-ui:layou
 String treeId = (String)request.getAttribute("liferay-ui:layouts-tree:treeId");
 
 if (Validator.isNull(portletNamespace)) {
-	portletNamespace = portletDisplay.getNamespace();
+	portletNamespace = namespace;
 }
 %>
 
@@ -92,7 +92,7 @@ if (Validator.isNull(portletNamespace)) {
 					}
 				}
 			},
-			boundingBox: '#<%= portletNamespace + HtmlUtil.escape(treeId) %>Output',
+			boundingBox: '#<portlet:namespace /><%= HtmlUtil.escape(treeId) %>Output',
 			incomplete: <%= incomplete %>,
 			layouts: <%= layoutsJSON %>,
 			layoutURL: '<%= portletURL + StringPool.AMPERSAND + portletNamespace + "selPlid={selPlid}" + StringPool.AMPERSAND + portletNamespace %>',
@@ -124,4 +124,4 @@ if (Validator.isNull(portletNamespace)) {
 	).render();
 </aui:script>
 
-<div class="lfr-tree" data-treeid="<%= HtmlUtil.escapeAttribute(treeId) %>" id="<%= portletNamespace + HtmlUtil.escape(treeId) %>Output"></div>
+<div class="lfr-tree" data-treeid="<%= HtmlUtil.escapeAttribute(treeId) %>" id="<portlet:namespace /><%= HtmlUtil.escape(treeId) %>Output"></div>

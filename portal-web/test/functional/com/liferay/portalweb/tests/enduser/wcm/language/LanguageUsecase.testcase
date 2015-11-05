@@ -333,6 +333,102 @@
 		</execute>
 	</command>
 
+	<command name="ViewDisplayOptionsViaLanguagePortlet" priority="4">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Language" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="LanguagePortlet#toggleDisplayTemplate">
+			<var name="displayStyle" value="Icon Menu" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="LanguagePortlet#viewDisplayTemplateIconMenu">
+			<var name="language" value="Deutsch" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="LanguagePortlet#toggleDisplayTemplate">
+			<var name="displayStyle" value="Long Text" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="LanguagePortlet#viewDisplayTemplateLongText">
+			<var name="language" value="suomi" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="LanguagePortlet#toggleDisplayTemplate">
+			<var name="displayStyle" value="Select Box" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="LanguagePortlet#viewDisplayTemplateSelectBox">
+			<var name="language" value="English" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="LanguagePortlet#toggleDisplayTemplate">
+			<var name="displayStyle" value="Short Text" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="LanguagePortlet#viewDisplayTemplateShortText">
+			<var name="languageKey" value="HU" />
+		</execute>
+	</command>
+
 	<command name="ViewRemovedCurrentPortalLanguagesViaLanguagePortlet" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page Name" />

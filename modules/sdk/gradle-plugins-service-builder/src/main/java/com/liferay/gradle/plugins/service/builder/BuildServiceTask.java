@@ -27,22 +27,11 @@ import org.gradle.api.Project;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.tasks.JavaExec;
-import org.gradle.process.JavaExecSpec;
 
 /**
  * @author Andrea Di Giorgi
  */
 public class BuildServiceTask extends JavaExec {
-
-	@Override
-	public JavaExecSpec args(Iterable<?> args) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public JavaExec args(Object... args) {
-		throw new UnsupportedOperationException();
-	}
 
 	@Override
 	public JavaExec classpath(Object... paths) {
@@ -51,7 +40,8 @@ public class BuildServiceTask extends JavaExec {
 
 	@Override
 	public void exec() {
-		super.setArgs(getArgs());
+		setArgs(getCompleteArgs());
+
 		super.setClasspath(getClasspath());
 		super.setWorkingDir(getWorkingDir());
 
@@ -60,57 +50,6 @@ public class BuildServiceTask extends JavaExec {
 
 	public String getApiDirName() {
 		return _serviceBuilderArgs.getApiDirName();
-	}
-
-	@Override
-	public List<String> getArgs() {
-		List<String> args = new ArrayList<>();
-
-		args.add("service.api.dir=" + getApiDirName());
-		args.add(
-			"service.auto.import.default.references=" +
-				isAutoImportDefaultReferences());
-		args.add("service.auto.namespace.tables=" + isAutoNamespaceTables());
-		args.add("service.bean.locator.util=" + getBeanLocatorUtil());
-		args.add("service.build.number.increment=" + isBuildNumberIncrement());
-		args.add("service.build.number=" + getBuildNumber());
-		args.add("service.hbm.file=" + getHbmFileName());
-		args.add("service.impl.dir=" + getImplDirName());
-		args.add("service.input.file=" + getInputFileName());
-		args.add(
-			"service.model.hints.configs=" +
-				StringUtil.merge(getModelHintsConfigs(), ","));
-		args.add("service.model.hints.file=" + getModelHintsFileName());
-		args.add("service.osgi.module=" + isOsgiModule());
-		args.add("service.plugin.name=" + getPluginName());
-		args.add("service.props.util=" + getPropsUtil());
-		args.add(
-			"service.read.only.prefixes=" +
-				StringUtil.merge(getReadOnlyPrefixes(), ","));
-		args.add(
-			"service.resource.actions.configs=" +
-				StringUtil.merge(getResourceActionsConfigs(), ","));
-		args.add("service.resources.dir=" + getResourcesDirName());
-		args.add("service.spring.file=" + getSpringFileName());
-		args.add(
-			"service.spring.namespaces=" +
-				StringUtil.merge(getSpringNamespaces(), ","));
-		args.add("service.sql.dir=" + getSqlDirName());
-		args.add("service.sql.file=" + getSqlFileName());
-		args.add("service.sql.indexes.file=" + getSqlIndexesFileName());
-		args.add("service.sql.sequences.file=" + getSqlSequencesFileName());
-
-		String targetEntityName = getTargetEntityName();
-
-		if (Validator.isNull(targetEntityName)) {
-			targetEntityName = "${service.target.entity.name}";
-		}
-
-		args.add("service.target.entity.name=" + targetEntityName);
-
-		args.add("service.test.dir=" + getTestDirName());
-
-		return args;
 	}
 
 	public String getBeanLocatorUtil() {
@@ -249,11 +188,6 @@ public class BuildServiceTask extends JavaExec {
 		_serviceBuilderArgs.setApiDirName(apiDirName);
 	}
 
-	@Override
-	public JavaExec setArgs(Iterable<?> applicationArgs) {
-		throw new UnsupportedOperationException();
-	}
-
 	public void setAutoImportDefaultReferences(
 		boolean autoImportDefaultReferences) {
 
@@ -361,6 +295,56 @@ public class BuildServiceTask extends JavaExec {
 	@Override
 	public void setWorkingDir(Object dir) {
 		throw new UnsupportedOperationException();
+	}
+
+	protected List<String> getCompleteArgs() {
+		List<String> args = new ArrayList<>(getArgs());
+
+		args.add("service.api.dir=" + getApiDirName());
+		args.add(
+			"service.auto.import.default.references=" +
+				isAutoImportDefaultReferences());
+		args.add("service.auto.namespace.tables=" + isAutoNamespaceTables());
+		args.add("service.bean.locator.util=" + getBeanLocatorUtil());
+		args.add("service.build.number.increment=" + isBuildNumberIncrement());
+		args.add("service.build.number=" + getBuildNumber());
+		args.add("service.hbm.file=" + getHbmFileName());
+		args.add("service.impl.dir=" + getImplDirName());
+		args.add("service.input.file=" + getInputFileName());
+		args.add(
+			"service.model.hints.configs=" +
+				StringUtil.merge(getModelHintsConfigs(), ","));
+		args.add("service.model.hints.file=" + getModelHintsFileName());
+		args.add("service.osgi.module=" + isOsgiModule());
+		args.add("service.plugin.name=" + getPluginName());
+		args.add("service.props.util=" + getPropsUtil());
+		args.add(
+			"service.read.only.prefixes=" +
+				StringUtil.merge(getReadOnlyPrefixes(), ","));
+		args.add(
+			"service.resource.actions.configs=" +
+				StringUtil.merge(getResourceActionsConfigs(), ","));
+		args.add("service.resources.dir=" + getResourcesDirName());
+		args.add("service.spring.file=" + getSpringFileName());
+		args.add(
+			"service.spring.namespaces=" +
+				StringUtil.merge(getSpringNamespaces(), ","));
+		args.add("service.sql.dir=" + getSqlDirName());
+		args.add("service.sql.file=" + getSqlFileName());
+		args.add("service.sql.indexes.file=" + getSqlIndexesFileName());
+		args.add("service.sql.sequences.file=" + getSqlSequencesFileName());
+
+		String targetEntityName = getTargetEntityName();
+
+		if (Validator.isNull(targetEntityName)) {
+			targetEntityName = "${service.target.entity.name}";
+		}
+
+		args.add("service.target.entity.name=" + targetEntityName);
+
+		args.add("service.test.dir=" + getTestDirName());
+
+		return args;
 	}
 
 	private final ServiceBuilderArgs _serviceBuilderArgs =

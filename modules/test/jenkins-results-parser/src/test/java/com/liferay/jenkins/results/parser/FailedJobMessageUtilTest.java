@@ -151,7 +151,7 @@ public class FailedJobMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 	@Override
 	protected String getMessage(String urlString) throws Exception {
 		Project project = _getProject(
-			urlString, _urlToFile(urlString).getPath());
+			urlString, urlString.substring("file:".length()));
 
 		FailedJobMessageUtil.getFailedJobMessage(project);
 
@@ -175,16 +175,6 @@ public class FailedJobMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 		project.setProperty("top.level.shared.dir", topLevelSharedDir);
 
 		return project;
-	}
-
-	private File _urlToFile(String urlString) throws Exception {
-		if (!urlString.startsWith("file:")) {
-			throw new Exception("Only file URLs are allowed.");
-		}
-
-		String localURL = JenkinsResultsParserUtil.getLocalURL(urlString);
-
-		return new File(localURL.substring("file:".length()));
 	}
 
 	private static final String _JAVAC_OUTPUT_FILE_NAME = "javac.output.txt";

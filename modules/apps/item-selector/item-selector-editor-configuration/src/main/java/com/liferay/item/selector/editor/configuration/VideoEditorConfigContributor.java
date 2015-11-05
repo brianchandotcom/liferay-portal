@@ -47,8 +47,6 @@ public class VideoEditorConfigContributor extends BaseEditorConfigContributor {
 
 		List<ItemSelectorCriterion> itemSelectorCriteria = new ArrayList<>();
 
-		itemSelectorCriteria.add(new URLItemSelectorCriterion());
-
 		boolean allowBrowseDocuments = GetterUtil.getBoolean(
 			inputEditorTaglibAttributes.get(
 				"liferay-ui:input-editor:allowBrowseDocuments"));
@@ -56,6 +54,8 @@ public class VideoEditorConfigContributor extends BaseEditorConfigContributor {
 		if (allowBrowseDocuments) {
 			itemSelectorCriteria.add(new VideoItemSelectorCriterion());
 		}
+
+		itemSelectorCriteria.add(new URLItemSelectorCriterion());
 
 		PortletURL itemSelectorURL = getItemSelectorPortletURL(
 			inputEditorTaglibAttributes, requestBackedPortletURLFactory,

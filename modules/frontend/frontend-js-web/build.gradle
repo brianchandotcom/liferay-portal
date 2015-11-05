@@ -6,6 +6,7 @@ configurations {
 	jQuery
 	lfrAMDLoader
 	lodash
+	svg4everybody
 }
 
 task buildAlloy(type: Copy)
@@ -14,7 +15,7 @@ task buildJQueryPluginsForm
 task buildLexicon(type: Copy)
 task buildLfrAMDLoader(type: Copy)
 task buildLodash(type: Copy)
-task buildSvg4everybody
+task buildSvg4everybody(type: Copy)
 
 String alloyVersion = "3.0.1"
 String jqueryPluginsFormVersion = "3.51"
@@ -139,21 +140,19 @@ buildLodash {
 }
 
 buildSvg4everybody {
-	File svg4everybodyJsFile = file("src/main/resources/META-INF/resources/misc/svg4everybody.js")
+	eachFile new StripPathSegmentsAction(6)
 
-	doLast {
-		FileUtil.get(project, "https://raw.githubusercontent.com/jonathantneal/svg4everybody/v${svg4everybodyVersion}/dist/svg4everybody.js", svg4everybodyJsFile)
-
-		String text = svg4everybodyJsFile.text
-
-		text = text.replace('"function" == typeof define', 'false && "function" == typeof define')
-
-		svg4everybodyJsFile.text = text
+	filter {
+		String line -> line.replace('"function" == typeof define', 'false && "function" == typeof define')
 	}
 
-	onlyIf {
-		!svg4everybodyJsFile.exists()
+	from {
+		zipTree(configurations.svg4everybody.singleFile)
 	}
+
+	include "META-INF/resources/webjars/svg4everybody/${svg4everybodyVersion}/dist/svg4everybody.js"
+	includeEmptyDirs = false
+	into new File(jsDestinationDir, "misc")
 }
 
 classes {
@@ -180,6 +179,8 @@ dependencies {
 	lfrAMDLoader group: "org.webjars.npm", name: "lfr-amd-loader", transitive: false, version: lfrAMDLoaderVersion
 
 	lodash group: "org.webjars.bower", name: "lodash", transitive: false, version: lodashVersion
+
+	svg4everybody group: "org.webjars.npm", name: "svg4everybody", transitive: false, version: svg4everybodyVersion
 }
 
 liferay {

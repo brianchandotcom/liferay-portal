@@ -14,12 +14,10 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/portal-settings/init.jsp" %>
 
 <%
 long ldapServerId = ParamUtil.getLong(request, "ldapServerId", 0);
-
-String postfix = LDAPSettingsUtil.getPropertyPostfix(ldapServerId);
 
 String baseProviderURL = ParamUtil.getString(request, "baseProviderURL");
 String baseDN = ParamUtil.getString(request, "baseDN");
@@ -28,7 +26,10 @@ String principal = ParamUtil.getString(request, "principal");
 String credentials = request.getParameter("credentials");
 
 if (credentials.equals(Portal.TEMP_OBFUSCATION_VALUE)) {
-	credentials = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.LDAP_SECURITY_CREDENTIALS + postfix);
+	LDAPServerConfiguration ldapServerConfiguration = ldapServerConfigurationProvider.getConfiguration(themeDisplay.getCompanyId(), ldapServerId, true);
+
+	credentials = ldapServerConfiguration.securityCredential();
+
 }
 
 LdapContext ldapContext = PortalLDAPUtil.getContext(themeDisplay.getCompanyId(), baseProviderURL, principal, credentials);
@@ -159,7 +160,7 @@ portletURL.setWindowState(LiferayWindowState.POP_UP);
 			value="<%= HtmlUtil.escape(emailAddress) %>"
 		/>
 
-		<%@ include file="/test_ldap_users_user_name.jspf" %>
+		<%@ include file="/portal-settings/test_ldap_users_user_name.jspf" %>
 
 		<liferay-ui:search-container-column-text
 			name="password"

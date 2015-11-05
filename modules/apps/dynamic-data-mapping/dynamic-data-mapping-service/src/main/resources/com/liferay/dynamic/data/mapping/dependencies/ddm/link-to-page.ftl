@@ -24,31 +24,33 @@
 		</#if>
 	</#if>
 
-	<@aui.select helpMessage=escape(fieldStructure.tip) name=namespacedFieldName label=escape(label) required=required showEmptyOption=!required>
-		<#if (validator.isNotNull(selectedLayout) && !layoutPermission.contains(permissionChecker, selectedLayout, "VIEW"))>
-			<optgroup label="${languageUtil.get(requestedLocale, "current")}">
-				<@getLayoutOption
-					layout = selectedLayout
-					level = 0
-					selected = true
-				/>
-			</optgroup>
-		</#if>
+	<div class="form-group">
+		<@aui.select helpMessage=escape(fieldStructure.tip) name=namespacedFieldName label=escape(label) required=required showEmptyOption=!required>
+			<#if (validator.isNotNull(selectedLayout) && !layoutPermission.contains(permissionChecker, selectedLayout, "VIEW"))>
+				<optgroup label="${languageUtil.get(requestedLocale, "current")}">
+					<@getLayoutOption
+						layout = selectedLayout
+						level = 0
+						selected = true
+					/>
+				</optgroup>
+			</#if>
 
-		<@getLayoutsOptions
-			groupId = scopeGroupId
-			parentLayoutId = 0
-			privateLayout = false
-			selectedPlid = selectedPlid
-		/>
+			<@getLayoutsOptions
+				groupId = scopeGroupId
+				parentLayoutId = 0
+				privateLayout = false
+				selectedPlid = selectedPlid
+			/>
 
-		<@getLayoutsOptions
-			groupId = scopeGroupId
-			parentLayoutId = 0
-			privateLayout = true
-			selectedPlid = selectedPlid
-		/>
-	</@aui.select>
+			<@getLayoutsOptions
+				groupId = scopeGroupId
+				parentLayoutId = 0
+				privateLayout = true
+				selectedPlid = selectedPlid
+			/>
+		</@aui.select>
+	</div>
 
 	${fieldStructure.children}
 </@>

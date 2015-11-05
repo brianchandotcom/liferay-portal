@@ -23,10 +23,13 @@ public class BuildUtility {
 		StringBuilder sb = new StringBuilder();
 
 		for (String hostName : value.split(",")) {
+			hostName = hostName.trim();
+			
 			int x = hostName.indexOf("..");
 
 			if (x == -1) {
-				sb.append(hostName);
+				sb.append(hostName);				
+				sb.append(",");
 
 				continue;
 			}
@@ -43,11 +46,16 @@ public class BuildUtility {
 			for (int current = first; current <= last; current++) {
 				sb.append(prefix);
 				sb.append(current);
-				sb.append(",");
+				if (current < last) {
+					sb.append(",");
+				}
 			}
+			
+			sb.append(",");
 		}
+		String newValue = sb.toString();
 
-		return sb.toString();		
+		return newValue.substring(0, newValue.length() - 1);
 	}
 
 }

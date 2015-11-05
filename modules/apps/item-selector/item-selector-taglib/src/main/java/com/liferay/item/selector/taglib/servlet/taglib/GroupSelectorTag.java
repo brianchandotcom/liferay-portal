@@ -46,12 +46,12 @@ import javax.servlet.jsp.PageContext;
  */
 public class GroupSelectorTag extends IncludeTag {
 
-	public void setGroupCount(int groupCount) {
-		_groupCount = groupCount;
-	}
-
 	public void setGroups(List<Group> groups) {
 		_groups = groups;
+	}
+
+	public void setGroupsCount(int groupsCount) {
+		_groupsCount = groupsCount;
 	}
 
 	@Override
@@ -65,43 +65,8 @@ public class GroupSelectorTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
-		_groupCount = 0;
 		_groups = null;
-	}
-
-	protected int getGroupCount(HttpServletRequest request) {
-		if ((_groupCount > 0) || (_groups != null)) {
-			return _groupCount;
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		User user = themeDisplay.getUser();
-
-		String keywords = ParamUtil.getString(request, "keywords");
-
-		if (Validator.isNotNull(keywords)) {
-			LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
-
-			groupParams.put("site", Boolean.TRUE);
-			groupParams.put("usersGroups", Long.valueOf(user.getUserId()));
-
-			return GroupLocalServiceUtil.searchCount(
-				themeDisplay.getCompanyId(), _CLASSNAME_IDS, keywords,
-				groupParams);
-		}
-
-		try {
-			List<Group> groups = user.getMySiteGroups(null, QueryUtil.ALL_POS);
-
-			return groups.size();
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			return 0;
-		}
+		_groupsCount = 0;
 	}
 
 	protected List<Group> getGroups(HttpServletRequest request) {
@@ -147,6 +112,41 @@ public class GroupSelectorTag extends IncludeTag {
 		}
 	}
 
+	protected int getGroupsCount(HttpServletRequest request) {
+		if ((_groups != null) || (_groupsCount > 0)) {
+			return _groupsCount;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		User user = themeDisplay.getUser();
+
+		String keywords = ParamUtil.getString(request, "keywords");
+
+		if (Validator.isNotNull(keywords)) {
+			LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
+
+			groupParams.put("site", Boolean.TRUE);
+			groupParams.put("usersGroups", Long.valueOf(user.getUserId()));
+
+			return GroupLocalServiceUtil.searchCount(
+				themeDisplay.getCompanyId(), _CLASSNAME_IDS, keywords,
+				groupParams);
+		}
+
+		try {
+			List<Group> groups = user.getMySiteGroups(null, QueryUtil.ALL_POS);
+
+			return groups.size();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			return 0;
+		}
+	}
+
 	@Override
 	protected String getPage() {
 		return "/group_selector/page.jsp";
@@ -155,10 +155,10 @@ public class GroupSelectorTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-item-selector:group-selector:groupCount",
-			getGroupCount(request));
-		request.setAttribute(
 			"liferay-item-selector:group-selector:groups", getGroups(request));
+		request.setAttribute(
+			"liferay-item-selector:group-selector:groupsCount",
+			getGroupsCount(request));
 		request.setAttribute(
 			"liferay-item-selector:group-selector:itemSelector",
 			ItemSelectorUtil.getItemSelector());
@@ -173,7 +173,7 @@ public class GroupSelectorTag extends IncludeTag {
 	private static final Log _log = LogFactoryUtil.getLog(
 		GroupSelectorTag.class);
 
-	private int _groupCount;
 	private List<Group> _groups = null;
+	private int _groupsCount;
 
 }

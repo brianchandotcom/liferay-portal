@@ -1325,6 +1325,75 @@
 	);
 
 	Liferay.provide(
+			Util,
+			'openDDMDataProviderPortlet',
+			function(config, callback) {
+				var instance = this;
+
+				var defaultValues = {
+						eventName: 'selectDataProvider',
+						mvcPath: '/view.jsp'
+				};
+
+				config = A.merge(defaultValues,	config);
+
+				var ddmDataProviderURL;
+
+				if (config.basePortletURL) {
+					ddmDataProviderURL = Liferay.PortletURL.createURL(config.basePortletURL);
+				}
+				else {
+					ddmDataProviderURL = Liferay.PortletURL.createRenderURL();
+				}
+
+				ddmDataProviderURL.setEscapeXML(false);
+
+				ddmDataProviderURL.setDoAsGroupId(config.doAsGroupId || themeDisplay.getScopeGroupId());
+				ddmDataProviderURL.setParameter('groupId', config.groupId);
+				ddmDataProviderURL.setParameter('mvcPath', config.mvcPath);
+				ddmDataProviderURL.setParameter('portletResourceNamespace', config.portletResourceNamespace);
+				ddmDataProviderURL.setParameter('eventName', config.eventName);
+
+				if ('redirect' in config) {
+					ddmDataProviderURL.setParameter('redirect', config.redirect);
+				}
+
+				if ('refererPortletName' in config) {
+					ddmDataProviderURL.setParameter('refererPortletName', config.refererPortletName);
+				}
+
+				ddmDataProviderURL.setPortletId(Liferay.PortletKeys.DYNAMIC_DATA_MAPPING_DATA_PROVIDER);
+				ddmDataProviderURL.setWindowState('pop_up');
+
+				config.uri = ddmDataProviderURL.toString();
+
+				var dialogConfig = config.dialog;
+
+				if (!dialogConfig) {
+					dialogConfig = {};
+
+					config.dialog = dialogConfig;
+				}
+
+				var eventHandles = [Liferay.once(config.eventName, callback)];
+
+				var detachSelectionOnHideFn = function(event) {
+					if (!event.newVal) {
+						(new A.EventHandle(eventHandles)).detach();
+					}
+				};
+
+				Util.openWindow(
+						config,
+						function(dialogWindow) {
+							eventHandles.push(dialogWindow.after(['destroy', 'visibleChange'], detachSelectionOnHideFn));
+						}
+				);
+			},
+			['liferay-portlet-url']
+	);
+
+	Liferay.provide(
 		Util,
 		'openDocument',
 		function(webDavUrl, onSuccess, onError) {

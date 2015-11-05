@@ -16,12 +16,11 @@ package com.liferay.item.selector.taglib.servlet.taglib;
 
 import com.liferay.item.selector.taglib.servlet.ServletContextUtil;
 import com.liferay.item.selector.taglib.servlet.item.selector.ItemSelectorUtil;
-import com.liferay.item.selector.web.constants.ItemSelectorPortletKeys;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -33,17 +32,11 @@ import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.RequestBackedPortletURLFactory;
-import com.liferay.portlet.RequestBackedPortletURLFactoryUtil;
-import com.liferay.portlet.usersadmin.search.GroupSearch;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -127,22 +120,17 @@ public class GroupSelectorTag extends IncludeTag {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
-
 		User user = themeDisplay.getUser();
 
 		String keywords = ParamUtil.getString(request, "keywords");
 
-		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
-			RequestBackedPortletURLFactoryUtil.create(request);
+		int cur = ParamUtil.getInteger(
+			request, SearchContainer.DEFAULT_CUR_PARAM);
+		int delta = ParamUtil.getInteger(
+			request, SearchContainer.DEFAULT_DELTA_PARAM);
 
-		PortletURL viewGroupSelectorURL =
-			requestBackedPortletURLFactory.createRenderURL(
-				ItemSelectorPortletKeys.ITEM_SELECTOR);
-
-		SearchContainer searchContainer = new GroupSearch(
-			portletRequest, viewGroupSelectorURL);
+		int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
+			cur, delta);
 
 		if (Validator.isNotNull(keywords)) {
 			LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
@@ -152,15 +140,13 @@ public class GroupSelectorTag extends IncludeTag {
 
 			return GroupLocalServiceUtil.search(
 				themeDisplay.getCompanyId(), getClassNameIds(), keywords,
-				groupParams, searchContainer.getStart(),
-				searchContainer.getEnd(), null);
+				groupParams, startAndEnd[0], startAndEnd[1], null);
 		}
 
 		try {
 			List<Group> groups = user.getMySiteGroups(null, QueryUtil.ALL_POS);
 
-			return ListUtil.subList(
-				groups, searchContainer.getStart(), searchContainer.getEnd());
+			return ListUtil.subList(groups, startAndEnd[0], startAndEnd[1]);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

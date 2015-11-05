@@ -16,7 +16,9 @@ package com.liferay.dynamic.data.mapping.data.provider.rest;
 
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContext;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderException;
 import com.liferay.dynamic.data.mapping.data.provider.rest.DDMRESTDataProviderSettings.RESTSettings;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -40,7 +42,19 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 	@Override
 	public List<KeyValuePair> getData(
 			DDMDataProviderContext ddmDataProviderContext)
-		throws Exception {
+		throws DDMDataProviderException {
+
+		try {
+			return doGetData(ddmDataProviderContext);
+		}
+		catch (PortalException pe) {
+			throw new DDMDataProviderException(pe);
+		}
+	}
+
+	protected List<KeyValuePair> doGetData(
+			DDMDataProviderContext ddmDataProviderContext)
+		throws PortalException {
 
 		RESTSettings restSettings = ddmDataProviderContext.getSettings(
 			RESTSettings.class);

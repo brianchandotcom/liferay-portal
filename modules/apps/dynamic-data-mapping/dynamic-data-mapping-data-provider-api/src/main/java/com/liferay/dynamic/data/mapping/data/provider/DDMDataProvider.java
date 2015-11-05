@@ -25,6 +25,6 @@ public interface DDMDataProvider {
 
 	public List<KeyValuePair> getData(
 			DDMDataProviderContext ddmDataProviderContext)
-		throws Exception;
+		throws DDMDataProviderException;
 
 }

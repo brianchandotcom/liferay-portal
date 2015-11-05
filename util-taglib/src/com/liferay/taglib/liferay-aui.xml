@@ -562,6 +562,9 @@
 			</attribute>
 		</attributes>
 	</component>
+	<component name="FieldsetGroup" bodyContent="true">
+		<description>Creates a <![CDATA[<code>&lt;div&gt;</code>]]> tag to group fieldset elements.</description>
+	</component>
 	<component name="Form" bodyContent="true">
 		<description>Creates a form that offers additional styling and custom namespacing.</description>
 		<attributes>

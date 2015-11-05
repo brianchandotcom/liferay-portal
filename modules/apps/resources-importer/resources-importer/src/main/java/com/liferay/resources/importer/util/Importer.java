@@ -14,6 +14,8 @@
 
 package com.liferay.resources.importer.util;
 
+import com.liferay.journal.util.JournalConverter;
+
 import javax.servlet.ServletContext;
 
 /**
@@ -45,6 +47,8 @@ public interface Importer {
 	public void setDeveloperModeEnabled(boolean developerModeEnabled);
 
 	public void setGroupId(long groupId);
+
+	public void setJournalConverter(JournalConverter journalConverter);
 
 	public void setResourcesDir(String resourcesDir);
 

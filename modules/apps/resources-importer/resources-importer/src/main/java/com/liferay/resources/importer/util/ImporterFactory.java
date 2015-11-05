@@ -164,20 +164,16 @@ public class ImporterFactory {
 		importer.afterPropertiesSet();
 	}
 
-	protected FileSystemImporter getFileSystemImporter(
-		JournalConverter journalConverter) {
-
-		return new FileSystemImporter(journalConverter);
+	protected FileSystemImporter getFileSystemImporter() {
+		return new FileSystemImporter();
 	}
 
 	protected LARImporter getLARImporter() {
 		return new LARImporter();
 	}
 
-	protected ResourceImporter getResourceImporter(
-		JournalConverter journalConverter) {
-
-		return new ResourceImporter(journalConverter);
+	protected ResourceImporter getResourceImporter() {
+		return new ResourceImporter();
 	}
 
 	@Reference

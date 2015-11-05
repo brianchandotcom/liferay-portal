@@ -32,7 +32,6 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.JournalArticleServiceUtil;
-import com.liferay.journal.util.JournalConverter;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -133,10 +132,6 @@ public class FileSystemImporter extends BaseImporter {
 		}
 
 		doImportResources();
-	}
-
-	public void setJournalConverter(JournalConverter journalConverter) {
-		this.journalConverter = journalConverter;
 	}
 
 	protected void addApplicationDisplayTemplate(
@@ -1766,7 +1761,6 @@ public class FileSystemImporter extends BaseImporter {
 		}
 	}
 
-	protected final JournalConverter journalConverter;
 	protected ServiceContext serviceContext;
 
 	private static final String _APPLICATION_DISPLAY_TEMPLATE_DIR_NAME =

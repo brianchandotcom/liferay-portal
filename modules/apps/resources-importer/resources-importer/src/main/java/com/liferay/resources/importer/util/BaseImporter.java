@@ -14,6 +14,7 @@
 
 package com.liferay.resources.importer.util;
 
+import com.liferay.journal.util.JournalConverter;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -204,6 +205,11 @@ public abstract class BaseImporter implements Importer {
 	}
 
 	@Override
+	public void setJournalConverter(JournalConverter journalConverter) {
+		this.journalConverter = journalConverter;
+	}
+
+	@Override
 	public void setResourcesDir(String resourcesDir) {
 		this.resourcesDir = resourcesDir;
 	}
@@ -290,6 +296,7 @@ public abstract class BaseImporter implements Importer {
 	protected boolean developerModeEnabled;
 	protected boolean existing;
 	protected long groupId;
+	protected JournalConverter journalConverter;
 	protected String resourcesDir;
 	protected ServletContext servletContext;
 	protected String servletContextName;

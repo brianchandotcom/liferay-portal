@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SCRIPT_CONTENT_FIELD_TEXT_AREA</td>
+	<td>//div[contains(@id,'richEditor')]/textarea</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SCRIPT_FILE_FIELD</td>
 	<td>//div[contains(@class,'input-text-wrapper')]/input[contains(@id,'script')]</td>
 	<td></td>

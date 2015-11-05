@@ -186,7 +186,7 @@ public class WikiPageAssetRenderer
 		throws Exception {
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, WikiPortletKeys.WIKI, 0,
+			liferayPortletRequest, WikiPortletKeys.WIKI,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
@@ -203,7 +203,7 @@ public class WikiPageAssetRenderer
 		throws Exception {
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, WikiPortletKeys.WIKI, 0,
+			liferayPortletRequest, WikiPortletKeys.WIKI,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcRenderCommandName", "/wiki/export_page");
@@ -240,7 +240,7 @@ public class WikiPageAssetRenderer
 		throws Exception {
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, WikiPortletKeys.WIKI, 0,
+			liferayPortletRequest, WikiPortletKeys.WIKI,
 			PortletRequest.RENDER_PHASE);
 
 		WikiPage previousVersionPage =

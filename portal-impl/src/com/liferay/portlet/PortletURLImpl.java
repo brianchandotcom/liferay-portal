@@ -643,6 +643,7 @@ public class PortletURLImpl
 		}
 	}
 
+	@Override
 	public void setRefererGroupId(long refererGroupId) {
 		_refererGroupId = refererGroupId;
 

@@ -628,6 +628,10 @@ public class PortalUtil {
 		return getPortal().getControlPanelFullURL(scopeGroupId, ppid, params);
 	}
 
+	public static Layout getControlPanelLayout(long companyId, Group group) {
+		return getPortal().getControlPanelLayout(companyId, group);
+	}
+
 	public static long getControlPanelPlid(long companyId)
 		throws PortalException {
 
@@ -642,34 +646,33 @@ public class PortalUtil {
 
 	public static PortletURL getControlPanelPortletURL(
 		HttpServletRequest request, Group group, String portletId,
-		long refererPlid, String lifecycle) {
+		long refererGroupId, long refererPlid, String lifecycle) {
 
 		return getPortal().getControlPanelPortletURL(
-			request, group, portletId, refererPlid, lifecycle);
+			request, group, portletId, refererGroupId, refererPlid, lifecycle);
 	}
 
 	public static PortletURL getControlPanelPortletURL(
-		HttpServletRequest request, String portletId, long refererPlid,
-		String lifecycle) {
+		HttpServletRequest request, String portletId, String lifecycle) {
 
 		return getPortal().getControlPanelPortletURL(
-			request, portletId, refererPlid, lifecycle);
+			request, portletId, lifecycle);
 	}
 
 	public static PortletURL getControlPanelPortletURL(
 		PortletRequest portletRequest, Group group, String portletId,
-		long refererPlid, String lifecycle) {
+		long refererGroupId, long refererPlid, String lifecycle) {
 
 		return getPortal().getControlPanelPortletURL(
-			portletRequest, group, portletId, refererPlid, lifecycle);
+			portletRequest, group, portletId, refererGroupId, refererPlid,
+			lifecycle);
 	}
 
 	public static PortletURL getControlPanelPortletURL(
-		PortletRequest portletRequest, String portletId, long refererPlid,
-		String lifecycle) {
+		PortletRequest portletRequest, String portletId, String lifecycle) {
 
 		return getPortal().getControlPanelPortletURL(
-			portletRequest, portletId, refererPlid, lifecycle);
+			portletRequest, portletId, lifecycle);
 	}
 
 	public static String getCreateAccountURL(

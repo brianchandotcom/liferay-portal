@@ -20,6 +20,9 @@ import com.liferay.item.selector.web.upgrade.ItemSelectorWebUpgrade;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.RequestBackedPortletURLFactoryUtil;
 
 import java.io.IOException;
 
@@ -61,9 +64,13 @@ public class ItemSelectorPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		ItemSelectorRendering itemSelectorRendering =
 			_itemSelector.getItemSelectorRendering(
-				renderRequest, renderResponse);
+				RequestBackedPortletURLFactoryUtil.create(renderRequest),
+				renderRequest.getParameterMap(), themeDisplay);
 
 		LocalizedItemSelectorRendering localizedItemSelectorRendering =
 			new LocalizedItemSelectorRendering(

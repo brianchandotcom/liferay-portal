@@ -239,7 +239,7 @@ public class DLFileEntryAssetRenderer
 		throws Exception {
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, DLPortletKeys.DOCUMENT_LIBRARY, 0,
+			liferayPortletRequest, DLPortletKeys.DOCUMENT_LIBRARY,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
@@ -257,7 +257,7 @@ public class DLFileEntryAssetRenderer
 		throws Exception {
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, DLPortletKeys.DOCUMENT_LIBRARY, 0,
+			liferayPortletRequest, DLPortletKeys.DOCUMENT_LIBRARY,
 			PortletRequest.ACTION_PHASE);
 
 		portletURL.setParameter(

@@ -123,7 +123,7 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 				BlogsEntry.class.getName(), PortletProvider.Action.MANAGE);
 
 			portletURL = PortalUtil.getControlPanelPortletURL(
-				portletRequest, portletId, 0, PortletRequest.RENDER_PHASE);
+				portletRequest, portletId, PortletRequest.RENDER_PHASE);
 		}
 		else {
 			portletURL = PortletURLFactoryUtil.create(

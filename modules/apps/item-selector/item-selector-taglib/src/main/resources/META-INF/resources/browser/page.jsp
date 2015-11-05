@@ -84,7 +84,7 @@ if (Validator.isNotNull(keywords)) {
 	long folderId = ParamUtil.getLong(request, "folderId");
 
 	if (showBreadcrumb && !showSearchInfo) {
-		ItemSelectorBrowserUtil.addPortletBreadcrumbEntries(folderId, displayStyle, request, PortletURLUtil.clone(portletURL, liferayPortletResponse));
+		ItemSelectorBrowserUtil.addPortletBreadcrumbEntries(folderId, displayStyle, request, liferayPortletResponse, PortletURLUtil.clone(portletURL, liferayPortletResponse));
 	%>
 
 		<liferay-ui:breadcrumb
@@ -181,7 +181,6 @@ if (Validator.isNotNull(keywords)) {
 		<liferay-ui:search-container
 			searchContainer="<%= searchContainer %>"
 			total="<%= searchContainer.getTotal() %>"
-			var="listSearchContainer"
 		>
 			<liferay-ui:search-container-results
 				results="<%= searchContainer.getResults() %>"

@@ -77,7 +77,7 @@ public class BookmarksUtil {
 		throws PortalException {
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			portletRequest, BookmarksPortletKeys.BOOKMARKS_ADMIN, 0,
+			portletRequest, BookmarksPortletKeys.BOOKMARKS_ADMIN,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcRenderCommandName", "/bookmarks/view");

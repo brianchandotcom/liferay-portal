@@ -484,6 +484,8 @@ public interface Portal {
 			long scopeGroupId, String ppid, Map<String, String[]> params)
 		throws PortalException;
 
+	public Layout getControlPanelLayout(long companyId, Group group);
+
 	public long getControlPanelPlid(long companyId) throws PortalException;
 
 	public long getControlPanelPlid(PortletRequest portletRequest)
@@ -491,19 +493,17 @@ public interface Portal {
 
 	public PortletURL getControlPanelPortletURL(
 		HttpServletRequest request, Group group, String portletId,
-		long refererPlid, String lifecycle);
+		long refererGroupId, long refererPlid, String lifecycle);
 
 	public PortletURL getControlPanelPortletURL(
-		HttpServletRequest request, String portletId, long refererPlid,
-		String lifecycle);
+		HttpServletRequest request, String portletId, String lifecycle);
 
 	public PortletURL getControlPanelPortletURL(
 		PortletRequest portletRequest, Group group, String portletId,
-		long refererPlid, String lifecycle);
+		long refererGroupId, long refererPlid, String lifecycle);
 
 	public PortletURL getControlPanelPortletURL(
-		PortletRequest portletRequest, String portletId, long refererPlid,
-		String lifecycle);
+		PortletRequest portletRequest, String portletId, String lifecycle);
 
 	public String getCreateAccountURL(
 			HttpServletRequest request, ThemeDisplay themeDisplay)

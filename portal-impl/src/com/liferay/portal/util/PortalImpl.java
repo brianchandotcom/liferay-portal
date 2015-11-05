@@ -192,6 +192,8 @@ import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.RenderRequestImpl;
 import com.liferay.portlet.RenderResponseImpl;
+import com.liferay.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portlet.StateAwareResponseImpl;
 import com.liferay.portlet.UserAttributes;
 import com.liferay.portlet.admin.util.OmniadminUtil;
@@ -275,7 +277,6 @@ import javax.portlet.ResourceResponse;
 import javax.portlet.StateAwareResponse;
 import javax.portlet.ValidatorException;
 import javax.portlet.WindowState;
-import javax.portlet.WindowStateException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -741,6 +742,13 @@ public class PortalImpl implements Portal {
 			if (themeDisplay.getDoAsGroupId() > 0) {
 				url = HttpUtil.setParameter(
 					url, "doAsGroupId", themeDisplay.getDoAsGroupId());
+			}
+
+			if (themeDisplay.getRefererGroupId() !=
+					GroupConstants.DEFAULT_PARENT_GROUP_ID) {
+
+				url = HttpUtil.setParameter(
+					url, "refererGroupId", themeDisplay.getRefererGroupId());
 			}
 
 			if (themeDisplay.getRefererPlid() != LayoutConstants.DEFAULT_PLID) {
@@ -1652,6 +1660,28 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
+	public Layout getControlPanelLayout(long companyId, Group group) {
+		Layout layout = null;
+
+		try {
+			long plid = getControlPanelPlid(companyId);
+
+			layout = LayoutLocalServiceUtil.getLayout(plid);
+		}
+		catch (PortalException pe) {
+			_log.error("Unable to get control panel layout", pe);
+
+			return null;
+		}
+
+		if (group == null) {
+			return layout;
+		}
+
+		return new VirtualLayout(layout, group);
+	}
+
+	@Override
 	public long getControlPanelPlid(long companyId) throws PortalException {
 		Group controlPanelGroup = GroupLocalServiceUtil.getGroup(
 			companyId, GroupConstants.CONTROL_PANEL);
@@ -1673,71 +1703,59 @@ public class PortalImpl implements Portal {
 	@Override
 	public PortletURL getControlPanelPortletURL(
 		HttpServletRequest request, Group group, String portletId,
-		long refererPlid, String lifecycle) {
+		long refererGroupId, long refererPlid, String lifecycle) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		LiferayPortletURL liferayPortletURL = new PortletURLImpl(
-			request, portletId,
-			getControlPanelLayout(themeDisplay, group, portletId), lifecycle);
-
-		if (refererPlid > 0) {
-			liferayPortletURL.setRefererPlid(refererPlid);
+		if (group == null) {
+			group = getControlPanelDisplayGroup(
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+				themeDisplay.getDoAsGroupId(), portletId);
 		}
 
-		try {
-			liferayPortletURL.setWindowState(WindowState.MAXIMIZED);
-		}
-		catch (WindowStateException wse) {
-			_log.error(wse);
-		}
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(request);
 
-		return liferayPortletURL;
+		return requestBackedPortletURLFactory.createControlPanelPortletURL(
+			portletId, group, refererGroupId, refererPlid, lifecycle);
 	}
 
 	@Override
 	public PortletURL getControlPanelPortletURL(
-		HttpServletRequest request, String portletId, long refererPlid,
-		String lifecycle) {
+		HttpServletRequest request, String portletId, String lifecycle) {
 
 		return getControlPanelPortletURL(
-			request, null, portletId, refererPlid, lifecycle);
+			request, null, portletId, 0, 0, lifecycle);
 	}
 
 	@Override
 	public PortletURL getControlPanelPortletURL(
 		PortletRequest portletRequest, Group group, String portletId,
-		long refererPlid, String lifecycle) {
+		long refererGroupId, long refererPlid, String lifecycle) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		LiferayPortletURL liferayPortletURL = new PortletURLImpl(
-			portletRequest, portletId,
-			getControlPanelLayout(themeDisplay, group, portletId), lifecycle);
-
-		if (refererPlid > 0) {
-			liferayPortletURL.setRefererPlid(refererPlid);
+		if (group == null) {
+			group = getControlPanelDisplayGroup(
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+				themeDisplay.getDoAsGroupId(), portletId);
 		}
 
-		try {
-			liferayPortletURL.setWindowState(WindowState.MAXIMIZED);
-		}
-		catch (WindowStateException wse) {
-			_log.error(wse);
-		}
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(portletRequest);
 
-		return liferayPortletURL;
+		return requestBackedPortletURLFactory.createControlPanelPortletURL(
+			portletId, group, refererGroupId, refererPlid, lifecycle);
 	}
 
 	@Override
 	public PortletURL getControlPanelPortletURL(
-		PortletRequest portletRequest, String portletId, long refererPlid,
-		String lifecycle) {
+		PortletRequest portletRequest, String portletId, String lifecycle) {
 
 		return getControlPanelPortletURL(
-			portletRequest, null, portletId, refererPlid, lifecycle);
+			portletRequest, null, portletId, 0, 0, lifecycle);
 	}
 
 	@Override
@@ -4863,7 +4881,7 @@ public class PortalImpl implements Portal {
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             #getControlPanelPortletURL(PortletRequest, Group, String,
-	 *             long, String)}
+	 *             String)}
 	 */
 	@Deprecated
 	@Override
@@ -4872,7 +4890,7 @@ public class PortalImpl implements Portal {
 		String portletId) {
 
 		PortletURL portletURL = getControlPanelPortletURL(
-			request, portletId, 0, PortletRequest.RENDER_PHASE);
+			request, portletId, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 
@@ -4882,7 +4900,7 @@ public class PortalImpl implements Portal {
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             #getControlPanelPortletURL(PortletRequest, Group, String,
-	 *             long, String)}
+	 *             String)}
 	 */
 	@Deprecated
 	@Override
@@ -7570,35 +7588,6 @@ public class PortalImpl implements Portal {
 
 			return group;
 		}
-	}
-
-	protected Layout getControlPanelLayout(
-		ThemeDisplay themeDisplay, Group group, String portletId) {
-
-		Layout layout = null;
-
-		try {
-			long plid = getControlPanelPlid(themeDisplay.getCompanyId());
-
-			layout = LayoutLocalServiceUtil.getLayout(plid);
-		}
-		catch (PortalException pe) {
-			_log.error("Unable to get control panel layout", pe);
-
-			return null;
-		}
-
-		if (group == null) {
-			group = getControlPanelDisplayGroup(
-				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
-				themeDisplay.getDoAsGroupId(), portletId);
-
-			if (group == null) {
-				return layout;
-			}
-		}
-
-		return new VirtualLayout(layout, group);
 	}
 
 	protected long getDoAsUserId(

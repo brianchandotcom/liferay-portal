@@ -144,7 +144,7 @@ public class GroupSelectorTag extends IncludeTag {
 		}
 
 		try {
-			List<Group> groups = user.getMySiteGroups(null, QueryUtil.ALL_POS);
+			List<Group> groups = user.getMySiteGroups(null, startAndEnd[1]);
 
 			return ListUtil.subList(groups, startAndEnd[0], startAndEnd[1]);
 		}

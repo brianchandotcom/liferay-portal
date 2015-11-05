@@ -40,9 +40,9 @@
 		<var name="key_siteCalendarName" value="${siteCalendarName}" />
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="AssertTextEquals" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR" value1="${calendarName}" />
+		<execute function="AssertTextEquals" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR" value1="${siteCalendarName}" />
 
-		<execute function="Click" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR_MENULIST_ARROW" value1="${calendarName}" />
+		<execute function="Click" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR_MENULIST_ARROW" value1="${siteCalendarName}" />
 	</command>
 
 	<command name="_viewCalendarHidden">
@@ -166,7 +166,7 @@
 
 	<command name="chooseSiteCalendarMenulistOption">
 		<execute macro="Calendar#_gotoSiteCalendarMenulist">
-			<var name="calendarName" value="${calendarName}" />
+			<var name="siteCalendarName" value="${siteCalendarName}" />
 		</execute>
 
 		<execute macro="Calendar#_gotoMenulistOption">
@@ -1005,7 +1005,7 @@
 
 	<command name="viewSiteCalendarNoMenulistOption">
 		<execute macro="Calendar#_gotoSiteCalendarMenulist">
-			<var name="calendarName" value="${calendarName}" />
+			<var name="siteCalendarName" value="${siteCalendarName}" />
 		</execute>
 
 		<var name="key_menuListOption" value="${menuListOption}" />

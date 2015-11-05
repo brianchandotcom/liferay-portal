@@ -2211,8 +2211,8 @@
 		</execute>
 
 		<execute macro="Calendar#chooseSiteCalendarMenulistOption">
-			<var name="calendarName" value="Liferay" />
 			<var name="menuListOption" value="RSS" />
+			<var name="siteCalendarName" value="Liferay" />
 		</execute>
 
 		<execute macro="Calendar#viewRSSFeedEventPresent">
@@ -2229,8 +2229,8 @@
 		</execute>
 
 		<execute macro="Calendar#chooseSiteCalendarMenulistOption">
-			<var name="calendarName" value="Liferay" />
 			<var name="menuListOption" value="RSS" />
+			<var name="siteCalendarName" value="Liferay" />
 		</execute>
 
 		<execute macro="Calendar#viewRSSFeedEventNotPresent">
@@ -2266,8 +2266,8 @@
 		</execute>
 
 		<execute macro="Calendar#chooseSiteCalendarMenulistOption">
-			<var name="calendarName" value="Liferay" />
 			<var name="menuListOption" value="RSS" />
+			<var name="siteCalendarName" value="Liferay" />
 		</execute>
 
 		<execute macro="Calendar#viewRSSFeedEventPresent">
@@ -2290,8 +2290,8 @@
 		</execute>
 
 		<execute macro="Calendar#viewSiteCalendarNoMenulistOption">
-			<var name="calendarName" value="Liferay" />
 			<var name="menuListOption" value="RSS" />
+			<var name="siteCalendarName" value="Liferay" />
 		</execute>
 
 		<execute macro="Calendar#viewNoRSS">
@@ -4501,8 +4501,8 @@
 		</execute>
 
 		<execute macro="Calendar#chooseSiteCalendarMenulistOption">
-			<var name="calendarName" value="Liferay" />
 			<var name="menuListOption" value="RSS" />
+			<var name="siteCalendarName" value="Liferay" />
 		</execute>
 
 		<execute macro="Calendar#viewRSSFeedEventNotPresent">

@@ -405,6 +405,17 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 			boolean addDefaultVocabulary)
 		throws PortalException {
 
+		return searchVocabulariesDisplay(
+			groupId, title, start, end, null, addDefaultVocabulary);
+	}
+
+	@Override
+	public AssetVocabularyDisplay searchVocabulariesDisplay(
+			long groupId, String title, int start, int end,
+			OrderByComparator<AssetVocabulary> obc,
+			boolean addDefaultVocabulary)
+		throws PortalException {
+
 		User user = getUser();
 
 		BaseModelSearchResult<AssetVocabulary> baseModelSearchResult =

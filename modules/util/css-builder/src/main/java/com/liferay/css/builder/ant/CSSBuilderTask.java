@@ -56,6 +56,10 @@ public class CSSBuilderTask extends Task {
 		_cssBuilderArgs.setDocrootDirName(docrootDirName);
 	}
 
+	public void setGenerateSourceMap(boolean generateSourceMap) {
+		_cssBuilderArgs.setGenerateSourceMap(generateSourceMap);
+	}
+
 	public void setPortalCommonDirName(String portalCommonDirName) {
 		_cssBuilderArgs.setPortalCommonDirName(portalCommonDirName);
 	}

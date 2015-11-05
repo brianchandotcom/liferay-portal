@@ -64,18 +64,7 @@
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:search-container-column-text name="title">
-
-			<%
-			String iconCssClass = DLUtil.getFileIconCssClass(fileEntry.getExtension());
-			%>
-
-			<c:if test="<%= Validator.isNotNull(iconCssClass) %>">
-				<i class="<%= iconCssClass %>"></i>
-			</c:if>
-
-			<span class="taglib-text">
-				<%= HtmlUtil.escape(fileEntry.getTitle()) %>
-			</span>
+			<%= HtmlUtil.escape(fileEntry.getTitle()) %>
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text name="size" value="<%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %>" />

@@ -116,17 +116,16 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 			"subtypeFieldsFilterEnabled", Boolean.FALSE.toString());
 
 		if (subtypeFieldsFilterEnabled.equals(Boolean.TRUE.toString())) {
+			boolean dlFilterByFieldEnable = isFilterByFieldEnable(
+				portletPreferences, _DL_FILTER_BY_FIELD_ENABLED_KEY);
 			boolean journalFilterByFieldEnable = isFilterByFieldEnable(
 				portletPreferences, _JOURNAL_FILTER_BY_FIELD_ENABLED_KEY);
 
-			boolean dlFilterByFieldEnable = isFilterByFieldEnable(
-				portletPreferences, _DL_FILTER_BY_FIELD_ENABLED_KEY);
-
-			if (journalFilterByFieldEnable) {
-				upgradeJournalDateFieldValue(portletPreferences);
-			}
-			else if (dlFilterByFieldEnable) {
+			if (dlFilterByFieldEnable) {
 				upgradeDLDateFieldsValues(portletPreferences);
+			}
+			else if (journalFilterByFieldEnable) {
+				upgradeJournalDateFieldValue(portletPreferences);
 			}
 		}
 

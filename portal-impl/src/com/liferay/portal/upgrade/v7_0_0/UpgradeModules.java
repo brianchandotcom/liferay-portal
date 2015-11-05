@@ -50,7 +50,7 @@ public class UpgradeModules extends UpgradeProcess {
 				ps.setString(4, bundleSymbolicName);
 				ps.setInt(5, 001);
 				ps.setTimestamp(6, timestamp);
-				ps.setInt(7, 1);
+				ps.setBoolean(7, true);
 				ps.setInt(8, 0);
 				ps.setString(9, ReleaseConstants.TEST_STRING);
 				ps.setString(10, "0.0.1");

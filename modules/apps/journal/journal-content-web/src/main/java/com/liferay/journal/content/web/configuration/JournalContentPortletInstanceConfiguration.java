@@ -24,13 +24,13 @@ import aQute.bnd.annotation.metatype.Meta;
 )
 public interface JournalContentPortletInstanceConfiguration {
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(required = false)
 	public String articleId();
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(required = false)
 	public String contentMetadataAssetAddonEntryKeys();
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(required = false)
 	public String ddmTemplateKey();
 
 	@Meta.AD(required = false)
@@ -39,7 +39,7 @@ public interface JournalContentPortletInstanceConfiguration {
 	@Meta.AD(deflt = "0", required = false)
 	public long groupId();
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(required = false)
 	public String userToolAssetAddonEntryKeys();
 
 }

@@ -27,13 +27,13 @@ public interface SiteNavigationLanguagePortletInstanceConfiguration {
 	@Meta.AD(deflt = "true", required = false)
 	public boolean displayCurrentLocale();
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(required = false)
 	public String displayStyle();
 
 	@Meta.AD(deflt = "0", required = false)
 	public long displayStyleGroupId();
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(required = false)
 	public String languageIds();
 
 }

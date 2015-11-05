@@ -24,19 +24,19 @@ import aQute.bnd.annotation.metatype.Meta;
 )
 public interface IFramePortletInstanceConfiguration {
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(required = false)
 	public String alt();
 
 	@Meta.AD(deflt = "false", required = false)
 	public boolean auth();
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(required = false)
 	public String authType();
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(required = false)
 	public String basicPassword();
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(required = false)
 	public String basicUserName();
 
 	@Meta.AD(deflt = "0", required = false)
@@ -45,13 +45,13 @@ public interface IFramePortletInstanceConfiguration {
 	@Meta.AD(deflt = "#000000", required = false)
 	public String bordercolor();
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(required = false)
 	public String formMethod();
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(required = false)
 	public String formPassword();
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(required = false)
 	public String formUserName();
 
 	@Meta.AD(deflt = "0", required = false)
@@ -63,22 +63,22 @@ public interface IFramePortletInstanceConfiguration {
 	@Meta.AD(deflt = "600", required = false)
 	public String heightNormal();
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(required = false)
 	public String hiddenVariables();
 
 	@Meta.AD(deflt = "0", required = false)
 	public String hspace();
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(required = false)
 	public String longdesc();
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(required = false)
 	public String password();
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(required = false)
 	public String passwordField();
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(required = false)
 	public boolean relative();
 
 	@Meta.AD(deflt = "true", required = false)
@@ -87,16 +87,16 @@ public interface IFramePortletInstanceConfiguration {
 	@Meta.AD(deflt = "auto", required = false)
 	public String scrolling();
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(required = false)
 	public String src();
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(required = false)
 	public String title();
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(required = false)
 	public String userName();
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(required = false)
 	public String userNameField();
 
 	@Meta.AD(deflt = "0", required = false)

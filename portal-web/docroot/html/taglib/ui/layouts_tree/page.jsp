@@ -77,6 +77,10 @@ String treeId = (String)request.getAttribute("liferay-ui:layouts-tree:treeId");
 	if (Validator.isNotNull(portletId)) {
 		portletNamespace = PortalUtil.getPortletNamespace(portletId);
 	}
+
+	portletURL.setParameter("selPlid", _SEL_PLID_TOKEN);
+
+	String encodedParameter = HttpUtil.encodePath(_SEL_PLID_TOKEN);
 	%>
 
 	var TreeViewType = Liferay.LayoutsTree;
@@ -97,7 +101,7 @@ String treeId = (String)request.getAttribute("liferay-ui:layouts-tree:treeId");
 			boundingBox: '#<portlet:namespace /><%= HtmlUtil.escape(treeId) %>Output',
 			incomplete: <%= incomplete %>,
 			layouts: <%= layoutsJSON %>,
-			layoutURL: '<%= portletURL + StringPool.AMPERSAND + portletNamespace + "selPlid={selPlid}" %>',
+			layoutURL: '<%= StringUtil.replace(portletURL.toString(), encodedParameter, _SEL_PLID_TOKEN) %>',
 
 			<c:if test="<%= Validator.isNotNull(linkTemplate) %>">
 				linkTemplate: '<%= linkTemplate %>',
@@ -127,3 +131,7 @@ String treeId = (String)request.getAttribute("liferay-ui:layouts-tree:treeId");
 </aui:script>
 
 <div class="lfr-tree" data-treeid="<%= HtmlUtil.escapeAttribute(treeId) %>" id="<portlet:namespace /><%= HtmlUtil.escape(treeId) %>Output"></div>
+
+<%!
+private static final String _SEL_PLID_TOKEN = "{selPlid}";
+%>

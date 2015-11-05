@@ -12,82 +12,65 @@
  * details.
  */
 
-package com.liferay.css.builder.maven;
+package com.liferay.css.builder.ant;
 
 import com.liferay.css.builder.CSSBuilderArgs;
 import com.liferay.css.builder.CSSBuilderInvoker;
 
-import java.io.File;
-
-import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.Project;
+import org.apache.tools.ant.Task;
 
 /**
- * Compiles CSS files.
- *
  * @author Andrea Di Giorgi
- * @goal build-css
  */
-public class CSSBuilderMojo extends AbstractMojo {
+public class BuildCSSTask extends Task {
 
 	@Override
-	public void execute() throws MojoExecutionException {
+	public void execute() throws BuildException {
+		Project project = getProject();
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		currentThread.setContextClassLoader(
+			BuildCSSTask.class.getClassLoader());
+
 		try {
-			CSSBuilderInvoker.invoke(baseDir, _cssBuilderArgs);
+			CSSBuilderInvoker.invoke(project.getBaseDir(), _cssBuilderArgs);
 		}
 		catch (Exception e) {
-			throw new MojoExecutionException(e.getMessage(), e);
+			throw new BuildException(e);
+		}
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 
-	/**
-	 * @parameter
-	 */
 	public void setDirNames(String dirNames) {
 		_cssBuilderArgs.setDirNames(dirNames);
 	}
 
-	/**
-	 * @parameter
-	 */
 	public void setDocrootDirName(String docrootDirName) {
 		_cssBuilderArgs.setDocrootDirName(docrootDirName);
 	}
 
-	/**
-	 * @parameter
-	 */
 	public void setGenerateSourceMap(boolean generateSourceMap) {
 		_cssBuilderArgs.setGenerateSourceMap(generateSourceMap);
 	}
 
-	/**
-	 * @parameter
-	 * @required
-	 */
 	public void setPortalCommonDirName(String portalCommonDirName) {
 		_cssBuilderArgs.setPortalCommonDirName(portalCommonDirName);
 	}
 
-	/**
-	 * @parameter
-	 */
 	public void setRtlExcludedPathRegexps(String rtlExcludedPathRegexps) {
 		_cssBuilderArgs.setRtlExcludedPathRegexps(rtlExcludedPathRegexps);
 	}
 
-	/**
-	 * @parameter
-	 */
 	public void setSassCompilerClassName(String sassCompilerClassName) {
 		_cssBuilderArgs.setSassCompilerClassName(sassCompilerClassName);
 	}
-
-	/**
-	 * @parameter default-value="${project.basedir}
-	 * @readonly
-	 */
-	protected File baseDir;
 
 	private final CSSBuilderArgs _cssBuilderArgs = new CSSBuilderArgs();
 

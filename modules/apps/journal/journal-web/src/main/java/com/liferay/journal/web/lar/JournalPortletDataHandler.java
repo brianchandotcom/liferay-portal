@@ -93,6 +93,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Hugo Huijser
  * @author Daniel Kocsis
  * @author László Csontos
+ * @author Mate Thurzo
  * @see    com.liferay.journal.lar.JournalCreationStrategy
  * @see    com.liferay.portlet.exportimport.lar.PortletDataHandler
  */
@@ -160,17 +161,17 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 			return portletPreferences;
 		}
 
-		journalArticleLocalService.deleteArticles(
+		_journalArticleLocalService.deleteArticles(
 			portletDataContext.getScopeGroupId());
 
-		journalFolderLocalService.deleteFolders(
+		_journalFolderLocalService.deleteFolders(
 			portletDataContext.getGroupId());
 
-		ddmTemplateLocalService.deleteTemplates(
+		_ddmTemplateLocalService.deleteTemplates(
 			portletDataContext.getScopeGroupId(),
 			PortalUtil.getClassNameId(DDMStructure.class));
 
-		ddmStructureLocalService.deleteStructures(
+		_ddmStructureLocalService.deleteStructures(
 			portletDataContext.getScopeGroupId(),
 			PortalUtil.getClassNameId(JournalArticle.class));
 
@@ -193,7 +194,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "feeds")) {
 			ActionableDynamicQuery feedActionableDynamicQuery =
-				journalFeedLocalService.getExportActionableDynamicQuery(
+				_journalFeedLocalService.getExportActionableDynamicQuery(
 					portletDataContext);
 
 			feedActionableDynamicQuery.performActions();
@@ -201,7 +202,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "folders")) {
 			ActionableDynamicQuery folderActionableDynamicQuery =
-				journalFolderLocalService.getExportActionableDynamicQuery(
+				_journalFolderLocalService.getExportActionableDynamicQuery(
 					portletDataContext);
 
 			folderActionableDynamicQuery.performActions();
@@ -324,7 +325,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 					portletDataContext, articleElement);
 			}
 
-			journalContent.clearCache();
+			_journalContent.clearCache();
 		}
 
 		return portletPreferences;
@@ -352,13 +353,13 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 		ddmTemplateActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery feedActionableDynamicQuery =
-			journalFeedLocalService.getExportActionableDynamicQuery(
+			_journalFeedLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		feedActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery folderActionableDynamicQuery =
-			journalFolderLocalService.getExportActionableDynamicQuery(
+			_journalFolderLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		folderActionableDynamicQuery.performCount();
@@ -368,7 +369,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 		final PortletDataContext portletDataContext) {
 
 		ExportActionableDynamicQuery exportActionableDynamicQuery =
-			journalArticleLocalService.getExportActionableDynamicQuery(
+			_journalArticleLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		final ExportActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
@@ -426,7 +427,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 		final PortletDataContext portletDataContext) {
 
 		ExportActionableDynamicQuery exportActionableDynamicQuery =
-			ddmStructureLocalService.getExportActionableDynamicQuery(
+			_ddmStructureLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		final ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
@@ -461,7 +462,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 			PortletDataContext portletDataContext) {
 
 		ExportActionableDynamicQuery exportActionableDynamicQuery =
-			journalArticleLocalService.getExportActionableDynamicQuery(
+			_journalArticleLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		exportActionableDynamicQuery.setStagedModelType(
@@ -475,7 +476,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 		final PortletDataContext portletDataContext) {
 
 		ExportActionableDynamicQuery exportActionableDynamicQuery =
-			ddmTemplateLocalService.getExportActionableDynamicQuery(
+			_ddmTemplateLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		final ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
@@ -497,7 +498,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 					disjunction.add(classPKProperty.eq(0L));
 
 					DynamicQuery ddmStructureDynamicQuery =
-						ddmStructureLocalService.dynamicQuery();
+						_ddmStructureLocalService.dynamicQuery();
 
 					Property classNameIdProperty = PropertyFactoryUtil.forName(
 						"classNameId");
@@ -535,40 +536,40 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 	protected void setDDMStructureLocalService(
 		DDMStructureLocalService ddmStructureLocalService) {
 
-		this.ddmStructureLocalService = ddmStructureLocalService;
+		_ddmStructureLocalService = ddmStructureLocalService;
 	}
 
 	@Reference(unbind = "-")
 	protected void setDDMTemplateLocalService(
 		DDMTemplateLocalService ddmTemplateLocalService) {
 
-		this.ddmTemplateLocalService = ddmTemplateLocalService;
+		_ddmTemplateLocalService = ddmTemplateLocalService;
 	}
 
 	@Reference(unbind = "-")
 	protected void setJournalArticleLocalService(
 		JournalArticleLocalService journalArticleLocalService) {
 
-		this.journalArticleLocalService = journalArticleLocalService;
+		_journalArticleLocalService = journalArticleLocalService;
 	}
 
 	@Reference(unbind = "-")
 	protected void setJournalContent(JournalContent journalContent) {
-		this.journalContent = journalContent;
+		_journalContent = journalContent;
 	}
 
 	@Reference(unbind = "-")
 	protected void setJournalFeedLocalService(
 		JournalFeedLocalService journalFeedLocalService) {
 
-		this.journalFeedLocalService = journalFeedLocalService;
+		_journalFeedLocalService = journalFeedLocalService;
 	}
 
 	@Reference(unbind = "-")
 	protected void setJournalFolderLocalService(
 		JournalFolderLocalService journalFolderLocalService) {
 
-		this.journalFolderLocalService = journalFolderLocalService;
+		_journalFolderLocalService = journalFolderLocalService;
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -576,11 +577,11 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	protected DDMStructureLocalService ddmStructureLocalService;
-	protected DDMTemplateLocalService ddmTemplateLocalService;
-	protected JournalArticleLocalService journalArticleLocalService;
-	protected JournalContent journalContent;
-	protected JournalFeedLocalService journalFeedLocalService;
-	protected JournalFolderLocalService journalFolderLocalService;
+	private DDMStructureLocalService _ddmStructureLocalService;
+	private DDMTemplateLocalService _ddmTemplateLocalService;
+	private JournalArticleLocalService _journalArticleLocalService;
+	private JournalContent _journalContent;
+	private JournalFeedLocalService _journalFeedLocalService;
+	private JournalFolderLocalService _journalFolderLocalService;
 
 }

@@ -44,6 +44,16 @@
 	<td>//button[@title='Move selected items from Available to Current.']</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_TEMPLATE_SELECT</td>
+	<td>//select[contains(@id,'displayStyle')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

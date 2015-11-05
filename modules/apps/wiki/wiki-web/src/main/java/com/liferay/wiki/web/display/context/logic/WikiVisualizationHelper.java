@@ -43,11 +43,11 @@ public class WikiVisualizationHelper {
 	public boolean isFrontPageNavItemSelected() {
 		WikiPage wikiPage = _wikiRequestHelper.getWikiPage();
 
-		String strutsAction = _wikiRequestHelper.getStrutsAction();
+		String logicalPath = _wikiRequestHelper.getLogicalPath();
 
 		String frontPageName = _wikiGroupServiceConfiguration.frontPageName();
 
-		if (Validator.isNull(strutsAction) ||
+		if (Validator.isNull(logicalPath) ||
 			(wikiPage != null) && frontPageName.equals(wikiPage.getTitle())) {
 
 			return true;
@@ -76,10 +76,10 @@ public class WikiVisualizationHelper {
 	}
 
 	public boolean isUndoTrashControlVisible() {
-		String strutsAction = _wikiRequestHelper.getStrutsAction();
+		String logicalPath = _wikiRequestHelper.getLogicalPath();
 
-		if (strutsAction.endsWith("view_page_activities") ||
-			strutsAction.endsWith("view_page_attachments")) {
+		if (logicalPath.endsWith("view_page_activities") ||
+			logicalPath.endsWith("view_page_attachments")) {
 
 			return false;
 		}
@@ -103,29 +103,29 @@ public class WikiVisualizationHelper {
 		return isNavItemSelected("/view_recent_changes");
 	}
 
-	protected String getStrutsPath() {
-		if (_strutsPath == null) {
-			String strutsAction = _wikiRequestHelper.getStrutsAction();
+	protected String getLogicalPathPrefix() {
+		if (_logicalPathPrefix == null) {
+			String logicalPath = _wikiRequestHelper.getLogicalPath();
 
-			if (Validator.isNotNull(strutsAction)) {
-				int pos = strutsAction.indexOf(StringPool.SLASH, 1);
+			if (Validator.isNotNull(logicalPath)) {
+				int pos = logicalPath.indexOf(StringPool.SLASH, 1);
 
 				if (pos != -1) {
-					_strutsPath = strutsAction.substring(0, pos);
+					_logicalPathPrefix = logicalPath.substring(0, pos);
 				}
 			}
 		}
 
-		return _strutsPath;
+		return _logicalPathPrefix;
 	}
 
-	protected boolean isNavItemSelected(String navItemStrutsAction) {
-		String strutsAction = _wikiRequestHelper.getStrutsAction();
+	protected boolean isNavItemSelected(String navItemLogicalPath) {
+		String logicalPath = _wikiRequestHelper.getLogicalPath();
 
-		return strutsAction.equals(getStrutsPath() + navItemStrutsAction);
+		return logicalPath.equals(getLogicalPathPrefix() + navItemLogicalPath);
 	}
 
-	private String _strutsPath;
+	private String _logicalPathPrefix;
 	private final WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 	private final WikiPortletInstanceSettingsHelper
 		_wikiPortletInstanceSettingsHelper;

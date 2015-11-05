@@ -97,7 +97,7 @@ String treeId = (String)request.getAttribute("liferay-ui:layouts-tree:treeId");
 			boundingBox: '#<portlet:namespace /><%= HtmlUtil.escape(treeId) %>Output',
 			incomplete: <%= incomplete %>,
 			layouts: <%= layoutsJSON %>,
-			layoutURL: '<%= portletURL + StringPool.AMPERSAND + portletNamespace + "selPlid={selPlid}" + StringPool.AMPERSAND + portletNamespace %>',
+			layoutURL: '<%= portletURL + StringPool.AMPERSAND + portletNamespace + "selPlid={selPlid}" %>',
 
 			<c:if test="<%= Validator.isNotNull(linkTemplate) %>">
 				linkTemplate: '<%= linkTemplate %>',

@@ -36,7 +36,6 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-edit"
 			message="edit"
 			url="<%= editEntryURL %>"
 		/>
@@ -52,7 +51,6 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 		/>
 
 		<liferay-ui:icon
-			iconCssClass="icon-lock"
 			message="permissions"
 			method="get"
 			url="<%= permissionsEntryURL %>"

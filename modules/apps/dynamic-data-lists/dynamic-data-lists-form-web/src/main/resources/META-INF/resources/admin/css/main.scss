@@ -1,4 +1,5 @@
 @import "bourbon";
+@import "mixins";
 
 .portlet-forms {
 	.aspect-ratio img {
@@ -394,7 +395,7 @@
 		position: absolute;
 		right: 0;
 		top: 50%;
-		
+
 		.icon-monospaced {
 			color: #B0BEC9;
 		}
@@ -403,7 +404,7 @@
 			color: inherit;
 		}
 	}
-	
+
 	.form-builder-field-list-empty .form-builder-field-list-add-container {
 		margin-top: initial;
 	}
@@ -456,15 +457,13 @@
 	.form-builder-layout {
 		margin: 0 auto;
 		width: auto;
-	
+
 		.form-builder-field-list-container {
 			padding: 26px 0 0 0;
 		}
 
-		.form-builder-field-list-empty {
-			.form-builder-field-list-container {
-				padding-bottom: 26px;
-			}
+		.form-builder-field-list-empty .form-builder-field-list-container {
+			padding-bottom: 26px;
 		}
 
 		.layout-builder-add-row-area {
@@ -487,30 +486,22 @@
 					}
 
 					.layout-col-content {
-						padding-left: 15px;
-						padding-right: 15px;
+						padding-left: 34px;
+						padding-right: 34px;
 					}
 
-					@media screen and (max-width: 990px) {
+					@include md {
 						.layout-col-content {
+							padding-left: 15px;
+							padding-right: 15px;
+						}
+
+						&:first-of-type .layout-col-content {
 							padding-left: 34px;
+						}
+
+						&.last-col .layout-col-content {
 							padding-right: 34px;
-						}
-					}
-
-					&:first-of-type {
-						@media screen and (min-width: 990px) {
-							.layout-col-content {
-								padding-left: 34px;
-							}
-						}
-					}
-
-					&.last-col {
-						@media screen and (min-width: 990px) {
-							.layout-col-content {
-								padding-right: 34px;
-							}
 						}
 					}
 				}

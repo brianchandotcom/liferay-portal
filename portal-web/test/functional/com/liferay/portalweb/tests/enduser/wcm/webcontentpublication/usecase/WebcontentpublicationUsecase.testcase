@@ -160,6 +160,8 @@
 			<var name="portletName" value="Web Content Display" />
 		</execute>
 
+		<execute function="Refresh" />
+
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Asset Publisher" />
 		</execute>

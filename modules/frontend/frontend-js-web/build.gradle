@@ -143,7 +143,9 @@ buildSvg4everybody {
 	eachFile new StripPathSegmentsAction(6)
 
 	filter {
-		String line -> line.replace('"function" == typeof define', 'false && "function" == typeof define')
+		String line ->
+
+		line.replace('"function" == typeof define', 'false && "function" == typeof define')
 	}
 
 	from {

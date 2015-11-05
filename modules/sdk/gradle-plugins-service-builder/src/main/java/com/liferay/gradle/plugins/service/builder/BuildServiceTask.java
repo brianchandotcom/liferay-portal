@@ -28,6 +28,10 @@ import org.gradle.api.tasks.JavaExec;
  */
 public class BuildServiceTask extends JavaExec {
 
+	public BuildServiceTask() {
+		setMain("com.liferay.portal.tools.service.builder.ServiceBuilder");
+	}
+
 	@Override
 	public void exec() {
 		setArgs(getCompleteArgs());
@@ -57,11 +61,6 @@ public class BuildServiceTask extends JavaExec {
 
 	public String getInputFileName() {
 		return _serviceBuilderArgs.getInputFileName();
-	}
-
-	@Override
-	public String getMain() {
-		return "com.liferay.portal.tools.service.builder.ServiceBuilder";
 	}
 
 	public String[] getModelHintsConfigs() {

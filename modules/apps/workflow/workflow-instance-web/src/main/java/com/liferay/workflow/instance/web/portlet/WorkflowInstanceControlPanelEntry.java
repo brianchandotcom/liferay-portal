@@ -49,7 +49,8 @@ public class WorkflowInstanceControlPanelEntry
 			return true;
 		}
 
-		return false;
+		return super.hasPermissionImplicitlyGranted(
+			permissionChecker, group, portlet);
 	}
 
 }

@@ -48,7 +48,8 @@ public class SiteSettingsControlPanelEntry extends BaseControlPanelEntry {
 			return true;
 		}
 
-		return false;
+		return super.hasAccessPermissionDenied(
+			permissionChecker, group, portlet);
 	}
 
 }

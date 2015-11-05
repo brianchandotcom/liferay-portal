@@ -36,7 +36,8 @@ public class WorkflowControlPanelEntry extends BaseControlPanelEntry {
 			return true;
 		}
 
-		return false;
+		return super.hasAccessPermissionDenied(
+			permissionChecker, group, portlet);
 	}
 
 }

@@ -91,7 +91,8 @@ public class UsersControlPanelEntry extends BaseControlPanelEntry {
 			}*/
 		}
 
-		return false;
+		return super.hasPermissionImplicitlyGranted(
+			permissionChecker, group, portlet);
 	}
 
 	@Reference(unbind = "-")

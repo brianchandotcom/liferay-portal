@@ -57,7 +57,8 @@ public class MyPagesControlPanelEntry extends BaseControlPanelEntry {
 			return true;
 		}
 
-		return false;
+		return super.hasAccessPermissionDenied(
+			permissionChecker, group, portlet);
 	}
 
 	@Reference(unbind = "-")

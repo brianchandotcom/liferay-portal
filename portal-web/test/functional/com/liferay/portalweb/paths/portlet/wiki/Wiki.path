@@ -79,6 +79,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RICH_TEXT_EDITOR</td>
+	<td>//div[contains(@class,'alloy-editor') and contains(@aria-label,'Rich Text Editor')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VIEW_BODY_FIELD</td>
 	<td>//html/body[contains(@class,'portlet-wiki') and contains(.,'${key_wikiPageContent}')]</td>
 	<td></td>

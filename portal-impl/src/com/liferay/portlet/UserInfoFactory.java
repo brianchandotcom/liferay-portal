@@ -17,7 +17,6 @@ package com.liferay.portlet;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.model.User;
@@ -147,7 +146,7 @@ public class UserInfoFactory {
 						portletContextBagCustomUserAttributes.get(
 							customUserAttributesClassName);
 
-					if (Validator.isNotNull(customUserAttributes)) {
+					if (customUserAttributes != null) {
 						customUserAttributes =
 							(CustomUserAttributes)customUserAttributes.clone();
 					}

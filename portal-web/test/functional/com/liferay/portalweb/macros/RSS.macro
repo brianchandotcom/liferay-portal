@@ -52,9 +52,9 @@
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 	</command>
 
-	<command name="viewCorruptScriptConsoleError">
-		<execute function="AssertConsoleTextPresentNoError" value1="ERROR" />
-		<execute function="AssertConsoleTextPresentNoError" value1="Unexpected end of file reached." />
+	<command name="viewCorruptScript">
+		<execute function="AssertTextPresent" value1="An error occurred while processing the template." />
+		<execute function="AssertTextPresent" value1="Unexpected end of file reached." />
 	</command>
 
 	<command name="viewCustomADT">

@@ -92,13 +92,19 @@
 			<var name="siteName" value="Test Site Name" />
 		</execute>
 
-		<execute function="RefreshNoError" />
+		<execute function="Refresh" />
 
 		<execute macro="ApplicationDisplayTemplates#addADTviaPortletPG">
 			<var name="adtType" value="RSS" />
 		</execute>
 
-		<execute macro="RSS#viewCorruptScriptConsoleError" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="ADT Test Page" />
+			<var name="siteName" value="Test Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="RSS#viewCorruptScript" />
 	</command>
 
 	<command name="AddRSSADTWithScript" priority="3">

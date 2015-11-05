@@ -22,6 +22,8 @@
 
 		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 			<liferay-ui:app-view-entry
+				actionJsp="/blogs_admin/image_action.jsp"
+				actionJspServletContext="<%= application %>"
 				assetCategoryClassName="<%= DLFileEntry.class.getName() %>"
 				assetCategoryClassPK="<%= fileEntry.getFileEntryId() %>"
 				assetTagClassName="<%= DLFileEntry.class.getName() %>"
@@ -38,6 +40,10 @@
 				title="<%= fileEntry.getTitle() %>"
 			/>
 		</liferay-ui:search-container-column-text>
+
+		<liferay-ui:search-container-column-jsp
+			path="/blogs_admin/image_action.jsp"
+		/>
 	</c:when>
 	<c:when test='<%= displayStyle.equals("icon") %>'>
 
@@ -47,6 +53,8 @@
 
 		<liferay-ui:search-container-column-text>
 			<liferay-frontend:vertical-card
+				actionJsp="/blogs_admin/image_action.jsp"
+				actionJspServletContext="<%= application %>"
 				imageUrl="<%= DLUtil.getThumbnailSrc(fileEntry, themeDisplay) %>"
 				resultRow="<%= row %>"
 				rowChecker="<%= searchContainer.getRowChecker() %>"
@@ -75,5 +83,11 @@
 		<liferay-ui:search-container-column-text name="modified-date">
 			<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - fileEntry.getModifiedDate().getTime(), true), HtmlUtil.escape(fileEntry.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
 		</liferay-ui:search-container-column-text>
+
+		<liferay-ui:search-container-column-jsp
+			align="right"
+			cssClass="entry-action"
+			path="/blogs_admin/image_action.jsp"
+		/>
 	</c:otherwise>
 </c:choose>

@@ -16,6 +16,7 @@ package com.liferay.wiki.lar;
 
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
 import com.liferay.portlet.exportimport.lar.DataLevel;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataHandler;
@@ -37,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {"javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY},
 	service = PortletDataHandler.class
 )
-public class WikiDisplayPortletDataHandler extends WikiPortletDataHandler {
+public class WikiDisplayPortletDataHandler extends BasePortletDataHandler {
 
 	@Activate
 	protected void activate() {

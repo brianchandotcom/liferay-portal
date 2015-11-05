@@ -17,15 +17,18 @@ package com.liferay.portal.store.s3.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.documentlibrary.store.test.BaseStoreTestCase;
 
+import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -51,6 +54,32 @@ public class S3StoreTest extends BaseStoreTestCase {
 			"Property \"" + PropsKeys.DL_STORE_IMPL + "\" is not set to \"" +
 				s3StoreClassName + "\"",
 			dlStoreImpl.equals(s3StoreClassName));
+	}
+
+	@Override
+	@Test
+	public void testUpdateFileWithNewFileNameNoSuchFileException()
+		throws Exception {
+
+		String fileName = RandomTestUtil.randomString();
+
+		store.updateFile(
+			companyId, repositoryId, fileName, RandomTestUtil.randomString());
+
+		Assert.assertFalse(store.hasFile(companyId, repositoryId, fileName));
+	}
+
+	@Override
+	@Test
+	public void testUpdateFileWithNewRepositoryIdNoSuchFileException()
+		throws Exception {
+
+		String fileName = RandomTestUtil.randomString();
+
+		store.updateFile(
+			companyId, repositoryId, fileName, RandomTestUtil.randomString());
+
+		Assert.assertFalse(store.hasFile(companyId, repositoryId, fileName));
 	}
 
 	@Override

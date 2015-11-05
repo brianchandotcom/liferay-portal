@@ -13,3 +13,11 @@
  * details.
  */
 --%>
+
+<%
+String panelId = StringPool.BLANK;
+
+if (Validator.isNotNull(label) && collapsed) {
+	panelId = namespace + PortalUtil.getUniqueElementId(request, StringPool.BLANK, AUIUtil.normalizeId(label));
+}
+%>

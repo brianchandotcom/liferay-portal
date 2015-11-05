@@ -16,17 +16,32 @@
 
 <%@ include file="/html/taglib/aui/fieldset/init.jsp" %>
 
-<fieldset class="fieldset <%= cssClass %>" <%= Validator.isNotNull(id) ? "id=\"" + namespace + id + "\"" : StringPool.BLANK %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
+<fieldset class="fieldset <%= collapsed ? "panel panel-default" : StringPool.BLANK %> <%= cssClass %>" <%= Validator.isNotNull(id) ? "id=\"" + namespace + id + "\"" : StringPool.BLANK %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
 	<c:if test="<%= Validator.isNotNull(label) %>">
-		<legend class="fieldset-legend">
-			<span class="legend">
-				<liferay-ui:message key="<%= label %>" localizeKey="<%= localizeLabel %>" />
+		<c:choose>
+			<c:when test="<%= collapsed %>">
+				<legend class="fieldset-legend panel-heading">
+					<a aria-controls="collapseOne" aria-expanded="true" data-toggle="collapse" href="#<%= panelId %>" role="button">
+						<liferay-ui:message key="<%= label %>" localizeKey="<%= localizeLabel %>" />
 
-				<c:if test="<%= Validator.isNotNull(helpMessage) %>">
-					<liferay-ui:icon-help message="<%= helpMessage %>" />
-				</c:if>
-			</span>
-		</legend>
+						<c:if test="<%= Validator.isNotNull(helpMessage) %>">
+							<liferay-ui:icon-help message="<%= helpMessage %>" />
+						</c:if>
+					</a>
+				</legend>
+			</c:when>
+			<c:otherwise>
+				<legend class="fieldset-legend">
+					<span class="legend">
+						 <liferay-ui:message key="<%= label %>" localizeKey="<%= localizeLabel %>" />
+
+						<c:if test="<%= Validator.isNotNull(helpMessage) %>">
+							<liferay-ui:icon-help message="<%= helpMessage %>" />
+						</c:if>
+					</span>
+				</legend>
+			</c:otherwise>
+		</c:choose>
 	</c:if>
 
-	<div class="<%= column ? "row-fluid" : StringPool.BLANK %>">
+	<div class="<%= collapsed ? "panel-collapse collapse in" : StringPool.BLANK %> <%= column ? "row-fluid" : StringPool.BLANK %>" id="<%= panelId %>">

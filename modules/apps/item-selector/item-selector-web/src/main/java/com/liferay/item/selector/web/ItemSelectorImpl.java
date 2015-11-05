@@ -77,7 +77,7 @@ public class ItemSelectorImpl implements ItemSelector {
 			itemSelectorCriterionClasses = getItemSelectorCriterionClasses(
 				parameters);
 
-		for (int i = 0; i<itemSelectorCriterionClasses.size(); i++) {
+		for (int i = 0; i < itemSelectorCriterionClasses.size(); i++) {
 			Class<? extends ItemSelectorCriterion> itemSelectorCriterionClass =
 				itemSelectorCriterionClasses.get(i);
 
@@ -134,31 +134,11 @@ public class ItemSelectorImpl implements ItemSelector {
 					continue;
 				}
 
-				String title = itemSelectorView.getTitle(
-					themeDisplay.getLocale());
-
-				PortletURL portletURL = null;
-
-				if (Validator.isNotNull(selectedTab) &&
-					selectedTab.equals(title)) {
-
-					portletURL = getItemSelectorURL(
-						requestBackedPortletURLFactory,
-						themeDisplay.getScopeGroup(),
-						themeDisplay.getRefererGroupId(), itemSelectedEventName,
-						itemSelectorCriteriaArray);
-				}
-				else {
-					Group group = themeDisplay.getRefererGroup() != null ?
-						themeDisplay.getRefererGroup() :
-						themeDisplay.getScopeGroup();
-
-					portletURL = getItemSelectorURL(
-						requestBackedPortletURLFactory, group, 0,
-						itemSelectedEventName, itemSelectorCriteriaArray);
-				}
-
-				portletURL.setParameter(PARAMETER_SELECTED_TAB, title);
+				PortletURL portletURL = getPortletURL(
+					requestBackedPortletURLFactory,
+					itemSelectorView.getTitle(themeDisplay.getLocale()),
+					selectedTab, itemSelectedEventName, themeDisplay,
+					itemSelectorCriteriaArray);
 
 				itemSelectorViewRenderers.add(
 					new ItemSelectorViewRendererImpl(
@@ -283,6 +263,37 @@ public class ItemSelectorImpl implements ItemSelector {
 		populateItemSelectorCriteria(parameters, itemSelectorCriteria);
 
 		return parameters;
+	}
+
+	protected PortletURL getPortletURL(
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory,
+		String title, String selectedTab, String itemSelectedEventName,
+		ThemeDisplay themeDisplay,
+		ItemSelectorCriterion[] itemSelectorCriteriaArray) {
+
+		PortletURL portletURL = null;
+
+		if (Validator.isNotNull(selectedTab) && selectedTab.equals(title)) {
+			portletURL = getItemSelectorURL(
+				requestBackedPortletURLFactory, themeDisplay.getScopeGroup(),
+				themeDisplay.getRefererGroupId(), itemSelectedEventName,
+				itemSelectorCriteriaArray);
+		}
+		else {
+			Group group = themeDisplay.getRefererGroup();
+
+			if (group == null) {
+				group = themeDisplay.getScopeGroup();
+			}
+
+			portletURL = getItemSelectorURL(
+				requestBackedPortletURLFactory, group, 0, itemSelectedEventName,
+				itemSelectorCriteriaArray);
+		}
+
+		portletURL.setParameter(PARAMETER_SELECTED_TAB, title);
+
+		return portletURL;
 	}
 
 	protected String getValue(Map<String, String[]> parameters, String name) {

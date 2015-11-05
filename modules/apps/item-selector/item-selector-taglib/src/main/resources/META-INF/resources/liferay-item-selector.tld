@@ -69,7 +69,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>groupCount</name>
+			<name>groupsCount</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

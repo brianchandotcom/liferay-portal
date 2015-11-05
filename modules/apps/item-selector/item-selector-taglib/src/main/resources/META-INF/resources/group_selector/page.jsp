@@ -17,7 +17,7 @@
 <%@ include file="/group_selector/init.jsp" %>
 
 <%
-int groupCount = GetterUtil.getInteger(request.getAttribute("liferay-item-selector:group-selector:groupCount"));
+int groupsCount = GetterUtil.getInteger(request.getAttribute("liferay-item-selector:group-selector:groupsCount"));
 List<Group> groups = (List<Group>)request.getAttribute("liferay-item-selector:group-selector:groups");
 ItemSelector itemSelector = (ItemSelector)request.getAttribute("liferay-item-selector:group-selector:itemSelector");
 
@@ -40,7 +40,7 @@ SearchContainer searchContainer = new GroupSearch(liferayPortletRequest, iterato
 <div class="container-fluid-1280 lfr-item-viewer">
 	<liferay-ui:search-container
 		searchContainer="<%= searchContainer %>"
-		total="<%= groupCount %>"
+		total="<%= groupsCount %>"
 		var="listSearchContainer"
 	>
 		<liferay-ui:search-container-results

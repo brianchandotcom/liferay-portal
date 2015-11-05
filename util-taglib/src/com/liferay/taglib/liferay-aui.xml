@@ -530,6 +530,16 @@
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<name>collapsed</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+			</attribute>
+			<attribute>
+				<name>collapsible</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+			</attribute>
+			<attribute>
 				<description>A CSS class for styling the component</description>
 				<name>cssClass</name>
 				<inputType>java.lang.String</inputType>

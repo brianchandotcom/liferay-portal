@@ -26,7 +26,7 @@ long groupId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:layou
 boolean incomplete = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:layouts-tree:incomplete"));
 String linkTemplate = (String)request.getAttribute("liferay-ui:layouts-tree:linkTemplate");
 String modules = (String)request.getAttribute("liferay-ui:layouts-tree:modules");
-String portletNamespace = (String)request.getAttribute("liferay-ui:layouts-tree:portletNamespace");
+String portletId = (String)request.getAttribute("liferay-ui:layouts-tree:portletId");
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-ui:layouts-tree:portletURL");
 boolean privateLayout = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:layouts-tree:privateLayout"));
 String rootLinkTemplate = (String)request.getAttribute("liferay-ui:layouts-tree:rootLinkTemplate");
@@ -35,10 +35,6 @@ boolean saveState = GetterUtil.getBoolean((String)request.getAttribute("liferay-
 boolean selectableTree = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:layouts-tree:selectableTree"));
 long selPlid = GetterUtil.getLong((String)request.getAttribute("liferay-ui:layouts-tree:selPlid"));
 String treeId = (String)request.getAttribute("liferay-ui:layouts-tree:treeId");
-
-if (Validator.isNull(portletNamespace)) {
-	portletNamespace = namespace;
-}
 %>
 
 <aui:script use="<%= modules %>">
@@ -75,6 +71,12 @@ if (Validator.isNull(portletNamespace)) {
 	long[] openNodes = StringUtil.split(SessionTreeJSClicks.getOpenNodes(request, treeId), 0L);
 
 	JSONObject layoutsJSON = JSONFactoryUtil.createJSONObject(LayoutsTreeUtil.getLayoutsJSON(request, groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, openNodes, true, treeId));
+
+	String portletNamespace = namespace;
+
+	if (Validator.isNotNull(portletId)) {
+		portletNamespace = PortalUtil.getPortletNamespace(portletId);
+	}
 	%>
 
 	var TreeViewType = Liferay.LayoutsTree;

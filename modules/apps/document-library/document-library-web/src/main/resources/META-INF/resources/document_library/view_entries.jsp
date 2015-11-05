@@ -17,6 +17,10 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
+String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_document_library_edit_file_entry") + StringPool.UNDERLINE;
+
+request.setAttribute("randomNamespace", randomNamespace);
+
 String navigation = ParamUtil.getString(request, "navigation", "home");
 
 String currentFolder = ParamUtil.getString(request, "curFolder");
@@ -552,6 +556,8 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" resultRowSplitter="<%= new DLResultRowSplitter() %>" searchContainer="<%= dlSearchContainer %>" />
 	</liferay-ui:search-container>
 </div>
+
+<%@ include file="/document_library/version_details.jspf" %>
 
 <%!
 private static Log _log = LogFactoryUtil.getLog("com_liferay_document_library_web.document_library.view_entries_jsp");

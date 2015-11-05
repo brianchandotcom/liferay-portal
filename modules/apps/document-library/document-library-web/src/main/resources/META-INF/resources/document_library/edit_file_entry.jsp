@@ -507,15 +507,7 @@ if (portletTitleBasedNavigation) {
 	/>
 </div>
 
-<div id="<portlet:namespace />versionDetails" style="display: none">
-	<aui:fieldset>
-		<aui:input label="i-want-my-changes-to-create-a-major-version" name='<%= randomNamespace + "majorVersion" %>' type="checkbox" />
-		<aui:input label="change-log" name='<%= randomNamespace + "changeLog" %>' type="textarea" />
-
-		<aui:button name='<%= randomNamespace + "save" %>' primary="true" value="save" />
-		<aui:button name='<%= randomNamespace + "cancel" %>' type="cancel" value="cancel" />
-	</aui:fieldset>
-</div>
+<%@ include file="/document_library/version_details.jspf" %>
 
 <aui:script>
 	function <portlet:namespace />changeFileEntryType() {

@@ -136,9 +136,37 @@ public class UIItemsBuilder {
 		portletURL.setParameter(
 			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
 
-		_addURLUIItem(
-			new URLMenuItem(), menuItems, DLUIItemKeys.CHECKIN, "checkin",
-			portletURL.toString());
+		String onClick =
+			getNamespace() + "showVersionDetailsDialog('" + portletURL + "');";
+
+		JavaScriptMenuItem javascriptMenuItem = _addJavaScriptUIItem(
+			new JavaScriptMenuItem(), menuItems, DLUIItemKeys.CHECKIN,
+			"checkin", onClick);
+
+		String javaScript =
+			"/com/liferay/document/library/web/display/context/dependencies" +
+				"/checkin_js.ftl";
+
+		Class<?> clazz = getClass();
+
+		URLTemplateResource urlTemplateResource = new URLTemplateResource(
+			javaScript, clazz.getResource(javaScript));
+
+		Template template = TemplateManagerUtil.getTemplate(
+			TemplateConstants.LANG_TYPE_FTL, urlTemplateResource, false);
+
+		template.put(
+			"dialogTitle",
+			UnicodeLanguageUtil.get(_request, "describe-your-changes"));
+		template.put("namespace", getNamespace());
+		template.put(
+			"randomNamespace", _request.getAttribute("randomNamespace"));
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		template.processTemplate(unsyncStringWriter);
+
+		javascriptMenuItem.setJavaScript(unsyncStringWriter.toString());
 	}
 
 	public void addCheckinToolbarItem(List<ToolbarItem> toolbarItems)

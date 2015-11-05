@@ -1,5 +1,5 @@
 (function() {
-	var pluginName = 'imageselector';
+	var pluginName = 'itemselector';
 
 	var STR_FILE_ENTRY_RETURN_TYPE = 'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType';
 

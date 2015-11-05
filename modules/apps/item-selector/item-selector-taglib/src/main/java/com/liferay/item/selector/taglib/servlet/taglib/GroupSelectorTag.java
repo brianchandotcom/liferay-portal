@@ -69,14 +69,6 @@ public class GroupSelectorTag extends IncludeTag {
 		_groups = null;
 	}
 
-	protected long[] getClassNameIds() {
-		return new long[] {
-			ClassNameLocalServiceUtil.getClassNameId(Company.class),
-			ClassNameLocalServiceUtil.getClassNameId(Group.class),
-			ClassNameLocalServiceUtil.getClassNameId(Organization.class)
-		};
-	}
-
 	protected int getGroupCount(HttpServletRequest request) {
 		if ((_groupCount > 0) || (_groups != null)) {
 			return _groupCount;
@@ -96,7 +88,7 @@ public class GroupSelectorTag extends IncludeTag {
 			groupParams.put("usersGroups", Long.valueOf(user.getUserId()));
 
 			return GroupLocalServiceUtil.searchCount(
-				themeDisplay.getCompanyId(), getClassNameIds(), keywords,
+				themeDisplay.getCompanyId(), _CLASSNAME_IDS, keywords,
 				groupParams);
 		}
 
@@ -139,7 +131,7 @@ public class GroupSelectorTag extends IncludeTag {
 			groupParams.put("usersGroups", Long.valueOf(user.getUserId()));
 
 			return GroupLocalServiceUtil.search(
-				themeDisplay.getCompanyId(), getClassNameIds(), keywords,
+				themeDisplay.getCompanyId(), _CLASSNAME_IDS, keywords,
 				groupParams, startAndEnd[0], startAndEnd[1], null);
 		}
 
@@ -171,6 +163,12 @@ public class GroupSelectorTag extends IncludeTag {
 			"liferay-item-selector:group-selector:itemSelector",
 			ItemSelectorUtil.getItemSelector());
 	}
+
+	private static final long[] _CLASSNAME_IDS = {
+		ClassNameLocalServiceUtil.getClassNameId(Company.class),
+		ClassNameLocalServiceUtil.getClassNameId(Group.class),
+		ClassNameLocalServiceUtil.getClassNameId(Organization.class)
+	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GroupSelectorTag.class);

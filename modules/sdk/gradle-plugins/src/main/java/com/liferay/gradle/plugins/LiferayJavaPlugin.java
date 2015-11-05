@@ -1066,6 +1066,19 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			project, TEST_INTEGRATION_SOURCE_SET_NAME, classesDir, null);
 	}
 
+	protected void configureTaskBuildCSSGenerateSourceMap(
+		BuildCSSTask buildCSSTask) {
+
+		String generateSourceMap = GradleUtil.getProperty(
+			buildCSSTask.getProject(), "sass.generate.source.map",
+			(String)null);
+
+		if (Validator.isNotNull(generateSourceMap)) {
+			buildCSSTask.setGenerateSourceMap(
+				Boolean.parseBoolean(generateSourceMap));
+		}
+	}
+
 	protected void configureTaskBuildCSSSassCompilerClassName(
 		BuildCSSTask buildCSSTask) {
 
@@ -1652,6 +1665,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(BuildCSSTask buildCSSTask) {
+					configureTaskBuildCSSGenerateSourceMap(buildCSSTask);
 					configureTaskBuildCSSSassCompilerClassName(buildCSSTask);
 				}
 

@@ -14,9 +14,15 @@
 
 package com.liferay.build.utility;
 
+import org.junit.Test;
+
 /**
 * @author Peter Yoo
 */
 public class BuildUtilityTest {
 
+	@Test
+	public void testExpandSlaveRange() {
+		
+	}
 }

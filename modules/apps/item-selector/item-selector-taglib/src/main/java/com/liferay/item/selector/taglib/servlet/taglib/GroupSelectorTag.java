@@ -82,9 +82,11 @@ public class GroupSelectorTag extends IncludeTag {
 		String keywords = ParamUtil.getString(request, "keywords");
 
 		int cur = ParamUtil.getInteger(
-			request, SearchContainer.DEFAULT_CUR_PARAM);
+			request, SearchContainer.DEFAULT_CUR_PARAM,
+			SearchContainer.DEFAULT_CUR);
 		int delta = ParamUtil.getInteger(
-			request, SearchContainer.DEFAULT_DELTA_PARAM);
+			request, SearchContainer.DEFAULT_DELTA_PARAM,
+			SearchContainer.DEFAULT_DELTA);
 
 		int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
 			cur, delta);

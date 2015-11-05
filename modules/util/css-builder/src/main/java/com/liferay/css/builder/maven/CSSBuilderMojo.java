@@ -56,6 +56,13 @@ public class CSSBuilderMojo extends AbstractMojo {
 
 	/**
 	 * @parameter
+	 */
+	public void setGenerateSourceMap(boolean generateSourceMap) {
+		_cssBuilderArgs.setGenerateSourceMap(generateSourceMap);
+	}
+
+	/**
+	 * @parameter
 	 * @required
 	 */
 	public void setPortalCommonDirName(String portalCommonDirName) {

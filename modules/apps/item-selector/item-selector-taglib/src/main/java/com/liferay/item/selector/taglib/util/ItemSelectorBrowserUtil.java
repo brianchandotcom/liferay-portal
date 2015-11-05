@@ -167,14 +167,14 @@ public class ItemSelectorBrowserUtil {
 			PortletURL portletURL)
 		throws PortalException, PortletException {
 
-		PortletURL viewSiteSelectorURL = PortletURLUtil.clone(
+		PortletURL viewGroupSelectorURL = PortletURLUtil.clone(
 			portletURL, liferayPortletResponse);
 
-		viewSiteSelectorURL.setParameter(
-			"showGroupSelector", String.valueOf(true));
+		viewGroupSelectorURL.setParameter(
+			"showGroupSelector", Boolean.TRUE.toString());
 
 		PortalUtil.addPortletBreadcrumbEntry(
-			request, "sites", viewSiteSelectorURL.toString());
+			request, "sites", viewGroupSelectorURL.toString());
 	}
 
 	protected static void addPortletBreadcrumbEntry(

@@ -53,46 +53,42 @@ renderResponse.setTitle(LanguageUtil.get(request, "merge-tags"));
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="groupId" type="hidden" value="<%= scopeGroupId %>" />
 
-	<div class="row">
-		<div class="card-horizontal main-content-card">
-			<div class="card-row card-row-padded">
-				<aui:fieldset cssClass="col-md-4">
-					<label for="<portlet:namespace />assetTagsSelector">
-						<liferay-ui:message key="tags" />
-					</label>
+	<aui:fieldset-group>
+		<aui:fieldset cssClass="col-md-4">
+			<label for="<portlet:namespace />assetTagsSelector">
+				<liferay-ui:message key="tags" />
+			</label>
 
-					<liferay-ui:asset-tags-selector
-						addCallback="onAddTag"
-						allowAddEntry="<%= false %>"
-						curTags="<%= StringUtil.merge(mergeTagNames) %>"
-						hiddenInput="mergeTagNames"
-						id="assetTagsSelector"
-						removeCallback="onRemoveTag"
-					/>
+			<liferay-ui:asset-tags-selector
+				addCallback="onAddTag"
+				allowAddEntry="<%= false %>"
+				curTags="<%= StringUtil.merge(mergeTagNames) %>"
+				hiddenInput="mergeTagNames"
+				id="assetTagsSelector"
+				removeCallback="onRemoveTag"
+			/>
 
-					<aui:select cssClass="target-tag" label="into-this-tag" name="targetTagName">
+			<aui:select cssClass="target-tag" label="into-this-tag" name="targetTagName">
 
-						<%
-						for (String tagName : mergeTagNames) {
-						%>
+				<%
+				for (String tagName : mergeTagNames) {
+				%>
 
-							<aui:option label="<%= tagName %>" />
+					<aui:option label="<%= tagName %>" />
 
-						<%
-						}
-						%>
+				<%
+				}
+				%>
 
-					</aui:select>
-				</aui:fieldset>
-			</div>
-		</div>
+			</aui:select>
+		</aui:fieldset>
+	</aui:fieldset-group>
 
-		<aui:button-row>
-			<aui:button cssClass="btn-lg" type="submit" />
+	<aui:button-row>
+		<aui:button cssClass="btn-lg" type="submit" />
 
-			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
-		</aui:button-row>
-	</div>
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+	</aui:button-row>
 </aui:form>
 
 <aui:script sandbox="<%= true %>">

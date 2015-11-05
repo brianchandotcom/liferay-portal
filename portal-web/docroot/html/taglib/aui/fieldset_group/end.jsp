@@ -15,3 +15,6 @@
 --%>
 
 <%@ include file="/html/taglib/aui/fieldset_group/init.jsp" %>
+
+	</div>
+</div>

@@ -587,52 +587,22 @@ if (portletTitleBasedNavigation) {
 		window,
 		'<portlet:namespace />showVersionDetailsDialog',
 		function(form) {
-			var versionDetailsDialog = Liferay.Util.Window.getWindow(
-				{
-					dialog: {
-						bodyContent: $('#<portlet:namespace />versionDetails').html(),
-						destroyOnHide: true
-					},
-					title: '<%= UnicodeLanguageUtil.get(request, "describe-your-changes") %>'
-				}
-			);
+			Liferay.Portlet.DocumentLibrary.Checkin.showDialog(
+				'<portlet:namespace />versionDetails',
+				'<%= UnicodeLanguageUtil.get(request, "describe-your-changes") %>',
+				['<portlet:namespace /><%= randomNamespace %>majorVersion', '<portlet:namespace /><%= randomNamespace %>changeLog'],
+				function(event, nodes) {
+					var majorVersionNode = nodes[0];
+					var changeLogNode = nodes[1];
 
-			var versionDetailsDialogBoundingBox = versionDetailsDialog.get('boundingBox');
-
-			var majorVersion = versionDetailsDialogBoundingBox.one('#<portlet:namespace /><%= randomNamespace %>majorVersion');
-			var saveButton = versionDetailsDialogBoundingBox.one('#<portlet:namespace /><%= randomNamespace %>save');
-
-			saveButton.on(
-				'click',
-				function(event) {
-					var changeLog = versionDetailsDialogBoundingBox.one('#<portlet:namespace /><%= randomNamespace %>changeLog');
-
-					form.fm('majorVersion').val(majorVersion.attr('checked'));
-					form.fm('changeLog').val(changeLog.val());
+					form.fm('majorVersion').val(majorVersionNode.attr('checked'));
+					form.fm('changeLog').val(changeLogNode.val());
 
 					submitForm(form);
 				}
 			);
-
-			var cancelButton = versionDetailsDialogBoundingBox.one('#<portlet:namespace /><%= randomNamespace %>cancel');
-
-			cancelButton.on(
-				'click',
-				function(event) {
-					versionDetailsDialog.destroy();
-				}
-			);
-
-			versionDetailsDialog.after(
-				'render',
-				function(event) {
-					majorVersion.focus();
-				}
-			);
-
-			versionDetailsDialog.render();
 		},
-		['liferay-util-window']
+		['document-library-checkin']
 	);
 
 	function <portlet:namespace />validateTitle() {

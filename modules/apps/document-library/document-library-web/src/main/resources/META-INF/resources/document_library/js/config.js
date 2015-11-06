@@ -7,6 +7,13 @@
 				dl: {
 					base: PATH_DL_WEB + '/document_library/js/',
 					modules: {
+						'document-library-checkin': {
+							path: 'checkin.js',
+							requires: [
+								'liferay-document-library',
+								'liferay-util-window',
+							]
+						},
 						'document-library-upload': {
 							path: 'upload.js',
 							requires: [

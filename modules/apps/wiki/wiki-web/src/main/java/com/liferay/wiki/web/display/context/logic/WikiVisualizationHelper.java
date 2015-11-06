@@ -15,7 +15,6 @@
 package com.liferay.wiki.web.display.context.logic;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.constants.WikiPortletKeys;
@@ -43,11 +42,12 @@ public class WikiVisualizationHelper {
 	public boolean isFrontPageNavItemSelected() {
 		WikiPage wikiPage = _wikiRequestHelper.getWikiPage();
 
-		String strutsAction = _wikiRequestHelper.getStrutsAction();
+		String mvcRenderCommandName =
+			_wikiRequestHelper.getMVCrenderCommandName();
 
 		String frontPageName = _wikiGroupServiceConfiguration.frontPageName();
 
-		if (Validator.isNull(strutsAction) ||
+		if (Validator.isNull(mvcRenderCommandName) ||
 			(wikiPage != null) && frontPageName.equals(wikiPage.getTitle())) {
 
 			return true;
@@ -76,10 +76,11 @@ public class WikiVisualizationHelper {
 	}
 
 	public boolean isUndoTrashControlVisible() {
-		String strutsAction = _wikiRequestHelper.getStrutsAction();
+		String mvcRenderCommandName =
+			_wikiRequestHelper.getMVCrenderCommandName();
 
-		if (strutsAction.endsWith("view_page_activities") ||
-			strutsAction.endsWith("view_page_attachments")) {
+		if (mvcRenderCommandName.equals("/wiki/view_page_activities") ||
+			mvcRenderCommandName.equals("/wiki/view_page_attachments")) {
 
 			return false;
 		}
@@ -88,44 +89,28 @@ public class WikiVisualizationHelper {
 	}
 
 	public boolean isViewAllPagesNavItemSelected() {
-		return isNavItemSelected("/view_all_pages");
+		return isNavItemSelected("/wiki/view_all_pages");
 	}
 
 	public boolean isViewDraftPagesNavItemSelected() {
-		return isNavItemSelected("/view_draft_pages");
+		return isNavItemSelected("/wiki/view_draft_pages");
 	}
 
 	public boolean isViewOrphanPagesNavItemSelected() {
-		return isNavItemSelected("/view_orphan_pages");
+		return isNavItemSelected("/wiki/view_orphan_pages");
 	}
 
 	public boolean isViewRecentChangesNavItemSelected() {
-		return isNavItemSelected("/view_recent_changes");
+		return isNavItemSelected("/wiki/view_recent_changes");
 	}
 
-	protected String getStrutsPath() {
-		if (_strutsPath == null) {
-			String strutsAction = _wikiRequestHelper.getStrutsAction();
+	protected boolean isNavItemSelected(String navItemMVCRenderCommandName) {
+		String mvcRenderCommandName =
+			_wikiRequestHelper.getMVCrenderCommandName();
 
-			if (Validator.isNotNull(strutsAction)) {
-				int pos = strutsAction.indexOf(StringPool.SLASH, 1);
-
-				if (pos != -1) {
-					_strutsPath = strutsAction.substring(0, pos);
-				}
-			}
-		}
-
-		return _strutsPath;
+		return mvcRenderCommandName.equals(navItemMVCRenderCommandName);
 	}
 
-	protected boolean isNavItemSelected(String navItemStrutsAction) {
-		String strutsAction = _wikiRequestHelper.getStrutsAction();
-
-		return strutsAction.equals(getStrutsPath() + navItemStrutsAction);
-	}
-
-	private String _strutsPath;
 	private final WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 	private final WikiPortletInstanceSettingsHelper
 		_wikiPortletInstanceSettingsHelper;

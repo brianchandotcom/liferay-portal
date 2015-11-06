@@ -27,14 +27,15 @@ public abstract class BaseStrutsRequestHelper extends BaseRequestHelper {
 		super(request);
 	}
 
-	public String getStrutsAction() {
-		if (_strutsAction == null) {
-			_strutsAction = ParamUtil.getString(getRequest(), "struts_action");
+	public String getMVCrenderCommandName() {
+		if (_mvcRenderCommandName == null) {
+			_mvcRenderCommandName = ParamUtil.getString(
+				getRequest(), "mvcRenderCommandName");
 		}
 
-		return _strutsAction;
+		return _mvcRenderCommandName;
 	}
 
-	private String _strutsAction;
+	private String _mvcRenderCommandName;
 
 }

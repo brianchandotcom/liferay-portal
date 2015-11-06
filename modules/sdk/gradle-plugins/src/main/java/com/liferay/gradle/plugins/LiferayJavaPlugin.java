@@ -165,6 +165,8 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	public void apply(Project project) {
 		addLiferayExtension(project);
 
+		configureTasksBuildCSS(project);
+
 		applyPlugins(project);
 
 		configureConf2ScopeMappings(project);
@@ -1077,40 +1079,8 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			project, TEST_INTEGRATION_SOURCE_SET_NAME, classesDir, null);
 	}
 
-	protected void configureTaskBuildCSS(
-		Project project, LiferayExtension liferayExtension) {
-
-		BuildCSSTask buildCSSTask = (BuildCSSTask)GradleUtil.getTask(
-			project, CSSBuilderPlugin.BUILD_CSS_TASK_NAME);
-
-		configureTaskBuildCSSDocrootDirName(buildCSSTask);
-		configureTaskBuildCSSSassCompilerClassName(buildCSSTask);
-	}
-
-	protected void configureTaskBuildCSSDocrootDirName(
-		BuildCSSTask buildCSSTask) {
-
-		Project project = buildCSSTask.getProject();
-
-		String docrootDirName = buildCSSTask.getDocrootDirName();
-
-		if (Validator.isNotNull(docrootDirName) &&
-			FileUtil.exists(project, docrootDirName)) {
-
-			return;
-		}
-
-		File resourcesDir = getResourcesDir(project);
-
-		buildCSSTask.setDocrootDirName(project.relativePath(resourcesDir));
-	}
-
 	protected void configureTaskBuildCSSSassCompilerClassName(
 		BuildCSSTask buildCSSTask) {
-
-		if (Validator.isNotNull(buildCSSTask.getSassCompilerClassName())) {
-			return;
-		}
 
 		String sassCompilerClassName = GradleUtil.getProperty(
 			buildCSSTask.getProject(), "sass.compiler.class.name",
@@ -1643,7 +1613,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	protected void configureTasks(
 		Project project, LiferayExtension liferayExtension) {
 
-		configureTaskBuildCSS(project, liferayExtension);
 		configureTaskBuildLang(project);
 		configureTaskClasses(project);
 		configureTaskClean(project);
@@ -1682,6 +1651,21 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 						appServerType);
 
 					appServerTask.merge(appServer);
+				}
+
+			});
+	}
+
+	protected void configureTasksBuildCSS(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			BuildCSSTask.class,
+			new Action<BuildCSSTask>() {
+
+				@Override
+				public void execute(BuildCSSTask buildCSSTask) {
+					configureTaskBuildCSSSassCompilerClassName(buildCSSTask);
 				}
 
 			});

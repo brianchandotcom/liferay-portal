@@ -14,7 +14,6 @@
 
 package com.liferay.gradle.plugins;
 
-import com.liferay.gradle.plugins.css.builder.BuildCSSTask;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
 import com.liferay.gradle.plugins.tasks.DirectDeployTask;
@@ -252,25 +251,6 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 
 		configureSourceSet(
 			project, SourceSet.MAIN_SOURCE_SET_NAME, classesDir, srcDir);
-	}
-
-	@Override
-	protected void configureTaskBuildCSSDocrootDirName(
-		BuildCSSTask buildCSSTask) {
-
-		Project project = buildCSSTask.getProject();
-
-		String docrootDirName = buildCSSTask.getDocrootDirName();
-
-		if (Validator.isNotNull(docrootDirName) &&
-			FileUtil.exists(project, docrootDirName)) {
-
-			return;
-		}
-
-		File webAppDir = getWebAppDir(project);
-
-		buildCSSTask.setDocrootDirName(project.relativePath(webAppDir));
 	}
 
 	@Override

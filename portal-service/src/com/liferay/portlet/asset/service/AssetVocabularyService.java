@@ -185,6 +185,12 @@ public interface AssetVocabularyService extends BaseService {
 		long groupId, java.lang.String title, int start, int end,
 		boolean addDefaultVocabulary) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.asset.model.AssetVocabularyDisplay searchVocabulariesDisplay(
+		long groupId, java.lang.String title, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort, boolean addDefaultVocabulary)
+		throws PortalException;
+
 	public com.liferay.portlet.asset.model.AssetVocabulary updateVocabulary(
 		long vocabularyId, java.lang.String title,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,

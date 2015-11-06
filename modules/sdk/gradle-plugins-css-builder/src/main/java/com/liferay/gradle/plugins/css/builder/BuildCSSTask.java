@@ -44,6 +44,10 @@ import org.gradle.api.tasks.SkipWhenEmpty;
  */
 public class BuildCSSTask extends JavaExec {
 
+	public BuildCSSTask() {
+		setMain("com.liferay.css.builder.CSSBuilder");
+	}
+
 	@Override
 	public JavaExec classpath(Object... paths) {
 		throw new UnsupportedOperationException();
@@ -127,11 +131,6 @@ public class BuildCSSTask extends JavaExec {
 
 	public String getDocrootDirName() {
 		return _cssBuilderArgs.getDocrootDirName();
-	}
-
-	@Override
-	public String getMain() {
-		return "com.liferay.css.builder.CSSBuilder";
 	}
 
 	@InputDirectory

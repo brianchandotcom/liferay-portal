@@ -28,14 +28,6 @@ public interface DateDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
 
 	@DDMFormField(
-		label = "%date-format", optionLabels = {"%d-m-y", "%m-d-y", "%y-m-d"},
-		optionValues = {"%d/%m/%Y", "%m/%d/%Y", "%Y/%m/%d"},
-		properties = {"setting.category=basic", "setting.weight=2"},
-		type = "select"
-	)
-	public String mask();
-
-	@DDMFormField(
 		dataType = "string", label = "%predefined-value", type = "date"
 	)
 	@Override

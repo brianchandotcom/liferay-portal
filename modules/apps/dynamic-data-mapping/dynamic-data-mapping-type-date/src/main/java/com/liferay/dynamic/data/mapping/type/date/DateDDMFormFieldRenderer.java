@@ -14,8 +14,11 @@
 
 package com.liferay.dynamic.data.mapping.type.date;
 
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.registry.BaseDDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldRenderer;
+import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResource;
 
@@ -24,6 +27,7 @@ import java.util.Map;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Renato Rego
@@ -59,6 +63,26 @@ public class DateDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 		_templateResource = null;
 	}
 
+	@Override
+	protected void populateOptionalContext(
+		Template template, DDMFormField ddmFormField,
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
+
+		String displayValue = _dateDDMFormFieldValueRenderer.render(
+			ddmFormFieldRenderingContext.getValue(),
+			ddmFormFieldRenderingContext.getLocale());
+
+		template.put("displayValue", displayValue);
+	}
+
+	@Reference
+	protected void setDateDDMFormFieldValueRenderer(
+		DateDDMFormFieldValueRenderer dateDDMFormFieldValueRenderer) {
+
+		_dateDDMFormFieldValueRenderer = dateDDMFormFieldValueRenderer;
+	}
+
+	private DateDDMFormFieldValueRenderer _dateDDMFormFieldValueRenderer;
 	private TemplateResource _templateResource;
 
 }

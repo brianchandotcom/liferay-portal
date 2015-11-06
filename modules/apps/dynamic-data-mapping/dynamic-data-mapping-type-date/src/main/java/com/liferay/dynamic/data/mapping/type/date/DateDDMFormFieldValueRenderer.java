@@ -14,67 +14,54 @@
 
 package com.liferay.dynamic.data.mapping.type.date;
 
-import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
-import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.text.Format;
+import java.text.ParseException;
 
 import java.util.Locale;
-
-import javax.xml.bind.DatatypeConverter;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Bruno Basto
  */
-@Component(immediate = true, property = {"ddm.form.field.type.name=date"})
+@Component(
+	immediate = true, property = "ddm.form.field.type.name=date",
+	service = {
+		DateDDMFormFieldValueRenderer.class, DDMFormFieldValueRenderer.class
+	}
+)
 public class DateDDMFormFieldValueRenderer
 	implements DDMFormFieldValueRenderer {
 
 	@Override
 	public String render(DDMFormFieldValue ddmFormFieldValue, Locale locale) {
-		DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
-
-		String formattedDate = StringPool.BLANK;
-
-		String mask = StringUtil.toLowerCase(
-			(String)ddmFormField.getProperty("mask"));
-
 		Value value = ddmFormFieldValue.getValue();
 
-		String valueString = value.getString(locale);
-
-		if (Validator.isNotNull(valueString)) {
-			String simpleDateFormatPattern = _SIMPLE_DATE_FORMAT_PATTERN_MDY;
-
-			if (mask.indexOf("%y") == 0) {
-				simpleDateFormatPattern = _SIMPLE_DATE_FORMAT_PATTERN_YMD;
-			}
-			else if (mask.indexOf("%d") == 0) {
-				simpleDateFormatPattern = _SIMPLE_DATE_FORMAT_PATTERN_DMY;
-			}
-
-			Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(
-				simpleDateFormatPattern, locale);
-
-			formattedDate = format.format(
-				DatatypeConverter.parseDateTime(valueString));
-		}
-
-		return formattedDate;
+		return render(value.getString(locale), locale);
 	}
 
-	private static final String _SIMPLE_DATE_FORMAT_PATTERN_DMY = "dd/MM/yyyy";
+	protected String render(String valueString, Locale locale) {
+		if (Validator.isNotNull(valueString)) {
+			try {
+				return DateUtil.formatDate("yyyy-MM-dd", valueString, locale);
+			}
+			catch (ParseException pe) {
+				_log.error("Unable to parse date", pe);
+			}
+		}
 
-	private static final String _SIMPLE_DATE_FORMAT_PATTERN_MDY = "MM/dd/yyyy";
+		return StringPool.BLANK;
+	}
 
-	private static final String _SIMPLE_DATE_FORMAT_PATTERN_YMD = "yyyy/MM/dd";
+	private static final Log _log = LogFactoryUtil.getLog(
+		DateDDMFormFieldValueRenderer.class);
 
 }

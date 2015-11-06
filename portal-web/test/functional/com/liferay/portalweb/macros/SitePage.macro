@@ -33,6 +33,8 @@
 		<execute function="Pause" locator1="5000" />
 		<execute function="AssertClick" locator1="SitePages#TOOLBAR_ADD_CHILD_PAGE" value1="Add Child Page" />
 
+		<execute function="AssertElementPresent#pauseAssertVisible" locator1="Icon#BACK" />
+
 		<execute function="Type#mouseOverFocusType" locator1="TextInput#NAME" value1="${siteChildPageName}" />
 		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />

@@ -48,6 +48,9 @@ public interface BlogsPortletInstanceConfiguration {
 	@Meta.AD(deflt = "true", required = false)
 	public boolean enableSocialBookmarks();
 
+	@Meta.AD(deflt = "false", required = false)
+	public boolean enableViewCount();
+
 	@Meta.AD(
 		deflt = "${server-property://com.liferay.portal/search.container.page.default.delta}",
 		required = false

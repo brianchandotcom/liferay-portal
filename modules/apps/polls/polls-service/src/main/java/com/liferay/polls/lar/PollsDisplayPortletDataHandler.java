@@ -16,10 +16,9 @@ package com.liferay.polls.lar;
 
 import com.liferay.polls.configuration.PollsServiceConfigurationValues;
 import com.liferay.polls.constants.PollsPortletKeys;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
 import com.liferay.portlet.exportimport.lar.DataLevel;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataHandler;
@@ -39,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {"javax.portlet.name=" + PollsPortletKeys.POLLS_DISPLAY},
 	service = PortletDataHandler.class
 )
-public class PollsDisplayPortletDataHandler extends PollsPortletDataHandler {
+public class PollsDisplayPortletDataHandler extends BasePortletDataHandler {
 
 	@Activate
 	protected void activate() {
@@ -69,8 +68,5 @@ public class PollsDisplayPortletDataHandler extends PollsPortletDataHandler {
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		PollsDisplayPortletDataHandler.class);
 
 }

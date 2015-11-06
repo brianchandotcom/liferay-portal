@@ -17,6 +17,7 @@ package com.liferay.document.library.web.lar;
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
 import com.liferay.portlet.exportimport.lar.DataLevel;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataHandler;
@@ -36,7 +37,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = PortletDataHandler.class
 )
-public class DLDisplayPortletDataHandler extends DLPortletDataHandler {
+public class DLDisplayPortletDataHandler extends BasePortletDataHandler {
 
 	public DLDisplayPortletDataHandler() {
 		setDataLevel(DataLevel.PORTLET_INSTANCE);

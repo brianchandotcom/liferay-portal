@@ -40,7 +40,7 @@
 		</field>
 		<field name="minDisplayRows" type="int" />
 		<field name="scope" type="int" />
-		<field name="typeSettings" type="String">
+		<field name="settings" type="String">
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="lastPublishDate" type="Date" />

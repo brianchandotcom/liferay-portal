@@ -314,22 +314,22 @@ public class DDLRecordSetLocalServiceImpl
 	}
 
 	@Override
-	public DDLRecordSet updateRecordSet(long recordSetId, String typeSettings)
+	public DDLRecordSet updateRecordSet(long recordSetId, String settings)
 		throws PortalException {
 
 		Date now = new Date();
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+		UnicodeProperties settingsProperties = new UnicodeProperties();
 
-		typeSettingsProperties.fastLoad(typeSettings);
+		settingsProperties.fastLoad(settings);
 
-		validateTypeSettingsProperties(typeSettingsProperties);
+		validateSettingsProperties(settingsProperties);
 
 		DDLRecordSet recordSet = ddlRecordSetPersistence.findByPrimaryKey(
 			recordSetId);
 
 		recordSet.setModifiedDate(now);
-		recordSet.setTypeSettings(typeSettingsProperties.toString());
+		recordSet.setSettings(settingsProperties.toString());
 
 		return ddlRecordSetPersistence.update(recordSet);
 	}
@@ -422,11 +422,11 @@ public class DDLRecordSetLocalServiceImpl
 		}
 	}
 
-	protected void validateTypeSettingsProperties(
-			UnicodeProperties typeSettingsProperties)
+	protected void validateSettingsProperties(
+			UnicodeProperties settingsProperties)
 		throws PortalException {
 
-		String requireCaptcha = typeSettingsProperties.getProperty(
+		String requireCaptcha = settingsProperties.getProperty(
 			"requireCaptcha");
 
 		if (!Validator.isBoolean(requireCaptcha)) {

@@ -153,14 +153,13 @@ public class DDLRecordSetServiceImpl extends DDLRecordSetServiceBaseImpl {
 	}
 
 	@Override
-	public DDLRecordSet updateRecordSet(long recordSetId, String typeSettings)
+	public DDLRecordSet updateRecordSet(long recordSetId, String settings)
 		throws PortalException {
 
 		DDLRecordSetPermission.check(
 			getPermissionChecker(), recordSetId, ActionKeys.UPDATE);
 
-		return ddlRecordSetLocalService.updateRecordSet(
-			recordSetId, typeSettings);
+		return ddlRecordSetLocalService.updateRecordSet(recordSetId, settings);
 	}
 
 }

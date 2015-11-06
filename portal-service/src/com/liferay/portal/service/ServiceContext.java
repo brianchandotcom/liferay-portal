@@ -404,8 +404,6 @@ public class ServiceContext implements Cloneable, Serializable {
 	 * @return the user ID, or guest ID if there is no user in this service
 	 *         context, or <code>0</code> if there is no company in this service
 	 *         context
-	 * @throws PortalException if a default user for the company could not be
-	 *         found
 	 */
 	public long getGuestOrUserId() throws PortalException {
 		long userId = getUserId();

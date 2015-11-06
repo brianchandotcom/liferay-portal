@@ -68,8 +68,8 @@ public class DayAndPosition implements Cloneable, Serializable {
 	/**
 	 * Returns <code>true</code> if the day is a valid day of the week.
 	 *
-	 * @param  d the day of the week in terms of {@link java.util.Calendar} or
-	 *         {@link #NO_WEEKDAY}
+	 * @param  d the day of the week in terms of {@link Calendar} or {@link
+	 *         #NO_WEEKDAY}
 	 * @return <code>true</code> if the day is a valid day of the week;
 	 *         <code>false</code> otherwise
 	 */

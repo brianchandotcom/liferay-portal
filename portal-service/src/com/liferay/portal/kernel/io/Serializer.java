@@ -31,11 +31,11 @@ import java.util.Arrays;
  * Serializes data in a ClassLoader-aware manner.
  *
  * <p>
- * The Serializer can perform better than {@link java.io.ObjectOutputStream} and
- * {@link java.io.DataOutputStream}, with respect to encoding primary types,
- * because it uses a more compact format (containing no BlockHeader) and simpler
- * call stack involving {@link BigEndianCodec}, as compared to using an
- * OutputStream wrapper on top of {@link java.io.Bits}.
+ * The Serializer can perform better than {@link ObjectOutputStream} and {@link
+ * java.io.DataOutputStream}, with respect to encoding primary types, because it
+ * uses a more compact format (containing no BlockHeader) and simpler call stack
+ * involving {@link BigEndianCodec}, as compared to using an OutputStream
+ * wrapper on top of {@link java.io.Bits}.
  * </p>
  *
  * <p>
@@ -61,8 +61,8 @@ import java.util.Arrays;
  * scheming than non-ASCII String scheming. In most cases, when all system
  * internal Strings are ASCII Strings and only Strings holding user input
  * information can have non-ASCII characters, this Serializer performs best. In
- * other cases, developers should consider using {@link
- * java.io.ObjectOutputStream} or {@link java.io.DataOutputStream}.
+ * other cases, developers should consider using {@link ObjectOutputStream} or
+ * {@link java.io.DataOutputStream}.
  * </p>
  *
  * <p>
@@ -78,15 +78,15 @@ import java.util.Arrays;
  * </p>
  *
  * <p>
- * On object serialization, the Serializer uses the {@link
- * com.liferay.portal.kernel.util.ClassLoaderPool} to look up the servlet
- * context name corresponding to the object's ClassLoader. The servlet context
- * name is written to the serialization stream. On object deserialization, the
- * {@link Deserializer} uses the ClassLoaderPool to look up the ClassLoader
- * corresponding to the servlet context name read from the deserialization
- * stream. ObjectOutputStream and ObjectInputStream lack these features, making
- * Serializer and Deserializer better choices for ClassLoader-aware Object
- * serialization/deserialization, especially when plugins are involved.
+ * On object serialization, the Serializer uses the {@link ClassLoaderPool} to
+ * look up the servlet context name corresponding to the object's ClassLoader.
+ * The servlet context name is written to the serialization stream. On object
+ * deserialization, the {@link Deserializer} uses the ClassLoaderPool to look up
+ * the ClassLoader corresponding to the servlet context name read from the
+ * deserialization stream. ObjectOutputStream and ObjectInputStream lack these
+ * features, making Serializer and Deserializer better choices for
+ * ClassLoader-aware Object serialization/deserialization, especially when
+ * plugins are involved.
  * </p>
  *
  * @author Shuyang Zhou

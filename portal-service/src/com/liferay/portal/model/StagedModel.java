@@ -23,6 +23,7 @@ import java.util.Date;
  */
 public interface StagedModel extends ClassedModel {
 
+	@Override
 	public Object clone();
 
 	public long getCompanyId();

@@ -39,6 +39,7 @@ public interface BaseModel<T>
 	 *
 	 * @return the shallow clone of this model instance
 	 */
+	@Override
 	public Object clone();
 
 	/**
@@ -125,8 +126,7 @@ public interface BaseModel<T>
 	 * attributes stored in the service context.
 	 *
 	 * @param serviceContext the service context to be applied
-	 * @see   com.liferay.portal.service.ServiceContext#getExpandoBridgeAttributes(
-	 *        )
+	 * @see   ServiceContext#getExpandoBridgeAttributes()
 	 */
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext);
 

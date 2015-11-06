@@ -66,7 +66,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Sergio González
  * @author Peter Fellwock
  */
-
 @Component(
 	property = {
 		"javax.portlet.name=" + LoginPortletKeys.FAST_LOGIN,

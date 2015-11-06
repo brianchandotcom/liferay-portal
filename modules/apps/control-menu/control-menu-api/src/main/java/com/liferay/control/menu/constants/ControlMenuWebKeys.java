@@ -15,7 +15,6 @@
 package com.liferay.control.menu.constants;
 
 /**
- *
  * @author Julio Camarero
  */
 public class ControlMenuWebKeys {

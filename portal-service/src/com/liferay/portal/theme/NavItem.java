@@ -268,7 +268,7 @@ public class NavItem implements Serializable {
 	 * child layouts.
 	 *
 	 * @return <code>true</code> if the navigation item's layout has browsable
-	 * 		   child layouts; <code>false</code> otherwise
+	 *         child layouts; <code>false</code> otherwise
 	 * @throws Exception if an exception occurred
 	 */
 	public boolean hasBrowsableChildren() throws Exception {

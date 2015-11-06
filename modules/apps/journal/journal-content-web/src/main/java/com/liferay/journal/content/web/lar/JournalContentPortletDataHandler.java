@@ -60,9 +60,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  * @author Bruno Farache
  * @author Daniel Kocsis
- * @see    com.liferay.journal.web.lar.JournalPortletDataHandler
+ * @see    JournalPortletDataHandler
  * @see    com.liferay.journal.lar.JournalCreationStrategy
- * @see    com.liferay.portlet.exportimport.lar.PortletDataHandler
+ * @see    PortletDataHandler
  */
 @Component(
 	immediate = true,

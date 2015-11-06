@@ -199,7 +199,6 @@ public class LayoutImpl extends LayoutBaseImpl {
 	 * the current layout.
 	 *
 	 * @return the ID of the topmost parent layout of the current layout
-	 * @throws PortalException if a matching layout could not be found
 	 */
 	@Override
 	public long getAncestorLayoutId() throws PortalException {
@@ -228,7 +227,6 @@ public class LayoutImpl extends LayoutBaseImpl {
 	 * of the current layout.
 	 *
 	 * @return the plid of the topmost parent layout of the current layout
-	 * @throws PortalException if a matching layout could not be found
 	 */
 	@Override
 	public long getAncestorPlid() throws PortalException {
@@ -258,7 +256,6 @@ public class LayoutImpl extends LayoutBaseImpl {
 	 * parent listed last.
 	 *
 	 * @return the current layout's list of parent layouts
-	 * @throws PortalException if a matching layout could not be found
 	 */
 	@Override
 	public List<Layout> getAncestors() throws PortalException {
@@ -296,7 +293,6 @@ public class LayoutImpl extends LayoutBaseImpl {
 	 * @param  permissionChecker the user-specific context to check permissions
 	 * @return the list of all child layouts that the user has permission to
 	 *         access
-	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public List<Layout> getChildren(PermissionChecker permissionChecker)
@@ -328,7 +324,6 @@ public class LayoutImpl extends LayoutBaseImpl {
 	 * @return the color scheme that is configured for the current layout, or
 	 *         the color scheme  of the layout set that contains the current
 	 *         layout if no color scheme is configured
-	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public ColorScheme getColorScheme() throws PortalException {
@@ -356,7 +351,6 @@ public class LayoutImpl extends LayoutBaseImpl {
 	 *
 	 * @return the CSS text for the current layout, or for the layout set if no
 	 *         CSS text is configured in the current layout
-	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public String getCssText() throws PortalException {
@@ -493,8 +487,6 @@ public class LayoutImpl extends LayoutBaseImpl {
 	 * </p>
 	 *
 	 * @return the current layout's group
-	 * @throws PortalException if a group with the primary key could not be
-	 *         found
 	 */
 	@Override
 	public Group getGroup() throws PortalException {
@@ -557,7 +549,6 @@ public class LayoutImpl extends LayoutBaseImpl {
 	 * Returns the current layout's {@link LayoutSet}.
 	 *
 	 * @return the current layout's layout set
-	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public LayoutSet getLayoutSet() throws PortalException {
@@ -607,7 +598,6 @@ public class LayoutImpl extends LayoutBaseImpl {
 	 *
 	 * @return the current layout's parent plid, or <code>0</code> if the
 	 *         current layout is the topmost parent layout
-	 * @throws PortalException if a matching layout could not be found
 	 */
 	@Override
 	public long getParentPlid() throws PortalException {
@@ -667,7 +657,6 @@ public class LayoutImpl extends LayoutBaseImpl {
 	 *
 	 * @return the current layout's theme, or the layout set's theme if no
 	 *         layout theme is configured
-	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Theme getTheme() throws PortalException {
@@ -776,8 +765,6 @@ public class LayoutImpl extends LayoutBaseImpl {
 	 * @return <code>true</code> if the given layout ID matches one of the
 	 *         current layout's hierarchical parents; <code>false</code>
 	 *         otherwise
-	 * @throws PortalException if any one of the current layout's acestors could
-	 *         not be retrieved
 	 */
 	@Override
 	public boolean hasAncestor(long layoutId) throws PortalException {

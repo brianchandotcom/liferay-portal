@@ -103,7 +103,6 @@ public interface MVCActionCommand extends MVCCommand {
 	 * @param  actionResponse the action response
 	 * @return <code>true</code> if an error occurs in processing the action
 	 *         request; <code>false</code> otherwise
-	 * @throws PortletException if a portlet exception occurred
 	 */
 	public boolean processAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)

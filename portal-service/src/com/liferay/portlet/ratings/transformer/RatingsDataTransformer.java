@@ -42,8 +42,8 @@ public interface RatingsDataTransformer {
 	 *
 	 * <p>
 	 * This method returns an {@link ActionableDynamicQuery.PerformActionMethod}
-	 * for operating on a {@link com.liferay.portlet.ratings.model.RatingsEntry}
-	 * entity to transform its values based on when the ratings type is changed.
+	 * for operating on a {@link RatingsEntry} entity to transform its values
+	 * based on when the ratings type is changed.
 	 * </p>
 	 *
 	 * @param  fromRatingsType the previous ratings type
@@ -51,8 +51,6 @@ public interface RatingsDataTransformer {
 	 * @return an {@link ActionableDynamicQuery.PerformActionMethod} with the
 	 *         actions to be applied to the ratings entry when the ratings type
 	 *         changes.
-	 * @throws PortalException if the transformation could not be applied
-	 *         successfully
 	 */
 	public ActionableDynamicQuery.PerformActionMethod<RatingsEntry>
 		transformRatingsData(

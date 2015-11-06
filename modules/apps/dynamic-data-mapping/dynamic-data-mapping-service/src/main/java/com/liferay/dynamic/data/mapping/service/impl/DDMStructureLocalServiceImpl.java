@@ -203,9 +203,6 @@ public class DDMStructureLocalServiceImpl
 	 *             UUID, creation date, modification date, guest permissions,
 	 *             and group permissions for the structure.
 	 * @return     the structure
-	 * @throws     PortalException if a user with the primary key could not be
-	 *             found, if the XSD was not well-formed, or if a portal
-	 *             exception occurred
 	 * @deprecated As of 7.0.0, replaced by {@link #addStructure(long, long,
 	 *             long, long, String, Map, Map, DDMForm, DDMFormLayout, String,
 	 *             int, ServiceContext)}
@@ -262,9 +259,6 @@ public class DDMStructureLocalServiceImpl
 	 *             UUID, creation date, modification date, guest permissions,
 	 *             and group permissions for the structure.
 	 * @return     the structure
-	 * @throws     PortalException if a user with the primary key could not be
-	 *             found, if the XSD was not well-formed, or if a portal
-	 *             exception occurred
 	 * @deprecated As of 7.0.0, replaced by {@link #addStructure(long, long,
 	 *             long, Map, Map, DDMForm, DDMFormLayout, ServiceContext)}
 	 */
@@ -332,9 +326,6 @@ public class DDMStructureLocalServiceImpl
 	 *             UUID, creation date, modification date, guest permissions and
 	 *             group permissions for the structure.
 	 * @return     the structure
-	 * @throws     PortalException if a user with the primary key could not be
-	 *             found, if the XSD was not well-formed, or if a portal
-	 *             exception occurred
 	 * @deprecated As of 7.0.0, replaced by {@link #addStructure(long, long,
 	 *             String, long, String, Map, Map, DDMForm, DDMFormLayout,
 	 *             String, int, ServiceContext)}
@@ -363,10 +354,9 @@ public class DDMStructureLocalServiceImpl
 	/**
 	 * Adds the resources to the structure.
 	 *
-	 * @param  structure the structure to add resources to
-	 * @param  addGroupPermissions whether to add group permissions
-	 * @param  addGuestPermissions whether to add guest permissions
-	 * @throws PortalException if a portal exception occurred
+	 * @param structure the structure to add resources to
+	 * @param addGroupPermissions whether to add group permissions
+	 * @param addGuestPermissions whether to add guest permissions
 	 */
 	@Override
 	public void addStructureResources(
@@ -387,9 +377,8 @@ public class DDMStructureLocalServiceImpl
 	/**
 	 * Adds the model resources with the permissions to the structure.
 	 *
-	 * @param  structure the structure to add resources to
-	 * @param  modelPermissions the model permissions to be added
-	 * @throws PortalException if a portal exception occurred
+	 * @param structure the structure to add resources to
+	 * @param modelPermissions the model permissions to be added
 	 */
 	@Override
 	public void addStructureResources(
@@ -420,7 +409,6 @@ public class DDMStructureLocalServiceImpl
 	 *         UUID, creation date, modification date, guest permissions, and
 	 *         group permissions for the structure.
 	 * @return the new structure
-	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public DDMStructure copyStructure(
@@ -462,8 +450,7 @@ public class DDMStructureLocalServiceImpl
 	 * is required by another entity. If it is needed, an exception is thrown.
 	 * </p>
 	 *
-	 * @param  structure the structure to be deleted
-	 * @throws PortalException if a portal exception occurred
+	 * @param structure the structure to be deleted
 	 */
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
@@ -527,8 +514,7 @@ public class DDMStructureLocalServiceImpl
 	 * is required by another entity. If it is needed, an exception is thrown.
 	 * </p>
 	 *
-	 * @param  structureId the primary key of the structure to be deleted
-	 * @throws PortalException if a portal exception occurred
+	 * @param structureId the primary key of the structure to be deleted
 	 */
 	@Override
 	public void deleteStructure(long structureId) throws PortalException {
@@ -546,11 +532,10 @@ public class DDMStructureLocalServiceImpl
 	 * is required by another entity. If it is needed, an exception is thrown.
 	 * </p>
 	 *
-	 * @param  groupId the primary key of the group
-	 * @param  classNameId the primary key of the class name for the structure's
-	 *         related model
-	 * @param  structureKey the unique string identifying the structure
-	 * @throws PortalException if a portal exception occurred
+	 * @param groupId the primary key of the group
+	 * @param classNameId the primary key of the class name for the structure's
+	 *        related model
+	 * @param structureKey the unique string identifying the structure
 	 */
 	@Override
 	public void deleteStructure(
@@ -574,8 +559,7 @@ public class DDMStructureLocalServiceImpl
 	 * needed, an exception is thrown.
 	 * </p>
 	 *
-	 * @param  groupId the primary key of the group
-	 * @throws PortalException if a portal exception occurred
+	 * @param groupId the primary key of the group
 	 */
 	@Override
 	public void deleteStructures(long groupId) throws PortalException {
@@ -649,7 +633,6 @@ public class DDMStructureLocalServiceImpl
 	 *         search
 	 * @return the matching structure, or <code>null</code> if a matching
 	 *         structure could not be found
-	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public DDMStructure fetchStructure(
@@ -753,7 +736,6 @@ public class DDMStructureLocalServiceImpl
 	 *
 	 * @param  structureId the primary key of the structure
 	 * @return the structure with the ID
-	 * @throws PortalException if a structure with the ID could not be found
 	 */
 	@Override
 	public DDMStructure getStructure(long structureId) throws PortalException {
@@ -769,7 +751,6 @@ public class DDMStructureLocalServiceImpl
 	 *         related model
 	 * @param  structureKey the unique string identifying the structure
 	 * @return the matching structure
-	 * @throws PortalException if a matching structure could not be found
 	 */
 	@Override
 	public DDMStructure getStructure(
@@ -802,7 +783,6 @@ public class DDMStructureLocalServiceImpl
 	 *         have sharing enabled) and include global scoped sites in the
 	 *         search in the search
 	 * @return the matching structure
-	 * @throws PortalException if a matching structure could not be found
 	 */
 	@Override
 	public DDMStructure getStructure(
@@ -1298,9 +1278,6 @@ public class DDMStructureLocalServiceImpl
 	 * @param      serviceContext the service context to be applied. Can set the
 	 *             structure's modification date.
 	 * @return     the updated structure
-	 * @throws     PortalException if a matching structure could not be found,
-	 *             if the XSD was not well-formed, or if a portal exception
-	 *             occurred
 	 * @deprecated As of 7.0.0, replaced by {@link #updateStructure(long, long,
 	 *             long, long, String, Map, Map, DDMForm, DDMFormLayout,
 	 *             ServiceContext)}
@@ -1346,9 +1323,6 @@ public class DDMStructureLocalServiceImpl
 	 * @param      serviceContext the service context to be applied. Can set the
 	 *             structure's modification date.
 	 * @return     the updated structure
-	 * @throws     PortalException if a matching structure could not be found,
-	 *             if the XSD was not well-formed, or if a portal exception
-	 *             occurred
 	 * @deprecated As of 7.0.0, replaced by {@link #updateStructure(long, long,
 	 *             long, Map, Map, DDMForm, DDMFormLayout, ServiceContext)}
 	 */
@@ -1386,9 +1360,6 @@ public class DDMStructureLocalServiceImpl
 	 * @param      serviceContext the service context to be applied. Can set the
 	 *             structure's modification date.
 	 * @return     the updated structure
-	 * @throws     PortalException if a matching structure could not be found,
-	 *             if the XSD was not well-formed, or if a portal exception
-	 *             occurred
 	 * @deprecated As of 7.0.0, replaced by {@link #updateStructure(long,
 	 *             DDMForm, DDMFormLayout, ServiceContext)}
 	 */

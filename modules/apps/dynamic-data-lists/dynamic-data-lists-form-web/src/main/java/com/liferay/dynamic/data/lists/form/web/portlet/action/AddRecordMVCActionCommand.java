@@ -27,9 +27,15 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.util.PortalUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -57,8 +63,11 @@ public class AddRecordMVCActionCommand extends BaseMVCActionCommand {
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 		long recordSetId = ParamUtil.getLong(actionRequest, "recordSetId");
+		String portletId = PortalUtil.getPortletId(actionRequest);
 
-		DDMForm ddmForm = getDDMForm(recordSetId);
+		DDLRecordSet recordSet = _ddlRecordSetService.getRecordSet(recordSetId);
+
+		DDMForm ddmForm = getDDMForm(recordSet);
 
 		DDMFormValues ddmFormValues = _ddmFormValuesFactory.create(
 			actionRequest, ddmForm);
@@ -69,10 +78,23 @@ public class AddRecordMVCActionCommand extends BaseMVCActionCommand {
 		_ddlRecordService.addRecord(
 			groupId, recordSetId, DDLRecordConstants.DISPLAY_INDEX_DEFAULT,
 			ddmFormValues, serviceContext);
+
+		String successURL = GetterUtil.getString(
+			recordSet.getSettingsProperty("successURL", StringPool.BLANK));
+
+		if (SessionErrors.isEmpty(actionRequest) &&
+			Validator.isNotNull(successURL)) {
+
+			SessionMessages.add(
+				actionRequest, portletId,
+				SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
+
+			actionResponse.sendRedirect(successURL);
+		}
 	}
 
-	protected DDMForm getDDMForm(long recordSetId) throws PortalException {
-		DDLRecordSet recordSet = _ddlRecordSetService.getRecordSet(recordSetId);
+	protected DDMForm getDDMForm(DDLRecordSet recordSet)
+		throws PortalException {
 
 		DDMStructure ddmStructure = recordSet.getDDMStructure();
 

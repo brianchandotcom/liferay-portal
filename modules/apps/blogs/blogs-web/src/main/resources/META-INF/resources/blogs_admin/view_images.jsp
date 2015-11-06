@@ -31,10 +31,15 @@ else {
 String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
+int delta = ParamUtil.getInteger(request, "delta");
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 portletURL.setParameter("navigation", "images");
+portletURL.setParameter("delta", String.valueOf(delta));
+portletURL.setParameter("orderBycol", orderByCol);
+portletURL.setParameter("orderByType", orderByType);
 
 String keywords = ParamUtil.getString(request, "keywords");
 %>
@@ -84,7 +89,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 			id="images"
 			orderByComparator="<%= DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType) %>"
 			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
-			searchContainer="<%= new EntrySearch(renderRequest, PortletURLUtil.clone(portletURL, liferayPortletResponse)) %>"
+			searchContainer="<%= new SearchContainer(renderRequest, PortletURLUtil.clone(portletURL, liferayPortletResponse), null, "no-images-were-found") %>"
 		>
 
 			<%

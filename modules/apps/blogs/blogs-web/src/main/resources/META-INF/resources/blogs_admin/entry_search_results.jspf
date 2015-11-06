@@ -26,7 +26,7 @@ if ((assetCategoryId != 0) || Validator.isNotNull(assetTagName)) {
 		results.add(BlogsEntryLocalServiceUtil.getBlogsEntry(assetEntry.getClassPK()));
 	}
 }
-else if (Validator.isNull(searchTerms.getKeywords())) {
+else if (Validator.isNull(keywords)) {
 	if (entriesNavigation.equals("mine")) {
 		total = BlogsEntryServiceUtil.getGroupUserEntriesCount(scopeGroupId, themeDisplay.getUserId(), WorkflowConstants.STATUS_ANY);
 	}
@@ -49,7 +49,7 @@ else {
 	SearchContext searchContext = SearchContextFactory.getInstance(request);
 
 	searchContext.setEnd(searchContainer.getEnd());
-	searchContext.setKeywords(searchTerms.getKeywords());
+	searchContext.setKeywords(keywords);
 	searchContext.setStart(searchContainer.getStart());
 
 	Hits hits = indexer.search(searchContext);

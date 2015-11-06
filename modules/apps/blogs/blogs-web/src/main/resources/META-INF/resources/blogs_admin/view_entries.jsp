@@ -36,14 +36,22 @@ else {
 String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
+int delta = ParamUtil.getInteger(request, "delta");
+
 PortletURL navigationPortletURL = renderResponse.createRenderURL();
 
 navigationPortletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
+navigationPortletURL.setParameter("delta", String.valueOf(delta));
+navigationPortletURL.setParameter("orderBycol", orderByCol);
+navigationPortletURL.setParameter("orderByType", orderByType);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 portletURL.setParameter("entriesNavigation", entriesNavigation);
+portletURL.setParameter("delta", String.valueOf(delta));
+portletURL.setParameter("orderBycol", orderByCol);
+portletURL.setParameter("orderByType", orderByType);
 
 String keywords = ParamUtil.getString(request, "keywords");
 %>
@@ -110,12 +118,8 @@ String keywords = ParamUtil.getString(request, "keywords");
 			id="blogEntries"
 			orderByComparator="<%= BlogsUtil.getOrderByComparator(orderByCol, orderByType) %>"
 			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
-			searchContainer="<%= new EntrySearch(renderRequest, portletURL) %>"
+			searchContainer="<%= new SearchContainer(renderRequest, PortletURLUtil.clone(portletURL, liferayPortletResponse), null, "no-entries-were-found") %>"
 		>
-
-			<%
-			EntrySearchTerms searchTerms = (EntrySearchTerms)searchContainer.getSearchTerms();
-			%>
 
 			<liferay-ui:search-container-results>
 				<%@ include file="/blogs_admin/entry_search_results.jspf" %>

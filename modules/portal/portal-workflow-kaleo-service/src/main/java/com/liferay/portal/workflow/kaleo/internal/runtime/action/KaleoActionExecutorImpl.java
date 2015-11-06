@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.runtime.action;
+package com.liferay.portal.workflow.kaleo.internal.runtime.action;
 
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -23,6 +23,8 @@ import com.liferay.portal.workflow.kaleo.definition.ExecutionType;
 import com.liferay.portal.workflow.kaleo.model.KaleoAction;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
+import com.liferay.portal.workflow.kaleo.runtime.action.ActionExecutorManager;
+import com.liferay.portal.workflow.kaleo.runtime.action.KaleoActionExecutor;
 import com.liferay.portal.workflow.kaleo.service.KaleoActionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoLogLocalService;
@@ -32,7 +34,7 @@ import java.util.List;
 /**
  * @author Michael C. Han
  */
-public class ActionExecutorManagerHelper implements KaleoActionExecutor {
+public class KaleoActionExecutorImpl implements KaleoActionExecutor {
 
 	public void executeKaleoActions(
 			String kaleoClassName, long kaleoClassPK,
@@ -83,7 +85,7 @@ public class ActionExecutorManagerHelper implements KaleoActionExecutor {
 		"Action completed successfully.";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ActionExecutorManagerHelper.class);
+		KaleoActionExecutorImpl.class);
 
 	@BeanReference(type = KaleoActionLocalService.class)
 	private KaleoActionLocalService _kaleoActionLocalService;

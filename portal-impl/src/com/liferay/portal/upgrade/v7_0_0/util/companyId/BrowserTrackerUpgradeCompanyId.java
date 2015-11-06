@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v7_0_0.util.companyId;
 
 import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdInTable;
+import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdUtil;
 
 /**
  * @author Cristina González
@@ -27,7 +28,17 @@ public class BrowserTrackerUpgradeCompanyId implements UpgradeCompanyIdInTable {
 	}
 
 	@Override
-	public void upgradeProcess() {
+	public void upgradeProcess() throws Exception {
+		String select =
+			"select b.browserTrackerId, u.companyId from BrowserTracker b, " +
+				"User_ u where b.userId=u.userId";
+
+		String update =
+			"update BrowserTracker set companyId = ? " +
+				"where browserTrackerId = ?";
+
+		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
+			"BrowserTracker", select, update, "companyId", "browserTrackerId");
 	}
 
 }

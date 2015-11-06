@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v7_0_0.util.companyId;
 
 import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdInTable;
+import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdUtil;
 
 /**
  * @author Cristina González
@@ -28,7 +29,19 @@ public class UserTrackerPathUpgradeCompanyId
 	}
 
 	@Override
-	public void upgradeProcess() {
+	public void upgradeProcess() throws Exception {
+		String select =
+			"select ut.companyId, utp.userTrackerPathId " +
+				"from UserTracker ut, UserTrackerPath utp " +
+				"where ut.userTrackerId=utp.userTrackerId";
+
+		String update =
+			"update UserTrackerPath set companyId = ? where " +
+				"userTrackerPathId = ?";
+
+		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
+			"UserTrackerPath", select, update, "companyId",
+			"userTrackerPathId");
 	}
 
 }

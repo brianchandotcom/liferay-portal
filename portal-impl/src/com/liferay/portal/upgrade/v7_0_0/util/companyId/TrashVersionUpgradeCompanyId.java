@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v7_0_0.util.companyId;
 
 import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdInTable;
+import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdUtil;
 
 /**
  * @author Cristina González
@@ -27,7 +28,16 @@ public class TrashVersionUpgradeCompanyId implements UpgradeCompanyIdInTable {
 	}
 
 	@Override
-	public void upgradeProcess() {
+	public void upgradeProcess() throws Exception {
+		String select =
+			"select te.companyId, tv.versionId from TrashEntry te, " +
+				"TrashVersion tv where te.entryId=tv.entryId";
+
+		String update =
+			"update TrashVersion set companyId = ? where versionId = ?";
+
+		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
+			"TrashVersion", select, update, "companyId", "versionId");
 	}
 
 }

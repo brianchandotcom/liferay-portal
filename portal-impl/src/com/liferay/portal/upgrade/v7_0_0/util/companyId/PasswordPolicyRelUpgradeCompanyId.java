@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v7_0_0.util.companyId;
 
 import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdInTable;
+import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdUtil;
 
 /**
  * @author Cristina González
@@ -28,7 +29,19 @@ public class PasswordPolicyRelUpgradeCompanyId
 	}
 
 	@Override
-	public void upgradeProcess() {
+	public void upgradeProcess() throws Exception {
+		String select =
+			"select pp.companyId, ppr.passwordPolicyRelId " +
+				"from PasswordPolicy pp, PasswordPolicyRel ppr " +
+				"where pp.passwordPolicyId=ppr.passwordPolicyId";
+
+		String update =
+			"update PasswordPolicyRel set companyId = ? " +
+				"where passwordPolicyRelId = ?";
+
+		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
+			"PasswordPolicyRel", select, update, "companyId",
+			"passwordPolicyRelId");
 	}
 
 }

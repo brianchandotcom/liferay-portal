@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v7_0_0.util.companyId;
 
 import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdInTable;
+import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdUtil;
 
 /**
  * @author Cristina González
@@ -28,7 +29,20 @@ public class SCFrameworkVersiSCProductVersUpgradeCompanyId
 	}
 
 	@Override
-	public void upgradeProcess() {
+	public void upgradeProcess() throws Exception {
+		String select =
+			"select fv.companyId, fvpv.frameworkVersionId, " +
+				"fvpv.productVersionId from SCFrameworkVersion fv, " +
+				"SCFrameworkVersi_SCProductVers fvpv" +
+				" where fv.frameworkVersionId=fvpv.frameworkVersionId;";
+
+		String update =
+			"update SCFrameworkVersi_SCProductVers set companyId = ? " +
+				"where frameworkVersionId = ? and productVersionId = ?";
+
+		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
+			"SCFrameworkVersi_SCProductVers", select, update, "companyId",
+			"frameworkVersionId", "productVersionId");
 	}
 
 }

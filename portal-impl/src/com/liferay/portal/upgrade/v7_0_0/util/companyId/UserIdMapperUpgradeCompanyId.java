@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v7_0_0.util.companyId;
 
 import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdInTable;
+import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdUtil;
 
 /**
  * @author Cristina González
@@ -27,7 +28,16 @@ public class UserIdMapperUpgradeCompanyId implements UpgradeCompanyIdInTable {
 	}
 
 	@Override
-	public void upgradeProcess() {
+	public void upgradeProcess() throws Exception {
+		String select =
+			"select u.companyId, uim.userIdMapperId from User_ u, " +
+				"UserIdMapper uim where u.userId=uim.userId";
+
+		String update =
+			"update UserIdMapper set companyId = ? where userIdMapperId = ?";
+
+		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
+			"UserIdMapper", select, update, "companyId", "userIdMapperId");
 	}
 
 }

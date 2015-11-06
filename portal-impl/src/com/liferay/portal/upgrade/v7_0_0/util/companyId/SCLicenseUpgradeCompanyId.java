@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v7_0_0.util.companyId;
 
 import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdInTable;
+import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdUtil;
 
 /**
  * @author Cristina González
@@ -27,7 +28,18 @@ public class SCLicenseUpgradeCompanyId implements UpgradeCompanyIdInTable {
 	}
 
 	@Override
-	public void upgradeProcess() {
+	public void upgradeProcess() throws Exception {
+		String select =
+			"select pe.companyId, lpe.licenseId from SCLicense l, " +
+				"SCLicenses_SCProductEntries lpe, SCProductEntry pe " +
+				"where l.licenseId=lpe.licenseId and " +
+				"lpe.productEntryId=pe.productEntryId";
+
+		String update =
+			"update SCLicense set companyId = ? where licenseId = ?";
+
+		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
+			"SCLicense", select, update, "companyId", "licenseId");
 	}
 
 }

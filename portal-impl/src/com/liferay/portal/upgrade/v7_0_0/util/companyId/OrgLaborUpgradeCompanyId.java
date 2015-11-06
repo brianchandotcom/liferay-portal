@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v7_0_0.util.companyId;
 
 import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdInTable;
+import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdUtil;
 
 /**
  * @author Cristina González
@@ -27,7 +28,16 @@ public class OrgLaborUpgradeCompanyId implements UpgradeCompanyIdInTable {
 	}
 
 	@Override
-	public void upgradeProcess() {
+	public void upgradeProcess() throws Exception {
+		String select =
+			"select o.companyId, ol.orgLaborId from Organization_ o, " +
+				"OrgLabor ol where o.organizationId=ol.organizationId";
+
+		String update =
+			"update OrgLabor set companyId = ? where orgLaborId = ?";
+
+		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
+			"OrgLabor", select, update, "companyId", "orgLaborId");
 	}
 
 }

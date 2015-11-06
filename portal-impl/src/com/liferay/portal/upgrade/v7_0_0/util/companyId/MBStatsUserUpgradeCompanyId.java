@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v7_0_0.util.companyId;
 
 import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdInTable;
+import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdUtil;
 
 /**
  * @author Cristina González
@@ -27,7 +28,16 @@ public class MBStatsUserUpgradeCompanyId implements UpgradeCompanyIdInTable {
 	}
 
 	@Override
-	public void upgradeProcess() {
+	public void upgradeProcess() throws Exception {
+		String select =
+			"select g.companyId, mbsu.statsUserId from Group_ g, " +
+				"MBStatsUser mbsu where g.groupId=mbsu.groupId";
+
+		String update =
+			"update MBStatsUser set companyId = ? where statsUserId = ?";
+
+		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
+			"MBStatsUser", select, update, "companyId", "statsUserId");
 	}
 
 }

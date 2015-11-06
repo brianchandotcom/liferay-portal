@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v7_0_0.util.companyId;
 
 import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdInTable;
+import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdUtil;
 
 /**
  * @author Cristina González
@@ -28,7 +29,19 @@ public class DLFileEntryMetadataUpgradeCompanyId
 	}
 
 	@Override
-	public void upgradeProcess() {
+	public void upgradeProcess() throws Exception {
+		String select =
+			"select dlfe.companyId, dlfem.fileEntryMetadataId from " +
+				"DLFileEntry dlfe, DLFileEntryMetadata dlfem " +
+				"where dlfe.fileEntryId=dlfem.fileEntryId";
+
+		String update =
+			"update DLFileEntryMetadata set companyId = ? " +
+				"where fileEntryMetadataId = ?";
+
+		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
+			"DLFileEntryMetadata", select, update, "companyId",
+			"fileEntryMetadataId");
 	}
 
 }

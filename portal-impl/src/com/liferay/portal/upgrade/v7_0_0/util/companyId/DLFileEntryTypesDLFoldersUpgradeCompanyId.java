@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v7_0_0.util.companyId;
 
 import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdInTable;
+import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdUtil;
 
 /**
  * @author Cristina González
@@ -28,7 +29,22 @@ public class DLFileEntryTypesDLFoldersUpgradeCompanyId
 	}
 
 	@Override
-	public void upgradeProcess() {
+	public void upgradeProcess() throws Exception {
+		String select =
+			"select dlfet.companyId, dlfetdlf.fileEntryTypeId, " +
+				"dlfetdlf.folderId from DLFileEntryTypes_DLFolders dlfetdlf, " +
+				"DLFileEntryType dlfet, DLFolder dlf " +
+				"where dlf.companyId=dlfet.companyId and " +
+				"dlfet.fileEntryTypeId=dlfetdlf.fileEntryTypeId and " +
+				"dlf.folderId=dlfetdlf.folderId";
+
+		String update =
+			"update DLFileEntryTypes_DLFolders set companyId = ? " +
+				"where fileEntryTypeId = ? and folderId = ?";
+
+		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
+			"DLFileEntryTypes_DLFolders", select, update, "companyId",
+			"fileEntryTypeId", "folderId");
 	}
 
 }

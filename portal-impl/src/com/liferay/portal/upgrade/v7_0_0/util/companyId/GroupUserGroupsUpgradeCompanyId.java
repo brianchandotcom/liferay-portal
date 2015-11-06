@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v7_0_0.util.companyId;
 
 import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdInTable;
+import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdUtil;
 
 /**
  * @author Cristina González
@@ -28,7 +29,19 @@ public class GroupUserGroupsUpgradeCompanyId
 	}
 
 	@Override
-	public void upgradeProcess() {
+	public void upgradeProcess() throws Exception {
+		String select =
+			"select g.companyId, gug.groupId, gug.userGroupId from " +
+				"Group_ g, Groups_UserGroups gug " +
+				"where g.groupId=gug.groupId;";
+
+		String update =
+			"update Groups_UserGroups set companyId = ? " +
+				"where groupId = ? and userGroupId = ?";
+
+		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
+			"Groups_UserGroups", select, update, "companyId", "groupId",
+			"userGroupId");
 	}
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v7_0_0.util.companyId;
 
 import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdInTable;
+import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdUtil;
 
 /**
  * @author Cristina González
@@ -28,7 +29,18 @@ public class PasswordPasswordTrackerUpgradeCompanyId
 	}
 
 	@Override
-	public void upgradeProcess() {
+	public void upgradeProcess() throws Exception {
+		String select =
+			"select u.companyId, pt.passwordTrackerId " +
+				"from PasswordTracker pt, User_ u where pt.userId=u.userId";
+
+		String update =
+			"update PasswordTracker set companyId = ? " +
+				"where passwordTrackerId = ?";
+
+		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
+			"PasswordTracker", select, update, "companyId",
+			"passwordTrackerId");
 	}
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v7_0_0.util.companyId;
 
 import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdInTable;
+import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdUtil;
 
 /**
  * @author Cristina González
@@ -27,7 +28,38 @@ public class DLSyncEventUpgradeCompanyId implements UpgradeCompanyIdInTable {
 	}
 
 	@Override
-	public void upgradeProcess() {
+	public void upgradeProcess() throws Exception {
+
+		// DLFileEntries
+
+		String select =
+			"(select dlfe.companyId, dlse.syncEventId from DLFileEntry dlfe, " +
+				"DLSyncEvent dlse where dlse.type_='file' and " +
+				"dlfe.fileEntryId=dlse.typePK) UNION (select re.companyId, " +
+				"dlse.syncEventId from DLSyncEvent dlse, RepositoryEntry re " +
+				"where dlse.type_='file' and dlse.typePK=re.repositoryId)";
+
+		String update =
+			"update DLSyncEvent set companyId = ? where syncEventId = ?";
+
+		String[] columnNames = {"companyId", "syncEventId"};
+
+		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
+			"DLSyncEvent", select, update, columnNames);
+
+		// DLFolders
+
+		select =
+			"(select dlf.companyId, dlse.syncEventId from DLFolder dlf, " +
+				"DLSyncEvent dlse where dlse.type_='folder' and " +
+				"dlf.folderId=dlse.typePK) UNION (select re.companyId, " +
+				"dlse.syncEventId from DLSyncEvent dlse, RepositoryEntry re " +
+				"where dlse.type_='folder' and dlse.typePK=re.repositoryId)";
+
+		update = "update DLSyncEvent set companyId = ? where syncEventId = ?";
+
+		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
+			"DLSyncEvent", select, update, "companyId", "syncEventId");
 	}
 
 }

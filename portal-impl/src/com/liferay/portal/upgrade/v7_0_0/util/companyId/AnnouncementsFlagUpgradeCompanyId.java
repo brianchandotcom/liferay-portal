@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v7_0_0.util.companyId;
 
 import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdInTable;
+import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdUtil;
 
 /**
  * @author Cristina González
@@ -28,7 +29,16 @@ public class AnnouncementsFlagUpgradeCompanyId
 	}
 
 	@Override
-	public void upgradeProcess() {
+	public void upgradeProcess() throws Exception {
+		String select =
+			"select a.flagId, a.userId, u.companyId from AnnouncementsFlag a," +
+				" User_ u where a.userId=u.userId";
+
+		String update =
+			"update AnnouncementsFlag set companyId = ? where flagId = ?";
+
+		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
+			"AnnouncementsFlag", select, update, "companyId", "flagId");
 	}
 
 }

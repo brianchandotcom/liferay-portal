@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v7_0_0.util.companyId;
 
 import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdInTable;
+import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdUtil;
 
 /**
  * @author Cristina González
@@ -28,7 +29,19 @@ public class ResourceBlockPermissionUpgradeCompanyId
 	}
 
 	@Override
-	public void upgradeProcess() {
+	public void upgradeProcess() throws Exception {
+		String select =
+			"select rb.companyId, rbp.resourceBlockPermissionId " +
+				"from ResourceBlockPermission rbp, ResourceBlock rb " +
+				"where rb.resourceBlockId=rbp.resourceBlockId";
+
+		String update =
+			"update ResourceBlockPermission set companyId = ? " +
+				"where resourceBlockPermissionId = ?";
+
+		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
+			"ResourceBlockPermission", select, update, "companyId",
+			"resourceBlockPermissionId");
 	}
 
 }

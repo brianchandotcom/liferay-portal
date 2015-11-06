@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v7_0_0.util.companyId;
 
 import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdInTable;
+import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdUtil;
 
 /**
  * @author Cristina González
@@ -28,7 +29,19 @@ public class AssetEntriesAssetCategoriesUpgradeCompanyId
 	}
 
 	@Override
-	public void upgradeProcess() {
+	public void upgradeProcess() throws Exception {
+		String select =
+			"select a.categoryId, c.companyId, a.entryId from " +
+				"AssetEntries_AssetCategories a, AssetCategory c where " +
+				"a.categoryId=c.categoryId";
+
+		String update =
+			"update AssetEntries_AssetCategories set companyId = ? " +
+				"where categoryId = ? and entryId = ?";
+
+		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
+			"AssetEntries_AssetCategories", select, update, "companyId",
+			"categoryId", "entryId");
 	}
 
 }

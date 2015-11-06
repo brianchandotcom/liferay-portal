@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v7_0_0.util.companyId;
 
 import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdInTable;
+import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdUtil;
 
 /**
  * @author Cristina González
@@ -28,7 +29,32 @@ public class PortletPreferencesUpgradeCompanyId
 	}
 
 	@Override
-	public void upgradeProcess() {
+	public void upgradeProcess() throws Exception {
+		String select =
+			"select p.companyId, pp.portletPreferencesId " +
+				"from Portlet p, PortletPreferences pp where " +
+				"p.portletId=pp.portletId";
+
+		String update =
+			"update PortletPreferences set companyId = ? " +
+				"where portletPreferencesId = ?";
+
+		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
+			"PortletPreferences", select, update, "companyId",
+			"portletPreferencesId");
+
+		select =
+			"select l.companyId, pp.portletPreferencesId " +
+				"from Layout l, PortletPreferences pp where " +
+				"l.plid=pp.plid";
+
+		update =
+			"update PortletPreferences set companyId = ? " +
+				"where portletPreferencesId = ?";
+
+		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
+			"PortletPreferences", select, update, "companyId",
+			"portletPreferencesId");
 	}
 
 }

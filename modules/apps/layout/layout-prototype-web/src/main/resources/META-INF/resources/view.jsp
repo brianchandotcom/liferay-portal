@@ -33,7 +33,10 @@ PortletURL portletURL = renderResponse.createRenderURL();
 	</aui:nav>
 </aui:nav-bar>
 
-<liferay-frontend:management-bar>
+<liferay-frontend:management-bar
+	checkBoxContainerId="layoutPrototypeSearchContainer"
+	includeCheckBox="<%= true %>"
+>
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
@@ -55,20 +58,22 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
+
+	<liferay-frontend:management-bar-action-buttons>
+		<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-trash" id="deleteSelectedLayoutPrototypes" />
+	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="get" name="fm">
-	<liferay-portlet:renderURLParams varImpl="portletURL" />
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
-	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
-
+<aui:form cssClass="container-fluid-1280" name="fm">
 	<liferay-ui:search-container
 		emptyResultsMessage="there-are-no-page-templates.-you-can-add-a-page-template-by-clicking-the-plus-button-on-the-right-bottom-corner"
 		headerNames="name"
+		id="layoutPrototype"
 		iteratorURL="<%= portletURL %>"
+		rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
 		total="<%= LayoutPrototypeLocalServiceUtil.searchCount(company.getCompanyId(), null) %>"
 	>
-		<aui:input name="deleteLayoutPrototypesIds" type="hidden" />
+		<aui:input name="layoutPrototypeIds" type="hidden" />
 
 		<%
 		boolean orderByAsc = false;
@@ -90,6 +95,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.model.LayoutPrototype"
+			cssClass="selectable"
 			escapedModel="<%= true %>"
 			keyProperty="layoutPrototypeId"
 			modelVar="layoutPrototype"
@@ -152,3 +158,24 @@ PortletURL portletURL = renderResponse.createRenderURL();
 		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addLayoutPrototypeURL.toString() %>" />
 	</liferay-frontend:add-menu>
 </c:if>
+
+<aui:script sandbox="<%= true %>">
+	var Util = Liferay.Util;
+
+	var form = $(document.<portlet:namespace />fm);
+
+	$('#<portlet:namespace />deleteSelectedLayoutPrototypes').on(
+		'click',
+		function() {
+			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+				<portlet:actionURL name="deleteLayoutPrototypes" var="deleteURL">
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+				</portlet:actionURL>
+
+				form.fm('layoutPrototypeIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+
+				submitForm(form, '<%= deleteURL %>');
+			}
+		}
+	);
+</aui:script>

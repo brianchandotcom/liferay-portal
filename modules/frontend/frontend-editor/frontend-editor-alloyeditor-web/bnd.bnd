@@ -8,6 +8,7 @@ Include-Resource:\
 	META-INF/resources=tmp/META-INF/resources,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/Encryptor.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/EncryptorException.class
+JS-Config: /META-INF/resources/js/config.js
 Web-ContextPath: /frontend-editor-alloyeditor-web
 
 -donotcopy: (\.touch|.*_diffs.*)

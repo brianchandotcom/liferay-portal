@@ -36,6 +36,10 @@ import org.gradle.util.GUtil;
  */
 public class BuildTaglibsTask extends JavaExec {
 
+	public BuildTaglibsTask() {
+		setMain("com.liferay.alloy.tools.tagbuilder.TagBuilder");
+	}
+
 	public BuildTaglibsTask componentsXmlFiles(Iterable<?> componentsXmlFiles) {
 		GUtil.addToCollection(_componentsXmlFiles, componentsXmlFiles);
 
@@ -82,11 +86,6 @@ public class BuildTaglibsTask extends JavaExec {
 
 	public File getJspParentDir() {
 		return GradleUtil.toFile(getProject(), _jspParentDir);
-	}
-
-	@Override
-	public String getMain() {
-		return "com.liferay.alloy.tools.tagbuilder.TagBuilder";
 	}
 
 	public String getOsgiModuleSymbolicName() {

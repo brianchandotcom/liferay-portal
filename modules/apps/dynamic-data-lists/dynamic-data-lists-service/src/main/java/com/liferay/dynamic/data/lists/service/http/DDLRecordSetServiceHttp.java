@@ -403,6 +403,39 @@ public class DDLRecordSetServiceHttp {
 		}
 	}
 
+	public static com.liferay.dynamic.data.lists.model.DDLRecordSet updateRecordSet(
+		HttpPrincipal httpPrincipal, long recordSetId,
+		java.lang.String typeSettings)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(DDLRecordSetServiceUtil.class,
+					"updateRecordSet", _updateRecordSetParameterTypes11);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					recordSetId, typeSettings);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.dynamic.data.lists.model.DDLRecordSet)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(DDLRecordSetServiceHttp.class);
 	private static final Class<?>[] _addRecordSetParameterTypes0 = new Class[] {
 			long.class, long.class, java.lang.String.class, java.util.Map.class,
@@ -446,5 +479,8 @@ public class DDLRecordSetServiceHttp {
 			long.class, long.class, java.lang.String.class, java.util.Map.class,
 			java.util.Map.class, int.class,
 			com.liferay.portal.service.ServiceContext.class
+		};
+	private static final Class<?>[] _updateRecordSetParameterTypes11 = new Class[] {
+			long.class, java.lang.String.class
 		};
 }

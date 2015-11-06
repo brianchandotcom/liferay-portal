@@ -60,4 +60,9 @@ public interface DDLRecordSet extends DDLRecordSetModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getRecords();
+
+	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties();
+
+	public java.lang.String getTypeSettingsProperty(java.lang.String key,
+		java.lang.String defaultValue);
 }

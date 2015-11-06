@@ -150,6 +150,8 @@ public class DDLRecordSetPersistenceTest {
 
 		newDDLRecordSet.setScope(RandomTestUtil.nextInt());
 
+		newDDLRecordSet.setTypeSettings(RandomTestUtil.randomString());
+
 		newDDLRecordSet.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_ddlRecordSets.add(_persistence.update(newDDLRecordSet));
@@ -186,6 +188,8 @@ public class DDLRecordSetPersistenceTest {
 			newDDLRecordSet.getMinDisplayRows());
 		Assert.assertEquals(existingDDLRecordSet.getScope(),
 			newDDLRecordSet.getScope());
+		Assert.assertEquals(existingDDLRecordSet.getTypeSettings(),
+			newDDLRecordSet.getTypeSettings());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingDDLRecordSet.getLastPublishDate()),
 			Time.getShortTimestamp(newDDLRecordSet.getLastPublishDate()));
@@ -522,6 +526,8 @@ public class DDLRecordSetPersistenceTest {
 		ddlRecordSet.setMinDisplayRows(RandomTestUtil.nextInt());
 
 		ddlRecordSet.setScope(RandomTestUtil.nextInt());
+
+		ddlRecordSet.setTypeSettings(RandomTestUtil.randomString());
 
 		ddlRecordSet.setLastPublishDate(RandomTestUtil.nextDate());
 

@@ -1332,6 +1332,7 @@ public class DataFactory {
 			DDLRecordSetConstants.MIN_DISPLAY_ROWS_DEFAULT);
 		ddlRecordSetModel.setScope(
 			DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS);
+		ddlRecordSetModel.setTypeSettings(StringPool.BLANK);
 		ddlRecordSetModel.setLastPublishDate(new Date());
 
 		return ddlRecordSetModel;

@@ -458,6 +458,12 @@ public class DDLRecordSetLocalServiceUtil {
 			descriptionMap, minDisplayRows, serviceContext);
 	}
 
+	public static com.liferay.dynamic.data.lists.model.DDLRecordSet updateRecordSet(
+		long recordSetId, java.lang.String typeSettings)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateRecordSet(recordSetId, typeSettings);
+	}
+
 	public static DDLRecordSetLocalService getService() {
 		return _serviceTracker.getService();
 	}

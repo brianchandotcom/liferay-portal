@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.lists.service.impl;
 import com.liferay.dynamic.data.lists.exception.RecordSetDDMStructureIdException;
 import com.liferay.dynamic.data.lists.exception.RecordSetDuplicateRecordSetKeyException;
 import com.liferay.dynamic.data.lists.exception.RecordSetNameException;
+import com.liferay.dynamic.data.lists.exception.RecordSetSettingsException;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.base.DDLRecordSetLocalServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
@@ -34,6 +36,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -310,6 +313,27 @@ public class DDLRecordSetLocalServiceImpl
 			serviceContext, recordSet);
 	}
 
+	@Override
+	public DDLRecordSet updateRecordSet(long recordSetId, String typeSettings)
+		throws PortalException {
+
+		Date now = new Date();
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+		typeSettingsProperties.fastLoad(typeSettings);
+
+		validateTypeSettingsProperties(typeSettingsProperties);
+
+		DDLRecordSet recordSet = ddlRecordSetPersistence.findByPrimaryKey(
+			recordSetId);
+
+		recordSet.setModifiedDate(now);
+		recordSet.setTypeSettings(typeSettingsProperties.toString());
+
+		return ddlRecordSetPersistence.update(recordSet);
+	}
+
 	protected DDLRecordSet doUpdateRecordSet(
 			long ddmStructureId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, int minDisplayRows,
@@ -395,6 +419,19 @@ public class DDLRecordSetLocalServiceImpl
 
 		if (Validator.isNull(name)) {
 			throw new RecordSetNameException();
+		}
+	}
+
+	protected void validateTypeSettingsProperties(
+			UnicodeProperties typeSettingsProperties)
+		throws PortalException {
+
+		String requireCaptcha = typeSettingsProperties.getProperty(
+			"requireCaptcha");
+
+		if (!Validator.isBoolean(requireCaptcha)) {
+			throw new RecordSetSettingsException(
+				"'requireCaptcha' property must be a boolean");
 		}
 	}
 

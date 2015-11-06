@@ -14,7 +14,6 @@
 
 package com.liferay.gradle.plugins;
 
-import com.liferay.gradle.plugins.alloy.taglib.AlloyTaglibPlugin;
 import com.liferay.gradle.plugins.css.builder.BuildCSSTask;
 import com.liferay.gradle.plugins.css.builder.CSSBuilderPlugin;
 import com.liferay.gradle.plugins.extensions.AppServer;
@@ -890,7 +889,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, OptionalBasePlugin.class);
 		GradleUtil.applyPlugin(project, ProvidedBasePlugin.class);
 
-		GradleUtil.applyPlugin(project, AlloyTaglibPlugin.class);
 		GradleUtil.applyPlugin(project, CSSBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, JavadocFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, JSModuleConfigGeneratorPlugin.class);

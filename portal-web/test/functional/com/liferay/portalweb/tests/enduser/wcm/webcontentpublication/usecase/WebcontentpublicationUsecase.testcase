@@ -94,7 +94,10 @@
 		</execute>
 
 		<execute macro="Page#gotoConfigurationCP">
+			<var name="pageAccess" value="Private" />
 			<var name="portletName" value="Site Settings" />
+			<var name="siteName" value="Organization Name" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Site#addVirtualHostsURLCP">
@@ -103,7 +106,10 @@
 		</execute>
 
 		<execute macro="Page#gotoConfigurationCP">
+			<var name="pageAccess" value="Private" />
 			<var name="portletName" value="Site Settings" />
+			<var name="siteName" value="Organization Name" />
+			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Site#addVirtualHostsURLCP">
@@ -147,6 +153,9 @@
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Web Content Page" />
+			<var name="siteName" value="http://www.able.com:8080" />
+			<var name="siteURL" value="true" />
+			<var name="virtualHostsURL" value="http://www.able.com:8080" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -159,6 +168,8 @@
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Web Content Display" />
 		</execute>
+
+		<execute function="Refresh" />
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Asset Publisher" />
@@ -219,17 +230,6 @@
 		<execute macro="WebContent#viewPGViaAP">
 			<var name="webContentContent" value="WC WebContent Content Edit" />
 			<var name="webContentTitle" value="WC WebContent Title Edit" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Web Content Page" />
-			<var name="siteName" value="http://www.able.com:8080" />
-			<var name="siteURL" value="true" />
-			<var name="virtualHostsURL" value="http://www.able.com:8080" />
-		</execute>
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content Edit" />
 		</execute>
 
 		<execute macro="User#firstLoginPG" />

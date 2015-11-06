@@ -281,11 +281,6 @@
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.ManagementBarTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<name>checkBoxContainerId</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<name>includeCheckBox</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

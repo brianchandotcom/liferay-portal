@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.upgrade.v1_0_0.util.companyId;
 
 import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdInTable;
+import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdUtil;
 
 /**
  * @author Cristina González
@@ -28,7 +29,16 @@ public class DDMStructureLinkUpgradeCompanyId
 	}
 
 	@Override
-	public void upgradeProcess() {
+	public void upgradeProcess() throws Exception {
+		String select =
+			"select ds.companyId, dsl.structureId from DDMStructure ds, " +
+				"DDMStructureLink dsl where ds.structureId=dsl.structureId";
+
+		String update =
+			"update DDMStructureLink set companyId = ? where structureId = ?";
+
+		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
+			"DDMStructureLink", select, update, "companyId", "structureId");
 	}
 
 }

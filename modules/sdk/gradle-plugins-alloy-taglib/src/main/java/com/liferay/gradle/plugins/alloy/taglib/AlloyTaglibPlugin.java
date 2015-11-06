@@ -20,11 +20,14 @@ import java.io.File;
 
 import java.util.Iterator;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.file.SourceDirectorySet;
+import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskContainer;
 
@@ -34,43 +37,50 @@ import org.gradle.api.tasks.TaskContainer;
 public class AlloyTaglibPlugin implements Plugin<Project> {
 
 	@Override
-	public void apply(Project project) {
-		project.afterEvaluate(
-			new Action<Project>() {
+	public void apply(final Project project) {
+		PluginContainer pluginContainer = project.getPlugins();
+
+		pluginContainer.withType(
+			JavaPlugin.class,
+			new Action<JavaPlugin>() {
 
 				@Override
-				public void execute(Project project) {
-					configureTasksBuildTaglibs(project);
+				public void execute(JavaPlugin javaPlugin) {
+					configureTasksBuildTaglibsWithJava(project);
 				}
 
 			});
 	}
 
 	protected void configureTaskBuildTaglibsJspParentDir(
-		BuildTaglibsTask buildTaglibsTask) {
+		final BuildTaglibsTask buildTaglibsTask) {
 
-		if (buildTaglibsTask.getJspParentDir() != null) {
-			return;
-		}
+		buildTaglibsTask.setJspParentDir(
+			new Callable<File>() {
 
-		File jspParentDir = getResourcesDir(buildTaglibsTask.getProject());
+				@Override
+				public File call() throws Exception {
+					return getResourcesDir(buildTaglibsTask.getProject());
+				}
 
-		buildTaglibsTask.setJspParentDir(jspParentDir);
+			});
 	}
 
 	protected void configureTaskBuildTaglibsTldDir(
-		BuildTaglibsTask buildTaglibsTask) {
+		final BuildTaglibsTask buildTaglibsTask) {
 
-		if (buildTaglibsTask.getTldDir() != null) {
-			return;
-		}
+		buildTaglibsTask.setTldDir(
+			new Callable<File>() {
 
-		File tldDir = getResourcesDir(buildTaglibsTask.getProject());
+				@Override
+				public File call() throws Exception {
+					return getResourcesDir(buildTaglibsTask.getProject());
+				}
 
-		buildTaglibsTask.setTldDir(tldDir);
+			});
 	}
 
-	protected void configureTasksBuildTaglibs(Project project) {
+	protected void configureTasksBuildTaglibsWithJava(Project project) {
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(

@@ -4788,7 +4788,7 @@ module.framework.properties.osgi.console=11312</echo>
 			product.names=${product.names}
 			project.dir=${project.dir.unix}
 			test.case.available.property.names=${test.case.available.property.names}
-			test.console.log.file.name=${liferay.home}/logs/liferay.${current.date}.xml
+			test.console.log.file.name=${test.console.log.file.name}
 			test.console.shut.down.file.name=${project.dir.unix}/console-shut-down
 			test.dependencies.dir.name=dependencies
 			test.poshi.warnings.file.name=${project.dir.unix}/poshi-warnings.xml
@@ -6789,6 +6789,65 @@ jdbc.default.password=${database.mysql.password}</echo>
 			<equals arg1="${database.jndi.enabled}" arg2="true" />
 			<then>
 				<prepare-database-jndi />
+			</then>
+		</if>
+
+		<if>
+			<available file="${app.server.tomcat.lib.portal.dir}/portal-impl.jar" />
+			<then>
+				<tstamp>
+					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+				</tstamp>
+
+				<mkdir dir="${tstamp.value}" />
+
+				<unzip
+					dest="${tstamp.value}"
+					src="${app.server.tomcat.lib.portal.dir}/portal-impl.jar"
+				/>
+
+				<if>
+					<not>
+						<resourcecontains resource="${tstamp.value}/META-INF/portal-log4j.xml" substring="TEST_FILE" />
+					</not>
+					<then>
+						<replace file="${tstamp.value}/META-INF/portal-log4j.xml">
+							<replacetoken><![CDATA[<appender name="TEXT_FILE" class="org.apache.log4j.rolling.RollingFileAppender">]]></replacetoken>
+							<replacevalue><![CDATA[
+	<appender name="TEST_FILE" class="org.apache.log4j.rolling.RollingFileAppender">
+		<rollingPolicy class="org.apache.log4j.rolling.FixedWindowRollingPolicy">
+			<param name="FileNamePattern" value="@liferay.home@/logs/liferay%i.xml" />
+		</rollingPolicy>
+
+		<triggeringPolicy class="org.apache.log4j.rolling.SizeBasedTriggeringPolicy">
+			<param name="MaxFileSize" value="50000000000" />
+		</triggeringPolicy>
+
+		<layout class="org.apache.log4j.xml.XMLLayout">
+			<param name="LocationInfo" value="true" />
+		</layout>
+	</appender>
+
+	<appender name="TEXT_FILE" class="org.apache.log4j.rolling.RollingFileAppender">]]></replacevalue>
+						</replace>
+
+						<replace file="${tstamp.value}/META-INF/portal-log4j.xml">
+							<replacetoken><![CDATA[<appender-ref ref="TEXT_FILE" />]]></replacetoken>
+							<replacevalue><![CDATA[<appender-ref ref="TEST_FILE" />
+		<appender-ref ref="TEXT_FILE" />]]></replacevalue>
+						</replace>
+					</then>
+				</if>
+
+				<zip
+					basedir="${tstamp.value}"
+					destfile="${app.server.tomcat.lib.portal.dir}/portal-impl.jar"
+					update="yes"
+				/>
+
+				<delete dir="${tstamp.value}" />
+
+				<var name="test.console.log.file.name" value="${liferay.home}/logs/liferay1.xml" />
 			</then>
 		</if>
 

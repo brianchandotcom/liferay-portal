@@ -120,7 +120,7 @@
 		</execute>
 
 		<execute macro="Breadcrumb#configureBreadcrumb">
-			<var name="checkSetupName" value="Show Current Site,Show Application Breadcrumb" />
+			<var name="checkSetupName" value="Show Current Site,Show Application Breadcrumb,Show Guest Site,Show Page" />
 		</execute>
 
 		<execute macro="Breadcrumb#viewConfigurationPreview">

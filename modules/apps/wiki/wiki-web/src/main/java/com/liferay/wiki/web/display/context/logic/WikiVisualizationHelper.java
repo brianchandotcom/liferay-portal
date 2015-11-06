@@ -15,7 +15,6 @@
 package com.liferay.wiki.web.display.context.logic;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.constants.WikiPortletKeys;
@@ -80,8 +79,8 @@ public class WikiVisualizationHelper {
 		String mvcRenderCommandName =
 			_wikiRequestHelper.getMVCrenderCommandName();
 
-		if (mvcRenderCommandName.endsWith("view_page_activities") ||
-			mvcRenderCommandName.endsWith("view_page_attachments")) {
+		if (mvcRenderCommandName.equals("/wiki/view_page_activities") ||
+			mvcRenderCommandName.equals("/wiki/view_page_attachments")) {
 
 			return false;
 		}
@@ -90,48 +89,28 @@ public class WikiVisualizationHelper {
 	}
 
 	public boolean isViewAllPagesNavItemSelected() {
-		return isNavItemSelected("/view_all_pages");
+		return isNavItemSelected("/wiki/view_all_pages");
 	}
 
 	public boolean isViewDraftPagesNavItemSelected() {
-		return isNavItemSelected("/view_draft_pages");
+		return isNavItemSelected("/wiki/view_draft_pages");
 	}
 
 	public boolean isViewOrphanPagesNavItemSelected() {
-		return isNavItemSelected("/view_orphan_pages");
+		return isNavItemSelected("/wiki/view_orphan_pages");
 	}
 
 	public boolean isViewRecentChangesNavItemSelected() {
-		return isNavItemSelected("/view_recent_changes");
-	}
-
-	protected String getMVCRenderCommandNamePrefix() {
-		if (_mvcRenderCommandNamePrefix == null) {
-			String mvcRenderCommandName =
-				_wikiRequestHelper.getMVCrenderCommandName();
-
-			if (Validator.isNotNull(mvcRenderCommandName)) {
-				int pos = mvcRenderCommandName.indexOf(StringPool.SLASH, 1);
-
-				if (pos != -1) {
-					_mvcRenderCommandNamePrefix =
-						mvcRenderCommandName.substring(0, pos);
-				}
-			}
-		}
-
-		return _mvcRenderCommandNamePrefix;
+		return isNavItemSelected("/wiki/view_recent_changes");
 	}
 
 	protected boolean isNavItemSelected(String navItemMVCRenderCommandName) {
 		String mvcRenderCommandName =
 			_wikiRequestHelper.getMVCrenderCommandName();
 
-		return mvcRenderCommandName.equals(
-			getMVCRenderCommandNamePrefix() + navItemMVCRenderCommandName);
+		return mvcRenderCommandName.equals(navItemMVCRenderCommandName);
 	}
 
-	private String _mvcRenderCommandNamePrefix;
 	private final WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 	private final WikiPortletInstanceSettingsHelper
 		_wikiPortletInstanceSettingsHelper;

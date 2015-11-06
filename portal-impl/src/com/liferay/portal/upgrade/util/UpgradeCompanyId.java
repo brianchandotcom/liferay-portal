@@ -17,6 +17,7 @@ package com.liferay.portal.upgrade.util;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdInTable;
 
 /**
  * @author Brian Wing Shun Chan
@@ -25,7 +26,11 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		for (String tableName : getTableNames()) {
+		for (UpgradeCompanyIdInTable upgradeCompanyIdInTable :
+				getUpgradeCompanyIdInTable()) {
+
+			String tableName = upgradeCompanyIdInTable.getTableName();
+
 			if (tableHasColumn(tableName, "companyId")) {
 				if (_log.isInfoEnabled()) {
 					_log.info("Skipping table " + tableName);
@@ -39,10 +44,12 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 			}
 
 			runSQL("alter table " + tableName + " add companyId LONG");
+
+			upgradeCompanyIdInTable.upgradeProcess();
 		}
 	}
 
-	protected abstract String[] getTableNames();
+	protected abstract UpgradeCompanyIdInTable[] getUpgradeCompanyIdInTable();
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeCompanyId.class);

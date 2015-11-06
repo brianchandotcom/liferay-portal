@@ -27,7 +27,6 @@ public interface Document extends Branch, Cloneable {
 	public Document addDocumentType(
 		String name, String publicId, String systemId);
 
-	@Override
 	public Document clone();
 
 	public DocumentType getDocumentType();

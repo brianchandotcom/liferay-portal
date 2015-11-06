@@ -39,7 +39,6 @@ public interface BaseModel<T>
 	 *
 	 * @return the shallow clone of this model instance
 	 */
-	@Override
 	public Object clone();
 
 	/**

@@ -41,6 +41,7 @@ public class BlogsPanelApp extends BasePanelApp {
 		return BlogsPortletKeys.BLOGS_ADMIN;
 	}
 
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + BlogsPortletKeys.BLOGS_ADMIN + ")",
 		unbind = "-"

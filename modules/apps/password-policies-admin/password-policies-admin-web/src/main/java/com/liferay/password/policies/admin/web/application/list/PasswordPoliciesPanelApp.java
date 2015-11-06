@@ -41,6 +41,7 @@ public class PasswordPoliciesPanelApp extends BasePanelApp {
 		return PasswordPoliciesAdminPortletKeys.PASSWORD_POLICIES_ADMIN;
 	}
 
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + PasswordPoliciesAdminPortletKeys.PASSWORD_POLICIES_ADMIN + ")",
 		unbind = "-"

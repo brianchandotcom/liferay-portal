@@ -60,6 +60,7 @@ import org.osgi.service.component.annotations.Reference;
 public class DefaultDDMStructureHelperImpl
 	implements DefaultDDMStructureHelper {
 
+	@Override
 	public void addDDMStructures(
 			long userId, long groupId, long classNameId,
 			ClassLoader classLoader, String fileName,
@@ -149,6 +150,7 @@ public class DefaultDDMStructureHelperImpl
 		}
 	}
 
+	@Override
 	public String getDynamicDDMStructureDefinition(
 			ClassLoader classLoader, String fileName,
 			String dynamicDDMStructureName, Locale locale)

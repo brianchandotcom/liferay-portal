@@ -38,6 +38,7 @@ public class WikiAttachmentItemSelectorCriterionHandler
 	}
 
 	@Activate
+	@Override
 	protected void activate(BundleContext bundleContext) {
 		super.activate(bundleContext);
 	}

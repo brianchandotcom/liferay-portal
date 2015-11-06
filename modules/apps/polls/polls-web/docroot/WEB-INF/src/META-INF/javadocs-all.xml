@@ -417,7 +417,7 @@
 				<comment><![CDATA[]]></comment>
 			</return>
 			<throws>
-				<name>com.liferay.portal.kernel.exception.PortalException</name>
+				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>

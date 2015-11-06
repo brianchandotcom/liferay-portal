@@ -41,6 +41,7 @@ public class JournalPanelApp extends BasePanelApp {
 		return JournalPortletKeys.JOURNAL;
 	}
 
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + JournalPortletKeys.JOURNAL + ")",
 		unbind = "-"

@@ -41,6 +41,7 @@ public class UsersPanelApp extends BasePanelApp {
 		return UsersAdminPortletKeys.USERS_ADMIN;
 	}
 
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN + ")",
 		unbind = "-"

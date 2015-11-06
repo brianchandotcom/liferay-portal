@@ -56,6 +56,7 @@ public class StagingConfigurationPanelApp extends BasePanelApp {
 		return true;
 	}
 
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + StagingConfigurationPortletKeys.STAGING_CONFIGURATION + ")",
 		unbind = "-"

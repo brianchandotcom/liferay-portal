@@ -41,6 +41,7 @@ public class ServerAdminPanelApp extends BasePanelApp {
 		return PortletKeys.SERVER_ADMIN;
 	}
 
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + PortletKeys.SERVER_ADMIN + ")",
 		unbind = "-"

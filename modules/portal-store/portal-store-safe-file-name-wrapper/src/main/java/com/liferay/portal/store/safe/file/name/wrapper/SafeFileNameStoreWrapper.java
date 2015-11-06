@@ -39,6 +39,7 @@ import org.osgi.service.component.annotations.Component;
 )
 public class SafeFileNameStoreWrapper implements StoreWrapper {
 
+	@Override
 	public Store wrap(Store store) {
 		return new SafeFileNameStore(store);
 	}

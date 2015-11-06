@@ -17,8 +17,8 @@ package com.liferay.amazon.rankings.web.portlet;
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.amazon.rankings.web.configuration.AmazonRankingsConfiguration;
-import com.liferay.amazon.rankings.web.upgrade.AmazonRankingsWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.model.Release;
 
 import java.io.IOException;
 
@@ -81,9 +81,10 @@ public class AmazonRankingsPortlet extends MVCPortlet {
 			AmazonRankingsConfiguration.class, properties);
 	}
 
-	@Reference(unbind = "-")
-	protected void setAmazonRankingsWebUpgrade(
-		AmazonRankingsWebUpgrade amazonRankingsWebUpgrade) {
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.amazon.rankings.web)(release.schema.version=1.0.0))"
+	)
+	protected void setRelease(Release release) {
 	}
 
 	private volatile AmazonRankingsConfiguration _amazonRankingsConfiguration;

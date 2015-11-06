@@ -182,7 +182,7 @@ public class DefaultTaskManagerImpl
 
 		KaleoTask kaleoTask = kaleoTaskInstanceToken.getKaleoTask();
 
-		actionExecutorManagerHelper.executeKaleoActions(
+		kaleoActionExecutor.executeKaleoActions(
 			KaleoNode.class.getName(), kaleoTask.getKaleoNodeId(),
 			ExecutionType.ON_ASSIGNMENT, executionContext);
 

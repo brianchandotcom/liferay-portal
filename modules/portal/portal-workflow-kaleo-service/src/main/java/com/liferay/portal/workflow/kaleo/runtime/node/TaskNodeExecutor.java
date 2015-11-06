@@ -162,7 +162,7 @@ public class TaskNodeExecutor extends BaseNodeExecutor {
 
 		executionContext.setKaleoTaskInstanceToken(kaleoTaskInstanceToken);
 
-		actionExecutorManagerHelper.executeKaleoActions(
+		kaleoActionExecutor.executeKaleoActions(
 			KaleoNode.class.getName(), currentKaleoNode.getKaleoNodeId(),
 			ExecutionType.ON_ASSIGNMENT, executionContext);
 

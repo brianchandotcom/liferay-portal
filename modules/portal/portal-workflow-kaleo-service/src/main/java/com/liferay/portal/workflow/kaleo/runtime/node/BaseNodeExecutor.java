@@ -47,7 +47,7 @@ public abstract class BaseNodeExecutor
 
 		boolean performExecute = doEnter(currentKaleoNode, executionContext);
 
-		actionExecutorManagerHelper.executeKaleoActions(
+		kaleoActionExecutor.executeKaleoActions(
 			KaleoNode.class.getName(), currentKaleoNode.getKaleoNodeId(),
 			ExecutionType.ON_ENTRY, executionContext);
 
@@ -92,7 +92,7 @@ public abstract class BaseNodeExecutor
 
 		KaleoTimer kaleoTimer = kaleoTimerInstanceToken.getKaleoTimer();
 
-		actionExecutorManagerHelper.executeKaleoActions(
+		kaleoActionExecutor.executeKaleoActions(
 			KaleoTimer.class.getName(), kaleoTimer.getKaleoTimerId(),
 			ExecutionType.ON_TIMER, executionContext);
 
@@ -119,7 +119,7 @@ public abstract class BaseNodeExecutor
 
 		doExit(currentKaleoNode, executionContext, remainingPathElements);
 
-		actionExecutorManagerHelper.executeKaleoActions(
+		kaleoActionExecutor.executeKaleoActions(
 			KaleoNode.class.getName(), currentKaleoNode.getKaleoNodeId(),
 			ExecutionType.ON_EXIT, executionContext);
 

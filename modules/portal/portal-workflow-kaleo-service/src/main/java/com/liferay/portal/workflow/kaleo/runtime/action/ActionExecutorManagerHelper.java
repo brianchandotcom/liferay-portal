@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * @author Michael C. Han
  */
-public class ActionExecutorManagerHelper {
+public class ActionExecutorManagerHelper implements KaleoActionExecutor {
 
 	public void executeKaleoActions(
 			String kaleoClassName, long kaleoClassPK,

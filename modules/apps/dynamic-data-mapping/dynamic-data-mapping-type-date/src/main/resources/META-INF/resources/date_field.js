@@ -22,7 +22,7 @@ AUI.add(
 					},
 
 					mask: {
-						value: '%d/%m/%Y'
+						value: Liferay.AUI.getDateFormat()
 					},
 
 					type: {
@@ -53,7 +53,7 @@ AUI.add(
 
 						if (isoDate) {
 							formattedDate = A.Date.format(
-								new Date(isoDate),
+								A.Date.parse('%Y-%m-%d', isoDate),
 								{
 									format: instance.get('mask')
 								}
@@ -66,7 +66,7 @@ AUI.add(
 					getISODate: function(date) {
 						var instance = this;
 
-						return date.toISOString();
+						return A.Date.format(date);
 					},
 
 					getTemplateContext: function() {

@@ -17,7 +17,6 @@ package com.liferay.dynamic.data.lists.service.impl;
 import com.liferay.dynamic.data.lists.exception.RecordSetDDMStructureIdException;
 import com.liferay.dynamic.data.lists.exception.RecordSetDuplicateRecordSetKeyException;
 import com.liferay.dynamic.data.lists.exception.RecordSetNameException;
-import com.liferay.dynamic.data.lists.exception.RecordSetSettingsException;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.base.DDLRecordSetLocalServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -425,14 +424,6 @@ public class DDLRecordSetLocalServiceImpl
 	protected void validateSettingsProperties(
 			UnicodeProperties settingsProperties)
 		throws PortalException {
-
-		String requireCaptcha = settingsProperties.getProperty(
-			"requireCaptcha");
-
-		if (!Validator.isBoolean(requireCaptcha)) {
-			throw new RecordSetSettingsException(
-				"The property \"requireCaptcha\" is not a boolean");
-		}
 	}
 
 	@ServiceReference(type = DDMStructureLinkLocalService.class)

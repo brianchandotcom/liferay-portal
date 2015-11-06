@@ -42,6 +42,6 @@ public class PortalSettingsLDAPAuthenticationDynamicInclude
 		super.servletContext = servletContext;
 	}
 
-	private static final String _JSP_PATH = "/portal-settings/ldap.jsp";
+	private static final String _JSP_PATH = "/portal_settings/ldap.jsp";
 
 }

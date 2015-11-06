@@ -44,6 +44,6 @@ public class PortalSettingsTestLDAPConnectionDynamicInclude
 	}
 
 	private static final String _JSP_PATH =
-		"/portal-settings/test_ldap_connection.jsp";
+		"/portal_settings/test_ldap_connection.jsp";
 
 }

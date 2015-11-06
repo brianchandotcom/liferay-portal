@@ -44,6 +44,6 @@ public class PortalSettingsTestLDAPUsersDynamicInclude
 	}
 
 	private static final String _JSP_PATH =
-		"/portal-settings/test_ldap_users.jsp";
+		"/portal_settings/test_ldap_users.jsp";
 
 }

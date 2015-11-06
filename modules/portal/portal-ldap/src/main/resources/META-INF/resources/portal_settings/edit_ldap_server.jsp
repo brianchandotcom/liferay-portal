@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/portal-settings/init.jsp" %>
+<%@ include file="/portal_settings/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -216,7 +216,7 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 
 		<aui:input cssClass="lfr-input-text-container" label="password" name="userMappingPassword" type="text" value="<%= userMappingPassword %>" />
 
-		<%@ include file="/portal-settings/edit_ldap_server_user_name.jspf" %>
+		<%@ include file="/portal_settings/edit_ldap_server_user_name.jspf" %>
 
 		<aui:input cssClass="lfr-input-text-container" label="job-title" name="userMappingJobTitle" type="text" value="<%= userMappingJobTitle %>" />
 

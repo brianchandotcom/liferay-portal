@@ -44,6 +44,6 @@ public class PortalSettingsEditLDAPServerDynamicInclude
 	}
 
 	private static final String _JSP_PATH =
-		"/portal-settings/edit_ldap_server.jsp";
+		"/portal_settings/edit_ldap_server.jsp";
 
 }

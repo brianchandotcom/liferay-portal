@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/portal-settings/init.jsp" %>
+<%@ include file="/portal_settings/init.jsp" %>
 
 <%
 long ldapServerId = ParamUtil.getLong(request, "ldapServerId", 0);

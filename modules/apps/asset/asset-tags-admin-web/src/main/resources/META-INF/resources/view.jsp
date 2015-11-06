@@ -64,9 +64,9 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<aui:a cssClass="btn" href="javascript:;" iconCssClass="icon-random" id="mergeSelectedTags" />
+		<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-random" id="mergeSelectedTags" />
 
-		<aui:a cssClass="btn" href="javascript:;" iconCssClass="icon-trash" id="deleteSelectedTags" />
+		<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-trash" id="deleteSelectedTags" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 

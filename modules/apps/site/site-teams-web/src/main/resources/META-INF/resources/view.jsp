@@ -79,7 +79,7 @@ TeamDisplayTerms searchTerms = (TeamDisplayTerms)teamSearchContainer.getSearchTe
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<aui:a cssClass="btn" href="javascript:;" iconCssClass="icon-trash" id="deleteSelectedTeams" />
+		<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-trash" id="deleteSelectedTeams" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 

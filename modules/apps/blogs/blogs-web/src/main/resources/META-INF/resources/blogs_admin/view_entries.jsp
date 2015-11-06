@@ -90,7 +90,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 		String taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteEntries();";
 		%>
 
-		<aui:a cssClass="btn" href="<%= taglibURL %>" iconCssClass='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "icon-trash" : "icon-remove" %>' />
+		<liferay-frontend:management-bar-button href="<%= taglibURL %>" iconCssClass='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "icon-trash" : "icon-remove" %>' />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 

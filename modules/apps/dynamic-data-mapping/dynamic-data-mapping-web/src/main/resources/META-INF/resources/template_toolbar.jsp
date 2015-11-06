@@ -37,8 +37,7 @@ boolean includeCheckBox = ParamUtil.getBoolean(request, "includeCheckBox", true)
 			String taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteTemplates();";
 			%>
 
-			<aui:a cssClass="btn" href="<%= taglibURL %>" iconCssClass="icon-trash" />
-
+			<liferay-frontend:management-bar-button href="<%= taglibURL %>" iconCssClass="icon-trash" />
 		</liferay-frontend:management-bar-action-buttons>
 	</c:if>
 </liferay-frontend:management-bar>

@@ -98,7 +98,7 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<aui:a cssClass="btn" href="javascript:;" iconCssClass="icon-trash" id="deleteSelectedCategories" />
+		<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-trash" id="deleteSelectedCategories" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 

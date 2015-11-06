@@ -1,32 +1,23 @@
-import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask
-import com.liferay.gradle.plugins.node.tasks.ExecuteNodeTask
+import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
-apply plugin: "com.liferay.cache"
-
-task bowerInstall(type: ExecuteNodeTask)
-task buildSoyutils(type: Copy)
-task downloadBower(type: DownloadNodeModuleTask)
-
-String bowerVersion = "1.5.2"
-
-bowerInstall {
-	args = [new File(node.nodeDir, "node_modules/bower/bin/bower"), "install", "soyutils", "--allow-root"]
-	dependsOn downloadBower
+configurations {
+	soyutils
 }
+
+task buildSoyutils(type: Copy)
+
+String soyutilsVersion = "2012.12.21"
 
 buildSoyutils {
-	dependsOn bowerInstall
-	from new File("bower_components", "soyutils/soyutils.js")
-	into "classes/META-INF/resources"
-}
+	eachFile new StripPathSegmentsAction(5)
 
-cache {
-	task(buildSoyutils) {
-		baseDir = buildSoyutils.destinationDir
-		cacheDir = ".task-cache"
-		include "soyutils.js"
-		testFile "build.gradle"
+	from {
+		zipTree(configurations.soyutils.singleFile)
 	}
+
+	include "META-INF/resources/webjars/soyutils/${soyutilsVersion}/soyutils.js"
+	includeEmptyDirs = false
+	into "classes/META-INF/resources"
 }
 
 classes {
@@ -35,11 +26,8 @@ classes {
 
 dependencies {
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
-}
 
-downloadBower {
-	moduleName = "bower"
-	moduleVersion = bowerVersion
+	soyutils group: "org.webjars.bower", name: "soyutils", transitive: false, version: soyutilsVersion
 }
 
 liferay {

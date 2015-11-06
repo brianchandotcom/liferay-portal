@@ -54,21 +54,14 @@
 	<extension-point name="build-portal-web-dependencies" depends="build-css,build-dtd" />
 
 	<target name="build-common-css">
-		<property name="bourbon.version" value="3.2.3" />
-
 		<property name="bourbon.deploy" value="${sass.portal.common.dir}/bourbon" />
-
-		<property name="bourbon.file" value="bourbon-${bourbon.version}.zip" />
 
 		<if>
 			<not>
-				<uptodate
-					srcfile="third-party/${bourbon.file}"
-					targetfile="${bourbon.deploy}"
-				/>
+				<available file="${bourbon.deploy}" />
 			</not>
 			<then>
-				<gradle-execute dir="../modules/frontend/frontend-css-web" task="buildBourbon" />
+				<gradle-execute dir="../modules/frontend/frontend-common-css" task="buildBourbon" />
 			</then>
 		</if>
 	</target>

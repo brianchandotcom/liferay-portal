@@ -15,6 +15,7 @@
 package com.liferay.marketplace.upgrade.v1_0_0.util.companyId;
 
 import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdInTable;
+import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdUtil;
 
 /**
  * @author Cristina González
@@ -28,7 +29,17 @@ public class MarketplaceModuleUpgradeCompanyId
 	}
 
 	@Override
-	public void upgradeProcess() {
+	public void upgradeProcess() throws Exception {
+		String select =
+			"select ma.companyId, mm.moduleId from " +
+				"Marketplace_App ma, Marketplace_Module mm " +
+				"where ma.appId=mm.appId";
+
+		String update =
+			"update Marketplace_Module set companyId = ? where moduleId = ?";
+
+		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
+			"Marketplace_Module", select, update, "companyId", "moduleId");
 	}
 
 }

@@ -6,7 +6,8 @@ dependencies {
 	compile project(":apps:configuration-admin:configuration-admin-api")
 	compile project(":apps:dynamic-data-lists:dynamic-data-lists-api")
 	compile project(":apps:dynamic-data-lists:dynamic-data-lists-service")
-	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-field-type")
+	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-data-provider-web")
+    compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-field-type")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-renderer")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-values-factory")
 	

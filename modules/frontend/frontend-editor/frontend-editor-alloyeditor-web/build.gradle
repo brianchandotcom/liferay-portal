@@ -35,7 +35,9 @@ buildAlloyEditor {
 
 	duplicatesStrategy = "exclude"
 
-	from { zipTree(configurations.alloyEditor.singleFile) } {
+	from {
+		zipTree(configurations.alloyEditor.singleFile)
+	} {
 		eachFile new StripPathSegmentsAction(7)
 		include "META-INF/resources/webjars/alloyeditor/${alloyEditorVersion}/dist/alloy-editor/**"
 	}

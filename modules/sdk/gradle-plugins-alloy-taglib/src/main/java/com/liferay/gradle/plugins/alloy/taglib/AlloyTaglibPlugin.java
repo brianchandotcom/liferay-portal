@@ -27,6 +27,8 @@ import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.file.SourceDirectorySet;
+import org.gradle.api.internal.plugins.osgi.OsgiHelper;
+import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.SourceSet;
@@ -40,6 +42,17 @@ public class AlloyTaglibPlugin implements Plugin<Project> {
 	@Override
 	public void apply(final Project project) {
 		PluginContainer pluginContainer = project.getPlugins();
+
+		pluginContainer.withType(
+			BasePlugin.class,
+			new Action<BasePlugin>() {
+
+				@Override
+				public void execute(BasePlugin basePlugin) {
+					configureTasksBuildTaglibsWithBase(project);
+				}
+
+			});
 
 		pluginContainer.withType(
 			JavaPlugin.class,
@@ -92,6 +105,21 @@ public class AlloyTaglibPlugin implements Plugin<Project> {
 			});
 	}
 
+	protected void configureTaskBuildTaglibsOsgiModuleSymbolicName(
+		final BuildTaglibsTask buildTaglibs) {
+
+		buildTaglibs.setOsgiModuleSymbolicName(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					return _osgiHelper.getBundleSymbolicName(
+						buildTaglibs.getProject());
+				}
+
+			});
+	}
+
 	protected void configureTaskBuildTaglibsTldDir(
 		final BuildTaglibsTask buildTaglibsTask) {
 
@@ -104,6 +132,22 @@ public class AlloyTaglibPlugin implements Plugin<Project> {
 						buildTaglibsTask.getProject());
 
 					return new File(resourcesDir, "META-INF/resources");
+				}
+
+			});
+	}
+
+	protected void configureTasksBuildTaglibsWithBase(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			BuildTaglibsTask.class,
+			new Action<BuildTaglibsTask>() {
+
+				@Override
+				public void execute(BuildTaglibsTask buildTaglibs) {
+					configureTaskBuildTaglibsOsgiModuleSymbolicName(
+						buildTaglibs);
 				}
 
 			});
@@ -147,5 +191,7 @@ public class AlloyTaglibPlugin implements Plugin<Project> {
 
 		return iterator.next();
 	}
+
+	private static final OsgiHelper _osgiHelper = new OsgiHelper();
 
 }

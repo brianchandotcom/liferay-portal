@@ -14,7 +14,8 @@
 
 package com.liferay.portal.workflow.kaleo.action.executor.internal;
 
-import com.liferay.portal.kernel.scripting.ScriptingUtil;
+import com.liferay.portal.kernel.scripting.Scripting;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.workflow.kaleo.action.executor.ActionExecutor;
 import com.liferay.portal.workflow.kaleo.action.executor.ActionExecutorException;
 import com.liferay.portal.workflow.kaleo.model.KaleoAction;
@@ -29,6 +30,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -44,7 +46,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = ActionExecutor.class
 )
-public class ScriptActionExecutor extends BaseScriptActionExecutor {
+public class ScriptActionExecutor implements ActionExecutor {
 
 	public ScriptActionExecutor() {
 		_outputObjects.add(WorkflowContextUtil.WORKFLOW_CONTEXT_NAME);
@@ -74,9 +76,12 @@ public class ScriptActionExecutor extends BaseScriptActionExecutor {
 		Map<String, Object> inputObjects =
 			ScriptingContextBuilderUtil.buildScriptingContext(executionContext);
 
-		Map<String, Object> results = ScriptingUtil.eval(
+		String[] scriptRequiredContexts = StringUtil.split(
+			kaleoAction.getScriptRequiredContexts());
+
+		Map<String, Object> results = _scripting.eval(
 			null, inputObjects, _outputObjects, kaleoAction.getScriptLanguage(),
-			kaleoAction.getScript(), getScriptClassLoaders(kaleoAction));
+			kaleoAction.getScript(), scriptRequiredContexts);
 
 		Map<String, Serializable> resultsWorkflowContext =
 			(Map<String, Serializable>)results.get(
@@ -86,6 +91,12 @@ public class ScriptActionExecutor extends BaseScriptActionExecutor {
 			executionContext, resultsWorkflowContext);
 	}
 
+	@Reference(unbind = "-")
+	protected void setScripting(Scripting scripting) {
+		_scripting = scripting;
+	}
+
 	private final Set<String> _outputObjects = new HashSet<>();
+	private Scripting _scripting;
 
 }

@@ -1851,7 +1851,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			request, portletId, 0, PortletRequest.RENDER_PHASE);
+			request, portletId, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcRenderCommandName", "/blogs/view_entry");
 		portletURL.setParameter("entryId", String.valueOf(entry.getEntryId()));

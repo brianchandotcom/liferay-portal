@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,30 +12,6 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.item.selector;
-
-import java.io.IOException;
-
-import javax.portlet.PortletURL;
-
-import javax.servlet.ServletException;
-import javax.servlet.jsp.PageContext;
-
-/**
- * @author Iván Zaera
- */
-public interface ItemSelectorViewRenderer {
-
-	public String getItemSelectedEventName();
-
-	public ItemSelectorCriterion getItemSelectorCriterion();
-
-	public ItemSelectorView<ItemSelectorCriterion> getItemSelectorView();
-
-	public PortletURL getPortletURL();
-
-	public void renderHTML(PageContext pageContext)
-		throws IOException, ServletException;
-
-}
+<%@ include file="/init.jsp" %>

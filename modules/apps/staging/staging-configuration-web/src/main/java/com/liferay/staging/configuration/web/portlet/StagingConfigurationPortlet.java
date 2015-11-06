@@ -162,13 +162,13 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 			if (stagingType == StagingConstants.TYPE_LOCAL_STAGING) {
 				portletURL = PortalUtil.getControlPanelPortletURL(
 					actionRequest, liveGroup.getStagingGroup(),
-					StagingConfigurationPortletKeys.STAGING_CONFIGURATION, 0,
+					StagingConfigurationPortletKeys.STAGING_CONFIGURATION, 0, 0,
 					PortletRequest.RENDER_PHASE);
 			}
 			else if (stagingType == StagingConstants.TYPE_REMOTE_STAGING) {
 				portletURL = PortalUtil.getControlPanelPortletURL(
 					actionRequest, liveGroup,
-					StagingConfigurationPortletKeys.STAGING_CONFIGURATION, 0,
+					StagingConfigurationPortletKeys.STAGING_CONFIGURATION, 0, 0,
 					PortletRequest.RENDER_PHASE);
 			}
 
@@ -179,7 +179,7 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 		else if (stagingType == StagingConstants.TYPE_NOT_STAGED) {
 			PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 				actionRequest, liveGroup,
-				StagingConfigurationPortletKeys.STAGING_CONFIGURATION, 0,
+				StagingConfigurationPortletKeys.STAGING_CONFIGURATION, 0, 0,
 				PortletRequest.RENDER_PHASE);
 
 			if (portletURL != null) {

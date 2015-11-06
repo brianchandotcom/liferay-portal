@@ -2330,7 +2330,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		if (plid == LayoutConstants.DEFAULT_PLID) {
 			portletURL = PortalUtil.getControlPanelPortletURL(
-				request, WikiPortletKeys.WIKI_ADMIN, 0,
+				request, WikiPortletKeys.WIKI_ADMIN,
 				PortletRequest.RENDER_PHASE);
 		}
 		else {
@@ -2372,7 +2372,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 		else {
 			PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-				request, WikiPortletKeys.WIKI_ADMIN, 0,
+				request, WikiPortletKeys.WIKI_ADMIN,
 				PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter(

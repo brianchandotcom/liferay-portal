@@ -31,7 +31,7 @@ create table DDLRecordSet (
 	description STRING null,
 	minDisplayRows INTEGER,
 	scope INTEGER,
-	typeSettings TEXT null,
+	settings_ TEXT null,
 	lastPublishDate DATE null
 );
 

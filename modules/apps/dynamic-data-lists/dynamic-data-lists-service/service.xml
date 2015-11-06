@@ -79,7 +79,7 @@
 		<column name="description" type="String" localized="true" />
 		<column name="minDisplayRows" type="int" />
 		<column name="scope" type="int" />
-		<column name="typeSettings" type="String" />
+		<column name="settings" type="String" />
 		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->

@@ -69,7 +69,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 		attributes.put("description", getDescription());
 		attributes.put("minDisplayRows", getMinDisplayRows());
 		attributes.put("scope", getScope());
-		attributes.put("typeSettings", getTypeSettings());
+		attributes.put("settings", getSettings());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
@@ -161,10 +161,10 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 			setScope(scope);
 		}
 
-		String typeSettings = (String)attributes.get("typeSettings");
+		String settings = (String)attributes.get("settings");
 
-		if (typeSettings != null) {
-			setTypeSettings(typeSettings);
+		if (settings != null) {
+			setSettings(settings);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
@@ -489,24 +489,24 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	}
 
 	/**
-	* Returns the type settings of this d d l record set.
+	* Returns the settings of this d d l record set.
 	*
-	* @return the type settings of this d d l record set
+	* @return the settings of this d d l record set
 	*/
 	@Override
-	public java.lang.String getTypeSettings() {
-		return _ddlRecordSet.getTypeSettings();
+	public java.lang.String getSettings() {
+		return _ddlRecordSet.getSettings();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties() {
-		return _ddlRecordSet.getTypeSettingsProperties();
+	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties() {
+		return _ddlRecordSet.getSettingsProperties();
 	}
 
 	@Override
-	public java.lang.String getTypeSettingsProperty(java.lang.String key,
+	public java.lang.String getSettingsProperty(java.lang.String key,
 		java.lang.String defaultValue) {
-		return _ddlRecordSet.getTypeSettingsProperty(key, defaultValue);
+		return _ddlRecordSet.getSettingsProperty(key, defaultValue);
 	}
 
 	/**
@@ -856,13 +856,13 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	}
 
 	/**
-	* Sets the type settings of this d d l record set.
+	* Sets the settings of this d d l record set.
 	*
-	* @param typeSettings the type settings of this d d l record set
+	* @param settings the settings of this d d l record set
 	*/
 	@Override
-	public void setTypeSettings(java.lang.String typeSettings) {
-		_ddlRecordSet.setTypeSettings(typeSettings);
+	public void setSettings(java.lang.String settings) {
+		_ddlRecordSet.setSettings(settings);
 	}
 
 	/**

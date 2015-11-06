@@ -17,8 +17,6 @@
 <%@ include file="/display/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect", currentURL);
-
 DDLRecordSet recordSet = ddlFormDisplayContext.getRecordSet();
 %>
 
@@ -31,9 +29,13 @@ DDLRecordSet recordSet = ddlFormDisplayContext.getRecordSet();
 	<c:otherwise>
 		<portlet:actionURL name="addRecord" var="addRecordActionURL" />
 
+		<%
+		String redirect = GetterUtil.getString(recordSet.getSettingsProperty("redirectURL", currentURL));
+		%>
+
 		<div class="portlet-forms">
 			<aui:form action="<%= addRecordActionURL %>" method="post" name="fm">
-				<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 				<aui:input name="groupId" type="hidden" value="<%= themeDisplay.getScopeGroupId() %>" />
 				<aui:input name="recordSetId" type="hidden" value="<%= recordSet.getRecordSetId() %>" />
 				<aui:input name="availableLanguageId" type="hidden" value="<%= themeDisplay.getLanguageId() %>" />

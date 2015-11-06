@@ -3497,7 +3497,7 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 		ddlRecordSetImpl.setDescription(ddlRecordSet.getDescription());
 		ddlRecordSetImpl.setMinDisplayRows(ddlRecordSet.getMinDisplayRows());
 		ddlRecordSetImpl.setScope(ddlRecordSet.getScope());
-		ddlRecordSetImpl.setTypeSettings(ddlRecordSet.getTypeSettings());
+		ddlRecordSetImpl.setSettings(ddlRecordSet.getSettings());
 		ddlRecordSetImpl.setLastPublishDate(ddlRecordSet.getLastPublishDate());
 
 		return ddlRecordSetImpl;
@@ -3927,7 +3927,7 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No DDLRecordSet exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(DDLRecordSetPersistenceImpl.class);
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"uuid"
+				"uuid", "settings"
 			});
 	private static final DDLRecordSet _nullDDLRecordSet = new DDLRecordSetImpl() {
 			@Override

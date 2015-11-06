@@ -50,60 +50,6 @@
 		top: 2px;
 		width: 1em;
 	}
-
-	.lfr-nav-updateable {
-		.add-page-editor {
-			@include md {
-				margin-top: 7px;
-			}
-
-			.add-page-editor-input, .btn {
-				height: 32px;
-
-				@include md {
-					height: auto;
-				}
-			}
-
-			.add-page-editor-input {
-				left: 5px;
-				width: 70%;
-
-				@include md {
-					width: 150px;
-				}
-			}
-
-			.btn {
-				margin-left: 0;
-				margin-top: 0;
-				padding-bottom: 0;
-				padding-top: 0;
-				width: 30%;
-
-				@include md {
-					padding-bottom: 6px;
-					padding-top: 6px;
-					width: auto;
-				}
-			}
-
-			.input-group {
-				margin: 6px 0 7px;
-				width: 100%;
-
-				@include md {
-					margin-bottom: 0;
-					margin-top: 0;
-					width: auto;
-				}
-			}
-		}
-
-		&.selected a:hover span {
-			cursor: text;
-		}
-	}
 }
 
 .controls-hidden .modify-pages {

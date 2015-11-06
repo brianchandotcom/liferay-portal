@@ -2,3 +2,4 @@ Bundle-Name: Liferay Staging Portlet Data Handler
 Bundle-SymbolicName: com.liferay.staging.portlet.data.handler
 Bundle-Version: 1.0.0
 Include-Resource: classes
+Export-Package: com.liferay.staging.portlet.data.handler.*

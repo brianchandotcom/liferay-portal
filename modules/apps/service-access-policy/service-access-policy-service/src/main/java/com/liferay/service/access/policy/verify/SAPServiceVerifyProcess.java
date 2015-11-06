@@ -17,11 +17,12 @@ package com.liferay.service.access.policy.verify;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.model.Company;
+import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.service.access.policy.service.SAPEntryLocalService;
 
-import javax.servlet.ServletContext;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -30,7 +31,11 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Mika Koivisto
  */
-@Component(immediate = true, service = SAPServiceVerifyProcess.class)
+@Component(
+	immediate = true,
+	property = {"verify.process.name=com.liferay.service.access.policy.service"},
+	service = VerifyProcess.class
+)
 public class SAPServiceVerifyProcess extends VerifyProcess {
 
 	@Activate
@@ -40,25 +45,31 @@ public class SAPServiceVerifyProcess extends VerifyProcess {
 	}
 
 	@Reference
+	protected void setCompanyLocalService(
+		CompanyLocalService companyLocalService) {
+
+		_companyLocalService = companyLocalService;
+	}
+
+	@Reference
 	protected void setSAPEntryLocalService(
 		SAPEntryLocalService sapEntryLocalService) {
 
 		_sapEntryLocalService = sapEntryLocalService;
 	}
 
-	@Reference(target ="(original.bean=true)")
-	protected void setServiceContext(ServletContext serviceContext) {
-	}
-
 	protected void verifyDefaultSAPEntry() {
-		for (long companyId : PortalInstances.getCompanyIds()) {
+		List<Company> companies = _companyLocalService.getCompanies();
+
+		for (Company company : companies) {
 			try {
-				_sapEntryLocalService.checkSystemSAPEntries(companyId);
+				_sapEntryLocalService.checkSystemSAPEntries(
+					company.getCompanyId());
 			}
 			catch (PortalException pe) {
 				_log.error(
 					"Unable to add default service access policy for company " +
-						companyId,
+						company.getCompanyId(),
 					pe);
 			}
 		}
@@ -67,6 +78,7 @@ public class SAPServiceVerifyProcess extends VerifyProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SAPServiceVerifyProcess.class);
 
+	private CompanyLocalService _companyLocalService;
 	private SAPEntryLocalService _sapEntryLocalService;
 
 }

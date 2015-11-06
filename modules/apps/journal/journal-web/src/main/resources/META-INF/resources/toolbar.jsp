@@ -23,7 +23,6 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 %>
 
 <liferay-frontend:management-bar
-	checkBoxContainerId="entriesContainer"
 	includeCheckBox="<%= !user.isDefaultUser() && journalDisplayContext.isShowEditActions() %>"
 	searchContainerId="<%= searchContainerId %>"
 >

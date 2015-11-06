@@ -18,10 +18,6 @@ AUI.add(
 		var ManagementBar = A.Component.create(
 			{
 				ATTRS: {
-					checkBoxContainer: {
-						setter: 'one'
-					},
-
 					checkBoxesSelector: {
 						validator: Lang.isString,
 						value: 'input[type=checkbox]'
@@ -143,9 +139,9 @@ AUI.add(
 								action: Liferay.ManagementBar.restoreTask,
 								condition: Liferay.ManagementBar.testRestoreTask,
 								params: {
-									checkBoxContainerId: instance.get('checkBoxContainer').attr('id'),
 									checkBoxesSelector: instance.get('checkBoxesSelector'),
 									itemsCountContainerSelector: instance.get('itemsCountContainer').attr('class'),
+									searchContainerNodeId: instance.get('searchContainerId') + 'SearchContainer',
 									secondaryBarId: instance.get('secondaryBar').attr('id'),
 									selectAllCheckBoxesSelector: instance.get('selectAllCheckBoxesSelector')
 								}
@@ -214,20 +210,20 @@ AUI.add(
 						secondaryBar.addClass(STR_ON);
 					}
 
-					var checkBoxContainer = node.one(STR_HASH + params.checkBoxContainerId);
+					var searchContainerNode = node.one(STR_HASH + params.searchContainerNodeId);
 
 					var selectedElements = A.Array.partition(
 						state.data.elements,
 						function(item) {
 							var valueSelector = '[value="' + item.value + '"]';
 
-							return checkBoxContainer.one(params.checkBoxesSelector + valueSelector);
+							return searchContainerNode.one(params.checkBoxesSelector + valueSelector);
 						}
 					);
 
 					var onscreenSelectedItems = selectedElements.matches.length;
 
-					var checkBoxes = checkBoxContainer.all(params.checkBoxesSelector);
+					var checkBoxes = searchContainerNode.all(params.checkBoxesSelector);
 
 					var selectAllCheckBoxesCheckBox = secondaryBar.one(params.selectAllCheckBoxesSelector);
 
@@ -239,7 +235,7 @@ AUI.add(
 				},
 
 				testRestoreTask: function(state, params, node) {
-					return node.one(STR_HASH + params.checkBoxContainerId);
+					return node.one(STR_HASH + params.searchContainerNodeId);
 				}
 			}
 		);

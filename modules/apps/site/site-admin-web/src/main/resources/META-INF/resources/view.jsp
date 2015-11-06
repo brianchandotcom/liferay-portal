@@ -63,8 +63,8 @@ if (group != null) {
 </aui:nav-bar>
 
 <liferay-frontend:management-bar
-	checkBoxContainerId="sitesSearchContainer"
 	includeCheckBox="<%= true %>"
+	searchContainerId="sites"
 >
 	<liferay-frontend:management-bar-buttons>
 		<c:if test="<%= Validator.isNull(keywords) && (group != null) %>">

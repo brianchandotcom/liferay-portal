@@ -58,7 +58,6 @@ public class BuildCSSTask extends JavaExec {
 		setArgs(getCompleteArgs());
 
 		super.setClasspath(getClasspath());
-		super.setWorkingDir(getWorkingDir());
 
 		super.exec();
 	}
@@ -172,11 +171,6 @@ public class BuildCSSTask extends JavaExec {
 		return _project.files(sourceMapFiles);
 	}
 
-	@Override
-	public File getWorkingDir() {
-		return _project.getProjectDir();
-	}
-
 	@Input
 	public boolean isGenerateSourceMap() {
 		return _cssBuilderArgs.isGenerateSourceMap();
@@ -209,11 +203,6 @@ public class BuildCSSTask extends JavaExec {
 
 	public void setSassCompilerClassName(String sassCompilerClassName) {
 		_cssBuilderArgs.setSassCompilerClassName(sassCompilerClassName);
-	}
-
-	@Override
-	public void setWorkingDir(Object dir) {
-		throw new UnsupportedOperationException();
 	}
 
 	protected List<String> getCompleteArgs() {

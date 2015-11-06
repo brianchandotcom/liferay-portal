@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -50,6 +51,52 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class LDAPServerConfigurationProviderImpl
 	implements ConfigurationProvider<LDAPServerConfiguration> {
+
+	@Override
+	public boolean delete(long companyId) {
+		Map<Long, Configuration> configurations = _configurations.get(
+			companyId);
+
+		if (MapUtil.isEmpty(configurations)) {
+			return false;
+		}
+
+		for (Configuration configuration : configurations.values()) {
+			try {
+				configuration.delete();
+			}
+			catch (IOException ie) {
+				throw new SystemException(ie);
+			}
+		}
+
+		return true;
+	}
+
+	@Override
+	public boolean delete(long companyId, long ldapServerId) {
+		Map<Long, Configuration> configurations = _configurations.get(
+			companyId);
+
+		if (MapUtil.isEmpty(configurations)) {
+			return false;
+		}
+
+		Configuration configuration = configurations.get(ldapServerId);
+
+		if (configuration == null) {
+			return false;
+		}
+
+		try {
+			configuration.delete();
+		}
+		catch (IOException ie) {
+			throw new SystemException(ie);
+		}
+
+		return true;
+	}
 
 	@Override
 	public LDAPServerConfiguration getConfiguration(long companyId) {
@@ -278,6 +325,12 @@ public class LDAPServerConfigurationProviderImpl
 
 		Map<Long, Configuration> configurations = _configurations.get(
 			companyId);
+
+		if (configurations == null) {
+			configurations = new HashMap<>();
+
+			_configurations.put(companyId, configurations);
+		}
 
 		Map<Long, Configuration> defaultConfigurations = _configurations.get(
 			0L);

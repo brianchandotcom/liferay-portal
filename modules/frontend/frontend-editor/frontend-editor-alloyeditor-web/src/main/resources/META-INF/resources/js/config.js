@@ -1,0 +1,31 @@
+;(function() {
+	var PATH_FRONTEND_EDITOR_ALLOYEDITOR_WEB = Liferay.ThemeDisplay.getPathContext() + '/o/frontend-editor-alloyeditor-web';
+
+	AUI().applyConfig(
+		{
+			groups: {
+				alloyeditor: {
+					base: PATH_FRONTEND_EDITOR_ALLOYEDITOR_WEB + '/js/',
+					modules: {
+						'liferay-alloy-editor': {
+							path: 'alloyeditor.js',
+							requires: [
+								'alloy-editor',
+								'aui-component',
+								'liferay-portlet-base'
+							]
+						},
+						'liferay-alloy-editor-source': {
+							path: 'alloyeditor_source.js',
+							requires: [
+								'liferay-fullscreen-source-editor',
+								'liferay-source-editor'
+							]
+						}
+					},
+					root: PATH_FRONTEND_EDITOR_ALLOYEDITOR_WEB + '/js/'
+				}
+			}
+		}
+	);
+})();

@@ -80,6 +80,35 @@ public class UpdateRecordSetSettingsMVCActionCommand
 		String redirectURL = ParamUtil.getString(actionRequest, "redirectURL");
 
 		settingsProperties.setProperty("redirectURL", redirectURL);
+		
+		boolean sendEmailNotification = ParamUtil.getBoolean(
+			actionRequest, "sendEmailNotification");
+
+		String emailFromName = ParamUtil.getString(
+			actionRequest, "emailFromName");
+
+		String emailFromAddress = ParamUtil.getString(
+			actionRequest, "emailFromAddress");
+
+		String emailToAddress = ParamUtil.getString(
+			actionRequest, "emailToAddress");
+
+		String emailSubject = ParamUtil.getString(
+			actionRequest, "emailSubject");
+
+		settingsProperties.setProperty(
+			"sendEmailNotification", String.valueOf(sendEmailNotification));
+
+		if (sendEmailNotification) {
+			settingsProperties.setProperty("emailFromName", emailFromName);
+
+			settingsProperties.setProperty(
+				"emailFromAddress", emailFromAddress);
+
+			settingsProperties.setProperty("emailToAddress", emailToAddress);
+
+			settingsProperties.setProperty("emailSubject", emailSubject);
+		}
 
 		boolean requireCaptcha = ParamUtil.getBoolean(
 			actionRequest, "requireCaptcha");

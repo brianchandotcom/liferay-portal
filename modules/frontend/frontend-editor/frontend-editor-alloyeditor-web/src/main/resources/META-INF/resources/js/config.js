@@ -10,7 +10,6 @@
 						'liferay-alloy-editor': {
 							path: 'alloyeditor.js',
 							requires: [
-								'alloy-editor',
 								'aui-component',
 								'liferay-portlet-base'
 							]

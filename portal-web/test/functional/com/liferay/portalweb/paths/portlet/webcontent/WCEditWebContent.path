@@ -59,11 +59,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CHANGE_DEFAULT_LANGUAGE</td>
-	<td>//a[contains(@class,'change') and contains(@class,'locale')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TEXT_FIELD_WIDTH</td>
 	<td>//div[contains(@data-fieldname,'Text')]/input[contains(@class,'input-${key_widthSize}')]</td>
 	<td></td>

@@ -102,7 +102,7 @@
 		<if>
 			<equals arg1="${required}" arg2="true" />
 			<then>
-				<execute function="Check" locator1="CPVocabulariesAdd#REQUIRED_CHECKBOX" />
+				<execute function="Check" locator1="CategoriesEditVocabulary#REQUIRED_CHECKBOX" />
 			</then>
 		</if>
 

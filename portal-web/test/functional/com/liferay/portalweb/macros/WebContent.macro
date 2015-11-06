@@ -694,6 +694,16 @@
 		<execute function="AssertTextEquals" locator1="Message#ERROR_3" value1="${webContentTitle} is not approved." />
 	</command>
 
+	<command name="changeDefaultLanguage">
+		<var name="key_localizedLanguage" value="${localizedLanguage}" />
+
+		<execute function="AssertClick" locator1="Translation#CHANGE_DEFAULT_LANGUAGE" value1="Change" />
+
+		<execute function="Select" locator1="Select#DEFAULT_LANGUAGE" value1="${localizedLanguage}" />
+
+		<execute function="AssertTextEquals" locator1="WCEditWebContent#DEFAULT_LANGUAGE" value1="${localizedLanguage}" />
+	</command>
+
 	<command name="copyCP">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
@@ -1232,6 +1242,10 @@
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No web content was found" />
 		<execute function="AssertElementNotPresent" locator1="WC#ENTRY_DESCRIPTIVE_THUMBNAIL" />
 		<execute function="AssertElementNotPresent" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" />
+	</command>
+
+	<command name="viewDefaultLanguage">
+		<execute function="AssertTextEquals" locator1="WCEditWebContent#DEFAULT_LANGUAGE" value1="${localizedLanguage}" />
 	</command>
 
 	<command name="viewDefaultPGViaWCD">

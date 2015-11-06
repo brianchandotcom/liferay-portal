@@ -438,7 +438,7 @@
 <!--PORTLET_COLUMN-->
 <tr>
 	<td>PORTLET_COLUMN_1</td>
-	<td>//div[contains(@class,'col-md-6 portlet-column portlet-column-first')]//div[contains(@id,'NestedPortletsPortlet') and contains(@class,'portlet-dropzone portlet-column-content portlet-column-content-first empty')]</td>
+	<td>//div[contains(@class,'col-md-6 portlet-column portlet-column-first')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -448,7 +448,7 @@
 </tr>
 <tr>
 	<td>PORTLET_COLUMN_1_NESTED_PORTLET_TITLE</td>
-	<td>//div[contains(@id,'column-1')]//h1[@class='portlet-title' and contains(.,'${key_portletTitleName}')]/span</td>
+	<td>//div[contains(@id,'column-1')]//h2[contains(@class,'portlet-title') and contains(.,'${key_portletTitleName}')]</td>
 	<td></td>
 </tr>
 <tr>

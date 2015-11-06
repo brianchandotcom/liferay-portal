@@ -32,15 +32,27 @@ import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.SourceSet;
-import org.gradle.api.tasks.TaskContainer;
 
 /**
  * @author Andrea Di Giorgi
  */
 public class AlloyTaglibPlugin implements Plugin<Project> {
 
+	public static final String BUILD_TAGLIBS_TASK_NAME = "buildTaglibs";
+
 	@Override
-	public void apply(final Project project) {
+	public void apply(Project project) {
+		addTaskBuildTaglibs(project);
+	}
+
+	protected BuildTaglibsTask addTaskBuildTaglibs(Project project) {
+		final BuildTaglibsTask buildTaglibsTask = GradleUtil.addTask(
+			project, BUILD_TAGLIBS_TASK_NAME, BuildTaglibsTask.class);
+
+		buildTaglibsTask.setDescription(
+			"Builds the AlloyUI JSP Taglibs for this project.");
+		buildTaglibsTask.setGroup(BasePlugin.BUILD_GROUP);
+
 		PluginContainer pluginContainer = project.getPlugins();
 
 		pluginContainer.withType(
@@ -49,7 +61,8 @@ public class AlloyTaglibPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(BasePlugin basePlugin) {
-					configureTasksBuildTaglibsWithBase(project);
+					configureTaskBuildTaglibsOsgiModuleSymbolicName(
+						buildTaglibsTask);
 				}
 
 			});
@@ -60,10 +73,14 @@ public class AlloyTaglibPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(JavaPlugin javaPlugin) {
-					configureTasksBuildTaglibsWithJava(project);
+					configureTaskBuildTaglibsJavaDir(buildTaglibsTask);
+					configureTaskBuildTaglibsJspParentDir(buildTaglibsTask);
+					configureTaskBuildTaglibsTldDir(buildTaglibsTask);
 				}
 
 			});
+
+		return buildTaglibsTask;
 	}
 
 	protected void configureTaskBuildTaglibsJavaDir(
@@ -132,39 +149,6 @@ public class AlloyTaglibPlugin implements Plugin<Project> {
 						buildTaglibsTask.getProject());
 
 					return new File(resourcesDir, "META-INF/resources");
-				}
-
-			});
-	}
-
-	protected void configureTasksBuildTaglibsWithBase(Project project) {
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			BuildTaglibsTask.class,
-			new Action<BuildTaglibsTask>() {
-
-				@Override
-				public void execute(BuildTaglibsTask buildTaglibs) {
-					configureTaskBuildTaglibsOsgiModuleSymbolicName(
-						buildTaglibs);
-				}
-
-			});
-	}
-
-	protected void configureTasksBuildTaglibsWithJava(Project project) {
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			BuildTaglibsTask.class,
-			new Action<BuildTaglibsTask>() {
-
-				@Override
-				public void execute(BuildTaglibsTask buildTaglibsTask) {
-					configureTaskBuildTaglibsJavaDir(buildTaglibsTask);
-					configureTaskBuildTaglibsJspParentDir(buildTaglibsTask);
-					configureTaskBuildTaglibsTldDir(buildTaglibsTask);
 				}
 
 			});

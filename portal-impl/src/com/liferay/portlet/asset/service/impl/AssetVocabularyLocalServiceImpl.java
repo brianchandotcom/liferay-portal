@@ -386,11 +386,11 @@ public class AssetVocabularyLocalServiceImpl
 	@Override
 	public BaseModelSearchResult<AssetVocabulary> searchVocabularies(
 			long companyId, long groupId, String title, int start, int end,
-			OrderByComparator<AssetVocabulary> obc)
+			Sort sort)
 		throws PortalException {
 
 		SearchContext searchContext = buildSearchContext(
-			companyId, groupId, title, start, end, obc);
+			companyId, groupId, title, start, end, sort);
 
 		return searchVocabularies(searchContext);
 	}
@@ -429,7 +429,7 @@ public class AssetVocabularyLocalServiceImpl
 
 	protected SearchContext buildSearchContext(
 		long companyId, long groupId, String title, int start, int end,
-		OrderByComparator<AssetVocabulary> obc) {
+		Sort sort) {
 
 		SearchContext searchContext = new SearchContext();
 
@@ -439,15 +439,7 @@ public class AssetVocabularyLocalServiceImpl
 		searchContext.setGroupIds(new long[] {groupId});
 		searchContext.setKeywords(title);
 		searchContext.setStart(start);
-
-		if (obc != null) {
-			String orderByCol = obc.getOrderBy();
-
-			if (orderByCol.equals("create-date")) {
-				searchContext.setSorts(
-					new Sort("createDate", Sort.LONG_TYPE, obc.isAscending()));
-			}
-		}
+		searchContext.setSorts(sort);
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 

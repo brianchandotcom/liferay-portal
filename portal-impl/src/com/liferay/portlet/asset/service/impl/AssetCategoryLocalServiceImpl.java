@@ -636,13 +636,12 @@ public class AssetCategoryLocalServiceImpl
 	@Override
 	public BaseModelSearchResult<AssetCategory> searchCategories(
 			long companyId, long[] groupIds, String title, long[] vocabularyIds,
-			long[] parentCategoryIds, int start, int end,
-			OrderByComparator<AssetCategory> obc)
+			long[] parentCategoryIds, int start, int end, Sort sort)
 		throws PortalException {
 
 		SearchContext searchContext = buildSearchContext(
 			companyId, groupIds, title, parentCategoryIds, vocabularyIds, start,
-			end, obc);
+			end, sort);
 
 		return searchCategories(searchContext);
 	}
@@ -781,8 +780,7 @@ public class AssetCategoryLocalServiceImpl
 
 	protected SearchContext buildSearchContext(
 		long companyId, long[] groupIds, String title, long[] parentCategoryIds,
-		long[] vocabularyIds, int start, int end,
-		OrderByComparator<AssetCategory> obc) {
+		long[] vocabularyIds, int start, int end, Sort sort) {
 
 		SearchContext searchContext = new SearchContext();
 
@@ -799,15 +797,7 @@ public class AssetCategoryLocalServiceImpl
 		searchContext.setGroupIds(groupIds);
 		searchContext.setKeywords(title);
 		searchContext.setStart(start);
-
-		if (obc != null) {
-			String orderByCol = obc.getOrderBy();
-
-			if (orderByCol.equals("create-date")) {
-				searchContext.setSorts(
-					new Sort("createDate", Sort.LONG_TYPE, obc.isAscending()));
-			}
-		}
+		searchContext.setSorts(sort);
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 

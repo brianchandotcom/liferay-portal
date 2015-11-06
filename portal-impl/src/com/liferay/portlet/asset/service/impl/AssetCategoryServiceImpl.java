@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -528,13 +529,12 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 	@Override
 	public AssetCategoryDisplay searchCategoriesDisplay(
 			long groupId, String title, long vocabularyId,
-			long parentCategoryId, int start, int end,
-			OrderByComparator<AssetCategory> obc)
+			long parentCategoryId, int start, int end, Sort sort)
 		throws PortalException {
 
 		return searchCategoriesDisplay(
 			new long[] {groupId}, title, new long[] {vocabularyId},
-			new long[] {parentCategoryId}, start, end, obc);
+			new long[] {parentCategoryId}, start, end, sort);
 	}
 
 	@Override
@@ -576,8 +576,7 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 	@Override
 	public AssetCategoryDisplay searchCategoriesDisplay(
 			long[] groupIds, String title, long[] vocabularyIds,
-			long[] parentCategoryIds, int start, int end,
-			OrderByComparator<AssetCategory> obc)
+			long[] parentCategoryIds, int start, int end, Sort sort)
 		throws PortalException {
 
 		User user = getUser();
@@ -585,7 +584,7 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 		BaseModelSearchResult<AssetCategory> baseModelSearchResult =
 			assetCategoryLocalService.searchCategories(
 				user.getCompanyId(), groupIds, title, vocabularyIds,
-				parentCategoryIds, start, end, obc);
+				parentCategoryIds, start, end, sort);
 
 		return new AssetCategoryDisplay(
 			baseModelSearchResult.getBaseModels(),

@@ -20,9 +20,11 @@
 String activeView = ParamUtil.getString(request, "activeView", sessionClicksDefaultView);
 long date = ParamUtil.getLong(request, "date", System.currentTimeMillis());
 
+boolean showSiteCalendars = (groupCalendarResource != null) && (groupCalendarResource.getCalendarResourceId() != userCalendarResource.getCalendarResourceId());
+
 List<Calendar> groupCalendars = Collections.emptyList();
 
-if (groupCalendarResource != null) {
+if (showSiteCalendars) {
 	groupCalendars = CalendarServiceUtil.search(themeDisplay.getCompanyId(), null, new long[] {groupCalendarResource.getCalendarResourceId()}, null, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, (OrderByComparator)null);
 }
 
@@ -91,11 +93,11 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 					<div class="calendar-portlet-calendar-list" id="<portlet:namespace />myCalendarList"></div>
 				</c:if>
 
-				<c:if test="<%= groupCalendarResource != null %>">
+				<c:if test="<%= showSiteCalendars %>">
 					<div class="calendar-portlet-list-header toggler-header-expanded">
 						<span class="calendar-portlet-list-arrow"></span>
 
-						<span class="calendar-portlet-list-text"><liferay-ui:message key="current-site-calendars" /></span>
+						<span class="calendar-portlet-list-text"><liferay-ui:message arguments="<%= new String[] {groupCalendarResource.getName(locale)} %>" key="x-calendars" /></span>
 
 						<c:if test="<%= CalendarResourcePermission.contains(permissionChecker, groupCalendarResource, CalendarActionKeys.ADD_CALENDAR) %>">
 							<span class="calendar-list-item-arrow" data-calendarResourceId="<%= groupCalendarResource.getCalendarResourceId() %>" tabindex="0"><i class="icon-caret-down"></i></span>
@@ -200,7 +202,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 			calendarLists.push(window.<portlet:namespace />otherCalendarList);
 		</c:if>
 
-		<c:if test="<%= groupCalendarResource != null %>">
+		<c:if test="<%= showSiteCalendars %>">
 			calendarLists.push(window.<portlet:namespace />siteCalendarList);
 		</c:if>
 

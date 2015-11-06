@@ -1,4 +1,6 @@
 <definition>
+	<var name="siteName" value="Liferay" />
+
 	<command name="_assertDialogBoxPresent">
 		<if>
 			<equals arg1="${schedulerEventDialogBox}" arg2="false" />
@@ -1531,6 +1533,7 @@
 
 	<command name="viewInvitedUserRSVPWithApprovedWorkflow">
 		<var name="key_siteCalendarName" value="${siteCalendarName}" />
+		<var name="key_siteName" value="${siteName}" />
 
 		<execute function="AssertClick" locator1="Calendar#CURRENT_SITE_CALENDARS_CALENDAR" value1="${siteCalendarName}" />
 
@@ -1544,6 +1547,7 @@
 
 	<command name="viewNoUserInviteWithUnapprovedWorkflow">
 		<var name="key_siteCalendarName" value="${siteCalendarName}" />
+		<var name="key_siteName" value="${siteName}" />
 
 		<execute function="AssertClick" locator1="Calendar#CURRENT_SITE_CALENDARS_CALENDAR" value1="${siteCalendarName}" />
 

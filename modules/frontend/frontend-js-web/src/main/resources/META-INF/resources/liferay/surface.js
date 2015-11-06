@@ -350,6 +350,9 @@ AUI.add(
 					},
 					method: {
 						value: 'POST'
+					},
+					timeout: {
+						value: Liferay.PropsValues.JAVASCRIPT_SINGLE_PAGE_APPLICATION_TIMEOUT
 					}
 				},
 
@@ -364,6 +367,9 @@ AUI.add(
 				ATTRS: {
 					cacheable: {
 						value: true
+					},
+					timeout: {
+						value: Liferay.PropsValues.JAVASCRIPT_SINGLE_PAGE_APPLICATION_TIMEOUT
 					},
 					urlParams: {
 						value: {

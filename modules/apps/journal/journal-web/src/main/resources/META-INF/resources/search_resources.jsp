@@ -33,8 +33,6 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 int total = 0;
 
-boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, ArticleDisplayTerms.ADVANCED_SEARCH);
-
 PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 portletURL.setParameter("redirect", redirect);
@@ -46,29 +44,14 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portlet
 
 <div class="search-info">
 	<span class="keywords">
-
-		<%
-		String message = StringPool.BLANK;
-
-		if (advancedSearch) {
-			if (folder != null) {
-				message = LanguageUtil.format(request, "advanced-search-in-x", HtmlUtil.escape(folder.getName()), false);
-			}
-			else {
-				message = LanguageUtil.get(request, "advanced-search-everywhere");
-			}
-		}
-		else {
-			if (folder != null) {
-				message = LanguageUtil.format(request, "searched-for-x-in-x", new Object[] {HtmlUtil.escape(keywords), HtmlUtil.escape(folder.getName())}, false);
-			}
-			else {
-				message = LanguageUtil.format(request, "searched-for-x-everywhere", HtmlUtil.escape(keywords), false);
-			}
-		}
-		%>
-
-		<%= message %>
+		<c:choose>
+			<c:when test="<%= folder != null %>">
+				<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(keywords)} %>" key="searched-for-x-in-x" translateArguments="<%= false %>" />
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:message arguments="<%= HtmlUtil.escape(keywords) %>" key="searched-for-x-everywhere" translateArguments="<%= false %>" />
+			</c:otherwise>
+		</c:choose>
 	</span>
 
 	<c:if test="<%= folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID %>">
@@ -131,34 +114,22 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portlet
 
 				Indexer<?> indexer = null;
 
-				if (searchTerms.isAdvancedSearch()) {
-					indexer = IndexerRegistryUtil.nullSafeGetIndexer(JournalArticle.class);
+				indexer = JournalSearcher.getInstance();
 
-					searchContext.setAndSearch(searchTerms.isAndOperator());
-					searchContext.setAttribute(Field.ARTICLE_ID, searchTerms.getArticleId());
-					searchContext.setAttribute(Field.CONTENT, searchTerms.getContent());
-					searchContext.setAttribute(Field.DESCRIPTION, searchTerms.getDescription());
-					searchContext.setAttribute(Field.STATUS, searchTerms.getStatus());
-					searchContext.setAttribute(Field.TITLE, searchTerms.getTitle());
+				searchContext.setAttribute(Field.STATUS, WorkflowConstants.STATUS_ANY);
+
+				if (Validator.isNotNull(keywords)) {
+					searchContext.setAttribute(Field.ARTICLE_ID, keywords);
+					searchContext.setAttribute(Field.CONTENT, keywords);
+					searchContext.setAttribute(Field.DESCRIPTION, keywords);
+					searchContext.setAttribute(Field.TITLE, keywords);
+					searchContext.setKeywords(keywords);
 				}
 				else {
-					indexer = JournalSearcher.getInstance();
-
-					searchContext.setAttribute(Field.STATUS, WorkflowConstants.STATUS_ANY);
-
-					if (Validator.isNotNull(keywords)) {
-						searchContext.setAttribute(Field.ARTICLE_ID, keywords);
-						searchContext.setAttribute(Field.CONTENT, keywords);
-						searchContext.setAttribute(Field.DESCRIPTION, keywords);
-						searchContext.setAttribute(Field.TITLE, keywords);
-						searchContext.setKeywords(keywords);
-					}
-					else {
-						searchContext.setAndSearch(true);
-					}
-
-					searchContext.setIncludeDiscussions(true);
+					searchContext.setAndSearch(true);
 				}
+
+				searchContext.setIncludeDiscussions(true);
 
 				LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
 
@@ -353,16 +324,7 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portlet
 
 		<c:if test="<%= emptySearchResults %>">
 			<div class="alert alert-info">
-
-				<%
-				message = LanguageUtil.get(request, "no-web-content-was-found-that-matched-the-specified-filters");
-
-				if (!advancedSearch) {
-					message = LanguageUtil.format(request, "no-web-content-was-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>", false);
-				}
-				%>
-
-				<%= message %>
+				<liferay-ui:message arguments='<%= "<strong>" + HtmlUtil.escape(keywords) + "</strong>" %>' key="no-web-content-was-found-that-matched-the-keywords-x" translateArguments="<%= false %>" />
 			</div>
 		</c:if>
 

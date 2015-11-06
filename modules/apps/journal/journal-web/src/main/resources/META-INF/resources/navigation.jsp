@@ -101,7 +101,7 @@ long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId);
 		%>
 
 		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
-			<liferay-util:include page="/article_search.jsp" servletContext="<%= application %>" />
+			<liferay-ui:input-search markupView="lexicon" />
 		</aui:form>
 	</aui:nav-bar-search>
 </aui:nav-bar>

@@ -18,10 +18,6 @@
 
 <%
 String keywords = ParamUtil.getString(request, "keywords");
-
-boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, ArticleDisplayTerms.ADVANCED_SEARCH);
-
-boolean search = Validator.isNotNull(keywords) || advancedSearch;
 %>
 
 <liferay-frontend:management-bar
@@ -33,7 +29,7 @@ boolean search = Validator.isNotNull(keywords) || advancedSearch;
 			<aui:a cssClass="btn infoPanelToggler" href="javascript:;" iconCssClass="icon-info-sign" />
 		</li>
 
-		<c:if test="<%= !search %>">
+		<c:if test="<%= Validator.isNull(keywords) %>">
 			<liferay-util:include page="/display_style_buttons.jsp" servletContext="<%= application %>" />
 		</c:if>
 	</liferay-frontend:management-bar-buttons>

@@ -21,14 +21,7 @@ journalParams.put("expandoAttributes", searchTerms.getKeywords());
 
 Sort sort = SortFactoryUtil.getSort(JournalArticle.class, searchContainer.getOrderByCol(), searchContainer.getOrderByType());
 
-BaseModelSearchResult<JournalArticle> baseModelSearchResult = null;
-
-if (searchTerms.isAdvancedSearch()) {
-	baseModelSearchResult = JournalArticleLocalServiceUtil.searchJournalArticles(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFolderIds(), JournalArticleConstants.CLASSNAME_ID_DEFAULT, searchTerms.getArticleId(), searchTerms.getTitle(), searchTerms.getDescription(), searchTerms.getContent(), searchTerms.getStatus(), searchTerms.getDDMStructureKey(), searchTerms.getDDMTemplateKey(), journalParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), sort);
-}
-else {
-	baseModelSearchResult = JournalArticleLocalServiceUtil.searchJournalArticles(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFolderIds(), JournalArticleConstants.CLASSNAME_ID_DEFAULT, searchTerms.getDDMStructureKey(), searchTerms.getDDMTemplateKey(), searchTerms.getKeywords(), journalParams, searchContainer.getStart(), searchContainer.getEnd(), sort);
-}
+BaseModelSearchResult<JournalArticle> baseModelSearchResult = JournalArticleLocalServiceUtil.searchJournalArticles(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFolderIds(), JournalArticleConstants.CLASSNAME_ID_DEFAULT, searchTerms.getDDMStructureKey(), searchTerms.getDDMTemplateKey(), searchTerms.getKeywords(), journalParams, searchContainer.getStart(), searchContainer.getEnd(), sort);
 
 results = baseModelSearchResult.getBaseModels();
 

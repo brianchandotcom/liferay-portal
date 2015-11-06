@@ -25,9 +25,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 	includeCheckBox="<%= !user.isDefaultUser() && journalDisplayContext.isShowEditActions() %>"
 >
 	<liferay-frontend:management-bar-buttons>
-		<li>
-			<aui:a cssClass="btn infoPanelToggler" href="javascript:;" iconCssClass="icon-info-sign" />
-		</li>
+		<liferay-frontend:management-bar-button cssClass="infoPanelToggler" href="javascript:;" iconCssClass="icon-info-sign" />
 
 		<c:if test="<%= Validator.isNull(keywords) %>">
 			<liferay-util:include page="/display_style_buttons.jsp" servletContext="<%= application %>" />

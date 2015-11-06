@@ -201,11 +201,6 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 	}
 
 	@Override
-	protected Task addTaskWar(Project project) {
-		return null;
-	}
-
-	@Override
 	protected void applyPlugins(Project project) {
 		super.applyPlugins(project);
 

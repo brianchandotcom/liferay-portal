@@ -104,7 +104,6 @@ import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.plugins.MavenPlugin;
 import org.gradle.api.plugins.MavenPluginConvention;
-import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.Delete;
@@ -457,7 +456,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		addTaskStartTestableTomcat(project);
 		addTaskStopTestableTomcat(project);
 		addTaskTestIntegration(project);
-		addTaskWar(project);
 		addTaskZipJavadoc(project);
 	}
 
@@ -831,17 +829,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		checkTask.dependsOn(test);
 
 		return test;
-	}
-
-	protected Task addTaskWar(Project project) {
-		Task task = project.task(WarPlugin.WAR_TASK_NAME);
-
-		task.dependsOn(JavaPlugin.JAR_TASK_NAME);
-
-		task.setDescription("Alias for 'jar'.");
-		task.setGroup(BasePlugin.BUILD_GROUP);
-
-		return task;
 	}
 
 	protected Zip addTaskZipJavadoc(Project project) {

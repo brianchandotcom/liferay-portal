@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.alloy.taglib;
 
 import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.util.Validator;
 
 import java.io.File;
 
@@ -47,6 +48,28 @@ public class AlloyTaglibPlugin implements Plugin<Project> {
 				@Override
 				public void execute(JavaPlugin javaPlugin) {
 					configureTasksBuildTaglibsWithJava(project);
+				}
+
+			});
+	}
+
+	protected void configureTaskBuildTaglibsJavaDir(
+		final BuildTaglibsTask buildTaglibsTask) {
+
+		buildTaglibsTask.setJavaDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					String javaPackage = buildTaglibsTask.getJavaPackage();
+
+					if (Validator.isNull(javaPackage)) {
+						return null;
+					}
+
+					return new File(
+						getJavaDir(buildTaglibsTask.getProject()),
+						javaPackage.replace('.', '/'));
 				}
 
 			});
@@ -89,11 +112,19 @@ public class AlloyTaglibPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(BuildTaglibsTask buildTaglibsTask) {
+					configureTaskBuildTaglibsJavaDir(buildTaglibsTask);
 					configureTaskBuildTaglibsJspParentDir(buildTaglibsTask);
 					configureTaskBuildTaglibsTldDir(buildTaglibsTask);
 				}
 
 			});
+	}
+
+	protected File getJavaDir(Project project) {
+		SourceSet sourceSet = GradleUtil.getSourceSet(
+			project, SourceSet.MAIN_SOURCE_SET_NAME);
+
+		return getSrcDir(sourceSet.getJava());
 	}
 
 	protected File getResourcesDir(Project project) {

@@ -101,17 +101,13 @@ public class FacetedSearcher extends BaseSearcher {
 			searchQuery.addTerms(Field.KEYWORDS, keywords);
 		}
 
-		List<Group> inactiveGroups = new ArrayList<>();
-
-		inactiveGroups = GroupLocalServiceUtil.getActiveGroups(
+		List<Group> inactiveGroups = GroupLocalServiceUtil.getActiveGroups(
 			searchContext.getCompanyId(), false);
 
 		for (Group inactiveGroup : inactiveGroups) {
-			String groupIdString = Long.toString(inactiveGroup.getGroupId());
-
 			searchQuery.addTerm(
-				Field.GROUP_ID, groupIdString, false,
-				BooleanClauseOccur.MUST_NOT);
+				Field.GROUP_ID, String.valueOf(inactiveGroup.getGroupId()),
+				false, BooleanClauseOccur.MUST_NOT);
 		}
 
 		for (String entryClassName : searchContext.getEntryClassNames()) {

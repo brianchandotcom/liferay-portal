@@ -15,13 +15,23 @@
 package com.liferay.portal.workflow.kaleo.action.executor.internal;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ClassUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.workflow.kaleo.action.executor.ActionExecutor;
+import com.liferay.portal.workflow.kaleo.definition.ScriptLanguage;
 import com.liferay.portal.workflow.kaleo.model.KaleoAction;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.action.ActionExecutorManager;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Leonardo Barros
@@ -34,20 +44,77 @@ public class ActionExecutorManagerImpl implements ActionExecutorManager {
 			KaleoAction kaleoAction, ExecutionContext executionContext)
 		throws PortalException {
 
-		ActionExecutor actionExecutor =
-			_actionExecutorTracker.getActionExecutor(
-				kaleoAction.getScriptLanguage(), kaleoAction.getScript());
+		String actionExecutorKey = getActionExecutorKey(
+			kaleoAction.getScriptLanguage(), kaleoAction.getScript());
+
+		ActionExecutor actionExecutor = _actionExecutors.get(actionExecutorKey);
+
+		if (actionExecutor == null) {
+			throw new PortalException(
+				"No ActionExecutor configured for: " + actionExecutorKey);
+		}
 
 		actionExecutor.execute(kaleoAction, executionContext);
 	}
 
-	@Reference(unbind = "-")
-	protected void setActionExecutorTracker(
-		ActionExecutorTracker actionExecutorTracker) {
+	public String getActionExecutorKey(
+		String language, String actionExecutorClassName) {
 
-		_actionExecutorTracker = actionExecutorTracker;
+		ScriptLanguage scriptLanguage = ScriptLanguage.parse(language);
+
+		if (scriptLanguage.equals(ScriptLanguage.JAVA)) {
+			return language + StringPool.COLON + actionExecutorClassName;
+		}
+		else {
+			return language;
+		}
 	}
 
-	private ActionExecutorTracker _actionExecutorTracker;
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		unbind = "unregisterActionExecutor"
+	)
+	protected synchronized void registerActionExecutor(
+		ActionExecutor actionExecutor, Map<String, Object> properties) {
+
+		Object languageProperty = properties.get(
+			"com.liferay.portal.workflow.kaleo.action.executor.language");
+
+		String[] defaultValue = new String[] {String.valueOf(languageProperty)};
+
+		String[] languages = GetterUtil.getStringValues(
+			languageProperty, defaultValue);
+
+		for (String language : languages) {
+			String actionExecutorKey = getActionExecutorKey(
+				language, ClassUtil.getClassName(actionExecutor));
+
+			_actionExecutors.put(actionExecutorKey, actionExecutor);
+		}
+	}
+
+	protected synchronized void unregisterActionExecutor(
+		ActionExecutor actionExecutor, Map<String, Object> properties) {
+
+		Object languageProperty = properties.get(
+			"com.liferay.portal.workflow.kaleo.action.executor.language");
+
+		String[] defaultValue = new String[] {String.valueOf(languageProperty)};
+
+		String[] languages = GetterUtil.getStringValues(
+			languageProperty, defaultValue);
+
+		for (String language : languages) {
+			String actionExecutorKey = getActionExecutorKey(
+				language, ClassUtil.getClassName(actionExecutor));
+
+			_actionExecutors.remove(actionExecutorKey);
+		}
+	}
+
+	private final Map<String, ActionExecutor> _actionExecutors =
+		new ConcurrentHashMap<>();
 
 }

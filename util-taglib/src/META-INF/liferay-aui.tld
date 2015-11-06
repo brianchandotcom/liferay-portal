@@ -2878,4 +2878,11 @@
 			<type>java.lang.String</type>
 		</attribute>
 	</tag>
+	<tag>
+		<description><![CDATA[Creates a <code>&lt;div&gt;</code> tag to group fieldset elements.]]></description>
+		<name>fieldset-group</name>
+		<tag-class>com.liferay.taglib.aui.FieldsetGroupTag</tag-class>
+		<body-content>JSP</body-content>
+		<dynamic-attributes>true</dynamic-attributes>
+	</tag>
 </taglib>

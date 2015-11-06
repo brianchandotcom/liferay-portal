@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
@@ -405,11 +406,21 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 			boolean addDefaultVocabulary)
 		throws PortalException {
 
+		return searchVocabulariesDisplay(
+			groupId, title, start, end, null, addDefaultVocabulary);
+	}
+
+	@Override
+	public AssetVocabularyDisplay searchVocabulariesDisplay(
+			long groupId, String title, int start, int end, Sort sort,
+			boolean addDefaultVocabulary)
+		throws PortalException {
+
 		User user = getUser();
 
 		BaseModelSearchResult<AssetVocabulary> baseModelSearchResult =
 			assetVocabularyLocalService.searchVocabularies(
-				user.getCompanyId(), groupId, title, start, end);
+				user.getCompanyId(), groupId, title, start, end, sort);
 
 		List<AssetVocabulary> vocabularies =
 			baseModelSearchResult.getBaseModels();

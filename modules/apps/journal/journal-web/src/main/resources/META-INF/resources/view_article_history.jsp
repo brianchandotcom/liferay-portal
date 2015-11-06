@@ -27,6 +27,8 @@ String orderByCol = ParamUtil.getString(request, "orderByCol", "version");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
 JournalArticle article = journalDisplayContext.getArticle();
+
+String backURL = ParamUtil.getString(request, "backURL");
 %>
 
 <c:choose>
@@ -36,16 +38,6 @@ JournalArticle article = journalDisplayContext.getArticle();
 		</div>
 	</c:when>
 	<c:otherwise>
-
-		<portlet:renderURL var="backURL">
-			<portlet:param name="mvcPath" value="/edit_article.jsp" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="referringPortletResource" value="<%= referringPortletResource %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
-			<portlet:param name="folderId" value="<%= String.valueOf(article.getFolderId()) %>" />
-			<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
-			<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
-		</portlet:renderURL>
 
 		<%
 		portletDisplay.setShowBackIcon(true);

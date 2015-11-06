@@ -50,27 +50,27 @@
 </tr>
 <tr>
 	<td>DATE_FIELD</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]/span/input</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DECIMAL_FIELD</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]/input</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENTS_AND_MEDIA_FIELD</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]/input</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENTS_AND_MEDIA_SELECT</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]/div/button[contains(.,'Select')]</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//button[contains(.,'Select')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENTS_AND_MEDIA_CLEAR</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]/div/button[contains(.,'Clear')]</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//button[contains(.,'Clear')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -80,12 +80,12 @@
 </tr>
 <tr>
 	<td>INTEGER_FIELD</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]/input</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LINK_TO_PAGE_SELECT</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]/select</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//select</td>
 	<td></td>
 </tr>
 <tr>
@@ -95,12 +95,12 @@
 </tr>
 <tr>
 	<td>PARAGRAPH_FIELD</td>
-	<td>//div[@class='lfr-ddm-container']/p[contains(.,'${key_fieldText}')]</td>
+	<td>//div[@class='lfr-ddm-container']//p[contains(.,'${key_fieldText}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NUMBER_FIELD</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]/input</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//input</td>
 	<td></td>
 </tr>
 <tr>
@@ -125,17 +125,17 @@
 </tr>
 <tr>
 	<td>RADIO_OPTION_LABEL</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]/label[contains(.,'${key_ddlRecordFieldData}')]</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//label[contains(.,'${key_ddlRecordFieldData}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RADIO_OPTION_RADIO</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]/label[contains(.,'${key_ddlRecordFieldData}')]/input</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//label[contains(.,'${key_ddlRecordFieldData}')]/input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SELECT_SELECT</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]/div/select</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//select</td>
 	<td></td>
 </tr>
 <tr>
@@ -150,22 +150,22 @@
 </tr>
 <tr>
 	<td>TEXT_FIELD</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]/input</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TEXT_BOX_FIELD</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]/textarea</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//textarea</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DYNAMIC_DATA_GENERIC_FIELD</td>
-	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${key_dmDynamicDataFieldName}')]/input</td>
+	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${key_dmDynamicDataFieldName}')]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DYNAMIC_DATA_GENERIC_TEXTAREA</td>
-	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${key_dmDynamicDataFieldTextarea}')]/textarea</td>
+	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${key_dmDynamicDataFieldTextarea}')]//textarea</td>
 	<td></td>
 </tr>
 </tbody>

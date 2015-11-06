@@ -7,10 +7,10 @@
 		<if>
 			<equals arg1="${pageTemplateActive}" arg2="No" />
 			<then>
-				<execute function="Uncheck" locator1="Checkbox#ACTIVE" />
+				<execute function="Click" locator1="Checkbox#ACTIVE_TOGGLE_SWITCH" />
 			</then>
 			<else>
-				<execute function="Check" locator1="Checkbox#ACTIVE" />
+				<execute function="Uncheck" locator1="Checkbox#ACTIVE_TOGGLE_SWITCH" />
 			</else>
 		</if>
 
@@ -19,7 +19,7 @@
 
 		<var name="key_pageTemplateName" value="${pageTemplateName}" />
 
-		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
 		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_ACTIVE" value1="${pageTemplateActive}" />
 	</command>
 
@@ -35,8 +35,10 @@
 	<command name="editCP">
 		<var name="key_pageTemplateName" value="${pageTemplateName}" />
 
-		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
+
 		<execute function="Click" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_ACTIONS" />
+
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${pageTemplateName} Edit" />
@@ -44,31 +46,28 @@
 		<if>
 			<equals arg1="${pageTemplateActive}" arg2="No" />
 			<then>
-				<execute function="Uncheck" locator1="Checkbox#ACTIVE" />
+				<execute function="Click" locator1="Checkbox#ACTIVE_TOGGLE_SWITCH" />
 			</then>
 			<else>
-				<execute function="Check" locator1="Checkbox#ACTIVE" />
+				<execute function="Uncheck" locator1="Checkbox#ACTIVE_TOGGLE_SWITCH" />
 			</else>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="PageTemplates#OPEN_PAGE_TEMPLATE" value1="Open Page Template" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<var name="key_pageTemplateName" value="${pageTemplateName}" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName} Edit" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName} Edit" />
 		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_ACTIVE" value1="${pageTemplateActive}" />
 	</command>
 
 	<command name="gotoPageTemplateViaEdit">
 		<var name="key_pageTemplateName" value="${pageTemplateName}" />
 
-		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
-		<execute function="Click" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
 
-		<execute function="AssertClick" locator1="PageTemplates#OPEN_PAGE_TEMPLATE" value1="Open Page Template" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />" />
 	</command>
 
 	<command name="tearDownCP">
@@ -76,10 +75,12 @@
 			<var name="portletName" value="Page Templates" />
 		</execute>
 
+		<var name="key_pageTemplateName" value="Page Template Name" />
+
 		<while>
-			<condition function="IsElementPresent" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_ACTIONS_4" />
+			<condition function="IsElementPresent" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_ACTIONS" />
 			<then>
-				<execute function="Click" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_ACTIONS_4" />
+				<execute function="Click" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_ACTIONS" />
 				<execute function="AssertClick" locator1="MenuItem#DELETE" value1="Delete" />
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
@@ -90,14 +91,14 @@
 	<command name="viewCP">
 		<var name="key_pageTemplateName" value="Page Template Name" />
 
-		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
 	</command>
 
 	<command name="viewDefaultCP">
 		<for list="${pageTemplateNameList}" param="pageTemplateName" >
 			<var name="key_pageTemplateName" value="${pageTemplateName}" />
 
-			<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
+			<execute function="AssertTextEquals#assertPartialText" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
 		</for>
 
 		<execute function="AssertElementNotPresent" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME_4" />
@@ -107,7 +108,7 @@
 		<for list="${pageTemplateNameList}" param="pageTemplateNameTranslation" >
 			<var name="key_pageTemplateName" value="${pageTemplateNameTranslation}" />
 
-			<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateNameTranslation}" />
+			<execute function="AssertTextEquals#assertPartialText" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateNameTranslation}" />
 		</for>
 
 		<for list="${pageTemplateDescriptionList}" param="DescriptionTranslation" >

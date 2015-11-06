@@ -582,7 +582,7 @@
 </tr>
 <tr>
 	<td>SITE_ADMINISTRATION_NAVIGATION</td>
-	<td>//ul[contains(@class,'category-portlets')]/li[contains(.,'${key_portletName}')]/span/a</td>
+	<td>//div[contains(@id,'site_administration')]//li/a[contains(.,'${key_portletName}')]</td>
 	<td>Site Administration Navigation</td>
 </tr>
 <tr>

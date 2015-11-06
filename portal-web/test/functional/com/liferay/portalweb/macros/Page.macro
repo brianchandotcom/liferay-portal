@@ -817,15 +817,13 @@
 			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
-		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="ControlMenu#ADMIN" value1="${adminLocalized}" />
-
 		<var name="key_portletCategoryName" value="${portletCategoryName}" />
 
 		<execute function="AssertClick" locator1="ControlMenu#ADMIN_SITE_ADMINISTRATION_CATEGORY" value1="${portletCategoryName}" />
 
 		<var name="key_portletName" value="${portletName}" />
 
-		<execute function="AssertClick#assertPartialTextClickAtCPNavigation" locator1="Home#SITE_ADMINISTRATION_NAVIGATION" value1="${portletName}" />
+		<execute function="AssertClick" locator1="Home#SITE_ADMINISTRATION_NAVIGATION" value1="${portletName}" />
 	</command>
 
 	<command name="gotoUsersCP">

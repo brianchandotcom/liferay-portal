@@ -66,47 +66,47 @@
 <!--ADMIN-->
 <tr>
 	<td>ADMIN_SITE_ADMINISTRATION</td>
-	<td>//li[@id='_145_adminLinks']/ul/li/a[contains(.,'Site Administration')]</td>
+	<td>//div[contains(@id,'product_menu')]//a[contains(.,'Site Administration')]</td>
 	<td>Site Administration Navigation</td>
 </tr>
 <tr>
 	<td>ADMIN_SITE_ADMINISTRATION_CATEGORY</td>
-	<td>//li[@id='_145_adminLinks']/ul/li/ul/li/a[contains(.,' ${key_portletCategoryName}')]</td>
+	<td>//div[contains(@id,'product_menu')]//a[contains(.,' ${key_portletCategoryName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADMIN_SITE_ADMINISTRATION_PAGES</td>
-	<td>//li[@id='_145_adminLinks']/ul/li/ul/li/a[contains(.,'Pages')]</td>
+	<td>//div[contains(@id,'product_menu')]//a[contains(.,'Pages')]</td>
 	<td>Pages Navigation</td>
 </tr>
 <tr>
 	<td>ADMIN_SITE_ADMINISTRATION_CONTENT</td>
-	<td>//li[@id='_145_adminLinks']/ul/li/ul/li/a[contains(.,'Content')]</td>
+	<td>//div[contains(@id,'product_menu')]//a[contains(.,'Content')]</td>
 	<td>Content Navigation</td>
 </tr>
 <tr>
 	<td>ADMIN_SITE_ADMINISTRATION_USERS</td>
-	<td>//li[@id='_145_adminLinks']/ul/li/ul/li/a[contains(.,'Users')]</td>
+	<td>//div[contains(@id,'product_menu')]//a[contains(.,'Users')]</td>
 	<td>Users Navigation</td>
 </tr>
 <tr>
 	<td>ADMIN_SITE_ADMINISTRATION_CONFIGURATION</td>
-	<td>//li[@id='_145_adminLinks']/ul/li/ul/li/a[contains(.,'Configuration')]</td>
+	<td>//div[contains(@id,'product_menu')]//a[contains(.,'Configuration')]</td>
 	<td>Configuration Navigation</td>
 </tr>
 <tr>
 	<td>ADMIN_SITE_ADMINISTRATION_CONFIGURATION_LOCALIZED</td>
-	<td>//li[@id='_145_adminLinks']/ul/li/ul/li/a[contains(.,'${key_localizedPortletCategoryName}')]</td>
+	<td>//div[contains(@id,'product_menu')]//a[contains(.,'${key_localizedPortletCategoryName}')]</td>
 	<td>Configuration Navigation</td>
 </tr>
 <tr>
 	<td>ADMIN_CONTROL_PANEL</td>
-	<td>//li[@id='_145_adminLinks']/ul/li/a[contains(.,'Control Panel')]</td>
+	<td>//div[contains(@id,'product_menu')]//a[contains(.,'Control Panel')]</td>
 	<td>Control Panel Navigation</td>
 </tr>
 <tr>
 	<td>ADMIN_CONTROL_PANEL_LOCALIZED</td>
-	<td>//li[@id='_145_adminLinks']/ul/li/a[contains(.,'${key_localizedControlPanel}')]</td>
+	<td>//div[contains(@id,'product_menu')]//a[contains(.,'${key_localizedControlPanel}')]</td>
 	<td>Control Panel Navigation</td>
 </tr>
 <tr>

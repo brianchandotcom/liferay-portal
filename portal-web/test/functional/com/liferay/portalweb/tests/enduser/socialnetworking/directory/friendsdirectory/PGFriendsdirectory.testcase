@@ -108,7 +108,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="AssertClick" locator1="//div[@class='add-as-friend']/button[contains(.,'Add as Friend')]" value1="Add as Friend" />
+		<execute function="AssertClick" locator1="//div[@class='add-as-friend']/button[contains(.,'Add as Friend')]" value1="ADD AS FRIEND" />
 
 		<execute function="AssertTextEquals" locator1="//div[contains(@class,'alert') and contains(@class,'alert-info')]" value1="Friend Requested" />
 

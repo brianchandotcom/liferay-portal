@@ -29,7 +29,6 @@
 
 		<execute macro="Blogs#tearDownConfigurationScopePG">
 			<var name="pageName" value="${pageName}" />
-			<var name="portletNameBorderless" value="Blogs" />
 		</execute>
 
 		<execute macro="Organization#tearDownCP" />

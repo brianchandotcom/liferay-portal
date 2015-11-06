@@ -682,7 +682,7 @@
 		</execute>
 
 		<execute macro="WikiEntry#addPageContent">
-			<var name="wikiPageContent" value="Edited " />
+			<var name="wikiPageContent" value="Edited Wiki Page Content" />
 		</execute>
 
 		<execute macro="WikiEntry#cancel" />
@@ -784,7 +784,7 @@
 		</execute>
 
 		<execute macro="WikiEntry#addPageContent">
-			<var name="wikiPageContent" value="Copied " />
+			<var name="wikiPageContent" value="Copied Wiki Page Content" />
 		</execute>
 
 		<execute macro="WikiEntry#publish" />
@@ -898,7 +898,7 @@
 		</execute>
 
 		<execute macro="WikiEntry#addPageContent">
-			<var name="wikiPageContent" value="Edited " />
+			<var name="wikiPageContent" value="Edited Wiki Page Content" />
 		</execute>
 
 		<execute macro="WikiEntry#publish" />
@@ -1051,7 +1051,7 @@
 		</execute>
 
 		<execute macro="WikiEntry#addPageContent">
-			<var name="wikiPageContent" value="Edited " />
+			<var name="wikiPageContent" value="Edited Wiki Page Content" />
 		</execute>
 
 		<execute function="AssertClick" locator1="Button#PREVIEW" value1="Preview" />
@@ -1404,7 +1404,7 @@
 		</execute>
 
 		<execute macro="WikiEntry#addPageContent">
-			<var name="wikiPageContent" value="Edited " />
+			<var name="wikiPageContent" value="Edited Wiki Page Content" />
 		</execute>
 
 		<execute macro="WikiEntry#saveAsDraft" />

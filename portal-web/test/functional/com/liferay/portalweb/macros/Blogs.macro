@@ -322,8 +322,6 @@
 			<var name="defaultURL" value="${defaultURL}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Blogs Page" />
-			<var name="soDashboard" value="${soDashboard}" />
-			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="Portlet#gotoPortletOptions">
@@ -377,8 +375,6 @@
 			<var name="defaultURL" value="${defaultURL}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Blogs Page" />
-			<var name="soDashboard" value="${soDashboard}" />
-			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="Portlet#gotoPortletOptions">
@@ -425,13 +421,9 @@
 			<var name="defaultURL" value="${defaultURL}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName}" />
-			<var name="soDashboard" value="${soDashboard}" />
-			<var name="soPage" value="${soPage}" />
 		</execute>
 
-		<execute macro="BlogsNavigator#gotoConfigurationSetupPG">
-			<var name="soPage" value="${soPage}" />
-		</execute>
+		<execute macro="BlogsNavigator#gotoConfigurationSetupPG" />
 
 		<execute macro="BlogsConfiguration#selectDisplayTemplate">
 			<var name="displayTemplate" value="Abstract" />
@@ -445,14 +437,9 @@
 			<var name="defaultURL" value="${defaultURL}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName}" />
-			<var name="soDashboard" value="${soDashboard}" />
-			<var name="soPage" value="${soPage}" />
 		</execute>
 
-		<execute macro="BlogsNavigator#gotoConfigurationSetupPG">
-			<var name="portletNameBorderless" value="Blogs" />
-			<var name="soPage" value="${soPage}" />
-		</execute>
+		<execute macro="BlogsNavigator#gotoConfigurationSetupPG" />
 
 		<execute macro="BlogsNavigator#gotoConfigurationScopePG" />
 
@@ -489,8 +476,6 @@
 			<var name="defaultURL" value="${defaultURL}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName}" />
-			<var name="soDashboard" value="${soDashboard}" />
-			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute function="AssertClick" locator1="PGBlogs#UNSUBSCRIBE_LINK" value1="Unsubscribe" />

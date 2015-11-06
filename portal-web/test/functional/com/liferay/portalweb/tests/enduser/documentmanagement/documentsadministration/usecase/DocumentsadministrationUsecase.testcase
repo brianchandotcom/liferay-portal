@@ -712,6 +712,10 @@
 			<var name="dmDocumentTypeName" value="Photos" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoControlPanelSystem">
 			<var name="portlet" value="Server Administration" />
 		</execute>

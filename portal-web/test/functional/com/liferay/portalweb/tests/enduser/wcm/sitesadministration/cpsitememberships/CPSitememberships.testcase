@@ -959,10 +959,9 @@
 		<execute macro="Page#openURL" />
 
 		<execute macro="Page#changeSiteScope">
-			<var name="portletCategoryName" value="My Sites" />
 			<var name="siteName" value="Liferay" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="ControlMenu#ADMIN_SITE_ADMINISTRATION_USERS" value1="Users" />
+		<execute function="AssertNotVisible" locator1="ControlMenu#ADMIN_SITE_ADMINISTRATION_USERS" value1="Users" />
 	</command>
 </definition>

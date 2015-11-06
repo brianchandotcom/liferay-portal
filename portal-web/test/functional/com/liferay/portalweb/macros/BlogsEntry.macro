@@ -461,8 +461,6 @@
 					<var name="defaultURL" value="${defaultURL}" />
 					<var name="nodePort" value="${nodePort}" />
 					<var name="pageName" value="${pageName}" />
-					<var name="soDashboard" value="${soDashboard}" />
-					<var name="soPage" value="${soPage}" />
 					<var name="virtualHostsURL" value="${virtualHost1}" />
 				</execute>
 			</then>
@@ -471,8 +469,6 @@
 					<var name="defaultURL" value="${defaultURL}" />
 					<var name="nodePort" value="${nodePort}" />
 					<var name="pageName" value="${pageName}" />
-					<var name="soDashboard" value="${soDashboard}" />
-					<var name="soPage" value="${soPage}" />
 				</execute>
 			</else>
 		</if>
@@ -856,11 +852,16 @@
 	<command name="moveToRecycleBinDraftCP">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="AssertTextEquals" locator1="CPBlogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
-		<execute function="AssertTextEquals" locator1="CPBlogs#ENTRY_TABLE_STATUS" value1="Draft" />
-		<execute function="Click" locator1="CPBlogs#ENTRY_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="CPBlogs#ENTRY_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPBlogs#SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType} ${entryTitle} was moved to the Recycle Bin. Undo" />
+		<execute function="AssertTextEquals" locator1="Blogs#ICON_VIEW_ENTRY_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="Blogs#ICON_VIEW_ENTRY_STATUS" value1="Draft" />
+
+		<execute function="Click" locator1="Blogs#ICON_VIEW_ENTRY_OPTIONS_DROPDOWN" />
+
+		<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+
+		<var name="key_assetType" value="${assetType}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#RECYCLE_BIN_SUCCESS" value1="The ${assetType} ${entryTitle} was moved to the Recycle Bin. Undo" />
 	</command>
 
 	<command name="moveToRecycleBinNoPermissionPG">
@@ -1130,14 +1131,17 @@
 		</execute>
 
 		<if>
-			<condition function="IsElementPresent#isVisible" locator1="Blogs#ENTRY_TABLE_ALL_CHECKBOX" />
+			<condition function="IsElementPresent#isVisible" locator1="Message#EMPTY_INFO" value1="No entries were found." />
 			<then>
+				<execute macro="Blogs#viewNoEntryCP" />
+			</then>
+			<else>
 				<execute function="Click" locator1="Blogs#ENTRY_TABLE_ALL_CHECKBOX" />
 
 				<execute function="Click" locator1="Icon#DELETE" />
 
 				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="moved to the Recycle Bin. Undo" />
-			</then>
+			</else>
 		</if>
 
 		<execute macro="Page#gotoContentCP">

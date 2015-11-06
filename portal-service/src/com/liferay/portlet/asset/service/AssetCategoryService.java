@@ -239,8 +239,7 @@ public interface AssetCategoryService extends BaseService {
 	public com.liferay.portlet.asset.model.AssetCategoryDisplay searchCategoriesDisplay(
 		long groupId, java.lang.String title, long vocabularyId,
 		long parentCategoryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> obc)
-		throws PortalException;
+		com.liferay.portal.kernel.search.Sort sort) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.asset.model.AssetCategoryDisplay searchCategoriesDisplay(
@@ -256,8 +255,7 @@ public interface AssetCategoryService extends BaseService {
 	public com.liferay.portlet.asset.model.AssetCategoryDisplay searchCategoriesDisplay(
 		long[] groupIds, java.lang.String title, long[] vocabularyIds,
 		long[] parentCategoryIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetCategory> obc)
-		throws PortalException;
+		com.liferay.portal.kernel.search.Sort sort) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.asset.model.AssetCategoryDisplay searchCategoriesDisplay(

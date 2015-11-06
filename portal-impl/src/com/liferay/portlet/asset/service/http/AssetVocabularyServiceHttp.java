@@ -835,8 +835,7 @@ public class AssetVocabularyServiceHttp {
 
 	public static com.liferay.portlet.asset.model.AssetVocabularyDisplay searchVocabulariesDisplay(
 		HttpPrincipal httpPrincipal, long groupId, java.lang.String title,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> obc,
+		int start, int end, com.liferay.portal.kernel.search.Sort sort,
 		boolean addDefaultVocabulary)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -845,7 +844,7 @@ public class AssetVocabularyServiceHttp {
 					_searchVocabulariesDisplayParameterTypes25);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					title, start, end, obc, addDefaultVocabulary);
+					title, start, end, sort, addDefaultVocabulary);
 
 			Object returnObj = null;
 
@@ -997,8 +996,7 @@ public class AssetVocabularyServiceHttp {
 		};
 	private static final Class<?>[] _searchVocabulariesDisplayParameterTypes25 = new Class[] {
 			long.class, java.lang.String.class, int.class, int.class,
-			com.liferay.portal.kernel.util.OrderByComparator.class,
-			boolean.class
+			com.liferay.portal.kernel.search.Sort.class, boolean.class
 		};
 	private static final Class<?>[] _updateVocabularyParameterTypes26 = new Class[] {
 			long.class, java.lang.String.class, java.util.Map.class,

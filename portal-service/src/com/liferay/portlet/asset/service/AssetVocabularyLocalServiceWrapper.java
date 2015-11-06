@@ -481,11 +481,10 @@ public class AssetVocabularyLocalServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portlet.asset.model.AssetVocabulary> searchVocabularies(
 		long companyId, long groupId, java.lang.String title, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> obc)
+		int end, com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetVocabularyLocalService.searchVocabularies(companyId,
-			groupId, title, start, end, obc);
+			groupId, title, start, end, sort);
 	}
 
 	/**

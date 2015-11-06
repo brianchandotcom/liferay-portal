@@ -365,8 +365,7 @@ public interface AssetVocabularyLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portlet.asset.model.AssetVocabulary> searchVocabularies(
 		long companyId, long groupId, java.lang.String title, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> obc)
+		int end, com.liferay.portal.kernel.search.Sort sort)
 		throws PortalException;
 
 	/**

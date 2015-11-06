@@ -251,11 +251,10 @@ public class AssetVocabularyServiceWrapper implements AssetVocabularyService,
 	@Override
 	public com.liferay.portlet.asset.model.AssetVocabularyDisplay searchVocabulariesDisplay(
 		long groupId, java.lang.String title, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.asset.model.AssetVocabulary> obc,
-		boolean addDefaultVocabulary)
+		com.liferay.portal.kernel.search.Sort sort, boolean addDefaultVocabulary)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetVocabularyService.searchVocabulariesDisplay(groupId,
-			title, start, end, obc, addDefaultVocabulary);
+			title, start, end, sort, addDefaultVocabulary);
 	}
 
 	@Override

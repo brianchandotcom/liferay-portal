@@ -21,114 +21,79 @@ String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName
 
 String navigation = ParamUtil.getString(request, "navigation", "home");
 
+boolean search = mvcRenderCommandName.equals("/document_library/search");
+
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 
 long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
 
-boolean search = mvcRenderCommandName.equals("/document_library/search");
+int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_ANY, false);
 %>
 
-<aui:nav-bar>
-	<aui:nav collapsible="<%= true %>" cssClass="nav-display-style-buttons navbar-nav" icon="th-list" id="displayStyleButtons">
+<liferay-frontend:management-bar
+	checkBoxContainerId="entriesContainer"
+	includeCheckBox="<%= total > 0 %>"
+>
+	<liferay-frontend:management-bar-buttons>
+		<aui:a cssClass="btn infoPanelToggler" href="javascript:;" iconCssClass="icon-info-sign" />
+
 		<c:if test="<%= !search %>">
 			<liferay-util:include page="/document_library/display_style_buttons.jsp" servletContext="<%= application %>" />
 		</c:if>
-	</aui:nav>
+	</liferay-frontend:management-bar-buttons>
 
-	<aui:nav cssClass="navbar-nav" id="toolbarContainer">
-		<aui:nav-item cssClass="hide" dropdown="<%= true %>" id="actionsButtonContainer" label="actions">
-
-			<%
-			Group scopeGroup = themeDisplay.getScopeGroup();
-			%>
-
-			<c:if test="<%= !scopeGroup.isStaged() || scopeGroup.isStagingGroup() || !scopeGroup.isStagedPortlet(DLPortletKeys.DOCUMENT_LIBRARY) %>">
-
-				<%
-				String taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CANCEL_CHECKOUT + "'}); void(0);";
-				%>
-
-				<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-remove" label="cancel-checkout[document]" />
-
-				<%
-				taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CHECKIN + "'}); void(0);";
-				%>
-
-				<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-lock" label="checkin" />
-
-				<%
-				taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CHECKOUT + "'}); void(0);";
-				%>
-
-				<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-unlock" label="checkout[document]" />
-
-				<%
-				taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.MOVE + "'}); void(0);";
-				%>
-
-				<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-move" label="move" />
-			</c:if>
-
-			<%
-			String taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.MOVE_TO_TRASH + "'}); void(0);";
-			%>
-
-			<aui:nav-item cssClass="item-remove" href="<%= taglibURL %>" iconCssClass="icon-trash" id="moveToTrashAction" label="move-to-the-recycle-bin" />
-
-			<%
-			taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteEntries();";
-			%>
-
-			<aui:nav-item cssClass="item-remove" href="<%= taglibURL %>" iconCssClass="icon-remove" id="deleteAction" label="delete" />
-		</aui:nav-item>
-
-		<liferay-util:include page="/document_library/add_button.jsp" servletContext="<%= application %>" />
-
-		<c:if test='<%= !search && !navigation.equals("recent") %>'>
+	<c:if test='<%= !search && !navigation.equals("recent") %>'>
+		<liferay-frontend:management-bar-filters>
 			<liferay-util:include page="/document_library/sort_button.jsp" servletContext="<%= application %>" />
-		</c:if>
-
-		<c:if test="<%= !user.isDefaultUser() %>">
-			<aui:nav-item dropdown="<%= true %>" label="manage">
-
-				<%
-				String taglibURL = "javascript:" + renderResponse.getNamespace() + "openFileEntryTypeView()";
-				%>
-
-				<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-file" label="document-types" />
-
-				<%
-				taglibURL = "javascript:" + renderResponse.getNamespace() + "openDDMStructureView()";
-				%>
-
-				<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-file-text" label="metadata-sets" />
-			</aui:nav-item>
-		</c:if>
-	</aui:nav>
-
-	<c:if test="<%= dlPortletInstanceSettings.isShowFoldersSearch() %>">
-		<aui:nav-bar-search>
-			<div class="form-search">
-				<liferay-portlet:renderURL varImpl="searchURL">
-					<portlet:param name="mvcRenderCommandName" value="/document_library/search" />
-					<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
-					<portlet:param name="searchRepositoryId" value="<%= String.valueOf(repositoryId) %>" />
-					<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-					<portlet:param name="searchFolderId" value="<%= String.valueOf(folderId) %>" />
-					<portlet:param name="showRepositoryTabs" value="<%= (folderId == 0) ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" />
-					<portlet:param name="showSearchInfo" value="<%= Boolean.TRUE.toString() %>" />
-				</liferay-portlet:renderURL>
-
-				<aui:form action="<%= searchURL %>" method="get" name="fm1">
-					<liferay-portlet:renderURLParams varImpl="searchURL" />
-					<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-
-					<liferay-ui:input-search />
-				</aui:form>
-			</div>
-		</aui:nav-bar-search>
+		</liferay-frontend:management-bar-filters>
 	</c:if>
-</aui:nav-bar>
+
+	<liferay-frontend:management-bar-action-buttons>
+
+		<%
+		Group scopeGroup = themeDisplay.getScopeGroup();
+		%>
+
+		<c:if test="<%= !scopeGroup.isStaged() || scopeGroup.isStagingGroup() || !scopeGroup.isStagedPortlet(DLPortletKeys.DOCUMENT_LIBRARY) %>">
+
+			<%
+			String taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CANCEL_CHECKOUT + "'}); void(0);";
+			%>
+
+			<aui:a cssClass="btn" href="<%= taglibURL %>" iconCssClass="icon-remove" />
+
+			<%
+			taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CHECKIN + "'}); void(0);";
+			%>
+
+			<aui:a cssClass="btn" href="<%= taglibURL %>" iconCssClass="icon-lock" />
+
+			<%
+			taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CHECKOUT + "'}); void(0);";
+			%>
+
+			<aui:a cssClass="btn" href="<%= taglibURL %>" iconCssClass="icon-unlock" />
+
+			<%
+			taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.MOVE + "'}); void(0);";
+			%>
+
+			<aui:a cssClass="btn" href="<%= taglibURL %>" iconCssClass="icon-move" />
+		</c:if>
+
+		<%
+		String taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.MOVE_TO_TRASH + "'}); void(0);";
+		%>
+
+		<aui:a cssClass="btn" href="<%= taglibURL %>" iconCssClass="icon-trash" id="moveToTrashAction" />
+
+		<%
+		taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteEntries();";
+		%>
+
+		<aui:a cssClass="btn" href="<%= taglibURL %>" iconCssClass="icon-remove" id="deleteAction" />
+	</liferay-frontend:management-bar-action-buttons>
+</liferay-frontend:management-bar>
 
 <aui:script>
 	function <portlet:namespace />deleteEntries() {
@@ -140,41 +105,5 @@ boolean search = mvcRenderCommandName.equals("/document_library/search");
 				}
 			);
 		}
-	}
-
-	function <portlet:namespace />openFileEntryTypeView() {
-		Liferay.Util.openWindow(
-			{
-				dialog: {
-					destroyOnHide: true,
-					on: {
-						visibleChange: function(event) {
-							if (!event.newVal) {
-								Liferay.Portlet.refresh('#p_p_id_<%= portletDisplay.getId() %>_');
-							}
-						}
-					}
-				},
-				id: '<portlet:namespace />openFileEntryTypeView',
-				title: '<%= UnicodeLanguageUtil.get(request, "document-types") %>',
-				uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/document_library/view_file_entry_type.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></liferay-portlet:renderURL>'
-			}
-		);
-	}
-
-	function <portlet:namespace />openDDMStructureView() {
-		Liferay.Util.openDDMPortlet(
-			{
-				basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletProviderUtil.getPortletId(com.liferay.dynamic.data.mapping.model.DDMStructure.class.getName(), PortletProvider.Action.VIEW), themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
-				dialog: {
-					destroyOnHide: true
-				},
-				groupId: <%= scopeGroupId %>,
-				refererPortletName: '<%= DLPortletKeys.DOCUMENT_LIBRARY %>',
-				showAncestorScopes: true,
-				showManageTemplates: false,
-				title: '<%= UnicodeLanguageUtil.get(request, "metadata-sets") %>'
-			}
-		);
 	}
 </aui:script>

@@ -59,11 +59,11 @@ public class DDMRESTDataProviderTest {
 	public void testGetCountries() throws Exception {
 		DDMFormField ddmFormField = new DDMFormField("test", "text");
 
+		ddmFormField.setProperty("key", "countryId");
+		ddmFormField.setProperty("password", "test");
 		ddmFormField.setProperty(
 			"url", "http://localhost:8080/api/jsonws/country/get-countries");
 		ddmFormField.setProperty("username", "test@liferay.com");
-		ddmFormField.setProperty("password", "test");
-		ddmFormField.setProperty("key", "countryId");
 		ddmFormField.setProperty("value", "nameCurrentValue");
 
 		DDMDataProviderContext ddmDataProviderContext =

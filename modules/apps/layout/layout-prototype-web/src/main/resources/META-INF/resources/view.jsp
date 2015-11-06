@@ -22,6 +22,8 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 String orderByCol = ParamUtil.getString(request, "orderByCol", "create-date");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
+int totalVar = LayoutPrototypeLocalServiceUtil.searchCount(company.getCompanyId(), null);
+
 PortletURL portletURL = renderResponse.createRenderURL();
 %>
 
@@ -33,36 +35,38 @@ PortletURL portletURL = renderResponse.createRenderURL();
 	</aui:nav>
 </aui:nav-bar>
 
-<liferay-frontend:management-bar
-	checkBoxContainerId="layoutPrototypeSearchContainer"
-	includeCheckBox="<%= true %>"
->
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= renderResponse.createRenderURL() %>"
-		/>
+<c:if test="<%= totalVar > 0 %>">
+	<liferay-frontend:management-bar
+		checkBoxContainerId="layoutPrototypeSearchContainer"
+		includeCheckBox="<%= true %>"
+	>
+		<liferay-frontend:management-bar-filters>
+			<liferay-frontend:management-bar-navigation
+				navigationKeys='<%= new String[] {"all"} %>'
+				portletURL="<%= renderResponse.createRenderURL() %>"
+			/>
 
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= orderByCol %>"
-			orderByType="<%= orderByType %>"
-			orderColumns='<%= new String[] {"create-date"} %>'
-			portletURL="<%= renderResponse.createRenderURL() %>"
-		/>
-	</liferay-frontend:management-bar-filters>
+			<liferay-frontend:management-bar-sort
+				orderByCol="<%= orderByCol %>"
+				orderByType="<%= orderByType %>"
+				orderColumns='<%= new String[] {"create-date"} %>'
+				portletURL="<%= renderResponse.createRenderURL() %>"
+			/>
+		</liferay-frontend:management-bar-filters>
 
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= portletURL %>"
-			selectedDisplayStyle="<%= displayStyle %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-buttons>
+			<liferay-frontend:management-bar-display-buttons
+				displayViews='<%= new String[] {"list"} %>'
+				portletURL="<%= portletURL %>"
+				selectedDisplayStyle="<%= displayStyle %>"
+			/>
+		</liferay-frontend:management-bar-buttons>
 
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-trash" id="deleteSelectedLayoutPrototypes" />
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
+		<liferay-frontend:management-bar-action-buttons>
+			<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-trash" id="deleteSelectedLayoutPrototypes" />
+		</liferay-frontend:management-bar-action-buttons>
+	</liferay-frontend:management-bar>
+</c:if>
 
 <aui:form cssClass="container-fluid-1280" name="fm">
 	<liferay-ui:search-container
@@ -71,7 +75,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 		id="layoutPrototype"
 		iteratorURL="<%= portletURL %>"
 		rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
-		total="<%= LayoutPrototypeLocalServiceUtil.searchCount(company.getCompanyId(), null) %>"
+		total="<%= totalVar %>"
 	>
 		<aui:input name="layoutPrototypeIds" type="hidden" />
 

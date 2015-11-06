@@ -67,7 +67,14 @@ afterEvaluate {
 }
 
 buildCSS {
-	dependsOn ":frontend:frontend-common-css:buildCssCommon"
+	dependsOn {
+		FileCollection cssFiles = getCSSFiles()
+
+		if (!cssFiles.empty) {
+			":frontend:frontend-common-css:buildCssCommon"
+		}
+	}
+
 	portalCommonDir = new File(rootDir, "frontend/frontend-common-css/tmp/META-INF/resources")
 }
 

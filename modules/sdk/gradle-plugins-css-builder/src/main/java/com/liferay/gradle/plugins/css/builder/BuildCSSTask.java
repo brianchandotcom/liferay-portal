@@ -49,23 +49,10 @@ public class BuildCSSTask extends JavaExec {
 	}
 
 	@Override
-	public JavaExec classpath(Object... paths) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public void exec() {
 		setArgs(getCompleteArgs());
 
-		super.setClasspath(getClasspath());
-
 		super.exec();
-	}
-
-	@Override
-	public FileCollection getClasspath() {
-		return GradleUtil.getConfiguration(
-			getProject(), CSSBuilderPlugin.CSS_BUILDER_CONFIGURATION_NAME);
 	}
 
 	@OutputDirectories
@@ -175,11 +162,6 @@ public class BuildCSSTask extends JavaExec {
 	@Input
 	public boolean isGenerateSourceMap() {
 		return _cssBuilderArgs.isGenerateSourceMap();
-	}
-
-	@Override
-	public JavaExec setClasspath(FileCollection classpath) {
-		throw new UnsupportedOperationException();
 	}
 
 	public void setDirNames(String ... dirNames) {

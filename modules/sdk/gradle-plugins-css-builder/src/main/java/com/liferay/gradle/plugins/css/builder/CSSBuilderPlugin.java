@@ -51,11 +51,15 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		addConfigurationCSSBuilder(project);
+		Configuration cssBuilderConfiguration = addConfigurationCSSBuilder(
+			project);
+
 		addConfigurationPortalCommonCSS(project);
 
 		addTaskBuildCSS(project);
 		addTaskExpandPortalCommonCSS(project);
+
+		configureTasksBuildCSS(project, cssBuilderConfiguration);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -191,6 +195,12 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 			project.relativePath(fileCollection.getSingleFile()));
 	}
 
+	protected void configureTaskBuildCSSClasspath(
+		BuildCSSTask buildCSSTask, Configuration cssBuilderConfiguration) {
+
+		buildCSSTask.setClasspath(cssBuilderConfiguration);
+	}
+
 	protected void configureTasksBuildCSS(Project project) {
 		TaskContainer taskContainer = project.getTasks();
 
@@ -201,6 +211,24 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 				@Override
 				public void execute(BuildCSSTask buildCSSTask) {
 					configureTaskBuildCSS(buildCSSTask);
+				}
+
+			});
+	}
+
+	protected void configureTasksBuildCSS(
+		Project project, final Configuration cssBuilderConfiguration) {
+
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			BuildCSSTask.class,
+			new Action<BuildCSSTask>() {
+
+				@Override
+				public void execute(BuildCSSTask buildCSSTask) {
+					configureTaskBuildCSSClasspath(
+						buildCSSTask, cssBuilderConfiguration);
 				}
 
 			});

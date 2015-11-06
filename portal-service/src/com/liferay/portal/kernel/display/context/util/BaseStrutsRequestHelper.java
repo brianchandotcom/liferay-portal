@@ -15,9 +15,6 @@
 package com.liferay.portal.kernel.display.context.util;
 
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
-
-import javax.portlet.ActionRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -30,20 +27,15 @@ public abstract class BaseStrutsRequestHelper extends BaseRequestHelper {
 		super(request);
 	}
 
-	public String getLogicalPath() {
-		if (_logicalPath == null) {
-			_logicalPath = ParamUtil.getString(
-				getRequest(), ActionRequest.ACTION_NAME);
-
-			if (Validator.isNull(_logicalPath)) {
-				_logicalPath = ParamUtil.getString(
-					getRequest(), "mvcRenderCommandName");
-			}
+	public String getMVCrenderCommandName() {
+		if (_mvcRenderCommandName == null) {
+			_mvcRenderCommandName = ParamUtil.getString(
+				getRequest(), "mvcRenderCommandName");
 		}
 
-		return _logicalPath;
+		return _mvcRenderCommandName;
 	}
 
-	private String _logicalPath;
+	private String _mvcRenderCommandName;
 
 }

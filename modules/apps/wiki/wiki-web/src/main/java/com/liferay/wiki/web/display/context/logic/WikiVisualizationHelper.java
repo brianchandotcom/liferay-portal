@@ -43,11 +43,12 @@ public class WikiVisualizationHelper {
 	public boolean isFrontPageNavItemSelected() {
 		WikiPage wikiPage = _wikiRequestHelper.getWikiPage();
 
-		String logicalPath = _wikiRequestHelper.getLogicalPath();
+		String mvcRenderCommandName =
+			_wikiRequestHelper.getMVCrenderCommandName();
 
 		String frontPageName = _wikiGroupServiceConfiguration.frontPageName();
 
-		if (Validator.isNull(logicalPath) ||
+		if (Validator.isNull(mvcRenderCommandName) ||
 			(wikiPage != null) && frontPageName.equals(wikiPage.getTitle())) {
 
 			return true;
@@ -76,10 +77,11 @@ public class WikiVisualizationHelper {
 	}
 
 	public boolean isUndoTrashControlVisible() {
-		String logicalPath = _wikiRequestHelper.getLogicalPath();
+		String mvcRenderCommandName =
+			_wikiRequestHelper.getMVCrenderCommandName();
 
-		if (logicalPath.endsWith("view_page_activities") ||
-			logicalPath.endsWith("view_page_attachments")) {
+		if (mvcRenderCommandName.endsWith("view_page_activities") ||
+			mvcRenderCommandName.endsWith("view_page_attachments")) {
 
 			return false;
 		}
@@ -103,29 +105,33 @@ public class WikiVisualizationHelper {
 		return isNavItemSelected("/view_recent_changes");
 	}
 
-	protected String getLogicalPathPrefix() {
-		if (_logicalPathPrefix == null) {
-			String logicalPath = _wikiRequestHelper.getLogicalPath();
+	protected String getMVCRenderCommandNamePrefix() {
+		if (_mvcRenderCommandNamePrefix == null) {
+			String mvcRenderCommandName =
+				_wikiRequestHelper.getMVCrenderCommandName();
 
-			if (Validator.isNotNull(logicalPath)) {
-				int pos = logicalPath.indexOf(StringPool.SLASH, 1);
+			if (Validator.isNotNull(mvcRenderCommandName)) {
+				int pos = mvcRenderCommandName.indexOf(StringPool.SLASH, 1);
 
 				if (pos != -1) {
-					_logicalPathPrefix = logicalPath.substring(0, pos);
+					_mvcRenderCommandNamePrefix =
+						mvcRenderCommandName.substring(0, pos);
 				}
 			}
 		}
 
-		return _logicalPathPrefix;
+		return _mvcRenderCommandNamePrefix;
 	}
 
-	protected boolean isNavItemSelected(String navItemLogicalPath) {
-		String logicalPath = _wikiRequestHelper.getLogicalPath();
+	protected boolean isNavItemSelected(String navItemMVCRenderCommandName) {
+		String mvcRenderCommandName =
+			_wikiRequestHelper.getMVCrenderCommandName();
 
-		return logicalPath.equals(getLogicalPathPrefix() + navItemLogicalPath);
+		return mvcRenderCommandName.equals(
+			getMVCRenderCommandNamePrefix() + navItemMVCRenderCommandName);
 	}
 
-	private String _logicalPathPrefix;
+	private String _mvcRenderCommandNamePrefix;
 	private final WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 	private final WikiPortletInstanceSettingsHelper
 		_wikiPortletInstanceSettingsHelper;

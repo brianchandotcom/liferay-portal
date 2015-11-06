@@ -75,11 +75,11 @@ public class UpdateRecordSetSettingsMVCActionCommand
 
 		long recordSetId = ParamUtil.getLong(actionRequest, "recordSetId");
 
-		String successURL = ParamUtil.getString(actionRequest, "successURL");
+		String redirectURL = ParamUtil.getString(actionRequest, "redirectURL");
 
 		UnicodeProperties settingsProperties = new UnicodeProperties(true);
 
-		settingsProperties.setProperty("successURL", successURL);
+		settingsProperties.setProperty("redirectURL", redirectURL);
 
 		_ddlRecordSetService.updateRecordSet(
 			recordSetId, settingsProperties.toString());

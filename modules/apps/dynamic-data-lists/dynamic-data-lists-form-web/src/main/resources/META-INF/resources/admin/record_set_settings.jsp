@@ -22,7 +22,7 @@ DDLRecordSet recordSet = ddlFormAdminDisplayContext.getRecordSet();
 long recordSetId = BeanParamUtil.getLong(recordSet, request, "recordSetId");
 long groupId = BeanParamUtil.getLong(recordSet, request, "groupId", scopeGroupId);
 
-String successURL = GetterUtil.getString(recordSet.getSettingsProperty("successURL", StringPool.BLANK));
+String redirectURL = GetterUtil.getString(recordSet.getSettingsProperty("redirectURL", StringPool.BLANK));
 %>
 
 <portlet:actionURL name="updateRecordSetSettings" var="updateRecordSetSettingsURL">
@@ -37,7 +37,7 @@ String successURL = GetterUtil.getString(recordSet.getSettingsProperty("successU
 		<liferay-ui:error exception="<%= RecordSetSettingsException.class %>" message="please-enter-a-valid-form-settings" />
 
 		<aui:fieldset>
-			<aui:input label="redirect-url-on-success" name="successURL" value="<%= HtmlUtil.toInputSafe(successURL) %>" wrapperCssClass="lfr-input-text-container" />
+			<aui:input label="redirect-url-on-success" name="redirectURL" value="<%= HtmlUtil.toInputSafe(redirectURL) %>" wrapperCssClass="lfr-input-text-container" />
 
 			<c:if test="<%= ddlFormAdminDisplayContext.isDDLRecordWorkflowHandlerDeployed() %>">
 				<aui:select label="workflow" name="workflowDefinition">

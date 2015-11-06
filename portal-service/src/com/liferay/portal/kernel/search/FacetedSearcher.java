@@ -17,9 +17,12 @@ package com.liferay.portal.kernel.search;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -29,7 +32,6 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -104,10 +106,15 @@ public class FacetedSearcher extends BaseSearcher {
 		List<Group> inactiveGroups = GroupLocalServiceUtil.getActiveGroups(
 			searchContext.getCompanyId(), false);
 
-		for (Group inactiveGroup : inactiveGroups) {
-			searchQuery.addTerm(
-				Field.GROUP_ID, String.valueOf(inactiveGroup.getGroupId()),
-				false, BooleanClauseOccur.MUST_NOT);
+		if (!inactiveGroups.isEmpty()) {
+			TermsFilter groupTermsFilter = new TermsFilter(Field.GROUP_ID);
+
+			groupTermsFilter.addValues(
+				ArrayUtil.toStringArray(
+					ListUtil.toArray(inactiveGroups, Group.GROUP_ID_ACCESSOR)));
+
+			fullQueryBooleanFilter.add(
+				groupTermsFilter, BooleanClauseOccur.MUST_NOT);
 		}
 
 		for (String entryClassName : searchContext.getEntryClassNames()) {

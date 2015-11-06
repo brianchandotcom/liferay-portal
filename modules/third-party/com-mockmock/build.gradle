@@ -26,7 +26,7 @@ configurations {
 
 downloadSrc {
 	from {
-		zipTree FileUtil.get(project, mockMockSrcUrl)
+		zipTree(FileUtil.get(project, mockMockSrcUrl))
 	}
 
 	into buildDir

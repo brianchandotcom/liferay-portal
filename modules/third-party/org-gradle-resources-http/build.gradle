@@ -24,7 +24,7 @@ deploy {
 	}
 
 	from {
-		zipTree FileUtil.get(project, "https://services.gradle.org/distributions/gradle-${gradleVersion}-bin.zip")
+		zipTree(FileUtil.get(project, "https://services.gradle.org/distributions/gradle-${gradleVersion}-bin.zip"))
 	}
 
 	into("gradle-${gradleVersion}/lib/plugins") {

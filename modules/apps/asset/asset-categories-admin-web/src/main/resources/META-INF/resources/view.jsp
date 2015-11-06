@@ -46,7 +46,9 @@ List<AssetVocabulary> vocabularies = null;
 int totalVar = 0;
 
 if (Validator.isNotNull(keywords)) {
-	AssetVocabularyDisplay assetVocabularyDisplay = AssetVocabularyServiceUtil.searchVocabulariesDisplay(scopeGroupId, keywords, vocabulariesSearchContainer.getStart(), vocabulariesSearchContainer.getEnd(), vocabulariesSearchContainer.getOrderByComparator(), true);
+	Sort sort = new Sort("createDate", Sort.LONG_TYPE, orderByAsc);
+
+	AssetVocabularyDisplay assetVocabularyDisplay = AssetVocabularyServiceUtil.searchVocabulariesDisplay(scopeGroupId, keywords, vocabulariesSearchContainer.getStart(), vocabulariesSearchContainer.getEnd(), sort, true);
 
 	totalVar = assetVocabularyDisplay.getTotal();
 

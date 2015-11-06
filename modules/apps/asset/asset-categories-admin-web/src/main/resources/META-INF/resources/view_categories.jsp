@@ -75,7 +75,9 @@ List<AssetCategory> categories = null;
 int totalVar = 0;
 
 if (Validator.isNotNull(keywords)) {
-	AssetCategoryDisplay assetCategoryDisplay = AssetCategoryServiceUtil.searchCategoriesDisplay(scopeGroupId, keywords, categoryId, vocabularyId, categoriesSearchContainer.getStart(), categoriesSearchContainer.getEnd(), categoriesSearchContainer.getOrderByComparator());
+	Sort sort = new Sort("createDate", Sort.LONG_TYPE, orderByAsc);
+
+	AssetCategoryDisplay assetCategoryDisplay = AssetCategoryServiceUtil.searchCategoriesDisplay(scopeGroupId, keywords, categoryId, vocabularyId, categoriesSearchContainer.getStart(), categoriesSearchContainer.getEnd(), sort);
 
 	totalVar = assetCategoryDisplay.getTotal();
 

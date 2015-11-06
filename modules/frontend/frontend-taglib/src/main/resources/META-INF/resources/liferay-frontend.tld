@@ -402,6 +402,26 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>management-bar-status</name>
+		<tag-class>com.liferay.frontend.taglib.servlet.taglib.ManagementBarStatusTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>portletURL</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>status</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>statuses</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<description>Creates a lexicon-based card component.</description>
 		<name>user-vertical-card</name>
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.UserVerticalCardTag</tag-class>

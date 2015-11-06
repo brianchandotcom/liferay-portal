@@ -61,24 +61,6 @@ renderResponse.setTitle(layoutPrototype.isNew() ? LanguageUtil.get(request, "new
 		<aui:input name="description" />
 
 		<aui:input name="active" />
-
-		<c:if test="<%= !layoutPrototype.isNew() %>">
-			<aui:field-wrapper label="configuration">
-
-				<%
-				Group layoutPrototypeGroup = layoutPrototype.getGroup();
-				%>
-
-				<liferay-ui:icon
-					iconCssClass="icon-search"
-					label="<%= true %>"
-					message="open-page-template"
-					method="get"
-					target="_blank"
-					url="<%= layoutPrototypeGroup.getDisplayURL(themeDisplay, true) %>"
-				/>
-			</aui:field-wrapper>
-		</c:if>
 	</aui:fieldset>
 
 	<aui:button-row>

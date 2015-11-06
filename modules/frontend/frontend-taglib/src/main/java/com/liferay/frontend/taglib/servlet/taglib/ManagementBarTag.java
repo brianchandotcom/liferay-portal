@@ -46,10 +46,6 @@ public class ManagementBarTag extends IncludeTag implements BodyTag {
 		_buttons = buttons;
 	}
 
-	public void setCheckBoxContainerId(String checkBoxContainerId) {
-		_checkBoxContainerId = checkBoxContainerId;
-	}
-
 	public void setFilters(String filters) {
 		_filters = filters;
 	}
@@ -73,7 +69,6 @@ public class ManagementBarTag extends IncludeTag implements BodyTag {
 	protected void cleanUp() {
 		_actionButtons = null;
 		_buttons = null;
-		_checkBoxContainerId = StringPool.BLANK;
 		_filters = null;
 		_includeCheckBox = false;
 		_searchContainerId = null;
@@ -101,9 +96,6 @@ public class ManagementBarTag extends IncludeTag implements BodyTag {
 		request.setAttribute(
 			"liferay-frontend:management-bar:buttons", _buttons);
 		request.setAttribute(
-			"liferay-frontend:management-bar:checkBoxContainerId",
-			_checkBoxContainerId);
-		request.setAttribute(
 			"liferay-frontend:management-bar:filters", _filters);
 		request.setAttribute(
 			"liferay-frontend:management-bar:includeCheckBox",
@@ -119,7 +111,6 @@ public class ManagementBarTag extends IncludeTag implements BodyTag {
 
 	private String _actionButtons;
 	private String _buttons;
-	private String _checkBoxContainerId = StringPool.BLANK;
 	private String _filters;
 	private boolean _includeCheckBox;
 	private String _searchContainerId;

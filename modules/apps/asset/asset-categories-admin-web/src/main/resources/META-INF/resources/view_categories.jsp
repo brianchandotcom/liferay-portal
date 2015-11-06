@@ -136,8 +136,8 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 
 <c:if test="<%= Validator.isNotNull(keywords) || (categoriesCount > 0) %>">
 	<liferay-frontend:management-bar
-		checkBoxContainerId="assetCategoriesSearchContainer"
 		includeCheckBox="<%= true %>"
+		searchContainerId="assetCategories"
 	>
 		<liferay-frontend:management-bar-buttons>
 			<liferay-frontend:management-bar-filters>

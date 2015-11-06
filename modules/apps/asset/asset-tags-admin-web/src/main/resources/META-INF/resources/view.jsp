@@ -81,8 +81,8 @@ tagsSearchContainer.setResults(tags);
 
 <c:if test="<%= Validator.isNotNull(keywords) || (tagsCount > 0) %>">
 	<liferay-frontend:management-bar
-		checkBoxContainerId="assetTagsSearchContainer"
 		includeCheckBox="<%= true %>"
+		searchContainerId="assetTags"
 	>
 		<liferay-frontend:management-bar-filters>
 			<liferay-frontend:management-bar-navigation

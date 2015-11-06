@@ -46,7 +46,7 @@ public class SecureRandomUtil {
 			return _bytes[index];
 		}
 
-		return (byte)_reload();
+		return (byte)_reload(index);
 	}
 
 	public static double nextDouble() {
@@ -56,7 +56,7 @@ public class SecureRandomUtil {
 			return BigEndianCodec.getDouble(_bytes, index);
 		}
 
-		return Double.longBitsToDouble(_reload());
+		return Double.longBitsToDouble(_reload(index));
 	}
 
 	public static float nextFloat() {
@@ -66,7 +66,7 @@ public class SecureRandomUtil {
 			return BigEndianCodec.getFloat(_bytes, index);
 		}
 
-		return Float.intBitsToFloat((int)_reload());
+		return Float.intBitsToFloat((int)_reload(index));
 	}
 
 	public static int nextInt() {
@@ -76,7 +76,7 @@ public class SecureRandomUtil {
 			return BigEndianCodec.getInt(_bytes, index);
 		}
 
-		return (int)_reload();
+		return (int)_reload(index);
 	}
 
 	public static long nextLong() {
@@ -86,25 +86,22 @@ public class SecureRandomUtil {
 			return BigEndianCodec.getLong(_bytes, index);
 		}
 
-		return _reload();
+		return _reload(index);
 	}
 
-	private static long _reload() {
+	private static long _reload(int index) {
 		if (_reloadingFlag.compareAndSet(false, true)) {
 			_random.nextBytes(_bytes);
+
+			_gapRandom.setSeed(_random.nextLong());
 
 			_index.set(0);
 
 			_reloadingFlag.set(false);
 		}
 
-		int offset = _index.get() % (_BUFFER_SIZE - 7);
-
-		long l = BigEndianCodec.getLong(_bytes, offset) ^ _gapSeed;
-
-		_gapSeed = l;
-
-		return l;
+		return _gapRandom.nextLong() ^ BigEndianCodec.getLong(
+			_bytes, Math.abs(index % (_BUFFER_SIZE - 7)));
 	}
 
 	private static final int _BUFFER_SIZE;
@@ -112,7 +109,7 @@ public class SecureRandomUtil {
 	private static final int _MIN_BUFFER_SIZE = 1024;
 
 	private static final byte[] _bytes;
-	private static long _gapSeed;
+	private static final Random _gapRandom = new Random();
 	private static final AtomicInteger _index = new AtomicInteger();
 	private static final Random _random = new SecureRandom();
 	private static final AtomicBoolean _reloadingFlag = new AtomicBoolean();
@@ -132,7 +129,7 @@ public class SecureRandomUtil {
 
 		_random.nextBytes(_bytes);
 
-		_gapSeed = _random.nextLong();
+		_gapRandom.setSeed(_random.nextLong());
 	}
 
 }

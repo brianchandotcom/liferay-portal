@@ -287,7 +287,7 @@ AUI.add(
 						AArray.invoke(instance.get('fields'), 'renderUI');
 
 						instance.fire(
-							'render',
+							'liferay-ddm-field:render',
 							{
 								field: instance
 							}
@@ -581,7 +581,7 @@ AUI.add(
 						var instance = this;
 
 						instance.fire(
-							'repeat',
+							'liferay-ddm-field:repeat',
 							{
 								field: newField,
 								originalField: originalField
@@ -675,7 +675,7 @@ AUI.add(
 						);
 
 						instance.fire(
-							'remove',
+							'liferay-ddm-field:remove',
 							{
 								field: field
 							}

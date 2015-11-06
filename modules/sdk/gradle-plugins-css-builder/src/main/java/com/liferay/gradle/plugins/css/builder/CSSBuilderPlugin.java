@@ -15,12 +15,15 @@
 package com.liferay.gradle.plugins.css.builder;
 
 import com.liferay.gradle.util.GradleUtil;
-import com.liferay.gradle.util.Validator;
 import com.liferay.gradle.util.copy.StripPathSegmentsAction;
 
 import groovy.lang.Closure;
 
 import java.io.File;
+
+import java.util.Iterator;
+import java.util.Set;
+import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
@@ -29,10 +32,15 @@ import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
+import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.BasePlugin;
+import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.plugins.PluginContainer;
+import org.gradle.api.plugins.WarPlugin;
+import org.gradle.api.plugins.WarPluginConvention;
 import org.gradle.api.tasks.Copy;
+import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskContainer;
-import org.gradle.api.tasks.TaskOutputs;
 
 /**
  * @author Andrea Di Giorgi
@@ -53,23 +61,16 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 	public void apply(Project project) {
 		Configuration cssBuilderConfiguration = addConfigurationCSSBuilder(
 			project);
-
-		addConfigurationPortalCommonCSS(project);
+		Configuration portalCommonCSSConfiguration =
+			addConfigurationPortalCommonCSS(project);
 
 		addTaskBuildCSS(project);
-		addTaskExpandPortalCommonCSS(project);
 
-		configureTasksBuildCSS(project, cssBuilderConfiguration);
+		Copy expandPortalCommonCSSTask = addTaskExpandPortalCommonCSS(
+			project, portalCommonCSSConfiguration);
 
-		project.afterEvaluate(
-			new Action<Project>() {
-
-				@Override
-				public void execute(Project project) {
-					configureTasksBuildCSS(project);
-				}
-
-			});
+		configureTasksBuildCSS(
+			project, cssBuilderConfiguration, expandPortalCommonCSSTask);
 	}
 
 	protected Configuration addConfigurationCSSBuilder(final Project project) {
@@ -133,29 +134,54 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 	}
 
 	protected BuildCSSTask addTaskBuildCSS(Project project) {
-		BuildCSSTask buildCSSTask = GradleUtil.addTask(
+		final BuildCSSTask buildCSSTask = GradleUtil.addTask(
 			project, BUILD_CSS_TASK_NAME, BuildCSSTask.class);
 
-		buildCSSTask.setGroup(BasePlugin.BUILD_GROUP);
 		buildCSSTask.setDescription("Build CSS files.");
+		buildCSSTask.setGroup(BasePlugin.BUILD_GROUP);
+
+		PluginContainer pluginContainer = project.getPlugins();
+
+		pluginContainer.withType(
+			JavaPlugin.class,
+			new Action<JavaPlugin>() {
+
+				@Override
+				public void execute(JavaPlugin javaPlugin) {
+					configureTaskBuildCSSForJavaPlugin(buildCSSTask);
+				}
+
+			});
+
+		pluginContainer.withType(
+			WarPlugin.class,
+			new Action<WarPlugin>() {
+
+				@Override
+				public void execute(WarPlugin warPlugin) {
+					configureTaskBuildCSSForWarPlugin(buildCSSTask);
+				}
+
+			});
 
 		return buildCSSTask;
 	}
 
-	protected Copy addTaskExpandPortalCommonCSS(final Project project) {
+	protected Copy addTaskExpandPortalCommonCSS(
+		final Project project,
+		final Configuration portalCommonCSSConfiguration) {
+
 		Copy copy = GradleUtil.addTask(
 			project, EXPAND_PORTAL_COMMON_CSS_TASK_NAME, Copy.class);
 
-		copy.eachFile(new StripPathSegmentsAction(5));
+		copy.eachFile(new StripPathSegmentsAction(2));
 
 		Closure<Void> closure = new Closure<Void>(null) {
 
 			@SuppressWarnings("unused")
 			public FileTree doCall() {
-				Configuration configuration = GradleUtil.getConfiguration(
-					project, PORTAL_COMMON_CSS_CONFIGURATION_NAME);
-
-				return project.zipTree(configuration.getSingleFile());
+				return project.zipTree(
+					portalCommonCSSConfiguration.getSingleFile());
 			}
 
 		};
@@ -169,55 +195,87 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 		return copy;
 	}
 
-	protected void configureTaskBuildCSS(BuildCSSTask buildCSSTask) {
-		Project project = buildCSSTask.getProject();
-
-		String portalCommonDirName = buildCSSTask.getPortalCommonDirName();
-
-		if (Validator.isNotNull(portalCommonDirName)) {
-			return;
-		}
-
-		Task expandPortalCommonCSSTask = GradleUtil.getTask(
-			project, EXPAND_PORTAL_COMMON_CSS_TASK_NAME);
-
-		FileCollection cssFiles = buildCSSTask.getCSSFiles();
-
-		if (!cssFiles.isEmpty()) {
-			buildCSSTask.dependsOn(expandPortalCommonCSSTask);
-		}
-
-		TaskOutputs taskOutputs = expandPortalCommonCSSTask.getOutputs();
-
-		FileCollection fileCollection = taskOutputs.getFiles();
-
-		buildCSSTask.setPortalCommonDirName(
-			project.relativePath(fileCollection.getSingleFile()));
-	}
-
 	protected void configureTaskBuildCSSClasspath(
 		BuildCSSTask buildCSSTask, Configuration cssBuilderConfiguration) {
 
 		buildCSSTask.setClasspath(cssBuilderConfiguration);
 	}
 
-	protected void configureTasksBuildCSS(Project project) {
-		TaskContainer taskContainer = project.getTasks();
+	protected void configureTaskBuildCSSDependsOn(
+		BuildCSSTask buildCSSTask, final Copy expandPortalCommonCSSTask) {
 
-		taskContainer.withType(
-			BuildCSSTask.class,
-			new Action<BuildCSSTask>() {
+		Closure<Task> closure = new Closure<Task>(null) {
+
+			@SuppressWarnings("unused")
+			public Task doCall(BuildCSSTask buildCSSTask) {
+				FileCollection cssFiles = buildCSSTask.getCSSFiles();
+				File portalCommonDir = buildCSSTask.getPortalCommonDir();
+
+				if (!cssFiles.isEmpty() &&
+					portalCommonDir.equals(
+						expandPortalCommonCSSTask.getDestinationDir())) {
+
+					return expandPortalCommonCSSTask;
+				}
+
+				return null;
+			}
+
+		};
+
+		buildCSSTask.dependsOn(closure);
+	}
+
+	protected void configureTaskBuildCSSForJavaPlugin(
+		final BuildCSSTask buildCSSTask) {
+
+		buildCSSTask.setDocrootDir(
+			new Callable<File>() {
 
 				@Override
-				public void execute(BuildCSSTask buildCSSTask) {
-					configureTaskBuildCSS(buildCSSTask);
+				public File call() throws Exception {
+					return getResourcesDir(buildCSSTask.getProject());
+				}
+
+			});
+
+		Task processResourcesTask = GradleUtil.getTask(
+			buildCSSTask.getProject(), JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
+
+		processResourcesTask.dependsOn(buildCSSTask);
+	}
+
+	protected void configureTaskBuildCSSForWarPlugin(
+		final BuildCSSTask buildCSSTask) {
+
+		buildCSSTask.setDocrootDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return getWebAppDir(buildCSSTask.getProject());
+				}
+
+			});
+	}
+
+	protected void configureTaskBuildCSSPortalCommonDir(
+		BuildCSSTask buildCSSTask, final Copy expandPortalCommonCSSTask) {
+
+		buildCSSTask.setPortalCommonDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return expandPortalCommonCSSTask.getDestinationDir();
 				}
 
 			});
 	}
 
 	protected void configureTasksBuildCSS(
-		Project project, final Configuration cssBuilderConfiguration) {
+		Project project, final Configuration cssBuilderConfiguration,
+		final Copy expandPortalCommonCSSTask) {
 
 		TaskContainer taskContainer = project.getTasks();
 
@@ -229,9 +287,35 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 				public void execute(BuildCSSTask buildCSSTask) {
 					configureTaskBuildCSSClasspath(
 						buildCSSTask, cssBuilderConfiguration);
+					configureTaskBuildCSSDependsOn(
+						buildCSSTask, expandPortalCommonCSSTask);
+					configureTaskBuildCSSPortalCommonDir(
+						buildCSSTask, expandPortalCommonCSSTask);
 				}
 
 			});
+	}
+
+	protected File getResourcesDir(Project project) {
+		SourceSet sourceSet = GradleUtil.getSourceSet(
+			project, SourceSet.MAIN_SOURCE_SET_NAME);
+
+		return getSrcDir(sourceSet.getResources());
+	}
+
+	protected File getSrcDir(SourceDirectorySet sourceDirectorySet) {
+		Set<File> srcDirs = sourceDirectorySet.getSrcDirs();
+
+		Iterator<File> iterator = srcDirs.iterator();
+
+		return iterator.next();
+	}
+
+	protected File getWebAppDir(Project project) {
+		WarPluginConvention warPluginConvention = GradleUtil.getConvention(
+			project, WarPluginConvention.class);
+
+		return warPluginConvention.getWebAppDir();
 	}
 
 }

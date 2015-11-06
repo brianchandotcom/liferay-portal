@@ -24,6 +24,7 @@ import com.liferay.registry.ServiceReference;
 import com.liferay.registry.collections.ServiceReferenceMapper;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
+import com.liferay.registry.util.StringPlus;
 
 import java.util.List;
 
@@ -64,12 +65,16 @@ public abstract class BasePortletToolbarContributorLocator
 						serviceReference,
 					Emitter<String> emitter) {
 
-					String portletName = (String)serviceReference.getProperty(
-						"javax.portlet.name");
-					String value = (String)serviceReference.getProperty(
-						getPropertyName());
+					List<String> portletNames = StringPlus.asList(
+						serviceReference.getProperty("javax.portlet.name"));
+					List<String> values = StringPlus.asList(
+						serviceReference.getProperty(getPropertyName()));
 
-					emitter.emit(getKey(portletName, value));
+					for (String portletName : portletNames) {
+						for (String value : values) {
+							emitter.emit(getKey(portletName, value));
+						}
+					}
 				}
 
 			});

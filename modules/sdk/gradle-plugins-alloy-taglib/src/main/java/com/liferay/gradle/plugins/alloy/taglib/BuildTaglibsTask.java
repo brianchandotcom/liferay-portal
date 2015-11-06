@@ -52,7 +52,7 @@ public class BuildTaglibsTask extends JavaExec {
 
 	@Override
 	public void exec() {
-		super.setSystemProperties(getSystemProperties());
+		setSystemProperties(getCompleteSystemProperties());
 
 		super.exec();
 	}
@@ -89,46 +89,6 @@ public class BuildTaglibsTask extends JavaExec {
 
 	public String getOsgiModuleSymbolicName() {
 		return GradleUtil.toString(_osgiModuleSymbolicName);
-	}
-
-	@Override
-	public Map<String, Object> getSystemProperties() {
-		Map<String, Object> systemProperties = new HashMap<>();
-
-		systemProperties.put(
-			"tagbuilder.components.xml",
-			getRelativePaths(getComponentsXmlFiles()));
-		systemProperties.put("tagbuilder.copyright.year", getCopyrightYear());
-		systemProperties.put(
-			"tagbuilder.java.dir", getRelativePath(getJavaDir()) + "/");
-		systemProperties.put("tagbuilder.java.package", getJavaPackage());
-		systemProperties.put(
-			"tagbuilder.jsp.common.init.path", getJspCommonInitPath());
-
-		String jspDirName = getJspDirName();
-
-		if (!jspDirName.endsWith("/")) {
-			jspDirName = jspDirName + "/";
-		}
-
-		systemProperties.put("tagbuilder.jsp.dir", jspDirName);
-
-		systemProperties.put(
-			"tagbuilder.jsp.parent.dir",
-			getRelativePath(getJspParentDir()) + "/");
-
-		String osgiModuleSymbolicName = getOsgiModuleSymbolicName();
-
-		if (Validator.isNotNull(osgiModuleSymbolicName)) {
-			systemProperties.put(
-				"tagbuilder.osgi.module.symbolic.name", osgiModuleSymbolicName);
-		}
-
-		systemProperties.put("tagbuilder.templates.dir", getTemplatesDirName());
-		systemProperties.put(
-			"tagbuilder.tld.dir", getRelativePath(getTldDir()) + "/");
-
-		return systemProperties;
 	}
 
 	public String getTemplatesDirName() {
@@ -177,11 +137,6 @@ public class BuildTaglibsTask extends JavaExec {
 		_osgiModuleSymbolicName = osgiModuleSymbolicName;
 	}
 
-	@Override
-	public void setSystemProperties(Map<String, ?> properties) {
-		throw new UnsupportedOperationException();
-	}
-
 	public void setTemplatesDirName(Object templatesDirName) {
 		_templatesDirName = templatesDirName;
 	}
@@ -190,14 +145,44 @@ public class BuildTaglibsTask extends JavaExec {
 		_tldDir = tldDir;
 	}
 
-	@Override
-	public JavaExec systemProperties(Map<String, ?> properties) {
-		throw new UnsupportedOperationException();
-	}
+	protected Map<String, Object> getCompleteSystemProperties() {
+		Map<String, Object> systemProperties = new HashMap<>(
+			getSystemProperties());
 
-	@Override
-	public JavaExec systemProperty(String name, Object value) {
-		throw new UnsupportedOperationException();
+		systemProperties.put(
+			"tagbuilder.components.xml",
+			getRelativePaths(getComponentsXmlFiles()));
+		systemProperties.put("tagbuilder.copyright.year", getCopyrightYear());
+		systemProperties.put(
+			"tagbuilder.java.dir", getRelativePath(getJavaDir()) + "/");
+		systemProperties.put("tagbuilder.java.package", getJavaPackage());
+		systemProperties.put(
+			"tagbuilder.jsp.common.init.path", getJspCommonInitPath());
+
+		String jspDirName = getJspDirName();
+
+		if (!jspDirName.endsWith("/")) {
+			jspDirName = jspDirName + "/";
+		}
+
+		systemProperties.put("tagbuilder.jsp.dir", jspDirName);
+
+		systemProperties.put(
+			"tagbuilder.jsp.parent.dir",
+			getRelativePath(getJspParentDir()) + "/");
+
+		String osgiModuleSymbolicName = getOsgiModuleSymbolicName();
+
+		if (Validator.isNotNull(osgiModuleSymbolicName)) {
+			systemProperties.put(
+				"tagbuilder.osgi.module.symbolic.name", osgiModuleSymbolicName);
+		}
+
+		systemProperties.put("tagbuilder.templates.dir", getTemplatesDirName());
+		systemProperties.put(
+			"tagbuilder.tld.dir", getRelativePath(getTldDir()) + "/");
+
+		return systemProperties;
 	}
 
 	protected String getComponentsXml() {

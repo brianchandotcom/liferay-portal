@@ -1001,7 +1001,7 @@
 		<execute macro="Page#gotoPG">
 			<var name="assetTitle" value="${assetTitle}" />
 			<var name="pageName" value="Asset Publisher Page" />
-	</execute>
+		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewRate4StarsPG" />
 	</command>

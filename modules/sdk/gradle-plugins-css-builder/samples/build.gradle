@@ -21,8 +21,4 @@ repositories {
 }
 
 apply plugin: "com.liferay.css.builder"
-
-buildCSS {
-	docrootDirName = "css"
-	portalCommonDirName = "../../../frontend/frontend-common-css/tmp/META-INF/resources"
-}
+apply plugin: "java"

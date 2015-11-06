@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+
 PortletURL portletURL = renderResponse.createRenderURL();
 %>
 
@@ -27,6 +29,16 @@ PortletURL portletURL = renderResponse.createRenderURL();
 		<aui:nav-item cssClass="active" label="templates" />
 	</aui:nav>
 </aui:nav-bar>
+
+<liferay-frontend:management-bar>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"list"} %>'
+			portletURL="<%= portletURL %>"
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
+</liferay-frontend:management-bar>
 
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="get" name="fm">
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
@@ -91,7 +103,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

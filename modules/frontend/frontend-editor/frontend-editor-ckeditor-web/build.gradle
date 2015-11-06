@@ -12,12 +12,12 @@ String ckEditorVersion = "4.5.3"
 String ckEditorScaytUrl = "http://download.ckeditor.com/scayt/releases/scayt_${ckEditorVersion}.zip"
 String ckEditorWscUrl = "http://download.ckeditor.com/wsc/releases/wsc_${ckEditorVersion}.zip"
 
-File editorsDestinationDir = file("tmp/META-INF/resources")
-File editorsSrcDir = file("src/main/resources/META-INF/resources")
+File editorDestinationDir = file("tmp/META-INF/resources")
+File editorSrcDir = file("src/main/resources/META-INF/resources")
 File thirdPartyDir = file("../../../../portal-web/third-party")
 
 buildCKEditor {
-	File ckEditorDestinationDir = new File(editorsDestinationDir, "ckeditor")
+	File ckEditorDestinationDir = new File(editorDestinationDir, "ckeditor")
 	File ckEditorZipFile = new File(thirdPartyDir, "ckeditor_${ckEditorVersion}_liferay.zip")
 
 	doFirst {
@@ -31,7 +31,7 @@ buildCKEditor {
 		include "ckeditor/**"
 	}
 
-	from new File(editorsSrcDir, "_diffs")
+	from new File(editorSrcDir, "_diffs")
 	includeEmptyDirs = false
 	into ckEditorDestinationDir
 
@@ -41,7 +41,7 @@ buildCKEditor {
 }
 
 buildCKEditorBBCode {
-	File bbCodeDir = new File(editorsSrcDir, "_diffs/plugins/bbcode")
+	File bbCodeDir = new File(editorSrcDir, "_diffs/plugins/bbcode")
 
 	destinationFile = new File(bbCodeDir, "bbcode_parser.js")
 
@@ -68,7 +68,7 @@ buildCKEditorScayt {
 		zipTree ckEditorScaytFile
 	}
 
-	into new File(editorsDestinationDir, "ckeditor/plugins")
+	into new File(editorDestinationDir, "ckeditor/plugins")
 }
 
 buildCKEditorWsc {
@@ -84,7 +84,7 @@ buildCKEditorWsc {
 		zipTree ckEditorWscFile
 	}
 
-	into new File(editorsDestinationDir, "ckeditor/plugins")
+	into new File(editorDestinationDir, "ckeditor/plugins")
 }
 
 classes {

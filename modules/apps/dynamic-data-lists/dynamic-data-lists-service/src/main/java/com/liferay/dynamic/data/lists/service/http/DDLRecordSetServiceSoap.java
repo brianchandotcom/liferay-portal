@@ -280,11 +280,10 @@ public class DDLRecordSetServiceSoap {
 	}
 
 	public static com.liferay.dynamic.data.lists.model.DDLRecordSetSoap updateRecordSet(
-		long recordSetId, java.lang.String typeSettings)
-		throws RemoteException {
+		long recordSetId, java.lang.String settings) throws RemoteException {
 		try {
 			com.liferay.dynamic.data.lists.model.DDLRecordSet returnValue = DDLRecordSetServiceUtil.updateRecordSet(recordSetId,
-					typeSettings);
+					settings);
 
 			return com.liferay.dynamic.data.lists.model.DDLRecordSetSoap.toSoapModel(returnValue);
 		}

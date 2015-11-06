@@ -62,7 +62,7 @@ public class SecureRandomUtilTest {
 	public void testConcurrentReload() throws Exception {
 		SecureRandom secureRandom = installPredictableRandom();
 
-		FutureTask<Long> futureTask = new FutureTask<Long>(
+		FutureTask<Long> futureTask = new FutureTask<>(
 			new Callable<Long>() {
 
 				@Override
@@ -302,12 +302,12 @@ public class SecureRandomUtilTest {
 			}
 
 			Assert.assertEquals(
-				BigEndianCodec.getInt(bytes, 0), SecureRandomUtil.nextInt(), 0);
+				BigEndianCodec.getInt(bytes, 0), SecureRandomUtil.nextInt());
 		}
 
 		// Gap number
 
-		Assert.assertEquals((int)getLong(7), SecureRandomUtil.nextInt(), 0);
+		Assert.assertEquals((int)getLong(7), SecureRandomUtil.nextInt());
 
 		// Second load
 
@@ -321,13 +321,12 @@ public class SecureRandomUtilTest {
 			}
 
 			Assert.assertEquals(
-				BigEndianCodec.getInt(bytes, 0), SecureRandomUtil.nextInt(), 0);
+				BigEndianCodec.getInt(bytes, 0), SecureRandomUtil.nextInt());
 		}
 
 		// Gap number
 
-		Assert.assertEquals(
-			(int)(getLong(7) ^ 1), SecureRandomUtil.nextInt(), 0);
+		Assert.assertEquals((int)(getLong(7) ^ 1L), SecureRandomUtil.nextInt());
 	}
 
 	@Test
@@ -347,13 +346,12 @@ public class SecureRandomUtilTest {
 			}
 
 			Assert.assertEquals(
-				BigEndianCodec.getLong(bytes, 0), SecureRandomUtil.nextLong(),
-				0);
+				BigEndianCodec.getLong(bytes, 0), SecureRandomUtil.nextLong());
 		}
 
 		// Gap number
 
-		Assert.assertEquals(getLong(7), SecureRandomUtil.nextLong(), 0);
+		Assert.assertEquals(getLong(7), SecureRandomUtil.nextLong());
 
 		// Second load
 
@@ -367,13 +365,12 @@ public class SecureRandomUtilTest {
 			}
 
 			Assert.assertEquals(
-				BigEndianCodec.getLong(bytes, 0), SecureRandomUtil.nextLong(),
-				0);
+				BigEndianCodec.getLong(bytes, 0), SecureRandomUtil.nextLong());
 		}
 
 		// Gap number
 
-		Assert.assertEquals(getLong(7) ^ 1, SecureRandomUtil.nextLong(), 0);
+		Assert.assertEquals(getLong(7) ^ 1, SecureRandomUtil.nextLong());
 	}
 
 	protected long getLong(int offset) {

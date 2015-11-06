@@ -54,8 +54,8 @@ JournalArticle article = journalDisplayContext.getArticle();
 		%>
 
 		<liferay-frontend:management-bar
-			checkBoxContainerId="articleVersionsSearchContainer"
 			includeCheckBox="<%= true %>"
+			searchContainerId="articleVersions"
 		>
 			<liferay-frontend:management-bar-buttons>
 

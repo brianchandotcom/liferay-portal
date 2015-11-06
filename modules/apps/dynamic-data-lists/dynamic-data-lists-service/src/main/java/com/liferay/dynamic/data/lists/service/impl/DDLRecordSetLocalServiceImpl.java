@@ -426,11 +426,11 @@ public class DDLRecordSetLocalServiceImpl
 			UnicodeProperties settingsProperties)
 		throws PortalException {
 
-		String successURL = settingsProperties.getProperty("successURL");
+		String redirectURL = settingsProperties.getProperty("redirectURL");
 
-		if (Validator.isNotNull(successURL) && !Validator.isUrl(successURL)) {
+		if (Validator.isNotNull(redirectURL) && !Validator.isUrl(redirectURL)) {
 			throw new RecordSetSettingsException(
-				"The property \"successURL\" is not a URL");
+				"The property \"redirectURL\" is not a URL");
 		}
 	}
 

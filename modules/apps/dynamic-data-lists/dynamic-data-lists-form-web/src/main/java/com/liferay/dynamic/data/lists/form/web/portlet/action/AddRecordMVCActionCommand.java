@@ -79,17 +79,17 @@ public class AddRecordMVCActionCommand extends BaseMVCActionCommand {
 			groupId, recordSetId, DDLRecordConstants.DISPLAY_INDEX_DEFAULT,
 			ddmFormValues, serviceContext);
 
-		String successURL = GetterUtil.getString(
-			recordSet.getSettingsProperty("successURL", StringPool.BLANK));
+		String redirectURL = GetterUtil.getString(
+			recordSet.getSettingsProperty("redirectURL", StringPool.BLANK));
 
 		if (SessionErrors.isEmpty(actionRequest) &&
-			Validator.isNotNull(successURL)) {
+			Validator.isNotNull(redirectURL)) {
 
 			SessionMessages.add(
 				actionRequest, portletId,
 				SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
 
-			actionResponse.sendRedirect(successURL);
+			actionResponse.sendRedirect(redirectURL);
 		}
 	}
 

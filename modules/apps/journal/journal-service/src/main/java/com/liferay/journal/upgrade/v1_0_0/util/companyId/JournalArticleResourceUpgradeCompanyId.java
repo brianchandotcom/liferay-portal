@@ -15,6 +15,7 @@
 package com.liferay.journal.upgrade.v1_0_0.util.companyId;
 
 import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdInTable;
+import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdUtil;
 
 /**
  * @author Cristina González
@@ -28,7 +29,19 @@ public class JournalArticleResourceUpgradeCompanyId
 	}
 
 	@Override
-	public void upgradeProcess() {
+	public void upgradeProcess() throws Exception {
+		String select =
+			"select g.companyId, jar.resourcePrimKey from " +
+				"Group_ g, JournalArticleResource jar " +
+				"where g.groupId=jar.groupId";
+
+		String update =
+			"update JournalArticleResource set companyId = ? " +
+				"where resourcePrimKey = ?";
+
+		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
+			"JournalArticleResource", select, update, "companyId",
+			"resourcePrimKey");
 	}
 
 }

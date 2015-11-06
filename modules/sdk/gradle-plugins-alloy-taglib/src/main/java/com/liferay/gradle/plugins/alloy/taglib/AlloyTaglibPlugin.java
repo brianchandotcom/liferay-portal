@@ -83,7 +83,10 @@ public class AlloyTaglibPlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
-					return getResourcesDir(buildTaglibsTask.getProject());
+					File resourcesDir = getResourcesDir(
+						buildTaglibsTask.getProject());
+
+					return new File(resourcesDir, "META-INF/resources");
 				}
 
 			});
@@ -97,7 +100,10 @@ public class AlloyTaglibPlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
-					return getResourcesDir(buildTaglibsTask.getProject());
+					File resourcesDir = getResourcesDir(
+						buildTaglibsTask.getProject());
+
+					return new File(resourcesDir, "META-INF/resources");
 				}
 
 			});

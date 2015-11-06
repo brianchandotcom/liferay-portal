@@ -65,7 +65,7 @@ buildCKEditorScayt {
 			FileUtil.get(project, ckEditorScaytUrl, ckEditorScaytFile)
 		}
 
-		zipTree ckEditorScaytFile
+		zipTree(ckEditorScaytFile)
 	}
 
 	into new File(editorDestinationDir, "ckeditor/plugins")
@@ -81,7 +81,7 @@ buildCKEditorWsc {
 			FileUtil.get(project, ckEditorWscUrl, ckEditorWscFile)
 		}
 
-		zipTree ckEditorWscFile
+		zipTree(ckEditorWscFile)
 	}
 
 	into new File(editorDestinationDir, "ckeditor/plugins")

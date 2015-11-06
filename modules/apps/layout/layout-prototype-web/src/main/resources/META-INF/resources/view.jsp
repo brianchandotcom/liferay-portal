@@ -51,15 +51,15 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			keyProperty="layoutPrototypeId"
 			modelVar="layoutPrototype"
 		>
+
+			<%
+			Group layoutPrototypeGroup = layoutPrototype.getGroup();
+			%>
+
 			<liferay-ui:search-container-column-text
 				name="name"
 			>
-				<liferay-portlet:renderURL varImpl="rowURL">
-					<portlet:param name="mvcPath" value="/edit_layout_prototype.jsp" />
-					<portlet:param name="layoutPrototypeId" value="<%= String.valueOf(layoutPrototype.getLayoutPrototypeId()) %>" />
-				</liferay-portlet:renderURL>
-
-				<aui:a href="<%= rowURL.toString() %>"><%= layoutPrototype.getName(locale) %></aui:a>
+				<aui:a href="<%= layoutPrototypeGroup.getDisplayURL(themeDisplay, true) %>" target="_blank"><%= layoutPrototype.getName(locale) %></aui:a>
 
 				<%
 				int mergeFailCount = SitesUtil.getMergeFailCount(layoutPrototype);

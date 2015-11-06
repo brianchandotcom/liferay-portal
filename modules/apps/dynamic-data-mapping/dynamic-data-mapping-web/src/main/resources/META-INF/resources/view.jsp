@@ -26,6 +26,8 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("mvcPath", "/view.jsp");
 portletURL.setParameter("tabs1", tabs1);
 portletURL.setParameter("groupId", String.valueOf(groupId));
+
+String searchContainerId = "structures";
 %>
 
 <liferay-ui:error exception="<%= RequiredStructureException.MustNotDeleteStructureReferencedByStructureLinks.class %>" message="the-structure-cannot-be-deleted-because-it-is-required-by-one-or-more-structure-links" />
@@ -57,11 +59,14 @@ portletURL.setParameter("groupId", String.valueOf(groupId));
 			<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 		</liferay-util:include>
 
-		<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
+			<liferay-util:param name="searchContainerId" value="<%= searchContainerId %>" />
+		</liferay-util:include>
 	</c:if>
 
 	<div class="container-fluid-1280" id="<portlet:namespace />entriesContainer">
 		<liferay-ui:search-container
+			id="<%= searchContainerId %>"
 			orderByCol="<%= orderByCol %>"
 			orderByComparator="<%= orderByComparator %>"
 			orderByType="<%= orderByType %>"

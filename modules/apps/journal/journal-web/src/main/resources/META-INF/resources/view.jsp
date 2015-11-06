@@ -21,7 +21,7 @@ String browseBy = ParamUtil.getString(request, "browseBy");
 
 String keywords = ParamUtil.getString(request, "keywords");
 
-String searchContainerId = "journalArticleSearchContainer";
+String searchContainerId = "articles";
 %>
 
 <portlet:actionURL name="restoreTrashEntries" var="restoreTrashEntriesURL" />

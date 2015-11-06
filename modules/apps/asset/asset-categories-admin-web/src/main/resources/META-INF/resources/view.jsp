@@ -87,8 +87,8 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 
 <c:if test="<%= Validator.isNotNull(keywords) || (vocabulariesCount > 0) %>">
 	<liferay-frontend:management-bar
-		checkBoxContainerId="assetVocabulariesSearchContainer"
 		includeCheckBox="<%= true %>"
+		searchContainerId="assetVocabularies"
 	>
 		<liferay-frontend:management-bar-buttons>
 			<liferay-frontend:management-bar-filters>

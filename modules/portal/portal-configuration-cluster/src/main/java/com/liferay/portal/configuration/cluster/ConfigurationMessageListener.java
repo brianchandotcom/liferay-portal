@@ -14,7 +14,7 @@
 
 package com.liferay.portal.configuration.cluster;
 
-import com.liferay.portal.configuration.persistence.ReloadablePersitenceManager;
+import com.liferay.portal.configuration.persistence.ReloadablePersistenceManager;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.Message;
@@ -39,10 +39,10 @@ import org.osgi.service.component.annotations.Reference;
 public class ConfigurationMessageListener extends BaseMessageListener {
 
 	@Reference
-	public void setReloadablePersitenceManager(
-		ReloadablePersitenceManager reloadablePersitenceManager) {
+	public void setReloadablePersistenceManager(
+		ReloadablePersistenceManager reloadablePersistenceManager) {
 
-		_reloadablePersitenceManager = reloadablePersitenceManager;
+		_reloadablePersistenceManager = reloadablePersistenceManager;
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class ConfigurationMessageListener extends BaseMessageListener {
 
 		sb.append(")");
 
-		_reloadablePersitenceManager.reload(pid);
+		_reloadablePersistenceManager.reload(pid);
 
 		try {
 			ConfigurationThreadLocal.setLocalUpdate(true);
@@ -113,6 +113,6 @@ public class ConfigurationMessageListener extends BaseMessageListener {
 	}
 
 	private ConfigurationAdmin _configurationAdmin;
-	private ReloadablePersitenceManager _reloadablePersitenceManager;
+	private ReloadablePersistenceManager _reloadablePersistenceManager;
 
 }

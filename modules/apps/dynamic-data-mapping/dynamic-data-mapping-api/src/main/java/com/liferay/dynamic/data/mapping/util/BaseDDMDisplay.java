@@ -60,7 +60,7 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 	public String getEditStructureDefaultValuesURL(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
-			DDMStructure structure, String redirectURL, String backURL)
+			DDMStructure structure, String redirectURL)
 		throws Exception {
 
 		return null;

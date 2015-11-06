@@ -57,7 +57,7 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 	public String getEditStructureDefaultValuesURL(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
-			DDMStructure structure, String redirectURL, String backURL)
+			DDMStructure structure, String redirectURL)
 		throws Exception {
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
@@ -66,7 +66,6 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 
 		portletURL.setParameter("mvcPath", "/edit_article.jsp");
 		portletURL.setParameter("redirect", redirectURL);
-		portletURL.setParameter("backURL", backURL);
 		portletURL.setParameter(
 			"groupId", String.valueOf(structure.getGroupId()));
 		portletURL.setParameter(

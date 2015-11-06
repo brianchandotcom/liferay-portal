@@ -60,9 +60,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  * @author Bruno Farache
  * @author Daniel Kocsis
- * @see    com.liferay.journal.web.lar.JournalPortletDataHandler
+ * @see    JournalPortletDataHandler
  * @see    com.liferay.journal.lar.JournalCreationStrategy
- * @see    com.liferay.portlet.exportimport.lar.PortletDataHandler
+ * @see    PortletDataHandler
  */
 @Component(
 	immediate = true,
@@ -75,6 +75,7 @@ public class JournalContentPortletDataHandler
 	extends JournalPortletDataHandler {
 
 	@Activate
+	@Override
 	protected void activate() {
 		setDataLevel(DataLevel.PORTLET_INSTANCE);
 		setDataPortletPreferences("articleId", "ddmTemplateKey", "groupId");
@@ -103,6 +104,7 @@ public class JournalContentPortletDataHandler
 		return portletPreferences;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setDDMStructureLocalService(
 		DDMStructureLocalService ddmStructureLocalService) {
@@ -110,6 +112,7 @@ public class JournalContentPortletDataHandler
 		this.ddmStructureLocalService = ddmStructureLocalService;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setDDMTemplateLocalService(
 		DDMTemplateLocalService ddmTemplateLocalService) {
@@ -117,6 +120,7 @@ public class JournalContentPortletDataHandler
 		this.ddmTemplateLocalService = ddmTemplateLocalService;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setJournalArticleLocalService(
 		JournalArticleLocalService journalArticleLocalService) {
@@ -124,11 +128,13 @@ public class JournalContentPortletDataHandler
 		this.journalArticleLocalService = journalArticleLocalService;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setJournalContent(JournalContent journalContent) {
 		this.journalContent = journalContent;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setJournalFeedLocalService(
 		JournalFeedLocalService journalFeedLocalService) {
@@ -136,6 +142,7 @@ public class JournalContentPortletDataHandler
 		this.journalFeedLocalService = journalFeedLocalService;
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setJournalFolderLocalService(
 		JournalFolderLocalService journalFolderLocalService) {
@@ -143,6 +150,7 @@ public class JournalContentPortletDataHandler
 		this.journalFolderLocalService = journalFolderLocalService;
 	}
 
+	@Override
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {

@@ -236,8 +236,7 @@ public class ManifestSummary implements Serializable {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getAllModelDeletionCounts()}
+	 * @deprecated As of 7.0.0, replaced by {@link #getAllModelDeletionCounts()}
 	 */
 	@Deprecated
 	public long getModelDeletionCount() {

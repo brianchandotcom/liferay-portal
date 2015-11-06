@@ -114,15 +114,12 @@ public interface SiteMembershipPolicy {
 	 * exception, the service foregoes making the changes.
 	 * </p>
 	 *
-	 * @param  userIds the primary keys of the users to be added and removed
-	 *         from the sites
-	 * @param  addGroupIds the primary keys of the sites to which the users are
-	 *         to be added (optionally <code>null</code>)
-	 * @param  removeGroupIds the primary keys of the sites from which the users
-	 *         are to be removed (optionally <code>null</code>)
-	 * @throws PortalException if any one user could not be added to a site, if
-	 *         any one user could not be removed from a site, or if a portal
-	 *         exception occurred
+	 * @param userIds the primary keys of the users to be added and removed from
+	 *        the sites
+	 * @param addGroupIds the primary keys of the sites to which the users are
+	 *        to be added (optionally <code>null</code>)
+	 * @param removeGroupIds the primary keys of the sites from which the users
+	 *        are to be removed (optionally <code>null</code>)
 	 */
 	public void checkMembership(
 			long[] userIds, long[] addGroupIds, long[] removeGroupIds)
@@ -137,10 +134,8 @@ public interface SiteMembershipPolicy {
 	 * an exception, the service foregoes making the changes.
 	 * </p>
 	 *
-	 * @param  addUserGroupRoles the user group roles to be added
-	 * @param  removeUserGroupRoles the user group roles to be removed
-	 * @throws PortalException if any one user group role violated the policy or
-	 *         if a portal exception occurred
+	 * @param addUserGroupRoles the user group roles to be added
+	 * @param removeUserGroupRoles the user group roles to be removed
 	 */
 	public void checkRoles(
 			List<UserGroupRole> addUserGroupRoles,
@@ -155,7 +150,6 @@ public interface SiteMembershipPolicy {
 	 * @param  groupId the primary key of the site
 	 * @return <code>true</code> if the user can be added to the site;
 	 *         <code>false</code> otherwise
-	 * @throws PortalException if a portal exception occurred
 	 */
 	public boolean isMembershipAllowed(long userId, long groupId)
 		throws PortalException;
@@ -170,7 +164,6 @@ public interface SiteMembershipPolicy {
 	 * @return <code>true</code> if the policy prevents the user from being
 	 *         removed from the site by the user associated with the permission
 	 *         checker; <code>false</code> otherwise
-	 * @throws PortalException if a portal exception occurred
 	 */
 	public boolean isMembershipProtected(
 			PermissionChecker permissionChecker, long userId, long groupId)
@@ -185,7 +178,6 @@ public interface SiteMembershipPolicy {
 	 * @param  groupId the primary key of the site
 	 * @return <code>true</code> if site membership for the user is mandatory;
 	 *         <code>false</code> otherwise
-	 * @throws PortalException if a portal exception occurred
 	 */
 	public boolean isMembershipRequired(long userId, long groupId)
 		throws PortalException;
@@ -199,7 +191,6 @@ public interface SiteMembershipPolicy {
 	 * @param  roleId the primary key of the role
 	 * @return <code>true</code> if the role can be added to the user on the
 	 *         site; <code>false</code> otherwise
-	 * @throws PortalException if a portal exception occurred
 	 */
 	public boolean isRoleAllowed(long userId, long groupId, long roleId)
 		throws PortalException;
@@ -215,7 +206,6 @@ public interface SiteMembershipPolicy {
 	 * @return <code>true</code> if the policy prevents the user from being
 	 *         removed from the role by the user associated with the permission
 	 *         checker; <code>false</code> otherwise
-	 * @throws PortalException if a portal exception occurred
 	 */
 	public boolean isRoleProtected(
 			PermissionChecker permissionChecker, long userId, long groupId,
@@ -231,7 +221,6 @@ public interface SiteMembershipPolicy {
 	 * @param  roleId the primary key of the role
 	 * @return <code>true</code> if the role is mandatory for the user on the
 	 *         site; <code>false</code> otherwise
-	 * @throws PortalException if a portal exception occurred
 	 */
 	public boolean isRoleRequired(long userId, long groupId, long roleId)
 		throws PortalException;
@@ -258,13 +247,12 @@ public interface SiteMembershipPolicy {
 	 * </li>
 	 * </ul>
 	 *
-	 * @param  userIds the primary key of the users that have been added or
-	 *         removed
-	 * @param  addGroupIds the primary keys of the sites to which the users were
-	 *         added (optionally <code>null</code>)
-	 * @param  removeGroupIds the primary keys of the sites from which the users
-	 *         were removed (optionally <code>null</code>)
-	 * @throws PortalException if a portal exception occurred
+	 * @param userIds the primary key of the users that have been added or
+	 *        removed
+	 * @param addGroupIds the primary keys of the sites to which the users were
+	 *        added (optionally <code>null</code>)
+	 * @param removeGroupIds the primary keys of the sites from which the users
+	 *        were removed (optionally <code>null</code>)
 	 */
 	public void propagateMembership(
 			long[] userIds, long[] addGroupIds, long[] removeGroupIds)
@@ -290,9 +278,8 @@ public interface SiteMembershipPolicy {
 	 * </li>
 	 * </ul>
 	 *
-	 * @param  addUserGroupRoles the user group roles added
-	 * @param  removeUserGroupRoles the user group roles removed
-	 * @throws PortalException if a portal exception occurred
+	 * @param addUserGroupRoles the user group roles added
+	 * @param removeUserGroupRoles the user group roles removed
 	 */
 	public void propagateRoles(
 			List<UserGroupRole> addUserGroupRoles,
@@ -306,8 +293,6 @@ public interface SiteMembershipPolicy {
 	 * Panel. If the <code>membership.policy.auto.verify</code> portal property
 	 * is <code>true</code> this method is triggered when starting Liferay and
 	 * every time a membership policy hook is deployed.
-	 *
-	 * @throws PortalException if a portal exception occurred
 	 */
 	public void verifyPolicy() throws PortalException;
 
@@ -315,8 +300,7 @@ public interface SiteMembershipPolicy {
 	 * Checks the integrity of the membership policy of the site and performs
 	 * operations necessary for the site's compliance.
 	 *
-	 * @param  group the site to verify
-	 * @throws PortalException if a portal exception occurred
+	 * @param group the site to verify
 	 */
 	public void verifyPolicy(Group group) throws PortalException;
 
@@ -360,13 +344,12 @@ public interface SiteMembershipPolicy {
 	 * must be removed from the site.
 	 * </li>
 	 *
-	 * @param  group the added or updated site to verify
-	 * @param  oldGroup the old site
-	 * @param  oldAssetCategories the old categories
-	 * @param  oldAssetTags the old tags
-	 * @param  oldExpandoAttributes the old expando attributes
-	 * @param  oldTypeSettingsProperties the old type settings properties
-	 * @throws PortalException if a portal exception occurred
+	 * @param group the added or updated site to verify
+	 * @param oldGroup the old site
+	 * @param oldAssetCategories the old categories
+	 * @param oldAssetTags the old tags
+	 * @param oldExpandoAttributes the old expando attributes
+	 * @param oldTypeSettingsProperties the old type settings properties
 	 */
 	public void verifyPolicy(
 			Group group, Group oldGroup, List<AssetCategory> oldAssetCategories,
@@ -379,8 +362,7 @@ public interface SiteMembershipPolicy {
 	 * Checks the integrity of the membership policy of the site role and
 	 * performs operations necessary for the role's compliance.
 	 *
-	 * @param  role the role to verify
-	 * @throws PortalException if a portal exception occurred
+	 * @param role the role to verify
 	 */
 	public void verifyPolicy(Role role) throws PortalException;
 
@@ -390,10 +372,9 @@ public interface SiteMembershipPolicy {
 	 * the role's compliance. Liferay calls this method when adding and updating
 	 * site roles.
 	 *
-	 * @param  role the added or updated role to verify
-	 * @param  oldRole the old role
-	 * @param  oldExpandoAttributes the old expando attributes
-	 * @throws PortalException if a portal exception occurred
+	 * @param role the added or updated role to verify
+	 * @param oldRole the old role
+	 * @param oldExpandoAttributes the old expando attributes
 	 */
 	public void verifyPolicy(
 			Role role, Role oldRole,

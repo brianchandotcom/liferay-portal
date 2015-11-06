@@ -14,6 +14,9 @@
 
 package com.liferay.login.web.constants;
 
+/**
+ * @author Brian Wing Shun Chan
+ */
 public class LoginPortletKeys {
 
 	public static final String FAST_LOGIN =

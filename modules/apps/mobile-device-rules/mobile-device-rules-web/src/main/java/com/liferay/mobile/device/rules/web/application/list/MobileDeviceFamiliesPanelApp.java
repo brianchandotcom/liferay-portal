@@ -41,6 +41,7 @@ public class MobileDeviceFamiliesPanelApp extends BasePanelApp {
 		return MDRPortletKeys.MOBILE_DEVICE_RULES;
 	}
 
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + MDRPortletKeys.MOBILE_DEVICE_RULES + ")",
 		unbind = "-"

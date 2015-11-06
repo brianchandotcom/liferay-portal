@@ -41,6 +41,7 @@ public class LicenseManagerPanelApp extends BasePanelApp {
 		return PortletKeys.LICENSE_MANAGER;
 	}
 
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + PortletKeys.LICENSE_MANAGER + ")",
 		unbind = "-"

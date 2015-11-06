@@ -71,7 +71,6 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	 * @param  weight the weight of the relationship, allowing precedence
 	 *         ordering of links
 	 * @return the asset link
-	 * @throws PortalException if the user could not be found
 	 */
 	@Override
 	public AssetLink addLink(
@@ -141,8 +140,7 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	/**
 	 * Deletes the asset link.
 	 *
-	 * @param  linkId the primary key of the asset link
-	 * @throws PortalException if the asset link could not be found
+	 * @param linkId the primary key of the asset link
 	 */
 	@Override
 	public void deleteLink(long linkId) throws PortalException {
@@ -430,16 +428,15 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	 * contained in the given link entry IDs.
 	 * </p>
 	 *
-	 * @param  userId the primary key of the user updating the links
-	 * @param  entryId the primary key of the asset entry to be managed
-	 * @param  linkEntryIds the primary keys of the asset entries to be linked
-	 *         with the asset entry to be managed
-	 * @param  typeId the type of the asset links to be created. Acceptable
-	 *         values include {@link AssetLinkConstants#TYPE_RELATED} which is a
-	 *         bidirectional relationship and {@link
-	 *         AssetLinkConstants#TYPE_CHILD} which is a unidirectional
-	 *         relationship. For more information see {@link AssetLinkConstants}
-	 * @throws PortalException if the user could not be found
+	 * @param userId the primary key of the user updating the links
+	 * @param entryId the primary key of the asset entry to be managed
+	 * @param linkEntryIds the primary keys of the asset entries to be linked
+	 *        with the asset entry to be managed
+	 * @param typeId the type of the asset links to be created. Acceptable
+	 *        values include {@link AssetLinkConstants#TYPE_RELATED} which is a
+	 *        bidirectional relationship and {@link
+	 *        AssetLinkConstants#TYPE_CHILD} which is a unidirectional
+	 *        relationship. For more information see {@link AssetLinkConstants}
 	 */
 	@Override
 	public void updateLinks(

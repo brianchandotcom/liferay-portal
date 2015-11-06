@@ -41,6 +41,7 @@ public class PortalInstancesPanelApp extends BasePanelApp {
 		return PortalInstancesPortletKeys.PORTAL_INSTANCES;
 	}
 
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + PortalInstancesPortletKeys.PORTAL_INSTANCES + ")",
 		unbind = "-"

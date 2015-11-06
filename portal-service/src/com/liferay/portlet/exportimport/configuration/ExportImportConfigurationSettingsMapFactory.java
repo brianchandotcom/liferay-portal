@@ -209,7 +209,6 @@ public class ExportImportConfigurationSettingsMapFactory {
 	 * @return an export layout settings map if the type is an export layout;
 	 *         otherwise, returns either a local or remote publish layout
 	 *         settings map, depending on the staging type
-	 * @throws PortalException if a portal exception occurred
 	 */
 	public static Map<String, Serializable> buildSettingsMap(
 			PortletRequest portletRequest, long groupId, int type)

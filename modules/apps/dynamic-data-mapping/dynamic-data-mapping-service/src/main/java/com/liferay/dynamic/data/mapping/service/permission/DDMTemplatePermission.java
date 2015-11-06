@@ -147,7 +147,6 @@ public class DDMTemplatePermission {
 	}
 
 	/**
-	 * @throws PortalException
 	 * @deprecated As of 7.0.0, replaced by {@link #contains(PermissionChecker,
 	 *             DDMTemplate, String)}
 	 */

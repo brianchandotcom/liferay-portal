@@ -59,6 +59,7 @@ public class ExportImportPanelApp extends BasePanelApp {
 			permissionChecker, group, ActionKeys.EXPORT_IMPORT_LAYOUTS);
 	}
 
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + ExportImportPortletKeys.EXPORT_IMPORT + ")",
 		unbind = "-"

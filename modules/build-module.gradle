@@ -107,6 +107,10 @@ configurations {
 		extendsFrom configurations.runtime
 		extendsFrom portal
 	}
+
+	javadocFormatter {
+		extendsFrom compile
+	}
 }
 
 if (FileUtil.exists(project, "docroot")) {

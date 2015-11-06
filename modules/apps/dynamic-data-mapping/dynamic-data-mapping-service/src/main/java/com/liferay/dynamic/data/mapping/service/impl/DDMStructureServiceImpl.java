@@ -73,10 +73,6 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 *             UUID, creation date, modification date, guest permissions,
 	 *             and group permissions for the structure.
 	 * @return     the structure
-	 * @throws     PortalException if a user with the primary key could not be
-	 *             found, if the user did not have permission to add the
-	 *             structure, if the XSD was not well-formed, or if a portal
-	 *             exception occurred
 	 * @deprecated As of 7.0.0, replaced by {@link #addStructure(long, long,
 	 *             long, Map, Map, DDMForm, DDMFormLayout, ServiceContext)}
 	 */
@@ -138,9 +134,6 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 *             UUID, creation date, modification date, guest permissions,
 	 *             and group permissions for the structure.
 	 * @return     the structure
-	 * @throws     PortalException if the user did not have permission to add
-	 *             the structure, if the XSD is not well formed, or if a portal
-	 *             exception occurred
 	 * @deprecated As of 7.0.0, replaced by {@link #addStructure(long, long,
 	 *             long, String, Map, Map, DDMForm, DDMFormLayout, String, int,
 	 *             ServiceContext)}
@@ -207,10 +200,6 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 *             Can set the UUID, creation date, modification date, guest
 	 *             permissions, and group permissions for the structure.
 	 * @return     the structure
-	 * @throws     PortalException if a user with the primary key could not be
-	 *             found, if the user did not have permission to add the
-	 *             structure, if the XSD was not well-formed, or if a portal
-	 *             exception occurred
 	 * @deprecated As of 7.0.0, replaced by {@link #addStructure(long, long,
 	 *             String, long, String, Map, Map, DDMForm, DDMFormLayout,
 	 *             String, int, ServiceContext)}
@@ -245,8 +234,6 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 *         UUID, creation date, modification date, guest permissions, and
 	 *         group permissions for the structure.
 	 * @return the new structure
-	 * @throws PortalException if the user did not have permission to add the
-	 *         structure or if a portal exception occurred
 	 */
 	@Override
 	public DDMStructure copyStructure(
@@ -289,9 +276,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 * is required by another entity. If it is needed, an exception is thrown.
 	 * </p>
 	 *
-	 * @param  structureId the primary key of the structure to be deleted
-	 * @throws PortalException if the user did not have permission to delete the
-	 *         structure or if a portal exception occurred
+	 * @param structureId the primary key of the structure to be deleted
 	 */
 	@Override
 	public void deleteStructure(long structureId) throws PortalException {
@@ -311,8 +296,6 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 * @param  structureKey the unique string identifying the structure
 	 * @return the matching structure, or <code>null</code> if a matching
 	 *         structure could not be found
-	 * @throws PortalException if the user did not have permission to view the
-	 *         structure or if a portal exception occurred
 	 */
 	@Override
 	public DDMStructure fetchStructure(
@@ -352,8 +335,6 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 *
 	 * @param  structureId the primary key of the structure
 	 * @return the structure with the ID
-	 * @throws PortalException if the user did not have permission to view the
-	 *         structure or if a structure with the ID could not be found
 	 */
 	@Override
 	public DDMStructure getStructure(long structureId) throws PortalException {
@@ -372,8 +353,6 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 *         related model
 	 * @param  structureKey the unique string identifying the structure
 	 * @return the matching structure
-	 * @throws PortalException if the user did not have permission to view the
-	 *         structure or if a matching structure could not be found
 	 */
 	@Override
 	public DDMStructure getStructure(
@@ -408,8 +387,6 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 *         have sharing enabled) and include global scoped sites in the
 	 *         search
 	 * @return the matching structure
-	 * @throws PortalException if the user did not have permission to view the
-	 *         structure or if a matching structure could not be found
 	 */
 	@Override
 	public DDMStructure getStructure(
@@ -466,8 +443,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	 * result set.
 	 * </p>
 	 *
@@ -504,8 +480,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	 * result set.
 	 * </p>
 	 *
@@ -626,8 +601,6 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 * @param      serviceContext the service context to be applied. Can set the
 	 *             modification date.
 	 * @return     the updated structure
-	 * @throws     PortalException if the user did not have permission to update
-	 *             the structure or if a portal exception occurred
 	 * @deprecated As of 7.0.0, replaced by {@link #updateStructure(long, long,
 	 *             long, String, Map, Map, DDMForm, DDMFormLayout,
 	 *             ServiceContext)}
@@ -679,8 +652,6 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 * @param      serviceContext the service context to be applied. Can set the
 	 *             modification date.
 	 * @return     the updated structure
-	 * @throws     PortalException if the user did not have permission to update
-	 *             the structure or if a portal exception occurred
 	 * @deprecated As of 7.0.0, replaced by {@link #updateStructure(long, long,
 	 *             Map, Map, DDMForm, DDMFormLayout, ServiceContext)}
 	 */

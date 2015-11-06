@@ -41,6 +41,7 @@ public class DDLPanelApp extends BasePanelApp {
 		return DDLPortletKeys.DYNAMIC_DATA_LISTS;
 	}
 
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS + ")",
 		unbind = "-"

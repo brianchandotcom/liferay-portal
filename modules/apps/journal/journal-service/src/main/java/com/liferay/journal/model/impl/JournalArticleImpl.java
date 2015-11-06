@@ -352,8 +352,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	}
 
 	/**
-	 * @param  defaultImportLocale the default imported locale
-	 * @throws LocaleException if a locale exception occurred
+	 * @param defaultImportLocale the default imported locale
 	 */
 	@Override
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)

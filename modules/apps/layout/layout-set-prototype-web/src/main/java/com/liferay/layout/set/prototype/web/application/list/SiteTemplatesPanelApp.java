@@ -41,6 +41,7 @@ public class SiteTemplatesPanelApp extends BasePanelApp {
 		return LayoutSetPrototypePortletKeys.LAYOUT_SET_PROTOTYPE;
 	}
 
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + LayoutSetPrototypePortletKeys.LAYOUT_SET_PROTOTYPE + ")",
 		unbind = "-"

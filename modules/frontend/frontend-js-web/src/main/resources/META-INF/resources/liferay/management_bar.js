@@ -5,15 +5,7 @@ AUI.add(
 
 		var ATTR_CHECKED = 'checked';
 
-		var STR_CHECKBOX_CONTAINER = 'checkBoxContainer';
-
-		var STR_CHECKBOXES_SELECTOR = 'checkBoxesSelector';
-
 		var STR_CLICK = 'click';
-
-		var STR_COLON = ':';
-
-		var STR_CHECKED_SELECTOR = STR_COLON + ATTR_CHECKED;
 
 		var STR_HASH = '#';
 
@@ -22,8 +14,6 @@ AUI.add(
 		var STR_SELECT_ALL_CHECKBOXES_SELECTOR = 'selectAllCheckBoxesSelector';
 
 		var STR_SELECTED_PARTIAL = 'selected-partial';
-
-		var STR_VISIBLE_SELECTOR = STR_COLON + 'visible';
 
 		var ManagementBar = A.Component.create(
 			{
@@ -40,21 +30,6 @@ AUI.add(
 					itemsCountContainer: {
 						setter: 'all',
 						value: '.selected-items-count'
-					},
-
-					rowCheckerSelector: {
-						validator: Lang.isString,
-						value: '.click-selector'
-					},
-
-					rowClassNameActive: {
-						validator: Lang.isString,
-						value: 'active'
-					},
-
-					rowSelector: {
-						validator: Lang.isString,
-						value: 'li.selectable,tr.selectable'
 					},
 
 					searchContainerId: {
@@ -81,50 +56,36 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
-						instance._bindUI();
+						instance._searchContainerRegisterHandle = Liferay.on('search-container:registered', instance._onSearchContainerRegistered, instance);
 					},
 
 					destructor: function() {
 						var instance = this;
 
+						instance._detachSearchContainerRegisterHandle();
+
 						(new A.EventHandle(instance._eventHandles)).detach();
-					},
-
-					_addSearchContainerEvents: function() {
-						var instance = this;
-
-						instance._eventHandles.push(
-							instance._searchContainer.on(
-								'rowToggled',
-								instance._onSearchContainerToggle,
-								instance
-							)
-						);
 					},
 
 					_bindUI: function() {
 						var instance = this;
 
 						instance._eventHandles = [
+							instance._searchContainer.on('rowToggled', instance._onSearchContainerRowToggled, instance),
 							instance.get('rootNode').delegate(STR_CLICK, instance._toggleSelectAll, instance.get(STR_SELECT_ALL_CHECKBOXES_SELECTOR), instance),
 							Liferay.on('surfaceStartNavigate', instance._onSurfaceStartNavigate, instance)
 						];
+					},
 
-						if (!instance._searchContainer) {
-							instance._eventHandles.push(
-								Liferay.on(
-									'search-container:registered',
-									function(event) {
-										if (event.searchContainer.get('id') === instance.get('searchContainerId')) {
-											instance._searchContainer = event.searchContainer;
-											instance._addSearchContainerEvents();
-										}
-									}
-								)
-							);
-						}
-						else {
-							instance._addSearchContainerEvents();
+					_detachSearchContainerRegisterHandle: function() {
+						var instance = this;
+
+						var searchContainerRegisterHandle = instance._searchContainerRegisterHandle;
+
+						if (searchContainerRegisterHandle) {
+							searchContainerRegisterHandle.detach();
+
+							instance._searchContainerRegisterHandle = null;
 						}
 					},
 
@@ -142,7 +103,21 @@ AUI.add(
 						return selectAllCheckBox;
 					},
 
-					_onSearchContainerToggle: function(event) {
+					_onSearchContainerRegistered: function(event) {
+						var instance = this;
+
+						var searchContainer = event.searchContainer;
+
+						if (searchContainer.get('id') === instance.get('searchContainerId')) {
+							instance._searchContainer = searchContainer;
+
+							instance._detachSearchContainerRegisterHandle();
+
+							instance._bindUI();
+						}
+					},
+
+					_onSearchContainerRowToggled: function(event) {
 						var instance = this;
 
 						var elements = event.elements;

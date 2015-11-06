@@ -134,6 +134,12 @@ public class JournalServiceConfigurationKeys {
 
 	public static final String LAR_CREATION_STRATEGY = "lar.creation.strategy";
 
+	public static final String PUBLISH_TO_LIVE_BY_DEFAULT =
+		"publish.to.live.by.default";
+
+	public static final String PUBLISH_VERSION_HISTORY_BY_DEFAULT =
+		"publish.version.history.by.default";
+
 	public static final String SYNC_CONTENT_SEARCH_ON_STARTUP =
 		"sync.content.search.on.startup";
 

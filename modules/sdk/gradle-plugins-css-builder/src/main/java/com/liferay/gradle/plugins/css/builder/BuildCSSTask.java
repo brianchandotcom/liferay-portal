@@ -44,10 +44,6 @@ import org.gradle.api.tasks.SkipWhenEmpty;
  */
 public class BuildCSSTask extends JavaExec {
 
-	public BuildCSSTask() {
-		_project = getProject();
-	}
-
 	@Override
 	public JavaExec classpath(Object... paths) {
 		throw new UnsupportedOperationException();
@@ -65,36 +61,40 @@ public class BuildCSSTask extends JavaExec {
 	@Override
 	public FileCollection getClasspath() {
 		return GradleUtil.getConfiguration(
-			_project, CSSBuilderPlugin.CSS_BUILDER_CONFIGURATION_NAME);
+			getProject(), CSSBuilderPlugin.CSS_BUILDER_CONFIGURATION_NAME);
 	}
 
 	@OutputDirectories
 	public FileCollection getCSSCacheDirs() {
+		Project project = getProject();
+
 		Set<File> cssCacheDirs = new HashSet<>();
 
 		FileCollection cssFiles = getCSSFiles();
 
 		for (File cssFile : cssFiles) {
-			File cssCacheDir = _project.file(cssFile + "/../.sass-cache");
+			File cssCacheDir = project.file(cssFile + "/../.sass-cache");
 
 			cssCacheDirs.add(cssCacheDir);
 		}
 
-		return _project.files(cssCacheDirs);
+		return project.files(cssCacheDirs);
 	}
 
 	@InputFiles
 	@SkipWhenEmpty
 	public FileCollection getCSSFiles() {
+		Project project = getProject();
+
 		String[] dirNames = getDirNames();
 
 		if (ArrayUtil.isEmpty(dirNames)) {
-			return _project.files();
+			return project.files();
 		}
 
 		Map<String, Object> args = new HashMap<>();
 
-		args.put("dir", _project.file(getDocrootDirName()));
+		args.put("dir", project.file(getDocrootDirName()));
 		args.put("exclude", "**/.sass-cache/**");
 
 		for (String dirName : dirNames) {
@@ -118,7 +118,7 @@ public class BuildCSSTask extends JavaExec {
 			args.put("includes", includes);
 		}
 
-		return _project.fileTree(args);
+		return project.fileTree(args);
 	}
 
 	public String[] getDirNames() {
@@ -136,7 +136,7 @@ public class BuildCSSTask extends JavaExec {
 
 	@InputDirectory
 	public File getPortalCommonDir() {
-		return _project.file(getPortalCommonDirName());
+		return GradleUtil.toFile(getProject(), getPortalCommonDirName());
 	}
 
 	public String getPortalCommonDirName() {
@@ -156,19 +156,21 @@ public class BuildCSSTask extends JavaExec {
 
 	@OutputFiles
 	public FileCollection getSourceMapFiles() {
+		Project project = getProject();
+
 		List<File> sourceMapFiles = new ArrayList<>();
 
 		if (isGenerateSourceMap()) {
 			FileCollection cssFiles = getCSSFiles();
 
 			for (File cssFile : cssFiles) {
-				File sourceMapFile = _project.file(cssFile + ".map");
+				File sourceMapFile = project.file(cssFile + ".map");
 
 				sourceMapFiles.add(sourceMapFile);
 			}
 		}
 
-		return _project.files(sourceMapFiles);
+		return project.files(sourceMapFiles);
 	}
 
 	@Input
@@ -253,6 +255,5 @@ public class BuildCSSTask extends JavaExec {
 	}
 
 	private final CSSBuilderArgs _cssBuilderArgs = new CSSBuilderArgs();
-	private final Project _project;
 
 }

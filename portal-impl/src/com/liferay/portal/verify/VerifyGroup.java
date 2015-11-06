@@ -40,7 +40,6 @@ import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.RobotsUtil;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -84,13 +83,10 @@ public class VerifyGroup extends VerifyProcess {
 	}
 
 	protected void updateName(long groupId, String name) throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"update Group_ set name = ? where groupId= " + groupId);
 
 			ps.setString(1, name);
@@ -98,7 +94,7 @@ public class VerifyGroup extends VerifyProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 
@@ -161,13 +157,10 @@ public class VerifyGroup extends VerifyProcess {
 	}
 
 	protected void verifyOrganizationNames() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(5);
 
 			sb.append("select groupId, name from Group_ where name like '%");
@@ -176,7 +169,7 @@ public class VerifyGroup extends VerifyProcess {
 			sb.append(GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX);
 			sb.append("'");
 
-			ps = con.prepareStatement(sb.toString());
+			ps = connection.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
 
@@ -205,7 +198,7 @@ public class VerifyGroup extends VerifyProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 

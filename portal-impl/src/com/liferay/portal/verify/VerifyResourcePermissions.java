@@ -173,62 +173,59 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			Role role, VerifiableResourcedModel verifiableResourcedModel)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		int total = 0;
 
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
+			try {
+				ps = con.prepareStatement(
+					"select count(*) from " +
+						verifiableResourcedModel.getTableName() +
+							" where companyId = " + role.getCompanyId());
 
-			ps = con.prepareStatement(
-				"select count(*) from " +
-					verifiableResourcedModel.getTableName() +
-						" where companyId = " + role.getCompanyId());
+				rs = ps.executeQuery();
 
-			rs = ps.executeQuery();
-
-			if (rs.next()) {
-				total = rs.getInt(1);
+				if (rs.next()) {
+					total = rs.getInt(1);
+				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			StringBundler sb = new StringBundler(8);
-
-			sb.append("select ");
-			sb.append(verifiableResourcedModel.getPrimaryKeyColumnName());
-			sb.append(", ");
-			sb.append(verifiableResourcedModel.getUserIdColumnName());
-			sb.append(" from ");
-			sb.append(verifiableResourcedModel.getTableName());
-			sb.append(" where companyId = ");
-			sb.append(role.getCompanyId());
-
-			ps = con.prepareStatement(sb.toString());
-
-			rs = ps.executeQuery();
-
-			for (int i = 0; rs.next(); i++) {
-				long primKey = rs.getLong(
-					verifiableResourcedModel.getPrimaryKeyColumnName());
-				long userId = rs.getLong(
-					verifiableResourcedModel.getUserIdColumnName());
-
-				verifyResourcedModel(
-					role.getCompanyId(),
-					verifiableResourcedModel.getModelName(), primKey, role,
-					userId, i, total);
+			finally {
+				DataAccess.cleanUp(null, ps, rs);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
+
+			try {
+				StringBundler sb = new StringBundler(8);
+
+				sb.append("select ");
+				sb.append(verifiableResourcedModel.getPrimaryKeyColumnName());
+				sb.append(", ");
+				sb.append(verifiableResourcedModel.getUserIdColumnName());
+				sb.append(" from ");
+				sb.append(verifiableResourcedModel.getTableName());
+				sb.append(" where companyId = ");
+				sb.append(role.getCompanyId());
+
+				ps = con.prepareStatement(sb.toString());
+
+				rs = ps.executeQuery();
+
+				for (int i = 0; rs.next(); i++) {
+					long primKey = rs.getLong(
+						verifiableResourcedModel.getPrimaryKeyColumnName());
+					long userId = rs.getLong(
+						verifiableResourcedModel.getUserIdColumnName());
+
+					verifyResourcedModel(
+						role.getCompanyId(),
+						verifiableResourcedModel.getModelName(), primKey, role,
+						userId, i, total);
+				}
+			}
+			finally {
+				DataAccess.cleanUp(null, ps, rs);
+			}
 		}
 	}
 

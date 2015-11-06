@@ -25,7 +25,11 @@ public interface ClusterReceiver {
 
 	public void addressesUpdated(List<Address> addresses);
 
+	public void coordinatorUpdated(Address coordinator);
+
 	public List<Address> getAddresses();
+
+	public Address getCoordinator();
 
 	public void openLatch();
 

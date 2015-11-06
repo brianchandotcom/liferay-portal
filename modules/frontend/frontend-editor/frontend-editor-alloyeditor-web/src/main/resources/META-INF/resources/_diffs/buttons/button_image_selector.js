@@ -7,6 +7,8 @@
 
 	var Util = Liferay.Util;
 
+	var React = AlloyEditor.React;
+
 	var ButtonImage = React.createClass(
 		{
 			displayName: 'ButtonImage',

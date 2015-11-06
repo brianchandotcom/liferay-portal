@@ -15,6 +15,7 @@
 package com.liferay.wiki.upgrade.v1_0_0.util.companyId;
 
 import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdInTable;
+import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdUtil;
 
 /**
  * @author Cristina González
@@ -28,7 +29,17 @@ public class WikiPageResourceUpgradeCompanyId
 	}
 
 	@Override
-	public void upgradeProcess() {
+	public void upgradeProcess() throws Exception {
+		String select =
+			"select wn.companyId, wpr.resourcePrimKey from " +
+				" WikiNode wn, WikiPageResource wpr where wn.nodeId=wpr.nodeId";
+
+		String update =
+			"update WikiPageResource set companyId = ? where " +
+				"resourcePrimKey = ?";
+
+		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
+			"WikiPageResource", select, update, "companyId", "resourcePrimKey");
 	}
 
 }

@@ -17,6 +17,10 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
+String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_document_library_view_file_entry") + StringPool.UNDERLINE;
+
+request.setAttribute("randomNamespace", randomNamespace);
+
 String tabs2 = ParamUtil.getString(request, "tabs2", "version-history");
 
 String redirect = ParamUtil.getString(request, "redirect");
@@ -572,6 +576,10 @@ if (portletTitleBasedNavigation) {
 		</aui:row>
 	</div>
 </div>
+
+<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
+	<%@ include file="/document_library/version_details.jspf" %>
+</c:if>
 
 <aui:script>
 	function <portlet:namespace />compare() {

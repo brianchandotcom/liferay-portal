@@ -176,10 +176,43 @@ public class UIItemsBuilder {
 			return;
 		}
 
-		_addJavaScriptUIItem(
+		PortletURL portletURL = _getActionURL(
+			"/document_library/edit_file_entry", Constants.CHECKIN);
+
+		portletURL.setParameter(
+			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
+
+		String onClick =
+			getNamespace() + "showVersionDetailsDialog('" + portletURL + "');";
+
+		JavaScriptToolbarItem javaScriptToolbarItem = _addJavaScriptUIItem(
 			new JavaScriptToolbarItem(), toolbarItems, DLUIItemKeys.CHECKIN,
-			LanguageUtil.get(_request, "checkin"),
-			getSubmitFormJavaScript(Constants.CHECKIN, null));
+			LanguageUtil.get(_request, "checkin"), onClick);
+
+		String javaScript =
+			"/com/liferay/document/library/web/display/context/dependencies" +
+				"/checkin_js.ftl";
+
+		Class<?> clazz = getClass();
+
+		URLTemplateResource urlTemplateResource = new URLTemplateResource(
+			javaScript, clazz.getResource(javaScript));
+
+		Template template = TemplateManagerUtil.getTemplate(
+			TemplateConstants.LANG_TYPE_FTL, urlTemplateResource, false);
+
+		template.put(
+			"dialogTitle",
+			UnicodeLanguageUtil.get(_request, "describe-your-changes"));
+		template.put("namespace", getNamespace());
+		template.put(
+			"randomNamespace", _request.getAttribute("randomNamespace"));
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		template.processTemplate(unsyncStringWriter);
+
+		javaScriptToolbarItem.setJavaScript(unsyncStringWriter.toString());
 	}
 
 	public void addCheckoutMenuItem(List<MenuItem> menuItems)

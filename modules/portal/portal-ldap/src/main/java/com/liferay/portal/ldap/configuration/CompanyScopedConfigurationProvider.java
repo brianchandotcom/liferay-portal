@@ -49,8 +49,8 @@ public abstract class CompanyScopedConfigurationProvider
 		try {
 			configuration.delete();
 		}
-		catch (IOException ie) {
-			throw new SystemException(ie);
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
 		}
 
 		return true;

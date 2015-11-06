@@ -65,8 +65,8 @@ public class LDAPServerConfigurationProviderImpl
 			try {
 				configuration.delete();
 			}
-			catch (IOException ie) {
-				throw new SystemException(ie);
+			catch (IOException ioe) {
+				throw new SystemException(ioe);
 			}
 		}
 
@@ -91,8 +91,8 @@ public class LDAPServerConfigurationProviderImpl
 		try {
 			configuration.delete();
 		}
-		catch (IOException ie) {
-			throw new SystemException(ie);
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
 		}
 
 		return true;

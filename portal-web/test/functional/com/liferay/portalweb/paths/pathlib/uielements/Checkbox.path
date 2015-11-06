@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ACTIVE_TOGGLE_SWITCH</td>
+	<td>//label[contains(.,'Active')]//span[contains(@class,'toggle-switch-handle')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_SAMPLE_DATA</td>
 	<td>//label[contains(.,'Add Sample Data')]/input[@type='checkbox']</td>
 	<td></td>

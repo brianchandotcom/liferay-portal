@@ -21,6 +21,8 @@ DDLRecordSet recordSet = ddlFormAdminDisplayContext.getRecordSet();
 
 long recordSetId = BeanParamUtil.getLong(recordSet, request, "recordSetId");
 long groupId = BeanParamUtil.getLong(recordSet, request, "groupId", scopeGroupId);
+
+String successURL = GetterUtil.getString(recordSet.getSettingsProperty("successURL", StringPool.BLANK));
 %>
 
 <portlet:actionURL name="updateRecordSetSettings" var="updateRecordSetSettingsURL">
@@ -32,40 +34,46 @@ long groupId = BeanParamUtil.getLong(recordSet, request, "groupId", scopeGroupId
 		<aui:input name="recordSetId" type="hidden" value="<%= recordSetId %>" />
 		<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 
-		<c:if test="<%= ddlFormAdminDisplayContext.isDDLRecordWorkflowHandlerDeployed() %>">
-			<aui:select label="workflow" name="workflowDefinition">
+		<liferay-ui:error exception="<%= RecordSetSettingsException.class %>" message="please-enter-a-valid-form-settings" />
 
-				<%
-				WorkflowDefinitionLink workflowDefinitionLink = null;
+		<aui:fieldset>
+			<aui:input label="redirect-url-on-success" name="successURL" value="<%= HtmlUtil.toInputSafe(successURL) %>" wrapperCssClass="lfr-input-text-container" />
 
-				try {
-					workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLink(company.getCompanyId(), themeDisplay.getScopeGroupId(), DDLRecordSet.class.getName(), recordSetId, 0, true);
-				}
-				catch (NoSuchWorkflowDefinitionLinkException nswdle) {
-				}
-				%>
+			<c:if test="<%= ddlFormAdminDisplayContext.isDDLRecordWorkflowHandlerDeployed() %>">
+				<aui:select label="workflow" name="workflowDefinition">
 
-				<aui:option><%= LanguageUtil.get(request, "no-workflow") %></aui:option>
+					<%
+					WorkflowDefinitionLink workflowDefinitionLink = null;
 
-				<%
-				List<WorkflowDefinition> workflowDefinitions = WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-				for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
-					boolean selected = false;
-
-					if ((workflowDefinitionLink != null) && workflowDefinitionLink.getWorkflowDefinitionName().equals(workflowDefinition.getName()) && (workflowDefinitionLink.getWorkflowDefinitionVersion() == workflowDefinition.getVersion())) {
-						selected = true;
+					try {
+						workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLink(company.getCompanyId(), themeDisplay.getScopeGroupId(), DDLRecordSet.class.getName(), recordSetId, 0, true);
 					}
-				%>
+					catch (NoSuchWorkflowDefinitionLinkException nswdle) {
+					}
+					%>
 
-					<aui:option label='<%= HtmlUtil.escape(workflowDefinition.getName()) + " (" + LanguageUtil.format(locale, "version-x", workflowDefinition.getVersion(), false) + ")" %>' selected="<%= selected %>" useModelValue="<%= false %>" value="<%= HtmlUtil.escapeAttribute(workflowDefinition.getName()) + StringPool.AT + workflowDefinition.getVersion() %>" />
+					<aui:option><%= LanguageUtil.get(request, "no-workflow") %></aui:option>
 
-				<%
-				}
-				%>
+					<%
+					List<WorkflowDefinition> workflowDefinitions = WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-			</aui:select>
-		</c:if>
+					for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
+						boolean selected = false;
+
+						if ((workflowDefinitionLink != null) && workflowDefinitionLink.getWorkflowDefinitionName().equals(workflowDefinition.getName()) && (workflowDefinitionLink.getWorkflowDefinitionVersion() == workflowDefinition.getVersion())) {
+							selected = true;
+						}
+					%>
+
+						<aui:option label='<%= HtmlUtil.escape(workflowDefinition.getName()) + " (" + LanguageUtil.format(locale, "version-x", workflowDefinition.getVersion(), false) + ")" %>' selected="<%= selected %>" useModelValue="<%= false %>" value="<%= HtmlUtil.escapeAttribute(workflowDefinition.getName()) + StringPool.AT + workflowDefinition.getVersion() %>" />
+
+					<%
+					}
+					%>
+
+				</aui:select>
+			</c:if>
+		</aui:fieldset>
 
 		<aui:button-row cssClass="ddl-form-builder-buttons">
 			<aui:button cssClass="btn-lg" id="submit" label="save" primary="<%= true %>" type="submit" />

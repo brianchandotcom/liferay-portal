@@ -55,13 +55,6 @@ public class DateDDMFormFieldTypeSettingsTest extends PowerMockito {
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(false);
 
-		DDMFormField maskDDMFormField = ddmFormFieldsMap.get("mask");
-
-		Assert.assertNotNull(maskDDMFormField);
-		Assert.assertEquals("string", maskDDMFormField.getDataType());
-		Assert.assertEquals("select", maskDDMFormField.getType());
-		Assert.assertEquals(false, maskDDMFormField.isLocalizable());
-
 		DDMFormField predefinedValueDDMFormField = ddmFormFieldsMap.get(
 			"predefinedValue");
 

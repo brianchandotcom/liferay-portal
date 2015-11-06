@@ -21,74 +21,72 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.util.DateFormatFactoryImpl;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Bruno Basto
  */
-@PrepareForTest({LanguageUtil.class})
-@RunWith(PowerMockRunner.class)
-public class DateDDMFormFieldValueRendererTest extends PowerMockito {
+public class DateDDMFormFieldValueRendererTest {
 
 	@Before
 	public void setUp() {
+		setUpDateFormatFactoryUtil();
 		setUpFastDateFormatFactoryUtil();
 	}
 
 	@Test
 	public void testRender() {
-		DDMFormFieldValue ddmFormFieldValue =
-			DDMFormValuesTestUtil.createDDMFormFieldValue(
-				"Date", new UnlocalizedValue("2015-01-25T00:00:00.000Z"));
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm("Date");
+		DDMFormField ddmFormField = DDMFormTestUtil.createDDMFormField(
+			"birthday", "Birthday", "date", "string", false, false, false);
+
+		ddmForm.addDDMFormField(ddmFormField);
 
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
 
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"birthday", new UnlocalizedValue("2015-01-25"));
+
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
-		DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
-
-		ddmFormField.setProperty("mask", "%d/%m/%Y");
-
 		DateDDMFormFieldValueRenderer dateDDMFormFieldValueRenderer =
-			createDateDDMFormFieldValueRenderer();
-
-		String expectedDateRenderedValue = "25/01/2015";
+			new DateDDMFormFieldValueRenderer();
 
 		Assert.assertEquals(
-			expectedDateRenderedValue,
+			"1/25/15",
 			dateDDMFormFieldValueRenderer.render(
 				ddmFormFieldValue, LocaleUtil.US));
 
+		Assert.assertEquals(
+			"25/01/15",
+			dateDDMFormFieldValueRenderer.render(
+				ddmFormFieldValue, LocaleUtil.BRAZIL));
+
 		ddmFormFieldValue.setValue(new UnlocalizedValue(""));
 
-		expectedDateRenderedValue = StringPool.BLANK;
-
 		Assert.assertEquals(
-			expectedDateRenderedValue,
+			StringPool.BLANK,
 			dateDDMFormFieldValueRenderer.render(
 				ddmFormFieldValue, LocaleUtil.US));
 	}
 
-	protected DateDDMFormFieldValueRenderer
-		createDateDDMFormFieldValueRenderer() {
+	protected void setUpDateFormatFactoryUtil() {
+		DateFormatFactoryUtil dateFormatFactoryUtil =
+			new DateFormatFactoryUtil();
 
-		return new DateDDMFormFieldValueRenderer();
+		dateFormatFactoryUtil.setDateFormatFactory(new DateFormatFactoryImpl());
 	}
 
 	protected void setUpFastDateFormatFactoryUtil() {

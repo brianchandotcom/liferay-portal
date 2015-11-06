@@ -63,7 +63,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 
 	<liferay-ui:search-container
-		emptyResultsMessage="no-page-templates-were-found"
+		emptyResultsMessage="there-are-no-page-templates.-you-can-add-a-page-template-by-clicking-the-plus-button-on-the-right-bottom-corner"
 		headerNames="name"
 		iteratorURL="<%= portletURL %>"
 		total="<%= LayoutPrototypeLocalServiceUtil.searchCount(company.getCompanyId(), null) %>"

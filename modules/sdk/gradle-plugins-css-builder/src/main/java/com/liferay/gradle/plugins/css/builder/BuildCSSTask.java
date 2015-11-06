@@ -38,7 +38,6 @@ import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputDirectories;
 import org.gradle.api.tasks.OutputFiles;
 import org.gradle.api.tasks.SkipWhenEmpty;
-import org.gradle.process.JavaExecSpec;
 
 /**
  * @author Andrea Di Giorgi
@@ -50,55 +49,18 @@ public class BuildCSSTask extends JavaExec {
 	}
 
 	@Override
-	public JavaExecSpec args(Iterable<?> args) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public JavaExec args(Object... args) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public JavaExec classpath(Object... paths) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void exec() {
-		super.setArgs(getArgs());
+		setArgs(getCompleteArgs());
+
 		super.setClasspath(getClasspath());
 		super.setWorkingDir(getWorkingDir());
 
 		super.exec();
-	}
-
-	@Override
-	public List<String> getArgs() {
-		List<String> args = new ArrayList<>();
-
-		String[] dirNames = getDirNames();
-
-		if (dirNames.length == 1) {
-			args.add("sass.dir=/" + _removeLeadingSlash(dirNames[0]));
-		}
-		else {
-			for (int i = 0; i < dirNames.length; i++) {
-				args.add(
-					"sass.dir." + i + "=/" + _removeLeadingSlash(dirNames[i]));
-			}
-		}
-
-		args.add(
-			"sass.docroot.dir=" + _removeTrailingSlash(getDocrootDirName()));
-		args.add("sass.generate.source.map=" + isGenerateSourceMap());
-		args.add("sass.portal.common.dir=" + getPortalCommonDirName());
-		args.add(
-			"sass.rtl.excluded.path.regexps=" +
-				StringUtil.merge(getRtlExcludedPathRegexps(), ","));
-		args.add("sass.compiler.class.name=" + getSassCompilerClassName());
-
-		return args;
 	}
 
 	@Override
@@ -221,11 +183,6 @@ public class BuildCSSTask extends JavaExec {
 	}
 
 	@Override
-	public JavaExec setArgs(Iterable<?> applicationArgs) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public JavaExec setClasspath(FileCollection classpath) {
 		throw new UnsupportedOperationException();
 	}
@@ -257,6 +214,33 @@ public class BuildCSSTask extends JavaExec {
 	@Override
 	public void setWorkingDir(Object dir) {
 		throw new UnsupportedOperationException();
+	}
+
+	protected List<String> getCompleteArgs() {
+		List<String> args = new ArrayList<>(getArgs());
+
+		String[] dirNames = getDirNames();
+
+		if (dirNames.length == 1) {
+			args.add("sass.dir=/" + _removeLeadingSlash(dirNames[0]));
+		}
+		else {
+			for (int i = 0; i < dirNames.length; i++) {
+				args.add(
+					"sass.dir." + i + "=/" + _removeLeadingSlash(dirNames[i]));
+			}
+		}
+
+		args.add(
+			"sass.docroot.dir=" + _removeTrailingSlash(getDocrootDirName()));
+		args.add("sass.generate.source.map=" + isGenerateSourceMap());
+		args.add("sass.portal.common.dir=" + getPortalCommonDirName());
+		args.add(
+			"sass.rtl.excluded.path.regexps=" +
+				StringUtil.merge(getRtlExcludedPathRegexps(), ","));
+		args.add("sass.compiler.class.name=" + getSassCompilerClassName());
+
+		return args;
 	}
 
 	private String _removeLeadingSlash(String path) {

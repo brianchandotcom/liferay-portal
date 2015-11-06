@@ -53,7 +53,6 @@ public class BuildTaglibsTask extends JavaExec {
 	@Override
 	public void exec() {
 		super.setSystemProperties(getSystemProperties());
-		super.setWorkingDir(getWorkingDir());
 
 		super.exec();
 	}
@@ -140,13 +139,6 @@ public class BuildTaglibsTask extends JavaExec {
 		return GradleUtil.toFile(getProject(), _tldDir);
 	}
 
-	@Override
-	public File getWorkingDir() {
-		Project project = getProject();
-
-		return project.getProjectDir();
-	}
-
 	public void setComponentsXmlFiles(Iterable<?> componentsXmlFiles) {
 		_componentsXmlFiles.clear();
 
@@ -196,11 +188,6 @@ public class BuildTaglibsTask extends JavaExec {
 
 	public void setTldDir(Object tldDir) {
 		_tldDir = tldDir;
-	}
-
-	@Override
-	public void setWorkingDir(Object dir) {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override

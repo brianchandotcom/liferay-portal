@@ -112,12 +112,13 @@ public class TestClusterChannel implements ClusterChannel {
 	}
 
 	@Override
-	public Address getLocalAddress() {
-		return _localAddress;
+	public ClusterReceiver getClusterReceiver() {
+		return _clusterReceiver;
 	}
 
-	public ClusterReceiver getReceiver() {
-		return _clusterReceiver;
+	@Override
+	public Address getLocalAddress() {
+		return _localAddress;
 	}
 
 	public boolean isClosed() {

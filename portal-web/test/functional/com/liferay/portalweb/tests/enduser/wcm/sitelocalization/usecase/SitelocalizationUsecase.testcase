@@ -315,7 +315,6 @@
 		</execute>
 
 		<execute macro="Page#viewURLLocale">
-			<var name="localePageURL" value="http://localhost:8080/es/web/site2-name" />
 			<var name="localizationPageURL" value="http://localhost:8080/web/site2-name" />
 		</execute>
 
@@ -324,7 +323,6 @@
 		</execute>
 
 		<execute macro="Page#viewURLLocale">
-			<var name="localePageURL" value="http://localhost:8080/en/web/site1-name" />
 			<var name="localizationPageURL" value="http://localhost:8080/web/site1-name" />
 		</execute>
 
@@ -338,7 +336,6 @@
 		</execute>
 
 		<execute macro="Page#viewURLLocale">
-			<var name="localePageURL" value="http://localhost:8080/es/web/site2-name" />
 			<var name="localizationOption" value="Display the page in English (United States)." />
 			<var name="localizationPageURL" value="http://localhost:8080/web/site2-name" />
 		</execute>

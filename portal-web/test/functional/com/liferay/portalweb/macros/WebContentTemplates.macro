@@ -170,6 +170,7 @@
 	</command>
 
 	<command name="localizeTemplateName">
+		<var name="key_ddlTemplateName" value="${templateName}" />
 		<var name="key_localizationName" value="${localization1NameKey}" />
 
 		<execute macro="Page#gotoContentCP">

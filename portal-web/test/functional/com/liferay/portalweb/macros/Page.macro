@@ -1221,7 +1221,6 @@
 		</if>
 
 		<execute function="AssertLocation" value1="${localizationPageURL}" />
-		<execute function="AssertNotLocation" value1="${localePageURL}" />
 	</command>
 
 	<command name="viewUserPageLayoutPG">

@@ -274,7 +274,7 @@
 <!--FORM-->
 <tr>
 	<td>FORM_BUILDER</td>
-	<td>//div[@class='property-builder-drop-container']</td>
+	<td>//ul[contains(@class,'property-builder-fields-container')]</td>
 	<td></td>
 </tr>
 <tr>

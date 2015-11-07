@@ -112,6 +112,7 @@ AUI.add(
 				var portletNode = A.one('#p_p_id' + instance.get('portletNamespace'));
 
 				settingsModal._modal.set('centered', portletNode);
+				settingsModal._modal.set('zIndex', Liferay.zIndex.OVERLAY);
 			},
 
 			saveSettings: function() {

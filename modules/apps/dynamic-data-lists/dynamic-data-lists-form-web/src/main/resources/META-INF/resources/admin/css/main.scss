@@ -8,6 +8,10 @@
 }
 
 .portlet-forms {
+	.ddl-form-builder-buttons {
+		margin-bottom: 0;
+	}
+
 	.ddl-form-name {
 		font-size: 32px;
 		line-height: 32px;
@@ -352,6 +356,43 @@
 				margin: 0 -50px;
 				position: static;
 				width: auto;
+			}
+		}
+	}
+}
+
+.lfr-ddl-form-builder-field-types-modal {
+	max-height: 550px;
+	outline: none;
+	width: 500px;
+
+	&.lfr-ddl-form-builder-field-types-modal-hidden {
+		display: none;
+	}
+
+	.modal-body {
+		background-color: #FFF;
+		padding: 25px 35px;
+
+		.field-type {
+			float: none;
+			padding: 20px 0;
+			width: auto;
+
+			.field-type-icon, .field-type-label {
+				color: #879CAC;
+			}
+
+			.field-type-icon {
+				font-size: 24px;
+			}
+
+			.field-type-label {
+				font-family: inherit;
+				font-size: 12px;
+				font-weight: 500;
+				margin-top: 8px;
+				text-transform: capitalize;
 			}
 		}
 	}

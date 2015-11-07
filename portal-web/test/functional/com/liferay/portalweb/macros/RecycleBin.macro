@@ -170,13 +170,18 @@
 		<var name="key_assetName" value="${assetName}" />
 
 		<if>
-			<isset var="customMaxAgeMsg" />
+			<condition function="IsElementPresent" locator1="RecycleBin#EMPTY_RECYCLE_BIN" />
 			<then>
-				<execute function="AssertTextEquals" locator1="Message#INFO" value1="${customMaxAgeMsg}" />
+				<if>
+					<isset var="customMaxAgeMsg" />
+					<then>
+						<execute function="AssertTextEquals" locator1="Message#INFO" value1="${customMaxAgeMsg}" />
+					</then>
+					<else>
+						<execute function="AssertTextEquals" locator1="Message#INFO" value1="Entries that have been in the Recycle Bin for more than 1 month are automatically deleted. Empty the Recycle Bin" />
+					</else>
+				</if>
 			</then>
-			<else>
-				<execute function="AssertTextEquals" locator1="Message#INFO" value1="Entries that have been in the Recycle Bin for more than 1 month are automatically deleted. Empty the Recycle Bin" />
-			</else>
 		</if>
 
 		<execute function="AssertTextEquals" locator1="RecycleBin#RECYCLE_BIN_TABLE_NAME" value1="${assetName}" />

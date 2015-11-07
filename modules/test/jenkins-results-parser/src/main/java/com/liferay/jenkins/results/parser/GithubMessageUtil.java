@@ -86,30 +86,26 @@ public class GithubMessageUtil {
 		String reportFileNames = project.getProperty("top.level.report.files");
 
 		for (String reportFileName : reportFileNames.split(" ")) {
-			try {
-				File file = new File(reportFileName);
+			File file = new File(reportFileName);
 
-				String content = _read(file);
+			String content = _read(file);
 
-				Pattern pattern =
-					Pattern.compile("\\<h5[^\\>]*\\>(.+)\\<\\/h5\\>.*");
+			Pattern pattern =
+				Pattern.compile("\\<h5[^\\>]*\\>(.+)\\<\\/h5\\>.*");
 
-				Matcher matcher = pattern.matcher(content);
+			Matcher matcher = pattern.matcher(content);
 
-				if (matcher.find()) {
-					if (content.contains("job-result=\\\"SUCCESS\\\"")) {
-						sb.append("<li>");
-						sb.append(matcher.group(1));
-						sb.append("</li>");
-					}
-					else {
-						sb.append("<li><strike><strong>");
-						sb.append(matcher.group(1));
-						sb.append("</strong></strike></li>");
-					}
+			if (matcher.find()) {
+				if (content.contains("job-result=\\\"SUCCESS\\\"")) {
+					sb.append("<li>");
+					sb.append(matcher.group(1));
+					sb.append("</li>");
 				}
-			}
-			catch (Exception e) {
+				else {
+					sb.append("<li><strike><strong>");
+					sb.append(matcher.group(1));
+					sb.append("</strong></strike></li>");
+				}
 			}
 		}
 
@@ -159,7 +155,7 @@ public class GithubMessageUtil {
 			sb.append(".</pre></li>");
 
 			int jobFailureCount = 1;
-
+			
 			for (String reportFileName : reportFileNames.split(" ")) {
 				try {
 					File file = new File(reportFileName);

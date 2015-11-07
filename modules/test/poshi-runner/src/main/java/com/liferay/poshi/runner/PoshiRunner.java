@@ -18,8 +18,10 @@ import com.liferay.poshi.runner.logger.CommandLoggerHandler;
 import com.liferay.poshi.runner.logger.LoggerUtil;
 import com.liferay.poshi.runner.logger.SummaryLoggerHandler;
 import com.liferay.poshi.runner.logger.XMLLoggerHandler;
+import com.liferay.poshi.runner.selenium.LiferaySelenium;
 import com.liferay.poshi.runner.selenium.LiferaySeleniumHelper;
 import com.liferay.poshi.runner.selenium.SeleniumUtil;
+import com.liferay.poshi.runner.selenium.WebDriverUtil;
 import com.liferay.poshi.runner.util.PropsValues;
 
 import java.util.ArrayList;
@@ -27,6 +29,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.dom4j.Element;
+
+import org.openqa.selenium.WebDriver;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -86,57 +90,76 @@ public class PoshiRunner {
 		_testClassName = PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
 			_testClassCommandName);
 
-		PoshiRunnerContext.setTestCaseCommandName(_testClassCommandName);
-		PoshiRunnerContext.setTestCaseName(_testClassName);
+		if (classCommandName.equals("PortalSmoke#Navigate")) {
+		}
+		else {
+			PoshiRunnerContext.setTestCaseCommandName(_testClassCommandName);
+			PoshiRunnerContext.setTestCaseName(_testClassName);
 
-		XMLLoggerHandler.generateXMLLog(classCommandName);
+			XMLLoggerHandler.generateXMLLog(classCommandName);
 
-		CommandLoggerHandler.startRunning();
+			CommandLoggerHandler.startRunning();
 
-		LoggerUtil.startLogger();
+			LoggerUtil.startLogger();
 
-		SeleniumUtil.startSelenium();
+			SeleniumUtil.startSelenium();
+		}
 	}
 
 	@Test
 	public void test() throws Exception {
-		try {
-			_runSetUp();
+		if (_testClassCommandName.equals("PortalSmoke#Navigate")) {
+			SeleniumUtil.startSelenium();
 
-			_runCommand();
+			LiferaySelenium selenium = SeleniumUtil.getSelenium();
 
-			LiferaySeleniumHelper.assertNoPoshiWarnings();
+			WebDriver webDriver = WebDriverUtil.getWebDriver();
+
+			webDriver.get("file:///opt/dev/projects/github/liferay-portal-master/quick.html");
+
+			/* HERERERER */
+
+			SeleniumUtil.stopSelenium();
 		}
-		catch (Exception e) {
-			LiferaySeleniumHelper.printJavaProcessStacktrace();
-
-			PoshiRunnerStackTraceUtil.printStackTrace(e.getMessage());
-
-			PoshiRunnerStackTraceUtil.emptyStackTrace();
-
-			throw new Exception(e.getMessage(), e);
-		}
-		finally {
-			LiferaySeleniumHelper.writePoshiWarnings();
-
-			LoggerUtil.createSummary();
-
+		else {
 			try {
-				if (!PropsValues.TEST_SKIP_TEAR_DOWN) {
-					_runTearDown();
-				}
+				_runSetUp();
+
+				_runCommand();
+
+				LiferaySeleniumHelper.assertNoPoshiWarnings();
 			}
 			catch (Exception e) {
+				LiferaySeleniumHelper.printJavaProcessStacktrace();
+
 				PoshiRunnerStackTraceUtil.printStackTrace(e.getMessage());
 
 				PoshiRunnerStackTraceUtil.emptyStackTrace();
+
+				throw new Exception(e.getMessage(), e);
 			}
 			finally {
-				LoggerUtil.stopLogger();
+				LiferaySeleniumHelper.writePoshiWarnings();
 
-				CommandLoggerHandler.stopRunning();
+				LoggerUtil.createSummary();
 
-				SeleniumUtil.stopSelenium();
+				try {
+					if (!PropsValues.TEST_SKIP_TEAR_DOWN) {
+						_runTearDown();
+					}
+				}
+				catch (Exception e) {
+					PoshiRunnerStackTraceUtil.printStackTrace(e.getMessage());
+
+					PoshiRunnerStackTraceUtil.emptyStackTrace();
+				}
+				finally {
+					LoggerUtil.stopLogger();
+
+					CommandLoggerHandler.stopRunning();
+
+					SeleniumUtil.stopSelenium();
+				}
 			}
 		}
 	}

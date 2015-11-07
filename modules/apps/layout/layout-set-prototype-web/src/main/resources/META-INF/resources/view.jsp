@@ -108,14 +108,14 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			/>
 
 			<liferay-ui:search-container-column-text
-				cssClass="checkbox-cell"
+				cssClass="list-group-item-field"
 				name="active"
 			>
 				<%= LanguageUtil.get(request, layoutSetPrototype.isActive()? "yes" : "no") %>
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-jsp
-				cssClass="checkbox-cell entry-action"
+				cssClass="list-group-item-field"
 				href="<%= rowURL %>"
 				path="/layout_set_prototype_action.jsp"
 			/>

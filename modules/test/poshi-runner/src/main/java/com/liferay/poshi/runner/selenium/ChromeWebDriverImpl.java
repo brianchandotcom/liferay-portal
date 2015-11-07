@@ -22,7 +22,7 @@ import com.liferay.poshi.runner.util.StringUtil;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 /**
@@ -30,8 +30,8 @@ import org.openqa.selenium.remote.DesiredCapabilities;
  */
 public class ChromeWebDriverImpl extends BaseWebDriverImpl {
 
-	public ChromeWebDriverImpl(String browserURL) {
-		super(browserURL, new ChromeDriver(_desiredCapabilities));
+	public ChromeWebDriverImpl(String browserURL, WebDriver webDriver) {
+		super(browserURL, webDriver);
 	}
 
 	private static final DesiredCapabilities _desiredCapabilities;

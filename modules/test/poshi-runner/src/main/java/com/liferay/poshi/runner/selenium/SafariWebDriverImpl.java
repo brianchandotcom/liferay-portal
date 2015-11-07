@@ -18,15 +18,14 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.internal.WrapsDriver;
-import org.openqa.selenium.safari.SafariDriver;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class SafariWebDriverImpl extends BaseWebDriverImpl {
 
-	public SafariWebDriverImpl(String browserURL) {
-		super(browserURL, new SafariDriver());
+	public SafariWebDriverImpl(String browserURL, WebDriver webDriver) {
+		super(browserURL, webDriver);
 	}
 
 	@Override

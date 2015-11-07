@@ -28,7 +28,12 @@ import java.util.Map;
 
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.InputDirectory;
+import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.JavaExec;
+import org.gradle.api.tasks.Optional;
+import org.gradle.api.tasks.SkipWhenEmpty;
 import org.gradle.util.GUtil;
 
 /**
@@ -57,44 +62,56 @@ public class BuildTaglibsTask extends JavaExec {
 		super.exec();
 	}
 
+	@InputFiles
+	@SkipWhenEmpty
 	public FileCollection getComponentsXmlFiles() {
 		Project project = getProject();
 
 		return project.files(_componentsXmlFiles.toArray());
 	}
 
+	@Input
 	public String getCopyrightYear() {
 		return GradleUtil.toString(_copyrightYear);
 	}
 
+	@InputDirectory
 	public File getJavaDir() {
 		return GradleUtil.toFile(getProject(), _javaDir);
 	}
 
+	@Input
 	public String getJavaPackage() {
 		return GradleUtil.toString(_javaPackage);
 	}
 
+	@Input
 	public String getJspCommonInitPath() {
 		return GradleUtil.toString(_jspCommonInitPath);
 	}
 
+	@Input
 	public String getJspDirName() {
 		return GradleUtil.toString(_jspDirName);
 	}
 
+	@InputDirectory
 	public File getJspParentDir() {
 		return GradleUtil.toFile(getProject(), _jspParentDir);
 	}
 
+	@Input
+	@Optional
 	public String getOsgiModuleSymbolicName() {
 		return GradleUtil.toString(_osgiModuleSymbolicName);
 	}
 
+	@Input
 	public String getTemplatesDirName() {
 		return GradleUtil.toString(_templatesDirName);
 	}
 
+	@InputDirectory
 	public File getTldDir() {
 		return GradleUtil.toFile(getProject(), _tldDir);
 	}

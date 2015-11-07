@@ -7,11 +7,8 @@
 		<if>
 			<equals arg1="${pageTemplateActive}" arg2="No" />
 			<then>
-				<execute function="Click" locator1="Checkbox#ACTIVE_TOGGLE_SWITCH" />
+				<execute function="Click" locator1="PageTemplates#ACTIVE_TOGGLE_SWITCH" />
 			</then>
-			<else>
-				<execute function="Uncheck" locator1="Checkbox#ACTIVE_TOGGLE_SWITCH" />
-			</else>
 		</if>
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
@@ -46,11 +43,8 @@
 		<if>
 			<equals arg1="${pageTemplateActive}" arg2="No" />
 			<then>
-				<execute function="Click" locator1="Checkbox#ACTIVE_TOGGLE_SWITCH" />
+				<execute function="Click" locator1="PageTemplates#ACTIVE_TOGGLE_SWITCH" />
 			</then>
-			<else>
-				<execute function="Uncheck" locator1="Checkbox#ACTIVE_TOGGLE_SWITCH" />
-			</else>
 		</if>
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />

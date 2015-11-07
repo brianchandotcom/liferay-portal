@@ -941,7 +941,7 @@
 			</else>
 		</if>
 
-		<execute function="AssertClickNoError" locator1="Button#EXPIRE" value1="Expire" />
+		<execute function="ClickNoError" locator1="Icon#EXPIRE" />
 		<execute function="Confirm" value1="Are you sure you want to expire the selected version?" />
 	</command>
 

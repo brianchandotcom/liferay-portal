@@ -23,14 +23,12 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
-import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.internal.plugins.osgi.OsgiHelper;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
-import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.SourceSet;
 
 /**
@@ -42,6 +40,8 @@ public class AlloyTaglibPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
+		GradleUtil.applyPlugin(project, JavaPlugin.class);
+
 		addTaskBuildTaglibs(project);
 	}
 
@@ -52,39 +52,6 @@ public class AlloyTaglibPlugin implements Plugin<Project> {
 		buildTaglibsTask.setDescription(
 			"Builds the AlloyUI JSP Taglibs for this project.");
 		buildTaglibsTask.setGroup(BasePlugin.BUILD_GROUP);
-
-		PluginContainer pluginContainer = project.getPlugins();
-
-		pluginContainer.withType(
-			BasePlugin.class,
-			new Action<BasePlugin>() {
-
-				@Override
-				public void execute(BasePlugin basePlugin) {
-					configureTaskBuildTaglibsOsgiModuleSymbolicName(
-						buildTaglibsTask);
-				}
-
-			});
-
-		pluginContainer.withType(
-			JavaPlugin.class,
-			new Action<JavaPlugin>() {
-
-				@Override
-				public void execute(JavaPlugin javaPlugin) {
-					configureTaskBuildTaglibsJavaDir(buildTaglibsTask);
-					configureTaskBuildTaglibsJspParentDir(buildTaglibsTask);
-					configureTaskBuildTaglibsTldDir(buildTaglibsTask);
-				}
-
-			});
-
-		return buildTaglibsTask;
-	}
-
-	protected void configureTaskBuildTaglibsJavaDir(
-		final BuildTaglibsTask buildTaglibsTask) {
 
 		buildTaglibsTask.setJavaDir(
 			new Callable<File>() {
@@ -103,10 +70,6 @@ public class AlloyTaglibPlugin implements Plugin<Project> {
 				}
 
 			});
-	}
-
-	protected void configureTaskBuildTaglibsJspParentDir(
-		final BuildTaglibsTask buildTaglibsTask) {
 
 		buildTaglibsTask.setJspParentDir(
 			new Callable<File>() {
@@ -120,25 +83,17 @@ public class AlloyTaglibPlugin implements Plugin<Project> {
 				}
 
 			});
-	}
 
-	protected void configureTaskBuildTaglibsOsgiModuleSymbolicName(
-		final BuildTaglibsTask buildTaglibs) {
-
-		buildTaglibs.setOsgiModuleSymbolicName(
+		buildTaglibsTask.setOsgiModuleSymbolicName(
 			new Callable<String>() {
 
 				@Override
 				public String call() throws Exception {
 					return _osgiHelper.getBundleSymbolicName(
-						buildTaglibs.getProject());
+						buildTaglibsTask.getProject());
 				}
 
 			});
-	}
-
-	protected void configureTaskBuildTaglibsTldDir(
-		final BuildTaglibsTask buildTaglibsTask) {
 
 		buildTaglibsTask.setTldDir(
 			new Callable<File>() {
@@ -152,6 +107,8 @@ public class AlloyTaglibPlugin implements Plugin<Project> {
 				}
 
 			});
+
+		return buildTaglibsTask;
 	}
 
 	protected File getJavaDir(Project project) {

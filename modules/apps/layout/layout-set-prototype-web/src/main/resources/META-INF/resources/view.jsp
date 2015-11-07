@@ -19,6 +19,9 @@
 <%
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 
+String orderByCol = ParamUtil.getString(request, "orderByCol", "create-date");
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
 PortletURL portletURL = renderResponse.createRenderURL();
 %>
 
@@ -34,6 +37,13 @@ PortletURL portletURL = renderResponse.createRenderURL();
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= renderResponse.createRenderURL() %>"
+		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= orderByCol %>"
+			orderByType="<%= orderByType %>"
+			orderColumns='<%= new String[] {"create-date"} %>'
 			portletURL="<%= renderResponse.createRenderURL() %>"
 		/>
 	</liferay-frontend:management-bar-filters>
@@ -60,8 +70,22 @@ PortletURL portletURL = renderResponse.createRenderURL();
 	>
 		<aui:input name="deleteLayoutSetPrototypesIds" type="hidden" />
 
+		<%
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<LayoutSetPrototype> orderByComparator = new LayoutSetPrototypeCreateDateComparator(orderByAsc);
+
+		searchContainer.setOrderByCol(orderByCol);
+		searchContainer.setOrderByComparator(orderByComparator);
+		searchContainer.setOrderByType(orderByType);
+		%>
+
 		<liferay-ui:search-container-results
-			results="<%= LayoutSetPrototypeLocalServiceUtil.search(company.getCompanyId(), null, searchContainer.getStart(), searchContainer.getEnd(), null) %>"
+			results="<%= LayoutSetPrototypeLocalServiceUtil.search(company.getCompanyId(), null, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
 		/>
 
 		<liferay-ui:search-container-row
@@ -112,6 +136,11 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			<liferay-ui:search-container-column-text
 				name="description"
 				value="<%= layoutSetPrototype.getDescription(locale) %>"
+			/>
+
+			<liferay-ui:search-container-column-date
+				name="create-date"
+				property="createDate"
 			/>
 
 			<liferay-ui:search-container-column-text

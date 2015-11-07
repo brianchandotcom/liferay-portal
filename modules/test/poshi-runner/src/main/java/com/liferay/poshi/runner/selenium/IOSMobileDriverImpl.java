@@ -15,19 +15,16 @@
 package com.liferay.poshi.runner.selenium;
 
 import io.appium.java_client.TouchAction;
-import io.appium.java_client.ios.IOSDriver;
 
-import java.net.URL;
-
-import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.WebDriver;
 
 /**
  * @author Kenji Heigel
  */
 public class IOSMobileDriverImpl extends BaseMobileDriverImpl {
 
-	public IOSMobileDriverImpl(String browserURL) {
-		super(browserURL, new IOSDriver(_url, _desiredCapabilities));
+	public IOSMobileDriverImpl(String browserURL, WebDriver webDriver) {
+		super(browserURL, webDriver);
 	}
 
 	protected void tap(String locator) {
@@ -49,28 +46,6 @@ public class IOSMobileDriverImpl extends BaseMobileDriverImpl {
 		touchAction.perform();
 
 		context("WEBVIEW_1");
-	}
-
-	private static final DesiredCapabilities _desiredCapabilities;
-	private static final URL _url;
-
-	static {
-		_desiredCapabilities = DesiredCapabilities.android();
-
-		_desiredCapabilities.setCapability("browserName", "Safari");
-		_desiredCapabilities.setCapability("deviceName", "iPhone 5s");
-		_desiredCapabilities.setCapability("platformName", "iOS");
-		_desiredCapabilities.setCapability("platformVersion", "8.2");
-
-		URL url = null;
-
-		try {
-			url = new URL("http://0.0.0.0:4723/wd/hub/");
-		}
-		catch (Exception e) {
-		}
-
-		_url = url;
 	}
 
 }

@@ -804,6 +804,45 @@ public class WebDriverHelper {
 		}
 	}
 
+	protected static By getBy(String locator) {
+		if (locator.startsWith("//")) {
+			return By.xpath(locator);
+		}
+		else if (locator.startsWith("class=")) {
+			locator = locator.substring(6);
+
+			return By.className(locator);
+		}
+		else if (locator.startsWith("css=")) {
+			locator = locator.substring(4);
+
+			return By.cssSelector(locator);
+		}
+		else if (locator.startsWith("link=")) {
+			locator = locator.substring(5);
+
+			return By.linkText(locator);
+		}
+		else if (locator.startsWith("name=")) {
+			locator = locator.substring(5);
+
+			return By.name(locator);
+		}
+		else if (locator.startsWith("tag=")) {
+			locator = locator.substring(4);
+
+			return By.tagName(locator);
+		}
+		else if (locator.startsWith("xpath=") || locator.startsWith("xPath=")) {
+			locator = locator.substring(6);
+
+			return By.xpath(locator);
+		}
+		else {
+			return By.id(locator);
+		}
+	}
+
 	protected static WebElement getWebElement(
 		WebDriver webDriver, String locator) {
 
@@ -836,45 +875,23 @@ public class WebDriverHelper {
 			setTimeoutImplicit(webDriver, timeout);
 		}
 
+		List<WebElement> webElements = null;
+
 		try {
-			if (locator.startsWith("//")) {
-				return webDriver.findElements(By.xpath(locator));
-			}
-			else if (locator.startsWith("class=")) {
-				locator = locator.substring(6);
+			webElements = webDriver.findElements(getBy(locator));
 
-				return webDriver.findElements(By.className(locator));
-			}
-			else if (locator.startsWith("css=")) {
-				locator = locator.substring(4);
+			List<WebElement> webElementWrappers = new ArrayList<>();
 
-				return webDriver.findElements(By.cssSelector(locator));
-			}
-			else if (locator.startsWith("link=")) {
-				locator = locator.substring(5);
+			if (webElements != null) {
+				for (WebElement webElement : webElements) {
+					webElementWrappers.add(
+						new WebElementWrapper(locator, webElement));
+				}
 
-				return webDriver.findElements(By.linkText(locator));
+				return webElementWrappers;
 			}
-			else if (locator.startsWith("name=")) {
-				locator = locator.substring(5);
 
-				return webDriver.findElements(By.name(locator));
-			}
-			else if (locator.startsWith("tag=")) {
-				locator = locator.substring(4);
-
-				return webDriver.findElements(By.tagName(locator));
-			}
-			else if (locator.startsWith("xpath=") ||
-					 locator.startsWith("xPath=")) {
-
-				locator = locator.substring(6);
-
-				return webDriver.findElements(By.xpath(locator));
-			}
-			else {
-				return webDriver.findElements(By.id(locator));
-			}
+			return webElementWrappers;
 		}
 		finally {
 			if (timeout != null) {

@@ -18,10 +18,9 @@ import com.liferay.poshi.runner.util.PropsValues;
 
 import com.thoughtworks.selenium.Selenium;
 
-import io.appium.java_client.MobileDriver;
-
 import java.util.List;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import org.w3c.dom.Node;
@@ -33,10 +32,10 @@ import org.w3c.dom.Node;
 public class MobileDriverToSeleniumBridge
 	extends MobileDriverWrapper implements Selenium {
 
-	public MobileDriverToSeleniumBridge(MobileDriver mobileDriver) {
-		super(mobileDriver);
+	public MobileDriverToSeleniumBridge(WebDriver webDriver) {
+		super(webDriver);
 
-		WebDriverHelper.setDefaultWindowHandle(mobileDriver.getWindowHandle());
+		WebDriverHelper.setDefaultWindowHandle(webDriver.getWindowHandle());
 	}
 
 	@Override

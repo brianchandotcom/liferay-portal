@@ -14,42 +14,15 @@
 
 package com.liferay.poshi.runner.selenium;
 
-import com.liferay.poshi.runner.util.PropsValues;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.WebDriver;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class EdgeRemoteWebDriverImpl extends EdgeWebDriverImpl {
 
-	public EdgeRemoteWebDriverImpl(String browserURL) {
-		super(
-			browserURL, new RemoteWebDriver(_remoteURL, _desiredCapabilities));
-	}
-
-	private static final DesiredCapabilities _desiredCapabilities;
-	private static final URL _remoteURL;
-
-	static {
-		_desiredCapabilities = DesiredCapabilities.edge();
-
-		_desiredCapabilities.setCapability("platform", "WINDOWS");
-
-		URL remoteURL = null;
-
-		try {
-			remoteURL = new URL(
-				PropsValues.SELENIUM_REMOTE_DRIVER_HUB + ":4444/wd/hub");
-		}
-		catch (MalformedURLException murle) {
-		}
-
-		_remoteURL = remoteURL;
+	public EdgeRemoteWebDriverImpl(String browserURL, WebDriver webDriver) {
+		super(browserURL, webDriver);
 	}
 
 }

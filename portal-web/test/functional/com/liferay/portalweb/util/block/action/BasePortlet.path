@@ -60,7 +60,7 @@
 </tr>
 <tr>
 	<td>SPECIFIC_PORTLET_BORDERLESS_BAR</td>
-	<td>//div[contains(.,'${key_portletName}') and contains(@class,'portlet-borderless')]//span[contains(@class,'portlet-actions')]</td>
+	<td>//div[contains(@class,'portlet-title-default')]/span[contains(.,'${key_portletName}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -238,6 +238,18 @@ public abstract class UpgradeBaseJournal extends UpgradeProcess {
 		}
 	}
 
+	protected Map<Locale, String> localize(long groupId, String key)
+		throws Exception {
+
+		Map<Locale, String> localizationMap = new HashMap<>();
+
+		for (Locale locale : LanguageUtil.getAvailableLocales(groupId)) {
+			localizationMap.put(locale, LanguageUtil.get(locale, key));
+		}
+
+		return localizationMap;
+	}
+
 	protected String localize(
 			long groupId, String key, String defaultLanguageId)
 		throws Exception {

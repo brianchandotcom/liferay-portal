@@ -100,18 +100,8 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 			Group group = layoutSetPrototype.getGroup();
 
-			PortletURL siteAdministrationURL = null;
-
-			PanelCategoryHelper panelCategoryHelper = (PanelCategoryHelper)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_HELPER);
-
-			String portletId = panelCategoryHelper.getFirstPortletId(PanelCategoryKeys.SITE_ADMINISTRATION, permissionChecker, group);
-
-			if (Validator.isNotNull(portletId)) {
-				siteAdministrationURL = PortalUtil.getControlPanelPortletURL(request, group, portletId, 0, PortletRequest.RENDER_PHASE);
-			}
-
-			if (siteAdministrationURL != null) {
-				rowURL = siteAdministrationURL.toString();
+			if (LayoutSetPrototypePermissionUtil.contains(permissionChecker, layoutSetPrototype.getLayoutSetPrototypeId(), ActionKeys.UPDATE) && (group.getPrivateLayoutsPageCount() > 0)) {
+				rowURL = group.getDisplayURL(themeDisplay, true);
 			}
 			%>
 
@@ -119,7 +109,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 				name="name"
 			>
 
-				<aui:a href="<%= rowURL %>"><%= layoutSetPrototype.getName(locale) %></aui:a>
+				<aui:a href="<%= rowURL %>" target="_blank"><%= layoutSetPrototype.getName(locale) %></aui:a>
 
 				<%
 				int mergeFailCount = SitesUtil.getMergeFailCount(layoutSetPrototype);

@@ -55,31 +55,15 @@ renderResponse.setTitle(layoutPrototype.isNew() ? LanguageUtil.get(request, "new
 
 	<aui:model-context bean="<%= layoutPrototype %>" model="<%= LayoutPrototype.class %>" />
 
-	<aui:fieldset>
-		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
+	<aui:fieldset-group>
+		<aui:fieldset>
+			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
 
-		<aui:input name="description" />
+			<aui:input name="description" />
 
-		<aui:input name="active" />
-
-		<c:if test="<%= !layoutPrototype.isNew() %>">
-			<aui:field-wrapper label="configuration">
-
-				<%
-				Group layoutPrototypeGroup = layoutPrototype.getGroup();
-				%>
-
-				<liferay-ui:icon
-					iconCssClass="icon-search"
-					label="<%= true %>"
-					message="open-page-template"
-					method="get"
-					target="_blank"
-					url="<%= layoutPrototypeGroup.getDisplayURL(themeDisplay, true) %>"
-				/>
-			</aui:field-wrapper>
-		</c:if>
-	</aui:fieldset>
+			<aui:input name="active" type="toggle-switch" value="<%= layoutPrototype.isActive() %>" />
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />

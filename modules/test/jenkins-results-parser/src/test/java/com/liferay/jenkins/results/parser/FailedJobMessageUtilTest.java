@@ -15,15 +15,12 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
-
 import java.net.URL;
 import java.net.URLDecoder;
 
 import org.apache.tools.ant.Project;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -54,6 +51,13 @@ public class FailedJobMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 	protected void downloadSample(File sampleDir, URL url) throws Exception {
 		downloadSampleURL(sampleDir, url, "/api/json");
 		downloadSampleURL(sampleDir, url, "/logText/progressiveText");
+
+		String urlString = url.toString();
+
+		if (urlString.contains("-source")) {
+			return;
+		}
+		
 		downloadSampleURL(sampleDir, url, "/testReport/api/json");
 
 		downloadSampleAxisURLs(sampleDir, new File(sampleDir, "/api/json"));
@@ -63,6 +67,7 @@ public class FailedJobMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 			String sampleKey, String buildNumber, String jobName,
 			String hostName)
 		throws Exception {
+		this.generateJavacOutputFile = generateJavacOutputFile;
 
 		String urlString =
 			"https://${hostName}.liferay.com/job/${jobName}/${buildNumber}/";

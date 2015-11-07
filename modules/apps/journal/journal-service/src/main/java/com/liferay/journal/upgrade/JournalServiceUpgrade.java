@@ -18,6 +18,7 @@ import com.liferay.journal.upgrade.v1_0_0.UpgradeClassNames;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeCompanyId;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeJournal;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeJournalArticleType;
+import com.liferay.journal.upgrade.v1_0_0.UpgradeJournalArticles;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeJournalDisplayPreferences;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeLastPublishDate;
 import com.liferay.journal.upgrade.v1_0_0.UpgradePortletSettings;
@@ -50,7 +51,7 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 			"com.liferay.journal.service", "0.0.1", "1.0.0",
 			new UpgradeSchema(), new UpgradeClassNames(),
 			new UpgradeCompanyId(), new UpgradeJournal(),
-			new UpgradeJournalArticleType(),
+			new UpgradeJournalArticleType(), new UpgradeJournalArticles(),
 			new UpgradeJournalDisplayPreferences(),
 			new UpgradeLastPublishDate(),
 			new UpgradePortletSettings(_settingsFactory),

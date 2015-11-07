@@ -1,17 +1,15 @@
 <definition component-name="portal-plugins-osgi">
 	<property name="plugins.deployment.type" value="osgi" />
-	<property name="testray.main.component.name" value="Plugin Installer" />
+	<property name="testray.main.component.name" value="User Interface" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<command name="ZoeBrochureThemeSmoke" priority="4">
+	<command name="131ColumnsLayouttplSmoke" priority="4">
 		<property name="layouttpl.plugins.includes" value="1-3-1-columns-layouttpl" />
-		<property name="theme.plugins.includes" value="zoe-brochure-theme" />
-		<property name="web.plugins.includes" value="resources-importer-web" />
 
-		<var name="appName" value="Zoe Brochure" />
+		<var name="appName" value="1-3-1 Columns Layout" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="App Manager" />
@@ -19,6 +17,6 @@
 
 		<execute function="AssertTextPresent#assertTextPresent" value1="${appName}" />
 
-		<execute function="AntCommand#antCommand" locator1="build-test.xml" value1="remove-plugin -Dplugin.name=zoe-brochure-theme" />
+		<execute function="AntCommand#antCommand" locator1="build-test.xml" value1="remove-plugin -Dplugin.name=1-3-1-columns-layouttpl" />
 	</command>
 </definition>

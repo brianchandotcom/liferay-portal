@@ -1,16 +1,16 @@
 <definition component-name="portal-plugins-osgi">
 	<property name="plugins.deployment.type" value="osgi" />
-	<property name="testray.main.component.name" value="Plugin Installer" />
+	<property name="testray.main.component.name" value="User Interface" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<command name="ZoeResortThemeSmoke" priority="4">
-		<property name="theme.plugins.includes" value="zoe-resort-theme" />
+	<command name="ZoePoliticalThemeSmoke" priority="4">
+		<property name="theme.plugins.includes" value="zoe-political-theme" />
 		<property name="web.plugins.includes" value="resources-importer-web" />
 
-		<var name="appName" value="Zoe Resort" />
+		<var name="appName" value="Zoe Political" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="App Manager" />
@@ -18,6 +18,6 @@
 
 		<execute function="AssertTextPresent#assertTextPresent" value1="${appName}" />
 
-		<execute function="AntCommand#antCommand" locator1="build-test.xml" value1="remove-plugin -Dplugin.name=zoe-resort-theme" />
+		<execute function="AntCommand#antCommand" locator1="build-test.xml" value1="remove-plugin -Dplugin.name=zoe-political-theme" />
 	</command>
 </definition>

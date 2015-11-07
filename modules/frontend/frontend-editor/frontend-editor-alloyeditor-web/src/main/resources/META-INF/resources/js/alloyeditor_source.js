@@ -38,8 +38,14 @@ AUI.add(
 						instance._editorSwitch = host.one('#Switch');
 						instance._editorWrapper = host.one('#Wrapper');
 
+						instance._toggleSourceSwitchFn = A.debounce(instance._toggleSourceSwitch, 100, instance);
+
+						host.getNativeEditor().on('editorUpdate', A.bind('_onEditorUpdate', instance));
+
 						instance._eventHandles = [
 							instance._editorSwitch.on('click', instance._switchMode, instance),
+							instance._editorSwitch.on('blur', instance._onSwitchBlur, instance),
+							instance._editorSwitch.on('focus', instance._onSwitchFocus, instance),
 							instance._editorFullscreen.on('click', instance._onFullScreenBtnClick, instance),
 							instance.doAfter('getHTML', instance._getHTML, instance)
 						];
@@ -100,6 +106,12 @@ AUI.add(
 								text
 							);
 						}
+					},
+
+					_onEditorUpdate: function(event) {
+						var instance = this;
+
+						instance._toggleSourceSwitchFn(event.data.state);
 					},
 
 					_onFullScreenBtnClick: function() {
@@ -170,6 +182,30 @@ AUI.add(
 						}
 					},
 
+					_onSwitchBlur: function(event) {
+						var instance = this;
+
+						instance._isFocused = false;
+
+						instance._toggleSourceSwitchFn(
+							{
+								hidden: true
+							}
+						);
+					},
+
+					_onSwitchFocus: function(event) {
+						var instance = this;
+
+						instance._isFocused = true;
+
+						instance._toggleSourceSwitchFn(
+							{
+								hidden: false
+							}
+						);
+					},
+
 					_switchMode: function(event) {
 						var instance = this;
 
@@ -213,6 +249,20 @@ AUI.add(
 						instance._isVisible = editorWrapper.hasClass(CSS_SHOW_SOURCE);
 
 						editorSwitch.setHTML(instance._isVisible ? 'abc' : '&lt;/&gt;');
+
+						instance._toggleSourceSwitchFn(
+							{
+								hidden: true
+							}
+						);
+					},
+
+					_toggleSourceSwitch: function(editorState) {
+						var instance = this;
+
+						var showSourceSwitch = instance._isVisible || instance._isFocused || !editorState.hidden;
+
+						instance._editorSwitch.ancestor().toggleClass('hide', !showSourceSwitch);
 					}
 				}
 			}
@@ -222,6 +272,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-fullscreen-source-editor', 'liferay-source-editor']
+		requires: ['aui-debounce', 'liferay-fullscreen-source-editor', 'liferay-source-editor']
 	}
 );

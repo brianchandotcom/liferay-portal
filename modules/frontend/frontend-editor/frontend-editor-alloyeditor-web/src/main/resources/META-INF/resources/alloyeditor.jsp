@@ -147,7 +147,7 @@ if (editorOptions != null) {
 					</div>
 				</div>
 			</div>
-			<div class="alloy-editor-switch">
+			<div class="alloy-editor-switch hide">
 				<button class="btn btn-default btn-xs hide icon-fullscreen" id="<%= name %>Fullscreen" type="button"></button>
 
 				<button class="btn btn-default btn-xs" id="<%= name %>Switch" type="button">

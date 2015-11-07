@@ -16,7 +16,7 @@ package com.liferay.poshi.runner.selenium;
 
 import com.liferay.poshi.runner.util.PropsValues;
 
-import io.appium.java_client.MobileDriver;
+import org.openqa.selenium.WebDriver;
 
 /**
  * @author Kenji Heigel
@@ -24,8 +24,8 @@ import io.appium.java_client.MobileDriver;
 public abstract class BaseMobileDriverImpl
 	extends MobileDriverToSeleniumBridge implements LiferaySelenium {
 
-	public BaseMobileDriverImpl(String browserURL, MobileDriver mobileDriver) {
-		super(mobileDriver);
+	public BaseMobileDriverImpl(String browserURL, WebDriver webDriver) {
+		super(webDriver);
 
 		System.setProperty("java.awt.headless", "false");
 	}

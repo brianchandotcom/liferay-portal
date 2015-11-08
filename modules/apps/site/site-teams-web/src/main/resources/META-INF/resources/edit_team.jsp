@@ -48,15 +48,17 @@ renderResponse.setTitle(((team == null) ? LanguageUtil.get(request, "new-team") 
 
 	<aui:model-context bean="<%= team %>" model="<%= Team.class %>" />
 
-	<aui:fieldset>
-		<c:if test="<%= team != null %>">
-			<aui:input name="teamId" type="resource" value="<%= String.valueOf(team.getTeamId()) %>" />
-		</c:if>
+	<aui:fieldset-group>
+		<aui:fieldset>
+			<c:if test="<%= team != null %>">
+				<aui:input name="teamId" type="resource" value="<%= String.valueOf(team.getTeamId()) %>" />
+			</c:if>
 
-		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
+			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
 
-		<aui:input name="description" />
-	</aui:fieldset>
+			<aui:input name="description" />
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />

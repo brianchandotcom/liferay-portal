@@ -50,6 +50,19 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="update-jboss-java-opts">
+		<attribute name="app.server.jboss.dir" />
+
+		<sequential>
+			<replace
+				dir="@{app.server.jboss.dir}/bin"
+				includes="*.bat,*.conf"
+				token="-Xmx512m"
+				value="-Xmx1024m"
+			/>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="update-plugins-includes-plugin">
 		<attribute name="plugins.includes.plugin.bundle" />
 		<attribute name="plugins.includes.plugin.dependent-apps" />
@@ -120,6 +133,8 @@
 
 		<antcall target="unzip-jboss" inheritAll="false" />
 
+		<update-jboss-java-opts app.server.jboss.dir="${app.server.parent.dir}/jboss-eap-6.0.1" />
+
 		<delete dir="${project.dir}/portal-web/classes" />
 
 		<ant target="deploy" inheritAll="false" />
@@ -148,6 +163,8 @@
 
 		<antcall target="unzip-jboss" inheritAll="false" />
 
+		<update-jboss-java-opts app.server.jboss.dir="${app.server.parent.dir}/jboss-eap-6.1.0" />
+
 		<delete dir="${project.dir}/portal-web/classes" />
 
 		<ant target="deploy" inheritAll="false" />
@@ -175,6 +192,8 @@
 		<antcall target="update-sdk-properties" inheritAll="false" />
 
 		<antcall target="unzip-jboss" inheritAll="false" />
+
+		<update-jboss-java-opts app.server.jboss.dir="${app.server.parent.dir}/jboss-eap-6.4.0" />
 
 		<delete dir="${project.dir}/portal-web/classes" />
 

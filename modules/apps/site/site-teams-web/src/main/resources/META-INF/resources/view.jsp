@@ -70,6 +70,11 @@ TeamDisplayTerms searchTerms = (TeamDisplayTerms)teamSearchContainer.getSearchTe
 	%>
 
 	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= renderResponse.createRenderURL() %>"
+		/>
+
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= teamSearchContainer.getOrderByCol() %>"
 			orderByType="<%= teamSearchContainer.getOrderByType() %>"

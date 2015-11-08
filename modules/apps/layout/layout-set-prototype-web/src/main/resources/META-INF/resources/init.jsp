@@ -32,6 +32,7 @@ page import="com.liferay.application.list.display.context.logic.PanelCategoryHel
 page import="com.liferay.layout.set.prototype.web.constants.LayoutSetPrototypePortletKeys" %><%@
 page import="com.liferay.portal.NoSuchLayoutSetPrototypeException" %><%@
 page import="com.liferay.portal.RequiredLayoutSetPrototypeException" %><%@
+page import="com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@

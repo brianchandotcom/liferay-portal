@@ -100,6 +100,7 @@ teamSearchContainer.setTotal(teamsCount);
 	<aui:input name="teamIds" type="hidden" />
 
 	<liferay-ui:search-container
+		emptyResultsMessage="there-are-no-site-teams.-you-can-add-a-site-team-by-clicking-the-plus-button-on-the-bottom-right-corner"
 		id="teams"
 		rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
 		searchContainer="<%= teamSearchContainer %>"

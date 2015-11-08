@@ -125,8 +125,6 @@ public class PACLAggregateTest extends AutoBalanceTestCase {
 		public void run(RunNotifier runNotifier) {
 			_runNotifier = runNotifier;
 
-			System.setProperty("catalina.base", ".");
-
 			super.run(runNotifier);
 		}
 

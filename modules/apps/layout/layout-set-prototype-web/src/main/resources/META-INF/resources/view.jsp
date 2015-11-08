@@ -22,7 +22,18 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 String orderByCol = ParamUtil.getString(request, "orderByCol", "create-date");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
-int totalVar = LayoutSetPrototypeLocalServiceUtil.searchCount(company.getCompanyId(), null);
+String navigation = ParamUtil.getString(request, "navigation", "all");
+
+Boolean active = null;
+
+if (navigation.equals("active")) {
+	active = true;
+}
+else if (navigation.equals("inactive")) {
+	active = false;
+}
+
+int totalVar = LayoutSetPrototypeLocalServiceUtil.searchCount(company.getCompanyId(), active);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 %>
@@ -42,7 +53,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 	>
 		<liferay-frontend:management-bar-filters>
 			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all"} %>'
+				navigationKeys='<%= new String[] {"all", "active", "inactive"} %>'
 				portletURL="<%= renderResponse.createRenderURL() %>"
 			/>
 
@@ -96,7 +107,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 		%>
 
 		<liferay-ui:search-container-results
-			results="<%= LayoutSetPrototypeLocalServiceUtil.search(company.getCompanyId(), null, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
+			results="<%= LayoutSetPrototypeLocalServiceUtil.search(company.getCompanyId(), active, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
 		/>
 
 		<liferay-ui:search-container-row

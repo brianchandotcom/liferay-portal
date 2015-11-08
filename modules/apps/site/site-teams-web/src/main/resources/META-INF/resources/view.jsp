@@ -112,6 +112,7 @@ teamSearchContainer.setTotal(teamsCount);
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.model.Team"
+			cssClass="selectable"
 			escapedModel="<%= true %>"
 			keyProperty="teamId"
 			modelVar="team"
@@ -130,9 +131,10 @@ teamSearchContainer.setTotal(teamsCount);
 
 			<c:choose>
 				<c:when test='<%= displayStyle.equals("descriptive") %>'>
-					<liferay-ui:search-container-column-text>
-						<h3 class="icon-group"></h3>
-					</liferay-ui:search-container-column-text>
+					<liferay-ui:search-container-column-icon
+						icon="icon-group"
+						toggleRowChecker="<%= true %>"
+					/>
 
 					<liferay-ui:search-container-column-text
 						colspan="<%= 2 %>"
@@ -164,7 +166,7 @@ teamSearchContainer.setTotal(teamsCount);
 					/>
 
 					<liferay-ui:search-container-column-jsp
-						cssClass="checkbox-cell entry-action"
+						cssClass="list-group-item-field"
 						path="/team_action.jsp"
 					/>
 				</c:when>

@@ -74,11 +74,34 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(team.getName());
 %>
 
-<liferay-ui:tabs
-	names="users,user-groups"
-	param="tabs1"
-	portletURL="<%= portletURL %>"
-/>
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+
+		<%
+		PortletURL usersURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+		usersURL.setParameter("tabs1", "users");
+		%>
+
+		<aui:nav-item href="<%= usersURL.toString() %>" label="users" selected='<%= tabs1.equals("users") %>' />
+
+		<%
+		PortletURL userGroupsURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+		userGroupsURL.setParameter("tabs1", "user-groups");
+		%>
+
+		<aui:nav-item href="<%= userGroupsURL.toString() %>" label="user-groups" selected='<%= tabs1.equals("user-groups") %>' />
+	</aui:nav>
+
+	<aui:nav-bar-search>
+		<aui:form action="<%= portletURL.toString() %>" method="get" name="searchFm">
+			<liferay-portlet:renderURLParams varImpl="portletURL" />
+
+			<liferay-ui:input-search markupView="lexicon" />
+		</aui:form>
+	</aui:nav-bar-search>
+</aui:nav-bar>
 
 <c:choose>
 	<c:when test='<%= tabs1.equals("users") %>'>

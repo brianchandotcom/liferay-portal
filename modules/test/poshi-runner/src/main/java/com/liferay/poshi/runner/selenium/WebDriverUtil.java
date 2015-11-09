@@ -20,6 +20,7 @@ import com.liferay.poshi.runner.util.StringPool;
 import com.liferay.poshi.runner.util.StringUtil;
 
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -208,6 +209,25 @@ public class WebDriverUtil extends PropsValues {
 		return new RemoteWebDriver(url, desiredCapabilities);
 	}
 
+	private WebDriver _getIOSMobileDriver() {
+		DesiredCapabilities desiredCapabilities = DesiredCapabilities.android();
+
+		desiredCapabilities.setCapability("browserName", "Safari");
+		desiredCapabilities.setCapability("deviceName", "iPhone 5s");
+		desiredCapabilities.setCapability("platformName", "iOS");
+		desiredCapabilities.setCapability("platformVersion", "8.2");
+
+		URL url = null;
+
+		try {
+			url = new URL("http://0.0.0.0:4723/wd/hub/");
+		}
+		catch (Exception e) {
+		}
+
+		return new IOSDriver(url, desiredCapabilities);
+	}
+
 	private WebDriver _getWebDriver() {
 		return _webDriver;
 	}
@@ -244,6 +264,9 @@ public class WebDriverUtil extends PropsValues {
 				 SELENIUM_REMOTE_DRIVER_ENABLED) {
 
 			_webDriver = _getInternetExplorerRemoteDriver();
+		}
+		else if (BROWSER_TYPE.equals("iossafari")) {
+			_webDriver = _getIOSMobileDriver();
 		}
 		else {
 			throw new RuntimeException("Invalid browser type " + BROWSER_TYPE);

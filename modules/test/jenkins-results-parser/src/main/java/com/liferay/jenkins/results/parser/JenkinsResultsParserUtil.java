@@ -46,6 +46,7 @@ public class JenkinsResultsParserUtil {
 		json = json.replaceAll("\\{", "&#123;");
 		json = json.replaceAll("\\}", "&#125;");
 		json = json.replaceAll("\n", "<br />");
+		json = json.replaceAll("\u00BB", "&raquo;");
 
 		return json;
 	}
@@ -185,7 +186,9 @@ public class JenkinsResultsParserUtil {
 
 		String key = url.replace("//", "/");
 
-		if (checkCache && _toStringCache.containsKey(key)) {
+		if (checkCache && _toStringCache.containsKey(key) &&
+			!url.startsWith("file:")) {
+
 			System.out.println("Loading " + url);
 
 			return _toStringCache.get(key);
@@ -211,7 +214,9 @@ public class JenkinsResultsParserUtil {
 
 		bufferedReader.close();
 
-		_toStringCache.put(key, sb.toString());
+		if (!url.startsWith("file:")) {
+			_toStringCache.put(key, sb.toString());
+		}
 
 		return sb.toString();
 	}

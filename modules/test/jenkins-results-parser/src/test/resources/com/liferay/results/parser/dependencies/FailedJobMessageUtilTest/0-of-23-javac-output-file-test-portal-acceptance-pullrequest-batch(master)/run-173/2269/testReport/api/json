@@ -1,0 +1,33 @@
+{
+  "duration" : 110.855,
+  "empty" : false,
+  "failCount" : 0,
+  "passCount" : 1,
+  "skipCount" : 0,
+  "suites" : [
+    {
+      "cases" : [
+        {
+          "age" : 0,
+          "className" : "com.liferay.poshi.runner.PoshiRunner",
+          "duration" : 110.855,
+          "errorDetails" : null,
+          "errorStackTrace" : null,
+          "failedSince" : 0,
+          "name" : "test[CPUsersandorganizations#EditOrganizationSite]",
+          "skipped" : false,
+          "skippedMessage" : null,
+          "status" : "PASSED",
+          "stderr" : "\n\n",
+          "stdout" : "\n-- listing properties --\nbrowser.type=firefox\ncompany.id=1\ncomponent.names=extra-apps-content-targeting,extra-apps-known-issues,liferay-connected-services-fix-packs,liferay-connected-services-known-issues,liferay-connected-services-notifications,liferay-connected-services-project-administration,liferay-connected-services-subscriptions,liferay-connected-services-user-management,marketplace,marketplace-known-issues,marketplace-plugins-1-2-1-columns-layouttpl,marketplace-plugins-1-3-1-columns-layo\n...[truncated 6115 chars]...\n\ntheme.ids=classic,controlpanel\ntimeout.explicit.wait=60\ntimeout.implicit.wait=3\nvm.host=vm-1\n\n\n###\n### CPUsersandorganizations#EditOrganizationSite\n###\n\nChecking to see if TCat is enabled...\nNavigate to Control Panel > Users and Organizations.\nLIFERAY_ERROR: Resource URL for /portlet.properties is null\nNavigate to Control Panel > Users and Organizations.\nNavigate to Control Panel > Sites.\nNavigate to Control Panel > Users and Organizations.\nNavigate to Control Panel > Users and Organizations.\n\n"
+        }
+      ],
+      "duration" : 110.855,
+      "id" : "0",
+      "name" : "com.liferay.poshi.runner.PoshiRunner",
+      "stderr" : "\n\n",
+      "stdout" : "\n-- listing properties --\nbrowser.type=firefox\ncompany.id=1\ncomponent.names=extra-apps-content-targeting,extra-apps-known-issues,liferay-connected-services-fix-packs,liferay-connected-services-known-issues,liferay-connected-services-notifications,liferay-connected-services-project-administration,liferay-connected-services-subscriptions,liferay-connected-services-user-management,marketplace,marketplace-known-issues,marketplace-plugins-1-2-1-columns-layouttpl,marketplace-plugins-1-3-1-columns-layo\n...[truncated 6115 chars]...\n\ntheme.ids=classic,controlpanel\ntimeout.explicit.wait=60\ntimeout.implicit.wait=3\nvm.host=vm-1\n\n\n###\n### CPUsersandorganizations#EditOrganizationSite\n###\n\nChecking to see if TCat is enabled...\nNavigate to Control Panel > Users and Organizations.\nLIFERAY_ERROR: Resource URL for /portlet.properties is null\nNavigate to Control Panel > Users and Organizations.\nNavigate to Control Panel > Sites.\nNavigate to Control Panel > Users and Organizations.\nNavigate to Control Panel > Users and Organizations.\n\n",
+      "timestamp" : "2015-11-04T19:09:06"
+    }
+  ]
+}

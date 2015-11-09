@@ -1,0 +1,33 @@
+{
+  "duration" : 461.159,
+  "empty" : false,
+  "failCount" : 0,
+  "passCount" : 1,
+  "skipCount" : 0,
+  "suites" : [
+    {
+      "cases" : [
+        {
+          "age" : 0,
+          "className" : "com.liferay.poshi.runner.PoshiRunner",
+          "duration" : 461.159,
+          "errorDetails" : null,
+          "errorStackTrace" : null,
+          "failedSince" : 0,
+          "name" : "test[CPRolesPGBlogs#AddBlogsEntryOrgRole]",
+          "skipped" : false,
+          "skippedMessage" : null,
+          "status" : "PASSED",
+          "stderr" : "\n\n",
+          "stdout" : "\n-- listing properties --\nbrowser.type=firefox\ncompany.id=1\ncomponent.names=extra-apps-content-targeting,extra-apps-known-issues,liferay-connected-services-fix-packs,liferay-connected-services-known-issues,liferay-connected-services-notifications,liferay-connected-services-project-administration,liferay-connected-services-subscriptions,liferay-connected-services-user-management,marketplace,marketplace-known-issues,marketplace-plugins-1-2-1-columns-layouttpl,marketplace-plugins-1-3-1-columns-layo\n...[truncated 10748 chars]...\n&/o/frontend-js-web/aui/promise/promise-min.js&/o/frontend-js-web/aui/aui-promise/aui-promise-min.js&/o/frontend-js-web/aui/aui-surface-base/aui-surface-base-min.js&/o/frontend-js-web/aui/aui-surface-screen/aui-surface-screen-min.js&/o/frontend-js-web/aui/aui-surface-screen-route/aui-surface-screen-route-min.js&/o/frontend-js-web/aui/aui-surface-app/aui-surface-app-min.js&/o/frontend-js-web/aui/querystring-parse/querystring-parse-min.js:13]\nLog out of Liferay Portal.\nLog out of Liferay Portal.\n\n"
+        }
+      ],
+      "duration" : 461.159,
+      "id" : "0",
+      "name" : "com.liferay.poshi.runner.PoshiRunner",
+      "stderr" : "\n\n",
+      "stdout" : "\n-- listing properties --\nbrowser.type=firefox\ncompany.id=1\ncomponent.names=extra-apps-content-targeting,extra-apps-known-issues,liferay-connected-services-fix-packs,liferay-connected-services-known-issues,liferay-connected-services-notifications,liferay-connected-services-project-administration,liferay-connected-services-subscriptions,liferay-connected-services-user-management,marketplace,marketplace-known-issues,marketplace-plugins-1-2-1-columns-layouttpl,marketplace-plugins-1-3-1-columns-layo\n...[truncated 10748 chars]...\n&/o/frontend-js-web/aui/promise/promise-min.js&/o/frontend-js-web/aui/aui-promise/aui-promise-min.js&/o/frontend-js-web/aui/aui-surface-base/aui-surface-base-min.js&/o/frontend-js-web/aui/aui-surface-screen/aui-surface-screen-min.js&/o/frontend-js-web/aui/aui-surface-screen-route/aui-surface-screen-route-min.js&/o/frontend-js-web/aui/aui-surface-app/aui-surface-app-min.js&/o/frontend-js-web/aui/querystring-parse/querystring-parse-min.js:13]\nLog out of Liferay Portal.\nLog out of Liferay Portal.\n\n",
+      "timestamp" : "2015-11-04T19:03:28"
+    }
+  ]
+}

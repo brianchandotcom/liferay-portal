@@ -21,9 +21,9 @@ String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName
 
 String navigation = ParamUtil.getString(request, "navigation", "home");
 
-long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
-
 long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
+
+long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 
 boolean search = mvcRenderCommandName.equals("/document_library/search");
 %>

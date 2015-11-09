@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -613,7 +614,8 @@ public class AssetCategoryLocalServiceImpl
 		throws PortalException {
 
 		SearchContext searchContext = buildSearchContext(
-			companyId, groupIds, title, new long[0], vocabularyIds, start, end);
+			companyId, groupIds, title, new long[0], vocabularyIds, start, end,
+			null);
 
 		return searchCategories(searchContext);
 	}
@@ -626,7 +628,20 @@ public class AssetCategoryLocalServiceImpl
 
 		SearchContext searchContext = buildSearchContext(
 			companyId, groupIds, title, parentCategoryIds, vocabularyIds, start,
-			end);
+			end, null);
+
+		return searchCategories(searchContext);
+	}
+
+	@Override
+	public BaseModelSearchResult<AssetCategory> searchCategories(
+			long companyId, long[] groupIds, String title, long[] vocabularyIds,
+			long[] parentCategoryIds, int start, int end, Sort sort)
+		throws PortalException {
+
+		SearchContext searchContext = buildSearchContext(
+			companyId, groupIds, title, parentCategoryIds, vocabularyIds, start,
+			end, sort);
 
 		return searchCategories(searchContext);
 	}
@@ -765,7 +780,7 @@ public class AssetCategoryLocalServiceImpl
 
 	protected SearchContext buildSearchContext(
 		long companyId, long[] groupIds, String title, long[] parentCategoryIds,
-		long[] vocabularyIds, int start, int end) {
+		long[] vocabularyIds, int start, int end, Sort sort) {
 
 		SearchContext searchContext = new SearchContext();
 
@@ -782,6 +797,7 @@ public class AssetCategoryLocalServiceImpl
 		searchContext.setGroupIds(groupIds);
 		searchContext.setKeywords(title);
 		searchContext.setStart(start);
+		searchContext.setSorts(sort);
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 

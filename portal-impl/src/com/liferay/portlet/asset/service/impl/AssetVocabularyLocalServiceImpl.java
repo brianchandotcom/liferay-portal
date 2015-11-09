@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -379,8 +380,17 @@ public class AssetVocabularyLocalServiceImpl
 			long companyId, long groupId, String title, int start, int end)
 		throws PortalException {
 
+		return searchVocabularies(companyId, groupId, title, start, end, null);
+	}
+
+	@Override
+	public BaseModelSearchResult<AssetVocabulary> searchVocabularies(
+			long companyId, long groupId, String title, int start, int end,
+			Sort sort)
+		throws PortalException {
+
 		SearchContext searchContext = buildSearchContext(
-			companyId, groupId, title, start, end);
+			companyId, groupId, title, start, end, sort);
 
 		return searchVocabularies(searchContext);
 	}
@@ -418,7 +428,8 @@ public class AssetVocabularyLocalServiceImpl
 	}
 
 	protected SearchContext buildSearchContext(
-		long companyId, long groupId, String title, int start, int end) {
+		long companyId, long groupId, String title, int start, int end,
+		Sort sort) {
 
 		SearchContext searchContext = new SearchContext();
 
@@ -428,6 +439,7 @@ public class AssetVocabularyLocalServiceImpl
 		searchContext.setGroupIds(new long[] {groupId});
 		searchContext.setKeywords(title);
 		searchContext.setStart(start);
+		searchContext.setSorts(sort);
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 

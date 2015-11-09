@@ -53,7 +53,7 @@ AUI.add(
 
 						var fieldTypesListNode = A.Node.create(instance.TPL_TYPES_LIST);
 
-						fieldTypesListNode.get('children').remove();
+						fieldTypesListNode.empty();
 
 						var length = fieldTypes.length;
 

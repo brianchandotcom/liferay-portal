@@ -60,7 +60,7 @@
 </tr>
 <tr>
 	<td>TEXT_FIELD_WIDTH</td>
-	<td>//div[contains(@data-fieldname,'Text')]/input[contains(@class,'input-${key_widthSize}')]</td>
+	<td>//div[contains(@data-fieldname,'Text')]//input[contains(@class,'input-${key_widthSize}')]</td>
 	<td></td>
 </tr>
 <tr>

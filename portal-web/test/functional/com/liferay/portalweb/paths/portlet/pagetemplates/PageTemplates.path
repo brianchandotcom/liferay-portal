@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>OPEN_PAGE_TEMPLATE</td>
-	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group')) and contains(@class,'field-wrapper')]/span/a/span</td>
+	<td>//div[(contains(@class,'control-group') or contains(@class,'field-group')) and contains(@class,'field-wrapper')]/span/a/span</td>
 	<td></td>
 </tr>
 <tr>

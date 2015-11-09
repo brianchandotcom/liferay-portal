@@ -5,5 +5,7 @@
 </#if>
 
 <@aui["field-wrapper"] data=data helpMessage=escape(fieldStructure.tip) label=escape(label)>
-	${fieldStructure.children}
+	<div class="form-group">
+		${fieldStructure.children}
+	</div>
 </@>

@@ -88,7 +88,7 @@ public class SeleniumUtil extends PropsValues {
 				"webdriver.ie.driver",
 				SELENIUM_EXECUTABLE_DIR_NAME + SELENIUM_IE_DRIVER_EXECUTABLE);
 
-			_selenium = new InternetExplorerWebDriverImpl(portalURL);
+			_selenium = new InternetExplorerWebDriverImpl(portalURL, webDriver);
 		}
 		else if (BROWSER_TYPE.equals("internetexplorer") &&
 				 SELENIUM_REMOTE_DRIVER_ENABLED) {

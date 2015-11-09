@@ -32,6 +32,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -170,6 +171,18 @@ public class WebDriverUtil extends PropsValues {
 		return new FirefoxDriver(firefoxProfile);
 	}
 
+	private WebDriver _getInternetExplorerDriver() {
+		DesiredCapabilities desiredCapabilities =
+			DesiredCapabilities.internetExplorer();
+
+		desiredCapabilities.setCapability(
+			InternetExplorerDriver.
+				INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,
+			true);
+
+		return new InternetExplorerDriver(desiredCapabilities);
+	}
+
 	private WebDriver _getWebDriver() {
 		return _webDriver;
 	}
@@ -196,6 +209,11 @@ public class WebDriverUtil extends PropsValues {
 		}
 		else if (BROWSER_TYPE.equals("firefox")) {
 			_webDriver = _getFirefoxDriver();
+		}
+		else if (BROWSER_TYPE.equals("internetexplorer") &&
+				 !SELENIUM_REMOTE_DRIVER_ENABLED) {
+
+			_webDriver = _getInternetExplorerDriver();
 		}
 		else {
 			throw new RuntimeException("Invalid browser type " + BROWSER_TYPE);

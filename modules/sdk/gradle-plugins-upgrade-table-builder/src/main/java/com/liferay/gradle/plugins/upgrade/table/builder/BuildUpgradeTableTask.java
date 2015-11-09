@@ -14,13 +14,11 @@
 
 package com.liferay.gradle.plugins.upgrade.table.builder;
 
-import com.liferay.gradle.util.GradleUtil;
 import com.liferay.portal.tools.upgrade.table.builder.UpgradeTableBuilderArgs;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.gradle.api.file.FileCollection;
 import org.gradle.api.tasks.JavaExec;
 
 /**
@@ -34,28 +32,14 @@ public class BuildUpgradeTableTask extends JavaExec {
 				"UpgradeTableBuilder");
 	}
 
-	@Override
-	public JavaExec classpath(Object... paths) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public void exec() {
 		setArgs(getCompleteArgs());
-
-		super.setClasspath(getClasspath());
 
 		super.exec();
 	}
 
 	public String getBaseDirName() {
 		return _upgradeTableBuilderArgs.getBaseDirName();
-	}
-
-	@Override
-	public FileCollection getClasspath() {
-		return GradleUtil.getConfiguration(
-			getProject(), UpgradeTableBuilderPlugin.CONFIGURATION_NAME);
 	}
 
 	public String getUpgradeTableDirName() {

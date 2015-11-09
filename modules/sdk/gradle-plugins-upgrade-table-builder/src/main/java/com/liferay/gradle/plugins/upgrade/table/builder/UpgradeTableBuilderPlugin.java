@@ -20,6 +20,8 @@ import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.file.FileCollection;
+import org.gradle.api.tasks.TaskContainer;
 
 /**
  * @author Andrea Di Giorgi
@@ -33,9 +35,13 @@ public class UpgradeTableBuilderPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		addUpgradeTableBuilderConfiguration(project);
+		Configuration upgradeTableBuilderConfiguration =
+			addUpgradeTableBuilderConfiguration(project);
 
 		addBuildUpgradeTableTask(project);
+
+		configureTasksBuildUpgradeTable(
+			project, upgradeTableBuilderConfiguration);
 	}
 
 	protected BuildUpgradeTableTask addBuildUpgradeTableTask(Project project) {
@@ -77,6 +83,34 @@ public class UpgradeTableBuilderPlugin implements Plugin<Project> {
 		GradleUtil.addDependency(
 			project, CONFIGURATION_NAME, "com.liferay",
 			"com.liferay.portal.tools.upgrade.table.builder", "latest.release");
+	}
+
+	protected void configureTaskBuildUpgradeTableClasspath(
+		BuildUpgradeTableTask buildUpgradeTableTask,
+		FileCollection fileCollection) {
+
+		buildUpgradeTableTask.setClasspath(fileCollection);
+	}
+
+	protected void configureTasksBuildUpgradeTable(
+		Project project, final Configuration upgradeTableBuilderConfiguration) {
+
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			BuildUpgradeTableTask.class,
+			new Action<BuildUpgradeTableTask>() {
+
+				@Override
+				public void execute(
+					BuildUpgradeTableTask buildUpgradeTableTask) {
+
+					configureTaskBuildUpgradeTableClasspath(
+						buildUpgradeTableTask,
+						upgradeTableBuilderConfiguration);
+				}
+
+			});
 	}
 
 }

@@ -12,7 +12,7 @@
 	</tear-down>
 
 	<command name="NoGuestRoleFromWCDArticleHistoryURL" priority="4">
-		<var name="url" value="http://localhost:8080/web/guest/home?&amp;p_p_id=15&amp;p_p_lifecycle=0&amp;p_p_state=maximized&amp;p_p_mode=view&amp;_15_struts_action=%2Fjournal%2Fview_article_history&amp;_15_groupId=10180&amp;_15_articleId=" />
+		<var name="url" value="http://localhost:8080/web/guest/home?&amp;p_p_id=com_liferay_journal_web_portlet_JournalPortlet&amp;p_p_lifecycle=0&amp;p_p_state=maximized&amp;p_p_mode=view&amp;_com_liferay_journal_web_portlet_JournalPortlet_struts_action=%2Fjournal%2Fview_article_history&amp;_com_liferay_journal_web_portlet_JournalPortlet_groupId=10180&amp;_com_liferay_journal_web_portlet_JournalPortlet_articleId=" />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Web Content Display Page" />

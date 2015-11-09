@@ -69,8 +69,8 @@
 		<execute macro="Search#viewSearchResultsPG">
 			<var name="searchAssetTitle1" value="Apple" />
 			<var name="searchAssetTitle2" value="Apple" />
-			<var name="searchAssetType1" value="Document" />
-			<var name="searchAssetType2" value="Message Boards Message" />
+			<var name="searchAssetType1" value="Message Boards Message" />
+			<var name="searchAssetType2" value="Document" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -84,8 +84,8 @@
 		<execute macro="Search#viewSearchResultsPG">
 			<var name="searchAssetTitle1" value="Apple" />
 			<var name="searchAssetTitle2" value="Apple" />
-			<var name="searchAssetType1" value="Document" />
-			<var name="searchAssetType2" value="Message Boards Message" />
+			<var name="searchAssetType1" value="Message Boards Message" />
+			<var name="searchAssetType2" value="Document" />
 		</execute>
 
 		<execute macro="Portlet#shutdownSpecificServer">
@@ -113,8 +113,8 @@
 		<execute macro="Search#viewSearchResultsPG">
 			<var name="searchAssetTitle1" value="Apple" />
 			<var name="searchAssetTitle2" value="Apple" />
-			<var name="searchAssetType1" value="Document" />
-			<var name="searchAssetType2" value="Message Boards Message" />
+			<var name="searchAssetType1" value="Message Boards Message" />
+			<var name="searchAssetType2" value="Document" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -128,8 +128,8 @@
 		<execute macro="Search#viewSearchResultsPG">
 			<var name="searchAssetTitle1" value="Apple" />
 			<var name="searchAssetTitle2" value="Apple" />
-			<var name="searchAssetType1" value="Document" />
-			<var name="searchAssetType2" value="Message Boards Message" />
+			<var name="searchAssetType1" value="Message Boards Message" />
+			<var name="searchAssetType2" value="Document" />
 		</execute>
 	</command>
 </definition>

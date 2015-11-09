@@ -21,6 +21,8 @@ import com.liferay.poshi.runner.util.StringUtil;
 
 import io.appium.java_client.android.AndroidDriver;
 
+import java.io.File;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -30,6 +32,8 @@ import java.util.Map;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -132,6 +136,55 @@ public class WebDriverUtil extends PropsValues {
 		return new RemoteWebDriver(url, desiredCapabilities);
 	}
 
+	private WebDriver _getFirefoxDriver() {
+		FirefoxProfile firefoxProfile = new FirefoxProfile();
+
+		try {
+			File file = new File(StringPool.PERIOD);
+
+			String absolutePath = file.getAbsolutePath();
+
+			if (absolutePath.endsWith(StringPool.PERIOD)) {
+				absolutePath = absolutePath.substring(
+					0, absolutePath.length() - 1);
+
+				absolutePath = StringUtil.replace(
+					absolutePath, StringPool.BACK_SLASH,
+					StringPool.FORWARD_SLASH);
+			}
+
+			firefoxProfile.addExtension(
+				WebDriverUtil.class,
+				"/META-INF/resources/firefox/extensions/jserrorcollector.xpi");
+		}
+		catch (Exception e) {
+		}
+
+		String outputDirName = PropsValues.OUTPUT_DIR_NAME;
+
+		if (OSDetector.isWindows()) {
+			outputDirName = StringUtil.replace(
+				outputDirName, StringPool.FORWARD_SLASH, StringPool.BACK_SLASH);
+		}
+
+		firefoxProfile.setPreference("browser.download.dir", outputDirName);
+
+		firefoxProfile.setPreference("browser.download.folderList", 2);
+		firefoxProfile.setPreference(
+			"browser.download.manager.showWhenStarting", false);
+		firefoxProfile.setPreference("browser.download.useDownloadDir", true);
+		firefoxProfile.setPreference(
+			"browser.helperApps.alwaysAsk.force", false);
+		firefoxProfile.setPreference(
+			"browser.helperApps.neverAsk.saveToDisk",
+			"application/excel,application/msword,application/pdf," +
+				"application/zip,audio/mpeg3,image/jpeg,image/png,text/plain");
+		firefoxProfile.setPreference("dom.max_chrome_script_run_time", 300);
+		firefoxProfile.setPreference("dom.max_script_run_time", 300);
+
+		return new FirefoxDriver(firefoxProfile);
+	}
+
 	private WebDriver _getWebDriver() {
 		return _webDriver;
 	}
@@ -155,6 +208,9 @@ public class WebDriverUtil extends PropsValues {
 				 SELENIUM_REMOTE_DRIVER_ENABLED) {
 
 			_webDriver = _getEdgeRemoteDriver();
+		}
+		else if (BROWSER_TYPE.equals("firefox")) {
+			_webDriver = _getFirefoxDriver();
 		}
 		else {
 			throw new RuntimeException("Invalid browser type " + BROWSER_TYPE);

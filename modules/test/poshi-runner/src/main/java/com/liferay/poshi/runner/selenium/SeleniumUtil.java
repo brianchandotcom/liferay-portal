@@ -79,7 +79,7 @@ public class SeleniumUtil extends PropsValues {
 			_selenium = new EdgeRemoteWebDriverImpl(portalURL, webDriver);
 		}
 		else if (BROWSER_TYPE.equals("firefox")) {
-			_selenium = new FirefoxWebDriverImpl(portalURL);
+			_selenium = new FirefoxWebDriverImpl(portalURL, webDriver);
 		}
 		else if (BROWSER_TYPE.equals("internetexplorer") &&
 				 !SELENIUM_REMOTE_DRIVER_ENABLED) {

@@ -78,8 +78,12 @@ public class UpdateRecordSetSettingsMVCActionCommand
 		UnicodeProperties settingsProperties = new UnicodeProperties(true);
 
 		String redirectURL = ParamUtil.getString(actionRequest, "redirectURL");
+		boolean requireCaptcha = ParamUtil.getBoolean(
+			actionRequest, "requireCaptcha");
 
 		settingsProperties.setProperty("redirectURL", redirectURL);
+		settingsProperties.setProperty(
+			"requireCaptcha", String.valueOf(requireCaptcha));
 
 		_ddlRecordSetService.updateRecordSet(
 			recordSetId, settingsProperties.toString());

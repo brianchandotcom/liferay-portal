@@ -12,10 +12,12 @@
  * details.
  */
 
-package com.liferay.document.library.web.portlet.action;
+package com.liferay.document.library.web.portlet.configuration.icon;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
-import com.liferay.portal.kernel.portlet.ConfigurationAction;
+import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIconFactory;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -28,15 +30,25 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_DISPLAY},
-	service = ConfigurationAction.class
+	property = {"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN},
+	service = PortletConfigurationIconFactory.class
 )
-public class DLDisplayConfigurationAction
-	extends ValidateRootFolderConfigurationAction {
+public class DocumentTypesPortletConfigurationIconFactory
+	extends BaseJSPPortletConfigurationIconFactory {
 
 	@Override
-	public String getJspPath(HttpServletRequest httpServletRequest) {
-		return "/document_library_display/configuration.jsp";
+	public PortletConfigurationIcon create(HttpServletRequest request) {
+		return new DocumentTypesPortletConfigurationIcon(request);
+	}
+
+	@Override
+	public String getJspPath() {
+		return "/document_library/configuration/icon/document_types.jsp";
+	}
+
+	@Override
+	public double getWeight() {
+		return 101;
 	}
 
 	@Override

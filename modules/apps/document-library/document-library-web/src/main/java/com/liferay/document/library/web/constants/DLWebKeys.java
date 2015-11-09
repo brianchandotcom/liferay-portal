@@ -12,17 +12,14 @@
  * details.
  */
 
-package com.liferay.document.library.web.display.context.util;
-
-import javax.servlet.http.HttpServletRequest;
+package com.liferay.document.library.web.constants;
 
 /**
- * @author Iván Zaera
+ * @author Brian Wing Shun Chan
  */
-public class DLDisplayRequestHelper extends DLRequestHelper {
+public class DLWebKeys {
 
-	public DLDisplayRequestHelper(HttpServletRequest request) {
-		super(request);
-	}
+	public static final String DOCUMENT_LIBRARY_PORTLET_TOOLBAR_CONTRIBUTOR =
+		"DOCUMENT_LIBRARY_PORTLET_TOOLBAR_CONTRIBUTOR";
 
 }

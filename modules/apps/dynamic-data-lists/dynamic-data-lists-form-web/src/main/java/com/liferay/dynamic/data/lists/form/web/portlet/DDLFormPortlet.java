@@ -33,6 +33,8 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.portal.PortletPreferencesException;
+import com.liferay.portal.kernel.captcha.CaptchaMaxChallengesException;
+import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -265,6 +267,8 @@ public class DDLFormPortlet extends MVCPortlet {
 	@Override
 	protected boolean isSessionErrorException(Throwable cause) {
 		if (cause instanceof DDMFormRenderingException ||
+			cause instanceof CaptchaTextException ||
+			cause instanceof CaptchaMaxChallengesException ||
 			cause instanceof NoSuchRecordSetException ||
 			cause instanceof NoSuchStructureException ||
 			cause instanceof NoSuchStructureLayoutException ||

@@ -317,12 +317,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		// LPS-59076
 
 		if (_checkModulesServiceUtil) {
-			if (content.contains("@Component") &&
-				content.contains("ServiceUtil.")) {
-
-				processErrorMessage(
-					fileName,
-					"OSGI Component should not call ServiceUtil: " + fileName);
+			if (content.contains("@Component")) {
+				checkOSGIComponents(fileName, absolutePath, content);
 			}
 
 			if (!absolutePath.contains("/modules/core/") &&
@@ -333,6 +329,39 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				processErrorMessage(
 					fileName, "Do not use Registry in modules: " + fileName);
 			}
+		}
+	}
+
+	protected void checkOSGIComponents(
+		String fileName, String absolutePath, String content) {
+
+		Matcher matcher = _serviceUtilImportPattern.matcher(content);
+
+		while (matcher.find()) {
+			String serviceUtilClassName = matcher.group(2);
+
+			String moduleServicePackagePath = getModuleServicePackagePath(
+				fileName);
+
+			if (Validator.isNotNull(moduleServicePackagePath)) {
+				String serviceUtilClassPackagePath = matcher.group(1);
+
+				if (serviceUtilClassPackagePath.startsWith(
+						moduleServicePackagePath)) {
+
+					processErrorMessage(
+						fileName,
+						"LPS-59076: Convert OSGi Component to Spring bean: " +
+							fileName);
+
+					continue;
+				}
+			}
+
+			processErrorMessage(
+				fileName,
+				"LPS-59076: Use @Reference instead of calling " +
+					serviceUtilClassName + " directly: " + fileName);
 		}
 	}
 
@@ -2852,6 +2881,44 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return x + 1;
 	}
 
+	protected String getModuleServicePackagePath(String fileName) {
+		String serviceDirLocation = fileName;
+
+		while (true) {
+			int pos = serviceDirLocation.lastIndexOf(StringPool.SLASH);
+
+			if (pos == -1) {
+				return null;
+			}
+
+			serviceDirLocation = serviceDirLocation.substring(0, pos + 1);
+
+			File file = new File(serviceDirLocation + "service");
+
+			if (file.exists()) {
+				serviceDirLocation = serviceDirLocation + "service";
+
+				break;
+			}
+
+			file = new File(serviceDirLocation + "liferay");
+
+			if (file.exists()) {
+				return null;
+			}
+
+			serviceDirLocation = StringUtil.replaceLast(
+				serviceDirLocation, StringPool.SLASH, StringPool.BLANK);
+		}
+
+		serviceDirLocation = StringUtil.replace(
+			serviceDirLocation, StringPool.SLASH, StringPool.PERIOD);
+
+		int pos = serviceDirLocation.lastIndexOf(".com.");
+
+		return serviceDirLocation.substring(pos + 1);
+	}
+
 	protected String getNextLine(String content, int lineCount) {
 		int nextLineStartPos = getLineStartPos(content, lineCount + 1);
 
@@ -3296,6 +3363,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Pattern _redundantCommaPattern = Pattern.compile(",\n\t+\\}");
 	private List<String> _secureRandomExclusionFiles;
 	private List<String> _secureXmlExclusionFiles;
+	private Pattern _serviceUtilImportPattern = Pattern.compile(
+		"\nimport ([A-Za-z1-9\\.]*)\\.([A-Za-z1-9]*ServiceUtil);");
 	private Pattern _stagedModelTypesPattern = Pattern.compile(
 		"StagedModelType\\(([a-zA-Z.]*(class|getClassName[\\(\\)]*))\\)");
 	private List<String> _staticLogVariableExclusionFiles;

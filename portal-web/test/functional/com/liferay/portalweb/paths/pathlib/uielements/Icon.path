@@ -120,7 +120,7 @@
 </tr>
 <tr>
 	<td>EXPIRE</td>
-	<td>//a[contains(@href,'editEntry')]/span[contains(@class,'icon-time')]</td>
+	<td>//a[contains(@id,'expireArticle') or contains(@href,'editEntry')]/span[contains(@class,'icon-time')]</td>
 	<td></td>
 </tr>
 <tr>

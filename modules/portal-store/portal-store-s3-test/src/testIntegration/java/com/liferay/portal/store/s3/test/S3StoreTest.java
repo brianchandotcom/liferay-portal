@@ -58,7 +58,9 @@ public class S3StoreTest extends BaseStoreTestCase {
 
 	@Override
 	@Test
-	public void testUpdateFileWithNewFileName() throws Exception {
+	public void testUpdateFileWithNewFileNameNoSuchFileException()
+		throws Exception {
+
 		String fileName = RandomTestUtil.randomString();
 
 		store.updateFile(
@@ -69,7 +71,9 @@ public class S3StoreTest extends BaseStoreTestCase {
 
 	@Override
 	@Test
-	public void testUpdateFileWithNewRepositoryId() throws Exception {
+	public void testUpdateFileWithNewRepositoryIdNoSuchFileException()
+		throws Exception {
+
 		String fileName = RandomTestUtil.randomString();
 
 		store.updateFile(

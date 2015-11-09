@@ -302,6 +302,12 @@ whip {
 	version = project.properties["com.liferay.whip.version"]
 }
 
+pluginManager.withPlugin("com.liferay.alloy.taglib") {
+	buildTaglibs {
+		classpath = configurations.alloyTaglib
+	}
+}
+
 pluginManager.withPlugin("com.liferay.maven.plugin.builder") {
 	afterEvaluate {
 		buildPluginDescriptor {

@@ -50,8 +50,13 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#gotoPG">
-			<var name="wikiPageTitle" value="FrontPage" />
+		<execute macro="WikiPage#addFrontPagePG">
+			<var name="wikiNodeName" value="Main" />
+			<var name="wikiPageContent" value="Wiki FrontPage Content" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="WikiPage#addAttachmentViaPageDetailsPG">

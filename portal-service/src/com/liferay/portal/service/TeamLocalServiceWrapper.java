@@ -408,6 +408,12 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 		return _teamLocalService.getTeams(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.model.Team> getTeamsByUserOrUserGroups(
+		long groupId, long userId) {
+		return _teamLocalService.getTeamsByUserOrUserGroups(groupId, userId);
+	}
+
 	/**
 	* Returns all the teams matching the UUID and company.
 	*

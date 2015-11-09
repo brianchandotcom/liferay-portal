@@ -301,6 +301,10 @@ public interface TeamLocalService extends BaseLocalService,
 	public java.util.List<com.liferay.portal.model.Team> getTeams(int start,
 		int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Team> getTeamsByUserOrUserGroups(
+		long groupId, long userId);
+
 	/**
 	* Returns all the teams matching the UUID and company.
 	*

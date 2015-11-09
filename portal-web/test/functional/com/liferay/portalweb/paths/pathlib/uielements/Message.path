@@ -159,6 +159,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EMPTY_INFO_2</td>
+	<td>//div[contains(@class,'panel-default')][2]//div[contains(@class,'empty-result-message')]//div[@class='card-footer']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RECYCLE_BIN_RESTORE_SUCCESS</td>
 	<td>//div[contains(.,'${key_assetType}') and contains(@class,'alert-success')]</td>
 	<td></td>

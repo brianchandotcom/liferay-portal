@@ -298,8 +298,7 @@
 	<command name="addLocalizedFrontPagePG">
 		<execute function="AssertClick" locator1="Wiki#FRONTPAGE_DEFAULT_MESSAGE" value1="${emptyPageMessage}" />
 
-		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD_LOCALIZED" value1="${wikiPageContent}" />
-		<execute function="SelectFrame" locator1="CKEditor#BODY_FIELD_LOCALIZED" />
+		<execute function="Type#clickAtType" locator1="Wiki#RICH_TEXT_EDITOR" value1="${wikiPageContent}" />
 
 		<if>
 			<equals arg1="${rtl}" arg2="true" />
@@ -311,8 +310,7 @@
 			</else>
 		</if>
 
-		<execute function="AssertElementPresent" locator1="//html[@dir='${textDirection}']" />
-		<execute function="SelectFrame" locator1="relative=top" />
+		<execute function="AssertElementPresent" locator1="//div[@id='cke_contents_${textDirection}']" />
 
 		<execute function="Click" locator1="Button#PUBLISH_LOCALIZED" />
 

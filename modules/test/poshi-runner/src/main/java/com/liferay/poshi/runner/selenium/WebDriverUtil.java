@@ -61,6 +61,26 @@ public class WebDriverUtil extends PropsValues {
 		return new AndroidDriver(url, desiredCapabilities);
 	}
 
+	private WebDriver _getChromeAndroidDriver() {
+		DesiredCapabilities desiredCapabilities = DesiredCapabilities.android();
+
+		desiredCapabilities.setCapability("browserName", "Chrome");
+		desiredCapabilities.setCapability(
+			"deviceName", PropsValues.MOBILE_DEVICE_NAME);
+		desiredCapabilities.setCapability("platformName", "Android");
+		desiredCapabilities.setCapability("platformVersion", "5.0.1");
+
+		URL url = null;
+
+		try {
+			url = new URL("http://0.0.0.0:4723/wd/hub/");
+		}
+		catch (MalformedURLException murle) {
+		}
+
+		return new AndroidDriver(url, desiredCapabilities);
+	}
+
 	private WebDriver _getWebDriver() {
 		return _webDriver;
 	}
@@ -68,6 +88,9 @@ public class WebDriverUtil extends PropsValues {
 	private void _startWebDriver() {
 		if (BROWSER_TYPE.equals("android")) {
 			_webDriver = _getAndroidDriver();
+		}
+		else if (BROWSER_TYPE.equals("androidchrome")) {
+			_webDriver = _getChromeAndroidDriver();
 		}
 		else {
 			throw new RuntimeException("Invalid browser type " + BROWSER_TYPE);

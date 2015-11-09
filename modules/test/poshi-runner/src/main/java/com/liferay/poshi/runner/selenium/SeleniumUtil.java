@@ -58,7 +58,7 @@ public class SeleniumUtil extends PropsValues {
 			_selenium = new AndroidMobileDriverImpl(portalURL, webDriver);
 		}
 		else if (BROWSER_TYPE.equals("androidchrome")) {
-			_selenium = new ChromeMobileDriverImpl(portalURL);
+			_selenium = new ChromeMobileDriverImpl(portalURL, webDriver);
 		}
 		else if (BROWSER_TYPE.equals("chrome")) {
 			System.setProperty(

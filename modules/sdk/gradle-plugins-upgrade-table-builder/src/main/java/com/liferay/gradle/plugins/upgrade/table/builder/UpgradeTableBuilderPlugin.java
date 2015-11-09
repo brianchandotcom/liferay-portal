@@ -21,6 +21,7 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.tasks.TaskContainer;
 
 /**
@@ -51,6 +52,7 @@ public class UpgradeTableBuilderPlugin implements Plugin<Project> {
 
 		buildUpgradeTableTask.setDescription(
 			"Runs Liferay Upgrade Table Builder to build upgrade tables.");
+		buildUpgradeTableTask.setGroup(BasePlugin.BUILD_GROUP);
 
 		return buildUpgradeTableTask;
 	}

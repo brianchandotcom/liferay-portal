@@ -22,7 +22,6 @@ import com.helger.css.decl.CSSExpressionMemberTermSimple;
 import com.helger.css.decl.CSSExpressionMemberTermURI;
 import com.helger.css.decl.CSSMediaRule;
 import com.helger.css.decl.CSSStyleRule;
-import com.helger.css.decl.CSSUnknownRule;
 import com.helger.css.decl.CascadingStyleSheet;
 import com.helger.css.decl.ICSSExpressionMember;
 import com.helger.css.decl.ICSSTopLevelRule;
@@ -54,8 +53,6 @@ public class RTLCSSConverter {
 	}
 
 	public String process(String css) {
-		css = processNoFlip(css);
-
 		CascadingStyleSheet cascadingStyleSheet = CSSReader.readFromString(
 			css, CCharset.CHARSET_UTF_8_OBJ, ECSSVersion.CSS30,
 			new DoNothingCSSParseErrorHandler());
@@ -230,12 +227,6 @@ public class RTLCSSConverter {
 		}
 	}
 
-	protected String processNoFlip(String css) {
-		css = css.replaceAll("/\\*\\s*@noflip\\s*\\*/ *(\\n|$)", "");
-
-		return css.replaceAll("/\\*\\s*@noflip\\s*\\*/", "@noflip ");
-	}
-
 	protected void processRule(CSSStyleRule cssStyleRule) {
 		for (String property : _replacementStyles.keySet()) {
 			replaceStyle(cssStyleRule, property);
@@ -283,10 +274,6 @@ public class RTLCSSConverter {
 			}
 
 			String css = icssTopLevelRule.getAsCSSString(_cssWriterSettings, 1);
-
-			if (icssTopLevelRule instanceof CSSUnknownRule) {
-				css = css.replace("@noflip ", "");
-			}
 
 			sb.append(css);
 		}

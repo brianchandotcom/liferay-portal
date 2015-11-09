@@ -350,24 +350,6 @@ public class RTLCSSConverterTest {
 	}
 
 	@Test
-	public void testNoFlip() throws Exception {
-		RTLCSSConverter rtlCssConverter = new RTLCSSConverter();
-
-		Assert.assertEquals(
-			"p{margin-left: 5px}",
-			rtlCssConverter.process("/* @noflip */ p {margin-left: 5px}"));
-		Assert.assertEquals(
-			"p{margin-left: 5px}",
-			rtlCssConverter.process("/*@noflip*/p {margin-left: 5px}"));
-		Assert.assertEquals(
-			"p{margin-right:5px}",
-			rtlCssConverter.process("p {margin-left: 5px;/*@noflip*/}"));
-		Assert.assertEquals(
-			"p{margin-right:5px}",
-			rtlCssConverter.process("p{margin-left: 5px}\n/*@noflip*/"));
-	}
-
-	@Test
 	public void testPadding() throws Exception {
 		RTLCSSConverter rtlCssConverter = new RTLCSSConverter();
 

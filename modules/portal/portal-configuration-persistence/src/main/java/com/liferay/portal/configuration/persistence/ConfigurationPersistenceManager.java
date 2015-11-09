@@ -56,7 +56,7 @@ import org.apache.felix.cm.file.ConfigurationHandler;
  */
 public class ConfigurationPersistenceManager
 	implements NotCachablePersistenceManager, PersistenceManager,
-			   ReloadablePersitenceManager {
+			   ReloadablePersistenceManager {
 
 	@Override
 	public void delete(final String pid) throws IOException {

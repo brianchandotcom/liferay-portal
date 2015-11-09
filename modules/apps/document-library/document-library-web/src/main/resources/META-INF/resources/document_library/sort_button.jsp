@@ -28,8 +28,8 @@ String orderByType = ParamUtil.getString(request, "orderByType");
 
 Map<String, String> orderColumns = new HashMap<String, String>();
 
-orderColumns.put("downloads", "downloads");
 orderColumns.put("creationDate", "create-date");
+orderColumns.put("downloads", "downloads");
 orderColumns.put("modifiedDate", "modified-date");
 orderColumns.put("size", "size");
 orderColumns.put("title", "title");

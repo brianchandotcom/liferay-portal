@@ -17,10 +17,11 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
+long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
+
 Folder folder = (Folder)request.getAttribute("view.jsp-folder");
 
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
-long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
 %>
 
 <div class="sidebar-header">

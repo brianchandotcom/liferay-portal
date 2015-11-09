@@ -19,13 +19,11 @@
 <%
 String navigation = ParamUtil.getString(request, "navigation", "home");
 
-long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
-
 long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
 
-long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
+long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 
-long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId);
+long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
 
 DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
 %>
@@ -70,6 +68,10 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 						selected='<%= navigation.equals("mine") %>'
 					/>
 				</c:if>
+
+				<%
+				long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId);
+				%>
 
 				<c:if test="<%= DLFileEntryTypeServiceUtil.getFileEntryTypesCount(groupIds) > 0 %>">
 					<aui:nav-item

@@ -14,14 +14,21 @@
 
 package com.liferay.poshi.runner.selenium;
 
+import com.liferay.poshi.runner.util.OSDetector;
 import com.liferay.poshi.runner.util.PropsValues;
+import com.liferay.poshi.runner.util.StringPool;
+import com.liferay.poshi.runner.util.StringUtil;
 
 import io.appium.java_client.android.AndroidDriver;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 /**
@@ -81,6 +88,27 @@ public class WebDriverUtil extends PropsValues {
 		return new AndroidDriver(url, desiredCapabilities);
 	}
 
+	private WebDriver _getChromeDriver() {
+		DesiredCapabilities desiredCapabilities = DesiredCapabilities.chrome();
+
+		Map<String, Object> preferences = new HashMap<>();
+
+		String outputDirName = PropsValues.OUTPUT_DIR_NAME;
+
+		if (OSDetector.isWindows()) {
+			outputDirName = StringUtil.replace(
+				outputDirName, StringPool.FORWARD_SLASH, StringPool.BACK_SLASH);
+		}
+
+		preferences.put("download.default_directory", outputDirName);
+
+		preferences.put("download.prompt_for_download", false);
+
+		desiredCapabilities.setCapability("chrome.prefs", preferences);
+
+		return new ChromeDriver(desiredCapabilities);
+	}
+
 	private WebDriver _getWebDriver() {
 		return _webDriver;
 	}
@@ -91,6 +119,9 @@ public class WebDriverUtil extends PropsValues {
 		}
 		else if (BROWSER_TYPE.equals("androidchrome")) {
 			_webDriver = _getChromeAndroidDriver();
+		}
+		else if (BROWSER_TYPE.equals("chrome")) {
+			_webDriver = _getChromeDriver();
 		}
 		else {
 			throw new RuntimeException("Invalid browser type " + BROWSER_TYPE);

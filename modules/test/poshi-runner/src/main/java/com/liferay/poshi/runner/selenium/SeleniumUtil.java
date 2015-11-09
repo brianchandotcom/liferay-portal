@@ -66,7 +66,7 @@ public class SeleniumUtil extends PropsValues {
 				SELENIUM_EXECUTABLE_DIR_NAME +
 					SELENIUM_CHROME_DRIVER_EXECUTABLE);
 
-			_selenium = new ChromeWebDriverImpl(portalURL);
+			_selenium = new ChromeWebDriverImpl(portalURL, webDriver);
 		}
 		else if (BROWSER_TYPE.equals("edge") &&
 				 !SELENIUM_REMOTE_DRIVER_ENABLED) {

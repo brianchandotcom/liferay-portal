@@ -100,7 +100,7 @@ public class SeleniumUtil extends PropsValues {
 			_selenium = new IOSMobileDriverImpl(portalURL, webDriver);
 		}
 		else if (BROWSER_TYPE.equals("safari")) {
-			_selenium = new SafariWebDriverImpl(portalURL);
+			_selenium = new SafariWebDriverImpl(portalURL, webDriver);
 		}
 		else {
 			throw new RuntimeException("Invalid browser type " + BROWSER_TYPE);

@@ -36,6 +36,7 @@ import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.safari.SafariDriver;
 
 /**
  * @author Brian Wing Shun Chan
@@ -228,6 +229,10 @@ public class WebDriverUtil extends PropsValues {
 		return new IOSDriver(url, desiredCapabilities);
 	}
 
+	private WebDriver _getSafariDriver() {
+		return new SafariDriver();
+	}
+
 	private WebDriver _getWebDriver() {
 		return _webDriver;
 	}
@@ -267,6 +272,9 @@ public class WebDriverUtil extends PropsValues {
 		}
 		else if (BROWSER_TYPE.equals("iossafari")) {
 			_webDriver = _getIOSMobileDriver();
+		}
+		else if (BROWSER_TYPE.equals("safari")) {
+			_webDriver = _getSafariDriver();
 		}
 		else {
 			throw new RuntimeException("Invalid browser type " + BROWSER_TYPE);

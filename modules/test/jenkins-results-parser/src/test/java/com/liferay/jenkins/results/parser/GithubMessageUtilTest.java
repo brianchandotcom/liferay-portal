@@ -39,10 +39,10 @@ import org.junit.Test;
  */
 public class GithubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 
-	protected FailedJobMessageUtilTest jobMessageUtilTest;
+	protected GithubJobMessageUtilTest jobMessageUtilTest;
 	
 	public GithubMessageUtilTest() {
-		jobMessageUtilTest = new FailedJobMessageUtilTest();
+		jobMessageUtilTest = new GithubJobMessageUtilTest();
 	}
 	
 	@Before
@@ -258,7 +258,7 @@ public class GithubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 			
 			Project project = _getProject(null, _url, _sampleDir.getPath());
 
-			FailedJobMessageUtil.getFailedJobMessage(project);
+			GithubJobMessageUtil.getFailedJobMessage(project);
 
 			String reportString = project.getProperty("report.html.content");
 

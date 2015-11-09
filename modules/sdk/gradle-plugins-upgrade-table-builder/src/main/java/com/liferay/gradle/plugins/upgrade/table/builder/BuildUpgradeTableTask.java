@@ -32,6 +32,12 @@ import org.gradle.process.JavaExecSpec;
  */
 public class BuildUpgradeTableTask extends JavaExec {
 
+	public BuildUpgradeTableTask() {
+		setMain(
+			"com.liferay.portal.tools.upgrade.table.builder." +
+				"UpgradeTableBuilder");
+	}
+
 	@Override
 	public JavaExecSpec args(Iterable<?> args) {
 		throw new UnsupportedOperationException();
@@ -75,12 +81,6 @@ public class BuildUpgradeTableTask extends JavaExec {
 	public FileCollection getClasspath() {
 		return GradleUtil.getConfiguration(
 			getProject(), UpgradeTableBuilderPlugin.CONFIGURATION_NAME);
-	}
-
-	@Override
-	public String getMain() {
-		return "com.liferay.portal.tools.upgrade.table.builder." +
-			"UpgradeTableBuilder";
 	}
 
 	public String getUpgradeTableDirName() {

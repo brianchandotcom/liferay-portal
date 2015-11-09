@@ -16,34 +16,4 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-long ldapServerId = ParamUtil.getLong(request, "ldapServerId", 0);
-
-String postfix = LDAPSettingsUtil.getPropertyPostfix(ldapServerId);
-
-String baseProviderURL = ParamUtil.getString(request, "baseProviderURL");
-String principal = ParamUtil.getString(request, "principal");
-
-String credentials = request.getParameter("credentials");
-
-if (credentials.equals(Portal.TEMP_OBFUSCATION_VALUE)) {
-	credentials = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.LDAP_SECURITY_CREDENTIALS + postfix);
-}
-
-LdapContext ldapContext = PortalLDAPUtil.getContext(themeDisplay.getCompanyId(), baseProviderURL, principal, credentials);
-%>
-
-<c:choose>
-	<c:when test="<%= ldapContext != null %>">
-		<liferay-ui:message key="liferay-has-successfully-connected-to-the-ldap-server" />
-	</c:when>
-	<c:otherwise>
-		<liferay-ui:message key="liferay-has-failed-to-connect-to-the-ldap-server" />
-	</c:otherwise>
-</c:choose>
-
-<%
-if (ldapContext != null) {
-	ldapContext.close();
-}
-%>
+<liferay-util:dynamic-include key="/portal-settings/test_ldap_connection.jsp" />

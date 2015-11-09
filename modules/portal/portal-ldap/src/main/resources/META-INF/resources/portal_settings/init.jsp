@@ -23,8 +23,22 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.portal.kernel.util.Constants" %><%@
+<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
+page import="com.liferay.portal.kernel.ldap.DuplicateLDAPServerNameException" %><%@
+page import="com.liferay.portal.kernel.ldap.LDAPFilterException" %><%@
+page import="com.liferay.portal.kernel.ldap.LDAPServerNameException" %><%@
+page import="com.liferay.portal.kernel.ldap.LDAPUtil" %><%@
+page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
+page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.ListUtil" %><%@
+page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.PropertiesUtil" %><%@
+page import="com.liferay.portal.kernel.util.StringBundler" %><%@
+page import="com.liferay.portal.kernel.util.StringPool" %><%@
+page import="com.liferay.portal.kernel.util.StringUtil" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.ldap.authenticator.configuration.LDAPAuthConfiguration" %><%@
 page import="com.liferay.portal.ldap.configuration.ConfigurationProvider" %><%@
 page import="com.liferay.portal.ldap.configuration.LDAPServerConfiguration" %><%@
@@ -32,9 +46,19 @@ page import="com.liferay.portal.ldap.constants.LDAPConstants" %><%@
 page import="com.liferay.portal.ldap.exportimport.configuration.LDAPExportConfiguration" %><%@
 page import="com.liferay.portal.ldap.exportimport.configuration.LDAPImportConfiguration" %><%@
 page import="com.liferay.portal.ldap.internal.portal.settings.web.portlet.util.ConfigurationProviderUtil" %><%@
+page import="com.liferay.portal.security.ldap.PortalLDAPUtil" %><%@
+page import="com.liferay.portal.util.Portal" %><%@
+page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %>
 
-<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %><%@
+page import="java.util.List" %><%@
+page import="java.util.Properties" %>
+
+<%@ page import="javax.naming.directory.Attribute" %><%@
+page import="javax.naming.directory.Attributes" %><%@
+page import="javax.naming.directory.SearchResult" %><%@
+page import="javax.naming.ldap.LdapContext" %>
 
 <%@ page import="javax.portlet.ActionRequest" %><%@
 page import="javax.portlet.PortletURL" %>
@@ -62,5 +86,5 @@ LDAPImportConfiguration ldapImportConfiguration = ldapImportConfigurationProvide
 
 ConfigurationProvider<LDAPServerConfiguration> ldapServerConfigurationProvider = ConfigurationProviderUtil.getLDAPServerConfigurationProvider();
 
-List<LDAPServerConfiguration> ldapServerConfigurations = ldapServerConfigurationProvider.getConfigurations(themeDisplay.getCompanyId());
+List<LDAPServerConfiguration> ldapServerConfigurations = ldapServerConfigurationProvider.getConfigurations(themeDisplay.getCompanyId(), false);
 %>

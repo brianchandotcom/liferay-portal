@@ -21,8 +21,6 @@ import com.liferay.poshi.runner.util.StringUtil;
 
 import io.appium.java_client.android.AndroidDriver;
 
-import java.io.File;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -140,19 +138,6 @@ public class WebDriverUtil extends PropsValues {
 		FirefoxProfile firefoxProfile = new FirefoxProfile();
 
 		try {
-			File file = new File(StringPool.PERIOD);
-
-			String absolutePath = file.getAbsolutePath();
-
-			if (absolutePath.endsWith(StringPool.PERIOD)) {
-				absolutePath = absolutePath.substring(
-					0, absolutePath.length() - 1);
-
-				absolutePath = StringUtil.replace(
-					absolutePath, StringPool.BACK_SLASH,
-					StringPool.FORWARD_SLASH);
-			}
-
 			firefoxProfile.addExtension(
 				WebDriverUtil.class,
 				"/META-INF/resources/firefox/extensions/jserrorcollector.xpi");

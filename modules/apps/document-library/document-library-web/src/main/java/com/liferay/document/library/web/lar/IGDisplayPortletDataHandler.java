@@ -31,15 +31,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Raymond Augé
  */
 @Component(
-	property = {
-		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_DISPLAY,
-		"javax.portlet.name=" + DLPortletKeys.MEDIA_GALLERY_DISPLAY
-	},
+	property = {"javax.portlet.name=" + DLPortletKeys.MEDIA_GALLERY_DISPLAY},
 	service = PortletDataHandler.class
 )
-public class DLDisplayPortletDataHandler extends BasePortletDataHandler {
+public class IGDisplayPortletDataHandler extends BasePortletDataHandler {
 
-	public DLDisplayPortletDataHandler() {
+	public IGDisplayPortletDataHandler() {
 		setDataLevel(DataLevel.PORTLET_INSTANCE);
 		setDataPortletPreferences("rootFolderId");
 		setExportControls(new PortletDataHandlerControl[0]);

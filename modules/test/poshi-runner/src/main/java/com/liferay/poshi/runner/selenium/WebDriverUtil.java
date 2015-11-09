@@ -31,6 +31,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 /**
  * @author Brian Wing Shun Chan
@@ -114,6 +115,23 @@ public class WebDriverUtil extends PropsValues {
 		return new EdgeDriver();
 	}
 
+	private WebDriver _getEdgeRemoteDriver() {
+		DesiredCapabilities desiredCapabilities = DesiredCapabilities.edge();
+
+		desiredCapabilities.setCapability("platform", "WINDOWS");
+
+		URL url = null;
+
+		try {
+			url = new URL(
+				PropsValues.SELENIUM_REMOTE_DRIVER_HUB + ":4444/wd/hub");
+		}
+		catch (MalformedURLException murle) {
+		}
+
+		return new RemoteWebDriver(url, desiredCapabilities);
+	}
+
 	private WebDriver _getWebDriver() {
 		return _webDriver;
 	}
@@ -132,6 +150,11 @@ public class WebDriverUtil extends PropsValues {
 				 !SELENIUM_REMOTE_DRIVER_ENABLED) {
 
 			_webDriver = _getEdgeDriver();
+		}
+		else if (BROWSER_TYPE.equals("edge") &&
+				 SELENIUM_REMOTE_DRIVER_ENABLED) {
+
+			_webDriver = _getEdgeRemoteDriver();
 		}
 		else {
 			throw new RuntimeException("Invalid browser type " + BROWSER_TYPE);

@@ -17,9 +17,9 @@ package com.liferay.osgi.util.test;
 import com.liferay.arquillian.deploymentscenario.annotations.BndFile;
 import com.liferay.osgi.util.service.ReflectionServiceTracker;
 import com.liferay.osgi.util.service.UnavailableServiceException;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.util.Dictionary;
+import java.util.Hashtable;
 
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
@@ -28,7 +28,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
@@ -37,117 +36,53 @@ import org.osgi.framework.BundleException;
 import org.osgi.framework.ServiceRegistration;
 
 /**
- * @author Carlos Sierra Andrés
- */
-@RunWith(Enclosed.class)
-public class ReflectionServiceTrackerTest {
+* @author Carlos Sierra Andrés
+*/
+@BndFile("src/testIntegration/resources/bnd.bnd")
+@RunWith(Arquillian.class)
+public class TrackingInterfacesTest {
 
-	@BndFile("src/testIntegration/resources/bnd.bnd")
-	@RunWith(Arquillian.class)
-	public static class WhenTrackingClasses {
+	@Before
+	public void setUp() throws BundleException {
+		_bundle.start();
 
-		@Before
-		public void setUp() throws BundleException {
-			_bundle.start();
-
-			_bundleContext = _bundle.getBundleContext();
-		}
-
-		@Test
-		public void shouldInjectNullWhenNoServicesAreRegistered() {
-			TestInstance testInstance = new TestInstance();
-
-			ReflectionServiceTracker reflectionServiceTracker =
-				new ReflectionServiceTracker(testInstance);
-
-			Assert.assertNull(testInstance.getTrackedOne());
-			Assert.assertNull(testInstance.getTrackedTwo());
-
-			reflectionServiceTracker.close();
-		}
-
-		@Test
-		public void shouldInjectNullWhenUnregisteringServices() {
-			TestInstance testInstance = new TestInstance();
-
-			ReflectionServiceTracker reflectionServiceTracker =
-				new ReflectionServiceTracker(testInstance);
-
-			TrackedOne trackedOne = new TrackedOne();
-
-			ServiceRegistration<TrackedOne> serviceRegistration1 =
-				registerServiceWithRanking(
-					_bundleContext, TrackedOne.class, trackedOne, 0);
-
-			TrackedTwo trackedTwo = new TrackedTwo();
-
-			ServiceRegistration<TrackedTwo> serviceRegistration2 =
-				registerServiceWithRanking(
-					_bundleContext, TrackedTwo.class, trackedTwo, 0);
-
-			serviceRegistration1.unregister();
-			serviceRegistration2.unregister();
-
-			Assert.assertNull(testInstance.getTrackedOne());
-			Assert.assertNull(testInstance.getTrackedTwo());
-
-			reflectionServiceTracker.close();
-		}
-
-		@After
-		public void tearDown() throws BundleException {
-			_bundle.stop();
-		}
-
-		@ArquillianResource
-		private Bundle _bundle;
-
-		private BundleContext _bundleContext;
-
+		_bundleContext = _bundle.getBundleContext();
 	}
 
-	@BndFile("src/testIntegration/resources/bnd.bnd")
-	@RunWith(Arquillian.class)
-	public static class WhenTrackingInterfaces {
+	@After
+	public void tearDown() throws BundleException {
+		_bundle.stop();
+	}
 
-		@Before
-		public void setUp() throws BundleException {
-			_bundle.start();
+	@Test
+	public void testInjectHighestRankingWhenSeveralServicesAreRegistered() {
+		TestInterface testInterface = new TestInterface();
 
-			_bundleContext = _bundle.getBundleContext();
-		}
-
-		@Test
-		public void
-			shouldInjectHighestRankingWhenSeveralServicesAreRegistered() {
-
-			TestInterface testInterface = new TestInterface();
-
-			ReflectionServiceTracker reflectionServiceTracker =
-				new ReflectionServiceTracker(testInterface);
+		try (ReflectionServiceTracker reflectionServiceTracker =
+			new ReflectionServiceTracker(testInterface)) {
 
 			TrackedOne trackedOne = new TrackedOne();
 
 			ServiceRegistration<InterfaceOne> serviceRegistration1 =
-				registerServiceWithRanking(
+				ReflectionServiceTrackerTestUtil.registerServiceWithRanking(
 					_bundleContext, InterfaceOne.class, trackedOne, 2);
 
 			TrackedTwo trackedTwo = new TrackedTwo();
 
 			ServiceRegistration<InterfaceTwo> serviceRegistration2 =
-				registerServiceWithRanking(
+				ReflectionServiceTrackerTestUtil.registerServiceWithRanking(
 					_bundleContext, InterfaceTwo.class, trackedTwo, 2);
 
 			TrackedOne trackedOne2 = new TrackedOne();
 
 			ServiceRegistration<InterfaceOne> serviceRegistration3 =
-				registerServiceWithRanking(
+				ReflectionServiceTrackerTestUtil.registerServiceWithRanking(
 					_bundleContext, InterfaceOne.class, trackedOne2, 1);
 
 			TrackedTwo trackedTwo2 = new TrackedTwo();
 
 			ServiceRegistration<InterfaceTwo> serviceRegistration4 =
-				registerServiceWithRanking(
+				ReflectionServiceTrackerTestUtil.registerServiceWithRanking(
 					_bundleContext, InterfaceTwo.class, trackedTwo2, 1);
 
 			Assert.assertEquals(trackedOne, testInterface.getTrackedOne());
@@ -157,53 +92,52 @@ public class ReflectionServiceTrackerTest {
 			serviceRegistration2.unregister();
 			serviceRegistration3.unregister();
 			serviceRegistration4.unregister();
-
-			reflectionServiceTracker.close();
 		}
+	}
 
-		@Test
-		public void
-			shouldInjectNextServiceWithHighestRankingWhenUnregisteringServices() {
+	@Test
+	public void
+		testInjectNextServiceWithHighestRankingWhenUnregisteringServices() {
 
-			TestInterface testInterface = new TestInterface();
+		TestInterface testInterface = new TestInterface();
 
-			ReflectionServiceTracker reflectionServiceTracker =
-				new ReflectionServiceTracker(testInterface);
+		try (ReflectionServiceTracker reflectionServiceTracker =
+			new ReflectionServiceTracker(testInterface)) {
 
 			TrackedOne trackedOne = new TrackedOne();
 
 			ServiceRegistration<InterfaceOne> serviceRegistration1 =
-				registerServiceWithRanking(
+				ReflectionServiceTrackerTestUtil.registerServiceWithRanking(
 					_bundleContext, InterfaceOne.class, trackedOne, 3);
 
 			TrackedTwo trackedTwo = new TrackedTwo();
 
 			ServiceRegistration<InterfaceTwo> serviceRegistration2 =
-				registerServiceWithRanking(
+				ReflectionServiceTrackerTestUtil.registerServiceWithRanking(
 					_bundleContext, InterfaceTwo.class, trackedTwo, 3);
 
 			TrackedOne trackedOne2 = new TrackedOne();
 
 			ServiceRegistration<InterfaceOne> serviceRegistration3 =
-				registerServiceWithRanking(
+				ReflectionServiceTrackerTestUtil.registerServiceWithRanking(
 					_bundleContext, InterfaceOne.class, trackedOne2, 2);
 
 			TrackedTwo trackedTwo2 = new TrackedTwo();
 
 			ServiceRegistration<InterfaceTwo> serviceRegistration4 =
-				registerServiceWithRanking(
+				ReflectionServiceTrackerTestUtil.registerServiceWithRanking(
 					_bundleContext, InterfaceTwo.class, trackedTwo2, 2);
 
 			TrackedOne trackedOne3 = new TrackedOne();
 
 			ServiceRegistration<InterfaceOne> serviceRegistration5 =
-				registerServiceWithRanking(
+				ReflectionServiceTrackerTestUtil.registerServiceWithRanking(
 					_bundleContext, InterfaceOne.class, trackedOne3, 1);
 
 			TrackedTwo trackedTwo3 = new TrackedTwo();
 
 			ServiceRegistration<InterfaceTwo> serviceRegistration6 =
-				registerServiceWithRanking(
+				ReflectionServiceTrackerTestUtil.registerServiceWithRanking(
 					_bundleContext, InterfaceTwo.class, trackedTwo3, 1);
 
 			serviceRegistration1.unregister();
@@ -216,27 +150,26 @@ public class ReflectionServiceTrackerTest {
 			serviceRegistration4.unregister();
 			serviceRegistration5.unregister();
 			serviceRegistration6.unregister();
-
-			reflectionServiceTracker.close();
 		}
+	}
 
-		@Test
-		public void shouldInjectServicesWhenTheyAreRegistered() {
-			TestInterface testInterface = new TestInterface();
+	@Test
+	public void testInjectServicesWhenTheyAreRegistered() {
+		TestInterface testInterface = new TestInterface();
 
-			ReflectionServiceTracker reflectionServiceTracker =
-				new ReflectionServiceTracker(testInterface);
+		try (ReflectionServiceTracker reflectionServiceTracker =
+			new ReflectionServiceTracker(testInterface)) {
 
 			TrackedOne trackedOne = new TrackedOne();
 
 			ServiceRegistration<InterfaceOne> serviceRegistration1 =
-				registerServiceWithRanking(
+				ReflectionServiceTrackerTestUtil.registerServiceWithRanking(
 					_bundleContext, InterfaceOne.class, trackedOne, 0);
 
 			TrackedTwo trackedTwo = new TrackedTwo();
 
 			ServiceRegistration<InterfaceTwo> serviceRegistration2 =
-				registerServiceWithRanking(
+				ReflectionServiceTrackerTestUtil.registerServiceWithRanking(
 					_bundleContext, InterfaceTwo.class, trackedTwo, 0);
 
 			Assert.assertEquals(trackedOne, testInterface.getTrackedOne());
@@ -244,18 +177,15 @@ public class ReflectionServiceTrackerTest {
 
 			serviceRegistration1.unregister();
 			serviceRegistration2.unregister();
-
-			reflectionServiceTracker.close();
 		}
+	}
 
-		@Test
-		public void
-			shouldInjectUnavailableServiceProxyWhenNoServicesAreRegistered() {
+	@Test
+	public void testInjectUnavailableServiceProxyWhenNoServicesAreRegistered() {
+		TestInterface testInterface = new TestInterface();
 
-			TestInterface testInterface = new TestInterface();
-
-			ReflectionServiceTracker reflectionServiceTracker =
-				new ReflectionServiceTracker(testInterface);
+		try (ReflectionServiceTracker reflectionServiceTracker =
+			new ReflectionServiceTracker(testInterface)) {
 
 			Assert.assertNotNull(testInterface.getTrackedOne());
 			Assert.assertNotNull(testInterface.getTrackedTwo());
@@ -279,29 +209,26 @@ public class ReflectionServiceTrackerTest {
 				Assert.assertEquals(
 					InterfaceTwo.class, sue.getUnavailableServiceClass());
 			}
-
-			reflectionServiceTracker.close();
 		}
+	}
 
-		@Test
-		public void
-			shouldInjectUnavailableServiceProxyWhenUnregisteringServices() {
+	@Test
+	public void testInjectUnavailableServiceProxyWhenUnregisteringServices() {
+		TestInterface testInterface = new TestInterface();
 
-			TestInterface testInterface = new TestInterface();
-
-			ReflectionServiceTracker reflectionServiceTracker =
-				new ReflectionServiceTracker(testInterface);
+		try (ReflectionServiceTracker reflectionServiceTracker =
+			new ReflectionServiceTracker(testInterface)) {
 
 			TrackedOne trackedOne = new TrackedOne();
 
 			ServiceRegistration<InterfaceOne> serviceRegistration1 =
-				registerServiceWithRanking(
+				ReflectionServiceTrackerTestUtil.registerServiceWithRanking(
 					_bundleContext, InterfaceOne.class, trackedOne, 0);
 
 			TrackedTwo trackedTwo = new TrackedTwo();
 
 			ServiceRegistration<InterfaceTwo> serviceRegistration2 =
-				registerServiceWithRanking(
+				ReflectionServiceTrackerTestUtil.registerServiceWithRanking(
 					_bundleContext, InterfaceTwo.class, trackedTwo, 0);
 
 			serviceRegistration1.unregister();
@@ -329,43 +256,41 @@ public class ReflectionServiceTrackerTest {
 				Assert.assertEquals(
 					InterfaceTwo.class, sue.getUnavailableServiceClass());
 			}
-
-			reflectionServiceTracker.close();
 		}
+	}
 
-		@Test
-		public void shouldUpdateInjectionPointWhenChangingServiceProperties() {
-			TestInterface testInterface = new TestInterface();
+	@Test
+	public void testUpdateInjectionPointWhenChangingServiceProperties() {
+		TestInterface testInterface = new TestInterface();
 
-			ReflectionServiceTracker reflectionServiceTracker =
-				new ReflectionServiceTracker(testInterface);
+		try (ReflectionServiceTracker reflectionServiceTracker =
+			new ReflectionServiceTracker(testInterface)) {
 
 			TrackedOne trackedOne = new TrackedOne();
 
 			ServiceRegistration<InterfaceOne> serviceRegistration1 =
-				registerServiceWithRanking(
+				ReflectionServiceTrackerTestUtil.registerServiceWithRanking(
 					_bundleContext, InterfaceOne.class, trackedOne, 2);
 
 			TrackedTwo trackedTwo = new TrackedTwo();
 
 			ServiceRegistration<InterfaceTwo> serviceRegistration2 =
-				registerServiceWithRanking(
+				ReflectionServiceTrackerTestUtil.registerServiceWithRanking(
 					_bundleContext, InterfaceTwo.class, trackedTwo, 2);
 
 			TrackedOne trackedOne2 = new TrackedOne();
 
 			ServiceRegistration<InterfaceOne> serviceRegistration3 =
-				registerServiceWithRanking(
+				ReflectionServiceTrackerTestUtil.registerServiceWithRanking(
 					_bundleContext, InterfaceOne.class, trackedOne2, 1);
 
 			TrackedTwo trackedTwo2 = new TrackedTwo();
 
 			ServiceRegistration<InterfaceTwo> serviceRegistration4 =
-				registerServiceWithRanking(
+				ReflectionServiceTrackerTestUtil.registerServiceWithRanking(
 					_bundleContext, InterfaceTwo.class, trackedTwo2, 1);
 
-			Dictionary<String, Object> properties =
-				new HashMapDictionary<String, Object>();
+			Dictionary<String, Object> properties = new Hashtable<>();
 
 			properties.put("service.ranking", 3);
 
@@ -379,31 +304,12 @@ public class ReflectionServiceTrackerTest {
 			serviceRegistration2.unregister();
 			serviceRegistration3.unregister();
 			serviceRegistration4.unregister();
-
-			reflectionServiceTracker.close();
 		}
-
-		@After
-		public void tearDown() throws BundleException {
-			_bundle.stop();
-		}
-
-		@ArquillianResource
-		private Bundle _bundle;
-
-		private BundleContext _bundleContext;
-
 	}
 
-	protected static <T> ServiceRegistration<T> registerServiceWithRanking(
-		BundleContext bundleContext, Class<T> clazz, T service, int ranking) {
+	@ArquillianResource
+	private Bundle _bundle;
 
-		Dictionary<String, Integer> properties =
-			new HashMapDictionary<String, Integer>();
-
-		properties.put("service.ranking", ranking);
-
-		return bundleContext.registerService(clazz, service, properties);
-	}
+	private BundleContext _bundleContext;
 
 }

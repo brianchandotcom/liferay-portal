@@ -1347,11 +1347,9 @@
 			<var name="webContentTitle" value="WC Folder Name" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoEditCP">
+		<execute macro="WebContent#gotoViewSpecificVersionHistoryCP">
 			<var name="webContentTitle" value="Web Content Title Edit Draft" />
 		</execute>
-
-		<execute macro="WebContent#gotoViewSpecificVersionHistoryCP" />
 
 		<execute macro="WebContent#viewSpecificVersionHistoryCP">
 			<var name="webContentStatus" value="Approved" />

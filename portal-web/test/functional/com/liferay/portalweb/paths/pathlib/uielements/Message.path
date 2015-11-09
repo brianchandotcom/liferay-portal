@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DDM_TEMPLATE_INFO</td>
+	<td>//div[contains(@id,'DDMPortlet')]//div[contains(@class,'empty-result-message')]//div[@class='card-footer']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ERROR</td>
 	<td>//div[contains(@class,'alert') and (contains(@class,'alert-error') or contains(@class,'alert-danger'))]</td>
 	<td></td>

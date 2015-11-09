@@ -14,7 +14,11 @@
 
 package com.liferay.gradle.plugins.upgrade.table.builder;
 
+import com.liferay.gradle.util.FileUtil;
+import com.liferay.gradle.util.GradleUtil;
 import com.liferay.portal.tools.upgrade.table.builder.UpgradeTableBuilderArgs;
+
+import java.io.File;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,41 +42,44 @@ public class BuildUpgradeTableTask extends JavaExec {
 		super.exec();
 	}
 
-	public String getBaseDirName() {
-		return _upgradeTableBuilderArgs.getBaseDirName();
+	public File getBaseDir() {
+		return GradleUtil.toFile(getProject(), _baseDir);
 	}
 
-	public String getUpgradeTableDirName() {
-		return _upgradeTableBuilderArgs.getUpgradeTableDirName();
+	public File getUpgradeTableDir() {
+		return GradleUtil.toFile(getProject(), _upgradeTableDir);
 	}
 
 	public boolean isOsgiModule() {
-		return _upgradeTableBuilderArgs.isOsgiModule();
+		return _osgiModule;
 	}
 
-	public void setBaseDirName(String baseDirName) {
-		_upgradeTableBuilderArgs.setBaseDirName(baseDirName);
+	public void setBaseDir(Object baseDir) {
+		_baseDir = baseDir;
 	}
 
 	public void setOsgiModule(boolean osgiModule) {
-		_upgradeTableBuilderArgs.setOsgiModule(osgiModule);
+		_osgiModule = osgiModule;
 	}
 
-	public void setUpgradeTableDirName(String upgradeTableDirName) {
-		_upgradeTableBuilderArgs.setUpgradeTableDirName(upgradeTableDirName);
+	public void setUpgradeTableDir(Object upgradeTableDir) {
+		_upgradeTableDir = upgradeTableDir;
 	}
 
 	protected List<String> getCompleteArgs() {
 		List<String> args = new ArrayList<>(getArgs());
 
-		args.add("upgrade.base.dir=" + getBaseDirName());
+		args.add("upgrade.base.dir=" + FileUtil.getAbsolutePath(getBaseDir()));
 		args.add("upgrade.osgi.module=" + isOsgiModule());
-		args.add("upgrade.table.dir=" + getUpgradeTableDirName());
+		args.add(
+			"upgrade.table.dir=" +
+				FileUtil.getAbsolutePath(getUpgradeTableDir()));
 
 		return args;
 	}
 
-	private final UpgradeTableBuilderArgs _upgradeTableBuilderArgs =
-		new UpgradeTableBuilderArgs();
+	private Object _baseDir = UpgradeTableBuilderArgs.BASE_DIR_NAME;
+	private boolean _osgiModule = UpgradeTableBuilderArgs.OSGI_MODULE;
+	private Object _upgradeTableDir;
 
 }

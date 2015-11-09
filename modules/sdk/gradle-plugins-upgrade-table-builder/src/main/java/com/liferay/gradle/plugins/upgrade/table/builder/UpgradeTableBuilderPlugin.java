@@ -50,6 +50,7 @@ public class UpgradeTableBuilderPlugin implements Plugin<Project> {
 			project, BUILD_UPGRADE_TABLE_TASK_NAME,
 			BuildUpgradeTableTask.class);
 
+		buildUpgradeTableTask.setBaseDir(project.getProjectDir());
 		buildUpgradeTableTask.setDescription(
 			"Runs Liferay Upgrade Table Builder to build upgrade tables.");
 		buildUpgradeTableTask.setGroup(BasePlugin.BUILD_GROUP);

@@ -335,13 +335,17 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	protected void checkOSGIComponents(
 		String fileName, String absolutePath, String content) {
 
+		String moduleServicePackagePath = null;
+
 		Matcher matcher = _serviceUtilImportPattern.matcher(content);
 
 		while (matcher.find()) {
 			String serviceUtilClassName = matcher.group(2);
 
-			String moduleServicePackagePath = getModuleServicePackagePath(
-				fileName);
+			if (moduleServicePackagePath == null) {
+				moduleServicePackagePath = getModuleServicePackagePath(
+					fileName);
+			}
 
 			if (Validator.isNotNull(moduleServicePackagePath)) {
 				String serviceUtilClassPackagePath = matcher.group(1);
@@ -362,6 +366,40 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				fileName,
 				"LPS-59076: Use @Reference instead of calling " +
 					serviceUtilClassName + " directly: " + fileName);
+		}
+
+		matcher = _setReferenceMethodPattern.matcher(content);
+
+		while (matcher.find()) {
+			if (moduleServicePackagePath == null) {
+				moduleServicePackagePath = getModuleServicePackagePath(
+					fileName);
+			}
+
+			if (Validator.isNotNull(moduleServicePackagePath)) {
+				String typeName = matcher.group(3);
+
+				StringBundler sb = new StringBundler(5);
+
+				sb.append("\nimport ");
+				sb.append(moduleServicePackagePath);
+				sb.append(".*\\.");
+				sb.append(typeName);
+				sb.append(StringPool.SEMICOLON);
+
+				Pattern pattern = Pattern.compile(sb.toString());
+
+				matcher = pattern.matcher(content);
+
+				if (matcher.find()) {
+					processErrorMessage(
+						fileName,
+						"LPS-59076: Convert OSGi Component to Spring bean: " +
+							fileName);
+
+					break;
+				}
+			}
 		}
 	}
 
@@ -2888,7 +2926,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			int pos = serviceDirLocation.lastIndexOf(StringPool.SLASH);
 
 			if (pos == -1) {
-				return null;
+				return StringPool.BLANK;
 			}
 
 			serviceDirLocation = serviceDirLocation.substring(0, pos + 1);
@@ -2904,7 +2942,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			file = new File(serviceDirLocation + "liferay");
 
 			if (file.exists()) {
-				return null;
+				return StringPool.BLANK;
 			}
 
 			serviceDirLocation = StringUtil.replaceLast(
@@ -3365,6 +3403,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private List<String> _secureXmlExclusionFiles;
 	private Pattern _serviceUtilImportPattern = Pattern.compile(
 		"\nimport ([A-Za-z1-9\\.]*)\\.([A-Za-z1-9]*ServiceUtil);");
+	private Pattern _setReferenceMethodPattern = Pattern.compile(
+		"@Reference(.*|\\(\n(.*\n)*?\t*\\))\\s+protected void set\\w+?\\(\\s*" +
+			"([ ,<>\\w]+)\\s+\\w+\\) \\{\\s+(\\w+) =\\s+\\w+;\\s+\\}");
 	private Pattern _stagedModelTypesPattern = Pattern.compile(
 		"StagedModelType\\(([a-zA-Z.]*(class|getClassName[\\(\\)]*))\\)");
 	private List<String> _staticLogVariableExclusionFiles;

@@ -23,6 +23,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.JavaExec;
 
 /**
@@ -42,14 +44,17 @@ public class BuildUpgradeTableTask extends JavaExec {
 		super.exec();
 	}
 
+	@InputDirectory
 	public File getBaseDir() {
 		return GradleUtil.toFile(getProject(), _baseDir);
 	}
 
+	@InputDirectory
 	public File getUpgradeTableDir() {
 		return GradleUtil.toFile(getProject(), _upgradeTableDir);
 	}
 
+	@Input
 	public boolean isOsgiModule() {
 		return _osgiModule;
 	}

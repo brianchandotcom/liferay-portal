@@ -375,6 +375,5 @@ public interface DDLRecordSetLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public com.liferay.dynamic.data.lists.model.DDLRecordSet updateRecordSet(
-		long recordSetId, java.lang.String typeSettings)
-		throws PortalException;
+		long recordSetId, java.lang.String settings) throws PortalException;
 }

@@ -33,7 +33,15 @@ DDLRecordSet recordSet = ddlFormDisplayContext.getRecordSet();
 
 		<div class="portlet-forms">
 			<aui:form action="<%= addRecordActionURL %>" method="post" name="fm">
-				<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+
+				<%
+				String redirectURL = GetterUtil.getString(recordSet.getSettingsProperty("redirectURL", StringPool.BLANK));
+				%>
+
+				<c:if test="<%= Validator.isNull(redirectURL) %>">
+					<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+				</c:if>
+
 				<aui:input name="groupId" type="hidden" value="<%= themeDisplay.getScopeGroupId() %>" />
 				<aui:input name="recordSetId" type="hidden" value="<%= recordSet.getRecordSetId() %>" />
 				<aui:input name="availableLanguageId" type="hidden" value="<%= themeDisplay.getLanguageId() %>" />

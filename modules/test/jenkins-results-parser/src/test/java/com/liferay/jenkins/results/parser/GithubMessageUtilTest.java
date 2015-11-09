@@ -18,14 +18,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map.Entry;
 import java.util.Properties;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.FutureTask;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -59,58 +53,67 @@ public class GithubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 	public void testGetFailedJobsMessage() throws Exception {
 		assertSamples();
 	}
-
-	protected void processProgressiveText(
-		File sampleDir, String progressiveTextURL, Properties properties)
+	
+	
+	protected void downloadSampleJobMessages(
+		String progressiveTextURL, Properties properties, File sampleDir)
 			throws Exception {
 
 		jobMessageUtilTest.dependenciesDir = sampleDir;
 
-		String content = JenkinsResultsParserUtil.toString(
-			JenkinsResultsParserUtil.getLocalURL(progressiveTextURL));
+		String content = JenkinsResultsParserUtil.toString(JenkinsResultsParserUtil.getLocalURL(progressiveTextURL));
 		Matcher progressiveTextMatcher = _PROGRESSIVE_TEXT_JOB_URL_PATTERN.matcher(content);
 		
-		int jobCount = 0;
-		
-		ExecutorService executor = Executors.newFixedThreadPool(_MAX_THREADS);
-		List<FutureTask<FailedJobMessageResult>> taskList = new ArrayList<>();		
-		while (progressiveTextMatcher.find()) {
-			FailedJobMessageCallable callable = new FailedJobMessageCallable(jobCount, sampleDir, progressiveTextMatcher.group("url"));
-
-			FutureTask<FailedJobMessageResult> futureTask = new FutureTask<>(callable);
-
-			executor.execute(futureTask);
-			taskList.add(futureTask);
-			jobCount++;
-		}
-		
-		executor.shutdown();
-
+		StringBuilder reportFilesBuffer = new StringBuilder();
 		int passCount = 0;
-		StringBuilder reportFilesStringBuilder = new StringBuilder();
-		for (FutureTask<FailedJobMessageResult> task : taskList) {
-			FailedJobMessageResult result = task.get();
+		int jobCount = 0;
+		while (progressiveTextMatcher.find()) {
+			String urlString = progressiveTextMatcher.group("url");			
+			Matcher urlMatcher = _URL_JOB_NAME_PATTERN.matcher(urlString);
 
-			if ("SUCCESS".equals(result.getResult())) {
+			urlMatcher.find();
+
+			JSONObject jobJSONObject = 
+				JenkinsResultsParserUtil.toJSONObject(
+					JenkinsResultsParserUtil.getLocalURL(urlString + "/api/json"));
+
+			Project project = getProject(null, urlString, sampleDir.getPath());
+			
+			GithubJobMessageUtil.getFailedJobMessage(project);
+			
+			String jobReportString = project.getProperty("report.html.content");
+			
+			File jobExpectedMessageFile = new File(sampleDir, jobCount + "-report.html");
+
+			write(
+				jobExpectedMessageFile,
+				"<h5 job-result=\\\"" + jobJSONObject.getString("result") +
+					"\\\"><a href=\"" + urlString + "\">" +
+					urlMatcher.group("jobName") + "</a></h5>" +
+					jobReportString);
+			
+			if (reportFilesBuffer.length() > 0) {
+				reportFilesBuffer.append(" ");
+			}
+			
+			reportFilesBuffer.append(jobExpectedMessageFile.getPath());
+
+			if ("SUCCESS".equals(jobJSONObject.getString("result"))) {
 				passCount++;
 			}
 			
-			if (reportFilesStringBuilder.length() > 0) {
-				reportFilesStringBuilder.append(" ");
-			}
-			
-			reportFilesStringBuilder.append(result.getJobReportFilePath());
+			jobCount++;
 		}
-		
 		properties.setProperty(
-			"top.level.report.files", reportFilesStringBuilder.toString());
+			"top.level.report.files", reportFilesBuffer.toString());
 		properties.setProperty(
 			"top.level.pass.count", String.valueOf(passCount));
 		properties.setProperty(
 			"top.level.fail.count", String.valueOf(jobCount - passCount));
 	}	
+
 	
-	private void _saveProperties(File file, Properties properties)
+	protected void saveProperties(File file, Properties properties)
 		throws Exception {
 
 		try (FileOutputStream fos = new FileOutputStream(file)) {
@@ -118,7 +121,7 @@ public class GithubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 		}
 	}
 	
-	private Properties _loadProperties(File file) throws Exception {
+	protected Properties loadProperties(File file) throws Exception {
 		Properties properties = new Properties();
 		
 		try (FileInputStream fis = new FileInputStream(file)) {
@@ -133,8 +136,8 @@ public class GithubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 
 		Properties properties = new Properties();
 		
-		processProgressiveText(
-			sampleDir, url.toString() + "/logText/progressiveText",	properties);
+		downloadSampleJobMessages(
+			url.toString() + "/logText/progressiveText", properties,	sampleDir);
 		
 		JSONObject jsonObject =
 			JenkinsResultsParserUtil.toJSONObject(
@@ -145,7 +148,7 @@ public class GithubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 		properties.setProperty(
 			"top.level.result", jsonObject.getString("result"));
 
-		_saveProperties(new File(sampleDir, "sample.properties"), properties);	
+		saveProperties(new File(sampleDir, "sample.properties"), properties);	
 	}
 
 	protected void downloadSample(
@@ -171,21 +174,21 @@ public class GithubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 		
 		File sampleDir = new File(localURLString.substring("file:".length()));
 		
-		Project project = _getProject(new File(sampleDir, "sample.properties"), "", sampleDir.getPath());
+		Project project = getProject(new File(sampleDir, "sample.properties"), "", sampleDir.getPath());
 
 		GithubMessageUtil.getGithubMessage(project);
 
 		return project.getProperty("github.post.comment.body");
 	}
 
-	private Project _getProject(File samplePropertiesFile,
+	protected Project getProject(File samplePropertiesFile,
 		String buildURLString, String topLevelSharedDir)
 			throws Exception {
 
 		Project project = new Project();
 		
 		if (samplePropertiesFile != null) {
-			Properties properties = _loadProperties(samplePropertiesFile);
+			Properties properties = loadProperties(samplePropertiesFile);
 			for (Entry<Object, Object> entry : properties.entrySet()) {
 				project.setProperty(
 					String.valueOf(entry.getKey()),
@@ -219,69 +222,5 @@ public class GithubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 	private static final Pattern _URL_JOB_NAME_PATTERN =
 		Pattern.compile(
 			".+://(?<hostName>[^.]+).liferay.com/job/(?<jobName>[^/]+).*/(?<buildNumber>\\d+)/");
-	
-	private class FailedJobMessageResult {
-
-		public FailedJobMessageResult(String jobReportFilePath, String result) {
-			_jobReportFilePath = jobReportFilePath;
-			_result = result;
-		}
-
-		public String getJobReportFilePath() {
-			return _jobReportFilePath;
-		}
-
-		public String getResult() {
-			return _result;
-		}
-		
-		private String _jobReportFilePath;
-		private String _result;
-		
-	}
-
-	private class FailedJobMessageCallable implements Callable<FailedJobMessageResult> {
-		
-		public FailedJobMessageCallable(int jobCount, File sampleDir, String url) {
-			_jobCount = jobCount;
-			_sampleDir = sampleDir;
-			_url = url;
-		}
-
-		@Override
-		public FailedJobMessageResult call() throws Exception {
-			Matcher urlMatcher = _URL_JOB_NAME_PATTERN.matcher(_url);
-			
-			urlMatcher.find();
-			
-			File jobReportFile = new File(_sampleDir, _jobCount + "-" + urlMatcher.group("jobName") + "-report.html");
-			
-			Project project = _getProject(null, _url, _sampleDir.getPath());
-
-			GithubJobMessageUtil.getFailedJobMessage(project);
-
-			String reportString = project.getProperty("report.html.content");
-
-			JSONObject jobJSONObject = 
-				JenkinsResultsParserUtil.toJSONObject(
-					JenkinsResultsParserUtil.getLocalURL(_url + "/api/json"));
-
-			write(
-				jobReportFile,
-				"<h5 job-result=\\\"" + jobJSONObject.getString("result") +
-					"\\\"><a href=\"" + _url + "\">" +
-					urlMatcher.group("jobName") + "</a></h5>" +
-					reportString);
-			
-			return new FailedJobMessageResult(jobReportFile.getPath(), jobJSONObject.getString("result"));
-		}
-		
-		private int _jobCount;
-		private File _sampleDir;
-		private String _url;
-		
-	}
-	
-	
 
 }

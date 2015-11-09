@@ -29,7 +29,7 @@ public class UniqueStringRandomizerBumperTestCallback
 		new UniqueStringRandomizerBumperTestCallback();
 
 	@Override
-	public Object doBeforeClass(Description description) {
+	public Object beforeClass(Description description) {
 		UniqueStringRandomizerBumper.reset();
 
 		return null;

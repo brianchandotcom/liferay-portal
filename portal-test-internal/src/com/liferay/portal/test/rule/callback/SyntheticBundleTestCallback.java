@@ -42,7 +42,7 @@ public class SyntheticBundleTestCallback extends BaseTestCallback<Long, Long> {
 	}
 
 	@Override
-	public void doAfterClass(Description description, Long bundleId)
+	public void afterClass(Description description, Long bundleId)
 		throws PortalException {
 
 		if (bundleId == null) {
@@ -55,7 +55,7 @@ public class SyntheticBundleTestCallback extends BaseTestCallback<Long, Long> {
 	}
 
 	@Override
-	public Long doBeforeClass(Description description) throws Exception {
+	public Long beforeClass(Description description) throws Exception {
 		Class<?> testClass = description.getTestClass();
 
 		InputStream inputStream = createBundle(testClass);

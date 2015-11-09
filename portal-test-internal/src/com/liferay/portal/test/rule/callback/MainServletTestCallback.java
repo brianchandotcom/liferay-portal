@@ -53,7 +53,7 @@ public class MainServletTestCallback extends BaseTestCallback<Object, Object> {
 	}
 
 	@Override
-	public void doAfterClass(Description description, Object object) {
+	public void afterClass(Description description, Object object) {
 		try {
 			SearchEngineUtil.removeCompany(TestPropsValues.getCompanyId());
 		}
@@ -63,7 +63,7 @@ public class MainServletTestCallback extends BaseTestCallback<Object, Object> {
 	}
 
 	@Override
-	public Object doBeforeClass(Description description) {
+	public Object beforeClass(Description description) {
 		if (isArquillianTest(description)) {
 			Assert.fail(
 				description.getTestClass() + " is an Arquillian test and " +

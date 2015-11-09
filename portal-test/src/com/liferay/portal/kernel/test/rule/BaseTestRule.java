@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.test.rule;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.test.rule.callback.BaseTestCallback;
+import com.liferay.portal.kernel.test.rule.callback.TestCallback;
 
 import org.junit.internal.runners.statements.ExpectException;
 import org.junit.internal.runners.statements.FailOnTimeout;
@@ -31,8 +31,8 @@ import org.junit.runners.model.Statement;
  */
 public class BaseTestRule<C, M> implements TestRule {
 
-	public BaseTestRule(BaseTestCallback<C, M> baseTestCallback) {
-		_baseTestCallback = baseTestCallback;
+	public BaseTestRule(TestCallback<C, M> TestCallback) {
+		_testCallback = TestCallback;
 	}
 
 	@Override
@@ -50,12 +50,12 @@ public class BaseTestRule<C, M> implements TestRule {
 				Object target = null;
 
 				if (methodName == null) {
-					c = _baseTestCallback.doBeforeClass(description);
+					c = _testCallback.beforeClass(description);
 				}
 				else {
 					target = inspectTarget(statement);
 
-					m = _baseTestCallback.doBeforeMethod(description, target);
+					m = _testCallback.beforeMethod(description, target);
 				}
 
 				try {
@@ -63,10 +63,10 @@ public class BaseTestRule<C, M> implements TestRule {
 				}
 				finally {
 					if (methodName == null) {
-						_baseTestCallback.doAfterClass(description, c);
+						_testCallback.afterClass(description, c);
 					}
 					else {
-						_baseTestCallback.doAfterMethod(description, m, target);
+						_testCallback.afterMethod(description, m, target);
 					}
 				}
 			}
@@ -114,6 +114,6 @@ public class BaseTestRule<C, M> implements TestRule {
 		throw new IllegalStateException("Unknow statement " + statement);
 	}
 
-	private final BaseTestCallback<C, M> _baseTestCallback;
+	private final TestCallback<C, M> _testCallback;
 
 }

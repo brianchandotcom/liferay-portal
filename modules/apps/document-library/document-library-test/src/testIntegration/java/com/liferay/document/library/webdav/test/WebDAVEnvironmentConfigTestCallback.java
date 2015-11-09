@@ -33,12 +33,12 @@ public class WebDAVEnvironmentConfigTestCallback
 		new WebDAVEnvironmentConfigTestCallback();
 
 	@Override
-	public void doAfterClass(Description description, Object object) {
+	public void afterClass(Description description, Object object) {
 		_baseWebDAVTestCase.service(Method.DELETE, "", null, null);
 	}
 
 	@Override
-	public Object doBeforeClass(Description description) {
+	public Object beforeClass(Description description) {
 		Tuple tuple = _baseWebDAVTestCase.service(Method.MKCOL, "", null, null);
 
 		int statusCode = BaseWebDAVTestCase.getStatusCode(tuple);

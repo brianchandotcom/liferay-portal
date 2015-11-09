@@ -57,7 +57,7 @@ public class DeleteAfterTestRunTestCallback
 		new DeleteAfterTestRunTestCallback();
 
 	@Override
-	public void doAfterMethod(
+	public void afterMethod(
 		Description description, Object object, Object target) {
 
 		Class<?> testClass = description.getTestClass();

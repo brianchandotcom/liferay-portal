@@ -32,7 +32,7 @@ public class CITimeoutTestCallback extends BaseTestCallback<Long, Object> {
 		new CITimeoutTestCallback();
 
 	@Override
-	public void doAfterClass(Description description, Long startTime) {
+	public void afterClass(Description description, Long startTime) {
 		long testTime = System.currentTimeMillis() - startTime;
 
 		if (testTime <= TestPropsValues.CI_TEST_TIMEOUT_TIME) {
@@ -51,7 +51,7 @@ public class CITimeoutTestCallback extends BaseTestCallback<Long, Object> {
 	}
 
 	@Override
-	public Long doBeforeClass(Description description) {
+	public Long beforeClass(Description description) {
 		String message = System.getProperty(_CI_TIMEOUT_TEST_CLASS_MESSAGE);
 
 		if (message != null) {

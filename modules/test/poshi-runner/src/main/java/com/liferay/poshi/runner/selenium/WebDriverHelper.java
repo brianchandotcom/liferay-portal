@@ -219,6 +219,45 @@ public class WebDriverHelper {
 		return webElement.getAttribute(attribute);
 	}
 
+	public static By getByFromLocator(String locator) {
+		if (locator.startsWith("//")) {
+			return By.xpath(locator);
+		}
+		else if (locator.startsWith("class=")) {
+			locator = locator.substring(6);
+
+			return By.className(locator);
+		}
+		else if (locator.startsWith("css=")) {
+			locator = locator.substring(4);
+
+			return By.cssSelector(locator);
+		}
+		else if (locator.startsWith("link=")) {
+			locator = locator.substring(5);
+
+			return By.linkText(locator);
+		}
+		else if (locator.startsWith("name=")) {
+			locator = locator.substring(5);
+
+			return By.name(locator);
+		}
+		else if (locator.startsWith("tag=")) {
+			locator = locator.substring(4);
+
+			return By.tagName(locator);
+		}
+		else if (locator.startsWith("xpath=") || locator.startsWith("xPath=")) {
+			locator = locator.substring(6);
+
+			return By.xpath(locator);
+		}
+		else {
+			return By.id(locator);
+		}
+	}
+
 	public static String getConfirmation(WebDriver webDriver) {
 		webDriver.switchTo();
 
@@ -837,44 +876,7 @@ public class WebDriverHelper {
 		}
 
 		try {
-			if (locator.startsWith("//")) {
-				return webDriver.findElements(By.xpath(locator));
-			}
-			else if (locator.startsWith("class=")) {
-				locator = locator.substring(6);
-
-				return webDriver.findElements(By.className(locator));
-			}
-			else if (locator.startsWith("css=")) {
-				locator = locator.substring(4);
-
-				return webDriver.findElements(By.cssSelector(locator));
-			}
-			else if (locator.startsWith("link=")) {
-				locator = locator.substring(5);
-
-				return webDriver.findElements(By.linkText(locator));
-			}
-			else if (locator.startsWith("name=")) {
-				locator = locator.substring(5);
-
-				return webDriver.findElements(By.name(locator));
-			}
-			else if (locator.startsWith("tag=")) {
-				locator = locator.substring(4);
-
-				return webDriver.findElements(By.tagName(locator));
-			}
-			else if (locator.startsWith("xpath=") ||
-					 locator.startsWith("xPath=")) {
-
-				locator = locator.substring(6);
-
-				return webDriver.findElements(By.xpath(locator));
-			}
-			else {
-				return webDriver.findElements(By.id(locator));
-			}
+			return webDriver.findElements(getByFromLocator(locator));
 		}
 		finally {
 			if (timeout != null) {

@@ -57,7 +57,7 @@ public class ActionExecutorManagerImpl implements ActionExecutorManager {
 		actionExecutor.execute(kaleoAction, executionContext);
 	}
 
-	public String getActionExecutorKey(
+	protected String getActionExecutorKey(
 		String language, String actionExecutorClassName) {
 
 		ScriptLanguage scriptLanguage = ScriptLanguage.parse(language);

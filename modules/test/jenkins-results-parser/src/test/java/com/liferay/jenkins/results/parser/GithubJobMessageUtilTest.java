@@ -15,19 +15,22 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
+
 import java.net.URL;
 import java.net.URLDecoder;
 
 import org.apache.tools.ant.Project;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author Peter Yoo
  */
-public class FailedJobMessageUtilTest extends BaseJenkinsResultsParserTestCase {
+public class GithubJobMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 
 	@Before
 	public void setUp() throws Exception {
@@ -57,7 +60,7 @@ public class FailedJobMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 		if (urlString.contains("-source")) {
 			return;
 		}
-		
+
 		downloadSampleURL(sampleDir, url, "/testReport/api/json");
 
 		downloadSampleAxisURLs(sampleDir, new File(sampleDir, "/api/json"));
@@ -67,8 +70,6 @@ public class FailedJobMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 			String sampleKey, String buildNumber, String jobName,
 			String hostName)
 		throws Exception {
-		this.generateJavacOutputFile = generateJavacOutputFile;
-
 		String urlString =
 			"https://${hostName}.liferay.com/job/${jobName}/${buildNumber}/";
 
@@ -118,7 +119,7 @@ public class FailedJobMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 		Project project = getProject(
 			urlString, urlString.substring("file:".length()));
 
-		FailedJobMessageUtil.getFailedJobMessage(project);
+		GithubJobMessageUtil.getFailedJobMessage(project);
 
 		return project.getProperty("report.html.content");
 	}

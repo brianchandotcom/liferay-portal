@@ -31,7 +31,7 @@ import org.json.JSONObject;
 /**
  * @author Peter Yoo
  */
-public class FailedJobMessageUtil {
+public class GithubJobMessageUtil {
 
 	public static void getFailedJobMessage(Project project) throws Exception {
 		StringBuilder sb = new StringBuilder();

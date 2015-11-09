@@ -22,7 +22,6 @@ import java.util.List;
 
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.tasks.JavaExec;
-import org.gradle.process.JavaExecSpec;
 
 /**
  * @author Andrea Di Giorgi
@@ -36,37 +35,17 @@ public class BuildUpgradeTableTask extends JavaExec {
 	}
 
 	@Override
-	public JavaExecSpec args(Iterable<?> args) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public JavaExec args(Object... args) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public JavaExec classpath(Object... paths) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void exec() {
-		super.setArgs(getArgs());
+		setArgs(getCompleteArgs());
+
 		super.setClasspath(getClasspath());
 
 		super.exec();
-	}
-
-	@Override
-	public List<String> getArgs() {
-		List<String> args = new ArrayList<>();
-
-		args.add("upgrade.base.dir=" + getBaseDirName());
-		args.add("upgrade.osgi.module=" + isOsgiModule());
-		args.add("upgrade.table.dir=" + getUpgradeTableDirName());
-
-		return args;
 	}
 
 	public String getBaseDirName() {
@@ -97,6 +76,16 @@ public class BuildUpgradeTableTask extends JavaExec {
 
 	public void setUpgradeTableDirName(String upgradeTableDirName) {
 		_upgradeTableBuilderArgs.setUpgradeTableDirName(upgradeTableDirName);
+	}
+
+	protected List<String> getCompleteArgs() {
+		List<String> args = new ArrayList<>(getArgs());
+
+		args.add("upgrade.base.dir=" + getBaseDirName());
+		args.add("upgrade.osgi.module=" + isOsgiModule());
+		args.add("upgrade.table.dir=" + getUpgradeTableDirName());
+
+		return args;
 	}
 
 	private final UpgradeTableBuilderArgs _upgradeTableBuilderArgs =

@@ -17,12 +17,9 @@ package com.liferay.gradle.plugins.upgrade.table.builder;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.portal.tools.upgrade.table.builder.UpgradeTableBuilderArgs;
 
-import java.io.File;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.process.JavaExecSpec;
@@ -57,7 +54,6 @@ public class BuildUpgradeTableTask extends JavaExec {
 	public void exec() {
 		super.setArgs(getArgs());
 		super.setClasspath(getClasspath());
-		super.setWorkingDir(getWorkingDir());
 
 		super.exec();
 	}
@@ -85,13 +81,6 @@ public class BuildUpgradeTableTask extends JavaExec {
 
 	public String getUpgradeTableDirName() {
 		return _upgradeTableBuilderArgs.getUpgradeTableDirName();
-	}
-
-	@Override
-	public File getWorkingDir() {
-		Project project = getProject();
-
-		return project.getProjectDir();
 	}
 
 	public boolean isOsgiModule() {

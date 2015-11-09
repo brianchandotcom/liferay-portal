@@ -90,10 +90,7 @@ public class GithubMessageUtil {
 
 			String content = _read(file);
 
-			Pattern pattern =
-				Pattern.compile("\\<h5[^\\>]*\\>(.+)\\<\\/h5\\>.*");
-
-			Matcher matcher = pattern.matcher(content);
+			Matcher matcher = _pattern.matcher(content);
 
 			if (matcher.find()) {
 				if (content.contains("job-result=\\\"SUCCESS\\\"")) {
@@ -191,4 +188,8 @@ public class GithubMessageUtil {
 	private static String _read(File file) throws IOException {
 		return new String(Files.readAllBytes(Paths.get(file.toURI())));
 	}
+	
+	private static Pattern _pattern =
+		Pattern.compile("\\<h5[^\\>]*\\>(.+)\\<\\/h5\\>.*");
+
 }

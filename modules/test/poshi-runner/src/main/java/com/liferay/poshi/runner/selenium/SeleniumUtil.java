@@ -16,6 +16,8 @@ package com.liferay.poshi.runner.selenium;
 
 import com.liferay.poshi.runner.util.PropsValues;
 
+import org.openqa.selenium.WebDriver;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -48,8 +50,12 @@ public class SeleniumUtil extends PropsValues {
 			portalURL = "http://localhost:8180/console";
 		}
 
+		WebDriverUtil.startWebDriver();
+
+		WebDriver webDriver = WebDriverUtil.getWebDriver();
+
 		if (BROWSER_TYPE.equals("android")) {
-			_selenium = new AndroidMobileDriverImpl(portalURL);
+			_selenium = new AndroidMobileDriverImpl(portalURL, webDriver);
 		}
 		else if (BROWSER_TYPE.equals("androidchrome")) {
 			_selenium = new ChromeMobileDriverImpl(portalURL);
@@ -103,6 +109,8 @@ public class SeleniumUtil extends PropsValues {
 	@SuppressWarnings("deprecation")
 	private void _stopSelenium() {
 		if (_selenium != null) {
+			WebDriverUtil.stopWebDriver();
+
 			_selenium.stop();
 
 			_selenium.stopLogger();

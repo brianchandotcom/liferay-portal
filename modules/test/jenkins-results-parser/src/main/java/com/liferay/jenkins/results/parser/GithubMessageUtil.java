@@ -16,8 +16,10 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 import java.io.IOException;
+
 import java.nio.file.Files;
 import java.nio.file.Paths;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,7 +29,7 @@ import org.apache.tools.ant.Project;
  * @author Peter Yoo
  */
 public class GithubMessageUtil {
-	
+
 	public static void getGithubMessage(Project project) throws Exception {
 		StringBuilder sb = new StringBuilder();
 
@@ -39,8 +41,8 @@ public class GithubMessageUtil {
 		sb.append(project.getProperty("top.level.build.time"));
 		sb.append("</p>");
 
-		String rebaseBranchGitCommit =
-			project.getProperty("rebase.branch.git.commit");
+		String rebaseBranchGitCommit = project.getProperty(
+			"rebase.branch.git.commit");
 
 		if (!rebaseBranchGitCommit.equals("")) {
 			sb.append("<h4>Base Branch:</h4>");
@@ -123,8 +125,8 @@ public class GithubMessageUtil {
 			sb.append("</a></h5>");
 			sb.append("<h6>Job Results:</h6>");
 
-			int topLevelPassCount =
-				Integer.parseInt(project.getProperty("top.level.pass.count"));
+			int topLevelPassCount = Integer.parseInt(
+				project.getProperty("top.level.pass.count"));
 
 			sb.append("<p>");
 			sb.append(topLevelPassCount);
@@ -136,9 +138,8 @@ public class GithubMessageUtil {
 
 			sb.append(" Passed.<br />");
 
-			int topLevelFailCount =
-				Integer.parseInt(
-					project.getProperty("top.level.fail.count")) + 1;
+			int topLevelFailCount = Integer.parseInt(
+				project.getProperty("top.level.fail.count")) + 1;
 
 			sb.append(topLevelFailCount);
 			sb.append(" Job");
@@ -152,7 +153,7 @@ public class GithubMessageUtil {
 			sb.append(".</pre></li>");
 
 			int jobFailureCount = 1;
-			
+
 			for (String reportFileName : reportFileNames.split(" ")) {
 				try {
 					File file = new File(reportFileName);
@@ -182,14 +183,14 @@ public class GithubMessageUtil {
 			sb.append("</ol>");
 		}
 
-		project.setProperty("github.post.comment.body", sb.toString());		
+		project.setProperty("github.post.comment.body", sb.toString());
 	}
-	
+
 	private static String _read(File file) throws IOException {
 		return new String(Files.readAllBytes(Paths.get(file.toURI())));
 	}
-	
-	private static Pattern _pattern =
-		Pattern.compile("\\<h5[^\\>]*\\>(.+)\\<\\/h5\\>.*");
+
+	private static final Pattern _pattern = Pattern.compile(
+		"\\<h5[^\\>]*\\>(.+)\\<\\/h5\\>.*");
 
 }

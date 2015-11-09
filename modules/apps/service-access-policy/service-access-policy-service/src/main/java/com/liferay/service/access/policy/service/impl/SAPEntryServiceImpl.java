@@ -73,7 +73,7 @@ public class SAPEntryServiceImpl extends SAPEntryServiceBaseImpl {
 	public SAPEntry fetchSAPEntry(long companyId, String name)
 		throws PortalException {
 
-		SAPEntry sapEntry = sapEntryPersistence.fetchByC_N(companyId, name);
+		SAPEntry sapEntry = sapEntryLocalService.fetchSAPEntry(companyId, name);
 
 		if (sapEntry != null) {
 			SAPEntryPermission.check(

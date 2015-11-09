@@ -74,6 +74,10 @@ public interface AnnouncementsEntryService extends BaseService {
 	public void deleteEntry(long entryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.announcements.model.AnnouncementsEntry fetchAnnouncementsEntry(
+		long entryId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry getEntry(
 		long entryId) throws PortalException;
 

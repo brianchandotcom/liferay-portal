@@ -252,6 +252,20 @@ public class MBMessageServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.messageboards.model.MBMessageSoap fetchMBMessage(
+		long messageId) throws RemoteException {
+		try {
+			com.liferay.portlet.messageboards.model.MBMessage returnValue = MBMessageServiceUtil.fetchMBMessage(messageId);
+
+			return com.liferay.portlet.messageboards.model.MBMessageSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.messageboards.model.MBMessageSoap[] getCategoryMessages(
 		long groupId, long categoryId, int status, int start, int end)
 		throws RemoteException {

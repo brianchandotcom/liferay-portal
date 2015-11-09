@@ -114,6 +114,20 @@ public class TeamServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.model.TeamSoap fetchTeam(long teamId)
+		throws RemoteException {
+		try {
+			com.liferay.portal.model.Team returnValue = TeamServiceUtil.fetchTeam(teamId);
+
+			return com.liferay.portal.model.TeamSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portal.model.TeamSoap[] getGroupTeams(
 		long groupId) throws RemoteException {
 		try {

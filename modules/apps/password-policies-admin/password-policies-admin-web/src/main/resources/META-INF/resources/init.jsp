@@ -47,6 +47,7 @@ page import="com.liferay.portal.security.ldap.LDAPSettingsUtil" %><%@
 page import="com.liferay.portal.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.service.PasswordPolicyLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.PasswordPolicyRelLocalServiceUtil" %><%@
+page import="com.liferay.portal.service.PasswordPolicyServiceUtil" %><%@
 page import="com.liferay.portal.service.permission.PasswordPolicyPermissionUtil" %><%@
 page import="com.liferay.portal.service.permission.PortalPermissionUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@

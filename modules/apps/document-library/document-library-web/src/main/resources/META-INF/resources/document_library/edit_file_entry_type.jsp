@@ -29,7 +29,7 @@ long ddmStructureId = BeanParamUtil.getLong(ddmStructure, request, "structureId"
 
 String script = BeanParamUtil.getString(ddmStructure, request, "definition");
 
-JSONArray fieldsJSONArray = DDMUtil.getDDMFormFieldsJSONArray(DDMStructureLocalServiceUtil.fetchDDMStructure(ddmStructureId), script);
+JSONArray fieldsJSONArray = DDMUtil.getDDMFormFieldsJSONArray(DDMStructureServiceUtil.fetchDDMStructure(ddmStructureId), script);
 
 List<DDMStructure> ddmStructures = null;
 

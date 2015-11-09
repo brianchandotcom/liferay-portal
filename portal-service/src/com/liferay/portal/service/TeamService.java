@@ -65,6 +65,10 @@ public interface TeamService extends BaseService {
 	public void deleteTeam(long teamId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.Team fetchTeam(long teamId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Team> getGroupTeams(
 		long groupId) throws PortalException;
 

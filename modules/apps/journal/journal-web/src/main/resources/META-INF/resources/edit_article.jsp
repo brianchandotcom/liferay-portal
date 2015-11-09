@@ -45,15 +45,12 @@ if (Validator.isNull(ddmStructureKey) && (article != null)) {
 	ddmStructureKey = article.getDDMStructureKey();
 }
 
-DDMStructure ddmStructure = null;
-
 long ddmStructureId = ParamUtil.getLong(request, "ddmStructureId");
 
-if (ddmStructureId > 0) {
-	ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(ddmStructureId);
-}
-else if (Validator.isNotNull(ddmStructureKey)) {
-	ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(themeDisplay.getSiteGroupId(), PortalUtil.getClassNameId(JournalArticle.class), ddmStructureKey, true);
+DDMStructure ddmStructure = DDMStructureServiceUtil.fetchStructure(ddmStructureId);
+
+if ((ddmStructure == null) && Validator.isNotNull(ddmStructureKey)) {
+	ddmStructure = DDMStructureServiceUtil.fetchStructure(themeDisplay.getSiteGroupId(), PortalUtil.getClassNameId(JournalArticle.class), ddmStructureKey, true);
 }
 
 String ddmTemplateKey = ParamUtil.getString(request, "ddmTemplateKey");

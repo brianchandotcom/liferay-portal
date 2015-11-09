@@ -80,6 +80,22 @@ public class MDRRuleGroupInstanceServiceImpl
 	}
 
 	@Override
+	public MDRRuleGroupInstance fetchRuleGroupInstance(long ruleGroupInstanceId)
+		throws PortalException {
+
+		MDRRuleGroupInstance ruleGroupInstance =
+			mdrRuleGroupInstanceLocalService.fetchRuleGroupInstance(
+				ruleGroupInstanceId);
+
+		if (ruleGroupInstance != null) {
+			MDRRuleGroupInstancePermission.check(
+				getPermissionChecker(), ruleGroupInstance, ActionKeys.VIEW);
+		}
+
+		return ruleGroupInstance;
+	}
+
+	@Override
 	public List<MDRRuleGroupInstance> getRuleGroupInstances(
 		String className, long classPK, int start, int end,
 		OrderByComparator<MDRRuleGroupInstance> orderByComparator) {

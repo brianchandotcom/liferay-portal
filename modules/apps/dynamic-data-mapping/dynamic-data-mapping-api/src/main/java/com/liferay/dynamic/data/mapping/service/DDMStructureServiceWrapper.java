@@ -297,6 +297,20 @@ public class DDMStructureServiceWrapper implements DDMStructureService,
 	}
 
 	/**
+	* Returns the structure with the ID.
+	*
+	* @param structureId the primary key of the structure
+	* @return the structure with the structure ID, or <code>null</code> if a
+	matching structure could not be found
+	*/
+	@Override
+	public com.liferay.dynamic.data.mapping.model.DDMStructure fetchStructure(
+		long structureId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmStructureService.fetchStructure(structureId);
+	}
+
+	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier

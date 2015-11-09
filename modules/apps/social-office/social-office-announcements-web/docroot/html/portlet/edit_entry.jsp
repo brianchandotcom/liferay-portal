@@ -23,7 +23,7 @@ String redirectMvcPath = HttpUtil.getParameter(HttpUtil.decodeURL(redirect), ren
 
 long entryId = ParamUtil.getLong(request, "entryId");
 
-AnnouncementsEntry entry = AnnouncementsEntryLocalServiceUtil.fetchAnnouncementsEntry(entryId);
+AnnouncementsEntry entry = AnnouncementsEntryServiceUtil.fetchAnnouncementsEntry(entryId);
 
 String content = BeanParamUtil.getString(entry, request, "content");
 

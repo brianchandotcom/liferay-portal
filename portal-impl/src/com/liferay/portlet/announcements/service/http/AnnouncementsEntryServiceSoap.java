@@ -134,6 +134,21 @@ public class AnnouncementsEntryServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.announcements.model.AnnouncementsEntrySoap fetchAnnouncementsEntry(
+		long entryId) throws RemoteException {
+		try {
+			com.liferay.portlet.announcements.model.AnnouncementsEntry returnValue =
+				AnnouncementsEntryServiceUtil.fetchAnnouncementsEntry(entryId);
+
+			return com.liferay.portlet.announcements.model.AnnouncementsEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.announcements.model.AnnouncementsEntrySoap getEntry(
 		long entryId) throws RemoteException {
 		try {

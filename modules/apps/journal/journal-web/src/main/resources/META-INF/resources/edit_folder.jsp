@@ -190,7 +190,7 @@ renderResponse.setTitle(title);
 				<c:if test="<%= !rootFolder %>">
 
 					<%
-					JournalFolder parentFolder = JournalFolderLocalServiceUtil.fetchFolder(folder.getParentFolderId());
+					JournalFolder parentFolder = JournalFolderServiceUtil.fetchFolder(folder.getParentFolderId());
 
 					String parentFolderName = LanguageUtil.get(request, "home");
 

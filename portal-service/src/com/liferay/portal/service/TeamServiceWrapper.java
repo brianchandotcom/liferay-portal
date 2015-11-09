@@ -58,6 +58,12 @@ public class TeamServiceWrapper implements TeamService,
 	}
 
 	@Override
+	public com.liferay.portal.model.Team fetchTeam(long teamId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _teamService.fetchTeam(teamId);
+	}
+
+	@Override
 	public java.util.List<com.liferay.portal.model.Team> getGroupTeams(
 		long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -166,6 +166,13 @@ public class MBMessageServiceWrapper implements MBMessageService,
 	}
 
 	@Override
+	public com.liferay.portlet.messageboards.model.MBMessage fetchMBMessage(
+		long messageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessageService.fetchMBMessage(messageId);
+	}
+
+	@Override
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getCategoryMessages(
 		long groupId, long categoryId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {

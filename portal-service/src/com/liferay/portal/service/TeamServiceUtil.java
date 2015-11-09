@@ -65,6 +65,11 @@ public class TeamServiceUtil {
 		getService().deleteTeam(teamId);
 	}
 
+	public static com.liferay.portal.model.Team fetchTeam(long teamId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().fetchTeam(teamId);
+	}
+
 	public static java.util.List<com.liferay.portal.model.Team> getGroupTeams(
 		long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {

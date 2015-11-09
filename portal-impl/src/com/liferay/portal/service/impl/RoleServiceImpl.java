@@ -172,10 +172,14 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 
 	@Override
 	public Role fetchRole(long roleId) throws PortalException {
-		RolePermissionUtil.check(
-			getPermissionChecker(), roleId, ActionKeys.VIEW);
+		Role role = roleLocalService.fetchRole(roleId);
 
-		return roleLocalService.fetchRole(roleId);
+		if (role != null) {
+			RolePermissionUtil.check(
+				getPermissionChecker(), roleId, ActionKeys.VIEW);
+		}
+
+		return role;
 	}
 
 	/**

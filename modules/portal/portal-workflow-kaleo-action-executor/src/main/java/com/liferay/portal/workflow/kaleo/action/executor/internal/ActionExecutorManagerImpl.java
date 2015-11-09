@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.workflow.kaleo.action.executor.ActionExecutor;
 import com.liferay.portal.workflow.kaleo.definition.ScriptLanguage;
 import com.liferay.portal.workflow.kaleo.model.KaleoAction;
@@ -45,7 +46,8 @@ public class ActionExecutorManagerImpl implements ActionExecutorManager {
 		throws PortalException {
 
 		String actionExecutorKey = getActionExecutorKey(
-			kaleoAction.getScriptLanguage(), kaleoAction.getScript());
+			kaleoAction.getScriptLanguage(),
+			StringUtil.trim(kaleoAction.getScript()));
 
 		ActionExecutor actionExecutor = _actionExecutors.get(actionExecutorKey);
 

@@ -704,7 +704,7 @@
 	</command>
 
 	<command name="viewOnlyAddOptionViaSiteAdminCP">
-		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Icon#ADD" value1="Add" />
+		<execute function="Click" locator1="Icon#ADD" />
 
 		<execute function="AssertElementNotPresent" locator1="NavPill#CONTENT" />
 		<execute function="AssertElementNotPresent" locator1="NavPill#APPLICATIONS" />

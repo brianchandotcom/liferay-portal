@@ -346,16 +346,16 @@
 	</command>
 
 	<command name="SitesDynamicTemplates" priority="3">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Site Templates" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Site Templates" />
 		</execute>
 
 		<execute macro="SiteTemplates#addCP">
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Site Templates" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Site Templates" />
 		</execute>
 
 		<execute macro="SiteTemplates#addSitePageViaSiteTemplateCP">
@@ -365,8 +365,8 @@
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Site Templates" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Site Templates" />
 		</execute>
 
 		<execute macro="SiteTemplates#addSitePageViaSiteTemplateCP">
@@ -374,8 +374,8 @@
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Site Templates" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Site Templates" />
 		</execute>
 
 		<execute macro="SitePage#editTemplatePagesCP">
@@ -421,8 +421,8 @@
 
 		<execute function="SelectWindow" locator1="null" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Site Templates" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Site Templates" />
 		</execute>
 
 		<execute macro="SitePage#editTemplatePagesCP">
@@ -450,8 +450,8 @@
 
 		<execute function="SelectWindow" locator1="null" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="User#addCP">
@@ -461,8 +461,8 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="User#editPasswordCP">
@@ -470,8 +470,8 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addCP">
@@ -480,9 +480,9 @@
 			<var name="siteType" value="Site Template" />
 		</execute>
 
-		<execute macro="Page#gotoUsersCP">
-			<var name="portletName" value="Site Memberships" />
-			<var name="siteScopeName" value="Site Name" />
+		<execute macro="ProductMenu#gotoSitesUsers">
+			<var name="portlet" value="Site Memberships" />
+			<var name="site" value="Site Name" />
 		</execute>
 
 		<execute macro="Site#addMemberCP">
@@ -493,8 +493,8 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="User#assignSiteRoleCP">
@@ -527,7 +527,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Portlet#viewPillTitle">
+		<execute macro="Portlet#viewTitle">
 			<var name="portletName" value="Blogs" />
 		</execute>
 
@@ -561,8 +561,8 @@
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Site Templates" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Site Templates" />
 		</execute>
 
 		<execute macro="SitePage#editTemplatePagesCP">
@@ -583,7 +583,7 @@
 		<execute function="MouseOver#mouseOverClickNavigation" locator1="Home#PAGE_1" />
 		<execute function="ClickNoError" locator1="Home#PAGE_DELETE" />
 		<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to delete this page?" />
-		<execute function="AssertElementNotPresent#assertElementNotPresentClickDockbar" locator1="Home#PAGE_DELETE" />
+		<execute function="AssertElementNotPresent" locator1="link=home" />
 
 		<execute macro="Portlet#deletePG">
 			<var name="portletName" value="Recent Bloggers" />
@@ -598,8 +598,8 @@
 			<var name="portletName" value="Dictionary" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Site Templates" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Site Templates" />
 		</execute>
 
 		<execute macro="Page#addPageToSiteTemplates">
@@ -607,8 +607,13 @@
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Site Templates" />
+		</execute>
+
 		<execute macro="SiteTemplatesNavigator#gotoSiteTemplatesPage">
 			<var name="pageName" value="Added Page Name" />
+			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -630,8 +635,6 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="link=home" />
-
 		<execute macro="Portlet#viewNoSpecificPG">
 			<var name="portletName" value="Recent Bloggers" />
 		</execute>
@@ -644,16 +647,6 @@
 
 		<execute macro="Portlet#viewSpecificPG">
 			<var name="portletName" value="Dictionary" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="Portlet#viewSpecificPG">
-			<var name="portletName" value="Search" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -672,8 +665,8 @@
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Site Templates" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Site Templates" />
 		</execute>
 
 		<execute macro="SiteTemplates#editAllowSiteAdminToModifyPageCP">
@@ -691,6 +684,8 @@
 			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="link=home" />
 
 		<execute macro="SitePage#viewOnlyAddOptionViaSiteAdminCP" />
 
@@ -726,8 +721,8 @@
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Site Templates" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Site Templates" />
 		</execute>
 
 		<execute macro="SiteTemplates#editAllowSiteAdminToModifyPageCP">
@@ -735,8 +730,8 @@
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Site Templates" />
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Site Templates" />
 		</execute>
 
 		<execute macro="SitePage#editTemplatePagesCP">

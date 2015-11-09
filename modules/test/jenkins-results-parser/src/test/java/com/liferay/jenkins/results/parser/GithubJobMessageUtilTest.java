@@ -70,6 +70,7 @@ public class GithubJobMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 			String sampleKey, String buildNumber, String jobName,
 			String hostName)
 		throws Exception {
+
 		String urlString =
 			"https://${hostName}.liferay.com/job/${jobName}/${buildNumber}/";
 

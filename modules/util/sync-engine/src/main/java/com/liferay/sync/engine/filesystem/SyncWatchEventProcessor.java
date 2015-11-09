@@ -569,10 +569,13 @@ public class SyncWatchEventProcessor implements Runnable {
 		Path sourceFilePath = Paths.get(
 			syncWatchEvent.getPreviousFilePathName());
 
-		SyncFile syncFile = SyncFileService.fetchSyncFile(
+		SyncFile sourceSyncFile = SyncFileService.fetchSyncFile(
 			sourceFilePath.toString());
 
-		if (syncFile == null) {
+		SyncFile targetSyncFile = SyncFileService.fetchSyncFile(
+			targetFilePath.toString());
+
+		if ((sourceSyncFile == null) || (targetSyncFile != null)) {
 			if (Files.isDirectory(targetFilePath)) {
 				addFolder(syncWatchEvent);
 			}
@@ -582,23 +585,24 @@ public class SyncWatchEventProcessor implements Runnable {
 
 			return;
 		}
-		else if (isPendingTypePK(syncFile)) {
-			queueSyncWatchEvent(syncFile.getFilePathName(), syncWatchEvent);
+		else if (isPendingTypePK(sourceSyncFile)) {
+			queueSyncWatchEvent(
+				sourceSyncFile.getFilePathName(), syncWatchEvent);
 
 			return;
 		}
 
-		String fileType = syncFile.getType();
+		String fileType = sourceSyncFile.getType();
 
 		if (fileType.equals(SyncFile.TYPE_FILE)) {
 			SyncFileService.moveFileSyncFile(
 				targetFilePath, parentSyncFile.getTypePK(), _syncAccountId,
-				syncFile);
+				sourceSyncFile);
 		}
 		else {
 			SyncFileService.moveFolderSyncFile(
 				targetFilePath, parentSyncFile.getTypePK(), _syncAccountId,
-				syncFile);
+				sourceSyncFile);
 		}
 
 		renameFile(syncWatchEvent);

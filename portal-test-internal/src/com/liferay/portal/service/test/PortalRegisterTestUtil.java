@@ -16,8 +16,8 @@ package com.liferay.portal.service.test;
 
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.workflow.user.UserWorkflowHandler;
 import com.liferay.portlet.asset.util.AssetEntryIndexer;
-import com.liferay.portlet.directory.workflow.UserWorkflowHandler;
 import com.liferay.portlet.documentlibrary.util.DLFileEntryIndexer;
 import com.liferay.portlet.documentlibrary.util.DLFolderIndexer;
 import com.liferay.portlet.messageboards.util.MBMessageIndexer;
@@ -27,7 +27,7 @@ import com.liferay.portlet.usersadmin.util.OrganizationIndexer;
 import com.liferay.portlet.usersadmin.util.UserIndexer;
 
 /**
- * @author Roberto Díaz
+ * @author Roberto D�az
  */
 public class PortalRegisterTestUtil {
 

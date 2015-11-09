@@ -27,6 +27,7 @@ FileTree fileTree = fileTree(rootDir) {
 		include "apps/control-menu/*/build.gradle"
 		include "apps/currency-converter/*/build.gradle"
 		include "apps/dictionary/*/build.gradle"
+		include "apps/directory/*/build.gradle"
 		include "apps/document-library/*/build.gradle"
 		include "apps/dynamic-data-lists/*/build.gradle"
 		include "apps/dynamic-data-mapping/*/build.gradle"

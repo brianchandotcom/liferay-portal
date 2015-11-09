@@ -78,12 +78,11 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 						dropdown="<%= true %>"
 						label='<%= HtmlUtil.escape(LanguageUtil.get(request, "document-types")) %>'
 					>
-
 						<portlet:renderURL var="viewBasicFileEntryTypeURL">
 							<portlet:param name="mvcRenderCommandName" value="/document_library/view" />
 							<portlet:param name="browseBy" value="file-entry-type" />
 							<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
-							<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(0) %>" />
+							<portlet:param name="fileEntryTypeId" value="0" />
 						</portlet:renderURL>
 
 						<aui:nav-item

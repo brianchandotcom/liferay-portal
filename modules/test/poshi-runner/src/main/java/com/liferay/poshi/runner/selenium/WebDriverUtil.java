@@ -29,6 +29,7 @@ import java.util.Map;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 /**
@@ -109,6 +110,10 @@ public class WebDriverUtil extends PropsValues {
 		return new ChromeDriver(desiredCapabilities);
 	}
 
+	private WebDriver _getEdgeDriver() {
+		return new EdgeDriver();
+	}
+
 	private WebDriver _getWebDriver() {
 		return _webDriver;
 	}
@@ -122,6 +127,11 @@ public class WebDriverUtil extends PropsValues {
 		}
 		else if (BROWSER_TYPE.equals("chrome")) {
 			_webDriver = _getChromeDriver();
+		}
+		else if (BROWSER_TYPE.equals("edge") &&
+				 !SELENIUM_REMOTE_DRIVER_ENABLED) {
+
+			_webDriver = _getEdgeDriver();
 		}
 		else {
 			throw new RuntimeException("Invalid browser type " + BROWSER_TYPE);

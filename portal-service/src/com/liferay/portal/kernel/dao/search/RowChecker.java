@@ -176,8 +176,9 @@ public class RowChecker {
 			return StringPool.BLANK;
 		}
 
-		StringBuilder sb = new StringBuilder(10);
+		StringBuilder sb = new StringBuilder(12);
 
+		sb.append("<label>");
 		sb.append("<input name=\"");
 		sb.append(name);
 		sb.append("\" title=\"");
@@ -188,6 +189,7 @@ public class RowChecker {
 		sb.append("'.table'), ");
 		sb.append(checkBoxRowIds);
 		sb.append(", this, 'tr:not(.lfr-template)');\">");
+		sb.append("</label>");
 
 		return sb.toString();
 	}
@@ -252,8 +254,9 @@ public class RowChecker {
 		String name, String value, String checkBoxRowIds,
 		String checkBoxAllRowIds, String checkBoxPostOnClick) {
 
-		StringBundler sb = new StringBundler(14);
+		StringBundler sb = new StringBundler(16);
 
+		sb.append("<label>");
 		sb.append("<input ");
 
 		if (checked) {
@@ -281,6 +284,7 @@ public class RowChecker {
 		}
 
 		sb.append(">");
+		sb.append("</label>");
 
 		return sb.toString();
 	}

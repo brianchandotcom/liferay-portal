@@ -110,7 +110,7 @@
 		<if>
 			<equals arg1="${multipleAssets}" arg2="true" />
 			<then>
-				<execute function="AssertNotVisible" locator1="Message#EMPTY_INFO" value1="The Recycle Bin is empty." />
+				<execute function="AssertElementNotPresent" locator1="Message#EMPTY_INFO" value1="The Recycle Bin is empty." />
 			</then>
 			<else>
 				<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="The Recycle Bin is empty." />

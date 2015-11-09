@@ -20,7 +20,11 @@
 
 		<execute function="Type#mouseOverFocusType" locator1="TextInput#TITLE" value1="Web Content Title" />
 
-		<execute function="Click#pauseClickAt" locator1="CKEditor#CONTENT_IMAGE_LINK" />
+		<execute function="Click#pauseClickAt" locator1="AlloyEditor#CONTENT_FIELD" />
+
+		<execute function="Click" locator1="AlloyEditor#CONTENT_ADD_BUTTON" />
+
+		<execute function="Click" locator1="AlloyEditor#CONTENT_ADD_MENUBAR_IMAGE" />
 
 		<execute macro="ItemSelector#addFromURL">
 			<var name="imageSourceURL" value="https://raw.githubusercontent.com/liferay/liferay-portal/master/portal-web/test/functional/com/liferay/portalweb/dependencies/Document_1.jpg" />

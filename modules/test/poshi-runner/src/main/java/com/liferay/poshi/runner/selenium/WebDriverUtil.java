@@ -96,6 +96,10 @@ public class WebDriverUtil extends PropsValues {
 	}
 
 	private WebDriver _getChromeDriver() {
+		System.setProperty(
+			"webdriver.chrome.driver",
+			SELENIUM_EXECUTABLE_DIR_NAME + SELENIUM_CHROME_DRIVER_EXECUTABLE);
+
 		DesiredCapabilities desiredCapabilities = DesiredCapabilities.chrome();
 
 		Map<String, Object> preferences = new HashMap<>();

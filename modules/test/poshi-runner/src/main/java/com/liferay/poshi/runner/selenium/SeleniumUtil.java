@@ -61,11 +61,6 @@ public class SeleniumUtil extends PropsValues {
 			_selenium = new ChromeMobileDriverImpl(portalURL, webDriver);
 		}
 		else if (BROWSER_TYPE.equals("chrome")) {
-			System.setProperty(
-				"webdriver.chrome.driver",
-				SELENIUM_EXECUTABLE_DIR_NAME +
-					SELENIUM_CHROME_DRIVER_EXECUTABLE);
-
 			_selenium = new ChromeWebDriverImpl(portalURL, webDriver);
 		}
 		else if (BROWSER_TYPE.equals("edge") &&

@@ -12,9 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.runtime.action;
+package com.liferay.portal.workflow.kaleo.action.executor.internal;
 
-import com.liferay.portal.kernel.scripting.ScriptingUtil;
+import com.liferay.portal.kernel.scripting.Scripting;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.workflow.kaleo.action.executor.ActionExecutor;
+import com.liferay.portal.workflow.kaleo.action.executor.ActionExecutorException;
 import com.liferay.portal.workflow.kaleo.model.KaleoAction;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.util.ScriptingContextBuilderUtil;
@@ -26,9 +29,23 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portal.workflow.kaleo.action.executor.language=beanshell",
+		"com.liferay.portal.workflow.kaleo.action.executor.language=groovy",
+		"com.liferay.portal.workflow.kaleo.action.executor.language=javascript",
+		"com.liferay.portal.workflow.kaleo.action.executor.language=python",
+		"com.liferay.portal.workflow.kaleo.action.executor.language=ruby"
+	},
+	service = ActionExecutor.class
+)
 public class ScriptActionExecutor implements ActionExecutor {
 
 	public ScriptActionExecutor() {
@@ -37,12 +54,11 @@ public class ScriptActionExecutor implements ActionExecutor {
 
 	@Override
 	public void execute(
-			KaleoAction kaleoAction, ExecutionContext executionContext,
-			ClassLoader... classLoaders)
+			KaleoAction kaleoAction, ExecutionContext executionContext)
 		throws ActionExecutorException {
 
 		try {
-			doExecute(kaleoAction, executionContext, classLoaders);
+			doExecute(kaleoAction, executionContext);
 		}
 		catch (Exception e) {
 			throw new ActionExecutorException(e);
@@ -54,16 +70,18 @@ public class ScriptActionExecutor implements ActionExecutor {
 	}
 
 	protected void doExecute(
-			KaleoAction kaleoAction, ExecutionContext executionContext,
-			ClassLoader... classLoaders)
+			KaleoAction kaleoAction, ExecutionContext executionContext)
 		throws Exception {
 
 		Map<String, Object> inputObjects =
 			ScriptingContextBuilderUtil.buildScriptingContext(executionContext);
 
-		Map<String, Object> results = ScriptingUtil.eval(
+		String[] scriptRequiredContexts = StringUtil.split(
+			kaleoAction.getScriptRequiredContexts());
+
+		Map<String, Object> results = _scripting.eval(
 			null, inputObjects, _outputObjects, kaleoAction.getScriptLanguage(),
-			kaleoAction.getScript(), classLoaders);
+			kaleoAction.getScript(), scriptRequiredContexts);
 
 		Map<String, Serializable> resultsWorkflowContext =
 			(Map<String, Serializable>)results.get(
@@ -73,6 +91,12 @@ public class ScriptActionExecutor implements ActionExecutor {
 			executionContext, resultsWorkflowContext);
 	}
 
+	@Reference(unbind = "-")
+	protected void setScripting(Scripting scripting) {
+		_scripting = scripting;
+	}
+
 	private final Set<String> _outputObjects = new HashSet<>();
+	private Scripting _scripting;
 
 }

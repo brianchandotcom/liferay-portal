@@ -1,6 +1,12 @@
 Bundle-Name: Liferay Portal Workflow Kaleo Service
 Bundle-SymbolicName: com.liferay.portal.workflow.kaleo.service
 Bundle-Version: 1.0.0
+Export-Package:  \
+	com.liferay.portal.workflow.kaleo.model,\
+	com.liferay.portal.workflow.kaleo.runtime,\
+	com.liferay.portal.workflow.kaleo.runtime.action,\
+	com.liferay.portal.workflow.kaleo.runtime.util,\
+	com.liferay.portal.workflow.kaleo.util
 Import-Package:\
 	com.liferay.portal.kernel.messaging.config,\
 	com.liferay.portal.kernel.messaging.proxy,\

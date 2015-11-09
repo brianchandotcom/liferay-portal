@@ -12,19 +12,28 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.runtime.action;
+package com.liferay.portal.workflow.kaleo.action.executor;
 
-import com.liferay.portal.workflow.kaleo.model.KaleoAction;
-import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
+import com.liferay.portal.kernel.workflow.WorkflowException;
 
 /**
  * @author Michael C. Han
  */
-public interface ActionExecutor {
+public class ActionExecutorException extends WorkflowException {
 
-	public void execute(
-			KaleoAction kaleoAction, ExecutionContext executionContext,
-			ClassLoader... classLoaders)
-		throws ActionExecutorException;
+	public ActionExecutorException() {
+	}
+
+	public ActionExecutorException(String msg) {
+		super(msg);
+	}
+
+	public ActionExecutorException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public ActionExecutorException(Throwable cause) {
+		super(cause);
+	}
 
 }

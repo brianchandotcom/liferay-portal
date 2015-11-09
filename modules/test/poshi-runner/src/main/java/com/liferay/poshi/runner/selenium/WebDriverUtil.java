@@ -183,6 +183,31 @@ public class WebDriverUtil extends PropsValues {
 		return new InternetExplorerDriver(desiredCapabilities);
 	}
 
+	private WebDriver _getInternetExplorerRemoteDriver() {
+		DesiredCapabilities desiredCapabilities =
+			DesiredCapabilities.internetExplorer();
+
+		desiredCapabilities.setCapability(
+			InternetExplorerDriver.
+				INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,
+			true);
+		desiredCapabilities.setCapability(
+			"platform", PropsValues.SELENIUM_DESIRED_CAPABILITIES_PLATFORM);
+		desiredCapabilities.setCapability(
+			"version", PropsValues.SELENIUM_DESIRED_CAPABILITIES_VERSION);
+
+		URL url = null;
+
+		try {
+			url = new URL(
+				PropsValues.SELENIUM_REMOTE_DRIVER_HUB + ":4444/wd/hub");
+		}
+		catch (MalformedURLException murle) {
+		}
+
+		return new RemoteWebDriver(url, desiredCapabilities);
+	}
+
 	private WebDriver _getWebDriver() {
 		return _webDriver;
 	}
@@ -214,6 +239,11 @@ public class WebDriverUtil extends PropsValues {
 				 !SELENIUM_REMOTE_DRIVER_ENABLED) {
 
 			_webDriver = _getInternetExplorerDriver();
+		}
+		else if (BROWSER_TYPE.equals("internetexplorer") &&
+				 SELENIUM_REMOTE_DRIVER_ENABLED) {
+
+			_webDriver = _getInternetExplorerRemoteDriver();
 		}
 		else {
 			throw new RuntimeException("Invalid browser type " + BROWSER_TYPE);

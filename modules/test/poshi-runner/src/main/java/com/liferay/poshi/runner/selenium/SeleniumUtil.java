@@ -93,7 +93,8 @@ public class SeleniumUtil extends PropsValues {
 		else if (BROWSER_TYPE.equals("internetexplorer") &&
 				 SELENIUM_REMOTE_DRIVER_ENABLED) {
 
-			_selenium = new InternetExplorerRemoteWebDriverImpl(portalURL);
+			_selenium = new InternetExplorerRemoteWebDriverImpl(
+				portalURL, webDriver);
 		}
 		else if (BROWSER_TYPE.equals("iossafari")) {
 			_selenium = new IOSMobileDriverImpl(portalURL);

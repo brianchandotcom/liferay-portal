@@ -703,7 +703,6 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			"mvcRenderCommandName", "/document_library/edit_file_entry");
 		portletURL.setParameter(Constants.CMD, Constants.UPDATE, false);
 		portletURL.setParameter("redirect", redirect, false);
-
 		portletURL.setParameter(
 			"groupId", String.valueOf(fileEntry.getGroupId()), false);
 		portletURL.setParameter(

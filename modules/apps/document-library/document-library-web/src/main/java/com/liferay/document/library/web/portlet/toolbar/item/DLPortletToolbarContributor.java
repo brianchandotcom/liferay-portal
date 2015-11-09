@@ -138,7 +138,7 @@ public class DLPortletToolbarContributor implements PortletToolbarContributor {
 			}
 			catch (PortalException pe) {
 				_log.error(
-					"Cannot add menu item for file entry type " +
+					"Unable to add menu item for file entry type " +
 						fileEntryType.getName(),
 					pe);
 			}
@@ -160,6 +160,12 @@ public class DLPortletToolbarContributor implements PortletToolbarContributor {
 			return;
 		}
 
+		URLMenuItem urlMenuItem = new URLMenuItem();
+
+		urlMenuItem.setLabel(
+			LanguageUtil.get(
+				PortalUtil.getHttpServletRequest(portletRequest), "folder"));
+
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
@@ -176,11 +182,6 @@ public class DLPortletToolbarContributor implements PortletToolbarContributor {
 		portletURL.setParameter("parentFolderId", String.valueOf(folderId));
 		portletURL.setParameter("ignoreRootFolder", Boolean.TRUE.toString());
 
-		URLMenuItem urlMenuItem = new URLMenuItem();
-
-		urlMenuItem.setLabel(
-			LanguageUtil.get(
-				PortalUtil.getHttpServletRequest(portletRequest), "folder"));
 		urlMenuItem.setURL(portletURL.toString());
 
 		menuItems.add(urlMenuItem);
@@ -204,6 +205,13 @@ public class DLPortletToolbarContributor implements PortletToolbarContributor {
 			return;
 		}
 
+		URLMenuItem urlMenuItem = new URLMenuItem();
+
+		urlMenuItem.setLabel(
+			LanguageUtil.get(
+				PortalUtil.getHttpServletRequest(portletRequest),
+				"repository"));
+
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
@@ -215,12 +223,6 @@ public class DLPortletToolbarContributor implements PortletToolbarContributor {
 		portletURL.setParameter(
 			"redirect", PortalUtil.getCurrentURL(portletRequest));
 
-		URLMenuItem urlMenuItem = new URLMenuItem();
-
-		urlMenuItem.setLabel(
-			LanguageUtil.get(
-				PortalUtil.getHttpServletRequest(portletRequest),
-				"repository"));
 		urlMenuItem.setURL(portletURL.toString());
 
 		menuItems.add(urlMenuItem);
@@ -245,6 +247,12 @@ public class DLPortletToolbarContributor implements PortletToolbarContributor {
 			return;
 		}
 
+		URLMenuItem urlMenuItem = new URLMenuItem();
+
+		urlMenuItem.setLabel(
+			LanguageUtil.get(
+				PortalUtil.getHttpServletRequest(portletRequest), "shortcut"));
+
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
@@ -260,11 +268,6 @@ public class DLPortletToolbarContributor implements PortletToolbarContributor {
 			String.valueOf(_getRepositoryId(themeDisplay, folder)));
 		portletURL.setParameter("folderId", String.valueOf(folderId));
 
-		URLMenuItem urlMenuItem = new URLMenuItem();
-
-		urlMenuItem.setLabel(
-			LanguageUtil.get(
-				PortalUtil.getHttpServletRequest(portletRequest), "shortcut"));
 		urlMenuItem.setURL(portletURL.toString());
 
 		menuItems.add(urlMenuItem);
@@ -314,8 +317,8 @@ public class DLPortletToolbarContributor implements PortletToolbarContributor {
 			}
 			catch (PortalException pe) {
 				_log.error(
-					"Cannot obtain file entry types for group id " +
-						groupId + " and folder " + folderId,
+					"Unable to get file entry types for group " + groupId +
+						" and folder " + folderId,
 					pe);
 			}
 		}
@@ -338,7 +341,7 @@ public class DLPortletToolbarContributor implements PortletToolbarContributor {
 				menuItems, folder, themeDisplay, portletRequest);
 		}
 		catch (PortalException pe) {
-			_log.error("Cannot add folder menu item", pe);
+			_log.error("Unable to add folder menu item", pe);
 		}
 
 		try {
@@ -346,7 +349,7 @@ public class DLPortletToolbarContributor implements PortletToolbarContributor {
 				menuItems, folder, themeDisplay, portletRequest);
 		}
 		catch (PortalException pe) {
-			_log.error("Cannot add shortcut menu item", pe);
+			_log.error("Unable to add shortcut menu item", pe);
 		}
 
 		try {
@@ -354,7 +357,7 @@ public class DLPortletToolbarContributor implements PortletToolbarContributor {
 				menuItems, folder, themeDisplay, portletRequest);
 		}
 		catch (PortalException pe) {
-			_log.error("Cannot add repository menu item", pe);
+			_log.error("Unable to add repository menu item", pe);
 		}
 
 		try {
@@ -362,14 +365,15 @@ public class DLPortletToolbarContributor implements PortletToolbarContributor {
 				menuItems, folder, themeDisplay, portletRequest);
 		}
 		catch (PortalException pe) {
-			_log.error("Cannot add repository menu item", pe);
+			_log.error("Unable to add repository menu item", pe);
 		}
 
 		return menuItems;
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.portlet.documentlibrary.model.DLFolder)", unbind = "-"
+		target = "(model.class.name=com.liferay.portlet.documentlibrary.model.DLFolder)",
+		unbind = "-"
 	)
 	protected void setBaseModelPermissionChecker(
 		BaseModelPermissionChecker baseModelPermissionChecker) {
@@ -452,6 +456,13 @@ public class DLPortletToolbarContributor implements PortletToolbarContributor {
 			return;
 		}
 
+		URLMenuItem urlMenuItem = new URLMenuItem();
+
+		urlMenuItem.setLabel(
+			LanguageUtil.get(
+				PortalUtil.getHttpServletRequest(portletRequest),
+				"basic-document"));
+
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
@@ -468,12 +479,6 @@ public class DLPortletToolbarContributor implements PortletToolbarContributor {
 			String.valueOf(_getRepositoryId(themeDisplay, folder)));
 		portletURL.setParameter("folderId", String.valueOf(folderId));
 
-		URLMenuItem urlMenuItem = new URLMenuItem();
-
-		urlMenuItem.setLabel(
-			LanguageUtil.get(
-				PortalUtil.getHttpServletRequest(portletRequest),
-				"basic-document"));
 		urlMenuItem.setURL(portletURL.toString());
 
 		menuItems.add(urlMenuItem);
@@ -485,7 +490,16 @@ public class DLPortletToolbarContributor implements PortletToolbarContributor {
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		long folderId = _getFolderId(folder);
+		URLMenuItem urlMenuItem = new URLMenuItem();
+
+		String label = LanguageUtil.get(
+			PortalUtil.getHttpServletRequest(portletRequest),
+			HtmlUtil.escape(
+				fileEntryType.getUnambiguousName(
+					fileEntryTypes, themeDisplay.getScopeGroupId(),
+					themeDisplay.getLocale())));
+
+		urlMenuItem.setLabel(label);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
@@ -501,21 +515,12 @@ public class DLPortletToolbarContributor implements PortletToolbarContributor {
 		portletURL.setParameter(
 			"repositoryId",
 			String.valueOf(_getRepositoryId(themeDisplay, folder)));
-		portletURL.setParameter("folderId", String.valueOf(folderId));
+		portletURL.setParameter(
+			"folderId", String.valueOf(_getFolderId(folder)));
 		portletURL.setParameter(
 			"fileEntryTypeId",
 			String.valueOf(fileEntryType.getFileEntryTypeId()));
 
-		String label = LanguageUtil.get(
-			PortalUtil.getHttpServletRequest(portletRequest),
-			HtmlUtil.escape(
-				fileEntryType.getUnambiguousName(
-					fileEntryTypes, themeDisplay.getScopeGroupId(),
-					themeDisplay.getLocale())));
-
-		URLMenuItem urlMenuItem = new URLMenuItem();
-
-		urlMenuItem.setLabel(label);
 		urlMenuItem.setURL(portletURL.toString());
 
 		return urlMenuItem;

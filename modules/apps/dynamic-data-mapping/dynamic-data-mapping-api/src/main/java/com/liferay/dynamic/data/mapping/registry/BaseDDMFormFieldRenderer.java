@@ -36,6 +36,12 @@ import java.util.Locale;
  */
 public abstract class BaseDDMFormFieldRenderer implements DDMFormFieldRenderer {
 
+	public abstract String getTemplateLanguage();
+
+	public abstract String getTemplateNamespace();
+
+	public abstract TemplateResource getTemplateResource();
+
 	@Override
 	public String render(
 			DDMFormField ddmFormField,

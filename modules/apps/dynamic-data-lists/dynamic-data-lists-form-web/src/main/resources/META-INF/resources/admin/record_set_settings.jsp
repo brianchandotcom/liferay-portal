@@ -23,6 +23,7 @@ long recordSetId = BeanParamUtil.getLong(recordSet, request, "recordSetId");
 
 long groupId = BeanParamUtil.getLong(recordSet, request, "groupId", scopeGroupId);
 String redirectURL = GetterUtil.getString(recordSet.getSettingsProperty("redirectURL", StringPool.BLANK));
+boolean requireCaptcha = GetterUtil.getBoolean(recordSet.getSettingsProperty("requireCaptcha", Boolean.FALSE.toString()));
 %>
 
 <portlet:actionURL name="updateRecordSetSettings" var="updateRecordSetSettingsURL">
@@ -38,6 +39,8 @@ String redirectURL = GetterUtil.getString(recordSet.getSettingsProperty("redirec
 
 		<aui:fieldset>
 			<aui:input label="redirect-url-on-success" name="redirectURL" value="<%= HtmlUtil.toInputSafe(redirectURL) %>" wrapperCssClass="lfr-input-text-container" />
+
+			<aui:input name="requireCaptcha" type="checkbox" value="<%= requireCaptcha %>" />
 
 			<c:if test="<%= ddlFormAdminDisplayContext.isDDLRecordWorkflowHandlerDeployed() %>">
 				<aui:select label="workflow" name="workflowDefinition">

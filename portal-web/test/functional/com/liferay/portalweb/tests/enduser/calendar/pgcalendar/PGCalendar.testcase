@@ -4677,6 +4677,16 @@
 
 		<execute macro="Page#gotoMyDashboard" />
 
+		<execute macro="Calendar#searchOtherCalendars">
+			<var name="searchValue" value="site" />
+		</execute>
+
+		<for list="Site A,Site B,Site C" param="calendarName">
+			<execute macro="Calendar#viewOtherCalendarsSearchResult">
+				<var name="calendarName" value="${calendarName}" />
+			</execute>
+		</for>
+
 		<execute macro="CalendarNavigator#gotoAddEvent" />
 
 		<execute macro="CalendarEvent#viewAvailableCalendars">

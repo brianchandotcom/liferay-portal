@@ -14,26 +14,40 @@
 
 package com.liferay.blogs.web.upgrade;
 
+import com.liferay.blogs.web.upgrade.v1_0_0.UpgradeEnableViewCount;
 import com.liferay.blogs.web.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.blogs.web.upgrade.v1_0_0.UpgradePortletSettings;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.service.ReleaseLocalService;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.service.PortletPreferencesLocalService;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
  */
-@Component(immediate = true, service = BlogsWebUpgrade.class)
-public class BlogsWebUpgrade {
+@Component(immediate = true)
+public class BlogsWebUpgrade implements UpgradeStepRegistrator {
+
+	@Override
+	public void register(Registry registry) {
+		registry.register(
+			"com.liferay.blogs.web", "0.0.0", "1.0.0", new DummyUpgradeStep());
+		registry.register(
+			"com.liferay.blogs.web", "0.0.1", "1.0.0", new UpgradePortletId(),
+			new UpgradePortletSettings(_settingsFactory),
+			new UpgradeEnableViewCount());
+	}
+
+	@Reference(unbind = "-")
+	public void setPortletPreferencesLocalService(
+		PortletPreferencesLocalService portletPreferencesLocalService) {
+
+		_portletPreferencesLocalService = portletPreferencesLocalService;
+	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
@@ -41,30 +55,11 @@ public class BlogsWebUpgrade {
 	}
 
 	@Reference(unbind = "-")
-	protected void setReleaseLocalService(
-		ReleaseLocalService releaseLocalService) {
-
-		_releaseLocalService = releaseLocalService;
-	}
-
-	@Reference(unbind = "-")
 	protected void setSettingsFactory(SettingsFactory settingsFactory) {
 		_settingsFactory = settingsFactory;
 	}
 
-	@Activate
-	protected void upgrade() throws PortalException {
-		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
-
-		upgradeProcesses.add(new UpgradePortletId());
-
-		upgradeProcesses.add(new UpgradePortletSettings(_settingsFactory));
-
-		_releaseLocalService.updateRelease(
-			"com.liferay.blogs.web", upgradeProcesses, 1, 1, false);
-	}
-
-	private ReleaseLocalService _releaseLocalService;
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
 	private SettingsFactory _settingsFactory;
 
 }

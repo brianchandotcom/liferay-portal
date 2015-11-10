@@ -292,14 +292,14 @@
 		<var name="i" value="1" />
 
 		<while>
-			<condition function="IsElementPresent" locator1="xpath=(//div[@data-fieldname='Text']/input)[${i}]" />
+			<condition function="IsElementPresent" locator1="xpath=(//div[@data-fieldname='Text']//input)[${i}]" />
 			<then>
 				<var method="MathUtil#sum('${i}', '1')" name="i" />
 
 				<if>
-					<condition function="IsElementPresent" locator1="xpath=(//div[@data-fieldname='Text']/input)[${i}]" />
+					<condition function="IsElementPresent" locator1="xpath=(//div[@data-fieldname='Text']//input)[${i}]" />
 					<then>
-						<execute function="Type" locator1="xpath=(//div[@data-fieldname='Text']/input)[${i}]" value1="${ddlRecordFieldData} ${i}" />
+						<execute function="Type" locator1="xpath=(//div[@data-fieldname='Text']//input)[${i}]" value1="${ddlRecordFieldData} ${i}" />
 					</then>
 				</if>
 			</then>

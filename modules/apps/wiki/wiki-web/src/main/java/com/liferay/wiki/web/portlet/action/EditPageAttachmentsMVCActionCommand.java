@@ -410,8 +410,7 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 			if (cmd.equals(Constants.ADD_TEMP) ||
 				cmd.equals(Constants.DELETE_TEMP)) {
 
-				actionResponse.setRenderParameter(
-					"mvcPath", "/html/common/null.jsp");
+				actionResponse.setRenderParameter("mvcPath", "/null.jsp");
 			}
 		}
 		catch (NoSuchNodeException | NoSuchPageException |

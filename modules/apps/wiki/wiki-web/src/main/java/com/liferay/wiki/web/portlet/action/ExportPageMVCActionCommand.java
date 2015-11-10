@@ -119,8 +119,7 @@ public class ExportPageMVCActionCommand extends BaseMVCActionCommand {
 				nodeId, title, version, targetExtension, viewPageURL,
 				editPageURL, themeDisplay, request, response);
 
-			actionResponse.setRenderParameter(
-				"mvcPath", "/html/common/null.jsp");
+			actionResponse.setRenderParameter("mvcPath", "/null.jsp");
 		}
 		catch (Exception e) {
 			String host = PrefsPropsUtil.getString(

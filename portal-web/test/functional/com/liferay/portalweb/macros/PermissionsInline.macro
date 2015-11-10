@@ -129,7 +129,7 @@
 
 		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
+		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 	</command>
@@ -310,7 +310,7 @@
 		<var name="key_teamName" value="${teamName}" />
 
 		<execute function="Click" locator1="SiteTeams#TEAM_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
+		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
 
 		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
 	</command>
@@ -345,7 +345,7 @@
 
 		<execute function="MouseOver" locator1="WC#ENTRY_DESCRIPTIVE_THUMBNAIL" />
 		<execute function="Click" locator1="WC#ENTRY_DESCRIPTIVE_MENULIST_ICON" />
-		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
+		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
 
 		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
 		<execute function="AssertTextEquals" locator1="Permissions#HEADER_TITLE" value1="${webContentTitle}" />

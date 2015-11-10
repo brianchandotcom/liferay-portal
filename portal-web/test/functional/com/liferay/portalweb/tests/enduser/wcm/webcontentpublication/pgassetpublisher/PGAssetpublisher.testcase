@@ -384,7 +384,7 @@
 		<var name="key_ddlDataDefinitionName" value="Advertisement WC Structure Name" />
 
 		<execute function="Click" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS" />
-		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
+		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
 
 		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
 			<var name="addOrRemoveViewPermission" value="Remove" />
@@ -423,7 +423,7 @@
 		<var name="key_ddlDataDefinitionName" value="Press Release Structure Name" />
 
 		<execute function="Click" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS" />
-		<execute function="Click" locator1="MenuItem#PERMISSIONS" />
+		<execute function="Click" locator1="MenuItem#PERMISSIONS_LEXICON" />
 
 		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
 			<var name="addOrRemoveViewPermission" value="Remove" />
@@ -461,7 +461,7 @@
 		<var name="key_ddlTemplateName" value="Advertisement Template Name" />
 
 		<execute function="Click" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ELLIPSIS" />
-		<execute function="Click" locator1="MenuItem#PERMISSIONS" />
+		<execute function="Click" locator1="MenuItem#PERMISSIONS_LEXICON" />
 
 		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
 			<var name="addOrRemoveViewPermission" value="Remove" />
@@ -499,7 +499,7 @@
 		<var name="key_ddlTemplateName" value="Press Release Template Name" />
 
 		<execute function="Click" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ELLIPSIS" />
-		<execute function="Click" locator1="MenuItem#PERMISSIONS" />
+		<execute function="Click" locator1="MenuItem#PERMISSIONS_LEXICON" />
 
 		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
 			<var name="addOrRemoveViewPermission" value="Remove" />

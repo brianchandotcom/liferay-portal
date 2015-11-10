@@ -35,25 +35,25 @@ public class JenkinsResultsParserUtil {
 	public static String expandSlaveRange(String value) {
 		StringBuilder sb = new StringBuilder();
 
-		for (String slaveHostname : value.split(",")) {
-			int x = slaveHostname.indexOf("..");
+		for (String hostName : value.split(",")) {
+			int x = hostName.indexOf("..");
 
 			if (x == -1) {
-				sb.append(slaveHostname);
+				sb.append(hostName);
 
 				continue;
 			}
 
-			int y = slaveHostname.lastIndexOf("-") + 1;
+			int y = hostName.lastIndexOf("-") + 1;
 
-			String slaveHostnamePrefix = slaveHostname.substring(0, y);
+			String prefix = hostName.substring(0, y);
 
-			int firstSlaveHostnameIndex = Integer.parseInt(slaveHostname.substring(y, x));
-			int lastSlaveHostnameIndex = Integer.parseInt(slaveHostname.substring(x + 2));
+			int first = Integer.parseInt(hostName.substring(y, x));
+			int last = Integer.parseInt(hostName.substring(x + 2));
 
-			for (int currentSlaveHostnameIndex = firstSlaveHostnameIndex; currentSlaveHostnameIndex <= lastSlaveHostnameIndex; currentSlaveHostnameIndex++) {
-				sb.append(slaveHostnamePrefix);
-				sb.append(currentSlaveHostnameIndex);
+			for (int current = first; current <= last; current++) {
+				sb.append(prefix);
+				sb.append(current);
 				sb.append(",");
 			}
 		}

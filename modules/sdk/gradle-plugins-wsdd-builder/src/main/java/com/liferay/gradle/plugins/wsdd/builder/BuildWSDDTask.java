@@ -23,6 +23,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.JavaExec;
 
 /**
@@ -41,22 +43,27 @@ public class BuildWSDDTask extends JavaExec {
 		super.exec();
 	}
 
+	@Input
 	public String getBuilderClasspath() {
 		return GradleUtil.toString(_builderClasspath);
 	}
 
+	@InputFile
 	public File getInputFile() {
 		return GradleUtil.toFile(getProject(), _inputFile);
 	}
 
+	@Input
 	public File getOutputDir() {
 		return GradleUtil.toFile(getProject(), _outputDir);
 	}
 
+	@Input
 	public File getServerConfigFile() {
 		return GradleUtil.toFile(getProject(), _serverConfigFile);
 	}
 
+	@Input
 	public String getServiceNamespace() {
 		return GradleUtil.toString(_serviceNamespace);
 	}

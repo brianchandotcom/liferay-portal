@@ -74,7 +74,7 @@
   "building" : false,
   "description" : "<strong>brianchandotcom</strong> - <a href=\"https://github.com/brianchandotcom/liferay-portal/pull/31450\">PR#31450</a> - <a href=\"https://test-1-1.liferay.com//userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/1550/jenkins-report.html\">Jenkins Report</a>",
   "duration" : 768812,
-  "estimatedDuration" : 1018285,
+  "estimatedDuration" : 1206018,
   "executor" : null,
   "fullDisplayName" : "test-portal-acceptance-pullrequest-batch(master) » PortalSmoke#Smoke,!master #1287",
   "id" : "2015-10-26_16-31-48",

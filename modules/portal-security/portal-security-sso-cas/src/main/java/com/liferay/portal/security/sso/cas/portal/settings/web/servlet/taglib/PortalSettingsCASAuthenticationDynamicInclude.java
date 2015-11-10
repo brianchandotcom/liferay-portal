@@ -75,7 +75,8 @@ public class PortalSettingsCASAuthenticationDynamicInclude
 		_servletContext = servletContext;
 	}
 
-	private static final String _JSP_PATH = "/portal-settings/cas.jsp";
+	private static final String _JSP_PATH =
+		"/com.liferay.portal.settings.web/cas.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalSettingsCASAuthenticationDynamicInclude.class);

@@ -1370,7 +1370,6 @@
 			</then>
 			<else>
 				<execute function="AssertElementPresent" locator1="Wiki#LINK_ADD_CHILD_PAGE" />
-				<execute function="AssertElementPresent" locator1="Icon#EDIT" />
 				<execute function="AssertElementPresent" locator1="PGWiki#COMMENTS_BE_THE_FIRST_LINK" />
 				<execute function="AssertElementPresent" locator1="Comments#SUBSCRIBE_TO_COMMENTS_LINK" />
 			</else>

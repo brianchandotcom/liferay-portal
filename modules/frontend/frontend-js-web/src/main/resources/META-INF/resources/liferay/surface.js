@@ -1,8 +1,6 @@
 AUI.add(
 	'liferay-surface',
 	function(A) {
-		var AArray = A.Array;
-
 		A.Surface.DEFAULT = 'defaultScreen';
 
 		var Surface = {
@@ -350,6 +348,9 @@ AUI.add(
 					},
 					method: {
 						value: 'POST'
+					},
+					timeout: {
+						value: Liferay.PropsValues.JAVASCRIPT_SINGLE_PAGE_APPLICATION_TIMEOUT
 					}
 				},
 
@@ -364,6 +365,9 @@ AUI.add(
 				ATTRS: {
 					cacheable: {
 						value: true
+					},
+					timeout: {
+						value: Liferay.PropsValues.JAVASCRIPT_SINGLE_PAGE_APPLICATION_TIMEOUT
 					},
 					urlParams: {
 						value: {

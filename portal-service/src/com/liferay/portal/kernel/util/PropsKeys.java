@@ -993,6 +993,8 @@ public interface PropsKeys {
 
 	public static final String JAVASCRIPT_SINGLE_PAGE_APPLICATION_ENABLED = "javascript.single.page.application.enabled";
 
+	public static final String JAVASCRIPT_SINGLE_PAGE_APPLICATION_TIMEOUT = "javascript.single.page.application.timeout";
+
 	public static final String JDBC_DEFAULT_DRIVER_CLASS_NAME = "jdbc.default.driverClassName";
 
 	public static final String JDBC_DEFAULT_JNDI_NAME = "jdbc.default.jndi.name";

@@ -34,7 +34,10 @@ import javax.servlet.http.HttpServletRequest;
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  * @author Tibor Lipusz
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.site.navigation.taglib.servlet.taglib.NavigationTag}
  */
+@Deprecated
 public class NavigationTag extends IncludeTag {
 
 	public void setBulletStyle(String bulletStyle) {

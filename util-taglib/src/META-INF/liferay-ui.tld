@@ -3517,6 +3517,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-site-navigation:navigation</code>]]></description>
 		<name>navigation</name>
 		<tag-class>com.liferay.taglib.ui.NavigationTag</tag-class>
 		<body-content>JSP</body-content>

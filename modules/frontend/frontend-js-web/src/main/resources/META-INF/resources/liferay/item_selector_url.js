@@ -61,6 +61,10 @@ AUI.add(
 						if (!event.newVal) {
 							instance.fire(STR_SELECTED_ITEM);
 						}
+
+						var itemViewer = instance._itemViewer;
+
+						itemViewer.cancelPreviewTimer();
 					},
 
 					_bindUI: function() {

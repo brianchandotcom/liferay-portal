@@ -122,7 +122,8 @@ AUI.add(
 								'<div class="sidebar-body"><div class="tab-content"></div></div>' +
 							'</div>' +
 						'</div>' +
-						'<span class="glyphicon glyphicon-time ' + CSS_LOADING_ICON + '"></span>' +
+						'<span class="glyphicon glyphicon-time text-muted ' + CSS_LOADING_ICON + '"></span>' +
+						'<p class="preview-timeout-message text-muted" style="opacity: 0">' + Liferay.Language.get('preview-image-is-taking-longer-than-expected') + '</p>' +
 					'</div>',
 
 					initializer: function() {
@@ -135,6 +136,8 @@ AUI.add(
 
 						instance._displacedMethodHandles = [
 							Do.after('_afterBindUI', instance, 'bindUI', instance),
+							Do.after('_afterGetCurrentImage', instance, '_getCurrentImage', instance),
+							Do.after('_afterShow', instance, 'show', instance),
 							Do.after('_afterShowCurrentImage', instance, '_showCurrentImage', instance),
 							Do.after('_bindSidebarEvents', instance, '_afterLinksChange', instance),
 							Do.before('_beforeOnClickControl', instance, '_onClickControl', instance),
@@ -172,6 +175,28 @@ AUI.add(
 						instance._bindSidebarEvents();
 					},
 
+					_afterGetCurrentImage: function(event) {
+						var instance = this;
+
+						if (instance._previewError) {
+							instance._previewError = false;
+							return new Do.AlterReturn(
+								'alter return to error message',
+								instance.get('srcNode').one('.preview-timeout-message')
+							);
+						}
+					},
+
+					_afterShow: function() {
+						var instance = this;
+
+						instance._timer = A.later(
+							5000,
+							instance,
+							instance._showNoPreviewMessage
+						);
+					},
+
 					_afterShowCurrentImage: function() {
 						var instance = this;
 
@@ -197,6 +222,17 @@ AUI.add(
 
 						if (!instance.get(STR_RENDER_CONTROLS)) {
 							return new Do.Halt();
+						}
+					},
+
+					cancelPreviewTimer: function() {
+						var instance = this;
+
+						if (instance._timer) {
+							instance._timer.cancel();
+							instance._timer = null;
+
+							instance.get('srcNode').one('.preview-timeout-message').setStyle('opacity', 0);
 						}
 					},
 
@@ -360,6 +396,15 @@ AUI.add(
 						}
 
 						return links;
+					},
+
+					_showNoPreviewMessage: function() {
+						var instance = this;
+
+						instance.get('srcNode').one('.' + CSS_LOADING_ICON).hide();
+
+						instance._previewError = true;
+						instance.fire('animate');
 					},
 
 					_syncCaptionUI: function() {

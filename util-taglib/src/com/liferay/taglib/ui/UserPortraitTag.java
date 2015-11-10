@@ -106,6 +106,11 @@ public class UserPortraitTag extends IncludeTag {
 	}
 
 	@Override
+	protected boolean isCleanUpSetAttributes() {
+		return true;
+	}
+
+	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
 			"liferay-ui:user-portrait:colorCssClass", getColorCssClass());

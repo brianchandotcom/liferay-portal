@@ -23,8 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.gradle.api.Project;
-import org.gradle.api.artifacts.ConfigurationContainer;
-import org.gradle.api.file.FileCollection;
 import org.gradle.api.tasks.JavaExec;
 
 /**
@@ -37,32 +35,14 @@ public class BuildWSDDTask extends JavaExec {
 	}
 
 	@Override
-	public JavaExec classpath(Object... paths) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public void exec() {
 		setArgs(getCompleteArgs());
-
-		super.setClasspath(getClasspath());
 
 		super.exec();
 	}
 
 	public String getBuilderClasspath() {
 		return _wsddBuilderArgs.getClassPath();
-	}
-
-	@Override
-	public FileCollection getClasspath() {
-		Project project = getProject();
-
-		ConfigurationContainer configurationContainer =
-			project.getConfigurations();
-
-		return configurationContainer.getByName(
-			WSDDBuilderPlugin.CONFIGURATION_NAME);
 	}
 
 	public File getInputFile() {
@@ -89,11 +69,6 @@ public class BuildWSDDTask extends JavaExec {
 
 	public void setBuilderClasspath(String builderClasspath) {
 		_wsddBuilderArgs.setClassPath(builderClasspath);
-	}
-
-	@Override
-	public JavaExec setClasspath(FileCollection classpath) {
-		throw new UnsupportedOperationException();
 	}
 
 	public void setInputFileName(String inputFileName) {

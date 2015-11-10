@@ -40,9 +40,12 @@ public class WSDDBuilderPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		addWSDDBuilderConfiguration(project);
+		Configuration wsddBuilderConfiguration = addWSDDBuilderConfiguration(
+			project);
 
 		addBuildWSDDTask(project);
+
+		configureTasksBuildWSDD(project, wsddBuilderConfiguration);
 	}
 
 	protected BuildWSDDTask addBuildWSDDTask(Project project) {
@@ -120,6 +123,30 @@ public class WSDDBuilderPlugin implements Plugin<Project> {
 		fileCollection = fileCollection.plus(sourceSet.getRuntimeClasspath());
 
 		buildWSDDTask.setBuilderClasspath(fileCollection.getAsPath());
+	}
+
+	protected void configureTaskBuildWSDDClasspath(
+		BuildWSDDTask buildWSDDTask, FileCollection fileCollection) {
+
+		buildWSDDTask.setClasspath(fileCollection);
+	}
+
+	protected void configureTasksBuildWSDD(
+		Project project, final Configuration wsddBuilderCOnfiguration) {
+
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			BuildWSDDTask.class,
+			new Action<BuildWSDDTask>() {
+
+				@Override
+				public void execute(BuildWSDDTask buildWSDDTask) {
+					configureTaskBuildWSDDClasspath(
+						buildWSDDTask, wsddBuilderCOnfiguration);
+				}
+
+			});
 	}
 
 }

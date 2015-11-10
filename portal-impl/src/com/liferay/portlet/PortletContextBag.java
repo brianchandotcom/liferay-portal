@@ -18,10 +18,16 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.model.PortletApp;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.collections.ServiceReferenceMapper;
+import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerMap;
+import com.liferay.registry.util.StringPlus;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletURLGenerationListener;
@@ -34,6 +40,36 @@ public class PortletContextBag {
 
 	public PortletContextBag(String servletContextName) {
 		_servletContextName = servletContextName;
+
+		_dynamicCustomUserAttributes = ServiceTrackerCollections.singleValueMap(
+			CustomUserAttributes.class,
+			"(&(custom.user.attribute=*)(|(servlet.context.name=ALL)" +
+				"(servlet.context.name=" + servletContextName + ")))",
+			new ServiceReferenceMapper<String, CustomUserAttributes>() {
+
+				@Override
+				public void map(
+					ServiceReference<CustomUserAttributes> serviceReference,
+					ServiceReferenceMapper.Emitter<String> emitter) {
+
+					List<String> customUserAttributeKeys = StringPlus.asList(
+						serviceReference.getProperty("custom.user.attribute"));
+
+					for (String customUserAttributeKey :
+							customUserAttributeKeys) {
+
+						emitter.emit(customUserAttributeKey);
+					}
+
+				}
+			}
+		);
+
+		_dynamicCustomUserAttributes.open();
+	}
+
+	public void close() {
+		_dynamicCustomUserAttributes.close();
 	}
 
 	public Map<String, CustomUserAttributes> getCustomUserAttributes() {
@@ -108,6 +144,18 @@ public class PortletContextBag {
 				}
 			}
 		}
+
+		for (String userAttributeName : _dynamicCustomUserAttributes.keySet()) {
+			CustomUserAttributes customUserAttributes =
+				_dynamicCustomUserAttributes.getService(userAttributeName);
+
+			String attrValue = customUserAttributes.getValue(
+				userAttributeName, unmodifiableUserInfo);
+
+			if (attrValue != null) {
+				userInfo.put(userAttributeName, attrValue);
+			}
+		}
 	}
 
 	private CustomUserAttributes newInstance(String className) {
@@ -126,6 +174,8 @@ public class PortletContextBag {
 
 	private final Map<String, CustomUserAttributes> _customUserAttributes =
 		new HashMap<>();
+	private final ServiceTrackerMap<String, CustomUserAttributes>
+		_dynamicCustomUserAttributes;
 	private final Map<String, PortletFilter> _portletFilters = new HashMap<>();
 	private final String _servletContextName;
 	private final Map<String, PortletURLGenerationListener> _urlListeners =

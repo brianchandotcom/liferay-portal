@@ -56,7 +56,6 @@ public class BuildWSDDTask extends JavaExec {
 	public void exec() {
 		super.setArgs(getArgs());
 		super.setClasspath(getClasspath());
-		super.setWorkingDir(getWorkingDir());
 
 		super.exec();
 	}
@@ -116,13 +115,6 @@ public class BuildWSDDTask extends JavaExec {
 	}
 
 	@Override
-	public File getWorkingDir() {
-		Project project = getProject();
-
-		return project.getProjectDir();
-	}
-
-	@Override
 	public JavaExec setArgs(Iterable<?> applicationArgs) {
 		throw new UnsupportedOperationException();
 	}
@@ -150,11 +142,6 @@ public class BuildWSDDTask extends JavaExec {
 
 	public void setServiceNamespace(String serviceNamespace) {
 		_wsddBuilderArgs.setServiceNamespace(serviceNamespace);
-	}
-
-	@Override
-	public void setWorkingDir(Object dir) {
-		throw new UnsupportedOperationException();
 	}
 
 	private final WSDDBuilderArgs _wsddBuilderArgs = new WSDDBuilderArgs();

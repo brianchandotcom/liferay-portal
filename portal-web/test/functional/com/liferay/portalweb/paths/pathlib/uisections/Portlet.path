@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>H1_HEADER</td>
-	<td>//h1[@class='header-title']/span</td>
+	<td>//h1[@class='header-title']/span | //h1[@class='header-title']</td>
 	<td></td>
 </tr>
 <tr>

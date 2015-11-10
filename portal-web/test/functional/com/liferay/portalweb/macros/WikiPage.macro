@@ -1357,7 +1357,7 @@
 
 	<command name="viewCustomADTSocialPG" >
 		<execute function="AssertClick" locator1="Wiki#NAVIGATION_FRONTPAGE" value1="FrontPage" />
-		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="FrontPage" />
+		<execute function="AssertTextEquals" locator1="Portlet#H1_HEADER" value1="FrontPage" />
 		<execute function="AssertTextEquals" locator1="Wiki#BODY" value1="${wikiPageContent}" />
 
 		<if>

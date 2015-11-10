@@ -35,6 +35,10 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 PortletURL portletURL = (PortletURL)request.getAttribute("edit_team_assignments.jsp-portletURL");
 
 RowChecker rowChecker = new UserGroupTeamChecker(renderResponse, team);
+
+portletURL.setParameter("cur", String.valueOf(cur));
+
+String taglibOnClick = renderResponse.getNamespace() + "updateTeamUserGroups('" + portletURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
 %>
 
 <liferay-frontend:management-bar>
@@ -61,82 +65,74 @@ RowChecker rowChecker = new UserGroupTeamChecker(renderResponse, team);
 	</liferay-frontend:management-bar-buttons>
 </liferay-frontend:management-bar>
 
+<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
+
 <liferay-ui:tabs
 	names="current,available"
 	param="tabs2"
 	portletURL="<%= portletURL %>"
 />
 
-<liferay-ui:search-container
-	rowChecker="<%= rowChecker %>"
-	searchContainer="<%= new UserGroupSearch(renderRequest, portletURL) %>"
->
+<portlet:actionURL name="editTeamUserGroups" var="editTeamUserGroupsURL" />
 
-	<%
-	UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)searchContainer.getSearchTerms();
+<aui:form action="<%= editTeamUserGroupsURL %>" method="post" name="fm">
+	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
+	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="assignmentsRedirect" type="hidden" />
+	<aui:input name="teamId" type="hidden" value="<%= String.valueOf(team.getTeamId()) %>" />
+	<aui:input name="addUserGroupIds" type="hidden" />
+	<aui:input name="removeUserGroupIds" type="hidden" />
 
-	LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
-
-	userGroupParams.put("userGroupsGroups", Long.valueOf(group.getGroupId()));
-
-	if (tabs2.equals("current")) {
-		userGroupParams.put("userGroupsTeams", Long.valueOf(team.getTeamId()));
-	}
-	%>
-
-	<liferay-ui:search-container-results>
-
-		<%
-		total = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams);
-
-		searchContainer.setTotal(total);
-
-		results = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-
-		searchContainer.setResults(results);
-		%>
-
-	</liferay-ui:search-container-results>
-
-	<liferay-ui:search-container-row
-		className="com.liferay.portal.model.UserGroup"
-		cssClass="selectable"
-		escapedModel="<%= true %>"
-		keyProperty="userGroupId"
-		modelVar="userGroup"
+	<liferay-ui:search-container
+		rowChecker="<%= rowChecker %>"
+		searchContainer="<%= new UserGroupSearch(renderRequest, portletURL) %>"
 	>
 
 		<%
-		boolean showActions = true;
+		UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)searchContainer.getSearchTerms();
+
+		LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
+
+		userGroupParams.put("userGroupsGroups", Long.valueOf(group.getGroupId()));
+
+		if (tabs2.equals("current")) {
+			userGroupParams.put("userGroupsTeams", Long.valueOf(team.getTeamId()));
+		}
 		%>
 
-		<%@ include file="/user_group_columns.jspf" %>
-	</liferay-ui:search-container-row>
+		<liferay-ui:search-container-results>
 
-	<portlet:actionURL name="editTeamUserGroups" var="editTeamUserGroupsURL" />
+			<%
+			total = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams);
 
-	<aui:form action="<%= editTeamUserGroupsURL %>" method="post" name="fm">
-		<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
-		<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-		<aui:input name="assignmentsRedirect" type="hidden" />
-		<aui:input name="teamId" type="hidden" value="<%= String.valueOf(team.getTeamId()) %>" />
-		<aui:input name="addUserGroupIds" type="hidden" />
-		<aui:input name="removeUserGroupIds" type="hidden" />
+			searchContainer.setTotal(total);
 
-		<div class="separator"><!-- --></div>
+			results = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 
-		<%
-		portletURL.setParameter("cur", String.valueOf(cur));
+			searchContainer.setResults(results);
+			%>
 
-		String taglibOnClick = renderResponse.getNamespace() + "updateTeamUserGroups('" + portletURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
-		%>
+		</liferay-ui:search-container-results>
 
-		<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
+		<liferay-ui:search-container-row
+			className="com.liferay.portal.model.UserGroup"
+			cssClass="selectable"
+			escapedModel="<%= true %>"
+			keyProperty="userGroupId"
+			modelVar="userGroup"
+		>
+
+			<%
+			boolean showActions = true;
+			%>
+
+			<%@ include file="/user_group_columns.jspf" %>
+		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
-	</aui:form>
-</liferay-ui:search-container>
+	</liferay-ui:search-container>
+</aui:form>
 
 <aui:script>
 	function <portlet:namespace />updateTeamUserGroups(assignmentsRedirect) {

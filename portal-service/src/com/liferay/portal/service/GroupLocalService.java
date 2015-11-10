@@ -511,6 +511,17 @@ public interface GroupLocalService extends BaseLocalService,
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
+	* Returns all the active or inactive groups in the company.
+	*
+	* @param companyId the primary key of the company
+	* @param active whether the group is active
+	* @return groups associated with the company, based on the active parameter
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Group> getActiveGroups(
+		long companyId, boolean active);
+
+	/**
 	* Returns the company group.
 	*
 	* @param companyId the primary key of the company

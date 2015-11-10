@@ -18,8 +18,11 @@ import com.helger.commons.charset.CCharset;
 import com.helger.css.ECSSVersion;
 import com.helger.css.decl.CascadingStyleSheet;
 import com.helger.css.reader.CSSReader;
+import com.helger.css.reader.errorhandler.DoNothingCSSParseErrorHandler;
 import com.helger.css.writer.CSSWriter;
 import com.helger.css.writer.CSSWriterSettings;
+
+import java.io.File;
 
 import java.net.URL;
 
@@ -340,6 +343,15 @@ public class RTLCSSConverterTest {
 	}
 
 	@Test
+	public void testMultipleDeclarations() throws Exception {
+		RTLCSSConverter rtlCssConverter = new RTLCSSConverter();
+
+		Assert.assertEquals(
+			"p{text-align:left;text-align:start}",
+			rtlCssConverter.process("p{text-align: right; text-align: start}"));
+	}
+
+	@Test
 	public void testNoCompress() throws Exception {
 		RTLCSSConverter rtlCssConverter = new RTLCSSConverter(false);
 
@@ -371,11 +383,29 @@ public class RTLCSSConverterTest {
 
 	@Test
 	public void testPortalCss() throws Exception {
-		RTLCSSConverter rtlCssConverter = new RTLCSSConverter();
+		RTLCSSConverter rtlCssConverter = new RTLCSSConverter(false);
 
-		Assert.assertEquals(
-			formatCss(read("main_rtl.css")),
-			rtlCssConverter.process(read("main.css")));
+		Class<?> clazz = getClass();
+
+		URL url = clazz.getResource("dependencies");
+
+		File folder = new File(url.toURI());
+
+		for (File file : folder.listFiles()) {
+			String filePath = file.getPath();
+
+			if (filePath.contains("_rtl") || !filePath.endsWith(".css")) {
+				continue;
+			}
+
+			System.out.println(filePath + ":");
+
+			Assert.assertEquals(
+				formatCss(read(getRtlCustomFileName(filePath))),
+				formatCss(rtlCssConverter.process(read(filePath))));
+
+			System.out.println("Passed!");
+		}
 	}
 
 	@Test
@@ -411,22 +441,30 @@ public class RTLCSSConverterTest {
 
 	protected String formatCss(String css) {
 		CascadingStyleSheet cascadingStyleSheet = CSSReader.readFromString(
-			css, CCharset.CHARSET_UTF_8_OBJ, ECSSVersion.CSS30);
+			css, CCharset.CHARSET_UTF_8_OBJ, ECSSVersion.CSS30,
+			new DoNothingCSSParseErrorHandler());
 
-		CSSWriter cssWriter = new CSSWriter(
-			new CSSWriterSettings(ECSSVersion.CSS30, true));
+		CSSWriterSettings cssWriterSettings = new CSSWriterSettings(
+			ECSSVersion.CSS30, false);
+
+		cssWriterSettings.setOptimizedOutput(false);
+		cssWriterSettings.setRemoveUnnecessaryCode(Boolean.TRUE);
+
+		CSSWriter cssWriter = new CSSWriter(cssWriterSettings);
 
 		return cssWriter.getCSSAsString(cascadingStyleSheet);
 	}
 
+	protected String getRtlCustomFileName(String fileName) {
+		int pos = fileName.lastIndexOf(".");
+
+		return fileName.substring(0, pos) + "_rtl" + fileName.substring(pos);
+	}
+
 	protected String read(String fileName) throws Exception {
-		Class<?> clazz = getClass();
+		Path filePath = Paths.get(fileName);
 
-		URL url = clazz.getResource("dependencies/" + fileName);
-
-		Path path = Paths.get(url.toURI());
-
-		return new String(Files.readAllBytes(path));
+		return new String(Files.readAllBytes(filePath));
 	}
 
 }

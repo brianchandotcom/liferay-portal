@@ -58,7 +58,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletConfigFactoryUtil;
 import com.liferay.portlet.PortletConfigImpl;
-import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.configuration.web.upgrade.PortletConfigurationWebUpgrade;
 import com.liferay.portlet.portletconfiguration.action.ActionUtil;
 import com.liferay.portlet.portletconfiguration.util.PortletConfigurationUtil;
@@ -771,10 +770,10 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			return null;
 		}
 
-		PortletPreferencesIds portletPreferencesIds =
-			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
-				themeDisplay.getCompanyId(), themeDisplay.getSiteGroupId(),
-				PortletKeys.PREFS_PLID_SHARED, portletId, settingsScope);
+		PortletPreferencesIds portletPreferencesIds = new PortletPreferencesIds(
+			themeDisplay.getCompanyId(), layout.getGroupId(),
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, PortletKeys.PREFS_PLID_SHARED,
+			portletId);
 
 		return _portletPreferencesLocalService.getPreferences(
 			portletPreferencesIds);

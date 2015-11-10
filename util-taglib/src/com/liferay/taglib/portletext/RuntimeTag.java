@@ -211,9 +211,23 @@ public class RuntimeTag extends TagSupport {
 			JSONObject jsonObject = null;
 
 			if ((PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
+					themeDisplay.getScopeGroupId(),
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+					PortletKeys.PREFS_PLID_SHARED, portlet, false) < 1) &&
+				!(layout.isTypeControlPanel() || layout.isTypePanel())) {
+
+				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+					PortletKeys.PREFS_PLID_SHARED,
+					portletInstance.getPortletInstanceKey(),
+					defaultPreferences);
+			}
+
+			if ((PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
 					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid(),
-					portletInstance.getPortletInstanceKey()) < 1) ||
-				layout.isTypeControlPanel() || layout.isTypePanel()) {
+					portletInstance.getPortletInstanceKey()) < 1) &&
+				!(layout.isTypeControlPanel() || layout.isTypePanel())) {
 
 				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
 					layout, portletInstance.getPortletInstanceKey(),

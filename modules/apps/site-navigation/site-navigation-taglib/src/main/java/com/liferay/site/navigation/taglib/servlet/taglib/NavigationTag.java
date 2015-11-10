@@ -23,12 +23,14 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.theme.NavItem;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.site.navigation.taglib.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Brian Wing Shun Chan
@@ -59,6 +61,13 @@ public class NavigationTag extends IncludeTag {
 
 	public void setNestedChildren(boolean nestedChildren) {
 		_nestedChildren = nestedChildren;
+	}
+
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		servletContext = ServletContextUtil.getServletContext();
 	}
 
 	public void setPreview(boolean preview) {

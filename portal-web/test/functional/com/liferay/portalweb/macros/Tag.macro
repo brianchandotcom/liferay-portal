@@ -182,7 +182,11 @@
 		<var name="key_tagName" value="${tagName}" />
 
 		<execute function="Check" locator1="Tags#TAG_ENTRY_TABLE_CHECKBOX" />
+
 		<execute function="ClickNoError" locator1="Icon#MERGE" />
+
+		<execute function="ClickNoError" locator1="Button#SAVE" />
+
 		<execute function="Confirm" value1="Please choose at least 2 tags." />
 	</command>
 

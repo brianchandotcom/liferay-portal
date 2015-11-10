@@ -14,7 +14,10 @@
 
 package com.liferay.portlet;
 
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -23,7 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PortletContextBagPool {
 
 	public static void clear() {
-		_instance._portletContextBagPool.clear();
+		_instance._clear();
 	}
 
 	public static PortletContextBag get(String servletContextName) {
@@ -44,6 +47,24 @@ public class PortletContextBagPool {
 		_portletContextBagPool = new ConcurrentHashMap<>();
 	}
 
+	private void _clear() {
+		Set<Entry<String, PortletContextBag>> entrySet =
+			_portletContextBagPool.entrySet();
+
+		Iterator<Entry<String, PortletContextBag>> iterator =
+			entrySet.iterator();
+
+		while (iterator.hasNext()) {
+			Entry<String, PortletContextBag> entry = iterator.next();
+
+			iterator.remove();
+
+			PortletContextBag portletContextBag = entry.getValue();
+
+			portletContextBag.close();
+		}
+	}
+
 	private PortletContextBag _get(String servletContextName) {
 		return _portletContextBagPool.get(servletContextName);
 	}
@@ -55,7 +76,14 @@ public class PortletContextBagPool {
 	}
 
 	private PortletContextBag _remove(String servletContextName) {
-		return _portletContextBagPool.remove(servletContextName);
+		PortletContextBag portletContextBag = _portletContextBagPool.remove(
+			servletContextName);
+
+		if (portletContextBag != null) {
+			portletContextBag.close();
+		}
+
+		return portletContextBag;
 	}
 
 	private static final PortletContextBagPool _instance =

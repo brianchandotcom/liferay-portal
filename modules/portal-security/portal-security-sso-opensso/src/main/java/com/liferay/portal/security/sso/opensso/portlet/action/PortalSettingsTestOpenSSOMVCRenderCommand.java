@@ -14,13 +14,23 @@
 
 package com.liferay.portal.security.sso.opensso.portlet.action;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
+import com.liferay.portal.util.PortalUtil;
 
+import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Philip Jones
@@ -36,9 +46,45 @@ public class PortalSettingsTestOpenSSOMVCRenderCommand
 
 	@Override
 	public String render(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
 
-		return "/test_opensso.jsp";
+		RequestDispatcher requestDispatcher =
+			_servletContext.getRequestDispatcher(_JSP_PATH);
+
+		try {
+			HttpServletRequest request = PortalUtil.getHttpServletRequest(
+				renderRequest);
+
+			HttpServletResponse response = PortalUtil.getHttpServletResponse(
+				renderResponse);
+
+			requestDispatcher.include(request, response);
+		}
+		catch (Exception se) {
+			_log.error("Unable to include JSP " + _JSP_PATH, se);
+
+			throw new PortletException(
+				"Unable to include JSP " + _JSP_PATH, se);
+		}
+
+		return DONT_DISPATCH_PATH;
 	}
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.portal.security.sso.opensso)",
+		unbind = "-"
+	)
+	protected void setServletContext(ServletContext servletContext) {
+		_servletContext = servletContext;
+	}
+
+	private static final String _JSP_PATH =
+		"/com.liferay.portal.settings.web/test_opensso.jsp";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortalSettingsTestOpenSSOMVCRenderCommand.class);
+
+	private volatile ServletContext _servletContext;
 
 }

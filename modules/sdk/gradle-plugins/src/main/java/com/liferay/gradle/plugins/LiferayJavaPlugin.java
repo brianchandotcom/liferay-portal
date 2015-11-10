@@ -41,7 +41,6 @@ import com.liferay.gradle.plugins.tasks.StartAppServerTask;
 import com.liferay.gradle.plugins.tasks.StopAppServerTask;
 import com.liferay.gradle.plugins.tld.formatter.TLDFormatterPlugin;
 import com.liferay.gradle.plugins.upgrade.table.builder.BuildUpgradeTableTask;
-import com.liferay.gradle.plugins.upgrade.table.builder.UpgradeTableBuilderPlugin;
 import com.liferay.gradle.plugins.whip.WhipPlugin;
 import com.liferay.gradle.plugins.whip.WhipTaskExtension;
 import com.liferay.gradle.plugins.wsdd.builder.BuildWSDDTask;
@@ -186,12 +185,12 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureArtifacts(project);
 
 		configureTaskBuildService(project);
-		configureTaskBuildUpgradeTable(project);
 		configureTaskBuildWSDD(project);
 		configureTaskBuildWSDL(project);
 		configureTaskBuildXSD(project);
 		configureTaskConfigJSModules(project);
 		configureTaskTranspileJS(project);
+		configureTasksBuildUpgradeTable(project);
 		configureTasksTest(project);
 
 		project.afterEvaluate(
@@ -1363,27 +1362,14 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		buildServiceTask.setTestDirName("");
 	}
 
-	protected void configureTaskBuildUpgradeTable(Project project) {
-		BuildUpgradeTableTask buildUpgradeTableTask =
-			(BuildUpgradeTableTask)GradleUtil.getTask(
-				project,
-				UpgradeTableBuilderPlugin.BUILD_UPGRADE_TABLE_TASK_NAME);
-
-		configureTaskBuildUpgradeTableDirName(buildUpgradeTableTask);
-	}
-
-	protected void configureTaskBuildUpgradeTableDirName(
+	protected void configureTaskBuildUpgradeTableDir(
 		BuildUpgradeTableTask buildUpgradeTableTask) {
 
-		Project project = buildUpgradeTableTask.getProject();
-
 		File file = GradleUtil.getProperty(
-			project, "upgrade.table.dir", (File)null);
+			buildUpgradeTableTask.getProject(), "upgrade.table.dir",
+			(File)null);
 
-		if (file != null) {
-			buildUpgradeTableTask.setUpgradeTableDirName(
-				FileUtil.getAbsolutePath(file));
-		}
+		buildUpgradeTableTask.setUpgradeTableDir(file);
 	}
 
 	protected void configureTaskBuildWSDD(Project project) {
@@ -1909,6 +1895,23 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 						appServerType);
 
 					appServerTask.merge(appServer);
+				}
+
+			});
+	}
+
+	protected void configureTasksBuildUpgradeTable(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			BuildUpgradeTableTask.class,
+			new Action<BuildUpgradeTableTask>() {
+
+				@Override
+				public void execute(
+					BuildUpgradeTableTask buildUpgradeTableTask) {
+
+					configureTaskBuildUpgradeTableDir(buildUpgradeTableTask);
 				}
 
 			});

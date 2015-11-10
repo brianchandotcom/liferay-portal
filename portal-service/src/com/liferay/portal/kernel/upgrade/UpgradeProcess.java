@@ -48,7 +48,7 @@ public abstract class UpgradeProcess
 		return 0;
 	}
 
-	public boolean hasTable(String tableName) throws Exception {
+	protected boolean hasTable(String tableName) throws Exception {
 		if (doHasTable(StringUtil.toLowerCase(tableName)) ||
 			doHasTable(StringUtil.toUpperCase(tableName)) ||
 			doHasTable(tableName)) {
@@ -59,43 +59,43 @@ public abstract class UpgradeProcess
 		return false;
 	}
 
-	public long increment() {
+	protected long increment() {
 		DB db = DBFactoryUtil.getDB();
 
 		return db.increment();
 	}
 
-	public long increment(String name) {
+	protected long increment(String name) {
 		DB db = DBFactoryUtil.getDB();
 
 		return db.increment(name);
 	}
 
-	public boolean isSupportsAlterColumnName() {
+	protected boolean isSupportsAlterColumnName() {
 		DB db = DBFactoryUtil.getDB();
 
 		return db.isSupportsAlterColumnName();
 	}
 
-	public boolean isSupportsAlterColumnType() {
+	protected boolean isSupportsAlterColumnType() {
 		DB db = DBFactoryUtil.getDB();
 
 		return db.isSupportsAlterColumnType();
 	}
 
-	public boolean isSupportsStringCaseSensitiveQuery() {
+	protected boolean isSupportsStringCaseSensitiveQuery() {
 		DB db = DBFactoryUtil.getDB();
 
 		return db.isSupportsStringCaseSensitiveQuery();
 	}
 
-	public boolean isSupportsUpdateWithInnerJoin() {
+	protected boolean isSupportsUpdateWithInnerJoin() {
 		DB db = DBFactoryUtil.getDB();
 
 		return db.isSupportsUpdateWithInnerJoin();
 	}
 
-	public boolean tableHasColumn(String tableName, String columnName)
+	protected boolean tableHasColumn(String tableName, String columnName)
 		throws Exception {
 
 		PreparedStatement ps = null;
@@ -125,7 +125,7 @@ public abstract class UpgradeProcess
 		return false;
 	}
 
-	public boolean tableHasData(String tableName) throws Exception {
+	protected boolean tableHasData(String tableName) throws Exception {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 

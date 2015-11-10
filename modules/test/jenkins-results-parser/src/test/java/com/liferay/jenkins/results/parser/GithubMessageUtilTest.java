@@ -38,7 +38,7 @@ import org.junit.Test;
 public class GithubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 
 	public GithubMessageUtilTest() {
-		jobMessageUtilTest = new GithubJobMessageUtilTest();
+		jobMessageUtilTest = new GitHubJobMessageUtilTest();
 	}
 
 	@Before
@@ -116,7 +116,7 @@ public class GithubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 
 			Project project = getProject(null, urlString, sampleDir.getPath());
 
-			GithubJobMessageUtil.getFailedJobMessage(project);
+			GitHubJobMessageUtil.getFailedJobMessage(project);
 
 			String jobReportString = project.getProperty("report.html.content");
 
@@ -225,7 +225,7 @@ public class GithubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 		}
 	}
 
-	protected GithubJobMessageUtilTest jobMessageUtilTest;
+	protected GitHubJobMessageUtilTest jobMessageUtilTest;
 
 	private static final Pattern _PROGRESSIVE_TEXT_JOB_URL_PATTERN =
 		Pattern.compile("\\[echo\\] \\'.*\\' completed at (?<url>.+).");

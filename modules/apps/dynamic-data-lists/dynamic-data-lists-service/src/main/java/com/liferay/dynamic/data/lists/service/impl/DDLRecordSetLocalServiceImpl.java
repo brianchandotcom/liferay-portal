@@ -432,6 +432,14 @@ public class DDLRecordSetLocalServiceImpl
 			throw new RecordSetSettingsException(
 				"The property \"redirectURL\" is not a URL");
 		}
+
+		String requireCaptcha = settingsProperties.getProperty(
+			"requireCaptcha");
+
+		if (!Validator.isBoolean(requireCaptcha)) {
+			throw new RecordSetSettingsException(
+				"The property \"requireCaptcha\" is not a boolean");
+		}
 	}
 
 	@ServiceReference(type = DDMStructureLinkLocalService.class)

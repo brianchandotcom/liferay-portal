@@ -17,18 +17,11 @@ package com.liferay.dynamic.data.mapping.registry;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.template.TemplateResource;
 
 /**
  * @author Pablo Carvalho
  */
 public interface DDMFormFieldRenderer {
-
-	public String getTemplateLanguage();
-
-	public String getTemplateNamespace();
-
-	public TemplateResource getTemplateResource();
 
 	public String render(
 			DDMFormField ddmFormField,

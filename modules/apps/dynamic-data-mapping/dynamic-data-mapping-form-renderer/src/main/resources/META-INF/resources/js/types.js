@@ -48,7 +48,10 @@ AUI.add(
 				fieldType.set('settings', config.settings);
 				fieldType.set('settingsLayout', config.settingsLayout);
 				fieldType.set('system', config.system);
-				fieldType.set('templateNamespace', config.templateNamespace);
+
+				if (config.templateNamespace) {
+					fieldType.set('templateNamespace', config.templateNamespace);
+				}
 
 				return fieldType;
 			}

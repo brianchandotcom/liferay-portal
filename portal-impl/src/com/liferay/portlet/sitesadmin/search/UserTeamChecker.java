@@ -36,6 +36,15 @@ public class UserTeamChecker extends EmptyOnClickRowChecker {
 
 	@Override
 	public boolean isChecked(Object obj) {
+		return hasTeamUser(obj);
+	}
+
+	@Override
+	public boolean isDisabled(Object obj) {
+		return hasTeamUser(obj);
+	}
+
+	protected boolean hasTeamUser(Object obj) {
 		User user = (User)obj;
 
 		try {

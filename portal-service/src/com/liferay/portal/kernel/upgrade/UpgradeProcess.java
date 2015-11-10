@@ -48,6 +48,80 @@ public abstract class UpgradeProcess
 		return 0;
 	}
 
+	public void upgrade() throws UpgradeException {
+		long start = System.currentTimeMillis();
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Upgrading " + ClassUtil.getClassName(this));
+		}
+
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
+			connection = con;
+
+			doUpgrade();
+		}
+		catch (Exception e) {
+			throw new UpgradeException(e);
+		}
+		finally {
+			connection = null;
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Completed upgrade process " +
+						ClassUtil.getClassName(this) + " in " +
+							(System.currentTimeMillis() - start) + "ms");
+			}
+		}
+	}
+
+	public void upgrade(Class<?> upgradeProcessClass) throws UpgradeException {
+		UpgradeProcess upgradeProcess = null;
+
+		try {
+			upgradeProcess = (UpgradeProcess)upgradeProcessClass.newInstance();
+		}
+		catch (Exception e) {
+			throw new UpgradeException(e);
+		}
+
+		upgradeProcess.upgrade();
+	}
+
+	@Override
+	public void upgrade(DBProcessContext dbProcessContext)
+		throws UpgradeException {
+
+		upgrade();
+	}
+
+	public void upgrade(UpgradeProcess upgradeProcess) throws UpgradeException {
+		upgradeProcess.upgrade();
+	}
+
+	protected boolean doHasTable(String tableName) throws Exception {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			DatabaseMetaData metadata = connection.getMetaData();
+
+			rs = metadata.getTables(null, null, tableName, null);
+
+			while (rs.next()) {
+				return true;
+			}
+		}
+		finally {
+			DataAccess.cleanUp(null, ps, rs);
+		}
+
+		return false;
+	}
+
+	protected void doUpgrade() throws Exception {
+	}
+
 	protected boolean hasTable(String tableName) throws Exception {
 		if (doHasTable(StringUtil.toLowerCase(tableName)) ||
 			doHasTable(StringUtil.toUpperCase(tableName)) ||
@@ -150,80 +224,6 @@ public abstract class UpgradeProcess
 		}
 
 		return false;
-	}
-
-	public void upgrade() throws UpgradeException {
-		long start = System.currentTimeMillis();
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Upgrading " + ClassUtil.getClassName(this));
-		}
-
-		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
-			connection = con;
-
-			doUpgrade();
-		}
-		catch (Exception e) {
-			throw new UpgradeException(e);
-		}
-		finally {
-			connection = null;
-
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Completed upgrade process " +
-						ClassUtil.getClassName(this) + " in " +
-							(System.currentTimeMillis() - start) + "ms");
-			}
-		}
-	}
-
-	public void upgrade(Class<?> upgradeProcessClass) throws UpgradeException {
-		UpgradeProcess upgradeProcess = null;
-
-		try {
-			upgradeProcess = (UpgradeProcess)upgradeProcessClass.newInstance();
-		}
-		catch (Exception e) {
-			throw new UpgradeException(e);
-		}
-
-		upgradeProcess.upgrade();
-	}
-
-	@Override
-	public void upgrade(DBProcessContext dbProcessContext)
-		throws UpgradeException {
-
-		upgrade();
-	}
-
-	public void upgrade(UpgradeProcess upgradeProcess) throws UpgradeException {
-		upgradeProcess.upgrade();
-	}
-
-	protected boolean doHasTable(String tableName) throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			DatabaseMetaData metadata = connection.getMetaData();
-
-			rs = metadata.getTables(null, null, tableName, null);
-
-			while (rs.next()) {
-				return true;
-			}
-		}
-		finally {
-			DataAccess.cleanUp(null, ps, rs);
-		}
-
-		return false;
-	}
-
-	protected void doUpgrade() throws Exception {
 	}
 
 	protected void upgradeTable(String tableName, Object[][] tableColumns)

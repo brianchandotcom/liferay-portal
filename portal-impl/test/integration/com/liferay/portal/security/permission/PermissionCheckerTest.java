@@ -280,9 +280,9 @@ public class PermissionCheckerTest {
 
 	@Test
 	public void testIsOmniAdminWithCompanyAdmin() throws Exception {
-		Company company = CompanyTestUtil.addCompany();
+		_company = CompanyTestUtil.addCompany();
 
-		User adminUser = UserTestUtil.addCompanyAdminUser(company);
+		User adminUser = UserTestUtil.addCompanyAdminUser(_company);
 
 		PermissionChecker permissionChecker = _getPermissionChecker(adminUser);
 
@@ -420,6 +420,9 @@ public class PermissionCheckerTest {
 	}
 
 	private CaptureAppender _captureAppender;
+
+	@DeleteAfterTestRun
+	private Company _company;
 
 	@DeleteAfterTestRun
 	private Group _group;

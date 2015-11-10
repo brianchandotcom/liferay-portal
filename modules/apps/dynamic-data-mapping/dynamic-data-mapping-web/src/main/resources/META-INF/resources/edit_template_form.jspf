@@ -33,8 +33,6 @@ String fieldsJSONArrayString = fieldsJSONArray.toString();
 <aui:input name="language" type="hidden" value="json" />
 <aui:input name="scriptContent" type="hidden" />
 
-<%@ include file="/form_builder.jspf" %>
-
 <aui:script>
 	function <portlet:namespace />attachValueChange(formBuilder) {
 		AUI.$('#<portlet:namespace />mode').on(
@@ -106,3 +104,5 @@ String fieldsJSONArrayString = fieldsJSONArray.toString();
 		return availableFields.concat(FormBuilder.AVAILABLE_FIELDS.DDM_TEMPLATE);
 	};
 </aui:script>
+
+<%@ include file="/form_builder.jspf" %>

@@ -58,7 +58,7 @@ public class JenkinsResultsParserUtil {
 			}
 		}
 
-		value = sb.toString();
+		return sb.toString();
 	}
 
 	public static String fixJSON(String json) {

@@ -587,14 +587,16 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 			renderResponse.setTitle(
 				ActionUtil.getTitle(portlet, renderRequest));
+
+			super.doDispatch(renderRequest, renderResponse);
 		}
 		catch (Exception ex) {
 			_log.error(ex.getMessage());
 
+			SessionErrors.add(renderRequest, ex.getClass());
+
 			include("/error.jsp", renderRequest, renderResponse);
 		}
-
-		super.doDispatch(renderRequest, renderResponse);
 	}
 
 	protected String[] getActionIds(

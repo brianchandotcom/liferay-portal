@@ -296,8 +296,6 @@
 			<var name="webContentTitle" value="WC WebContent2 Title" />
 		</execute>
 
-		<execute macro="WikiNode#addMainCP" />
-
 		<execute macro="WikiNode#gotoCP">
 			<var name="wikiNodeName" value="Main" />
 		</execute>

@@ -12,24 +12,32 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.upgrade.v1_0_0;
+package com.liferay.portal.upgrade.v7_0_0.util.companyId;
 
-import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.util.companyId.DDMStorageLinkUpgradeCompanyId;
-import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.util.companyId.DDMStructureLinkUpgradeCompanyId;
 import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdInTable;
+import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdUtil;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Cristina González
  */
-public class UpgradeCompanyId
-	extends com.liferay.portal.upgrade.util.UpgradeCompanyId {
+public class OrgLaborUpgradeCompanyId implements UpgradeCompanyIdInTable {
 
 	@Override
-	protected UpgradeCompanyIdInTable[] getUpgradeCompanyIdInTable() {
-		return new UpgradeCompanyIdInTable[] {
-			new DDMStorageLinkUpgradeCompanyId(),
-			new DDMStructureLinkUpgradeCompanyId()
-		};
+	public void execute() throws Exception {
+		String select =
+			"select o.companyId, ol.orgLaborId from Organization_ o, " +
+				"OrgLabor ol where o.organizationId=ol.organizationId";
+
+		String update =
+			"update OrgLabor set companyId = ? where orgLaborId = ?";
+
+		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
+			"OrgLabor", select, update, "companyId", "orgLaborId");
+	}
+
+	@Override
+	public String getTableName() {
+		return "OrgGroupRole";
 	}
 
 }

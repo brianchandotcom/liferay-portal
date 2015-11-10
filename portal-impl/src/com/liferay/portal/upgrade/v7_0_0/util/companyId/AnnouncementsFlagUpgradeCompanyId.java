@@ -12,24 +12,33 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.upgrade.v1_0_0;
+package com.liferay.portal.upgrade.v7_0_0.util.companyId;
 
-import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.util.companyId.DDMStorageLinkUpgradeCompanyId;
-import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.util.companyId.DDMStructureLinkUpgradeCompanyId;
 import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdInTable;
+import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdUtil;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Cristina González
  */
-public class UpgradeCompanyId
-	extends com.liferay.portal.upgrade.util.UpgradeCompanyId {
+public class AnnouncementsFlagUpgradeCompanyId
+	implements UpgradeCompanyIdInTable {
 
 	@Override
-	protected UpgradeCompanyIdInTable[] getUpgradeCompanyIdInTable() {
-		return new UpgradeCompanyIdInTable[] {
-			new DDMStorageLinkUpgradeCompanyId(),
-			new DDMStructureLinkUpgradeCompanyId()
-		};
+	public void execute() throws Exception {
+		String select =
+			"select a.flagId, a.userId, u.companyId from AnnouncementsFlag a," +
+				" User_ u where a.userId=u.userId";
+
+		String update =
+			"update AnnouncementsFlag set companyId = ? where flagId = ?";
+
+		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
+			"AnnouncementsFlag", select, update, "companyId", "flagId");
+	}
+
+	@Override
+	public String getTableName() {
+		return "AnnouncementsFlag";
 	}
 
 }

@@ -14,6 +14,10 @@
 
 package com.liferay.journal.upgrade.v1_0_0;
 
+import com.liferay.journal.upgrade.v1_0_0.util.companyId.JournalArticleImageUpgradeCompanyId;
+import com.liferay.journal.upgrade.v1_0_0.util.companyId.JournalArticleResourceUpgradeCompanyId;
+import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdInTable;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -21,8 +25,11 @@ public class UpgradeCompanyId
 	extends com.liferay.portal.upgrade.util.UpgradeCompanyId {
 
 	@Override
-	protected String[] getTableNames() {
-		return new String[] {"JournalArticleImage", "JournalArticleResource"};
+	protected UpgradeCompanyIdInTable[] getUpgradeCompanyIdInTable() {
+		return new UpgradeCompanyIdInTable[] {
+			new JournalArticleImageUpgradeCompanyId(),
+			new JournalArticleResourceUpgradeCompanyId()
+		};
 	}
 
 }

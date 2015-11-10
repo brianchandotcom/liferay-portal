@@ -12,24 +12,32 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.upgrade.v1_0_0;
+package com.liferay.portal.upgrade.v7_0_0.util.companyId;
 
-import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.util.companyId.DDMStorageLinkUpgradeCompanyId;
-import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.util.companyId.DDMStructureLinkUpgradeCompanyId;
 import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdInTable;
+import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdUtil;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Cristina González
  */
-public class UpgradeCompanyId
-	extends com.liferay.portal.upgrade.util.UpgradeCompanyId {
+public class TrashVersionUpgradeCompanyId implements UpgradeCompanyIdInTable {
 
 	@Override
-	protected UpgradeCompanyIdInTable[] getUpgradeCompanyIdInTable() {
-		return new UpgradeCompanyIdInTable[] {
-			new DDMStorageLinkUpgradeCompanyId(),
-			new DDMStructureLinkUpgradeCompanyId()
-		};
+	public void execute() throws Exception {
+		String select =
+			"select te.companyId, tv.versionId from TrashEntry te, " +
+				"TrashVersion tv where te.entryId=tv.entryId";
+
+		String update =
+			"update TrashVersion set companyId = ? where versionId = ?";
+
+		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
+			"TrashVersion", select, update, "companyId", "versionId");
+	}
+
+	@Override
+	public String getTableName() {
+		return "TrashVersion";
 	}
 
 }

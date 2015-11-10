@@ -12,24 +12,32 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.upgrade.v1_0_0;
+package com.liferay.portal.upgrade.v7_0_0.util.companyId;
 
-import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.util.companyId.DDMStorageLinkUpgradeCompanyId;
-import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.util.companyId.DDMStructureLinkUpgradeCompanyId;
 import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdInTable;
+import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdUtil;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Cristina González
  */
-public class UpgradeCompanyId
-	extends com.liferay.portal.upgrade.util.UpgradeCompanyId {
+public class AssetTagStatsUpgradeCompanyId implements UpgradeCompanyIdInTable {
 
 	@Override
-	protected UpgradeCompanyIdInTable[] getUpgradeCompanyIdInTable() {
-		return new UpgradeCompanyIdInTable[] {
-			new DDMStorageLinkUpgradeCompanyId(),
-			new DDMStructureLinkUpgradeCompanyId()
-		};
+	public void execute() throws Exception {
+		String select =
+			"select t.companyId, a.tagStatsId from AssetTagStats a, " +
+				"AssetTag t where a.tagId=t.tagId";
+
+		String update =
+			"update AssetTagStats set companyId = ? where tagStatsId = ?";
+
+		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
+			"AssetTagStats", select, update, "companyId", "tagStatsId");
+	}
+
+	@Override
+	public String getTableName() {
+		return "AssetTagStats";
 	}
 
 }

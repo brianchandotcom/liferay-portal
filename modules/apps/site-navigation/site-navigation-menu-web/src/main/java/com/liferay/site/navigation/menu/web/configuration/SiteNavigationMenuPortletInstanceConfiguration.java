@@ -42,7 +42,7 @@ public interface SiteNavigationMenuPortletInstanceConfiguration {
 	@Meta.AD(deflt = "preview", required = false)
 	public boolean preview();
 
-	@Meta.AD(deflt = "1", required = false)
+	@Meta.AD(deflt = "0", required = false)
 	public int rootLayoutLevel();
 
 	@Meta.AD(deflt = "absolute", required = false)

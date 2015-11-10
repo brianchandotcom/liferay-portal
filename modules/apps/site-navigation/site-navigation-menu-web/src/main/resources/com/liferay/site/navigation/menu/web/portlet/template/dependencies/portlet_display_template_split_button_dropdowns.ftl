@@ -6,7 +6,7 @@
 <#assign navbarId = "navbar_" + portletDisplay.getId() />
 
 <div id="${navbarId}">
-	<#assign rootNavigationItems = navItem.fromLayouts(request, themeDisplay.getLayouts(), null) />
+	<#assign rootNavigationItems = entries />
 
 	<#list rootNavigationItems as rootNavigationItem>
 		<#if rootNavigationItem.isBrowsable() || rootNavigationItem.hasBrowsableChildren() >

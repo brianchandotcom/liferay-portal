@@ -9,7 +9,7 @@
 	<ul aria-label="#language ("site-pages")" class="nav nav-tabs nav-tabs-justified navbar-site" role="menubar">
 		<h1 class="hide-accessible">#language ("navigation")</h1>
 
-		<#assign rootNavigationItems = navItem.fromLayouts(request, themeDisplay.getLayouts(), null) />
+		<#assign rootNavigationItems = entries />
 
 		<#list rootNavigationItems as rootNavigationItem>
 			<#if rootNavigationItem.isBrowsable() || rootNavigationItem.hasBrowsableChildren() >

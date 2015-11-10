@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 
 import java.io.InputStream;
 
-import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -82,31 +81,22 @@ public class UpgradeMVCCVersion extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		Connection connection = null;
+		DatabaseMetaData databaseMetaData = connection.getMetaData();
 
-		try {
-			connection = DataAccess.getUpgradeOptimizedConnection();
+		List<Element> classElements = getClassElements();
 
-			DatabaseMetaData databaseMetaData = connection.getMetaData();
-
-			List<Element> classElements = getClassElements();
-
-			for (Element classElement : classElements) {
-				if (classElement.element("version") == null) {
-					continue;
-				}
-
-				upgradeMVCCVersion(databaseMetaData, classElement);
+		for (Element classElement : classElements) {
+			if (classElement.element("version") == null) {
+				continue;
 			}
 
-			String[] moduleTableNames = getModuleTableNames();
-
-			for (String moduleTableName : moduleTableNames) {
-				upgradeMVCCVersion(databaseMetaData, moduleTableName);
-			}
+			upgradeMVCCVersion(databaseMetaData, classElement);
 		}
-		finally {
-			DataAccess.cleanUp(connection);
+
+		String[] moduleTableNames = getModuleTableNames();
+
+		for (String moduleTableName : moduleTableNames) {
+			upgradeMVCCVersion(databaseMetaData, moduleTableName);
 		}
 	}
 

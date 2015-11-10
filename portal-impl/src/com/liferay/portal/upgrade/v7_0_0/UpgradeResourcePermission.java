@@ -14,12 +14,10 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.upgrade.AutoBatchPreparedStatementUtil;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -37,11 +35,10 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 			"update ResourcePermission set primKeyId = ?, viewActionId = ? " +
 				"where resourcePermissionId = ?";
 
-		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
-			PreparedStatement ps1 = con.prepareStatement(selectSQL);
+		try (PreparedStatement ps1 = connection.prepareStatement(selectSQL);
 			ResultSet rs = ps1.executeQuery();
 			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
-				con.prepareStatement(updateSQL))) {
+				connection.prepareStatement(updateSQL))) {
 
 			while (rs.next()) {
 				long resourcePermissionId = rs.getLong("resourcePermissionId");

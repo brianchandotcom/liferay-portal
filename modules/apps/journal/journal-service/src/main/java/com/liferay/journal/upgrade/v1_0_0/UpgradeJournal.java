@@ -51,7 +51,6 @@ import com.liferay.portlet.dynamicdatamapping.StorageEngineManager;
 import com.liferay.util.ContentUtil;
 import com.liferay.util.xml.XMLUtil;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -224,13 +223,10 @@ public class UpgradeJournal extends UpgradeProcess {
 		long classNameId = PortalUtil.getClassNameId(
 			DDMStructure.class.getName());
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(6);
 
 			sb.append("select DDMTemplate.templateId, JournalArticle.id_ ");
@@ -240,7 +236,7 @@ public class UpgradeJournal extends UpgradeProcess {
 			sb.append("JournalArticle.ddmTemplateKey and ");
 			sb.append("JournalArticle.classNameId != ?)");
 
-			ps = con.prepareStatement(sb.toString());
+			ps = connection.prepareStatement(sb.toString());
 
 			ps.setLong(1, classNameId);
 
@@ -255,7 +251,7 @@ public class UpgradeJournal extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 
@@ -408,13 +404,10 @@ public class UpgradeJournal extends UpgradeProcess {
 			String content)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"update JournalArticle set ddmStructureKey = ?, " +
 					"ddmTemplateKey = ?, content = ? where id_ = ?");
 
@@ -426,19 +419,16 @@ public class UpgradeJournal extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 
 	protected void updateJournalArticles(long companyId) throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select id_, content from JournalArticle where companyId = " +
 					companyId + " and ddmStructureKey is null or " +
 						"ddmStructureKey like ''");
@@ -455,20 +445,17 @@ public class UpgradeJournal extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 
 	protected void updateJournalArticlesDateFieldValues() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select id_, content from JournalArticle where content like " +
 					"'%type=_ddm-date_%'");
 
@@ -482,20 +469,17 @@ public class UpgradeJournal extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 
 	protected void updateJournalArticlesDateFieldValues(long id, String content)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"update JournalArticle set content = ? where id_ = ?");
 
 			ps.setString(1, transformDateFieldValues(content));
@@ -504,7 +488,7 @@ public class UpgradeJournal extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 

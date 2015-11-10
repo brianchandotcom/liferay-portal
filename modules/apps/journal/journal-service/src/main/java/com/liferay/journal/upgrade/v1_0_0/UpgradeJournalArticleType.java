@@ -39,7 +39,6 @@ import com.liferay.portlet.asset.service.AssetEntryLocalService;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalService;
 import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -128,14 +127,11 @@ public class UpgradeJournalArticleType extends UpgradeProcess {
 	}
 
 	protected List<String> getArticleTypes() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select distinct type_ from JournalArticle");
 
 			rs = ps.executeQuery();
@@ -149,19 +145,16 @@ public class UpgradeJournalArticleType extends UpgradeProcess {
 			return types;
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 
 	protected boolean hasSelectedArticleTypes() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select count(*) from JournalArticle where type_ != 'general'");
 
 			rs = ps.executeQuery();
@@ -177,7 +170,7 @@ public class UpgradeJournalArticleType extends UpgradeProcess {
 			return false;
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 
@@ -186,13 +179,10 @@ public class UpgradeJournalArticleType extends UpgradeProcess {
 			Map<String, Long> journalArticleTypesToAssetCategoryIds)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(10);
 
 			sb.append("select JournalArticle.resourcePrimKey, ");
@@ -206,7 +196,7 @@ public class UpgradeJournalArticleType extends UpgradeProcess {
 			sb.append("JournalArticle.companyId = ? and ");
 			sb.append("tempJournalArticle.id_ is null");
 
-			ps = con.prepareStatement(sb.toString());
+			ps = connection.prepareStatement(sb.toString());
 
 			ps.setLong(1, companyId);
 
@@ -232,7 +222,7 @@ public class UpgradeJournalArticleType extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 

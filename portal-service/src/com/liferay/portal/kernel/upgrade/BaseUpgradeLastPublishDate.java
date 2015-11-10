@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.util.PortletKeys;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -35,14 +34,11 @@ import java.util.List;
 public class BaseUpgradeLastPublishDate extends UpgradeProcess {
 
 	protected Date getLayoutSetLastPublishDate(long groupId) throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select settings_ from LayoutSet where groupId = ?");
 
 			ps.setLong(1, groupId);
@@ -66,21 +62,18 @@ public class BaseUpgradeLastPublishDate extends UpgradeProcess {
 			return null;
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 
 	protected Date getPortletLastPublishDate(long groupId, String portletId)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select preferences from PortletPreferences where plid = ? " +
 					"and ownerType = ? and ownerId = ? and portletId = ?");
 
@@ -116,19 +109,16 @@ public class BaseUpgradeLastPublishDate extends UpgradeProcess {
 			return null;
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 
 	protected List<Long> getStagedGroupIds() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select groupId from Group_ where typeSettings like " +
 					"'%staged=true%'");
 
@@ -145,7 +135,7 @@ public class BaseUpgradeLastPublishDate extends UpgradeProcess {
 			return stagedGroupIds;
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 
@@ -175,13 +165,10 @@ public class BaseUpgradeLastPublishDate extends UpgradeProcess {
 			long groupId, String tableName, Date lastPublishDate)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"update " + tableName + " set lastPublishDate = ? where " +
 					"groupId = ?");
 
@@ -191,7 +178,7 @@ public class BaseUpgradeLastPublishDate extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 

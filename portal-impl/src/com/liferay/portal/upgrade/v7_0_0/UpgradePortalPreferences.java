@@ -27,7 +27,6 @@ import com.liferay.portlet.exportimport.staging.Staging;
 import com.liferay.portlet.exportimport.staging.StagingConstants;
 import com.liferay.util.xml.XMLUtil;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -118,14 +117,11 @@ public class UpgradePortalPreferences extends UpgradeProcess {
 	}
 
 	protected void upgradePortalPreferences() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select portalPreferencesId, preferences from " +
 					"PortalPreferences");
 
@@ -140,7 +136,7 @@ public class UpgradePortalPreferences extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 
@@ -148,13 +144,10 @@ public class UpgradePortalPreferences extends UpgradeProcess {
 			long portalPreferencesId, String preferences)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"update PortalPreferences set preferences = ? where " +
 					"portalPreferencesId = ?");
 
@@ -163,7 +156,7 @@ public class UpgradePortalPreferences extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 

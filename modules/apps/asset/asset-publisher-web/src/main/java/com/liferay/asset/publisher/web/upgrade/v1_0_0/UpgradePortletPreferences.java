@@ -34,7 +34,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -61,14 +60,11 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 			return ddmStructureJSONObject;
 		}
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select definition from DDMStructure where structureId = ?" );
 
 			ps.setLong(1, structureId);
@@ -91,7 +87,7 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 				"Unable to find dynamic data mapping structure " + structureId);
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 
@@ -130,13 +126,10 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 	protected String getJournalArticleResourceUuid(String journalArticleUuid)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(5);
 
 			sb.append("select JournalArticleResource.uuid_ from ");
@@ -145,7 +138,7 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 			sb.append("JournalArticleResource.resourcePrimKey where ");
 			sb.append("JournalArticle.uuid_ = ?");
 
-			ps = con.prepareStatement(sb.toString());
+			ps = connection.prepareStatement(sb.toString());
 
 			ps.setString(1, journalArticleUuid);
 
@@ -158,7 +151,7 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 			return null;
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 
@@ -217,7 +210,6 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 			portletPreferences.getValue(_DL_CLASS_TYPE, "0"));
 
 		if (fileEntryTypeId > 0) {
-			Connection con = null;
 			PreparedStatement ps = null;
 			ResultSet rs = null;
 
@@ -225,9 +217,7 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 				long fileEntryTypeClassNameId = PortalUtil.getClassNameId(
 					DLFileEntryType.class);
 
-				con = DataAccess.getUpgradeOptimizedConnection();
-
-				ps = con.prepareStatement(
+				ps = connection.prepareStatement(
 					"select structureId from DDMStructureLink where " +
 						"classNameId = ? and classPK = ?" );
 
@@ -256,7 +246,7 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 				}
 			}
 			finally {
-				DataAccess.cleanUp(con, ps, rs);
+				DataAccess.cleanUp(null, ps, rs);
 			}
 		}
 	}

@@ -19,7 +19,6 @@ import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.security.permission.ActionKeys;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -34,13 +33,10 @@ public class BaseUpgradeAdminPortlets extends UpgradeProcess {
 			String primKey, long roleId, long actionIds)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"insert into ResourcePermission (resourcePermissionId, " +
 					"companyId, name, scope, primKey, roleId, actionIds) " +
 						"values (?, ?, ?, ?, ?, ?, ?)");
@@ -56,21 +52,18 @@ public class BaseUpgradeAdminPortlets extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 		finally {
-			DataAccess.cleanUp(con, ps);
+			DataAccess.cleanUp(ps);
 		}
 	}
 
 	protected long getBitwiseValue(String name, String actionId)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select bitwiseValue from ResourceAction where name = ? and " +
 					"actionId = ?");
 
@@ -86,19 +79,16 @@ public class BaseUpgradeAdminPortlets extends UpgradeProcess {
 			return 0;
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 
 	protected long getControlPanelGroupId() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select groupId from Group_ where name = '" +
 					GroupConstants.CONTROL_PANEL + "'");
 
@@ -111,7 +101,7 @@ public class BaseUpgradeAdminPortlets extends UpgradeProcess {
 			return 0;
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 
@@ -122,14 +112,11 @@ public class BaseUpgradeAdminPortlets extends UpgradeProcess {
 		long bitwiseValue = getBitwiseValue(
 			portletFrom, ActionKeys.ACCESS_IN_CONTROL_PANEL);
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select * from ResourcePermission where name = ?");
 
 			ps.setString(1, portletFrom);
@@ -167,7 +154,7 @@ public class BaseUpgradeAdminPortlets extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 

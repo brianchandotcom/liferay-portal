@@ -1,8 +1,6 @@
 AUI.add(
 	'liferay-surface',
 	function(A) {
-		var AArray = A.Array;
-
 		A.Surface.DEFAULT = 'defaultScreen';
 
 		var Surface = {

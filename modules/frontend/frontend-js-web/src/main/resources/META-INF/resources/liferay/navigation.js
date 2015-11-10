@@ -399,7 +399,7 @@ AUI.add(
 			function() {
 				var instance = this;
 
-				if (instance.get('isSortable')) {
+				if (instance.get('isSortable') && instance._navList) {
 					var sortable = new A.Sortable(
 						{
 							container: instance._navList,

@@ -99,7 +99,6 @@
 	</command>
 
 	<command name="deletePG">
-		<var name="key_assetType" value="${assetType}" />
 		<var name="key_folderName" value="${folderName}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
@@ -230,8 +229,6 @@
 	</command>
 
 	<command name="moveSubfolderToRecycleBinPG">
-		<var name="key_assetType" value="${assetType}" />
-
 		<execute function="AssertClick" locator1="NavListItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#RECYCLE_BIN_SUCCESS" value1="The ${assetType} ${subfolderName} was moved to the Recycle Bin." />
 	</command>
@@ -241,7 +238,6 @@
 			<var name="portletName" value="Bookmarks" />
 		</execute>
 
-		<var name="key_assetType" value="${assetType}" />
 		<var name="key_folderName" value="${folderName}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
@@ -272,8 +268,6 @@
 				<execute function="Click" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_ACTIONS_DROPDOWN_GENERIC" />
 
 				<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-
-				<var name="key_assetType" value="${assetType}" />
 
 				<execute function="AssertTextEquals#assertPartialText" locator1="Message#RECYCLE_BIN_SUCCESS" value1="moved to the Recycle Bin. Undo" />
 			</then>

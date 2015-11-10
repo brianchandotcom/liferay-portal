@@ -121,8 +121,6 @@
 	</command>
 
 	<command name="deleteCP">
-		<var name="key_assetType" value="${assetType}" />
-
 		<if>
 			<condition function="IsElementPresent" locator1="MessageBoards#CATEGORY_TABLE_ADMIN_ALL_CHECKBOX" />
 			<then>
@@ -134,7 +132,6 @@
 	</command>
 
 	<command name="deletePG">
-		<var name="key_assetType" value="${assetType}" />
 		<var name="key_categoryName" value="${categoryName}" />
 
 		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
@@ -230,8 +227,6 @@
 				<execute function="Check" locator1="MessageBoards#CATEGORY_TABLE_ADMIN_ALL_CHECKBOX" />
 
 				<execute function="AssertClick" locator1="MessageBoardsAdmin#CATEGORIES_RECYCLE_BIN_BUTTON" value1="Move to the Recycle Bin"  />
-
-				<var name="key_assetType" value="${assetType}" />
 
 				<execute function="AssertTextEquals#assertPartialText" locator1="Message#RECYCLE_BIN_SUCCESS" value1="moved to the Recycle Bin. Undo" />
 			</then>

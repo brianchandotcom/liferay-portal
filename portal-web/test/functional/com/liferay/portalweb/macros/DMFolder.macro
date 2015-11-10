@@ -167,7 +167,6 @@
 	</command>
 
 	<command name="deleteCP">
-		<var name="key_assetType" value="${assetType}" />
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
 		<execute function="Click" locator1="DocumentsAndMedia#ICON_FOLDER_ACTIONS" />
@@ -187,7 +186,6 @@
 	</command>
 
 	<command name="deletePG">
-		<var name="key_assetType" value="${assetType}" />
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
 		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#ICON_FOLDER_TITLE" value1="${dmFolderName}" />
@@ -338,7 +336,6 @@
 	</command>
 
 	<command name="moveToRecycleBinCP">
-		<var name="key_assetType" value="${assetType}" />
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
 		<execute function="AssertElementPresent" locator1="DocumentsAndMedia#ICON_FOLDER_THUMBNAIL" />
@@ -408,8 +405,6 @@
 		<while>
 			<condition function="IsElementPresent" locator1="MediaGallery#ENTRIES_FOLDER" />
 			<then>
-				<var name="key_assetType" value="${assetType}" />
-
 				<execute function="Click" locator1="MediaGallery#ENTRIES_FOLDER" />
 				<execute function="AssertClick" locator1="MediaGallery#ENTRY_RECYCLE_BIN_ICON" value1="Move to the Recycle Bin" />
 				<execute function="AssertTextEquals#assertPartialText" locator1="Message#RECYCLE_BIN_SUCCESS" value1="moved to the Recycle Bin. Undo" />

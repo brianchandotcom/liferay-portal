@@ -991,8 +991,6 @@
 
 		<execute function="Click" locator1="Icon#DELETE" />
 
-		<var name="key_assetType" value="Web Content Article" />
-
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#RECYCLE_BIN_SUCCESS" value1="moved to the Recycle Bin. Undo" />
 	</command>
 
@@ -1084,8 +1082,6 @@
 		<execute macro="Portlet#changeDisplayStyle">
 			<var name="displayStyle" value="Descriptive" />
 		</execute>
-
-		<var name="key_assetType" value="Web Content Article" />
 
 		<while>
 			<condition function="IsElementPresent#pauseIsElementPresent" locator1="WC#ENTRY_DESCRIPTIVE_THUMBNAIL_GENERIC" />

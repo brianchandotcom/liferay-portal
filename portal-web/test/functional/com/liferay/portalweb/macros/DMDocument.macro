@@ -710,7 +710,6 @@
 	</command>
 
 	<command name="deleteCP">
-		<var name="key_assetType" value="${assetType}" />
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
 		<execute function="Click" locator1="DocumentsAndMedia#ICON_DOCUMENT_ACTIONS" />
@@ -730,7 +729,6 @@
 	</command>
 
 	<command name="deletePG">
-		<var name="key_assetType" value="${assetType}" />
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
 		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
@@ -745,7 +743,6 @@
 	</command>
 
 	<command name="deletePGViaMG">
-		<var name="key_assetType" value="${assetType}" />
 		<var name="key_mgDocumentTitle" value="${mgDocumentTitle}" />
 
 		<execute function="AssertClick" locator1="MediaGallery#IMAGE_TITLE" value1="${mgDocumentTitle}" />
@@ -1223,7 +1220,6 @@
 	</command>
 
 	<command name="moveToRecycleBinCP">
-		<var name="key_assetType" value="${assetType}" />
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
 		<execute function="AssertElementPresent" locator1="DocumentsAndMedia#ICON_DOCUMENT" />

@@ -46,12 +46,12 @@ public class WSDDBuilderPlugin implements Plugin<Project> {
 		Configuration wsddBuilderConfiguration = addWSDDBuilderConfiguration(
 			project);
 
-		addBuildWSDDTask(project);
+		addTaskBuildWSDD(project);
 
 		configureTasksBuildWSDD(project, wsddBuilderConfiguration);
 	}
 
-	protected BuildWSDDTask addBuildWSDDTask(final Project project) {
+	protected BuildWSDDTask addTaskBuildWSDD(final Project project) {
 		BuildWSDDTask buildWSDDTask = GradleUtil.addTask(
 			project, BUILD_WSDD_TASK_NAME, BuildWSDDTask.class);
 

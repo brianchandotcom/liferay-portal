@@ -514,8 +514,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			if (cmd.equals(Constants.ADD_TEMP) ||
 				cmd.equals(Constants.DELETE_TEMP)) {
 
-				actionResponse.setRenderParameter(
-					"mvcPath", "/html/common/null.jsp");
+				actionResponse.setRenderParameter("mvcPath", "/null.jsp");
 			}
 			else if (cmd.equals(Constants.PREVIEW)) {
 			}

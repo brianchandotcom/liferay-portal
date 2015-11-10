@@ -57,7 +57,7 @@ public class GetFileMVCActionCommand extends BaseMVCActionCommand {
 
 		_getFileActionHelper.processRequest(request, response);
 
-		actionResponse.setRenderParameter("mvcPath", "/html/common/null.jsp");
+		actionResponse.setRenderParameter("mvcPath", "/null.jsp");
 	}
 
 	private final GetFileActionHelper _getFileActionHelper =

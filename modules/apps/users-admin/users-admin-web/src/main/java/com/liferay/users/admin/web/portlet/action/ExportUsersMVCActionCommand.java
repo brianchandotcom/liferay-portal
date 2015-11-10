@@ -106,8 +106,7 @@ public class ExportUsersMVCActionCommand extends BaseMVCActionCommand {
 			ServletResponseUtil.sendFile(
 				request, response, fileName, bytes, ContentTypes.TEXT_CSV_UTF8);
 
-			actionResponse.setRenderParameter(
-				"mvcPath", "/null.jsp");
+			actionResponse.setRenderParameter("mvcPath", "/null.jsp");
 		}
 		catch (Exception e) {
 			SessionErrors.add(actionRequest, e.getClass());

@@ -657,8 +657,8 @@
 	</command>
 
 	<command name="viewDefaultMyWorkflowTasksCP">
-		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_INFO_MESSAGE" value1="There are no pending tasks assigned to you." />
-		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_INFO_MESSAGE" value1="There are no pending tasks assigned to your roles." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no pending tasks assigned to you." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO_2" value1="There are no pending tasks assigned to your roles." />
 		<execute function="AssertClick" locator1="MenuItem#COMPLETED" value1="Completed" />
 
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no completed tasks." />

@@ -19,6 +19,9 @@
 <%
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 
+String orderByCol = ParamUtil.getString(request, "orderByCol", "first-name");
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
 String tabs1 = (String)request.getAttribute("edit_team_assignments.jsp-tabs1");
 String tabs2 = (String)request.getAttribute("edit_team_assignments.jsp-tabs2");
 
@@ -40,6 +43,13 @@ RowChecker rowChecker = new UserTeamChecker(renderResponse, team);
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
 			portletURL="<%= portletURL %>"
+		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= orderByCol %>"
+			orderByType="<%= orderByType %>"
+			orderColumns='<%= new String[] {"first-name", "screen-name"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 

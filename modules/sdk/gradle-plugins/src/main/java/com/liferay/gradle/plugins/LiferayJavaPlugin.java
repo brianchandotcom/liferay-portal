@@ -43,7 +43,6 @@ import com.liferay.gradle.plugins.tld.formatter.TLDFormatterPlugin;
 import com.liferay.gradle.plugins.upgrade.table.builder.BuildUpgradeTableTask;
 import com.liferay.gradle.plugins.whip.WhipPlugin;
 import com.liferay.gradle.plugins.whip.WhipTaskExtension;
-import com.liferay.gradle.plugins.wsdd.builder.WSDDBuilderPlugin;
 import com.liferay.gradle.plugins.wsdl.builder.BuildWSDLTask;
 import com.liferay.gradle.plugins.wsdl.builder.WSDLBuilderPlugin;
 import com.liferay.gradle.plugins.xml.formatter.FormatXMLTask;
@@ -896,7 +895,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, SourceFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, SoyPlugin.class);
 		GradleUtil.applyPlugin(project, TLDFormatterPlugin.class);
-		GradleUtil.applyPlugin(project, WSDDBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, WSDLBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, WhipPlugin.class);
 		GradleUtil.applyPlugin(project, XMLFormatterPlugin.class);

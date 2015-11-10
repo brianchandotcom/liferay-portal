@@ -44,6 +44,7 @@ public class JenkinsResultsParserUtil {
 				if (sb.length() > 0) {
 					sb.append(",");
 				}
+
 				sb.append(hostName);
 
 				continue;
@@ -53,15 +54,14 @@ public class JenkinsResultsParserUtil {
 
 			String prefix = hostName.substring(0, y);
 
-			int first =
-				Integer.parseInt(hostName.substring(y, x));
-			int last =
-				Integer.parseInt(hostName.substring(x + 2));
+			int first = Integer.parseInt(hostName.substring(y, x));
+			int last = Integer.parseInt(hostName.substring(x + 2));
 
 			for (int current = first; current <= last; current++) {
 				if (sb.length() > 0) {
 					sb.append(",");
 				}
+
 				sb.append(prefix);
 				sb.append(current);
 			}

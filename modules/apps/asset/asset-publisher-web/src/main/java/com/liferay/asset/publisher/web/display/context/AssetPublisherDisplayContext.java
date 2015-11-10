@@ -160,26 +160,6 @@ public class AssetPublisherDisplayContext {
 		return _allAssetTagNames;
 	}
 
-	public BaseModelSearchResult<AssetEntry> getAssetEntries(
-			AssetEntryQuery assetEntryQuery, int start, int end)
-		throws Exception {
-
-		if (isSearchWithIndex()) {
-			return AssetUtil.searchAssetEntries(
-				_request, assetEntryQuery, start, end);
-		}
-
-		int total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
-
-		assetEntryQuery.setEnd(end);
-		assetEntryQuery.setStart(start);
-
-		List<AssetEntry> assetEntries = AssetEntryServiceUtil.getEntries(
-			assetEntryQuery);
-
-		return new BaseModelSearchResult<>(assetEntries, total);
-	}
-
 	public AssetEntryQuery getAssetEntryQuery() throws Exception {
 		if (_assetEntryQuery != null) {
 			return _assetEntryQuery;
@@ -228,28 +208,6 @@ public class AssetPublisherDisplayContext {
 			themeDisplay.getUser(), _portletPreferences, _assetEntryQuery);
 
 		return _assetEntryQuery;
-	}
-
-	public List<AssetEntryResult> getAssetEntryResults(
-			SearchContainer searchContainer)
-		throws Exception {
-
-		if (!isShowAssetEntryResults()) {
-			return Collections.emptyList();
-		}
-
-		long assetVocabularyId = GetterUtil.getLong(
-			_portletPreferences.getValue("assetVocabularyId", null));
-
-		if (assetVocabularyId > 0) {
-			return getAssetEntryResultsByVocabulary(
-				assetVocabularyId, searchContainer);
-		}
-		else if (assetVocabularyId <= -1) {
-			return getAssetEntryResultsByClassName(searchContainer);
-		}
-
-		return getAssetEntryResultsByDefault(searchContainer);
 	}
 
 	public String getAssetLinkBehavior() {
@@ -1113,178 +1071,7 @@ public class AssetPublisherDisplayContext {
 			"ddmStructureFieldValue", getDDMStructureFieldValue());
 	}
 
-	protected List<AssetEntryResult> getAssetEntryResultsByClassName(
-			SearchContainer searchContainer)
-		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		AssetEntryQuery assetEntryQuery = getAssetEntryQuery();
-
-		List<AssetEntryResult> assetEntryResults = new ArrayList<>();
-
-		int end = searchContainer.getEnd();
-		int start = searchContainer.getStart();
-
-		int total = 0;
-
-		for (long classNameId : getClassNameIds()) {
-			assetEntryQuery.setClassNameIds(new long[] {classNameId});
-
-			BaseModelSearchResult<AssetEntry> baseModelSearchResult =
-				getAssetEntries(assetEntryQuery, start, end);
-
-			int groupTotal = baseModelSearchResult.getLength();
-
-			total += groupTotal;
-
-			List<AssetEntry> assetEntries =
-				baseModelSearchResult.getBaseModels();
-
-			if (!assetEntries.isEmpty() && (start < groupTotal)) {
-				AssetRendererFactory<?> groupAssetRendererFactory =
-					AssetRendererFactoryRegistryUtil.
-						getAssetRendererFactoryByClassNameId(classNameId);
-
-				String title = ResourceActionsUtil.getModelResource(
-					themeDisplay.getLocale(),
-					groupAssetRendererFactory.getClassName());
-
-				assetEntryResults.add(
-					new AssetEntryResult(title, assetEntries));
-			}
-
-			String portletName = getPortletName();
-
-			if (!portletName.equals(AssetPublisherPortletKeys.RECENT_CONTENT)) {
-				if (groupTotal > 0) {
-					if ((end > 0) && (end > groupTotal)) {
-						end -= groupTotal;
-					}
-					else {
-						end = 0;
-					}
-
-					if ((start > 0) && (start > groupTotal)) {
-						start -= groupTotal;
-					}
-					else {
-						start = 0;
-					}
-				}
-
-				assetEntryQuery.setEnd(QueryUtil.ALL_POS);
-				assetEntryQuery.setStart(QueryUtil.ALL_POS);
-			}
-		}
-
-		searchContainer.setTotal(total);
-
-		return assetEntryResults;
-	}
-
-	protected List<AssetEntryResult> getAssetEntryResultsByDefault(
-			SearchContainer searchContainer)
-		throws Exception {
-
-		List<AssetEntryResult> assetEntryResults = new ArrayList<>();
-
-		int end = searchContainer.getEnd();
-		int start = searchContainer.getStart();
-
-		AssetEntryQuery assetEntryQuery = getAssetEntryQuery();
-
-		assetEntryQuery.setClassNameIds(getClassNameIds());
-
-		BaseModelSearchResult<AssetEntry> baseModelSearchResult =
-			getAssetEntries(assetEntryQuery, start, end);
-
-		int total = baseModelSearchResult.getLength();
-
-		searchContainer.setTotal(total);
-
-		List<AssetEntry> assetEntries = baseModelSearchResult.getBaseModels();
-
-		if (!assetEntries.isEmpty() && (start < total)) {
-			assetEntryResults.add(new AssetEntryResult(assetEntries));
-		}
-
-		return assetEntryResults;
-	}
-
-	protected List<AssetEntryResult> getAssetEntryResultsByVocabulary(
-			long assetVocabularyId, SearchContainer searchContainer)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		AssetEntryQuery assetEntryQuery = getAssetEntryQuery();
-
-		List<AssetEntryResult> assetEntryResults = new ArrayList<>();
-
-		List<AssetCategory> assetCategories =
-			AssetCategoryLocalServiceUtil.getVocabularyRootCategories(
-				assetVocabularyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-		assetEntryQuery.setClassNameIds(getClassNameIds());
-
-		int end = searchContainer.getEnd();
-		int start = searchContainer.getStart();
-
-		int total = 0;
-
-		for (AssetCategory assetCategory : assetCategories) {
-			long[] oldAllCategoryIds = assetEntryQuery.getAllCategoryIds();
-
-			long[] newAllAssetCategoryIds = ArrayUtil.append(
-				oldAllCategoryIds, assetCategory.getCategoryId());
-
-			assetEntryQuery.setAllCategoryIds(newAllAssetCategoryIds);
-
-			BaseModelSearchResult<AssetEntry> baseModelSearchResult =
-				getAssetEntries(assetEntryQuery, start, end);
-
-			int groupTotal = baseModelSearchResult.getLength();
-
-			total += groupTotal;
-
-			List<AssetEntry> assetEntries =
-				baseModelSearchResult.getBaseModels();
-
-			if (!assetEntries.isEmpty() && (start < groupTotal)) {
-				String title = assetCategory.getTitle(themeDisplay.getLocale());
-
-				assetEntryResults.add(
-					new AssetEntryResult(title, assetEntries));
-			}
-
-			if (groupTotal > 0) {
-				if ((end > 0) && (end > groupTotal)) {
-					end -= groupTotal;
-				}
-				else {
-					end = 0;
-				}
-
-				if ((start > 0) && (start > groupTotal)) {
-					start -= groupTotal;
-				}
-				else {
-					start = 0;
-				}
-			}
-
-			assetEntryQuery.setAllCategoryIds(oldAllCategoryIds);
-			assetEntryQuery.setEnd(QueryUtil.ALL_POS);
-			assetEntryQuery.setStart(QueryUtil.ALL_POS);
-		}
-
-		searchContainer.setTotal(total);
-
-		return assetEntryResults;
-	}
 
 	protected String getPortletName() {
 		PortletConfig portletConfig = (PortletConfig)_request.getAttribute(
@@ -1295,37 +1082,6 @@ public class AssetPublisherDisplayContext {
 		}
 
 		return portletConfig.getPortletName();
-	}
-
-	protected boolean isSearchWithIndex() throws Exception {
-		AssetEntryQuery assetEntryQuery = getAssetEntryQuery();
-
-		String portletName = getPortletName();
-
-		if (AssetPublisherWebConfigurationValues.SEARCH_WITH_INDEX &&
-			(assetEntryQuery.getLinkedAssetEntryId() == 0) &&
-			!portletName.equals(
-				AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS) &&
-			!portletName.equals(AssetPublisherPortletKeys.MOST_VIEWED_ASSETS)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	protected boolean isShowAssetEntryResults() throws Exception {
-		AssetEntryQuery assetEntryQuery = getAssetEntryQuery();
-
-		String portletName = getPortletName();
-
-		if (!portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS) ||
-			(assetEntryQuery.getLinkedAssetEntryId() > 0)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	protected void setDDMStructure() throws Exception {

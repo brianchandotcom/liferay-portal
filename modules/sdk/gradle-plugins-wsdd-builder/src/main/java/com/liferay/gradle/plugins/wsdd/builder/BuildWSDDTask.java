@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.wsdd.builder;
 
 import com.liferay.gradle.util.FileUtil;
+import com.liferay.gradle.util.GradleUtil;
 import com.liferay.portal.tools.wsdd.builder.WSDDBuilderArgs;
 
 import java.io.File;
@@ -22,7 +23,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.gradle.api.Project;
 import org.gradle.api.tasks.JavaExec;
 
 /**
@@ -42,49 +42,43 @@ public class BuildWSDDTask extends JavaExec {
 	}
 
 	public String getBuilderClasspath() {
-		return _wsddBuilderArgs.getClassPath();
+		return GradleUtil.toString(_builderClasspath);
 	}
 
 	public File getInputFile() {
-		Project project = getProject();
-
-		return project.file(_wsddBuilderArgs.getFileName());
+		return GradleUtil.toFile(getProject(), _inputFile);
 	}
 
 	public File getOutputDir() {
-		Project project = getProject();
-
-		return project.file(_wsddBuilderArgs.getOutputPath());
+		return GradleUtil.toFile(getProject(), _outputDir);
 	}
 
 	public File getServerConfigFile() {
-		Project project = getProject();
-
-		return project.file(_wsddBuilderArgs.getServerConfigFileName());
+		return GradleUtil.toFile(getProject(), _serverConfigFile);
 	}
 
 	public String getServiceNamespace() {
-		return _wsddBuilderArgs.getServiceNamespace();
+		return GradleUtil.toString(_serviceNamespace);
 	}
 
-	public void setBuilderClasspath(String builderClasspath) {
-		_wsddBuilderArgs.setClassPath(builderClasspath);
+	public void setBuilderClasspath(Object builderClasspath) {
+		_builderClasspath = builderClasspath;
 	}
 
-	public void setInputFileName(String inputFileName) {
-		_wsddBuilderArgs.setFileName(inputFileName);
+	public void setInputFile(Object inputFile) {
+		_inputFile = inputFile;
 	}
 
-	public void setOutputDirName(String outputDirName) {
-		_wsddBuilderArgs.setOutputPath(outputDirName);
+	public void setOutputDir(Object outputDir) {
+		_outputDir = outputDir;
 	}
 
-	public void setServerConfigFileName(String serverConfigFileName) {
-		_wsddBuilderArgs.setServerConfigFileName(serverConfigFileName);
+	public void setServerConfigFile(Object serverConfigFile) {
+		_serverConfigFile = serverConfigFile;
 	}
 
-	public void setServiceNamespace(String serviceNamespace) {
-		_wsddBuilderArgs.setServiceNamespace(serviceNamespace);
+	public void setServiceNamespace(Object serviceNamespace) {
+		_serviceNamespace = serviceNamespace;
 	}
 
 	protected List<String> getCompleteArgs() {
@@ -103,6 +97,10 @@ public class BuildWSDDTask extends JavaExec {
 		return args;
 	}
 
-	private final WSDDBuilderArgs _wsddBuilderArgs = new WSDDBuilderArgs();
+	private Object _builderClasspath;
+	private Object _inputFile = WSDDBuilderArgs.FILE_NAME;
+	private Object _outputDir;
+	private Object _serverConfigFile = WSDDBuilderArgs.SERVER_CONFIG_FILE_NAME;
+	private Object _serviceNamespace = WSDDBuilderArgs.SERVICE_NAMESPACE;
 
 }

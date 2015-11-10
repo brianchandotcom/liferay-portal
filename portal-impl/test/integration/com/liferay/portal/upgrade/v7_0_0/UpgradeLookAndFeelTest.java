@@ -39,7 +39,7 @@ import org.junit.Test;
 /**
  * @author Eduardo Garcia
  */
-public class UpgradeLookAndFeelTest extends UpgradeLookAndFeel {
+public class UpgradeLookAndFeelTest {
 
 	@ClassRule
 	@Rule
@@ -56,7 +56,9 @@ public class UpgradeLookAndFeelTest extends UpgradeLookAndFeel {
 		setPortletShowBorders("portlet1", true);
 		setPortletShowBorders("portlet2", false);
 
-		doUpgrade();
+		UpgradeLookAndFeel upgradeLookAndFeel = new UpgradeLookAndFeel();
+
+		upgradeLookAndFeel.upgrade();
 
 		CacheRegistryUtil.clear();
 

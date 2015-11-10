@@ -31,6 +31,9 @@ import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.plugins.PluginContainer;
+import org.gradle.api.plugins.WarPlugin;
+import org.gradle.api.plugins.WarPluginConvention;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskOutputs;
@@ -125,6 +128,19 @@ public class WSDDBuilderPlugin implements Plugin<Project> {
 
 			});
 
+		PluginContainer pluginContainer = project.getPlugins();
+
+		pluginContainer.withType(
+			WarPlugin.class,
+			new Action<WarPlugin>() {
+
+				@Override
+				public void execute(WarPlugin warPlugin) {
+					configureTaskBuildWSDDForWarPlugin(buildWSDDTask);
+				}
+
+			});
+
 		return buildWSDDTask;
 	}
 
@@ -138,6 +154,34 @@ public class WSDDBuilderPlugin implements Plugin<Project> {
 		BuildWSDDTask buildWSDDTask, FileCollection fileCollection) {
 
 		buildWSDDTask.setClasspath(fileCollection);
+	}
+
+	protected void configureTaskBuildWSDDForWarPlugin(
+		final BuildWSDDTask buildWSDDTask) {
+
+		buildWSDDTask.setInputFile(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return new File(
+						getWebAppDir(buildWSDDTask.getProject()),
+						"WEB-INF/service.xml");
+				}
+
+			});
+
+		buildWSDDTask.setServerConfigFile(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return new File(
+						getWebAppDir(buildWSDDTask.getProject()),
+						"WEB-INF/server-config.wsdd");
+				}
+
+			});
 	}
 
 	protected void configureTasksBuildWSDD(
@@ -171,6 +215,13 @@ public class WSDDBuilderPlugin implements Plugin<Project> {
 		Iterator<File> iterator = srcDirs.iterator();
 
 		return iterator.next();
+	}
+
+	protected File getWebAppDir(Project project) {
+		WarPluginConvention warPluginConvention = GradleUtil.getConvention(
+			project, WarPluginConvention.class);
+
+		return warPluginConvention.getWebAppDir();
 	}
 
 }

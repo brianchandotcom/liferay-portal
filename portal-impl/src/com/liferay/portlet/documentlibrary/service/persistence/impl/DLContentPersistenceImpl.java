@@ -2951,6 +2951,22 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the document library content
+	*
+	* @param pk the primary key of the document library content
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		DLContent dlContent = fetchByPrimaryKey(pk);
+
+		if (dlContent == null) {
+			throw new RuntimeException("The entity DLContent with PK " + pk +
+				" was not found");
+		}
+
+		return dlContent.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

@@ -4849,6 +4849,22 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the s a p entry
+	*
+	* @param pk the primary key of the s a p entry
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		SAPEntry sapEntry = fetchByPrimaryKey(pk);
+
+		if (sapEntry == null) {
+			throw new RuntimeException("The entity SAPEntry with PK " + pk +
+				" was not found");
+		}
+
+		return sapEntry.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

@@ -4729,6 +4729,22 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the phone
+	*
+	* @param pk the primary key of the phone
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		Phone phone = fetchByPrimaryKey(pk);
+
+		if (phone == null) {
+			throw new RuntimeException("The entity Phone with PK " + pk +
+				" was not found");
+		}
+
+		return phone.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

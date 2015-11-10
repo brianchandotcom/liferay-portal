@@ -734,6 +734,22 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the account
+	*
+	* @param pk the primary key of the account
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		Account account = fetchByPrimaryKey(pk);
+
+		if (account == null) {
+			throw new RuntimeException("The entity Account with PK " + pk +
+				" was not found");
+		}
+
+		return account.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

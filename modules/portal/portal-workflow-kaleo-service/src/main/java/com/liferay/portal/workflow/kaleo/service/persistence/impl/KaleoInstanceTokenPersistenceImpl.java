@@ -3612,6 +3612,22 @@ public class KaleoInstanceTokenPersistenceImpl extends BasePersistenceImpl<Kaleo
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the kaleo instance token
+	*
+	* @param pk the primary key of the kaleo instance token
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		KaleoInstanceToken kaleoInstanceToken = fetchByPrimaryKey(pk);
+
+		if (kaleoInstanceToken == null) {
+			throw new RuntimeException("The entity KaleoInstanceToken with PK " +
+				pk + " was not found");
+		}
+
+		return kaleoInstanceToken.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return KaleoInstanceTokenModelImpl.TABLE_COLUMNS_MAP;

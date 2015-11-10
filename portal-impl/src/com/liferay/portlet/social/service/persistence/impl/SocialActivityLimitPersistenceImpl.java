@@ -2785,6 +2785,23 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the social activity limit
+	*
+	* @param pk the primary key of the social activity limit
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		SocialActivityLimit socialActivityLimit = fetchByPrimaryKey(pk);
+
+		if (socialActivityLimit == null) {
+			throw new RuntimeException(
+				"The entity SocialActivityLimit with PK " + pk +
+				" was not found");
+		}
+
+		return socialActivityLimit.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return SocialActivityLimitModelImpl.TABLE_COLUMNS_MAP;

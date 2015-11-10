@@ -1239,6 +1239,22 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the shopping item price
+	*
+	* @param pk the primary key of the shopping item price
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		ShoppingItemPrice shoppingItemPrice = fetchByPrimaryKey(pk);
+
+		if (shoppingItemPrice == null) {
+			throw new RuntimeException("The entity ShoppingItemPrice with PK " +
+				pk + " was not found");
+		}
+
+		return shoppingItemPrice.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return ShoppingItemPriceModelImpl.TABLE_COLUMNS_MAP;

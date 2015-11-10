@@ -3239,6 +3239,22 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the document library file rank
+	*
+	* @param pk the primary key of the document library file rank
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		DLFileRank dlFileRank = fetchByPrimaryKey(pk);
+
+		if (dlFileRank == null) {
+			throw new RuntimeException("The entity DLFileRank with PK " + pk +
+				" was not found");
+		}
+
+		return dlFileRank.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

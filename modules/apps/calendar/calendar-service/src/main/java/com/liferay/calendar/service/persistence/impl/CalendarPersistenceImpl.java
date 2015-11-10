@@ -4591,6 +4591,22 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the calendar
+	*
+	* @param pk the primary key of the calendar
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		Calendar calendar = fetchByPrimaryKey(pk);
+
+		if (calendar == null) {
+			throw new RuntimeException("The entity Calendar with PK " + pk +
+				" was not found");
+		}
+
+		return calendar.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

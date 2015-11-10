@@ -1242,6 +1242,22 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the shopping order item
+	*
+	* @param pk the primary key of the shopping order item
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		ShoppingOrderItem shoppingOrderItem = fetchByPrimaryKey(pk);
+
+		if (shoppingOrderItem == null) {
+			throw new RuntimeException("The entity ShoppingOrderItem with PK " +
+				pk + " was not found");
+		}
+
+		return shoppingOrderItem.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return ShoppingOrderItemModelImpl.TABLE_COLUMNS_MAP;

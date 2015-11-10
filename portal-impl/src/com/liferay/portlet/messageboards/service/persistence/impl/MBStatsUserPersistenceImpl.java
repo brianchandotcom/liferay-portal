@@ -2593,6 +2593,22 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the message boards stats user
+	*
+	* @param pk the primary key of the message boards stats user
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		MBStatsUser mbStatsUser = fetchByPrimaryKey(pk);
+
+		if (mbStatsUser == null) {
+			throw new RuntimeException("The entity MBStatsUser with PK " + pk +
+				" was not found");
+		}
+
+		return mbStatsUser.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return MBStatsUserModelImpl.TABLE_COLUMNS_MAP;

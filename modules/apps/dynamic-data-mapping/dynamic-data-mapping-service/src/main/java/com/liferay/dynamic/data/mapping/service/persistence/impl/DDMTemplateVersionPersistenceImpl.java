@@ -2141,6 +2141,22 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the d d m template version
+	*
+	* @param pk the primary key of the d d m template version
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		DDMTemplateVersion ddmTemplateVersion = fetchByPrimaryKey(pk);
+
+		if (ddmTemplateVersion == null) {
+			throw new RuntimeException("The entity DDMTemplateVersion with PK " +
+				pk + " was not found");
+		}
+
+		return ddmTemplateVersion.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return DDMTemplateVersionModelImpl.TABLE_COLUMNS_MAP;

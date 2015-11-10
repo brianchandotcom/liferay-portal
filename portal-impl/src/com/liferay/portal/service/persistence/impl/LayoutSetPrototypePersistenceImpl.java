@@ -4602,6 +4602,22 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the layout set prototype
+	*
+	* @param pk the primary key of the layout set prototype
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		LayoutSetPrototype layoutSetPrototype = fetchByPrimaryKey(pk);
+
+		if (layoutSetPrototype == null) {
+			throw new RuntimeException("The entity LayoutSetPrototype with PK " +
+				pk + " was not found");
+		}
+
+		return layoutSetPrototype.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

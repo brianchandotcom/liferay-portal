@@ -2970,6 +2970,23 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the journal article image
+	*
+	* @param pk the primary key of the journal article image
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		JournalArticleImage journalArticleImage = fetchByPrimaryKey(pk);
+
+		if (journalArticleImage == null) {
+			throw new RuntimeException(
+				"The entity JournalArticleImage with PK " + pk +
+				" was not found");
+		}
+
+		return journalArticleImage.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return JournalArticleImageModelImpl.TABLE_COLUMNS_MAP;

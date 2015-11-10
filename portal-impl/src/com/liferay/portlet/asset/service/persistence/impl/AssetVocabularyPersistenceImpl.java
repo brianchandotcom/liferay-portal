@@ -5414,6 +5414,22 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the asset vocabulary
+	*
+	* @param pk the primary key of the asset vocabulary
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		AssetVocabulary assetVocabulary = fetchByPrimaryKey(pk);
+
+		if (assetVocabulary == null) {
+			throw new RuntimeException("The entity AssetVocabulary with PK " +
+				pk + " was not found");
+		}
+
+		return assetVocabulary.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

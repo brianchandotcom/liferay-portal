@@ -4233,6 +4233,22 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the kaleo log
+	*
+	* @param pk the primary key of the kaleo log
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		KaleoLog kaleoLog = fetchByPrimaryKey(pk);
+
+		if (kaleoLog == null) {
+			throw new RuntimeException("The entity KaleoLog with PK " + pk +
+				" was not found");
+		}
+
+		return kaleoLog.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

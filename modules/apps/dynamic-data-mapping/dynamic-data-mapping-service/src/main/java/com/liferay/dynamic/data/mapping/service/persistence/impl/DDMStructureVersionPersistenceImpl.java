@@ -2150,6 +2150,23 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the d d m structure version
+	*
+	* @param pk the primary key of the d d m structure version
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		DDMStructureVersion ddmStructureVersion = fetchByPrimaryKey(pk);
+
+		if (ddmStructureVersion == null) {
+			throw new RuntimeException(
+				"The entity DDMStructureVersion with PK " + pk +
+				" was not found");
+		}
+
+		return ddmStructureVersion.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

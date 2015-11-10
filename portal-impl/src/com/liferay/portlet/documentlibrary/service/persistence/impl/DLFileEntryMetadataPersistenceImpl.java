@@ -3270,6 +3270,23 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the document library file entry metadata
+	*
+	* @param pk the primary key of the document library file entry metadata
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		DLFileEntryMetadata dlFileEntryMetadata = fetchByPrimaryKey(pk);
+
+		if (dlFileEntryMetadata == null) {
+			throw new RuntimeException(
+				"The entity DLFileEntryMetadata with PK " + pk +
+				" was not found");
+		}
+
+		return dlFileEntryMetadata.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

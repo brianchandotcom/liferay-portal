@@ -693,6 +693,15 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the counter
+	*
+	* @param pk the primary key of the counter
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		return 0;
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CounterModelImpl.TABLE_COLUMNS_MAP;

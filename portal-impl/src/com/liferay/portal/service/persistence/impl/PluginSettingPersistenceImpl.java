@@ -1617,6 +1617,22 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the plugin setting
+	*
+	* @param pk the primary key of the plugin setting
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		PluginSetting pluginSetting = fetchByPrimaryKey(pk);
+
+		if (pluginSetting == null) {
+			throw new RuntimeException("The entity PluginSetting with PK " +
+				pk + " was not found");
+		}
+
+		return pluginSetting.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

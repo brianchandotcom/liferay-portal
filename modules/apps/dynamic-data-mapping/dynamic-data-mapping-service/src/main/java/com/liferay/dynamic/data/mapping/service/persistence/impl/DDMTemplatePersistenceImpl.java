@@ -12935,6 +12935,22 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the d d m template
+	*
+	* @param pk the primary key of the d d m template
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		DDMTemplate ddmTemplate = fetchByPrimaryKey(pk);
+
+		if (ddmTemplate == null) {
+			throw new RuntimeException("The entity DDMTemplate with PK " + pk +
+				" was not found");
+		}
+
+		return ddmTemplate.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

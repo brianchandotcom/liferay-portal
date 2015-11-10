@@ -2060,6 +2060,23 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the s c product screenshot
+	*
+	* @param pk the primary key of the s c product screenshot
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		SCProductScreenshot scProductScreenshot = fetchByPrimaryKey(pk);
+
+		if (scProductScreenshot == null) {
+			throw new RuntimeException(
+				"The entity SCProductScreenshot with PK " + pk +
+				" was not found");
+		}
+
+		return scProductScreenshot.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return SCProductScreenshotModelImpl.TABLE_COLUMNS_MAP;

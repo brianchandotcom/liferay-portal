@@ -1620,6 +1620,15 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the resource action
+	*
+	* @param pk the primary key of the resource action
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		return 0;
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return ResourceActionModelImpl.TABLE_COLUMNS_MAP;

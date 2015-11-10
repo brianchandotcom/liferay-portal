@@ -31361,6 +31361,22 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the journal article
+	*
+	* @param pk the primary key of the journal article
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		JournalArticle journalArticle = fetchByPrimaryKey(pk);
+
+		if (journalArticle == null) {
+			throw new RuntimeException("The entity JournalArticle with PK " +
+				pk + " was not found");
+		}
+
+		return journalArticle.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

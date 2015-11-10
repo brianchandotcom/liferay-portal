@@ -7959,6 +7959,23 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the user notification event
+	*
+	* @param pk the primary key of the user notification event
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		UserNotificationEvent userNotificationEvent = fetchByPrimaryKey(pk);
+
+		if (userNotificationEvent == null) {
+			throw new RuntimeException(
+				"The entity UserNotificationEvent with PK " + pk +
+				" was not found");
+		}
+
+		return userNotificationEvent.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

@@ -7418,6 +7418,22 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the calendar resource
+	*
+	* @param pk the primary key of the calendar resource
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		CalendarResource calendarResource = fetchByPrimaryKey(pk);
+
+		if (calendarResource == null) {
+			throw new RuntimeException("The entity CalendarResource with PK " +
+				pk + " was not found");
+		}
+
+		return calendarResource.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

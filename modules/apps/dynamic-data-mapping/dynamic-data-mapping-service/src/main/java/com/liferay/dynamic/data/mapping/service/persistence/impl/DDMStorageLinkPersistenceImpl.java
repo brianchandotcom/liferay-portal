@@ -2673,6 +2673,22 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the d d m storage link
+	*
+	* @param pk the primary key of the d d m storage link
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		DDMStorageLink ddmStorageLink = fetchByPrimaryKey(pk);
+
+		if (ddmStorageLink == null) {
+			throw new RuntimeException("The entity DDMStorageLink with PK " +
+				pk + " was not found");
+		}
+
+		return ddmStorageLink.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

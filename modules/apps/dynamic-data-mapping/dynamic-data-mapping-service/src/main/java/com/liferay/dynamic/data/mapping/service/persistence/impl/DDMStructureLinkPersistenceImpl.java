@@ -2653,6 +2653,22 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the d d m structure link
+	*
+	* @param pk the primary key of the d d m structure link
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		DDMStructureLink ddmStructureLink = fetchByPrimaryKey(pk);
+
+		if (ddmStructureLink == null) {
+			throw new RuntimeException("The entity DDMStructureLink with PK " +
+				pk + " was not found");
+		}
+
+		return ddmStructureLink.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return DDMStructureLinkModelImpl.TABLE_COLUMNS_MAP;

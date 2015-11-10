@@ -2046,6 +2046,22 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the d d m template link
+	*
+	* @param pk the primary key of the d d m template link
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		DDMTemplateLink ddmTemplateLink = fetchByPrimaryKey(pk);
+
+		if (ddmTemplateLink == null) {
+			throw new RuntimeException("The entity DDMTemplateLink with PK " +
+				pk + " was not found");
+		}
+
+		return ddmTemplateLink.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return DDMTemplateLinkModelImpl.TABLE_COLUMNS_MAP;

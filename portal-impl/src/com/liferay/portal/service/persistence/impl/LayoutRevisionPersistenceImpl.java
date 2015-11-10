@@ -6779,6 +6779,22 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the layout revision
+	*
+	* @param pk the primary key of the layout revision
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		LayoutRevision layoutRevision = fetchByPrimaryKey(pk);
+
+		if (layoutRevision == null) {
+			throw new RuntimeException("The entity LayoutRevision with PK " +
+				pk + " was not found");
+		}
+
+		return layoutRevision.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return LayoutRevisionModelImpl.TABLE_COLUMNS_MAP;

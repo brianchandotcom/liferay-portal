@@ -5803,6 +5803,22 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the layout friendly u r l
+	*
+	* @param pk the primary key of the layout friendly u r l
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		LayoutFriendlyURL layoutFriendlyURL = fetchByPrimaryKey(pk);
+
+		if (layoutFriendlyURL == null) {
+			throw new RuntimeException("The entity LayoutFriendlyURL with PK " +
+				pk + " was not found");
+		}
+
+		return layoutFriendlyURL.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

@@ -6622,6 +6622,22 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the document library file version
+	*
+	* @param pk the primary key of the document library file version
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		DLFileVersion dlFileVersion = fetchByPrimaryKey(pk);
+
+		if (dlFileVersion == null) {
+			throw new RuntimeException("The entity DLFileVersion with PK " +
+				pk + " was not found");
+		}
+
+		return dlFileVersion.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

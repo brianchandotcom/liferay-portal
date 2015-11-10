@@ -2288,6 +2288,23 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the resource type permission
+	*
+	* @param pk the primary key of the resource type permission
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		ResourceTypePermission resourceTypePermission = fetchByPrimaryKey(pk);
+
+		if (resourceTypePermission == null) {
+			throw new RuntimeException(
+				"The entity ResourceTypePermission with PK " + pk +
+				" was not found");
+		}
+
+		return resourceTypePermission.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return ResourceTypePermissionModelImpl.TABLE_COLUMNS_MAP;

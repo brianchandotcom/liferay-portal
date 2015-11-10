@@ -6086,6 +6086,22 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the resource permission
+	*
+	* @param pk the primary key of the resource permission
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		ResourcePermission resourcePermission = fetchByPrimaryKey(pk);
+
+		if (resourcePermission == null) {
+			throw new RuntimeException("The entity ResourcePermission with PK " +
+				pk + " was not found");
+		}
+
+		return resourcePermission.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return ResourcePermissionModelImpl.TABLE_COLUMNS_MAP;

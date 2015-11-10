@@ -4757,6 +4757,22 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the website
+	*
+	* @param pk the primary key of the website
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		Website website = fetchByPrimaryKey(pk);
+
+		if (website == null) {
+			throw new RuntimeException("The entity Website with PK " + pk +
+				" was not found");
+		}
+
+		return website.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

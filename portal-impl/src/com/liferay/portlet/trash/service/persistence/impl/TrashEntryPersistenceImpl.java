@@ -3160,6 +3160,22 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the trash entry
+	*
+	* @param pk the primary key of the trash entry
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		TrashEntry trashEntry = fetchByPrimaryKey(pk);
+
+		if (trashEntry == null) {
+			throw new RuntimeException("The entity TrashEntry with PK " + pk +
+				" was not found");
+		}
+
+		return trashEntry.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return TrashEntryModelImpl.TABLE_COLUMNS_MAP;

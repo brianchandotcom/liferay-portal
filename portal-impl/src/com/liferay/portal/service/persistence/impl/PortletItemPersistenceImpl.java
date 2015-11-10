@@ -2367,6 +2367,22 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the portlet item
+	*
+	* @param pk the primary key of the portlet item
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		PortletItem portletItem = fetchByPrimaryKey(pk);
+
+		if (portletItem == null) {
+			throw new RuntimeException("The entity PortletItem with PK " + pk +
+				" was not found");
+		}
+
+		return portletItem.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return PortletItemModelImpl.TABLE_COLUMNS_MAP;

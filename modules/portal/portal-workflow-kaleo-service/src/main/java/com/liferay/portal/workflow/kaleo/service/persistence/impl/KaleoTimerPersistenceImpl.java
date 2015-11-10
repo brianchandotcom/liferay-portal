@@ -2025,6 +2025,22 @@ public class KaleoTimerPersistenceImpl extends BasePersistenceImpl<KaleoTimer>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the kaleo timer
+	*
+	* @param pk the primary key of the kaleo timer
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		KaleoTimer kaleoTimer = fetchByPrimaryKey(pk);
+
+		if (kaleoTimer == null) {
+			throw new RuntimeException("The entity KaleoTimer with PK " + pk +
+				" was not found");
+		}
+
+		return kaleoTimer.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return KaleoTimerModelImpl.TABLE_COLUMNS_MAP;

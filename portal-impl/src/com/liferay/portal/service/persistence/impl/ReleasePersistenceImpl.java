@@ -1025,6 +1025,15 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the release
+	*
+	* @param pk the primary key of the release
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		return 0;
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

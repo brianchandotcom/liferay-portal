@@ -3705,6 +3705,22 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the blogs stats user
+	*
+	* @param pk the primary key of the blogs stats user
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		BlogsStatsUser blogsStatsUser = fetchByPrimaryKey(pk);
+
+		if (blogsStatsUser == null) {
+			throw new RuntimeException("The entity BlogsStatsUser with PK " +
+				pk + " was not found");
+		}
+
+		return blogsStatsUser.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return BlogsStatsUserModelImpl.TABLE_COLUMNS_MAP;

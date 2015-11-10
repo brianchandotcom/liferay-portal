@@ -10679,6 +10679,22 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the message boards category
+	*
+	* @param pk the primary key of the message boards category
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		MBCategory mbCategory = fetchByPrimaryKey(pk);
+
+		if (mbCategory == null) {
+			throw new RuntimeException("The entity MBCategory with PK " + pk +
+				" was not found");
+		}
+
+		return mbCategory.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

@@ -1876,6 +1876,22 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the user ID mapper
+	*
+	* @param pk the primary key of the user ID mapper
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		UserIdMapper userIdMapper = fetchByPrimaryKey(pk);
+
+		if (userIdMapper == null) {
+			throw new RuntimeException("The entity UserIdMapper with PK " + pk +
+				" was not found");
+		}
+
+		return userIdMapper.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

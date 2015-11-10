@@ -8192,6 +8192,22 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the journal folder
+	*
+	* @param pk the primary key of the journal folder
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		JournalFolder journalFolder = fetchByPrimaryKey(pk);
+
+		if (journalFolder == null) {
+			throw new RuntimeException("The entity JournalFolder with PK " +
+				pk + " was not found");
+		}
+
+		return journalFolder.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

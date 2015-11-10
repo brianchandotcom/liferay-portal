@@ -8286,6 +8286,22 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the background task
+	*
+	* @param pk the primary key of the background task
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		BackgroundTask backgroundTask = fetchByPrimaryKey(pk);
+
+		if (backgroundTask == null) {
+			throw new RuntimeException("The entity BackgroundTask with PK " +
+				pk + " was not found");
+		}
+
+		return backgroundTask.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return BackgroundTaskModelImpl.TABLE_COLUMNS_MAP;

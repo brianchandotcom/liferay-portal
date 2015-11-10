@@ -1552,6 +1552,22 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the shopping coupon
+	*
+	* @param pk the primary key of the shopping coupon
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		ShoppingCoupon shoppingCoupon = fetchByPrimaryKey(pk);
+
+		if (shoppingCoupon == null) {
+			throw new RuntimeException("The entity ShoppingCoupon with PK " +
+				pk + " was not found");
+		}
+
+		return shoppingCoupon.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

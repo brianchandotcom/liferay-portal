@@ -4251,6 +4251,22 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the password policy
+	*
+	* @param pk the primary key of the password policy
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		PasswordPolicy passwordPolicy = fetchByPrimaryKey(pk);
+
+		if (passwordPolicy == null) {
+			throw new RuntimeException("The entity PasswordPolicy with PK " +
+				pk + " was not found");
+		}
+
+		return passwordPolicy.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

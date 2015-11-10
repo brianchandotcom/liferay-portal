@@ -1236,6 +1236,22 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the shopping item field
+	*
+	* @param pk the primary key of the shopping item field
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		ShoppingItemField shoppingItemField = fetchByPrimaryKey(pk);
+
+		if (shoppingItemField == null) {
+			throw new RuntimeException("The entity ShoppingItemField with PK " +
+				pk + " was not found");
+		}
+
+		return shoppingItemField.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

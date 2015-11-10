@@ -3735,6 +3735,22 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the asset link
+	*
+	* @param pk the primary key of the asset link
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		AssetLink assetLink = fetchByPrimaryKey(pk);
+
+		if (assetLink == null) {
+			throw new RuntimeException("The entity AssetLink with PK " + pk +
+				" was not found");
+		}
+
+		return assetLink.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

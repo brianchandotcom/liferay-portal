@@ -2343,6 +2343,22 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the contact
+	*
+	* @param pk the primary key of the contact
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		Contact contact = fetchByPrimaryKey(pk);
+
+		if (contact == null) {
+			throw new RuntimeException("The entity Contact with PK " + pk +
+				" was not found");
+		}
+
+		return contact.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return ContactModelImpl.TABLE_COLUMNS_MAP;

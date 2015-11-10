@@ -3157,6 +3157,22 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the kaleo notification
+	*
+	* @param pk the primary key of the kaleo notification
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		KaleoNotification kaleoNotification = fetchByPrimaryKey(pk);
+
+		if (kaleoNotification == null) {
+			throw new RuntimeException("The entity KaleoNotification with PK " +
+				pk + " was not found");
+		}
+
+		return kaleoNotification.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return KaleoNotificationModelImpl.TABLE_COLUMNS_MAP;

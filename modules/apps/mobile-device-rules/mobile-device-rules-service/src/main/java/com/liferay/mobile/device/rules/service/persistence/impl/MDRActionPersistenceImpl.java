@@ -2761,6 +2761,22 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the m d r action
+	*
+	* @param pk the primary key of the m d r action
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		MDRAction mdrAction = fetchByPrimaryKey(pk);
+
+		if (mdrAction == null) {
+			throw new RuntimeException("The entity MDRAction with PK " + pk +
+				" was not found");
+		}
+
+		return mdrAction.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

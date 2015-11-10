@@ -20160,6 +20160,22 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the message-boards message
+	*
+	* @param pk the primary key of the message-boards message
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		MBMessage mbMessage = fetchByPrimaryKey(pk);
+
+		if (mbMessage == null) {
+			throw new RuntimeException("The entity MBMessage with PK " + pk +
+				" was not found");
+		}
+
+		return mbMessage.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

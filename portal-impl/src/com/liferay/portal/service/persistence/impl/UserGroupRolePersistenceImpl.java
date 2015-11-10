@@ -3322,6 +3322,22 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the user group role
+	*
+	* @param pk the primary key of the user group role
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		UserGroupRole userGroupRole = fetchByPrimaryKey(pk);
+
+		if (userGroupRole == null) {
+			throw new RuntimeException("The entity UserGroupRole with PK " +
+				pk + " was not found");
+		}
+
+		return userGroupRole.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return UserGroupRoleModelImpl.TABLE_COLUMNS_MAP;

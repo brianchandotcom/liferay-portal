@@ -2084,6 +2084,23 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the resource block permission
+	*
+	* @param pk the primary key of the resource block permission
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		ResourceBlockPermission resourceBlockPermission = fetchByPrimaryKey(pk);
+
+		if (resourceBlockPermission == null) {
+			throw new RuntimeException(
+				"The entity ResourceBlockPermission with PK " + pk +
+				" was not found");
+		}
+
+		return resourceBlockPermission.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return ResourceBlockPermissionModelImpl.TABLE_COLUMNS_MAP;

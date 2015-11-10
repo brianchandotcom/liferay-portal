@@ -6852,6 +6852,22 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the document library file shortcut
+	*
+	* @param pk the primary key of the document library file shortcut
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		DLFileShortcut dlFileShortcut = fetchByPrimaryKey(pk);
+
+		if (dlFileShortcut == null) {
+			throw new RuntimeException("The entity DLFileShortcut with PK " +
+				pk + " was not found");
+		}
+
+		return dlFileShortcut.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

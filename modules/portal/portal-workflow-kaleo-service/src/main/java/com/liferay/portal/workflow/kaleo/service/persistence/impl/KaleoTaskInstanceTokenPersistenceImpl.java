@@ -3304,6 +3304,23 @@ public class KaleoTaskInstanceTokenPersistenceImpl extends BasePersistenceImpl<K
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the kaleo task instance token
+	*
+	* @param pk the primary key of the kaleo task instance token
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		KaleoTaskInstanceToken kaleoTaskInstanceToken = fetchByPrimaryKey(pk);
+
+		if (kaleoTaskInstanceToken == null) {
+			throw new RuntimeException(
+				"The entity KaleoTaskInstanceToken with PK " + pk +
+				" was not found");
+		}
+
+		return kaleoTaskInstanceToken.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return KaleoTaskInstanceTokenModelImpl.TABLE_COLUMNS_MAP;

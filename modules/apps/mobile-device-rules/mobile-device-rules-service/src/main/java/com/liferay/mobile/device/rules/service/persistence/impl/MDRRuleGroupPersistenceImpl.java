@@ -3573,6 +3573,22 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the m d r rule group
+	*
+	* @param pk the primary key of the m d r rule group
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		MDRRuleGroup mdrRuleGroup = fetchByPrimaryKey(pk);
+
+		if (mdrRuleGroup == null) {
+			throw new RuntimeException("The entity MDRRuleGroup with PK " + pk +
+				" was not found");
+		}
+
+		return mdrRuleGroup.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

@@ -2604,6 +2604,15 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the region
+	*
+	* @param pk the primary key of the region
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		return 0;
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

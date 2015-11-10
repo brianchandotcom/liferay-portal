@@ -2518,6 +2518,22 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the wiki page resource
+	*
+	* @param pk the primary key of the wiki page resource
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		WikiPageResource wikiPageResource = fetchByPrimaryKey(pk);
+
+		if (wikiPageResource == null) {
+			throw new RuntimeException("The entity WikiPageResource with PK " +
+				pk + " was not found");
+		}
+
+		return wikiPageResource.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

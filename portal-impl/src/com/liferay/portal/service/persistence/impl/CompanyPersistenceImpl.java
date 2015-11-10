@@ -2012,6 +2012,15 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the company
+	*
+	* @param pk the primary key of the company
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		return 0;
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

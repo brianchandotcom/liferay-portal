@@ -3166,6 +3166,23 @@ public class KaleoTaskAssignmentPersistenceImpl extends BasePersistenceImpl<Kale
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the kaleo task assignment
+	*
+	* @param pk the primary key of the kaleo task assignment
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		KaleoTaskAssignment kaleoTaskAssignment = fetchByPrimaryKey(pk);
+
+		if (kaleoTaskAssignment == null) {
+			throw new RuntimeException(
+				"The entity KaleoTaskAssignment with PK " + pk +
+				" was not found");
+		}
+
+		return kaleoTaskAssignment.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return KaleoTaskAssignmentModelImpl.TABLE_COLUMNS_MAP;

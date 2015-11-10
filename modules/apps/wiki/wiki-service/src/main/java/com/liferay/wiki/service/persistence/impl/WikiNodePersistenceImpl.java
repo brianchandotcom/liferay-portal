@@ -5401,6 +5401,22 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the wiki node
+	*
+	* @param pk the primary key of the wiki node
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		WikiNode wikiNode = fetchByPrimaryKey(pk);
+
+		if (wikiNode == null) {
+			throw new RuntimeException("The entity WikiNode with PK " + pk +
+				" was not found");
+		}
+
+		return wikiNode.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

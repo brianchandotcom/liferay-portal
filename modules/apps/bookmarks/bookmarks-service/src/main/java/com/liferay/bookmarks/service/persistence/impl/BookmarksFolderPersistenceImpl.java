@@ -7867,6 +7867,22 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the bookmarks folder
+	*
+	* @param pk the primary key of the bookmarks folder
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		BookmarksFolder bookmarksFolder = fetchByPrimaryKey(pk);
+
+		if (bookmarksFolder == null) {
+			throw new RuntimeException("The entity BookmarksFolder with PK " +
+				pk + " was not found");
+		}
+
+		return bookmarksFolder.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

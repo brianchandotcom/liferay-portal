@@ -3880,6 +3880,22 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the d d l record set
+	*
+	* @param pk the primary key of the d d l record set
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		DDLRecordSet ddlRecordSet = fetchByPrimaryKey(pk);
+
+		if (ddlRecordSet == null) {
+			throw new RuntimeException("The entity DDLRecordSet with PK " + pk +
+				" was not found");
+		}
+
+		return ddlRecordSet.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

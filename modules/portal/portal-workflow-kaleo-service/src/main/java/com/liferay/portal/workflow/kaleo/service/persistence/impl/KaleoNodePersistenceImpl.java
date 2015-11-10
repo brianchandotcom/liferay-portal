@@ -2347,6 +2347,22 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the kaleo node
+	*
+	* @param pk the primary key of the kaleo node
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		KaleoNode kaleoNode = fetchByPrimaryKey(pk);
+
+		if (kaleoNode == null) {
+			throw new RuntimeException("The entity KaleoNode with PK " + pk +
+				" was not found");
+		}
+
+		return kaleoNode.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

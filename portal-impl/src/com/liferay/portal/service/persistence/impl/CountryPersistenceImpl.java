@@ -2026,6 +2026,15 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the country
+	*
+	* @param pk the primary key of the country
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		return 0;
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

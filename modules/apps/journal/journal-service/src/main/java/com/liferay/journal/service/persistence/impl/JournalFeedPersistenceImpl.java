@@ -3417,6 +3417,22 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the journal feed
+	*
+	* @param pk the primary key of the journal feed
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		JournalFeed journalFeed = fetchByPrimaryKey(pk);
+
+		if (journalFeed == null) {
+			throw new RuntimeException("The entity JournalFeed with PK " + pk +
+				" was not found");
+		}
+
+		return journalFeed.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

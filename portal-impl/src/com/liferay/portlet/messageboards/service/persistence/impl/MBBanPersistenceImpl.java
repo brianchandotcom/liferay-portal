@@ -4002,6 +4002,22 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the message boards ban
+	*
+	* @param pk the primary key of the message boards ban
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		MBBan mbBan = fetchByPrimaryKey(pk);
+
+		if (mbBan == null) {
+			throw new RuntimeException("The entity MBBan with PK " + pk +
+				" was not found");
+		}
+
+		return mbBan.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

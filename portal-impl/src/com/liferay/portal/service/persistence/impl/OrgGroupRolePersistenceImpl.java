@@ -1669,6 +1669,22 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the org group role
+	*
+	* @param pk the primary key of the org group role
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		OrgGroupRole orgGroupRole = fetchByPrimaryKey(pk);
+
+		if (orgGroupRole == null) {
+			throw new RuntimeException("The entity OrgGroupRole with PK " + pk +
+				" was not found");
+		}
+
+		return orgGroupRole.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return OrgGroupRoleModelImpl.TABLE_COLUMNS_MAP;

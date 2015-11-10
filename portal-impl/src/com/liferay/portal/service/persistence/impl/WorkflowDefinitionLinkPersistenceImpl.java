@@ -2974,6 +2974,23 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the workflow definition link
+	*
+	* @param pk the primary key of the workflow definition link
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		WorkflowDefinitionLink workflowDefinitionLink = fetchByPrimaryKey(pk);
+
+		if (workflowDefinitionLink == null) {
+			throw new RuntimeException(
+				"The entity WorkflowDefinitionLink with PK " + pk +
+				" was not found");
+		}
+
+		return workflowDefinitionLink.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return WorkflowDefinitionLinkModelImpl.TABLE_COLUMNS_MAP;

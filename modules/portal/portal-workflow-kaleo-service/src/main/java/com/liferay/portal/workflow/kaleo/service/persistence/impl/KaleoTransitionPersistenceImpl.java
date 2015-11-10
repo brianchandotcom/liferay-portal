@@ -2948,6 +2948,22 @@ public class KaleoTransitionPersistenceImpl extends BasePersistenceImpl<KaleoTra
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the kaleo transition
+	*
+	* @param pk the primary key of the kaleo transition
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		KaleoTransition kaleoTransition = fetchByPrimaryKey(pk);
+
+		if (kaleoTransition == null) {
+			throw new RuntimeException("The entity KaleoTransition with PK " +
+				pk + " was not found");
+		}
+
+		return kaleoTransition.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return KaleoTransitionModelImpl.TABLE_COLUMNS_MAP;

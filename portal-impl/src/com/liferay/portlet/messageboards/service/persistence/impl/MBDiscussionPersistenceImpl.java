@@ -3261,6 +3261,22 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the message boards discussion
+	*
+	* @param pk the primary key of the message boards discussion
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		MBDiscussion mbDiscussion = fetchByPrimaryKey(pk);
+
+		if (mbDiscussion == null) {
+			throw new RuntimeException("The entity MBDiscussion with PK " + pk +
+				" was not found");
+		}
+
+		return mbDiscussion.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

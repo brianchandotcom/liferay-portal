@@ -5344,6 +5344,22 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the portlet preferences
+	*
+	* @param pk the primary key of the portlet preferences
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		PortletPreferences portletPreferences = fetchByPrimaryKey(pk);
+
+		if (portletPreferences == null) {
+			throw new RuntimeException("The entity PortletPreferences with PK " +
+				pk + " was not found");
+		}
+
+		return portletPreferences.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return PortletPreferencesModelImpl.TABLE_COLUMNS_MAP;

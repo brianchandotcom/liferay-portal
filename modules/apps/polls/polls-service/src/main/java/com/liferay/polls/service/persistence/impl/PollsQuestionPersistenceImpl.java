@@ -3121,6 +3121,22 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the polls question
+	*
+	* @param pk the primary key of the polls question
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		PollsQuestion pollsQuestion = fetchByPrimaryKey(pk);
+
+		if (pollsQuestion == null) {
+			throw new RuntimeException("The entity PollsQuestion with PK " +
+				pk + " was not found");
+		}
+
+		return pollsQuestion.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

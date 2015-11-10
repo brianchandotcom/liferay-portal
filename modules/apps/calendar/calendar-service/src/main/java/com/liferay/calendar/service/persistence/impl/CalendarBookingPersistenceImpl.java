@@ -6429,6 +6429,22 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the calendar booking
+	*
+	* @param pk the primary key of the calendar booking
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		CalendarBooking calendarBooking = fetchByPrimaryKey(pk);
+
+		if (calendarBooking == null) {
+			throw new RuntimeException("The entity CalendarBooking with PK " +
+				pk + " was not found");
+		}
+
+		return calendarBooking.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

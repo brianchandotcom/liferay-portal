@@ -3604,6 +3604,23 @@ public class DDMDataProviderInstancePersistenceImpl extends BasePersistenceImpl<
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the d d m data provider instance
+	*
+	* @param pk the primary key of the d d m data provider instance
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		DDMDataProviderInstance ddmDataProviderInstance = fetchByPrimaryKey(pk);
+
+		if (ddmDataProviderInstance == null) {
+			throw new RuntimeException(
+				"The entity DDMDataProviderInstance with PK " + pk +
+				" was not found");
+		}
+
+		return ddmDataProviderInstance.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

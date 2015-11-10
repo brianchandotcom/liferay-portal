@@ -1177,6 +1177,22 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the image
+	*
+	* @param pk the primary key of the image
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		Image image = fetchByPrimaryKey(pk);
+
+		if (image == null) {
+			throw new RuntimeException("The entity Image with PK " + pk +
+				" was not found");
+		}
+
+		return image.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

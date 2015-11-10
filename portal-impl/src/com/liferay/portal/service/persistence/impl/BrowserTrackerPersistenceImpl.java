@@ -958,6 +958,22 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the browser tracker
+	*
+	* @param pk the primary key of the browser tracker
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		BrowserTracker browserTracker = fetchByPrimaryKey(pk);
+
+		if (browserTracker == null) {
+			throw new RuntimeException("The entity BrowserTracker with PK " +
+				pk + " was not found");
+		}
+
+		return browserTracker.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return BrowserTrackerModelImpl.TABLE_COLUMNS_MAP;

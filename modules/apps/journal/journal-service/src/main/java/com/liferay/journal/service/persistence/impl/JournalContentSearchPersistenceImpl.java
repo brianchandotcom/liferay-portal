@@ -5486,6 +5486,23 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the journal content search
+	*
+	* @param pk the primary key of the journal content search
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		JournalContentSearch journalContentSearch = fetchByPrimaryKey(pk);
+
+		if (journalContentSearch == null) {
+			throw new RuntimeException(
+				"The entity JournalContentSearch with PK " + pk +
+				" was not found");
+		}
+
+		return journalContentSearch.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return JournalContentSearchModelImpl.TABLE_COLUMNS_MAP;

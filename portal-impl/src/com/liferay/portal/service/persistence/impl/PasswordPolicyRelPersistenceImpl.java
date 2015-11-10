@@ -1544,6 +1544,22 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the password policy rel
+	*
+	* @param pk the primary key of the password policy rel
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		PasswordPolicyRel passwordPolicyRel = fetchByPrimaryKey(pk);
+
+		if (passwordPolicyRel == null) {
+			throw new RuntimeException("The entity PasswordPolicyRel with PK " +
+				pk + " was not found");
+		}
+
+		return passwordPolicyRel.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return PasswordPolicyRelModelImpl.TABLE_COLUMNS_MAP;

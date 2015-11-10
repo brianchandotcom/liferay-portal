@@ -341,7 +341,7 @@
 	</command>
 
 	<command name="gotoWCArticle">
-		<var name="key_webContentTitle" value="${webContentTitle}" />
+		<var name="key_descriptiveEntry" value="${webContentTitle}" />
 
 		<execute function="MouseOver" locator1="WC#ENTRY_DESCRIPTIVE_THUMBNAIL" />
 		<execute function="Click" locator1="WC#ENTRY_DESCRIPTIVE_MENULIST_ICON" />

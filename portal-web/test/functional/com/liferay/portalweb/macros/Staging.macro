@@ -208,7 +208,12 @@
 	</command>
 
 	<command name="configurePublishToLive">
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="StagingPublishtolivenow#SWITCH_TO_ADVANCED" value1="Switch to Advanced Publication" />
+		<if>
+			<condition function="IsElementPresent" locator1="StagingPublishtolivenow#SWITCH_TO_ADVANCED" />
+			<then>
+				<execute function="AssertClick#assertPartialTextClickAt" locator1="StagingPublishtolivenow#SWITCH_TO_ADVANCED" value1="Switch to Advanced Publication" />
+			</then>
+		</if>
 
 		<if>
 			<equals arg1="${deleteMissingPages}" arg2="true" />
@@ -770,12 +775,10 @@
 	</command>
 
 	<command name="submitForPublicationPageRevision">
-		<execute function="AssertElementNotPresent" locator1="Button#PUBLISH_TO_LIVE" value1="Publish to Live" />
 		<execute function="AssertTextEquals" locator1="Message#STATUS" value1="Draft" />
 
 		<execute function="AssertClick" locator1="Staging#STAGING_MENU_SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
 
-		<execute function="AssertElementNotPresent" locator1="Button#PUBLISH_TO_LIVE" />
 		<execute function="AssertElementNotPresent" locator1="Staging#STAGING_MENU_SUBMIT_FOR_PUBLICATION" />
 
 		<if>

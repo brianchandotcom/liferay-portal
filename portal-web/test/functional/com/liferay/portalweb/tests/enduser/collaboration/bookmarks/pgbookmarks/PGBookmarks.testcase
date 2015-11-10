@@ -121,6 +121,10 @@
 			<var name="folderName" value="${folderName}" />
 		</execute>
 
+		<execute function="Refresh" />
+
+		<execute function="Pause" locator1="3000" />
+
 		<execute macro="Bookmark#gotoPG">
 			<var name="bookmarkName" value="${bookmarkName}" />
 			<var name="bookmarkURL" value="${bookmarkURL}" />

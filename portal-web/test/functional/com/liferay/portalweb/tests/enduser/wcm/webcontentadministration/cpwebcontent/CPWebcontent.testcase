@@ -253,6 +253,10 @@
 			<var name="nestedFieldData" value="123" />
 		</execute>
 
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
 		<execute macro="WebContentNavigator#gotoManageStructures" />
 
 		<execute macro="WebContentStructures#viewCP">
@@ -365,7 +369,7 @@
 		<execute macro="WebContent#viewUnlocalizableTextBox">
 			<var name="editLocalizedTextBox" value="Text Box Unlocalized" />
 			<var name="localizedText" value="Text Spanish" />
-			<var name="localizedTextBox" value="Text Box Spanish" />
+			<var name="localizedTextBox" value="Text Box" />
 			<var name="localizedTitle" value="Title Spanish" />
 			<var name="webContentTextBox" value="Text Box" />
 			<var name="webContentTitle" value="WC WebContent Title" />
@@ -757,6 +761,12 @@
 			<var name="templateName" value="WC Template Name" />
 		</execute>
 
+		<execute macro="WebContentTemplates#save" />
+
+		<execute macro="WebContentNavigator#gotoViewTemplate">
+			<var name="templateName" value="WC Template Name" />
+		</execute>
+
 		<execute macro="WebContentTemplates#addStructure">
 			<var name="structureName" value="WC Structure Name" />
 			<var name="templateFieldNames" value="Text" />
@@ -791,6 +801,7 @@
 		</execute>
 
 		<execute macro="WebContent#previewCPwithStructureTemplateXSL">
+			<var name="fieldName" value="Text" />
 			<var name="webContentText" value="WC WebContent Text" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>

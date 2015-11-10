@@ -181,11 +181,9 @@
 
 		<execute function="AssertTextEquals" locator1="DDMSelectTemplate#TEMPLATE_TABLE_NAME" value1="${templateName}" />
 
-		<execute function="AssertClick" locator1="DDMSelectTemplate#TEMPLATE_TABLE_NAME" value1="${templateName}" />
-
-		<execute function="SelectFrame" />
-
-		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
+		<execute macro="WebContentNavigator#gotoViewTemplate">
+			<var name="templateName" value="${templateName}" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="TextInput#NAME" value1="${templateName}" />
 
@@ -281,10 +279,10 @@
 			</else>
 		</if>
 
-		<execute function="AssertClick" locator1="DDMSelectTemplate#TEMPLATE_TABLE_NAME" value1="${templateName}" />
-		<execute function="SelectFrame" />
+		<execute macro="WebContentNavigator#gotoViewTemplate">
+			<var name="templateName" value="${templateName}" />
+		</execute>
 
-		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
 		<execute function="AssertTextEquals" locator1="TextInput#NAME" value1="${templateName}" />
 
 		<execute macro="WebContentNavigator#showTemplateDetails" />

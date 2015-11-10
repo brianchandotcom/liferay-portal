@@ -129,9 +129,6 @@ public class DDMFormFieldTypesJSONSerializerTest extends BaseDDMTestCase {
 		DDMFormFieldRenderer ddmFormFieldRenderer = mock(
 			DDMFormFieldRenderer.class);
 
-		whenDDMFormFieldRendererGetTemplateNamespace(
-			ddmFormFieldRenderer, "_templateNamespace_");
-
 		when(
 			ddmFormFieldTypeServicesTracker.getDDMFormFieldRenderer(
 				Matchers.anyString())
@@ -179,17 +176,6 @@ public class DDMFormFieldTypesJSONSerializerTest extends BaseDDMTestCase {
 			DDMFormFieldTypesJSONSerializerImpl.class, "_jsonFactory");
 
 		field.set(_ddmFormFieldTypesJSONSerializer, new JSONFactoryImpl());
-	}
-
-	protected void whenDDMFormFieldRendererGetTemplateNamespace(
-		DDMFormFieldRenderer ddmFormFieldRenderer,
-		String returnTemplateNamespace) {
-
-		when(
-			ddmFormFieldRenderer.getTemplateNamespace()
-		).thenReturn(
-			returnTemplateNamespace
-		);
 	}
 
 	protected void whenDDMFormFieldTypeGetDDMFormFieldTypeSettings(

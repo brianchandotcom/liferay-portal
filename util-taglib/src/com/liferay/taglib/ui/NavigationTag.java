@@ -92,21 +92,28 @@ public class NavigationTag extends IncludeTag {
 	}
 
 	protected List<NavItem> getNavItems(HttpServletRequest request)
-		throws PortalException {
+		throws Exception {
 
 		List<NavItem> navItems = new ArrayList<>();
+
+		List<NavItem> navItemsBranch = _getNavItemsBranch(request);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Layout layout = themeDisplay.getLayout();
+		int layoutLevel = _rootLayoutLevel;
 
-		NavItem navItem = new NavItem(request, layout, null);
+		if (_rootLayoutType.equals("relative")) {
+			layoutLevel = navItemsBranch.size() - _rootLayoutLevel;
+		}
 
-		navItems.add(navItem);
-
-		for (Layout ancestorLayout : layout.getAncestors()) {
-			navItems.add(0, new NavItem(request, ancestorLayout, null));
+		if (layoutLevel > 0) {
+			navItems = NavItem.fromLayouts(
+				request, themeDisplay.getLayouts(), null);
+		}
+		else if(layoutLevel > 0) {
+			NavItem rootNavItem = navItemsBranch.get(layoutLevel - 1);
+			navItems = rootNavItem.getChildren();
 		}
 
 		return navItems;
@@ -132,8 +139,8 @@ public class NavigationTag extends IncludeTag {
 
 			request.setAttribute("liferay-ui:navigation:navItems", navItems);
 		}
-		catch (PortalException pe) {
-			_log.error(pe);
+		catch (Exception e) {
+			_log.error(e);
 		}
 
 		request.setAttribute(
@@ -143,6 +150,27 @@ public class NavigationTag extends IncludeTag {
 			String.valueOf(_rootLayoutLevel));
 		request.setAttribute(
 			"liferay-ui:navigation:rootLayoutType", _rootLayoutType);
+	}
+
+	private List<NavItem> _getNavItemsBranch(HttpServletRequest request)
+		throws PortalException {
+
+		List<NavItem> navItems = new ArrayList<>();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		NavItem navItem = new NavItem(request, layout, null);
+
+		navItems.add(navItem);
+
+		for (Layout ancestorLayout : layout.getAncestors()) {
+			navItems.add(0, new NavItem(request, ancestorLayout, null));
+		}
+
+		return navItems;
 	}
 
 	private static final String _PAGE = "/html/taglib/ui/navigation/page.jsp";

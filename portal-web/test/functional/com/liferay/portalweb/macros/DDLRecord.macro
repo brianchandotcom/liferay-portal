@@ -253,7 +253,7 @@
 				<if>
 					<condition function="IsElementPresent" locator1="xpath=(//div[@data-fieldname='${key_fieldName}']/a[contains(@class,'ddm-repeatable-add-button')])[${i}]" />
 					<then>
-						<execute function="Type" locator1="xpath=(//div[@data-fieldname='${key_fieldName}']/a[contains(@class,'ddm-repeatable-add-button')]/../input)[${i}]" value1="${ddlRecordFieldData} ${i}" />
+						<execute function="Type" locator1="xpath=(//div[@data-fieldname='${key_fieldName}'][${i}]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)" value1="${ddlRecordFieldData} ${i}" />
 					</then>
 				</if>
 			</then>

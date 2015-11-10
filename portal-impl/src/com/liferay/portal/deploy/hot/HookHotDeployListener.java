@@ -172,8 +172,7 @@ public class HookHotDeployListener
 		"admin.default.group.names", "admin.default.role.names",
 		"admin.default.user.group.names",
 		"asset.publisher.asset.entry.query.processors",
-		"asset.publisher.display.styles",
-		"asset.publisher.query.form.configuration", "auth.forward.by.last.path",
+		"asset.publisher.display.styles", "auth.forward.by.last.path",
 		"auth.public.paths", "auth.verifier.pipeline", "auto.deploy.listeners",
 		"application.startup.events", "auth.failure", "auth.max.failures",
 		"auth.token.ignore.actions", "auth.token.ignore.origins",
@@ -2380,10 +2379,10 @@ public class HookHotDeployListener
 	private static final String[] _PROPS_VALUES_LONG = {};
 
 	private static final String[] _PROPS_VALUES_MERGE_STRING_ARRAY = {
-		"asset.publisher.query.form.configuration", "auth.token.ignore.actions",
-		"auth.token.ignore.origins", "auth.token.ignore.portlets",
-		"admin.default.group.names", "admin.default.role.names",
-		"admin.default.user.group.names", "asset.publisher.display.styles",
+		"auth.token.ignore.actions", "auth.token.ignore.origins",
+		"auth.token.ignore.portlets", "admin.default.group.names",
+		"admin.default.role.names", "admin.default.user.group.names",
+		"asset.publisher.display.styles",
 		"company.settings.form.authentication",
 		"company.settings.form.configuration",
 		"company.settings.form.identification",

@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,12 +11,19 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+package com.liferay.portlet.asset.util;
 
-<%
-String customUserAttributes = GetterUtil.getString(portletPreferences.getValue("customUserAttributes", StringPool.BLANK));
-%>
+/**
+ *
+ * @author Julio Camarero
+ */
+public abstract class BaseAssetEntryQueryProcessor
+	implements AssetEntryQueryProcessor {
 
-<aui:input helpMessage="custom-user-attributes-help" label="displayed-assets-must-match-these-custom-user-profile-attributes" name="preferences--customUserAttributes--" value="<%= customUserAttributes %>" />
+	@Override
+	public String getKey() {
+		return getClass().getSimpleName();
+	}
+
+}

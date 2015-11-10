@@ -68,19 +68,10 @@
 			<then>
 				<execute macro="DMDocument#showCategorization" />
 
-				<var name="key_vocabularyName" value="${vocabularyName}" />
-
-				<execute function="Click" locator1="AssetCategorization#VOCABULARY_SELECT" value1="${vocabularyName}" />
-
-				<for list="${categoryNameList}" param="categoryName">
-					<var name="key_categoryName" value="${categoryName}" />
-					<execute function="AssertElementPresent" locator1="AssetCategorization#CATEGORIES_CATEGORY_CHECKBOX" value1="${categoryName}" />
-					<execute function="Type" locator1="AssetCategorization#CATEGORIES_SEARCH_FIELD" value1="${categoryName}" />
-					<execute function="Check" locator1="AssetCategorization#CATEGORIES_CATEGORY_SEARCH_RESULT_CHECKBOX" />
-					<execute function="Type" locator1="AssetCategorization#CATEGORIES_SEARCH_FIELD" value1="" />
-				</for>
-
-				<execute function="Click" locator1="AssetCategorization#CATEGORIES_CLOSE_BUTTON" />
+				<execute macro="AssetCategorization#addMultipleCategories">
+					<var name="categoryNameList" value="${categoryNameList}" />
+					<var name="vocabularyName" value="${vocabularyName}" />
+				</execute>
 			</then>
 		</if>
 

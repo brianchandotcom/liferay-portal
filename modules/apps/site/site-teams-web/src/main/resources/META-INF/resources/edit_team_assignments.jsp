@@ -74,22 +74,20 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(team.getName());
 %>
 
-<div class="container-fluid-1280">
-	<liferay-ui:tabs
-		names="users,user-groups"
-		param="tabs1"
-		portletURL="<%= portletURL %>"
-	/>
+<liferay-ui:tabs
+	names="users,user-groups"
+	param="tabs1"
+	portletURL="<%= portletURL %>"
+/>
 
-	<c:choose>
-		<c:when test='<%= tabs1.equals("users") %>'>
-			<liferay-util:include page="/edit_team_assignments_users.jsp" servletContext="<%= application %>" />
-		</c:when>
-		<c:when test='<%= tabs1.equals("user-groups") %>'>
-			<liferay-util:include page="/edit_team_assignments_user_groups.jsp" servletContext="<%= application %>" />
-		</c:when>
-	</c:choose>
-</div>
+<c:choose>
+	<c:when test='<%= tabs1.equals("users") %>'>
+		<liferay-util:include page="/edit_team_assignments_users.jsp" servletContext="<%= application %>" />
+	</c:when>
+	<c:when test='<%= tabs1.equals("user-groups") %>'>
+		<liferay-util:include page="/edit_team_assignments_user_groups.jsp" servletContext="<%= application %>" />
+	</c:when>
+</c:choose>
 
 <%
 if (group.isOrganization()) {

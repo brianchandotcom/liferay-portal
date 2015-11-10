@@ -36,6 +36,13 @@ RowChecker rowChecker = new UserGroupTeamChecker(renderResponse, team);
 %>
 
 <liferay-frontend:management-bar>
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= portletURL %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'

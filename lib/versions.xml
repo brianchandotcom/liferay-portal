@@ -1400,6 +1400,42 @@
 				</comments>
 			</library>
 			<library>
+				<file-name>lib/portal/common-image.jar</file-name>
+				<version>3.1.2</version>
+				<project-name>TwelveMonkeys ImageIO</project-name>
+				<project-url>https://github.com/haraldk/TwelveMonkeys</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-3-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/portal/common-io.jar</file-name>
+				<version>3.1.2</version>
+				<project-name>TwelveMonkeys ImageIO</project-name>
+				<project-url>https://github.com/haraldk/TwelveMonkeys</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-3-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/portal/common-lang.jar</file-name>
+				<version>3.1.2</version>
+				<project-name>TwelveMonkeys ImageIO</project-name>
+				<project-url>https://github.com/haraldk/TwelveMonkeys</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-3-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/portal/commons-beanutils.jar</file-name>
 				<version>1.8.2</version>
 				<project-name>Commons Beanutils</project-name>
@@ -1901,6 +1937,66 @@
 						<license-name>LGPL 2.1</license-name>
 						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
 						<copyright-notice>Copyright (c) Bernhard Bablok 2008-2010</copyright-notice>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/portal/imageio-bmp.jar</file-name>
+				<version>3.1.2</version>
+				<project-name>TwelveMonkeys ImageIO</project-name>
+				<project-url>https://github.com/haraldk/TwelveMonkeys</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-3-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/portal/imageio-core.jar</file-name>
+				<version>3.1.2</version>
+				<project-name>TwelveMonkeys ImageIO</project-name>
+				<project-url>https://github.com/haraldk/TwelveMonkeys</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-3-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/portal/imageio-jpeg.jar</file-name>
+				<version>3.1.2</version>
+				<project-name>TwelveMonkeys ImageIO</project-name>
+				<project-url>https://github.com/haraldk/TwelveMonkeys</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-3-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/portal/imageio-metadata.jar</file-name>
+				<version>3.1.2</version>
+				<project-name>TwelveMonkeys ImageIO</project-name>
+				<project-url>https://github.com/haraldk/TwelveMonkeys</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-3-Clause</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/portal/imageio-tiff.jar</file-name>
+				<version>3.1.2</version>
+				<project-name>TwelveMonkeys ImageIO</project-name>
+				<project-url>https://github.com/haraldk/TwelveMonkeys</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD License</license-name>
+						<license-url>http://opensource.org/licenses/BSD-3-Clause</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -2519,18 +2615,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/monte-cc.jar</file-name>
-				<version>0.7.7</version>
-				<project-name>Monte Media Library</project-name>
-				<project-url>http://www.randelshofer.ch/monte</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 3.0</license-name>
-						<license-url>https://www.gnu.org/licenses/lgpl-3.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/nekohtml.jar</file-name>
 				<version>1.9.14</version>
 				<project-name>CyberNeko HTML Parser</project-name>
@@ -2558,7 +2642,7 @@
 				<file-name>lib/portal/netty-all.jar</file-name>
 				<version>4.0.23</version>
 				<project-name>Netty</project-name>
-				<project-url>http://netty.io</project-url>
+				<project-url>http://netty.io/</project-url>
 				<licenses>
 					<license>
 						<license-name>Apache License 2.0</license-name>
@@ -3496,8 +3580,8 @@
 				<project-url>http://www.xuggle.com</project-url>
 				<licenses>
 					<license>
-						<license-name>LGPL 3.0</license-name>
-						<license-url>https://www.gnu.org/licenses/lgpl-3.0</license-url>
+						<license-name>LGPL 3</license-name>
+						<license-url>http://www.gnu.org/licenses/lgpl.html</license-url>
 					</license>
 				</licenses>
 			</library>

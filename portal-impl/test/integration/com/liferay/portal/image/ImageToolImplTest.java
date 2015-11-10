@@ -24,10 +24,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBuffer;
 import java.awt.image.DataBufferByte;
-import java.awt.image.DataBufferInt;
-import java.awt.image.Raster;
 import java.awt.image.RenderedImage;
 
 import java.io.File;
@@ -163,9 +160,10 @@ public class ImageToolImplTest {
 
 		Assert.assertNotNull(expectedImage);
 
-		Raster raster = expectedImage.getData();
+		DataBufferByte expectedDataBufferByte =
+			(DataBufferByte)expectedImage.getData().getDataBuffer();
 
-		DataBuffer expectedDataBuffer = raster.getDataBuffer();
+		byte[][] expectedData = expectedDataBufferByte.getBankData();
 
 		String expectedType = FileUtil.getExtension(fileName);
 
@@ -185,39 +183,17 @@ public class ImageToolImplTest {
 
 		Assert.assertNotNull(resultImage);
 
-		raster = resultImage.getData();
+		DataBufferByte resultDataBufferByte =
+			(DataBufferByte)resultImage.getData().getDataBuffer();
 
-		DataBuffer resultDataBuffer = raster.getDataBuffer();
+		byte[][] resultData = resultDataBufferByte.getBankData();
 
 		String resultType = imageBag.getType();
 
 		Assert.assertTrue(
 			StringUtil.equalsIgnoreCase(expectedType, resultType));
-		Assert.assertTrue(
-			expectedDataBuffer instanceof DataBufferByte ||
-			expectedDataBuffer instanceof DataBufferInt);
 
-		if (expectedDataBuffer instanceof DataBufferByte) {
-			DataBufferByte expectedDataBufferByte =
-				(DataBufferByte)expectedDataBuffer;
-			DataBufferByte resultDataBufferByte =
-				(DataBufferByte)resultDataBuffer;
-
-			Assert.assertTrue(
-				Arrays.deepEquals(
-					expectedDataBufferByte.getBankData(),
-					resultDataBufferByte.getBankData()));
-		}
-		else if (expectedDataBuffer instanceof DataBufferInt) {
-			DataBufferInt expectedDataBufferInt =
-				(DataBufferInt)expectedDataBuffer;
-			DataBufferInt resultDataBufferInt = (DataBufferInt)resultDataBuffer;
-
-			Assert.assertTrue(
-				Arrays.deepEquals(
-					expectedDataBufferInt.getBankData(),
-					resultDataBufferInt.getBankData()));
-		}
+		Assert.assertTrue(Arrays.deepEquals(expectedData, resultData));
 	}
 
 	protected void testCrop(

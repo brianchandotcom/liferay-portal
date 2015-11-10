@@ -14,7 +14,6 @@
 
 package com.liferay.portal.image;
 
-import com.liferay.portal.kernel.concurrent.FutureConverter;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageMagick;
 import com.liferay.portal.kernel.image.ImageTool;
@@ -55,19 +54,12 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.concurrent.Future;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
-import javax.imageio.spi.IIORegistry;
-import javax.imageio.spi.ImageReaderSpi;
 import javax.imageio.stream.ImageInputStream;
 
 import net.jmge.gif.Gif89Encoder;
-
-import org.im4java.core.IMOperation;
-
-import org.monte.media.jpeg.CMYKJPEGImageReaderSpi;
 
 /**
  * @author Brian Wing Shun Chan
@@ -162,82 +154,6 @@ public class ImageToolImpl implements ImageTool {
 				"Unable to configure the default user male portrait: " +
 					e.getMessage());
 		}
-	}
-
-	@Override
-	public Future<RenderedImage> convertCMYKtoRGB(
-		byte[] bytes, final String type) {
-
-		ImageMagick imageMagick = getImageMagick();
-
-		if (!imageMagick.isEnabled()) {
-			return null;
-		}
-
-		File inputFile = _fileUtil.createTempFile(type);
-		final File outputFile = _fileUtil.createTempFile(type);
-
-		try {
-			_fileUtil.write(inputFile, bytes);
-
-			IMOperation imOperation = new IMOperation();
-
-			imOperation.addRawArgs("-format", "%[colorspace]");
-			imOperation.addImage(inputFile.getPath());
-
-			String[] output = imageMagick.identify(imOperation.getCmdArgs());
-
-			if ((output.length == 1) &&
-				StringUtil.equalsIgnoreCase(output[0], "CMYK")) {
-
-				if (_log.isInfoEnabled()) {
-					_log.info("The image is in the CMYK colorspace");
-				}
-
-				imOperation = new IMOperation();
-
-				imOperation.addRawArgs("-colorspace", "RGB");
-				imOperation.addImage(inputFile.getPath());
-				imOperation.addImage(outputFile.getPath());
-
-				Future<Object> future = (Future<Object>)imageMagick.convert(
-					imOperation.getCmdArgs());
-
-				return new FutureConverter<RenderedImage, Object>(future) {
-
-					@Override
-					protected RenderedImage convert(Object obj) {
-						RenderedImage renderedImage = null;
-
-						try {
-							ImageBag imageBag = read(
-								_fileUtil.getBytes(outputFile));
-
-							renderedImage = imageBag.getRenderedImage();
-						}
-						catch (IOException ioe) {
-							if (_log.isDebugEnabled()) {
-								_log.debug("Unable to convert " + type, ioe);
-							}
-						}
-
-						return renderedImage;
-					}
-
-				};
-			}
-		}
-		catch (Exception e) {
-			if (_log.isErrorEnabled()) {
-				_log.error(e, e);
-			}
-		}
-		finally {
-			_fileUtil.delete(inputFile);
-			_fileUtil.delete(outputFile);
-		}
-
-		return null;
 	}
 
 	@Override
@@ -472,32 +388,28 @@ public class ImageToolImpl implements ImageTool {
 		RenderedImage renderedImage = null;
 
 		try {
+			boolean firstImageReader = true;
+
 			imageInputStream = ImageIO.createImageInputStream(
 				new ByteArrayInputStream(bytes));
 
 			Iterator<ImageReader> iterator = ImageIO.getImageReaders(
 				imageInputStream);
 
-			while ((renderedImage == null) && iterator.hasNext()) {
+			while (iterator.hasNext()) {
 				ImageReader imageReader = iterator.next();
 
 				imageReaders.offer(imageReader);
 
-				try {
+				if (firstImageReader) {
 					imageReader.setInput(imageInputStream);
 
 					renderedImage = imageReader.read(0);
-				}
-				catch (IOException ioe) {
-					continue;
-				}
 
-				formatName = StringUtil.toLowerCase(
-					imageReader.getFormatName());
-			}
+					formatName = imageReader.getFormatName();
 
-			if (renderedImage == null) {
-				throw new IOException("Unsupported image type");
+					firstImageReader = false;
+				}
 			}
 		}
 		finally {
@@ -512,6 +424,8 @@ public class ImageToolImpl implements ImageTool {
 			}
 		}
 
+		formatName = StringUtil.toLowerCase(formatName);
+
 		String type = TYPE_JPEG;
 
 		if (formatName.contains(TYPE_BMP)) {
@@ -520,9 +434,7 @@ public class ImageToolImpl implements ImageTool {
 		else if (formatName.contains(TYPE_GIF)) {
 			type = TYPE_GIF;
 		}
-		else if (formatName.contains("jpeg") ||
-				 StringUtil.equalsIgnoreCase(type, "jpeg")) {
-
+		else if (formatName.contains("jpeg") || type.equals("jpeg")) {
 			type = TYPE_JPEG;
 		}
 		else if (formatName.contains(TYPE_PNG)) {
@@ -654,49 +566,6 @@ public class ImageToolImpl implements ImageTool {
 		return scaledBufferedImage;
 	}
 
-	protected ImageMagick getImageMagick() {
-		if (_imageMagick == null) {
-			_imageMagick = ImageMagickImpl.getInstance();
-
-			_imageMagick.reset();
-		}
-
-		return _imageMagick;
-	}
-
-	protected void orderImageReaderSpis() {
-		IIORegistry defaultIIORegistry = IIORegistry.getDefaultInstance();
-
-		ImageReaderSpi firstImageReaderSpi = null;
-		ImageReaderSpi secondImageReaderSpi = null;
-
-		Iterator<ImageReaderSpi> imageReaderSpis =
-			defaultIIORegistry.getServiceProviders(ImageReaderSpi.class, true);
-
-		while (imageReaderSpis.hasNext()) {
-			ImageReaderSpi imageReaderSpi = imageReaderSpis.next();
-
-			if (imageReaderSpi instanceof CMYKJPEGImageReaderSpi) {
-				secondImageReaderSpi = imageReaderSpi;
-			}
-			else {
-				String[] formatNames = imageReaderSpi.getFormatNames();
-
-				if (ArrayUtil.contains(formatNames, TYPE_JPEG, true) ||
-					ArrayUtil.contains(formatNames, "jpeg", true)) {
-
-					firstImageReaderSpi = imageReaderSpi;
-				}
-			}
-		}
-
-		if ((firstImageReaderSpi != null) && (secondImageReaderSpi != null)) {
-			defaultIIORegistry.setOrdering(
-				ImageReaderSpi.class, firstImageReaderSpi,
-				secondImageReaderSpi);
-		}
-	}
-
 	protected byte[] toMultiByte(int intValue) {
 		int numBits = 32;
 		int mask = 0x80000000;
@@ -724,8 +593,6 @@ public class ImageToolImpl implements ImageTool {
 
 	private ImageToolImpl() {
 		ImageIO.setUseCache(PropsValues.IMAGE_IO_USE_DISK_CACHE);
-
-		orderImageReaderSpis();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(ImageToolImpl.class);
@@ -733,7 +600,6 @@ public class ImageToolImpl implements ImageTool {
 	private static final ImageTool _instance = new ImageToolImpl();
 
 	private static final FileImpl _fileUtil = FileImpl.getInstance();
-	private static ImageMagick _imageMagick;
 
 	private Image _defaultCompanyLogo;
 	private Image _defaultOrganizationLogo;

@@ -702,6 +702,10 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			entry.setPriority(priority.doubleValue());
 		}
 
+		// Save first, so tags and categories have access to the assetEntry
+
+		assetEntryPersistence.update(entry);
+
 		// Categories
 
 		if (categoryIds != null) {

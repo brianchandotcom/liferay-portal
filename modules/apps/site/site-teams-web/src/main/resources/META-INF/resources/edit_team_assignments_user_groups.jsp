@@ -71,16 +71,6 @@ RowChecker rowChecker = new UserGroupTeamChecker(renderResponse, team);
 	rowChecker="<%= rowChecker %>"
 	searchContainer="<%= new UserGroupSearch(renderRequest, portletURL) %>"
 >
-	<portlet:renderURL var="searchURL">
-		<portlet:param name="mvcPath" value="/edit_team_assignments.jsp" />
-		<portlet:param name="tabs1" value="<%= tabs1 %>" />
-		<portlet:param name="tabs2" value="<%= tabs2 %>" />
-		<portlet:param name="teamId" value="<%= String.valueOf(team.getTeamId()) %>" />
-	</portlet:renderURL>
-
-	<aui:form action="<%= searchURL %>" name="searchFm">
-		<liferay-ui:user-group-search-form />
-	</aui:form>
 
 	<%
 	UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)searchContainer.getSearchTerms();
@@ -97,20 +87,11 @@ RowChecker rowChecker = new UserGroupTeamChecker(renderResponse, team);
 	<liferay-ui:search-container-results>
 
 		<%
-		if (searchTerms.isAdvancedSearch()) {
-			total = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getName(), searchTerms.getDescription(), userGroupParams, searchTerms.isAndOperator());
+		total = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams);
 
-			searchContainer.setTotal(total);
+		searchContainer.setTotal(total);
 
-			results = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getName(), searchTerms.getDescription(), userGroupParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-		}
-		else {
-			total = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams);
-
-			searchContainer.setTotal(total);
-
-			results = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-		}
+		results = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 
 		searchContainer.setResults(results);
 		%>

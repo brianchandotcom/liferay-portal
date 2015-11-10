@@ -74,7 +74,7 @@
   "building" : false,
   "description" : "<strong>topolik</strong> - <a href=\"https://github.com/topolik/liferay-portal/pull/214\">PR#214</a> - <a href=\"https://test-1-1.liferay.com//userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/1603/jenkins-report.html\">Jenkins Report</a>",
   "duration" : 893347,
-  "estimatedDuration" : 1070415,
+  "estimatedDuration" : 1335733,
   "executor" : null,
   "fullDisplayName" : "test-portal-acceptance-pullrequest-batch(master) » PasswordpoliciesUsecase#ViewUserAccountLockout,!master #2251",
   "id" : "2015-11-04_08-04-08",

@@ -74,7 +74,7 @@
   "building" : false,
   "description" : "<strong>topolik</strong> - <a href=\"https://github.com/topolik/liferay-portal/pull/214\">PR#214</a> - <a href=\"https://test-1-1.liferay.com//userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/1603/jenkins-report.html\">Jenkins Report</a>",
   "duration" : 1081883,
-  "estimatedDuration" : 953878,
+  "estimatedDuration" : 1139661,
   "executor" : null,
   "fullDisplayName" : "test-portal-acceptance-pullrequest-batch(master) » CPCategories#EditSubcategory,!master #2251",
   "id" : "2015-11-04_08-04-08",

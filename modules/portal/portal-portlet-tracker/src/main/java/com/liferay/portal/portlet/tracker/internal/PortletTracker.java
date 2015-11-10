@@ -238,17 +238,7 @@ public class PortletTracker
 			portletCategory.separate(portletModel.getRootPortletId());
 		}
 
-		PortletContextBag portletContextBag = PortletContextBagPool.remove(
-			bundlePortletApp.getServletContextName());
-
-		if ((portletContextBag != null) &&
-			(portletContextBag instanceof BundlePortletContextBag)) {
-
-			BundlePortletContextBag bundlePortletContextBag =
-				(BundlePortletContextBag)portletContextBag;
-
-			bundlePortletContextBag.close();
-		}
+		PortletContextBagPool.remove(bundlePortletApp.getServletContextName());
 
 		PortletBag portletBag = PortletBagPool.remove(
 			portletModel.getRootPortletId());
@@ -312,13 +302,6 @@ public class PortletTracker
 
 		collectJxPortletFeatures(serviceReference, portletModel);
 		collectLiferayFeatures(serviceReference, portletModel);
-
-		BundlePortletContextBag portletContextBag = new BundlePortletContextBag(
-			portletId, bundlePortletApp.getServletContextName(),
-			bundle.getBundleContext());
-
-		PortletContextBagPool.put(
-			bundlePortletApp.getServletContextName(), portletContextBag);
 
 		PortletBagFactory portletBagFactory = new BundlePortletBagFactory(
 			portlet);
@@ -1062,6 +1045,12 @@ public class PortletTracker
 		serviceRegistrations.addServiceRegistration(
 			bundleContext.registerService(
 				ServletContextListener.class, bundlePortletApp, properties));
+
+		PortletContextBag portletContextBag = new PortletContextBag(
+			bundlePortletApp.getServletContextName());
+
+		PortletContextBagPool.put(
+			bundlePortletApp.getServletContextName(), portletContextBag);
 
 		return bundlePortletApp;
 	}

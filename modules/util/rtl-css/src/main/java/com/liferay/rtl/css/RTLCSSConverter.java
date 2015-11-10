@@ -70,14 +70,14 @@ public class RTLCSSConverter {
 		return _cssWriter.getCSSAsString(cascadingStyleSheet);
 	}
 
-	protected void convertBackground(CSSDeclaration cssDeclaration) {
+	protected void convertBackgroundProperties(CSSDeclaration cssDeclaration) {
 		CSSExpression cssExpression = cssDeclaration.getExpression();
 
 		List<ICSSExpressionMember> icssExpressionMembers =
 			cssExpression.getAllMembers();
 
-		for (ICSSExpressionMember icssExpressionMember :
-			icssExpressionMembers) {
+		for (
+			ICSSExpressionMember icssExpressionMember : icssExpressionMembers) {
 
 			if (icssExpressionMember instanceof CSSExpressionMemberTermURI) {
 				CSSExpressionMemberTermURI cssExpressionMemberTermURI =
@@ -92,18 +92,22 @@ public class RTLCSSConverter {
 				cssExpressionMemberTermURI.setURIString(
 					uri.substring(0, index) + fileName);
 			}
-			else if (icssExpressionMember instanceof CSSExpressionMemberTermSimple) {
+			else if (icssExpressionMember instanceof
+				CSSExpressionMemberTermSimple) {
+
 				CSSExpressionMemberTermSimple cssExpressionMemberTermSimple =
 					(CSSExpressionMemberTermSimple)icssExpressionMember;
 
 				cssExpressionMemberTermSimple.setValue(
 					reverse(cssExpressionMemberTermSimple.getValue()));
 			}
-			else if (icssExpressionMember instanceof CSSExpressionMemberFunction) {
+			else if (icssExpressionMember instanceof
+				CSSExpressionMemberFunction) {
+
 				CSSExpressionMemberFunction cssExpressionMemberFunction =
 					(CSSExpressionMemberFunction)icssExpressionMember;
 
-				reverseExpression(cssExpressionMemberFunction.getExpression());
+				reverseValue(cssExpressionMemberFunction.getExpression());
 			}
 		}
 
@@ -142,7 +146,7 @@ public class RTLCSSConverter {
 		}
 	}
 
-	protected void convertShorthand(CSSDeclaration cssDeclaration) {
+	protected void convertShorthandProperties(CSSDeclaration cssDeclaration) {
 		CSSExpression cssExpression = cssDeclaration.getExpression();
 
 		List<CSSExpressionMemberTermSimple> cssExpressionMemberTermSimples =
@@ -164,7 +168,9 @@ public class RTLCSSConverter {
 		}
 	}
 
-	protected void convertShorthandRadius(CSSDeclaration cssDeclaration) {
+	protected void convertShorthandRadiusProperties(
+		CSSDeclaration cssDeclaration) {
+
 		CSSExpression cssExpression = cssDeclaration.getExpression();
 
 		List<CSSExpressionMemberTermSimple> cssExpressionMemberTermSimples =
@@ -225,27 +231,27 @@ public class RTLCSSConverter {
 
 	protected void processRule(CSSStyleRule cssStyleRule) {
 		for (CSSDeclaration cssDeclaration :
-				cssStyleRule.getAllDeclarations()) {
+			cssStyleRule.getAllDeclarations()) {
 
-			String property = stripProperty(cssDeclaration.getProperty());
+			String property = stripAsterick(cssDeclaration.getProperty());
 
-			if (_backgroundStyles.contains(property)) {
-				convertBackground(cssDeclaration);
+			if (_backgroundProperties.contains(property)) {
+				convertBackgroundProperties(cssDeclaration);
 			}
-			else if (_iconStyles.contains(property)) {
+			else if (_iconProperties.contains(property)) {
 				replaceIcons(cssDeclaration);
 			}
-			else if (_replacementStyles.contains(property)) {
-				replaceStyle(cssDeclaration);
+			else if (_reverseProperties.contains(property)) {
+				reverseProperty(cssDeclaration);
 			}
-			else if (_reverseStyles.contains(property)) {
-				reverseStyle(cssDeclaration);
+			else if (_reverseValueProperties.contains(property)) {
+				reverseValue(cssDeclaration);
 			}
-			else if (_shorthandRadiusStyles.contains(property)) {
-				convertShorthandRadius(cssDeclaration);
+			else if (_shorthandRadiusProperties.contains(property)) {
+				convertShorthandRadiusProperties(cssDeclaration);
 			}
-			else if (_shorthandStyles.contains(property)) {
-				convertShorthand(cssDeclaration);
+			else if (_shorthandProperties.contains(property)) {
+				convertShorthandProperties(cssDeclaration);
 			}
 		}
 	}
@@ -282,22 +288,6 @@ public class RTLCSSConverter {
 		}
 	}
 
-	protected void replaceStyle(CSSDeclaration cssDeclaration) {
-		String property = cssDeclaration.getProperty();
-
-		String asterisk = "";
-
-		if (property.startsWith("*")) {
-			asterisk = "*";
-
-			property = stripProperty(property);
-		}
-
-		property = reverse(property);
-
-		cssDeclaration.setProperty(asterisk + property);
-	}
-
 	protected String reverse(String s) {
 		if (s.contains("right")) {
 			s = s.replace("right", "left");
@@ -309,11 +299,27 @@ public class RTLCSSConverter {
 		return s;
 	}
 
-	protected void reverseStyle(CSSDeclaration cssDeclaration) {
-		reverseExpression(cssDeclaration.getExpression());
+	protected void reverseProperty(CSSDeclaration cssDeclaration) {
+		String property = cssDeclaration.getProperty();
+
+		String asterisk = "";
+
+		if (property.startsWith("*")) {
+			asterisk = "*";
+
+			property = stripAsterick(property);
+		}
+
+		property = reverse(property);
+
+		cssDeclaration.setProperty(asterisk + property);
 	}
 
-	protected void reverseExpression(CSSExpression cssExpression) {
+	protected void reverseValue(CSSDeclaration cssDeclaration) {
+		reverseValue(cssDeclaration.getExpression());
+	}
+
+	protected void reverseValue(CSSExpression cssExpression) {
 		List<CSSExpressionMemberTermSimple> cssExpressionMemberTermSimples =
 			cssExpression.getAllSimpleMembers();
 
@@ -336,19 +342,20 @@ public class RTLCSSConverter {
 		}
 	}
 
-	protected String stripProperty(String property) {
+	protected String stripAsterick(String property) {
 		return property.replaceAll("\\**\\b", "");
 	}
 
-	private static final List<String> _backgroundStyles = Arrays.asList(
+	private static final List<String> _backgroundProperties = Arrays.asList(
 		"background", "background-image", "background-position");
-	private static final List<String> _iconStyles = Arrays.asList("content");
+	private static final List<String> _iconProperties = Arrays.asList(
+		"content");
 	private static final Pattern _percentOrLengthPattern = Pattern.compile(
 		"(\\d+)([a-z]{2}|%)");
 	private static final Pattern _percentPattern = Pattern.compile("\\d+%");
 	private static final Map<String, String> _replacementIcons =
 		new HashMap<>();
-	private static final List<String> _replacementStyles = Arrays.asList(
+	private static final List<String> _reverseProperties = Arrays.asList(
 		"-moz-border-radius-bottomright", "-moz-border-radius-bottomleft",
 		"-moz-border-radius-topright", "-moz-border-radius-topleft",
 		"border-radius-topleft", "border-radius-topright",
@@ -361,12 +368,13 @@ public class RTLCSSConverter {
 		"border-right-width", "border-radius-bottomleft",
 		"border-radius-bottomright", "left", "right", "margin-left",
 		"margin-right", "padding-left", "padding-right");
-	private static final List<String> _reverseStyles = Arrays.asList(
+	private static final List<String> _reverseValueProperties = Arrays.asList(
 		"clear", "direction", "float", "text-align");
-	private static final List<String> _shorthandRadiusStyles = Arrays.asList(
-		"-moz-border-radius", "-webkit-border-radius", "border-radius");
-	private static final List<String> _shorthandStyles = Arrays.asList(
+	private static final List<String> _shorthandProperties = Arrays.asList(
 		"border-color", "border-style", "border-width", "margin", "padding");
+	private static final List<String> _shorthandRadiusProperties =
+		Arrays.asList(
+			"-moz-border-radius", "-webkit-border-radius", "border-radius");
 
 	static {
 		_replacementIcons.put("\"\\f060\"", "\"\\f061\"");

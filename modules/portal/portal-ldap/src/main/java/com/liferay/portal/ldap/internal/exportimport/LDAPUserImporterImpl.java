@@ -869,12 +869,12 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		LDAPImportConfiguration ldapImportConfiguration =
 			_ldapImportConfigurationProvider.getConfiguration(companyId);
 
-		if (Validator.isNotNull(groupMappingsUser) &&
-			ldapImportConfiguration.importGroupSearchFilterEnabled()) {
+		LDAPServerConfiguration ldapServerConfiguration =
+			_ldapServerConfigurationProvider.getConfiguration(
+				companyId, ldapServerId);
 
-			LDAPServerConfiguration ldapServerConfiguration =
-				_ldapServerConfigurationProvider.getConfiguration(
-					companyId, ldapServerId);
+		if (Validator.isNotNull(groupMappingsUser) &&
+			ldapServerConfiguration.groupSearchFilterEnabled()) {
 
 			String baseDN = ldapServerConfiguration.baseDN();
 

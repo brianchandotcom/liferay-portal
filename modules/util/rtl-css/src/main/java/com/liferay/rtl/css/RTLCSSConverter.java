@@ -275,9 +275,9 @@ public class RTLCSSConverter {
 		List<CSSExpressionMemberTermSimple> cssExpressionMemberTermSimples =
 			cssExpression.getAllSimpleMembers();
 
-		if (cssExpressionMemberTermSimples.size() > 0) {
-			CSSExpressionMemberTermSimple cssExpressionMemberTermSimple =
-				cssExpressionMemberTermSimples.get(0);
+		for (
+			CSSExpressionMemberTermSimple cssExpressionMemberTermSimple :
+			cssExpressionMemberTermSimples) {
 
 			String replacementValue = _replacementIcons.get(
 				cssExpressionMemberTermSimple.getValue());

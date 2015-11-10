@@ -307,9 +307,9 @@
 			<var name="siteScopeName" value="${siteScopeName}" />
 		</execute>
 
-		<var name="key_teamName" value="${teamName}" />
+		<var name="key_listEntry" value="${teamName}" />
 
-		<execute function="Click" locator1="SiteTeams#TEAM_TABLE_ACTIONS" />
+		<execute function="Click" locator1="Icon#DESCRIPTIVE_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
 
 		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
@@ -343,8 +343,7 @@
 	<command name="gotoWCArticle">
 		<var name="key_descriptiveEntry" value="${webContentTitle}" />
 
-		<execute function="MouseOver" locator1="WC#ENTRY_DESCRIPTIVE_THUMBNAIL" />
-		<execute function="Click" locator1="WC#ENTRY_DESCRIPTIVE_MENULIST_ICON" />
+		<execute function="Click" locator1="Icon#DESCRIPTIVE_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
 
 		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />

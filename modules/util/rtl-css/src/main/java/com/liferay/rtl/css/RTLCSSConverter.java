@@ -93,7 +93,7 @@ public class RTLCSSConverter {
 					uri.substring(0, index) + fileName);
 			}
 			else if (icssExpressionMember instanceof
-				CSSExpressionMemberTermSimple) {
+						CSSExpressionMemberTermSimple) {
 
 				CSSExpressionMemberTermSimple cssExpressionMemberTermSimple =
 					(CSSExpressionMemberTermSimple)icssExpressionMember;
@@ -102,7 +102,7 @@ public class RTLCSSConverter {
 					reverse(cssExpressionMemberTermSimple.getValue()));
 			}
 			else if (icssExpressionMember instanceof
-				CSSExpressionMemberFunction) {
+						CSSExpressionMemberFunction) {
 
 				CSSExpressionMemberFunction cssExpressionMemberFunction =
 					(CSSExpressionMemberFunction)icssExpressionMember;
@@ -230,8 +230,8 @@ public class RTLCSSConverter {
 	}
 
 	protected void processRule(CSSStyleRule cssStyleRule) {
-		for (CSSDeclaration cssDeclaration :
-			cssStyleRule.getAllDeclarations()) {
+		for (
+			CSSDeclaration cssDeclaration : cssStyleRule.getAllDeclarations()) {
 
 			String property = stripAsterick(cssDeclaration.getProperty());
 

@@ -16,10 +16,10 @@
 
 <div id="<portlet:namespace />versionDetails" style="display: none">
 	<aui:fieldset>
-		<aui:input label="i-want-my-changes-to-create-a-major-version" name='<%= randomNamespace + "majorVersion" %>' type="checkbox" />
-		<aui:input label="change-log" name='<%= randomNamespace + "changeLog" %>' type="textarea" />
+		<aui:input label="i-want-my-changes-to-create-a-major-version" name="versionDetailsMajorVersion" type="checkbox" />
+		<aui:input label="change-log" name="versionDetailsChangeLog" type="textarea" />
 
-		<aui:button name='<%= randomNamespace + "save" %>' primary="true" value="save" />
-		<aui:button name='<%= randomNamespace + "cancel" %>' type="cancel" value="cancel" />
+		<aui:button name="versionDetailsSave" primary="true" value="save" />
+		<aui:button name="versionDetailsCancel" type="cancel" value="cancel" />
 	</aui:fieldset>
 </div>

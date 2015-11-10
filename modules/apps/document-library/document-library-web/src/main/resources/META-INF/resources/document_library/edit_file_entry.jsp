@@ -17,8 +17,6 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_document_library_edit_file_entry") + StringPool.UNDERLINE;
-
 String cmd = ParamUtil.getString(request, Constants.CMD, Constants.EDIT);
 
 String redirect = ParamUtil.getString(request, "redirect");
@@ -590,7 +588,7 @@ if (portletTitleBasedNavigation) {
 			Liferay.Portlet.DocumentLibrary.Checkin.showDialog(
 				'<portlet:namespace />versionDetails',
 				'<%= UnicodeLanguageUtil.get(request, "describe-your-changes") %>',
-				['<portlet:namespace /><%= randomNamespace %>majorVersion', '<portlet:namespace /><%= randomNamespace %>changeLog'],
+				['<portlet:namespace />versionDetailsMajorVersion', '<portlet:namespace />versionDetailsChangeLog'],
 				function(event, nodes) {
 					var majorVersionNode = nodes[0];
 					var changeLogNode = nodes[1];

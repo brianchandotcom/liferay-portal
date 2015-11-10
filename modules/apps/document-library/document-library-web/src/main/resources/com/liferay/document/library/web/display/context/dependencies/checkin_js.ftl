@@ -5,7 +5,7 @@ Liferay.provide(
 		Liferay.Portlet.DocumentLibrary.Checkin.showDialog(
 			'${namespace}versionDetails',
 			'${dialogTitle}',
-			['${namespace}${randomNamespace}majorVersion', '${namespace}${randomNamespace}changeLog'],
+			['${namespace}versionDetailsMajorVersion', '${namespace}versionDetailsChangeLog'],
 			function(event, nodes) {
 				var majorVersionNode = nodes[0];
 				var changeLogNode = nodes[1];

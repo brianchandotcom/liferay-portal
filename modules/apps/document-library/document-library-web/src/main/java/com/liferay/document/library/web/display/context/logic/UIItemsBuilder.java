@@ -205,8 +205,6 @@ public class UIItemsBuilder {
 			"dialogTitle",
 			UnicodeLanguageUtil.get(_request, "describe-your-changes"));
 		template.put("namespace", getNamespace());
-		template.put(
-			"randomNamespace", _request.getAttribute("randomNamespace"));
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 

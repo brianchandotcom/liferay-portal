@@ -17,10 +17,6 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_document_library_view_file_entry") + StringPool.UNDERLINE;
-
-request.setAttribute("randomNamespace", randomNamespace);
-
 String tabs2 = ParamUtil.getString(request, "tabs2", "version-history");
 
 String redirect = ParamUtil.getString(request, "redirect");

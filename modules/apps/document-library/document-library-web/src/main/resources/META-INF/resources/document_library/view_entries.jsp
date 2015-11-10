@@ -17,10 +17,6 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_document_library_edit_file_entry") + StringPool.UNDERLINE;
-
-request.setAttribute("randomNamespace", randomNamespace);
-
 String navigation = ParamUtil.getString(request, "navigation", "home");
 
 String currentFolder = ParamUtil.getString(request, "curFolder");

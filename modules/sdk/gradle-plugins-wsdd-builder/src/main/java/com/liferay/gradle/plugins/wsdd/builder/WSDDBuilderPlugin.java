@@ -15,7 +15,8 @@
 package com.liferay.gradle.plugins.wsdd.builder;
 
 import com.liferay.gradle.util.GradleUtil;
-import com.liferay.gradle.util.Validator;
+
+import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
@@ -50,7 +51,7 @@ public class WSDDBuilderPlugin implements Plugin<Project> {
 		configureTasksBuildWSDD(project, wsddBuilderConfiguration);
 	}
 
-	protected BuildWSDDTask addBuildWSDDTask(Project project) {
+	protected BuildWSDDTask addBuildWSDDTask(final Project project) {
 		BuildWSDDTask buildWSDDTask = GradleUtil.addTask(
 			project, BUILD_WSDD_TASK_NAME, BuildWSDDTask.class);
 
@@ -59,12 +60,27 @@ public class WSDDBuilderPlugin implements Plugin<Project> {
 
 		buildWSDDTask.dependsOn(JavaPlugin.COMPILE_JAVA_TASK_NAME);
 
-		buildWSDDTask.doFirst(
-			new Action<Task>() {
+		buildWSDDTask.setBuilderClasspath(
+			new Callable<String>() {
 
 				@Override
-				public void execute(Task task) {
-					configureBuildWSDDTaskBuilderClasspath((BuildWSDDTask)task);
+				public String call() throws Exception {
+					Task compileJavaTask = GradleUtil.getTask(
+						project, JavaPlugin.COMPILE_JAVA_TASK_NAME);
+
+					TaskOutputs taskOutputs = compileJavaTask.getOutputs();
+
+					FileCollection fileCollection = taskOutputs.getFiles();
+
+					SourceSet sourceSet = GradleUtil.getSourceSet(
+						project, SourceSet.MAIN_SOURCE_SET_NAME);
+
+					fileCollection = fileCollection.plus(
+						sourceSet.getCompileClasspath());
+					fileCollection = fileCollection.plus(
+						sourceSet.getRuntimeClasspath());
+
+					return fileCollection.getAsPath();
 				}
 
 			});
@@ -98,33 +114,6 @@ public class WSDDBuilderPlugin implements Plugin<Project> {
 		GradleUtil.addDependency(
 			project, CONFIGURATION_NAME, "com.liferay",
 			"com.liferay.portal.tools.wsdd.builder", "latest.release");
-	}
-
-	protected void configureBuildWSDDTaskBuilderClasspath(
-		BuildWSDDTask buildWSDDTask) {
-
-		if (Validator.isNotNull(buildWSDDTask.getBuilderClasspath())) {
-			return;
-		}
-
-		Project project = buildWSDDTask.getProject();
-
-		TaskContainer taskContainer = project.getTasks();
-
-		Task compileJavaTask = taskContainer.findByName(
-			JavaPlugin.COMPILE_JAVA_TASK_NAME);
-
-		TaskOutputs taskOutputs = compileJavaTask.getOutputs();
-
-		FileCollection fileCollection = taskOutputs.getFiles();
-
-		SourceSet sourceSet = GradleUtil.getSourceSet(
-			project, SourceSet.MAIN_SOURCE_SET_NAME);
-
-		fileCollection = fileCollection.plus(sourceSet.getCompileClasspath());
-		fileCollection = fileCollection.plus(sourceSet.getRuntimeClasspath());
-
-		buildWSDDTask.setBuilderClasspath(fileCollection.getAsPath());
 	}
 
 	protected void configureTaskBuildWSDDClasspath(

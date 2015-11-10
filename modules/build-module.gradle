@@ -27,6 +27,7 @@ apply plugin: "pmd"
 
 if (FileUtil.exists(project, "service.xml")) {
 	apply plugin: "com.liferay.portal.tools.upgrade.table.builder"
+	apply plugin: "com.liferay.portal.tools.wsdd.builder"
 }
 
 File appServerClassesPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/classes")
@@ -144,7 +145,6 @@ dependencies {
 	testCompile group: "com.liferay.portal", name: "portal-test-internal", version: liferay.portalVersion
 
 	tldFormatter group: "com.liferay", name: "com.liferay.tld.formatter", version: "default"
-	wsddBuilder group: "com.liferay", name: "com.liferay.portal.tools.wsdd.builder", version: "default"
 	xmlFormatter group: "com.liferay", name: "com.liferay.xml.formatter", version: "default"
 	xmltask rootProject.files("../lib/development/xmltask.jar")
 }
@@ -330,6 +330,12 @@ pluginManager.withPlugin("com.liferay.maven.plugin.builder") {
 pluginManager.withPlugin("com.liferay.portal.tools.upgrade.table.builder") {
 	dependencies {
 		upgradeTableBuilder group: "com.liferay", name: "com.liferay.portal.tools.upgrade.table.builder", version: "default"
+	}
+}
+
+pluginManager.withPlugin("com.liferay.portal.tools.wsdd.builder") {
+	dependencies {
+		wsddBuilder group: "com.liferay", name: "com.liferay.portal.tools.wsdd.builder", version: "default"
 	}
 }
 

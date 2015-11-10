@@ -28,6 +28,9 @@
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" name="deleteTeam" qname="operNS:deleteTeam" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="teamId" type="tns:long"></parameter>
 		</operation>
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://model.portal.liferay.com" name="fetchTeam" qname="operNS:fetchTeam" returnQName="fetchTeamReturn" returnType="rtns:TeamSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="teamId" type="tns:long"></parameter>
+		</operation>
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.portal.liferay.com" name="getGroupTeams" qname="operNS:getGroupTeams" returnQName="getGroupTeamsReturn" returnType="rtns:ArrayOf_tns2_TeamSoap" returnItemType="tns2:TeamSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 		</operation>
@@ -54,7 +57,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="description" type="tns:string"></parameter>
 		</operation>
-		<parameter name="allowedMethods" value="addTeam deleteTeam getGroupTeams getTeam getUserTeams hasUserTeam updateTeam" />
+		<parameter name="allowedMethods" value="addTeam deleteTeam fetchTeam getGroupTeams getTeam getUserTeams hasUserTeam updateTeam" />
 		<parameter name="className" value="com.liferay.portal.service.http.TeamServiceSoap" />
 		<parameter name="schemaUnqualified" value="http://model.portal.liferay.com,http://permission.service.portal.liferay.com,http://service.portal.liferay.com,http://theme.portal.liferay.com,http://toolbar.portlet.kernel.portal.liferay.com,http://util.kernel.portal.liferay.com,http://xml.apache.org/xml-soap,urn:http.service.portal.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />

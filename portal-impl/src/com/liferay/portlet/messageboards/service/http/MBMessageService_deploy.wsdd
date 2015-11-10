@@ -92,6 +92,9 @@
 		<operation xmlns:operNS="urn:http.service.messageboards.portlet.liferay.com" name="emptyMessageAttachments" qname="operNS:emptyMessageAttachments" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="messageId" type="tns:long"></parameter>
 		</operation>
+		<operation xmlns:operNS="urn:http.service.messageboards.portlet.liferay.com" xmlns:rtns="http://model.messageboards.portlet.liferay.com" name="fetchMBMessage" qname="operNS:fetchMBMessage" returnQName="fetchMBMessageReturn" returnType="rtns:MBMessageSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="messageId" type="tns:long"></parameter>
+		</operation>
 		<operation xmlns:operNS="urn:http.service.messageboards.portlet.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getCategoryMessagesCount" qname="operNS:getCategoryMessagesCount" returnQName="getCategoryMessagesCountReturn" returnType="rtns:int" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="categoryId" type="tns:long"></parameter>
@@ -163,7 +166,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="allowPingbacks" type="tns:boolean"></parameter>
 			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
 		</operation>
-		<parameter name="allowedMethods" value="addDiscussionMessage addMessage deleteDiscussionMessage deleteMessage deleteMessageAttachment deleteMessageAttachments emptyMessageAttachments getCategoryMessages getCategoryMessagesCount getGroupMessagesCount getMessage getThreadAnswersCount getThreadMessages getThreadMessagesCount restoreMessageAttachmentFromTrash subscribeMessage unsubscribeMessage updateAnswer updateDiscussionMessage updateMessage" />
+		<parameter name="allowedMethods" value="addDiscussionMessage addMessage deleteDiscussionMessage deleteMessage deleteMessageAttachment deleteMessageAttachments emptyMessageAttachments fetchMBMessage getCategoryMessages getCategoryMessagesCount getGroupMessagesCount getMessage getThreadAnswersCount getThreadMessages getThreadMessagesCount restoreMessageAttachmentFromTrash subscribeMessage unsubscribeMessage updateAnswer updateDiscussionMessage updateMessage" />
 		<parameter name="className" value="com.liferay.portlet.messageboards.service.http.MBMessageServiceSoap" />
 		<parameter name="schemaUnqualified" value="http://model.messageboards.portlet.liferay.com,http://permission.service.portal.liferay.com,http://service.portal.liferay.com,http://theme.portal.liferay.com,http://toolbar.portlet.kernel.portal.liferay.com,http://util.kernel.portal.liferay.com,http://xml.apache.org/xml-soap,urn:http.service.messageboards.portlet.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />

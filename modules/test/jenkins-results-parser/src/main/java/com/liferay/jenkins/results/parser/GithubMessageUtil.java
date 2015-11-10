@@ -28,7 +28,7 @@ import org.apache.tools.ant.Project;
 /**
  * @author Peter Yoo
  */
-public class GithubMessageUtil {
+public class GitHubMessageUtil {
 
 	public static void getGithubMessage(Project project) throws Exception {
 		StringBuilder sb = new StringBuilder();

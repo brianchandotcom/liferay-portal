@@ -35,9 +35,9 @@ import org.junit.Test;
 /**
  * @author Peter Yoo
  */
-public class GithubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
+public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 
-	public GithubMessageUtilTest() {
+	public GitHubMessageUtilTest() {
 		jobMessageUtilTest = new GitHubJobMessageUtilTest();
 	}
 
@@ -160,7 +160,7 @@ public class GithubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 		Project project = getProject(
 			new File(sampleDir, "sample.properties"), "", sampleDir.getPath());
 
-		GithubMessageUtil.getGithubMessage(project);
+		GitHubMessageUtil.getGithubMessage(project);
 
 		return project.getProperty("github.post.comment.body");
 	}

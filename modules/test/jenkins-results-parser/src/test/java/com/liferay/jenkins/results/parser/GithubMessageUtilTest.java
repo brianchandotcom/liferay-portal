@@ -101,9 +101,10 @@ public class GithubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 		Matcher progressiveTextMatcher =
 			_PROGRESSIVE_TEXT_JOB_URL_PATTERN.matcher(content);
 
-		StringBuilder reportFilesBuffer = new StringBuilder();
-		int passCount = 0;
 		int jobCount = 0;
+		int passCount = 0;
+		StringBuilder reportFilesBuffer = new StringBuilder();
+
 		while (progressiveTextMatcher.find()) {
 			String urlString = progressiveTextMatcher.group("url");
 			Matcher urlMatcher = _URL_JOB_NAME_PATTERN.matcher(urlString);
@@ -143,11 +144,11 @@ public class GithubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 		}
 
 		properties.setProperty(
-			"top.level.report.files", reportFilesBuffer.toString());
+			"top.level.fail.count", String.valueOf(jobCount - passCount));
 		properties.setProperty(
 			"top.level.pass.count", String.valueOf(passCount));
 		properties.setProperty(
-			"top.level.fail.count", String.valueOf(jobCount - passCount));
+			"top.level.report.files", reportFilesBuffer.toString());
 	}
 
 	@Override

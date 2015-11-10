@@ -537,7 +537,7 @@
 		<if>
 			<isset var="webContentLinkToPage" />
 			<then>
-				<var name="key_linkedPageName" value="${linkedPageName}" />
+				<var name="key_fieldName" value="${webContentLinkToPage}" />
 
 				<execute function="Select" locator1="DDMField#LINK_TO_PAGE" value1="regexp:–\s+${linkedPageName}" />
 			</then>

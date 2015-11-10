@@ -16,6 +16,10 @@ package com.liferay.gradle.plugins.wsdd.builder;
 
 import com.liferay.gradle.util.GradleUtil;
 
+import java.io.File;
+
+import java.util.Iterator;
+import java.util.Set;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
@@ -24,6 +28,7 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.SourceSet;
@@ -43,7 +48,7 @@ public class WSDDBuilderPlugin implements Plugin<Project> {
 	public void apply(Project project) {
 		GradleUtil.applyPlugin(project, JavaPlugin.class);
 
-		Configuration wsddBuilderConfiguration = addWSDDBuilderConfiguration(
+		Configuration wsddBuilderConfiguration = addConfigurationWSDDBuilder(
 			project);
 
 		addTaskBuildWSDD(project);
@@ -51,12 +56,31 @@ public class WSDDBuilderPlugin implements Plugin<Project> {
 		configureTasksBuildWSDD(project, wsddBuilderConfiguration);
 	}
 
-	protected BuildWSDDTask addTaskBuildWSDD(final Project project) {
-		BuildWSDDTask buildWSDDTask = GradleUtil.addTask(
-			project, BUILD_WSDD_TASK_NAME, BuildWSDDTask.class);
+	protected Configuration addConfigurationWSDDBuilder(final Project project) {
+		Configuration configuration = GradleUtil.addConfiguration(
+			project, CONFIGURATION_NAME);
 
-		buildWSDDTask.setDescription("Runs Liferay WSDD Builder.");
-		buildWSDDTask.setGroup(BasePlugin.BUILD_GROUP);
+		configuration.setDescription(
+			"Configures Liferay WSDD Builder for this project.");
+		configuration.setVisible(false);
+
+		GradleUtil.executeIfEmpty(
+			configuration,
+			new Action<Configuration>() {
+
+				@Override
+				public void execute(Configuration configuration) {
+					addWSDDBuilderDependencies(project);
+				}
+
+			});
+
+		return configuration;
+	}
+
+	protected BuildWSDDTask addTaskBuildWSDD(Project project) {
+		final BuildWSDDTask buildWSDDTask = GradleUtil.addTask(
+			project, BUILD_WSDD_TASK_NAME, BuildWSDDTask.class);
 
 		buildWSDDTask.dependsOn(JavaPlugin.COMPILE_JAVA_TASK_NAME);
 
@@ -65,6 +89,8 @@ public class WSDDBuilderPlugin implements Plugin<Project> {
 
 				@Override
 				public String call() throws Exception {
+					Project project = buildWSDDTask.getProject();
+
 					Task compileJavaTask = GradleUtil.getTask(
 						project, JavaPlugin.COMPILE_JAVA_TASK_NAME);
 
@@ -85,29 +111,21 @@ public class WSDDBuilderPlugin implements Plugin<Project> {
 
 			});
 
-		return buildWSDDTask;
-	}
+		buildWSDDTask.setDescription("Runs Liferay WSDD Builder.");
+		buildWSDDTask.setGroup(BasePlugin.BUILD_GROUP);
+		buildWSDDTask.setInputFile("service.xml");
 
-	protected Configuration addWSDDBuilderConfiguration(final Project project) {
-		Configuration configuration = GradleUtil.addConfiguration(
-			project, CONFIGURATION_NAME);
-
-		configuration.setDescription(
-			"Configures Liferay WSDD Builder for this project.");
-		configuration.setVisible(false);
-
-		GradleUtil.executeIfEmpty(
-			configuration,
-			new Action<Configuration>() {
+		buildWSDDTask.setOutputDir(
+			new Callable<File>() {
 
 				@Override
-				public void execute(Configuration configuration) {
-					addWSDDBuilderDependencies(project);
+				public File call() throws Exception {
+					return getResourcesDir(buildWSDDTask.getProject());
 				}
 
 			});
 
-		return configuration;
+		return buildWSDDTask;
 	}
 
 	protected void addWSDDBuilderDependencies(Project project) {
@@ -138,6 +156,21 @@ public class WSDDBuilderPlugin implements Plugin<Project> {
 				}
 
 			});
+	}
+
+	protected File getResourcesDir(Project project) {
+		SourceSet sourceSet = GradleUtil.getSourceSet(
+			project, SourceSet.MAIN_SOURCE_SET_NAME);
+
+		return getSrcDir(sourceSet.getResources());
+	}
+
+	protected File getSrcDir(SourceDirectorySet sourceDirectorySet) {
+		Set<File> srcDirs = sourceDirectorySet.getSrcDirs();
+
+		Iterator<File> iterator = srcDirs.iterator();
+
+		return iterator.next();
 	}
 
 }

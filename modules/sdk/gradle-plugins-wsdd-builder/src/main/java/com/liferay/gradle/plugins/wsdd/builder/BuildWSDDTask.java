@@ -105,7 +105,7 @@ public class BuildWSDDTask extends JavaExec {
 	}
 
 	private Object _builderClasspath;
-	private Object _inputFile = WSDDBuilderArgs.FILE_NAME;
+	private Object _inputFile;
 	private Object _outputDir;
 	private Object _serverConfigFile = WSDDBuilderArgs.SERVER_CONFIG_FILE_NAME;
 	private Object _serviceNamespace = WSDDBuilderArgs.SERVICE_NAMESPACE;

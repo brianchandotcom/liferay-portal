@@ -25,6 +25,10 @@ apply plugin: "findbugs"
 apply plugin: "idea"
 apply plugin: "pmd"
 
+if (FileUtil.exists(project, "service.xml")) {
+	apply plugin: "com.liferay.portal.tools.upgrade.table.builder"
+}
+
 File appServerClassesPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/classes")
 File appServerLibPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/lib")
 
@@ -140,7 +144,6 @@ dependencies {
 	testCompile group: "com.liferay.portal", name: "portal-test-internal", version: liferay.portalVersion
 
 	tldFormatter group: "com.liferay", name: "com.liferay.tld.formatter", version: "default"
-	upgradeTableBuilder group: "com.liferay", name: "com.liferay.portal.tools.upgrade.table.builder", version: "default"
 	wsddBuilder group: "com.liferay", name: "com.liferay.portal.tools.wsdd.builder", version: "default"
 	xmlFormatter group: "com.liferay", name: "com.liferay.xml.formatter", version: "default"
 	xmltask rootProject.files("../lib/development/xmltask.jar")
@@ -321,6 +324,12 @@ pluginManager.withPlugin("com.liferay.maven.plugin.builder") {
 		ext {
 			autoClean = false
 		}
+	}
+}
+
+pluginManager.withPlugin("com.liferay.portal.tools.upgrade.table.builder") {
+	dependencies {
+		upgradeTableBuilder group: "com.liferay", name: "com.liferay.portal.tools.upgrade.table.builder", version: "default"
 	}
 }
 

@@ -9,6 +9,7 @@
 		<typeMapping xmlns:ns="http://model.asset.portlet.liferay.com" qname="ns:AssetVocabularyDisplay" type="java:com.liferay.portlet.asset.model.AssetVocabularyDisplay" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
 		<typeMapping xmlns:ns="http://model.asset.portlet.liferay.com" qname="ns:AssetVocabularySoap" type="java:com.liferay.portlet.asset.model.AssetVocabularySoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
 		<typeMapping xmlns:ns="http://permission.service.portal.liferay.com" qname="ns:ModelPermissions" type="java:com.liferay.portal.service.permission.ModelPermissions" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
+		<typeMapping xmlns:ns="http://search.kernel.portal.liferay.com" qname="ns:Sort" type="java:com.liferay.portal.kernel.search.Sort" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
 		<typeMapping xmlns:ns="http://service.portal.liferay.com" qname="ns:ServiceContext" type="java:com.liferay.portal.service.ServiceContext" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
 		<typeMapping xmlns:ns="http://theme.portal.liferay.com" qname="ns:PortletDisplay" type="java:com.liferay.portal.theme.PortletDisplay" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
 		<typeMapping xmlns:ns="http://theme.portal.liferay.com" qname="ns:ThemeDisplay" type="java:com.liferay.portal.theme.ThemeDisplay" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
@@ -132,6 +133,14 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="title" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
+			<parameter xmlns:tns="http://search.kernel.portal.liferay.com" qname="sort" type="tns:Sort"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="addDefaultVocabulary" type="tns:boolean"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" xmlns:rtns="http://model.asset.portlet.liferay.com" name="searchVocabulariesDisplay" qname="operNS:searchVocabulariesDisplay" returnQName="searchVocabulariesDisplayReturn" returnType="rtns:AssetVocabularyDisplay" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="title" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="addDefaultVocabulary" type="tns:boolean"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.asset.portlet.liferay.com" xmlns:rtns="http://model.asset.portlet.liferay.com" name="updateVocabulary" qname="operNS:updateVocabulary" returnQName="updateVocabularyReturn" returnType="rtns:AssetVocabularySoap" soapAction="">
@@ -146,7 +155,7 @@
 		</operation>
 		<parameter name="allowedMethods" value="addVocabulary deleteVocabularies deleteVocabulary fetchVocabulary getCompanyVocabularies getGroupVocabularies getGroupVocabulariesCount getGroupVocabulariesDisplay getGroupsVocabularies getJSONGroupVocabularies getVocabularies getVocabulary searchVocabulariesDisplay updateVocabulary" />
 		<parameter name="className" value="com.liferay.portlet.asset.service.http.AssetVocabularyServiceSoap" />
-		<parameter name="schemaUnqualified" value="http://model.asset.portlet.liferay.com,http://permission.service.portal.liferay.com,http://service.portal.liferay.com,http://theme.portal.liferay.com,http://toolbar.portlet.kernel.portal.liferay.com,http://util.kernel.portal.liferay.com,http://xml.apache.org/xml-soap,urn:http.service.asset.portlet.liferay.com" />
+		<parameter name="schemaUnqualified" value="http://model.asset.portlet.liferay.com,http://permission.service.portal.liferay.com,http://search.kernel.portal.liferay.com,http://service.portal.liferay.com,http://theme.portal.liferay.com,http://toolbar.portlet.kernel.portal.liferay.com,http://util.kernel.portal.liferay.com,http://xml.apache.org/xml-soap,urn:http.service.asset.portlet.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />
 		<parameter name="wsdlPortType" value="AssetVocabularyServiceSoap" />
 		<parameter name="wsdlServiceElement" value="AssetVocabularyServiceSoapService" />

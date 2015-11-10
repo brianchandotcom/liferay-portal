@@ -49,6 +49,9 @@
 		<operation xmlns:operNS="urn:http.service.announcements.portlet.liferay.com" name="deleteEntry" qname="operNS:deleteEntry" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="entryId" type="tns:long"></parameter>
 		</operation>
+		<operation xmlns:operNS="urn:http.service.announcements.portlet.liferay.com" xmlns:rtns="http://model.announcements.portlet.liferay.com" name="fetchAnnouncementsEntry" qname="operNS:fetchAnnouncementsEntry" returnQName="fetchAnnouncementsEntryReturn" returnType="rtns:AnnouncementsEntrySoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="entryId" type="tns:long"></parameter>
+		</operation>
 		<operation xmlns:operNS="urn:http.service.announcements.portlet.liferay.com" xmlns:rtns="http://model.announcements.portlet.liferay.com" name="getEntry" qname="operNS:getEntry" returnQName="getEntryReturn" returnType="rtns:AnnouncementsEntrySoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="entryId" type="tns:long"></parameter>
 		</operation>
@@ -71,7 +74,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="expirationDateMinute" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="priority" type="tns:int"></parameter>
 		</operation>
-		<parameter name="allowedMethods" value="addEntry deleteEntry getEntry updateEntry" />
+		<parameter name="allowedMethods" value="addEntry deleteEntry fetchAnnouncementsEntry getEntry updateEntry" />
 		<parameter name="className" value="com.liferay.portlet.announcements.service.http.AnnouncementsEntryServiceSoap" />
 		<parameter name="schemaUnqualified" value="http://model.announcements.portlet.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />

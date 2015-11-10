@@ -608,6 +608,16 @@ public class AssetCategoryLocalServiceUtil {
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portlet.asset.model.AssetCategory> searchCategories(
 		long companyId, long[] groupIds, java.lang.String title,
+		long[] vocabularyIds, long[] parentCategoryIds, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .searchCategories(companyId, groupIds, title, vocabularyIds,
+			parentCategoryIds, start, end, sort);
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portlet.asset.model.AssetCategory> searchCategories(
+		long companyId, long[] groupIds, java.lang.String title,
 		long[] vocabularyIds, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

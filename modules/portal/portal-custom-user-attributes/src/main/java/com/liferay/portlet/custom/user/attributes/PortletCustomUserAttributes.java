@@ -24,8 +24,8 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"custom.user.attribute=user.name.random", "javax.portlet.name=ALL",
-		"service.ranking:Integer=-1"
+		"custom.user.attribute=user.name.random", "service.ranking:Integer=-1",
+		"servlet.context.name=ALL"
 	},
 	service = CustomUserAttributes.class
 )

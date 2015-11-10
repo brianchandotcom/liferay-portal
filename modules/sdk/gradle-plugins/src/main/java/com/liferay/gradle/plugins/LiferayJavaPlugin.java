@@ -1370,17 +1370,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 				project,
 				UpgradeTableBuilderPlugin.BUILD_UPGRADE_TABLE_TASK_NAME);
 
-		configureTaskBuildUpgradeTableBaseDirName(buildUpgradeTableTask);
 		configureTaskBuildUpgradeTableDirName(buildUpgradeTableTask);
-	}
-
-	protected void configureTaskBuildUpgradeTableBaseDirName(
-		BuildUpgradeTableTask buildUpgradeTableTask) {
-
-		Project project = buildUpgradeTableTask.getProject();
-
-		buildUpgradeTableTask.setBaseDirName(
-			FileUtil.getAbsolutePath(project.getProjectDir()));
 	}
 
 	protected void configureTaskBuildUpgradeTableDirName(

@@ -296,6 +296,10 @@
 			<var name="webContentTitle" value="WC WebContent2 Title" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Wiki" />
+		</execute>
+
 		<execute macro="WikiNode#gotoCP">
 			<var name="wikiNodeName" value="Main" />
 		</execute>

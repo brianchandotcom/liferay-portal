@@ -33,6 +33,10 @@ import org.gradle.process.JavaExecSpec;
  */
 public class BuildWSDDTask extends JavaExec {
 
+	public BuildWSDDTask() {
+		setMain("com.liferay.portal.tools.wsdd.builder.WSDDBuilder");
+	}
+
 	@Override
 	public JavaExecSpec args(Iterable<?> args) {
 		throw new UnsupportedOperationException();
@@ -93,11 +97,6 @@ public class BuildWSDDTask extends JavaExec {
 		Project project = getProject();
 
 		return project.file(_wsddBuilderArgs.getFileName());
-	}
-
-	@Override
-	public String getMain() {
-		return "com.liferay.portal.tools.wsdd.builder.WSDDBuilder";
 	}
 
 	public File getOutputDir() {

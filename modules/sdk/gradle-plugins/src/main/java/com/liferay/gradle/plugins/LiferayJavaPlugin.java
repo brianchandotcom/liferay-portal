@@ -43,7 +43,6 @@ import com.liferay.gradle.plugins.tld.formatter.TLDFormatterPlugin;
 import com.liferay.gradle.plugins.upgrade.table.builder.BuildUpgradeTableTask;
 import com.liferay.gradle.plugins.whip.WhipPlugin;
 import com.liferay.gradle.plugins.whip.WhipTaskExtension;
-import com.liferay.gradle.plugins.wsdd.builder.BuildWSDDTask;
 import com.liferay.gradle.plugins.wsdd.builder.WSDDBuilderPlugin;
 import com.liferay.gradle.plugins.wsdl.builder.BuildWSDLTask;
 import com.liferay.gradle.plugins.wsdl.builder.WSDLBuilderPlugin;
@@ -185,7 +184,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureArtifacts(project);
 
 		configureTaskBuildService(project);
-		configureTaskBuildWSDD(project);
 		configureTaskBuildWSDL(project);
 		configureTaskBuildXSD(project);
 		configureTaskConfigJSModules(project);
@@ -1370,23 +1368,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			(File)null);
 
 		buildUpgradeTableTask.setUpgradeTableDir(file);
-	}
-
-	protected void configureTaskBuildWSDD(Project project) {
-		BuildWSDDTask buildWSDDTask = (BuildWSDDTask)GradleUtil.getTask(
-			project, WSDDBuilderPlugin.BUILD_WSDD_TASK_NAME);
-
-		configureTaskBuildWSDDOutputDirName(buildWSDDTask);
-	}
-
-	protected void configureTaskBuildWSDDOutputDirName(
-		BuildWSDDTask buildWSDDTask) {
-
-		Project project = buildWSDDTask.getProject();
-
-		File outputDir = getJavaDir(project);
-
-		buildWSDDTask.setOutputDirName(project.relativePath(outputDir));
 	}
 
 	protected void configureTaskBuildWSDL(Project project) {

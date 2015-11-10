@@ -24,12 +24,7 @@ public class PortletPreferencesUpgradeCompanyId
 	implements UpgradeCompanyIdInTable {
 
 	@Override
-	public String getTableName() {
-		return "PortletPreferences";
-	}
-
-	@Override
-	public void upgradeProcess() throws Exception {
+	public void execute() throws Exception {
 		String select =
 			"select p.companyId, pp.portletPreferencesId " +
 				"from Portlet p, PortletPreferences pp where " +
@@ -55,6 +50,11 @@ public class PortletPreferencesUpgradeCompanyId
 		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
 			"PortletPreferences", select, update, "companyId",
 			"portletPreferencesId");
+	}
+
+	@Override
+	public String getTableName() {
+		return "PortletPreferences";
 	}
 
 }

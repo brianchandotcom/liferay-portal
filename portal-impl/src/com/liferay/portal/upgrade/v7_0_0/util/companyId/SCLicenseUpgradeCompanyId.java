@@ -23,12 +23,7 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdUtil;
 public class SCLicenseUpgradeCompanyId implements UpgradeCompanyIdInTable {
 
 	@Override
-	public String getTableName() {
-		return "SCLicense";
-	}
-
-	@Override
-	public void upgradeProcess() throws Exception {
+	public void execute() throws Exception {
 		String select =
 			"select pe.companyId, lpe.licenseId from SCLicense l, " +
 				"SCLicenses_SCProductEntries lpe, SCProductEntry pe " +
@@ -40,6 +35,11 @@ public class SCLicenseUpgradeCompanyId implements UpgradeCompanyIdInTable {
 
 		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
 			"SCLicense", select, update, "companyId", "licenseId");
+	}
+
+	@Override
+	public String getTableName() {
+		return "SCLicense";
 	}
 
 }

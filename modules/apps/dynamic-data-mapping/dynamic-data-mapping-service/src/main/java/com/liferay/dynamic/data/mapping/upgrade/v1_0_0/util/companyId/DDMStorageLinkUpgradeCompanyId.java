@@ -23,12 +23,7 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdUtil;
 public class DDMStorageLinkUpgradeCompanyId implements UpgradeCompanyIdInTable {
 
 	@Override
-	public String getTableName() {
-		return "DDMStorageLink";
-	}
-
-	@Override
-	public void upgradeProcess() throws Exception {
+	public void execute() throws Exception {
 		String select =
 			"select ds.companyId, dsl.structureId from DDMStructure ds, " +
 				"DDMStorageLink dsl where ds.structureId=dsl.structureId";
@@ -38,6 +33,11 @@ public class DDMStorageLinkUpgradeCompanyId implements UpgradeCompanyIdInTable {
 
 		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
 			"DDMStorageLink", select, update, "companyId", "structureId");
+	}
+
+	@Override
+	public String getTableName() {
+		return "DDMStorageLink";
 	}
 
 }

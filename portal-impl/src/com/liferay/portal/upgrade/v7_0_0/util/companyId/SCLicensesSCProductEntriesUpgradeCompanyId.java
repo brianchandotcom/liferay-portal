@@ -24,12 +24,7 @@ public class SCLicensesSCProductEntriesUpgradeCompanyId
 	implements UpgradeCompanyIdInTable {
 
 	@Override
-	public String getTableName() {
-		return "SCLicenses_SCProductEntries";
-	}
-
-	@Override
-	public void upgradeProcess() throws Exception {
+	public void execute() throws Exception {
 		String select =
 			"select pe.companyId, lpe.licenseId, " +
 				"lpe.productEntryId from SCLicense l, " +
@@ -44,6 +39,11 @@ public class SCLicensesSCProductEntriesUpgradeCompanyId
 		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
 			"SCLicenses_SCProductEntries", select, update, "companyId",
 			"licenseId", "productEntryId");
+	}
+
+	@Override
+	public String getTableName() {
+		return "SCLicenses_SCProductEntries";
 	}
 
 }

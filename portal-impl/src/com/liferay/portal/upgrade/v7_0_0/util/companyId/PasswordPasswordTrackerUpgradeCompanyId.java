@@ -24,12 +24,7 @@ public class PasswordPasswordTrackerUpgradeCompanyId
 	implements UpgradeCompanyIdInTable {
 
 	@Override
-	public String getTableName() {
-		return "PasswordTracker";
-	}
-
-	@Override
-	public void upgradeProcess() throws Exception {
+	public void execute() throws Exception {
 		String select =
 			"select u.companyId, pt.passwordTrackerId " +
 				"from PasswordTracker pt, User_ u where pt.userId=u.userId";
@@ -41,6 +36,11 @@ public class PasswordPasswordTrackerUpgradeCompanyId
 		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
 			"PasswordTracker", select, update, "companyId",
 			"passwordTrackerId");
+	}
+
+	@Override
+	public String getTableName() {
+		return "PasswordTracker";
 	}
 
 }

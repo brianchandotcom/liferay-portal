@@ -23,12 +23,7 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdUtil;
 public class GroupRolesUpgradeCompanyId implements UpgradeCompanyIdInTable {
 
 	@Override
-	public String getTableName() {
-		return "Groups_Roles";
-	}
-
-	@Override
-	public void upgradeProcess() throws Exception {
+	public void execute() throws Exception {
 		String select =
 			"select g.companyId, gr.groupId, gr.roleId from " +
 				"Group_ g, Groups_Roles gr " +
@@ -40,6 +35,11 @@ public class GroupRolesUpgradeCompanyId implements UpgradeCompanyIdInTable {
 
 		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
 			"Groups_Roles", select, update, "companyId", "groupId", "roleId");
+	}
+
+	@Override
+	public String getTableName() {
+		return "Groups_Roles";
 	}
 
 }

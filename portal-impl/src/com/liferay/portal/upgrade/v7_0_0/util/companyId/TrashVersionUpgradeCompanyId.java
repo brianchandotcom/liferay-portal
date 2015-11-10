@@ -23,12 +23,7 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdUtil;
 public class TrashVersionUpgradeCompanyId implements UpgradeCompanyIdInTable {
 
 	@Override
-	public String getTableName() {
-		return "TrashVersion";
-	}
-
-	@Override
-	public void upgradeProcess() throws Exception {
+	public void execute() throws Exception {
 		String select =
 			"select te.companyId, tv.versionId from TrashEntry te, " +
 				"TrashVersion tv where te.entryId=tv.entryId";
@@ -38,6 +33,11 @@ public class TrashVersionUpgradeCompanyId implements UpgradeCompanyIdInTable {
 
 		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
 			"TrashVersion", select, update, "companyId", "versionId");
+	}
+
+	@Override
+	public String getTableName() {
+		return "TrashVersion";
 	}
 
 }

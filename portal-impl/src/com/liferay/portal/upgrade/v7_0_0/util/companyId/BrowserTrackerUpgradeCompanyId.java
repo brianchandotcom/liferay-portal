@@ -23,12 +23,7 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdUtil;
 public class BrowserTrackerUpgradeCompanyId implements UpgradeCompanyIdInTable {
 
 	@Override
-	public String getTableName() {
-		return "BrowserTracker";
-	}
-
-	@Override
-	public void upgradeProcess() throws Exception {
+	public void execute() throws Exception {
 		String select =
 			"select b.browserTrackerId, u.companyId from BrowserTracker b, " +
 				"User_ u where b.userId=u.userId";
@@ -39,6 +34,11 @@ public class BrowserTrackerUpgradeCompanyId implements UpgradeCompanyIdInTable {
 
 		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
 			"BrowserTracker", select, update, "companyId", "browserTrackerId");
+	}
+
+	@Override
+	public String getTableName() {
+		return "BrowserTracker";
 	}
 
 }

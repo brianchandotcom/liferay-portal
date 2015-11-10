@@ -23,12 +23,7 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdUtil;
 public class UserIdMapperUpgradeCompanyId implements UpgradeCompanyIdInTable {
 
 	@Override
-	public String getTableName() {
-		return "UserIdMapper";
-	}
-
-	@Override
-	public void upgradeProcess() throws Exception {
+	public void execute() throws Exception {
 		String select =
 			"select u.companyId, uim.userIdMapperId from User_ u, " +
 				"UserIdMapper uim where u.userId=uim.userId";
@@ -38,6 +33,11 @@ public class UserIdMapperUpgradeCompanyId implements UpgradeCompanyIdInTable {
 
 		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
 			"UserIdMapper", select, update, "companyId", "userIdMapperId");
+	}
+
+	@Override
+	public String getTableName() {
+		return "UserIdMapper";
 	}
 
 }

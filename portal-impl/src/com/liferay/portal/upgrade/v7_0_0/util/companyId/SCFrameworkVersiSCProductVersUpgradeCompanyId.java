@@ -24,12 +24,7 @@ public class SCFrameworkVersiSCProductVersUpgradeCompanyId
 	implements UpgradeCompanyIdInTable {
 
 	@Override
-	public String getTableName() {
-		return "SCFrameworkVersi_SCProductVers";
-	}
-
-	@Override
-	public void upgradeProcess() throws Exception {
+	public void execute() throws Exception {
 		String select =
 			"select fv.companyId, fvpv.frameworkVersionId, " +
 				"fvpv.productVersionId from SCFrameworkVersion fv, " +
@@ -43,6 +38,11 @@ public class SCFrameworkVersiSCProductVersUpgradeCompanyId
 		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
 			"SCFrameworkVersi_SCProductVers", select, update, "companyId",
 			"frameworkVersionId", "productVersionId");
+	}
+
+	@Override
+	public String getTableName() {
+		return "SCFrameworkVersi_SCProductVers";
 	}
 
 }

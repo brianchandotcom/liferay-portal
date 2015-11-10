@@ -24,12 +24,7 @@ public class DLFileEntryTypesDLFoldersUpgradeCompanyId
 	implements UpgradeCompanyIdInTable {
 
 	@Override
-	public String getTableName() {
-		return "DLFileEntryTypes_DLFolders";
-	}
-
-	@Override
-	public void upgradeProcess() throws Exception {
+	public void execute() throws Exception {
 		String select =
 			"select dlfet.companyId, dlfetdlf.fileEntryTypeId, " +
 				"dlfetdlf.folderId from DLFileEntryTypes_DLFolders dlfetdlf, " +
@@ -45,6 +40,11 @@ public class DLFileEntryTypesDLFoldersUpgradeCompanyId
 		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
 			"DLFileEntryTypes_DLFolders", select, update, "companyId",
 			"fileEntryTypeId", "folderId");
+	}
+
+	@Override
+	public String getTableName() {
+		return "DLFileEntryTypes_DLFolders";
 	}
 
 }

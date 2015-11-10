@@ -19,8 +19,8 @@ package com.liferay.portal.kernel.upgrade.util;
  */
 public interface UpgradeCompanyIdInTable {
 
-	public String getTableName();
+	public void execute() throws Exception;
 
-	public void upgradeProcess() throws Exception;
+	public String getTableName();
 
 }

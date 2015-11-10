@@ -24,12 +24,7 @@ public class UserGroupGroupRoleUpgradeCompanyId
 	implements UpgradeCompanyIdInTable {
 
 	@Override
-	public String getTableName() {
-		return "UserGroupGroupRole";
-	}
-
-	@Override
-	public void upgradeProcess() throws Exception {
+	public void execute() throws Exception {
 		String select =
 			"select g.companyId, uggr.userGroupId, uggr.groupId, uggr.roleId " +
 				"from Group_ g,  UserGroupGroupRole uggr " +
@@ -42,6 +37,11 @@ public class UserGroupGroupRoleUpgradeCompanyId
 		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
 			"UserGroupGroupRole", select, update, "companyId", "userGroupId",
 			"groupId", "roleId");
+	}
+
+	@Override
+	public String getTableName() {
+		return "UserGroupGroupRole";
 	}
 
 }

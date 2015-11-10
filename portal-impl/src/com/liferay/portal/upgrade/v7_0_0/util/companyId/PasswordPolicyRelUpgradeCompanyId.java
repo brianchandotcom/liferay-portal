@@ -24,12 +24,7 @@ public class PasswordPolicyRelUpgradeCompanyId
 	implements UpgradeCompanyIdInTable {
 
 	@Override
-	public String getTableName() {
-		return "PasswordPolicyRel";
-	}
-
-	@Override
-	public void upgradeProcess() throws Exception {
+	public void execute() throws Exception {
 		String select =
 			"select pp.companyId, ppr.passwordPolicyRelId " +
 				"from PasswordPolicy pp, PasswordPolicyRel ppr " +
@@ -42,6 +37,11 @@ public class PasswordPolicyRelUpgradeCompanyId
 		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
 			"PasswordPolicyRel", select, update, "companyId",
 			"passwordPolicyRelId");
+	}
+
+	@Override
+	public String getTableName() {
+		return "PasswordPolicyRel";
 	}
 
 }

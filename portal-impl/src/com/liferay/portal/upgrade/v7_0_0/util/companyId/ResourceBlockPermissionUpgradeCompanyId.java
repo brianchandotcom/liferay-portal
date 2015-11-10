@@ -24,12 +24,7 @@ public class ResourceBlockPermissionUpgradeCompanyId
 	implements UpgradeCompanyIdInTable {
 
 	@Override
-	public String getTableName() {
-		return "ResourceBlockPermission";
-	}
-
-	@Override
-	public void upgradeProcess() throws Exception {
+	public void execute() throws Exception {
 		String select =
 			"select rb.companyId, rbp.resourceBlockPermissionId " +
 				"from ResourceBlockPermission rbp, ResourceBlock rb " +
@@ -42,6 +37,11 @@ public class ResourceBlockPermissionUpgradeCompanyId
 		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
 			"ResourceBlockPermission", select, update, "companyId",
 			"resourceBlockPermissionId");
+	}
+
+	@Override
+	public String getTableName() {
+		return "ResourceBlockPermission";
 	}
 
 }

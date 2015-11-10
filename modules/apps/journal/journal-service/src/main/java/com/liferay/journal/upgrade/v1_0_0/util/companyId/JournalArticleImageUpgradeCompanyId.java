@@ -24,12 +24,7 @@ public class JournalArticleImageUpgradeCompanyId
 	implements UpgradeCompanyIdInTable {
 
 	@Override
-	public String getTableName() {
-		return "JournalArticleImage";
-	}
-
-	@Override
-	public void upgradeProcess() throws Exception {
+	public void execute() throws Exception {
 		String select =
 			"select g.companyId, jai.articleImageId from " +
 				"Group_ g, JournalArticleImage jai where g.groupId=jai.groupId";
@@ -41,6 +36,11 @@ public class JournalArticleImageUpgradeCompanyId
 		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
 			"JournalArticleImage", select, update, "companyId",
 			"articleImageId");
+	}
+
+	@Override
+	public String getTableName() {
+		return "JournalArticleImage";
 	}
 
 }

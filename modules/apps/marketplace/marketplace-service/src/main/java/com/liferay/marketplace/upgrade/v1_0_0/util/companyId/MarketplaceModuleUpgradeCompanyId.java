@@ -24,12 +24,7 @@ public class MarketplaceModuleUpgradeCompanyId
 	implements UpgradeCompanyIdInTable {
 
 	@Override
-	public String getTableName() {
-		return "Marketplace_Module";
-	}
-
-	@Override
-	public void upgradeProcess() throws Exception {
+	public void execute() throws Exception {
 		String select =
 			"select ma.companyId, mm.moduleId from " +
 				"Marketplace_App ma, Marketplace_Module mm " +
@@ -40,6 +35,11 @@ public class MarketplaceModuleUpgradeCompanyId
 
 		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
 			"Marketplace_Module", select, update, "companyId", "moduleId");
+	}
+
+	@Override
+	public String getTableName() {
+		return "Marketplace_Module";
 	}
 
 }

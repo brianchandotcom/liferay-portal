@@ -24,12 +24,7 @@ public class UserTrackerPathUpgradeCompanyId
 	implements UpgradeCompanyIdInTable {
 
 	@Override
-	public String getTableName() {
-		return "UserTrackerPath";
-	}
-
-	@Override
-	public void upgradeProcess() throws Exception {
+	public void execute() throws Exception {
 		String select =
 			"select ut.companyId, utp.userTrackerPathId " +
 				"from UserTracker ut, UserTrackerPath utp " +
@@ -42,6 +37,11 @@ public class UserTrackerPathUpgradeCompanyId
 		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
 			"UserTrackerPath", select, update, "companyId",
 			"userTrackerPathId");
+	}
+
+	@Override
+	public String getTableName() {
+		return "UserTrackerPath";
 	}
 
 }

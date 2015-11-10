@@ -45,7 +45,7 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 
 			runSQL("alter table " + tableName + " add companyId LONG");
 
-			upgradeCompanyIdInTable.upgradeProcess();
+			upgradeCompanyIdInTable.execute();
 		}
 	}
 

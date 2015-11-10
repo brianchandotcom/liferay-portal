@@ -23,12 +23,7 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdUtil;
 public class RatingsStatsUpgradeCompanyId implements UpgradeCompanyIdInTable {
 
 	@Override
-	public String getTableName() {
-		return "RatingsStats";
-	}
-
-	@Override
-	public void upgradeProcess() throws Exception {
+	public void execute() throws Exception {
 		StringBuilder select = new StringBuilder();
 
 		// BookmarksEntry
@@ -130,6 +125,11 @@ public class RatingsStatsUpgradeCompanyId implements UpgradeCompanyIdInTable {
 
 		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
 			"RatingsStats", select.toString(), update, "companyId", "statsId");
+	}
+
+	@Override
+	public String getTableName() {
+		return "RatingsStats";
 	}
 
 }

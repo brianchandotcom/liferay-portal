@@ -24,12 +24,7 @@ public class AnnouncementsFlagUpgradeCompanyId
 	implements UpgradeCompanyIdInTable {
 
 	@Override
-	public String getTableName() {
-		return "AnnouncementsFlag";
-	}
-
-	@Override
-	public void upgradeProcess() throws Exception {
+	public void execute() throws Exception {
 		String select =
 			"select a.flagId, a.userId, u.companyId from AnnouncementsFlag a," +
 				" User_ u where a.userId=u.userId";
@@ -39,6 +34,11 @@ public class AnnouncementsFlagUpgradeCompanyId
 
 		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
 			"AnnouncementsFlag", select, update, "companyId", "flagId");
+	}
+
+	@Override
+	public String getTableName() {
+		return "AnnouncementsFlag";
 	}
 
 }

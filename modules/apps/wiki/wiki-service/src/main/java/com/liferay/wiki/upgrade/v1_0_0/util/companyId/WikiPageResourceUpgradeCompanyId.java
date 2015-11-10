@@ -24,12 +24,7 @@ public class WikiPageResourceUpgradeCompanyId
 	implements UpgradeCompanyIdInTable {
 
 	@Override
-	public String getTableName() {
-		return "WikiPageResource";
-	}
-
-	@Override
-	public void upgradeProcess() throws Exception {
+	public void execute() throws Exception {
 		String select =
 			"select wn.companyId, wpr.resourcePrimKey from " +
 				" WikiNode wn, WikiPageResource wpr where wn.nodeId=wpr.nodeId";
@@ -40,6 +35,11 @@ public class WikiPageResourceUpgradeCompanyId
 
 		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
 			"WikiPageResource", select, update, "companyId", "resourcePrimKey");
+	}
+
+	@Override
+	public String getTableName() {
+		return "WikiPageResource";
 	}
 
 }

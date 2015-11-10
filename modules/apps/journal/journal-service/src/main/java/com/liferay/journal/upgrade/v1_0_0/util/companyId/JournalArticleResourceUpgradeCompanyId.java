@@ -24,12 +24,7 @@ public class JournalArticleResourceUpgradeCompanyId
 	implements UpgradeCompanyIdInTable {
 
 	@Override
-	public String getTableName() {
-		return "JournalArticleResource";
-	}
-
-	@Override
-	public void upgradeProcess() throws Exception {
+	public void execute() throws Exception {
 		String select =
 			"select g.companyId, jar.resourcePrimKey from " +
 				"Group_ g, JournalArticleResource jar " +
@@ -42,6 +37,11 @@ public class JournalArticleResourceUpgradeCompanyId
 		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
 			"JournalArticleResource", select, update, "companyId",
 			"resourcePrimKey");
+	}
+
+	@Override
+	public String getTableName() {
+		return "JournalArticleResource";
 	}
 
 }

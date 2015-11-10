@@ -23,12 +23,7 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdUtil;
 public class MBStatsUserUpgradeCompanyId implements UpgradeCompanyIdInTable {
 
 	@Override
-	public String getTableName() {
-		return "MBStatsUser";
-	}
-
-	@Override
-	public void upgradeProcess() throws Exception {
+	public void execute() throws Exception {
 		String select =
 			"select g.companyId, mbsu.statsUserId from Group_ g, " +
 				"MBStatsUser mbsu where g.groupId=mbsu.groupId";
@@ -38,6 +33,11 @@ public class MBStatsUserUpgradeCompanyId implements UpgradeCompanyIdInTable {
 
 		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
 			"MBStatsUser", select, update, "companyId", "statsUserId");
+	}
+
+	@Override
+	public String getTableName() {
+		return "MBStatsUser";
 	}
 
 }

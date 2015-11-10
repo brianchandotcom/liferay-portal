@@ -33,12 +33,7 @@ import java.sql.SQLException;
 public class ImageUpgradeCompanyId implements UpgradeCompanyIdInTable {
 
 	@Override
-	public String getTableName() {
-		return "Image";
-	}
-
-	@Override
-	public void upgradeProcess() throws Exception {
+	public void execute() throws Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -80,6 +75,11 @@ public class ImageUpgradeCompanyId implements UpgradeCompanyIdInTable {
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
 		}
+	}
+
+	@Override
+	public String getTableName() {
+		return "Image";
 	}
 
 	private static final long _DEFAULT_COMPANY_ID = 0;

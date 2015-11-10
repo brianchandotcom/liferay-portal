@@ -23,12 +23,7 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdUtil;
 public class AssetTagStatsUpgradeCompanyId implements UpgradeCompanyIdInTable {
 
 	@Override
-	public String getTableName() {
-		return "AssetTagStats";
-	}
-
-	@Override
-	public void upgradeProcess() throws Exception {
+	public void execute() throws Exception {
 		String select =
 			"select t.companyId, a.tagStatsId from AssetTagStats a, " +
 				"AssetTag t where a.tagId=t.tagId";
@@ -38,6 +33,11 @@ public class AssetTagStatsUpgradeCompanyId implements UpgradeCompanyIdInTable {
 
 		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
 			"AssetTagStats", select, update, "companyId", "tagStatsId");
+	}
+
+	@Override
+	public String getTableName() {
+		return "AssetTagStats";
 	}
 
 }

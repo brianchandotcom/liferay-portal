@@ -23,12 +23,7 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeCompanyIdUtil;
 public class DLSyncEventUpgradeCompanyId implements UpgradeCompanyIdInTable {
 
 	@Override
-	public String getTableName() {
-		return "DLSyncEvent";
-	}
-
-	@Override
-	public void upgradeProcess() throws Exception {
+	public void execute() throws Exception {
 
 		// DLFileEntries
 
@@ -60,6 +55,11 @@ public class DLSyncEventUpgradeCompanyId implements UpgradeCompanyIdInTable {
 
 		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
 			"DLSyncEvent", select, update, "companyId", "syncEventId");
+	}
+
+	@Override
+	public String getTableName() {
+		return "DLSyncEvent";
 	}
 
 }

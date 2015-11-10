@@ -24,12 +24,7 @@ public class AssetEntriesAssetTagsUpgradeCompanyId
 	implements UpgradeCompanyIdInTable {
 
 	@Override
-	public String getTableName() {
-		return "AssetEntries_AssetTags";
-	}
-
-	@Override
-	public void upgradeProcess() throws Exception {
+	public void execute() throws Exception {
 		String select =
 			"select t.companyId, a.entryId, a.tagId from " +
 				"AssetEntries_AssetTags a, AssetTag t where a.tagId=t.tagId";
@@ -41,6 +36,11 @@ public class AssetEntriesAssetTagsUpgradeCompanyId
 		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
 			"AssetEntries_AssetTags", select, update, "companyId", "entryId",
 			"tagId");
+	}
+
+	@Override
+	public String getTableName() {
+		return "AssetEntries_AssetTags";
 	}
 
 }

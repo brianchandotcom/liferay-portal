@@ -24,12 +24,7 @@ public class ShoppingItemFieldUpgradeCompanyId
 	implements UpgradeCompanyIdInTable {
 
 	@Override
-	public String getTableName() {
-		return "ShoppingItemField";
-	}
-
-	@Override
-	public void upgradeProcess() throws Exception {
+	public void execute() throws Exception {
 		String select =
 			"select si.companyId, sif.itemFieldId from ShoppingItem si, " +
 				"ShoppingItemField sif where si.itemId=sif.itemId";
@@ -39,6 +34,11 @@ public class ShoppingItemFieldUpgradeCompanyId
 
 		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
 			"ShoppingItemField", select, update, "companyId", "itemFieldId");
+	}
+
+	@Override
+	public String getTableName() {
+		return "ShoppingItemField";
 	}
 
 }

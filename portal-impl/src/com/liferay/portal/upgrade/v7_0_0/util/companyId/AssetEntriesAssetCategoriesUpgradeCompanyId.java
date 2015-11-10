@@ -24,12 +24,7 @@ public class AssetEntriesAssetCategoriesUpgradeCompanyId
 	implements UpgradeCompanyIdInTable {
 
 	@Override
-	public String getTableName() {
-		return "AssetEntries_AssetCategories";
-	}
-
-	@Override
-	public void upgradeProcess() throws Exception {
+	public void execute() throws Exception {
 		String select =
 			"select a.categoryId, c.companyId, a.entryId from " +
 				"AssetEntries_AssetCategories a, AssetCategory c where " +
@@ -42,6 +37,11 @@ public class AssetEntriesAssetCategoriesUpgradeCompanyId
 		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
 			"AssetEntries_AssetCategories", select, update, "companyId",
 			"categoryId", "entryId");
+	}
+
+	@Override
+	public String getTableName() {
+		return "AssetEntries_AssetCategories";
 	}
 
 }

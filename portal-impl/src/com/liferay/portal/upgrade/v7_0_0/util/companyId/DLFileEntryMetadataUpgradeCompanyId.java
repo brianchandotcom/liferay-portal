@@ -24,12 +24,7 @@ public class DLFileEntryMetadataUpgradeCompanyId
 	implements UpgradeCompanyIdInTable {
 
 	@Override
-	public String getTableName() {
-		return "DLFileEntryMetadata";
-	}
-
-	@Override
-	public void upgradeProcess() throws Exception {
+	public void execute() throws Exception {
 		String select =
 			"select dlfe.companyId, dlfem.fileEntryMetadataId from " +
 				"DLFileEntry dlfe, DLFileEntryMetadata dlfem " +
@@ -42,6 +37,11 @@ public class DLFileEntryMetadataUpgradeCompanyId
 		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
 			"DLFileEntryMetadata", select, update, "companyId",
 			"fileEntryMetadataId");
+	}
+
+	@Override
+	public String getTableName() {
+		return "DLFileEntryMetadata";
 	}
 
 }

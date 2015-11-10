@@ -24,12 +24,7 @@ public class DDMStructureLinkUpgradeCompanyId
 	implements UpgradeCompanyIdInTable {
 
 	@Override
-	public String getTableName() {
-		return "DDMStructureLink";
-	}
-
-	@Override
-	public void upgradeProcess() throws Exception {
+	public void execute() throws Exception {
 		String select =
 			"select ds.companyId, dsl.structureId from DDMStructure ds, " +
 				"DDMStructureLink dsl where ds.structureId=dsl.structureId";
@@ -39,6 +34,11 @@ public class DDMStructureLinkUpgradeCompanyId
 
 		UpgradeCompanyIdUtil.updateCompanyColumnOnTable(
 			"DDMStructureLink", select, update, "companyId", "structureId");
+	}
+
+	@Override
+	public String getTableName() {
+		return "DDMStructureLink";
 	}
 
 }

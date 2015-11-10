@@ -37,28 +37,15 @@ public class UpgradeTableBuilderPlugin implements Plugin<Project> {
 	@Override
 	public void apply(Project project) {
 		Configuration upgradeTableBuilderConfiguration =
-			addUpgradeTableBuilderConfiguration(project);
+			addConfigurationUpgradeTableBuilder(project);
 
-		addBuildUpgradeTableTask(project);
+		addTaskBuildUpgradeTable(project);
 
 		configureTasksBuildUpgradeTable(
 			project, upgradeTableBuilderConfiguration);
 	}
 
-	protected BuildUpgradeTableTask addBuildUpgradeTableTask(Project project) {
-		BuildUpgradeTableTask buildUpgradeTableTask = GradleUtil.addTask(
-			project, BUILD_UPGRADE_TABLE_TASK_NAME,
-			BuildUpgradeTableTask.class);
-
-		buildUpgradeTableTask.setBaseDir(project.getProjectDir());
-		buildUpgradeTableTask.setDescription(
-			"Runs Liferay Upgrade Table Builder to build upgrade tables.");
-		buildUpgradeTableTask.setGroup(BasePlugin.BUILD_GROUP);
-
-		return buildUpgradeTableTask;
-	}
-
-	protected Configuration addUpgradeTableBuilderConfiguration(
+	protected Configuration addConfigurationUpgradeTableBuilder(
 		final Project project) {
 
 		Configuration configuration = GradleUtil.addConfiguration(
@@ -80,6 +67,19 @@ public class UpgradeTableBuilderPlugin implements Plugin<Project> {
 			});
 
 		return configuration;
+	}
+
+	protected BuildUpgradeTableTask addTaskBuildUpgradeTable(Project project) {
+		BuildUpgradeTableTask buildUpgradeTableTask = GradleUtil.addTask(
+			project, BUILD_UPGRADE_TABLE_TASK_NAME,
+			BuildUpgradeTableTask.class);
+
+		buildUpgradeTableTask.setBaseDir(project.getProjectDir());
+		buildUpgradeTableTask.setDescription(
+			"Runs Liferay Upgrade Table Builder to build upgrade tables.");
+		buildUpgradeTableTask.setGroup(BasePlugin.BUILD_GROUP);
+
+		return buildUpgradeTableTask;
 	}
 
 	protected void addUpgradeTableBuilderDependencies(Project project) {

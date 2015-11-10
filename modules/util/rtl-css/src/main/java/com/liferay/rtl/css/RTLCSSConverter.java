@@ -290,10 +290,10 @@ public class RTLCSSConverter {
 
 	protected String reverse(String s) {
 		if (s.contains("right")) {
-			s = s.replace("right", "left");
+			return s.replace("right", "left");
 		}
 		else if (s.contains("left")) {
-			s = s.replace("left", "right");
+			return s.replace("left", "right");
 		}
 
 		return s;

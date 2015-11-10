@@ -398,13 +398,9 @@ public class RTLCSSConverterTest {
 				continue;
 			}
 
-			System.out.println(filePath + ":");
-
 			Assert.assertEquals(
 				formatCss(read(getRtlCustomFileName(filePath))),
 				formatCss(rtlCssConverter.process(read(filePath))));
-
-			System.out.println("Passed!");
 		}
 	}
 

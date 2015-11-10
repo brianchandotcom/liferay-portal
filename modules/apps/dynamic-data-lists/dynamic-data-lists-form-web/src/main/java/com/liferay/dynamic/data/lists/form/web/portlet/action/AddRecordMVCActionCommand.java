@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.lists.form.web.portlet.action;
 
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
+import com.liferay.dynamic.data.lists.form.web.util.DDLFormEmailNotificationSenderUtil;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
@@ -78,9 +79,18 @@ public class AddRecordMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDLRecord.class.getName(), actionRequest);
 
-		_ddlRecordService.addRecord(
+		DDLRecord ddlRecord = _ddlRecordService.addRecord(
 			groupId, recordSetId, DDLRecordConstants.DISPLAY_INDEX_DEFAULT,
 			ddmFormValues, serviceContext);
+
+		boolean sendEmailNotification = GetterUtil.getBoolean(
+			recordSet.getSettingsProperty(
+				"sendEmailNotification", StringPool.BLANK));
+
+		if (sendEmailNotification) {
+			DDLFormEmailNotificationSenderUtil.sendEmailNotification(
+				actionRequest, ddlRecord);
+		}
 
 		String redirectURL = GetterUtil.getString(
 			recordSet.getSettingsProperty("redirectURL", StringPool.BLANK));

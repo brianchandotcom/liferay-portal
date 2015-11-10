@@ -80,7 +80,7 @@ public class UpdateRecordSetSettingsMVCActionCommand
 		String redirectURL = ParamUtil.getString(actionRequest, "redirectURL");
 
 		settingsProperties.setProperty("redirectURL", redirectURL);
-		
+
 		boolean sendEmailNotification = ParamUtil.getBoolean(
 			actionRequest, "sendEmailNotification");
 

@@ -139,7 +139,7 @@ public class UpgradeCompanyIdUtil {
 
 			StringBuilder sb = new StringBuilder();
 
-			sb.append("Has not be posible to update the companyId of ");
+			sb.append("Has not been possible to update the companyId of ");
 			sb.append("the following rows in the table ");
 			sb.append(tableName);
 
@@ -160,13 +160,13 @@ public class UpgradeCompanyIdUtil {
 				sb.append("}");
 			}
 
-			if (_log.isInfoEnabled()) {
-				_log.info(sb);
+			if (_log.isWarnEnabled()) {
+				_log.warn(sb.toString());
 			}
 		}
 		catch (SQLException sqle) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(sqle.getMessage(), sqle);
+			if (_log.isErrorEnabled()) {
+				_log.error(sqle.getMessage(), sqle);
 			}
 		}
 		finally {

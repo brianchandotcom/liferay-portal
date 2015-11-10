@@ -146,6 +146,10 @@ public class ProductMenuDisplayContext {
 
 		Group mySiteGroup = getMySiteGroup();
 
+		if (mySiteGroup == null) {
+			return false;
+		}
+
 		return mySiteGroup.isShowSite(
 			_themeDisplay.getPermissionChecker(), privateLayout);
 	}

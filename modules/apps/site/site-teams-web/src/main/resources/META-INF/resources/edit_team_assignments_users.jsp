@@ -49,10 +49,6 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_team_assignments.
 		<portlet:param name="teamId" value="<%= String.valueOf(team.getTeamId()) %>" />
 	</portlet:renderURL>
 
-	<aui:form action="<%= searchURL %>" name="searchFm">
-		<liferay-ui:user-search-form />
-	</aui:form>
-
 	<%
 	UserSearchTerms searchTerms = (UserSearchTerms)userSearchContainer.getSearchTerms();
 
@@ -69,20 +65,11 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_team_assignments.
 	<liferay-ui:search-container-results>
 
 		<%
-		if (searchTerms.isAdvancedSearch()) {
-			total = UserLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getFirstName(), searchTerms.getMiddleName(), searchTerms.getLastName(), searchTerms.getScreenName(), searchTerms.getEmailAddress(), searchTerms.getStatus(), userParams, searchTerms.isAndOperator());
+		total = UserLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams);
 
-			userSearchContainer.setTotal(total);
+		userSearchContainer.setTotal(total);
 
-			results = UserLocalServiceUtil.search(company.getCompanyId(), searchTerms.getFirstName(), searchTerms.getMiddleName(), searchTerms.getLastName(), searchTerms.getScreenName(), searchTerms.getEmailAddress(), searchTerms.getStatus(), userParams, searchTerms.isAndOperator(), userSearchContainer.getStart(), userSearchContainer.getEnd(), userSearchContainer.getOrderByComparator());
-		}
-		else {
-			total = UserLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams);
-
-			userSearchContainer.setTotal(total);
-
-			results = UserLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams, userSearchContainer.getStart(), userSearchContainer.getEnd(), userSearchContainer.getOrderByComparator());
-		}
+		results = UserLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams, userSearchContainer.getStart(), userSearchContainer.getEnd(), userSearchContainer.getOrderByComparator());
 
 		userSearchContainer.setResults(results);
 		%>

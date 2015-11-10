@@ -26,7 +26,6 @@ import org.gradle.api.Project;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.tasks.JavaExec;
-import org.gradle.process.JavaExecSpec;
 
 /**
  * @author Andrea Di Giorgi
@@ -38,43 +37,17 @@ public class BuildWSDDTask extends JavaExec {
 	}
 
 	@Override
-	public JavaExecSpec args(Iterable<?> args) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public JavaExec args(Object... args) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public JavaExec classpath(Object... paths) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void exec() {
-		super.setArgs(getArgs());
+		setArgs(getCompleteArgs());
+
 		super.setClasspath(getClasspath());
 
 		super.exec();
-	}
-
-	@Override
-	public List<String> getArgs() {
-		List<String> args = new ArrayList<>();
-
-		args.add("wsdd.class.path=" + getBuilderClasspath());
-		args.add("wsdd.input.file=" + FileUtil.getAbsolutePath(getInputFile()));
-		args.add(
-			"wsdd.output.path=" +
-				FileUtil.getAbsolutePath(getOutputDir()) + "/");
-		args.add(
-			"wsdd.server.config.file=" +
-				FileUtil.getAbsolutePath(getServerConfigFile()));
-		args.add("wsdd.service.namespace=" + getServiceNamespace());
-
-		return args;
 	}
 
 	public String getBuilderClasspath() {
@@ -114,11 +87,6 @@ public class BuildWSDDTask extends JavaExec {
 		return _wsddBuilderArgs.getServiceNamespace();
 	}
 
-	@Override
-	public JavaExec setArgs(Iterable<?> applicationArgs) {
-		throw new UnsupportedOperationException();
-	}
-
 	public void setBuilderClasspath(String builderClasspath) {
 		_wsddBuilderArgs.setClassPath(builderClasspath);
 	}
@@ -142,6 +110,22 @@ public class BuildWSDDTask extends JavaExec {
 
 	public void setServiceNamespace(String serviceNamespace) {
 		_wsddBuilderArgs.setServiceNamespace(serviceNamespace);
+	}
+
+	protected List<String> getCompleteArgs() {
+		List<String> args = new ArrayList<>(getArgs());
+
+		args.add("wsdd.class.path=" + getBuilderClasspath());
+		args.add("wsdd.input.file=" + FileUtil.getAbsolutePath(getInputFile()));
+		args.add(
+			"wsdd.output.path=" +
+				FileUtil.getAbsolutePath(getOutputDir()) + "/");
+		args.add(
+			"wsdd.server.config.file=" +
+				FileUtil.getAbsolutePath(getServerConfigFile()));
+		args.add("wsdd.service.namespace=" + getServiceNamespace());
+
+		return args;
 	}
 
 	private final WSDDBuilderArgs _wsddBuilderArgs = new WSDDBuilderArgs();

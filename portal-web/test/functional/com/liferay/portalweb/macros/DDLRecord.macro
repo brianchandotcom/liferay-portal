@@ -671,6 +671,12 @@
 		<execute function="AssertTextEquals" locator1="DDLRecord#FIELD_2" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
 	</command>
 
+	<command name="viewTextFieldRepeated">
+		<execute function="AssertTextEquals" locator1="xpath=(//div[@data-fieldname='Text'][1]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)" value1="${ddlRecordFieldData1}" />
+		<execute function="AssertTextEquals" locator1="xpath=(//div[@data-fieldname='Text'][2]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)" value1="${ddlRecordFieldData2}" />
+		<execute function="AssertTextEquals" locator1="xpath=(//div[@data-fieldname='Text'][3]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)" value1="${ddlRecordFieldData3}" />
+	</command>
+
 	<command name="viewViaDDLDisplayPG">
 		<execute function="AssertTextEquals" locator1="Portlet#H2_HEADER" value1="${ddlListName}" />
 		<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_COLUMN_ONE_NAME" value1="${fieldFieldLabel}" />

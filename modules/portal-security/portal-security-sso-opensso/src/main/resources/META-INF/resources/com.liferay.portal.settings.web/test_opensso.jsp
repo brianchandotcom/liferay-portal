@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/com.liferay.portal.settings.web/init.jsp" %>
 
 <%
 String openSsoLoginURL = ParamUtil.getString(request, "openSsoLoginURL");

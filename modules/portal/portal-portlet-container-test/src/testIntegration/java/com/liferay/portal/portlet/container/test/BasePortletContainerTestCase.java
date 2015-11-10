@@ -57,7 +57,6 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
-import org.osgi.util.tracker.ServiceTracker;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 
@@ -83,10 +82,6 @@ public class BasePortletContainerTestCase {
 	@After
 	public void tearDown() throws Exception {
 		PermissionThreadLocal.setPermissionChecker(null);
-
-		if (serviceTracker != null) {
-			serviceTracker.close();
-		}
 
 		for (ServiceRegistration<?> serviceRegistration :
 				serviceRegistrations) {
@@ -246,9 +241,6 @@ public class BasePortletContainerTestCase {
 	protected ServiceRegistration<?> serviceRegistration;
 	protected List<ServiceRegistration<?>> serviceRegistrations =
 		new CopyOnWriteArrayList<>();
-	protected ServiceTracker
-		<com.liferay.portal.model.Portlet, com.liferay.portal.model.Portlet>
-			serviceTracker;
 	protected TestPortlet testPortlet;
 
 }

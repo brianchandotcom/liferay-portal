@@ -41,7 +41,10 @@ portletURL.setParameter("cur", String.valueOf(cur));
 String taglibOnClick = renderResponse.getNamespace() + "updateTeamUserGroups('" + portletURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
 %>
 
-<liferay-frontend:management-bar>
+<liferay-frontend:management-bar
+	checkBoxContainerId="userGroupsSearchContainer"
+	includeCheckBox="<%= true %>"
+>
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
@@ -63,6 +66,10 @@ String taglibOnClick = renderResponse.getNamespace() + "updateTeamUserGroups('" 
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
+
+	<liferay-frontend:management-bar-action-buttons>
+		<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-trash" id="deleteUserGroups" />
+	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
 <aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
@@ -86,6 +93,7 @@ String taglibOnClick = renderResponse.getNamespace() + "updateTeamUserGroups('" 
 
 	<liferay-ui:search-container
 		emptyResultsMessage="there-are-no-members.-you-can-add-a-member-by-clicking-the-button-on-the-top-of-this-box"
+		id="userGroups"
 		rowChecker="<%= rowChecker %>"
 		searchContainer="<%= new UserGroupSearch(renderRequest, portletURL) %>"
 	>
@@ -136,15 +144,18 @@ String taglibOnClick = renderResponse.getNamespace() + "updateTeamUserGroups('" 
 </aui:form>
 
 <aui:script>
-	function <portlet:namespace />updateTeamUserGroups(assignmentsRedirect) {
-		var Util = Liferay.Util;
+	var Util = Liferay.Util;
 
-		var form = AUI.$(document.<portlet:namespace />fm);
+	var form = $(document.<portlet:namespace />fm);
 
-		form.fm('assignmentsRedirect').val(assignmentsRedirect);
-		form.fm('addUserGroupIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-		form.fm('removeUserGroupIds').val(Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
+	$('#<portlet:namespace />deleteUserGroups').on(
+		'click',
+		function() {
+			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+				form.fm('removeUserGroupIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-		submitForm(form);
-	}
+				submitForm(form);
+			}
+		}
+	);
 </aui:script>

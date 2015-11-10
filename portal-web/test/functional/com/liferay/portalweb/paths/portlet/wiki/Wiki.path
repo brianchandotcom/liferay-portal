@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>BODY</td>
-	<td>//div[@class='wiki-body']/p</td>
+	<td>//div[@class='wiki-body']//p</td>
 	<td></td>
 </tr>
 <tr>

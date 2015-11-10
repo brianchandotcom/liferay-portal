@@ -875,7 +875,6 @@
 		</execute>
 
 		<execute macro="WikiPage#viewCustomADTSocialPG">
-			<var name="pageStaging" value="true" />
 			<var name="wikiPageContent" value="Test Wiki Content" />
 		</execute>
 	</command>

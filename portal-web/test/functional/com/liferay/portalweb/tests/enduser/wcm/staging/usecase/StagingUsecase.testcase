@@ -2552,10 +2552,17 @@
 
 		<execute macro="Page#viewDefaultLogoPG" />
 
+		<execute macro="Page#gotoContentCP">
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
 		<execute macro="Page#gotoPagesCP">
 			<var name="portletName" value="Site Pages" />
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
+
+		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="Page#changeLogoViaPageCP">
 			<var name="logoFile" value="Document_2.png" />
@@ -2574,6 +2581,13 @@
 			<var name="portletName" value="Site Pages" />
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="Staging#gotoPublishToLive" />
 

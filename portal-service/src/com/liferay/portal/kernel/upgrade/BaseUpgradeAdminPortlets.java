@@ -26,7 +26,7 @@ import java.sql.ResultSet;
  * @author Juan Fernández
  * @author Sergio González
  */
-public class BaseUpgradeAdminPortlets extends UpgradeProcess {
+public abstract class BaseUpgradeAdminPortlets extends UpgradeProcess {
 
 	protected void addResourcePermission(
 			long resourcePermissionId, long companyId, String name, int scope,

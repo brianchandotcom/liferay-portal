@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * @author Mate Thurzo
  */
-public class BaseUpgradeLastPublishDate extends UpgradeProcess {
+public abstract class BaseUpgradeLastPublishDate extends UpgradeProcess {
 
 	protected Date getLayoutSetLastPublishDate(long groupId) throws Exception {
 		PreparedStatement ps = null;

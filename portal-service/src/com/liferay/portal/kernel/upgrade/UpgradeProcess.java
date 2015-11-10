@@ -119,8 +119,7 @@ public abstract class UpgradeProcess
 		return false;
 	}
 
-	protected void doUpgrade() throws Exception {
-	}
+	protected abstract void doUpgrade() throws Exception;
 
 	protected boolean hasTable(String tableName) throws Exception {
 		if (doHasTable(StringUtil.toLowerCase(tableName)) ||

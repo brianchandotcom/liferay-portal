@@ -18,13 +18,6 @@
 
 <%
 String tabs1 = (String)request.getAttribute("edit_team_assignments.jsp-tabs1");
-String tabs2 = (String)request.getAttribute("edit_team_assignments.jsp-tabs2");
-
-int cur = (Integer)request.getAttribute("edit_team_assignments.jsp-cur");
-
-String redirect = (String)request.getAttribute("edit_team_assignments.jsp-redirect");
-
-Group group = (Group)request.getAttribute("edit_team_assignments.jsp-group");
 
 Team team = (Team)request.getAttribute("edit_team_assignments.jsp-team");
 
@@ -41,11 +34,7 @@ UserSearchTerms searchTerms = (UserSearchTerms)userSearchContainer.getSearchTerm
 LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
 userParams.put("inherit", Boolean.TRUE);
-userParams.put("usersGroups", group.getGroupId());
-
-if (tabs2.equals("current")) {
-	userParams.put("usersTeams", team.getTeamId());
-}
+userParams.put("usersTeams", team.getTeamId());
 
 int usersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams);
 
@@ -55,11 +44,7 @@ List<User> users = UserLocalServiceUtil.search(company.getCompanyId(), searchTer
 
 userSearchContainer.setResults(users);
 
-RowChecker rowChecker = new UserTeamChecker(renderResponse, team);
-
-portletURL.setParameter("cur", String.valueOf(cur));
-
-String taglibOnClick = renderResponse.getNamespace() + "updateTeamUsers('" + portletURL.toString() + "');";
+RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 %>
 
 <c:if test="<%= usersCount > 0 %>">
@@ -95,20 +80,15 @@ String taglibOnClick = renderResponse.getNamespace() + "updateTeamUsers('" + por
 	</liferay-frontend:management-bar>
 </c:if>
 
-<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
-
-<liferay-ui:tabs
-	names="current,available"
-	param="tabs2"
-	portletURL="<%= portletURL %>"
-/>
+<aui:button-row cssClass="text-center">
+	<aui:button cssClass="btn-lg btn-primary" id="addUsers" value="add-team-members" />
+</aui:button-row>
 
 <portlet:actionURL name="editTeamUsers" var="editTeamUsersURL" />
 
-<aui:form action="<%= editTeamUsersURL %>" method="post" name="fm">
+<aui:form action="<%= editTeamUsersURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
-	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="assignmentsRedirect" type="hidden" />
 	<aui:input name="teamId" type="hidden" value="<%= String.valueOf(team.getTeamId()) %>" />
 	<aui:input name="addUserIds" type="hidden" />
@@ -141,10 +121,46 @@ String taglibOnClick = renderResponse.getNamespace() + "updateTeamUsers('" + por
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script>
+<aui:script use="liferay-item-selector-dialog">
 	var Util = Liferay.Util;
 
 	var form = $(document.<portlet:namespace />fm);
+
+	<portlet:renderURL var="selectUserURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<portlet:param name="mvcPath" value="/select_users.jsp" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="teamId" value="<%= String.valueOf(team.getTeamId()) %>" />
+	</portlet:renderURL>
+
+	$('#<portlet:namespace />addUsers').on(
+		'click',
+		function(event) {
+			event.preventDefault();
+
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+				{
+					eventName: '<portlet:namespace />selectUser',
+					on: {
+						selectedItemChange: function(event) {
+							var selectedItem = event.newVal;
+
+							if (selectedItem) {
+								var form = AUI.$(document.<portlet:namespace />fm);
+
+								form.fm('addUserIds').val(selectedItem.value);
+
+								submitForm(form);
+							}
+						}
+					},
+					title: '<liferay-ui:message arguments="<%= team.getName() %>" key="add-new-user-to-x" />',
+					url: '<%= selectUserURL %>'
+				}
+			);
+
+			itemSelectorDialog.open();
+		}
+	);
 
 	$('#<portlet:namespace />deleteUsers').on(
 		'click',

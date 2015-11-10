@@ -17,35 +17,40 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = (String)request.getAttribute("edit_team_assignments.jsp-tabs1");
-String tabs2 = (String)request.getAttribute("edit_team_assignments.jsp-tabs2");
+String redirect = ParamUtil.getString(request, "redirect");
 
-int cur = (Integer)request.getAttribute("edit_team_assignments.jsp-cur");
-
-String redirect = (String)request.getAttribute("edit_team_assignments.jsp-redirect");
-
-Group group = (Group)request.getAttribute("edit_team_assignments.jsp-group");
-
-Team team = (Team)request.getAttribute("edit_team_assignments.jsp-team");
+String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectUser");
 
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 String orderByCol = ParamUtil.getString(request, "orderByCol", "first-name");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
-PortletURL portletURL = (PortletURL)request.getAttribute("edit_team_assignments.jsp-portletURL");
+long teamId = ParamUtil.getLong(request, "teamId");
 
-SearchContainer userSearchContainer = new UserSearch(renderRequest, portletURL);
+Team team = TeamLocalServiceUtil.fetchTeam(teamId);
+
+PortletURL portletURL = renderResponse.createRenderURL();
+
+portletURL.setParameter("mvcPath", "/select_users.jsp");
+portletURL.setParameter("redirect", redirect);
+portletURL.setParameter("eventName", eventName);
+portletURL.setParameter("teamId", String.valueOf(teamId));
+
+SearchContainer userSearchContainer = new UserSearch(renderRequest, PortletURLUtil.clone(portletURL, renderResponse));
 
 UserSearchTerms searchTerms = (UserSearchTerms)userSearchContainer.getSearchTerms();
 
 LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
 userParams.put("inherit", Boolean.TRUE);
-userParams.put("usersGroups", group.getGroupId());
 
-if (tabs2.equals("current")) {
-	userParams.put("usersTeams", team.getTeamId());
+Group group = GroupLocalServiceUtil.getGroup(team.getGroupId());
+
+if (group != null) {
+	group = StagingUtil.getLiveGroup(group.getGroupId());
 }
+
+userParams.put("usersGroups", group.getGroupId());
 
 int usersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams);
 
@@ -56,11 +61,15 @@ List<User> users = UserLocalServiceUtil.search(company.getCompanyId(), searchTer
 userSearchContainer.setResults(users);
 
 RowChecker rowChecker = new UserTeamChecker(renderResponse, team);
-
-portletURL.setParameter("cur", String.valueOf(cur));
-
-String taglibOnClick = renderResponse.getNamespace() + "updateTeamUsers('" + portletURL.toString() + "');";
 %>
+
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav-bar-search>
+		<aui:form action="<%= portletURL.toString() %>" name="searchFm">
+			<liferay-ui:input-search markupView="lexicon" />
+		</aui:form>
+	</aui:nav-bar-search>
+</aui:nav-bar>
 
 <c:if test="<%= usersCount > 0 %>">
 	<liferay-frontend:management-bar
@@ -88,39 +97,15 @@ String taglibOnClick = renderResponse.getNamespace() + "updateTeamUsers('" + por
 				selectedDisplayStyle="<%= displayStyle %>"
 			/>
 		</liferay-frontend:management-bar-buttons>
-
-		<liferay-frontend:management-bar-action-buttons>
-			<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-trash" id="deleteUsers" />
-		</liferay-frontend:management-bar-action-buttons>
 	</liferay-frontend:management-bar>
 </c:if>
 
-<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
-
-<liferay-ui:tabs
-	names="current,available"
-	param="tabs2"
-	portletURL="<%= portletURL %>"
-/>
-
-<portlet:actionURL name="editTeamUsers" var="editTeamUsersURL" />
-
-<aui:form action="<%= editTeamUsersURL %>" method="post" name="fm">
-	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
-	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="assignmentsRedirect" type="hidden" />
-	<aui:input name="teamId" type="hidden" value="<%= String.valueOf(team.getTeamId()) %>" />
-	<aui:input name="addUserIds" type="hidden" />
-	<aui:input name="removeUserIds" type="hidden" />
-
+<aui:form cssClass="container-fluid-1280" name="selectUserFm">
 	<liferay-ui:search-container
-		emptyResultsMessage="there-are-no-members.-you-can-add-a-member-by-clicking-the-button-on-the-top-of-this-box"
 		id="users"
 		rowChecker="<%= rowChecker %>"
 		searchContainer="<%= userSearchContainer %>"
 	>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.model.User"
 			cssClass="selectable"
@@ -131,7 +116,7 @@ String taglibOnClick = renderResponse.getNamespace() + "updateTeamUsers('" + por
 		>
 
 			<%
-			boolean showActions = true;
+			boolean showActions = false;
 			%>
 
 			<%@ include file="/user_columns.jspf" %>
@@ -142,18 +127,33 @@ String taglibOnClick = renderResponse.getNamespace() + "updateTeamUsers('" + por
 </aui:form>
 
 <aui:script>
-	var Util = Liferay.Util;
+	var A = AUI();
 
-	var form = $(document.<portlet:namespace />fm);
+	var <portlet:namespace />userIds = [];
 
-	$('#<portlet:namespace />deleteUsers').on(
-		'click',
-		function() {
-			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-				form.fm('removeUserIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+	$('input[name="<portlet:namespace />rowIds"]').on(
+		'change',
+		function(event) {
+			var target = event.target;
 
-				submitForm(form);
+			if (target.checked) {
+				<portlet:namespace />userIds.push(target.value);
 			}
+			else {
+				A.Array.removeItem(<portlet:namespace />userIds, target.value);
+			}
+
+			var event = {};
+
+			if (<portlet:namespace />userIds.length > 0) {
+				event = {
+					data: {
+						value: <portlet:namespace />userIds.join(',')
+					}
+				};
+			}
+
+			Liferay.Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', event);
 		}
 	);
 </aui:script>

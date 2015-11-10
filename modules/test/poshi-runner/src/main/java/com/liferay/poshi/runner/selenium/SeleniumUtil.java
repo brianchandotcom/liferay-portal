@@ -16,6 +16,8 @@ package com.liferay.poshi.runner.selenium;
 
 import com.liferay.poshi.runner.util.PropsValues;
 
+import org.openqa.selenium.WebDriver;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -48,32 +50,31 @@ public class SeleniumUtil extends PropsValues {
 			portalURL = "http://localhost:8180/console";
 		}
 
+		WebDriverUtil.startWebDriver();
+
+		WebDriver webDriver = WebDriverUtil.getWebDriver();
+
 		if (BROWSER_TYPE.equals("android")) {
-			_selenium = new AndroidMobileDriverImpl(portalURL);
+			_selenium = new AndroidMobileDriverImpl(portalURL, webDriver);
 		}
 		else if (BROWSER_TYPE.equals("androidchrome")) {
-			_selenium = new ChromeMobileDriverImpl(portalURL);
+			_selenium = new ChromeMobileDriverImpl(portalURL, webDriver);
 		}
 		else if (BROWSER_TYPE.equals("chrome")) {
-			System.setProperty(
-				"webdriver.chrome.driver",
-				SELENIUM_EXECUTABLE_DIR_NAME +
-					SELENIUM_CHROME_DRIVER_EXECUTABLE);
-
-			_selenium = new ChromeWebDriverImpl(portalURL);
+			_selenium = new ChromeWebDriverImpl(portalURL, webDriver);
 		}
 		else if (BROWSER_TYPE.equals("edge") &&
 				 !SELENIUM_REMOTE_DRIVER_ENABLED) {
 
-			_selenium = new EdgeWebDriverImpl(portalURL);
+			_selenium = new EdgeWebDriverImpl(portalURL, webDriver);
 		}
 		else if (BROWSER_TYPE.equals("edge") &&
 				 SELENIUM_REMOTE_DRIVER_ENABLED) {
 
-			_selenium = new EdgeRemoteWebDriverImpl(portalURL);
+			_selenium = new EdgeRemoteWebDriverImpl(portalURL, webDriver);
 		}
 		else if (BROWSER_TYPE.equals("firefox")) {
-			_selenium = new FirefoxWebDriverImpl(portalURL);
+			_selenium = new FirefoxWebDriverImpl(portalURL, webDriver);
 		}
 		else if (BROWSER_TYPE.equals("internetexplorer") &&
 				 !SELENIUM_REMOTE_DRIVER_ENABLED) {
@@ -82,18 +83,19 @@ public class SeleniumUtil extends PropsValues {
 				"webdriver.ie.driver",
 				SELENIUM_EXECUTABLE_DIR_NAME + SELENIUM_IE_DRIVER_EXECUTABLE);
 
-			_selenium = new InternetExplorerWebDriverImpl(portalURL);
+			_selenium = new InternetExplorerWebDriverImpl(portalURL, webDriver);
 		}
 		else if (BROWSER_TYPE.equals("internetexplorer") &&
 				 SELENIUM_REMOTE_DRIVER_ENABLED) {
 
-			_selenium = new InternetExplorerRemoteWebDriverImpl(portalURL);
+			_selenium = new InternetExplorerRemoteWebDriverImpl(
+				portalURL, webDriver);
 		}
 		else if (BROWSER_TYPE.equals("iossafari")) {
-			_selenium = new IOSMobileDriverImpl(portalURL);
+			_selenium = new IOSMobileDriverImpl(portalURL, webDriver);
 		}
 		else if (BROWSER_TYPE.equals("safari")) {
-			_selenium = new SafariWebDriverImpl(portalURL);
+			_selenium = new SafariWebDriverImpl(portalURL, webDriver);
 		}
 		else {
 			throw new RuntimeException("Invalid browser type " + BROWSER_TYPE);
@@ -103,6 +105,8 @@ public class SeleniumUtil extends PropsValues {
 	@SuppressWarnings("deprecation")
 	private void _stopSelenium() {
 		if (_selenium != null) {
+			WebDriverUtil.stopWebDriver();
+
 			_selenium.stop();
 
 			_selenium.stopLogger();

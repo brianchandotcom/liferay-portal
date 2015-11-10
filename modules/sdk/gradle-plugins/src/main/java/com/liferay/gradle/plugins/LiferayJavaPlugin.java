@@ -212,10 +212,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		Delete delete = (Delete)GradleUtil.getTask(
 			project, BasePlugin.CLEAN_TASK_NAME);
 
-		boolean cleanDeployed = GradleUtil.getProperty(
-			delete, CLEAN_DEPLOYED_PROPERTY_NAME, true);
-
-		if (!cleanDeployed) {
+		if (!isCleanDeployed(delete)) {
 			return;
 		}
 
@@ -2238,6 +2235,11 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	protected boolean isAddTestDefaultDependencies(Project project) {
 		return GradleUtil.getProperty(
 			project, _ADD_TEST_DEFAULT_DEPENDENCIES_PROPERTY_NAME, true);
+	}
+
+	protected boolean isCleanDeployed(Delete delete) {
+		return GradleUtil.getProperty(
+			delete, CLEAN_DEPLOYED_PROPERTY_NAME, true);
 	}
 
 	protected boolean isTestProject(Project project) {

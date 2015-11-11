@@ -15,8 +15,8 @@
 package com.liferay.announcements.web.portlet;
 
 import com.liferay.announcements.web.constants.AnnouncementsPortletKeys;
-import com.liferay.announcements.web.upgrade.AnnouncementsWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.model.Release;
 
 import javax.portlet.Portlet;
 
@@ -52,9 +52,10 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class AnnouncementsPortlet extends MVCPortlet {
 
-	@Reference(unbind = "-")
-	protected void setAnnouncementsWebUpgrade(
-		AnnouncementsWebUpgrade announcementsWebUpgrade) {
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.announcements.web)(release.schema.version=1.0.0))"
+	)
+	protected void setRelease(Release release) {
 	}
 
 }

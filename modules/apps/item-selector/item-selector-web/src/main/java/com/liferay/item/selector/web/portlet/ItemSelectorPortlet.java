@@ -16,10 +16,10 @@ package com.liferay.item.selector.web.portlet;
 
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorRendering;
-import com.liferay.item.selector.web.upgrade.ItemSelectorWebUpgrade;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.model.Release;
 
 import java.io.IOException;
 
@@ -79,9 +79,10 @@ public class ItemSelectorPortlet extends MVCPortlet {
 		_itemSelector = itemSelector;
 	}
 
-	@Reference(unbind = "-")
-	protected void setItemSelectorWebUpgrade(
-		ItemSelectorWebUpgrade itemSelectorWebUpgrade) {
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.item.selector.web)(release.schema.version=1.0.0))"
+	)
+	protected void setRelease(Release release) {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

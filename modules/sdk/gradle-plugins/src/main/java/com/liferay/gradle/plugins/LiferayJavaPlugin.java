@@ -181,7 +181,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		configureArtifacts(project);
 
-		configureTaskBuildWSDL(project);
 		configureTaskBuildXSD(project);
 		configureTaskConfigJSModules(project);
 		configureTaskTranspileJS(project);
@@ -1144,33 +1143,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			(File)null);
 
 		buildUpgradeTableTask.setUpgradeTableDir(file);
-	}
-
-	protected void configureTaskBuildWSDL(Project project) {
-		BuildWSDLTask buildWSDLTask = (BuildWSDLTask)GradleUtil.getTask(
-			project, WSDLBuilderPlugin.BUILD_WSDL_TASK_NAME);
-
-		configureTaskBuildWSDLDestinationDir(buildWSDLTask);
-		configureTaskBuildWSDLInputDir(buildWSDLTask);
-	}
-
-	protected void configureTaskBuildWSDLDestinationDir(
-		BuildWSDLTask buildWSDLTask) {
-
-		File destinationDir = buildWSDLTask.getDestinationDir();
-
-		if (!destinationDir.exists()) {
-			buildWSDLTask.setDestinationDir(
-				getLibDir(buildWSDLTask.getProject()));
-		}
-	}
-
-	protected void configureTaskBuildWSDLInputDir(BuildWSDLTask buildWSDLTask) {
-		File inputDir = buildWSDLTask.getInputDir();
-
-		if (!inputDir.exists()) {
-			buildWSDLTask.setInputDir("wsdl");
-		}
 	}
 
 	protected void configureTaskBuildXSD(Project project) {

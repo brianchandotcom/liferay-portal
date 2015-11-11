@@ -94,6 +94,7 @@ import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.Servlet;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -1096,24 +1097,6 @@ public class PortletTracker
 		BundleContext bundleContext, String contextName,
 		ClassLoader classLoader) {
 
-		Servlet servlet = null;
-
-		try {
-			Class<?> clazz = Class.forName(
-				"com.liferay.portal.servlet.jsp.compiler.JspServlet");
-
-			servlet = (Servlet)clazz.newInstance();
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"No JSP Servlet was deployed for WAB " + contextName +
-						" due to: " + e.getMessage());
-			}
-
-			return null;
-		}
-
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		Dictionary<String, Object> componentProperties =
@@ -1144,7 +1127,7 @@ public class PortletTracker
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN, "*.jsp");
 
 		return bundleContext.registerService(
-			Servlet.class, servlet, properties);
+			Servlet.class, new JspServletWrapper(), properties);
 	}
 
 	protected ServiceRegistration<Servlet> createPortletServlet(
@@ -1401,6 +1384,35 @@ public class PortletTracker
 		_serviceRegistrations = new ConcurrentHashMap<>();
 	private ServiceTracker<Portlet, com.liferay.portal.model.Portlet>
 		_serviceTracker;
+
+	private class JspServletWrapper extends HttpServlet {
+
+		@Override
+		public void destroy() {
+			_servlet.destroy();
+		}
+
+		@Override
+		public ServletConfig getServletConfig() {
+			return _servlet.getServletConfig();
+		}
+
+		@Override
+		public void init(ServletConfig config) throws ServletException {
+			_servlet.init(config);
+		}
+
+		@Override
+		public void service(ServletRequest request, ServletResponse response)
+			throws ServletException, IOException {
+
+			_servlet.service(request, response);
+		}
+
+		private final Servlet _servlet =
+			new com.liferay.portal.servlet.jsp.compiler.JspServlet();
+
+	}
 
 	private class PortletServletWrapper extends HttpServlet {
 

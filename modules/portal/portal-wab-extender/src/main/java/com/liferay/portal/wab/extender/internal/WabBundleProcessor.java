@@ -24,6 +24,8 @@ import com.liferay.portal.wab.extender.internal.definition.ServletDefinition;
 import com.liferay.portal.wab.extender.internal.definition.WebXMLDefinition;
 import com.liferay.portal.wab.extender.internal.definition.WebXMLDefinitionLoader;
 
+import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Enumeration;
@@ -37,12 +39,17 @@ import java.util.concurrent.ConcurrentSkipListSet;
 
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextAttributeListener;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
 import javax.servlet.ServletRequestAttributeListener;
 import javax.servlet.ServletRequestListener;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionListener;
 
@@ -206,23 +213,6 @@ public class WabBundleProcessor implements ServletContextListener {
 	}
 
 	protected ServiceRegistration<Servlet> createJspServlet() {
-		Servlet servlet = null;
-
-		try {
-			Class<?> clazz = Class.forName(
-				"com.liferay.portal.servlet.jsp.compiler.JspServlet");
-
-			servlet = (Servlet)clazz.newInstance();
-		}
-		catch (Exception e) {
-			_logger.log(
-				Logger.LOG_WARNING,
-				"No JSP Servlet was deployed for WAB " + _contextName +
-					" due to: " + e.getMessage());
-
-			return null;
-		}
-
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		for (Enumeration<String> keys = _properties.keys();
@@ -250,7 +240,7 @@ public class WabBundleProcessor implements ServletContextListener {
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN, "*.jsp");
 
 		return _bundleContext.registerService(
-			Servlet.class, servlet, properties);
+			Servlet.class, new JspServletWrapper(), properties);
 	}
 
 	protected void destroyContext() {
@@ -592,5 +582,34 @@ public class WabBundleProcessor implements ServletContextListener {
 	private WabServletContextHelper _wabServletContextHelper;
 	private WebXMLDefinition _webXMLDefinition;
 	private final WebXMLDefinitionLoader _webXMLDefinitionLoader;
+
+	private class JspServletWrapper extends HttpServlet {
+
+		@Override
+		public void destroy() {
+			_servlet.destroy();
+		}
+
+		@Override
+		public ServletConfig getServletConfig() {
+			return _servlet.getServletConfig();
+		}
+
+		@Override
+		public void init(ServletConfig config) throws ServletException {
+			_servlet.init(config);
+		}
+
+		@Override
+		public void service(ServletRequest request, ServletResponse response)
+			throws ServletException, IOException {
+
+			_servlet.service(request, response);
+		}
+
+		private final Servlet _servlet =
+			new com.liferay.portal.servlet.jsp.compiler.JspServlet();
+
+	}
 
 }

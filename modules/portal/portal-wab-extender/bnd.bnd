@@ -4,7 +4,6 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.portal.wab.extender.ws.axis
 Import-Package:\
-	com.liferay.portal.servlet.jsp.compiler;version='[1.0.0,2.0)',\
 	javax.servlet;version='[2.3.0,4.0.0)',\
 	javax.servlet.http;version='[2.3.0,4.0.0)',\
 	org.apache.axis;resolution:='optional',\

@@ -344,6 +344,9 @@ public class DLFolderFinderTest {
 
 		Assert.assertEquals(2, results.size());
 
+		boolean assertMountPointFolder = false;
+		boolean assertRegularFolder = false;
+
 		for (Object result : results) {
 			Assert.assertTrue(
 				String.valueOf(result.getClass()), result instanceof DLFolder);
@@ -352,11 +355,18 @@ public class DLFolderFinderTest {
 
 			if (dlFolder.isMountPoint()) {
 				Assert.assertEquals("Test Repository", dlFolder.getName());
+
+				assertMountPointFolder = true;
 			}
 			else {
 				Assert.assertEquals("Folder A", dlFolder.getName());
+
+				assertRegularFolder = true;
 			}
 		}
+
+		Assert.assertTrue(assertMountPointFolder);
+		Assert.assertTrue(assertRegularFolder);
 	}
 
 	protected FileEntry addFileEntry(

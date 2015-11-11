@@ -123,6 +123,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Raymond Augé
+ * @author Peter Fellwock
  */
 @Component(immediate = true, service = PortletTracker.class)
 public class PortletTracker
@@ -235,6 +236,8 @@ public class PortletTracker
 			portletCategory.separate(portletModel.getRootPortletId());
 		}
 
+		PortletContextBagPool.remove(bundlePortletApp.getServletContextName());
+
 		PortletBag portletBag = PortletBagPool.remove(
 			portletModel.getRootPortletId());
 
@@ -297,12 +300,6 @@ public class PortletTracker
 
 		collectJxPortletFeatures(serviceReference, portletModel);
 		collectLiferayFeatures(serviceReference, portletModel);
-
-		PortletContextBag portletContextBag = new PortletContextBag(
-			bundlePortletApp.getServletContextName());
-
-		PortletContextBagPool.put(
-			bundlePortletApp.getServletContextName(), portletContextBag);
 
 		PortletBagFactory portletBagFactory = new BundlePortletBagFactory(
 			portlet);
@@ -1046,6 +1043,12 @@ public class PortletTracker
 		serviceRegistrations.addServiceRegistration(
 			bundleContext.registerService(
 				ServletContextListener.class, bundlePortletApp, properties));
+
+		PortletContextBag portletContextBag = new PortletContextBag(
+			bundlePortletApp.getServletContextName());
+
+		PortletContextBagPool.put(
+			bundlePortletApp.getServletContextName(), portletContextBag);
 
 		return bundlePortletApp;
 	}

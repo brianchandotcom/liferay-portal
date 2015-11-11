@@ -49,11 +49,11 @@
 	</command>
 
 	<command name="configureSetupPG">
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-
 		<if>
 			<isset var="userToolNameList" />
 			<then>
+				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
 				<execute function="Click" locator1="WCDConfiguration#USER_TOOLS_SELECT_BUTTON" />
 
 				<execute function="SelectFrameTop" />

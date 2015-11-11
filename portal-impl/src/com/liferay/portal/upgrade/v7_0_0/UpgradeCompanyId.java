@@ -14,6 +14,10 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
+import java.io.IOException;
+
+import java.sql.SQLException;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -33,26 +37,57 @@ public class UpgradeCompanyId
 				"DLFileEntryMetadata", "DLFileEntry", "fileEntryId"),
 			new TableUpdater(
 				"DLFileEntryTypes_DLFolders", "DLFolder", "folderId"),
-			//new TableUpdater("DLSyncEvent", "", ""),
+			new DLSyncEventTableUpdater("DLSyncEvent", "", ""),
 			new TableUpdater("Groups_Orgs", "Group_", "groupId"),
 			new TableUpdater("Groups_Roles", "Group_", "groupId"),
 			new TableUpdater("Groups_UserGroups", "Group_", "groupId"),
-			//new TableUpdater("Image", "", ""),
+			new TableUpdater(
+				"Image", "imageId",
+				new String[][] {
+					{"DLFileEntry", "largeImageId"}, {"Company", "logoId"},
+					{"Layout", "iconImageId"},
+					{"LayoutRevision", "iconImageId"},
+					{"LayoutSetBranch", "logoId"}, {"Organization_", "logoId"},
+					{"User_", "portraitId"}, {"BlogsEntry", "smallImageId"},
+					{"JournalArticle", "smallImageId"},
+					{"DDMTemplate", "smallImageId"},
+					{"SCProductScreenshot", "thumbnailId"},
+					{"SCProductScreenshot", "fullImageId"}
+				}),
 			new TableUpdater("MBStatsUser", "Group_", "groupId"),
 			new TableUpdater("OrgGroupRole", "Organization_", "organizationId"),
 			new TableUpdater("OrgLabor", "Organization_", "organizationId"),
 			new TableUpdater(
 				"PasswordPolicyRel", "PasswordPolicy", "passwordPolicyId"),
 			new TableUpdater("PasswordTracker", "User_", "userId"),
-			//new TableUpdater("PortletPreferences", "Portlet", "portletId"),
-			//new TableUpdater("RatingsStats", "", ""),
-			//new TableUpdater("ResourceBlockPermission", "", ""),
+			new TableUpdater(
+				"PortletPreferences", "portletId",
+				new String[][] {{"Layout", "plid"}, {"Portlet", "portletId"}}),
+			new TableUpdater(
+				"RatingsStats", "classPK",
+				new String[][] {
+					{"BookmarksEntry", "entryId"},
+					{"BookmarksFolder", "folderId"},
+					{"BlogsEntry", "entryId"},
+					{"CalendarBooking", "calendarBookingId"},
+					{"DDLRecord", "recordId"},
+					{"DLFileEntry", "fileEntryId"},
+					{"DLFolder", "folderId"},
+					{"JournalArticle", "articleId"},
+					{"JournalFolder", "folderId"},
+					{"MBDiscussion", "discussionId"},
+					{"MBMessage", "messageId"},
+					{"WikiPage", "pageId"}
+				}),
+			new TableUpdater(
+				"ResourceBlockPermission", "ResourceBlock", "resourceBlockId"),
 			new TableUpdater(
 				"SCFrameworkVersi_SCProductVers", "SCFrameworkVersion",
 				"frameworkVersionId"),
-			new TableUpdater("SCLicense", "SCLicense", "licenseId"),
+			new SCLicenseTableUpdater("SCLicense", "", ""),
 			new TableUpdater(
-				"SCLicenses_SCProductEntries", "SCLicense", "licenseId"),
+				"SCLicenses_SCProductEntries", "SCProductEntry",
+				"productEntryId"),
 			new TableUpdater("TrashVersion", "TrashEntry", "entryId"),
 			new TableUpdater("UserGroupGroupRole", "UserGroup", "userGroupId"),
 			new TableUpdater("UserGroupRole", "UserGroup", "userGroupId"),
@@ -65,6 +100,66 @@ public class UpgradeCompanyId
 			new TableUpdater("Users_UserGroups", "User_", "userId"),
 			new TableUpdater("UserTrackerPath", "UserTracker", "userTrackerId")
 		};
+	}
+
+	protected class DLSyncEventTableUpdater extends TableUpdater {
+
+		public DLSyncEventTableUpdater(
+			String tableName, String foreignTableName,
+			String foreignColumnName) {
+
+			super(tableName, foreignTableName, foreignColumnName);
+		}
+
+		@Override
+		public void update() throws IOException, SQLException {
+
+			// DLFileEntries
+
+			String updateDLFileEntry =
+				"update DLSyncEvent " +
+					"set companyId = (select dlfe.companyId " +
+						"from DLFileEntry dlfe " +
+						"where DLSyncEvent.type_='file' and " +
+						"dlfe.fileEntryId = DLSyncEvent.typePK);";
+
+			runSQL(updateDLFileEntry);
+
+			// DLFolders
+
+			String updateDLFolder =
+				"update DLSyncEvent " +
+					"set companyId = (select dlf.companyId " +
+					"from DLFolder dlf " +
+					"where DLSyncEvent.type_='folder' and " +
+					"dlf.folderId = DLSyncEvent.typePK);";
+
+			runSQL(updateDLFolder);
+		}
+
+	}
+
+	protected class SCLicenseTableUpdater extends TableUpdater {
+
+		public SCLicenseTableUpdater(
+			String tableName, String foreignTableName,
+			String foreignColumnName) {
+
+			super(tableName, foreignTableName, foreignColumnName);
+		}
+
+		@Override
+		public void update() throws IOException, SQLException {
+			String updateDLFileEntry =
+				"update SCLicense " +
+					"set companyId = (select pe.companyId " +
+					"from SCLicenses_SCProductEntries lpe, SCProductEntry pe " +
+					"where SCLicense.licenseId=lpe.licenseId and " +
+					"lpe.productEntryId=pe.productEntryId);";
+
+			runSQL(updateDLFileEntry);
+		}
+
 	}
 
 }

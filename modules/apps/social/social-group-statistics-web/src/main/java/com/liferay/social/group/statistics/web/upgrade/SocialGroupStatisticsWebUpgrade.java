@@ -14,16 +14,10 @@
 
 package com.liferay.social.group.statistics.web.upgrade;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.service.ReleaseLocalService;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.social.group.statistics.web.upgrade.v1_0_0.UpgradePortletId;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -31,31 +25,18 @@ import org.osgi.service.component.annotations.Reference;
  * @author Iván Zaera
  */
 @Component(immediate = true, service = SocialGroupStatisticsWebUpgrade.class)
-public class SocialGroupStatisticsWebUpgrade {
+public class SocialGroupStatisticsWebUpgrade implements UpgradeStepRegistrator {
+
+	@Override
+	public void register(Registry registry) {
+		registry.register(
+			"com.liferay.social.group.statistics.web", "0.0.1", "1.0.0",
+			new UpgradePortletId());
+	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
-
-	@Reference(unbind = "-")
-	protected void setReleaseLocalService(
-		ReleaseLocalService releaseLocalService) {
-
-		_releaseLocalService = releaseLocalService;
-	}
-
-	@Activate
-	protected void upgrade() throws PortalException {
-		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
-
-		upgradeProcesses.add(new UpgradePortletId());
-
-		_releaseLocalService.updateRelease(
-			"com.liferay.social.group.statistics.web", upgradeProcesses, 1, 1,
-			false);
-	}
-
-	private ReleaseLocalService _releaseLocalService;
 
 }

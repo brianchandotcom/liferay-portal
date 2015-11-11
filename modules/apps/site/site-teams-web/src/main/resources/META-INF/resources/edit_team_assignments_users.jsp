@@ -34,6 +34,27 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
 PortletURL portletURL = (PortletURL)request.getAttribute("edit_team_assignments.jsp-portletURL");
 
+SearchContainer userSearchContainer = new UserSearch(renderRequest, portletURL);
+
+UserSearchTerms searchTerms = (UserSearchTerms)userSearchContainer.getSearchTerms();
+
+LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
+
+userParams.put("inherit", Boolean.TRUE);
+userParams.put("usersGroups", group.getGroupId());
+
+if (tabs2.equals("current")) {
+	userParams.put("usersTeams", team.getTeamId());
+}
+
+int usersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams);
+
+userSearchContainer.setTotal(usersCount);
+
+List<User> users = UserLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams, userSearchContainer.getStart(), userSearchContainer.getEnd(), userSearchContainer.getOrderByComparator());
+
+userSearchContainer.setResults(users);
+
 RowChecker rowChecker = new UserTeamChecker(renderResponse, team);
 
 portletURL.setParameter("cur", String.valueOf(cur));
@@ -41,36 +62,38 @@ portletURL.setParameter("cur", String.valueOf(cur));
 String taglibOnClick = renderResponse.getNamespace() + "updateTeamUsers('" + portletURL.toString() + "');";
 %>
 
-<liferay-frontend:management-bar
-	checkBoxContainerId="usersSearchContainer"
-	includeCheckBox="<%= true %>"
->
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= portletURL %>"
-		/>
+<c:if test="<%= usersCount > 0 %>">
+	<liferay-frontend:management-bar
+		checkBoxContainerId="usersSearchContainer"
+		includeCheckBox="<%= true %>"
+	>
+		<liferay-frontend:management-bar-filters>
+			<liferay-frontend:management-bar-navigation
+				navigationKeys='<%= new String[] {"all"} %>'
+				portletURL="<%= portletURL %>"
+			/>
 
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= orderByCol %>"
-			orderByType="<%= orderByType %>"
-			orderColumns='<%= new String[] {"first-name", "screen-name"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
-		/>
-	</liferay-frontend:management-bar-filters>
+			<liferay-frontend:management-bar-sort
+				orderByCol="<%= orderByCol %>"
+				orderByType="<%= orderByType %>"
+				orderColumns='<%= new String[] {"first-name", "screen-name"} %>'
+				portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+			/>
+		</liferay-frontend:management-bar-filters>
 
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
-			selectedDisplayStyle="<%= displayStyle %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-buttons>
+			<liferay-frontend:management-bar-display-buttons
+				displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
+				portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+				selectedDisplayStyle="<%= displayStyle %>"
+			/>
+		</liferay-frontend:management-bar-buttons>
 
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-trash" id="deleteUsers" />
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
+		<liferay-frontend:management-bar-action-buttons>
+			<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-trash" id="deleteUsers" />
+		</liferay-frontend:management-bar-action-buttons>
+	</liferay-frontend:management-bar>
+</c:if>
 
 <aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
 
@@ -95,36 +118,8 @@ String taglibOnClick = renderResponse.getNamespace() + "updateTeamUsers('" + por
 		emptyResultsMessage="there-are-no-members.-you-can-add-a-member-by-clicking-the-button-on-the-top-of-this-box"
 		id="users"
 		rowChecker="<%= rowChecker %>"
-		searchContainer="<%= new UserSearch(renderRequest, portletURL) %>"
-		var="userSearchContainer"
+		searchContainer="<%= userSearchContainer %>"
 	>
-
-		<%
-		UserSearchTerms searchTerms = (UserSearchTerms)userSearchContainer.getSearchTerms();
-
-		LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
-
-		userParams.put("inherit", Boolean.TRUE);
-		userParams.put("usersGroups", group.getGroupId());
-
-		if (tabs2.equals("current")) {
-			userParams.put("usersTeams", team.getTeamId());
-		}
-		%>
-
-		<liferay-ui:search-container-results>
-
-			<%
-			total = UserLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams);
-
-			userSearchContainer.setTotal(total);
-
-			results = UserLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams, userSearchContainer.getStart(), userSearchContainer.getEnd(), userSearchContainer.getOrderByComparator());
-
-			userSearchContainer.setResults(results);
-			%>
-
-		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.model.User"

@@ -211,6 +211,8 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		template.put("pages", pages);
 		template.put(
 			"portletNamespace", ddmFormRenderingContext.getPortletNamespace());
+
+		template.put("readOnly", ddmFormRenderingContext.isReadOnly());
 		template.put("templateNamespace", getTemplateNamespace(ddmFormLayout));
 
 		DDMFormValues ddmFormValues =

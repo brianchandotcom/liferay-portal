@@ -41,7 +41,19 @@ public class UpgradeCompanyId
 			new TableUpdater("Groups_Orgs", "Group_", "groupId"),
 			new TableUpdater("Groups_Roles", "Group_", "groupId"),
 			new TableUpdater("Groups_UserGroups", "Group_", "groupId"),
-			//new TableUpdater("Image", "", ""),
+			new TableUpdater(
+				"Image", "imageId",
+				new String[][] {
+					{"DLFileEntry", "largeImageId"}, {"Company", "logoId"},
+					{"Layout", "iconImageId"},
+					{"LayoutRevision", "iconImageId"},
+					{"LayoutSetBranch", "logoId"}, {"Organization_", "logoId"},
+					{"User_", "portraitId"}, {"BlogsEntry", "smallImageId"},
+					{"JournalArticle", "smallImageId"},
+					{"DDMTemplate", "smallImageId"},
+					{"SCProductScreenshot", "thumbnailId"},
+					{"SCProductScreenshot", "fullImageId"}
+				}),
 			new TableUpdater("MBStatsUser", "Group_", "groupId"),
 			new TableUpdater("OrgGroupRole", "Organization_", "organizationId"),
 			new TableUpdater("OrgLabor", "Organization_", "organizationId"),

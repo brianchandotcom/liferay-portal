@@ -14,6 +14,8 @@
 
 package com.liferay.gradle.plugins.wsdl.builder;
 
+import com.liferay.gradle.util.GradleUtil;
+
 import java.io.File;
 
 import java.util.HashMap;
@@ -32,15 +34,11 @@ import org.gradle.api.tasks.SkipWhenEmpty;
 public class BuildWSDLTask extends DefaultTask {
 
 	public File getDestinationDir() {
-		Project project = getProject();
-
-		return project.file(_destinationDir);
+		return GradleUtil.toFile(getProject(), _destinationDir);
 	}
 
 	public File getInputDir() {
-		Project project = getProject();
-
-		return project.file(_inputDir);
+		return GradleUtil.toFile(getProject(), _inputDir);
 	}
 
 	@InputFiles

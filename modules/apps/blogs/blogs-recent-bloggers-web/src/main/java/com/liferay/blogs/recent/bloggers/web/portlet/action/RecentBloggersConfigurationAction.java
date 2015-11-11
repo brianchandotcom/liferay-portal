@@ -44,7 +44,8 @@ public class RecentBloggersConfigurationAction
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.blogs.web)", unbind = "-"
+		target = "(osgi.web.symbolicname=com.liferay.blogs.recent.bloggers.web)",
+		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);

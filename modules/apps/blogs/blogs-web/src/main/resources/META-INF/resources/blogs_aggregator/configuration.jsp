@@ -43,72 +43,70 @@ if (organizationId > 0) {
 			<aui:option label="scope" />
 		</aui:select>
 
-		<c:if test="<%= organizationId > 0 %>">
-			<div class="form-group <%= selectionMethod.equals("users") ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />usersSelectionOptions">
-				<aui:input label="organization" name="organizationName" type="resource"  value="<%= organizationName %>" />
+		<div class="form-group <%= selectionMethod.equals("users") ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />usersSelectionOptions">
+			<aui:input label="organization" name="organizationName" type="resource"  value="<%= organizationName %>" />
 
-				<aui:button name="selectOrganizationButton" value="select" />
+			<aui:button name="selectOrganizationButton" value="select" />
 
-				<%
-				String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('organizationId', 'organizationName', this, '" + renderResponse.getNamespace() + "');";
-				%>
+			<%
+			String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('organizationId', 'organizationName', this, '" + renderResponse.getNamespace() + "');";
+			%>
 
-				<aui:button name="removeOrganizationButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
-			</div>
+			<aui:button name="removeOrganizationButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+		</div>
 
-			<aui:script>
-				AUI.$('#<portlet:namespace />selectOrganizationButton').on(
-					'click',
-					function(event) {
-						Liferay.Util.selectEntity(
-							{
-								dialog: {
-									constrain: true,
-									modal: true
-								},
-
-								<%
-								String portletId = PortletProviderUtil.getPortletId(User.class.getName(), PortletProvider.Action.VIEW);
-								%>
-
-								id: '<%= PortalUtil.getPortletNamespace(portletId) %>selectOrganization',
-
-								title: '<liferay-ui:message arguments="organization" key="select-x" />',
-
-								<%
-								PortletURL selectOrganizationURL = PortletProviderUtil.getPortletURL(request, Organization.class.getName(), PortletProvider.Action.BROWSE);
-
-								selectOrganizationURL.setParameter("tabs1", "organizations");
-								selectOrganizationURL.setWindowState(LiferayWindowState.POP_UP);
-								%>
-
-								uri: '<%= selectOrganizationURL.toString() %>'
+		<aui:script>
+			AUI.$('#<portlet:namespace />selectOrganizationButton').on(
+				'click',
+				function(event) {
+					Liferay.Util.selectEntity(
+						{
+							dialog: {
+								constrain: true,
+								modal: true
 							},
-							function(event) {
-								document.<portlet:namespace />fm.<portlet:namespace />organizationId.value = event.organizationid;
 
-								document.getElementById('<portlet:namespace />organizationName').value = event.name;
+							<%
+							String portletId = PortletProviderUtil.getPortletId(User.class.getName(), PortletProvider.Action.VIEW);
+							%>
 
-								Liferay.Util.toggleDisabled('#<portlet:namespace />removeOrganizationButton', false);
-							}
-						);
-					}
-				);
+							id: '<%= PortalUtil.getPortletNamespace(portletId) %>selectOrganization',
 
-				var selectionMethod = AUI.$('#<portlet:namespace />selectionMethod');
+							title: '<liferay-ui:message arguments="organization" key="select-x" />',
 
-				selectionMethod.on(
-					'change',
-					function() {
-						var usersSelectionOptions = AUI.$('#<portlet:namespace />usersSelectionOptions');
+							<%
+							PortletURL selectOrganizationURL = PortletProviderUtil.getPortletURL(request, Organization.class.getName(), PortletProvider.Action.BROWSE);
 
-						var showUsersSelectionOptions = !(selectionMethod.val() === 'users');
+							selectOrganizationURL.setParameter("tabs1", "organizations");
+							selectOrganizationURL.setWindowState(LiferayWindowState.POP_UP);
+							%>
 
-						usersSelectionOptions.toggleClass('hide', showUsersSelectionOptions);
-					}
-				);
-			</aui:script>
-		</c:if>
+							uri: '<%= selectOrganizationURL.toString() %>'
+						},
+						function(event) {
+							document.<portlet:namespace />fm.<portlet:namespace />organizationId.value = event.organizationid;
+
+							document.getElementById('<portlet:namespace />organizationName').value = event.name;
+
+							Liferay.Util.toggleDisabled('#<portlet:namespace />removeOrganizationButton', false);
+						}
+					);
+				}
+			);
+
+			var selectionMethod = AUI.$('#<portlet:namespace />selectionMethod');
+
+			selectionMethod.on(
+				'change',
+				function() {
+					var usersSelectionOptions = AUI.$('#<portlet:namespace />usersSelectionOptions');
+
+					var showUsersSelectionOptions = !(selectionMethod.val() === 'users');
+
+					usersSelectionOptions.toggleClass('hide', showUsersSelectionOptions);
+				}
+			);
+		</aui:script>
 
 		<aui:select name="preferences--displayStyle--" value="<%= displayStyle %>">
 			<aui:option label="body-and-image" />

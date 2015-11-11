@@ -69,27 +69,6 @@ public class StagedGroupStagedModelDataHandler
 	}
 
 	@Override
-	public void importMissingReference(
-		PortletDataContext portletDataContext, Element referenceElement) {
-
-		Map<Long, Long> groupIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				Group.class);
-
-		long groupId = GetterUtil.getLong(
-			referenceElement.attributeValue("group-id"));
-
-		if ((groupId == 0) || groupIds.containsKey(groupId)) {
-			return;
-		}
-
-		Group existingGroup = fetchExistingGroup(
-			portletDataContext, referenceElement);
-
-		groupIds.put(groupId, existingGroup.getGroupId());
-	}
-
-	@Override
 	public boolean validateReference(
 		PortletDataContext portletDataContext, Element referenceElement) {
 
@@ -119,6 +98,27 @@ public class StagedGroupStagedModelDataHandler
 	@Override
 	protected void doExportStagedModel(
 		PortletDataContext portletDataContext, StagedGroup stagedGroup) {
+	}
+
+	@Override
+	protected void doImportMissingReference(
+		PortletDataContext portletDataContext, Element referenceElement) {
+
+		Map<Long, Long> groupIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Group.class);
+
+		long groupId = GetterUtil.getLong(
+			referenceElement.attributeValue("group-id"));
+
+		if ((groupId == 0) || groupIds.containsKey(groupId)) {
+			return;
+		}
+
+		Group existingGroup = fetchExistingGroup(
+			portletDataContext, referenceElement);
+
+		groupIds.put(groupId, existingGroup.getGroupId());
 	}
 
 	@Override

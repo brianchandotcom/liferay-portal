@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TransientValue;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
@@ -292,23 +293,17 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			PortletDataContext portletDataContext, Element referenceElement)
 		throws PortletDataException {
 
-		importMissingGroupReference(portletDataContext, referenceElement);
+		try {
+			doImportMissingReference(portletDataContext, referenceElement);
+		}
+		catch (Exception e) {
+			if (!StringUtil.equalsIgnoreCase(
+					referenceElement.attributeValue("type"),
+					portletDataContext.REFERENCE_TYPE_DEPENDENCY_DISPOSABLE)) {
 
-		String uuid = referenceElement.attributeValue("uuid");
-
-		Map<Long, Long> groupIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				Group.class);
-
-		long groupId = GetterUtil.getLong(
-			referenceElement.attributeValue("group-id"));
-
-		groupId = MapUtil.getLong(groupIds, groupId);
-
-		long classPK = GetterUtil.getLong(
-			referenceElement.attributeValue("class-pk"));
-
-		importMissingReference(portletDataContext, uuid, groupId, classPK);
+				throw e;
+			}
+		}
 	}
 
 	@Override
@@ -452,6 +447,29 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	protected abstract void doExportStagedModel(
 			PortletDataContext portletDataContext, T stagedModel)
 		throws Exception;
+
+	protected void doImportMissingReference(
+			PortletDataContext portletDataContext, Element referenceElement)
+		throws PortletDataException {
+
+		importMissingGroupReference(portletDataContext, referenceElement);
+
+		String uuid = referenceElement.attributeValue("uuid");
+
+		Map<Long, Long> groupIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Group.class);
+
+		long groupId = GetterUtil.getLong(
+			referenceElement.attributeValue("group-id"));
+
+		groupId = MapUtil.getLong(groupIds, groupId);
+
+		long classPK = GetterUtil.getLong(
+			referenceElement.attributeValue("class-pk"));
+
+		importMissingReference(portletDataContext, uuid, groupId, classPK);
+	}
 
 	protected void doImportMissingReference(
 			PortletDataContext portletDataContext, String uuid, long groupId,

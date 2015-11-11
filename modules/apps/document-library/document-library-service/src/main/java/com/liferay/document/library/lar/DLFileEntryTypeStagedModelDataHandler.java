@@ -131,45 +131,6 @@ public class DLFileEntryTypeStagedModelDataHandler
 	}
 
 	@Override
-	public void importMissingReference(
-			PortletDataContext portletDataContext, Element referenceElement)
-		throws PortletDataException {
-
-		importMissingGroupReference(portletDataContext, referenceElement);
-
-		String uuid = referenceElement.attributeValue("uuid");
-
-		Map<Long, Long> groupIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				Group.class);
-
-		long groupId = GetterUtil.getLong(
-			referenceElement.attributeValue("group-id"));
-
-		groupId = MapUtil.getLong(groupIds, groupId);
-
-		String fileEntryTypeKey = referenceElement.attributeValue(
-			"file-entry-type-key");
-		boolean preloaded = GetterUtil.getBoolean(
-			referenceElement.attributeValue("preloaded"));
-
-		DLFileEntryType existingFileEntryType = null;
-
-		existingFileEntryType = fetchExistingFileEntryType(
-			uuid, groupId, fileEntryTypeKey, preloaded);
-
-		Map<Long, Long> fileEntryTypeIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				DLFileEntryType.class);
-
-		long fileEntryTypeId = GetterUtil.getLong(
-			referenceElement.attributeValue("class-pk"));
-
-		fileEntryTypeIds.put(
-			fileEntryTypeId, existingFileEntryType.getFileEntryTypeId());
-	}
-
-	@Override
 	public boolean validateReference(
 		PortletDataContext portletDataContext, Element referenceElement) {
 
@@ -237,6 +198,45 @@ public class DLFileEntryTypeStagedModelDataHandler
 		portletDataContext.addClassedModel(
 			fileEntryTypeElement,
 			ExportImportPathUtil.getModelPath(fileEntryType), fileEntryType);
+	}
+
+	@Override
+	protected void doImportMissingReference(
+			PortletDataContext portletDataContext, Element referenceElement)
+		throws PortletDataException {
+
+		importMissingGroupReference(portletDataContext, referenceElement);
+
+		String uuid = referenceElement.attributeValue("uuid");
+
+		Map<Long, Long> groupIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Group.class);
+
+		long groupId = GetterUtil.getLong(
+			referenceElement.attributeValue("group-id"));
+
+		groupId = MapUtil.getLong(groupIds, groupId);
+
+		String fileEntryTypeKey = referenceElement.attributeValue(
+			"file-entry-type-key");
+		boolean preloaded = GetterUtil.getBoolean(
+			referenceElement.attributeValue("preloaded"));
+
+		DLFileEntryType existingFileEntryType = null;
+
+		existingFileEntryType = fetchExistingFileEntryType(
+			uuid, groupId, fileEntryTypeKey, preloaded);
+
+		Map<Long, Long> fileEntryTypeIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				DLFileEntryType.class);
+
+		long fileEntryTypeId = GetterUtil.getLong(
+			referenceElement.attributeValue("class-pk"));
+
+		fileEntryTypeIds.put(
+			fileEntryTypeId, existingFileEntryType.getFileEntryTypeId());
 	}
 
 	@Override

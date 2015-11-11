@@ -152,50 +152,6 @@ public class LayoutStagedModelDataHandler
 	}
 
 	@Override
-	public void importMissingReference(
-			PortletDataContext portletDataContext, Element referenceElement)
-		throws PortletDataException {
-
-		importMissingGroupReference(portletDataContext, referenceElement);
-
-		String uuid = referenceElement.attributeValue("uuid");
-
-		Map<Long, Long> groupIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				Group.class);
-
-		long groupId = GetterUtil.getLong(
-			referenceElement.attributeValue("group-id"));
-
-		groupId = MapUtil.getLong(groupIds, groupId);
-
-		boolean privateLayout = GetterUtil.getBoolean(
-			referenceElement.attributeValue("private-layout"));
-
-		Layout existingLayout = null;
-
-		existingLayout = fetchMissingReference(uuid, groupId, privateLayout);
-
-		Map<Long, Layout> layouts =
-			(Map<Long, Layout>)portletDataContext.getNewPrimaryKeysMap(
-				Layout.class + ".layout");
-
-		long layoutId = GetterUtil.getLong(
-			referenceElement.attributeValue("layout-id"));
-
-		layouts.put(layoutId, existingLayout);
-
-		Map<Long, Long> layoutPlids =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				Layout.class);
-
-		long plid = GetterUtil.getLong(
-			referenceElement.attributeValue("class-pk"));
-
-		layoutPlids.put(plid, existingLayout.getPlid());
-	}
-
-	@Override
 	public boolean validateReference(
 		PortletDataContext portletDataContext, Element referenceElement) {
 
@@ -321,6 +277,50 @@ public class LayoutStagedModelDataHandler
 
 		portletDataContext.addClassedModel(
 			layoutElement, ExportImportPathUtil.getModelPath(layout), layout);
+	}
+
+	@Override
+	protected void doImportMissingReference(
+			PortletDataContext portletDataContext, Element referenceElement)
+		throws PortletDataException {
+
+		importMissingGroupReference(portletDataContext, referenceElement);
+
+		String uuid = referenceElement.attributeValue("uuid");
+
+		Map<Long, Long> groupIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Group.class);
+
+		long groupId = GetterUtil.getLong(
+			referenceElement.attributeValue("group-id"));
+
+		groupId = MapUtil.getLong(groupIds, groupId);
+
+		boolean privateLayout = GetterUtil.getBoolean(
+			referenceElement.attributeValue("private-layout"));
+
+		Layout existingLayout = null;
+
+		existingLayout = fetchMissingReference(uuid, groupId, privateLayout);
+
+		Map<Long, Layout> layouts =
+			(Map<Long, Layout>)portletDataContext.getNewPrimaryKeysMap(
+				Layout.class + ".layout");
+
+		long layoutId = GetterUtil.getLong(
+			referenceElement.attributeValue("layout-id"));
+
+		layouts.put(layoutId, existingLayout);
+
+		Map<Long, Long> layoutPlids =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Layout.class);
+
+		long plid = GetterUtil.getLong(
+			referenceElement.attributeValue("class-pk"));
+
+		layoutPlids.put(plid, existingLayout.getPlid());
 	}
 
 	@Override

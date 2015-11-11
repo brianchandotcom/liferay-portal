@@ -61,9 +61,25 @@ public class UpgradeCompanyId
 				"PasswordPolicyRel", "PasswordPolicy", "passwordPolicyId"),
 			new TableUpdater("PasswordTracker", "User_", "userId"),
 			new TableUpdater(
-				"PortletPreferences", "portletId",
-				new String[][] {{"Layout", "plid"}, {"Portlet", "portletId"}}),
-			//new TableUpdater("RatingsStats", "", ""),
+				"PortletPreferences", "portletId", 
+				new String[][] {
+					{"Layout", "plid"}, {"Portlet", "portletId"}
+				}),
+			new TableUpdater(
+				"RatingsStats", "classPK",
+				new String[][] {
+					{"BookmarksEntry", "entryId"}, 
+					{"BookmarksFolder", "folderId"},
+					{"BlogsEntry", "entryId"},
+					{"CalendarBooking", "calendarBookingId"},
+					{"DDLRecord", "recordId"},
+					{"DLFileEntry", "fileEntryId"},
+					{"DLFolder", "folderId"},
+					{"JournalArticle", "articleId"},
+					{"JournalFolder", "folderId"},
+					{"MBDiscussion", "discussionId"},
+					{"MBMessage", "messageId"},
+					{"WikiPage", "pageId"}}),
 			//new TableUpdater("ResourceBlockPermission", "", ""),
 			new TableUpdater(
 				"SCFrameworkVersi_SCProductVers", "SCFrameworkVersion",

@@ -150,11 +150,11 @@ else {
 			results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
 		}
 		else {
-			total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, false);
+			total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, true);
 
 			dlSearchContainer.setTotal(total);
 
-			results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, false, dlSearchContainer.getStart(), dlSearchContainer.getEnd(), dlSearchContainer.getOrderByComparator());
+			results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, true, dlSearchContainer.getStart(), dlSearchContainer.getEnd(), dlSearchContainer.getOrderByComparator());
 		}
 	}
 	else if (navigation.equals("mine") || navigation.equals("recent")) {
@@ -433,7 +433,7 @@ if ((folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (folderId != roo
 					<c:choose>
 						<c:when test='<%= displayStyle.equals("descriptive") %>'>
 							<liferay-ui:search-container-column-icon
-								icon="icon-folder-close"
+								icon='<%= curFolder.isMountPoint() ? "icon-hdd" : "icon-folder-close" %>'
 								toggleRowChecker="<%= true %>"
 							/>
 
@@ -462,7 +462,7 @@ if ((folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (folderId != roo
 								<liferay-frontend:horizontal-card
 									actionJsp="/document_library/folder_action.jsp"
 									actionJspServletContext="<%= application %>"
-									icon="icon-folder-close-alt"
+									icon='<%= curFolder.isMountPoint() ? "icon-hdd" : "icon-folder-close-alt" %>'
 									imageCSSClass="icon-monospaced"
 									resultRow="<%= row %>"
 									rowChecker="<%= entriesChecker %>"

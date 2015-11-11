@@ -39,6 +39,9 @@ import com.liferay.portal.service.persistence.PasswordPolicyFinder;
 import com.liferay.portal.service.persistence.PasswordPolicyPersistence;
 import com.liferay.portal.service.persistence.PasswordPolicyRelPersistence;
 import com.liferay.portal.service.persistence.PasswordTrackerPersistence;
+import com.liferay.portal.service.persistence.RecentLayoutBranchPersistence;
+import com.liferay.portal.service.persistence.RecentLayoutRevisionPersistence;
+import com.liferay.portal.service.persistence.RecentLayoutSetBranchPersistence;
 import com.liferay.portal.service.persistence.RoleFinder;
 import com.liferay.portal.service.persistence.RolePersistence;
 import com.liferay.portal.service.persistence.SubscriptionPersistence;
@@ -845,6 +848,120 @@ public abstract class UserServiceBaseImpl extends BaseServiceImpl
 	public void setPasswordTrackerPersistence(
 		PasswordTrackerPersistence passwordTrackerPersistence) {
 		this.passwordTrackerPersistence = passwordTrackerPersistence;
+	}
+
+	/**
+	 * Returns the recent layout branch local service.
+	 *
+	 * @return the recent layout branch local service
+	 */
+	public com.liferay.portal.service.RecentLayoutBranchLocalService getRecentLayoutBranchLocalService() {
+		return recentLayoutBranchLocalService;
+	}
+
+	/**
+	 * Sets the recent layout branch local service.
+	 *
+	 * @param recentLayoutBranchLocalService the recent layout branch local service
+	 */
+	public void setRecentLayoutBranchLocalService(
+		com.liferay.portal.service.RecentLayoutBranchLocalService recentLayoutBranchLocalService) {
+		this.recentLayoutBranchLocalService = recentLayoutBranchLocalService;
+	}
+
+	/**
+	 * Returns the recent layout branch persistence.
+	 *
+	 * @return the recent layout branch persistence
+	 */
+	public RecentLayoutBranchPersistence getRecentLayoutBranchPersistence() {
+		return recentLayoutBranchPersistence;
+	}
+
+	/**
+	 * Sets the recent layout branch persistence.
+	 *
+	 * @param recentLayoutBranchPersistence the recent layout branch persistence
+	 */
+	public void setRecentLayoutBranchPersistence(
+		RecentLayoutBranchPersistence recentLayoutBranchPersistence) {
+		this.recentLayoutBranchPersistence = recentLayoutBranchPersistence;
+	}
+
+	/**
+	 * Returns the recent layout revision local service.
+	 *
+	 * @return the recent layout revision local service
+	 */
+	public com.liferay.portal.service.RecentLayoutRevisionLocalService getRecentLayoutRevisionLocalService() {
+		return recentLayoutRevisionLocalService;
+	}
+
+	/**
+	 * Sets the recent layout revision local service.
+	 *
+	 * @param recentLayoutRevisionLocalService the recent layout revision local service
+	 */
+	public void setRecentLayoutRevisionLocalService(
+		com.liferay.portal.service.RecentLayoutRevisionLocalService recentLayoutRevisionLocalService) {
+		this.recentLayoutRevisionLocalService = recentLayoutRevisionLocalService;
+	}
+
+	/**
+	 * Returns the recent layout revision persistence.
+	 *
+	 * @return the recent layout revision persistence
+	 */
+	public RecentLayoutRevisionPersistence getRecentLayoutRevisionPersistence() {
+		return recentLayoutRevisionPersistence;
+	}
+
+	/**
+	 * Sets the recent layout revision persistence.
+	 *
+	 * @param recentLayoutRevisionPersistence the recent layout revision persistence
+	 */
+	public void setRecentLayoutRevisionPersistence(
+		RecentLayoutRevisionPersistence recentLayoutRevisionPersistence) {
+		this.recentLayoutRevisionPersistence = recentLayoutRevisionPersistence;
+	}
+
+	/**
+	 * Returns the recent layout set branch local service.
+	 *
+	 * @return the recent layout set branch local service
+	 */
+	public com.liferay.portal.service.RecentLayoutSetBranchLocalService getRecentLayoutSetBranchLocalService() {
+		return recentLayoutSetBranchLocalService;
+	}
+
+	/**
+	 * Sets the recent layout set branch local service.
+	 *
+	 * @param recentLayoutSetBranchLocalService the recent layout set branch local service
+	 */
+	public void setRecentLayoutSetBranchLocalService(
+		com.liferay.portal.service.RecentLayoutSetBranchLocalService recentLayoutSetBranchLocalService) {
+		this.recentLayoutSetBranchLocalService = recentLayoutSetBranchLocalService;
+	}
+
+	/**
+	 * Returns the recent layout set branch persistence.
+	 *
+	 * @return the recent layout set branch persistence
+	 */
+	public RecentLayoutSetBranchPersistence getRecentLayoutSetBranchPersistence() {
+		return recentLayoutSetBranchPersistence;
+	}
+
+	/**
+	 * Sets the recent layout set branch persistence.
+	 *
+	 * @param recentLayoutSetBranchPersistence the recent layout set branch persistence
+	 */
+	public void setRecentLayoutSetBranchPersistence(
+		RecentLayoutSetBranchPersistence recentLayoutSetBranchPersistence) {
+		this.recentLayoutSetBranchPersistence = recentLayoutSetBranchPersistence;
 	}
 
 	/**
@@ -2235,6 +2352,18 @@ public abstract class UserServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.portal.service.PasswordTrackerLocalService passwordTrackerLocalService;
 	@BeanReference(type = PasswordTrackerPersistence.class)
 	protected PasswordTrackerPersistence passwordTrackerPersistence;
+	@BeanReference(type = com.liferay.portal.service.RecentLayoutBranchLocalService.class)
+	protected com.liferay.portal.service.RecentLayoutBranchLocalService recentLayoutBranchLocalService;
+	@BeanReference(type = RecentLayoutBranchPersistence.class)
+	protected RecentLayoutBranchPersistence recentLayoutBranchPersistence;
+	@BeanReference(type = com.liferay.portal.service.RecentLayoutRevisionLocalService.class)
+	protected com.liferay.portal.service.RecentLayoutRevisionLocalService recentLayoutRevisionLocalService;
+	@BeanReference(type = RecentLayoutRevisionPersistence.class)
+	protected RecentLayoutRevisionPersistence recentLayoutRevisionPersistence;
+	@BeanReference(type = com.liferay.portal.service.RecentLayoutSetBranchLocalService.class)
+	protected com.liferay.portal.service.RecentLayoutSetBranchLocalService recentLayoutSetBranchLocalService;
+	@BeanReference(type = RecentLayoutSetBranchPersistence.class)
+	protected RecentLayoutSetBranchPersistence recentLayoutSetBranchPersistence;
 	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)
 	protected com.liferay.portal.service.ResourceLocalService resourceLocalService;
 	@BeanReference(type = com.liferay.portal.service.RoleLocalService.class)

@@ -48,15 +48,9 @@ public class BuildWSDLTask extends DefaultTask {
 	public FileCollection getInputFiles() {
 		Project project = getProject();
 
-		File wsdlDir = getInputDir();
-
-		if (wsdlDir == null) {
-			return project.files();
-		}
-
 		Map<String, Object> args = new HashMap<>();
 
-		args.put("dir", wsdlDir);
+		args.put("dir", getInputDir());
 		args.put("include", "*.wsdl");
 
 		return project.fileTree(args);
@@ -79,8 +73,8 @@ public class BuildWSDLTask extends DefaultTask {
 		_inputDir = inputDir;
 	}
 
-	private Object _destinationDir = "lib";
+	private Object _destinationDir;
 	private boolean _includeSource = true;
-	private Object _inputDir = "wsdl";
+	private Object _inputDir;
 
 }

@@ -113,7 +113,9 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 			project, BUILD_WSDL_TASK_NAME, BuildWSDLTask.class);
 
 		buildWSDLTask.setDescription("Generates WSDL client stubs.");
+		buildWSDLTask.setDestinationDir("lib");
 		buildWSDLTask.setGroup(BasePlugin.BUILD_GROUP);
+		buildWSDLTask.setInputDir("wsdl");
 
 		return buildWSDLTask;
 	}

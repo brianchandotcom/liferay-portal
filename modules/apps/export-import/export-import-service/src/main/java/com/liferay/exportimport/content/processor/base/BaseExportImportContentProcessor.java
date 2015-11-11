@@ -345,7 +345,16 @@ public class BaseExportImportContentProcessor
 					_log.debug(e, e);
 				}
 				else if (_log.isWarnEnabled()) {
-					_log.warn(e.getMessage());
+					StringBundler exceptionSB = new StringBundler(6);
+
+					exceptionSB.append("Unable to process file entry ");
+					exceptionSB.append(fileEntry.getFileEntryId());
+					exceptionSB.append(" for ");
+					exceptionSB.append(stagedModel.getModelClassName());
+					exceptionSB.append(" with primary key ");
+					exceptionSB.append(stagedModel.getPrimaryKeyObj());
+
+					_log.warn(exceptionSB.toString());
 				}
 			}
 
@@ -770,8 +779,28 @@ public class BaseExportImportContentProcessor
 				continue;
 			}
 
-			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, stagedModel, DLFileEntry.class, classPK);
+			try {
+				StagedModelDataHandlerUtil.importReferenceStagedModel(
+					portletDataContext, stagedModel, DLFileEntry.class,
+					classPK);
+			}
+			catch (Exception e) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(e, e);
+				}
+				else if (_log.isWarnEnabled()) {
+					StringBundler sb = new StringBundler(6);
+
+					sb.append("Unable to process file entry ");
+					sb.append(classPK);
+					sb.append(" for ");
+					sb.append(stagedModel.getModelClassName());
+					sb.append(" with primary key ");
+					sb.append(stagedModel.getPrimaryKeyObj());
+
+					_log.warn(sb.toString());
+				}
+			}
 
 			Map<Long, Long> dlFileEntryIds =
 				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(

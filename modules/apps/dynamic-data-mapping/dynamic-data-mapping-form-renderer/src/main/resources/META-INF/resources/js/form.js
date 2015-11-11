@@ -73,6 +73,16 @@ AUI.add(
 						return container.ancestor('form', true);
 					},
 
+					getSubmitButton: function() {
+						var instance = this;
+
+						var container = instance.get('container');
+
+						var formNode = instance.getFormNode();
+
+						return (formNode || container).one('[type="submit"]');
+					},
+
 					submit: function() {
 						var instance = this;
 

@@ -720,6 +720,7 @@
 
 		<reference package-path="com.liferay.portal" entity="LayoutRevision" />
 		<reference package-path="com.liferay.portal" entity="LayoutSetBranch" />
+		<reference package-path="com.liferay.portal" entity="RecentLayoutBranch" />
 		<reference package-path="com.liferay.portal" entity="User" />
 	</entity>
 	<entity name="LayoutFriendlyURL" uuid="true" local-service="true" remote-service="false">
@@ -929,6 +930,7 @@
 		<reference package-path="com.liferay.portal" entity="LayoutSet" />
 		<reference package-path="com.liferay.portal" entity="LayoutSetBranch" />
 		<reference package-path="com.liferay.portal" entity="PortletPreferences" />
+		<reference package-path="com.liferay.portal" entity="RecentLayoutRevision" />
 		<reference package-path="com.liferay.portal" entity="Resource" />
 		<reference package-path="com.liferay.portal" entity="User" />
 		<reference package-path="com.liferay.portal" entity="WorkflowInstanceLink" />
@@ -1052,6 +1054,7 @@
 		<reference package-path="com.liferay.portal" entity="LayoutBranch" />
 		<reference package-path="com.liferay.portal" entity="LayoutRevision" />
 		<reference package-path="com.liferay.portal" entity="LayoutSet" />
+		<reference package-path="com.liferay.portal" entity="RecentLayoutSetBranch" />
 		<reference package-path="com.liferay.portal" entity="Resource" />
 		<reference package-path="com.liferay.portal" entity="User" />
 	</entity>
@@ -1742,6 +1745,118 @@
 
 		<reference package-path="com.liferay.portal" entity="Portlet" />
 		<reference package-path="com.liferay.portal" entity="PortletItem" />
+	</entity>
+	<entity name="RecentLayoutBranch" local-service="true" remote-service="false" uuid="false">
+
+		<!-- PK fields -->
+
+		<column name="recentLayoutBranchId" type="long" primary="true" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="layoutSetBranchId" type="long" />
+		<column name="plid" type="long" />
+		<column name="layoutBranchId" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="UserId" return-type="Collection">
+			<finder-column name="userId" />
+		</finder>
+		<finder name="LayoutBranchId" return-type="Collection">
+			<finder-column name="layoutBranchId" />
+		</finder>
+		<finder name="U_L_P" return-type="RecentLayout" unique="true">
+			<finder-column name="userId" />
+			<finder-column name="layoutSetBranchId" />
+			<finder-column name="plid" />
+		</finder>
+	</entity>
+	<entity name="RecentLayoutRevision" local-service="true" remote-service="false" uuid="false">
+
+		<!-- PK fields -->
+
+		<column name="recentLayoutRevisionId" type="long" primary="true" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="layoutSetBranchId" type="long" />
+		<column name="plid" type="long" />
+		<column name="layoutRevisionId" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="UserId" return-type="Collection">
+			<finder-column name="userId" />
+		</finder>
+		<finder name="LayoutRevisionId" return-type="Collection">
+			<finder-column name="layoutRevisionId" />
+		</finder>
+		<finder name="U_L_P" return-type="RecentLayout" unique="true">
+			<finder-column name="userId" />
+			<finder-column name="layoutSetBranchId" />
+			<finder-column name="plid" />
+		</finder>
+	</entity>
+	<entity name="RecentLayoutSetBranch" local-service="true" remote-service="false" uuid="false">
+
+		<!-- PK fields -->
+
+		<column name="recentLayoutSetBranchId" type="long" primary="true" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="layoutSetId" type="long" />
+		<column name="layoutSetBranchId" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="UserId" return-type="Collection">
+			<finder-column name="userId" />
+		</finder>
+		<finder name="LayoutSetBranchId" return-type="Collection">
+			<finder-column name="layoutSetBranchId" />
+		</finder>
+		<finder name="U_L" return-type="RecentLayoutSet" unique="true">
+			<finder-column name="userId" />
+			<finder-column name="layoutSetId" />
+		</finder>
 	</entity>
 	<entity name="Region" local-service="false" remote-service="true">
 
@@ -2587,6 +2702,9 @@
 		<reference package-path="com.liferay.portal" entity="PasswordPolicy" />
 		<reference package-path="com.liferay.portal" entity="PasswordPolicyRel" />
 		<reference package-path="com.liferay.portal" entity="PasswordTracker" />
+		<reference package-path="com.liferay.portal" entity="RecentLayoutBranch" />
+		<reference package-path="com.liferay.portal" entity="RecentLayoutRevision" />
+		<reference package-path="com.liferay.portal" entity="RecentLayoutSetBranch" />
 		<reference package-path="com.liferay.portal" entity="Resource" />
 		<reference package-path="com.liferay.portal" entity="Role" />
 		<reference package-path="com.liferay.portal" entity="Subscription" />

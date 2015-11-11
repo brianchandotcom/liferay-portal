@@ -516,6 +516,7 @@
 					'liferay-management-bar': {
 						path: 'management_bar.js',
 						requires: [
+							'aui-component',
 							'liferay-portlet-base'
 						]
 					},

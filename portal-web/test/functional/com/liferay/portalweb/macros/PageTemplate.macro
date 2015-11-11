@@ -3,6 +3,7 @@
 		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${pageTemplateName}" />
+		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="This is a page template description" />
 
 		<if>
 			<equals arg1="${pageTemplateActive}" arg2="No" />
@@ -18,6 +19,27 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
 		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_ACTIVE" value1="${pageTemplateActive}" />
+	</command>
+
+	<command name="deactivateAndActivate">
+		<var name="key_pageTemplateName" value="${pageTemplateName}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
+
+		<execute function="Click" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_ACTIONS" />
+
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+
+		<if>
+			<isset var="pageTemplateStatus" />
+			<then>
+				<execute function="Click" locator1="PageTemplates#ACTIVE_TOGGLE_SWITCH" />
+			</then>
+		</if>
+
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="deleteCP">
@@ -54,6 +76,26 @@
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 		<execute function="AssertTextEquals#assertPartialText" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName} Edit" />
 		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_ACTIVE" value1="${pageTemplateActive}" />
+	</command>
+
+	<command name="editDescription">
+		<var name="key_pageTemplateName" value="${pageTemplateName}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
+
+		<var name="key_pageTemplateDescription" value="${pageTemplateDescription}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_DESCRITPION" value1="${pageTemplateDescription}" />
+
+		<execute function="Click" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_ACTIONS" />
+
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+
+		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="This is a page template description edit" />
+
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="gotoPageTemplateViaEdit">
@@ -129,6 +171,16 @@
 		</if>
 	</command>
 
+	<command name="viewDescription">
+		<var name="key_pageTemplateName" value="${pageTemplateName}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
+
+		<var name="key_pageTemplateDescription" value="${pageTemplateDescription}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_DESCRITPION" value1="${pageTemplateDescription}" />
+	</command>
+
 	<command name="viewPG">
 		<var name="key_pageTemplateName" value="${pageTemplateName}" />
 
@@ -138,5 +190,12 @@
 
 		<execute function="AssertTextEquals" locator1="Home#SITE_NAME" value1="${pageTemplateName}" />
 		<execute function="AssertTextEquals" locator1="Home#PAGE_TEMPLATE" value1="${pageTemplateName}" />
+	</command>
+
+	<command name="viewStatus">
+		<var name="key_pageTemplateName" value="${pageTemplateName}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
+		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_ACTIVE" value1="${pageTemplateStatus}" />
 	</command>
 </definition>

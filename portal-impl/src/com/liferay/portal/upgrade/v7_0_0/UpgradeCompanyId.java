@@ -14,6 +14,10 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
+import java.io.IOException;
+
+import java.sql.SQLException;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -33,7 +37,7 @@ public class UpgradeCompanyId
 				"DLFileEntryMetadata", "DLFileEntry", "fileEntryId"),
 			new TableUpdater(
 				"DLFileEntryTypes_DLFolders", "DLFolder", "folderId"),
-			//new TableUpdater("DLSyncEvent", "", ""),
+			new DLSyncEventTableUpdater("DLSyncEvent", "", ""),
 			new TableUpdater("Groups_Orgs", "Group_", "groupId"),
 			new TableUpdater("Groups_Roles", "Group_", "groupId"),
 			new TableUpdater("Groups_UserGroups", "Group_", "groupId"),
@@ -65,6 +69,43 @@ public class UpgradeCompanyId
 			new TableUpdater("Users_UserGroups", "User_", "userId"),
 			new TableUpdater("UserTrackerPath", "UserTracker", "userTrackerId")
 		};
+	}
+
+	protected class DLSyncEventTableUpdater extends TableUpdater {
+
+		public DLSyncEventTableUpdater(
+			String tableName, String foreignTableName,
+			String foreignColumnName) {
+
+			super(tableName, foreignTableName, foreignColumnName);
+		}
+
+		@Override
+		public void update() throws IOException, SQLException {
+
+			// DLFileEntries
+
+			String updateDLFileEntry =
+				"update DLSyncEvent " +
+					"set companyId = (select dlfe.companyId " +
+						"from DLFileEntry dlfe " +
+						"where DLSyncEvent.type_='file' and " +
+						"dlfe.fileEntryId = DLSyncEvent.typePK);";
+
+			runSQL(updateDLFileEntry);
+
+			// DLFolders
+
+			String updateDLFolder =
+				"update DLSyncEvent " +
+					"set companyId = (select dlf.companyId " +
+					"from DLFolder dlf " +
+					"where DLSyncEvent.type_='folder' and " +
+					"dlf.folderId = DLSyncEvent.typePK);";
+
+			runSQL(updateDLFolder);
+		}
+
 	}
 
 }

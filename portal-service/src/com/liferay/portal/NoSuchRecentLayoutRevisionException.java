@@ -16,8 +16,6 @@ package com.liferay.portal;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.NoSuchModelException;
-
 /**
  * @author Brian Wing Shun Chan
  */

@@ -16,28 +16,54 @@ package com.liferay.portal.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.model.LayoutSetBranch;
+import com.liferay.portal.model.RecentLayoutSetBranch;
+import com.liferay.portal.model.User;
 import com.liferay.portal.service.base.RecentLayoutSetBranchLocalServiceBaseImpl;
 
 /**
- * The implementation of the recent layout set branch local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.portal.service.RecentLayoutSetBranchLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
  * @author Brian Wing Shun Chan
- * @see RecentLayoutSetBranchLocalServiceBaseImpl
- * @see com.liferay.portal.service.RecentLayoutSetBranchLocalServiceUtil
+ * @author Preston Crary
  */
 @ProviderType
 public class RecentLayoutSetBranchLocalServiceImpl
 	extends RecentLayoutSetBranchLocalServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.portal.service.RecentLayoutSetBranchLocalServiceUtil} to access the recent layout set branch local service.
-	 */
+
+	@Override
+	public RecentLayoutSetBranch addRecentLayoutSetBranch(
+		long companyId, long groupId, long userId, long layoutSetId,
+		long layoutSetBranchId) {
+
+		long recentLayoutSetBranchId = counterLocalService.increment();
+
+		RecentLayoutSetBranch recentLayoutSetBranch =
+			recentLayoutSetBranchPersistence.create(recentLayoutSetBranchId);
+
+		recentLayoutSetBranch.setCompanyId(companyId);
+		recentLayoutSetBranch.setGroupId(groupId);
+		recentLayoutSetBranch.setUserId(userId);
+		recentLayoutSetBranch.setLayoutSetId(layoutSetId);
+		recentLayoutSetBranch.setLayoutSetBranchId(layoutSetBranchId);
+
+		return recentLayoutSetBranchPersistence.update(recentLayoutSetBranch);
+	}
+
+	@Override
+	public void deleteRecentLayoutSetBranches(LayoutSetBranch layoutSetBranch) {
+		recentLayoutSetBranchPersistence.removeByLayoutSetBranchId(
+			layoutSetBranch.getLayoutSetBranchId());
+	}
+
+	@Override
+	public void deleteRecentLayoutSetBranches(User user) {
+		recentLayoutSetBranchPersistence.removeByUserId(user.getUserId());
+	}
+
+	@Override
+	public RecentLayoutSetBranch fetchRecentLayoutSetBranch(
+		long userId, long layoutSetId) {
+
+		return recentLayoutSetBranchPersistence.fetchByU_L(userId, layoutSetId);
+	}
+
 }

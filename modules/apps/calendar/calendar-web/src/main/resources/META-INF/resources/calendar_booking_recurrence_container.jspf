@@ -336,6 +336,9 @@ if (recurrence != null) {
 			if (!checked) {
 				summaryNode.empty();
 			}
+			else {
+				window.<portlet:namespace />updateSummaries();
+			}
 
 			<portlet:namespace />openRecurrenceDialog(checked);
 		}

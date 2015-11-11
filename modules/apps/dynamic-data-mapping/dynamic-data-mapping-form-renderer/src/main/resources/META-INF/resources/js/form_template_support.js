@@ -44,7 +44,8 @@ AUI.add(
 
 				return {
 					pages: normalizedLayout.pages,
-					readOnly: instance.get('readOnly')
+					readOnly: instance.get('readOnly'),
+					strings: instance.get('strings')
 				};
 			},
 

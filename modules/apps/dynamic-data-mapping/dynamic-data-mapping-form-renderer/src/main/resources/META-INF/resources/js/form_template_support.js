@@ -17,6 +17,10 @@ AUI.add(
 				value: themeDisplay.getLanguageId()
 			},
 
+			readOnly: {
+				value: false
+			},
+
 			templateNamespace: {
 				value: 'ddm.paginated_form'
 			}
@@ -39,7 +43,8 @@ AUI.add(
 				var normalizedLayout = instance._normalizeLayout(layout);
 
 				return {
-					pages: normalizedLayout.pages
+					pages: normalizedLayout.pages,
+					readOnly: instance.get('readOnly')
 				};
 			},
 

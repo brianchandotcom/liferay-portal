@@ -45,7 +45,9 @@ AUI.add(
 
 						var formNode = instance.getFormNode();
 
-						if (formNode) {
+						var readOnly = instance.get('readOnly');
+
+						if (formNode && !readOnly) {
 							instance._eventHandlers.push(
 								formNode.on('submit', A.bind('_onDOMSubmitForm', instance)),
 								Liferay.on('submitForm', instance._onLiferaySubmitForm, instance)

@@ -14,8 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.type.validation;
 
-import com.liferay.dynamic.data.mapping.registry.BaseDDMFormFieldRenderer;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldRenderer;
+import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldRenderer;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldRenderer;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResource;
 

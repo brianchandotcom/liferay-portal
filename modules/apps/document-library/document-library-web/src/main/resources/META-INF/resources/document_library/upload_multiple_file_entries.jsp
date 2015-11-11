@@ -17,7 +17,7 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-String backURL = ParamUtil.getString(request, "backURL");
+String redirect = ParamUtil.getString(request, "redirect");
 
 long repositoryId = ParamUtil.getLong(request, "repositoryId");
 
@@ -33,7 +33,7 @@ long folderId = ParamUtil.getLong(request, "folderId");
 
 <div <%= portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
 	<liferay-ui:header
-		backURL="<%= backURL %>"
+		backURL="<%= redirect %>"
 		title='<%= portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY) ? "add-multiple-media" : "add-multiple-documents" %>'
 	/>
 

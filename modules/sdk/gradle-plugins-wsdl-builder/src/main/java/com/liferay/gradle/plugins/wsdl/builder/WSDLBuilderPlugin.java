@@ -45,6 +45,8 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
+		GradleUtil.applyPlugin(project, JavaPlugin.class);
+
 		addConfigurationWSDLBuilder(project);
 
 		addTaskBuildWSDL(project);

@@ -602,7 +602,7 @@ public class WabBundleProcessor implements ServletContextListener {
 
 		@Override
 		public void service(ServletRequest request, ServletResponse response)
-			throws ServletException, IOException {
+			throws IOException, ServletException {
 
 			_servlet.service(request, response);
 		}

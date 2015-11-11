@@ -1404,7 +1404,7 @@ public class PortletTracker
 
 		@Override
 		public void service(ServletRequest request, ServletResponse response)
-			throws ServletException, IOException {
+			throws IOException, ServletException {
 
 			_servlet.service(request, response);
 		}

@@ -19,9 +19,9 @@ import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.model.JournalFeedConstants;
-import com.liferay.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.journal.service.JournalContentSearchLocalServiceUtil;
-import com.liferay.journal.service.JournalFeedLocalServiceUtil;
+import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.service.JournalContentSearchLocalService;
+import com.liferay.journal.service.JournalFeedLocalService;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.comparator.ArticleDisplayDateComparator;
 import com.liferay.journal.util.comparator.ArticleModifiedDateComparator;
@@ -49,14 +49,14 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.service.ImageLocalServiceUtil;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.ImageLocalService;
+import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 import com.liferay.portlet.documentlibrary.util.ImageProcessorUtil;
 import com.liferay.util.RSSUtil;
 
@@ -135,7 +135,7 @@ public class JournalRSSUtil {
 			obc = new ArticleDisplayDateComparator(orderByAsc);
 		}
 
-		return JournalArticleLocalServiceUtil.search(
+		return _journalArticleLocalService.search(
 			companyId, groupId, folderIds,
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT, articleId, version,
 			title, description, content, ddmStructureKey, ddmTemplateKey,
@@ -213,12 +213,11 @@ public class JournalRSSUtil {
 
 			try {
 				if (Validator.isNotNull(uuid)) {
-					fileEntry =
-						DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
-							uuid, groupId);
+					fileEntry = _dlAppLocalService.getFileEntryByUuidAndGroupId(
+						uuid, groupId);
 				}
 				else {
-					fileEntry = DLAppLocalServiceUtil.getFileEntry(
+					fileEntry = _dlAppLocalService.getFileEntry(
 						groupId, folderId, title);
 				}
 			}
@@ -235,7 +234,7 @@ public class JournalRSSUtil {
 				long fileEntryId = GetterUtil.getLong(
 					parameters.get("fileEntryId")[0]);
 
-				fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
+				fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
@@ -250,7 +249,7 @@ public class JournalRSSUtil {
 				String uuid = parameters.get("uuid")[0];
 				long groupId = GetterUtil.getLong(parameters.get("groupId")[0]);
 
-				fileEntry = DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+				fileEntry = _dlAppLocalService.getFileEntryByUuidAndGroupId(
 					uuid, groupId);
 			}
 			catch (Exception e) {
@@ -333,7 +332,7 @@ public class JournalRSSUtil {
 					imageId = GetterUtil.getLong(parameters.get("i_id")[0]);
 				}
 
-				image = ImageLocalServiceUtil.getImage(imageId);
+				image = _imageLocalService.getImage(imageId);
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
@@ -360,10 +359,10 @@ public class JournalRSSUtil {
 		String feedId = ParamUtil.getString(resourceRequest, "feedId");
 
 		if (id > 0) {
-			feed = JournalFeedLocalServiceUtil.getFeed(id);
+			feed = _journalFeedLocalService.getFeed(id);
 		}
 		else {
-			feed = JournalFeedLocalServiceUtil.getFeed(groupId, feedId);
+			feed = _journalFeedLocalService.getFeed(groupId, feedId);
 		}
 
 		String languageId = LanguageUtil.getLanguageId(resourceRequest);
@@ -374,7 +373,7 @@ public class JournalRSSUtil {
 		Layout layout = null;
 
 		if (plid > 0) {
-			layout = LayoutLocalServiceUtil.fetchLayout(plid);
+			layout = _layoutLocalService.fetchLayout(plid);
 		}
 
 		if (layout == null) {
@@ -491,14 +490,14 @@ public class JournalRSSUtil {
 		throws Exception {
 
 		List<Long> hitLayoutIds =
-			JournalContentSearchLocalServiceUtil.getLayoutIds(
+			_journalContentSearchLocalService.getLayoutIds(
 				layout.getGroupId(), layout.isPrivateLayout(),
 				article.getArticleId());
 
 		if (!hitLayoutIds.isEmpty()) {
 			Long hitLayoutId = hitLayoutIds.get(0);
 
-			Layout hitLayout = LayoutLocalServiceUtil.getLayout(
+			Layout hitLayout = _layoutLocalService.getLayout(
 				layout.getGroupId(), layout.isPrivateLayout(),
 				hitLayoutId.longValue());
 
@@ -665,8 +664,46 @@ public class JournalRSSUtil {
 	}
 
 	@Reference
+	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
+		_dlAppLocalService = dlAppLocalService;
+	}
+
+	@Reference
+	protected void setImageLocalService(ImageLocalService imageLocalService) {
+		_imageLocalService = imageLocalService;
+	}
+
+	@Reference
+	protected void setJournalArticleLocalService(
+		JournalArticleLocalService journalArticleLocalService) {
+
+		_journalArticleLocalService = journalArticleLocalService;
+	}
+
+	@Reference
 	protected void setJournalContent(JournalContent journalContent) {
 		_journalContent = journalContent;
+	}
+
+	@Reference
+	protected void setJournalContentSearchLocalService(
+		JournalContentSearchLocalService journalContentSearchLocalService) {
+
+		_journalContentSearchLocalService = journalContentSearchLocalService;
+	}
+
+	@Reference
+	protected void setJournalFeedLocalService(
+		JournalFeedLocalService journalFeedLocalService) {
+
+		_journalFeedLocalService = journalFeedLocalService;
+	}
+
+	@Reference
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
 	}
 
 	private static final String _XML_REQUUEST =
@@ -675,6 +712,12 @@ public class JournalRSSUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(JournalRSSUtil.class);
 
+	private DLAppLocalService _dlAppLocalService;
+	private ImageLocalService _imageLocalService;
+	private JournalArticleLocalService _journalArticleLocalService;
 	private JournalContent _journalContent;
+	private JournalContentSearchLocalService _journalContentSearchLocalService;
+	private JournalFeedLocalService _journalFeedLocalService;
+	private LayoutLocalService _layoutLocalService;
 
 }

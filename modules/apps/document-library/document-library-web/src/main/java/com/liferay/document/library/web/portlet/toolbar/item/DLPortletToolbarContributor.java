@@ -115,16 +115,6 @@ public class DLPortletToolbarContributor implements PortletToolbarContributor {
 		List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
 		PortletRequest portletRequest) {
 
-		long folderId = _getFolderId(folder);
-
-		if (!containsPermission(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), folderId,
-				ActionKeys.ADD_DOCUMENT)) {
-
-			return;
-		}
-
 		List<DLFileEntryType> fileEntryTypes = getFileEntryTypes(
 			themeDisplay.getScopeGroupId(), folder);
 
@@ -508,14 +498,6 @@ public class DLPortletToolbarContributor implements PortletToolbarContributor {
 		PortletRequest portletRequest) {
 
 		long folderId = _getFolderId(folder);
-
-		if (!containsPermission(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), folderId,
-				ActionKeys.ADD_DOCUMENT)) {
-
-			return;
-		}
 
 		URLMenuItem urlMenuItem = new URLMenuItem();
 

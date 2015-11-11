@@ -32,7 +32,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSystem">
-			<var name="portlet" value="Configuration Admin" />
+			<var name="portlet" value="System Settings" />
 		</execute>
 
 		<execute macro="XSLContent#configureConfigurationAdminXSL" />

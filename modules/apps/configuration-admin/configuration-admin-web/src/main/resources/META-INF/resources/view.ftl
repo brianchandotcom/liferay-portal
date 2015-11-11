@@ -29,6 +29,12 @@
 
 <#assign configurationModelIterator = Request["configurationModelIterator"] />
 
+<@aui["nav-bar"] cssClass="collapse-basic-search" markupView="lexicon">
+	<@aui["nav"] cssClass="navbar-nav">
+		<@aui["nav-item"] cssClass="active" label="settings" />
+	</@>
+</@>
+
 <div class="container-fluid-1280">
 	<@liferay_ui["search-container"]
 		emptyResultsMessage="no-configurations-were-found"

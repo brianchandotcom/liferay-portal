@@ -11,7 +11,7 @@
 							path: 'checkin.js',
 							requires: [
 								'liferay-document-library',
-								'liferay-util-window',
+								'liferay-util-window'
 							]
 						},
 						'document-library-upload': {

@@ -21,7 +21,7 @@ AUI.add(
 
 				saveButton.on(
 					'click',
-					function (event) {
+					function(event) {
 						onSave(
 							event,
 							A.Array.map(
@@ -38,14 +38,14 @@ AUI.add(
 
 				cancelButton.on(
 					'click',
-					function (event) {
+					function(event) {
 						versionDetailsDialog.destroy();
 					}
 				);
 
 				versionDetailsDialog.render();
 			}
-		}
+		};
 
 		Liferay.Portlet.DocumentLibrary.Checkin = DocumentLibraryCheckin;
 	},

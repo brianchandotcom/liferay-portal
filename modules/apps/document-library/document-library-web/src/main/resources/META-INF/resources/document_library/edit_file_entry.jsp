@@ -590,11 +590,11 @@ if (portletTitleBasedNavigation) {
 				'<%= UnicodeLanguageUtil.get(request, "describe-your-changes") %>',
 				['<portlet:namespace />versionDetailsMajorVersion', '<portlet:namespace />versionDetailsChangeLog'],
 				function(event, nodes) {
-					var majorVersionNode = nodes[0];
 					var changeLogNode = nodes[1];
+					var majorVersionNode = nodes[0];
 
-					form.fm('majorVersion').val(majorVersionNode.attr('checked'));
 					form.fm('changeLog').val(changeLogNode.val());
+					form.fm('majorVersion').val(majorVersionNode.attr('checked'));
 
 					submitForm(form);
 				}

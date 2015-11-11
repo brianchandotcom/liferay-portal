@@ -88,8 +88,8 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 	public static final String FIND_BY_USERS_ORGS =
 		UserFinder.class.getName() + ".findByUsersOrgs";
 
-	public static final String FIND_BY_USERS_ORGSITES =
-		UserFinder.class.getName() + ".findByUsersOrgSites";
+	public static final String FIND_BY_USERS_ORGS_GROUP =
+		UserFinder.class.getName() + ".findByUsersOrgsGroup";
 
 	public static final String FIND_BY_USERS_USER_GROUPS =
 		UserFinder.class.getName() + ".findByUsersUserGroups";
@@ -215,11 +215,11 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 			}
 
 			sb.append(StringPool.OPEN_PARENTHESIS);
-			sb.append(CustomSQLUtil.get(FIND_BY_USERS_ORGSITES));
+			sb.append(CustomSQLUtil.get(FIND_BY_USERS_ORGS_GROUP));
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 
 			if (sybase) {
-				sb.append(" USERS_ORG_SITES");
+				sb.append(" USERS_ORGS_GROUP");
 			}
 
 			sb.append(" UNION ALL ");

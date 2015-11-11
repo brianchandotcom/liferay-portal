@@ -2802,7 +2802,6 @@ should follow these steps:
 2.  Call `SchedulerEngineHelper.register(MessageListener, SchedulerEntry)` to
     register your `SchedulerEventMessageListener`.
 
-
 #### Why was this change made?
 
 The deleted methods provided facilities that aren't compatible with using

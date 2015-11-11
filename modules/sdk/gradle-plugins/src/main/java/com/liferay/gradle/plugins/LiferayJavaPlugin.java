@@ -43,8 +43,6 @@ import com.liferay.gradle.plugins.tld.formatter.TLDFormatterPlugin;
 import com.liferay.gradle.plugins.upgrade.table.builder.BuildUpgradeTableTask;
 import com.liferay.gradle.plugins.whip.WhipPlugin;
 import com.liferay.gradle.plugins.whip.WhipTaskExtension;
-import com.liferay.gradle.plugins.wsdd.builder.BuildWSDDTask;
-import com.liferay.gradle.plugins.wsdd.builder.WSDDBuilderPlugin;
 import com.liferay.gradle.plugins.wsdl.builder.BuildWSDLTask;
 import com.liferay.gradle.plugins.wsdl.builder.WSDLBuilderPlugin;
 import com.liferay.gradle.plugins.xml.formatter.FormatXMLTask;
@@ -185,7 +183,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureArtifacts(project);
 
 		configureTaskBuildService(project);
-		configureTaskBuildWSDD(project);
 		configureTaskBuildWSDL(project);
 		configureTaskBuildXSD(project);
 		configureTaskConfigJSModules(project);
@@ -215,10 +212,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		Delete delete = (Delete)GradleUtil.getTask(
 			project, BasePlugin.CLEAN_TASK_NAME);
 
-		boolean cleanDeployed = GradleUtil.getProperty(
-			delete, CLEAN_DEPLOYED_PROPERTY_NAME, true);
-
-		if (!cleanDeployed) {
+		if (!isCleanDeployed(delete)) {
 			return;
 		}
 
@@ -898,7 +892,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, SourceFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, SoyPlugin.class);
 		GradleUtil.applyPlugin(project, TLDFormatterPlugin.class);
-		GradleUtil.applyPlugin(project, WSDDBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, WSDLBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, WhipPlugin.class);
 		GradleUtil.applyPlugin(project, XMLFormatterPlugin.class);
@@ -1370,23 +1363,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			(File)null);
 
 		buildUpgradeTableTask.setUpgradeTableDir(file);
-	}
-
-	protected void configureTaskBuildWSDD(Project project) {
-		BuildWSDDTask buildWSDDTask = (BuildWSDDTask)GradleUtil.getTask(
-			project, WSDDBuilderPlugin.BUILD_WSDD_TASK_NAME);
-
-		configureTaskBuildWSDDOutputDirName(buildWSDDTask);
-	}
-
-	protected void configureTaskBuildWSDDOutputDirName(
-		BuildWSDDTask buildWSDDTask) {
-
-		Project project = buildWSDDTask.getProject();
-
-		File outputDir = getJavaDir(project);
-
-		buildWSDDTask.setOutputDirName(project.relativePath(outputDir));
 	}
 
 	protected void configureTaskBuildWSDL(Project project) {
@@ -2259,6 +2235,11 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	protected boolean isAddTestDefaultDependencies(Project project) {
 		return GradleUtil.getProperty(
 			project, _ADD_TEST_DEFAULT_DEPENDENCIES_PROPERTY_NAME, true);
+	}
+
+	protected boolean isCleanDeployed(Delete delete) {
+		return GradleUtil.getProperty(
+			delete, CLEAN_DEPLOYED_PROPERTY_NAME, true);
 	}
 
 	protected boolean isTestProject(Project project) {

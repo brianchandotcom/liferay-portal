@@ -59,12 +59,15 @@ import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
+import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.BasePluginConvention;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
+import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
+import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskInputs;
 import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.api.tasks.bundling.Jar;
@@ -78,9 +81,6 @@ import org.gradle.internal.Factory;
 public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 
 	public static final String AUTO_UPDATE_XML_TASK_NAME = "autoUpdateXml";
-
-	public static final String BUILD_WSDD_JAR_TASK_NAME =
-		WSDDBuilderPlugin.BUILD_WSDD_TASK_NAME + "Jar";
 
 	public static final String COPY_LIBS_TASK_NAME = "copyLibs";
 
@@ -111,6 +111,32 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 				}
 
 			});
+	}
+
+	protected void addCleanDeployedFile(
+		Project project, final Callable<String> callable) {
+
+		Delete delete = (Delete)GradleUtil.getTask(
+			project, BasePlugin.CLEAN_TASK_NAME);
+
+		if (!isCleanDeployed(delete)) {
+			return;
+		}
+
+		final Copy copy = (Copy)GradleUtil.getTask(project, DEPLOY_TASK_NAME);
+
+		Closure<File> closure = new Closure<File>(null) {
+
+			@SuppressWarnings("unused")
+			public File doCall() throws Exception {
+				return new File(
+					copy.getDestinationDir(),
+					getDeployedFileName(copy.getProject(), callable.call()));
+			}
+
+		};
+
+		delete.delete(closure);
 	}
 
 	@Override
@@ -296,22 +322,26 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		return directDeployTask;
 	}
 
-	protected Task addTaskBuildWSDDJar(final Project project) {
-		Task task = project.task(BUILD_WSDD_JAR_TASK_NAME);
+	protected Jar addTaskBuildWSDDJar(final BuildWSDDTask buildWSDDTask) {
+		Project project = buildWSDDTask.getProject();
 
-		TaskOutputs taskOutputs = task.getOutputs();
+		final Jar jar = GradleUtil.addTask(
+			project, buildWSDDTask.getName() + "Jar", Jar.class);
 
-		taskOutputs.file(
-			new Callable<File>() {
+		jar.dependsOn(buildWSDDTask);
 
-				@Override
-				public File call() throws Exception {
-					return getWSDDJarFile(project);
-				}
+		String taskName = buildWSDDTask.getName();
 
-			});
+		if (taskName.equals(WSDDBuilderPlugin.BUILD_WSDD_TASK_NAME)) {
+			jar.setAppendix("wsdd");
+		}
+		else {
+			jar.setAppendix("wsdd-" + taskName);
+		}
 
-		task.doLast(
+		jar.deleteAllActions();
+
+		jar.doLast(
 			new Action<Task>() {
 
 				@Override
@@ -352,9 +382,20 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 					properties.put(
 						Constants.IMPORT_PACKAGE,
 						"javax.servlet,javax.servlet.http");
-					properties.put(
-						Constants.INCLUDE_RESOURCE,
-						"WEB-INF/=server-config.wsdd,classes;filter:=*.wsdd");
+
+					StringBuilder sb = new StringBuilder();
+
+					sb.append("WEB-INF/=");
+					sb.append(
+						_getRelativePath(
+							project, buildWSDDTask.getServerConfigFile()));
+					sb.append(',');
+					sb.append(
+						_getRelativePath(
+							project, buildWSDDTask.getOutputDir()));
+					sb.append(";filter:=*.wsdd");
+
+					properties.put(Constants.INCLUDE_RESOURCE, sb.toString());
 
 					jarBuilder.withProperties(properties);
 
@@ -371,12 +412,36 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 
 			});
 
-		BuildWSDDTask buildWSDDTask = (BuildWSDDTask)GradleUtil.getTask(
-			project, WSDDBuilderPlugin.BUILD_WSDD_TASK_NAME);
+		buildWSDDTask.finalizedBy(jar);
 
-		buildWSDDTask.finalizedBy(task);
+		addCleanDeployedFile(
+			project,
+			new Callable<String>() {
 
-		return task;
+				@Override
+				public String call() throws Exception {
+					return jar.getArchiveName();
+				}
+
+			});
+
+		Task task = GradleUtil.getTask(project, DEPLOY_TASK_NAME);
+
+		if (task instanceof Copy) {
+			Copy copy = (Copy)task;
+
+			copy.from(
+				new Callable<File>() {
+
+					@Override
+					public File call() throws Exception {
+						return jar.getArchivePath();
+					}
+
+				});
+		}
+
+		return jar;
 	}
 
 	protected Copy addTaskCopyLibs(final Project project) {
@@ -407,8 +472,20 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 
 		addTaskAutoUpdateXml(project);
 		addTaskCopyLibs(project);
-		addTaskBuildWSDDJar(project);
 		addTaskUnzipJar(project);
+
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			BuildWSDDTask.class,
+			new Action<BuildWSDDTask>() {
+
+				@Override
+				public void execute(BuildWSDDTask buildWSDDTask) {
+					addTaskBuildWSDDJar(buildWSDDTask);
+				}
+
+			});
 	}
 
 	@Override
@@ -692,19 +769,6 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		configureTaskDeployRename((Copy)task);
 	}
 
-	@Override
-	protected void configureTaskDeployFrom(Copy copy) {
-		super.configureTaskDeployFrom(copy);
-
-		File wsddJarFile = getWSDDJarFile(copy.getProject());
-
-		if (wsddJarFile.exists()) {
-			copy.from(wsddJarFile);
-
-			addCleanDeployedFile(copy.getProject(), wsddJarFile);
-		}
-	}
-
 	protected void configureTaskDeployRename(Copy copy) {
 		final Project project = copy.getProject();
 
@@ -850,19 +914,6 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		return new File(project.getBuildDir(), "unzipped-jar");
 	}
 
-	protected File getWSDDJarFile(Project project) {
-		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
-
-		String bundleSymbolicName = getBundleInstruction(
-			project, Constants.BUNDLE_SYMBOLICNAME);
-
-		String fileName =
-			bundleSymbolicName + "-wsdd-" + project.getVersion() +
-				"." + Jar.DEFAULT_EXTENSION;
-
-		return new File(jar.getDestinationDir(), fileName);
-	}
-
 	protected void replaceJarBuilderFactory(Project project) {
 		BundleExtension bundleExtension = GradleUtil.getExtension(
 			project, BundleExtension.class);
@@ -892,6 +943,12 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		for (File file : fileTree) {
 			touchFile(file, time);
 		}
+	}
+
+	private String _getRelativePath(Project project, File file) {
+		String relativePath = project.relativePath(file);
+
+		return relativePath.replace('\\', '/');
 	}
 
 	private static final Logger _logger = Logging.getLogger(

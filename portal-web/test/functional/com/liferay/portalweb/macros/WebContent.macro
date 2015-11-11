@@ -376,13 +376,10 @@
 			</then>
 		</if>
 
-		<var name="key_categoryName" value="${categoryName}" />
-		<var name="key_vocabularyName" value="${vocabularyName}" />
-
-		<execute function="AssertClick" locator1="AssetCategorization#CATEGORY_SELECT" value1="Select" />
-		<execute function="Click" locator1="AssetCategorization#CATEGORIES_CATEGORY_CHECKBOX" />
-		<execute function="Click" locator1="AssetCategorization#CATEGORIES_CLOSE_BUTTON" />
-		<execute function="AssertTextEquals" locator1="AssetCategorization#CATEGORY" value1="${categoryName}" />
+		<execute macro="AssetCategorization#addCategory">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
 
 		<execute macro="WebContent#publish" />
 
@@ -442,17 +439,10 @@
 		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${webContentContent}" />
 		<execute function="AssertClick" locator1="NavListItem#CATEGORIZATION" value1="Categorization" />
 
-		<var name="key_vocabularyName" value="${vocabularyName}" />
-
-		<execute function="AssertClick" locator1="AssetCategorization#CATEGORY_SELECT" value1="Select" />
-
-		<for list="${categoryNameList}" param="categoryName">
-			<var name="key_categoryName" value="${categoryName}" />
-
-			<execute function="Click" locator1="AssetCategorization#CATEGORIES_CATEGORY_CHECKBOX" />
-		</for>
-
-		<execute function="Click" locator1="AssetCategorization#CATEGORIES_CLOSE_BUTTON" />
+		<execute macro="AssetCategorization#addMultipleCategories">
+			<var name="categoryNameList" value="${categoryNameList}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
 
 		<execute macro="WebContent#publish" />
 	</command>

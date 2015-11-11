@@ -53,6 +53,10 @@ entriesChecker.setCssClass("entry-selector");
 
 articleSearchContainer.setRowChecker(entriesChecker);
 
+EntriesMover entriesMover = new EntriesMover(scopeGroupId);
+
+articleSearchContainer.setRowMover(entriesMover);
+
 ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)articleSearchContainer.getDisplayTerms();
 %>
 
@@ -225,7 +229,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 	<liferay-ui:search-container-row
 		className="Object"
-		cssClass="entry-display-style selectable"
+		cssClass="entry-display-style"
 		modelVar="object"
 	>
 

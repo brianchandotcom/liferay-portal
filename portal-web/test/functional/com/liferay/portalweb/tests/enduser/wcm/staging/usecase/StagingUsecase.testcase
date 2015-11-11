@@ -3130,8 +3130,6 @@
 			<var name="site" value="Site Name" />
 		</execute>
 
-		<execute macro="Navigator#gotoStagedView" />
-
 		<execute macro="Staging#configurePublishToLive">
 			<var name="checkPageName" value="Page 2" />
 		</execute>
@@ -3840,8 +3838,6 @@
 			<var name="portletName" value="Sites" />
 		</execute>
 
-		<execute macro="Navigator#gotoStagedView" />
-
 		<execute macro="SitePage#addCP">
 			<var name="siteName" value="Site Name" />
 			<var name="sitePageName" value="Test Page 1" />
@@ -4267,8 +4263,6 @@
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
-
-		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="SitePage#addCP">
 			<var name="siteName" value="${siteName}" />

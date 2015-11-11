@@ -21,7 +21,6 @@ String taglibOnClick = renderResponse.getNamespace() + "openDDMStructureView()";
 %>
 
 <liferay-ui:icon
-	iconCssClass="icon-list-alt"
 	message="metadata-sets"
 	onClick="<%= taglibOnClick %>"
 	url="javascript:;"

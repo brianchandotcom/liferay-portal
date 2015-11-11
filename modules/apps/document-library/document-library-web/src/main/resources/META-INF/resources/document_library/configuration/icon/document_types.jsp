@@ -21,7 +21,6 @@ String taglibOnClick = renderResponse.getNamespace() + "openFileEntryTypeView()"
 %>
 
 <liferay-ui:icon
-	iconCssClass="icon-file"
 	message="document-types"
 	onClick="<%= taglibOnClick %>"
 	url="javascript:;"

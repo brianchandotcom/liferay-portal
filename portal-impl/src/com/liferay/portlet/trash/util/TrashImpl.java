@@ -264,10 +264,10 @@ public class TrashImpl implements Trash {
 
 					TrashHandler trashHandler =
 						TrashHandlerRegistryUtil.getTrashHandler(
-							entry.getClassName());
+							entryClassName);
 
 					TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
-						entry.getClassPK());
+						classPK);
 
 					entry.setClassName(trashRenderer.getClassName());
 					entry.setClassPK(trashRenderer.getClassPK());

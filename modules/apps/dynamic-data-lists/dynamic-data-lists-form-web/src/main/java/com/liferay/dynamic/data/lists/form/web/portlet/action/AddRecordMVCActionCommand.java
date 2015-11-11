@@ -15,7 +15,7 @@
 package com.liferay.dynamic.data.lists.form.web.portlet.action;
 
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
-import com.liferay.dynamic.data.lists.form.web.util.DDLFormEmailNotificationSenderUtil;
+import com.liferay.dynamic.data.lists.form.web.notification.DDLFormEmailNotificationSender;
 import com.liferay.dynamic.data.lists.form.web.util.DDLFormEmailNotificationUtil;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordConstants;

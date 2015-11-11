@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.form.web.util;
+package com.liferay.dynamic.data.lists.form.web.notification;
 
 import com.liferay.dynamic.data.lists.form.web.configuration.DDLFormWebConfigurationValues;
+import com.liferay.dynamic.data.lists.form.web.util.DDLFormEmailNotificationUtil;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -39,20 +40,18 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.ContentUtil;
 
 import java.io.Serializable;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import javax.mail.internet.InternetAddress;
-
 import javax.portlet.PortletRequest;
 
 /**
  * @author Rafael Praxedes
  */
-public class DDLFormEmailNotificationSenderUtil {
+public class DDLFormEmailNotificationSender {
 
 	public static void sendEmailNotification(
 		PortletRequest portletRequest, DDLRecord record) {

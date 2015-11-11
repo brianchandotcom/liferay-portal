@@ -1332,7 +1332,7 @@
 			<var name="linkedPageName" value="Test Page" />
 			<var name="structureName" value="Test Structure" />
 			<var name="templateName" value="Test Template" />
-			<var name="webContentLinkToPage" value="true" />
+			<var name="webContentLinkToPage" value="LinkToPage" />
 			<var name="webContentTitle" value="WC Title" />
 		</execute>
 

@@ -75,6 +75,7 @@ public class UpdateRecordSetSettingsMVCActionCommand
 
 		boolean sendEmailNotification = ParamUtil.getBoolean(
 			actionRequest, "sendEmailNotification");
+
 		String emailFromName = ParamUtil.getString(
 			actionRequest, "emailFromName");
 		String emailFromAddress = ParamUtil.getString(
@@ -104,6 +105,16 @@ public class UpdateRecordSetSettingsMVCActionCommand
 		settingsProperties.setProperty("redirectURL", redirectURL);
 	}
 
+	protected void updateRecordSetRequireCaptchaSettings(
+		ActionRequest actionRequest, UnicodeProperties settingsProperties) {
+
+		boolean requireCaptcha = ParamUtil.getBoolean(
+			actionRequest, "requireCaptcha");
+
+		settingsProperties.setProperty(
+			"requireCaptcha", String.valueOf(requireCaptcha));
+	}
+
 	protected void updateRecordSetSettings(ActionRequest actionRequest)
 		throws PortalException {
 
@@ -112,14 +123,10 @@ public class UpdateRecordSetSettingsMVCActionCommand
 		UnicodeProperties settingsProperties = new UnicodeProperties(true);
 
 		updateRecordSetRedirectURLSettings(actionRequest, settingsProperties);
+		updateRecordSetRequireCaptchaSettings(
+			actionRequest, settingsProperties);
 		updateRecordSetEmailNotificationSettings(
 			actionRequest, settingsProperties);
-
-		boolean requireCaptcha = ParamUtil.getBoolean(
-			actionRequest, "requireCaptcha");
-
-		settingsProperties.setProperty(
-			"requireCaptcha", String.valueOf(requireCaptcha));
 
 		_ddlRecordSetService.updateRecordSet(
 			recordSetId, settingsProperties.toString());

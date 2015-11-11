@@ -39,18 +39,16 @@ public class DDLFormEmailNotificationUtil {
 		String defaultEmailFromAddress = PrefsPropsUtil.getString(
 			recordSet.getCompanyId(), PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
 
-		return GetterUtil.getString(
-			recordSet.getSettingsProperty(
-				"emailFromAddress", defaultEmailFromAddress));
+		return recordSet.getSettingsProperty(
+			"emailFromAddress", defaultEmailFromAddress);
 	}
 
 	public static String getEmailFromName(DDLRecordSet recordSet) {
 		String defaultEmailFromName = PrefsPropsUtil.getString(
 			recordSet.getCompanyId(), PropsKeys.ADMIN_EMAIL_FROM_NAME);
 
-		return GetterUtil.getString(
-			recordSet.getSettingsProperty(
-				"emailFromName", defaultEmailFromName));
+		return recordSet.getSettingsProperty(
+			"emailFromName", defaultEmailFromName);
 	}
 
 	public static String getEmailSubject(DDLRecordSet recordSet)
@@ -69,8 +67,8 @@ public class DDLFormEmailNotificationUtil {
 			resourceBundle, "new-x-form-submitted", recordSet.getName(locale),
 			false);
 
-		return GetterUtil.getString(
-			recordSet.getSettingsProperty("emailSubject", defaultEmailSubject));
+		return recordSet.getSettingsProperty(
+			"emailSubject", defaultEmailSubject);
 	}
 
 	public static String getEmailToAddress(DDLRecordSet recordSet) {
@@ -82,9 +80,8 @@ public class DDLFormEmailNotificationUtil {
 			defaultEmailToAddress = user.getEmailAddress();
 		}
 
-		return GetterUtil.getString(
-			recordSet.getSettingsProperty(
-				"emailToAddress", defaultEmailToAddress));
+		return recordSet.getSettingsProperty(
+			"emailToAddress", defaultEmailToAddress);
 	}
 
 	public static boolean isEmailNotificationEnabled(DDLRecordSet recordSet) {

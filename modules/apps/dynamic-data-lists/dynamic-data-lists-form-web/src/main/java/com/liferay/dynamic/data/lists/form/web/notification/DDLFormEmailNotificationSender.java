@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.lists.form.web.configuration.DDLFormWebConfigura
 import com.liferay.dynamic.data.lists.form.web.util.DDLFormEmailNotificationUtil;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
@@ -25,7 +26,7 @@ import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTracker
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.mail.service.MailServiceUtil;
+import com.liferay.mail.service.MailService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -51,6 +52,7 @@ import javax.mail.internet.InternetAddress;
 import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rafael Praxedes
@@ -62,35 +64,45 @@ public class DDLFormEmailNotificationSender {
 		PortletRequest portletRequest, DDLRecord record) {
 
 		try {
-			DDLRecordSet recordSet = record.getRecordSet();
+			MailMessage mailMessage = createMailMessage(portletRequest, record);
 
-			String emailFromAddress =
-				DDLFormEmailNotificationUtil.getEmailFromAddress(recordSet);
-			String emailFromName =
-				DDLFormEmailNotificationUtil.getEmailFromName(recordSet);
-			String emailToAddress =
-				DDLFormEmailNotificationUtil.getEmailToAddress(recordSet);
-			String subject = DDLFormEmailNotificationUtil.getEmailSubject(
-				recordSet);
-
-			InternetAddress fromInternetAddress = new InternetAddress(
-				emailFromAddress, emailFromName);
-
-			String body = getEmailBody(portletRequest, recordSet, record);
-
-			MailMessage mailMessage = new MailMessage(
-				fromInternetAddress, subject, body, true);
-
-			InternetAddress[] toAddresses = InternetAddress.parse(
-				emailToAddress);
-
-			mailMessage.setTo(toAddresses);
-
-			MailServiceUtil.sendEmail(mailMessage);
+			_mailService.sendEmail(mailMessage);
 		}
 		catch (Exception e) {
 			_log.error("The form email could not be sent", e);
 		}
+	}
+
+	protected MailMessage createMailMessage(
+			PortletRequest portletRequest, DDLRecord record)
+		throws Exception {
+
+		DDLRecordSet recordSet = record.getRecordSet();
+
+		String emailFromAddress =
+			DDLFormEmailNotificationUtil.getEmailFromAddress(recordSet);
+		String emailFromName = DDLFormEmailNotificationUtil.getEmailFromName(
+			recordSet);
+
+		InternetAddress fromInternetAddress = new InternetAddress(
+			emailFromAddress, emailFromName);
+
+		String subject = DDLFormEmailNotificationUtil.getEmailSubject(
+			recordSet);
+
+		String body = getEmailBody(portletRequest, recordSet, record);
+
+		MailMessage mailMessage = new MailMessage(
+			fromInternetAddress, subject, body, true);
+
+		String emailToAddress = DDLFormEmailNotificationUtil.getEmailToAddress(
+			recordSet);
+
+		InternetAddress[] toAddresses = InternetAddress.parse(emailToAddress);
+
+		mailMessage.setTo(toAddresses);
+
+		return mailMessage;
 	}
 
 	protected Map<String, Serializable> getContext(
@@ -100,30 +112,32 @@ public class DDLFormEmailNotificationSender {
 
 		Map<String, Serializable> context = new HashMap<>();
 
-		DDMStructure ddmStructure = recordSet.getDDMStructure();
+		Locale locale = getDDMFormDefaultLocale(recordSet.getDDMStructure());
 
-		String emailFromAddress =
-			DDLFormEmailNotificationUtil.getEmailFromAddress(recordSet);
-		String emailFromName = DDLFormEmailNotificationUtil.getEmailFromName(
-			recordSet);
-
-		Locale locale = ddmStructure.getDDMForm().getDefaultLocale();
+		context.put("formName", recordSet.getName(locale));
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		Group siteGroup = themeDisplay.getSiteGroup();
 
-		String portalUrl = PortalUtil.getPortalURL(portletRequest);
-
-		context.put("formName", recordSet.getName(locale));
 		context.put("siteName", siteGroup.getName(locale));
 		context.put("formFieldsValues", getSerializedDDMFormValues(record));
-		context.put("fromName", emailFromName);
-		context.put("fromAddress", emailFromAddress);
-		context.put("portalUrl", portalUrl);
+		context.put(
+			"fromName",
+			DDLFormEmailNotificationUtil.getEmailFromName(recordSet));
+		context.put(
+			"fromAddress",
+			DDLFormEmailNotificationUtil.getEmailFromAddress(recordSet));
+		context.put("portalUrl", PortalUtil.getPortalURL(portletRequest));
 
 		return context;
+	}
+
+	protected Locale getDDMFormDefaultLocale(DDMStructure ddmStructure) {
+		DDMForm ddmForm = ddmStructure.getDDMForm();
+
+		return ddmForm.getDefaultLocale();
 	}
 
 	protected String getEmailBody(
@@ -200,15 +214,22 @@ public class DDLFormEmailNotificationSender {
 			});
 	}
 
+	@Reference
 	protected void setDDMFormFieldTypeServicesTracker(
 		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker) {
 
 		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
 	}
 
+	@Reference
+	protected void setMailService(MailService mailService) {
+		_mailService = mailService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDLFormEmailNotificationSender.class);
 
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+	private MailService _mailService;
 
 }

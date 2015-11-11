@@ -434,40 +434,43 @@ public class DDLRecordSetLocalServiceImpl
 				"The property \"redirectURL\" is not a URL");
 		}
 
+		String requireCaptcha = settingsProperties.getProperty(
+			"requireCaptcha");
+
+		if (Validator.isNotNull(requireCaptcha) &&
+			!Validator.isBoolean(requireCaptcha)) {
+
+			throw new RecordSetSettingsException(
+				"The property \"requireCaptcha\" is not a boolean");
+		}
+
 		boolean sendEmailNotification = GetterUtil.getBoolean(
 			settingsProperties.getProperty("sendEmailNotification"));
 
 		if (sendEmailNotification) {
-			String emailFromAddress = GetterUtil.getString(
-				settingsProperties.getProperty("emailFromAddress"));
-			String emailFromName = GetterUtil.getString(
-				settingsProperties.getProperty("emailFromName"));
-			String emailToAddress = GetterUtil.getString(
-				settingsProperties.getProperty("emailToAddress"));
-
-			if (Validator.isNull(emailFromName)) {
-				throw new RecordSetSettingsException(
-					"The property \"emailFromName\" is empty");
-			}
+			String emailFromAddress = settingsProperties.getProperty(
+				"emailFromAddress");
 
 			if (!Validator.isEmailAddress(emailFromAddress)) {
 				throw new RecordSetSettingsException(
 					"The property \"emailFromAddress\" is not an email");
 			}
 
+			String emailFromName = settingsProperties.getProperty(
+				"emailFromName");
+
+			if (Validator.isNull(emailFromName)) {
+				throw new RecordSetSettingsException(
+					"The property \"emailFromName\" is empty");
+			}
+
+			String emailToAddress = settingsProperties.getProperty(
+				"emailToAddresses");
+
 			if (!Validator.isEmailAddress(emailToAddress)) {
 				throw new RecordSetSettingsException(
 					"The property \"emailToAddress\" is not an email");
 			}
-
-String requireCaptcha = settingsProperties.getProperty(
-			"requireCaptcha");
-
-		if (!Validator.isBoolean(requireCaptcha)) {
-			throw new RecordSetSettingsException(
-				"The property \"requireCaptcha\" is not a boolean");
-		}
-
 		}
 	}
 

@@ -18,6 +18,7 @@
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
+String backURL = ParamUtil.getString(request, "backURL");
 
 String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
 
@@ -36,16 +37,6 @@ JournalArticle article = journalDisplayContext.getArticle();
 		</div>
 	</c:when>
 	<c:otherwise>
-
-		<portlet:renderURL var="backURL">
-			<portlet:param name="mvcPath" value="/edit_article.jsp" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="referringPortletResource" value="<%= referringPortletResource %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
-			<portlet:param name="folderId" value="<%= String.valueOf(article.getFolderId()) %>" />
-			<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
-			<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
-		</portlet:renderURL>
 
 		<%
 		portletDisplay.setShowBackIcon(true);

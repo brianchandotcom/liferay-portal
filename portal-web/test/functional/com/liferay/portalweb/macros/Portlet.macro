@@ -221,7 +221,7 @@
 					<var name="key_portletName" value="${portletNameBorderless}" />
 
 					<execute function="MakeVisible" locator1="BasePortlet#SPECIFIC_PORTLET_BORDERLESS_BAR" />
-					<execute function="Click" locator1="BasePortlet#SPECIFIC_PORTLET_BORDERLESS_OPTIONS_ICON" />
+					<execute function="Click" locator1="BasePortlet#SPECIFIC_PORTLET_BORDERLESS_ELLIPSES_ICON" />
 				</then>
 			</elseif>
 			<else>

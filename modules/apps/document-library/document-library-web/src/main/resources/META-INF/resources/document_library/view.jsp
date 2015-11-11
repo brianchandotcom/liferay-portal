@@ -89,6 +89,8 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 request.setAttribute("view.jsp-displayStyle", displayStyle);
 request.setAttribute("view.jsp-orderByCol", orderByCol);
 request.setAttribute("view.jsp-orderByType", orderByType);
+
+String searchContainerId = "entries";
 %>
 
 <liferay-util:buffer var="uploadURL"><liferay-portlet:actionURL name="/document_library/edit_file_entry"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_DYNAMIC %>" /><portlet:param name="folderId" value="{folderId}" /><portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" /></liferay-portlet:actionURL></liferay-util:buffer>
@@ -103,7 +105,9 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 
 <liferay-util:include page="/document_library/navigation.jsp" servletContext="<%= application %>" />
 
-<liferay-util:include page="/document_library/toolbar.jsp" servletContext="<%= application %>" />
+<liferay-util:include page="/document_library/toolbar.jsp" servletContext="<%= application %>">
+	<liferay-util:param name="searchContainerId" value="<%= searchContainerId %>" />
+</liferay-util:include>
 
 <div id="<portlet:namespace />documentLibraryContainer">
 	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
@@ -143,7 +147,9 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 							<liferay-util:include page="/document_library/search_resources.jsp" servletContext="<%= application %>" />
 						</c:when>
 						<c:otherwise>
-							<liferay-util:include page="/document_library/view_entries.jsp" servletContext="<%= application %>" />
+							<liferay-util:include page="/document_library/view_entries.jsp" servletContext="<%= application %>">
+								<liferay-util:param name="searchContainerId" value="<%= searchContainerId %>" />
+							</liferay-util:include>
 						</c:otherwise>
 					</c:choose>
 
@@ -214,8 +220,7 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(DLPortletKeys.
 			%>
 
 			decimalSeparator: '<%= decimalFormatSymbols.getDecimalSeparator() %>',
-			displayStyle: '<%= HtmlUtil.escapeJS(displayStyle) %>',
-
+			editEntryUrl: '<portlet:actionURL name="/document_library/edit_entry" />',
 			folders: {
 				defaultParentFolderId: '<%= folderId %>',
 				dimensions: {
@@ -223,21 +228,12 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(DLPortletKeys.
 					width: '<%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH) %>'
 				}
 			},
-			maxFileSize: <%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) %>,
-			move: {
-				allRowIds: '<%= RowChecker.ALL_ROW_IDS %>',
-				editEntryUrl: '<portlet:actionURL name="/document_library/edit_entry" />',
-				folderIdHashRegEx: /#.*&?<portlet:namespace />folderId=([\d]+)/i,
-				folderIdRegEx: /&?<portlet:namespace />folderId=([\d]+)/i,
-				form: {
-					method: 'POST',
-					node: A.one(document.<portlet:namespace />fm2)
-				},
-				moveEntryRenderUrl: '<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/document_library/move_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>',
-				selectedCSSClass: 'active',
-				trashLinkId: '<%= TrashUtil.isTrashEnabled(scopeGroupId) ? ("_" + PortletProviderUtil.getPortletId(PortalProductMenuApplicationType.ProductMenu.CLASS_NAME, PortletProvider.Action.VIEW) + "_portlet_" + PortletProviderUtil.getPortletId(TrashEntry.class.getName(), PortletProvider.Action.VIEW)) : StringPool.BLANK %>',
-				updateable: <%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.UPDATE) %>
+			form: {
+				method: 'POST',
+				node: A.one(document.<portlet:namespace />fm2)
 			},
+			maxFileSize: <%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE) %>,
+			moveEntryUrl: '<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/document_library/move_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>',
 			namespace: '<portlet:namespace />',
 			portletId: '<%= HtmlUtil.escapeJS(portletId) %>',
 			redirect: encodeURIComponent('<%= currentURL %>'),
@@ -263,12 +259,8 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(DLPortletKeys.
 				%>
 
 			],
-			rowIds: '<portlet:namespace /><%= RowChecker.ROW_IDS %>',
 			scopeGroupId: <%= scopeGroupId %>,
-			select: {
-				displayStyleCSSClass: 'list-group-item',
-				selectedCSSClass: 'active'
-			},
+			searchContainerId: '<%= searchContainerId %>',
 			trashEnabled: <%= (scopeGroupId == repositoryId) && TrashUtil.isTrashEnabled(scopeGroupId) %>,
 			updateable: <%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.UPDATE) %>,
 			uploadURL: '<%= uploadURL %>',

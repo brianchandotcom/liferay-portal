@@ -26,11 +26,13 @@ long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-re
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 
 boolean search = mvcRenderCommandName.equals("/document_library/search");
+
+String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 %>
 
 <liferay-frontend:management-bar
-	checkBoxContainerId="entriesContainer"
 	includeCheckBox="<%= DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_ANY, false) > 0 %>"
+	searchContainerId="<%= searchContainerId %>"
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-button cssClass="infoPanelToggler" href="javascript:;" iconCssClass="icon-info-sign" />

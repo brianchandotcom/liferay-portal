@@ -393,7 +393,7 @@ public class JournalPortlet extends MVCPortlet {
 
 		renderRequest.setAttribute(
 			JournalWebConfiguration.class.getName(), _journalWebConfiguration);
-		
+
 		renderRequest.setAttribute(
 			JournalWebKeys.JOURNAL_CONTENT, _journalContent);
 

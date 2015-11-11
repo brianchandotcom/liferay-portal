@@ -60,7 +60,9 @@ public class UpgradeCompanyId
 			new TableUpdater(
 				"PasswordPolicyRel", "PasswordPolicy", "passwordPolicyId"),
 			new TableUpdater("PasswordTracker", "User_", "userId"),
-			//new TableUpdater("PortletPreferences", "Portlet", "portletId"),
+			new TableUpdater(
+				"PortletPreferences", "portletId",
+				new String[][] {{"Layout", "plid"}, {"Portlet", "portletId"}}),
 			//new TableUpdater("RatingsStats", "", ""),
 			//new TableUpdater("ResourceBlockPermission", "", ""),
 			new TableUpdater(

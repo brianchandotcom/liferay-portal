@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Asset Test
+Bundle-SymbolicName: com.liferay.asset.test
+Bundle-Version: 1.0.0
+Import-Package: *;resolution:=optional
+Include-Resource:\
+	classes,\
+	test-classes/integration,\
+	@lib/com.liferay.bookmarks.test.jar!/com/liferay/bookmarks/util/test/BookmarksTestUtil.class,\
+	@lib/com.liferay.journal.test.jar!/com/liferay/journal/test/util/JournalTestUtil.class

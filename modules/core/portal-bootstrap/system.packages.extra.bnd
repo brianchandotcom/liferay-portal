@@ -190,6 +190,7 @@ Export-Package:\
 	org.xml.sax.*;version='2.0.2',\
 	*
 Include-Resource:\
+	@lib/com.liferay.portal.app.license.api.jar,\
 	@lib/com.liferay.registry.api.jar,\
 	@lib/jaxws-api.jar,\
 	@../../../lib/development/jms.jar,\

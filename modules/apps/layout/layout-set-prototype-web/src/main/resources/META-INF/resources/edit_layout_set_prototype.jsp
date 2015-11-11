@@ -76,50 +76,52 @@ request.setAttribute("edit_layout_set_prototype.jsp-redirect", currentURL);
 
 	<aui:model-context bean="<%= layoutSetPrototype %>" model="<%= LayoutSetPrototype.class %>" />
 
-	<aui:fieldset>
-		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
+	<aui:fieldset-group>
+		<aui:fieldset>
+			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
 
-		<aui:input name="description" />
+			<aui:input name="description" />
 
-		<aui:input name="active" />
+			<aui:input name="active" type="toggle-switch" value="<%= layoutSetPrototype.isActive() %>" />
 
-		<aui:input helpMessage="allow-site-administrators-to-modify-pages-associated-with-this-site-template-help" label="allow-site-administrators-to-modify-pages-associated-with-this-site-template" name="layoutsUpdateable" type="checkbox" value="<%= layoutsUpdateable %>" />
+			<aui:input helpMessage="allow-site-administrators-to-modify-pages-associated-with-this-site-template-help" label="allow-site-administrators-to-modify-pages-associated-with-this-site-template" name="layoutsUpdateable" type="toggle-switch" value="<%= layoutsUpdateable %>" />
 
-		<%
-		Set<String> servletContextNames = CustomJspRegistryUtil.getServletContextNames();
+			<%
+			Set<String> servletContextNames = CustomJspRegistryUtil.getServletContextNames();
 
-		String customJspServletContextName = StringPool.BLANK;
+			String customJspServletContextName = StringPool.BLANK;
 
-		if (layoutSetPrototype != null) {
-			UnicodeProperties settingsProperties = layoutSetPrototype.getSettingsProperties();
+			if (layoutSetPrototype != null) {
+				UnicodeProperties settingsProperties = layoutSetPrototype.getSettingsProperties();
 
-			customJspServletContextName = GetterUtil.getString(settingsProperties.get("customJspServletContextName"));
-		}
-		%>
+				customJspServletContextName = GetterUtil.getString(settingsProperties.get("customJspServletContextName"));
+			}
+			%>
 
-		<c:if test="<%= !servletContextNames.isEmpty() %>">
-			<aui:select label="application-adapter" name="customJspServletContextName">
-				<aui:option label="none" />
+			<c:if test="<%= !servletContextNames.isEmpty() %>">
+				<aui:select label="application-adapter" name="customJspServletContextName">
+					<aui:option label="none" />
 
-				<%
-				for (String servletContextName : servletContextNames) {
-				%>
+					<%
+					for (String servletContextName : servletContextNames) {
+					%>
 
-					<aui:option selected="<%= customJspServletContextName.equals(servletContextName) %>" value="<%= servletContextName %>"><%= CustomJspRegistryUtil.getDisplayName(servletContextName) %></aui:option>
+						<aui:option selected="<%= customJspServletContextName.equals(servletContextName) %>" value="<%= servletContextName %>"><%= CustomJspRegistryUtil.getDisplayName(servletContextName) %></aui:option>
 
-				<%
-				}
-				%>
+					<%
+					}
+					%>
 
-			</aui:select>
-		</c:if>
+				</aui:select>
+			</c:if>
+		</aui:fieldset>
+	</aui:fieldset-group>
 
-		<aui:button-row>
-			<aui:button cssClass="btn-lg" type="submit" />
+	<aui:button-row>
+		<aui:button cssClass="btn-lg" type="submit" />
 
-			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
-		</aui:button-row>
-	</aui:fieldset>
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+	</aui:button-row>
 </aui:form>
 
 <%

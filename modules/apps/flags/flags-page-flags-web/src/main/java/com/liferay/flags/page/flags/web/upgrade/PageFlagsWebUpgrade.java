@@ -15,38 +15,22 @@
 package com.liferay.flags.page.flags.web.upgrade;
 
 import com.liferay.flags.page.flags.web.constants.PageFlagsPortletKeys;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.service.ReleaseLocalService;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
 
-import java.util.Collections;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = PageFlagsWebUpgrade.class)
-public class PageFlagsWebUpgrade {
+@Component(immediate = true)
+public class PageFlagsWebUpgrade implements UpgradeStepRegistrator {
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
-	@Reference(unbind = "-")
-	protected void setReleaseLocalService(
-		ReleaseLocalService releaseLocalService) {
-
-		_releaseLocalService = releaseLocalService;
-	}
-
-	@Activate
-	protected void upgrade() throws PortalException {
+	@Override
+	public void register(Registry registry) {
 		UpgradePortletId upgradePortletId = new UpgradePortletId() {
 
 			@Override
@@ -58,12 +42,17 @@ public class PageFlagsWebUpgrade {
 
 		};
 
-		_releaseLocalService.updateRelease(
-			"com.liferay.flags.page.flags.web",
-			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 1,
-			false);
+		registry.register(
+			"com.liferay.flags.page.flags.web", "0.0.0", "1.0.0",
+			new DummyUpgradeStep());
+		registry.register(
+			"com.liferay.flags.page.flags.web", "0.0.1", "1.0.0",
+			upgradePortletId);
 	}
 
-	private ReleaseLocalService _releaseLocalService;
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
 
 }

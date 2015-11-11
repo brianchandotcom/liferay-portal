@@ -52,18 +52,9 @@
 
 				<%
 					XugglerInstallException xie = (XugglerInstallException)errorException;
-
-					StringBundler sb = new StringBundler();
-
-					sb.append(LanguageUtil.get(locale, "an-unexpected-error-occurred-while-installing-xuggler"));
-					sb.append(StringPool.SPACE);
-					sb.append(StringPool.COLON);
-					sb.append(StringPool.SPACE);
-					sb.append(xie.getMessage());
 				%>
 
-				<liferay-ui:message key="<%= sb.toString() %>" localizeKey="<%= false %>" />
-
+				<liferay-ui:message arguments="<%= xie.getMessage() %>" key="an-unexpected-error-occurred-while-installing-xuggler-x" translateArguments="<%= false %>" />
 			</liferay-ui:error>
 
 			<c:choose>

@@ -503,7 +503,7 @@
 <!--NODE_TABLE-->
 <tr>
 	<td>NODE_TABLE</td>
-	<td>//div[contains(@id,'WikiAdminPortlet_ocerSearchContainer')]//table</td>
+	<td>//div[contains(@id,'WikiAdminPortlet') and contains(@id,'SearchContainer')]//table</td>
 	<td></td>
 </tr>
 <tr>

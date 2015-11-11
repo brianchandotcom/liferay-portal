@@ -27,12 +27,17 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.repository.portletrepository.PortletRepository;
+import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -67,6 +72,15 @@ public class DLFolderFinderTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
+
+		long classNameId = PortalUtil.getClassNameId(
+			PortletRepository.class.getName());
+
+		RepositoryLocalServiceUtil.addRepository(
+			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test Repository",
+			StringUtil.randomString(), StringUtil.randomString(),
+			new UnicodeProperties(), true, serviceContext);
 
 		_folder = DLAppLocalServiceUtil.addFolder(
 			TestPropsValues.getUserId(), _group.getGroupId(),
@@ -122,6 +136,16 @@ public class DLFolderFinderTest {
 				_group.getGroupId(), _folder.getFolderId(),
 				new String[] {ContentTypes.TEXT_PLAIN}, false,
 				queryDefinition));
+		Assert.assertEquals(
+			1,
+			DLFolderFinderUtil.filterCountF_FE_FS_ByG_F_M_M(
+				_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				null, false, queryDefinition));
+		Assert.assertEquals(
+			2,
+			DLFolderFinderUtil.filterCountF_FE_FS_ByG_F_M_M(
+				_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				null, true, queryDefinition));
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
 
@@ -311,6 +335,26 @@ public class DLFolderFinderTest {
 				DLFolder dlFolder = (DLFolder)result;
 
 				Assert.assertEquals("Folder B", dlFolder.getName());
+			}
+		}
+
+		results = DLFolderFinderUtil.filterFindF_FE_FS_ByG_F_M_M(
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			null, true, queryDefinition);
+
+		Assert.assertEquals(2, results.size());
+
+		for (Object result : results) {
+			Assert.assertTrue(
+				String.valueOf(result.getClass()), result instanceof DLFolder);
+
+			DLFolder dlFolder = (DLFolder)result;
+
+			if (dlFolder.isMountPoint()) {
+				Assert.assertEquals("Test Repository", dlFolder.getName());
+			}
+			else {
+				Assert.assertEquals("Folder A", dlFolder.getName());
 			}
 		}
 	}

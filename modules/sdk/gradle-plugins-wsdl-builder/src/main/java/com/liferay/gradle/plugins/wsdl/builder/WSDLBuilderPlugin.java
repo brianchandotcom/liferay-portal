@@ -45,7 +45,7 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		addWSDLBuilderConfiguration(project);
+		addConfigurationWSDLBuilder(project);
 
 		addTaskBuildWSDL(project);
 
@@ -54,10 +54,56 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
-					configureTaskBuildWSDL(project);
+					configureTasksBuildWSDL(project);
 				}
 
 			});
+	}
+
+	protected Configuration addConfigurationWSDLBuilder(final Project project) {
+		Configuration configuration = GradleUtil.addConfiguration(
+			project, CONFIGURATION_NAME);
+
+		configuration.setDescription(
+			"Configures Apache Axis for generating WSDL client stubs.");
+		configuration.setVisible(false);
+
+		GradleUtil.executeIfEmpty(
+			configuration,
+			new Action<Configuration>() {
+
+				@Override
+				public void execute(Configuration configuration) {
+					addDependenciesWSDLBuilder(project);
+				}
+
+			});
+
+		return configuration;
+	}
+
+	protected void addDependenciesWSDLBuilder(Project project) {
+		GradleUtil.addDependency(
+			project, CONFIGURATION_NAME, "axis", "axis-wsdl4j", "1.5.1");
+		GradleUtil.addDependency(
+			project, CONFIGURATION_NAME, "com.liferay", "org.apache.axis",
+			"1.4.LIFERAY-PATCHED-1");
+		GradleUtil.addDependency(
+			project, CONFIGURATION_NAME, "commons-discovery",
+			"commons-discovery", "0.2");
+		GradleUtil.addDependency(
+			project, CONFIGURATION_NAME, "commons-logging", "commons-logging",
+			"1.0.4");
+		GradleUtil.addDependency(
+			project, CONFIGURATION_NAME, "javax.activation", "activation",
+			"1.1");
+		GradleUtil.addDependency(
+			project, CONFIGURATION_NAME, "javax.mail", "mail", "1.4");
+		GradleUtil.addDependency(
+			project, CONFIGURATION_NAME, "org.apache.axis", "axis-jaxrpc",
+			"1.4");
+		GradleUtil.addDependency(
+			project, CONFIGURATION_NAME, "org.apache.axis", "axis-saaj", "1.4");
 	}
 
 	protected BuildWSDLTask addTaskBuildWSDL(Project project) {
@@ -177,52 +223,6 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 		taskOutputs.file(jarTask.getOutputs());
 	}
 
-	protected Configuration addWSDLBuilderConfiguration(final Project project) {
-		Configuration configuration = GradleUtil.addConfiguration(
-			project, CONFIGURATION_NAME);
-
-		configuration.setDescription(
-			"Configures Apache Axis for generating WSDL client stubs.");
-		configuration.setVisible(false);
-
-		GradleUtil.executeIfEmpty(
-			configuration,
-			new Action<Configuration>() {
-
-				@Override
-				public void execute(Configuration configuration) {
-					addWSDLBuilderDependencies(project);
-				}
-
-			});
-
-		return configuration;
-	}
-
-	protected void addWSDLBuilderDependencies(Project project) {
-		GradleUtil.addDependency(
-			project, CONFIGURATION_NAME, "axis", "axis-wsdl4j", "1.5.1");
-		GradleUtil.addDependency(
-			project, CONFIGURATION_NAME, "com.liferay", "org.apache.axis",
-			"1.4.LIFERAY-PATCHED-1");
-		GradleUtil.addDependency(
-			project, CONFIGURATION_NAME, "commons-discovery",
-			"commons-discovery", "0.2");
-		GradleUtil.addDependency(
-			project, CONFIGURATION_NAME, "commons-logging", "commons-logging",
-			"1.0.4");
-		GradleUtil.addDependency(
-			project, CONFIGURATION_NAME, "javax.activation", "activation",
-			"1.1");
-		GradleUtil.addDependency(
-			project, CONFIGURATION_NAME, "javax.mail", "mail", "1.4");
-		GradleUtil.addDependency(
-			project, CONFIGURATION_NAME, "org.apache.axis", "axis-jaxrpc",
-			"1.4");
-		GradleUtil.addDependency(
-			project, CONFIGURATION_NAME, "org.apache.axis", "axis-saaj", "1.4");
-	}
-
 	protected void configureTaskBuildWSDL(BuildWSDLTask buildWSDLTask) {
 		FileCollection inputFiles = buildWSDLTask.getInputFiles();
 
@@ -241,7 +241,7 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 			taskOutputs.getFiles());
 	}
 
-	protected void configureTaskBuildWSDL(Project project) {
+	protected void configureTasksBuildWSDL(Project project) {
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(

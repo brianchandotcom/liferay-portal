@@ -92,7 +92,7 @@ public class DLFolderAssetRenderer
 	public String getIconCssClass() throws PortalException {
 		try {
 			if (_folder.isMountPoint()) {
-				return "icon-drive";
+				return "icon-hdd";
 			}
 
 			if (!PropsValues.DL_FOLDER_ICON_CHECK_COUNT) {

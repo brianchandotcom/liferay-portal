@@ -116,6 +116,24 @@ if (fileEntry == null) {
 else {
 	dlEditFileEntryDisplayContext = dlDisplayContextProvider.getDLEditFileEntryDisplayContext(request, response, fileEntry);
 }
+
+String headerTitle = LanguageUtil.get(request, "new-document");
+
+if (fileVersion != null) {
+	headerTitle = fileVersion.getTitle();
+}
+else if ((dlFileEntryType != null) && (fileEntryTypeId != 0)) {
+	headerTitle = LanguageUtil.format(request, "new-x", dlFileEntryType.getName(locale), false);
+}
+
+boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
+
+if (portletTitleBasedNavigation) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
+
+	renderResponse.setTitle(headerTitle);
+}
 %>
 
 <div <%= portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
@@ -146,24 +164,10 @@ else {
 		</c:choose>
 	</c:if>
 
-	<c:if test="<%= showHeader %>">
-
-		<%
-		boolean localizeTitle = true;
-		String headerTitle = LanguageUtil.get(request, "new-document");
-
-		if (fileVersion != null) {
-			headerTitle = fileVersion.getTitle();
-			localizeTitle = false;
-		}
-		else if ((dlFileEntryType != null) && (fileEntryTypeId != 0)) {
-			headerTitle = LanguageUtil.format(request, "new-x", dlFileEntryType.getName(locale), false);
-		}
-		%>
-
+	<c:if test="<%= !portletTitleBasedNavigation && showHeader %>">
 		<liferay-ui:header
 			backURL="<%= redirect %>"
-			localizeTitle="<%= localizeTitle %>"
+			localizeTitle="<%= false %>"
 			title="<%= headerTitle %>"
 		/>
 	</c:if>

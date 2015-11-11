@@ -115,16 +115,6 @@ public class DLPortletToolbarContributor implements PortletToolbarContributor {
 		List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
 		PortletRequest portletRequest) {
 
-		long folderId = _getFolderId(folder);
-
-		if (!containsPermission(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), folderId,
-				ActionKeys.ADD_DOCUMENT)) {
-
-			return;
-		}
-
 		List<DLFileEntryType> fileEntryTypes = getFileEntryTypes(
 			themeDisplay.getScopeGroupId(), folder);
 
@@ -181,6 +171,59 @@ public class DLPortletToolbarContributor implements PortletToolbarContributor {
 			String.valueOf(_getRepositoryId(themeDisplay, folder)));
 		portletURL.setParameter("parentFolderId", String.valueOf(folderId));
 		portletURL.setParameter("ignoreRootFolder", Boolean.TRUE.toString());
+
+		urlMenuItem.setURL(portletURL.toString());
+
+		menuItems.add(urlMenuItem);
+	}
+
+	protected void addPortletTitleAddMultipleDocumentsMenuItem(
+			List<MenuItem> menuItems, Folder folder, ThemeDisplay themeDisplay,
+			PortletRequest portletRequest)
+		throws PortalException {
+
+		if ((folder != null) && !folder.isSupportsMultipleUpload()) {
+			return;
+		}
+
+		List<DLFileEntryType> fileEntryTypes = getFileEntryTypes(
+			themeDisplay.getScopeGroupId(), folder);
+
+		if (fileEntryTypes.isEmpty()) {
+			return;
+		}
+
+		long folderId = _getFolderId(folder);
+
+		if (!containsPermission(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroupId(), folderId,
+				ActionKeys.ADD_DOCUMENT)) {
+
+			return;
+		}
+
+		URLMenuItem urlMenuItem = new URLMenuItem();
+
+		urlMenuItem.setLabel(
+			LanguageUtil.get(
+				PortalUtil.getHttpServletRequest(portletRequest),
+				"multiple-documents"));
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			portletRequest, portletDisplay.getId(), themeDisplay.getPlid(),
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter(
+			"mvcPath", "/document_library/upload_multiple_file_entries.jsp");
+		portletURL.setParameter(
+			"redirect", PortalUtil.getCurrentURL(portletRequest));
+		portletURL.setParameter(
+			"repositoryId",
+			String.valueOf(_getRepositoryId(themeDisplay, folder)));
+		portletURL.setParameter("folderId", String.valueOf(folderId));
 
 		urlMenuItem.setURL(portletURL.toString());
 
@@ -361,11 +404,19 @@ public class DLPortletToolbarContributor implements PortletToolbarContributor {
 		}
 
 		try {
+			addPortletTitleAddMultipleDocumentsMenuItem(
+				menuItems, folder, themeDisplay, portletRequest);
+		}
+		catch (PortalException pe) {
+			_log.error("Unable to add multiple documents menu item", pe);
+		}
+
+		try {
 			addPortletTitleAddDocumentMenuItems(
 				menuItems, folder, themeDisplay, portletRequest);
 		}
 		catch (PortalException pe) {
-			_log.error("Unable to add repository menu item", pe);
+			_log.error("Unable to add add document menu item", pe);
 		}
 
 		return menuItems;
@@ -447,14 +498,6 @@ public class DLPortletToolbarContributor implements PortletToolbarContributor {
 		PortletRequest portletRequest) {
 
 		long folderId = _getFolderId(folder);
-
-		if (!containsPermission(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), folderId,
-				ActionKeys.ADD_DOCUMENT)) {
-
-			return;
-		}
 
 		URLMenuItem urlMenuItem = new URLMenuItem();
 

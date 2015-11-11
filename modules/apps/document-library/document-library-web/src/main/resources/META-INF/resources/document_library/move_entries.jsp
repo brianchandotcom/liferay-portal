@@ -81,6 +81,15 @@ for (FileShortcut curFileShortcut : fileShortcuts) {
 		invalidShortcutEntries.add(curFileShortcut);
 	}
 }
+
+boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
+
+if (portletTitleBasedNavigation) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
+
+	renderResponse.setTitle(LanguageUtil.get(request, "move-files"));
+}
 %>
 
 <div <%= portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
@@ -93,10 +102,12 @@ for (FileShortcut curFileShortcut : fileShortcuts) {
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="newFolderId" type="hidden" value="<%= newFolderId %>" />
 
-		<liferay-ui:header
-			backURL="<%= redirect %>"
-			title="move-files"
-		/>
+		<c:if test="<%= !portletTitleBasedNavigation %>">
+			<liferay-ui:header
+				backURL="<%= redirect %>"
+				title="move-files"
+			/>
+		</c:if>
 
 		<liferay-ui:error exception="<%= DuplicateFileEntryException.class %>" message="the-folder-you-selected-already-has-an-entry-with-this-name.-please-select-a-different-folder" />
 		<liferay-ui:error exception="<%= DuplicateFolderNameException.class %>" message="the-folder-you-selected-already-has-an-entry-with-this-name.-please-select-a-different-folder" />

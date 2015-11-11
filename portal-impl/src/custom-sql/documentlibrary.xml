@@ -319,8 +319,7 @@
 				DLFolder
 			WHERE
 				(DLFolder.groupId = ?) AND
-				(DLFolder.mountPoint = ?) AND
-				(DLFolder.hidden_ = [$FALSE$]) AND
+				(DLFolder.hidden_ = ?) AND
 				([$STATUS$]) AND
 				[$FOLDER_PARENT_FOLDER_ID$]
 		]]>
@@ -372,8 +371,7 @@
 				DLFolder
 			WHERE
 				(DLFolder.groupId = ?) AND
-				(DLFolder.mountPoint = ?) AND
-				(DLFolder.hidden_ = [$FALSE$]) AND
+				(DLFolder.hidden_ = ?) AND
 				([$STATUS$]) AND
 				[$FOLDER_PARENT_FOLDER_ID$]
 		]]>

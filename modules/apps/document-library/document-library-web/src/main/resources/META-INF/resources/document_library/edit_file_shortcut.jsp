@@ -60,6 +60,17 @@ portletURL.setParameter("mvcRenderCommandName", mvcRenderCommandName);
 portletURL.setParameter("tabs2", tabs2);
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
+
+String headerTitle = (fileShortcut != null) ? LanguageUtil.format(request, "shortcut-to-x", fileShortcut.getToTitle(), false) : LanguageUtil.get(request, "new-file-shortcut");
+
+boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
+
+if (portletTitleBasedNavigation) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
+
+	renderResponse.setTitle(headerTitle);
+}
 %>
 
 <div <%= portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
@@ -77,10 +88,13 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 		<aui:input name="toGroupId" type="hidden" value="<%= toGroupId %>" />
 		<aui:input name="toFileEntryId" type="hidden" value="<%= toFileEntryId %>" />
 
-		<liferay-ui:header
-			backURL="<%= redirect %>"
-			title='<%= (fileShortcut != null)? LanguageUtil.format(request, "shortcut-to-x", fileShortcut.getToTitle(), false) : "new-file-shortcut" %>'
-		/>
+		<c:if test="<%= !portletTitleBasedNavigation %>">
+			<liferay-ui:header
+				backURL="<%= redirect %>"
+				localizeTitle="<%= false %>"
+				title="<%= headerTitle %>"
+			/>
+		</c:if>
 
 		<liferay-ui:error exception="<%= FileShortcutPermissionException.class %>" message="you-do-not-have-permission-to-create-a-shortcut-to-the-selected-document" />
 		<liferay-ui:error exception="<%= NoSuchFileEntryException.class %>" message="the-document-could-not-be-found" />

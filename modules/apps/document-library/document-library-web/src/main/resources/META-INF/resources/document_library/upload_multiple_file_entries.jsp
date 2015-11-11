@@ -29,13 +29,27 @@ if (repositoryId <= 0) {
 }
 
 long folderId = ParamUtil.getLong(request, "folderId");
+
+String headerTitle = portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY) ? LanguageUtil.get(request, "add-multiple-media") : LanguageUtil.get(request, "add-multiple-documents");
+
+boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
+
+if (portletTitleBasedNavigation) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
+
+	renderResponse.setTitle(headerTitle);
+}
 %>
 
 <div <%= portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		title='<%= portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY) ? "add-multiple-media" : "add-multiple-documents" %>'
-	/>
+	<c:if test="<%= !portletTitleBasedNavigation %>">
+		<liferay-ui:header
+			backURL="<%= redirect %>"
+			localizeTitle="<%= false %>"
+			title="<%= headerTitle %>"
+		/>
+	</c:if>
 
 	<c:choose>
 		<c:when test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) %>">

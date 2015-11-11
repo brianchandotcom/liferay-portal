@@ -250,10 +250,15 @@ AUI.add(
 				var prevButton = instance._getPaginationPrevButton();
 				var submitButton = instance._getPaginationSubmitButton();
 
+				var readOnly = instance.get('readOnly');
+
 				if (pagesTotal == 1) {
 					nextButton.hide();
 					prevButton.hide();
-					submitButton.show();
+
+					if (!readOnly) {
+						submitButton.show();
+					}
 				}
 				else if (currentPage === 1) {
 					nextButton.show();
@@ -263,7 +268,10 @@ AUI.add(
 				else if (currentPage == pagesTotal) {
 					nextButton.hide();
 					prevButton.show();
-					submitButton.show();
+
+					if (!readOnly) {
+						submitButton.show();
+					}
 				}
 				else {
 					nextButton.show();

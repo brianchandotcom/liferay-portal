@@ -46,6 +46,10 @@ public class DDMFormRenderingContext {
 		return _portletNamespace;
 	}
 
+	public boolean isReadOnly() {
+		return _readOnly;
+	}
+
 	public void setDDMFormValues(DDMFormValues ddmFormValues) {
 		_ddmFormValues = ddmFormValues;
 	}
@@ -68,10 +72,15 @@ public class DDMFormRenderingContext {
 		_portletNamespace = portletNamespace;
 	}
 
+	public void setReadOnly(boolean readOnly) {
+		_readOnly = readOnly;
+	}
+
 	private DDMFormValues _ddmFormValues;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
 	private Locale _locale;
 	private String _portletNamespace;
+	private boolean _readOnly;
 
 }

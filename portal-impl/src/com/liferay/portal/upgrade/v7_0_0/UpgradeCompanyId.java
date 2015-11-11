@@ -84,7 +84,7 @@ public class UpgradeCompanyId
 			new TableUpdater(
 				"SCFrameworkVersi_SCProductVers", "SCFrameworkVersion",
 				"frameworkVersionId"),
-			new TableUpdater("SCLicense", "SCLicense", "licenseId"),
+			new SCLicenseTableUpdater("SCLicense", "", ""),
 			new TableUpdater(
 				"SCLicenses_SCProductEntries", "SCProductEntry",
 				"productEntryId"),
@@ -135,6 +135,29 @@ public class UpgradeCompanyId
 					"dlf.folderId = DLSyncEvent.typePK);";
 
 			runSQL(updateDLFolder);
+		}
+
+	}
+
+	protected class SCLicenseTableUpdater extends TableUpdater {
+
+		public SCLicenseTableUpdater(
+			String tableName, String foreignTableName,
+			String foreignColumnName) {
+
+			super(tableName, foreignTableName, foreignColumnName);
+		}
+
+		@Override
+		public void update() throws IOException, SQLException {
+			String updateDLFileEntry =
+				"update SCLicense " +
+					"set companyId = (select pe.companyId " +
+					"from SCLicenses_SCProductEntries lpe, SCProductEntry pe " +
+					"where SCLicense.licenseId=lpe.licenseId and " +
+					"lpe.productEntryId=pe.productEntryId);";
+
+			runSQL(updateDLFileEntry);
 		}
 
 	}

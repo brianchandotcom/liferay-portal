@@ -19,6 +19,8 @@ import com.liferay.gradle.util.GradleUtil;
 
 import java.io.File;
 
+import java.util.concurrent.Callable;
+
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -27,6 +29,9 @@ import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.plugins.PluginContainer;
+import org.gradle.api.plugins.WarPlugin;
+import org.gradle.api.plugins.WarPluginConvention;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskInputs;
@@ -109,13 +114,26 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 	}
 
 	protected BuildWSDLTask addTaskBuildWSDL(Project project) {
-		BuildWSDLTask buildWSDLTask = GradleUtil.addTask(
+		final BuildWSDLTask buildWSDLTask = GradleUtil.addTask(
 			project, BUILD_WSDL_TASK_NAME, BuildWSDLTask.class);
 
 		buildWSDLTask.setDescription("Generates WSDL client stubs.");
 		buildWSDLTask.setDestinationDir("lib");
 		buildWSDLTask.setGroup(BasePlugin.BUILD_GROUP);
 		buildWSDLTask.setInputDir("wsdl");
+
+		PluginContainer pluginContainer = project.getPlugins();
+
+		pluginContainer.withType(
+			WarPlugin.class,
+			new Action<WarPlugin>() {
+
+				@Override
+				public void execute(WarPlugin warPlugin) {
+					configureTaskBuildWSDLForWarPlugin(buildWSDLTask);
+				}
+
+			});
 
 		return buildWSDLTask;
 	}
@@ -245,6 +263,34 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 			taskOutputs.getFiles());
 	}
 
+	protected void configureTaskBuildWSDLForWarPlugin(
+		final BuildWSDLTask buildWSDLTask) {
+
+		buildWSDLTask.setDestinationDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return new File(
+						getWebAppDir(buildWSDLTask.getProject()),
+						"WEB-INF/lib");
+				}
+
+			});
+
+		buildWSDLTask.setInputDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return new File(
+						getWebAppDir(buildWSDLTask.getProject()),
+						"WEB-INF/wsdl");
+				}
+
+			});
+	}
+
 	protected void configureTasksBuildWSDL(Project project) {
 		TaskContainer taskContainer = project.getTasks();
 
@@ -258,6 +304,13 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 				}
 
 			});
+	}
+
+	protected File getWebAppDir(Project project) {
+		WarPluginConvention warPluginConvention = GradleUtil.getConvention(
+			project, WarPluginConvention.class);
+
+		return warPluginConvention.getWebAppDir();
 	}
 
 }

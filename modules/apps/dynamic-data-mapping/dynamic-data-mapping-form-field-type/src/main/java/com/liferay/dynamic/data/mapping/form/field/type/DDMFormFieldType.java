@@ -12,18 +12,16 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.registry;
+package com.liferay.dynamic.data.mapping.form.field.type;
 
 /**
  * @author Marcellus Tavares
  */
-public abstract class BaseDDMFormFieldType implements DDMFormFieldType {
+public interface DDMFormFieldType {
 
-	@Override
 	public Class<? extends DDMFormFieldTypeSettings>
-		getDDMFormFieldTypeSettings() {
+		getDDMFormFieldTypeSettings();
 
-		return DefaultDDMFormFieldTypeSettings.class;
-	}
+	public String getName();
 
 }

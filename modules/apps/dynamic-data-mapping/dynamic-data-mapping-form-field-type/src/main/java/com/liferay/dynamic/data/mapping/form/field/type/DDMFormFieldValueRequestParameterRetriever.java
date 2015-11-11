@@ -12,26 +12,17 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.registry;
-
-import com.liferay.portal.kernel.util.ParamUtil;
+package com.liferay.dynamic.data.mapping.form.field.type;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Marcellus Tavares
  */
-public class DefaultDDMFormFieldValueRequestParameterRetriever
-	implements DDMFormFieldValueRequestParameterRetriever {
+public interface DDMFormFieldValueRequestParameterRetriever {
 
-	@Override
 	public String get(
 		HttpServletRequest httpServletRequest, String ddmFormFieldParameterName,
-		String defaultDDMFormFieldParameterValue) {
-
-		return ParamUtil.getString(
-			httpServletRequest, ddmFormFieldParameterName,
-			defaultDDMFormFieldParameterValue);
-	}
+		String defaultDDMFormFieldParameterValue);
 
 }

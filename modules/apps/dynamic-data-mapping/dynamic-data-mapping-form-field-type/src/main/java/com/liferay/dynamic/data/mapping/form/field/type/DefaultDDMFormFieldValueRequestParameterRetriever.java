@@ -12,24 +12,26 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.registry;
+package com.liferay.dynamic.data.mapping.form.field.type;
 
-import com.liferay.dynamic.data.mapping.model.Value;
-import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.portal.kernel.util.ParamUtil;
 
-import java.util.Locale;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Marcellus Tavares
  */
-public class DefaultDDMFormFieldValueAccessor
-	implements DDMFormFieldValueAccessor<String> {
+public class DefaultDDMFormFieldValueRequestParameterRetriever
+	implements DDMFormFieldValueRequestParameterRetriever {
 
 	@Override
-	public String getValue(DDMFormFieldValue ddmFormFieldValue, Locale locale) {
-		Value value = ddmFormFieldValue.getValue();
+	public String get(
+		HttpServletRequest httpServletRequest, String ddmFormFieldParameterName,
+		String defaultDDMFormFieldParameterValue) {
 
-		return value.getString(locale);
+		return ParamUtil.getString(
+			httpServletRequest, ddmFormFieldParameterName,
+			defaultDDMFormFieldParameterValue);
 	}
 
 }

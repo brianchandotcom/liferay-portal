@@ -12,17 +12,28 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.registry;
+package com.liferay.dynamic.data.mapping.form.field.type;
 
-import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
-
-import java.util.Locale;
+import com.liferay.dynamic.data.mapping.annotations.DDMForm;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormField;
 
 /**
  * @author Marcellus Tavares
  */
-public interface DDMFormFieldValueAccessor<T> {
+@DDMForm(localization = "content/Language")
+public interface DDMFormFieldTypeSettings {
 
-	public T getValue(DDMFormFieldValue ddmFormFieldValue, Locale locale);
+	@DDMFormField(required = true, visibilityExpression = "false")
+	public String dataType();
+
+	@DDMFormField(
+		label = "%name",
+		properties = {"setting.category=advanced", "setting.weight=2"},
+		required = true, visibilityExpression = "false"
+	)
+	public String name();
+
+	@DDMFormField(required = true, visibilityExpression = "false")
+	public String type();
 
 }

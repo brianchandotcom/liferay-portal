@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Dynamic Data Mapping Form Field Type API
+Bundle-SymbolicName: com.liferay.dynamic.data.mapping.form.field.type.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.dynamic.data.mapping.form.field.type
+Include-Resource: classes

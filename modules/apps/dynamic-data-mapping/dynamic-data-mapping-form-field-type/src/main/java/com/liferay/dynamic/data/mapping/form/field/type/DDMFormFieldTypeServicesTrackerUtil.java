@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.registry;
+package com.liferay.dynamic.data.mapping.form.field.type;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 

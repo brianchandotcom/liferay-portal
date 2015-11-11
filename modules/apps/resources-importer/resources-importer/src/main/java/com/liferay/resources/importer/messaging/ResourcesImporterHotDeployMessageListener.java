@@ -115,6 +115,7 @@ public class ResourcesImporterHotDeployMessageListener
 	protected void setDestination(Destination destination) {
 	}
 
+	@Reference
 	protected void setImporterFactory(ImporterFactory importerFactory) {
 		_importerFactory = importerFactory;
 	}

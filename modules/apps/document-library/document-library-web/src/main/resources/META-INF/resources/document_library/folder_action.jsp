@@ -127,7 +127,6 @@ String iconMenuId = null;
 				</portlet:resourceURL>
 
 				<liferay-ui:icon
-					iconCssClass="icon-download"
 					message="download"
 					method="get"
 					url="<%= downloadURL %>"
@@ -150,7 +149,6 @@ String iconMenuId = null;
 						</portlet:renderURL>
 
 						<liferay-ui:icon
-							iconCssClass="icon-edit"
 							message="edit"
 							url="<%= editURL %>"
 						/>
@@ -165,7 +163,6 @@ String iconMenuId = null;
 						</portlet:renderURL>
 
 						<liferay-ui:icon
-							iconCssClass="icon-edit"
 							message="edit"
 							url="<%= editURL %>"
 						/>
@@ -180,7 +177,6 @@ String iconMenuId = null;
 						</portlet:renderURL>
 
 						<liferay-ui:icon
-							iconCssClass="icon-move"
 							message="move"
 							url="<%= moveURL %>"
 						/>
@@ -196,7 +192,6 @@ String iconMenuId = null;
 						/>
 
 						<liferay-ui:icon
-							iconCssClass="icon-lock"
 							message="permissions"
 							method="get"
 							url="<%= permissionsURL %>"
@@ -214,7 +209,6 @@ String iconMenuId = null;
 						</portlet:renderURL>
 
 						<liferay-ui:icon
-							iconCssClass="icon-plus"
 							message="add-subfolder"
 							url="<%= addFolderURL %>"
 						/>
@@ -241,7 +235,6 @@ String iconMenuId = null;
 							</portlet:actionURL>
 
 							<liferay-ui:icon
-								iconCssClass="icon-remove"
 								message="delete-expired-temporary-files"
 								url="<%= deleteExpiredTemporaryFileEntriesURL %>"
 							/>
@@ -268,7 +261,6 @@ String iconMenuId = null;
 						</portlet:renderURL>
 
 						<liferay-ui:icon
-							iconCssClass="icon-edit"
 							message="edit"
 							url="<%= editURL %>"
 						/>
@@ -284,7 +276,6 @@ String iconMenuId = null;
 						/>
 
 						<liferay-ui:icon
-							iconCssClass="icon-lock"
 							message="permissions"
 							method="get"
 							url="<%= permissionsURL %>"
@@ -302,7 +293,6 @@ String iconMenuId = null;
 						</portlet:renderURL>
 
 						<liferay-ui:icon
-							iconCssClass="icon-plus"
 							message='<%= (folder != null) ? "add-subfolder" : "add-folder" %>'
 							url="<%= addFolderURL %>"
 						/>
@@ -316,7 +306,6 @@ String iconMenuId = null;
 						</portlet:renderURL>
 
 						<liferay-ui:icon
-							iconCssClass="icon-plus"
 							message="add-repository"
 							url="<%= addRepositoryURL %>"
 						/>
@@ -339,7 +328,6 @@ String iconMenuId = null;
 
 						<liferay-ui:icon
 							cssClass="hide upload-multiple-documents"
-							iconCssClass="icon-copy"
 							message='<%= portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY) ? "multiple-media" : "multiple-documents" %>'
 							url="<%= editFileEntryURL %>"
 						/>
@@ -349,7 +337,6 @@ String iconMenuId = null;
 				<c:if test="<%= hasViewPermission && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY) && (DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(repositoryId, folderId, status) > 0) %>">
 					<liferay-ui:icon
 						cssClass='<%= randomNamespace + "-slide-show" %>'
-						iconCssClass="icon-search"
 						message="view-slide-show"
 						url="javascript:;"
 					/>
@@ -364,7 +351,6 @@ String iconMenuId = null;
 					</portlet:renderURL>
 
 					<liferay-ui:icon
-						iconCssClass="icon-plus"
 						message="add-shortcut"
 						url="<%= editFileShortcutURL %>"
 					/>
@@ -380,7 +366,6 @@ String iconMenuId = null;
 
 			<liferay-ui:icon
 				cssClass='<%= randomNamespace + "-webdav-action" %>'
-				iconCssClass="icon-desktop"
 				message="access-from-desktop"
 				url="javascript:;"
 			/>

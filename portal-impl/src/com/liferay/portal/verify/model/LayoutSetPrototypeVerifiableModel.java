@@ -46,6 +46,11 @@ public class LayoutSetPrototypeVerifiableModel
 	}
 
 	@Override
+	public boolean isAnonymousUserAllowed() {
+		return false;
+	}
+
+	@Override
 	public boolean isUpdateDates() {
 		return false;
 	}

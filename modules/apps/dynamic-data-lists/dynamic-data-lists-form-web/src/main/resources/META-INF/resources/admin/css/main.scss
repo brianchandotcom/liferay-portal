@@ -452,7 +452,7 @@
 
 	.form-builder-field-list-add-container,
 	.form-builder-field + .form-builder-field-list-add-container {
-		margin-top: -36px;
+		margin-top: -34px;
 	}
 
 	.liferay-ddm-form-renderer-wizard-navigation-allowed {
@@ -500,11 +500,12 @@
 		width: auto;
 
 		.form-builder-field-list-container {
-			padding: 26px 0 0 0;
+			padding: 36px 0 0 0;
 		}
 
 		.form-builder-field-list-empty .form-builder-field-list-container {
 			padding-bottom: 26px;
+			padding-top: 26px;
 		}
 
 		.layout-builder-add-row-area {

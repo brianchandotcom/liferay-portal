@@ -191,14 +191,6 @@ AUI.add(
 				return controls.one('.lfr-ddm-form-pagination-prev');
 			},
 
-			_getPaginationSubmitButton: function() {
-				var instance = this;
-
-				var controls = instance._getPaginationControlsNode();
-
-				return controls.one('.lfr-ddm-form-submit');
-			},
-
 			_onClickPaginationControls: function(event) {
 				var instance = this;
 
@@ -248,35 +240,30 @@ AUI.add(
 
 				var nextButton = instance._getPaginationNextButton();
 				var prevButton = instance._getPaginationPrevButton();
-				var submitButton = instance._getPaginationSubmitButton();
-
-				var readOnly = instance.get('readOnly');
 
 				if (pagesTotal == 1) {
 					nextButton.hide();
 					prevButton.hide();
-
-					if (!readOnly) {
-						submitButton.show();
-					}
 				}
 				else if (currentPage === 1) {
 					nextButton.show();
 					prevButton.hide();
-					submitButton.hide();
 				}
 				else if (currentPage == pagesTotal) {
 					nextButton.hide();
 					prevButton.show();
-
-					if (!readOnly) {
-						submitButton.show();
-					}
 				}
 				else {
 					nextButton.show();
 					prevButton.show();
-					submitButton.hide();
+				}
+
+				var submitButton = instance.getSubmitButton();
+
+				if (submitButton) {
+					var readOnly = instance.get('readOnly');
+
+					submitButton.toggle(currentPage === pagesTotal && !readOnly);
 				}
 			},
 

@@ -50,14 +50,44 @@ public class ServiceBuilderPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, JavaPlugin.class);
 
 		Configuration serviceBuilderConfiguration =
-			addServiceBuilderConfiguration(project);
+			addConfigurationServiceBuilder(project);
 
-		addBuildServiceTask(project);
+		addTaskBuildService(project);
 
 		configureTasksBuildService(project, serviceBuilderConfiguration);
 	}
 
-	protected BuildServiceTask addBuildServiceTask(final Project project) {
+	protected Configuration addConfigurationServiceBuilder(
+		final Project project) {
+
+		Configuration configuration = GradleUtil.addConfiguration(
+			project, CONFIGURATION_NAME);
+
+		configuration.setDescription(
+			"Configures Liferay Service Builder for this project.");
+		configuration.setVisible(false);
+
+		GradleUtil.executeIfEmpty(
+			configuration,
+			new Action<Configuration>() {
+
+				@Override
+				public void execute(Configuration configuration) {
+					addDependenciesServiceBuilder(project);
+				}
+
+			});
+
+		return configuration;
+	}
+
+	protected void addDependenciesServiceBuilder(Project project) {
+		GradleUtil.addDependency(
+			project, CONFIGURATION_NAME, "com.liferay",
+			"com.liferay.portal.tools.service.builder", "latest.release");
+	}
+
+	protected BuildServiceTask addTaskBuildService(final Project project) {
 		final BuildServiceTask buildServiceTask = GradleUtil.addTask(
 			project, BUILD_SERVICE_TASK_NAME, BuildServiceTask.class);
 
@@ -192,36 +222,6 @@ public class ServiceBuilderPlugin implements Plugin<Project> {
 			});
 
 		return buildServiceTask;
-	}
-
-	protected Configuration addServiceBuilderConfiguration(
-		final Project project) {
-
-		Configuration configuration = GradleUtil.addConfiguration(
-			project, CONFIGURATION_NAME);
-
-		configuration.setDescription(
-			"Configures Liferay Service Builder for this project.");
-		configuration.setVisible(false);
-
-		GradleUtil.executeIfEmpty(
-			configuration,
-			new Action<Configuration>() {
-
-				@Override
-				public void execute(Configuration configuration) {
-					addServiceBuilderDependencies(project);
-				}
-
-			});
-
-		return configuration;
-	}
-
-	protected void addServiceBuilderDependencies(Project project) {
-		GradleUtil.addDependency(
-			project, CONFIGURATION_NAME, "com.liferay",
-			"com.liferay.portal.tools.service.builder", "latest.release");
 	}
 
 	protected void configureTaskBuildServiceClasspath(

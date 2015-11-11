@@ -55,7 +55,6 @@
 		<execute macro="PermissionsInline#gotoBlogsEntryCP">
 			<var name="entryTitle" value="Blogs Entry Title" />
 			<var name="pageName" value="Blogs Page" />
-			<var name="portletName" value="Blogs" />
 		</execute>
 
 		<execute macro="Role#removePermissionPG">
@@ -88,7 +87,6 @@
 		<execute macro="PermissionsInline#gotoBlogsEntryCP">
 			<var name="entryTitle" value="Blogs Entry Title" />
 			<var name="pageName" value="Blogs Page" />
-			<var name="portletName" value="Blogs" />
 		</execute>
 
 		<execute macro="Role#definePermissionPG">

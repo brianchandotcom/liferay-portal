@@ -73,12 +73,18 @@ public class WSDDBuilderPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Configuration configuration) {
-					addWSDDBuilderDependencies(project);
+					addDependenciesWSDDBuilder(project);
 				}
 
 			});
 
 		return configuration;
+	}
+
+	protected void addDependenciesWSDDBuilder(Project project) {
+		GradleUtil.addDependency(
+			project, CONFIGURATION_NAME, "com.liferay",
+			"com.liferay.portal.tools.wsdd.builder", "latest.release");
 	}
 
 	protected BuildWSDDTask addTaskBuildWSDD(Project project) {
@@ -142,12 +148,6 @@ public class WSDDBuilderPlugin implements Plugin<Project> {
 			});
 
 		return buildWSDDTask;
-	}
-
-	protected void addWSDDBuilderDependencies(Project project) {
-		GradleUtil.addDependency(
-			project, CONFIGURATION_NAME, "com.liferay",
-			"com.liferay.portal.tools.wsdd.builder", "latest.release");
 	}
 
 	protected void configureTaskBuildWSDDClasspath(

@@ -360,6 +360,12 @@ public class PoshiRunnerContext {
 			Element commandElement = getTestCaseCommandElement(
 				testCaseClassCommandName);
 
+			if (Validator.isNotNull(
+					commandElement.attributeValue(propertyName))) {
+
+				runAttributeValue = commandElement.attributeValue(propertyName);
+			}
+
 			List<Element> commandPropertyElements = commandElement.elements(
 				"property");
 

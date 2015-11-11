@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -131,6 +132,18 @@ public abstract class BaseMVCActionCommand implements MVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse,
 			String redirect)
 		throws IOException {
+
+		if (Validator.isNull(redirect)) {
+			redirect = (String)actionRequest.getAttribute(WebKeys.REDIRECT);
+		}
+
+		if (Validator.isNull(redirect)) {
+			redirect = ParamUtil.getString(actionRequest, "redirect");
+		}
+
+		if (Validator.isNull(redirect)) {
+			return;
+		}
 
 		actionResponse.sendRedirect(redirect);
 

@@ -183,7 +183,12 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			CleanUpPermissionsUtil.cleanUpAddToPagePermissions(actionRequest);
 		}
 		else if (cmd.startsWith("convertProcess.")) {
-			redirect = convertProcess(actionRequest, actionResponse, cmd);
+			String convertProcessRedirect = convertProcess(
+				actionRequest, actionResponse, cmd);
+
+			if (Validator.isNotNull(convertProcessRedirect)) {
+				redirect = convertProcessRedirect;
+			}
 		}
 		else if (cmd.equals("dlPreviews")) {
 			DLPreviewableProcessor.deleteFiles();
@@ -318,7 +323,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		if (path != null) {
 			PortletURL portletURL = actionResponseImpl.createRenderURL();
 
-			portletURL.setParameter("struts_action", path);
+			portletURL.setParameter("mvcRenderCommandName", path);
 			portletURL.setWindowState(WindowState.MAXIMIZED);
 
 			return portletURL.toString();

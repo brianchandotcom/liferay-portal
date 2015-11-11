@@ -64,6 +64,81 @@
 		</execute>
 	</command>
 
+	<command name="DeactivateAndActivatePageTemplate" priority="4">
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Page Templates" />
+		</execute>
+
+		<execute macro="PageTemplate#addCP">
+			<var name="pageTemplateActive" value="Yes" />
+			<var name="pageTemplateName" value="Page Template Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Page Templates" />
+		</execute>
+
+		<execute macro="PageTemplate#deactivateAndActivate">
+			<var name="pageTemplateName" value="Page Template Name" />
+			<var name="pageTemplateStatus" value="No" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Page Templates" />
+		</execute>
+
+		<execute macro="PageTemplate#viewStatus">
+			<var name="pageTemplateName" value="Page Template Name" />
+			<var name="pageTemplateStatus" value="No" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Liferay" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePageNavigator#gotoAddPage" />
+
+		<execute macro="SitePage#viewPageTemplateTypeNotPresentCP">
+			<var name="pageTemplateName" value="Page Template Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Page Templates" />
+		</execute>
+
+		<execute macro="PageTemplate#deactivateAndActivate">
+			<var name="pageTemplateName" value="Page Template Name" />
+			<var name="pageTemplateStatus" value="Yes" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Page Templates" />
+		</execute>
+
+		<execute macro="PageTemplate#viewStatus">
+			<var name="pageTemplateName" value="Page Template Name" />
+			<var name="pageTemplateStatus" value="Yes" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Liferay" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePageNavigator#gotoAddPage" />
+
+		<execute macro="SitePage#viewPageTemplateTypePresentCP">
+			<var name="pageTemplateName" value="Page Template Name" />
+		</execute>
+	</command>
+
 	<command name="DeletePageTemplate" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Page Templates" />
@@ -105,6 +180,37 @@
 
 		<execute macro="PageTemplate#editCP">
 			<var name="pageTemplateActive" value="No" />
+			<var name="pageTemplateName" value="Page Template Name" />
+		</execute>
+	</command>
+
+	<command name="EditPageTemplateDescription" priority="4">
+		<property name="portal.acceptance" value="true" />
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Page Templates" />
+		</execute>
+
+		<execute macro="PageTemplate#addCP">
+			<var name="pageTemplateActive" value="Yes" />
+			<var name="pageTemplateName" value="Page Template Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Page Templates" />
+		</execute>
+
+		<execute macro="PageTemplate#editDescription">
+			<var name="pageTemplateDescription" value="This is a page template description" />
+			<var name="pageTemplateName" value="Page Template Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Page Templates" />
+		</execute>
+
+		<execute macro="PageTemplate#viewDescription">
+			<var name="pageTemplateDescription" value="This is a page template description edit" />
 			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
 	</command>

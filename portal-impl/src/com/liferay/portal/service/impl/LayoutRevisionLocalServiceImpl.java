@@ -168,9 +168,8 @@ public class LayoutRevisionLocalServiceImpl
 			}
 		}
 
-		StagingUtil.deleteRecentLayoutRevisionId(
-			layoutRevision.getUserId(), layoutRevision.getLayoutSetBranchId(),
-			layoutRevision.getPlid());
+		recentLayoutRevisionLocalService.deleteRecentLayoutRevisions(
+			layoutRevision);
 
 		if (layoutRevision.isPending()) {
 			workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(

@@ -438,17 +438,12 @@ public class DDLRecordSetLocalServiceImpl
 			settingsProperties.getProperty("sendEmailNotification"));
 
 		if (sendEmailNotification) {
-			String emailFromName = GetterUtil.getString(
-				settingsProperties.getProperty("emailFromName"));
-
 			String emailFromAddress = GetterUtil.getString(
 				settingsProperties.getProperty("emailFromAddress"));
-
+			String emailFromName = GetterUtil.getString(
+				settingsProperties.getProperty("emailFromName"));
 			String emailToAddress = GetterUtil.getString(
 				settingsProperties.getProperty("emailToAddress"));
-
-			String emailSubject = GetterUtil.getString(
-				settingsProperties.getProperty("emailSubject"));
 
 			if (Validator.isNull(emailFromName)) {
 				throw new RecordSetSettingsException(
@@ -463,11 +458,6 @@ public class DDLRecordSetLocalServiceImpl
 			if (!Validator.isEmailAddress(emailToAddress)) {
 				throw new RecordSetSettingsException(
 					"The property \"emailToAddress\" is not an email");
-			}
-
-			if (Validator.isNull(emailSubject)) {
-				throw new RecordSetSettingsException(
-					"The property \"emailSubject\" is empty");
 			}
 
 String requireCaptcha = settingsProperties.getProperty(

@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRendererRegistryUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
@@ -59,31 +60,19 @@ public class DDLFormEmailNotificationSenderUtil {
 		try {
 			DDLRecordSet recordSet = record.getRecordSet();
 
-			long companyId = recordSet.getCompanyId();
-
-			String emailFromName = recordSet.getSettingsProperty(
-				"emailFromName",
-				DDLFormEmailNotificationUtil.getDefaultEmailFromName(
-					companyId));
-
-			String emailFromAddress = recordSet.getSettingsProperty(
-				"emailFromAddress",
-				DDLFormEmailNotificationUtil.getDefaultEmailFromAddress(
-					companyId));
-
-			String emailToAddress = recordSet.getSettingsProperty(
-				"emailToAddress",
-				DDLFormEmailNotificationUtil.getDefaultEmailToAddress(
-					recordSet));
-
-			String subject = recordSet.getSettingsProperty(
-				"emailSubject",
-				DDLFormEmailNotificationUtil.getDefaultSubject(recordSet));
+			String emailFromAddress =
+				DDLFormEmailNotificationUtil.getEmailFromAddress(recordSet);
+			String emailFromName =
+				DDLFormEmailNotificationUtil.getEmailFromName(recordSet);
+			String emailToAddress =
+				DDLFormEmailNotificationUtil.getEmailToAddress(recordSet);
+			String subject = DDLFormEmailNotificationUtil.getEmailSubject(
+				recordSet);
 
 			InternetAddress fromInternetAddress = new InternetAddress(
 				emailFromAddress, emailFromName);
 
-			String body = getMailBody(portletRequest, recordSet, record);
+			String body = getEmailBody(portletRequest, recordSet, record);
 
 			MailMessage mailMessage = new MailMessage(
 				fromInternetAddress, subject, body, true);
@@ -101,22 +90,18 @@ public class DDLFormEmailNotificationSenderUtil {
 	}
 
 	private static Map<String, Serializable> getContext(
-		PortletRequest portletRequest, DDLRecordSet recordSet,
-		DDLRecord record) throws PortalException {
-
-		long companyId = recordSet.getCompanyId();
+			PortletRequest portletRequest, DDLRecordSet recordSet,
+			DDLRecord record)
+		throws PortalException {
 
 		Map<String, Serializable> context = new HashMap<>();
 
 		DDMStructure ddmStructure = recordSet.getDDMStructure();
 
-		String emailFromName = recordSet.getSettingsProperty(
-			"emailFromName",
-			DDLFormEmailNotificationUtil.getDefaultEmailFromName(companyId));
-
-		String emailFromAddress = recordSet.getSettingsProperty(
-			"emailFromAddress",
-			DDLFormEmailNotificationUtil.getDefaultEmailFromAddress(companyId));
+		String emailFromAddress =
+			DDLFormEmailNotificationUtil.getEmailFromAddress(recordSet);
+		String emailFromName = DDLFormEmailNotificationUtil.getEmailFromName(
+			recordSet);
 
 		Locale locale = ddmStructure.getDDMForm().getDefaultLocale();
 
@@ -137,7 +122,7 @@ public class DDLFormEmailNotificationSenderUtil {
 		return context;
 	}
 
-	private static String getMailBody(
+	private static String getEmailBody(
 		PortletRequest portletRequest, DDLRecordSet recordSet,
 		DDLRecord record) throws Exception {
 
@@ -153,16 +138,6 @@ public class DDLFormEmailNotificationSenderUtil {
 		return replaceTokens(notificationTemplate, context);
 	}
 
-	private static String getRenderedValue(
-		DDMFormFieldValue ddmFormFieldValue, Locale locale) {
-
-		DDMFormFieldValueRenderer ddmFormFieldValueRenderer =
-			DDMFormFieldValueRendererRegistryUtil.getDDMFormFieldValueRenderer(
-				ddmFormFieldValue.getType());
-
-		return ddmFormFieldValueRenderer.render(ddmFormFieldValue, locale);
-	}
-
 	private static String getSerializedDDMFormValues(DDLRecord record)
 		throws PortalException {
 
@@ -171,20 +146,33 @@ public class DDLFormEmailNotificationSenderUtil {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValues.getDDMFormFieldValues();
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(ddmFormFieldValues.size() * 4);
 
 		Locale defaultLocale = ddmFormValues.getDefaultLocale();
 
 		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
 			DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
 
-			sb.append(ddmFormField.getLabel().getString(defaultLocale));
-			sb.append(" : ");
-			sb.append(getRenderedValue(ddmFormFieldValue, defaultLocale));
+			LocalizedValue label = ddmFormField.getLabel();
+
+			sb.append(label.getString(defaultLocale));
+			sb.append(": ");
+			sb.append(
+				renderDDMFormFieldValue(ddmFormFieldValue, defaultLocale));
 			sb.append("<br />");
 		}
 
 		return sb.toString();
+	}
+
+	private static String renderDDMFormFieldValue(
+		DDMFormFieldValue ddmFormFieldValue, Locale locale) {
+
+		DDMFormFieldValueRenderer ddmFormFieldValueRenderer =
+			DDMFormFieldValueRendererRegistryUtil.getDDMFormFieldValueRenderer(
+				ddmFormFieldValue.getType());
+
+		return ddmFormFieldValueRenderer.render(ddmFormFieldValue, locale);
 	}
 
 	private static String replaceTokens(

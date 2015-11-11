@@ -15,59 +15,82 @@
 package com.liferay.dynamic.data.lists.form.web.util;
 
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 /**
  * @author Rafael Praxedes
  */
 public class DDLFormEmailNotificationUtil {
 
-	public static String getDefaultEmailFromAddress(long companyId) {
-		return PrefsPropsUtil.getString(
-			companyId, PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+	public static String getEmailFromAddress(DDLRecordSet recordSet) {
+		String defaultEmailFromAddress = PrefsPropsUtil.getString(
+			recordSet.getCompanyId(), PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+
+		return GetterUtil.getString(
+			recordSet.getSettingsProperty(
+				"emailFromAddress", defaultEmailFromAddress));
 	}
 
-	public static String getDefaultEmailFromName(long companyId) {
-		return PrefsPropsUtil.getString(
-			companyId, PropsKeys.ADMIN_EMAIL_FROM_NAME);
+	public static String getEmailFromName(DDLRecordSet recordSet) {
+		String defaultEmailFromName = PrefsPropsUtil.getString(
+			recordSet.getCompanyId(), PropsKeys.ADMIN_EMAIL_FROM_NAME);
+
+		return GetterUtil.getString(
+			recordSet.getSettingsProperty(
+				"emailFromName", defaultEmailFromName));
 	}
 
-	public static String getDefaultEmailToAddress(DDLRecordSet recordSet) {
-		String emailToAddress = StringPool.BLANK;
-
-		User userFormCreator = UserLocalServiceUtil.fetchUser(
-			recordSet.getUserId());
-
-		if (userFormCreator != null) {
-			emailToAddress = userFormCreator.getEmailAddress();
-		}
-
-		return emailToAddress;
-	}
-
-	public static String getDefaultSubject(DDLRecordSet recordSet)
+	public static String getEmailSubject(DDLRecordSet recordSet)
 		throws PortalException {
 
 		DDMStructure ddmStructure = recordSet.getDDMStructure();
 
-		Locale locale = ddmStructure.getDDMForm().getDefaultLocale();
+		DDMForm ddmForm = ddmStructure.getDDMForm();
 
-		return LanguageUtil.format(
-			locale, "new-x-form-submitted", recordSet.getName(locale), false);
+		Locale locale = ddmForm.getDefaultLocale();
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, DDLFormEmailNotificationUtil.class);
+
+		String defaultEmailSubject = LanguageUtil.format(
+			resourceBundle, "new-x-form-submitted", recordSet.getName(locale),
+			false);
+
+		return GetterUtil.getString(
+			recordSet.getSettingsProperty("emailSubject", defaultEmailSubject));
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		DDLFormEmailNotificationUtil.class);
+	public static String getEmailToAddress(DDLRecordSet recordSet) {
+		String defaultEmailToAddress = StringPool.BLANK;
+
+		User user = UserLocalServiceUtil.fetchUser(recordSet.getUserId());
+
+		if (user != null) {
+			defaultEmailToAddress = user.getEmailAddress();
+		}
+
+		return GetterUtil.getString(
+			recordSet.getSettingsProperty(
+				"emailToAddress", defaultEmailToAddress));
+	}
+
+	public static boolean isEmailNotificationEnabled(DDLRecordSet recordSet) {
+		return GetterUtil.getBoolean(
+			recordSet.getSettingsProperty(
+				"sendEmailNotification", Boolean.FALSE.toString()));
+	}
 
 }

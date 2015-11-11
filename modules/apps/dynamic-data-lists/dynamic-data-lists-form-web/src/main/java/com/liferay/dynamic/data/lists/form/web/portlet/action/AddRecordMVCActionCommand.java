@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.lists.form.web.portlet.action;
 
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
 import com.liferay.dynamic.data.lists.form.web.util.DDLFormEmailNotificationSenderUtil;
+import com.liferay.dynamic.data.lists.form.web.util.DDLFormEmailNotificationUtil;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
@@ -83,11 +84,10 @@ public class AddRecordMVCActionCommand extends BaseMVCActionCommand {
 			groupId, recordSetId, DDLRecordConstants.DISPLAY_INDEX_DEFAULT,
 			ddmFormValues, serviceContext);
 
-		boolean sendEmailNotification = GetterUtil.getBoolean(
-			recordSet.getSettingsProperty(
-				"sendEmailNotification", StringPool.BLANK));
+		boolean emailNotificationEnabled =
+			DDLFormEmailNotificationUtil.isEmailNotificationEnabled(recordSet);
 
-		if (sendEmailNotification) {
+		if (emailNotificationEnabled) {
 			DDLFormEmailNotificationSenderUtil.sendEmailNotification(
 				actionRequest, ddlRecord);
 		}

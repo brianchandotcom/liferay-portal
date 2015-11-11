@@ -62,48 +62,60 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 			String foreignColumnName) {
 
 			_tableName = tableName;
-			_foreignTableName = foreignTableName;
-			_foreignColumnName = foreignColumnName;
+
+			_columnName = foreignColumnName;
+
+			_foreignTables = new String[1][2];
+
+			_foreignTables[0][0] = foreignTableName;
+
+			_foreignTables[0][1] = foreignColumnName;
 		}
 
-		public String getForeignColumnName() {
-			return _foreignColumnName;
-		}
+		public TableUpdater(
+			String tableName, String columnName, String[][] foreignTables) {
 
-		public String getForeignTableName() {
-			return _foreignTableName;
+			_tableName = tableName;
+
+			_columnName = columnName;
+
+			_foreignTables = foreignTables;
 		}
 
 		public String getTableName() {
 			return _tableName;
 		}
 
-		public String getUpdateSQL() {
+		public void update() throws IOException, SQLException {
+			for (String[] foreignTable : _foreignTables) {
+				runSQL(getUpdateSQL(foreignTable[0], foreignTable[1]));
+			}
+		}
+
+		protected String getUpdateSQL(
+			String foreignTableName, String foreignColumnName) {
+
 			StringBundler sb = new StringBundler();
 
 			sb.append("update ");
-			sb.append(getTableName());
+			sb.append(_tableName);
 			sb.append(" set companyId = (select companyId from ");
-			sb.append(getForeignTableName());
+			sb.append(foreignTableName);
 			sb.append(" where ");
-			sb.append(getForeignTableName());
+			sb.append(foreignTableName);
 			sb.append(".");
-			sb.append(getForeignColumnName());
+			sb.append(foreignColumnName);
 			sb.append(" = ");
 			sb.append(_tableName);
 			sb.append(".");
-			sb.append(getForeignColumnName());
+			sb.append(_columnName);
 			sb.append(")");
 
 			return sb.toString();
 		}
 
-		public void update() throws IOException, SQLException {
-			runSQL(getUpdateSQL());
-		}
-
-		private final String _foreignColumnName;
-		private final String _foreignTableName;
+		private final String _columnName;
+		private final String[][] _foreignTables;
 		private final String _tableName;
 
 	}

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.registry;
+package com.liferay.dynamic.data.mapping.util;
 
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -109,11 +109,10 @@ public class DDMFormFactory {
 	}
 
 	private static final Class<? extends Annotation> _DDM_FORM_ANNOTATION =
-		com.liferay.dynamic.data.mapping.registry.annotations.DDMForm.class;
+		com.liferay.dynamic.data.mapping.annotations.DDMForm.class;
 
 	private static final Class<? extends Annotation>
 		_DDM_FORM_FIELD_ANNOTATION =
-			com.liferay.dynamic.data.mapping.registry.annotations.DDMFormField.
-				class;
+			com.liferay.dynamic.data.mapping.annotations.DDMFormField.class;
 
 }

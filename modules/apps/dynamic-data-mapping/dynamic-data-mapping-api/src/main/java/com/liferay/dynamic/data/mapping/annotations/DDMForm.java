@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.registry.annotations;
+package com.liferay.dynamic.data.mapping.annotations;
 
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -25,33 +25,13 @@ import java.lang.annotation.Target;
  * @author Marcellus Tavares
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
-public @interface DDMFormField {
+@Target(ElementType.TYPE)
+public @interface DDMForm {
 
-	public String dataType() default StringPool.BLANK;
+	public String availableLanguageIds() default StringPool.BLANK;
 
-	public String label() default StringPool.BLANK;
+	public String defaultLanguageId() default StringPool.BLANK;
 
-	public String name() default StringPool.BLANK;
-
-	public String[] optionLabels() default {};
-
-	public String[] optionValues() default {};
-
-	public String predefinedValue() default StringPool.BLANK;
-
-	public String[] properties() default {};
-
-	public boolean required() default false;
-
-	public String tip() default StringPool.BLANK;
-
-	public String type() default StringPool.BLANK;
-
-	public String validationErrorMessage() default StringPool.BLANK;
-
-	public String validationExpression() default StringPool.TRUE;
-
-	public String visibilityExpression() default StringPool.TRUE;
+	public String localization() default StringPool.BLANK;
 
 }

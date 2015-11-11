@@ -21,8 +21,8 @@
 			classpathref="project.classpath"
 			fork="true"
 			newenvironment="true"
-			resultproperty="build-client.result"
 			outputproperty="build-client.output"
+			resultproperty="build-client.result"
 		>
 			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
 			<arg value="${project.dir}/portal-web/docroot/WEB-INF/server-config.wsdd" />

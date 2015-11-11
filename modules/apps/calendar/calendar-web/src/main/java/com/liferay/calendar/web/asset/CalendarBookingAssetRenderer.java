@@ -102,6 +102,11 @@ public class CalendarBookingAssetRenderer
 	}
 
 	@Override
+	public int getStatus() {
+		return _calendarBooking.getStatus();
+	}
+
+	@Override
 	public String getSummary(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 

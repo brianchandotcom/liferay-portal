@@ -23,6 +23,7 @@ import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.JournalContentSearchLocalServiceUtil;
 import com.liferay.journal.service.permission.JournalArticlePermission;
 import com.liferay.journal.util.JournalContent;
+import com.liferay.journal.util.JournalConverter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -116,7 +117,13 @@ public class JournalArticleAssetRenderer
 
 	@Override
 	public DDMFormValuesReader getDDMFormValuesReader() {
-		return new JournalArticleDDMFormValuesReader(_article);
+		JournalArticleDDMFormValuesReader journalArticleDDMFormValuesReader =
+			new JournalArticleDDMFormValuesReader(_article);
+
+		journalArticleDDMFormValuesReader.setJournalConverter(
+			_journalConverter);
+
+		return journalArticleDDMFormValuesReader;
 	}
 
 	@Override
@@ -460,6 +467,10 @@ public class JournalArticleAssetRenderer
 		_journalContent = journalContent;
 	}
 
+	public void setJournalConverter(JournalConverter journalConverter) {
+		_journalConverter = journalConverter;
+	}
+
 	protected JournalArticleDisplay getArticleDisplay(
 			HttpServletRequest request, HttpServletResponse response)
 		throws PortalException {
@@ -510,5 +521,6 @@ public class JournalArticleAssetRenderer
 
 	private final JournalArticle _article;
 	private JournalContent _journalContent;
+	private JournalConverter _journalConverter;
 
 }

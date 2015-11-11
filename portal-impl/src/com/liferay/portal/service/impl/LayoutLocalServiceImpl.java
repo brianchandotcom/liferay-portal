@@ -2851,13 +2851,13 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		Layout nextLayout = null;
 
-		if (nextLayoutId > -1) {
+		if (nextLayoutId > 0) {
 			nextLayout = getLayout(groupId, privateLayout, nextLayoutId);
 		}
 
 		Layout previousLayout = null;
 
-		if (previousLayoutId > -1) {
+		if (previousLayoutId > 0) {
 			previousLayout = getLayout(
 				groupId, privateLayout, previousLayoutId);
 		}

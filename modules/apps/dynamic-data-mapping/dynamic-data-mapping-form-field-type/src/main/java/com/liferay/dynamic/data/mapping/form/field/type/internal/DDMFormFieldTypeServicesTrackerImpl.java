@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.registry.impl;
+package com.liferay.dynamic.data.mapping.form.field.type.internal;
 
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldRenderer;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldType;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTracker;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueAccessor;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueRenderer;
-import com.liferay.dynamic.data.mapping.registry.DefaultDDMFormFieldValueRenderer;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldRenderer;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccessor;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRenderer;
+import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldValueRenderer;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMap;

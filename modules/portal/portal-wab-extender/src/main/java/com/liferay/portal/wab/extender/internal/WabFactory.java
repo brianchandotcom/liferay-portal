@@ -16,6 +16,7 @@ package com.liferay.portal.wab.extender.internal;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.wab.extender.internal.configuration.WabExtenderConfiguration;
 import com.liferay.portal.wab.extender.internal.event.EventUtil;
@@ -74,7 +75,7 @@ public class WabFactory extends AbstractExtender {
 			_saxParserFactory.setFeature(_FEATURES_LOAD_EXTERNAL_DTD, false);
 		}
 		catch (ParserConfigurationException | SAXNotRecognizedException |
-			   SAXNotSupportedException e) {
+			SAXNotSupportedException e) {
 
 			ReflectionUtil.throwException(e);
 		}
@@ -127,6 +128,11 @@ public class WabFactory extends AbstractExtender {
 	@Override
 	protected void error(String message, Throwable t) {
 		_logger.log(Logger.LOG_ERROR, message, t);
+	}
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 	@Reference(unbind = "-")

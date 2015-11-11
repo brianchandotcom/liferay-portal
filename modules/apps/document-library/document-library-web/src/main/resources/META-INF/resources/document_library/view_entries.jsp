@@ -215,9 +215,12 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 
 	<%
 	String[] entryColumns = dlPortletInstanceSettingsHelper.getEntryColumns();
+
+	String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 	%>
 
 	<liferay-ui:search-container
+		id="<%= searchContainerId %>"
 		searchContainer="<%= dlSearchContainer %>"
 		total="<%= total %>"
 		totalVar="dlSearchContainerTotal"

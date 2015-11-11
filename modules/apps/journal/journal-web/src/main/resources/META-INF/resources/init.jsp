@@ -105,6 +105,7 @@ page import="com.liferay.journal.web.search.ArticleDisplayTerms" %><%@
 page import="com.liferay.journal.web.search.ArticleSearch" %><%@
 page import="com.liferay.journal.web.search.ArticleSearchTerms" %><%@
 page import="com.liferay.journal.web.search.EntriesChecker" %><%@
+page import="com.liferay.journal.web.search.EntriesMover" %><%@
 page import="com.liferay.journal.web.search.FeedDisplayTerms" %><%@
 page import="com.liferay.journal.web.search.FeedSearch" %><%@
 page import="com.liferay.journal.web.search.FeedSearchTerms" %><%@

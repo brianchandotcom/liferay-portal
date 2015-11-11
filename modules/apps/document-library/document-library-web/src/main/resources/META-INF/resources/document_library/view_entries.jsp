@@ -58,6 +58,8 @@ EntriesChecker entriesChecker = new EntriesChecker(liferayPortletRequest, lifera
 
 entriesChecker.setCssClass("entry-selector");
 
+EntriesMover entriesMover = new EntriesMover(scopeGroupId);
+
 String orderByCol = GetterUtil.getString((String)request.getAttribute("view.jsp-orderByCol"));
 String orderByType = GetterUtil.getString((String)request.getAttribute("view.jsp-orderByType"));
 
@@ -232,7 +234,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 
 		<liferay-ui:search-container-row
 			className="Object"
-			cssClass="app-view-entry-taglib entry-display-style selectable"
+			cssClass="app-view-entry-taglib entry-display-style"
 			modelVar="result"
 		>
 
@@ -268,6 +270,10 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 
 						if (Validator.isNull(dlSearchContainer.getRowChecker())) {
 							dlSearchContainer.setRowChecker(entriesChecker);
+						}
+
+						if (Validator.isNull(dlSearchContainer.getRowMover())) {
+							dlSearchContainer.setRowMover(entriesMover);
 						}
 					}
 
@@ -432,6 +438,10 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 
 						if (Validator.isNull(dlSearchContainer.getRowChecker())) {
 							dlSearchContainer.setRowChecker(entriesChecker);
+						}
+
+						if (Validator.isNull(dlSearchContainer.getRowMover())) {
+							dlSearchContainer.setRowMover(entriesMover);
 						}
 					}
 

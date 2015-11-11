@@ -162,15 +162,13 @@ AUI.add(
 							event.preventDefault();
 						}
 
-						var checked = event.currentTarget.attr(ATTR_CHECKED);
+						var searchContainer = instance._searchContainer;
 
-						var totalSelected = instance._searchContainer.select.toggleAllRows(checked).size();
+						if (searchContainer.hasPlugin('select')) {
+							var checked = event.currentTarget.attr(ATTR_CHECKED);
 
-						instance._updateItemsCount(totalSelected);
-
-						instance._toggleSelectAllCheckBox(checked, false);
-
-						instance._toggleSecondaryBar(totalSelected > 0);
+							searchContainer.select.toggleAllRows(checked);
+						}
 					},
 
 					_toggleSelectAllCheckBox: function(checked, partial) {
@@ -178,16 +176,8 @@ AUI.add(
 
 						var selectAllCheckBox = instance._getSelectAllCheckBox();
 
-						partial = partial && checked;
-
 						selectAllCheckBox.attr(ATTR_CHECKED, checked);
-
-						if (A.UA.gecko > 0 || A.UA.ie > 0) {
-							selectAllCheckBox.attr('indeterminate', partial);
-						}
-						else {
-							selectAllCheckBox.toggleClass(STR_SELECTED_PARTIAL, partial);
-						}
+						selectAllCheckBox.attr('indeterminate', partial && checked);
 					},
 
 					_updateItemsCount: function(itemsCount) {

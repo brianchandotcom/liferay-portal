@@ -11,8 +11,6 @@ AUI.add(
 
 		var STR_DRAG_NODE = 'dragNode';
 
-		var STR_DROP_TARGET_SELECTORS = 'dropTargets';
-
 		var STR_HOST = 'host';
 
 		var STR_NODE = 'node';
@@ -20,46 +18,13 @@ AUI.add(
 		var SearchContainerMove = A.Component.create(
 			{
 				ATTRS: {
-					activeAreaCSSClass: {
-						validator: Lang.isString,
-						value: 'active'
-					},
-
-					displayStyleCSSClass: {
-						validator: Lang.isString
-					},
-
-					draggableSelector: {
-						validator: Lang.isString,
-						value: '[data-draggable="true"]'
-					},
-
-					dropTargetIdAttribute: {
-						validator: Lang.isString,
-						value: 'data-folder-id'
-					},
-
 					dropTargets: {
-						validator: Lang.isArray,
-						value: [
-							{
-								action: null,
-								activeCSSClass: 'active',
-								container: null,
-								infoCSSCLass: null,
-								selector: '[data-folder="true"]'
-							}
-						]
-					},
-
-					extraDropTargets: {
-						validator: Lang.isArray,
-						value: []
+						validator: Lang.isArray
 					},
 
 					rowSelector: {
 						validator: Lang.isString,
-						value: 'li.selectable,tr.selectable'
+						value: 'li,tr'
 					},
 
 					tooltipClass: {
@@ -77,10 +42,6 @@ AUI.add(
 				prototype: {
 					initializer: function() {
 						var instance = this;
-
-						var host = instance.get(STR_HOST);
-
-						instance._searchContainerSelect = host.select;
 
 						instance._initDragAndDrop();
 
@@ -122,7 +83,7 @@ AUI.add(
 						instance._ddHandler = new A.DD.Delegate(
 							{
 								container: host.get(STR_CONTENT_BOX),
-								nodes: instance.get('rowSelector') + instance.get('draggableSelector'),
+								nodes: instance.get('rowSelector'),
 								on: {
 									'drag:drophit': A.bind('_onDragDropHit', instance),
 									'drag:enter': A.bind('_onDragEnter', instance),
@@ -152,12 +113,14 @@ AUI.add(
 					_initDropTargets: function() {
 						var instance = this;
 
-						var host = instance.get(STR_HOST);
+						var dropTargets = instance.get('dropTargets');
 
-						if (themeDisplay.isSignedIn()) {
-							instance.get(STR_DROP_TARGET_SELECTORS).forEach(
+						if (dropTargets && themeDisplay.isSignedIn()) {
+							var host = instance.get(STR_HOST);
+
+							dropTargets.forEach(
 								function(target) {
-									var container = target.container || host.get(STR_CONTENT_BOX);
+									var container = A.one(target.container) || host.get(STR_CONTENT_BOX);
 
 									var targetNodes = container.all(target.selector);
 
@@ -264,12 +227,16 @@ AUI.add(
 
 						var selectedItems = new A.NodeList(node);
 
-						if (instance._searchContainerSelect) {
-							var selected = instance._searchContainerSelect._isSelected(node);
+						var host = instance.get(STR_HOST);
+
+						if (host.hasPlugin('select')) {
+							var searchContainerSelect = host.select;
+
+							var selected = searchContainerSelect.isSelected(node);
 
 							if (!selected) {
-								instance._searchContainerSelect.toggleAllRows(false);
-								instance._searchContainerSelect.toggleRow(
+								searchContainerSelect.toggleAllRows(false);
+								searchContainerSelect.toggleRow(
 									{
 										toggleCheckbox: true
 									},
@@ -277,7 +244,7 @@ AUI.add(
 								);
 							}
 							else {
-								selectedItems = instance._searchContainerSelect._getCurrentPageSelectedElements();
+								selectedItems = searchContainerSelect.getCurrentPageSelectedElements();
 							}
 						}
 

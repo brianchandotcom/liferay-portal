@@ -39,6 +39,7 @@ page import="com.liferay.document.library.web.display.context.util.IGRequestHelp
 page import="com.liferay.document.library.web.portlet.action.EditFileEntryMVCActionCommand" %><%@
 page import="com.liferay.document.library.web.portlet.toolbar.item.DLPortletToolbarContributor" %><%@
 page import="com.liferay.document.library.web.search.EntriesChecker" %><%@
+page import="com.liferay.document.library.web.search.EntriesMover" %><%@
 page import="com.liferay.document.library.web.settings.internal.DLPortletInstanceSettings" %><%@
 page import="com.liferay.document.library.web.util.DLBreadcrumbUtil" %><%@
 page import="com.liferay.document.library.web.util.DLWebComponentProvider" %><%@

@@ -37,7 +37,7 @@ AUI.add(
 
 					rowSelector: {
 						validator: Lang.isString,
-						value: 'li.selectable,tr.selectable'
+						value: 'li[data-selectable="true"],tr[data-selectable="true"]'
 					}
 				},
 
@@ -76,22 +76,34 @@ AUI.add(
 						(new A.EventHandle(instance._eventHandles)).detach();
 					},
 
+					getAllSelectedElements: function() {
+						var instance = this;
+
+						return instance._getAllElements(true);
+					},
+
+					getCurrentPageSelectedElements: function() {
+						var instance = this;
+
+						return instance._getCurrentPageElements(true);
+					},
+
+					isSelected: function(element) {
+						return element.one(STR_CHECKBOX_SELECTOR).attr(STR_CHECKED);
+					},
+
 					toggleAllRows: function(selected) {
 						var instance = this;
 
-						var host = instance.get(STR_HOST);
-
 						instance._getCurrentPageElements().attr(STR_CHECKED, selected);
 
-						host.get(STR_CONTENT_BOX).all(instance.get(STR_ROW_SELECTOR)).toggleClass(instance.get(STR_ROW_CLASS_NAME_ACTIVE), selected);
+						instance.get(STR_HOST).get(STR_CONTENT_BOX).all(instance.get(STR_ROW_SELECTOR)).toggleClass(instance.get(STR_ROW_CLASS_NAME_ACTIVE), selected);
 
-						return instance._getAllSelectedElements();
+						instance._notifyRowToggle();
 					},
 
 					toggleRow: function(config, row) {
 						var instance = this;
-
-						var host = instance.get(STR_HOST);
 
 						if (config && config.toggleCheckbox) {
 							var checkbox = row.one(STR_CHECKBOX_SELECTOR);
@@ -101,17 +113,7 @@ AUI.add(
 
 						row.toggleClass(instance.get(STR_ROW_CLASS_NAME_ACTIVE));
 
-						host.fire(
-							'rowToggled',
-							{
-								elements: {
-									allElements: instance._getAllElements(),
-									allSelectedElements: instance._getAllSelectedElements(),
-									currentPageElements: instance._getCurrentPageElements(),
-									currentPageSelectedElements: instance._getCurrentPageSelectedElements()
-								}
-							}
-						);
+						instance._notifyRowToggle();
 					},
 
 					_addRestoreTask: function() {
@@ -140,7 +142,7 @@ AUI.add(
 
 						var elements = [];
 
-						var selectedElements = instance._getAllSelectedElements();
+						var selectedElements = instance.getAllSelectedElements();
 
 						selectedElements.each(
 							function(item, index) {
@@ -169,22 +171,10 @@ AUI.add(
 						return instance._getElements(STR_CHECKBOX_SELECTOR, onlySelected);
 					},
 
-					_getAllSelectedElements: function() {
-						var instance = this;
-
-						return instance._getAllElements(true);
-					},
-
 					_getCurrentPageElements: function(onlySelected) {
 						var instance = this;
 
 						return instance._getElements(instance.get(STR_ROW_SELECTOR) + ' ' + STR_CHECKBOX_SELECTOR, onlySelected);
-					},
-
-					_getCurrentPageSelectedElements: function() {
-						var instance = this;
-
-						return instance._getCurrentPageElements(true);
 					},
 
 					_getElements: function(selector, onlySelected) {
@@ -197,10 +187,20 @@ AUI.add(
 						return host.get(STR_CONTENT_BOX).all(selector + checked);
 					},
 
-					_isSelected: function(element) {
+					_notifyRowToggle: function() {
 						var instance = this;
 
-						return element.one(STR_CHECKBOX_SELECTOR).attr(STR_CHECKED);
+						instance.get(STR_HOST).fire(
+							'rowToggled',
+							{
+								elements: {
+									allElements: instance._getAllElements(),
+									allSelectedElements: instance.getAllSelectedElements(),
+									currentPageElements: instance._getCurrentPageElements(),
+									currentPageSelectedElements: instance.getCurrentPageSelectedElements()
+								}
+							}
+						);
 					},
 
 					_onClickRowSelector: function(config, event) {

@@ -31,6 +31,7 @@ List<String> headerNames = searchContainer.getHeaderNames();
 List<String> normalizedHeaderNames = searchContainer.getNormalizedHeaderNames();
 String emptyResultsMessage = searchContainer.getEmptyResultsMessage();
 RowChecker rowChecker = searchContainer.getRowChecker();
+RowMover rowMover = searchContainer.getRowMover();
 
 if (rowChecker != null) {
 	if (headerNames != null) {
@@ -80,21 +81,41 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 				List entries = row.getEntries();
 
 				boolean rowIsChecked = false;
+				boolean rowIsDisabled = false;
 
 				if (rowChecker != null) {
+					rowIsDisabled = rowChecker.isDisabled(row.getObject());
 					rowIsChecked = rowChecker.isChecked(row.getObject());
 
 					if (!rowIsChecked) {
 						allRowsIsChecked = false;
+					}
+
+					String rowSelector = rowChecker.getRowSelector();
+
+					if (Validator.isNull(rowSelector)) {
+						Map<String, Object> rowData = row.getData();
+
+						if (rowData == null) {
+							rowData = new HashMap<String, Object>();
+						}
+
+						rowData.put("selectable", !rowIsDisabled);
+
+						row.setData(rowData);
 					}
 				}
 
 				request.setAttribute("liferay-ui:search-container-row:rowId", id.concat(StringPool.UNDERLINE.concat(row.getRowId())));
 
 				Map<String, Object> data = row.getData();
+
+				if (data == null) {
+					data = new HashMap<String, Object>();
+				}
 			%>
 
-				<li class="<%= GetterUtil.getString(row.getClassName()) %> <%= row.getCssClass() %> <%= rowIsChecked ? "active" : StringPool.BLANK %>"  <%= AUIUtil.buildData(data) %>>
+				<li class="<%= GetterUtil.getString(row.getClassName()) %> <%= row.getCssClass() %> <%= rowIsChecked ? "active" : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %>>
 
 					<%
 					for (int k = 0; k < entries.size(); k++) {
@@ -143,45 +164,53 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 <c:if test="<%= Validator.isNotNull(id) %>">
 	<input id="<%= namespace + id %>PrimaryKeys" name="<%= namespace + id %>PrimaryKeys" type="hidden" value="" />
 
-	<aui:script use="liferay-search-container,liferay-search-container-move,liferay-search-container-select">
+	<%
+	String modules = "liferay-search-container";
+	String rowCheckerRowSelector = StringPool.BLANK;
+
+	if (rowMover != null) {
+		modules += ",liferay-search-container-move";
+	}
+
+	if (rowChecker != null) {
+		modules += ",liferay-search-container-select";
+
+		rowCheckerRowSelector = rowChecker.getRowSelector();
+
+		if (Validator.isNull(rowCheckerRowSelector)) {
+			rowCheckerRowSelector = "[data-selectable=\"true\"]";
+		}
+	}
+	%>
+
+	<aui:script use="<%= modules %>">
 		var plugins = [];
 
-		var rowSelector = 'li.selectable';
+		var rowSelector = 'li<%= rowCheckerRowSelector %>';
 
-		plugins.push(
-			{
-				cfg: {
-					rowSelector: rowSelector
-				},
-				fn: A.Plugin.SearchContainerSelect
-			}
-		);
+		<c:if test="<%= rowChecker != null %>">
+			plugins.push(
+				{
+					cfg: {
+						rowSelector: rowSelector
+					},
+					fn: A.Plugin.SearchContainerSelect
+				}
+			);
+		</c:if>
 
-		plugins.push(
-			{
-				cfg: {
-					dropTargets: [
-						{
-							action: 'move-to-folder',
-							activeCSSClass: 'active',
-							container: null,
-							infoCSSCLass: null,
-							selector: '[data-folder="true"]'
-						},
-						{
-							action: 'move-to-trash',
-							activeCSSClass: 'active',
-							container: A.getBody(),
-							infoCSSClass: 'app-view-drop-active',
-							selector: '#<%= TrashUtil.isTrashEnabled(scopeGroupId) ? ("_" + PortletProviderUtil.getPortletId(PortalProductMenuApplicationType.ProductMenu.CLASS_NAME, PortletProvider.Action.VIEW) + "_portlet_" + PortletProviderUtil.getPortletId(TrashEntry.class.getName(), PortletProvider.Action.VIEW)) : StringPool.BLANK %>',
-							title: 'Recycle Bin'
-						}
-					],
-					rowSelector: rowSelector
-				},
-				fn: A.Plugin.SearchContainerMove
-			}
-		);
+		<c:if test="<%= rowMover != null %>">
+			var rowMoverConfig = <%= rowMover.toJSON().toString() %>;
+
+			rowMoverConfig.rowSelector = rowSelector + rowMoverConfig.rowSelector;
+
+			plugins.push(
+				{
+					cfg: rowMoverConfig,
+					fn: A.Plugin.SearchContainerMove
+				}
+			);
+		</c:if>
 
 		var searchContainer = new Liferay.SearchContainer(
 			{

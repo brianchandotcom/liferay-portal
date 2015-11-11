@@ -23,8 +23,8 @@ long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folder
 
 long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL);
 
-String orderByCol = ParamUtil.getString(request, "orderByCol");
-String orderByType = ParamUtil.getString(request, "orderByType");
+String orderByCol = GetterUtil.getString((String)request.getAttribute("view.jsp-orderByCol"));
+String orderByType = GetterUtil.getString((String)request.getAttribute("view.jsp-orderByType"));
 
 Map<String, String> orderColumns = new HashMap<String, String>();
 

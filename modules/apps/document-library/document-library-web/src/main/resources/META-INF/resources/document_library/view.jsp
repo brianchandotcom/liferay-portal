@@ -76,7 +76,7 @@ if (Validator.isNotNull(orderByCol) && Validator.isNotNull(orderByType)) {
 	portalPreferences.setValue(DLPortletKeys.DOCUMENT_LIBRARY, "order-by-type", orderByType);
 }
 else {
-	orderByCol = portalPreferences.getValue(DLPortletKeys.DOCUMENT_LIBRARY, "order-by-col", StringPool.BLANK);
+	orderByCol = portalPreferences.getValue(DLPortletKeys.DOCUMENT_LIBRARY, "order-by-col", "modifiedDate");
 	orderByType = portalPreferences.getValue(DLPortletKeys.DOCUMENT_LIBRARY, "order-by-type", "asc");
 }
 

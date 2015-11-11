@@ -14,16 +14,11 @@
 
 package com.liferay.social.activities.web.upgrade;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.service.ReleaseLocalService;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
 import com.liferay.social.activities.web.constants.SocialActivitiesPortletKeys;
 
-import java.util.Collections;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -32,22 +27,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Peter Fellwock
  */
 @Component(immediate = true, service = SocialActivitiesWebUpgrade.class)
-public class SocialActivitiesWebUpgrade {
+public class SocialActivitiesWebUpgrade implements UpgradeStepRegistrator {
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
-	@Reference(unbind = "-")
-	protected void setReleaseLocalService(
-		ReleaseLocalService releaseLocalService) {
-
-		_releaseLocalService = releaseLocalService;
-	}
-
-	@Activate
-	protected void upgrade() throws PortalException {
+	@Override
+	public void register(Registry registry) {
 		UpgradePortletId upgradePortletId = new UpgradePortletId() {
 
 			@Override
@@ -61,12 +44,14 @@ public class SocialActivitiesWebUpgrade {
 
 		};
 
-		_releaseLocalService.updateRelease(
-			"com.liferay.social.activities.web",
-			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 1,
-			false);
+		registry.register(
+			"com.liferay.social.activities.web", "0.0.1", "1.0.0",
+			upgradePortletId);
 	}
 
-	private ReleaseLocalService _releaseLocalService;
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
 
 }

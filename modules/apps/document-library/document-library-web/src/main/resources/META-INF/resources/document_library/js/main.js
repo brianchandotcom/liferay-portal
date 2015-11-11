@@ -3,20 +3,30 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var DISPLAY_STYLE_TOOLBAR = 'displayStyleToolbar';
-
-		var STR_ROW_IDS_FILE_ENTRY_CHECKBOX = 'rowIdsFileEntry';
-
-		var STR_ROW_IDS_FILE_SHORTCUT_CHECKBOX = 'rowIdsDLFileShortcut';
-
-		var STR_ROW_IDS_FOLDER_CHECKBOX = 'rowIdsFolder';
-
 		var WIN = A.config.win;
 
 		var HTML5_UPLOAD = WIN && WIN.File && WIN.FormData && WIN.XMLHttpRequest;
 
 		var DocumentLibrary = A.Component.create(
 			{
+				ATTRS: {
+					editEntryUrl: {
+						validator: Lang.isString
+					},
+
+					form: {
+						validator: Lang.isObject
+					},
+
+					moveEntryUrl: {
+						validator: Lang.isString
+					},
+
+					searchContainerId: {
+						validator: Lang.isString
+					}
+				},
+
 				AUGMENTS: [Liferay.PortletBase],
 
 				EXTENDS: A.Base,
@@ -32,64 +42,25 @@ AUI.add(
 						instance._documentLibraryContainer = documentLibraryContainer;
 
 						instance._eventDataRequest = instance.ns('dataRequest');
-						instance._eventOpenDocument = instance.ns('openDocument');
 						instance._entriesContainer = instance.byId('entriesContainer');
-
-						var checkBoxesId = [
-							instance.ns(STR_ROW_IDS_FILE_SHORTCUT_CHECKBOX),
-							instance.ns(STR_ROW_IDS_FOLDER_CHECKBOX),
-							instance.ns(STR_ROW_IDS_FILE_ENTRY_CHECKBOX)
-						];
-
-						var displayStyle = config.displayStyle;
-
-						var displayStyleCSSClass = 'entry-display-style';
-
-						var displayStyleToolbar = instance.byId(DISPLAY_STYLE_TOOLBAR);
 
 						var namespace = instance.NS;
 
-						var portletContainerId = instance.ns('documentLibraryContainer');
+						var searchContainer = Liferay.SearchContainer.get(namespace + instance.get('searchContainerId'));
 
-						var selectConfig = config.select;
+						searchContainer.registerAction('move-to-folder', A.bind('_moveToFolder', instance));
+						searchContainer.registerAction('move-to-trash', A.bind('_moveToTrash', instance));
 
-						selectConfig.checkBoxesId = checkBoxesId;
-						selectConfig.displayStyle = displayStyle;
-						selectConfig.displayStyleCSSClass = displayStyleCSSClass;
-						selectConfig.displayStyleToolbar = displayStyleToolbar;
-						selectConfig.namespace = namespace;
-						selectConfig.portletContainerId = portletContainerId;
-						selectConfig.selector = 'entry-selector';
-						selectConfig.toggleSelector = 'click-selector';
-
-						instance._appViewSelect = new Liferay.AppViewSelect(selectConfig);
-
-						var moveConfig = config.move;
-
-						moveConfig.processEntryIds = {
-							checkBoxesIds: checkBoxesId,
-							entryIds: [
-								instance.ns('fileShortcutIds'),
-								instance.ns('folderIds'),
-								instance.ns('fileEntryIds')
-							]
-						};
-
-						moveConfig.displayStyleCSSClass = displayStyleCSSClass;
-						moveConfig.draggableCSSClass = '.entry-link';
-						moveConfig.moveToTrashActionName = 'move_to_trash';
-						moveConfig.namespace = namespace;
-						moveConfig.portletContainerId = portletContainerId;
-						moveConfig.portletGroup = 'document-library';
-
-						instance._appViewMove = new Liferay.AppViewMove(moveConfig);
+						instance._searchContainer = searchContainer;
 
 						var foldersConfig = config.folders;
 
 						instance._folderId = foldersConfig.defaultParentFolderId;
 
 						var eventHandles = [
-							Liferay.on(instance._eventOpenDocument, instance._openDocument, instance)
+							Liferay.on(instance.ns('editEntry'), instance._editEntry, instance),
+							Liferay.on(instance.ns('openDocument'), instance._openDocument, instance),
+
 						];
 
 						instance._config = config;
@@ -112,9 +83,6 @@ AUI.add(
 
 						A.Array.invoke(instance._eventHandles, 'detach');
 
-						instance._appViewMove.destroy();
-						instance._appViewSelect.destroy();
-
 						instance._documentLibraryContainer.purge(true);
 					},
 
@@ -122,6 +90,50 @@ AUI.add(
 						var instance = this;
 
 						return instance._folderId;
+					},
+
+					_editEntry: function(event) {
+						var instance = this;
+
+						var action = event.action;
+
+						var url = instance.get('editEntryUrl');
+
+						if (action === 'move' || action === 'moveEntries') {
+							url = instance.get('moveEntryUrl');
+						}
+
+						instance._processAction(action, url);
+					},
+
+					_moveToFolder: function(obj) {
+						var instance = this;
+
+						var namespace = instance.NS;
+
+						var dropTarget = obj.targetItem;
+
+						var selectedItems = obj.selectedItems;
+
+						var folderId = dropTarget.attr('data-folder-id');
+
+						if (folderId) {
+							if (!instance._searchContainer.select ||
+								selectedItems.indexOf(dropTarget.one('input[type=checkbox]'))
+							) {
+								var form = instance.get('form').node;
+
+								form.get(namespace + 'newFolderId').val(folderId);
+
+								instance._processAction('move', instance.get('moveEntryUrl'));
+							}
+						}
+					},
+
+					_moveToTrash: function() {
+						var instance = this;
+
+						instance._processAction('moveToTrash', instance.get('editEntryUrl'));
 					},
 
 					_openDocument: function(event) {
@@ -169,6 +181,29 @@ AUI.add(
 								viewFileEntryURL: config.viewFileEntryURL
 							}
 						);
+					},
+
+					_processAction: function(action, url, redirectUrl) {
+						var instance = this;
+
+						var namespace = instance.NS;
+
+						var form = instance.get('form').node;
+
+						redirectUrl = redirectUrl || location.href;
+
+						form.attr('method', instance.get('form').method);
+
+						if (form.get(namespace + 'javax-portlet-action')) {
+							form.get(namespace + 'javax-portlet-action').val(action);
+						}
+						else {
+							form.get(namespace + 'cmd').val(action);
+						}
+
+						form.get(namespace + 'redirect').val(redirectUrl);
+
+						submitForm(form, url);
 					},
 
 					_toggleTrashAction: function() {

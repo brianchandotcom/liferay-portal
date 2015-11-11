@@ -33,10 +33,12 @@ import org.gradle.api.tasks.SkipWhenEmpty;
  */
 public class BuildWSDLTask extends DefaultTask {
 
+	@Input
 	public File getDestinationDir() {
 		return GradleUtil.toFile(getProject(), _destinationDir);
 	}
 
+	@Input
 	public File getInputDir() {
 		return GradleUtil.toFile(getProject(), _inputDir);
 	}

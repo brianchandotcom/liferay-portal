@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.model.PublicRenderParameter;
 import com.liferay.portal.model.User;
 import com.liferay.portal.util.PortalUtil;
@@ -279,8 +280,13 @@ public abstract class StateAwareResponseImpl
 		_portletName = portletName;
 		_user = user;
 		_layout = layout;
+
+		Portlet portlet = portletRequestImpl.getPortlet();
+
+		PortletApp portletApp = portlet.getPortletApp();
+
 		_publicRenderParameters = PublicRenderParametersPool.get(
-			getHttpServletRequest(), layout.getPlid());
+			getHttpServletRequest(), layout.getPlid(), portletApp.isWARFile());
 
 		if (windowState != null) {
 			setWindowState(windowState);

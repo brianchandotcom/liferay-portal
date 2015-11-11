@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `1641223`.*
+*This document has been reviewed through commit `5504915e`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -2802,7 +2802,6 @@ should follow these steps:
 2.  Call `SchedulerEngineHelper.register(MessageListener, SchedulerEntry)` to
     register your `SchedulerEventMessageListener`.
 
-
 #### Why was this change made?
 
 The deleted methods provided facilities that aren't compatible with using
@@ -2822,14 +2821,14 @@ from `portal.properties`.
 
 #### Who is affected?
 
-This affects any hook that uses the
-`asset.publisher.query.form.configuration` property.
+This affects any hook that uses the `asset.publisher.query.form.configuration`
+property.
 
 #### How should I update my code?
 
 If you are using this property to generate the UI for an Asset Entry Query
-Processor, your Asset Entry Query Processor must implement the include method to
-generate a UI for that Asset Entry Query Processor.
+Processor, your Asset Entry Query Processor must now implement the `include`
+method to generate the UI.
 
 #### Why was this change made?
 

@@ -16,12 +16,54 @@ package com.liferay.portal.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.model.LayoutSetBranch;
+import com.liferay.portal.model.RecentLayoutSetBranch;
+import com.liferay.portal.model.User;
 import com.liferay.portal.service.base.RecentLayoutSetBranchLocalServiceBaseImpl;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Preston Crary
  */
 @ProviderType
 public class RecentLayoutSetBranchLocalServiceImpl
 	extends RecentLayoutSetBranchLocalServiceBaseImpl {
+
+	@Override
+	public RecentLayoutSetBranch addRecentLayoutSetBranch(
+		long companyId, long groupId, long userId, long layoutSetBranchId,
+		long layoutSetId) {
+
+		long recentLayoutSetBranchId = counterLocalService.increment();
+
+		RecentLayoutSetBranch recentLayoutSetBranch =
+			recentLayoutSetBranchPersistence.create(recentLayoutSetBranchId);
+
+		recentLayoutSetBranch.setGroupId(groupId);
+		recentLayoutSetBranch.setCompanyId(companyId);
+		recentLayoutSetBranch.setUserId(userId);
+		recentLayoutSetBranch.setLayoutSetBranchId(layoutSetBranchId);
+		recentLayoutSetBranch.setLayoutSetId(layoutSetId);
+
+		return recentLayoutSetBranchPersistence.update(recentLayoutSetBranch);
+	}
+
+	@Override
+	public void deleteRecentLayoutSetBranches(LayoutSetBranch layoutSetBranch) {
+		recentLayoutSetBranchPersistence.removeByLayoutSetBranchId(
+			layoutSetBranch.getLayoutSetBranchId());
+	}
+
+	@Override
+	public void deleteRecentLayoutSetBranches(User user) {
+		recentLayoutSetBranchPersistence.removeByUserId(user.getUserId());
+	}
+
+	@Override
+	public RecentLayoutSetBranch fetchRecentLayoutSetBranch(
+		long userId, long layoutSetId) {
+
+		return recentLayoutSetBranchPersistence.fetchByU_L(userId, layoutSetId);
+	}
+
 }

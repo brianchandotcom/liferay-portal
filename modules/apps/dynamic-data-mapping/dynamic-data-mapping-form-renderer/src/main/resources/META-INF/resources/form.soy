@@ -115,6 +115,7 @@
  * @param containerId
  * @param pages
  * @param readOnly
+ * @param strings
  */
 {template .paginated_form}
 	<div class="lfr-ddm-form-container" id="{$containerId}">
@@ -156,16 +157,16 @@
 
 		<div class="lfr-ddm-form-pagination-controls">
 			<button class="btn btn-lg btn-primary hide lfr-ddm-form-pagination-prev" type="button">
-				<i class="icon-angle-left"></i> Prev
+				<i class="icon-angle-left"></i> {$strings.previous}
 			</button>
 
 			<button class="btn btn-lg btn-primary{if length($pages) == 1} hide{/if} lfr-ddm-form-pagination-next pull-right" type="button">
-				Next <i class="icon-angle-right"></i>
+				{$strings.next} <i class="icon-angle-right"></i>
 			</button>
 
 			{if not $readOnly}
-				<button class="btn btn-lg btn-primary{if length($pages) > 1} hide{/if} lfr-ddm-form-submit pull-right" type="submit">Submit</button>
-			{/if}	
+				<button class="btn btn-lg btn-primary{if length($pages) > 1} hide{/if} lfr-ddm-form-submit pull-right" type="submit">{$strings.submit}</button>
+			{/if}
 		</div>
 	</div>
 {/template}

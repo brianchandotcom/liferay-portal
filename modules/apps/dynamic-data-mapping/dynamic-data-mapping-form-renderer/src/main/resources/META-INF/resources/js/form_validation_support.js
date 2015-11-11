@@ -11,12 +11,6 @@ AUI.add(
 		FormValidationSupport.ATTRS = {
 			evaluator: {
 				valueFn: '_valueEvaluator'
-			},
-
-			strings: {
-				value: {
-					requestErrorMessage: Liferay.Language.get('there-was-an-error-when-trying-to-validate-your-form')
-				}
 			}
 		};
 

@@ -34,13 +34,17 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.URLTemplateResource;
+import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -48,8 +52,11 @@ import java.io.Writer;
 
 import java.net.URL;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -123,6 +130,25 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		return html.concat(javaScript);
 	}
 
+	protected Map<String, String> getLanguageStringsMap(Locale locale) {
+		Map<String, String> stringsMap = new HashMap<>();
+
+		ResourceBundle portalResourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, PortalClassLoaderUtil.getClassLoader());
+
+		ResourceBundle resourceBundle = new AggregateResourceBundle(
+			portalResourceBundle,
+			ResourceBundleUtil.getBundle(
+				"content.Language", locale, getClass()));
+
+		stringsMap.put("next", LanguageUtil.get(resourceBundle, "next"));
+		stringsMap.put(
+			"previous", LanguageUtil.get(resourceBundle, "previous"));
+		stringsMap.put("submit", LanguageUtil.get(resourceBundle, "submit"));
+
+		return stringsMap;
+	}
+
 	protected List<Object> getPages(
 			DDMForm ddmForm, DDMFormLayout ddmFormLayout,
 			DDMFormRenderingContext ddmFormRenderingContext)
@@ -181,14 +207,15 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 			DDMFormRenderingContext ddmFormRenderingContext)
 		throws PortalException {
 
+		Locale locale = ddmFormRenderingContext.getLocale();
+
 		template.put("containerId", StringUtil.randomId());
 		template.put(
 			"definition", DDMFormJSONSerializerUtil.serialize(ddmForm));
 
 		DDMFormEvaluationResult ddmFormEvaluationResult =
 			_ddmFormEvaluator.evaluate(
-				ddmForm, ddmFormRenderingContext.getDDMFormValues(),
-				ddmFormRenderingContext.getLocale());
+				ddmForm, ddmFormRenderingContext.getDDMFormValues(), locale);
 
 		JSONSerializer jsonSerializer = _jsonFactory.createJSONSerializer();
 
@@ -213,6 +240,7 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 			"portletNamespace", ddmFormRenderingContext.getPortletNamespace());
 
 		template.put("readOnly", ddmFormRenderingContext.isReadOnly());
+		template.put("strings", getLanguageStringsMap(locale));
 		template.put("templateNamespace", getTemplateNamespace(ddmFormLayout));
 
 		DDMFormValues ddmFormValues =

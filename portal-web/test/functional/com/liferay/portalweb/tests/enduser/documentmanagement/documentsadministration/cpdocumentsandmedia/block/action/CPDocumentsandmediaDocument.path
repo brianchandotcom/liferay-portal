@@ -201,7 +201,7 @@
 <!--VERSION_HISTORY_TABLE-->
 <tr>
 	<td>VERSION_HISTORY_TABLE_CHECKBOX</td>
-	<td>//td/input</td>
+	<td>//td//input</td>
 	<td></td>
 </tr>
 <tr>

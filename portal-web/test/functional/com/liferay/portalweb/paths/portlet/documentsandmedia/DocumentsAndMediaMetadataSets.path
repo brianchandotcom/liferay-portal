@@ -36,7 +36,7 @@
 <!--METADATA_SETS_TABLE-->
 <tr>
 	<td>METADATA_SETS_TABLE_CHECKBOX</td>
-	<td>//tr[contains(.,'${key_metadataSetName}')]/td[1]/input</td>
+	<td>//tr[contains(.,'${key_metadataSetName}')]/td[1]//input</td>
 	<td></td>
 </tr>
 <tr>

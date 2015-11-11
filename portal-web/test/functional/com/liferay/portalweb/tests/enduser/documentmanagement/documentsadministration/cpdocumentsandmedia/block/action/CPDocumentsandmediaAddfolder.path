@@ -56,37 +56,37 @@
 </tr>
 <tr>
 	<td>PERMISSIONS_ACCESS_CHECKBOX</td>
-	<td>//table[contains(@id,'inputPermissionsTable')]/tbody/tr/td[2]/input</td>
+	<td>//table[contains(@id,'inputPermissionsTable')]/tbody/tr/td[2]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_ADD_DOCUMENT_CHECKBOX</td>
-	<td>//table[contains(@id,'inputPermissionsTable')]/tbody/tr/td[3]/input</td>
+	<td>//table[contains(@id,'inputPermissionsTable')]/tbody/tr/td[3]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_ADD_SHORTCUT_CHECKBOX</td>
-	<td>//table[contains(@id,'inputPermissionsTable')]/tbody/tr/td[4]/input</td>
+	<td>//table[contains(@id,'inputPermissionsTable')]/tbody/tr/td[4]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_ADD_SUBFOLDER_CHECKBOX</td>
-	<td>//table[contains(@id,'inputPermissionsTable')]/tbody/tr/td[5]/input</td>
+	<td>//table[contains(@id,'inputPermissionsTable')]/tbody/tr/td[5]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_DELETE_CHECKBOX</td>
-	<td>//table[contains(@id,'inputPermissionsTable')]/tbody/tr/td[6]/input</td>
+	<td>//table[contains(@id,'inputPermissionsTable')]/tbody/tr/td[6]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_PERMISSIONS_CHECKBOX</td>
-	<td>//table[contains(@id,'inputPermissionsTable')]/tbody/tr/td[7]/input</td>
+	<td>//table[contains(@id,'inputPermissionsTable')]/tbody/tr/td[7]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_UPDATE_CHECKBOX</td>
-	<td>//table[contains(@id,'inputPermissionsTable')]/tbody/tr/td[8]/input</td>
+	<td>//table[contains(@id,'inputPermissionsTable')]/tbody/tr/td[8]//input</td>
 	<td></td>
 </tr>
 </tbody>

@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>FIELD_FILTER_RADIO_BUTTON</td>
-	<td>//tr[contains(.,'${key_fieldName}')]/td/input</td>
+	<td>//tr[contains(.,'${key_fieldName}')]/td//input</td>
 	<td></td>
 </tr>
 <tr>

@@ -78,7 +78,7 @@
 </tr>
 <tr>
 	<td>ARTICLE_TABLE_ARTICLE_CHECKBOX</td>
-	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[1]/input[@type='checkbox']</td>
+	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[1]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

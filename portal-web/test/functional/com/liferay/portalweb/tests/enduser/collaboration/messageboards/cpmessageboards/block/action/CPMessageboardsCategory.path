@@ -87,7 +87,7 @@
 </tr>
 <tr>
 	<td>CATEGORY_TABLE_CHECKBOX</td>
-	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_subCategoryName}')]/td[1]/input[@type='checkbox']</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_subCategoryName}')]/td[1]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
@@ -165,7 +165,7 @@
 </tr>
 <tr>
 	<td>THREAD_TABLE_CHECKBOX</td>
-	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[1]/input[@type='checkbox']</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[1]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

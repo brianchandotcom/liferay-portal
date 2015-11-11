@@ -36,7 +36,7 @@
 </tr>
 <tr>
 	<td>SITE_TABLE_CHECKBOX</td>
-	<td>//table[contains(@data-searchcontainerid,'groupsSearchContainer')]//tr[contains(.,'${key_childChildSiteName}')]/td[1]/input</td>
+	<td>//table[contains(@data-searchcontainerid,'groupsSearchContainer')]//tr[contains(.,'${key_childChildSiteName}')]/td[1]//input</td>
 	<td></td>
 </tr>
 <tr>

@@ -140,7 +140,7 @@
 </tr>
 <tr>
 	<td>NEW_DEPLOYMENT_NAME_FIELD</td>
-	<td>//html/body/div/div[2]/div[2]/div[3]/div/div[2]/div[2]/div[2]/div/div/div[2]/div/div/div[2]/div/div/div/div[2]/div[2]/table/tbody/tr[4]/td/div/input</td>
+	<td>//html/body/div/div[2]/div[2]/div[3]/div/div[2]/div[2]/div[2]/div/div/div[2]/div/div/div[2]/div/div/div/div[2]/div[2]/table/tbody/tr[4]/td/div//input</td>
 	<td></td>
 </tr>
 <tr>

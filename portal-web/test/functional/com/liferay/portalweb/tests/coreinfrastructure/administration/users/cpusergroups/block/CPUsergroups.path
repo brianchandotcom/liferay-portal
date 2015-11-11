@@ -62,7 +62,7 @@
 <!--USER_GROUP_TABLE-->
 <tr>
 	<td>USER_GROUP_TABLE_CHECKBOX</td>
-	<td>//tr[contains(.,'${key_userGroupName}')]/td[1]/input</td>
+	<td>//tr[contains(.,'${key_userGroupName}')]/td[1]//input</td>
 	<td></td>
 </tr>
 <tr>

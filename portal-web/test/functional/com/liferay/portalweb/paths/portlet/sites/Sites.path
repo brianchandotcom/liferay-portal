@@ -11,12 +11,12 @@
 <!--SITE_TABLE-->
 <tr>
 	<td>SITE_TABLE_CHECKBOX</td>
-	<td>//table[contains(@class,'table-list')]//tr[contains(.,'${key_siteName}')]/td[1]/input</td>
+	<td>//table[contains(@class,'table-list')]//tr[contains(.,'${key_siteName}')]/td[1]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_TABLE_CHECKBOX_DISABLED</td>
-	<td>//table[contains(@class,'table-list')]//tr[contains(.,'${key_siteName}')]/td[1]/input[@disabled='']</td>
+	<td>//table[contains(@class,'table-list')]//tr[contains(.,'${key_siteName}')]/td[1]//input[@disabled='']</td>
 	<td></td>
 </tr>
 <tr>

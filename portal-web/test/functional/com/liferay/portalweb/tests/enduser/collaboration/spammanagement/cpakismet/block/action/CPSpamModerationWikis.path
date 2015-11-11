@@ -57,7 +57,7 @@
 <!--WIKI_PAGE_TABLE-->
 <tr>
 	<td>WIKI_PAGE_TABLE_CHECKBOX</td>
-	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[1]/input[@type='checkbox']</td>
+	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[1]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

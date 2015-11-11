@@ -179,7 +179,7 @@
 </tr>
 <tr>
 	<td>LIST_DOCUMENT_CHECKBOX</td>
-	<td>//table[@class='table table-list']//tr[contains(.,'${key_dmDocumentTitle}')]/td/input</td>
+	<td>//table[@class='table table-list']//tr[contains(.,'${key_dmDocumentTitle}')]/td//input</td>
 	<td></td>
 </tr>
 <tr>

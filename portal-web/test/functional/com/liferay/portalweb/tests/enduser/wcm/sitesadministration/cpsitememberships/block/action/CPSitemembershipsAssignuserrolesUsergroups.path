@@ -103,7 +103,7 @@
 </tr>
 <tr>
 	<td>USER_GROUP_TABLE_CHECKBOX</td>
-	<td>//tr[contains(.,'${key_userGroupName}')]/td[1]/input[contains(@name,'rowIds')]</td>
+	<td>//tr[contains(.,'${key_userGroupName}')]/td[1]//input[contains(@name,'rowIds')]</td>
 	<td></td>
 </tr>
 <tr>

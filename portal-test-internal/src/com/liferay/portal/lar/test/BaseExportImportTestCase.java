@@ -20,9 +20,12 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.model.User;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.test.LayoutTestUtil;
@@ -30,11 +33,17 @@ import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetLinkLocalServiceUtil;
+import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationConstants;
+import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationSettingsMapFactory;
 import com.liferay.portlet.exportimport.lar.ExportImportClassedModelUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys;
+import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
+import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalServiceUtil;
+import com.liferay.portlet.exportimport.service.ExportImportServiceUtil;
 
 import java.io.File;
+import java.io.Serializable;
 
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -48,6 +57,29 @@ import org.junit.Before;
  * @author Eduardo Garcia
  */
 public class BaseExportImportTestCase {
+
+	public void importLayouts(Map<String, String[]> parameterMap)
+		throws Exception {
+
+		User user = TestPropsValues.getUser();
+
+		Map<String, Serializable> importLayoutSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.
+				buildImportLayoutSettingsMap(
+					user, importedGroup.getGroupId(), false, null,
+					parameterMap);
+
+		ExportImportConfiguration importConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				addExportImportConfiguration(
+					user.getUserId(), importedGroup.getGroupId(),
+					StringPool.BLANK, StringPool.BLANK,
+					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
+					importLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
+					new ServiceContext());
+
+		ExportImportServiceUtil.importLayouts(importConfiguration, larFile);
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -113,6 +145,37 @@ public class BaseExportImportTestCase {
 	}
 
 	protected void deleteStagedModel(StagedModel stagedModel) throws Exception {
+	}
+
+	protected void exportImportLayouts(
+			long[] layoutIds, Map<String, String[]> parameterMap)
+		throws Exception {
+
+		exportLayouts(layoutIds, getExportParameterMap());
+
+		importLayouts(parameterMap);
+	}
+
+	protected void exportLayouts(
+			long[] layoutIds, Map<String, String[]> parameterMap)
+		throws Exception {
+
+		User user = TestPropsValues.getUser();
+
+		Map<String, Serializable> exportLayoutSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.
+				buildExportLayoutSettingsMap(
+					user, group.getGroupId(), false, layoutIds, parameterMap);
+
+		ExportImportConfiguration exportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				addDraftExportImportConfiguration(
+					user.getUserId(),
+					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
+					exportLayoutSettingsMap);
+
+		larFile = ExportImportServiceUtil.exportLayoutsAsFile(
+			exportConfiguration);
 	}
 
 	protected AssetEntry getAssetEntry(StagedModel stagedModel)

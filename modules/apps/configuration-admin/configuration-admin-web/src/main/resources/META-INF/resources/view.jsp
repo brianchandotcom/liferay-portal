@@ -21,6 +21,8 @@ PortletURL redirectURL = renderResponse.createRenderURL();
 
 ConfigurationModel factoryConfigurationModel = (ConfigurationModel)request.getAttribute("factoryConfigurationModel");
 ConfigurationModelIterator configurationModelIterator = (ConfigurationModelIterator)request.getAttribute("configurationModelIterator");
+List<String> configurationCategories = (List<String>)request.getAttribute("configurationCategories");
+String curConfigurationCategory = (String)request.getAttribute("curConfigurationCategory");
 %>
 
 <c:if test="<%= factoryConfigurationModel != null %>">
@@ -29,7 +31,20 @@ ConfigurationModelIterator configurationModelIterator = (ConfigurationModelItera
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item cssClass="active" label="settings" />
+
+		<% for (String configurationCategory : configurationCategories) { %>
+
+			<portlet:renderURL var="configurationCategoryURL">
+				<portlet:param name="curConfigurationCategory" value="<%= configurationCategory %>" />
+			</portlet:renderURL>
+
+			<aui:nav-item
+				cssClass='<%= configurationCategory.equals(curConfigurationCategory)? "active" : "" %>'
+				href="<%= configurationCategoryURL %>"
+				label="<%= configurationCategory %>" />
+
+		<% } %>
+
 	</aui:nav>
 </aui:nav-bar>
 

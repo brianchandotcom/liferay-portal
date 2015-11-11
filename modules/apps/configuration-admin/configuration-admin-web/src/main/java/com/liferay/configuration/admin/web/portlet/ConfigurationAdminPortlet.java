@@ -189,6 +189,9 @@ public class ConfigurationAdminPortlet extends MVCPortlet {
 					curConfigurationCategory = configurationCategories.get(0);
 				}
 
+				renderRequest.setAttribute(
+					"curConfigurationCategory", curConfigurationCategory);
+
 				List<ConfigurationModel> configurationModels =
 					configurationHelper.getConfigurationModels(
 						curConfigurationCategory);

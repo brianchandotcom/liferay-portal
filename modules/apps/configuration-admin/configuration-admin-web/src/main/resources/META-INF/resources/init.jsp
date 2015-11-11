@@ -28,6 +28,8 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.configuration.admin.web.model.ConfigurationModel" %><%@
 page import="com.liferay.configuration.admin.web.util.ConfigurationModelIterator" %>
 
+<%@ page import="java.util.List" %>
+
 <%@ page import="javax.portlet.PortletURL" %>
 
 <portlet:defineObjects />

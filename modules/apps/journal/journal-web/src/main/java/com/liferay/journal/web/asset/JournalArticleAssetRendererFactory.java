@@ -26,6 +26,7 @@ import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.service.permission.JournalArticlePermission;
 import com.liferay.journal.service.permission.JournalPermission;
 import com.liferay.journal.util.JournalContent;
+import com.liferay.journal.util.JournalConverter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -114,6 +115,7 @@ public class JournalArticleAssetRendererFactory
 
 		journalArticleAssetRenderer.setAssetRendererType(type);
 		journalArticleAssetRenderer.setJournalContent(_journalContent);
+		journalArticleAssetRenderer.setJournalConverter(_journalConverter);
 		journalArticleAssetRenderer.setServletContext(_servletContext);
 
 		return journalArticleAssetRenderer;
@@ -297,12 +299,18 @@ public class JournalArticleAssetRendererFactory
 		_journalContent = journalContent;
 	}
 
+	@Reference(unbind = "-")
+	protected void setJournalConverter(JournalConverter journalConverter) {
+		_journalConverter = journalConverter;
+	}
+
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private JournalArticleLocalService _journalArticleLocalService;
 	private JournalArticleResourceLocalService
 		_journalArticleResourceLocalService;
 	private JournalArticleService _journalArticleService;
 	private JournalContent _journalContent;
+	private JournalConverter _journalConverter;
 	private ServletContext _servletContext;
 
 }

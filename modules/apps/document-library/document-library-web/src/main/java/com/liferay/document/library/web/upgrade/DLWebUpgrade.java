@@ -17,24 +17,30 @@ package com.liferay.document.library.web.upgrade;
 import com.liferay.document.library.web.upgrade.v1_0_0.UpgradeAdminPortlets;
 import com.liferay.document.library.web.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.document.library.web.upgrade.v1_0_0.UpgradePortletSettings;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.service.ReleaseLocalService;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
  */
-@Component(immediate = true, service = DLWebUpgrade.class)
-public class DLWebUpgrade {
+@Component(immediate = true)
+public class DLWebUpgrade implements UpgradeStepRegistrator {
+
+	@Override
+	public void register(Registry registry) {
+		registry.register(
+			"com.liferay.document.library.web", "0.0.0", "1.0.0",
+			new DummyUpgradeStep());
+		registry.register(
+			"com.liferay.document.library.web", "0.0.1", "1.0.0",
+			new UpgradePortletId(), new UpgradeAdminPortlets(),
+			new UpgradePortletSettings(_settingsFactory));
+	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
@@ -42,31 +48,10 @@ public class DLWebUpgrade {
 	}
 
 	@Reference(unbind = "-")
-	protected void setReleaseLocalService(
-		ReleaseLocalService releaseLocalService) {
-
-		_releaseLocalService = releaseLocalService;
-	}
-
-	@Reference(unbind = "-")
 	protected void setSettingsFactory(SettingsFactory settingsFactory) {
 		_settingsFactory = settingsFactory;
 	}
 
-	@Activate
-	protected void upgrade() throws PortalException {
-		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
-
-		upgradeProcesses.add(new UpgradePortletId());
-
-		upgradeProcesses.add(new UpgradeAdminPortlets());
-		upgradeProcesses.add(new UpgradePortletSettings(_settingsFactory));
-
-		_releaseLocalService.updateRelease(
-			"com.liferay.document.library.web", upgradeProcesses, 1, 1, false);
-	}
-
-	private ReleaseLocalService _releaseLocalService;
 	private SettingsFactory _settingsFactory;
 
 }

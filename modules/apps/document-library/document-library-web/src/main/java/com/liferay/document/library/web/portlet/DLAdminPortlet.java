@@ -15,8 +15,8 @@
 package com.liferay.document.library.web.portlet;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
-import com.liferay.document.library.web.upgrade.DLWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.model.Release;
 
 import javax.portlet.Portlet;
 
@@ -56,8 +56,10 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class DLAdminPortlet extends MVCPortlet {
 
-	@Reference(unbind = "-")
-	protected void setDLWebUpgrade(DLWebUpgrade dlWebUpgrade) {
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.document.library.web)(release.schema.version=1.0.0))"
+	)
+	protected void setRelease(Release release) {
 	}
 
 }

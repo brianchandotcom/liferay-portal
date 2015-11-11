@@ -86,7 +86,8 @@ public class UpgradeCompanyId
 				"frameworkVersionId"),
 			new TableUpdater("SCLicense", "SCLicense", "licenseId"),
 			new TableUpdater(
-				"SCLicenses_SCProductEntries", "SCLicense", "licenseId"),
+				"SCLicenses_SCProductEntries", "SCProductEntry",
+				"productEntryId"),
 			new TableUpdater("TrashVersion", "TrashEntry", "entryId"),
 			new TableUpdater("UserGroupGroupRole", "UserGroup", "userGroupId"),
 			new TableUpdater("UserGroupRole", "UserGroup", "userGroupId"),

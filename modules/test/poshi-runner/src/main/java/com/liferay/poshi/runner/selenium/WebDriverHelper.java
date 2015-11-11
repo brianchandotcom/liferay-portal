@@ -876,7 +876,21 @@ public class WebDriverHelper {
 		}
 
 		try {
-			return webDriver.findElements(getBy(locator));
+			List<WebElement> webElements = webDriver.findElements(
+				getBy(locator));
+
+			List<WebElement> webElementWrappers = new ArrayList<>();
+
+			if (webElements != null) {
+				for (WebElement webElement : webElements) {
+					webElementWrappers.add(
+						new WebElementWrapper(locator, webElement));
+				}
+
+				return webElementWrappers;
+			}
+
+			return webElementWrappers;
 		}
 		finally {
 			if (timeout != null) {

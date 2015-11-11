@@ -941,7 +941,7 @@
 			</else>
 		</if>
 
-		<execute function="AssertClickNoError" locator1="Button#EXPIRE" value1="Expire" />
+		<execute function="ClickNoError" locator1="Icon#EXPIRE" />
 		<execute function="Confirm" value1="Are you sure you want to expire the selected version?" />
 	</command>
 
@@ -954,6 +954,10 @@
 	</command>
 
 	<command name="gotoViewSpecificVersionHistoryCP">
+		<var name="key_assetEntry" value="${webContentTitle}" />
+
+		<execute function="Click" locator1="Icon#DESCRIPTIVE_VERTICAL_ELLIPSIS" />
+
 		<execute function="AssertClick" locator1="MenuItem#VIEW_HISTORY" value1="View History" />
 	</command>
 

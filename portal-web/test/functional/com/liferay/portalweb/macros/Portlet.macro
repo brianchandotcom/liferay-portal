@@ -144,7 +144,10 @@
 		<var method="StringUtil#upperCase('${displayStyle}')" name="displayStyle" />
 
 		<if>
-			<condition function="IsElementPresent#isVisible" locator1="Icon#DISPLAY_STYLE_${displayStyle}" />
+			<and>
+				<condition function="IsElementPresent" locator1="Icon#DISPLAY_STYLE_${displayStyle}" />
+				<condition function="IsVisible" locator1="Icon#DISPLAY_STYLE_${displayStyle}" />
+			</and>
 			<then>
 				<execute function="Click" locator1="Icon#DISPLAY_STYLE_${displayStyle}" />
 			</then>

@@ -431,6 +431,7 @@ public class LayoutsTreeUtil {
 				"sortable",
 					hasManageLayoutsPermission &&
 					SitesUtil.isLayoutSortable(layout));
+			jsonObject.put("regularURL", layout.getRegularURL(request));
 			jsonObject.put("type", layout.getType());
 			jsonObject.put(
 				"updateable",

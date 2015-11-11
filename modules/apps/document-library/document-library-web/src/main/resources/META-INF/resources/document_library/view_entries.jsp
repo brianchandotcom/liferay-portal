@@ -61,10 +61,10 @@ entriesChecker.setCssClass("entry-selector");
 String orderByCol = GetterUtil.getString((String)request.getAttribute("view.jsp-orderByCol"));
 String orderByType = GetterUtil.getString((String)request.getAttribute("view.jsp-orderByType"));
 
-OrderByComparator<?> orderByComparator = DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType);
+OrderByComparator<?> orderByComparator = DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType, true);
 
 if (navigation.equals("recent")) {
-	orderByComparator = new RepositoryModelModifiedDateComparator();
+	orderByComparator = new RepositoryModelModifiedDateComparator(false, true);
 }
 
 dlSearchContainer.setOrderByCol(orderByCol);

@@ -101,7 +101,8 @@ public class VerifyAuditedModel extends VerifyProcess {
 	}
 
 	protected Object[] getAuditedModelArray(
-			Connection con, String tableName, String pkColumnName, long primKey)
+			Connection con, String tableName, String pkColumnName, long primKey,
+			boolean allowAnonymousUser, long previousUserId)
 		throws Exception {
 
 		PreparedStatement ps = null;
@@ -118,12 +119,22 @@ public class VerifyAuditedModel extends VerifyProcess {
 
 			if (rs.next()) {
 				long companyId = rs.getLong("companyId");
-				long userId = rs.getLong("userId");
 				Timestamp createDate = rs.getTimestamp("createDate");
 				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
 
+				long userId;
+				String userName;
+
+				if (allowAnonymousUser) {
+					userId = previousUserId;
+					userName = "Anonymous";
+				} else {
+					userId = rs.getLong("userId");
+					userName = getUserName(con, userId);
+				}
+
 				return new Object[] {
-					companyId, userId, getUserName(con, userId), createDate,
+					companyId, userId, userName, createDate,
 					modifiedDate
 				};
 			}
@@ -216,7 +227,8 @@ public class VerifyAuditedModel extends VerifyProcess {
 
 	protected void verifyAuditedModel(
 			Connection con, String tableName, String primaryKeyColumnName,
-			long primKey, Object[] auditedModelArray, boolean updateDates)
+			long primKey, Object[] auditedModelArray, boolean updateDates,
+			boolean allowAnonymousUser)
 		throws Exception {
 
 		PreparedStatement ps = null;
@@ -286,11 +298,12 @@ public class VerifyAuditedModel extends VerifyProcess {
 		ResultSet rs = null;
 
 		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
-			StringBundler sb = new StringBundler(8);
+			StringBundler sb = new StringBundler(9);
 
 			sb.append("select ");
 			sb.append(verifiableAuditedModel.getPrimaryKeyColumnName());
 			sb.append(", companyId");
+			sb.append(", userId");
 
 			if (verifiableAuditedModel.getJoinByTableName() != null) {
 				sb.append(StringPool.COMMA_AND_SPACE);
@@ -313,6 +326,7 @@ public class VerifyAuditedModel extends VerifyProcess {
 				long companyId = rs.getLong("companyId");
 				long primKey = rs.getLong(
 					verifiableAuditedModel.getPrimaryKeyColumnName());
+				long previousUserId = rs.getLong("userId");
 
 				if (verifiableAuditedModel.getJoinByTableName() != null) {
 					long relatedPrimKey = rs.getLong(
@@ -321,7 +335,9 @@ public class VerifyAuditedModel extends VerifyProcess {
 					auditedModelArray = getAuditedModelArray(
 						con, verifiableAuditedModel.getRelatedModelName(),
 						verifiableAuditedModel.getRelatedPKColumnName(),
-						relatedPrimKey);
+						relatedPrimKey,
+						verifiableAuditedModel.isAnonymousUserAllowed(),
+						previousUserId);
 				}
 				else if (previousCompanyId != companyId) {
 					auditedModelArray = getDefaultUserArray(con, companyId);
@@ -336,7 +352,8 @@ public class VerifyAuditedModel extends VerifyProcess {
 				verifyAuditedModel(
 					con, verifiableAuditedModel.getTableName(),
 					verifiableAuditedModel.getPrimaryKeyColumnName(), primKey,
-					auditedModelArray, verifiableAuditedModel.isUpdateDates());
+					auditedModelArray, verifiableAuditedModel.isUpdateDates(),
+					verifiableAuditedModel.isAnonymousUserAllowed());
 			}
 		}
 		finally {

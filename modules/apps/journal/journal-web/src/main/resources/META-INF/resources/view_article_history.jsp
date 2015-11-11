@@ -18,6 +18,7 @@
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
+String backURL = ParamUtil.getString(request, "backURL");
 
 String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
 
@@ -27,8 +28,6 @@ String orderByCol = ParamUtil.getString(request, "orderByCol", "version");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
 JournalArticle article = journalDisplayContext.getArticle();
-
-String backURL = ParamUtil.getString(request, "backURL");
 %>
 
 <c:choose>

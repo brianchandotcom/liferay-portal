@@ -16,28 +16,55 @@ package com.liferay.portal.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.model.LayoutRevision;
+import com.liferay.portal.model.RecentLayoutRevision;
+import com.liferay.portal.model.User;
 import com.liferay.portal.service.base.RecentLayoutRevisionLocalServiceBaseImpl;
 
 /**
- * The implementation of the recent layout revision local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.portal.service.RecentLayoutRevisionLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
  * @author Brian Wing Shun Chan
- * @see RecentLayoutRevisionLocalServiceBaseImpl
- * @see com.liferay.portal.service.RecentLayoutRevisionLocalServiceUtil
+ * @author Preston Crary
  */
 @ProviderType
 public class RecentLayoutRevisionLocalServiceImpl
 	extends RecentLayoutRevisionLocalServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.portal.service.RecentLayoutRevisionLocalServiceUtil} to access the recent layout revision local service.
-	 */
+
+	@Override
+	public RecentLayoutRevision addRecentLayoutRevision(
+		long companyId, long groupId, long userId, long layoutSetBranchId,
+		long plid) {
+
+		long recentLayoutRevisionId = counterLocalService.increment();
+
+		RecentLayoutRevision recentLayoutRevision =
+			recentLayoutRevisionPersistence.create(recentLayoutRevisionId);
+
+		recentLayoutRevision.setCompanyId(companyId);
+		recentLayoutRevision.setGroupId(groupId);
+		recentLayoutRevision.setUserId(userId);
+		recentLayoutRevision.setLayoutSetBranchId(layoutSetBranchId);
+		recentLayoutRevision.setPlid(plid);
+
+		return recentLayoutRevisionPersistence.update(recentLayoutRevision);
+	}
+
+	@Override
+	public void deleteRecentLayoutRevisions(LayoutRevision layoutRevision) {
+		recentLayoutRevisionPersistence.removeByLayoutRevisionId(
+			layoutRevision.getLayoutRevisionId());
+	}
+
+	@Override
+	public void deleteRecentLayoutRevisions(User user) {
+		recentLayoutRevisionPersistence.removeByUserId(user.getUserId());
+	}
+
+	@Override
+	public RecentLayoutRevision fetchRecentLayoutRevision(
+		long userId, long layoutSetBranchId, long plid) {
+
+		return recentLayoutRevisionPersistence.fetchByU_L_P(
+			userId, layoutSetBranchId, plid);
+	}
+
 }

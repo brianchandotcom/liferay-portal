@@ -132,9 +132,7 @@
 	<command name="viewPG">
 		<var name="key_pageTemplateName" value="${pageTemplateName}" />
 
-		<execute function="AssertClick" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
-
-		<execute function="AssertClick" locator1="PageTemplates#OPEN_PAGE_TEMPLATE" value1="Open Page Template" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
 
 		<execute function="SelectWindow" locator1="title=${pageTemplateName} - Liferay" />
 

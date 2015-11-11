@@ -45,7 +45,9 @@
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
+		</execute>
 
 		<execute macro="DMPortlet#viewNoPermissionCP" />
 

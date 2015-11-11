@@ -64,7 +64,7 @@ String orderByType = GetterUtil.getString((String)request.getAttribute("view.jsp
 OrderByComparator<?> orderByComparator = DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType, true);
 
 if (navigation.equals("recent")) {
-	orderByComparator = new RepositoryModelModifiedDateComparator(false, true);
+	orderByComparator = new RepositoryModelModifiedDateComparator(orderByType, true);
 }
 
 dlSearchContainer.setOrderByCol(orderByCol);

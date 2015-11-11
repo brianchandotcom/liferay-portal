@@ -1516,6 +1516,25 @@
 				(User_.status = ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.service.persistence.UserFinder.findByUsersOrgSites">
+		<![CDATA[
+			SELECT
+					User_.userId, groupId
+				FROM
+					User_
+				INNER JOIN
+					Users_Orgs ON
+						(Users_Orgs.userId = User_.userId)
+				INNER JOIN
+					Group_ ON
+						(Group_.classPK = Users_Orgs.organizationId)
+				WHERE
+					Group_.groupId IN [$GROUP_ID$] AND
+					(User_.companyId = ?) AND
+					(User_.defaultUser = ?) AND
+					(User_.status = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.service.persistence.UserFinder.findByUsersUserGroups">
 		<![CDATA[
 			SELECT

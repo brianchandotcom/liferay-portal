@@ -117,16 +117,16 @@
 		>
 			<arg line="-d ${doc.taglibs.dir}" />
 			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-aui.tld" />
+			<arg value="${project.dir}/modules/apps/application-list/application-list-taglib/src/main/resources/META-INF/resources/liferay-application-list.tld" />
+			<arg value="${project.dir}/modules/apps/dynamic-data-mapping/dynamic-data-mapping-taglib/src/main/resources/META-INF/resources/liferay-ddm.tld" />
+			<arg value="${project.dir}/modules/frontend/frontend-taglib/src/main/resources/META-INF/resources/liferay-frontend.tld" />
 			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-portlet-ext.tld" />
 			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-portlet.tld" />
 			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-security.tld" />
+			<arg value="${project.dir}/modules/apps/staging/staging-taglib/src/main/resources/META-INF/resources/liferay-staging.tld" />
 			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-theme.tld" />
 			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-ui.tld" />
 			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-util.tld" />
-			<arg value="${project.dir}/modules/frontend/frontend-taglib/src/main/resources/META-INF/resources/liferay-frontend.tld" />
-			<arg value="${project.dir}/modules/apps/staging/staging-taglib/src/main/resources/META-INF/resources/liferay-staging.tld" />
-			<arg value="${project.dir}/modules/apps/dynamic-data-mapping/dynamic-data-mapping-taglib/src/main/resources/META-INF/resources/liferay-ddm.tld" />
-			<arg value="${project.dir}/modules/apps/application-list/application-list-taglib/src/main/resources/META-INF/resources/liferay-application-list.tld" />
 		</java>
 	</target>
 

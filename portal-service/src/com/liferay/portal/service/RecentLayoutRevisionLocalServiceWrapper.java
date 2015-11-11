@@ -32,6 +32,14 @@ public class RecentLayoutRevisionLocalServiceWrapper
 		_recentLayoutRevisionLocalService = recentLayoutRevisionLocalService;
 	}
 
+	@Override
+	public com.liferay.portal.model.RecentLayoutRevision addRecentLayoutRevision(
+		long companyId, long groupId, long userId, long layoutRevisionId,
+		long layoutSetBranchId, long plid) {
+		return _recentLayoutRevisionLocalService.addRecentLayoutRevision(companyId,
+			groupId, userId, layoutRevisionId, layoutSetBranchId, plid);
+	}
+
 	/**
 	* Adds the recent layout revision to the database. Also notifies the appropriate model listeners.
 	*
@@ -90,6 +98,17 @@ public class RecentLayoutRevisionLocalServiceWrapper
 		long recentLayoutRevisionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _recentLayoutRevisionLocalService.deleteRecentLayoutRevision(recentLayoutRevisionId);
+	}
+
+	@Override
+	public void deleteRecentLayoutRevisions(
+		com.liferay.portal.model.LayoutRevision layoutRevision) {
+		_recentLayoutRevisionLocalService.deleteRecentLayoutRevisions(layoutRevision);
+	}
+
+	@Override
+	public void deleteRecentLayoutRevisions(com.liferay.portal.model.User user) {
+		_recentLayoutRevisionLocalService.deleteRecentLayoutRevisions(user);
 	}
 
 	@Override
@@ -182,6 +201,13 @@ public class RecentLayoutRevisionLocalServiceWrapper
 	public com.liferay.portal.model.RecentLayoutRevision fetchRecentLayoutRevision(
 		long recentLayoutRevisionId) {
 		return _recentLayoutRevisionLocalService.fetchRecentLayoutRevision(recentLayoutRevisionId);
+	}
+
+	@Override
+	public com.liferay.portal.model.RecentLayoutRevision fetchRecentLayoutRevision(
+		long userId, long layoutSetBranchId, long plid) {
+		return _recentLayoutRevisionLocalService.fetchRecentLayoutRevision(userId,
+			layoutSetBranchId, plid);
 	}
 
 	@Override

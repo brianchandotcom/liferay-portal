@@ -32,6 +32,14 @@ public class RecentLayoutSetBranchLocalServiceWrapper
 		_recentLayoutSetBranchLocalService = recentLayoutSetBranchLocalService;
 	}
 
+	@Override
+	public com.liferay.portal.model.RecentLayoutSetBranch addRecentLayoutSetBranch(
+		long companyId, long groupId, long userId, long layoutSetBranchId,
+		long layoutSetId) {
+		return _recentLayoutSetBranchLocalService.addRecentLayoutSetBranch(companyId,
+			groupId, userId, layoutSetBranchId, layoutSetId);
+	}
+
 	/**
 	* Adds the recent layout set branch to the database. Also notifies the appropriate model listeners.
 	*
@@ -90,6 +98,18 @@ public class RecentLayoutSetBranchLocalServiceWrapper
 		long recentLayoutSetBranchId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _recentLayoutSetBranchLocalService.deleteRecentLayoutSetBranch(recentLayoutSetBranchId);
+	}
+
+	@Override
+	public void deleteRecentLayoutSetBranches(
+		com.liferay.portal.model.LayoutSetBranch layoutSetBranch) {
+		_recentLayoutSetBranchLocalService.deleteRecentLayoutSetBranches(layoutSetBranch);
+	}
+
+	@Override
+	public void deleteRecentLayoutSetBranches(
+		com.liferay.portal.model.User user) {
+		_recentLayoutSetBranchLocalService.deleteRecentLayoutSetBranches(user);
 	}
 
 	@Override
@@ -182,6 +202,13 @@ public class RecentLayoutSetBranchLocalServiceWrapper
 	public com.liferay.portal.model.RecentLayoutSetBranch fetchRecentLayoutSetBranch(
 		long recentLayoutSetBranchId) {
 		return _recentLayoutSetBranchLocalService.fetchRecentLayoutSetBranch(recentLayoutSetBranchId);
+	}
+
+	@Override
+	public com.liferay.portal.model.RecentLayoutSetBranch fetchRecentLayoutSetBranch(
+		long userId, long layoutSetId) {
+		return _recentLayoutSetBranchLocalService.fetchRecentLayoutSetBranch(userId,
+			layoutSetId);
 	}
 
 	@Override

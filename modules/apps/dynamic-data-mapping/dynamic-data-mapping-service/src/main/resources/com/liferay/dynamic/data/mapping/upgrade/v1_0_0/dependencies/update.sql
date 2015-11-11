@@ -52,6 +52,7 @@ update DDMTemplate set versionUserName = userName;
 update DDMTemplate set version = '1.0';
 
 create table DDMTemplateLink (
+	companyId LONG,
 	templateLinkId LONG not null primary key,
 	classNameId LONG,
 	classPK LONG,

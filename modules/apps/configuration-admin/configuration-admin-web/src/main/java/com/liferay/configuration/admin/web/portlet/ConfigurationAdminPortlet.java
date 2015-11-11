@@ -176,8 +176,22 @@ public class ConfigurationAdminPortlet extends FreeMarkerPortlet {
 					"factoryConfigurationModel", factoryConfigurationModel);
 			}
 			else {
+				List<String> configurationCategories =
+					configurationHelper.getConfigurationCategories();
+
+				renderRequest.setAttribute(
+					"configurationCategories", configurationCategories);
+
+				String curConfigurationCategory = ParamUtil.getString(
+					renderRequest, "curConfigurationCategory");
+
+				if (Validator.isNull(curConfigurationCategory)) {
+					curConfigurationCategory = configurationCategories.get(0);
+				}
+
 				List<ConfigurationModel> configurationModels =
-					configurationHelper.getConfigurationModels();
+					configurationHelper.getConfigurationModels(
+						curConfigurationCategory);
 
 				renderRequest.setAttribute(
 					"configurationModelIterator",

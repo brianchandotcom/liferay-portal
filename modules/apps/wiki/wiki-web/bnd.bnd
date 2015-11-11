@@ -48,8 +48,20 @@ Import-Package:\
 	com.liferay.wiki.util,\
 	com.liferay.wiki.util.comparator,\
 	\
+	org.apache.commons.chain,\
+	org.apache.commons.chain.*,\
+	org.apache.commons.chain.generic,\
+	org.apache.commons.chain.generic.*,\
+	org.apache.commons.chain.impl,\
+	org.apache.commons.chain.impl.*,\
 	org.apache.struts.action,\
 	org.apache.struts.action.*,\
+	org.apache.struts.chain,\
+	org.apache.struts.chain.*,\
+	org.apache.struts.chain.commands,\
+	org.apache.struts.chain.commands.*,\
+	org.apache.struts.chain.commands.servlet,\
+	org.apache.struts.chain.commands.servlet.*,\
 	org.apache.struts.config,\
 	org.apache.struts.config.*,\
 	org.apache.struts.util,\

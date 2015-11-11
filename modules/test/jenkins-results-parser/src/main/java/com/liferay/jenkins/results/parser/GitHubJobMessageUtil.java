@@ -33,7 +33,7 @@ import org.json.JSONObject;
  */
 public class GitHubJobMessageUtil {
 
-	public static void getFailedJobMessage(Project project) throws Exception {
+	public static void getGitHubJobMessage(Project project) throws Exception {
 		StringBuilder sb = new StringBuilder();
 
 		String buildURL = project.getProperty("build.url");

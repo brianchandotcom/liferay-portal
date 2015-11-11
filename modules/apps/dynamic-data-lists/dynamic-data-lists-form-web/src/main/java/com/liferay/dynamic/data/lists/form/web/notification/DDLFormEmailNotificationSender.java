@@ -21,8 +21,8 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
-import com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRenderer;
-import com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRendererRegistryUtil;
+import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.mail.service.MailServiceUtil;
@@ -40,20 +40,25 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.ContentUtil;
 
 import java.io.Serializable;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import javax.mail.internet.InternetAddress;
+
 import javax.portlet.PortletRequest;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Rafael Praxedes
  */
+@Component(immediate = true, service = DDLFormEmailNotificationSender.class)
 public class DDLFormEmailNotificationSender {
 
-	public static void sendEmailNotification(
+	public void sendEmailNotification(
 		PortletRequest portletRequest, DDLRecord record) {
 
 		try {
@@ -88,7 +93,7 @@ public class DDLFormEmailNotificationSender {
 		}
 	}
 
-	private static Map<String, Serializable> getContext(
+	protected Map<String, Serializable> getContext(
 			PortletRequest portletRequest, DDLRecordSet recordSet,
 			DDLRecord record)
 		throws PortalException {
@@ -121,11 +126,12 @@ public class DDLFormEmailNotificationSender {
 		return context;
 	}
 
-	private static String getEmailBody(
-		PortletRequest portletRequest, DDLRecordSet recordSet,
-		DDLRecord record) throws Exception {
+	protected String getEmailBody(
+			PortletRequest portletRequest, DDLRecordSet recordSet,
+			DDLRecord record)
+		throws Exception {
 
-		Class<?> clazz = DDLFormEmailNotificationSenderUtil.class;
+		Class<?> clazz = getClass();
 
 		String notificationTemplate = ContentUtil.get(
 			clazz.getClassLoader(), DDLFormWebConfigurationValues.
@@ -137,7 +143,7 @@ public class DDLFormEmailNotificationSender {
 		return replaceTokens(notificationTemplate, context);
 	}
 
-	private static String getSerializedDDMFormValues(DDLRecord record)
+	protected String getSerializedDDMFormValues(DDLRecord record)
 		throws PortalException {
 
 		DDMFormValues ddmFormValues = record.getDDMFormValues();
@@ -164,17 +170,17 @@ public class DDLFormEmailNotificationSender {
 		return sb.toString();
 	}
 
-	private static String renderDDMFormFieldValue(
+	protected String renderDDMFormFieldValue(
 		DDMFormFieldValue ddmFormFieldValue, Locale locale) {
 
 		DDMFormFieldValueRenderer ddmFormFieldValueRenderer =
-			DDMFormFieldValueRendererRegistryUtil.getDDMFormFieldValueRenderer(
+			_ddmFormFieldTypeServicesTracker.getDDMFormFieldValueRenderer(
 				ddmFormFieldValue.getType());
 
 		return ddmFormFieldValueRenderer.render(ddmFormFieldValue, locale);
 	}
 
-	private static String replaceTokens(
+	protected String replaceTokens(
 			String notificationTemplate, Map<String, Serializable> context)
 		throws Exception {
 
@@ -194,7 +200,15 @@ public class DDLFormEmailNotificationSender {
 			});
 	}
 
+	protected void setDDMFormFieldTypeServicesTracker(
+		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker) {
+
+		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
-		DDLFormEmailNotificationSenderUtil.class);
+		DDLFormEmailNotificationSender.class);
+
+	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 
 }

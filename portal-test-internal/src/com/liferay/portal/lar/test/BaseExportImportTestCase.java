@@ -17,6 +17,7 @@ package com.liferay.portal.lar.test;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.model.Group;
@@ -25,6 +26,11 @@ import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.test.LayoutTestUtil;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.model.AssetLink;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetLinkLocalServiceUtil;
+import com.liferay.portlet.exportimport.lar.ExportImportClassedModelUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys;
 
@@ -65,6 +71,19 @@ public class BaseExportImportTestCase {
 		}
 	}
 
+	protected AssetLink addAssetLink(
+			StagedModel sourceStagedModel, StagedModel targetStagedModel,
+			int weight)
+		throws PortalException {
+
+		AssetEntry originAssetEntry = getAssetEntry(sourceStagedModel);
+		AssetEntry targetAssetEntry = getAssetEntry(targetStagedModel);
+
+		return AssetLinkLocalServiceUtil.addLink(
+			TestPropsValues.getUserId(), originAssetEntry.getEntryId(),
+			targetAssetEntry.getEntryId(), 0, weight);
+	}
+
 	protected void addParameter(
 		Map<String, String[]> parameterMap, String name, String value) {
 
@@ -94,6 +113,14 @@ public class BaseExportImportTestCase {
 	}
 
 	protected void deleteStagedModel(StagedModel stagedModel) throws Exception {
+	}
+
+	protected AssetEntry getAssetEntry(StagedModel stagedModel)
+		throws PortalException {
+
+		return AssetEntryLocalServiceUtil.getEntry(
+			ExportImportClassedModelUtil.getClassName(stagedModel),
+			ExportImportClassedModelUtil.getClassPK(stagedModel));
 	}
 
 	protected Map<String, String[]> getExportParameterMap() throws Exception {

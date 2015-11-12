@@ -29,7 +29,6 @@ import com.liferay.gradle.plugins.lang.builder.BuildLangTask;
 import com.liferay.gradle.plugins.lang.builder.LangBuilderPlugin;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.patcher.PatchTask;
-import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
 import com.liferay.gradle.plugins.soy.SoyPlugin;
@@ -182,7 +181,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		configureArtifacts(project);
 
-		configureTaskBuildService(project);
 		configureTaskBuildWSDL(project);
 		configureTaskBuildXSD(project);
 		configureTaskConfigJSModules(project);
@@ -1170,191 +1168,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		buildLangTask.setTranslateClientSecret(translateClientSecret);
 	}
 
-	protected void configureTaskBuildService(Project project) {
-		BuildServiceTask buildServiceTask =
-			(BuildServiceTask)GradleUtil.getTask(
-				project, ServiceBuilderPlugin.BUILD_SERVICE_TASK_NAME);
-
-		configureTaskBuildServiceApiDirName(buildServiceTask);
-		configureTaskBuildServiceAutoNamespaceTables(buildServiceTask);
-		configureTaskBuildServiceBeanLocatorUtil(buildServiceTask);
-		configureTaskBuildServiceHbmFileName(buildServiceTask);
-		configureTaskBuildServiceImplDirName(buildServiceTask);
-		configureTaskBuildServiceInputFileName(buildServiceTask);
-		configureTaskBuildServiceModelHintsFileName(buildServiceTask);
-		configureTaskBuildServiceOsgiModule(buildServiceTask);
-		configureTaskBuildServicePluginName(buildServiceTask);
-		configureTaskBuildServicePropsUtil(buildServiceTask);
-		configureTaskBuildServiceResourcesDirName(buildServiceTask);
-		configureTaskBuildServiceSpringFileName(buildServiceTask);
-		configureTaskBuildServiceSpringNamespaces(buildServiceTask);
-		configureTaskBuildServiceSqlDirName(buildServiceTask);
-		configureTaskBuildServiceSqlFileName(buildServiceTask);
-		configureTaskBuildServiceTestDirName(buildServiceTask);
-
-		configureTaskBuildServiceModelHintsConfigs(buildServiceTask);
-	}
-
-	protected void configureTaskBuildServiceApiDirName(
-		BuildServiceTask buildServiceTask) {
-
-		Project project = buildServiceTask.getProject();
-
-		File apiDir = new File(getServiceBaseDir(project), "service");
-
-		buildServiceTask.setApiDirName(project.relativePath(apiDir));
-	}
-
-	protected void configureTaskBuildServiceAutoNamespaceTables(
-		BuildServiceTask buildServiceTask) {
-
-		buildServiceTask.setAutoNamespaceTables(true);
-	}
-
-	protected void configureTaskBuildServiceBeanLocatorUtil(
-		BuildServiceTask buildServiceTask) {
-
-		buildServiceTask.setBeanLocatorUtil(
-			"com.liferay.util.bean.PortletBeanLocatorUtil");
-	}
-
-	protected void configureTaskBuildServiceHbmFileName(
-		BuildServiceTask buildServiceTask) {
-
-		Project project = buildServiceTask.getProject();
-
-		File hbmFile = new File(
-			getResourcesDir(project), "META-INF/portlet-hbm.xml");
-
-		buildServiceTask.setHbmFileName(project.relativePath(hbmFile));
-	}
-
-	protected void configureTaskBuildServiceImplDirName(
-		BuildServiceTask buildServiceTask) {
-
-		Project project = buildServiceTask.getProject();
-
-		File implDir = getJavaDir(project);
-
-		buildServiceTask.setImplDirName(project.relativePath(implDir));
-	}
-
-	protected void configureTaskBuildServiceInputFileName(
-		BuildServiceTask buildServiceTask) {
-
-		Project project = buildServiceTask.getProject();
-
-		File inputFile = new File(getServiceBaseDir(project), "service.xml");
-
-		buildServiceTask.setInputFileName(project.relativePath(inputFile));
-	}
-
-	protected void configureTaskBuildServiceModelHintsConfigs(
-		BuildServiceTask buildServiceTask) {
-
-		String fileName = buildServiceTask.getModelHintsFileName();
-
-		Project project = buildServiceTask.getProject();
-
-		File file = project.file(fileName);
-
-		for (String config : buildServiceTask.getModelHintsConfigs()) {
-			if (config.startsWith("classpath*:")) {
-				continue;
-			}
-
-			File configFile = project.file(config);
-
-			if (configFile.equals(file)) {
-				return;
-			}
-		}
-
-		buildServiceTask.modelHintsConfigs(fileName);
-	}
-
-	protected void configureTaskBuildServiceModelHintsFileName(
-		BuildServiceTask buildServiceTask) {
-
-		Project project = buildServiceTask.getProject();
-
-		File modelHintsFile = new File(
-			getResourcesDir(project), "META-INF/portlet-model-hints.xml");
-
-		buildServiceTask.setModelHintsFileName(
-			project.relativePath(modelHintsFile));
-	}
-
-	protected void configureTaskBuildServiceOsgiModule(
-		BuildServiceTask buildServiceTask) {
-
-		buildServiceTask.setOsgiModule(false);
-	}
-
-	protected void configureTaskBuildServicePluginName(
-		BuildServiceTask buildServiceTask) {
-
-		Project project = buildServiceTask.getProject();
-
-		buildServiceTask.setPluginName(project.getName());
-	}
-
-	protected void configureTaskBuildServicePropsUtil(
-		BuildServiceTask buildServiceTask) {
-
-		buildServiceTask.setPropsUtil("com.liferay.util.service.ServiceProps");
-	}
-
-	protected void configureTaskBuildServiceResourcesDirName(
-		BuildServiceTask buildServiceTask) {
-
-		Project project = buildServiceTask.getProject();
-
-		File resourcesDir = getResourcesDir(project);
-
-		buildServiceTask.setResourcesDirName(
-			project.relativePath(resourcesDir));
-	}
-
-	protected void configureTaskBuildServiceSpringFileName(
-		BuildServiceTask buildServiceTask) {
-
-		Project project = buildServiceTask.getProject();
-
-		File springFile = new File(
-			getResourcesDir(project), "META-INF/portlet-spring.xml");
-
-		buildServiceTask.setSpringFileName(project.relativePath(springFile));
-	}
-
-	protected void configureTaskBuildServiceSpringNamespaces(
-		BuildServiceTask buildServiceTask) {
-
-		buildServiceTask.setSpringNamespaces(new String[] {"beans"});
-	}
-
-	protected void configureTaskBuildServiceSqlDirName(
-		BuildServiceTask buildServiceTask) {
-
-		Project project = buildServiceTask.getProject();
-
-		File sqlDir = new File(getServiceBaseDir(project), "sql");
-
-		buildServiceTask.setSqlDirName(project.relativePath(sqlDir));
-	}
-
-	protected void configureTaskBuildServiceSqlFileName(
-		BuildServiceTask buildServiceTask) {
-
-		buildServiceTask.setSqlFileName("tables.sql");
-	}
-
-	protected void configureTaskBuildServiceTestDirName(
-		BuildServiceTask buildServiceTask) {
-
-		buildServiceTask.setTestDirName("");
-	}
-
 	protected void configureTaskBuildUpgradeTableDir(
 		BuildUpgradeTableTask buildUpgradeTableTask) {
 
@@ -2213,10 +2026,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			project, SourceSet.MAIN_SOURCE_SET_NAME);
 
 		return getSrcDir(sourceSet.getResources());
-	}
-
-	protected File getServiceBaseDir(Project project) {
-		return project.getProjectDir();
 	}
 
 	protected File getSrcDir(SourceDirectorySet sourceDirectorySet) {

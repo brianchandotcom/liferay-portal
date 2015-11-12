@@ -1713,7 +1713,24 @@
 			<var name="scopeSelection" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsEntry#viewCP">
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="List" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewEntryTable">
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewEntryAuthorCP">
+			<var name="entryAuthorFullName" value="Test Test" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<var name="key_entryTitle" value="Blogs Entry Title" />
+
+		<execute function="AssertClick" locator1="Blogs#ENTRY_TABLE_TITLE" value1="Blogs Entry Title" />
+
+		<execute macro="BlogsEntry#viewEntry">
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>

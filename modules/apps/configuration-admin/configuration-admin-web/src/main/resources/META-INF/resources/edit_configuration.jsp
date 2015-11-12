@@ -20,10 +20,10 @@
 ConfigurationModel configurationModel = (ConfigurationModel)request.getAttribute("configurationModel");
 String ddmFormHTML = (String)request.getAttribute("DYNAMIC_DATA_MAPPING_FORM_HTML");
 
-PortletURL redirectURL = renderResponse.createRenderURL();
+PortletURL portletURL = renderResponse.createRenderURL();
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirectURL.toString());
+portletDisplay.setURLBack(portletURL.toString());
 
 renderResponse.setTitle(configurationModel.getName());
 %>
@@ -33,21 +33,9 @@ renderResponse.setTitle(configurationModel.getName());
 
 <div class="container-fluid-1280">
 	<aui:form action="<%= bindConfigActionURL %>" method="post" name="fm">
-		<aui:input
-			name="redirect"
-			type="hidden"
-			value="<%= redirectURL %>"
-		/>
-		<aui:input
-			name="pid"
-			type="hidden"
-			value="<%= configurationModel.getID() %>"
-		/>
-		<aui:input
-			name="factoryPid"
-			type="hidden"
-			value="<%= configurationModel.getFactoryPid() %>"
-		/>
+		<aui:input name="redirect" type="hidden" value="<%= portletURL %>" />
+		<aui:input name="factoryPid" type="hidden" value="<%= configurationModel.getFactoryPid() %>" />
+		<aui:input name="pid" type="hidden" value="<%= configurationModel.getID() %>" />
 
 		<div class="lfr-ddm-container" id="lfr-ddm-container">
 			<%= ddmFormHTML %>
@@ -56,49 +44,32 @@ renderResponse.setTitle(configurationModel.getName());
 		<aui:button-row>
 			<c:choose>
 				<c:when test="<%= configurationModel.getConfiguration() != null %>">
-					<aui:button
-						type="submit"
-						value="update"
-					/>
+					<aui:button type="submit" value="update" />
 
-					<%
-					String deleteAttributesOnClickValue = renderResponse.getNamespace() + "deleteConfig();";
-					%>
-
-					<aui:button
-						onClick="<%= deleteAttributesOnClickValue %>"
-						type="button"
-						value="delete"
-					/>
+					<aui:button onClick='<%= renderResponse.getNamespace() + "deleteConfig();" %>' type="button" value="delete" />
 				</c:when>
 				<c:otherwise>
-					<aui:button
-						type="submit"
-						value="save"
-					/>
+					<aui:button type="submit" value="save" />
 				</c:otherwise>
 			</c:choose>
 
-			<aui:button
-				href="<%= redirectURL.toString() %>"
-				type="cancel"
-			/>
+			<aui:button href="<%= portletURL.toString() %>" type="cancel" />
 		</aui:button-row>
 	</aui:form>
 </div>
 
 <aui:script>
+	function <portlet:namespace />deleteConfig() {
+		var actionURL = "<%= deleteConfigActionURL.toString() %>";
+
+		<portlet:namespace />setDDMFieldNamespaceAndSubmit(actionURL);
+	}
+
 	function <portlet:namespace />setDDMFieldNamespaceAndSubmit(actionURL) {
 		if (actionURL) {
 			document.<portlet:namespace />fm.action = actionURL;
 		}
 
 		submitForm(document.<portlet:namespace />fm);
-	}
-
-	function <portlet:namespace />deleteConfig() {
-		var actionURL = "<%= deleteConfigActionURL.toString() %>";
-
-		<portlet:namespace />setDDMFieldNamespaceAndSubmit(actionURL);
 	}
 </aui:script>

@@ -107,7 +107,7 @@ public class PortalClientBuilder {
 
 		if (testNamespace.exists()) {
 			throw new RuntimeException(
-				"Please update " + mappingFile + " to namespace " +
+				"Please update " + mappingFile + " from namespace " +
 					"com.liferay.portal to com.liferay.client.soap.portal");
 		}
 	}

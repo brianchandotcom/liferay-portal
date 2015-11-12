@@ -46,7 +46,7 @@ renderResponse.setTitle(configurationModel.getName());
 				<c:when test="<%= configurationModel.getConfiguration() != null %>">
 					<aui:button type="submit" value="update" />
 
-					<aui:button onClick='<%= renderResponse.getNamespace() + "deleteConfiguration();" %>' type="button" value="delete" />
+					<aui:button onClick='<%= renderResponse.getNamespace() + "deleteConfiguration();" %>' value="delete" />
 				</c:when>
 				<c:otherwise>
 					<aui:button type="submit" value="save" />

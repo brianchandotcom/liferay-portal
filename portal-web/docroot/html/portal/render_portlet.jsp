@@ -739,7 +739,7 @@ if (group.isControlPanel()) {
 	portletDisplay.setShowMoveIcon(false);
 	portletDisplay.setShowPortletCssIcon(false);
 
-	if (!portlet.isPreferencesUniquePerLayout() && (portlet.getConfigurationActionInstance() != null) && (PortletPermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroupId(), curLayout, portlet, ActionKeys.CONFIGURATION))) {
+	if (!portlet.isPreferencesUniquePerLayout() && (portlet.getConfigurationActionInstance() != null) && PortletPermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroupId(), curLayout, portlet, ActionKeys.CONFIGURATION)) {
 		portletDisplay.setShowConfigurationIcon(true);
 	}
 }

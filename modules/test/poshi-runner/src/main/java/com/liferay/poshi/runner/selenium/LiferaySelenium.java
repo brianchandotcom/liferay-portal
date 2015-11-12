@@ -113,9 +113,9 @@ public interface LiferaySelenium extends Selenium {
 	public void connectToEmailAccount(String emailAddress, String emailPassword)
 		throws Exception;
 
-	public void copyText(String locator);
+	public void copyText(String locator) throws Exception;
 
-	public void copyValue(String locator);
+	public void copyValue(String locator) throws Exception;
 
 	public void deleteAllEmails() throws Exception;
 
@@ -128,6 +128,10 @@ public interface LiferaySelenium extends Selenium {
 	public String getCurrentMonth();
 
 	public String getCurrentYear();
+
+	public String getElementText(String locator) throws Exception;
+
+	public String getElementValue(String locator) throws Exception;
 
 	public String getEmailBody(String index) throws Exception;
 
@@ -167,9 +171,9 @@ public interface LiferaySelenium extends Selenium {
 
 	public boolean isNotSelectedLabel(String selectLocator, String pattern);
 
-	public boolean isNotText(String locator, String value);
+	public boolean isNotText(String locator, String value) throws Exception;
 
-	public boolean isNotValue(String locator, String value);
+	public boolean isNotValue(String locator, String value) throws Exception;
 
 	public boolean isNotVisible(String locator);
 
@@ -181,11 +185,11 @@ public interface LiferaySelenium extends Selenium {
 
 	public boolean isTCatEnabled();
 
-	public boolean isText(String locator, String value);
+	public boolean isText(String locator, String value) throws Exception;
 
 	public boolean isTextNotPresent(String pattern);
 
-	public boolean isValue(String locator, String value);
+	public boolean isValue(String locator, String value) throws Exception;
 
 	public void javaScriptMouseDown(String locator);
 

@@ -609,8 +609,12 @@ public class WebDriverToSeleniumBridge
 		return attributeNode.getTextContent();
 	}
 
-	public String getHtmlNodeText(String locator) {
+	public String getHtmlNodeText(String locator) throws Exception {
 		Node node = getHtmlNode(locator);
+
+		if (node == null) {
+			throw new Exception(locator + " is not present");
+		}
 
 		return node.getTextContent();
 	}
@@ -701,25 +705,7 @@ public class WebDriverToSeleniumBridge
 
 	@Override
 	public String getText(String locator) {
-		return getText(locator, null);
-	}
-
-	public String getText(String locator, String timeout) {
-		if (locator.contains("x:")) {
-			return getHtmlNodeText(locator);
-		}
-
-		WebElement webElement = getWebElement(locator, timeout);
-
-		if (!webElement.isDisplayed()) {
-			scrollWebElementIntoView(webElement);
-		}
-
-		String text = webElement.getText();
-
-		text = text.trim();
-
-		return text.replace("\n", " ");
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -729,17 +715,7 @@ public class WebDriverToSeleniumBridge
 
 	@Override
 	public String getValue(String locator) {
-		return getValue(locator, null);
-	}
-
-	public String getValue(String locator, String timeout) {
-		WebElement webElement = getWebElement(locator, timeout);
-
-		if (!webElement.isDisplayed()) {
-			scrollWebElementIntoView(webElement);
-		}
-
-		return webElement.getAttribute("value");
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

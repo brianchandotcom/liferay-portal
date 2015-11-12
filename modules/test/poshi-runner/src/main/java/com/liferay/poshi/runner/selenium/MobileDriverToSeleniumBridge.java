@@ -446,21 +446,7 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public String getText(String locator) {
-		return getText(locator, null);
-	}
-
-	public String getText(String locator, String timeout) {
-		WebElement webElement = getWebElement(locator, timeout);
-
-		if (!isInViewport(locator)) {
-			swipeWebElementIntoView(locator);
-		}
-
-		String text = webElement.getText();
-
-		text = text.trim();
-
-		return text.replace("\n", " ");
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -470,17 +456,7 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public String getValue(String locator) {
-		return getValue(locator, null);
-	}
-
-	public String getValue(String locator, String timeout) {
-		WebElement webElement = getWebElement(locator, timeout);
-
-		if (!isInViewport(locator)) {
-			swipeWebElementIntoView(locator);
-		}
-
-		return webElement.getAttribute("value");
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

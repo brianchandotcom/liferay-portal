@@ -203,6 +203,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 						PortletURL siteBrowserURL = PortletProviderUtil.getPortletURL(renderRequest, Group.class.getName(), PortletProvider.Action.BROWSE);
 
 						siteBrowserURL.setParameter("groupId", String.valueOf(layout.getGroupId()));
+						siteBrowserURL.setParameter("includeCurrentGroup", Boolean.FALSE.toString());
 						siteBrowserURL.setParameter("selectedGroupIds", StringUtil.merge(assetPublisherDisplayContext.getGroupIds()));
 						siteBrowserURL.setParameter("types", StringUtil.merge(types));
 						siteBrowserURL.setParameter("filter", "contentSharingWithChildrenEnabled");

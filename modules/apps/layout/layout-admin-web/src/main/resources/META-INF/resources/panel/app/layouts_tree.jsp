@@ -117,7 +117,7 @@ String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
 <c:if test="<%= !selGroup.isLayoutSetPrototype() && !selGroup.isLayoutPrototype() %>">
 
 	<%
-	PortletURL editPublicLayoutURL = PortalUtil.getControlPanelPortletURL(request, LayoutAdminPortletKeys.GROUP_PAGES, 0, PortletRequest.RENDER_PHASE);
+	PortletURL editPublicLayoutURL = PortalUtil.getControlPanelPortletURL(request, LayoutAdminPortletKeys.GROUP_PAGES, PortletRequest.RENDER_PHASE);
 
 	editPublicLayoutURL.setParameter("privateLayout", Boolean.FALSE.toString());
 	editPublicLayoutURL.setParameter("groupId", String.valueOf(liveGroup.getGroupId()));
@@ -136,7 +136,7 @@ String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
 </c:if>
 
 <%
-PortletURL editPrivateLayoutURL = PortalUtil.getControlPanelPortletURL(request, LayoutAdminPortletKeys.GROUP_PAGES, 0, PortletRequest.RENDER_PHASE);
+PortletURL editPrivateLayoutURL = PortalUtil.getControlPanelPortletURL(request, LayoutAdminPortletKeys.GROUP_PAGES, PortletRequest.RENDER_PHASE);
 
 editPrivateLayoutURL.setParameter("privateLayout", Boolean.TRUE.toString());
 editPrivateLayoutURL.setParameter("groupId", String.valueOf(liveGroup.getGroupId()));
@@ -162,7 +162,7 @@ if (selGroup.isLayoutSetPrototype() || selGroup.isLayoutPrototype()) {
 <c:if test="<%= ((selLayout == null) && GroupPermissionUtil.contains(permissionChecker, selGroup, ActionKeys.ADD_LAYOUT)) || ((selLayout != null) && LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.ADD_LAYOUT)) %>">
 
 	<%
-	PortletURL addPagesURL = PortalUtil.getControlPanelPortletURL(request, LayoutAdminPortletKeys.GROUP_PAGES, 0, PortletRequest.RENDER_PHASE);
+	PortletURL addPagesURL = PortalUtil.getControlPanelPortletURL(request, LayoutAdminPortletKeys.GROUP_PAGES, PortletRequest.RENDER_PHASE);
 
 	addPagesURL.setParameter("mvcPath", "/add_layout.jsp");
 	addPagesURL.setParameter("groupId", String.valueOf(selGroup.getGroupId()));

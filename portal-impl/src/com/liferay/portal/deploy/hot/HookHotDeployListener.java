@@ -728,7 +728,7 @@ public class HookHotDeployListener
 		for (String authPublicPath : authPublicPaths) {
 			registerService(
 				servletContextName, AUTH_PUBLIC_PATHS + authPublicPath,
-				Object.class, new Object());
+				Object.class, new Object(), "auth.public.path", authPublicPath);
 		}
 	}
 

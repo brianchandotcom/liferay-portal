@@ -41,7 +41,7 @@
 		<execute function="AssertElementPresent" locator1="//img[contains(@src,'Document_1.jpg')]" />
 	</command>
 
-	<command name="AddWikiFrontPageWithImageViaAttachments" priority="4" >
+	<command name="AddBlogsEntryWithImageViaBlogsImages" priority="4" >
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>

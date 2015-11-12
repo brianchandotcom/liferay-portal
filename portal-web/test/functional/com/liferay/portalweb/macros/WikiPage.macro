@@ -298,7 +298,7 @@
 	<command name="addLocalizedFrontPagePG">
 		<execute function="AssertClick" locator1="Wiki#FRONTPAGE_DEFAULT_MESSAGE" value1="${emptyPageMessage}" />
 
-		<execute function="Type#clickAtType" locator1="Wiki#RICH_TEXT_EDITOR" value1="${wikiPageContent}" />
+		<execute function="Type#typeAlloyEditor" locator1="//div[contains(@class,'alloy-editor') and contains(@class,'cke_editable_inline')]" value1="${wikiPageContent}" />
 
 		<if>
 			<equals arg1="${rtl}" arg2="true" />
@@ -310,7 +310,7 @@
 			</else>
 		</if>
 
-		<execute function="AssertElementPresent" locator1="//div[@id='cke_contents_${textDirection}']" />
+		<execute function="AssertElementPresent" locator1="//div[contains(@class,'cke_contents_${textDirection}')]" />
 
 		<execute function="Click" locator1="Button#PUBLISH_LOCALIZED" />
 

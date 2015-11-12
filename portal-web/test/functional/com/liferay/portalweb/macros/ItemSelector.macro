@@ -27,13 +27,13 @@
 
 		<execute function="AssertClick" locator1="ItemSelector#NAVIGATION_BLOG_IMAGES" value1="Blog Images" />
 
-		<execute function="AssertClick" locator1="ItemSelector#SELECT_FILE_IMAGE_PREVIEW" value1="${imageFileName}" />
+		<execute function="Click" locator1="ItemSelector#SELECT_FILE_IMAGE_PREVIEW" />
 
 		<execute function="AssertTextEquals" locator1="ItemSelector#CAPTION" value1="${imageFileName}" />
 
-		<execute function="AssertClick" locator1="ItemSelector#ADD_BUTTON" value1="Add" />
-
 		<execute function="SelectFrameTop" value1="relative=top" />
+
+		<execute function="AssertClick" locator1="ItemSelector#ADD_BUTTON" value1="Add" />
 	</command>
 
 	<command name="selectDMImage">

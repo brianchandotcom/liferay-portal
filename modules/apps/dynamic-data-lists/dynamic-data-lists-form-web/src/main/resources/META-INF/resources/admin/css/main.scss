@@ -5,13 +5,7 @@
 	.aspect-ratio img {
 		top: 0;
 	}
-}
 
-.lfr-ddm-form-page-title {
-	color: #728694;
-}
-
-.portlet-forms {
 	.ddl-form-builder-buttons {
 		margin-bottom: 0;
 	}
@@ -31,11 +25,15 @@
 	}
 
 	.form-builder-page-header-title,
-	.lfr-ddm-form-page-title {
-		font-size: 19px;
+	.form-builder-page-header-description,
+	.lfr-ddm-form-page-title,
+	.lfr-ddm-form-page-description {
+		color: #728694;
+		font-weight: 400;
 	}
 
 	.lfr-ddm-form-page-title {
+		font-size: 19px;
 		margin-top: 0;
 	}
 
@@ -56,7 +54,7 @@
 	}
 }
 
-.portlet-forms, .lfr-ddl-field-settings-modal {
+.lfr-ddl-field-settings-modal, .portlet-forms {
 	@include keyframes(spin) {
 		100% {
 			transform: rotate(359deg);
@@ -131,14 +129,6 @@
 				margin: 0;
 			}
 		}
-	}
-
-	.form-builder-page-header-title,
-	.form-builder-page-header-description,
-	.lfr-ddm-form-page-title,
-	.lfr-ddm-form-page-description {
-		color: #728694;
-		font-weight: 400;
 	}
 
 	.form-builder-tabview,

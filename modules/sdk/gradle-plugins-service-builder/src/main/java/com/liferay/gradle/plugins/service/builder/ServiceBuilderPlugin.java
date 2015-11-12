@@ -30,6 +30,9 @@ import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.internal.plugins.osgi.OsgiHelper;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.plugins.PluginContainer;
+import org.gradle.api.plugins.WarPlugin;
+import org.gradle.api.plugins.WarPluginConvention;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskContainer;
 
@@ -175,6 +178,19 @@ public class ServiceBuilderPlugin implements Plugin<Project> {
 
 			});
 
+		PluginContainer pluginContainer = project.getPlugins();
+
+		pluginContainer.withType(
+			WarPlugin.class,
+			new Action<WarPlugin>() {
+
+				@Override
+				public void execute(WarPlugin warPlugin) {
+					configureTaskBuildServiceForWarPlugin(buildServiceTask);
+				}
+
+			});
+
 		return buildServiceTask;
 	}
 
@@ -215,6 +231,46 @@ public class ServiceBuilderPlugin implements Plugin<Project> {
 		buildServiceTask.setClasspath(serviceBuilderConfiguration);
 	}
 
+	protected void configureTaskBuildServiceForWarPlugin(
+		final BuildServiceTask buildServiceTask) {
+
+		buildServiceTask.setApiDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return new File(
+						getWebAppDir(buildServiceTask.getProject()),
+						"WEB-INF/service");
+				}
+
+			});
+
+		buildServiceTask.setInputFile(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return new File(
+						getWebAppDir(buildServiceTask.getProject()),
+						"WEB-INF/service.xml");
+				}
+
+			});
+
+		buildServiceTask.setSqlDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return new File(
+						getWebAppDir(buildServiceTask.getProject()),
+						"WEB-INF/sql");
+				}
+
+			});
+	}
+
 	protected void configureTasksBuildService(
 		Project project, final Configuration serviceBuilderConfiguration) {
 
@@ -253,6 +309,13 @@ public class ServiceBuilderPlugin implements Plugin<Project> {
 		Iterator<File> iterator = srcDirs.iterator();
 
 		return iterator.next();
+	}
+
+	protected File getWebAppDir(Project project) {
+		WarPluginConvention warPluginConvention = GradleUtil.getConvention(
+			project, WarPluginConvention.class);
+
+		return warPluginConvention.getWebAppDir();
 	}
 
 	private static final OsgiHelper _osgiHelper = new OsgiHelper();

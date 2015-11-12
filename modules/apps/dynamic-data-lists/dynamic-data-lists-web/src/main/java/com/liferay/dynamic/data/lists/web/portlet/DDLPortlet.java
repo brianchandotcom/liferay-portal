@@ -22,7 +22,6 @@ import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
-import com.liferay.dynamic.data.lists.web.upgrade.DDLDisplayWebUpgrade;
 import com.liferay.portal.PortletPreferencesException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -136,11 +135,6 @@ public class DDLPortlet extends MVCPortlet {
 		else {
 			super.doDispatch(renderRequest, renderResponse);
 		}
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDLDisplayWebUpgrade(
-		DDLDisplayWebUpgrade ddlDisplayWebUpgrade) {
 	}
 
 	protected void setDDLRecordRequestAttribute(RenderRequest renderRequest)

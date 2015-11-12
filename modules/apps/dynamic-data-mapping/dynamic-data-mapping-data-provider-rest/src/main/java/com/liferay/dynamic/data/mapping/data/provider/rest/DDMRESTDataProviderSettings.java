@@ -14,9 +14,9 @@
 
 package com.liferay.dynamic.data.mapping.data.provider.rest;
 
+import com.liferay.dynamic.data.mapping.annotations.DDMForm;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormField;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderSettings;
-import com.liferay.dynamic.data.mapping.registry.annotations.DDMForm;
-import com.liferay.dynamic.data.mapping.registry.annotations.DDMFormField;
 
 import org.osgi.service.component.annotations.Component;
 

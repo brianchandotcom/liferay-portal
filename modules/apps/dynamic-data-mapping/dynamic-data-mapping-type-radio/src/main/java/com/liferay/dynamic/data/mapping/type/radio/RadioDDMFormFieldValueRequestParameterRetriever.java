@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.type.radio;
 
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueRequestParameterRetriever;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRequestParameterRetriever;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;

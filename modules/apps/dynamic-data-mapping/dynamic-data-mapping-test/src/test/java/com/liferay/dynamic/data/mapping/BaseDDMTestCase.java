@@ -15,6 +15,9 @@
 package com.liferay.dynamic.data.mapping;
 
 import com.liferay.dynamic.data.mapping.configuration.DDMServiceConfigurationKeys;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTrackerUtil;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializerUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializerUtil;
 import com.liferay.dynamic.data.mapping.io.internal.DDMFormJSONDeserializerImpl;
@@ -29,9 +32,6 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateImpl;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldType;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTrackerUtil;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
@@ -106,7 +106,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 	{
 		"com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializerUtil",
 		"com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializerUtil",
-		"com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTrackerUtil",
+		"com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTrackerUtil",
 		"com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil",
 		"com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil"
 	}

@@ -14,8 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.type.checkbox;
 
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccessor;
 import com.liferay.dynamic.data.mapping.model.Value;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueAccessor;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 
 import java.util.Locale;

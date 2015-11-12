@@ -14,11 +14,11 @@
 
 package com.liferay.dynamic.data.mapping.io;
 
+import com.liferay.dynamic.data.mapping.annotations.DDMForm;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormField;
 import com.liferay.dynamic.data.mapping.io.internal.DDMFormFieldTypeSettingsSerializerHelper;
 import com.liferay.dynamic.data.mapping.io.internal.DDMFormJSONSerializerImpl;
 import com.liferay.dynamic.data.mapping.io.internal.DDMFormLayoutJSONSerializerImpl;
-import com.liferay.dynamic.data.mapping.registry.annotations.DDMForm;
-import com.liferay.dynamic.data.mapping.registry.annotations.DDMFormField;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;

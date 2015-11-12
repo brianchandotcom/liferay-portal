@@ -14,11 +14,11 @@
 
 package com.liferay.dynamic.data.mapping.io;
 
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTrackerUtil;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldType;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTrackerUtil;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormFieldTypeSettingsTestUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -56,7 +56,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @PrepareForTest({DDMFormFieldTypeServicesTrackerUtil.class, LocaleUtil.class})
 @RunWith(PowerMockRunner.class)
 @SuppressStaticInitializationFor(
-	"com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTrackerUtil"
+	"com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTrackerUtil"
 )
 public class BaseDDMTestCase extends PowerMockito {
 

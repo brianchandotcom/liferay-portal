@@ -15,7 +15,7 @@
 package com.liferay.osgi.service.tracker.collections.map.internal;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
-import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceServiceTuple;
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceServiceReferenceServiceTupleWithKey;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerBucket;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerBucketFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -125,9 +125,11 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 	}
 
 	private void removeKeys(
-		ServiceReferenceServiceTuple<SR, TS, K> serviceReferenceServiceTuple) {
+		ServiceReferenceServiceReferenceServiceTupleWithKey<SR, TS, K>
+			serviceReferenceServiceTupleWithKey) {
 
-		List<K> emittedKeys = serviceReferenceServiceTuple.getEmittedKeys();
+		List<K> emittedKeys =
+			serviceReferenceServiceTupleWithKey.getEmittedKeys();
 
 		for (K emittedKey : emittedKeys) {
 			ServiceTrackerBucket<SR, TS, R> serviceTrackerBucket =
@@ -137,7 +139,7 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 				continue;
 			}
 
-			serviceTrackerBucket.remove(serviceReferenceServiceTuple);
+			serviceTrackerBucket.remove(serviceReferenceServiceTupleWithKey);
 
 			if (serviceTrackerBucket.isDisposable()) {
 				_serviceTrackerBuckets.remove(emittedKey);
@@ -149,7 +151,8 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 
 	private void storeKey(
 		K key,
-		ServiceReferenceServiceTuple<SR, TS, K> serviceReferenceServiceTuple) {
+		ServiceReferenceServiceReferenceServiceTupleWithKey<SR, TS, K>
+			serviceReferenceServiceTupleWithKey) {
 
 		ServiceTrackerBucket<SR, TS, R> serviceTrackerBucket =
 			_serviceTrackerBuckets.get(key);
@@ -166,15 +169,16 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 			}
 		}
 
-		serviceTrackerBucket.store(serviceReferenceServiceTuple);
+		serviceTrackerBucket.store(serviceReferenceServiceTupleWithKey);
 
-		serviceReferenceServiceTuple.addEmittedKey(key);
+		serviceReferenceServiceTupleWithKey.addEmittedKey(key);
 	}
 
 	private final Logger _logger;
 	private final ServiceReferenceMapper<K, ? super SR> _serviceReferenceMapper;
-	private final ServiceTracker<SR, ServiceReferenceServiceTuple<SR, TS, K>>
-		_serviceTracker;
+	private final ServiceTracker
+		<SR, ServiceReferenceServiceReferenceServiceTupleWithKey<SR, TS, K>>
+			_serviceTracker;
 	private final ConcurrentMap<K, ServiceTrackerBucket<SR, TS, R>>
 		_serviceTrackerBuckets = new ConcurrentHashMap<>();
 	private final ServiceTrackerCustomizer<SR, TS> _serviceTrackerCustomizer;
@@ -191,7 +195,7 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 
 		@Override
 		public void emit(K key) {
-			if ((_serviceReferenceServiceTuple == null) &&
+			if ((_serviceReferenceServiceTupleWithKey == null) &&
 				!_invokedServiceTrackerCustomizer) {
 
 				TS service = _serviceTrackerCustomizer.addingService(
@@ -203,12 +207,12 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 					return;
 				}
 
-				_serviceReferenceServiceTuple =
-					new ServiceReferenceServiceTuple<>(
+				_serviceReferenceServiceTupleWithKey =
+					new ServiceReferenceServiceReferenceServiceTupleWithKey<>(
 						_serviceReference, service);
 			}
 
-			storeKey(key, _serviceReferenceServiceTuple);
+			storeKey(key, _serviceReferenceServiceTupleWithKey);
 
 			if (_serviceTrackerMapListener != null) {
 				try {
@@ -217,7 +221,7 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 
 					_serviceTrackerMapListener.keyEmitted(
 						ServiceTrackerMapImpl.this, key,
-						_serviceReferenceServiceTuple.getService(),
+						_serviceReferenceServiceTupleWithKey.getService(),
 						serviceTrackerBucket.getContent());
 				}
 				catch (Throwable t) {
@@ -228,28 +232,29 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 			}
 		}
 
-		public ServiceReferenceServiceTuple<SR, TS, K>
-			getServiceReferenceServiceTuple() {
+		public ServiceReferenceServiceReferenceServiceTupleWithKey<SR, TS, K>
+			getServiceReferenceServiceTupleWithKey() {
 
-			return _serviceReferenceServiceTuple;
+			return _serviceReferenceServiceTupleWithKey;
 		}
 
 		private boolean _invokedServiceTrackerCustomizer;
 		private final ServiceReference<SR> _serviceReference;
-		private ServiceReferenceServiceTuple<SR, TS, K>
-			_serviceReferenceServiceTuple;
+		private ServiceReferenceServiceReferenceServiceTupleWithKey<SR, TS, K>
+			_serviceReferenceServiceTupleWithKey;
 
 	}
 
 	private class ServiceReferenceServiceTrackerCustomizer
 		implements
 			ServiceTrackerCustomizer
-				<SR, ServiceReferenceServiceTuple<SR, TS, K>> {
+				<SR, ServiceReferenceServiceReferenceServiceTupleWithKey
+					<SR, TS, K>> {
 
 		@Override
 		@SuppressWarnings({"rawtypes", "unchecked"})
-		public ServiceReferenceServiceTuple<SR, TS, K> addingService(
-			final ServiceReference<SR> serviceReference) {
+		public ServiceReferenceServiceReferenceServiceTupleWithKey<SR, TS, K>
+			addingService(final ServiceReference<SR> serviceReference) {
 
 			DefaultEmitter defaultEmitter = new DefaultEmitter(
 				serviceReference);
@@ -257,20 +262,21 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 			_serviceReferenceMapper.map(
 				(ServiceReference)serviceReference, defaultEmitter);
 
-			return defaultEmitter.getServiceReferenceServiceTuple();
+			return defaultEmitter.getServiceReferenceServiceTupleWithKey();
 		}
 
 		@Override
 		@SuppressWarnings({"rawtypes", "unchecked"})
 		public void modifiedService(
 			ServiceReference<SR> serviceReference,
-			final ServiceReferenceServiceTuple<SR, TS, K>
-				serviceReferenceServiceTuple) {
+			final ServiceReferenceServiceReferenceServiceTupleWithKey<SR, TS, K>
+				serviceReferenceServiceTupleWithKey) {
 
-			removeKeys(serviceReferenceServiceTuple);
+			removeKeys(serviceReferenceServiceTupleWithKey);
 
 			_serviceTrackerCustomizer.modifiedService(
-				serviceReference, serviceReferenceServiceTuple.getService());
+				serviceReference,
+				serviceReferenceServiceTupleWithKey.getService());
 
 			_serviceReferenceMapper.map(
 				(ServiceReference)serviceReference,
@@ -278,7 +284,7 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 
 				@Override
 				public void emit(K key) {
-					storeKey(key, serviceReferenceServiceTuple);
+					storeKey(key, serviceReferenceServiceTupleWithKey);
 				}
 
 			});
@@ -287,13 +293,14 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 		@Override
 		public void removedService(
 			final ServiceReference<SR> serviceReference,
-			final ServiceReferenceServiceTuple<SR, TS, K>
-				serviceReferenceServiceTuple) {
+			final ServiceReferenceServiceReferenceServiceTupleWithKey<SR, TS, K>
+				serviceReferenceServiceTupleWithKey) {
 
-			removeKeys(serviceReferenceServiceTuple);
+			removeKeys(serviceReferenceServiceTupleWithKey);
 
 			_serviceTrackerCustomizer.removedService(
-				serviceReference, serviceReferenceServiceTuple.getService());
+				serviceReference,
+				serviceReferenceServiceTupleWithKey.getService());
 		}
 
 	}

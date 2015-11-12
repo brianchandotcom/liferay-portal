@@ -21,10 +21,10 @@ import org.osgi.framework.ServiceReference;
 /**
  * @author Carlos Sierra Andrés
  */
-public class ServiceWrapperComparator<S>
-	implements Comparator<ServiceWrapper<S, ?>> {
+public class ServiceReferenceServiceTupleComparator<S>
+	implements Comparator<ServiceReferenceServiceTuple<S, ?>> {
 
-	public ServiceWrapperComparator(
+	public ServiceReferenceServiceTupleComparator(
 		Comparator<ServiceReference<S>> comparator) {
 
 		_comparator = comparator;
@@ -32,11 +32,11 @@ public class ServiceWrapperComparator<S>
 
 	@Override
 	public int compare(
-		ServiceWrapper<S, ?> serviceWrapper1,
-		ServiceWrapper<S, ?> serviceWrapper2) {
+		ServiceReferenceServiceTuple<S, ?> serviceReferenceServiceTuple1,
+		ServiceReferenceServiceTuple<S, ?> serviceReferenceServiceTuple2) {
 
-		if (serviceWrapper1 == null) {
-			if (serviceWrapper2 == null) {
+		if (serviceReferenceServiceTuple1 == null) {
+			if (serviceReferenceServiceTuple2 == null) {
 				return 0;
 			}
 
@@ -44,9 +44,9 @@ public class ServiceWrapperComparator<S>
 		}
 
 		ServiceReference<S> serviceReference1 =
-			serviceWrapper1.getServiceReference();
+			serviceReferenceServiceTuple1.getServiceReference();
 		ServiceReference<S> serviceReference2 =
-			serviceWrapper2.getServiceReference();
+			serviceReferenceServiceTuple2.getServiceReference();
 
 		int value = _comparator.compare(serviceReference1, serviceReference2);
 

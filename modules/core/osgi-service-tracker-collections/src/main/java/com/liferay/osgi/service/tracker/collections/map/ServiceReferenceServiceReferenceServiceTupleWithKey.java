@@ -14,7 +14,7 @@
 
 package com.liferay.osgi.service.tracker.collections.map;
 
-import com.liferay.osgi.service.tracker.collections.common.ServiceWrapper;
+import com.liferay.osgi.service.tracker.collections.common.ServiceReferenceServiceTuple;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +24,10 @@ import org.osgi.framework.ServiceReference;
 /**
  * @author Carlos Sierra Andrés
  */
-public class ServiceReferenceServiceTuple<SR, TS, K>
-	extends ServiceWrapper<SR, TS> {
+public class ServiceReferenceServiceReferenceServiceTupleWithKey<SR, TS, K>
+	extends ServiceReferenceServiceTuple<SR, TS> {
 
-	public ServiceReferenceServiceTuple(
+	public ServiceReferenceServiceReferenceServiceTupleWithKey(
 		ServiceReference<SR> serviceReference, TS service) {
 
 		super(serviceReference, service);
@@ -43,15 +43,19 @@ public class ServiceReferenceServiceTuple<SR, TS, K>
 			return false;
 		}
 
-		if (!(obj instanceof ServiceReferenceServiceTuple)) {
+		if (!(obj instanceof
+			ServiceReferenceServiceReferenceServiceTupleWithKey)) {
+
 			return false;
 		}
 
-		ServiceReferenceServiceTuple<SR, TS, K> serviceReferenceServiceTuple =
-			(ServiceReferenceServiceTuple<SR, TS, K>)obj;
+		ServiceReferenceServiceReferenceServiceTupleWithKey<SR, TS, K>
+			serviceReferenceServiceTupleWithKey =
+				(ServiceReferenceServiceReferenceServiceTupleWithKey<SR, TS, K>)
+					obj;
 
 		return getServiceReference().equals(
-			serviceReferenceServiceTuple.getServiceReference());
+			serviceReferenceServiceTupleWithKey.getServiceReference());
 	}
 
 	public List<K> getEmittedKeys() {

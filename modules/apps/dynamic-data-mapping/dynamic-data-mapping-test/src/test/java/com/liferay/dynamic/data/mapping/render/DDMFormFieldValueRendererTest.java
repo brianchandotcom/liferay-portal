@@ -64,7 +64,9 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 public class DDMFormFieldValueRendererTest extends BaseDDMTestCase {
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
+		super.setUp();
 		setUpCalendarFactoryUtil();
 		setUpDLAppLocalServiceUtil();
 		setUpFastDateFormatFactoryUtil();

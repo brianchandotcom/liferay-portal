@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.model.PortletPreferencesIds;
 import com.liferay.portal.model.PublicRenderParameter;
 import com.liferay.portal.model.User;
@@ -187,8 +188,11 @@ public class PortletContainerImpl implements PortletContainer {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		PortletApp portletApp = portlet.getPortletApp();
+
 		Map<String, String[]> publicRenderParameters =
-			PublicRenderParametersPool.get(request, layout.getPlid());
+			PublicRenderParametersPool.get(
+				request, layout.getPlid(), portletApp.isWARFile());
 
 		Map<String, String[]> parameters = request.getParameterMap();
 

@@ -3,7 +3,7 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var TPL_ERROR_MESSAGE = '<div class="validation-message">{errorMessage}</div>';
+		var TPL_ERROR_MESSAGE = '<div class="help-block">{errorMessage}</div>';
 
 		var TPL_FEEDBACK = '<span aria-hidden="true" class="form-control-feedback"><span class="icon-{icon}"></span></span>';
 
@@ -99,7 +99,7 @@ AUI.add(
 
 				var container = instance.get('container');
 
-				container.all('.validation-message').remove();
+				container.all('.help-block').remove();
 
 				var errorMessage = instance.get('errorMessage');
 

@@ -151,7 +151,7 @@ AUI.add(
 
 						var inputGroup = container.one('.input-group-container');
 
-						inputGroup.insert(container.one('.validation-message'), 'after');
+						inputGroup.insert(container.one('.help-block'), 'after');
 					}
 				}
 			}

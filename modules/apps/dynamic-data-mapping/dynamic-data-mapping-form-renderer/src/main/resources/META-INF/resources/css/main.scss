@@ -54,10 +54,6 @@
 		.liferay-ddm-form-field-date .input-group-addon {
 			cursor: pointer;
 		}
-
-		.validation-message {
-			position: absolute;
-		}
 	}
 
 	.lfr-ddm-form-page {
@@ -81,9 +77,8 @@
 		padding-top: 20px;
 	}
 
-	.validation-message {
+	.help-block {
 		margin-top: -45px;
-		position: absolute;
 	}
 }
 

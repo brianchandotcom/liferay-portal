@@ -16,9 +16,12 @@ package com.liferay.dynamic.data.mapping.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.configuration.admin.ConfigurationAdmin;
+
 /**
  * @author Lino Alves
  */
+@ConfigurationAdmin(category = "productivity")
 @Meta.OCD(
 	id = "com.liferay.dynamic.data.mapping.configuration.DDMServiceConfiguration",
 	name = "Dynamic Data Mapping Service Configuration"

@@ -59,15 +59,7 @@
 						tabs1Names = ArrayUtil.append(tabs1Names, "applications");
 					}
 
-					if (hasLayoutAddPermission) {
-						tabs1Names = ArrayUtil.append(tabs1Names, "page");
-					}
-
 					String selectedTab = GetterUtil.getString(SessionClicks.get(request, "com.liferay.control.menu.web_addPanelTab", "content"));
-
-					if (stateMaximized) {
-						selectedTab = "page";
-					}
 					%>
 
 					<h1><liferay-ui:message key="add" /></h1>

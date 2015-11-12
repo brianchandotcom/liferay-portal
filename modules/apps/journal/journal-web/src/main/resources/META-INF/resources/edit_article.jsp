@@ -89,13 +89,13 @@ if (article != null) {
 
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
-String[] mainSections = JournalWebConfigurationValues.JOURNAL_ARTICLE_FORM_ADD;
+String[] mainSections = journalWebConfiguration.journalArticleFormAdd();
 
 if (classNameId > JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
-	mainSections = JournalWebConfigurationValues.JOURNAL_ARTICLE_FORM_DEFAULT_VALUES;
+	mainSections = journalWebConfiguration.journalArticleFormDefaultValues();
 }
 else if ((article != null) && (article.getId() > 0)) {
-	mainSections = JournalWebConfigurationValues.JOURNAL_ARTICLE_FORM_UPDATE;
+	mainSections = journalWebConfiguration.journalArticleFormUpdate();
 }
 
 String[][] categorySections = {mainSections};

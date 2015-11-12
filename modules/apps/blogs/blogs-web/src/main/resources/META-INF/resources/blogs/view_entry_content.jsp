@@ -289,6 +289,10 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 							userName="<%= entry.getUserName() %>"
 						>
 							<%= dateFormatDateTime.format(entry.getDisplayDate()) %>
+
+							<c:if test="<%= blogsPortletInstanceConfiguration.enableViewCount() %>">
+								, <liferay-ui:message key='<%= assetEntry.getViewCount() == 1 ? "x-view" : "x-views" %>' arguments="<%= assetEntry.getViewCount() %>" />
+							</c:if>
 						</liferay-ui:user-display>
 					</div>
 				</c:if>

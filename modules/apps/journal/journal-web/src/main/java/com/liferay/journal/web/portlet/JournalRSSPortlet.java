@@ -15,11 +15,25 @@
 package com.liferay.journal.web.portlet;
 
 import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.journal.web.util.JournalRSSUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.util.PortalUtil;
+
+import java.io.IOException;
 
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -40,4 +54,43 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class JournalRSSPortlet extends MVCPortlet {
+
+	@Override
+	public void serveResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws IOException, PortletException {
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			resourceRequest);
+
+		HttpServletResponse response = PortalUtil.getHttpServletResponse(
+			resourceResponse);
+
+		try {
+			byte[] xml = _journalRSSUtil.getRSS(
+				resourceRequest, resourceResponse);
+
+			ServletResponseUtil.sendFile(
+				request, response, null, xml, ContentTypes.TEXT_XML_UTF8);
+		}
+		catch (Exception e) {
+			try {
+				PortalUtil.sendError(e, request, response);
+			}
+			catch (ServletException se) {
+			}
+		}
+	}
+
+	@Reference
+	protected void setJournalRSSUtil(JournalRSSUtil journalRSSUtil) {
+		_journalRSSUtil = journalRSSUtil;
+	}
+
+	protected void unsetJournalRSSUtil(JournalRSSUtil journalRSSUtil) {
+		_journalRSSUtil = null;
+	}
+
+	private JournalRSSUtil _journalRSSUtil;
+
 }

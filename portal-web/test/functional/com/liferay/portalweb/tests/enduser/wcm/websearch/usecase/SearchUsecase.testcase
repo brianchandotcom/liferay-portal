@@ -195,21 +195,21 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${searchPageName}" />
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMDocument#addPG">
+		<execute macro="DMDocument#addCP">
 			<var name="dmDocumentDescription" value="DM Document1 Description" />
 			<var name="dmDocumentFile" value="Document_1.doc" />
 			<var name="dmDocumentTitle" value="DM Document1 Title" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${searchPageName}" />
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMDocument#addPG">
+		<execute macro="DMDocument#addCP">
 			<var name="dmDocumentDescription" value="DM Document2 Description" />
 			<var name="dmDocumentFile" value="Document_1.jpg" />
 			<var name="dmDocumentTitle" value="DM Document2 Title" />

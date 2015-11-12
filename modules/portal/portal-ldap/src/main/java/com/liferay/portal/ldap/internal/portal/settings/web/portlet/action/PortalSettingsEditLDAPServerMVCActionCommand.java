@@ -78,9 +78,7 @@ public class PortalSettingsEditLDAPServerMVCActionCommand
 				deleteLDAPServer(actionRequest);
 			}
 
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-			sendRedirect(actionRequest, actionResponse, redirect);
+			sendRedirect(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
 			String mvcPath = "/edit_ldap_server.jsp";

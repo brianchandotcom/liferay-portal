@@ -103,9 +103,7 @@ public class EditImageMVCActionCommand extends BaseMVCActionCommand {
 				deleteImages(actionRequest);
 			}
 
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-			sendRedirect(actionRequest, actionResponse, redirect);
+			sendRedirect(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchEntryException ||

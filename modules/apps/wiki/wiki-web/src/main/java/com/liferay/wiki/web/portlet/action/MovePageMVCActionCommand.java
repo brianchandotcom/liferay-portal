@@ -76,8 +76,6 @@ public class MovePageMVCActionCommand extends BaseMVCActionCommand {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
-
 			if (cmd.equals(Constants.CHANGE_PARENT)) {
 				changeParentPage(actionRequest);
 			}
@@ -86,7 +84,7 @@ public class MovePageMVCActionCommand extends BaseMVCActionCommand {
 			}
 
 			if (Validator.isNotNull(cmd)) {
-				sendRedirect(actionRequest, actionResponse, redirect);
+				sendRedirect(actionRequest, actionResponse);
 			}
 		}
 		catch (Exception e) {

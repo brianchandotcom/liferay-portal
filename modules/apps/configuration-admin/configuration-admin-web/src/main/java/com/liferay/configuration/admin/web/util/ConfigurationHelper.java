@@ -25,8 +25,10 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -50,6 +52,8 @@ public class ConfigurationHelper {
 		_extendedMetaTypeService = extendedMetaTypeService;
 
 		_configurationModels = _getConfigurationModels(languageId);
+		_categorizedConfigurationModels = _getCategorizedConfigurationModels(
+			_configurationModels);
 	}
 
 	public Configuration getConfiguration(String pid) {
@@ -70,12 +74,23 @@ public class ConfigurationHelper {
 		return null;
 	}
 
+	public List<String> getConfigurationCategories() {
+		return new ArrayList<>(_categorizedConfigurationModels.keySet());
+	}
+
 	public ConfigurationModel getConfigurationModel(String pid) {
 		return _configurationModels.get(pid);
 	}
 
 	public List<ConfigurationModel> getConfigurationModels() {
 		return new ArrayList<>(_configurationModels.values());
+	}
+
+	public List<ConfigurationModel> getConfigurationModels(
+		String configurationCategory) {
+
+		return new ArrayList<>(
+			_categorizedConfigurationModels.get(configurationCategory));
 	}
 
 	public List<ConfigurationModel> getFactoryInstances(
@@ -152,6 +167,33 @@ public class ConfigurationHelper {
 		}
 	}
 
+	private Map<String, Set<ConfigurationModel>>
+		_getCategorizedConfigurationModels(
+			Map<String, ConfigurationModel> configurationModels) {
+
+		Map<String, Set<ConfigurationModel>> categorizedConfigurationModels =
+			new HashMap<>();
+
+		for (ConfigurationModel configurationModel :
+				configurationModels.values()) {
+
+			String configurationCategory = configurationModel.getCategory();
+			Set<ConfigurationModel> curConfigurationModels =
+				categorizedConfigurationModels.get(configurationCategory);
+
+			if (curConfigurationModels == null) {
+				curConfigurationModels = new HashSet<>();
+
+				categorizedConfigurationModels.put(
+					configurationCategory, curConfigurationModels);
+			}
+
+			curConfigurationModels.add(configurationModel);
+		}
+
+		return categorizedConfigurationModels;
+	}
+
 	private ConfigurationModel _getConfigurationModel(
 		Bundle bundle, String pid, boolean factory, String locale) {
 
@@ -204,6 +246,8 @@ public class ConfigurationHelper {
 	}
 
 	private final BundleContext _bundleContext;
+	private final Map<String, Set<ConfigurationModel>>
+		_categorizedConfigurationModels;
 	private final ConfigurationAdmin _configurationAdmin;
 	private final Map<String, ConfigurationModel> _configurationModels;
 	private final ExtendedMetaTypeService _extendedMetaTypeService;

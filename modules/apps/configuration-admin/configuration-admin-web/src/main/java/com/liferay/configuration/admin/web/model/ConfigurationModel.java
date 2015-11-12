@@ -16,6 +16,7 @@ package com.liferay.configuration.admin.web.model;
 
 import com.liferay.configuration.admin.ExtendedAttributeDefinition;
 import com.liferay.configuration.admin.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,6 +30,8 @@ import org.osgi.service.cm.Configuration;
  * @author Raymond Augé
  */
 public class ConfigurationModel implements ExtendedObjectClassDefinition {
+
+	public static final String CATEGORY_OTHER = "other";
 
 	public ConfigurationModel(
 		ExtendedObjectClassDefinition extendedObjectClassDefinition,
@@ -47,6 +50,16 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 
 	public String getBundleLocation() {
 		return _bundleLocation;
+	}
+
+	public String getCategory() {
+		Map<String, String> extensionAttributes =
+			_extendedObjectClassDefinition.getExtensionAttributes(
+				"http://www.liferay.com/xsd/liferay-configuration-admin_" +
+					"1_0_0.xsd");
+
+		return GetterUtil.get(
+			extensionAttributes.get("category"), CATEGORY_OTHER);
 	}
 
 	public Configuration getConfiguration() {

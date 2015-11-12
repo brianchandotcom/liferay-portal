@@ -19,8 +19,8 @@ import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-/*
- * @author Peter Yoo
+/**
+ * @author Brian Wing Shun Chan
  */
 public class UnstableMessageUtil {
 

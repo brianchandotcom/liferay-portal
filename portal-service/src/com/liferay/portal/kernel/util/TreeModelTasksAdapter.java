@@ -32,18 +32,12 @@ public class TreeModelTasksAdapter<T extends TreeModel>
 		return null;
 	}
 
-	/**
-	 * @throws PortalException
-	 */
 	@Override
 	public void rebuildDependentModelsTreePaths(
 			long parentPrimaryKey, String treePath)
 		throws PortalException {
 	}
 
-	/**
-	 * @throws PortalException
-	 */
 	@Override
 	public void reindexTreeModels(List<TreeModel> treeModels)
 		throws PortalException {

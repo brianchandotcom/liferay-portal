@@ -20,8 +20,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
-* @author Carlos Sierra Andrés
-*/
+ * @author Carlos Sierra Andrés
+ */
 public class DBContext {
 
 	public Connection getDataAccess() {

@@ -70,7 +70,7 @@ import org.apache.struts.util.MessageResources;
 
 /**
  * @author Brian Wing Shun Chan
- * @see com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand
+ * @see    com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand
  */
 public class PortletAction extends Action {
 

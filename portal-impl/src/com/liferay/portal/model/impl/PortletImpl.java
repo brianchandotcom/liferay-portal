@@ -1528,7 +1528,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param  uri the namespace URI
 	 * @param  localPart the local part
 	 * @return the spublic render parameter from a namespace URI and a local
-	 * part
+	 *         part
 	 */
 	@Override
 	public PublicRenderParameter getPublicRenderParameter(

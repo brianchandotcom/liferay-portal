@@ -14,6 +14,9 @@
 
 package com.liferay.plugins.admin.web.constants;
 
+/**
+ * @author Brian Wing Shun Chan
+ */
 public class PluginsAdminPortletKeys {
 
 	public static final String PLUGINS_ADMIN =

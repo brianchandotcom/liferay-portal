@@ -32,8 +32,8 @@ import org.osgi.framework.BundleException;
 import org.osgi.framework.ServiceRegistration;
 
 /**
-* @author Carlos Sierra Andrés
-*/
+ * @author Carlos Sierra Andrés
+ */
 @BndFile("src/testIntegration/resources/bnd.bnd")
 @RunWith(Arquillian.class)
 public class TrackingClassesTest {

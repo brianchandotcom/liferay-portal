@@ -14,6 +14,9 @@
 
 package com.liferay.directory.web.constants;
 
+/**
+ * @author Brian Wing Shun Chan
+ */
 public class DirectoryPortletKeys {
 
 	public static final String DIRECTORY =

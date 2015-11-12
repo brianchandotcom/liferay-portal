@@ -41,8 +41,8 @@ public class ImageToolUtil {
 	/**
 	 * Returns the CMYK image converted to RGB using ImageMagick. This must be
 	 * run against the original <code>byte[]</code> and not one extracted from a
-	 * {@link java.awt.image.RenderedImage}. The latter may potentially have
-	 * been already been read incorrectly.
+	 * {@link RenderedImage}. The latter may potentially have been already been
+	 * read incorrectly.
 	 *
 	 * @param  bytes the image to convert
 	 * @param  type the image type (e.g., "gif", "jpg", etc.)
@@ -104,7 +104,7 @@ public class ImageToolUtil {
 	}
 
 	/**
-	 * Returns the rendered image as a {@link java.awt.image.BufferedImage}.
+	 * Returns the rendered image as a {@link BufferedImage}.
 	 *
 	 * @param  renderedImage the original image
 	 * @return the converted image
@@ -180,7 +180,7 @@ public class ImageToolUtil {
 	/**
 	 * Detects the image format and creates an {@link
 	 * com.liferay.portal.kernel.image.ImageBag} containing the {@link
-	 * java.awt.image.RenderedImage} and image type.
+	 * RenderedImage} and image type.
 	 *
 	 * @param  bytes the bytes to read
 	 * @return the {@link com.liferay.portal.kernel.image.ImageBag}
@@ -193,7 +193,7 @@ public class ImageToolUtil {
 	/**
 	 * Detects the image format and creates an {@link
 	 * com.liferay.portal.kernel.image.ImageBag} containing the {@link
-	 * java.awt.image.RenderedImage} and image type.
+	 * RenderedImage} and image type.
 	 *
 	 * @param  file the file to read
 	 * @return the {@link com.liferay.portal.kernel.image.ImageBag}

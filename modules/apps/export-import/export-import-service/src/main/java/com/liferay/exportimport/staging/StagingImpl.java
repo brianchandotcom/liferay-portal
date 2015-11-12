@@ -469,8 +469,7 @@ public class StagingImpl implements Staging {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             com.liferay.portlet.exportimport.service.StagingLocalService#disableStaging(
-	 *             Group, ServiceContext)}
+	 *             StagingLocalService#disableStaging(Group, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -483,8 +482,7 @@ public class StagingImpl implements Staging {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             com.liferay.portlet.exportimport.service.StagingLocalService#disableStaging(
-	 *             Group, ServiceContext)}
+	 *             StagingLocalService#disableStaging(Group, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -496,8 +494,8 @@ public class StagingImpl implements Staging {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             com.liferay.portlet.exportimport.service.StagingLocalService#disableStaging(
-	 *             PortletRequest, Group, ServiceContext)}
+	 *             StagingLocalService#disableStaging(PortletRequest, Group,
+	 *             ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -511,8 +509,8 @@ public class StagingImpl implements Staging {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             com.liferay.portlet.exportimport.service.StagingLocalService#disableStaging(
-	 *             PortletRequest, Group, ServiceContext)}
+	 *             StagingLocalService#disableStaging(PortletRequest, Group,
+	 *             ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -527,8 +525,8 @@ public class StagingImpl implements Staging {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             com.liferay.portlet.exportimport.service.StagingLocalService#enableLocalStaging(
-	 *             long, Group, boolean, boolean, ServiceContext)}
+	 *             StagingLocalService#enableLocalStaging(long, Group, boolean,
+	 *             boolean, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -545,9 +543,8 @@ public class StagingImpl implements Staging {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             com.liferay.portlet.exportimport.service.StagingLocalService#enableRemoteStaging(
-	 *             long, Group, boolean, boolean, String, int, String, boolean,
-	 *             long, ServiceContext)}
+	 *             StagingLocalService#enableRemoteStaging(long, Group, boolean,
+	 *             boolean, String, int, String, boolean, long, ServiceContext)}
 	 */
 	@Deprecated
 	@Override

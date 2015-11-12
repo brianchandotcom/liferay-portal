@@ -85,15 +85,12 @@ public interface UserGroupMembershipPolicy {
 	 * an exception, the service foregoes making the changes.
 	 * </p>
 	 *
-	 * @param  userIds the primary keys of the users to be added and removed
-	 *         from the user groups
-	 * @param  addUserGroupIds the primary keys of the user groups to which the
-	 *         users are to be added (optionally <code>null</code>)
-	 * @param  removeUserGroupIds the primary keys of the user groups from which
-	 *         the users are to be removed (optionally <code>null</code>)
-	 * @throws PortalException if any one user could not be added to a user
-	 *         group, if any one user could not be removed from a user group, or
-	 *         if a portal exception occurred
+	 * @param userIds the primary keys of the users to be added and removed from
+	 *        the user groups
+	 * @param addUserGroupIds the primary keys of the user groups to which the
+	 *        users are to be added (optionally <code>null</code>)
+	 * @param removeUserGroupIds the primary keys of the user groups from which
+	 *        the users are to be removed (optionally <code>null</code>)
 	 */
 	public void checkMembership(
 			long[] userIds, long[] addUserGroupIds, long[] removeUserGroupIds)
@@ -107,7 +104,6 @@ public interface UserGroupMembershipPolicy {
 	 * @param  userGroupId the primary key of the user group
 	 * @return <code>true</code> if the user can be added to the user group;
 	 *         <code>false</code> otherwise
-	 * @throws PortalException if a portal exception occurred
 	 */
 	public boolean isMembershipAllowed(long userId, long userGroupId)
 		throws PortalException;
@@ -121,7 +117,6 @@ public interface UserGroupMembershipPolicy {
 	 * @param  userGroupId the primary key of the user group
 	 * @return <code>true</code> if user group membership for the user is
 	 *         mandatory; <code>false</code> otherwise
-	 * @throws PortalException if a portal exception occurred
 	 */
 	public boolean isMembershipRequired(long userId, long userGroupId)
 		throws PortalException;
@@ -149,12 +144,11 @@ public interface UserGroupMembershipPolicy {
 	 * </li>
 	 * </ul>
 	 *
-	 * @param  userIds the primary key of the users to be added or removed
-	 * @param  addUserGroupIds the primary keys of the user groups to which the
-	 *         users were added (optionally <code>null</code>)
-	 * @param  removeUserGroupIds the primary keys of the user groups from which
-	 *         the users were removed (optionally <code>null</code>)
-	 * @throws PortalException if a portal exception occurred
+	 * @param userIds the primary key of the users to be added or removed
+	 * @param addUserGroupIds the primary keys of the user groups to which the
+	 *        users were added (optionally <code>null</code>)
+	 * @param removeUserGroupIds the primary keys of the user groups from which
+	 *        the users were removed (optionally <code>null</code>)
 	 */
 	public void propagateMembership(
 			long[] userIds, long[] addUserGroupIds, long[] removeUserGroupIds)
@@ -167,8 +161,6 @@ public interface UserGroupMembershipPolicy {
 	 * If the <code>membership.policy.auto.verify</code> portal property is
 	 * <code>true</code> this method is triggered when starting Liferay and
 	 * every time a membership policy hook is deployed.
-	 *
-	 * @throws PortalException if a portal exception occurred
 	 */
 	public void verifyPolicy() throws PortalException;
 
@@ -176,8 +168,7 @@ public interface UserGroupMembershipPolicy {
 	 * Checks the integrity of the membership policy of the user group and
 	 * performs operations necessary for the user group's compliance.
 	 *
-	 * @param  userGroup the user group to verify
-	 * @throws PortalException if a portal exception occurred
+	 * @param userGroup the user group to verify
 	 */
 	public void verifyPolicy(UserGroup userGroup) throws PortalException;
 
@@ -218,10 +209,9 @@ public interface UserGroupMembershipPolicy {
 	 * does not have the Administrator role must be removed from the user group.
 	 * </li>
 	 *
-	 * @param  userGroup the added or updated user group to verify
-	 * @param  oldUserGroup the old user group
-	 * @param  oldExpandoAttributes the old expando attributes
-	 * @throws PortalException if a portal exception occurred
+	 * @param userGroup the added or updated user group to verify
+	 * @param oldUserGroup the old user group
+	 * @param oldExpandoAttributes the old expando attributes
 	 */
 	public void verifyPolicy(
 			UserGroup userGroup, UserGroup oldUserGroup,

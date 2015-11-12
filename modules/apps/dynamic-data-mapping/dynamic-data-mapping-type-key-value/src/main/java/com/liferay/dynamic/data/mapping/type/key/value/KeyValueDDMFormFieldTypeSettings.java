@@ -21,7 +21,7 @@ import com.liferay.dynamic.data.mapping.registry.annotations.DDMFormField;
 
 /**
  * @author Bruno Basto
-*/
+ */
 @DDMForm
 public interface KeyValueDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {

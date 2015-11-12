@@ -84,14 +84,12 @@ public interface RoleMembershipPolicy {
 	 * exception, the service foregoes making the changes.
 	 * </p>
 	 *
-	 * @param  userIds the primary keys of the users to be added and removed
-	 *         from the roles
-	 * @param  addRoleIds the primary keys of the roles to be added (optionally
-	 *         <code>null</code>)
-	 * @param  removeRoleIds the primary keys of the roles to be removed
-	 *         (optionally <code>null</code>)
-	 * @throws PortalException if any one role violated the policy or if a
-	 *         portal exception occurred
+	 * @param userIds the primary keys of the users to be added and removed from
+	 *        the roles
+	 * @param addRoleIds the primary keys of the roles to be added (optionally
+	 *        <code>null</code>)
+	 * @param removeRoleIds the primary keys of the roles to be removed
+	 *        (optionally <code>null</code>)
 	 */
 	public void checkRoles(
 			long[] userIds, long[] addRoleIds, long[] removeRoleIds)
@@ -105,7 +103,6 @@ public interface RoleMembershipPolicy {
 	 * @param  roleId the primary key of the role
 	 * @return <code>true</code> if the role can be added to the user;
 	 *         <code>false</code> otherwise
-	 * @throws PortalException if a portal exception occurred
 	 */
 	public boolean isRoleAllowed(long userId, long roleId)
 		throws PortalException;
@@ -119,7 +116,6 @@ public interface RoleMembershipPolicy {
 	 * @param  roleId the primary key of the role
 	 * @return <code>true</code> if the role is mandatory for the user;
 	 *         <code>false</code> otherwise
-	 * @throws PortalException if a portal exception occurred
 	 */
 	public boolean isRoleRequired(long userId, long roleId)
 		throws PortalException;
@@ -143,10 +139,9 @@ public interface RoleMembershipPolicy {
 	 * </li>
 	 * </ul>
 	 *
-	 * @param  userIds the primary keys of the users
-	 * @param  addRoleIds the primary keys of the added roles
-	 * @param  removeRoleIds the primary keys of the removed roles
-	 * @throws PortalException if a portal exception occurred
+	 * @param userIds the primary keys of the users
+	 * @param addRoleIds the primary keys of the added roles
+	 * @param removeRoleIds the primary keys of the removed roles
 	 */
 	public void propagateRoles(
 			long[] userIds, long[] addRoleIds, long[] removeRoleIds)
@@ -159,8 +154,6 @@ public interface RoleMembershipPolicy {
 	 * <code>membership.policy.auto.verify</code> portal property is
 	 * <code>true</code> this method is triggered when starting Liferay and
 	 * every time a membership policy hook is deployed.
-	 *
-	 * @throws PortalException if a portal exception occurred
 	 */
 	public void verifyPolicy() throws PortalException;
 
@@ -168,8 +161,7 @@ public interface RoleMembershipPolicy {
 	 * Checks the integrity of the membership policy of the role and performs
 	 * operations necessary for the compliance of the role.
 	 *
-	 * @param  role the role to verify
-	 * @throws PortalException if a portal exception occurred
+	 * @param role the role to verify
 	 */
 	public void verifyPolicy(Role role) throws PortalException;
 
@@ -179,10 +171,9 @@ public interface RoleMembershipPolicy {
 	 * operations necessary for the role's compliance. Liferay calls this method
 	 * when adding and updating roles.
 	 *
-	 * @param  role the added or updated role to verify
-	 * @param  oldRole the old role
-	 * @param  oldExpandoAttributes the old expando attributes
-	 * @throws PortalException if a portal exception occurred
+	 * @param role the added or updated role to verify
+	 * @param oldRole the old role
+	 * @param oldExpandoAttributes the old expando attributes
 	 */
 	public void verifyPolicy(
 			Role role, Role oldRole,

@@ -93,6 +93,7 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		configureJspCExtension(project);
 
 		configureArchivesBaseName(project);
+		configureTasksBuildService(project);
 		configureVersion(project);
 
 		project.afterEvaluate(
@@ -671,64 +672,10 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		buildCSSTask.setDocrootDirName(project.relativePath(docrootDir));
 	}
 
-	@Override
-	protected void configureTaskBuildServiceHbmFileName(
-		BuildServiceTask buildServiceTask) {
-
-		Project project = buildServiceTask.getProject();
-
-		File hbmFile = new File(
-			getResourcesDir(project), "META-INF/module-hbm.xml");
-
-		buildServiceTask.setHbmFileName(project.relativePath(hbmFile));
-	}
-
-	@Override
 	protected void configureTaskBuildServiceOsgiModule(
 		BuildServiceTask buildServiceTask) {
 
 		buildServiceTask.setOsgiModule(true);
-	}
-
-	@Override
-	protected void configureTaskBuildServicePluginName(
-		BuildServiceTask buildServiceTask) {
-
-		buildServiceTask.setPluginName("");
-	}
-
-	@Override
-	protected void configureTaskBuildServicePropsUtil(
-		BuildServiceTask buildServiceTask) {
-
-		String bundleSymbolicName = getBundleInstruction(
-			buildServiceTask.getProject(), Constants.BUNDLE_SYMBOLICNAME);
-
-		buildServiceTask.setPropsUtil(
-			bundleSymbolicName + ".util.ServiceProps");
-	}
-
-	@Override
-	protected void configureTaskBuildServiceSpringFileName(
-		BuildServiceTask buildServiceTask) {
-
-		Project project = buildServiceTask.getProject();
-
-		File springFile = new File(
-			getResourcesDir(project), "META-INF/spring/module-spring.xml");
-
-		buildServiceTask.setSpringFileName(project.relativePath(springFile));
-	}
-
-	@Override
-	protected void configureTaskBuildServiceSqlDirName(
-		BuildServiceTask buildServiceTask) {
-
-		Project project = buildServiceTask.getProject();
-
-		File sqlDir = new File(getResourcesDir(project), "META-INF/sql");
-
-		buildServiceTask.setSqlDirName(project.relativePath(sqlDir));
 	}
 
 	@Override
@@ -833,6 +780,21 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		configureTaskAutoUpdateXml(project);
 	}
 
+	protected void configureTasksBuildService(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			BuildServiceTask.class,
+			new Action<BuildServiceTask>() {
+
+				@Override
+				public void execute(BuildServiceTask buildServiceTask) {
+					configureTaskBuildServiceOsgiModule(buildServiceTask);
+				}
+
+			});
+	}
+
 	protected void configureTaskUnzipJar(Project project) {
 		Copy copy = (Copy)GradleUtil.getTask(project, UNZIP_JAR_TASK_NAME);
 
@@ -897,17 +859,6 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		}
 
 		return new File(docrootDir, "WEB-INF/lib");
-	}
-
-	@Override
-	protected File getServiceBaseDir(Project project) {
-		File docrootDir = project.file("docroot");
-
-		if (!docrootDir.exists()) {
-			return super.getServiceBaseDir(project);
-		}
-
-		return new File(docrootDir, "WEB-INF");
 	}
 
 	protected File getUnzippedJarDir(Project project) {

@@ -17,7 +17,6 @@ package com.liferay.gradle.plugins;
 import com.liferay.gradle.plugins.css.builder.BuildCSSTask;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
-import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.tasks.DirectDeployTask;
 import com.liferay.gradle.plugins.wsdl.builder.BuildWSDLTask;
 import com.liferay.gradle.plugins.xsd.builder.BuildXSDTask;
@@ -62,6 +61,7 @@ import org.gradle.api.plugins.WarPluginConvention;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
+import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskInputs;
 import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.api.tasks.bundling.Jar;
@@ -113,7 +113,7 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 
 		javaCompile.setDestinationDir(destinationDir);
 
-		javaCompile.setSource(buildServiceTask.getApiDirName());
+		javaCompile.setSource(buildServiceTask.getApiDir());
 
 		return javaCompile;
 	}
@@ -139,17 +139,24 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 	}
 
 	protected void addTaskBuildServiceTasks(Project project) {
-		BuildServiceTask buildServiceTask =
-			(BuildServiceTask)GradleUtil.getTask(
-				project, ServiceBuilderPlugin.BUILD_SERVICE_TASK_NAME);
+		TaskContainer taskContainer = project.getTasks();
 
-		Task buildServiceCompileTask = addTaskBuildServiceCompile(
-			buildServiceTask);
+		taskContainer.withType(
+			BuildServiceTask.class,
+			new Action<BuildServiceTask>() {
 
-		Task buildServiceJarTask = addTaskBuildServiceJar(
-			buildServiceTask, buildServiceCompileTask);
+				@Override
+				public void execute(BuildServiceTask buildServiceTask) {
+					Task buildServiceCompileTask = addTaskBuildServiceCompile(
+						buildServiceTask);
 
-		buildServiceTask.finalizedBy(buildServiceJarTask);
+					Task buildServiceJarTask = addTaskBuildServiceJar(
+						buildServiceTask, buildServiceCompileTask);
+
+					buildServiceTask.finalizedBy(buildServiceJarTask);
+				}
+
+			});
 	}
 
 	@Override
@@ -631,11 +638,6 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 	@Override
 	protected File getLibDir(Project project) {
 		return new File(getWebAppDir(project), "WEB-INF/lib");
-	}
-
-	@Override
-	protected File getServiceBaseDir(Project project) {
-		return new File(getWebAppDir(project), "WEB-INF");
 	}
 
 	protected File getServiceJarFile(Project project) {

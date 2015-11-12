@@ -24,11 +24,13 @@ import com.liferay.portal.kernel.util.StringPool;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -84,14 +86,24 @@ public class ConfigurationHelper {
 	}
 
 	public List<ConfigurationModel> getConfigurationModels() {
-		return new ArrayList<>(_configurationModels.values());
+		TreeSet orderedConfigurationModels = new TreeSet(
+			new ConfigurationModelComparator());
+
+		orderedConfigurationModels.addAll(_configurationModels.values());
+
+		return new ArrayList<>(orderedConfigurationModels);
 	}
 
 	public List<ConfigurationModel> getConfigurationModels(
 		String configurationCategory) {
 
-		return new ArrayList<>(
+		TreeSet orderedConfigurationModels = new TreeSet(
+			new ConfigurationModelComparator());
+
+		orderedConfigurationModels.addAll(
 			_categorizedConfigurationModels.get(configurationCategory));
+
+		return new ArrayList<>(orderedConfigurationModels);
 	}
 
 	public List<ConfigurationModel> getFactoryInstances(
@@ -253,5 +265,18 @@ public class ConfigurationHelper {
 	private final ConfigurationAdmin _configurationAdmin;
 	private final Map<String, ConfigurationModel> _configurationModels;
 	private final ExtendedMetaTypeService _extendedMetaTypeService;
+
+	private class ConfigurationModelComparator
+		implements Comparator<ConfigurationModel> {
+
+		@Override
+		public int compare(ConfigurationModel cm1, ConfigurationModel cm2) {
+			String name1 = cm1.getName();
+			String name2 = cm2.getName();
+
+			return name1.compareTo(name2);
+		}
+
+	}
 
 }

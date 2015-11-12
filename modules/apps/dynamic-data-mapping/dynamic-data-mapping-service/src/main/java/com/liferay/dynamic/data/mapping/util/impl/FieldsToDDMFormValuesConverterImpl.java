@@ -24,7 +24,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
-import com.liferay.dynamic.data.mapping.util.DDMUtil;
+import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -170,7 +170,7 @@ public class FieldsToDDMFormValuesConverterImpl
 		throws PortalException {
 
 		try {
-			return DDMUtil.getFieldsDisplayValues(ddmFieldsDisplayField);
+			return _ddm.getFieldsDisplayValues(ddmFieldsDisplayField);
 		}
 		catch (Exception e) {
 			throw new PortalException(e);
@@ -189,6 +189,11 @@ public class FieldsToDDMFormValuesConverterImpl
 		}
 
 		return String.valueOf(fieldValue);
+	}
+
+	@Reference
+	protected void setDDM(DDM ddm) {
+		_ddm = ddm;
 	}
 
 	protected void setDDMFormFieldValueInstanceId(
@@ -298,5 +303,7 @@ public class FieldsToDDMFormValuesConverterImpl
 			}
 		}
 	}
+
+	private DDM _ddm;
 
 }

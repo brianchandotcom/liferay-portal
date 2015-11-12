@@ -1,6 +1,6 @@
 buildService {
-	apiDirName = "../portal-background-task-api/src/main/java"
-	testDirName = "../portal-background-task-test/src/testIntegration/java"
+	apiDir = "../portal-background-task-api/src/main/java"
+	testDir = "../portal-background-task-test/src/testIntegration/java"
 }
 
 dependencies {

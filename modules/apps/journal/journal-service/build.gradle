@@ -1,7 +1,7 @@
 buildService {
-	apiDirName = "../journal-api/src/main/java"
+	apiDir = "../journal-api/src/main/java"
 	autoNamespaceTables = false
-	testDirName = "../journal-test/src/testIntegration/java"
+	testDir = "../journal-test/src/testIntegration/java"
 }
 
 dependencies {

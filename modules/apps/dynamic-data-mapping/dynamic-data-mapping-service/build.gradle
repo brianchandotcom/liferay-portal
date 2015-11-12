@@ -1,7 +1,7 @@
 buildService {
-	apiDirName = "../dynamic-data-mapping-api/src/main/java"
+	apiDir = "../dynamic-data-mapping-api/src/main/java"
 	autoNamespaceTables = false
-	testDirName = "../dynamic-data-mapping-test/src/testIntegration/java"
+	testDir = "../dynamic-data-mapping-test/src/testIntegration/java"
 }
 
 dependencies {

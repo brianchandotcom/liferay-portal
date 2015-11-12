@@ -44,7 +44,11 @@ public class JarUtil {
 			URL url, String libPath, String name, URLClassLoader urlClassLoader)
 		throws Exception {
 
-		if (PortalRunMode.isTestMode()) {
+		String protocol = url.getProtocol();
+
+		if (PortalRunMode.isTestMode() &&
+			(protocol.equals("http") || protocol.equals("https"))) {
+
 			try {
 				InetAddress.getAllByName("mirrors");
 

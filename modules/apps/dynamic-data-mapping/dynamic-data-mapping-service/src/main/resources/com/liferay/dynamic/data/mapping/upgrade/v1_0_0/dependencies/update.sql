@@ -1,3 +1,23 @@
+create table DDMDataProviderInstance (
+	uuid_ VARCHAR(75) null,
+	dataProviderInstanceId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	name STRING null,
+	description TEXT null,
+	definition TEXT null,
+	type_ VARCHAR(75) null
+);
+
+create index IX_DB54A6E5 on DDMDataProviderInstance (companyId);
+create index IX_1333A2A7 on DDMDataProviderInstance (groupId);
+create index IX_C903C097 on DDMDataProviderInstance (uuid_[$COLUMN_LENGTH:75$], companyId);
+create unique index IX_B4E180D9 on DDMDataProviderInstance (uuid_[$COLUMN_LENGTH:75$], groupId);
+
 alter table DDMStructure add versionUserId LONG;
 alter table DDMStructure add versionUserName VARCHAR(75) null;
 alter table DDMStructure add version VARCHAR(75) null;

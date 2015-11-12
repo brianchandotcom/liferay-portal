@@ -29,8 +29,10 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
+			<var name="portletName" value="Nested Portlets" />
 		</execute>
+
+		<execute macro="NestedPortlets#viewConfigurationDefaultLayoutTemplate" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Nested Portlets Page" />

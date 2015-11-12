@@ -19,8 +19,6 @@ import com.liferay.mobile.device.rules.service.MDRActionLocalService;
 import com.liferay.mobile.device.rules.service.MDRActionService;
 import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalService;
 import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceService;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.GroupService;
 import com.liferay.portal.service.LayoutLocalService;
@@ -32,17 +30,15 @@ import com.liferay.portal.service.LayoutSetLocalService;
 import com.liferay.portal.service.LayoutSetService;
 import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portal.service.ThemeLocalService;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 
 import javax.portlet.Portlet;
-import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Jorge Ferrer
+ * @author Julio Camarero
  */
 @Component(
 	immediate = true,
@@ -57,11 +53,11 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.render-weight=50",
 		"com.liferay.portlet.system=true",
 		"com.liferay.portlet.use-default-template=true",
-		"javax.portlet.display-name=Group Pages",
+		"javax.portlet.display-name=Page Template Page",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES,
+		"javax.portlet.name=" + LayoutAdminPortletKeys.LAYOUT_PROTOTYPE_PAGE,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.supported-public-render-parameter=layoutSetBranchId",
 		"javax.portlet.supported-public-render-parameter=privateLayout",
@@ -70,19 +66,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = {Portlet.class}
 )
-public class GroupPagesPortlet extends LayoutAdminPortlet {
-
-	@Override
-	protected Group getGroup(PortletRequest portletRequest) throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Group group = themeDisplay.getSiteGroup();
-
-		portletRequest.setAttribute(WebKeys.GROUP, group);
-
-		return group;
-	}
+public class LayoutPrototypePagePortlet extends GroupPagesPortlet {
 
 	@Reference(unbind = "-")
 	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {

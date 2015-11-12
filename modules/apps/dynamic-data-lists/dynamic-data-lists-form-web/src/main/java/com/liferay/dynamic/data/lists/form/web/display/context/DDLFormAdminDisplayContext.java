@@ -105,7 +105,7 @@ public class DDLFormAdminDisplayContext {
 		DDMForm ddmForm = ddmStructure.getDDMForm();
 
 		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
-			makeDDMFormFieldReadOnly(ddmFormField);
+			setDDMFormFieldReadOnly(ddmFormField);
 		}
 
 		DDMFormLayout ddmFormLayout = ddmStructure.getDDMFormLayout();
@@ -347,13 +347,13 @@ public class DDLFormAdminDisplayContext {
 		return DDLRecordLocalServiceUtil.fetchDDLRecord(recordId);
 	}
 
-	protected void makeDDMFormFieldReadOnly(DDMFormField ddmFormField) {
+	protected void setDDMFormFieldReadOnly(DDMFormField ddmFormField) {
 		ddmFormField.setReadOnly(true);
 
-		for (DDMFormField nestedDDMFormField
-				: ddmFormField.getNestedDDMFormFields()) {
+		for (DDMFormField nestedDDMFormField :
+				ddmFormField.getNestedDDMFormFields()) {
 
-			makeDDMFormFieldReadOnly(nestedDDMFormField);
+			setDDMFormFieldReadOnly(nestedDDMFormField);
 		}
 	}
 

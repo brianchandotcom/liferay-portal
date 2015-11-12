@@ -67,6 +67,7 @@ public class DDMFormFieldValueRendererTest extends BaseDDMTestCase {
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
+
 		setUpCalendarFactoryUtil();
 		setUpDLAppLocalServiceUtil();
 		setUpFastDateFormatFactoryUtil();

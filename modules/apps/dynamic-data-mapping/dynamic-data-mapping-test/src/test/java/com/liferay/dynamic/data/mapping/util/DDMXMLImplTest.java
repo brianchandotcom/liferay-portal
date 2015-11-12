@@ -44,6 +44,7 @@ public class DDMXMLImplTest extends BaseDDMTestCase {
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
+
 		setUpPropsUtil();
 		setUpSAXReaderUtil();
 	}

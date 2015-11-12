@@ -39,6 +39,7 @@ public class DDMFormValuesTransformerTest extends BaseDDMTestCase {
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
+
 		setUpJSONFactoryUtil();
 	}
 

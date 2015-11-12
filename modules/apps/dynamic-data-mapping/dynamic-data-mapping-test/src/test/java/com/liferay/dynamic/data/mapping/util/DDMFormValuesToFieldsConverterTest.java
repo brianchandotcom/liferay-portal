@@ -69,6 +69,7 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
+
 		setUpConfigurationFactoryUtil();
 		setUpDDMFormFieldTypeServicesTrackerUtil();
 		setUpAvailableLocales();

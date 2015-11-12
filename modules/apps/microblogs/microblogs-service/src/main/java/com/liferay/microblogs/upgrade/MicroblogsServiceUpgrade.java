@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Ryan Park
  * @author Manuel de la Peña
  */
-@Component(immediate = true)
+@Component(immediate = true, service = MicroblogsServiceUpgrade.class)
 public class MicroblogsServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override

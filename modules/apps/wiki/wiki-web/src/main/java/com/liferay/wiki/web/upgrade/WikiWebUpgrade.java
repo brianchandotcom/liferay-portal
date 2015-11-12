@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Iván Zaera
  * @author Manuel de la Peña
  */
-@Component(immediate = true)
+@Component(immediate = true, service = WikiWebUpgrade.class)
 public class WikiWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override

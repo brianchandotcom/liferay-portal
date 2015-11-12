@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true)
+@Component(immediate = true, service = KaleoServiceUpgrade.class)
 public class KaleoServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override

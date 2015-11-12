@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true)
+@Component(immediate = true, service = RSSWebUpgrade.class)
 public class RSSWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override

@@ -31,8 +31,6 @@ import org.osgi.service.cm.Configuration;
  */
 public class ConfigurationModel implements ExtendedObjectClassDefinition {
 
-	public static final String CATEGORY_OTHER = "other";
-
 	public ConfigurationModel(
 		ExtendedObjectClassDefinition extendedObjectClassDefinition,
 		Configuration configuration, String bundleLocation, boolean factory) {
@@ -58,8 +56,7 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 				"http://www.liferay.com/xsd/liferay-configuration-admin_" +
 					"1_0_0.xsd");
 
-		return GetterUtil.get(
-			extensionAttributes.get("category"), CATEGORY_OTHER);
+		return GetterUtil.get(extensionAttributes.get("category"), "other");
 	}
 
 	public Configuration getConfiguration() {

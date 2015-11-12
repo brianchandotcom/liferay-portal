@@ -71,6 +71,34 @@ public class DDMDataProviderInstanceLocalServiceImpl
 	}
 
 	@Override
+	public void deleteDataProviderInstance(
+		DDMDataProviderInstance dataProviderInstance) {
+
+		ddmDataProviderInstancePersistence.remove(dataProviderInstance);
+	}
+
+	@Override
+	public void deleteDataProviderInstance(long dataProviderInstanceId)
+		throws PortalException {
+
+		DDMDataProviderInstance dataProviderInstance =
+			ddmDataProviderInstancePersistence.findByPrimaryKey(
+				dataProviderInstanceId);
+
+		ddmDataProviderInstanceLocalService.deleteDataProviderInstance(
+			dataProviderInstance);
+	}
+
+	@Override
+	public DDMDataProviderInstance getDataProviderInstance(
+			long dataProviderInstanceId)
+		throws PortalException {
+
+		return ddmDataProviderInstancePersistence.findByPrimaryKey(
+			dataProviderInstanceId);
+	}
+
+	@Override
 	public List<DDMDataProviderInstance> search(
 		long companyId, long[] groupIds, String keywords, int start, int end,
 		OrderByComparator<DDMDataProviderInstance> orderByComparator) {

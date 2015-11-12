@@ -59,7 +59,19 @@ public class DDMDataProviderInstanceServiceImpl
 		DDMDataProviderInstancePermission.check(
 			getPermissionChecker(), dataProviderInstanceId, ActionKeys.DELETE);
 
-		ddmDataProviderInstanceLocalService.deleteDDMDataProviderInstance(
+		ddmDataProviderInstanceLocalService.deleteDataProviderInstance(
+			dataProviderInstanceId);
+	}
+
+	@Override
+	public DDMDataProviderInstance getDataProviderInstance(
+			long dataProviderInstanceId)
+		throws PortalException {
+
+		DDMDataProviderInstancePermission.check(
+			getPermissionChecker(), dataProviderInstanceId, ActionKeys.VIEW);
+
+		return ddmDataProviderInstanceLocalService.getDataProviderInstance(
 			dataProviderInstanceId);
 	}
 

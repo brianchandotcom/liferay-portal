@@ -17,23 +17,9 @@ package com.liferay.dynamic.data.mapping.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 /**
- * The extended model implementation for the DDMDataProviderInstance service. Represents a row in the &quot;DDMDataProviderInstance&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance} interface.
- * </p>
- *
  * @author Brian Wing Shun Chan
  */
 @ProviderType
 public class DDMDataProviderInstanceImpl
 	extends DDMDataProviderInstanceBaseImpl {
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a d d m data provider instance model instance should use the {@link com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance} interface instead.
-	 */
-	public DDMDataProviderInstanceImpl() {
-	}
-
 }

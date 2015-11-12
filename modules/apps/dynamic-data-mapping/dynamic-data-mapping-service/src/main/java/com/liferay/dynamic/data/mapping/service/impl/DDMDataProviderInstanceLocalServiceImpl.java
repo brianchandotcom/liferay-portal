@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.service.impl;
 
 import com.liferay.dynamic.data.mapping.exception.DataProviderInstanceNameException;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.service.base.DDMDataProviderInstanceLocalServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -40,34 +41,33 @@ public class DDMDataProviderInstanceLocalServiceImpl
 	@Override
 	public DDMDataProviderInstance addDataProviderInstance(
 			long userId, long groupId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String definition, String type,
-			DDMFormValues ddmFormValues, ServiceContext serviceContext)
+			Map<Locale, String> descriptionMap, DDMFormValues ddmFormValues,
+			String type, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		ddmFormValuesValidator.validate(ddmFormValues);
-
-		validateName(nameMap);
+		validate(nameMap, ddmFormValues);
 
 		long dataProviderInstanceId = counterLocalService.increment();
 
-		DDMDataProviderInstance ddmDataProviderInstance =
+		DDMDataProviderInstance dataProviderInstance =
 			ddmDataProviderInstancePersistence.create(dataProviderInstanceId);
 
-		ddmDataProviderInstance.setUuid(serviceContext.getUuid());
-		ddmDataProviderInstance.setGroupId(groupId);
-		ddmDataProviderInstance.setCompanyId(user.getCompanyId());
-		ddmDataProviderInstance.setUserId(user.getUserId());
-		ddmDataProviderInstance.setUserName(user.getFullName());
-		ddmDataProviderInstance.setDefinition(definition);
-		ddmDataProviderInstance.setDescriptionMap(descriptionMap);
-		ddmDataProviderInstance.setNameMap(nameMap);
-		ddmDataProviderInstance.setType(type);
+		dataProviderInstance.setUuid(serviceContext.getUuid());
+		dataProviderInstance.setGroupId(groupId);
+		dataProviderInstance.setCompanyId(user.getCompanyId());
+		dataProviderInstance.setUserId(user.getUserId());
+		dataProviderInstance.setUserName(user.getFullName());
+		dataProviderInstance.setDefinition(
+			ddmFormValuesJSONSerializer.serialize(ddmFormValues));
+		dataProviderInstance.setDescriptionMap(descriptionMap);
+		dataProviderInstance.setNameMap(nameMap);
+		dataProviderInstance.setType(type);
 
-		ddmDataProviderInstancePersistence.update(ddmDataProviderInstance);
+		ddmDataProviderInstancePersistence.update(dataProviderInstance);
 
-		return ddmDataProviderInstance;
+		return dataProviderInstance;
 	}
 
 	@Override
@@ -109,32 +109,31 @@ public class DDMDataProviderInstanceLocalServiceImpl
 	public DDMDataProviderInstance updateDataProviderInstance(
 			long userId, long dataProviderInstanceId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String definition, DDMFormValues ddmFormValues,
-			ServiceContext serviceContext)
+			DDMFormValues ddmFormValues, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		ddmFormValuesValidator.validate(ddmFormValues);
+		validate(nameMap, ddmFormValues);
 
-		validateName(nameMap);
-
-		DDMDataProviderInstance ddmDataProviderInstance =
+		DDMDataProviderInstance dataProviderInstance =
 			ddmDataProviderInstancePersistence.findByPrimaryKey(
 				dataProviderInstanceId);
 
-		ddmDataProviderInstance.setUserId(user.getUserId());
-		ddmDataProviderInstance.setUserName(user.getFullName());
-		ddmDataProviderInstance.setDefinition(definition);
-		ddmDataProviderInstance.setDescriptionMap(descriptionMap);
-		ddmDataProviderInstance.setNameMap(nameMap);
+		dataProviderInstance.setUserId(user.getUserId());
+		dataProviderInstance.setUserName(user.getFullName());
+		dataProviderInstance.setDefinition(
+			ddmFormValuesJSONSerializer.serialize(ddmFormValues));
+		dataProviderInstance.setDescriptionMap(descriptionMap);
+		dataProviderInstance.setNameMap(nameMap);
 
-		ddmDataProviderInstancePersistence.update(ddmDataProviderInstance);
+		ddmDataProviderInstancePersistence.update(dataProviderInstance);
 
-		return ddmDataProviderInstance;
+		return dataProviderInstance;
 	}
 
-	protected void validateName(Map<Locale, String> nameMap)
+	protected void validate(
+			Map<Locale, String> nameMap, DDMFormValues ddmFormValues)
 		throws PortalException {
 
 		String name = nameMap.get(LocaleUtil.getSiteDefault());
@@ -142,7 +141,12 @@ public class DDMDataProviderInstanceLocalServiceImpl
 		if (Validator.isNull(name)) {
 			throw new DataProviderInstanceNameException();
 		}
+
+		ddmFormValuesValidator.validate(ddmFormValues);
 	}
+
+	@ServiceReference(type = DDMFormValuesJSONSerializer.class)
+	protected DDMFormValuesJSONSerializer ddmFormValuesJSONSerializer;
 
 	@ServiceReference(type = DDMFormValuesValidator.class)
 	protected DDMFormValuesValidator ddmFormValuesValidator;

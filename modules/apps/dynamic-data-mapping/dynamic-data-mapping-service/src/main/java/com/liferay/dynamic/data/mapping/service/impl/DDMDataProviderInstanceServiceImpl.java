@@ -38,8 +38,8 @@ public class DDMDataProviderInstanceServiceImpl
 	@Override
 	public DDMDataProviderInstance addDataProviderInstance(
 			long groupId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String definition, String type,
-			DDMFormValues ddmFormValues, ServiceContext serviceContext)
+			Map<Locale, String> descriptionMap, DDMFormValues ddmFormValues,
+			String type, ServiceContext serviceContext)
 		throws PortalException {
 
 		DDMPermission.check(
@@ -48,8 +48,8 @@ public class DDMDataProviderInstanceServiceImpl
 			DDMDataProviderInstance.class.getName());
 
 		return ddmDataProviderInstanceLocalService.addDataProviderInstance(
-			getUserId(), groupId, nameMap, descriptionMap, definition, type,
-			ddmFormValues, serviceContext);
+			getUserId(), groupId, nameMap, descriptionMap, ddmFormValues, type,
+			serviceContext);
 	}
 
 	@Override
@@ -101,8 +101,8 @@ public class DDMDataProviderInstanceServiceImpl
 	@Override
 	public DDMDataProviderInstance updateDataProviderInstance(
 			long dataProviderInstanceId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String definition,
-			DDMFormValues ddmFormValues, ServiceContext serviceContext)
+			Map<Locale, String> descriptionMap, DDMFormValues ddmFormValues,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		DDMDataProviderInstancePermission.check(
@@ -110,7 +110,7 @@ public class DDMDataProviderInstanceServiceImpl
 
 		return ddmDataProviderInstanceLocalService.updateDataProviderInstance(
 			getUserId(), dataProviderInstanceId, nameMap, descriptionMap,
-			definition, ddmFormValues, serviceContext);
+			ddmFormValues, serviceContext);
 	}
 
 }

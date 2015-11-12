@@ -14,11 +14,9 @@
 
 package com.liferay.document.library.web.search;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.dao.search.RowMover;
 import com.liferay.portal.kernel.dao.search.RowMoverDropTarget;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portlet.admin.util.PortalProductMenuApplicationType;
@@ -46,9 +44,11 @@ public class EntriesMover extends RowMover {
 			moveToTrashDropTarget.setActiveCssClass("active");
 			moveToTrashDropTarget.setContainer("body");
 			moveToTrashDropTarget.setInfoCssClass("active");
-			moveToTrashDropTarget.setSelector("#_" + PortletProviderUtil.getPortletId(PortalProductMenuApplicationType.ProductMenu.CLASS_NAME, PortletProvider.Action.VIEW) + "_portlet_" + PortletProviderUtil.getPortletId(TrashEntry.class.getName(), PortletProvider.Action.VIEW));
+			moveToTrashDropTarget.setSelector(
+				"#_" + PortletProviderUtil.getPortletId(PortalProductMenuApplicationType.ProductMenu.CLASS_NAME, PortletProvider.Action.VIEW) + "_portlet_" + PortletProviderUtil.getPortletId(TrashEntry.class.getName(), PortletProvider.Action.VIEW));
 
 			addDropTarget(moveToTrashDropTarget);
 		}
 	}
+
 }

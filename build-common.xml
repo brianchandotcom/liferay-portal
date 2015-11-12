@@ -1098,6 +1098,8 @@ Please set the environment variable ANT_OPTS to the recommended value of
 					<equals arg1="${jps.pid}" arg2="" />
 				</not>
 				<then>
+					<echo>Thread dump for process : ${jps.pid}</echo>
+
 					<exec executable="jstack">
 						<arg value="-l" />
 						<arg value="${jps.pid}" />

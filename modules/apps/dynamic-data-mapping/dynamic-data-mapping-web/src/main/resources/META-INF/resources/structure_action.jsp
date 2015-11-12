@@ -109,8 +109,7 @@ DDMStructure structure = (DDMStructure)row.getObject();
 			<portlet:param name="classPK" value="<%= String.valueOf(structure.getStructureId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon
-			message="delete"
+		<liferay-ui:icon-delete
 			url="<%= deleteURL %>"
 		/>
 	</c:if>

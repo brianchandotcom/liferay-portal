@@ -11,36 +11,6 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddWebContentArticleWithImageViaURL" priority="4">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute function="Type#mouseOverFocusType" locator1="TextInput#TITLE" value1="Web Content Title" />
-
-		<execute function="Click#pauseClickAt" locator1="AlloyEditor#CONTENT_FIELD" />
-
-		<execute function="Click" locator1="AlloyEditor#CONTENT_ADD_BUTTON" />
-
-		<execute function="Click" locator1="AlloyEditor#CONTENT_ADD_MENUBAR_IMAGE" />
-
-		<execute macro="ItemSelector#addFromURL">
-			<var name="imageSourceURL" value="https://raw.githubusercontent.com/liferay/liferay-portal/master/portal-web/test/functional/com/liferay/portalweb/dependencies/Document_1.jpg" />
-		</execute>
-
-		<execute macro="WebContent#publish" />
-
-		<execute macro="WebContentNavigator#gotoPreviewCP">
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-
-		<execute function="AssertElementPresent" locator1="//img[contains(@src,'Document_1.jpg')]" />
-	</command>
-
 	<command name="AddBlogsEntryWithImageViaBlogsImages" priority="4" >
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
@@ -84,6 +54,36 @@
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="//div[contains(@class,'entry-content')]/p/img[contains(@src,'Document_1.jpg')]" />
+	</command>
+
+	<command name="AddWebContentArticleWithImageViaURL" priority="4">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute function="Type#mouseOverFocusType" locator1="TextInput#TITLE" value1="Web Content Title" />
+
+		<execute function="Click#pauseClickAt" locator1="AlloyEditor#CONTENT_FIELD" />
+
+		<execute function="Click" locator1="AlloyEditor#CONTENT_ADD_BUTTON" />
+
+		<execute function="Click" locator1="AlloyEditor#CONTENT_ADD_MENUBAR_IMAGE" />
+
+		<execute macro="ItemSelector#addFromURL">
+			<var name="imageSourceURL" value="https://raw.githubusercontent.com/liferay/liferay-portal/master/portal-web/test/functional/com/liferay/portalweb/dependencies/Document_1.jpg" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContentNavigator#gotoPreviewCP">
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute function="AssertElementPresent" locator1="//img[contains(@src,'Document_1.jpg')]" />
 	</command>
 
 	<command name="ViewCKEditorsInheritanceNo" priority="4">

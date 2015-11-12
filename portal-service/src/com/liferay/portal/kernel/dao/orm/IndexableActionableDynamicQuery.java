@@ -88,8 +88,8 @@ public class IndexableActionableDynamicQuery
 		}
 
 		SearchEngineUtil.updateDocuments(
-			_searchEngineId, getCompanyId(),
-			new ArrayList<Document>(_documents), _commitImmediately);
+			_searchEngineId, getCompanyId(), new ArrayList<>(_documents),
+			_commitImmediately);
 
 		_documents.clear();
 	}

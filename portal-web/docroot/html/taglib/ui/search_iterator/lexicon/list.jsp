@@ -14,39 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/search_iterator/init.jsp" %>
-
-<%
-SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:search:searchContainer");
-
-String markupView = (String)request.getAttribute("liferay-ui:search-iterator:markupView");
-boolean paginate = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:search-iterator:paginate"));
-ResultRowSplitter resultRowSplitter = (ResultRowSplitter)request.getAttribute("liferay-ui:search-iterator:resultRowSplitter");
-String type = (String)request.getAttribute("liferay-ui:search:type");
-
-String id = searchContainer.getId(request, namespace);
-
-List resultRows = searchContainer.getResultRows();
-List<String> headerNames = searchContainer.getHeaderNames();
-List<String> normalizedHeaderNames = searchContainer.getNormalizedHeaderNames();
-String emptyResultsMessage = searchContainer.getEmptyResultsMessage();
-RowChecker rowChecker = searchContainer.getRowChecker();
-RowMover rowMover = searchContainer.getRowMover();
-
-if (rowChecker != null) {
-	if (headerNames != null) {
-		headerNames.add(0, StringPool.BLANK);
-
-		normalizedHeaderNames.add(0, "rowChecker");
-	}
-}
-
-JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
-%>
-
-<c:if test="<%= resultRows.isEmpty() && (emptyResultsMessage != null) %>">
-	<liferay-ui:empty-result-message message="<%= emptyResultsMessage %>" />
-</c:if>
+<%@ include file="/html/taglib/ui/search_iterator/lexicon/top.jsp" %>
 
 <div class="<%= resultRows.isEmpty() ? "hide" : StringPool.BLANK %> <%= searchContainer.getCssClass() %>">
 	<div id="<%= namespace + id %>SearchContainer">
@@ -270,82 +238,10 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 		</tbody>
 		</table>
 	</div>
-
-	<c:if test="<%= PropsValues.SEARCH_CONTAINER_SHOW_PAGINATION_BOTTOM && paginate %>">
-		<div class="taglib-search-iterator-page-iterator-bottom">
-			<liferay-ui:search-paginator id='<%= id + "PageIteratorBottom" %>' markupView="<%= markupView %>" searchContainer="<%= searchContainer %>" type="<%= type %>" />
-		</div>
-	</c:if>
 </div>
 
-<c:if test="<%= Validator.isNotNull(id) %>">
-	<input id="<%= namespace + id %>PrimaryKeys" name="<%= namespace + id %>PrimaryKeys" type="hidden" value="" />
+<%
+String rowHtmlTag = "tr";
+%>
 
-	<%
-	String modules = "liferay-search-container";
-	String rowCheckerRowSelector = StringPool.BLANK;
-
-	if (rowMover != null) {
-		modules += ",liferay-search-container-move";
-	}
-
-	if (rowChecker != null) {
-		modules += ",liferay-search-container-select";
-
-		rowCheckerRowSelector = rowChecker.getRowSelector();
-
-		if (Validator.isNull(rowCheckerRowSelector)) {
-			rowCheckerRowSelector = "[data-selectable=\"true\"]";
-		}
-	}
-	%>
-
-	<aui:script use="<%= modules %>">
-		var plugins = [];
-
-		var rowSelector = 'tr<%= rowCheckerRowSelector %>';
-
-		<c:if test="<%= rowChecker != null %>">
-			plugins.push(
-				{
-					cfg: {
-						rowSelector: rowSelector
-					},
-					fn: A.Plugin.SearchContainerSelect
-				}
-			);
-		</c:if>
-
-		<c:if test="<%= rowMover != null %>">
-			var rowMoverConfig = <%= rowMover.toJSON().toString() %>;
-
-			rowMoverConfig.rowSelector = rowSelector + rowMoverConfig.rowSelector;
-
-			plugins.push(
-				{
-					cfg: rowMoverConfig,
-					fn: A.Plugin.SearchContainerMove
-				}
-			);
-		</c:if>
-
-		var searchContainer = new Liferay.SearchContainer(
-			{
-				id: '<%= namespace + id %>',
-				plugins: plugins
-			}
-		).render();
-
-		searchContainer.updateDataStore(<%= primaryKeysJSONArray.toString() %>);
-
-		var destroySearchContainer = function(event) {
-			if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
-				searchContainer.destroy();
-
-				Liferay.detach('destroyPortlet', destroySearchContainer);
-			}
-		};
-
-		Liferay.on('destroyPortlet', destroySearchContainer);
-	</aui:script>
-</c:if>
+<%@ include file="/html/taglib/ui/search_iterator/lexicon/bottom.jsp" %>

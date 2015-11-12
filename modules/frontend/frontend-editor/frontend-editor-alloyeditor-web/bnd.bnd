@@ -11,4 +11,4 @@ Include-Resource:\
 JS-Config: /META-INF/resources/js/config.js
 Web-ContextPath: /frontend-editor-alloyeditor-web
 
--donotcopy: (\.touch|.*_diffs.*)
+-donotcopy: (\.touch|.*_diffs.*|.*.properties)

@@ -8,4 +8,4 @@ Include-Resource:\
 	META-INF/resources=tmp/META-INF/resources
 Web-ContextPath: /frontend-editor-tinymce-web
 
--donotcopy: (\.touch|.*_diffs.*)
+-donotcopy: (\.touch|.*_diffs.*|.*.properties)

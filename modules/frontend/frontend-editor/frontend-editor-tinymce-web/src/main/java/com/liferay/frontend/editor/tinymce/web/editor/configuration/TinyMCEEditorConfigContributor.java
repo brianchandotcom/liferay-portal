@@ -14,12 +14,14 @@
 
 package com.liferay.frontend.editor.tinymce.web.editor.configuration;
 
+import com.liferay.frontend.editor.lang.FrontendEditorLang;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
+import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
@@ -101,6 +103,11 @@ public class TinyMCEEditorConfigContributor
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
+
+		resourceBundle = new AggregateResourceBundle(
+			resourceBundle,
+			ResourceBundleUtil.getBundle(
+				"content.Language", locale, FrontendEditorLang.class));
 
 		jsonArray.put(
 			getStyleFormatJSONObject(

@@ -462,7 +462,6 @@ public class JournalRSSUtil {
 		ResourceURL feedURL = resourceResponse.createResourceURL();
 
 		feedURL.setCacheability(ResourceURL.FULL);
-		feedURL.setParameter("p_p_resource_id", "rss");
 		feedURL.setParameter("groupId", String.valueOf(feed.getGroupId()));
 		feedURL.setParameter("feedId", String.valueOf(feed.getFeedId()));
 

@@ -14,6 +14,7 @@
 
 package com.liferay.osgi.service.tracker.collections.map.internal;
 
+import com.liferay.osgi.service.tracker.collections.common.ServiceWrapperComparator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceServiceTuple;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerBucket;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerBucketFactory;
@@ -52,12 +53,12 @@ public class SingleValueServiceTrackerBucketFactory<SR, TS>
 		public SingleBucket() {
 			_service = null;
 
-			ServiceReferenceServiceTupleComparator<SR>
-				serviceReferenceServiceTupleComparator =
-					new ServiceReferenceServiceTupleComparator<>(_comparator);
+			ServiceWrapperComparator<SR>
+				serviceWrapperComparator = new ServiceWrapperComparator<>(
+					_comparator);
 
 			_serviceReferences = new PriorityQueue<>(
-				1, serviceReferenceServiceTupleComparator);
+				1, serviceWrapperComparator);
 		}
 
 		@Override

@@ -14,6 +14,7 @@
 
 package com.liferay.osgi.service.tracker.collections.map.internal;
 
+import com.liferay.osgi.service.tracker.collections.common.ServiceWrapperComparator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceServiceTuple;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerBucket;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerBucketFactory;
@@ -98,12 +99,12 @@ public class MultiValueServiceTrackerBucketFactory<SR, TS>
 		}
 
 		private ListServiceTrackerBucket() {
-			ServiceReferenceServiceTupleComparator<SR>
-				serviceReferenceServiceTupleComparator =
-					new ServiceReferenceServiceTupleComparator<>(_comparator);
+			ServiceWrapperComparator<SR>
+				serviceWrapperComparator = new ServiceWrapperComparator<>(
+					_comparator);
 
 			_serviceReferenceServiceTuples = new TreeSet<>(
-				serviceReferenceServiceTupleComparator);
+				serviceWrapperComparator);
 		}
 
 		private final Set<ServiceReferenceServiceTuple<SR, TS, ?>>

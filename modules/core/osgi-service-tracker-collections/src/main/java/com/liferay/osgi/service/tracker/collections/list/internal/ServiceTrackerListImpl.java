@@ -14,6 +14,8 @@
 
 package com.liferay.osgi.service.tracker.collections.list.internal;
 
+import com.liferay.osgi.service.tracker.collections.common.ServiceWrapper;
+import com.liferay.osgi.service.tracker.collections.common.ServiceWrapperComparator;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 
 import java.util.Collections;
@@ -44,11 +46,10 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<S, T> {
 		_serviceTrackerCustomizer = serviceTrackerCustomizer;
 
 		if (comparator == null) {
-			_comparator = new ServiceReferenceNaturalOrderComparator<>();
+			_comparator = Collections.reverseOrder();
 		}
 		else {
-			_comparator = new ServiceReferenceServiceWrapperComparator<>(
-				comparator);
+			_comparator = new ServiceWrapperComparator<>(comparator);
 		}
 
 		if (filterString != null) {
@@ -87,29 +88,11 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<S, T> {
 	}
 
 	private final BundleContext _bundleContext;
-	private final Comparator<ServiceWrapper<S, T>> _comparator;
+	private final Comparator<ServiceWrapper<S, ?>> _comparator;
 	private final List<ServiceWrapper<S, T>> _services =
 		new CopyOnWriteArrayList<>();
 	private final ServiceTracker<S, T> _serviceTracker;
 	private final ServiceTrackerCustomizer<S, T> _serviceTrackerCustomizer;
-
-	private static class ServiceReferenceNaturalOrderComparator<S, T>
-		implements Comparator<ServiceWrapper<S, T>> {
-
-		@Override
-		public int compare(
-			ServiceWrapper<S, T> serviceWrapper1,
-			ServiceWrapper<S, T> serviceWrapper2) {
-
-			ServiceReference<S> serviceReference1 =
-				serviceWrapper1.getServiceReference();
-			ServiceReference<S> serviceReference2 =
-				serviceWrapper2.getServiceReference();
-
-			return serviceReference1.compareTo(serviceReference2);
-		}
-
-	}
 
 	private static class ServiceTrackerListIterator<S, T>
 		implements Iterator<T> {
@@ -138,26 +121,6 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<S, T> {
 		}
 
 		private final Iterator<ServiceWrapper<S, T>> _iterator;
-
-	}
-
-	private static class ServiceWrapper<S, T> {
-
-		public ServiceWrapper(ServiceReference<S> serviceReference, T service) {
-			_serviceReference = serviceReference;
-			_service = service;
-		}
-
-		public T getService() {
-			return _service;
-		}
-
-		public ServiceReference<S> getServiceReference() {
-			return _serviceReference;
-		}
-
-		private final T _service;
-		private final ServiceReference<S> _serviceReference;
 
 	}
 

@@ -185,20 +185,20 @@ public class ConfigurationAdminPortlet extends MVCPortlet {
 					ConfigurationAdminWebKeys.CONFIGURATION_CATEGORIES,
 					configurationCategories);
 
-				String curConfigurationCategory = ParamUtil.getString(
-					renderRequest, "curConfigurationCategory");
+				String configurationCategory = ParamUtil.getString(
+					renderRequest, "configurationCategory");
 
-				if (Validator.isNull(curConfigurationCategory)) {
-					curConfigurationCategory = configurationCategories.get(0);
+				if (Validator.isNull(configurationCategory)) {
+					configurationCategory = configurationCategories.get(0);
 				}
 
 				renderRequest.setAttribute(
-					ConfigurationAdminWebKeys.CUR_CONFIGURATION_CATEGORY,
-					curConfigurationCategory);
+					ConfigurationAdminWebKeys.CONFIGURATION_CATEGORY,
+					configurationCategory);
 
 				List<ConfigurationModel> configurationModels =
 					configurationHelper.getConfigurationModels(
-						curConfigurationCategory);
+						configurationCategory);
 
 				renderRequest.setAttribute(
 					ConfigurationAdminWebKeys.CONFIGURATION_MODEL_ITERATOR,

@@ -22,7 +22,7 @@ PortletURL redirectURL = renderResponse.createRenderURL();
 ConfigurationModel factoryConfigurationModel = (ConfigurationModel)request.getAttribute(ConfigurationAdminWebKeys.FACTORY_CONFIGURATION_MODEL);
 ConfigurationModelIterator configurationModelIterator = (ConfigurationModelIterator)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_MODEL_ITERATOR);
 List<String> configurationCategories = (List<String>)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_CATEGORIES);
-String curConfigurationCategory = (String)request.getAttribute(ConfigurationAdminWebKeys.CUR_CONFIGURATION_CATEGORY);
+String configurationCategory = (String)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_CATEGORY);
 %>
 
 <c:if test="<%= factoryConfigurationModel != null %>">
@@ -32,16 +32,16 @@ String curConfigurationCategory = (String)request.getAttribute(ConfigurationAdmi
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 
-		<% for (String configurationCategory : configurationCategories) { %>
+		<% for (String curConfigurationCategory : configurationCategories) { %>
 
 			<portlet:renderURL var="configurationCategoryURL">
-				<portlet:param name="curConfigurationCategory" value="<%= configurationCategory %>" />
+				<portlet:param name="configurationCategory" value="<%= curConfigurationCategory %>" />
 			</portlet:renderURL>
 
 			<aui:nav-item
-				cssClass='<%= configurationCategory.equals(curConfigurationCategory)? "active" : "" %>'
+				cssClass='<%= curConfigurationCategory.equals(configurationCategory)? "active" : "" %>'
 				href="<%= configurationCategoryURL %>"
-				label="<%= configurationCategory %>" />
+				label="<%= curConfigurationCategory %>" />
 
 		<% } %>
 

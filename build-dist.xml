@@ -1309,7 +1309,7 @@ this task.
 
 		<echo file="${app.server.jboss.bin.dir}/standalone.conf" append="true">
 			<![CDATA[
-				JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true ${java.security.config} -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"
+				JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true ${java.security.config} -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=384m"
 			]]>
 		</echo>
 
@@ -1323,7 +1323,7 @@ this task.
 			<replacetoken><![CDATA[:JAVA_OPTS_SET]]></replacetoken>
 			<replacevalue>
 				<![CDATA[
-					set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true @java.security.config@ -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"
+					set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true @java.security.config@ -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=384m"
 
 					:JAVA_OPTS_SET
 				]]>
@@ -2695,7 +2695,7 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 
 		<echo file="${app.server.wildfly.bin.dir}/standalone.conf" append="true">
 			<![CDATA[
-				JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true ${java.security.config} -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"
+				JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true ${java.security.config} -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=384m"
 			]]>
 		</echo>
 
@@ -2709,7 +2709,7 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 			<replacetoken><![CDATA[:JAVA_OPTS_SET]]></replacetoken>
 			<replacevalue>
 				<![CDATA[
-					set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true @java.security.config@ -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"
+					set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true @java.security.config@ -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=384m"
 
 					:JAVA_OPTS_SET
 				]]>

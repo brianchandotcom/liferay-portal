@@ -1540,6 +1540,7 @@ rerun your task.
 				junit.java.integration.gc=${junit.java.integration.gc}
 				junit.java.unit.gc=${junit.java.unit.gc}
 				liferay.home=${liferay.home}
+				liferay.portal.version=${lp.version}-SNAPSHOT
 				microsoft.translator.client.id=${microsoft.translator.client.id}
 				microsoft.translator.client.secret=${microsoft.translator.client.secret}
 				nodejs.npm.email=${nodejs.npm.email}

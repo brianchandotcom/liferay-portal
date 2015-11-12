@@ -30,6 +30,10 @@ if (FileUtil.exists(project, "service.xml")) {
 	apply plugin: "com.liferay.portal.tools.wsdd.builder"
 }
 
+liferay {
+	portalVersion = project.properties["liferay.portal.version"]
+}
+
 File appServerClassesPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/classes")
 File appServerLibPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/lib")
 

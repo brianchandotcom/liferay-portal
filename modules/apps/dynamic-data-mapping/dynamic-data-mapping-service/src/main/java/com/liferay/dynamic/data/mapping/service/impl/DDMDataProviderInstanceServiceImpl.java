@@ -14,30 +14,103 @@
 
 package com.liferay.dynamic.data.mapping.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
+import com.liferay.dynamic.data.mapping.constants.DDMActionKeys;
+import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.service.base.DDMDataProviderInstanceServiceBaseImpl;
+import com.liferay.dynamic.data.mapping.service.permission.DDMDataProviderInstancePermission;
+import com.liferay.dynamic.data.mapping.service.permission.DDMPermission;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.service.ServiceContext;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
- * The implementation of the d d m data provider instance remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService} interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see DDMDataProviderInstanceServiceBaseImpl
- * @see com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceServiceUtil
+ * @author Leonardo Barros
  */
-@ProviderType
 public class DDMDataProviderInstanceServiceImpl
 	extends DDMDataProviderInstanceServiceBaseImpl {
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceServiceUtil} to access the d d m data provider instance remote service.
-	 */
+
+	@Override
+	public DDMDataProviderInstance addDataProviderInstance(
+			long groupId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, String definition, String type,
+			DDMFormValues ddmFormValues, ServiceContext serviceContext)
+		throws PortalException {
+
+		DDMPermission.check(
+			getPermissionChecker(), groupId,
+			DDMActionKeys.ADD_DATA_PROVIDER_INSTANCE,
+			DDMDataProviderInstance.class.getName());
+
+		return ddmDataProviderInstanceLocalService.addDataProviderInstance(
+			getUserId(), groupId, nameMap, descriptionMap, definition, type,
+			ddmFormValues, serviceContext);
+	}
+
+	@Override
+	public void deleteDataProviderInstance(long dataProviderInstanceId)
+		throws PortalException {
+
+		DDMDataProviderInstancePermission.check(
+			getPermissionChecker(), dataProviderInstanceId, ActionKeys.DELETE);
+
+		ddmDataProviderInstanceLocalService.deleteDDMDataProviderInstance(
+			dataProviderInstanceId);
+	}
+
+	@Override
+	public List<DDMDataProviderInstance> search(
+		long companyId, long[] groupIds, String keywords, int start, int end,
+		OrderByComparator<DDMDataProviderInstance> orderByComparator) {
+
+		return ddmDataProviderInstanceFinder.filterByKeywords(
+			companyId, groupIds, keywords, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<DDMDataProviderInstance> search(
+		long companyId, long[] groupIds, String name, String description,
+		boolean andOperator, int start, int end,
+		OrderByComparator<DDMDataProviderInstance> orderByComparator) {
+
+		return ddmDataProviderInstanceFinder.filterFindByC_G_N_D(
+			companyId, groupIds, name, description, andOperator, start, end,
+			orderByComparator);
+	}
+
+	@Override
+	public int searchCount(long companyId, long[] groupIds, String keywords) {
+		return ddmDataProviderInstanceFinder.filterCountByKeywords(
+			companyId, groupIds, keywords);
+	}
+
+	@Override
+	public int searchCount(
+		long companyId, long[] groupIds, String name, String description,
+		boolean andOperator) {
+
+		return ddmDataProviderInstanceFinder.filterCountByC_G_N_D(
+			companyId, groupIds, name, description, andOperator);
+	}
+
+	@Override
+	public DDMDataProviderInstance updateDataProviderInstance(
+			long dataProviderInstanceId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, String definition,
+			DDMFormValues ddmFormValues, ServiceContext serviceContext)
+		throws PortalException {
+
+		DDMDataProviderInstancePermission.check(
+			getPermissionChecker(), dataProviderInstanceId, ActionKeys.UPDATE);
+
+		return ddmDataProviderInstanceLocalService.updateDataProviderInstance(
+			getUserId(), dataProviderInstanceId, nameMap, descriptionMap,
+			definition, ddmFormValues, serviceContext);
+	}
+
 }

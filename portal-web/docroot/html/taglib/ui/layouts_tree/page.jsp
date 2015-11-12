@@ -26,7 +26,6 @@ long groupId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:layou
 boolean incomplete = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:layouts-tree:incomplete"));
 String linkTemplate = (String)request.getAttribute("liferay-ui:layouts-tree:linkTemplate");
 String modules = (String)request.getAttribute("liferay-ui:layouts-tree:modules");
-String portletId = (String)request.getAttribute("liferay-ui:layouts-tree:portletId");
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-ui:layouts-tree:portletURL");
 boolean privateLayout = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:layouts-tree:privateLayout"));
 String rootLinkTemplate = (String)request.getAttribute("liferay-ui:layouts-tree:rootLinkTemplate");
@@ -71,12 +70,6 @@ String treeId = (String)request.getAttribute("liferay-ui:layouts-tree:treeId");
 	long[] openNodes = StringUtil.split(SessionTreeJSClicks.getOpenNodes(request, treeId), 0L);
 
 	JSONObject layoutsJSON = JSONFactoryUtil.createJSONObject(LayoutsTreeUtil.getLayoutsJSON(request, groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, openNodes, true, treeId));
-
-	String portletNamespace = namespace;
-
-	if (Validator.isNotNull(portletId)) {
-		portletNamespace = PortalUtil.getPortletNamespace(portletId);
-	}
 
 	portletURL.setParameter("selPlid", _SEL_PLID_TOKEN);
 

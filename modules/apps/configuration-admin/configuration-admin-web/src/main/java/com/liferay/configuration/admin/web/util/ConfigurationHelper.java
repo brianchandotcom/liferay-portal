@@ -52,6 +52,7 @@ public class ConfigurationHelper {
 		_extendedMetaTypeService = extendedMetaTypeService;
 
 		_configurationModels = _getConfigurationModels(languageId);
+
 		_categorizedConfigurationModels = _getCategorizedConfigurationModels(
 			_configurationModels);
 	}
@@ -178,6 +179,7 @@ public class ConfigurationHelper {
 				configurationModels.values()) {
 
 			String configurationCategory = configurationModel.getCategory();
+
 			Set<ConfigurationModel> curConfigurationModels =
 				categorizedConfigurationModels.get(configurationCategory);
 

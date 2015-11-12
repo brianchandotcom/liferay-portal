@@ -67,7 +67,6 @@ ConfigurationModel factoryConfigurationModel = (ConfigurationModel)request.getAt
 			keyProperty="ID"
 			modelVar="configurationModel"
 		>
-
 			<portlet:renderURL var="editURL">
 				<portlet:param name="mvcPath" value="/edit_configuration.jsp" />
 				<portlet:param name="factoryPid" value="<%= configurationModel.getFactoryPid() %>" />

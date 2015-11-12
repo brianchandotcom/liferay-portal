@@ -64,11 +64,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SPECIFIC_PORTLET_BORDERLESS_OPTIONS_ICON</td>
-	<td>//div[@class='portlet-borderless-container']/div[contains(.,'${key_portletName}')]//a[@title='Options']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SPECIFIC_PORTLET_BORDERLESS_ELLIPSIS_ICON</td>
 	<td>//div[span[contains(.,'${key_portletName}')]]/following-sibling::menu//i[contains(@class,'icon-ellipsis-vertical')]</td>
 	<td></td>

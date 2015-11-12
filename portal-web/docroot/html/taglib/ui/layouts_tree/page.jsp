@@ -66,16 +66,6 @@ String treeId = (String)request.getAttribute("liferay-ui:layouts-tree:treeId");
 		);
 	</c:if>
 
-	<%
-	long[] openNodes = StringUtil.split(SessionTreeJSClicks.getOpenNodes(request, treeId), 0L);
-
-	JSONObject layoutsJSON = JSONFactoryUtil.createJSONObject(LayoutsTreeUtil.getLayoutsJSON(request, groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, openNodes, true, treeId));
-
-	portletURL.setParameter("selPlid", _SEL_PLID_TOKEN);
-
-	String encodedParameter = HttpUtil.encodePath(_SEL_PLID_TOKEN);
-	%>
-
 	var TreeViewType = Liferay.LayoutsTree;
 
 	<c:if test="<%= draggableTree %>">
@@ -93,7 +83,21 @@ String treeId = (String)request.getAttribute("liferay-ui:layouts-tree:treeId");
 			},
 			boundingBox: '#<portlet:namespace /><%= HtmlUtil.escape(treeId) %>Output',
 			incomplete: <%= incomplete %>,
+
+			<%
+			long[] openNodes = StringUtil.split(SessionTreeJSClicks.getOpenNodes(request, treeId), 0L);
+
+			JSONObject layoutsJSON = JSONFactoryUtil.createJSONObject(LayoutsTreeUtil.getLayoutsJSON(request, groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, openNodes, true, treeId));
+			%>
+
 			layouts: <%= layoutsJSON %>,
+
+			<%
+			portletURL.setParameter("selPlid", _SEL_PLID_TOKEN);
+
+			String encodedParameter = HttpUtil.encodePath(_SEL_PLID_TOKEN);
+			%>
+
 			layoutURL: '<%= StringUtil.replace(portletURL.toString(), encodedParameter, _SEL_PLID_TOKEN) %>',
 
 			<c:if test="<%= Validator.isNotNull(linkTemplate) %>">

@@ -129,22 +129,6 @@
 		<execute function="Pause" locator1="3000" />
 	</command>
 
-	<command name="addScheduled">
-		<execute macro="BlogsNavigator#gotoAddEntry" />
-
-		<execute macro="BlogsEntry#addEntryContent">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entrySubtitle" value="${entrySubtitle}" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="BlogsNavigator#gotoSettings" />
-
-		<execute macro="BlogsEntry#scheduleBlogEntry" />
-
-		<execute macro="BlogsEntry#publish" />
-	</command>
-
 	<command name="addViaAP">
 		<if>
 			<isset var="siteScope" />

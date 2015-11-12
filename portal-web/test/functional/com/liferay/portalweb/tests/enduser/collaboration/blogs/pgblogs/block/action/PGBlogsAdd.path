@@ -19,11 +19,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TITLE_REQUIRED</td>
-	<td>//span[@class='label-required']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SUBTITLE_FIELD</td>
 	<td>//div[@class='entry-subtitle']/div</td>
 	<td></td>
@@ -34,58 +29,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DISPLAY_DATE_DATE_INPUT</td>
-	<td>//input[@id='_33_displayDate']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DISPLAY_DATE_DATE_HOUR</td>
-	<td>//input[@id='_33_displayDateHour']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DISPLAY_DATE_DATE_MINUTE</td>
-	<td>//input[@id='_33_displayDateMinute']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DISPLAY_DATE_DATE_MERIDIAN</td>
-	<td>//input[@id='_33_displayDateAmPm']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DISPLAY_DATE_TIME_INPUT</td>
-	<td>//input[@id='_33_displayDateTime']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CONTENT_FIELD</td>
 	<td>//div[@class='entry-content']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ALLOW_PINGBACKS_CHECKBOX</td>
-	<td>//input[contains(@id,'allowPingbacks')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ALLOWS_TRACKBACKS_CHECKBOX</td>
-	<td>//input[contains(@id,'allowTrackbacks')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ABSTRACT_DROPDOWN</td>
-	<td>//div[@id='blogsEntryAbstractPanel']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ABSTRACT_DROPDOWN_COLLAPSED</td>
-	<td>//div[contains(@class,'header-collapsed') and @data-persist-id='blogsEntryAbstractPanel']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CATEGORIZATION_DROPDOWN</td>
-	<td>//div[@id='blogsEntryCategorizationPanel']/div</td>
 	<td></td>
 </tr>
 <tr>
@@ -104,17 +49,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PREVIEW_BUTTON</td>
-	<td>//button[contains(@id,'previewButton')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PUBLISH_BUTTON</td>
-	<td>//button[contains(@id,'publishButton')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SUBMIT_FOR_PUBLICATION_BUTTON</td>
 	<td>//button[contains(@id,'publishButton')]</td>
 	<td></td>
 </tr>
@@ -142,42 +77,6 @@
 <tr>
 	<td>PERMISSIONS_CHECKBOX</td>
 	<td>//tr[contains(.,'${key_roleName}')]//input[@value='${key_permissionDefinitionKey}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--ABSTRACT-->
-<tr>
-	<td>ABSTRACT_DESCRIPTION_FIELD</td>
-	<td>//textarea[contains(@id,'description')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ABSTRACT_USE_SMALL_IMAGE_CHECKBOX</td>
-	<td>//input[contains(@id,'smallImage')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ABSTRACT_SMALL_IMAGE_URL_RADIO</td>
-	<td>//label[@class='radio inline' and contains(.,'Small Image URL')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ABSTRACT_SMALL_IMAGE_URL_FIELD</td>
-	<td>//input[contains(@id,'smallImageURL')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ABSTRACT_SMALL_IMAGE_FILE_RADIO</td>
-	<td>xpath=(//label[@class='radio inline' and contains(.,'Small Image')])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ABSTRACT_SMALL_IMAGE_FILE_BROWSE_BUTTON</td>
-	<td>//input[contains(@id,'smallFile')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -223,23 +122,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CATEGORIZATION_TAG_AUTOCOMPLETE</td>
-	<td>//div[contains(@class,'autocomplete-results-content')]/div/ul/li[contains(.,'${key_tagName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CATEGORIZATION_TAGS_ADD_BUTTON</td>
 	<td>//button[@title='Add Tags']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CATEGORIZATION_TAGS_SELECT_BUTTON</td>
-	<td>//button[@title='Select Tags']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CATEGORIZATION_TAGS_SUGGESTIONS_BUTTON</td>
-	<td>//button[@title='Suggestions']</td>
 	<td></td>
 </tr>
 <tr>

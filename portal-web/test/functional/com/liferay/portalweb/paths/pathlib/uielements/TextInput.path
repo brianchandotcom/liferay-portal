@@ -59,23 +59,38 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DISPLAY_DATE_DAY</td>
+	<td>//input[contains(@id,'displayDateDay')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DISPLAY_DATE_HOUR</td>
-	<td>//input[@id='_33_displayDateHour']</td>
+	<td>//input[contains(@id,'displayDateHour')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DISPLAY_DATE_MINUTE</td>
-	<td>//input[@id='_33_displayDateMinute']</td>
+	<td>//input[contains(@id,'displayDateMinute')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DISPLAY_DATE_MERIDIAN</td>
-	<td>//input[@id='_33_displayDateAmPm']</td>
+	<td>//input[contains(@id,'displayDateAmPm')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_DATE_MONTH</td>
+	<td>//input[contains(@id,'displayDateMonth')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DISPLAY_DATE_TIME</td>
 	<td>//input[contains(@id,'displayDateTime')]</td>
+	<td></td>
+</tr>
+<tr>
+ 	<td>DISPLAY_DATE_YEAR</td>
+	<td>//input[contains(@id,'displayDateYear')]</td>
 	<td></td>
 </tr>
 <tr>

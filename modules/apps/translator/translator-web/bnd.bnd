@@ -6,5 +6,4 @@ Import-Package:\
 	*
 Include-Resource:\
 	classes,\
-	META-INF/resources=src/main/resources/META-INF/resources,\
-	@../../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/ReflectionUtil.class
+	META-INF/resources=src/main/resources/META-INF/resources

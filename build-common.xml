@@ -1738,6 +1738,7 @@ rerun your task.
 
 		<path id="javadoc.formatter.classpath">
 			<fileset dir="${portal.tools.dir}/javadoc-formatter" includes="*.jar" />
+			<path refid="project.classpath" />
 		</path>
 
 		<java

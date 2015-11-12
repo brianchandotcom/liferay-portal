@@ -139,9 +139,6 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 		}
 
 		protected void update(String select, String update) throws Exception {
-			System.out.println("Select: " + select);
-			System.out.println("Update: " + update);
-
 			Connection con = null;
 			PreparedStatement ps = null;
 			PreparedStatement ps2 = null;

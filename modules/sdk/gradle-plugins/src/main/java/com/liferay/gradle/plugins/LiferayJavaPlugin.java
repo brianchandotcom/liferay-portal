@@ -29,7 +29,6 @@ import com.liferay.gradle.plugins.lang.builder.BuildLangTask;
 import com.liferay.gradle.plugins.lang.builder.LangBuilderPlugin;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.patcher.PatchTask;
-import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
 import com.liferay.gradle.plugins.soy.SoyPlugin;
 import com.liferay.gradle.plugins.tasks.AppServerTask;
@@ -886,7 +885,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, JspCPlugin.class);
 		GradleUtil.applyPlugin(project, JSTranspilerPlugin.class);
 		GradleUtil.applyPlugin(project, LangBuilderPlugin.class);
-		GradleUtil.applyPlugin(project, ServiceBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, SourceFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, SoyPlugin.class);
 		GradleUtil.applyPlugin(project, TLDFormatterPlugin.class);

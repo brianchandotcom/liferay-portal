@@ -19,10 +19,10 @@
 <%
 PortletURL redirectURL = renderResponse.createRenderURL();
 
-ConfigurationModel factoryConfigurationModel = (ConfigurationModel)request.getAttribute("factoryConfigurationModel");
-ConfigurationModelIterator configurationModelIterator = (ConfigurationModelIterator)request.getAttribute("configurationModelIterator");
-List<String> configurationCategories = (List<String>)request.getAttribute("configurationCategories");
-String curConfigurationCategory = (String)request.getAttribute("curConfigurationCategory");
+ConfigurationModel factoryConfigurationModel = (ConfigurationModel)request.getAttribute(ConfigurationAdminWebKeys.FACTORY_CONFIGURATION_MODEL);
+ConfigurationModelIterator configurationModelIterator = (ConfigurationModelIterator)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_MODEL_ITERATOR);
+List<String> configurationCategories = (List<String>)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_CATEGORIES);
+String curConfigurationCategory = (String)request.getAttribute(ConfigurationAdminWebKeys.CUR_CONFIGURATION_CATEGORY);
 %>
 
 <c:if test="<%= factoryConfigurationModel != null %>">

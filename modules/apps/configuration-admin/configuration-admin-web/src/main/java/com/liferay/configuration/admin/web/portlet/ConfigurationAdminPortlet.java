@@ -16,6 +16,7 @@ package com.liferay.configuration.admin.web.portlet;
 
 import com.liferay.configuration.admin.ExtendedMetaTypeService;
 import com.liferay.configuration.admin.web.constants.ConfigurationAdminPortletKeys;
+import com.liferay.configuration.admin.web.constants.ConfigurationAdminWebKeys;
 import com.liferay.configuration.admin.web.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.util.ConfigurationHelper;
 import com.liferay.configuration.admin.web.util.ConfigurationModelIterator;
@@ -166,21 +167,23 @@ public class ConfigurationAdminPortlet extends MVCPortlet {
 						themeDisplay.getLanguageId(), factoryPid);
 
 				renderRequest.setAttribute(
-					"configurationModelIterator",
+					ConfigurationAdminWebKeys.CONFIGURATION_MODEL_ITERATOR,
 					new ConfigurationModelIterator(configurationModels));
 
 				ConfigurationModel factoryConfigurationModel =
 					configurationHelper.getConfigurationModel(factoryPid);
 
 				renderRequest.setAttribute(
-					"factoryConfigurationModel", factoryConfigurationModel);
+					ConfigurationAdminWebKeys.FACTORY_CONFIGURATION_MODEL,
+					factoryConfigurationModel);
 			}
 			else {
 				List<String> configurationCategories =
 					configurationHelper.getConfigurationCategories();
 
 				renderRequest.setAttribute(
-					"configurationCategories", configurationCategories);
+					ConfigurationAdminWebKeys.CONFIGURATION_CATEGORIES,
+					configurationCategories);
 
 				String curConfigurationCategory = ParamUtil.getString(
 					renderRequest, "curConfigurationCategory");
@@ -190,14 +193,15 @@ public class ConfigurationAdminPortlet extends MVCPortlet {
 				}
 
 				renderRequest.setAttribute(
-					"curConfigurationCategory", curConfigurationCategory);
+					ConfigurationAdminWebKeys.CUR_CONFIGURATION_CATEGORY,
+					curConfigurationCategory);
 
 				List<ConfigurationModel> configurationModels =
 					configurationHelper.getConfigurationModels(
 						curConfigurationCategory);
 
 				renderRequest.setAttribute(
-					"configurationModelIterator",
+					ConfigurationAdminWebKeys.CONFIGURATION_MODEL_ITERATOR,
 					new ConfigurationModelIterator(configurationModels));
 			}
 		}

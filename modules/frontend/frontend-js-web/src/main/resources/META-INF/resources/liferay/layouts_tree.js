@@ -15,6 +15,8 @@ AUI.add(
 
 		var STR_ID = 'id';
 
+		var STR_LINK_TEMPLATE = 'linkTemplate';
+
 		var STR_PARENT_NODE = 'parentNode';
 
 		var TREE_CSS_CLASSES = {
@@ -64,14 +66,7 @@ AUI.add(
 			},
 
 			root: {
-				setter: function(obj) {
-					return A.merge(
-						{
-							linkTemplate: NODE_LINK_TPL
-						},
-						obj
-					);
-				},
+				setter: '_setRootConfig',
 				validator: Lang.isObject
 			},
 
@@ -324,10 +319,7 @@ AUI.add(
 					node
 				);
 
-				var label = instance._createNodeLink(
-					data,
-					instance.get('linkTemplate')
-				);
+				var label = instance._createNodeLink(data, instance.get(STR_LINK_TEMPLATE));
 
 				return label;
 			},
@@ -340,7 +332,7 @@ AUI.add(
 						label: LString.escapeHTML(rootConfig.label),
 						plid: rootConfig.defaultParentLayoutId
 					},
-					instance.get('root').linkTemplate
+					rootConfig.linkTemplate
 				);
 
 				var maxChildren = instance.get('maxChildren');
@@ -525,6 +517,14 @@ AUI.add(
 				else {
 					parentNode.appendChild(node);
 				}
+			},
+
+			_setRootConfig: function(val) {
+				var defaultRootConfig = {
+					linkTemplate: NODE_LINK_TPL
+				};
+
+				return A.merge(defaultRootConfig, val);
 			},
 
 			_updateLayout: function(data) {

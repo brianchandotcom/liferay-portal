@@ -15,8 +15,8 @@
 package com.liferay.social.activity.web.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.model.Release;
 import com.liferay.social.activity.web.constants.SocialActivityPortletKeys;
-import com.liferay.social.activity.web.upgrade.SocialActivityWebUpgrade;
 
 import javax.portlet.Portlet;
 
@@ -51,9 +51,10 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class SocialActivityPortlet extends MVCPortlet {
 
-	@Reference(unbind = "-")
-	protected void setSocialActivityWebUpgrade(
-		SocialActivityWebUpgrade socialActivityWebUpgrade) {
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.social.activity.web)(release.schema.version=1.0.0))"
+	)
+	protected void setRelease(Release release) {
 	}
 
 }

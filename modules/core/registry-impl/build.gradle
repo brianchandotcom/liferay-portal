@@ -1,6 +1,6 @@
 dependencies {
 	compile group: "org.eclipse.osgi", name: "org.eclipse.osgi", version: "3.10.200-SNAPSHOT"
-	compile project(":core:osgi-service-tracker-map")
+	compile project(":core:osgi-service-tracker-collections")
 	compile project(":core:registry-api")
 }
 

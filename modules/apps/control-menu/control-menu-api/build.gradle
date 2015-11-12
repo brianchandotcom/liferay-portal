@@ -3,7 +3,7 @@ dependencies {
 	compile group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
-	compile project(":core:osgi-service-tracker-map")
+	compile project(":core:osgi-service-tracker-collections")
 }
 
 liferay {

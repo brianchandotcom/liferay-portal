@@ -18,6 +18,7 @@ import aQute.bnd.annotation.metatype.Configurable;
 import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -72,9 +73,9 @@ public abstract class CompanyScopedConfigurationProvider
 	@Override
 	public T getConfiguration(long companyId, boolean useDefault) {
 		Dictionary<String, Object> properties = getConfigurationProperties(
-			companyId);
+			companyId, useDefault);
 
-		if (!useDefault && (properties == null)) {
+		if (properties == null) {
 			return null;
 		}
 
@@ -98,7 +99,18 @@ public abstract class CompanyScopedConfigurationProvider
 	public Dictionary<String, Object> getConfigurationProperties(
 		long companyId) {
 
+		return getConfigurationProperties(companyId, true);
+	}
+
+	@Override
+	public Dictionary<String, Object> getConfigurationProperties(
+		long companyId, boolean useDefault) {
+
 		Configuration configuration = _configurations.get(companyId);
+
+		if (useDefault && (configuration == null)) {
+			return new HashMapDictionary<>();
+		}
 
 		if (configuration == null) {
 			return null;
@@ -113,7 +125,14 @@ public abstract class CompanyScopedConfigurationProvider
 	public Dictionary<String, Object> getConfigurationProperties(
 		long companyId, long index) {
 
-		return getConfigurationProperties(companyId);
+		return getConfigurationProperties(companyId, index, true);
+	}
+
+	@Override
+	public Dictionary<String, Object> getConfigurationProperties(
+		long companyId, long index, boolean useDefault) {
+
+		return getConfigurationProperties(companyId, useDefault);
 	}
 
 	@Override
@@ -131,7 +150,7 @@ public abstract class CompanyScopedConfigurationProvider
 
 		if (ListUtil.isEmpty(configurationsProperties) && useDefault) {
 			T configurable = Configurable.createConfigurable(
-				getMetatype(), (Map<?, ?>)null);
+				getMetatype(), new HashMapDictionary<>());
 
 			configurables.add(configurable);
 		}

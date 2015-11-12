@@ -152,7 +152,7 @@ public class PortalSettingsLDAPAuthenticationFormMVCActionCommand
 		String... propertyNames) {
 
 		Dictionary<String, Object> properties =
-			configurationProvider.getConfigurationProperties(companyId);
+			configurationProvider.getConfigurationProperties(companyId, false);
 
 		if (properties == null) {
 			properties = new HashMapDictionary<>();

@@ -17,6 +17,7 @@ package com.liferay.portal.ldap.internal.configuration;
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.ldap.configuration.ConfigurationProvider;
@@ -117,7 +118,7 @@ public class LDAPServerConfigurationProviderImpl
 		}
 		else if (useDefault) {
 			ldapServerConfiguration = Configurable.createConfigurable(
-				getMetatype(), (Map<?, ?>)null);
+				getMetatype(), new HashMapDictionary<>());
 		}
 
 		return ldapServerConfiguration;
@@ -135,9 +136,9 @@ public class LDAPServerConfigurationProviderImpl
 		long companyId, long ldapServerId, boolean useDefault) {
 
 		Dictionary<String, Object> properties = getConfigurationProperties(
-			companyId, ldapServerId);
+			companyId, ldapServerId, useDefault);
 
-		if (!useDefault && (properties == null)) {
+		if (properties == null) {
 			return null;
 		}
 
@@ -151,11 +152,22 @@ public class LDAPServerConfigurationProviderImpl
 	public Dictionary<String, Object> getConfigurationProperties(
 		long companyId) {
 
+		return getConfigurationProperties(companyId, true);
+	}
+
+	@Override
+	public Dictionary<String, Object> getConfigurationProperties(
+		long companyId, boolean useDefault) {
+
 		List<Dictionary<String, Object>> configurationsProperties =
 			getConfigurationsProperties(companyId);
 
-		if (configurationsProperties.isEmpty()) {
+		if (configurationsProperties.isEmpty() && !useDefault) {
 			return null;
+		}
+
+		if (configurationsProperties.isEmpty()) {
+			return new HashMapDictionary<>();
 		}
 
 		return configurationsProperties.get(0);
@@ -165,16 +177,29 @@ public class LDAPServerConfigurationProviderImpl
 	public Dictionary<String, Object> getConfigurationProperties(
 		long companyId, long ldapServerId) {
 
+		return getConfigurationProperties(companyId, ldapServerId, true);
+	}
+
+	@Override
+	public Dictionary<String, Object> getConfigurationProperties(
+		long companyId, long ldapServerId, boolean useDefault) {
+
 		Map<Long, Configuration> configurations = _configurations.get(
 			companyId);
 
-		if (configurations == null) {
+		if ((configurations == null) && useDefault) {
+			return new HashMapDictionary<>();
+		}
+		else if ((configurations == null) && !useDefault) {
 			return null;
 		}
 
 		Configuration configuration = configurations.get(ldapServerId);
 
-		if (configuration == null) {
+		if ((configuration == null) && useDefault) {
+			return new HashMapDictionary<>();
+		}
+		else if ((configuration == null) && !useDefault) {
 			return null;
 		}
 
@@ -198,7 +223,8 @@ public class LDAPServerConfigurationProviderImpl
 
 		if (ListUtil.isEmpty(configurationsProperties) && useDefault) {
 			LDAPServerConfiguration ldapServerConfiguration =
-				Configurable.createConfigurable(getMetatype(), (Map<?, ?>)null);
+				Configurable.createConfigurable(
+					getMetatype(), new HashMapDictionary<>());
 
 			ldapServerConfigurations.add(ldapServerConfiguration);
 		}

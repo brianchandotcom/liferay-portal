@@ -34,10 +34,36 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="Permissions#definePermissionLoginUserCP">
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCP">
 			<var name="permissionDefinitionKey" value="CONTROL_PANEL_SITES_SITES_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Access in Control Panel" />
 			<var name="roleName" value="Regrole Name" />
+		</execute>
+
+		<execute function="Type" locator1="RolesPermissionsNavigation#SEARCH_FIELD" value1="Roles" />
+		
+		<execute function="AssertClick" locator1="RolesPermissionsNavigation#CONTROL_PANEL_USERS_ROLES" value1="Roles" />
+
+		<var name="permissionNavigationValue" value="Roles" />
+
+		<execute function="AssertTextEquals" locator1="RolesPermissions#PERMISSION_HEADER" value1="Roles" />
+
+		<execute function="Check" locator1="RolesPermissions#CONTROL_PANEL_USERS_ROLES_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />
+
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="The role permissions were updated." />
+
+		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="userea@liferay.com" />
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>

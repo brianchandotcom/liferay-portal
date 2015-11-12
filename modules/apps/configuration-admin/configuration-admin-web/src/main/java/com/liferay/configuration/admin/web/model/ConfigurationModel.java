@@ -14,6 +14,7 @@
 
 package com.liferay.configuration.admin.web.model;
 
+import com.liferay.configuration.admin.ConfigurationAdmin;
 import com.liferay.configuration.admin.ExtendedAttributeDefinition;
 import com.liferay.configuration.admin.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -53,8 +54,7 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 	public String getCategory() {
 		Map<String, String> extensionAttributes =
 			_extendedObjectClassDefinition.getExtensionAttributes(
-				"http://www.liferay.com/xsd/liferay-configuration-admin_" +
-					"1_0_0.xsd");
+				ConfigurationAdmin.XML_NAMESPACE);
 
 		return GetterUtil.get(extensionAttributes.get("category"), "other");
 	}

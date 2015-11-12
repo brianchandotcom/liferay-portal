@@ -14,9 +14,9 @@
 
 package com.liferay.dynamic.data.mapping.type.date;
 
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFactory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;

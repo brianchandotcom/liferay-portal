@@ -15,8 +15,8 @@
 package com.liferay.flags.page.flags.web.portlet;
 
 import com.liferay.flags.page.flags.web.constants.PageFlagsPortletKeys;
-import com.liferay.flags.page.flags.web.upgrade.PageFlagsWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.model.Release;
 
 import javax.portlet.Portlet;
 
@@ -49,9 +49,10 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class PageFlagsPortlet extends MVCPortlet {
 
-	@Reference(unbind = "-")
-	protected void setPageFlagsWebUpgrade(
-		PageFlagsWebUpgrade pageFlagsWebUpgrade) {
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.flags.page.flags.web)(release.schema.version=1.0.0))"
+	)
+	protected void setRelease(Release release) {
 	}
 
 }

@@ -15,8 +15,8 @@
 package com.liferay.social.group.statistics.web.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.model.Release;
 import com.liferay.social.group.statistics.web.constants.SocialGroupStatisticsPortletKeys;
-import com.liferay.social.group.statistics.web.upgrade.SocialGroupStatisticsWebUpgrade;
 
 import javax.portlet.Portlet;
 
@@ -49,9 +49,10 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class SocialGroupStatisticsPortlet extends MVCPortlet {
 
-	@Reference(unbind = "-")
-	protected void setSocialGroupStatisticsWebUpgrade(
-		SocialGroupStatisticsWebUpgrade socialGroupStatisticsWebUpgrade) {
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.social.group.statistics.web)(release.schema.version=1.0.0))"
+	)
+	protected void setRelease(Release release) {
 	}
 
 }

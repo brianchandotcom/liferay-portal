@@ -15,8 +15,8 @@
 package com.liferay.ratings.page.ratings.web.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.model.Release;
 import com.liferay.ratings.page.ratings.web.constants.PageRatingsPortletKeys;
-import com.liferay.ratings.page.ratings.web.upgrade.PageRatingsWebUpgrade;
 
 import javax.portlet.Portlet;
 
@@ -50,9 +50,10 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class PageRatingsPortlet extends MVCPortlet {
 
-	@Reference(unbind = "-")
-	protected void setPageRatingsWebUpgrade(
-		PageRatingsWebUpgrade pageRatingsWebUpgrade) {
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.ratings.page.ratings.web)(release.schema.version=1.0.0))"
+	)
+	protected void setRelease(Release release) {
 	}
 
 }

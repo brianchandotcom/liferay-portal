@@ -15,8 +15,8 @@
 package com.liferay.social.requests.web.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.model.Release;
 import com.liferay.social.requests.web.constants.SocialRequestsPortletKeys;
-import com.liferay.social.requests.web.upgrade.SocialRequestsWebUpgrade;
 
 import javax.portlet.Portlet;
 
@@ -48,9 +48,10 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class SocialRequestsPortlet extends MVCPortlet {
 
-	@Reference(unbind = "-")
-	public void setSocialRequestsWebUpgrade(
-		SocialRequestsWebUpgrade socialRequestsWebUpgrade) {
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.social.requests.web)(release.schema.version=1.0.0))"
+	)
+	public void setRelease(Release release) {
 	}
 
 }

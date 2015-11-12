@@ -58,7 +58,7 @@
 <!--SITE_TABLE-->
 <tr>
 	<td>SITE_TABLE_CHECKBOX</td>
-	<td>//div[contains(@id,'groupsSearchContainerSearchContainer')]//tr[contains(.,'${key_siteName}')]/td[1]/input[contains(@name,'rowIds')]</td>
+	<td>//div[contains(@id,'groupsSearchContainerSearchContainer')]//tr[contains(.,'${key_siteName}')]/td[1]//input[contains(@name,'rowIds')]</td>
 	<td></td>
 </tr>
 <tr>

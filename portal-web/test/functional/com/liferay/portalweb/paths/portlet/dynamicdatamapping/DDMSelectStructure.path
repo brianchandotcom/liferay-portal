@@ -67,7 +67,7 @@
 </tr>
 <tr>
 	<td>DDM_STRUCTURE_TABLE_CHECKBOX_1</td>
-	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td[1]/input[contains(@name,'rowIds')])[1]</td>
+	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td[1]//input[contains(@name,'rowIds')])[1]</td>
 	<td></td>
 </tr>
 <tr>

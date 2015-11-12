@@ -82,7 +82,7 @@
 <!--TAG_ENTRY_TABLE-->
 <tr>
 	<td>TAG_ENTRY_TABLE_CHECKBOX</td>
-	<td>//tr[contains(.,'${key_tagName}')]/td/input</td>
+	<td>//tr[contains(.,'${key_tagName}')]/td//input</td>
 	<td></td>
 </tr>
 <tr>

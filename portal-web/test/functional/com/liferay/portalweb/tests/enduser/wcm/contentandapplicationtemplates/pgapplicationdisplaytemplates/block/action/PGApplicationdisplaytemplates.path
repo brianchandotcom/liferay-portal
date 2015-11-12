@@ -77,7 +77,7 @@
 </tr>
 <tr>
 	<td>ADT_TABLE_CHECKBOX_1</td>
-	<td>//div[contains(@id,'ddmTemplatesSearchContainer')]//tr/td[1]/input</td>
+	<td>//div[contains(@id,'ddmTemplatesSearchContainer')]//tr/td[1]//input</td>
 	<td></td>
 </tr>
 <tr>

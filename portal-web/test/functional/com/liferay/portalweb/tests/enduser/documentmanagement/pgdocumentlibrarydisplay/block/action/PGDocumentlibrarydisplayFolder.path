@@ -130,7 +130,7 @@
 </tr>
 <tr>
 	<td>DOCUMENTS_TABLE_CHECKBOX</td>
-	<td>//div[contains(@id,'objectsSearchContainerSearchContainer')]/table/tbody/tr/td[1]/input</td>
+	<td>//div[contains(@id,'objectsSearchContainerSearchContainer')]/table/tbody/tr/td[1]//input</td>
 	<td>Checkbox</td>
 </tr>
 <tr>

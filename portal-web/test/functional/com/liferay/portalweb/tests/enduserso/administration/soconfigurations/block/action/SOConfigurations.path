@@ -87,7 +87,7 @@
 </tr>
 <tr>
 	<td>USER_TABLE_CHECKBOX</td>
-	<td>//tr[contains(.,'${key_userScreenName}')]/td[1]/input</td>
+	<td>//tr[contains(.,'${key_userScreenName}')]/td[1]//input</td>
 	<td></td>
 </tr>
 <tr>
@@ -113,7 +113,7 @@
 </tr>
 <tr>
 	<td>ORGANIZATION_TABLE_CHECKBOX</td>
-	<td>//tr[contains(.,'${key_orgName}')]/td[1]/input</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[1]//input</td>
 	<td></td>
 </tr>
 <tr>
@@ -139,7 +139,7 @@
 </tr>
 <tr>
 	<td>USER_GROUP_TABLE_CHECKBOX</td>
-	<td>//tr[contains(.,'${key_userGroupName}')]/td[1]/input</td>
+	<td>//tr[contains(.,'${key_userGroupName}')]/td[1]//input</td>
 	<td></td>
 </tr>
 <tr>

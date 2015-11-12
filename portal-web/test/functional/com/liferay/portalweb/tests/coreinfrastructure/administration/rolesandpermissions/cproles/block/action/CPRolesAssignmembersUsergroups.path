@@ -58,7 +58,7 @@
 <!--USER_GROUP_TABLE-->
 <tr>
 	<td>USER_GROUP_TABLE_CHECKBOX</td>
-	<td>//div[contains(@id,'userGroupsSearchContainerSearchContainer')]//tr[contains(.,'${key_userGroupName}')]/td[1]/input[contains(@name,'rowIds')]</td>
+	<td>//div[contains(@id,'userGroupsSearchContainerSearchContainer')]//tr[contains(.,'${key_userGroupName}')]/td[1]//input[contains(@name,'rowIds')]</td>
 	<td></td>
 </tr>
 <tr>

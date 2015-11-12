@@ -51,37 +51,37 @@
 </tr>
 <tr>
 	<td>PERMISSIONS_ADD_DISCUSSION_CHECKBOX</td>
-	<td>//table[@id='_199_inputPermissionsTable']/tbody/tr/td[2]/input</td>
+	<td>//table[@id='_199_inputPermissionsTable']/tbody/tr/td[2]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_DELETE_CHECKBOX</td>
-	<td>//table[@id='_199_inputPermissionsTable']/tbody/tr/td[3]/input</td>
+	<td>//table[@id='_199_inputPermissionsTable']/tbody/tr/td[3]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_DELETE_DISCUSSION_CHECKBOX</td>
-	<td>//table[@id='_199_inputPermissionsTable']/tbody/tr/td[4]/input</td>
+	<td>//table[@id='_199_inputPermissionsTable']/tbody/tr/td[4]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_OVERRIDE_CHECKOUT_CHECKBOX</td>
-	<td>//table[@id='_199_inputPermissionsTable']/tbody/tr/td[5]/input</td>
+	<td>//table[@id='_199_inputPermissionsTable']/tbody/tr/td[5]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_PERMISSIONS_CHECKBOX</td>
-	<td>//table[@id='_199_inputPermissionsTable']/tbody/tr/td[6]/input</td>
+	<td>//table[@id='_199_inputPermissionsTable']/tbody/tr/td[6]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_UPDATE_CHECKBOX</td>
-	<td>//table[@id='_199_inputPermissionsTable']/tbody/tr/td[7]/input</td>
+	<td>//table[@id='_199_inputPermissionsTable']/tbody/tr/td[7]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_UPDATE_DISCUSSION_CHECKBOX</td>
-	<td>//table[@id='_199_inputPermissionsTable']/tbody/tr/td[8]/input</td>
+	<td>//table[@id='_199_inputPermissionsTable']/tbody/tr/td[8]//input</td>
 	<td></td>
 </tr>
 <tr>
@@ -179,72 +179,72 @@
 </tr>
 <tr>
 	<td>PERMISSIONS_GUEST_ADD_DISCUSSION_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[2]/td[2]/input</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[2]/td[2]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_GUEST_DELETE_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[2]/td[3]/input</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[2]/td[3]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_GUEST_DELETE_DISCUSSION_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[2]/td[4]/input</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[2]/td[4]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_GUEST_OVERRIDE_CHECKOUT_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[2]/td[5]/input</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[2]/td[5]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_GUEST_PERMISSIONS_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[2]/td[6]/input</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[2]/td[6]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_GUEST_UPDATE_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[2]/td[7]/input</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[2]/td[7]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_GUEST_UPDATE_DISCUSSION_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[2]/td[8]/input</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[2]/td[8]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_SITE_MEMBER_ADD_DISCUSSION_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[3]/td[2]/input</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[3]/td[2]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_SITE_MEMBER_DELETE_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[3]/td[3]/input</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[3]/td[3]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_SITE_MEMBER_DELETE_DISCUSSION_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[3]/td[4]/input</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[3]/td[4]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_GUEST_OVERRIDE_CHECKOUT_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[3]/td[5]/input</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[3]/td[5]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_SITE_MEMBER_PERMISSIONS_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[3]/td[6]/input</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[3]/td[6]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_SITE_MEMBER_UPDATE_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[3]/td[7]/input</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[3]/td[7]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_SITE_MEMBER_UPDATE_DISCUSSION_CHECKBOX</td>
-	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[3]/td[8]/input</td>
+	<td>//table[@id='_20_inputPermissionsTable']/tbody/tr[3]/td[8]//input</td>
 	<td></td>
 </tr>
 </tbody>

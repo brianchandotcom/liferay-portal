@@ -58,7 +58,7 @@
 <!--ORGANIZATION_TABLE-->
 <tr>
 	<td>ORGANIZATION_TABLE_CHECKBOX</td>
-	<td>//div[contains(@id,'organizationsSearchContainer')]//tr[contains(.,'${key_orgName}')]/td[1]/input[contains(@name,'rowIds')]</td>
+	<td>//div[contains(@id,'organizationsSearchContainer')]//tr[contains(.,'${key_orgName}')]/td[1]//input[contains(@name,'rowIds')]</td>
 	<td></td>
 </tr>
 <tr>

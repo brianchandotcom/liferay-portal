@@ -103,7 +103,7 @@
 <!--USER_TABLE-->
 <tr>
 	<td>USER_TABLE_CHECKBOX</td>
-	<td>//tr[contains(.,'${userScreenName}')]/td[1]/input[@type='checkbox']</td>
+	<td>//tr[contains(.,'${userScreenName}')]/td[1]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

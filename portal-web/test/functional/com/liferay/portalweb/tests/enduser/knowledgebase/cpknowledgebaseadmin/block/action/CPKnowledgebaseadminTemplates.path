@@ -41,7 +41,7 @@
 </tr>
 <tr>
 	<td>TEMPLATE_TABLE_CHECKBOX</td>
-	<td>//tr[contains(.,'${key_kbTemplateTitle}')]/td[1]/input</td>
+	<td>//tr[contains(.,'${key_kbTemplateTitle}')]/td[1]//input</td>
 	<td></td>
 </tr>
 <tr>

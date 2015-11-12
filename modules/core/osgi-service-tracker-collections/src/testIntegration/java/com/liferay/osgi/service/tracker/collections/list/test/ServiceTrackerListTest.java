@@ -68,6 +68,33 @@ public class ServiceTrackerListTest {
 	}
 
 	@Test
+	public void testGetServiceWithCustomComparatorReturningZero() {
+		ServiceTrackerList<Object, Object> serviceTrackerList =
+			createServiceTrackerList(
+				_bundleContext,
+				new Comparator<ServiceReference<Object>>() {
+
+					@Override
+					public int compare(
+						ServiceReference<Object> entry1,
+						ServiceReference<Object> entry2) {
+
+						return 0;
+					}
+
+				});
+
+		Object[] services = {new Object(), new Object()};
+
+		Collection<ServiceRegistration<Object>> serviceRegistrations =
+			registerServices(Object.class, services);
+
+		Assert.assertEquals(2, serviceTrackerList.size());
+
+		unregister(serviceRegistrations);
+	}
+
+	@Test
 	public void testGetServiceWithCustomizer() {
 		ServiceTrackerList<Object, Object> serviceTrackerList =
 			createServiceTrackerList(
@@ -102,33 +129,6 @@ public class ServiceTrackerListTest {
 		}
 
 		serviceRegistration.unregister();
-	}
-
-	@Test
-	public void testServiceInSamePositionIsIgnored() {
-		ServiceTrackerList<Object, Object> serviceTrackerList =
-			createServiceTrackerList(
-				_bundleContext,
-				new Comparator<ServiceReference<Object>>() {
-
-					@Override
-					public int compare(
-						ServiceReference<Object> entry1,
-						ServiceReference<Object> entry2) {
-
-						return 0;
-					}
-
-				});
-
-		Object[] services = {new Object(), new Object()};
-
-		Collection<ServiceRegistration<Object>> serviceRegistrations =
-			registerServices(Object.class, services);
-
-		Assert.assertEquals(1, serviceTrackerList.size());
-
-		unregister(serviceRegistrations);
 	}
 
 	@Test
@@ -194,7 +194,7 @@ public class ServiceTrackerListTest {
 		Object[] services = {new Object(), new Object()};
 
 		Collection<ServiceRegistration<Object>> serviceRegistrations =
-			registerServices(Object.class, services);
+			registerServices(Object.class, services, "service.ranking");
 
 		int i = 0;
 

@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.osgi.service.tracker.collections.map.internal;
-
-import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceServiceTuple;
+package com.liferay.osgi.service.tracker.collections.common;
 
 import java.util.Comparator;
 
@@ -23,10 +21,10 @@ import org.osgi.framework.ServiceReference;
 /**
  * @author Carlos Sierra Andrés
  */
-class ServiceReferenceServiceTupleComparator<S>
-	implements Comparator<ServiceReferenceServiceTuple<S, ?, ?>> {
+public class ServiceWrapperComparator<S>
+	implements Comparator<ServiceWrapper<S, ?>> {
 
-	public ServiceReferenceServiceTupleComparator(
+	public ServiceWrapperComparator(
 		Comparator<ServiceReference<S>> comparator) {
 
 		_comparator = comparator;
@@ -34,11 +32,11 @@ class ServiceReferenceServiceTupleComparator<S>
 
 	@Override
 	public int compare(
-		ServiceReferenceServiceTuple<S, ?, ?> serviceReferenceServiceTuple1,
-		ServiceReferenceServiceTuple<S, ?, ?> serviceReferenceServiceTuple2) {
+		ServiceWrapper<S, ?> serviceWrapper1,
+		ServiceWrapper<S, ?> serviceWrapper2) {
 
-		if (serviceReferenceServiceTuple1 == null) {
-			if (serviceReferenceServiceTuple2 == null) {
+		if (serviceWrapper1 == null) {
+			if (serviceWrapper2 == null) {
 				return 0;
 			}
 
@@ -46,9 +44,9 @@ class ServiceReferenceServiceTupleComparator<S>
 		}
 
 		ServiceReference<S> serviceReference1 =
-			serviceReferenceServiceTuple1.getServiceReference();
+			serviceWrapper1.getServiceReference();
 		ServiceReference<S> serviceReference2 =
-			serviceReferenceServiceTuple2.getServiceReference();
+			serviceWrapper2.getServiceReference();
 
 		int value = _comparator.compare(serviceReference1, serviceReference2);
 

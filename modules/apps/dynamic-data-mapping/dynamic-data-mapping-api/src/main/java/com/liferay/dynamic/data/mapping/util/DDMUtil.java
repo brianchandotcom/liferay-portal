@@ -24,7 +24,6 @@ import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -33,18 +32,16 @@ import java.io.Serializable;
 
 import javax.portlet.PortletRequest;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+
 /**
  * @author Eduardo Lundgren
  * @author Marcellus Tavares
  * @author Leonardo Barros
  */
 public class DDMUtil {
-
-	public static DDM getDDM() {
-		PortalRuntimePermission.checkGetBeanProperty(DDMUtil.class);
-
-		return _ddm;
-	}
 
 	public static DDMForm getDDMForm(long classNameId, long classPK)
 		throws PortalException {
@@ -153,12 +150,19 @@ public class DDMUtil {
 		return getDDM().mergeFields(newFields, existingFields);
 	}
 
-	public void setDDM(DDM ddm) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
-		_ddm = ddm;
+	protected static DDM getDDM() {
+		return _serviceTracker.getService();
 	}
 
-	private static DDM _ddm;
+	private static final ServiceTracker<DDM, DDM> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(DDMUtil.class);
+
+		_serviceTracker = new ServiceTracker<>(
+			bundle.getBundleContext(), DDM.class, null);
+
+		_serviceTracker.open();
+	}
 
 }

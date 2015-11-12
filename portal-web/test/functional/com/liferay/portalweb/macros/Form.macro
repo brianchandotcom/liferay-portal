@@ -37,23 +37,21 @@
 
 	<command name="gotoAddAdditionalField">
 		<var name="key_columnSize" value="${columnSize}" />
-		<var name="key_fieldType" value="${fieldType}" />
 		<var name="key_previousFieldName" value="${previousFieldName}" />
 
 		<execute function="Click#makeVisibleClickAt" locator1="Form#ADD_ADDITIONAL_FIELD" />
 
-		<var method="StringUtil#lowerCase('${key_fieldType}')" name="key_fieldType" />
+		<var method="StringUtil#lowerCase('${fieldType}')" name="key_fieldType" />
 
 		<execute function="AssertClick" locator1="Form#ADD_FIELD_TYPE" value1="${fieldType}" />
 	</command>
 
 	<command name="gotoAddFirstField">
 		<var name="key_columnSize" value="${columnSize}" />
-		<var name="key_fieldType" value="${fieldType}" />
 
 		<execute function="Click" locator1="Form#ADD_FIRST_FIELD" />
 
-		<var method="StringUtil#lowerCase('${key_fieldType}')" name="key_fieldType" />
+		<var method="StringUtil#lowerCase('${fieldType}')" name="key_fieldType" />
 
 		<execute function="AssertClick" locator1="Form#ADD_FIELD_TYPE" value1="${fieldType}" />
 	</command>

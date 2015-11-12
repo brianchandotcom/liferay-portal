@@ -64,7 +64,7 @@ public class LayoutsTreeTag extends IncludeTag {
 	public void setIncomplete(boolean incomplete) {
 		_incomplete = incomplete;
 	}
-	
+
 	public void setLinkTemplate(String linkTemplate) {
 		_linkTemplate = linkTemplate;
 	}

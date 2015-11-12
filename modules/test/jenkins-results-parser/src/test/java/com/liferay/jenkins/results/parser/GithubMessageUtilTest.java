@@ -116,7 +116,7 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 
 			Project project = getProject(null, urlString, sampleDir.getPath());
 
-			GitHubJobMessageUtil.getFailedJobMessage(project);
+			GitHubJobMessageUtil.getGitHubJobMessage(project);
 
 			String jobReportString = project.getProperty("report.html.content");
 

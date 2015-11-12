@@ -134,7 +134,7 @@
 </tr>
 <tr>
 	<td>ENTRY_TABLE_STATUS</td>
-	<td>//tr[contains(.,'${key_entryTitle}')]/td[6]//span[@class='workflow-status']/strong</td>
+	<td>//tr[contains(.,'${key_entryTitle}')]/td//span[@class='workflow-status']/strong</td>
 	<td></td>
 </tr>
 <tr>

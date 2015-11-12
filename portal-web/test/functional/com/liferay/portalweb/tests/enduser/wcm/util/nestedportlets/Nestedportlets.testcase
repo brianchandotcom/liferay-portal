@@ -6,11 +6,23 @@
 	</set-up>
 
 	<command name="ViewWCDNestedPortlets" priority="4">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Nested Portlets Page" />
+		</execute>
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Nested Portlets Page" />
 		</execute>
 
-		<execute macro="NestedPortlets#viewConfigurationDefaultLayoutTemplate" />
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
+			<var name="portletName" value="Web Content Display" />
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Nested Portlets Page" />

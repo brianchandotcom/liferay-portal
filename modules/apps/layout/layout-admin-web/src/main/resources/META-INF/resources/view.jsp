@@ -97,7 +97,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader");
 				Group stagingGroup = layoutsAdminDisplayContext.getStagingGroup();
 				%>
 
-				<c:if test="<%= stagingGroup.isStaged() %>">
+				<c:if test="<%= stagingGroup.isStaged() && (selGroup.getGroupId() == stagingGroup.getGroupId()) %>">
 
 					<%
 					long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");

@@ -7,13 +7,15 @@ AUI.add(
 
 		var NODE_ID_TPL = '{treeId}_layoutId_{layoutId}_plid_{plid}_groupId_{groupId}';
 
-		var NODE_LINK_TPL = '<a class="{cssClass}" data-url="{url}" data-uuid="{uuid}" href="{href}" id="{id}" title="{title}">{label}</a>';
+		var NODE_LINK_TPL = '<a class="{cssClass}" data-url="{url}" data-uuid="{uuid}" href="{layoutURL}" id="{id}" title="{title}">{label}</a>';
 
 		var STR_BOUNDING_BOX = 'boundingBox';
 
 		var STR_EMPTY = '';
 
 		var STR_ID = 'id';
+
+		var STR_LINK_TEMPLATE = 'linkTemplate';
 
 		var STR_PARENT_NODE = 'parentNode';
 
@@ -53,12 +55,18 @@ AUI.add(
 				validator: Lang.isString
 			},
 
+			linkTemplate: {
+				validator: Lang.isString,
+				value: NODE_LINK_TPL
+			},
+
 			maxChildren: {
 				validator: Lang.isNumber,
 				value: 20
 			},
 
 			root: {
+				setter: '_setRootConfig',
 				validator: Lang.isObject
 			},
 
@@ -161,14 +169,14 @@ AUI.add(
 				);
 			},
 
-			_createNodeLink: function(data) {
+			_createNodeLink: function(data, template) {
 				var instance = this;
 
 				var className = 'layout-tree ';
 
 				data.cssClass = data.cssClass ? className + data.cssClass : className;
 
-				data.href = A.Lang.sub(
+				data.layoutURL = A.Lang.sub(
 					instance.get('layoutURL'),
 					{
 						selPlid: data.plid
@@ -183,7 +191,7 @@ AUI.add(
 
 				data.uuid = data.uuid ? LString.escapeHTML(data.uuid) : STR_EMPTY;
 
-				return A.Lang.sub(NODE_LINK_TPL, data);
+				return A.Lang.sub(template, data);
 			},
 
 			_displayNotice: function(message, type, timeout, useAnimation) {
@@ -299,7 +307,7 @@ AUI.add(
 			_formatNodeLabel: function(node, cssClass, name, title) {
 				var instance = this;
 
-				var label = instance._createNodeLink(
+				var data = A.merge(
 					{
 						cssClass: cssClass,
 						label: name,
@@ -307,8 +315,11 @@ AUI.add(
 						title: title,
 						url: node.friendlyURL,
 						uuid: node.uuid
-					}
+					},
+					node
 				);
+
+				var label = instance._createNodeLink(data, instance.get(STR_LINK_TEMPLATE));
 
 				return label;
 			},
@@ -320,7 +331,8 @@ AUI.add(
 					{
 						label: LString.escapeHTML(rootConfig.label),
 						plid: rootConfig.defaultParentLayoutId
-					}
+					},
+					rootConfig.linkTemplate
 				);
 
 				var maxChildren = instance.get('maxChildren');
@@ -505,6 +517,14 @@ AUI.add(
 				else {
 					parentNode.appendChild(node);
 				}
+			},
+
+			_setRootConfig: function(val) {
+				var defaultRootConfig = {
+					linkTemplate: NODE_LINK_TPL
+				};
+
+				return A.merge(defaultRootConfig, val);
 			},
 
 			_updateLayout: function(data) {

@@ -43,8 +43,7 @@ import org.osgi.framework.BundleContext;
  * @author Raymond Augé
  */
 @RunWith(Arquillian.class)
-public class CustomUserAttributesTest
-	extends BasePortletContainerTestCase {
+public class CustomUserAttributesTest extends BasePortletContainerTestCase {
 
 	@ClassRule
 	@Rule

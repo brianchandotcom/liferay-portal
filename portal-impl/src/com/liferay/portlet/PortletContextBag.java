@@ -60,7 +60,6 @@ public class PortletContextBag {
 
 						emitter.emit(customUserAttributeKey);
 					}
-
 				}
 			}
 		);

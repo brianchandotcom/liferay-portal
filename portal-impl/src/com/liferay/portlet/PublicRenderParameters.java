@@ -67,6 +67,6 @@ public class PublicRenderParameters extends HashMap<String, String[]> {
 		return super.remove(key);
 	}
 
-	private Map<String, String[]> _map2;
+	private final Map<String, String[]> _map2;
 
 }

@@ -54,7 +54,6 @@ public class PublicRenderParametersPool {
 			threadLocalMap = _publicRenderParametersThreadLocal.get();
 		}
 
-
 		return new PublicRenderParameters(map, threadLocalMap);
 	}
 

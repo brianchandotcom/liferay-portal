@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.web.display.context;
 
+import com.liferay.document.library.web.configuration.DLConfiguration;
 import com.liferay.document.library.web.display.context.logic.DLPortletInstanceSettingsHelper;
 import com.liferay.document.library.web.display.context.logic.DLVisualizationHelper;
 import com.liferay.document.library.web.display.context.logic.FileEntryDisplayContextHelper;
@@ -57,17 +58,60 @@ public class DefaultDLViewFileVersionDisplayContext
 
 	public DefaultDLViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			FileShortcut fileShortcut)
+			FileShortcut fileShortcut, DLConfiguration dlConfiguration)
 		throws PortalException {
 
-		this(request, response, fileShortcut.getFileVersion(), fileShortcut);
+		this(
+			request, response, fileShortcut.getFileVersion(), fileShortcut,
+			dlConfiguration);
 	}
 
 	public DefaultDLViewFileVersionDisplayContext(
 		HttpServletRequest request, HttpServletResponse response,
-		FileVersion fileVersion) {
+		FileVersion fileVersion, DLConfiguration dlConfiguration) {
 
-		this(request, response, fileVersion, null);
+		this(request, response, fileVersion, null, dlConfiguration);
+	}
+
+	@Override
+	public String getCssClassFileMimeType() {
+		String mimeType = _fileVersion.getMimeType();
+
+		if (_containsMimeType(_dlConfiguration.codeFileMimeTypes(), mimeType)) {
+			return "code";
+		}
+		else if (_containsMimeType(
+					_dlConfiguration.compressedFileMimeTypes(), mimeType)) {
+
+			return "compressed";
+		}
+		else if (_containsMimeType(
+					_dlConfiguration.multimediaFileMimeTypes(), mimeType)) {
+
+			return "multimedia";
+		}
+		else if (_containsMimeType(
+					_dlConfiguration.presentationFileMimeTypes(), mimeType)) {
+
+			return "presentation";
+		}
+		else if (_containsMimeType(
+					_dlConfiguration.textFileMimeTypes(), mimeType)) {
+
+			return "text";
+		}
+		else if (_containsMimeType(
+					_dlConfiguration.vectorialFileMimeTypes(), mimeType)) {
+
+			return "vectorial";
+		}
+		else if (_containsMimeType(
+					_dlConfiguration.spreadSheetFileMimeTypes(), mimeType)) {
+
+			return "spreadsheet";
+		}
+
+		return "unknown";
 	}
 
 	@Override
@@ -165,7 +209,8 @@ public class DefaultDLViewFileVersionDisplayContext
 
 	private DefaultDLViewFileVersionDisplayContext(
 		HttpServletRequest request, HttpServletResponse response,
-		FileVersion fileVersion, FileShortcut fileShortcut) {
+		FileVersion fileVersion, FileShortcut fileShortcut,
+		DLConfiguration dlConfiguration) {
 
 		try {
 			_fileVersion = fileVersion;
@@ -192,6 +237,8 @@ public class DefaultDLViewFileVersionDisplayContext
 				_uiItemsBuilder = new UIItemsBuilder(
 					request, response, fileShortcut);
 			}
+
+			_dlConfiguration = dlConfiguration;
 		}
 		catch (PortalException pe) {
 			throw new SystemException(
@@ -199,6 +246,25 @@ public class DefaultDLViewFileVersionDisplayContext
 					fileVersion,
 				pe);
 		}
+	}
+
+	private boolean _containsMimeType(String[] mimeTypes, String mimeType) {
+		for (String curMimeType : mimeTypes) {
+			int pos = curMimeType.indexOf("/");
+
+			if (pos != -1) {
+				if (mimeType.equals(curMimeType)) {
+					return true;
+				}
+			}
+			else {
+				if (mimeType.startsWith(curMimeType)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 	private FileEntry _getFileEntry(FileVersion fileVersion)
@@ -242,6 +308,7 @@ public class DefaultDLViewFileVersionDisplayContext
 	private static final UUID _UUID = UUID.fromString(
 		"85F6C50E-3893-4E32-9D63-208528A503FA");
 
+	private final DLConfiguration _dlConfiguration;
 	private final DLPortletInstanceSettingsHelper
 		_dlPortletInstanceSettingsHelper;
 	private final DLVisualizationHelper _dlVisualizationHelper;

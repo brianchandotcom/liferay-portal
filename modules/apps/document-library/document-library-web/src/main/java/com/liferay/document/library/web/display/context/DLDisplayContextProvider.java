@@ -14,6 +14,9 @@
 
 package com.liferay.document.library.web.display.context;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
+import com.liferay.document.library.web.configuration.DLConfiguration;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -35,6 +38,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -43,7 +47,10 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Iván Zaera
  */
-@Component(service = DLDisplayContextProvider.class)
+@Component(
+	configurationPid = "com.liferay.document.library.web.configuration.DLConfiguration",
+	service = DLDisplayContextProvider.class
+)
 public class DLDisplayContextProvider {
 
 	public DLEditFileEntryDisplayContext getDLEditFileEntryDisplayContext(
@@ -103,7 +110,7 @@ public class DLDisplayContextProvider {
 
 			DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
 				new DefaultDLViewFileVersionDisplayContext(
-					request, response, fileShortcut);
+					request, response, fileShortcut, _dlConfiguration);
 
 			if (fileShortcut == null) {
 				return dlViewFileVersionDisplayContext;
@@ -132,7 +139,7 @@ public class DLDisplayContextProvider {
 
 		DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
 			new DefaultDLViewFileVersionDisplayContext(
-				request, response, fileVersion);
+				request, response, fileVersion, _dlConfiguration);
 
 		if (fileVersion == null) {
 			return dlViewFileVersionDisplayContext;
@@ -154,7 +161,12 @@ public class DLDisplayContextProvider {
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
+		_dlConfiguration = Configurable.createConfigurable(
+			DLConfiguration.class, properties);
+
 		_bundleContext = bundleContext;
 
 		for (Map.Entry<ServiceReference<DLDisplayContextFactory>,
@@ -174,6 +186,12 @@ public class DLDisplayContextProvider {
 			_dlDisplayContextFactories.put(
 				serviceReference, dlDisplayContextFactory);
 		}
+	}
+
+	@Modified
+	protected void modified(Map<String, Object> properties) {
+		_dlConfiguration = Configurable.createConfigurable(
+			DLConfiguration.class, properties);
 	}
 
 	@Reference(
@@ -203,6 +221,7 @@ public class DLDisplayContextProvider {
 	}
 
 	private BundleContext _bundleContext;
+	private volatile DLConfiguration _dlConfiguration;
 	private final Map<ServiceReference<DLDisplayContextFactory>,
 		DLDisplayContextFactory> _dlDisplayContextFactories =
 			new ConcurrentSkipListMap<>();

@@ -33,6 +33,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface DLViewFileVersionDisplayContext extends DLDisplayContext {
 
+	public String getCssClassFileMimeType();
+
 	public DDMFormValues getDDMFormValues(DDMStructure ddmStructure)
 		throws PortalException;
 

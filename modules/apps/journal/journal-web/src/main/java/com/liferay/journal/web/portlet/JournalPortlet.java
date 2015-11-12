@@ -475,23 +475,6 @@ public class JournalPortlet extends MVCPortlet {
 
 			portletRequestDispatcher.include(resourceRequest, resourceResponse);
 		}
-
-		/*else if (resourceID.equals("rss")) {
-			try {
-				byte[] xml = _journalRSSUtil.getRSS(
-					resourceRequest, resourceResponse);
-
-				ServletResponseUtil.sendFile(
-					request, response, null, xml, ContentTypes.TEXT_XML_UTF8);
-			}
-			catch (Exception e) {
-				try {
-					PortalUtil.sendError(e, request, response);
-				}
-				catch (ServletException se) {
-				}
-			}
-		} */
 		else {
 			super.serveResource(resourceRequest, resourceResponse);
 		}

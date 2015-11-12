@@ -28,11 +28,11 @@ portletDisplay.setURLBack(portletURL.toString());
 renderResponse.setTitle(configurationModel.getName());
 %>
 
-<portlet:actionURL name="bindConfiguration" var="bindConfigActionURL" />
-<portlet:actionURL name="deleteConfiguration" var="deleteConfigActionURL" />
+<portlet:actionURL name="bindConfiguration" var="bindConfigurationActionURL" />
+<portlet:actionURL name="deleteConfiguration" var="deleteConfigurationActionURL" />
 
 <div class="container-fluid-1280">
-	<aui:form action="<%= bindConfigActionURL %>" method="post" name="fm">
+	<aui:form action="<%= bindConfigurationActionURL %>" method="post" name="fm">
 		<aui:input name="redirect" type="hidden" value="<%= portletURL %>" />
 		<aui:input name="factoryPid" type="hidden" value="<%= configurationModel.getFactoryPid() %>" />
 		<aui:input name="pid" type="hidden" value="<%= configurationModel.getID() %>" />
@@ -60,7 +60,7 @@ renderResponse.setTitle(configurationModel.getName());
 
 <aui:script>
 	function <portlet:namespace />deleteConfig() {
-		var actionURL = "<%= deleteConfigActionURL.toString() %>";
+		var actionURL = "<%= deleteConfigurationActionURL.toString() %>";
 
 		<portlet:namespace />setDDMFieldNamespaceAndSubmit(actionURL);
 	}

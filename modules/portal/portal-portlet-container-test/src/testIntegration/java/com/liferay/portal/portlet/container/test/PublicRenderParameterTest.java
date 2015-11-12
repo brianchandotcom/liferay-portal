@@ -59,15 +59,13 @@ import org.junit.runner.RunWith;
  * @author Raymond Augé
  */
 @RunWith(Arquillian.class)
-public class PublicRenderParameterTest
-	extends BasePortletContainerTestCase {
+public class PublicRenderParameterTest extends BasePortletContainerTestCase {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), TransactionalTestRule.INSTANCE);
-
 
 	@Test
 	public void testWithCoreLayoutTypeController() throws Exception {

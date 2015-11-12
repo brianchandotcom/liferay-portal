@@ -36,27 +36,6 @@ import javax.servlet.http.HttpSession;
 public class PublicRenderParametersPool {
 
 	public static Map<String, String[]> get(
-		HttpServletRequest request, long plid, boolean isWarFile) {
-
-		if (!isWarFile) {
-			return get(request, plid);
-		}
-
-		if (_publicRenderParametersThreadLocal.get() == null) {
-			_publicRenderParametersThreadLocal.set(
-				new HashMap<String, String[]>());
-
-			return _publicRenderParametersThreadLocal.get();
-		}
-
-		Map<String, String[]> map = get(request, plid);
-
-		map.putAll(_publicRenderParametersThreadLocal.get());
-
-		return map;
-	}
-
-	public static Map<String, String[]> get(
 		HttpServletRequest request, long plid) {
 
 		if (PropsValues.PORTLET_PUBLIC_RENDER_PARAMETER_DISTRIBUTION_LAYOUT) {
@@ -104,15 +83,36 @@ public class PublicRenderParametersPool {
 		}
 	}
 
+	public static Map<String, String[]> get(
+		HttpServletRequest request, long plid, boolean isWarFile) {
+
+		if (!isWarFile) {
+			return get(request, plid);
+		}
+
+		if (_publicRenderParametersThreadLocal.get() == null) {
+			_publicRenderParametersThreadLocal.set(
+				new HashMap<String, String[]>());
+
+			return _publicRenderParametersThreadLocal.get();
+		}
+
+		Map<String, String[]> map = get(request, plid);
+
+		map.putAll(_publicRenderParametersThreadLocal.get());
+
+		return map;
+	}
+
 	private static final String _PUBLIC_RENDER_PARAMETERS =
 		"PUBLIC_RENDER_PARAMETERS";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PublicRenderParametersPool.class);
 
 	private static final ThreadLocal<Map<String, String[]>>
 		_publicRenderParametersThreadLocal = new AutoResetThreadLocal<>(
 			PublicRenderParametersPool.class +
 				"._publicRenderParametersThreadLocal");
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		PublicRenderParametersPool.class);
 
 }

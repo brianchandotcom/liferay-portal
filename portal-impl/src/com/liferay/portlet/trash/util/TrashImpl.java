@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
@@ -462,11 +461,8 @@ public class TrashImpl implements Trash {
 			return null;
 		}
 
-		Layout layout = themeDisplay.getLayout();
-
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			request, portletId, layout.getLayoutId(),
-			PortletRequest.RENDER_PHASE);
+			request, portletId, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/view_content.jsp");
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
@@ -507,11 +503,8 @@ public class TrashImpl implements Trash {
 			return null;
 		}
 
-		Layout layout = themeDisplay.getLayout();
-
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			request, portletId, layout.getLayoutId(),
-			PortletRequest.RENDER_PHASE);
+			request, portletId, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 

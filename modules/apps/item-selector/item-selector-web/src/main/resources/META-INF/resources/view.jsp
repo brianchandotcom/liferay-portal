@@ -97,9 +97,21 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 		</aui:nav-bar>
 
 		<%
-		itemSelectorViewRenderer.renderHTML(pageContext);
+		boolean showGroupSelector = ParamUtil.getBoolean(request, "showGroupSelector");
 		%>
 
+		<c:choose>
+			<c:when test="<%= showGroupSelector %>">
+				<liferay-item-selector:group-selector />
+			</c:when>
+			<c:otherwise>
+
+				<%
+				itemSelectorViewRenderer.renderHTML(pageContext);
+				%>
+
+			</c:otherwise>
+		</c:choose>
 	</c:otherwise>
 </c:choose>
 

@@ -96,7 +96,7 @@ request.setAttribute("view_entries.jspf-site", group);
 	<%
 	String portletId = PortletProviderUtil.getPortletId(MembershipRequest.class.getName(), PortletProvider.Action.VIEW);
 
-	PortletURL assignMembersURL = PortalUtil.getControlPanelPortletURL(request, portletId, 0, PortletRequest.RENDER_PHASE);
+	PortletURL assignMembersURL = PortalUtil.getControlPanelPortletURL(request, portletId, PortletRequest.RENDER_PHASE);
 
 	assignMembersURL.setParameter("redirect", currentURL);
 	%>

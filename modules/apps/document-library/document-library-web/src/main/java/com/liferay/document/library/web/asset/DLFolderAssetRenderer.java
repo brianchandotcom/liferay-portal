@@ -225,7 +225,7 @@ public class DLFolderAssetRenderer
 		throws Exception {
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, 0,
+			liferayPortletRequest, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(

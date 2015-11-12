@@ -150,7 +150,7 @@ public class MBMessageAssetRenderer
 		throws Exception {
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, MBPortletKeys.MESSAGE_BOARDS, 0,
+			liferayPortletRequest, MBPortletKeys.MESSAGE_BOARDS,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(

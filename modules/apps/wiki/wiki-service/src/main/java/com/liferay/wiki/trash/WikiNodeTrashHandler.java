@@ -231,7 +231,7 @@ public class WikiNodeTrashHandler extends BaseWikiTrashHandler {
 
 		if (plid == LayoutConstants.DEFAULT_PLID) {
 			portletURL = PortalUtil.getControlPanelPortletURL(
-				portletRequest, WikiPortletKeys.WIKI_ADMIN, 0,
+				portletRequest, WikiPortletKeys.WIKI_ADMIN,
 				PortletRequest.RENDER_PHASE);
 		}
 		else {

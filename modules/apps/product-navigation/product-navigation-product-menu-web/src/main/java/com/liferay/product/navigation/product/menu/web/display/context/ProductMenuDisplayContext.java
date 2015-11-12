@@ -182,7 +182,7 @@ public class ProductMenuDisplayContext {
 
 		if (Validator.isNotNull(portletId)) {
 			groupAdministrationURL = PortalUtil.getControlPanelPortletURL(
-				_portletRequest, group, portletId, 0,
+				_portletRequest, group, portletId, 0, 0,
 				PortletRequest.RENDER_PHASE);
 
 			if (groupAdministrationURL != null) {

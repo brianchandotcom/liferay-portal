@@ -147,7 +147,7 @@ public class CommentAssetRenderer
 		throws Exception {
 
 		PortletURL editPortletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, CommentPortletKeys.COMMENT, 0,
+			liferayPortletRequest, CommentPortletKeys.COMMENT,
 			PortletRequest.RENDER_PHASE);
 
 		editPortletURL.setParameter("mvcPath", "/edit_discussion.jsp");

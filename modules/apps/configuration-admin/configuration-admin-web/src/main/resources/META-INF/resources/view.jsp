@@ -32,18 +32,23 @@ ConfigurationModel factoryConfigurationModel = (ConfigurationModel)request.getAt
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 
-		<% for (String curConfigurationCategory : configurationCategories) { %>
+		<%
+		for (String curConfigurationCategory : configurationCategories) {
+		%>
 
 			<portlet:renderURL var="configurationCategoryURL">
 				<portlet:param name="configurationCategory" value="<%= curConfigurationCategory %>" />
 			</portlet:renderURL>
 
 			<aui:nav-item
-				cssClass='<%= curConfigurationCategory.equals(configurationCategory)? "active" : "" %>'
+				cssClass='<%= curConfigurationCategory.equals(configurationCategory) ? "active" : "" %>'
 				href="<%= configurationCategoryURL %>"
-				label="<%= curConfigurationCategory %>" />
+				label="<%= curConfigurationCategory %>"
+			/>
 
-		<% } %>
+		<%
+		}
+		%>
 
 	</aui:nav>
 </aui:nav-bar>

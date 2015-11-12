@@ -16,6 +16,7 @@ package com.liferay.portal.wab.extender.internal;
 
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.wab.extender.internal.adapter.FilterExceptionAdapter;
+import com.liferay.portal.wab.extender.internal.adapter.PassThroughClassLoader;
 import com.liferay.portal.wab.extender.internal.adapter.ServletContextListenerExceptionAdapter;
 import com.liferay.portal.wab.extender.internal.adapter.ServletExceptionAdapter;
 import com.liferay.portal.wab.extender.internal.definition.FilterDefinition;
@@ -89,7 +90,8 @@ public class WabBundleProcessor implements ServletContextListener {
 
 		BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
 
-		_bundleClassLoader = bundleWiring.getClassLoader();
+		_bundleClassLoader = new PassThroughClassLoader(
+			bundleWiring.getClassLoader());
 
 		_contextName = _contextPath.substring(1);
 

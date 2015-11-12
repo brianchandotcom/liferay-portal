@@ -16,6 +16,8 @@ package com.liferay.portal.wab.extender.internal.adapter;
 
 import java.io.IOException;
 
+import java.util.concurrent.Callable;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -51,9 +53,18 @@ public class FilterExceptionAdapter implements Filter {
 	}
 
 	@Override
-	public void init(FilterConfig filterConfig) {
+	public void init(final FilterConfig filterConfig) {
 		try {
-			_filter.init(filterConfig);
+			TCCLUtil.wrapTCCL(new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					_filter.init(filterConfig);
+
+					return null;
+				}
+
+			});
 		}
 		catch (Exception e) {
 			_exception = e;

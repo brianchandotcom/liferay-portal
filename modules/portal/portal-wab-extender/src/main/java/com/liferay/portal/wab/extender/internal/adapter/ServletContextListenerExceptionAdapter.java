@@ -14,6 +14,8 @@
 
 package com.liferay.portal.wab.extender.internal.adapter;
 
+import java.util.concurrent.Callable;
+
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
@@ -40,9 +42,19 @@ public class ServletContextListenerExceptionAdapter
 	}
 
 	@Override
-	public void contextInitialized(ServletContextEvent servletContextEvent) {
+	public void contextInitialized(
+		final ServletContextEvent servletContextEvent) {
+
 		try {
-			_servletContextListener.contextInitialized(servletContextEvent);
+			TCCLUtil.wrapTCCL(new Callable<Void>() {
+				@Override
+				public Void call() throws Exception {
+					_servletContextListener.contextInitialized(
+						servletContextEvent);
+
+					return null;
+				}
+			});
 		}
 		catch (Exception e) {
 			_exception = e;

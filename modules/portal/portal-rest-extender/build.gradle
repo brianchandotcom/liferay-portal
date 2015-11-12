@@ -4,6 +4,7 @@ dependencies {
 	compile group: "org.apache.cxf", name: "cxf-rt-frontend-jaxrs", version: "3.0.3"
 	compile group: "org.apache.cxf", name: "cxf-rt-rs-extension-providers", version: "3.0.3"
 	compile group: "org.codehaus.jettison", name: "jettison", version: "1.3.3"
+	compile project(":apps:configuration-admin:configuration-admin-api")
 	compile project(":portal:portal-cxf-jaxrs-common")
 	compile project(":portal:portal-dependency-manager-tccl")
 }

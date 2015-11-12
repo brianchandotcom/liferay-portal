@@ -16,9 +16,12 @@ package com.liferay.portal.wab.extender.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.configuration.admin.ConfigurationAdmin;
+
 /**
  * @author Iván Zaera
  */
+@ConfigurationAdmin(category = "platform")
 @Meta.OCD(
 	id = "com.liferay.portal.wab.extender.internal.configuration.WabExtenderConfiguration"
 )

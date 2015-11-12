@@ -16,9 +16,12 @@ package com.liferay.portal.store.jcr.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.configuration.admin.ConfigurationAdmin;
+
 /**
  * @author Manuel de la Peña
  */
+@ConfigurationAdmin(category = "platform")
 @Meta.OCD(
 	id = "com.liferay.portal.store.jcr.configuration.JCRStoreConfiguration",
 	localization = "content/Language", name = "%jcr.store.configuration.name"

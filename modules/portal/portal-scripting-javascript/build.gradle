@@ -1,5 +1,6 @@
 dependencies {
 	compile group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "2.4.1"
+	compile project(":apps:configuration-admin:configuration-admin-api")
 	compile project(":portal:portal-scripting-api")
 
 	provided group: "org.mozilla", name: "rhino", version: "1.7R4"

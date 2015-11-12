@@ -53,11 +53,11 @@
 			}
 
 			.toggler-header-collapsed:after {
-				content: " »";
+				content: "\00a0\00bb";
 			}
 
 			.toggler-header-expanded:after {
-				content: " «";
+				content: "\00a0\00ab";
 			}
 
 			.background-task-status-in-progress {

@@ -145,7 +145,8 @@ public class ConfigurationAdminPortlet extends MVCPortlet {
 			}
 
 			renderRequest.setAttribute(
-				"configurationModel", configurationModel);
+				ConfigurationAdminWebKeys.CONFIGURATION_MODEL,
+				configurationModel);
 			renderRequest.setAttribute("factoryPid", factoryPid);
 			renderRequest.setAttribute("pid", pid);
 

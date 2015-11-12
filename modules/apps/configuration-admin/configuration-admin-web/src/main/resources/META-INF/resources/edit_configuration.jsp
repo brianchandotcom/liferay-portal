@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ConfigurationModel configurationModel = (ConfigurationModel)request.getAttribute("configurationModel");
+ConfigurationModel configurationModel = (ConfigurationModel)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_MODEL);
 String ddmFormHTML = (String)request.getAttribute(DDMWebKeys.DYNAMIC_DATA_MAPPING_FORM_HTML);
 
 PortletURL portletURL = renderResponse.createRenderURL();

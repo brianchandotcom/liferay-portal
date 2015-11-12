@@ -332,14 +332,17 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 	protected void checkInFileEntries(ActionRequest actionRequest)
 		throws Exception {
 
+		String changeLog = ParamUtil.getString(actionRequest, "changeLog");
 		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
+		boolean majorVersion = ParamUtil.getBoolean(
+			actionRequest, "majorVersion");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
 		if (fileEntryId > 0) {
 			_dlAppService.checkInFileEntry(
-				fileEntryId, false, StringPool.BLANK, serviceContext);
+				fileEntryId, majorVersion, changeLog, serviceContext);
 		}
 		else {
 			long[] fileEntryIds = StringUtil.split(
@@ -347,7 +350,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			for (int i = 0; i < fileEntryIds.length; i++) {
 				_dlAppService.checkInFileEntry(
-					fileEntryIds[i], false, StringPool.BLANK, serviceContext);
+					fileEntryIds[i], majorVersion, changeLog, serviceContext);
 			}
 		}
 	}

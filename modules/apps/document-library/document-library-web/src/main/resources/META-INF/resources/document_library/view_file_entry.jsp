@@ -573,6 +573,10 @@ if (portletTitleBasedNavigation) {
 	</div>
 </div>
 
+<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
+	<%@ include file="/document_library/version_details.jspf" %>
+</c:if>
+
 <aui:script>
 	function <portlet:namespace />compare() {
 		var rowIds = AUI.$('input[name=<portlet:namespace />rowIds]:checked');

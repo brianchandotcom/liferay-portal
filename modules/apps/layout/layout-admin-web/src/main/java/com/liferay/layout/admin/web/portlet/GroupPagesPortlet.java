@@ -63,6 +63,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES,
 		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.supported-public-render-parameter=layoutSetBranchId",
 		"javax.portlet.supported-public-render-parameter=privateLayout",
 		"javax.portlet.supported-public-render-parameter=selPlid",
 		"javax.portlet.supports.mime-type=text/html"

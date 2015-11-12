@@ -140,7 +140,7 @@ public class WabServletContextHelper extends ServletContextHelper {
 
 		int index = name.lastIndexOf('/');
 
-		if (index > 0) {
+		if (index > -1) {
 			dirName = name.substring(0, index);
 			fileName = name.substring(index + 1);
 		}

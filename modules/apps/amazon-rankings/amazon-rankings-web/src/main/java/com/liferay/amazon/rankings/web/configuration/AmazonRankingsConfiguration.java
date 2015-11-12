@@ -16,9 +16,12 @@ package com.liferay.amazon.rankings.web.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.configuration.admin.ConfigurationAdmin;
+
 /**
  * @author Jorge Ferrer
  */
+@ConfigurationAdmin(category = "other")
 @Meta.OCD(
 	id = "com.liferay.amazon.rankings.web.configuration.AmazonRankingsConfiguration"
 )

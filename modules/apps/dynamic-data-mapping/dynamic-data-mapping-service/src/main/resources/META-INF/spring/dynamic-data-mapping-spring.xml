@@ -92,9 +92,4 @@
 	<bean id="com.liferay.dynamic.data.mapping.util.DDMXMLUtil" class="com.liferay.dynamic.data.mapping.util.DDMXMLUtil">
 		<property name="DDMXML" ref="com.liferay.dynamic.data.mapping.util.DDMXML" />
 	</bean>
-	<bean id="com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverterUtil" class="com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverterUtil">
-		<property name="FieldsToDDMFormValuesConverter">
-			<bean class="com.liferay.dynamic.data.mapping.util.impl.FieldsToDDMFormValuesConverterImpl" />
-		</property>
-	</bean>
 </beans>

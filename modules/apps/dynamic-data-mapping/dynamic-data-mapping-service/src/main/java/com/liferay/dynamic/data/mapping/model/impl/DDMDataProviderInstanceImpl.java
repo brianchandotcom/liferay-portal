@@ -12,31 +12,14 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.exception;
+package com.liferay.dynamic.data.mapping.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
-
-import com.liferay.portal.NoSuchModelException;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @ProviderType
-public class NoSuchDataProviderException extends NoSuchModelException {
-
-	public NoSuchDataProviderException() {
-	}
-
-	public NoSuchDataProviderException(String msg) {
-		super(msg);
-	}
-
-	public NoSuchDataProviderException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
-
-	public NoSuchDataProviderException(Throwable cause) {
-		super(cause);
-	}
-
+public class DDMDataProviderInstanceImpl
+	extends DDMDataProviderInstanceBaseImpl {
 }

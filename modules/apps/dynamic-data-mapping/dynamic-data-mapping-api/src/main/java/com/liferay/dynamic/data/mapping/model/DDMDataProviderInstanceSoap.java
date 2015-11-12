@@ -23,18 +23,20 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services.
+ * This class is used by SOAP remote services, specifically {@link com.liferay.dynamic.data.mapping.service.http.DDMDataProviderInstanceServiceSoap}.
  *
  * @author Brian Wing Shun Chan
+ * @see com.liferay.dynamic.data.mapping.service.http.DDMDataProviderInstanceServiceSoap
  * @generated
  */
 @ProviderType
-public class DDMDataProviderSoap implements Serializable {
-	public static DDMDataProviderSoap toSoapModel(DDMDataProvider model) {
-		DDMDataProviderSoap soapModel = new DDMDataProviderSoap();
+public class DDMDataProviderInstanceSoap implements Serializable {
+	public static DDMDataProviderInstanceSoap toSoapModel(
+		DDMDataProviderInstance model) {
+		DDMDataProviderInstanceSoap soapModel = new DDMDataProviderInstanceSoap();
 
 		soapModel.setUuid(model.getUuid());
-		soapModel.setDataProviderId(model.getDataProviderId());
+		soapModel.setDataProviderInstanceId(model.getDataProviderInstanceId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -44,12 +46,14 @@ public class DDMDataProviderSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setDefinition(model.getDefinition());
+		soapModel.setType(model.getType());
 
 		return soapModel;
 	}
 
-	public static DDMDataProviderSoap[] toSoapModels(DDMDataProvider[] models) {
-		DDMDataProviderSoap[] soapModels = new DDMDataProviderSoap[models.length];
+	public static DDMDataProviderInstanceSoap[] toSoapModels(
+		DDMDataProviderInstance[] models) {
+		DDMDataProviderInstanceSoap[] soapModels = new DDMDataProviderInstanceSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -58,15 +62,15 @@ public class DDMDataProviderSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static DDMDataProviderSoap[][] toSoapModels(
-		DDMDataProvider[][] models) {
-		DDMDataProviderSoap[][] soapModels = null;
+	public static DDMDataProviderInstanceSoap[][] toSoapModels(
+		DDMDataProviderInstance[][] models) {
+		DDMDataProviderInstanceSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new DDMDataProviderSoap[models.length][models[0].length];
+			soapModels = new DDMDataProviderInstanceSoap[models.length][models[0].length];
 		}
 		else {
-			soapModels = new DDMDataProviderSoap[0][0];
+			soapModels = new DDMDataProviderInstanceSoap[0][0];
 		}
 
 		for (int i = 0; i < models.length; i++) {
@@ -76,26 +80,26 @@ public class DDMDataProviderSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static DDMDataProviderSoap[] toSoapModels(
-		List<DDMDataProvider> models) {
-		List<DDMDataProviderSoap> soapModels = new ArrayList<DDMDataProviderSoap>(models.size());
+	public static DDMDataProviderInstanceSoap[] toSoapModels(
+		List<DDMDataProviderInstance> models) {
+		List<DDMDataProviderInstanceSoap> soapModels = new ArrayList<DDMDataProviderInstanceSoap>(models.size());
 
-		for (DDMDataProvider model : models) {
+		for (DDMDataProviderInstance model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new DDMDataProviderSoap[soapModels.size()]);
+		return soapModels.toArray(new DDMDataProviderInstanceSoap[soapModels.size()]);
 	}
 
-	public DDMDataProviderSoap() {
+	public DDMDataProviderInstanceSoap() {
 	}
 
 	public long getPrimaryKey() {
-		return _dataProviderId;
+		return _dataProviderInstanceId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setDataProviderId(pk);
+		setDataProviderInstanceId(pk);
 	}
 
 	public String getUuid() {
@@ -106,12 +110,12 @@ public class DDMDataProviderSoap implements Serializable {
 		_uuid = uuid;
 	}
 
-	public long getDataProviderId() {
-		return _dataProviderId;
+	public long getDataProviderInstanceId() {
+		return _dataProviderInstanceId;
 	}
 
-	public void setDataProviderId(long dataProviderId) {
-		_dataProviderId = dataProviderId;
+	public void setDataProviderInstanceId(long dataProviderInstanceId) {
+		_dataProviderInstanceId = dataProviderInstanceId;
 	}
 
 	public long getGroupId() {
@@ -186,8 +190,16 @@ public class DDMDataProviderSoap implements Serializable {
 		_definition = definition;
 	}
 
+	public String getType() {
+		return _type;
+	}
+
+	public void setType(String type) {
+		_type = type;
+	}
+
 	private String _uuid;
-	private long _dataProviderId;
+	private long _dataProviderInstanceId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;
@@ -197,4 +209,5 @@ public class DDMDataProviderSoap implements Serializable {
 	private String _name;
 	private String _description;
 	private String _definition;
+	private String _type;
 }

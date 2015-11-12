@@ -1,6 +1,46 @@
 <?xml version="1.0"?>
 
 <custom-sql>
+	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMDataProviderInstanceFinder.countByC_G_N_D">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT DDMDataProviderInstance.dataProviderInstanceId) AS COUNT_VALUE
+			FROM
+				DDMDataProviderInstance
+			WHERE
+				(DDMDataProviderInstance.companyId = ?) AND
+				[$GROUP_ID$]
+				(
+					(lower(DDMDataProviderInstance.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(DDMDataProviderInstance.description LIKE ? [$AND_OR_NULL_CHECK$])
+				)
+		]]>
+	</sql>
+	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMDataProviderInstanceFinder.findByC_G_N_D">
+		<![CDATA[
+			SELECT
+				{DDMDataProviderInstance.*}
+			FROM
+				(
+					SELECT DISTINCT
+						DDMDataProviderInstance.dataProviderInstanceId
+					FROM
+						DDMDataProviderInstance
+					WHERE
+						(DDMDataProviderInstance.companyId = ?) AND
+						[$GROUP_ID$]
+						(
+							(lower(DDMDataProviderInstance.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+							(DDMDataProviderInstance.description LIKE ? [$AND_OR_NULL_CHECK$])
+						)
+				)
+				TEMP_TABLE
+					INNER JOIN DDMDataProviderInstance ON
+						TEMP_TABLE.dataProviderInstanceId = DDMDataProviderInstance.dataProviderInstanceId
+			ORDER BY
+				DDMDataProviderInstance.dataProviderInstanceId DESC
+		]]>
+	</sql>
 	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMStructureFinder.countByC_G_C_N_D_S_T_S">
 		<![CDATA[
 			SELECT

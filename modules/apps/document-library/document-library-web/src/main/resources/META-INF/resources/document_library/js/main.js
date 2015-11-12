@@ -59,8 +59,7 @@ AUI.add(
 
 						var eventHandles = [
 							Liferay.on(instance.ns('editEntry'), instance._editEntry, instance),
-							Liferay.on(instance.ns('openDocument'), instance._openDocument, instance),
-
+							Liferay.on(instance.ns('openDocument'), instance._openDocument, instance)
 						];
 
 						instance._config = config;

@@ -15,7 +15,6 @@
 package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.servlet.ServletContextUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;

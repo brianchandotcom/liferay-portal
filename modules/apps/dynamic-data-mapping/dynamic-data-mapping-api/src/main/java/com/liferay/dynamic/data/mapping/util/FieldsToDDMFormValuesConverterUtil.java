@@ -18,7 +18,10 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Marcellus Tavares
@@ -33,24 +36,24 @@ public class FieldsToDDMFormValuesConverterUtil {
 			ddmStructure, fields);
 	}
 
-	public static FieldsToDDMFormValuesConverter
+	protected static FieldsToDDMFormValuesConverter
 		getFieldsToDDMFormValuesConverter() {
 
-		PortalRuntimePermission.checkGetBeanProperty(
+		return _serviceTracker.getService();
+	}
+
+	private static final ServiceTracker<FieldsToDDMFormValuesConverter,
+		FieldsToDDMFormValuesConverter> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(
 			FieldsToDDMFormValuesConverterUtil.class);
 
-		return _fieldsToDDMFormValuesConverter;
+		_serviceTracker = new ServiceTracker<>(
+			bundle.getBundleContext(), FieldsToDDMFormValuesConverter.class,
+			null);
+
+		_serviceTracker.open();
 	}
-
-	public void setFieldsToDDMFormValuesConverter(
-		FieldsToDDMFormValuesConverter fieldsToDDMFormValuesConverter) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
-		_fieldsToDDMFormValuesConverter = fieldsToDDMFormValuesConverter;
-	}
-
-	private static FieldsToDDMFormValuesConverter
-		_fieldsToDDMFormValuesConverter;
 
 }

@@ -273,6 +273,27 @@
 			getComboPath: function() {
 				return '<%= PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathContext() + "/combo/", "minifierType=", jsLastModified) %>&';
 			},
+			getDateFormat: function() {
+
+				<%
+				String mask = "%m/%d/%Y";
+
+				DateFormat shortDateFormat = DateFormat.getDateInstance(DateFormat.SHORT, locale);
+
+				SimpleDateFormat shortDateFormatSimpleDateFormat = (SimpleDateFormat)shortDateFormat;
+
+				String shortDateFormatSimpleDateFormatPattern = shortDateFormatSimpleDateFormat.toPattern();
+
+				if (shortDateFormatSimpleDateFormatPattern.indexOf("y") == 0) {
+					mask = "%Y/%m/%d";
+				}
+				else if (shortDateFormatSimpleDateFormatPattern.indexOf("d") == 0) {
+					mask = "%d/%m/%Y";
+				}
+				%>
+
+				return '<%= mask %>';
+			},
 			getEditorCKEditorPath: function() {
 				return '<%= PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR) %>';
 			},

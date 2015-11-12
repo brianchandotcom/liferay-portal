@@ -34,12 +34,7 @@ gradle.beforeProject {
 gradle.taskGraph.useFilter {
 	Task task ->
 
-	if (task.name == "buildService") {
-		if (!FileUtil.exists(task.project, "service.xml")) {
-			return false
-		}
-	}
-	else if (task.name == "compileJSP") {
+	if (task.name == "compileJSP") {
 		FileTree jspFileTree = fileTree(dir: task.project.projectDir, excludes: ["**/custom_jsps/**/*", "**/dependencies/**/*"], includes: ["docroot/**/*.jsp", "src/main/resources/META-INF/resources/**/*.jsp"])
 
 		if (jspFileTree.empty) {

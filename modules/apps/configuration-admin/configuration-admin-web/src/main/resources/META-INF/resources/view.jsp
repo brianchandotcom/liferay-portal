@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-PortletURL redirectURL = renderResponse.createRenderURL();
-
 List<String> configurationCategories = (List<String>)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_CATEGORIES);
 String configurationCategory = (String)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_CATEGORY);
 ConfigurationModelIterator configurationModelIterator = (ConfigurationModelIterator)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_MODEL_ITERATOR);
@@ -26,7 +24,7 @@ ConfigurationModel factoryConfigurationModel = (ConfigurationModel)request.getAt
 %>
 
 <c:if test="<%= factoryConfigurationModel != null %>">
-	<liferay-ui:header backURL="<%= redirectURL.toString() %>" title="<%= factoryConfigurationModel.getName() %>" />
+	<liferay-ui:header backURL="<%= String.valueOf(renderResponse.createRenderURL()) %>" title="<%= factoryConfigurationModel.getName() %>" />
 </c:if>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">

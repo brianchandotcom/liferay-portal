@@ -25,8 +25,7 @@
 		</execute>
 
 		<execute macro="NestedPortlets#dragAndDropPortletToPortletColumnPG">
-			<var name="columnNumberFrom" value="1" />
-			<var name="columnNumberTo" value="1" />
+			<var name="columnNumberFrom" value="2" />
 			<var name="portletColumnNumberTo" value="1" />
 			<var name="portletName" value="Web Content Display" />
 		</execute>

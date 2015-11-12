@@ -35,6 +35,10 @@ if (FileUtil.exists(project, "wsdl")) {
 	apply plugin: "com.liferay.wsdl.builder"
 }
 
+if (FileUtil.exists(project, "xsd")) {
+	apply plugin: "com.liferay.xsd.builder"
+}
+
 liferay {
 	portalVersion = project.properties["liferay.portal.version"]
 }

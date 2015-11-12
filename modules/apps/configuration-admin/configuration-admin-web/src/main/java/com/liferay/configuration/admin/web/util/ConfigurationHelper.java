@@ -78,7 +78,12 @@ public class ConfigurationHelper {
 	}
 
 	public List<String> getConfigurationCategories() {
-		return new ArrayList<>(_categorizedConfigurationModels.keySet());
+		TreeSet orderedCategories = new TreeSet(
+			new ConfigurationCategoryComparator());
+
+		orderedCategories.addAll(_categorizedConfigurationModels.keySet());
+
+		return new ArrayList<>(orderedCategories);
 	}
 
 	public ConfigurationModel getConfigurationModel(String pid) {
@@ -265,6 +270,48 @@ public class ConfigurationHelper {
 	private final ConfigurationAdmin _configurationAdmin;
 	private final Map<String, ConfigurationModel> _configurationModels;
 	private final ExtendedMetaTypeService _extendedMetaTypeService;
+
+	private class ConfigurationCategoryComparator
+		implements Comparator<String> {
+
+		@Override
+		public int compare(
+			String configurationCategory1, String configurationCategory2) {
+
+			if (configurationCategory1.equals("other")) {
+				return 1;
+			}
+			else if (configurationCategory1.equals(
+						"web-experience-management")) {
+
+				return -1;
+			}
+			else if (configurationCategory1.equals("collaboration")) {
+				if (configurationCategory2.equals(
+						"web-experience-management")) {
+
+					return 1;
+				}
+				else {
+					return -1;
+				}
+			}
+			else if (configurationCategory1.equals("productivity")) {
+				if (configurationCategory2.equals(
+						"web-experience-management") ||
+					configurationCategory2.equals("collaboration")) {
+
+					return 1;
+				}
+				else {
+					return -1;
+				}
+			}
+
+			return configurationCategory1.compareTo(configurationCategory2);
+		}
+
+	}
 
 	private class ConfigurationModelComparator
 		implements Comparator<ConfigurationModel> {

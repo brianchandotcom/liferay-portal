@@ -15,8 +15,3 @@
 --%>
 
 <%@ include file="/html/taglib/init.jsp" %>
-
-<%@ page import="com.liferay.portlet.trash.util.TrashUtil" %><%@
-page import="com.liferay.portal.kernel.portlet.PortletProviderUtil" %><%@
-page import="com.liferay.portlet.admin.util.PortalProductMenuApplicationType" %><%@
-page import="com.liferay.portal.kernel.portlet.PortletProvider" %>

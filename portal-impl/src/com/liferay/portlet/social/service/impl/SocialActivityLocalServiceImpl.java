@@ -84,15 +84,14 @@ public class SocialActivityLocalServiceImpl
 	 * activities.
 	 * </p>
 	 *
-	 * @param  userId the primary key of the acting user
-	 * @param  groupId the primary key of the group
-	 * @param  createDate the activity's date
-	 * @param  className the target asset's class name
-	 * @param  classPK the primary key of the target asset
-	 * @param  type the activity's type
-	 * @param  extraData any extra data regarding the activity
-	 * @param  receiverUserId the primary key of the receiving user
-	 * @throws PortalException if the user or group could not be found
+	 * @param userId the primary key of the acting user
+	 * @param groupId the primary key of the group
+	 * @param createDate the activity's date
+	 * @param className the target asset's class name
+	 * @param classPK the primary key of the target asset
+	 * @param type the activity's type
+	 * @param extraData any extra data regarding the activity
+	 * @param receiverUserId the primary key of the receiving user
 	 */
 	@Override
 	public void addActivity(
@@ -192,14 +191,13 @@ public class SocialActivityLocalServiceImpl
 	 * Records an activity in the database, using a time based on the current
 	 * time in an attempt to make the activity's time unique.
 	 *
-	 * @param  userId the primary key of the acting user
-	 * @param  groupId the primary key of the group
-	 * @param  className the target asset's class name
-	 * @param  classPK the primary key of the target asset
-	 * @param  type the activity's type
-	 * @param  extraData any extra data regarding the activity
-	 * @param  receiverUserId the primary key of the receiving user
-	 * @throws PortalException if the user or group could not be found
+	 * @param userId the primary key of the acting user
+	 * @param groupId the primary key of the group
+	 * @param className the target asset's class name
+	 * @param classPK the primary key of the target asset
+	 * @param type the activity's type
+	 * @param extraData any extra data regarding the activity
+	 * @param receiverUserId the primary key of the receiving user
 	 */
 	@Override
 	public void addActivity(
@@ -288,15 +286,14 @@ public class SocialActivityLocalServiceImpl
 	 * String, long, int, String, long)}
 	 * </p>
 	 *
-	 * @param  userId the primary key of the acting user
-	 * @param  groupId the primary key of the group
-	 * @param  createDate the activity's date
-	 * @param  className the target asset's class name
-	 * @param  classPK the primary key of the target asset
-	 * @param  type the activity's type
-	 * @param  extraData any extra data regarding the activity
-	 * @param  receiverUserId the primary key of the receiving user
-	 * @throws PortalException if the user or group could not be found
+	 * @param userId the primary key of the acting user
+	 * @param groupId the primary key of the group
+	 * @param createDate the activity's date
+	 * @param className the target asset's class name
+	 * @param classPK the primary key of the target asset
+	 * @param type the activity's type
+	 * @param extraData any extra data regarding the activity
+	 * @param receiverUserId the primary key of the receiving user
 	 */
 	@Override
 	public void addUniqueActivity(
@@ -329,14 +326,13 @@ public class SocialActivityLocalServiceImpl
 	 * String, long, int, String, long)}
 	 * </p>
 	 *
-	 * @param  userId the primary key of the acting user
-	 * @param  groupId the primary key of the group
-	 * @param  className the target asset's class name
-	 * @param  classPK the primary key of the target asset
-	 * @param  type the activity's type
-	 * @param  extraData any extra data regarding the activity
-	 * @param  receiverUserId the primary key of the receiving user
-	 * @throws PortalException if the user or group could not be found
+	 * @param userId the primary key of the acting user
+	 * @param groupId the primary key of the group
+	 * @param className the target asset's class name
+	 * @param classPK the primary key of the target asset
+	 * @param type the activity's type
+	 * @param extraData any extra data regarding the activity
+	 * @param receiverUserId the primary key of the receiving user
 	 */
 	@Override
 	public void addUniqueActivity(
@@ -361,8 +357,7 @@ public class SocialActivityLocalServiceImpl
 	/**
 	 * Removes stored activities for the asset.
 	 *
-	 * @param  assetEntry the asset from which to remove stored activities
-	 * @throws PortalException if a portal exception occurred
+	 * @param assetEntry the asset from which to remove stored activities
 	 */
 	@Override
 	public void deleteActivities(AssetEntry assetEntry) throws PortalException {
@@ -388,10 +383,8 @@ public class SocialActivityLocalServiceImpl
 	 * Removes stored activities for the asset identified by the class name and
 	 * class primary key.
 	 *
-	 * @param  className the target asset's class name
-	 * @param  classPK the primary key of the target asset
-	 * @throws PortalException if the user's activity counters could not be
-	 *         deleted
+	 * @param className the target asset's class name
+	 * @param classPK the primary key of the target asset
 	 */
 	@Override
 	public void deleteActivities(String className, long classPK)
@@ -405,8 +398,7 @@ public class SocialActivityLocalServiceImpl
 	/**
 	 * Removes the stored activity from the database.
 	 *
-	 * @param  activityId the primary key of the stored activity
-	 * @throws PortalException if the activity could not be found
+	 * @param activityId the primary key of the stored activity
 	 */
 	@Override
 	public void deleteActivity(long activityId) throws PortalException {
@@ -419,9 +411,7 @@ public class SocialActivityLocalServiceImpl
 	/**
 	 * Removes the stored activity and its mirror activity from the database.
 	 *
-	 * @param  activity the activity to be removed
-	 * @throws PortalException if the user's activity counters could not be
-	 *         deleted or if a portal exception occurred
+	 * @param activity the activity to be removed
 	 */
 	@Override
 	public void deleteActivity(SocialActivity activity) throws PortalException {
@@ -449,9 +439,7 @@ public class SocialActivityLocalServiceImpl
 	 * the receiver.
 	 * </p>
 	 *
-	 * @param  userId the primary key of the user
-	 * @throws PortalException if the user's activity counters could not be
-	 *         deleted
+	 * @param userId the primary key of the user
 	 */
 	@Override
 	public void deleteUserActivities(long userId) throws PortalException {
@@ -676,7 +664,6 @@ public class SocialActivityLocalServiceImpl
 	 *
 	 * @param  activityId the primary key of the activity
 	 * @return Returns the activity
-	 * @throws PortalException if the activity could not be found
 	 */
 	@Override
 	public SocialActivity getActivity(long activityId) throws PortalException {
@@ -784,7 +771,6 @@ public class SocialActivityLocalServiceImpl
 	 *
 	 * @param  mirrorActivityId the primary key of the mirror activity
 	 * @return Returns the mirror activity
-	 * @throws PortalException if the mirror activity could not be found
 	 */
 	@Override
 	public SocialActivity getMirrorActivity(long mirrorActivityId)

@@ -323,8 +323,8 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #updateFolder(long, long,
-	 *             String, String, ServiceContext)} and {@link #mergeFolders(
-	 *             long, long)}
+	 *             String, String, ServiceContext)} and {@link
+	 *             #mergeFolders(long, long)}
 	 */
 	@Deprecated
 	@Override

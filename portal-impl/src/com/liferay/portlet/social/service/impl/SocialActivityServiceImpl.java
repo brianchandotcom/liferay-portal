@@ -55,7 +55,6 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
-	 * @throws PortalException if a permission checker was not initialized
 	 */
 	@Override
 	public List<SocialActivity> getActivities(
@@ -90,7 +89,6 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
-	 * @throws PortalException if a permission checker was not initialized
 	 */
 	@Override
 	public List<SocialActivity> getActivities(
@@ -126,7 +124,6 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
-	 * @throws PortalException if a permission checker was not initialized
 	 */
 	@Override
 	public List<SocialActivity> getActivities(
@@ -161,7 +158,6 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
-	 * @throws PortalException if a permission checker was not initialized
 	 */
 	@Override
 	public List<SocialActivity> getActivities(
@@ -245,7 +241,6 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 *
 	 * @param  activityId the primary key of the activity
 	 * @return Returns the activity
-	 * @throws PortalException if the activity could not be found
 	 */
 	@Override
 	public SocialActivity getActivity(long activityId) throws PortalException {
@@ -296,7 +291,6 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
-	 * @throws PortalException if a permission checker was not initialized
 	 */
 	@Override
 	public List<SocialActivity> getGroupActivities(
@@ -347,7 +341,6 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
-	 * @throws PortalException if a permission checker was not initialized
 	 */
 	@Override
 	public List<SocialActivity> getGroupUsersActivities(
@@ -383,7 +376,6 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 *
 	 * @param  mirrorActivityId the primary key of the mirror activity
 	 * @return Returns the mirror activity
-	 * @throws PortalException if the mirror activity could not be found
 	 */
 	@Override
 	public SocialActivity getMirrorActivity(long mirrorActivityId)
@@ -421,7 +413,6 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
-	 * @throws PortalException if a permission checker was not initialized
 	 */
 	@Override
 	public List<SocialActivity> getOrganizationActivities(
@@ -466,7 +457,6 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
-	 * @throws PortalException if a permission checker was not initialized
 	 */
 	@Override
 	public List<SocialActivity> getOrganizationUsersActivities(
@@ -511,7 +501,6 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
-	 * @throws PortalException if a permission checker was not initialized
 	 */
 	@Override
 	public List<SocialActivity> getRelationActivities(
@@ -545,7 +534,6 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
-	 * @throws PortalException if a permission checker was not initialized
 	 */
 	@Override
 	public List<SocialActivity> getRelationActivities(
@@ -603,7 +591,6 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
-	 * @throws PortalException if a permission checker was not initialized
 	 */
 	@Override
 	public List<SocialActivity> getUserActivities(
@@ -646,7 +633,6 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
-	 * @throws PortalException if a permission checker was not initialized
 	 */
 	@Override
 	public List<SocialActivity> getUserGroupsActivities(
@@ -690,7 +676,6 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
-	 * @throws PortalException if a permission checker was not initialized
 	 */
 	@Override
 	public List<SocialActivity> getUserGroupsAndOrganizationsActivities(
@@ -735,7 +720,6 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 * @param  start the lower bound of the range of results
 	 * @param  end the upper bound of the range of results (not inclusive)
 	 * @return the range of matching activities
-	 * @throws PortalException if a permission checker was not initialized
 	 */
 	@Override
 	public List<SocialActivity> getUserOrganizationsActivities(

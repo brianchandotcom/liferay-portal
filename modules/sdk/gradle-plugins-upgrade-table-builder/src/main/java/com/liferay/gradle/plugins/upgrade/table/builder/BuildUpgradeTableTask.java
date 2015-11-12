@@ -38,6 +38,7 @@ public class BuildUpgradeTableTask extends JavaExec {
 				"UpgradeTableBuilder");
 	}
 
+	@Override
 	public void exec() {
 		setArgs(getCompleteArgs());
 

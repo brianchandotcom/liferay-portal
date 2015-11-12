@@ -52,9 +52,6 @@ public class SocialRequestLocalServiceImpl
 	 * @param  extraData the extra data regarding the request
 	 * @param  receiverUserId the primary key of the user receiving the request
 	 * @return the social request
-	 * @throws PortalException if the users could not be found, if the users
-	 *         were not from the same company, or if either of the users was the
-	 *         default user
 	 */
 	@Override
 	public SocialRequest addRequest(
@@ -120,8 +117,7 @@ public class SocialRequestLocalServiceImpl
 	 * Removes the social request identified by its primary key from the
 	 * database.
 	 *
-	 * @param  requestId the primary key of the social request
-	 * @throws PortalException if the social request could not be found
+	 * @param requestId the primary key of the social request
 	 */
 	@Override
 	public void deleteRequest(long requestId) throws PortalException {
@@ -400,7 +396,6 @@ public class SocialRequestLocalServiceImpl
 	 * @param  status the new status
 	 * @param  themeDisplay the theme display
 	 * @return the updated social request
-	 * @throws PortalException if the social request could not be found
 	 */
 	@Override
 	public SocialRequest updateRequest(

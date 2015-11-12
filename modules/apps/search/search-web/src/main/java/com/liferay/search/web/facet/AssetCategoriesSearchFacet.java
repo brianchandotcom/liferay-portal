@@ -70,6 +70,7 @@ public class AssetCategoriesSearchFacet extends BaseJSPSearchFacet {
 		return "/facets/view/asset_categories.jsp";
 	}
 
+	@Override
 	public String getFacetClassName() {
 		return MultiValueFacet.class.getName();
 	}

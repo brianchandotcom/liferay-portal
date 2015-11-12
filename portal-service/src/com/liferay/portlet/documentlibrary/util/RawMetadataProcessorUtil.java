@@ -55,9 +55,8 @@ public class RawMetadataProcessorUtil {
 	/**
 	 * Generates the raw metadata associated with the file entry.
 	 *
-	 * @param  fileVersion the file version from which the raw metatada is to be
-	 *         generated
-	 * @throws PortalException if an error occurred in the metadata extraction
+	 * @param fileVersion the file version from which the raw metatada is to be
+	 *        generated
 	 */
 	public static void generateMetadata(FileVersion fileVersion)
 		throws PortalException {
@@ -102,9 +101,8 @@ public class RawMetadataProcessorUtil {
 	 * using {@link com.liferay.portal.metadata.TikaRawMetadataProcessor}.
 	 * </p>
 	 *
-	 * @param  fileVersion the file version from which the raw metatada is to be
-	 *         extracted and persisted
-	 * @throws PortalException if an error occurred in the metadata extraction
+	 * @param fileVersion the file version from which the raw metatada is to be
+	 *        extracted and persisted
 	 */
 	public static void saveMetadata(FileVersion fileVersion)
 		throws PortalException {

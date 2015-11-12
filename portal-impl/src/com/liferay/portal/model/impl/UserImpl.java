@@ -118,7 +118,6 @@ public class UserImpl extends UserBaseImpl {
 	 * Returns the user's birth date.
 	 *
 	 * @return the user's birth date
-	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Date getBirthday() throws PortalException {
@@ -129,7 +128,6 @@ public class UserImpl extends UserBaseImpl {
 	 * Returns the user's company's mail domain.
 	 *
 	 * @return the user's company's mail domain
-	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public String getCompanyMx() throws PortalException {
@@ -143,7 +141,6 @@ public class UserImpl extends UserBaseImpl {
 	 * Returns the user's associated contact.
 	 *
 	 * @return the user's associated contact
-	 * @throws PortalException if a portal exception occurred
 	 * @see    Contact
 	 */
 	@Override
@@ -250,7 +247,6 @@ public class UserImpl extends UserBaseImpl {
 	 * @param      portalURL the portal's URL
 	 * @param      mainPath the main path
 	 * @return     the user's display URL
-	 * @throws     PortalException if a portal exception occurred
 	 * @deprecated As of 7.0.0, replaced by {@link #getDisplayURL(ThemeDisplay)}
 	 */
 	@Deprecated
@@ -291,7 +287,6 @@ public class UserImpl extends UserBaseImpl {
 	 *             intranet(versus extranet)  site home page, if no friendly URL
 	 *             is available for the user's profile
 	 * @return     the user's display URL
-	 * @throws     PortalException if a portal exception occurred
 	 * @deprecated As of 7.0.0, replaced by {@link #getDisplayURL(ThemeDisplay)}
 	 */
 	@Deprecated
@@ -337,7 +332,6 @@ public class UserImpl extends UserBaseImpl {
 	 *
 	 * @param  themeDisplay the theme display
 	 * @return the user's display URL
-	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public String getDisplayURL(ThemeDisplay themeDisplay)
@@ -375,7 +369,6 @@ public class UserImpl extends UserBaseImpl {
 	 *         intranet (versus extranet) site home page, if no friendly URL is
 	 *         available for the user's profile
 	 * @return the user's display URL
-	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public String getDisplayURL(
@@ -418,7 +411,6 @@ public class UserImpl extends UserBaseImpl {
 	 *
 	 * @return <code>true</code> if the user is female; <code>false</code>
 	 *         otherwise
-	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public boolean getFemale() throws PortalException {
@@ -525,7 +517,6 @@ public class UserImpl extends UserBaseImpl {
 	 *
 	 * @return <code>true</code> if the user is male; <code>false</code>
 	 *         otherwise
-	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public boolean getMale() throws PortalException {
@@ -581,7 +572,7 @@ public class UserImpl extends UserBaseImpl {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #getMySiteGroups(String[],
-	 *              int)}
+	 *             int)}
 	 */
 	@Deprecated
 	@Override

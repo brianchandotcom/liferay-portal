@@ -36,7 +36,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.osgi.service.component.annotations.Component;
 
 /**
- *
  * @author Julio Camarero
  */
 @Component(

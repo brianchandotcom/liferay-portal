@@ -89,7 +89,6 @@ public interface MVCRenderCommand extends MVCCommand {
 	 * @param  renderRequest the render request
 	 * @param  renderResponse the render response
 	 * @return the path that should be dispatched
-	 * @throws PortletException if a portlet exception occurred
 	 */
 	public String render(
 			RenderRequest renderRequest, RenderResponse renderResponse)

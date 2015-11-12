@@ -236,6 +236,7 @@ public class ActionURLTag extends ParamAndPropertyAncestorTagImpl {
 		_cacheability = cacheability;
 	}
 
+	@Override
 	public void setCopyCurrentRenderParameters(
 		boolean copyCurrentRenderParameters) {
 

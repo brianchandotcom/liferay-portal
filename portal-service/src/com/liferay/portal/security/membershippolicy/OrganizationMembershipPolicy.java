@@ -117,15 +117,12 @@ public interface OrganizationMembershipPolicy {
 	 * throws an exception, the service foregoes making the changes.
 	 * </p>
 	 *
-	 * @param  userIds the primary keys of the users to be added and removed
-	 *         from the organizations
-	 * @param  addOrganizationIds the primary keys of the organizations to which
-	 *         the users are to be added (optionally <code>null</code>)
-	 * @param  removeOrganizationIds the primary keys of the organizations from
-	 *         which the users are to be removed (optionally <code>null</code>)
-	 * @throws PortalException if any one user could not be added to a
-	 *         organization, if any one user could not be removed from a
-	 *         organization, or if a portal exception occurred
+	 * @param userIds the primary keys of the users to be added and removed from
+	 *        the organizations
+	 * @param addOrganizationIds the primary keys of the organizations to which
+	 *        the users are to be added (optionally <code>null</code>)
+	 * @param removeOrganizationIds the primary keys of the organizations from
+	 *        which the users are to be removed (optionally <code>null</code>)
 	 */
 	public void checkMembership(
 			long[] userIds, long[] addOrganizationIds,
@@ -142,10 +139,8 @@ public interface OrganizationMembershipPolicy {
 	 * throws an exception, the service foregoes making the changes.
 	 * </p>
 	 *
-	 * @param  addUserGroupRoles the user group roles to be added
-	 * @param  removeUserGroupRoles the user group roles to be removed
-	 * @throws PortalException if any one user group role violated the policy or
-	 *         if a portal exception occurred
+	 * @param addUserGroupRoles the user group roles to be added
+	 * @param removeUserGroupRoles the user group roles to be removed
 	 */
 	public void checkRoles(
 			List<UserGroupRole> addUserGroupRoles,
@@ -160,7 +155,6 @@ public interface OrganizationMembershipPolicy {
 	 * @param  organizationId the primary key of the organization
 	 * @return <code>true</code> if the user can be added to the organization;
 	 *         <code>false</code> otherwise
-	 * @throws PortalException if a portal exception occurred
 	 */
 	public boolean isMembershipAllowed(long userId, long organizationId)
 		throws PortalException;
@@ -176,7 +170,6 @@ public interface OrganizationMembershipPolicy {
 	 * @return <code>true</code> if the policy prevents the user from being
 	 *         removed from the organization by the user associated with the
 	 *         permission checker; <code>false</code> otherwise
-	 * @throws PortalException if a portal exception occurred
 	 */
 	public boolean isMembershipProtected(
 			PermissionChecker permissionChecker, long userId,
@@ -193,7 +186,6 @@ public interface OrganizationMembershipPolicy {
 	 * @param  organizationId the primary key of the organization
 	 * @return <code>true</code> if organization membership for the user is
 	 *         mandatory; <code>false</code> otherwise
-	 * @throws PortalException if a portal exception occurred
 	 */
 	public boolean isMembershipRequired(long userId, long organizationId)
 		throws PortalException;
@@ -207,7 +199,6 @@ public interface OrganizationMembershipPolicy {
 	 * @param  roleId the primary key of the role
 	 * @return <code>true</code> if the role can be added to the user on the
 	 *         organization; <code>false</code> otherwise
-	 * @throws PortalException if a portal exception occurred
 	 */
 	public boolean isRoleAllowed(long userId, long organizationId, long roleId)
 		throws PortalException;
@@ -223,7 +214,6 @@ public interface OrganizationMembershipPolicy {
 	 * @return <code>true</code> if the policy prevents the user from being
 	 *         removed from the role by the user associated with the permission
 	 *         checker; <code>false</code> otherwise
-	 * @throws PortalException if a portal exception occurred
 	 */
 	public boolean isRoleProtected(
 			PermissionChecker permissionChecker, long userId,
@@ -239,7 +229,6 @@ public interface OrganizationMembershipPolicy {
 	 * @param  roleId the primary key of the role
 	 * @return <code>true</code> if the role is mandatory for the user on the
 	 *         organization; <code>false</code> otherwise
-	 * @throws PortalException if a portal exception occurred
 	 */
 	public boolean isRoleRequired(long userId, long organizationId, long roleId)
 		throws PortalException;
@@ -269,12 +258,11 @@ public interface OrganizationMembershipPolicy {
 	 * </li>
 	 * </ul>
 	 *
-	 * @param  userIds the primary key of the users to be added or removed
-	 * @param  addOrganizationIds the primary keys of the organizations to which
-	 *         the users were added (optionally <code>null</code>)
-	 * @param  removeOrganizationIds the primary keys of the organizations from
-	 *         which the users were removed (optionally <code>null</code>)
-	 * @throws PortalException if a portal exception occurred
+	 * @param userIds the primary key of the users to be added or removed
+	 * @param addOrganizationIds the primary keys of the organizations to which
+	 *        the users were added (optionally <code>null</code>)
+	 * @param removeOrganizationIds the primary keys of the organizations from
+	 *        which the users were removed (optionally <code>null</code>)
 	 */
 	public void propagateMembership(
 			long[] userIds, long[] addOrganizationIds,
@@ -301,9 +289,8 @@ public interface OrganizationMembershipPolicy {
 	 * </li>
 	 * </ul>
 	 *
-	 * @param  addUserGroupRoles the user group roles added
-	 * @param  removeUserGroupRoles the user group roles removed
-	 * @throws PortalException if a portal exception occurred
+	 * @param addUserGroupRoles the user group roles added
+	 * @param removeUserGroupRoles the user group roles removed
 	 */
 	public void propagateRoles(
 			List<UserGroupRole> addUserGroupRoles,
@@ -318,8 +305,6 @@ public interface OrganizationMembershipPolicy {
 	 * <code>membership.policy.auto.verify</code> portal property is
 	 * <code>true</code> this method is triggered when starting Liferay and
 	 * every time a membership policy hook is deployed.
-	 *
-	 * @throws PortalException if a portal exception occurred
 	 */
 	public void verifyPolicy() throws PortalException;
 
@@ -327,8 +312,7 @@ public interface OrganizationMembershipPolicy {
 	 * Checks the integrity of the membership policy of the organization and
 	 * performs operations necessary for the organization's compliance.
 	 *
-	 * @param  organization the organization to verify
-	 * @throws PortalException if a portal exception occurred
+	 * @param organization the organization to verify
 	 */
 	public void verifyPolicy(Organization organization) throws PortalException;
 
@@ -371,12 +355,11 @@ public interface OrganizationMembershipPolicy {
 	 * Administrator role must be removed from the organization.
 	 * </li>
 	 *
-	 * @param  organization the added or updated organization to verify
-	 * @param  oldOrganization the old organization
-	 * @param  oldAssetCategories the old categories
-	 * @param  oldAssetTags the old tags
-	 * @param  oldExpandoAttributes the old expando attributes
-	 * @throws PortalException if a portal exception occurred
+	 * @param organization the added or updated organization to verify
+	 * @param oldOrganization the old organization
+	 * @param oldAssetCategories the old categories
+	 * @param oldAssetTags the old tags
+	 * @param oldExpandoAttributes the old expando attributes
 	 */
 	public void verifyPolicy(
 			Organization organization, Organization oldOrganization,
@@ -388,8 +371,7 @@ public interface OrganizationMembershipPolicy {
 	 * Checks the integrity of the membership policy of the organization role
 	 * and performs operations necessary for the role's compliance.
 	 *
-	 * @param  role the role to verify
-	 * @throws PortalException if a portal exception occurred
+	 * @param role the role to verify
 	 */
 	public void verifyPolicy(Role role) throws PortalException;
 
@@ -399,10 +381,9 @@ public interface OrganizationMembershipPolicy {
 	 * for the role's compliance. Liferay calls this method when adding and
 	 * updating organization roles.
 	 *
-	 * @param  role the added or updated role to verify
-	 * @param  oldRole the old role
-	 * @param  oldExpandoAttributes the old expando attributes
-	 * @throws PortalException if a portal exception occurred
+	 * @param role the added or updated role to verify
+	 * @param oldRole the old role
+	 * @param oldExpandoAttributes the old expando attributes
 	 */
 	public void verifyPolicy(
 			Role role, Role oldRole,

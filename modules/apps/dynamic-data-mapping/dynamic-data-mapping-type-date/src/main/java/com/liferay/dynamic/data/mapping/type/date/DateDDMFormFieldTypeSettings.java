@@ -37,6 +37,7 @@ public interface DateDDMFormFieldTypeSettings
 		dataType = "ddm-validation", type = "validation",
 		visibilityExpression = "false"
 	)
+	@Override
 	public DDMFormFieldValidation validation();
 
 }

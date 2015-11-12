@@ -27,7 +27,7 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @see    Router
  * @see    com.liferay.portlet.RouteImpl
- * @see    com.liferay.portal.kernel.util.StringParser
+ * @see    StringParser
  */
 public interface Route {
 

@@ -69,6 +69,7 @@ public class ScopeSearchFacet extends BaseJSPSearchFacet {
 		return "/facets/view/scopes.jsp";
 	}
 
+	@Override
 	public String getFacetClassName() {
 		return ScopeFacet.class.getName();
 	}

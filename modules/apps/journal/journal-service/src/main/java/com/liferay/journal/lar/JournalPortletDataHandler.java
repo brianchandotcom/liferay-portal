@@ -95,7 +95,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author László Csontos
  * @author Mate Thurzo
  * @see    com.liferay.journal.lar.JournalCreationStrategy
- * @see    com.liferay.portlet.exportimport.lar.PortletDataHandler
+ * @see    PortletDataHandler
  */
 @Component(
 	property = {"javax.portlet.name=" + JournalPortletKeys.JOURNAL},

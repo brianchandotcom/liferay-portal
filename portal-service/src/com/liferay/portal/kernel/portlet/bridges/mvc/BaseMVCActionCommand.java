@@ -47,7 +47,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
- * @see com.liferay.portal.struts.PortletAction
+ * @see    com.liferay.portal.struts.PortletAction
  */
 public abstract class BaseMVCActionCommand implements MVCActionCommand {
 

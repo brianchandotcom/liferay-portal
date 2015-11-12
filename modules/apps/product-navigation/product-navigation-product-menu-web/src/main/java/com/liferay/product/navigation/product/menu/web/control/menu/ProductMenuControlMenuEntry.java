@@ -36,7 +36,6 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
- *
  * @author Julio Camarero
  */
 @Component(

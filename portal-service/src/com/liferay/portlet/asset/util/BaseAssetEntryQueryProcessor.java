@@ -15,7 +15,6 @@
 package com.liferay.portlet.asset.util;
 
 /**
- *
  * @author Julio Camarero
  */
 public abstract class BaseAssetEntryQueryProcessor

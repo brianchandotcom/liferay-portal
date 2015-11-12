@@ -41,6 +41,7 @@ public class DocumentLibraryPanelApp extends BasePanelApp {
 		return DLPortletKeys.DOCUMENT_LIBRARY_ADMIN;
 	}
 
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN + ")",
 		unbind = "-"

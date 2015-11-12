@@ -27,7 +27,6 @@ import javax.portlet.ActionResponse;
 
 /**
  * @author Jorge Ferrer
- * @autorh Philip Jones
  */
 @OSGiBeanProperties(
 	property = {

@@ -21,7 +21,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 
 /**
  * @author Lino Alves
-*/
+ */
 @DDMForm
 public interface TextDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {

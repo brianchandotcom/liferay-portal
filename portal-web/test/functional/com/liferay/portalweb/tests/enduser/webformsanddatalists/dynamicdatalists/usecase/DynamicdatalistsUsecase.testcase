@@ -1153,9 +1153,7 @@
 
 		<execute function="SelectWindow" locator1="title=Data Definition Page Name - Liferay" />
 
-		<execute macro="DDLList#attemptDeleteRecordViaDDLDisplayPG">
-			<var name="ddlListRecordName" value="Text" />
-		</execute>
+		<execute macro="DDLList#assertCannotDeleteRecordViaDDLDisplayPG" />
 
 		<execute function="Close" locator1="title=Data Definition Page Page Name - Liferay" />
 

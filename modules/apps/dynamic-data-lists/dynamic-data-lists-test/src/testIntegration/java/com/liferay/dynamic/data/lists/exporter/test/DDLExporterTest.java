@@ -340,7 +340,7 @@ public class DDLExporterTest {
 		_fieldValues = new HashMap<>();
 
 		_fieldValues.put(DDMFormFieldType.CHECKBOX, "false");
-		_fieldValues.put(DDMFormFieldType.DATE, "1/1/70");
+		_fieldValues.put(DDMFormFieldType.DATE, "1970-01-01");
 		_fieldValues.put(DDMFormFieldType.DECIMAL, "1.0");
 		_fieldValues.put(
 			DDMFormFieldType.DOCUMENT_LIBRARY,

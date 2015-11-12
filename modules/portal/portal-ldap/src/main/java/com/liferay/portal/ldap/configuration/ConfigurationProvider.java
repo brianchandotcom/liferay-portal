@@ -40,13 +40,7 @@ public interface ConfigurationProvider<T> {
 		long companyId);
 
 	public Dictionary<String, Object> getConfigurationProperties(
-		long companyId, boolean useDefault);
-
-	public Dictionary<String, Object> getConfigurationProperties(
 		long companyId, long index);
-
-	public Dictionary<String, Object> getConfigurationProperties(
-		long companyId, long index, boolean useDefault);
 
 	public List<T> getConfigurations(long companyId);
 
@@ -54,9 +48,6 @@ public interface ConfigurationProvider<T> {
 
 	public List<Dictionary<String, Object>> getConfigurationsProperties(
 		long companyId);
-
-	public List<Dictionary<String, Object>> getConfigurationsProperties(
-		long companyId, boolean useDefault);
 
 	public Class<T> getMetatype();
 

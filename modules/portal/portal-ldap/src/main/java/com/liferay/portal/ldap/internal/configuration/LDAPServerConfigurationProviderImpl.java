@@ -17,7 +17,7 @@ package com.liferay.portal.ldap.internal.configuration;
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.ldap.configuration.ConfigurationProvider;
 import com.liferay.portal.ldap.configuration.LDAPServerConfiguration;
@@ -110,12 +110,17 @@ public class LDAPServerConfigurationProviderImpl
 		List<LDAPServerConfiguration> ldapServerConfigurations =
 			getConfigurations(companyId, useDefault);
 
-		if (ldapServerConfigurations.isEmpty()) {
-			throw new IllegalArgumentException(
-				"No LDAP server configuration found for company " + companyId);
+		LDAPServerConfiguration ldapServerConfiguration = null;
+
+		if (!ldapServerConfigurations.isEmpty()) {
+			ldapServerConfiguration = ldapServerConfigurations.get(0);
+		}
+		else if (useDefault) {
+			ldapServerConfiguration = Configurable.createConfigurable(
+				getMetatype(), (Map<?, ?>)null);
 		}
 
-		return ldapServerConfigurations.get(0);
+		return ldapServerConfiguration;
 	}
 
 	@Override
@@ -130,7 +135,11 @@ public class LDAPServerConfigurationProviderImpl
 		long companyId, long ldapServerId, boolean useDefault) {
 
 		Dictionary<String, Object> properties = getConfigurationProperties(
-			companyId, ldapServerId, useDefault);
+			companyId, ldapServerId);
+
+		if (!useDefault && (properties == null)) {
+			return null;
+		}
 
 		LDAPServerConfiguration ldapServerConfiguration =
 			Configurable.createConfigurable(getMetatype(), properties);
@@ -142,19 +151,11 @@ public class LDAPServerConfigurationProviderImpl
 	public Dictionary<String, Object> getConfigurationProperties(
 		long companyId) {
 
-		return getConfigurationProperties(companyId, true);
-	}
-
-	@Override
-	public Dictionary<String, Object> getConfigurationProperties(
-		long companyId, boolean useDefault) {
-
 		List<Dictionary<String, Object>> configurationsProperties =
-			getConfigurationsProperties(companyId, useDefault);
+			getConfigurationsProperties(companyId);
 
 		if (configurationsProperties.isEmpty()) {
-			throw new IllegalArgumentException(
-				"No LDAP server configuration found for company " + companyId);
+			return null;
 		}
 
 		return configurationsProperties.get(0);
@@ -164,35 +165,17 @@ public class LDAPServerConfigurationProviderImpl
 	public Dictionary<String, Object> getConfigurationProperties(
 		long companyId, long ldapServerId) {
 
-		return getConfigurationProperties(companyId, ldapServerId, true);
-	}
-
-	@Override
-	public Dictionary<String, Object> getConfigurationProperties(
-		long companyId, long ldapServerId, boolean useDefault) {
-
 		Map<Long, Configuration> configurations = _configurations.get(
 			companyId);
 
-		if (useDefault && MapUtil.isEmpty(configurations)) {
-			configurations = _configurations.get(0L);
-		}
-		else if (!useDefault && MapUtil.isEmpty(configurations)) {
-			return new HashMapDictionary<>();
+		if (configurations == null) {
+			return null;
 		}
 
 		Configuration configuration = configurations.get(ldapServerId);
 
-		if (useDefault && (configuration == null)) {
-			configurations = _configurations.get(0L);
-
-			configuration = configurations.get(0L);
-		}
-
 		if (configuration == null) {
-			throw new IllegalArgumentException(
-				"No LDAP server configuration found for company " + companyId +
-					" and LDAP server " + ldapServerId);
+			return null;
 		}
 
 		return configuration.getProperties();
@@ -208,23 +191,27 @@ public class LDAPServerConfigurationProviderImpl
 		long companyId, boolean useDefault) {
 
 		List<Dictionary<String, Object>> configurationsProperties =
-			getConfigurationsProperties(companyId, useDefault);
-
-		if (configurationsProperties.isEmpty()) {
-			return Collections.emptyList();
-		}
+			getConfigurationsProperties(companyId);
 
 		List<LDAPServerConfiguration> ldapServerConfigurations =
 			new ArrayList<>(configurationsProperties.size());
 
-		for (Dictionary<String, Object> configurationProperties :
-				configurationsProperties) {
-
+		if (ListUtil.isEmpty(configurationsProperties) && useDefault) {
 			LDAPServerConfiguration ldapServerConfiguration =
-				Configurable.createConfigurable(
-					getMetatype(), configurationProperties);
+				Configurable.createConfigurable(getMetatype(), (Map<?, ?>)null);
 
 			ldapServerConfigurations.add(ldapServerConfiguration);
+		}
+		else if (ListUtil.isNotEmpty(configurationsProperties)) {
+			for (Dictionary<String, Object> configurationProperties :
+					configurationsProperties) {
+
+				LDAPServerConfiguration ldapServerConfiguration =
+					Configurable.createConfigurable(
+						getMetatype(), configurationProperties);
+
+				ldapServerConfigurations.add(ldapServerConfiguration);
+			}
 		}
 
 		return ldapServerConfigurations;
@@ -234,19 +221,8 @@ public class LDAPServerConfigurationProviderImpl
 	public List<Dictionary<String, Object>> getConfigurationsProperties(
 		long companyId) {
 
-		return getConfigurationsProperties(companyId, true);
-	}
-
-	@Override
-	public List<Dictionary<String, Object>> getConfigurationsProperties(
-		long companyId, boolean useDefault) {
-
 		Map<Long, Configuration> configurations = _configurations.get(
 			companyId);
-
-		if (useDefault && MapUtil.isEmpty(configurations)) {
-			configurations = _configurations.get(0L);
-		}
 
 		if (MapUtil.isEmpty(configurations)) {
 			return Collections.emptyList();

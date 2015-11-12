@@ -191,7 +191,7 @@ AUI.add(
 
 						var qualifiedName = instance.getQualifiedName().replace(/\$/ig, '\\$');
 
-						return '[name=' + qualifiedName + ']';
+						return '[name="' + qualifiedName + '"]';
 					},
 
 					getLabel: function() {

@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
@@ -521,6 +522,15 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				actionResponse.setRenderParameter("mvcPath", "/null.jsp");
 			}
 			else if (cmd.equals(Constants.PREVIEW)) {
+				SessionMessages.add(
+					actionRequest,
+					PortalUtil.getPortletId(actionRequest) +
+						SessionMessages.KEY_SUFFIX_FORCE_SEND_REDIRECT);
+
+				hideDefaultSuccessMessage(actionRequest);
+
+				actionResponse.setRenderParameter(
+					"mvcPath", "/document_library/edit_file_entry.jsp");
 			}
 			else if (!windowState.equals(LiferayWindowState.POP_UP)) {
 			}

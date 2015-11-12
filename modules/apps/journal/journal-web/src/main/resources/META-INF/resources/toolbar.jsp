@@ -37,7 +37,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<aui:a cssClass="btn infoPanelToggler" href="javascript:;" iconCssClass="icon-info-sign" />
+		<liferay-frontend:management-bar-button cssClass="infoPanelToggler" href="javascript:;" iconCssClass="icon-info-sign" />
 
 		<%
 		String taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteEntries();";

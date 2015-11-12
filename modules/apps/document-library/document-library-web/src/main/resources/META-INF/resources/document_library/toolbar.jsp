@@ -58,25 +58,25 @@ boolean search = mvcRenderCommandName.equals("/document_library/search");
 			String taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CANCEL_CHECKOUT + "'}); void(0);";
 			%>
 
-			<aui:a cssClass="btn" href="<%= taglibURL %>" iconCssClass="icon-remove" />
+			<liferay-frontend:management-bar-button href="<%= taglibURL %>" iconCssClass="icon-remove" />
 
 			<%
 			taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CHECKIN + "'}); void(0);";
 			%>
 
-			<aui:a cssClass="btn" href="<%= taglibURL %>" iconCssClass="icon-lock" />
+			<liferay-frontend:management-bar-button href="<%= taglibURL %>" iconCssClass="icon-lock" />
 
 			<%
 			taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CHECKOUT + "'}); void(0);";
 			%>
 
-			<aui:a cssClass="btn" href="<%= taglibURL %>" iconCssClass="icon-unlock" />
+			<liferay-frontend:management-bar-button href="<%= taglibURL %>" iconCssClass="icon-unlock" />
 
 			<%
 			taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.MOVE + "'}); void(0);";
 			%>
 
-			<aui:a cssClass="btn" href="<%= taglibURL %>" iconCssClass="icon-move" />
+			<liferay-frontend:management-bar-button href="<%= taglibURL %>" iconCssClass="icon-move" />
 		</c:if>
 
 		<%

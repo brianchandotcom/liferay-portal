@@ -36,16 +36,16 @@ public class RecentLayoutBranchLocalServiceImpl
 
 		long recentLayoutBranchId = counterLocalService.increment();
 
-		RecentLayoutBranch RecentLayoutBranch =
+		RecentLayoutBranch recentLayoutBranch =
 			recentLayoutBranchPersistence.create(recentLayoutBranchId);
 
-		RecentLayoutBranch.setCompanyId(companyId);
-		RecentLayoutBranch.setGroupId(groupId);
-		RecentLayoutBranch.setUserId(userId);
-		RecentLayoutBranch.setLayoutSetBranchId(layoutSetBranchId);
-		RecentLayoutBranch.setPlid(plid);
+		recentLayoutBranch.setCompanyId(companyId);
+		recentLayoutBranch.setGroupId(groupId);
+		recentLayoutBranch.setUserId(userId);
+		recentLayoutBranch.setLayoutSetBranchId(layoutSetBranchId);
+		recentLayoutBranch.setPlid(plid);
 
-		return recentLayoutBranchPersistence.update(RecentLayoutBranch);
+		return recentLayoutBranchPersistence.update(recentLayoutBranch);
 	}
 
 	@Override

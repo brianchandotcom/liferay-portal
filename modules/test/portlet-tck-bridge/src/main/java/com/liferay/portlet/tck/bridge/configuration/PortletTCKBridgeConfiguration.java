@@ -16,9 +16,12 @@ package com.liferay.portlet.tck.bridge.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.configuration.admin.ConfigurationAdmin;
+
 /**
  * @author Shuyang Zhou
  */
+@ConfigurationAdmin(category = "platform")
 @Meta.OCD(
 	id = "com.liferay.portlet.tck.bridge.configuration.PortletTCKBridgeConfiguration"
 )

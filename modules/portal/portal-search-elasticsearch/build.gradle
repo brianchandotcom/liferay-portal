@@ -2,6 +2,7 @@ dependencies {
 	compile group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "2.4.1"
 	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	compile group: "commons-lang", name: "commons-lang", version: "2.6"
+	compile project(":apps:configuration-admin:configuration-admin-api")
 
 	provided group: "com.vividsolutions", name: "jts", transitive: false, version: "1.13"
 	provided group: "org.antlr", name: "antlr-runtime", transitive: false, version: "3.5"

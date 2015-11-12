@@ -4,6 +4,7 @@ dependencies {
 	compile group: "commons-lang", name: "commons-lang", version: "2.6"
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	compile project(":apps:configuration-admin:configuration-admin-api")
 
 	provided group: "org.apache.lucene", name: "lucene-analyzers-common", version: "5.2.1"
 	provided group: "org.apache.lucene", name: "lucene-core", version: "5.2.1"

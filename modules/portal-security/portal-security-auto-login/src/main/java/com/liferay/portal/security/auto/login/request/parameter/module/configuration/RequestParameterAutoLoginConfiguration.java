@@ -16,9 +16,12 @@ package com.liferay.portal.security.auto.login.request.parameter.module.configur
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.configuration.admin.ConfigurationAdmin;
+
 /**
  * @author Tomas Polesovsky
  */
+@ConfigurationAdmin(category = "platform")
 @Meta.OCD(
 	id = "com.liferay.portal.security.auto.login.request.parameter.module.configuration.RequestParameterAutoLoginConfiguration"
 )public interface RequestParameterAutoLoginConfiguration {

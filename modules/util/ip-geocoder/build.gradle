@@ -7,6 +7,7 @@ dependencies {
 	compile group: "log4j", name: "log4j", version: "1.2.17"
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.tukaani", name: "xz", version: "1.5"
+	compile project(":apps:configuration-admin:configuration-admin-api")
 }
 
 deploy {

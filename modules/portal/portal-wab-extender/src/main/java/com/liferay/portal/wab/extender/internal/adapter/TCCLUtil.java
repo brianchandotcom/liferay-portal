@@ -28,7 +28,8 @@ public class TCCLUtil {
 
 		//This classLoader is needed to disable Equinox' boot delegation
 
-		ClassLoader classLoader = new PassThroughClassLoader(contextClassLoader);
+		ClassLoader classLoader = new PassThroughClassLoader(
+			contextClassLoader);
 
 		try {
 			thread.setContextClassLoader(classLoader);

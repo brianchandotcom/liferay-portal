@@ -35,7 +35,30 @@ import javax.servlet.http.HttpSession;
  */
 public class PublicRenderParametersPool {
 
-	public static Map<String, String[]> get(
+	public static PublicRenderParameters get(
+		HttpServletRequest request, long plid, boolean isWarFile) {
+
+		Map<String, String[]> threadLocalMap = null;
+
+		Map<String, String[]> map = get(request, plid);
+
+		if (isWarFile) {
+			if (_publicRenderParametersThreadLocal.get() == null) {
+				_publicRenderParametersThreadLocal.set(
+					new HashMap<String, String[]>());
+			}
+			else {
+				map.putAll(_publicRenderParametersThreadLocal.get());
+			}
+
+			threadLocalMap = _publicRenderParametersThreadLocal.get();
+		}
+
+
+		return new PublicRenderParameters(map, threadLocalMap);
+	}
+
+	protected static Map<String, String[]> get(
 		HttpServletRequest request, long plid) {
 
 		if (PropsValues.PORTLET_PUBLIC_RENDER_PARAMETER_DISTRIBUTION_LAYOUT) {
@@ -81,27 +104,6 @@ public class PublicRenderParametersPool {
 
 			return new HashMap<>();
 		}
-	}
-
-	public static Map<String, String[]> get(
-		HttpServletRequest request, long plid, boolean isWarFile) {
-
-		if (!isWarFile) {
-			return get(request, plid);
-		}
-
-		if (_publicRenderParametersThreadLocal.get() == null) {
-			_publicRenderParametersThreadLocal.set(
-				new HashMap<String, String[]>());
-
-			return _publicRenderParametersThreadLocal.get();
-		}
-
-		Map<String, String[]> map = get(request, plid);
-
-		map.putAll(_publicRenderParametersThreadLocal.get());
-
-		return map;
 	}
 
 	private static final String _PUBLIC_RENDER_PARAMETERS =

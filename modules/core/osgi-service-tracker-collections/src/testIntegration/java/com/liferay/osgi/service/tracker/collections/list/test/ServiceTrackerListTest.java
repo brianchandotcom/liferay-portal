@@ -76,8 +76,8 @@ public class ServiceTrackerListTest {
 
 					@Override
 					public int compare(
-						ServiceReference<Object> entry1,
-						ServiceReference<Object> entry2) {
+						ServiceReference<Object> serviceReference1,
+						ServiceReference<Object> serviceReference2) {
 
 						return 0;
 					}
@@ -103,19 +103,21 @@ public class ServiceTrackerListTest {
 
 					@Override
 					public Object addingService(
-						ServiceReference<Object> reference) {
+						ServiceReference<Object> serviceReference) {
 
 						return new CustomizedService();
 					}
 
 					@Override
 					public void modifiedService(
-						ServiceReference<Object> reference, Object service) {
+						ServiceReference<Object> serviceReference,
+						Object service) {
 					}
 
 					@Override
 					public void removedService(
-						ServiceReference<Object> reference, Object service) {
+						ServiceReference<Object> serviceReference,
+						Object service) {
 					}
 
 				},

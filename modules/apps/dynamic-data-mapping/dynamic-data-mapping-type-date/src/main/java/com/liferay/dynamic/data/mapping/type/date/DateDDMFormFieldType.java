@@ -14,9 +14,9 @@
 
 package com.liferay.dynamic.data.mapping.type.date;
 
-import com.liferay.dynamic.data.mapping.registry.BaseDDMFormFieldType;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldType;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeSettings;
+import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldType;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeSettings;
 
 import org.osgi.service.component.annotations.Component;
 

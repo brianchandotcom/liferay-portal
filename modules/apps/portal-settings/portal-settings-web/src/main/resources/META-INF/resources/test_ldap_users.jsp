@@ -16,4 +16,4 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-util:dynamic-include key="/portal-settings/test_ldap_users.jsp" />
+<liferay-util:dynamic-include key="/portal_settings/test_ldap_users.jsp" />

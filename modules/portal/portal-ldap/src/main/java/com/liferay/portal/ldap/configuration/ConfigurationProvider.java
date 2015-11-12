@@ -55,9 +55,6 @@ public interface ConfigurationProvider<T> {
 	public List<Dictionary<String, Object>> getConfigurationsProperties(
 		long companyId);
 
-	public List<Dictionary<String, Object>> getConfigurationsProperties(
-		long companyId, boolean useDefault);
-
 	public Class<T> getMetatype();
 
 	public void registerConfiguration(Configuration configuration);

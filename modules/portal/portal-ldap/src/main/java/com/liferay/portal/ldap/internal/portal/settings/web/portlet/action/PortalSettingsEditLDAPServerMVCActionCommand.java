@@ -161,7 +161,7 @@ public class PortalSettingsEditLDAPServerMVCActionCommand
 		else {
 			dictionary =
 				_ldapServerConfigurationProvider.getConfigurationProperties(
-					themeDisplay.getCompanyId(), ldapServerId, false);
+					themeDisplay.getCompanyId(), ldapServerId);
 		}
 
 		for (Map.Entry<String, String> entry : properties.entrySet()) {

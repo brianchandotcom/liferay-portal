@@ -29,10 +29,10 @@ public interface LDAPServerConfiguration {
 	@Meta.AD(deflt = "(mail=@email_address@)", required = false)
 	public String authSearchFilter();
 
-	@Meta.AD(deflt = "dc=example,dc=com", required = true)
+	@Meta.AD(deflt = "dc=example,dc=com", required = false)
 	public String baseDN();
 
-	@Meta.AD(deflt = "ldap://localhost:10389", required = true)
+	@Meta.AD(deflt = "ldap://localhost:10389", required = false)
 	public String baseProviderURL();
 
 	@Meta.AD(deflt = "0", required = false)
@@ -65,10 +65,10 @@ public interface LDAPServerConfiguration {
 	@Meta.AD(deflt = "0", required = false)
 	public long ldapServerId();
 
-	@Meta.AD(deflt = "secret", required = true)
+	@Meta.AD(deflt = "secret", required = false)
 	public String securityCredential();
 
-	@Meta.AD(deflt = "uid=admin,ou=system", required = true)
+	@Meta.AD(deflt = "uid=admin,ou=system", required = false)
 	public String securityPrincipal();
 
 	@Meta.AD(deflt = "", required = false)

@@ -15,11 +15,13 @@
 package com.liferay.translator.web.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
+import com.liferay.configuration.admin.ConfigurationAdmin;
 
 /**
  * @author Raymond Augé
  * @author Peter Fellwock
  */
+@ConfigurationAdmin(category = "other")
 @Meta.OCD(
 	id = "com.liferay.translator.web.configuration.TranslatorConfiguration",
 	localization = "content/Language"

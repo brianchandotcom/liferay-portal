@@ -130,12 +130,14 @@ public class PortletContextBag {
 					customUserAttributes = newInstance(
 						customUserAttributesClassName);
 				}
+
+				if (customUserAttributes != null) {
+					customUserAttributesMap.put(
+						customUserAttributesClassName, customUserAttributes);
+				}
 			}
 
 			if (customUserAttributes != null) {
-				customUserAttributesMap.put(
-					customUserAttributesClassName, customUserAttributes);
-
 				String attrValue = customUserAttributes.getValue(
 					userAttributeName, unmodifiableUserInfo);
 

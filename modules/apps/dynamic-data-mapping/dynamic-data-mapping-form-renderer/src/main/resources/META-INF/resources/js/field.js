@@ -290,6 +290,7 @@ AUI.add(
 								childElementsHTML: instance.getChildElementsHTML(),
 								label: instance.getLabel(),
 								name: instance.getQualifiedName(),
+								readOnly: instance.get('readOnly'),
 								value: value || '',
 								visible: instance.get('visible')
 							}

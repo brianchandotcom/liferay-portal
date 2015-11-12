@@ -744,7 +744,7 @@
 		</execute>
 
 		<execute macro="WebContent#addTranslation">
-			<var name="localizedInteger" value="2" />
+			<var name="localizedInteger" value="8" />
 			<var name="localizedLanguage" value="German (Germany)" />
 			<var name="localizedTitle" value="Netz Inhalt2 Titel" />
 			<var name="webContentTitle" value="Web Content2 Title" />
@@ -783,7 +783,7 @@
 		</execute>
 
 		<execute macro="WebContent#addTranslation">
-			<var name="localizedInteger" value="8" />
+			<var name="localizedInteger" value="5" />
 			<var name="localizedLanguage" value="German (Germany)" />
 			<var name="localizedTitle" value="Netz Inhalt3 Titel" />
 			<var name="webContentTitle" value="Web Content3 Title" />
@@ -850,9 +850,9 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewOrderedFieldPG">
-			<var name="firstAsset" value="Netz Inhalt2 Titel" />
-			<var name="secondAsset" value="Netz Inhalt1 Titel" />
-			<var name="thirdAsset" value="Netz Inhalt3 Titel" />
+			<var name="firstAsset" value="Netz Inhalt1 Titel" />
+			<var name="secondAsset" value="Netz Inhalt3 Titel" />
+			<var name="thirdAsset" value="Netz Inhalt2 Titel" />
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">

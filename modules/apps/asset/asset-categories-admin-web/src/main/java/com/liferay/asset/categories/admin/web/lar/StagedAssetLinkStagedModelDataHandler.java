@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.StagedModel;
@@ -40,7 +39,6 @@ import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 
 import java.util.List;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -175,25 +173,20 @@ public class StagedAssetLinkStagedModelDataHandler
 			return;
 		}
 
-		Map<Long, Long> assetEntry1Ids =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				stagedAssetLink.getEntry1ClassName());
-		Map<Long, Long> assetEntry2Ids =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				stagedAssetLink.getEntry2ClassName());
+		AssetEntry assetEntry1 = _assetEntryLocalService.fetchEntry(
+			portletDataContext.getScopeGroupId(),
+			stagedAssetLink.getEntry1Uuid());
+		AssetEntry assetEntry2 = _assetEntryLocalService.fetchEntry(
+			portletDataContext.getScopeGroupId(),
+			stagedAssetLink.getEntry2Uuid());
 
-		long assetEntry1Id = MapUtil.getLong(
-			assetEntry1Ids, stagedAssetLink.getEntryId1(), -1);
-		long assetEntry2Id = MapUtil.getLong(
-			assetEntry2Ids, stagedAssetLink.getEntryId2(), -1);
-
-		if ((assetEntry1Id <= 0) || (assetEntry2Id <= 0)) {
+		if ((assetEntry1 == null) || (assetEntry2 == null)) {
 			return;
 		}
 
 		_assetLinkLocalService.addLink(
-			userId, assetEntry1Id, assetEntry2Id, stagedAssetLink.getType(),
-			stagedAssetLink.getWeight());
+			userId, assetEntry1.getEntryId(), assetEntry2.getEntryId(),
+			stagedAssetLink.getType(), stagedAssetLink.getWeight());
 	}
 
 	protected StagedAssetLink fetchExistingAssetLink(

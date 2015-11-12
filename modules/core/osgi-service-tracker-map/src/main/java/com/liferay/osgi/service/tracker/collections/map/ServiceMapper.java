@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.osgi.service.tracker.map;
+package com.liferay.osgi.service.tracker.collections.map;
 
-import com.liferay.osgi.service.tracker.map.ServiceReferenceMapper.Emitter;
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper.Emitter;
 
 /**
  * @author Carlos Sierra Andrés

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.osgi.service.tracker.map;
+package com.liferay.osgi.service.tracker.collections.map;
 
 import java.util.HashMap;
 import java.util.Map;

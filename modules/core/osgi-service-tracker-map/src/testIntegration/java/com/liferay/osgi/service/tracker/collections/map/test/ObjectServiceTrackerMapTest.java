@@ -12,17 +12,17 @@
  * details.
  */
 
-package com.liferay.osgi.service.tracker.map.test;
+package com.liferay.osgi.service.tracker.collections.map.test;
 
-import com.liferay.osgi.service.tracker.map.PropertyServiceReferenceMapper;
-import com.liferay.osgi.service.tracker.map.ServiceReferenceMapper;
-import com.liferay.osgi.service.tracker.map.ServiceTrackerCustomizerFactory;
-import com.liferay.osgi.service.tracker.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
-import com.liferay.osgi.service.tracker.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.map.ServiceTrackerMapFactory;
-import com.liferay.osgi.service.tracker.map.internal.BundleContextWrapper;
-import com.liferay.osgi.service.tracker.map.internal.TrackedOne;
-import com.liferay.osgi.service.tracker.map.internal.TrackedTwo;
+import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceMapper;
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.osgi.service.tracker.collections.map.internal.BundleContextWrapper;
+import com.liferay.osgi.service.tracker.collections.map.internal.TrackedOne;
+import com.liferay.osgi.service.tracker.collections.map.internal.TrackedTwo;
 
 import java.util.Collection;
 import java.util.Comparator;

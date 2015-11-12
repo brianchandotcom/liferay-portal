@@ -22,20 +22,20 @@ import com.liferay.portal.NoSuchModelException;
  * @author Brian Wing Shun Chan
  */
 @ProviderType
-public class NoSuchDataProviderException extends NoSuchModelException {
+public class NoSuchDataProviderInstanceException extends NoSuchModelException {
 
-	public NoSuchDataProviderException() {
+	public NoSuchDataProviderInstanceException() {
 	}
 
-	public NoSuchDataProviderException(String msg) {
+	public NoSuchDataProviderInstanceException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchDataProviderException(String msg, Throwable cause) {
+	public NoSuchDataProviderInstanceException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public NoSuchDataProviderException(Throwable cause) {
+	public NoSuchDataProviderInstanceException(Throwable cause) {
 		super(cause);
 	}
 

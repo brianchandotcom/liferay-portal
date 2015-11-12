@@ -14,8 +14,8 @@
 
 package com.liferay.osgi.service.tracker.collections.list.internal;
 
-import com.liferay.osgi.service.tracker.collections.common.ServiceWrapper;
-import com.liferay.osgi.service.tracker.collections.common.ServiceWrapperComparator;
+import com.liferay.osgi.service.tracker.collections.common.ServiceReferenceServiceTuple;
+import com.liferay.osgi.service.tracker.collections.common.ServiceReferenceServiceTupleComparator;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 
 import java.util.Collections;
@@ -49,7 +49,8 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<S, T> {
 			_comparator = Collections.reverseOrder();
 		}
 		else {
-			_comparator = new ServiceWrapperComparator<>(comparator);
+			_comparator = new ServiceReferenceServiceTupleComparator<>(
+				comparator);
 		}
 
 		if (filterString != null) {
@@ -88,8 +89,8 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<S, T> {
 	}
 
 	private final BundleContext _bundleContext;
-	private final Comparator<ServiceWrapper<S, ?>> _comparator;
-	private final List<ServiceWrapper<S, T>> _services =
+	private final Comparator<ServiceReferenceServiceTuple<S, ?>> _comparator;
+	private final List<ServiceReferenceServiceTuple<S, T>> _services =
 		new CopyOnWriteArrayList<>();
 	private final ServiceTracker<S, T> _serviceTracker;
 	private final ServiceTrackerCustomizer<S, T> _serviceTrackerCustomizer;
@@ -98,7 +99,7 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<S, T> {
 		implements Iterator<T> {
 
 		public ServiceTrackerListIterator(
-			Iterator<ServiceWrapper<S, T>> iterator) {
+			Iterator<ServiceReferenceServiceTuple<S, T>> iterator) {
 
 			_iterator = iterator;
 		}
@@ -110,9 +111,10 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<S, T> {
 
 		@Override
 		public T next() {
-			ServiceWrapper<S, T> serviceWrapper = _iterator.next();
+			ServiceReferenceServiceTuple<S, T> serviceReferenceServiceTuple =
+				_iterator.next();
 
-			return serviceWrapper.getService();
+			return serviceReferenceServiceTuple.getService();
 		}
 
 		@Override
@@ -120,7 +122,7 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<S, T> {
 			throw new UnsupportedOperationException();
 		}
 
-		private final Iterator<ServiceWrapper<S, T>> _iterator;
+		private final Iterator<ServiceReferenceServiceTuple<S, T>> _iterator;
 
 	}
 
@@ -170,12 +172,12 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<S, T> {
 				return service;
 			}
 
-			ServiceWrapper<S, T> serviceWrapper = new ServiceWrapper<>(
-				serviceReference, service);
+			ServiceReferenceServiceTuple<S, T> serviceReferenceServiceTuple =
+				new ServiceReferenceServiceTuple<>(serviceReference, service);
 
 			synchronized(_services) {
 				int index = Collections.binarySearch(
-					_services, serviceWrapper, _comparator);
+					_services, serviceReferenceServiceTuple, _comparator);
 
 				if (remove) {
 					if (index >= 0) {
@@ -183,7 +185,7 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<S, T> {
 					}
 				}
 				else if (index < 0) {
-					_services.add(((-index) - 1), serviceWrapper);
+					_services.add(((-index) - 1), serviceReferenceServiceTuple);
 				}
 			}
 
@@ -193,7 +195,7 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<S, T> {
 	}
 
 	private class ServiceReferenceServiceWrapperComparator<S, T>
-		implements Comparator<ServiceWrapper<S, T>> {
+		implements Comparator<ServiceReferenceServiceTuple<S, T>> {
 
 		public ServiceReferenceServiceWrapperComparator(
 			Comparator<ServiceReference<S>> comparator) {
@@ -203,12 +205,12 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<S, T> {
 
 		@Override
 		public int compare(
-			ServiceWrapper<S, T> serviceWrapper1,
-			ServiceWrapper<S, T> serviceWrapper2) {
+			ServiceReferenceServiceTuple<S, T> serviceReferenceServiceTuple1,
+			ServiceReferenceServiceTuple<S, T> serviceReferenceServiceTuple2) {
 
 			return _comparator.compare(
-				serviceWrapper1.getServiceReference(),
-				serviceWrapper2.getServiceReference());
+				serviceReferenceServiceTuple1.getServiceReference(),
+				serviceReferenceServiceTuple2.getServiceReference());
 		}
 
 		private final Comparator<ServiceReference<S>> _comparator;

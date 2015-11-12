@@ -14,8 +14,8 @@
 
 package com.liferay.osgi.service.tracker.collections.map.internal;
 
-import com.liferay.osgi.service.tracker.collections.common.ServiceWrapperComparator;
-import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceServiceTuple;
+import com.liferay.osgi.service.tracker.collections.common.ServiceReferenceServiceTupleComparator;
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceServiceReferenceServiceTupleWithKey;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerBucket;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerBucketFactory;
 
@@ -61,54 +61,57 @@ public class MultiValueServiceTrackerBucketFactory<SR, TS>
 
 		@Override
 		public synchronized boolean isDisposable() {
-			return _serviceReferenceServiceTuples.isEmpty();
+			return _serviceReferenceServiceTupleWithKeys.isEmpty();
 		}
 
 		@Override
 		public synchronized void remove(
-			ServiceReferenceServiceTuple<SR, TS, ?>
-				serviceReferenceServiceTuple) {
+			ServiceReferenceServiceReferenceServiceTupleWithKey<SR, TS, ?>
+				serviceReferenceServiceTupleWithKey) {
 
-			_serviceReferenceServiceTuples.remove(serviceReferenceServiceTuple);
+			_serviceReferenceServiceTupleWithKeys.remove(
+				serviceReferenceServiceTupleWithKey);
 
 			rebuild();
 		}
 
 		@Override
 		public synchronized void store(
-			ServiceReferenceServiceTuple<SR, TS, ?>
-				serviceReferenceServiceTuple) {
+			ServiceReferenceServiceReferenceServiceTupleWithKey<SR, TS, ?>
+				serviceReferenceServiceTupleWithKey) {
 
-			_serviceReferenceServiceTuples.add(serviceReferenceServiceTuple);
+			_serviceReferenceServiceTupleWithKeys.add(
+				serviceReferenceServiceTupleWithKey);
 
 			rebuild();
 		}
 
 		protected void rebuild() {
-			_services = new ArrayList<>(_serviceReferenceServiceTuples.size());
+			_services = new ArrayList<>(
+				_serviceReferenceServiceTupleWithKeys.size());
 
 			for (
-				ServiceReferenceServiceTuple<SR, TS, ?>
-					serviceReferenceServiceTuple :
-						_serviceReferenceServiceTuples) {
+				ServiceReferenceServiceReferenceServiceTupleWithKey<SR, TS, ?>
+					serviceReferenceServiceTupleWithKey :
+				_serviceReferenceServiceTupleWithKeys) {
 
-				_services.add(serviceReferenceServiceTuple.getService());
+				_services.add(serviceReferenceServiceTupleWithKey.getService());
 			}
 
 			_services = Collections.unmodifiableList(_services);
 		}
 
 		private ListServiceTrackerBucket() {
-			ServiceWrapperComparator<SR>
-				serviceWrapperComparator = new ServiceWrapperComparator<>(
-					_comparator);
+			ServiceReferenceServiceTupleComparator<SR>
+				serviceReferenceServiceTupleComparator =
+					new ServiceReferenceServiceTupleComparator<>(_comparator);
 
-			_serviceReferenceServiceTuples = new TreeSet<>(
-				serviceWrapperComparator);
+			_serviceReferenceServiceTupleWithKeys = new TreeSet<>(
+				serviceReferenceServiceTupleComparator);
 		}
 
-		private final Set<ServiceReferenceServiceTuple<SR, TS, ?>>
-			_serviceReferenceServiceTuples;
+		private final Set<ServiceReferenceServiceReferenceServiceTupleWithKey
+			<SR, TS, ?>> _serviceReferenceServiceTupleWithKeys;
 		private List<TS> _services = new ArrayList<>();
 
 	}

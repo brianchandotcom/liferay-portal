@@ -19,17 +19,22 @@ import org.osgi.framework.ServiceReference;
 /**
 * @author Carlos Sierra Andrés
 */
-public class ServiceWrapper<S, T> implements Comparable<ServiceWrapper<S, T>> {
+public class ServiceReferenceServiceTuple<S, T>
+	implements Comparable<ServiceReferenceServiceTuple<S, T>> {
 
-	public ServiceWrapper(ServiceReference<S> serviceReference, T service) {
+	public ServiceReferenceServiceTuple(
+		ServiceReference<S> serviceReference, T service) {
+
 		_serviceReference = serviceReference;
 		_service = service;
 	}
 
 	@Override
-	public int compareTo(ServiceWrapper<S, T> serviceWrapper) {
+	public int compareTo(
+		ServiceReferenceServiceTuple<S, T> serviceReferenceServiceTuple) {
+
 		return _serviceReference.compareTo(
-			serviceWrapper.getServiceReference());
+			serviceReferenceServiceTuple.getServiceReference());
 	}
 
 	public T getService() {

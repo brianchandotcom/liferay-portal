@@ -16,11 +16,13 @@ package com.liferay.journal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.configuration.admin.ConfigurationAdmin;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 
 /**
  * @author Juergen Kappler
  */
+@ConfigurationAdmin(category = "web-experience-management")
 @Meta.OCD(
 	id = "com.liferay.journal.configuration.JournalGroupServiceConfiguration"
 )

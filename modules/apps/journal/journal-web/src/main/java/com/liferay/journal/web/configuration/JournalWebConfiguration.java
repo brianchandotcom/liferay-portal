@@ -16,9 +16,12 @@ package com.liferay.journal.web.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.configuration.admin.ConfigurationAdmin;
+
 /**
  * @author Jürgen Kappler
  */
+@ConfigurationAdmin(category = "web-experience-management")
 @Meta.OCD(id = "com.liferay.journal.web.configuration.JournalWebConfiguration")
 public interface JournalWebConfiguration {
 

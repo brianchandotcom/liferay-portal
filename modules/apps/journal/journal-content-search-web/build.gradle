@@ -1,6 +1,7 @@
 dependencies {
 	compile group: "com.liferay.portal", name: "util-taglib", version: liferay.portalVersion
 	compile group: "javax.servlet.jsp", name: "jsp-api", version: "2.1"
+	compile project(":apps:configuration-admin:configuration-admin-api")
 	compile project(":apps:journal:journal-api")
 	compile project(":portal:portal-upgrade")
 }

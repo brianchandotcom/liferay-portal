@@ -28,9 +28,9 @@ import java.util.Enumeration;
 *
 * @author Carlos Sierra Andrés
 */
-public class DummyClassLoader extends ClassLoader {
+public class PassThroughClassLoader extends ClassLoader {
 
-	public DummyClassLoader(ClassLoader contextClassLoader) {
+	public PassThroughClassLoader(ClassLoader contextClassLoader) {
 		super(contextClassLoader);
 	}
 

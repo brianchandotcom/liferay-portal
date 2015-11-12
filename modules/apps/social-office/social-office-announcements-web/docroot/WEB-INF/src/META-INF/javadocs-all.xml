@@ -223,7 +223,7 @@
 				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
-				<name>javax.portlet.PortletException</name>
+				<name>PortletException</name>
 				<type>javax.portlet.PortletException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
@@ -321,7 +321,7 @@
 				<comment><![CDATA[]]></comment>
 			</return>
 			<throws>
-				<name>com.liferay.portal.kernel.exception.PortalException</name>
+				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>

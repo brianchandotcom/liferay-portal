@@ -41,6 +41,7 @@ public class MBAdminPanelApp extends BasePanelApp {
 		return MBPortletKeys.MESSAGE_BOARDS_ADMIN;
 	}
 
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS_ADMIN + ")",
 		unbind = "-"

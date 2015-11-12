@@ -38,6 +38,7 @@ public class RetryWebElementImpl implements Locatable, WebElement, WrapsDriver {
 		_webElement = webElement;
 	}
 
+	@Override
 	public void clear() {
 		try {
 			_webElement.clear();
@@ -49,6 +50,7 @@ public class RetryWebElementImpl implements Locatable, WebElement, WrapsDriver {
 		}
 	}
 
+	@Override
 	public void click() {
 		try {
 			_webElement.click();
@@ -60,6 +62,7 @@ public class RetryWebElementImpl implements Locatable, WebElement, WrapsDriver {
 		}
 	}
 
+	@Override
 	public WebElement findElement(By by) {
 		try {
 			return _webElement.findElement(by);
@@ -71,6 +74,7 @@ public class RetryWebElementImpl implements Locatable, WebElement, WrapsDriver {
 		}
 	}
 
+	@Override
 	public List<WebElement> findElements(By by) {
 		try {
 			return _webElement.findElements(by);
@@ -82,6 +86,7 @@ public class RetryWebElementImpl implements Locatable, WebElement, WrapsDriver {
 		}
 	}
 
+	@Override
 	public String getAttribute(String name) {
 		try {
 			return _webElement.getAttribute(name);
@@ -93,6 +98,7 @@ public class RetryWebElementImpl implements Locatable, WebElement, WrapsDriver {
 		}
 	}
 
+	@Override
 	public Coordinates getCoordinates() {
 		try {
 			Locatable locatable = (Locatable)_webElement;
@@ -108,6 +114,7 @@ public class RetryWebElementImpl implements Locatable, WebElement, WrapsDriver {
 		}
 	}
 
+	@Override
 	public String getCssValue(String propertyName) {
 		try {
 			return _webElement.getCssValue(propertyName);
@@ -119,6 +126,7 @@ public class RetryWebElementImpl implements Locatable, WebElement, WrapsDriver {
 		}
 	}
 
+	@Override
 	public Point getLocation() {
 		try {
 			return _webElement.getLocation();
@@ -130,6 +138,7 @@ public class RetryWebElementImpl implements Locatable, WebElement, WrapsDriver {
 		}
 	}
 
+	@Override
 	public <X> X getScreenshotAs(OutputType<X> target)
 		throws WebDriverException {
 
@@ -143,6 +152,7 @@ public class RetryWebElementImpl implements Locatable, WebElement, WrapsDriver {
 		}
 	}
 
+	@Override
 	public Dimension getSize() {
 		try {
 			return _webElement.getSize();
@@ -154,6 +164,7 @@ public class RetryWebElementImpl implements Locatable, WebElement, WrapsDriver {
 		}
 	}
 
+	@Override
 	public String getTagName() {
 		try {
 			return _webElement.getTagName();
@@ -165,6 +176,7 @@ public class RetryWebElementImpl implements Locatable, WebElement, WrapsDriver {
 		}
 	}
 
+	@Override
 	public String getText() {
 		try {
 			return _webElement.getText();
@@ -176,10 +188,12 @@ public class RetryWebElementImpl implements Locatable, WebElement, WrapsDriver {
 		}
 	}
 
+	@Override
 	public WebDriver getWrappedDriver() {
 		return WebDriverUtil.getWebDriver();
 	}
 
+	@Override
 	public boolean isDisplayed() {
 		try {
 			return _webElement.isDisplayed();
@@ -191,6 +205,7 @@ public class RetryWebElementImpl implements Locatable, WebElement, WrapsDriver {
 		}
 	}
 
+	@Override
 	public boolean isEnabled() {
 		try {
 			return _webElement.isEnabled();
@@ -202,6 +217,7 @@ public class RetryWebElementImpl implements Locatable, WebElement, WrapsDriver {
 		}
 	}
 
+	@Override
 	public boolean isSelected() {
 		try {
 			return _webElement.isSelected();
@@ -224,6 +240,7 @@ public class RetryWebElementImpl implements Locatable, WebElement, WrapsDriver {
 		}
 	}
 
+	@Override
 	public void submit() {
 		try {
 			_webElement.submit();

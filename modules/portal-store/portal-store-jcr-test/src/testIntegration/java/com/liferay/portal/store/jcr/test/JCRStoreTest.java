@@ -35,6 +35,7 @@ public class JCRStoreTest extends BaseStoreTestCase {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@Override
 	protected String getStoreType() {
 		return "com.liferay.portal.store.jcr.JCRStore";
 	}

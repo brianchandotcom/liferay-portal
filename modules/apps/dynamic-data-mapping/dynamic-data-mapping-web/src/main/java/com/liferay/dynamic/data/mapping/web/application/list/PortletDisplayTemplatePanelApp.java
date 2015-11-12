@@ -41,6 +41,7 @@ public class PortletDisplayTemplatePanelApp extends BasePanelApp {
 		return PortletKeys.PORTLET_DISPLAY_TEMPLATE;
 	}
 
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + PortletKeys.PORTLET_DISPLAY_TEMPLATE + ")",
 		unbind = "-"

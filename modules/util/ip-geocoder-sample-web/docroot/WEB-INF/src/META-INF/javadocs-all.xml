@@ -23,7 +23,7 @@
 				<comment><![CDATA[]]></comment>
 			</throws>
 			<throws>
-				<name>javax.portlet.PortletException</name>
+				<name>PortletException</name>
 				<type>javax.portlet.PortletException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
@@ -31,7 +31,7 @@
 		<method>
 			<name>init</name>
 			<throws>
-				<name>javax.portlet.PortletException</name>
+				<name>PortletException</name>
 				<type>javax.portlet.PortletException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>

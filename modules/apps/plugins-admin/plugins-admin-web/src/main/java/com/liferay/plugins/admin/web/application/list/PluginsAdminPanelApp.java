@@ -41,6 +41,7 @@ public class PluginsAdminPanelApp extends BasePanelApp {
 		return PluginsAdminPortletKeys.PLUGINS_ADMIN;
 	}
 
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + PluginsAdminPortletKeys.PLUGINS_ADMIN + ")",
 		unbind = "-"

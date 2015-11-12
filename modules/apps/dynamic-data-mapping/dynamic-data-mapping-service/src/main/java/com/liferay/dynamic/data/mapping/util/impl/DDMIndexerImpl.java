@@ -207,6 +207,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 		}
 	}
 
+	@Override
 	public QueryFilter createFieldValueQueryFilter(
 			String ddmStructureFieldName, Serializable ddmStructureFieldValue,
 			Locale locale)

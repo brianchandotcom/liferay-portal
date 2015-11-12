@@ -74,6 +74,7 @@ public class MicroblogsEntryFinderImpl
 	public static final String FIND_BY_CCNI_CCPK_ATN =
 		MicroblogsEntryFinder.class.getName() + ".findByCCNI_CCPK_ATN";
 
+	@Override
 	public int countByUserId(long userId) {
 		Session session = null;
 
@@ -115,6 +116,7 @@ public class MicroblogsEntryFinderImpl
 		}
 	}
 
+	@Override
 	public int countByU_MU(long userId, long microblogsEntryUserId) {
 		Session session = null;
 
@@ -154,6 +156,7 @@ public class MicroblogsEntryFinderImpl
 		}
 	}
 
+	@Override
 	public int countByU_ATN(long userId, String assetTagName) {
 		Session session = null;
 
@@ -194,6 +197,7 @@ public class MicroblogsEntryFinderImpl
 		}
 	}
 
+	@Override
 	public int countByCCNI_ATN(long creatorClassNameId, String assetTagName) {
 		Session session = null;
 
@@ -231,6 +235,7 @@ public class MicroblogsEntryFinderImpl
 		}
 	}
 
+	@Override
 	public int countByU_T_MU(
 		long userId, int type, long microblogsEntryUserId) {
 
@@ -272,6 +277,7 @@ public class MicroblogsEntryFinderImpl
 		}
 	}
 
+	@Override
 	public int countByCCNI_CCPK_ATN(
 		long creatorClassNameId, long creatorClassPK, String assetTagName,
 		boolean andOperator) {
@@ -315,6 +321,7 @@ public class MicroblogsEntryFinderImpl
 		}
 	}
 
+	@Override
 	public List<MicroblogsEntry> findByUserId(long userId, int start, int end) {
 		Session session = null;
 
@@ -357,6 +364,7 @@ public class MicroblogsEntryFinderImpl
 		}
 	}
 
+	@Override
 	public List<MicroblogsEntry> findByU_MU(
 		long userId, long microblogsEntryUserId, int start, int end) {
 
@@ -389,6 +397,7 @@ public class MicroblogsEntryFinderImpl
 		}
 	}
 
+	@Override
 	public List<MicroblogsEntry> findByU_ATN(
 		long userId, String assetTagName, int start, int end) {
 
@@ -422,6 +431,7 @@ public class MicroblogsEntryFinderImpl
 		}
 	}
 
+	@Override
 	public List<MicroblogsEntry> findByCCNI_ATN(
 		long creatorClassNameId, String assetTagName, int start, int end) {
 
@@ -452,6 +462,7 @@ public class MicroblogsEntryFinderImpl
 		}
 	}
 
+	@Override
 	public List<MicroblogsEntry> findByU_T_MU(
 		long userId, int type, long microblogsEntryUserId, int start, int end) {
 
@@ -484,6 +495,7 @@ public class MicroblogsEntryFinderImpl
 		}
 	}
 
+	@Override
 	public List<MicroblogsEntry> findByCCNI_CCPK_ATN(
 		long creatorClassNameId, long creatorClassPK, String assetTagName,
 		boolean andOperator, int start, int end) {

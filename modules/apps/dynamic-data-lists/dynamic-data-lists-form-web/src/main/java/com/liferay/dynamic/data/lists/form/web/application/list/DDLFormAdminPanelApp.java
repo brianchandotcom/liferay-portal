@@ -41,6 +41,7 @@ public class DDLFormAdminPanelApp extends BasePanelApp {
 		return DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN;
 	}
 
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN + ")",
 		unbind = "-"

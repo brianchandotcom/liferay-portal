@@ -70,6 +70,7 @@ public class AssetTagsSearchFacet extends BaseJSPSearchFacet {
 		return "/facets/view/asset_tags.jsp";
 	}
 
+	@Override
 	public String getFacetClassName() {
 		return MultiValueFacet.class.getName();
 	}

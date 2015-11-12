@@ -29,18 +29,22 @@ import org.osgi.service.component.annotations.Component;
 public class EditPageAttachmentAlwaysAllowDoAsUser
 	implements AlwaysAllowDoAsUser {
 
+	@Override
 	public Collection<String> getActionNames() {
 		return Collections.emptyList();
 	}
 
+	@Override
 	public Collection<String> getMVCRenderCommandNames() {
 		return _mvcRenderCommandNames;
 	}
 
+	@Override
 	public Collection<String> getPaths() {
 		return Collections.emptyList();
 	}
 
+	@Override
 	public Collection<String> getStrutsActions() {
 		return Collections.emptyList();
 	}

@@ -41,6 +41,7 @@ public class MyAccountPanelApp extends BasePanelApp {
 		return MyAccountPortletKeys.MY_ACCOUNT;
 	}
 
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + MyAccountPortletKeys.MY_ACCOUNT + ")",
 		unbind = "-"

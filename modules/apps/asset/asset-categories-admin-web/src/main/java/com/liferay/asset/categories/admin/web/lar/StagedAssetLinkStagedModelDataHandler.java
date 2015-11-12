@@ -237,11 +237,11 @@ public class StagedAssetLinkStagedModelDataHandler
 
 		DynamicQuery dynamicQuery = _assetLinkLocalService.dynamicQuery();
 
-		Property entryId1IdProperty = PropertyFactoryUtil.forName("entry1Id");
+		Property entryId1IdProperty = PropertyFactoryUtil.forName("entryId1");
 
 		dynamicQuery.add(entryId1IdProperty.eq(assetEntry1DynamicQuery));
 
-		Property entryId2IdProperty = PropertyFactoryUtil.forName("entry2Id");
+		Property entryId2IdProperty = PropertyFactoryUtil.forName("entryId2");
 
 		dynamicQuery.add(entryId2IdProperty.eq(assetEntry2DynamicQuery));
 
@@ -267,7 +267,6 @@ public class StagedAssetLinkStagedModelDataHandler
 
 			assetEntry1DynamicQuery.add(groupIdCriterion);
 			assetEntry2DynamicQuery.add(groupIdCriterion);
-			dynamicQuery.add(groupIdCriterion);
 		}
 
 		return dynamicQuery;

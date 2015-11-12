@@ -1099,7 +1099,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				</not>
 				<then>
 					<exec executable="jstack">
-						<arg value="-F" />
+						<arg value="-l" />
 						<arg value="${jps.pid}" />
 					</exec>
 				</then>

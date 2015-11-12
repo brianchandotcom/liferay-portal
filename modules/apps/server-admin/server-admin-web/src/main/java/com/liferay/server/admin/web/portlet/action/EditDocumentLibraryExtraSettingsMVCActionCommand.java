@@ -60,9 +60,7 @@ public class EditDocumentLibraryExtraSettingsMVCActionCommand
 			convert(actionRequest, actionResponse);
 		}
 
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		sendRedirect(actionRequest, actionResponse, redirect);
+		sendRedirect(actionRequest, actionResponse);
 	}
 
 	protected int addCustomField(long companyId, String name, String preset)

@@ -115,9 +115,7 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 			_exportImportService.exportLayoutsAsFileInBackground(
 				exportImportConfiguration);
 
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-			sendRedirect(actionRequest, actionResponse, redirect);
+			sendRedirect(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
 			SessionErrors.add(actionRequest, e.getClass());

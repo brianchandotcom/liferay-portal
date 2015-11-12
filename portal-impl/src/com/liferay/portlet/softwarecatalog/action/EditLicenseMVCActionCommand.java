@@ -51,9 +51,7 @@ public class EditLicenseMVCActionCommand extends BaseMVCActionCommand {
 			deleteLicense(actionRequest);
 		}
 
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		sendRedirect(actionRequest, actionResponse, redirect);
+		sendRedirect(actionRequest, actionResponse);
 	}
 
 	protected void deleteLicense(ActionRequest actionRequest) throws Exception {

@@ -115,8 +115,6 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		try {
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
-
 			if (cmd.equals(Constants.ADD_TEMP)) {
 				_importLayoutsMVCActionCommand.addTempFileEntry(
 					actionRequest,
@@ -139,7 +137,7 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 
 				exportData(actionRequest, portlet);
 
-				sendRedirect(actionRequest, actionResponse, redirect);
+				sendRedirect(actionRequest, actionResponse);
 			}
 			else if (cmd.equals(Constants.IMPORT)) {
 				hideDefaultSuccessMessage(actionRequest);
@@ -155,7 +153,7 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 						SessionMessages.KEY_SUFFIX_CLOSE_REFRESH_PORTLET,
 					portlet.getPortletId());
 
-				sendRedirect(actionRequest, actionResponse, redirect);
+				sendRedirect(actionRequest, actionResponse);
 			}
 		}
 		catch (Exception e) {

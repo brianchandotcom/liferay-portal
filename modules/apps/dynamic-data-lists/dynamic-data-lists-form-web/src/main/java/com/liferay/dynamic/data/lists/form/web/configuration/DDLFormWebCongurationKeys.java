@@ -14,23 +14,12 @@
 
 package com.liferay.dynamic.data.lists.form.web.configuration;
 
-import com.liferay.portal.kernel.util.GetterUtil;
-
 /**
  * @author Rafael Praxedes
  */
-public class DDLFormWebConfigurationValues {
+public class DDLFormWebCongurationKeys {
 
 	public static final String DDL_FORM_WEB_EMAIL_FORM_ENTRY_NOTIFICATION_BODY =
-		GetterUtil.getString(
-			DDLFormWebConfigurationUtil.get(
-				DDLFormWebCongurationKeys.
-					DDL_FORM_WEB_EMAIL_FORM_ENTRY_NOTIFICATION_BODY));
-
-	public static final String DEFAULT_DISPLAY_VIEW = GetterUtil.getString(
-		DDLFormWebConfigurationUtil.get("default.display.view"));
-
-	public static String[] DISPLAY_VIEWS = DDLFormWebConfigurationUtil.getArray(
-		"display.views");
+		"email.form.entry.notification.body";
 
 }

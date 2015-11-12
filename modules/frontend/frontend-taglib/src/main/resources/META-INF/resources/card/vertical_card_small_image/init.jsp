@@ -14,9 +14,9 @@
  */
 --%>
 
-<%@ include file="/card/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
-cssClass = GetterUtil.getString(request.getAttribute("liferay-frontend:vertical-card-small-image:cssClass"));
+String cssClass = GetterUtil.getString(request.getAttribute("liferay-frontend:vertical-card-small-image:cssClass"));
 String src = GetterUtil.getString(request.getAttribute("liferay-frontend:vertical-card-small-image:src"));
 %>

@@ -1970,7 +1970,12 @@ ${tomcat-gc-log}
 
 	<macrodef name="set-portal-impl-portal-ext-properties">
 		<sequential>
-			<generate-jdbc-properties properties.file="portal-impl/src/portal-ext.properties" />
+			<generate-jdbc-properties properties.file="portal-impl/src/portal-ext.properties">
+				<post-action>
+					<echo file="@{properties.file}" append="true"><![CDATA[
+javascript.single.page.application.timeout=300000]]></echo>
+				</post-action>
+			</generate-jdbc-properties>
 		</sequential>
 	</macrodef>
 

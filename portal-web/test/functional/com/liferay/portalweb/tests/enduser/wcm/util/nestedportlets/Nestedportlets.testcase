@@ -3,18 +3,6 @@
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />
-
-		<execute macro="Page#addPG">
-			<var name="pageName" value="Nested Portlets Page" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Nested Portlets Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Nested Portlets" />
-		</execute>
 	</set-up>
 
 	<command name="ViewWCDNestedPortlets" priority="4">

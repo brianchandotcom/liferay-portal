@@ -75,6 +75,8 @@ public class PortletConfigurationIconTracker {
 	protected static Set<String> getPaths(PortletRequest portletRequest) {
 		Set<String> paths = new HashSet<>();
 
+		Set<String> defaultViews = new HashSet<>();
+
 		String portletId = getPortletId(portletRequest);
 
 		for (PortletConfigurationIconLocator portletConfigurationIconLocator :
@@ -83,10 +85,11 @@ public class PortletConfigurationIconTracker {
 			String path = portletConfigurationIconLocator.getPath(
 				portletRequest);
 
-			List<String> defaultViews =
+			List<String> curDefaultViews =
 				portletConfigurationIconLocator.getDefaultViews(portletId);
 
-			String[] defaultViewsArray = ArrayUtil.toStringArray(defaultViews);
+			String[] defaultViewsArray = ArrayUtil.toStringArray(
+				curDefaultViews);
 
 			if (Validator.isNotNull(path) &&
 				!ArrayUtil.contains(defaultViewsArray, path)) {
@@ -96,7 +99,19 @@ public class PortletConfigurationIconTracker {
 				continue;
 			}
 
-			paths.addAll(defaultViews);
+			defaultViews.addAll(curDefaultViews);
+		}
+
+		String[] defaultViewsArray = ArrayUtil.toStringArray(defaultViews);
+
+		if (paths.isEmpty()) {
+			return defaultViews;
+		}
+
+		for (String path : paths) {
+			if (ArrayUtil.contains(defaultViewsArray, path)) {
+				return defaultViews;
+			}
 		}
 
 		return paths;

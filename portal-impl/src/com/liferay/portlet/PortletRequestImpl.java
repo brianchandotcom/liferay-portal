@@ -668,7 +668,11 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 		_portlet = portlet;
 		_portletName = portlet.getPortletId();
-		_publicRenderParameters = PublicRenderParametersPool.get(request, plid);
+
+		PortletApp portletApp = portlet.getPortletApp();
+
+		_publicRenderParameters = PublicRenderParametersPool.get(
+			request, plid, portletApp.isWARFile());
 
 		if (invokerPortlet != null) {
 			if (invokerPortlet.isStrutsPortlet() ||
@@ -679,8 +683,6 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		}
 
 		String portletNamespace = PortalUtil.getPortletNamespace(_portletName);
-
-		PortletApp portletApp = portlet.getPortletApp();
 
 		boolean warFile = portletApp.isWARFile();
 
@@ -978,7 +980,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 	private HttpServletRequest _portletRequestDispatcherRequest;
 	private PortletPreferences _preferences;
 	private Profile _profile;
-	private Map<String, String[]> _publicRenderParameters;
+	private PublicRenderParameters _publicRenderParameters;
 	private String _remoteUser;
 	private long _remoteUserId;
 	private HttpServletRequest _request;

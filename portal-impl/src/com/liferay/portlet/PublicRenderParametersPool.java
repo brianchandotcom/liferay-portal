@@ -16,6 +16,7 @@ package com.liferay.portlet;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -34,7 +35,29 @@ import javax.servlet.http.HttpSession;
  */
 public class PublicRenderParametersPool {
 
-	public static Map<String, String[]> get(
+	public static PublicRenderParameters get(
+		HttpServletRequest request, long plid, boolean isWarFile) {
+
+		Map<String, String[]> threadLocalMap = null;
+
+		Map<String, String[]> map = get(request, plid);
+
+		if (isWarFile) {
+			if (_publicRenderParametersThreadLocal.get() == null) {
+				_publicRenderParametersThreadLocal.set(
+					new HashMap<String, String[]>());
+			}
+			else {
+				map.putAll(_publicRenderParametersThreadLocal.get());
+			}
+
+			threadLocalMap = _publicRenderParametersThreadLocal.get();
+		}
+
+		return new PublicRenderParameters(map, threadLocalMap);
+	}
+
+	protected static Map<String, String[]> get(
 		HttpServletRequest request, long plid) {
 
 		if (PropsValues.PORTLET_PUBLIC_RENDER_PARAMETER_DISTRIBUTION_LAYOUT) {
@@ -87,5 +110,10 @@ public class PublicRenderParametersPool {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PublicRenderParametersPool.class);
+
+	private static final ThreadLocal<Map<String, String[]>>
+		_publicRenderParametersThreadLocal = new AutoResetThreadLocal<>(
+			PublicRenderParametersPool.class +
+				"._publicRenderParametersThreadLocal");
 
 }

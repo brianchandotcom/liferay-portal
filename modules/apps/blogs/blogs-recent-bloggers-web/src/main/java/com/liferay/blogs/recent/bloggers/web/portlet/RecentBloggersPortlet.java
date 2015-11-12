@@ -15,8 +15,8 @@
 package com.liferay.blogs.recent.bloggers.web.portlet;
 
 import com.liferay.blogs.recent.bloggers.web.constants.RecentBloggersPortletKeys;
-import com.liferay.blogs.recent.bloggers.web.upgrade.RecentBloggersWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.model.Release;
 
 import javax.portlet.Portlet;
 
@@ -50,9 +50,10 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class RecentBloggersPortlet extends MVCPortlet {
 
-	@Reference(unbind = "-")
-	protected void setRecentBloggersWebUpgrade(
-		RecentBloggersWebUpgrade recentBloggersWebUpgrade) {
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.blogs.recent.bloggers.web)(release.schema.version=1.0.0))"
+	)
+	protected void setRelease(Release release) {
 	}
 
 }

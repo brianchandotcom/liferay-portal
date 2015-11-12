@@ -3,6 +3,7 @@ dependencies {
 	compile group: "javax.servlet.jsp", name: "jsp-api", version: "2.1"
 	compile group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
 	compile project(":apps:application-list:application-list-api")
+	compile project(":portal:portal-upgrade")
 }
 
 liferay {

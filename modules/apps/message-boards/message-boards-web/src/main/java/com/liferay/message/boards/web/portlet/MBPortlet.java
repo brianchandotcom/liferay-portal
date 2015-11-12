@@ -15,8 +15,8 @@
 package com.liferay.message.boards.web.portlet;
 
 import com.liferay.message.boards.web.constants.MBPortletKeys;
-import com.liferay.message.boards.web.upgrade.MBWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.model.Release;
 
 import javax.portlet.Portlet;
 
@@ -60,8 +60,10 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class MBPortlet extends MVCPortlet {
 
-	@Reference(unbind = "-")
-	protected void setMBWebUpgrade(MBWebUpgrade mbWebUpgrade) {
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.message.boards.web)(release.schema.version=1.0.0))"
+	)
+	protected void setRelease(Release release) {
 	}
 
 }

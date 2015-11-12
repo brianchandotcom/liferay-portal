@@ -24,8 +24,10 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
+import com.liferay.dynamic.data.mapping.util.impl.DDMImpl;
 import com.liferay.dynamic.data.mapping.util.impl.FieldsToDDMFormValuesConverterImpl;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 
 import java.util.List;
 
@@ -52,7 +54,7 @@ public class FieldsToDDMFormValuesConverterTest extends BaseDDMTestCase {
 		setUpDDMFormJSONDeserializerUtil();
 		setUpDDMFormJSONSerializerUtil();
 		setUpDDMStructureLocalServiceUtil();
-		setUpFieldsToDDMFormValuesConverterUtil();
+		setUpFieldsToDDMFormValuesConverter();
 		setUpHtmlUtil();
 		setUpJSONFactoryUtil();
 		setUpLanguageUtil();
@@ -253,12 +255,11 @@ public class FieldsToDDMFormValuesConverterTest extends BaseDDMTestCase {
 			ddmFormFieldValues.get(1));
 	}
 
-	protected void setUpFieldsToDDMFormValuesConverterUtil() {
-		FieldsToDDMFormValuesConverterUtil fieldsToDDMFormValuesConverterUtil =
-			new FieldsToDDMFormValuesConverterUtil();
+	protected void setUpFieldsToDDMFormValuesConverter() throws Exception {
+		java.lang.reflect.Field field = ReflectionUtil.getDeclaredField(
+			FieldsToDDMFormValuesConverterImpl.class, "_ddm");
 
-		fieldsToDDMFormValuesConverterUtil.setFieldsToDDMFormValuesConverter(
-			new FieldsToDDMFormValuesConverterImpl());
+		field.set(_fieldsToDDMFormValuesConverterImpl, new DDMImpl());
 	}
 
 	protected void testDDMFormFieldValue(

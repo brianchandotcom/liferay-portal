@@ -386,6 +386,10 @@ public class AssetUtil {
 				AssetRendererFactoryRegistryUtil.
 					getAssetRendererFactoryByClassName(className);
 
+			if (Validator.isNull(assetRendererFactory.getPortletId())) {
+				continue;
+			}
+
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(
 				themeDisplay.getCompanyId(),
 				assetRendererFactory.getPortletId());

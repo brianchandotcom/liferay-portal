@@ -17,7 +17,6 @@ package com.liferay.poshi.runner.selenium;
 import com.liferay.poshi.runner.util.PropsValues;
 
 import org.openqa.selenium.WebDriver;
-
 import org.openqa.selenium.WebElement;
 
 /**

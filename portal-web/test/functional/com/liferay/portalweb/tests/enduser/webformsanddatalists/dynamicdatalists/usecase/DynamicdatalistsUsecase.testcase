@@ -1135,6 +1135,8 @@
 			<var name="ddlListRecordName" value="Text" />
 		</execute>
 
+		<execute function="Close" locator1="title=Data Definition Page Page Name - Liferay" />
+
 		<execute function="SelectWindow" locator1="title=Users and Organizations - Control Panel - Liferay" />
 
 		<execute macro="Page#gotoContentCP">
@@ -1151,7 +1153,18 @@
 			<var name="roleName" value="Guest" />
 		</execute>
 
-		<execute function="SelectWindow" locator1="title=Data Definition Page Name - Liferay" />
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#impersonateCP">
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="false" />
+			<var name="pageName" value="Data Definition Page Name" />
+		</execute>
 
 		<execute macro="DDLList#assertCannotDeleteRecordViaDDLDisplayPG" />
 

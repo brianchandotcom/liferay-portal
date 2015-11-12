@@ -15,10 +15,12 @@
 package com.liferay.iframe.web.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
+import com.liferay.configuration.admin.ConfigurationAdmin;
 
 /**
  * @author Juergen Kappler
  */
+@ConfigurationAdmin(category = "web-experience-management")
 @Meta.OCD(
 	id = "com.liferay.iframe.web.configuration.IFramePortletInstanceConfiguration"
 )

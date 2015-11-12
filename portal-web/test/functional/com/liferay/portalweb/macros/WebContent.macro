@@ -191,12 +191,6 @@
 						<isset var="webContentText" />
 						<then>
 							<execute function="Type" locator1="DDMField#TEXT" value1="${webContentText}" />
-
-							<execute function="Click" locator1="Button#PUBLISH" />
-
-							<execute function="SelectFrame" value1="relative=top" />
-
-							<execute function="AssertTextEquals" locator1="WCD#WEB_CONTENT_CONTENT" value1="${webContentText}" />
 						</then>
 					</if>
 

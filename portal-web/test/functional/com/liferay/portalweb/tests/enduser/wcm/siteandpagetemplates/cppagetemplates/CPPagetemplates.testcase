@@ -185,8 +185,6 @@
 	</command>
 
 	<command name="EditPageTemplateDescription" priority="4">
-		<property name="portal.acceptance" value="true" />
-
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Page Templates" />
 		</execute>

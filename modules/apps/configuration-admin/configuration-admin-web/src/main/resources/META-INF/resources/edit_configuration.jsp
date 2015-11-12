@@ -60,13 +60,7 @@ renderResponse.setTitle(configurationModel.getName());
 
 <aui:script>
 	function <portlet:namespace />deleteConfiguration() {
-		<portlet:namespace />setDDMFieldNamespaceAndSubmit('<%= deleteConfigurationActionURL %>');
-	}
-
-	function <portlet:namespace />setDDMFieldNamespaceAndSubmit(actionURL) {
-		if (actionURL) {
-			document.<portlet:namespace />fm.action = actionURL;
-		}
+		document.<portlet:namespace />fm.action = '<%= deleteConfigurationActionURL %>';
 
 		submitForm(document.<portlet:namespace />fm);
 	}

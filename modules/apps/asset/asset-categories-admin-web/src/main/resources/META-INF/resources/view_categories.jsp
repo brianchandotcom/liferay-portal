@@ -83,6 +83,13 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 	includeCheckBox="<%= true %>"
 >
 	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-filters>
+			<liferay-frontend:management-bar-navigation
+				navigationKeys='<%= new String[] {"all"} %>'
+				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+			/>
+		</liferay-frontend:management-bar-filters>
+
 		<liferay-portlet:renderURL varImpl="displayStyleURL">
 			<liferay-portlet:param name="mvcPath" value="/view_categories.jsp" />
 			<liferay-portlet:param name="redirect" value="<%= currentURL %>" />

@@ -47,44 +47,43 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Wiki" />
+			<var name="portletName" value="Blogs" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WikiPage#addFrontPagePG">
-			<var name="wikiNodeName" value="Main" />
-			<var name="wikiPageContent" value="Wiki FrontPage Content" />
+		<execute macro="Blogs#addEntryWithUploadedCoverImage">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+			<var name="navTab" value="Upload Image" />
+			<var name="uploadFileName" value="Document_1.jpg" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="BlogsEntry#saveAsDraft" />
+
+		<execute function="Click" locator1="BlogsEditEntry#DELETE_COVER_IMAGE_BUTTON" />
+
+		<execute function="Click#pauseClickAt" locator1="AlloyEditor#CONTENT_FIELD" />
+
+		<execute function="Click" locator1="AlloyEditor#CONTENT_ADD_BUTTON" />
+
+		<execute function="Click" locator1="AlloyEditor#CONTENT_ADD_MENUBAR_IMAGE" />
+
+		<execute macro="ItemSelector#selectBlogImage">
+			<var name="imageFileName" value="Document_1.jpg" />
 		</execute>
 
-		<execute macro="WikiPage#addAttachmentViaPageDetailsPG">
-			<var name="attachmentFileName" value="Document_1.jpg" />
-			<var name="wikiPageTitle" value="FrontPage" />
+		<execute macro="BlogsEntry#publish" />
+
+		<execute macro="BlogsNavigator#gotoEntryPG">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute function="AssertClick" locator1="Wiki#FRONTPAGE_DEFAULT_MESSAGE" value1="This page is empty. Edit it to add some text." />
-
-		<execute function="AssertClick" locator1="Wiki#PAGE_TABS_CONTENT" value1="Content" />
-
-		<execute macro="DMDocument#linkImage">
-			<var name="documentName" value="Document_1.jpg" />
-		</execute>
-
-		<execute function="AssertClick#assertTextClickAtAndWaitCKEditor" locator1="Button#PUBLISH" value1="Publish" />
-
-		<var name="key_htmlTags" value="p/img[contains(@src,'Document_1.jpg')]" />
-
-		<execute function="AssertElementPresent" locator1="Wiki#HTML_BODY" />
+		<execute function="AssertElementPresent" locator1="//div[contains(@class,'entry-content')]/p/img[contains(@src,'Document_1.jpg')]" />
 	</command>
 
 	<command name="ViewCKEditorsInheritanceNo" priority="4">

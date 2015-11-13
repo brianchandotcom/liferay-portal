@@ -27,15 +27,22 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.internal.Coordinates;
 import org.openqa.selenium.internal.Locatable;
 import org.openqa.selenium.internal.WrapsDriver;
+import org.openqa.selenium.remote.FileDetector;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.remote.RemoteWebElement;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Michael Hashimoto
  */
-public class RetryWebElementImpl implements Locatable, WebElement, WrapsDriver {
+public class RetryWebElementImpl extends RemoteWebElement
+	implements Locatable, WebElement, WrapsDriver {
 
 	public RetryWebElementImpl(String locator, WebElement webElement) {
 		_locator = locator;
 		_webElement = webElement;
+
+		_remoteWebElement = (RemoteWebElement)_webElement;
 	}
 
 	@Override
@@ -63,6 +70,18 @@ public class RetryWebElementImpl implements Locatable, WebElement, WrapsDriver {
 	}
 
 	@Override
+	public boolean equals(Object obj) {
+		try {
+			return _remoteWebElement.equals(obj);
+		}
+		catch (StaleElementReferenceException sere) {
+			_refreshWebElement(sere);
+
+			return _remoteWebElement.equals(obj);
+		}
+	}
+
+	@Override
 	public WebElement findElement(By by) {
 		try {
 			return _webElement.findElement(by);
@@ -75,6 +94,66 @@ public class RetryWebElementImpl implements Locatable, WebElement, WrapsDriver {
 	}
 
 	@Override
+	public WebElement findElementByClassName(String using) {
+		try {
+			return _remoteWebElement.findElementByClassName(using);
+		}
+		catch (StaleElementReferenceException sere) {
+			_refreshWebElement(sere);
+
+			return _remoteWebElement.findElementByClassName(using);
+		}
+	}
+
+	@Override
+	public WebElement findElementByCssSelector(String using) {
+		try {
+			return _remoteWebElement.findElementByCssSelector(using);
+		}
+		catch (StaleElementReferenceException sere) {
+			_refreshWebElement(sere);
+
+			return _remoteWebElement.findElementByCssSelector(using);
+		}
+	}
+
+	@Override
+	public WebElement findElementByPartialLinkText(String using) {
+		try {
+			return _remoteWebElement.findElementByPartialLinkText(using);
+		}
+		catch (StaleElementReferenceException sere) {
+			_refreshWebElement(sere);
+
+			return _remoteWebElement.findElementByPartialLinkText(using);
+		}
+	}
+
+	@Override
+	public WebElement findElementByTagName(String using) {
+		try {
+			return _remoteWebElement.findElementByTagName(using);
+		}
+		catch (StaleElementReferenceException sere) {
+			_refreshWebElement(sere);
+
+			return _remoteWebElement.findElementByTagName(using);
+		}
+	}
+
+	@Override
+	public WebElement findElementByXPath(String using) {
+		try {
+			return _remoteWebElement.findElementByXPath(using);
+		}
+		catch (StaleElementReferenceException sere) {
+			_refreshWebElement(sere);
+
+			return _remoteWebElement.findElementByXPath(using);
+		}
+	}
+
+	@Override
 	public List<WebElement> findElements(By by) {
 		try {
 			return _webElement.findElements(by);
@@ -83,6 +162,66 @@ public class RetryWebElementImpl implements Locatable, WebElement, WrapsDriver {
 			_refreshWebElement(sere);
 
 			return _webElement.findElements(by);
+		}
+	}
+
+	@Override
+	public List<WebElement> findElementsByClassName(String using) {
+		try {
+			return _remoteWebElement.findElementsByClassName(using);
+		}
+		catch (StaleElementReferenceException sere) {
+			_refreshWebElement(sere);
+
+			return _remoteWebElement.findElementsByClassName(using);
+		}
+	}
+
+	@Override
+	public List<WebElement> findElementsByCssSelector(String using) {
+		try {
+			return _remoteWebElement.findElementsByCssSelector(using);
+		}
+		catch (StaleElementReferenceException sere) {
+			_refreshWebElement(sere);
+
+			return _remoteWebElement.findElementsByCssSelector(using);
+		}
+	}
+
+	@Override
+	public List<WebElement> findElementsByPartialLinkText(String using) {
+		try {
+			return _remoteWebElement.findElementsByPartialLinkText(using);
+		}
+		catch (StaleElementReferenceException sere) {
+			_refreshWebElement(sere);
+
+			return _remoteWebElement.findElementsByPartialLinkText(using);
+		}
+	}
+
+	@Override
+	public List<WebElement> findElementsByTagName(String using) {
+		try {
+			return _remoteWebElement.findElementsByTagName(using);
+		}
+		catch (StaleElementReferenceException sere) {
+			_refreshWebElement(sere);
+
+			return _remoteWebElement.findElementsByTagName(using);
+		}
+	}
+
+	@Override
+	public List<WebElement> findElementsByXPath(String using) {
+		try {
+			return _remoteWebElement.findElementsByXPath(using);
+		}
+		catch (StaleElementReferenceException sere) {
+			_refreshWebElement(sere);
+
+			return _remoteWebElement.findElementsByXPath(using);
 		}
 	}
 
@@ -123,6 +262,18 @@ public class RetryWebElementImpl implements Locatable, WebElement, WrapsDriver {
 			_refreshWebElement(sere);
 
 			return _webElement.getCssValue(propertyName);
+		}
+	}
+
+	@Override
+	public String getId() {
+		try {
+			return _remoteWebElement.getId();
+		}
+		catch (StaleElementReferenceException sere) {
+			_refreshWebElement(sere);
+
+			return _remoteWebElement.getId();
 		}
 	}
 
@@ -194,6 +345,18 @@ public class RetryWebElementImpl implements Locatable, WebElement, WrapsDriver {
 	}
 
 	@Override
+	public int hashCode() {
+		try {
+			return _remoteWebElement.hashCode();
+		}
+		catch (StaleElementReferenceException sere) {
+			_refreshWebElement(sere);
+
+			return _remoteWebElement.hashCode();
+		}
+	}
+
+	@Override
 	public boolean isDisplayed() {
 		try {
 			return _webElement.isDisplayed();
@@ -241,6 +404,42 @@ public class RetryWebElementImpl implements Locatable, WebElement, WrapsDriver {
 	}
 
 	@Override
+	public void setFileDetector(FileDetector detector) {
+		try {
+			_remoteWebElement.setFileDetector(detector);
+		}
+		catch (StaleElementReferenceException sere) {
+			_refreshWebElement(sere);
+
+			_remoteWebElement.setFileDetector(detector);
+		}
+	}
+
+	@Override
+	public void setId(String id) {
+		try {
+			_remoteWebElement.setId(id);
+		}
+		catch (StaleElementReferenceException sere) {
+			_refreshWebElement(sere);
+
+			_remoteWebElement.setId(id);
+		}
+	}
+
+	@Override
+	public void setParent(RemoteWebDriver parent) {
+		try {
+			_remoteWebElement.setParent(parent);
+		}
+		catch (StaleElementReferenceException sere) {
+			_refreshWebElement(sere);
+
+			_remoteWebElement.setParent(parent);
+		}
+	}
+
+	@Override
 	public void submit() {
 		try {
 			_webElement.submit();
@@ -266,11 +465,14 @@ public class RetryWebElementImpl implements Locatable, WebElement, WrapsDriver {
 		WebDriver webDriver = WebDriverUtil.getWebDriver();
 
 		_webElement = webDriver.findElement(WebDriverHelper.getBy(_locator));
+
+		_remoteWebElement = (RemoteWebElement)_webElement;
 	}
 
 	private static final int _RETRY_WAIT_TIME = 3;
 
 	private final String _locator;
+	private RemoteWebElement _remoteWebElement;
 	private WebElement _webElement;
 
 }

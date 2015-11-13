@@ -59,7 +59,7 @@ iteratorURL.setParameter("vocabularyId", String.valueOf(vocabularyId));
 iteratorURL.setParameter("displayStyle", displayStyle);
 iteratorURL.setParameter("keywords", keywords);
 
-SearchContainer categoriesSearchContainer = new SearchContainer(renderRequest, iteratorURL, null, "there-are-no-categories.-you-can-add-a-category-by-clicking-the-plus-button-on-the-bottom-right-corner");
+SearchContainer categoriesSearchContainer = new SearchContainer(renderRequest, iteratorURL, null, "there-are-no-categories.-you-can-add-a-category-by-clicking-the-plus-button-on-the-right-bottom-corner");
 
 String orderByCol = ParamUtil.getString(request, "orderByCol", "create-date");
 

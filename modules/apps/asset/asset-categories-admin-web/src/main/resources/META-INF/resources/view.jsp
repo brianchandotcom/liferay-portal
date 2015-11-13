@@ -21,7 +21,7 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 
 String keywords = ParamUtil.getString(request, "keywords");
 
-SearchContainer vocabulariesSearchContainer = new SearchContainer(renderRequest, renderResponse.createRenderURL(), null, "there-are-no-vocabularies.-you-can-add-a-vocabulary-by-clicking-the-plus-button-on-the-bottom-right-corner");
+SearchContainer vocabulariesSearchContainer = new SearchContainer(renderRequest, renderResponse.createRenderURL(), null, "there-are-no-vocabularies.-you-can-add-a-vocabulary-by-clicking-the-plus-button-on-the-right-bottom-corner");
 
 String orderByCol = ParamUtil.getString(request, "orderByCol", "create-date");
 

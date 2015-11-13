@@ -2432,18 +2432,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		int tabDiff = lineTabCount - previousLineTabCount;
 
-		if (previousLine.endsWith(" extends")) {
-			return getCombinedLinesContent(
-				content, fileName, line, trimmedLine, lineLength, lineCount,
-				previousLine, "extends", tabDiff, false, true, 0);
-		}
-
-		if (previousLine.endsWith(" implements")) {
-			return getCombinedLinesContent(
-				content, fileName, line, trimmedLine, lineLength, lineCount,
-				previousLine, "implements ", tabDiff, false, true, 0);
-		}
-
 		if (previousLine.endsWith("= new")) {
 			return getCombinedLinesContent(
 				content, fileName, line, trimmedLine, lineLength, lineCount,
@@ -2503,9 +2491,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					previousLine, null, tabDiff, false, true, 0);
 			}
 
-			if ((trimmedLine.startsWith("extends ") ||
-				 trimmedLine.startsWith("implements ") ||
-				 trimmedLine.startsWith("throws")) &&
+			if (trimmedLine.startsWith("throws") &&
 				(line.endsWith(StringPool.OPEN_CURLY_BRACE) ||
 				 line.endsWith(StringPool.SEMICOLON)) &&
 				(lineTabCount == (previousLineTabCount + 1))) {
@@ -3258,40 +3244,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			 trimmedLine.startsWith("protected ") ||
 			 trimmedLine.startsWith("public "))) {
 
-			String firstLine = null;
+			int x = line.indexOf(" throws ");
 
-			int x = 0;
-
-			while (true) {
-				int y = line.indexOf(" extends ", x);
-
-				if (y != -1) {
-					firstLine = line.substring(0, y);
-
-					if (StringUtil.count(firstLine, StringPool.GREATER_THAN) !=
-							StringUtil.count(firstLine, StringPool.LESS_THAN)) {
-
-						x = y + 1;
-
-						continue;
-					}
-				}
-				else {
-					y = line.indexOf(" implements ");
-
-					if (y == -1) {
-						y = line.indexOf(" throws ");
-					}
-
-					if (y == -1) {
-						break;
-					}
-
-					firstLine = line.substring(0, y);
-				}
-
+			if (x != -1) {
+				String firstLine = line.substring(0, x);
 				String secondLine =
-					indent + StringPool.TAB + line.substring(y + 1);
+					indent + StringPool.TAB + line.substring(x + 1);
 
 				return StringUtil.replace(
 					content, "\n" + line + "\n",

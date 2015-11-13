@@ -16,10 +16,6 @@ package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.util.StringBundler;
 
-import java.io.IOException;
-
-import java.sql.SQLException;
-
 /**
  * @author Brian Wing Shun Chan
  */
@@ -106,23 +102,29 @@ public class UpgradeCompanyId
 		}
 
 		@Override
-		public void update() throws IOException, SQLException {
+		public void update() throws Exception {
+			String updateSQL =
+				"update DLSyncEvent set companyId = ? where typePK = ?";
 
 			// DLFileEntry
 
 			String selectSQL =
-				"select companyId from DLFileEntry where DLSyncEvent.type_ = " +
-					"'file' and DLFileEntry.fileEntryId = DLSyncEvent.typePK";
+				"select DLFileEntry.companyId, DLSyncEvent.typePK " +
+					"from DLFileEntry, DLSyncEvent " +
+					"where DLSyncEvent.type_ = 'file' " +
+					"and DLFileEntry.fileEntryId = DLSyncEvent.typePK";
 
-			runSQL(getUpdateSQL(selectSQL));
+			update(selectSQL, updateSQL);
 
 			// DLFolder
 
 			selectSQL =
-				"select companyId from DLFolder where DLSyncEvent.type_ = " +
-					"'folder' and DLFolder.folderId = DLSyncEvent.typePK";
+				"select DLFolder.companyId, DLSyncEvent.typePK " +
+					"from DLFolder, DLSyncEvent " +
+					"where DLSyncEvent.type_ = 'folder' " +
+					"and DLFolder.folderId = DLSyncEvent.typePK";
 
-			runSQL(getUpdateSQL(selectSQL));
+			update(selectSQL, updateSQL);
 		}
 
 	}
@@ -130,51 +132,58 @@ public class UpgradeCompanyId
 	protected class PortletPreferencesTableUpdater extends TableUpdater {
 
 		public PortletPreferencesTableUpdater(String tableName) {
-			super(tableName, "", "");
+			super(tableName, "", "ownerId");
 		}
 
 		@Override
-		public void update() throws IOException, SQLException {
+		public void update() throws Exception {
+			String updateSQL = getUpdateSQL();
 
 			// Company
 
 			String selectSQL =
-				"select companyId from Company where Company.companyId = " +
-					"PortletPreferences.ownerId";
+				"select Company.companyId, PortletPreferences.ownerId " +
+					"from Company, PortletPreferences " +
+					"where Company.companyId = PortletPreferences.ownerId";
 
-			runSQL(getUpdateSQL(selectSQL));
+			update(selectSQL, updateSQL);
 
 			// Group
 
 			selectSQL =
-				"select companyId from Group_ where Group_.organizationId = " +
-					"PortletPreferences.ownerId";
+				"select Group_.companyId, PortletPreferences.ownerId " +
+					"from Group_, PortletPreferences " +
+					"where Group_.groupId = PortletPreferences.ownerId";
 
-			runSQL(getUpdateSQL(selectSQL));
+			update(selectSQL, updateSQL);
 
 			// Layout
 
 			selectSQL =
-				"select companyId from Layout where Layout.plid = " +
-					"PortletPreferences.ownerId";
+				"select Layout.companyId, PortletPreferences.ownerId " +
+					"from Layout, PortletPreferences " +
+					"where Layout.plid = PortletPreferences.ownerId";
 
-			runSQL(getUpdateSQL(selectSQL));
+			update(selectSQL, updateSQL);
 
 			// Organization
 
 			selectSQL =
-				"select companyId from Organization_ where " +
-					"Organization_.organizationId = PortletPreferences.ownerId";
+				"select Organization_.companyId, PortletPreferences.ownerId " +
+					"from Organization_, PortletPreferences " +
+					"where Organization_.organizationId = " +
+					"PortletPreferences.ownerId";
 
-			runSQL(getUpdateSQL(selectSQL));
+			update(selectSQL, updateSQL);
 
 			// User_
 
 			selectSQL =
-				"select companyId from User_ where User_.userId = " +
-					"PortletPreferences.ownerId";
+				"select User_.companyId, PortletPreferences.ownerId " +
+					"from User_, PortletPreferences " +
+					"where User_.userId = PortletPreferences.ownerId";
 
-			runSQL(getUpdateSQL(selectSQL));
+			update(selectSQL, updateSQL);
 		}
 
 	}
@@ -182,7 +191,7 @@ public class UpgradeCompanyId
 	protected class SCLicenseTableUpdater extends TableUpdater {
 
 		public SCLicenseTableUpdater(String tableName) {
-			super(tableName, "", "");
+			super(tableName, "", "licenseId");
 		}
 
 		@Override
@@ -191,9 +200,9 @@ public class UpgradeCompanyId
 
 			StringBundler sb = new StringBundler(6);
 
-			sb.append("select SCProductEntry.companyId from ");
-			sb.append("SCLicenses_SCProductEntries, SCProductEntry where ");
-			sb.append("SCLicenses_SCProductEntries.licenseId = ");
+			sb.append("select SCProductEntry.companyId SCLicense.licenseId ");
+			sb.append("from SCLicenses_SCProductEntries, SCProductEntry ");
+			sb.append("where SCLicenses_SCProductEntries.licenseId = ");
 			sb.append("SCLicense.licenseId and ");
 			sb.append("SCLicenses_SCProductEntries.productEntryId = ");
 			sb.append("SCProductEntry.productEntryId");

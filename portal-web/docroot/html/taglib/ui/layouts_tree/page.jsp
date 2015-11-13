@@ -99,7 +99,7 @@ String treeId = (String)request.getAttribute("liferay-ui:layouts-tree:treeId");
 			layoutURL: '<%= StringUtil.replace(portletURL.toString(), HttpUtil.encodePath("{selPlid}"), "{selPlid}") %>',
 
 			<c:if test="<%= Validator.isNotNull(linkTemplate) %>">
-				linkTemplate: '<%= linkTemplate %>',
+				linkTemplate: '<%= HtmlUtil.escapeJS(linkTemplate) %>',
 			</c:if>
 
 			<c:if test="<%= draggableTree %>">
@@ -115,7 +115,7 @@ String treeId = (String)request.getAttribute("liferay-ui:layouts-tree:treeId");
 				label: '<%= HtmlUtil.escapeJS(rootNodeName) %>',
 
 				<c:if test="<%= Validator.isNotNull(rootLinkTemplate) %>">
-					linkTemplate: '<%= rootLinkTemplate %>',
+					linkTemplate: '<%= HtmlUtil.escapeJS(rootLinkTemplate) %>',
 				</c:if>
 
 				privateLayout: <%= privateLayout %>

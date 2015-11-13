@@ -5,6 +5,7 @@ dependencies {
 	compile group: "org.apache.felix", name: "org.apache.felix.dependencymanager", version: "3.2.0"
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	compile project(":apps:configuration-admin:configuration-admin-api")
 
 	provided group: "org.apache.cxf", name: "cxf-rt-frontend-jaxws", version: "3.0.3"
 	provided group: "org.apache.cxf", name: "cxf-rt-ws-policy", version: "3.0.3"

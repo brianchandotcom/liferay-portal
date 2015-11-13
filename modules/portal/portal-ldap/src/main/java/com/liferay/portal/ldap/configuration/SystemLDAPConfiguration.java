@@ -19,6 +19,7 @@ import aQute.bnd.annotation.metatype.Meta;
 /**
  * @author Michael C. Han
  */
+@ConfigurationAdmin(category = "platform")
 @Meta.OCD(
 	factory = true,
 	id = "com.liferay.portal.ldap.configuration.SystemLDAPConfiguration",

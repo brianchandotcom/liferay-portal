@@ -1,4 +1,5 @@
 dependencies {
+	compile project(":apps:configuration-admin:configuration-admin-api")
 	compile project(":apps:journal:journal-content-asset-addon-entry:journal-content-asset-addon-entry-common")
 	compile project(":apps:journal:journal-web")
 	compile project(":portal:portal-upgrade")

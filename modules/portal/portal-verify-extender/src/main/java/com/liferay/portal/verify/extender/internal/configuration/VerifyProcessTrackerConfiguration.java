@@ -16,9 +16,12 @@ package com.liferay.portal.verify.extender.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.configuration.admin.ConfigurationAdmin;
+
 /**
  * @author Miguel Pastor
  */
+@ConfigurationAdmin(category = "platform")
 @Meta.OCD(
 	id = "com.liferay.portal.verify.extender.internal.configuration.VerifyProcessTrackerConfiguration"
 )

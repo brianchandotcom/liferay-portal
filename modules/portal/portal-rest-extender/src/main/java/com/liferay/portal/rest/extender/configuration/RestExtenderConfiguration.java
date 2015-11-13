@@ -16,9 +16,12 @@ package com.liferay.portal.rest.extender.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.configuration.admin.ConfigurationAdmin;
+
 /**
  * @author Carlos Sierra Andrés
  */
+@ConfigurationAdmin(category = "platform")
 @Meta.OCD(
 	factory = true,
 	id = "com.liferay.portal.rest.extender.configuration.RestExtenderConfiguration"

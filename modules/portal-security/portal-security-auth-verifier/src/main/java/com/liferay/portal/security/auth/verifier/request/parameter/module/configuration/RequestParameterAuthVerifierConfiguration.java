@@ -16,11 +16,13 @@ package com.liferay.portal.security.auth.verifier.request.parameter.module.confi
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.configuration.admin.ConfigurationAdmin;
 import com.liferay.portal.security.auth.verifier.module.configuration.BaseAuthVerifierConfiguration;
 
 /**
  * @author Tomas Polesovsky
  */
+@ConfigurationAdmin(category = "platform")
 @Meta.OCD(
 	factory = true,
 	id = "com.liferay.portal.security.auth.verifier.request.parameter.module.configuration.RequestParameterAuthVerifierConfiguration"

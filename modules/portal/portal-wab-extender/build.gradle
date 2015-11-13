@@ -10,6 +10,7 @@ dependencies {
 	compile group: "org.glassfish", name: "javax.servlet", transitive: false, version: "3.2-b06"
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
+	compile project(":apps:configuration-admin:configuration-admin-api")
 
 	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	provided group: "org.apache.felix", name: "org.apache.felix.utils", transitive: false, version: "1.6.0"

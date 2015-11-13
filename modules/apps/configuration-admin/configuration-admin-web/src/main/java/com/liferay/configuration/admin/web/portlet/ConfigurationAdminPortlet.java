@@ -16,6 +16,7 @@ package com.liferay.configuration.admin.web.portlet;
 
 import com.liferay.configuration.admin.ExtendedMetaTypeService;
 import com.liferay.configuration.admin.web.constants.ConfigurationAdminPortletKeys;
+import com.liferay.configuration.admin.web.constants.ConfigurationAdminWebKeys;
 import com.liferay.configuration.admin.web.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.util.ConfigurationHelper;
 import com.liferay.configuration.admin.web.util.ConfigurationModelIterator;
@@ -23,13 +24,13 @@ import com.liferay.configuration.admin.web.util.DDMFormRendererHelper;
 import com.liferay.dynamic.data.mapping.constants.DDMWebKeys;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.util.bridges.freemarker.FreeMarkerPortlet;
 
 import java.io.IOException;
 
@@ -63,14 +64,14 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.display-name=Configuration Admin",
 		"javax.portlet.info.keywords=osgi,configuration,admin",
 		"javax.portlet.init-param.template-path=/",
-		"javax.portlet.init-param.view-template=/view.ftl",
+		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + ConfigurationAdminPortletKeys.CONFIGURATION_ADMIN,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user"
 	},
 	service = Portlet.class
 )
-public class ConfigurationAdminPortlet extends FreeMarkerPortlet {
+public class ConfigurationAdminPortlet extends MVCPortlet {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
@@ -122,7 +123,7 @@ public class ConfigurationAdminPortlet extends FreeMarkerPortlet {
 			_bundleContext, _configurationAdmin, _extendedMetaTypeService,
 			themeDisplay.getLanguageId());
 
-		if (path.equals("/edit_configuration.ftl")) {
+		if (path.equals("/edit_configuration.jsp")) {
 			String pid = ParamUtil.getString(renderRequest, "pid", factoryPid);
 
 			ConfigurationModel configurationModel =
@@ -144,9 +145,8 @@ public class ConfigurationAdminPortlet extends FreeMarkerPortlet {
 			}
 
 			renderRequest.setAttribute(
-				"configurationModel", configurationModel);
-			renderRequest.setAttribute("factoryPid", factoryPid);
-			renderRequest.setAttribute("pid", pid);
+				ConfigurationAdminWebKeys.CONFIGURATION_MODEL,
+				configurationModel);
 
 			DDMFormRendererHelper ddmFormRendererHelper =
 				new DDMFormRendererHelper(
@@ -166,21 +166,41 @@ public class ConfigurationAdminPortlet extends FreeMarkerPortlet {
 						themeDisplay.getLanguageId(), factoryPid);
 
 				renderRequest.setAttribute(
-					"configurationModelIterator",
+					ConfigurationAdminWebKeys.CONFIGURATION_MODEL_ITERATOR,
 					new ConfigurationModelIterator(configurationModels));
 
 				ConfigurationModel factoryConfigurationModel =
 					configurationHelper.getConfigurationModel(factoryPid);
 
 				renderRequest.setAttribute(
-					"factoryConfigurationModel", factoryConfigurationModel);
+					ConfigurationAdminWebKeys.FACTORY_CONFIGURATION_MODEL,
+					factoryConfigurationModel);
 			}
 			else {
-				List<ConfigurationModel> configurationModels =
-					configurationHelper.getConfigurationModels();
+				List<String> configurationCategories =
+					configurationHelper.getConfigurationCategories();
 
 				renderRequest.setAttribute(
-					"configurationModelIterator",
+					ConfigurationAdminWebKeys.CONFIGURATION_CATEGORIES,
+					configurationCategories);
+
+				String configurationCategory = ParamUtil.getString(
+					renderRequest, "configurationCategory");
+
+				if (Validator.isNull(configurationCategory)) {
+					configurationCategory = configurationCategories.get(0);
+				}
+
+				renderRequest.setAttribute(
+					ConfigurationAdminWebKeys.CONFIGURATION_CATEGORY,
+					configurationCategory);
+
+				List<ConfigurationModel> configurationModels =
+					configurationHelper.getConfigurationModels(
+						configurationCategory);
+
+				renderRequest.setAttribute(
+					ConfigurationAdminWebKeys.CONFIGURATION_MODEL_ITERATOR,
 					new ConfigurationModelIterator(configurationModels));
 			}
 		}

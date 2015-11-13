@@ -55,7 +55,7 @@ if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMes
 							PortletURL trashURL = TrashUtil.getViewURL(request);
 							%>
 
-							<aui:a data="<%= trashData %>" href="<%= trashURL.toString() %>" label="the-recycle-bin" />
+							<aui:a cssClass="alert-link" data="<%= trashData %>" href="<%= trashURL.toString() %>" label="the-recycle-bin" />
 						</c:when>
 						<c:otherwise>
 							<liferay-ui:message key="the-recycle-bin" />
@@ -110,7 +110,7 @@ if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMes
 									PortletURL trashURL = TrashUtil.getViewContentURL(request, GetterUtil.getLong(primaryKeys[0]));
 									%>
 
-									<em class="delete-entry-title"><aui:a data="<%= trashData %>" href="<%= trashURL.toString() %>" label="<%= HtmlUtil.escape(title) %>" /></em>
+									<em class="delete-entry-title"><aui:a cssClass="alert-link" data="<%= trashData %>" href="<%= trashURL.toString() %>" label="<%= HtmlUtil.escape(title) %>" /></em>
 								</c:when>
 								<c:when test="<%= Validator.isNotNull(title) %>">
 									<em class="delete-entry-title"><%= HtmlUtil.escape(title) %></em>

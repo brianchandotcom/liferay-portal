@@ -18,12 +18,8 @@ import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderSettings;
 import com.liferay.dynamic.data.mapping.data.provider.web.constants.DDMDataProviderPortletKeys;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -31,10 +27,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 
-import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -52,28 +45,12 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + DDMDataProviderPortletKeys.DYNAMIC_DATA_MAPPING_DATA_PROVIDER,
-		"mvc.command.name=addDataProvider"
+		"mvc.command.name=updateDataProvider"
 	},
 	service = MVCActionCommand.class
 )
-public class AddDataProviderMVCActionCommand extends BaseMVCActionCommand {
-
-	public DDMFormValues getDDMFormValues(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortalException {
-
-		String dataProviderType = ParamUtil.getString(
-			actionRequest, "dataProviderType");
-
-		DDMDataProviderSettings ddmDataProviderSettings =
-			_ddmDataProvidersMap.get(dataProviderType);
-
-		Class<?> clazz = ddmDataProviderSettings.getSettings();
-
-		DDMForm ddmForm = DDMFormFactory.create(clazz);
-
-		return _ddmFormValuesFactory.create(actionRequest, ddmForm);
-	}
+public class UpdateDataProviderMVCActionCommand
+	extends AddDataProviderMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -83,14 +60,12 @@ public class AddDataProviderMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		long dataProviderId = ParamUtil.getLong(
+			actionRequest, "dataProviderInstanceId");
 
 		String name = ParamUtil.getString(actionRequest, "name");
 
 		String description = ParamUtil.getString(actionRequest, "description");
-
-		String dataProviderType = ParamUtil.getString(
-			actionRequest, "dataProviderType");
 
 		DDMFormValues ddmFormValues = getDDMFormValues(
 			actionRequest, actionResponse);
@@ -98,26 +73,13 @@ public class AddDataProviderMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMDataProviderInstance.class.getName(), actionRequest);
 
-		_ddmDataProviderInstanceService.addDataProviderInstance(
-			groupId, getLocalizedMap(themeDisplay.getLocale(), name),
+		getDDMDataProviderInstanceService().updateDataProviderInstance(
+			dataProviderId, getLocalizedMap(themeDisplay.getLocale(), name),
 			getLocalizedMap(themeDisplay.getLocale(), description),
-			ddmFormValues, dataProviderType, serviceContext);
+			ddmFormValues, serviceContext);
 	}
 
-	protected DDMDataProviderInstanceService
-		getDDMDataProviderInstanceService() {
-
-		return _ddmDataProviderInstanceService;
-	}
-
-	protected Map<Locale, String> getLocalizedMap(Locale locale, String value) {
-		Map<Locale, String> localizedMap = new HashMap<>();
-
-		localizedMap.put(locale, value);
-
-		return localizedMap;
-	}
-
+	@Override
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
@@ -128,37 +90,24 @@ public class AddDataProviderMVCActionCommand extends BaseMVCActionCommand {
 		DDMDataProviderSettings ddmDataProviderSettings,
 		Map<String, Object> properties) {
 
-		Object value = properties.get("ddm.data.provider.name");
-
-		_ddmDataProvidersMap.put(value.toString(), ddmDataProviderSettings);
+		super.registerDDMDataProviderSettings(
+			ddmDataProviderSettings, properties);
 	}
 
+	@Override
 	@Reference(unbind = "-")
 	protected void setDDMDataProviderInstanceService(
 		DDMDataProviderInstanceService ddmDataProviderInstanceService) {
 
-		_ddmDataProviderInstanceService = ddmDataProviderInstanceService;
+		super.setDDMDataProviderInstanceService(ddmDataProviderInstanceService);
 	}
 
+	@Override
 	@Reference
 	protected void setDDMFormValuesFactory(
 		DDMFormValuesFactory ddmFormValuesFactory) {
 
-		_ddmFormValuesFactory = ddmFormValuesFactory;
+		super.setDDMFormValuesFactory(ddmFormValuesFactory);
 	}
-
-	protected synchronized void unregisterDDMDataProviderSettings(
-		DDMDataProviderSettings ddmDataProviderSettings,
-		Map<String, Object> properties) {
-
-		Object value = properties.get("ddm.data.provider.name");
-
-		_ddmDataProvidersMap.remove(value);
-	}
-
-	private DDMDataProviderInstanceService _ddmDataProviderInstanceService;
-	private final Map<String, DDMDataProviderSettings> _ddmDataProvidersMap =
-		new ConcurrentHashMap<>();
-	private DDMFormValuesFactory _ddmFormValuesFactory;
 
 }

@@ -24,7 +24,6 @@ import com.liferay.service.access.policy.model.SAPEntry;
 import com.liferay.service.access.policy.service.SAPEntryLocalService;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -42,43 +41,31 @@ public class DefaultSyncPolicy {
 
 	@Activate
 	public void activated() throws Exception {
-		List<Company> companies = _companyLocalService.getCompanies();
+		for (Company company : _companyLocalService.getCompanies()) {
+			SAPEntry sapEntry = _sapEntryLocalService.fetchSAPEntry(
+				company.getCompanyId(), POLICY_NAME);
 
-		for (Company company : companies) {
-			long companyId = company.getCompanyId();
+			if (sapEntry != null) {
+				continue;
+			}
 
 			try {
-				addPolicy(company.getCompanyId());
+				Map<Locale, String> map = new HashMap<>();
+
+				map.put(LocaleUtil.getDefault(), POLICY_NAME);
+
+				_sapEntryLocalService.addSAPEntry(
+					_userLocalService.getDefaultUserId(company.getCompanyId()),
+					_ALLOWED_SERVICE_SIGNATURES, true, true, POLICY_NAME, map,
+					new ServiceContext());
 			}
 			catch (PortalException e) {
 				throw new Exception(
-					"Unable to add SAP default policy for company " + companyId,
+					"Unable to add SAP default policy for company " +
+						company.getCompanyId(),
 					e);
 			}
 		}
-	}
-
-	protected void addPolicy(long companyId) throws PortalException {
-		SAPEntry sapEntry = _sapEntryLocalService.fetchSAPEntry(
-			companyId, POLICY_NAME);
-
-		if (sapEntry != null) {
-			return;
-		}
-
-		long userId = _userLocalService.getDefaultUserId(companyId);
-		String allowedServiceSignatures = _POLICY_SERVICES;
-		boolean defaultSAPEntry = true;
-		boolean enabled = true;
-		String name = POLICY_NAME;
-		Map<Locale, String> titleMap = new HashMap<>();
-		titleMap.put(LocaleUtil.getDefault(), POLICY_NAME);
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		_sapEntryLocalService.addSAPEntry(
-			userId, allowedServiceSignatures, defaultSAPEntry, enabled, name,
-			titleMap, serviceContext);
 	}
 
 	@Reference(unbind = "-")
@@ -100,7 +87,7 @@ public class DefaultSyncPolicy {
 		_userLocalService = userLocalService;
 	}
 
-	private static final String _POLICY_SERVICES =
+	private static final String _ALLOWED_SERVICE_SIGNATURES =
 		"com.liferay.sync.service.SyncDLObjectService#getSyncContext";
 
 	private CompanyLocalService _companyLocalService;

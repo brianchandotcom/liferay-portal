@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.security.service.access.policy.ServiceAccessPol
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.AccessControlContext;
 import com.liferay.portal.security.auth.AuthException;
@@ -34,6 +35,7 @@ import com.liferay.sync.security.service.access.policy.SyncTokenPolicy;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
@@ -112,12 +114,23 @@ public class SyncAuthVerifier implements AuthVerifier {
 			AccessControlContext accessControlContext, Properties properties)
 		throws AuthException {
 
-		try {
-			AuthVerifierResult authVerifierResult = new AuthVerifierResult();
+		AuthVerifierResult authVerifierResult = new AuthVerifierResult();
 
+		HttpServletRequest request = accessControlContext.getRequest();
+
+		String uri = (String)request.getAttribute(WebKeys.INVOKER_FILTER_URI);
+
+		if (uri.startsWith("/download/")) {
+			String contextPath = request.getContextPath();
+
+			if (!contextPath.equals("/sync-web")) {
+				return authVerifierResult;
+			}
+		}
+
+		try {
 			String[] credentials = getCredentials(
-				accessControlContext.getRequest(),
-				accessControlContext.getResponse());
+				request, accessControlContext.getResponse());
 
 			if (credentials != null) {
 				authVerifierResult.setPassword(credentials[1]);
@@ -127,6 +140,15 @@ public class SyncAuthVerifier implements AuthVerifier {
 
 				ServiceAccessPolicyThreadLocal.addActiveServiceAccessPolicyName(
 					SyncTokenPolicy.POLICY_NAME);
+			}
+			else {
+
+				// SYNC-1463
+
+				Map<String, Object> settings =
+					accessControlContext.getSettings();
+
+				settings.remove("basic_auth");
 			}
 
 			return authVerifierResult;

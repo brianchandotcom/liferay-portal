@@ -104,6 +104,8 @@ public class DDMFormRendererHelper {
 		ddmFormFieldRenderingContext.setName(StringPool.BLANK);
 		ddmFormFieldRenderingContext.setPortletNamespace(
 			_ddmFormRenderingContext.getPortletNamespace());
+		ddmFormFieldRenderingContext.setReadOnly(
+			_ddmFormRenderingContext.isReadOnly());
 		ddmFormFieldRenderingContext.setValue(StringPool.BLANK);
 
 		return ddmFormFieldRenderingContext;

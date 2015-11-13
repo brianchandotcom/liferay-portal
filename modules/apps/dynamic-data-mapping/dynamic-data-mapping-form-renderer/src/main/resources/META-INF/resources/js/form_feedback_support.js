@@ -77,7 +77,7 @@ AUI.add(
 			showLoadingFeedback: function() {
 				var instance = this;
 
-				var submitButton = instance._getSubmitButton();
+				var submitButton = instance.getSubmitButton();
 
 				if (submitButton) {
 					instance.spinner.appendTo(submitButton);
@@ -102,16 +102,6 @@ AUI.add(
 				var instance = this;
 
 				instance.spinner = A.Node.create(TPL_BUTTON_SPINNER);
-			},
-
-			_getSubmitButton: function() {
-				var instance = this;
-
-				var container = instance.get('container');
-
-				var formNode = instance.getFormNode();
-
-				return (formNode || container).one('[type="submit"]');
 			},
 
 			_valueAlert: function() {

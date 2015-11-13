@@ -20,10 +20,13 @@ import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import org.junit.Assert;
@@ -34,17 +37,21 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 
 import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Marcellus Tavares
  */
+@PrepareForTest({PortalClassLoaderUtil.class, ResourceBundleUtil.class})
 @RunWith(PowerMockRunner.class)
 public class CheckboxDDMFormFieldTypeSettingsTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
 		setUpLanguageUtil();
+		setUpPortalClassLoaderUtil();
+		setUpResourceBundleUtil();
 	}
 
 	@Test
@@ -80,7 +87,41 @@ public class CheckboxDDMFormFieldTypeSettingsTest extends PowerMockito {
 		languageUtil.setLanguage(language);
 	}
 
+	protected void setUpPortalClassLoaderUtil() {
+		mockStatic(PortalClassLoaderUtil.class);
+
+		when(
+			PortalClassLoaderUtil.getClassLoader()
+		).thenReturn(
+			_classLoader
+		);
+	}
+
+	protected void setUpResourceBundleUtil() {
+		mockStatic(ResourceBundleUtil.class);
+
+		when(
+			ResourceBundleUtil.getBundle(
+				"content.Language", LocaleUtil.BRAZIL, _classLoader)
+		).thenReturn(
+			_resourceBundle
+		);
+
+		when(
+			ResourceBundleUtil.getBundle(
+				"content.Language", LocaleUtil.US, _classLoader)
+		).thenReturn(
+			_resourceBundle
+		);
+	}
+
 	@Mock
 	protected Language language;
+
+	@Mock
+	private ClassLoader _classLoader;
+
+	@Mock
+	private ResourceBundle _resourceBundle;
 
 }

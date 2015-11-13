@@ -47,7 +47,10 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
+		super.setUp();
+
 		setUpConfigurationFactoryUtil();
 		setUpDDMFormFieldTypeServicesTrackerUtil();
 		setUpDDMFormJSONSerializerUtil();

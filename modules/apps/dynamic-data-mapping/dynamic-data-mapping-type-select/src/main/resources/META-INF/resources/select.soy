@@ -9,6 +9,7 @@
  * @param multiple
  * @param name
  * @param options
+ * @param readOnly
  * @param required
  * @param showLabel
  * @param visible
@@ -26,7 +27,7 @@
 				</label>
 			{/if}
 
-			<select class="form-control" dir="{$dir}" id="{$name}" name="{$name}" {$multiple}>
+			<select class="form-control" dir="{$dir}" id="{$name}" name="{$name}" {$multiple} {if $readOnly}disabled{/if}>
 				{foreach $option in $options}
 					<option dir="{$dir}" {$option.status} value="{$option.value}">
 						{$option.label}

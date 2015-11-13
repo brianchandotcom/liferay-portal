@@ -9,6 +9,7 @@
  * @param label
  * @param name
  * @param placeholder
+ * @param readOnly
  * @param required
  * @param showLabel
  * @param tip
@@ -29,11 +30,11 @@
 
 		<div class="input-group-container {if $tip}input-group-default{/if}">
 			{if $displayStyle == 'multiline'}
-				<textarea class="field form-control" dir="{$dir}" id="{$name}" name="{$name}" placeholder="{$placeholder}">
+				<textarea class="field form-control" dir="{$dir}" id="{$name}" name="{$name}" placeholder="{$placeholder}" {if $readOnly}readonly{/if} >
 					{$value}
 				</textarea>
 			{else}
-				<input class="field form-control" dir="{$dir}" id="{$name}" name="{$name}" placeholder="{$placeholder}" type="text" value="{$value}">
+				<input class="field form-control" dir="{$dir}" id="{$name}" name="{$name}" placeholder="{$placeholder}" type="text" value="{$value}" {if $readOnly}readonly{/if} >
 			{/if}
 
 			{if $tip}

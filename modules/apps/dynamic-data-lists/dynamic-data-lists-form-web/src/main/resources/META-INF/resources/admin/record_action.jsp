@@ -23,6 +23,20 @@ DDLRecord record = (DDLRecord)row.getObject();
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+	<c:if test="<%= ddlFormAdminDisplayContext.isShowViewEntriesRecordSetIcon(ddlFormAdminDisplayContext.getRecordSet()) %>">
+		<portlet:renderURL var="viewURL">
+			<portlet:param name="mvcPath" value="/admin/view_record.jsp" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="recordId" value="<%= String.valueOf(record.getRecordId()) %>" />
+			<portlet:param name="recordSetId" value="<%= String.valueOf(record.getRecordSetId()) %>" />
+		</portlet:renderURL>
+
+		<liferay-ui:icon
+			message="view"
+			url="<%= viewURL %>"
+		/>
+	</c:if>
+
 	<c:if test="<%= ddlFormAdminDisplayContext.isShowDeleteRecordSetIcon(ddlFormAdminDisplayContext.getRecordSet()) %>">
 		<portlet:actionURL name="deleteRecord" var="deleteURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />

@@ -66,7 +66,10 @@ import org.powermock.core.classloader.annotations.SuppressStaticInitializationFo
 public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
+		super.setUp();
+
 		setUpConfigurationFactoryUtil();
 		setUpDDMFormFieldTypeServicesTrackerUtil();
 		setUpAvailableLocales();

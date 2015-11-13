@@ -6,6 +6,7 @@
  * @param childElementsHTML
  * @param label
  * @param name
+ * @param readOnly
  * @param required
  * @param showAsSwitcher
  * @param showLabel
@@ -17,7 +18,7 @@
 		{if $showAsSwitcher}
 			<div class="checkbox">
 				<label class="control-label" for="{$name}">
-					<input class="toggle-switch" id="{$name}" name="{$name}" type="checkbox" {$status} value="true" />
+					<input class="toggle-switch" id="{$name}" name="{$name}" type="checkbox" {$status} value="true" {if $readOnly}disabled{/if} />
 
 					<span aria-hidden="true" class="toggle-switch-bar">
 						<span class="toggle-switch-handle" data-label-off="{$label}" data-label-on="{$label}"></span>
@@ -30,7 +31,7 @@
 					<label class="control-label" for="{$name}">
 				{/if}
 
-				<input id="{$name}" name="{$name}" type="checkbox" {$status} value="true" />{if $showLabel} {$label}{/if}
+				<input id="{$name}" name="{$name}" type="checkbox" {$status} value="true" {if $readOnly}disabled{/if} />{if $showLabel} {$label}{/if}
 
 				{if $showLabel}
 						{if $required}

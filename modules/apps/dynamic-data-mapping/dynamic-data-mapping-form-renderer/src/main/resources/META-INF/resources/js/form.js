@@ -20,6 +20,15 @@ AUI.add(
 
 					portletNamespace: {
 						value: ''
+					},
+
+					strings: {
+						value: {
+							next: Liferay.Language.get('next'),
+							previous: Liferay.Language.get('previous'),
+							requestErrorMessage: Liferay.Language.get('there-was-an-error-when-trying-to-validate-your-form'),
+							submit: Liferay.Language.get('submit')
+						}
 					}
 				},
 
@@ -45,7 +54,9 @@ AUI.add(
 
 						var formNode = instance.getFormNode();
 
-						if (formNode) {
+						var readOnly = instance.get('readOnly');
+
+						if (formNode && !readOnly) {
 							instance._eventHandlers.push(
 								formNode.on('submit', A.bind('_onDOMSubmitForm', instance)),
 								Liferay.on('submitForm', instance._onLiferaySubmitForm, instance)
@@ -69,6 +80,16 @@ AUI.add(
 						var container = instance.get('container');
 
 						return container.ancestor('form', true);
+					},
+
+					getSubmitButton: function() {
+						var instance = this;
+
+						var container = instance.get('container');
+
+						var formNode = instance.getFormNode();
+
+						return (formNode || container).one('[type="submit"]');
 					},
 
 					submit: function() {

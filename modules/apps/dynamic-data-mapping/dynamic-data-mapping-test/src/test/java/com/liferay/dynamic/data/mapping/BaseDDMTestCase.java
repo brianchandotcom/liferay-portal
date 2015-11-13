@@ -50,9 +50,11 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
@@ -74,8 +76,10 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.Set;
 
+import org.junit.Before;
 import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
@@ -98,7 +102,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 		DDMFormFieldTypeServicesTrackerUtil.class,
 		DDMFormJSONDeserializerUtil.class, DDMFormJSONSerializerUtil.class,
 		DDMStructureLocalServiceUtil.class, DDMTemplateLocalServiceUtil.class,
-		LocaleUtil.class
+		LocaleUtil.class, PortalClassLoaderUtil.class, ResourceBundleUtil.class
 	}
 )
 @RunWith(PowerMockRunner.class)
@@ -112,6 +116,12 @@ import org.powermock.modules.junit4.PowerMockRunner;
 	}
 )
 public abstract class BaseDDMTestCase extends PowerMockito {
+
+	@Before
+	public void setUp() throws Exception {
+		setUpPortalClassLoaderUtil();
+		setUpResourceBundleUtil();
+	}
 
 	protected void addDDMFormFields(
 		DDMForm ddmForm, DDMFormField... ddmFormFieldsArray) {
@@ -689,6 +699,16 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		);
 	}
 
+	protected void setUpPortalClassLoaderUtil() {
+		mockStatic(PortalClassLoaderUtil.class);
+
+		when(
+			PortalClassLoaderUtil.getClassLoader()
+		).thenReturn(
+			_classLoader
+		);
+	}
+
 	protected void setUpPropsUtil() throws Exception {
 		Props props = mock(Props.class);
 
@@ -721,6 +741,24 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		);
 
 		PropsUtil.setProps(props);
+	}
+
+	protected void setUpResourceBundleUtil() {
+		mockStatic(ResourceBundleUtil.class);
+
+		when(
+			ResourceBundleUtil.getBundle(
+				"content.Language", LocaleUtil.BRAZIL, _classLoader)
+		).thenReturn(
+			_resourceBundle
+		);
+
+		when(
+			ResourceBundleUtil.getBundle(
+				"content.Language", LocaleUtil.US, _classLoader)
+		).thenReturn(
+			_resourceBundle
+		);
 	}
 
 	protected void setUpSAXReaderUtil() {
@@ -808,6 +846,12 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 	}
 
 	@Mock
+	private ClassLoader _classLoader;
+
+	@Mock
 	private DDMFormFieldType _defaultDDMFormFieldType;
+
+	@Mock
+	private ResourceBundle _resourceBundle;
 
 }

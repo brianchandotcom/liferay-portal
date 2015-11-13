@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -35,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import org.junit.Before;
@@ -53,7 +56,12 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author Marcellus Tavares
  */
-@PrepareForTest({DDMFormFieldTypeServicesTrackerUtil.class, LocaleUtil.class})
+@PrepareForTest(
+	{
+		DDMFormFieldTypeServicesTrackerUtil.class, LocaleUtil.class,
+		PortalClassLoaderUtil.class, ResourceBundleUtil.class
+	}
+)
 @RunWith(PowerMockRunner.class)
 @SuppressStaticInitializationFor(
 	"com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTrackerUtil"
@@ -66,6 +74,8 @@ public class BaseDDMTestCase extends PowerMockito {
 		setUpJSONFactoryUtil();
 		setUpLanguageUtil();
 		setUpLocaleUtil();
+		setUpPortalClassLoaderUtil();
+		setUpResourceBundleUtil();
 	}
 
 	protected DDMFormLayoutColumn createDDMFormLayoutColumn(
@@ -226,6 +236,34 @@ public class BaseDDMTestCase extends PowerMockito {
 		);
 	}
 
+	protected void setUpPortalClassLoaderUtil() {
+		mockStatic(PortalClassLoaderUtil.class);
+
+		when(
+			PortalClassLoaderUtil.getClassLoader()
+		).thenReturn(
+			_classLoader
+		);
+	}
+
+	protected void setUpResourceBundleUtil() {
+		mockStatic(ResourceBundleUtil.class);
+
+		when(
+			ResourceBundleUtil.getBundle(
+				"content.Language", LocaleUtil.BRAZIL, _classLoader)
+		).thenReturn(
+			_resourceBundle
+		);
+
+		when(
+			ResourceBundleUtil.getBundle(
+				"content.Language", LocaleUtil.US, _classLoader)
+		).thenReturn(
+			_resourceBundle
+		);
+	}
+
 	protected void whenLanguageGetAvailableLocalesThen(
 		Set<Locale> availableLocales) {
 
@@ -248,6 +286,12 @@ public class BaseDDMTestCase extends PowerMockito {
 	protected Language language;
 
 	@Mock
+	private ClassLoader _classLoader;
+
+	@Mock
 	private DDMFormFieldType _defaultDDMFormFieldType;
+
+	@Mock
+	private ResourceBundle _resourceBundle;
 
 }

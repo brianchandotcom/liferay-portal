@@ -39,7 +39,8 @@ long organizationId = organization.getOrganizationId();
 	<liferay-ui:icon
 		iconCssClass="icon-search"
 		message="view-users"
-		method="get" url="<%= viewUsersURL %>"
+		method="get"
+		url="<%= viewUsersURL %>"
 	/>
 
 	<c:if test="<%= organization.hasSuborganizations() %>">

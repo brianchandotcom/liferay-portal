@@ -118,7 +118,8 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 					<div class="edit-controls lfr-meta-actions">
 						<liferay-ui:icon-menu
 							cssClass="select-existing-selector"
-							direction="right" icon="../aui/plus"
+							direction="right"
+							icon="../aui/plus"
 							message='<%= LanguageUtil.format(request, (groupIds.length == 1) ? "select" : "select-in-x", HtmlUtil.escape(group.getDescriptiveName(locale)), false) %>'
 							showWhenSingleIcon="<%= true %>"
 						>

@@ -758,6 +758,17 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 								readAttributes = false;
 							}
+							else if (trimmedLine.endsWith(StringPool.QUOTE) &&
+									 (StringUtil.count(
+										trimmedLine, StringPool.QUOTE) > 2)) {
+
+								processErrorMessage(
+									fileName,
+									"attribute delimeter: " + fileName + " " +
+										lineCount);
+
+								readAttributes = false;
+							}
 							else if (Validator.isNotNull(previousAttribute)) {
 								if (!isAttributName(attribute) &&
 									!attribute.startsWith(
@@ -1680,7 +1691,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _jspIncludeFilePattern = Pattern.compile(
 		"/.*[.]jsp[f]?");
 	private final Pattern _jspTagAttributes = Pattern.compile(
-		"<\\w+:\\w+ (.*?[^%])>");
+		"<[-\\w]+:[-\\w]+ (.*?[^%])>");
 	private final Pattern _jspTagAttributeValue = Pattern.compile(
 		"('|\")<%= (.+?) %>('|\")");
 	private final Pattern _jspTaglibPattern = Pattern.compile(

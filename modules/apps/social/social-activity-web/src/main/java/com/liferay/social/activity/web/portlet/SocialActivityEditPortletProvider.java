@@ -31,8 +31,8 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = {EditPortletProvider.class}
 )
-public class SocialActivityEditPortletProvider extends BasePortletProvider
-	implements EditPortletProvider {
+public class SocialActivityEditPortletProvider
+	extends BasePortletProvider implements EditPortletProvider {
 
 	@Override
 	public String getPortletId() {

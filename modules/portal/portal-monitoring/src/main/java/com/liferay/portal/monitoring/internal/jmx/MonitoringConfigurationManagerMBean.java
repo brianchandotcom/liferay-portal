@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.monitoring.ServiceMonitoringControl;
  * @author Brian Wing Shun Chan
  */
 public interface MonitoringConfigurationManagerMBean
-	extends PortalMonitoringControl,
-	PortletMonitoringControl, ServiceMonitoringControl {
+	extends PortalMonitoringControl, PortletMonitoringControl,
+			ServiceMonitoringControl {
 
 	public String getLevel(String namespace);
 

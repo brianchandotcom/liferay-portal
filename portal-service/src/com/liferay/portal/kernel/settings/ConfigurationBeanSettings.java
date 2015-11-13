@@ -23,8 +23,8 @@ import java.lang.reflect.Method;
 /**
  * @author Iván Zaera
  */
-public class ConfigurationBeanSettings extends BaseSettings
-	implements Settings {
+public class ConfigurationBeanSettings
+	extends BaseSettings implements Settings {
 
 	public ConfigurationBeanSettings(
 		LocationVariableResolver locationVariableResolver,

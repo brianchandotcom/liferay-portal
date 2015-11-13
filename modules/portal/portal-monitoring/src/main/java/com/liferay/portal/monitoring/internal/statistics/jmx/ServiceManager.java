@@ -34,8 +34,8 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = DynamicMBean.class
 )
-public class ServiceManager extends StandardMBean
-	implements ServiceManagerMBean {
+public class ServiceManager
+	extends StandardMBean implements ServiceManagerMBean {
 
 	public ServiceManager() throws NotCompliantMBeanException {
 		super(ServiceManagerMBean.class);

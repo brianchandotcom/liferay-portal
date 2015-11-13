@@ -31,8 +31,7 @@ import java.util.concurrent.ConcurrentMap;
  * @author Shuyang Zhou
  */
 public abstract class ConcurrentMapperHashMap<K, IK, V, IV>
-	extends AbstractMap<K, V>
-	implements ConcurrentMap<K, V>, Serializable {
+	extends AbstractMap<K, V> implements ConcurrentMap<K, V>, Serializable {
 
 	@Override
 	public void clear() {

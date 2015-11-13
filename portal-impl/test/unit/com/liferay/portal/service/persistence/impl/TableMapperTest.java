@@ -1510,11 +1510,10 @@ public class TableMapperTest {
 
 	}
 
-	private interface Left extends LeftModel {};
-
-	private interface LeftModel extends BaseModel<Left> {};
-
-	private class MockAddMappingSqlUpdate implements SqlUpdate {
+	private interface Left
+		extends LeftModel {}; private interface LeftModel
+		extends BaseModel<Left> {}; private class MockAddMappingSqlUpdate
+		implements SqlUpdate {
 
 		public MockAddMappingSqlUpdate(
 			DataSource dataSource, String sql, int[] types) {

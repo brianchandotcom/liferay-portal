@@ -65,8 +65,8 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 	},
 	service = {Filter.class, PortalMonitoringControl.class}
 )
-public class MonitoringFilter extends BaseFilter
-	implements PortalMonitoringControl {
+public class MonitoringFilter
+	extends BaseFilter implements PortalMonitoringControl {
 
 	@Override
 	public boolean isFilterEnabled() {

@@ -26,7 +26,7 @@ import org.apache.http.protocol.HttpContext;
  */
 public class HttpRequestInterceptorWrapper
 	implements Comparable<HttpRequestInterceptorWrapper>,
-		HttpRequestInterceptor {
+			   HttpRequestInterceptor {
 
 	public HttpRequestInterceptorWrapper(
 		HttpRequestInterceptor httpRequestInterceptor, int sortOrder) {

@@ -25,8 +25,8 @@ import javax.servlet.jsp.tagext.BodyTag;
 /**
  * @author Eudaldo Alonso
  */
-public class ManagementBarActionButtonsTag extends IncludeTag
-	implements BodyTag {
+public class ManagementBarActionButtonsTag
+	extends IncludeTag implements BodyTag {
 
 	@Override
 	public int doEndTag() {

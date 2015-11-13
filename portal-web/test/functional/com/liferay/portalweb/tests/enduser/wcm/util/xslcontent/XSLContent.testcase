@@ -3,6 +3,7 @@
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />
+
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -59,6 +60,15 @@
 			<var name="dmDocumentTitle" value="Test XML Title" />
 		</execute>
 
+		<execute macro="PermissionsInline#gotoDMDocumentCP">
+			<var name="dmDocumentTitle" value="Test XML Title" />
+		</execute>
+
+		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
+			<var name="addOrRemoveViewPermission" value="Add" />
+			<var name="roleList" value="Guest" />
+		</execute>
+
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 			<var name="siteScopeName" value="Site Name" />
@@ -68,6 +78,15 @@
 			<var name="dmDocumentDescription" value="Test XSL Description" />
 			<var name="dmDocumentFile" value="test.xsl" />
 			<var name="dmDocumentTitle" value="Test XSL Title" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoDMDocumentCP">
+			<var name="dmDocumentTitle" value="Test XSL Title" />
+		</execute>
+
+		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
+			<var name="addOrRemoveViewPermission" value="Add" />
+			<var name="roleList" value="Guest" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -165,6 +184,15 @@
 			<var name="dmDocumentTitle" value="Test Corrupt XML Title" />
 		</execute>
 
+		<execute macro="PermissionsInline#gotoDMDocumentCP">
+			<var name="dmDocumentTitle" value="Test Corrupt XML Title" />
+		</execute>
+
+		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
+			<var name="addOrRemoveViewPermission" value="Add" />
+			<var name="roleList" value="Guest" />
+		</execute>
+
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 			<var name="siteScopeName" value="Site Name" />
@@ -174,6 +202,15 @@
 			<var name="dmDocumentDescription" value="Test XSL Description" />
 			<var name="dmDocumentFile" value="test.xsl" />
 			<var name="dmDocumentTitle" value="Test XSL Title" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoDMDocumentCP">
+			<var name="dmDocumentTitle" value="Test XSL Title" />
+		</execute>
+
+		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
+			<var name="addOrRemoveViewPermission" value="Add" />
+			<var name="roleList" value="Guest" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -259,6 +296,15 @@
 			<var name="dmDocumentTitle" value="Test XML Title" />
 		</execute>
 
+		<execute macro="PermissionsInline#gotoDMDocumentCP">
+			<var name="dmDocumentTitle" value="Test XML Title" />
+		</execute>
+
+		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
+			<var name="addOrRemoveViewPermission" value="Add" />
+			<var name="roleList" value="Guest" />
+		</execute>
+
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 			<var name="siteScopeName" value="Site Name" />
@@ -268,6 +314,15 @@
 			<var name="dmDocumentDescription" value="Test XSL Description" />
 			<var name="dmDocumentFile" value="test_corrupt.xsl" />
 			<var name="dmDocumentTitle" value="Test Corrupt XSL Title" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoDMDocumentCP">
+			<var name="dmDocumentTitle" value="Test Corrupt XSL Title" />
+		</execute>
+
+		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
+			<var name="addOrRemoveViewPermission" value="Add" />
+			<var name="roleList" value="Guest" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -351,6 +406,15 @@
 			<var name="dmDocumentTitle" value="Test XML Title" />
 		</execute>
 
+		<execute macro="PermissionsInline#gotoDMDocumentCP">
+			<var name="dmDocumentTitle" value="Test XML Title" />
+		</execute>
+
+		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
+			<var name="addOrRemoveViewPermission" value="Add" />
+			<var name="roleList" value="Guest" />
+		</execute>
+
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 			<var name="siteScopeName" value="Site Name" />
@@ -360,6 +424,15 @@
 			<var name="dmDocumentDescription" value="Test XSL Description" />
 			<var name="dmDocumentFile" value="test_version.xsl" />
 			<var name="dmDocumentTitle" value="Test XSL Title" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoDMDocumentCP">
+			<var name="dmDocumentTitle" value="Test XSL Title" />
+		</execute>
+
+		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
+			<var name="addOrRemoveViewPermission" value="Add" />
+			<var name="roleList" value="Guest" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">

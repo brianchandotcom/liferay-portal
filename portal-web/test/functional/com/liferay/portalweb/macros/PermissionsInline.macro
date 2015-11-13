@@ -150,6 +150,16 @@
 		<execute function="AssertClick" locator1="BasePortletConfiguration#NAVIGATION_PERMISSIONS" value1="Permissions" />
 	</command>
 
+	<command name="gotoDMDocumentCP">
+		<var name="key_assetEntry" value="${dmDocumentTitle}" />
+
+		<execute function="Click" locator1="Icon#DESCRIPTIVE_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+	</command>
+
 	<command name="gotoDMDocumentPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 

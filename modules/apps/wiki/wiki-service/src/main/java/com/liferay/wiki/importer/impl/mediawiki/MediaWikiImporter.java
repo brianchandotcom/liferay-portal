@@ -55,12 +55,14 @@ import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.translator.MediaWikiToCreoleTranslator;
+import com.liferay.wiki.util.WikiUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -180,8 +182,12 @@ public class MediaWikiImporter implements WikiImporter {
 
 		try {
 			long authorUserId = getUserId(userId, node, author, usersMap);
+
+			String format = "creole";
 			String parentTitle = readParentTitle(content);
 			String redirectTitle = readRedirectTitle(content);
+
+			Collection<String> supportedFormats = WikiUtil.getFormats();
 
 			ServiceContext serviceContext = new ServiceContext();
 
@@ -191,9 +197,18 @@ public class MediaWikiImporter implements WikiImporter {
 				readAssetTagNames(userId, node, content));
 
 			if (Validator.isNull(redirectTitle)) {
-				_translator.setStrictImportMode(strictImportMode);
+				if (supportedFormats.contains("mediawiki") &&
+					Validator.equals(
+						_wikiGroupServiceConfiguration.defaultFormat(),
+						"mediawiki")) {
 
-				content = _translator.translate(content);
+					format = "mediawiki";
+				}
+				else {
+					_translator.setStrictImportMode(strictImportMode);
+
+					content = _translator.translate(content);
+				}
 			}
 			else {
 				content =
@@ -214,7 +229,7 @@ public class MediaWikiImporter implements WikiImporter {
 
 			_wikiPageLocalService.updatePage(
 				authorUserId, node.getNodeId(), title, page.getVersion(),
-				content, summary, true, "creole", parentTitle, redirectTitle,
+				content, summary, true, format, parentTitle, redirectTitle,
 				serviceContext);
 		}
 		catch (Exception e) {

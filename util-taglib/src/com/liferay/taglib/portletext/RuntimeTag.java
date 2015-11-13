@@ -208,7 +208,7 @@ public class RuntimeTag extends TagSupport {
 
 			request.setAttribute(WebKeys.SETTINGS_SCOPE, settingsScope);
 
-			JSONObject jsonObject = null;
+			boolean writeJSONObject = false;
 
 			if (PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
 					themeDisplay.getScopeGroupId(),
@@ -221,6 +221,8 @@ public class RuntimeTag extends TagSupport {
 					PortletKeys.PREFS_PLID_SHARED,
 					portletInstance.getPortletInstanceKey(),
 					defaultPreferences);
+
+				writeJSONObject = true;
 			}
 
 			if (PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
@@ -243,19 +245,25 @@ public class RuntimeTag extends TagSupport {
 						themeDisplay.getPlid());
 				}
 
+				writeJSONObject = true;
+			}
+
+			JSONObject jsonObject = null;
+
+			if (writeJSONObject) {
 				jsonObject = JSONFactoryUtil.createJSONObject();
 
 				PortletJSONUtil.populatePortletJSONObject(
 					request, StringPool.BLANK, portlet, jsonObject);
 			}
 
-			if (jsonObject != null) {
+			if (writeJSONObject && (jsonObject != null)) {
 				PortletJSONUtil.writeHeaderPaths(response, jsonObject);
 			}
 
 			PortletContainerUtil.render(request, response, portlet);
 
-			if (jsonObject != null) {
+			if (writeJSONObject && (jsonObject != null)) {
 				PortletJSONUtil.writeFooterPaths(response, jsonObject);
 			}
 		}

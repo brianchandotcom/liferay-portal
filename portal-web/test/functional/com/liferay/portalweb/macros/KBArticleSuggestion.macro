@@ -121,7 +121,7 @@
 	<command name="viewPG">
 		<var name="key_kbSuggestionBody" value="${kbSuggestionBody}" />
 
-		<execute function="AssertTextEquals" locator1="KnowledgeBaseSuggestions#USER_NAME" value1="${userName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="KnowledgeBaseSuggestions#USER_NAME" value1="${userName}" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBaseSuggestions#CONTENT" value1="${kbSuggestionBody}" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBaseSuggestions#STATUS" value1="Status: ${status}" />
 	</command>

@@ -270,6 +270,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--KB_SEARCH-->
+<tr>
+	<td>KB_SEARCH_RESULTS_TITLE</td>
+	<td>//tr[contains(.,'${key_kbArticleTitle}')]//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--LINK-->
 <tr>
 	<td>LINK_RSS</td>

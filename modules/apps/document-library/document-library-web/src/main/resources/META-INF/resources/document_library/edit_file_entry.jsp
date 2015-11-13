@@ -20,7 +20,6 @@
 String cmd = ParamUtil.getString(request, Constants.CMD, Constants.EDIT);
 
 String redirect = ParamUtil.getString(request, "redirect");
-String uploadExceptionRedirect = ParamUtil.getString(request, "uploadExceptionRedirect", currentURL);
 
 String uploadProgressId = "dlFileEntryUploadProgress";
 
@@ -174,7 +173,6 @@ if (portletTitleBasedNavigation) {
 
 	<liferay-portlet:actionURL name="/document_library/edit_file_entry" varImpl="editFileEntryURL">
 		<liferay-portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_entry" />
-		<liferay-portlet:param name="uploadExceptionRedirect" value="<%= uploadExceptionRedirect %>" />
 	</liferay-portlet:actionURL>
 
 	<aui:form action="<%= editFileEntryURL %>" cssClass="lfr-dynamic-form" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFileEntry(" + saveAsDraft + ");" %>'>

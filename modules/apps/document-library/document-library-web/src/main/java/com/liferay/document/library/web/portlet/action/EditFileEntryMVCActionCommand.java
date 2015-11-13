@@ -739,24 +739,9 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				 e instanceof SourceFileNameException ||
 				 e instanceof StorageFieldRequiredException) {
 
-			UploadException uploadException =
-				(UploadException)actionRequest.getAttribute(
-					WebKeys.UPLOAD_EXCEPTION);
-
-			if ((uploadException != null) && !cmd.equals(Constants.ADD_TEMP)) {
-				String uploadExceptionRedirect = ParamUtil.getString(
-					actionRequest, "uploadExceptionRedirect");
-
-				sendRedirect(
-					actionRequest, actionResponse, uploadExceptionRedirect);
-
-				SessionErrors.add(actionRequest, e.getClass());
-
-				return;
-			}
-			else if (!cmd.equals(Constants.ADD_DYNAMIC) &&
-					 !cmd.equals(Constants.ADD_MULTIPLE) &&
-					 !cmd.equals(Constants.ADD_TEMP)) {
+			if (!cmd.equals(Constants.ADD_DYNAMIC) &&
+				!cmd.equals(Constants.ADD_MULTIPLE) &&
+				!cmd.equals(Constants.ADD_TEMP)) {
 
 				if (e instanceof AntivirusScannerException) {
 					SessionErrors.add(actionRequest, e.getClass(), e);

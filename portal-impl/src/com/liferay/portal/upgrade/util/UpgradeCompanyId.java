@@ -14,13 +14,19 @@
 
 package com.liferay.portal.upgrade.util;
 
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
-import java.io.IOException;
-
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -67,7 +73,7 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 
 			_foreignNamesArray = new String[][] {
 				new String[] {foreignTableName, foreignColumnName
-			}};
+				}};
 		}
 
 		public TableUpdater(
@@ -82,9 +88,12 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 			return _tableName;
 		}
 
-		public void update() throws IOException, SQLException {
+		public void update() throws Exception {
 			for (String[] foreignNames : _foreignNamesArray) {
-				runSQL(getUpdateSQL(foreignNames[0], foreignNames[1]));
+				String select = getSelectSQL(foreignNames[0], foreignNames[1]);
+				String update = getUpdateSQL();
+
+				update(select, update);
 			}
 		}
 
@@ -93,8 +102,17 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 
 			StringBundler sb = new StringBundler(10);
 
-			sb.append("select companyId from ");
+			sb.append("select ");
 			sb.append(foreignTableName);
+			sb.append(".");
+			sb.append("companyId, ");
+			sb.append(_tableName);
+			sb.append(".");
+			sb.append(_columnName);
+			sb.append(" from ");
+			sb.append(foreignTableName);
+			sb.append(", ");
+			sb.append(_tableName);
 			sb.append(" where ");
 			sb.append(foreignTableName);
 			sb.append(".");
@@ -107,23 +125,79 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 			return sb.toString();
 		}
 
-		protected String getUpdateSQL(String selectSQL) {
+		protected String getUpdateSQL() {
 			StringBundler sb = new StringBundler(5);
 
 			sb.append("update ");
 			sb.append(_tableName);
-			sb.append(" set companyId = (");
-			sb.append(selectSQL);
-			sb.append(")");
+			sb.append(" set companyId = ?");
+			sb.append(" where ");
+			sb.append(_columnName);
+			sb.append("=?");
 
 			return sb.toString();
 		}
 
-		protected String getUpdateSQL(
-			String foreignTableName, String foreignColumnName) {
+		protected void update(String select, String update) throws Exception {
+			Connection con = null;
+			PreparedStatement ps = null;
+			PreparedStatement ps2 = null;
+			ResultSet rs = null;
 
-			return getUpdateSQL(
-				getSelectSQL(foreignTableName, foreignColumnName));
+			try {
+				con = DataAccess.getUpgradeOptimizedConnection();
+
+				DatabaseMetaData databaseMetaData = con.getMetaData();
+
+				boolean supportsBatchUpdates =
+					databaseMetaData.supportsBatchUpdates();
+
+				ps = con.prepareStatement(select);
+
+				rs = ps.executeQuery();
+
+				ps2 = con.prepareStatement(update);
+
+				int count = 0;
+
+				while (rs.next()) {
+					ps2.setLong(1, rs.getLong("companyId"));
+					ps2.setLong(2, rs.getLong(_columnName));
+
+					if (supportsBatchUpdates) {
+						ps2.addBatch();
+
+						int batchSize = GetterUtil.getInteger(
+							PropsUtil.get(PropsKeys.HIBERNATE_JDBC_BATCH_SIZE));
+
+						if (count == batchSize) {
+							ps2.executeBatch();
+
+							count = 0;
+						}
+						else {
+							count++;
+						}
+					}
+					else {
+						ps2.executeUpdate();
+					}
+
+					if (supportsBatchUpdates && (count > 0)) {
+						ps.executeBatch();
+					}
+				}
+			}
+			catch (SQLException sqle) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"The companyId was not updated in " + _tableName, sqle);
+				}
+			}
+			finally {
+				DataAccess.cleanUp(con, ps2);
+				DataAccess.cleanUp(con, ps, rs);
+			}
 		}
 
 		private final String _columnName;

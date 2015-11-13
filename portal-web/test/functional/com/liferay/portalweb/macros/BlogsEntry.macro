@@ -584,7 +584,7 @@
 		<execute function="AssertElementPresent" locator1="PGBlogs#SUCCESS_MESSAGE" />
 	</command>
 
-	<command name="editContentPG">
+	<command name="editContentViaCardViewPG">
 		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
@@ -631,10 +631,12 @@
 	</command>
 
 	<command name="editNoPermissionPG">
-		<var name="key_entryContent" value="${entryContent}" />
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute function="AssertTextEquals" locator1="PGBlogs#ENTRY_TITLE" value1="${entryTitle}" />
+
+		<var name="key_entryContent" value="${entryContent}" />
+
 		<execute function="AssertTextEquals" locator1="PGBlogs#ENTRY_CONTENT" value1="${entryContent}" />
 		<execute function="AssertElementNotPresent" locator1="PGBlogs#ENTRY_EDIT" />
 	</command>
@@ -697,7 +699,7 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="CPBlogsEntry#ENTRY_CONTENT" value1="${entryContent}" />
 	</command>
 
-	<command name="editTitlePG">
+	<command name="editTitleViaCardViewPG">
 		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />

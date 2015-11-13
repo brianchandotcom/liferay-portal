@@ -1013,6 +1013,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		newContent = getCombinedLinesContent(
 			newContent, _combinedLinesPattern2);
 
+		newContent = formatClassLine(newContent);
+
 		newContent = fixIncorrectEmptyLineBeforeCloseCurlyBrace(
 			newContent, fileName);
 
@@ -1335,6 +1337,26 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				}
 
 				annotation += line + "\n";
+			}
+		}
+
+		return content;
+	}
+
+	protected String formatClassLine(String content) {
+		Matcher matcher = _classPattern.matcher(content);
+
+		while (matcher.find()) {
+			String match = matcher.group();
+
+			match = match.substring(0, match.length() - 1);
+
+			String formattedClassLine = getFormattedClassLine(
+				matcher.group(1), match);
+
+			if (formattedClassLine != null) {
+				content = StringUtil.replace(
+					content, match, formattedClassLine);
 			}
 		}
 
@@ -2743,6 +2765,127 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return null;
 	}
 
+	protected String getFormattedClassLine(String indent, String classLine) {
+		while (classLine.contains(StringPool.TAB + StringPool.SPACE)) {
+			classLine = StringUtil.replace(
+				classLine, StringPool.TAB + StringPool.SPACE, StringPool.TAB);
+		}
+
+		String classSingleLine = StringUtil.replace(
+			classLine.substring(1),
+			new String[] {StringPool.TAB, StringPool.NEW_LINE},
+			new String[] {StringPool.BLANK, StringPool.SPACE});
+
+		classSingleLine = indent + classSingleLine;
+
+		List<String> lines = new ArrayList<>();
+
+		outerWhile:
+		while (true) {
+			if (getLineLength(classSingleLine) <= _MAX_LINE_LENGTH) {
+				lines.add(classSingleLine);
+
+				break;
+			}
+
+			String newIndent = indent;
+			String newLine = classSingleLine;
+
+			int x = -1;
+
+			while (true) {
+				int y = newLine.indexOf(" extends ", x + 1);
+
+				if (y == -1) {
+					x = newLine.indexOf(" implements ", x + 1);
+				}
+				else {
+					x = y;
+				}
+
+				if (x == -1) {
+					break;
+				}
+
+				String linePart = newLine.substring(0, x);
+
+				if ((StringUtil.count(linePart, StringPool.GREATER_THAN) ==
+						StringUtil.count(linePart, StringPool.LESS_THAN)) &&
+					(getLineLength(linePart) <= _MAX_LINE_LENGTH)) {
+
+					if (lines.isEmpty()) {
+						newIndent = newIndent + StringPool.TAB;
+					}
+
+					lines.add(linePart);
+
+					newLine = newIndent + newLine.substring(x + 1);
+
+					if (getLineLength(newLine) <= _MAX_LINE_LENGTH) {
+						lines.add(newLine);
+
+						break outerWhile;
+					}
+
+					x = -1;
+				}
+			}
+
+			if (lines.isEmpty()) {
+				return null;
+			}
+
+			x = newLine.length();
+
+			while (true) {
+				x = newLine.lastIndexOf(", ", x - 1);
+
+				if (x == -1) {
+					return null;
+				}
+
+				String linePart = newLine.substring(0, x + 1);
+
+				if ((StringUtil.count(linePart, StringPool.GREATER_THAN) ==
+						StringUtil.count(linePart, StringPool.LESS_THAN)) &&
+					(getLineLength(linePart) <= _MAX_LINE_LENGTH)) {
+
+					lines.add(linePart);
+
+					if (linePart.contains("\textends")) {
+						newIndent = newIndent + "\t\t";
+					}
+					else if (linePart.contains("\timplements")) {
+						newIndent = newIndent + "\t\t   ";
+					}
+
+					newLine = newIndent + newLine.substring(x + 2);
+
+					if (getLineLength(newLine) <= _MAX_LINE_LENGTH) {
+						lines.add(newLine);
+
+						break outerWhile;
+					}
+
+					x = newLine.length();
+				}
+			}
+		}
+
+		String formattedClassLine = null;
+
+		for (String line : lines) {
+			if (formattedClassLine == null) {
+				formattedClassLine = "\n" + line;
+			}
+			else {
+				formattedClassLine = formattedClassLine + "\n" + line;
+			}
+		}
+
+		return formattedClassLine;
+	}
+
 	protected int getIfClauseLineBreakPos(String line) {
 		int x = line.lastIndexOf(" || ", _MAX_LINE_LENGTH - 3);
 		int y = line.lastIndexOf(" && ", _MAX_LINE_LENGTH - 3);
@@ -3366,6 +3509,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private List<String> _checkJavaFieldTypesExclusionFiles;
 	private boolean _checkModulesServiceUtil;
 	private boolean _checkUnprocessedExceptions;
+	private final Pattern _classPattern = Pattern.compile(
+		"\n(\t*)(private|protected|public) ((abstract|static) )*" +
+			"(class|enum|interface) ([\\s\\S]*?) \\{\n");
 	private Pattern _combinedLinesPattern1 = Pattern.compile(
 		"\n(\t*).+(=|\\]) (\\{)\n");
 	private Pattern _combinedLinesPattern2 = Pattern.compile(

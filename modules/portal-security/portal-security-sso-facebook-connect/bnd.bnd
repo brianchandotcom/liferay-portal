@@ -3,5 +3,7 @@ Bundle-SymbolicName: com.liferay.portal.security.sso.facebook.connect
 Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\
-	META-INF/resources=src/main/resources/META-INF/resources
+	META-INF/resources=src/main/resources/META-INF/resources,\
+	@lib/com.liferay.portal.language.jar,\
+	@lib/com.liferay.portal.security.common.jar
 Web-ContextPath: /portal-security-sso-facebook-connect

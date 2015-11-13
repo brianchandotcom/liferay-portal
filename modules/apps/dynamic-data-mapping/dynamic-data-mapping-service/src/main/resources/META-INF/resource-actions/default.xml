@@ -3,11 +3,43 @@
 
 <resource-action-mapping>
 	<model-resource>
+		<model-name>com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_dynamic_data_mapping_data_provider_web_portlet_DDMDataProviderPortlet</portlet-name>
+		</portlet-ref>
+		<weight>1</weight>
+		<permissions>
+			<supports>
+				<action-key>ADD_DATA_PROVIDER_INSTANCE</action-key>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults>
+				<action-key>ADD_DATA_PROVIDER_INSTANCE</action-key>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</site-member-defaults>
+			<guest-defaults>
+				<action-key>VIEW</action-key>
+			</guest-defaults>
+			<guest-unsupported>
+				<action-key>ADD_DATA_PROVIDER_INSTANCE</action-key>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+	<model-resource>
 		<model-name>com.liferay.dynamic.data.mapping.model.DDMStructure</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_dynamic_data_mapping_web_portlet_DDMPortlet</portlet-name>
 		</portlet-ref>
-		<weight>1</weight>
+		<weight>2</weight>
 		<permissions>
 			<supports>
 				<action-key>DELETE</action-key>
@@ -31,7 +63,7 @@
 		<portlet-ref>
 			<portlet-name>com_liferay_dynamic_data_mapping_web_portlet_DDMPortlet</portlet-name>
 		</portlet-ref>
-		<weight>2</weight>
+		<weight>3</weight>
 		<permissions>
 			<supports>
 				<action-key>DELETE</action-key>

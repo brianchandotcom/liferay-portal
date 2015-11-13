@@ -194,27 +194,4 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<S, T> {
 
 	}
 
-	private class ServiceReferenceServiceWrapperComparator<S, T>
-		implements Comparator<ServiceReferenceServiceTuple<S, T>> {
-
-		public ServiceReferenceServiceWrapperComparator(
-			Comparator<ServiceReference<S>> comparator) {
-
-			_comparator = comparator;
-		}
-
-		@Override
-		public int compare(
-			ServiceReferenceServiceTuple<S, T> serviceReferenceServiceTuple1,
-			ServiceReferenceServiceTuple<S, T> serviceReferenceServiceTuple2) {
-
-			return _comparator.compare(
-				serviceReferenceServiceTuple1.getServiceReference(),
-				serviceReferenceServiceTuple2.getServiceReference());
-		}
-
-		private final Comparator<ServiceReference<S>> _comparator;
-
-	}
-
 }

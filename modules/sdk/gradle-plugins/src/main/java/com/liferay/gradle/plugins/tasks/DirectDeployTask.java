@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.tasks;
 
 import com.liferay.gradle.util.FileUtil;
+import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.StringUtil;
 
 import java.io.File;
@@ -29,6 +30,10 @@ public class DirectDeployTask extends BasePortalImplToolsTask {
 
 	public File getAppServerDeployDir() {
 		return _appServerDeployDir;
+	}
+
+	public File getAppServerDir() {
+		return _appServerDir;
 	}
 
 	public String getAppServerType() {
@@ -147,6 +152,10 @@ public class DirectDeployTask extends BasePortalImplToolsTask {
 		_appServerDeployDir = appServerDeployDir;
 	}
 
+	public void setAppServerDir(File appServerDir) {
+		_appServerDir = appServerDir;
+	}
+
 	public void setAppServerType(String appServerType) {
 		_appServerType = appServerType;
 	}
@@ -168,11 +177,26 @@ public class DirectDeployTask extends BasePortalImplToolsTask {
 	}
 
 	@Override
+	protected void addDependencies() {
+		super.addDependencies();
+
+		String appServerType = getAppServerType();
+
+		if (appServerType.equals("jonas")) {
+			File dir = new File(getAppServerDir(), "lib/endorsed");
+
+			GradleUtil.addDependency(
+				project, getConfigurationName(), getJarsFileTree(dir));
+		}
+	}
+
+	@Override
 	protected String getToolName() {
 		return "Deployer";
 	}
 
 	private File _appServerDeployDir;
+	private File _appServerDir;
 	private String _appServerType;
 	private boolean _customPortletXml;
 	private boolean _unpackWar = true;

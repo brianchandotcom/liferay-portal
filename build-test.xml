@@ -4781,10 +4781,6 @@ module.framework.properties.osgi.console=11312</echo>
 	</target>
 
 	<target name="prepare-poshi-runner-properties">
-		<tstamp>
-			<format pattern="yyyy-MM-dd" property="current.date" timezone="GMT" />
-		</tstamp>
-
 		<echo append="true" file="${test.ext.properties.file}">
 			component.names=${component.names}
 			ignore.errors.file.name=${project.dir.unix}/portal-web/test-ignorable-error-lines.xml
@@ -4792,7 +4788,7 @@ module.framework.properties.osgi.console=11312</echo>
 			product.names=${product.names}
 			project.dir=${project.dir.unix}
 			test.case.available.property.names=${test.case.available.property.names}
-			test.console.log.file.name=${liferay.home}/logs/liferay.${current.date}.xml
+			test.console.log.file.name=${liferay.home}/logs/liferay.*.xml
 			test.console.shut.down.file.name=${project.dir.unix}/console-shut-down
 			test.dependencies.dir.name=dependencies
 			test.poshi.warnings.file.name=${project.dir.unix}/poshi-warnings.xml
@@ -6722,13 +6718,61 @@ jdbc.default.password=${database.mysql.password}</echo>
 					</then>
 				</if>
 
+				<property name="console.log.base.dir" value="${liferay.home}/logs" />
+
+				<fileset dir="${console.log.base.dir}" erroronmissingdir="false" id="fileset.id">
+					<include name="*.log" />
+				</fileset>
+
+				<property name="console.log.file.names" value="${toString:fileset.id}" />
+
 				<if>
-					<available file="${liferay.home}/logs/liferay.${current.date}.log" />
+					<not>
+						<equals arg1="${console.log.file.names}" arg2="" />
+					</not>
 					<then>
-						<copy
-							file="${liferay.home}/logs/liferay.${current.date}.log"
-							tofile="${jenkins.shared.results.dir}/${job.name}/builds/${env.BUILD_NUMBER}/liferay.log"
-						/>
+						<beanshell>
+							<![CDATA[
+								import org.apache.commons.io.FileUtils;
+								import org.apache.tools.ant.DirectoryScanner;
+
+								String consoleLogBaseDir = project.getProperty("console.log.base.dir");
+								String consoleLogFileNames = project.getProperty("console.log.file.names");
+
+								Map consoleLogFiles = new TreeMap();
+
+								DirectoryScanner directoryScanner = new DirectoryScanner();
+
+								directoryScanner.setBasedir(consoleLogBaseDir);
+								directoryScanner.setIncludes(consoleLogFileNames.split(";"));
+
+								directoryScanner.scan();
+
+								for (String filePath : directoryScanner.getIncludedFiles()) {
+									filePath = consoleLogBaseDir + "/" + filePath;
+
+									File file = new File(filePath);
+
+									consoleLogFiles.put(Long.toString(file.lastModified()), file);
+								}
+
+								StringBuilder sb = new StringBuilder();
+
+								SortedSet keys = new TreeSet(consoleLogFiles.keySet());
+
+								for (String key : keys) {
+									File file = consoleLogFiles.get(key);
+
+									sb.append(FileUtils.readFileToString(file));
+								}
+
+								project.setProperty("console.log.file.content", sb.toString());
+							]]>
+						</beanshell>
+
+						<echo file="portal-web/test-results/${poshi.runner.results.dir}/liferay.log">${console.log.file.content}</echo>
+
+						<echo file="${jenkins.shared.results.dir}/${job.name}/builds/${env.BUILD_NUMBER}/liferay.log">${console.log.file.content}</echo>
 					</then>
 				</if>
 

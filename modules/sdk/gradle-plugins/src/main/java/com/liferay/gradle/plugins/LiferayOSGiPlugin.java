@@ -17,6 +17,7 @@ package com.liferay.gradle.plugins;
 import aQute.bnd.osgi.Constants;
 
 import com.liferay.gradle.plugins.css.builder.BuildCSSTask;
+import com.liferay.gradle.plugins.css.builder.CSSBuilderPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
 import com.liferay.gradle.plugins.jasper.jspc.JspCExtension;
@@ -93,6 +94,7 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		configureJspCExtension(project);
 
 		configureArchivesBaseName(project);
+		configureTaskBuildCSS(project);
 		configureTasksBuildService(project);
 		configureVersion(project);
 
@@ -647,29 +649,23 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		directDeployTask.setWebAppFile(warFile);
 	}
 
-	@Override
-	protected void configureTaskBuildCSSDocrootDirName(
-		BuildCSSTask buildCSSTask) {
+	protected void configureTaskBuildCSS(Project project) {
+		Task task = GradleUtil.getTask(
+			project, CSSBuilderPlugin.BUILD_CSS_TASK_NAME);
 
-		Project project = buildCSSTask.getProject();
-
-		String docrootDirName = buildCSSTask.getDocrootDirName();
-
-		if (Validator.isNotNull(docrootDirName) &&
-			FileUtil.exists(project, docrootDirName)) {
-
-			return;
+		if (task instanceof BuildCSSTask) {
+			configureTaskBuildCSSDocrootDir((BuildCSSTask)task);
 		}
+	}
+
+	protected void configureTaskBuildCSSDocrootDir(BuildCSSTask buildCSSTask) {
+		Project project = buildCSSTask.getProject();
 
 		File docrootDir = project.file("docroot");
 
-		if (!docrootDir.exists()) {
-			super.configureTaskBuildCSSDocrootDirName(buildCSSTask);
-
-			return;
+		if (docrootDir.exists()) {
+			buildCSSTask.setDocrootDir(docrootDir);
 		}
-
-		buildCSSTask.setDocrootDirName(project.relativePath(docrootDir));
 	}
 
 	protected void configureTaskBuildServiceOsgiModule(

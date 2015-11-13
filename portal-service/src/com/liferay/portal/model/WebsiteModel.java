@@ -40,7 +40,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface WebsiteModel extends AttachedModel, BaseModel<Website>,
-	MVCCModel, StagedAuditedModel {
+	MVCCModel, ShardedModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

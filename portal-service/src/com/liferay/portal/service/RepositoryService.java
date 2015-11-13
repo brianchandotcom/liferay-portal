@@ -58,26 +58,33 @@ public interface RepositoryService extends BaseService {
 	public void deleteRepository(long repositoryId) throws PortalException;
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the OSGi service identifier.
 	*
-	* @return the Spring bean ID for this bean
+	* @return the OSGi service identifier
 	*/
-	public java.lang.String getBeanIdentifier();
+	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Repository getRepository(long repositoryId)
 		throws PortalException;
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String[] getSupportedConfigurations(long classNameId);
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String[] getSupportedParameters(
 		java.lang.String className, java.lang.String configuration);
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	#getSupportedParameters(String, String)}
+	* @deprecated As of 7.0.0, with no direct replacement
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -87,13 +94,6 @@ public interface RepositoryService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties(
 		long repositoryId) throws PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public void updateRepository(long repositoryId, java.lang.String name,
 		java.lang.String description) throws PortalException;

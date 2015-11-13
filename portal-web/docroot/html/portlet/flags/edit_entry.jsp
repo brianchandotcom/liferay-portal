@@ -26,7 +26,7 @@ long reportedUserId = ParamUtil.getLong(request, "reportedUserId");
 
 <style type="text/css">
 	.portlet-flags .form fieldset {
-		border: none;
+		border-width: 0;
 		padding: 0;
 		width: 100%;
 	}
@@ -35,7 +35,7 @@ long reportedUserId = ParamUtil.getLong(request, "reportedUserId");
 <div class="portlet-flags" id="<portlet:namespace />flagsPopup">
 	<aui:form method="post" name="flagsForm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "flag();" %>'>
 		<p>
-			<%= LanguageUtil.format(request, "you-are-about-to-report-a-violation-of-our-x-terms-of-use.-all-reports-are-strictly-confidential", themeDisplay.getPathMain() + "/portal/terms_of_use", false) %>
+			<liferay-ui:message arguments='<%= themeDisplay.getPathMain() + "/portal/terms_of_use" %>' key="you-are-about-to-report-a-violation-of-our-x-terms-of-use.-all-reports-are-strictly-confidential" translateArguments="<%= false %>" />
 		</p>
 
 		<aui:fieldset>
@@ -73,7 +73,9 @@ long reportedUserId = ParamUtil.getLong(request, "reportedUserId");
 <div class="hide" id="<portlet:namespace />confirmation">
 	<p><strong><liferay-ui:message key="thank-you-for-your-report" /></strong></p>
 
-	<p><%= LanguageUtil.format(request, "although-we-cannot-disclose-our-final-decision,-we-do-review-every-report-and-appreciate-your-effort-to-make-sure-x-is-a-safe-environment-for-everyone", HtmlUtil.escape(company.getName()), false) %></p>
+	<p>
+		<liferay-ui:message arguments="<%= HtmlUtil.escape(company.getName()) %>" key="although-we-cannot-disclose-our-final-decision,-we-do-review-every-report-and-appreciate-your-effort-to-make-sure-x-is-a-safe-environment-for-everyone" translateArguments="<%= false %>" />
+	</p>
 </div>
 
 <div class="hide" id="<portlet:namespace />error">
@@ -83,6 +85,7 @@ long reportedUserId = ParamUtil.getLong(request, "reportedUserId");
 <aui:script use="liferay-util-window">
 	function <portlet:namespace />flag() {
 		var reasonNode = A.one('#<portlet:namespace />reason');
+
 		var reason = (reasonNode && reasonNode.val()) || '';
 
 		if (reason == 'other') {
@@ -91,21 +94,17 @@ long reportedUserId = ParamUtil.getLong(request, "reportedUserId");
 			reason = (otherReasonNode && otherReasonNode.val()) || '<%= UnicodeLanguageUtil.get(request, "no-reason-specified") %>';
 		}
 
-		var reporterEmailAddressNode = A.one('#<portlet:namespace />reporterEmailAddress');
-		var reporterEmailAddress = (reporterEmailAddressNode && reporterEmailAddressNode.val()) || '';
-
 		var flagsPopupNode = A.one('#<portlet:namespace />flagsPopup');
-		var errorMessageNode = A.one('#<portlet:namespace />error');
-		var confirmationMessageNode = A.one('#<portlet:namespace />confirmation');
-
-		var errorMessage = (errorMessageNode && errorMessageNode.html()) || '';
-		var confirmationMessage = (confirmationMessageNode && confirmationMessageNode.html()) || '';
 
 		var setDialogContent = function(message) {
 			var dialog = Liferay.Util.Window.getByChild(flagsPopupNode);
 
 			dialog.setStdModContent('body', message);
 		};
+
+		var reporterEmailAddressNode = A.one('#<portlet:namespace />reporterEmailAddress');
+
+		var reporterEmailAddress = (reporterEmailAddressNode && reporterEmailAddressNode.val()) || '';
 
 		var data = Liferay.Util.ns(
 			'<portlet:namespace />',
@@ -119,6 +118,12 @@ long reportedUserId = ParamUtil.getLong(request, "reportedUserId");
 				reporterEmailAddress: reporterEmailAddress
 			}
 		);
+
+		var confirmationMessageNode = A.one('#<portlet:namespace />confirmation');
+		var errorMessageNode = A.one('#<portlet:namespace />error');
+
+		var confirmationMessage = (confirmationMessageNode && confirmationMessageNode.html()) || '';
+		var errorMessage = (errorMessageNode && errorMessageNode.html()) || '';
 
 		A.io.request(
 			'<liferay-portlet:actionURL portletName="<%= PortletKeys.FLAGS %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/flags/edit_entry" /></liferay-portlet:actionURL>',

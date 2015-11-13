@@ -288,15 +288,6 @@ public class SCProductEntryLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
 	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> getCompanyProductEntries(
 		long companyId, int start, int end) {
 		return getService().getCompanyProductEntries(companyId, start, end);
@@ -304,6 +295,15 @@ public class SCProductEntryLocalServiceUtil {
 
 	public static int getCompanyProductEntriesCount(long companyId) {
 		return getService().getCompanyProductEntriesCount(companyId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
@@ -442,15 +442,6 @@ public class SCProductEntryLocalServiceUtil {
 	public static boolean hasSCLicenseSCProductEntry(long licenseId,
 		long productEntryId) {
 		return getService().hasSCLicenseSCProductEntry(licenseId, productEntryId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static void setSCLicenseSCProductEntries(long licenseId,

@@ -17,9 +17,10 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
-OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)request.getAttribute("liferay-ui:organization-search-container-results:searchTerms");
 LinkedHashMap<String, Object> organizationParams = (LinkedHashMap<String, Object>)request.getAttribute("liferay-ui:organization-search-container-results:organizationParams");
 long parentOrganizationId = GetterUtil.getLong(request.getAttribute("liferay-ui:organization-search-container-results:parentOrganizationId"));
+OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)request.getAttribute("liferay-ui:organization-search-container-results:searchTerms");
+boolean useIndexer = GetterUtil.getBoolean(request.getAttribute("liferay-ui:organization-search-container-results:useIndexer"));
 
 Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(Organization.class);
 %>
@@ -27,7 +28,7 @@ Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(Organization.class);
 <liferay-ui:search-container searchContainer='<%= (SearchContainer)request.getAttribute("liferay-ui:organization-search-container-results:searchContainer") %>'>
 	<liferay-ui:search-container-results>
 		<c:choose>
-			<c:when test="<%= Validator.equals(themeDisplay.getPpid(), PortletKeys.DIRECTORY) && indexer.isIndexerEnabled() && PropsValues.ORGANIZATIONS_SEARCH_WITH_INDEX %>">
+			<c:when test="<%= useIndexer && indexer.isIndexerEnabled() && PropsValues.ORGANIZATIONS_SEARCH_WITH_INDEX %>">
 
 				<%
 				organizationParams.put("expandoAttributes", searchTerms.getKeywords());

@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CUSTOM_FIELD_CONTENT</td>
+	<td>//div[contains(@class,'custom-attributes')]/div/span[contains(.,'${key_customFieldContent}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CUSTOM_FIELD_TEXT_FIELD</td>
 	<td>//span[contains(.,'Wiki Custom Field Here')]/../..//input[@type='text']</td>
 	<td></td>
@@ -71,6 +76,11 @@
 <tr>
 	<td>PAGE_HEADER</td>
 	<td>//div[contains(@class,'taglib-header') and contains(.,'${key_wikiPageTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RICH_TEXT_EDITOR</td>
+	<td>//div[contains(@class,'alloy-editor') and contains(@aria-label,'Rich Text Editor')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -70,6 +70,18 @@ public interface Repository extends DocumentRepository {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * Cancels the file entry check out. If the file entry is not checked out,
+	 * invoking this method results in no changes.
+	 *
+	 * @param  fileEntryId the primary key of the file entry to cancel the check
+	 *         out
+	 * @return the file entry if the cancel checkout operation was successful;
+	 *         <code>null</code> if the file entry was not checked out
+	 * @throws PortalException if a portal exception occurred
+	 * @see    #checkInFileEntry(long, long, boolean, String, ServiceContext)
+	 * @see    #checkOutFileEntry(long, ServiceContext)
+	 */
 	public FileVersion cancelCheckOut(long fileEntryId) throws PortalException;
 
 	/**
@@ -92,7 +104,7 @@ public interface Repository extends DocumentRepository {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #checkInFileEntry(long, long,
-	 *             String, com.liferay.portal.service.ServiceContext)}
+	 *             String, ServiceContext)}
 	 */
 	@Deprecated
 	public void checkInFileEntry(

@@ -564,16 +564,6 @@ public class DLAppServiceWrapper implements DLAppService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _dlAppService.getBeanIdentifier();
-	}
-
-	/**
 	* Returns all the file entries in the folder.
 	*
 	* @param repositoryId the primary key of the file entry's repository
@@ -1611,6 +1601,16 @@ public class DLAppServiceWrapper implements DLAppService,
 	}
 
 	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _dlAppService.getOSGiServiceIdentifier();
+	}
+
+	/**
 	* Returns all the descendant folders of the folder with the primary key.
 	*
 	* @param repositoryId the primary key of the repository
@@ -1965,16 +1965,6 @@ public class DLAppServiceWrapper implements DLAppService,
 		com.liferay.portal.kernel.search.Query query)
 		throws com.liferay.portal.kernel.search.SearchException {
 		return _dlAppService.search(repositoryId, searchContext, query);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_dlAppService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

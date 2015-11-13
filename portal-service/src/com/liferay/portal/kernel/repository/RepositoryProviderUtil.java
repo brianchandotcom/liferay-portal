@@ -120,10 +120,6 @@ public class RepositoryProviderUtil {
 		return _repositoryProvider;
 	}
 
-	public static void invalidateRepository(long repositoryId) {
-		getRepositoryProvider().invalidateRepository(repositoryId);
-	}
-
 	public void setRepositoryProvider(RepositoryProvider repositoryProvider) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 

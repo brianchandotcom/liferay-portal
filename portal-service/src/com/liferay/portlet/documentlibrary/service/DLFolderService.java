@@ -62,13 +62,6 @@ public interface DLFolderService extends BaseService {
 	public void deleteFolder(long groupId, long parentFolderId,
 		java.lang.String name) throws PortalException;
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<java.lang.Object> getFileEntriesAndFileShortcuts(
 		long groupId, long folderId, int status, int start, int end)
@@ -158,6 +151,13 @@ public interface DLFolderService extends BaseService {
 		throws PortalException;
 
 	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	/**
 	* @deprecated As of 7.0.0, replaced by {@link #getSubfolderIds(List, long,
 	long, boolean)}
 	*/
@@ -198,13 +198,6 @@ public interface DLFolderService extends BaseService {
 	public com.liferay.portal.kernel.lock.Lock refreshFolderLock(
 		java.lang.String lockUuid, long companyId, long expirationTime)
 		throws PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public void unlockFolder(long folderId, java.lang.String lockUuid)
 		throws PortalException;

@@ -111,63 +111,7 @@
 		<execute macro="WebContent#viewAudioViaWCD" />
 	</command>
 
-	<command name="AddContentWithTitleAndAllFieldsNull" priority="4">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoManageStructures" />
-
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<for list="Boolean,Date,Decimal,Documents and Media,Geolocation,HTML,Image,Integer,Link to Page,Number,Radio,Select,Separator,Text,Text Box" param="structureFieldName">
-			<execute macro="DynamicDataMapping#addField">
-				<var name="field" value="${structureFieldName}" />
-				<var name="fieldFieldLabel" value="${structureFieldName}" />
-				<var method="StringUtil#replace('${structureFieldName}', ' ', '')" name="fieldName" />
-			</execute>
-		</for>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateFieldNames" value="Boolean,Date,Decimal,Documents and Media,Geolocation,HTML,Image,Integer,Link to Page,Number,Radio,Select,Separator,Text,Text Box" />
-			<var name="templateName" value="WC Template Name" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#addWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateName" value="WC Template Name" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-	</command>
-
-	<command name="AddExistingPageAsDisplayPageInSiteCP" priority="4">
+	<command name="AddExistingPageAsDisplayPageInSiteCP" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -362,12 +306,18 @@
 		</execute>
 
 		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="Global WC Structure Name" />
 			<var name="templateDescription" value="Local WC Template Description" />
-			<var name="templateFieldNames" value="Text" />
 			<var name="templateLanguage" value="ftl" />
 			<var name="templateName" value="Local WC Template Name" />
 		</execute>
+
+		<execute macro="WebContentTemplates#addStructure">
+			<var name="structureName" value="Global WC Structure Name" />
+			<var name="templateFieldNames" value="Text" />
+			<var name="templateLanguage" value="ftl" />
+		</execute>
+
+		<execute macro="WebContentTemplates#save" />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Web Content Display Page" />
@@ -395,7 +345,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWebContentWithGlobalStructureAndEditedDefaultValues" priority="4">
+	<command name="AddWebContentWithGlobalStructureAndEditedDefaultValues" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Global" />
@@ -426,8 +376,18 @@
 
 		<execute macro="WebContentTemplates#addCP">
 			<var name="addRoleViewPermissions" value="Power User" />
-			<var name="structureName" value="Global Structure" />
 			<var name="templateDescription" value="Template Description" />
+			<var name="templateName" value="Template Name" />
+		</execute>
+
+		<execute macro="WebContentTemplates#addStructure">
+			<var name="structureName" value="Global Structure" />
+		</execute>
+
+		<execute macro="WebContentTemplates#save" />
+
+		<execute macro="WebContentTemplates#addRoleViewPermissions">
+			<var name="roles" value="Power User" />
 			<var name="templateName" value="Template Name" />
 		</execute>
 
@@ -536,11 +496,16 @@
 		</execute>
 
 		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="WC Template Description" />
 			<var name="templateFieldNames" value="Text" />
 			<var name="templateName" value="WC Template Name" />
 		</execute>
+
+		<execute macro="WebContentTemplates#addStructure">
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="WebContentTemplates#save" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
@@ -624,12 +589,18 @@
 		</execute>
 
 		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="Global WC Structure Name" />
 			<var name="templateDescription" value="Global WC Template Description" />
-			<var name="templateFieldNames" value="Text" />
 			<var name="templateLanguage" value="ftl" />
 			<var name="templateName" value="Global WC Template Name" />
 		</execute>
+
+		<execute macro="WebContentTemplates#addStructure">
+			<var name="structureName" value="Global WC Structure Name" />
+			<var name="templateFieldNames" value="Text" />
+			<var name="templateLanguage" value="ftl" />
+		</execute>
+
+		<execute macro="WebContentTemplates#save" />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Web Content Display Page" />
@@ -700,11 +671,18 @@
 		</execute>
 
 		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateFieldNames" value="Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Text,Text Box" />
+			<var name="templateLanguage" value="ftl" />
 			<var name="templateName" value="WC Template Name" />
 		</execute>
+
+		<execute macro="WebContentTemplates#addStructure">
+			<var name="structureName" value="WC Structure Name" />
+			<var name="templateFieldNames" value="Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Text,Text Box" />
+			<var name="templateLanguage" value="ftl" />
+		</execute>
+
+		<execute macro="WebContentTemplates#save" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
@@ -769,12 +747,18 @@
 		</execute>
 
 		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="Global WC Structure Name" />
 			<var name="templateDescription" value="Global WC Template Description" />
-			<var name="templateFieldNames" value="Text" />
 			<var name="templateLanguage" value="ftl" />
 			<var name="templateName" value="Global WC Template Name" />
 		</execute>
+
+		<execute macro="WebContentTemplates#addStructure">
+			<var name="structureName" value="Global WC Structure Name" />
+			<var name="templateFieldNames" value="Text" />
+			<var name="templateLanguage" value="ftl" />
+		</execute>
+
+		<execute macro="WebContentTemplates#save" />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Web Content Display Page" />
@@ -806,9 +790,23 @@
 		</execute>
 
 		<execute macro="WebContentDisplayPortlet#editTemplate">
+			<var name="editTemplateButton" value="true" />
 			<var name="structureName" value="Global WC Structure Name" />
 			<var name="templateName" value="Template Edit" />
 			<var name="webContentContent" value="WC WebContent Text" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="WebContent#viewSelectedTemplateCP">
+			<var name="templateName" value="Template Edit" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 	</command>
@@ -840,22 +838,33 @@
 		</execute>
 
 		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="WC Template1 Description" />
 			<var name="templateFieldNames" value="Text" />
 			<var name="templateName" value="WC Template1 Name" />
 		</execute>
+
+		<execute macro="WebContentTemplates#addStructure">
+			<var name="structureName" value="WC Structure Name" />
+			<var name="templateFieldNames" value="Text" />
+		</execute>
+
+		<execute macro="WebContentTemplates#save" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
 
 		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="WC Template2 Description" />
-			<var name="templateFieldNames" value="Text" />
 			<var name="templateName" value="WC Template2 Name" />
 		</execute>
+
+		<execute macro="WebContentTemplates#addStructure">
+			<var name="structureName" value="WC Structure Name" />
+			<var name="templateFieldNames" value="Text" />
+		</execute>
+
+		<execute macro="WebContentTemplates#save" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
@@ -866,8 +875,6 @@
 		</execute>
 
 		<execute macro="WebContent#addWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateName" value="WC Template1 Name" />
 			<var name="webContentText" value="WC WebContent Text" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
@@ -887,7 +894,7 @@
 		</execute>
 
 		<execute macro="WebContent#selectTemplateCP">
-			<var name="templateName" value="WC Template2 Name" />
+			<var name="templateName" value="WC Template1 Name" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
@@ -900,7 +907,7 @@
 		</execute>
 
 		<execute macro="WebContent#viewSelectedTemplateCP">
-			<var name="templateName" value="WC Template2 Name" />
+			<var name="templateName" value="WC Template1 Name" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 	</command>
@@ -962,9 +969,14 @@
 			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
+		<execute macro="Page#gotoContentCP">
+			<var name="pageStaging" value="true" />
+			<var name="portletName" value="Web Content" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
 
-		<execute macro="WebContent#expirePGViaWCD">
+		<execute macro="WebContent#expireSpecificVersionCP">
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
@@ -1015,7 +1027,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewGlobalStructureViaAddMenuInLiferaySite" priority="4">
+	<command name="ViewGlobalStructureViaAddMenuInLiferaySite" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Global" />
@@ -1263,16 +1275,28 @@
 		</execute>
 
 		<execute macro="WebContentTemplates#addCP">
+			<var name="templateDescription" value="WC Template Description" />
+			<var name="templateLanguage" value="ftl" />
+			<var name="templateName" value="WC Template Name" />
+		</execute>
+
+		<execute macro="WebContentTemplates#save" />
+
+		<execute macro="WebContentTemplates#localizeTemplateName">
 			<var name="localization1Name" value="nom de la template de wc" />
 			<var name="localization1NameKey" value="fr_FR" />
 			<var name="localization2Name" value="wc 模板名称" />
 			<var name="localization2NameKey" value="zh_CN" />
-			<var name="structureName" value="WC Structure Name" />
-			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateFieldNames" value="Text" />
-			<var name="templateLanguage" value="ftl" />
 			<var name="templateName" value="WC Template Name" />
 		</execute>
+
+		<execute macro="WebContentTemplates#addStructure">
+			<var name="structureName" value="WC Structure Name" />
+			<var name="templateFieldNames" value="Text" />
+			<var name="templateLanguage" value="ftl" />
+		</execute>
+
+		<execute macro="WebContentTemplates#save" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
@@ -1372,7 +1396,7 @@
 		</execute>
 	</command>
 
-	<command name="WebContentAdministrationPaginatingRelatedAssets" priority="4">
+	<command name="WebContentAdministrationPaginatingRelatedAssets" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>

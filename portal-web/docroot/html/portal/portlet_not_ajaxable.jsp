@@ -27,5 +27,5 @@ if (portletTitle == null) {
 %>
 
 <div class="alert alert-info">
-	<%= LanguageUtil.format(request, "x-will-only-be-shown-after-you-refresh-the-page", portletTitle, false) %>
+	<liferay-ui:message arguments="<%= portletTitle %>" key="x-will-only-be-shown-after-you-refresh-the-page" translateArguments="<%= false %>" />
 </div>

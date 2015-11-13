@@ -30,6 +30,11 @@
 </tr>
 <tr>
 	<td>SCRIPT_CONTENT_FIELD</td>
+	<td>//div[contains(@class,'ace_text-layer')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCRIPT_CONTENT_FIELD_TEXT_AREA</td>
 	<td>//div[contains(@id,'richEditor')]/textarea</td>
 	<td></td>
 </tr>

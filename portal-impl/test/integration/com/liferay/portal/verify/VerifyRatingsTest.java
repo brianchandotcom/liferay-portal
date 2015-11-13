@@ -50,7 +50,10 @@ public class VerifyRatingsTest extends BaseVerifyProcessTestCase {
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
+		super.setUp();
+
 		_active = CacheRegistryUtil.isActive();
 
 		CacheRegistryUtil.setActive(false);
@@ -59,7 +62,10 @@ public class VerifyRatingsTest extends BaseVerifyProcessTestCase {
 	}
 
 	@After
+	@Override
 	public void tearDown() throws Exception {
+		super.tearDown();
+
 		List<RatingsEntry> ratingEntries =
 			RatingsEntryLocalServiceUtil.getEntries(_CLASS_NAME, _CLASS_PK);
 

@@ -5,7 +5,7 @@
 	<command name="addAllMembersCP">
 		<execute function="AssertClick" locator1="SiteMemberships#TOOLBAR_ADD_MEMBERS" value1="Add Members" />
 		<execute function="AssertClick" locator1="MenuItem#USER" value1="User" />
-		<execute function="Check" locator1="Checkbox#CHECK_ALL_NAME" />
+		<execute function="Check" locator1="Checkbox#SELECT_ALL" />
 		<execute function="Click" locator1="Button#SAVE" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
@@ -222,13 +222,13 @@
 	</command>
 
 	<command name="addVirtualHostsURLCP">
-		<execute function="AssertClick" locator1="SitesEditSite#MENU_BASIC_INFORMATION_SITE_URL" value1="Site URL" />
+		<execute function="AssertClick" locator1="NavListItem#SITE_URL" value1="Site URL" />
 
 		<if>
 			<isset var="publicVirtualHosts" />
 			<then>
 				<execute function="AssertTextEquals" locator1="SiteSettingsSiteURL#SITE_URL_VIRTUAL_HOSTS_PUBLIC_PAGES_LABEL" value1="Public Pages" />
-				<execute function="Type" locator1="SiteSettingsSiteURL#SITE_URL_VIRTUAL_HOSTS_PUBLIC_PAGES_FIELD" value1="${publicPageVirtualHostURL}" />
+				<execute function="Type" locator1="TextInput#PUBLIC_VIRTUAL_HOST_URL" value1="${publicPageVirtualHostURL}" />
 			</then>
 		</if>
 
@@ -236,7 +236,7 @@
 			<isset var="privateVirtualHosts" />
 			<then>
 				<execute function="AssertTextEquals" locator1="SiteSettingsSiteURL#SITE_URL_VIRTUAL_HOSTS_PRIVATE_PAGES_LABEL" value1="Private Pages" />
-				<execute function="Type" locator1="SiteSettingsSiteURL#SITE_URL_VIRTUAL_HOSTS_PRIVATE_PAGES_FIELD" value1="${privatePageVirtualHostURL}" />
+				<execute function="Type" locator1="TextInput#PRIVATE_VIRTUAL_HOST_URL" value1="${privatePageVirtualHostURL}" />
 			</then>
 		</if>
 
@@ -502,7 +502,7 @@
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-		<execute function="AssertTextEquals" locator1="Message#INFO_5" value1="No sites were found." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No sites were found." />
 		<execute function="AssertTextNotPresent" value1="${siteName}" />
 	</command>
 
@@ -516,12 +516,12 @@
 	</command>
 
 	<command name="editFriendlyURLCP">
-		<execute function="AssertClick" locator1="SitesEditSite#MENU_BASIC_INFORMATION_SITE_URL" value1="Site URL" />
+		<execute function="AssertClick" locator1="NavListItem#SITE_URL" value1="Site URL" />
 		<execute function="AssertTextEquals" locator1="SiteSettingsSiteURL#SITE_URL_FRIENDLY_URL_LABEL" value1="Friendly URL" />
 
 		<execute function="Pause" locator1="5000" />
 
-		<execute function="Type#mouseOverFocusType" locator1="SiteSettingsSiteURL#SITE_URL_FRIENDLY_URL_FIELD" value1="${siteFriendlyURLEdit}" />
+		<execute function="Type#mouseOverFocusType" locator1="TextInput#FRIENDLY_URL" value1="${siteFriendlyURLEdit}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<if>
@@ -529,7 +529,7 @@
 			<then>
 				<execute function="AssertTextEquals" locator1="Message#ERROR" value1="Your request failed to complete." />
 				<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="The friendly URL has too many slashes." />
-				<execute function="AssertTextEquals" locator1="SiteSettingsSiteURL#SITE_URL_FRIENDLY_URL_FIELD" value1="${siteFriendlyURLEdit}" />
+				<execute function="AssertTextEquals" locator1="TextInput#FRIENDLY_URL" value1="${siteFriendlyURLEdit}" />
 			</then>
 			<else>
 				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
@@ -572,6 +572,12 @@
 	<command name="gotoManageSitesTemplatesViaAddDropdown">
 		<execute function="Click" locator1="Button#PLUS" />
 		<execute function="AssertClick" locator1="MenuItem#MANAGE_SITES_TEMPLATES" value1="Manage Sites Templates" />
+	</command>
+
+	<command name="gotoSiteViaMySitesPG">
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute function="AssertClick" locator1="MySites#SITE_TABLE_SITE_NAME" value1="${siteName}" />
 	</command>
 
 	<command name="importSite">
@@ -852,7 +858,7 @@
 		<if>
 			<condition function="IsElementNotPresent" locator1="Message#EMPTY_INFO" />
 			<then>
-				<execute function="Check" locator1="Checkbox#CHECK_ALL_NAME" />
+				<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
 				<execute function="ClickNoError" locator1="Icon#DELETE" value1="Delete" />
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
@@ -880,7 +886,7 @@
 			</elseif>
 			<else>
 				<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
-				<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please enter a valid name." />
+				<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="The Site Name cannot be blank, numeric or a reserved word such as null. The Site Name cannot contain the following invalid characters: *." />
 			</else>
 		</if>
 	</command>
@@ -1055,19 +1061,18 @@
 	<command name="viewMySitesViaMySitesPG">
 		<var name="key_siteName" value="${siteName}" />
 
-		<if>
-			<equals arg1="${organizationSite}" arg2="true" />
-			<then>
-				<execute function="AssertClick" locator1="ControlMenu#MY_SITES" value1="My Sites" />
-				<execute function="AssertTextNotPresent" locator1="ControlMenu#MY_SITES_PUBLIC_SITE" value1="${siteName}" />
-			</then>
-			<else>
-				<execute function="AssertTextEquals" locator1="MySites#NAVIGATION_MY_SITES" value1="My Sites" />
-				<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME" value1="${siteName}" />
-				<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME_MEMBERS" value1="2" />
-				<execute function="AssertElementPresent" locator1="MySites#SITE_TABLE_SITE_ACTIONS" />
-			</else>
-		</if>
+		<execute function="AssertTextEquals" locator1="MySites#NAVIGATION_MY_SITES" value1="My Sites" />
+		<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME" value1="${siteName}" />
+		<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME_MEMBERS" value1="${memberCount}" />
+		<execute function="AssertElementPresent" locator1="MySites#SITE_TABLE_SITE_ACTIONS" />
+	</command>
+
+	<command name="viewNoMySitesViaMySitesPG">
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute function="AssertElementNotPresent" locator1="MySites#SITE_TABLE_SITE_NAME" />
+		<execute function="AssertElementNotPresent" locator1="MySites#SITE_TABLE_SITE_NAME_MEMBERS" />
+		<execute function="AssertElementNotPresent" locator1="MySites#SITE_TABLE_SITE_ACTIONS" />
 	</command>
 
 	<command name="viewPrivateVirtaulHostUrlUserLoginRedirect">

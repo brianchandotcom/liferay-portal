@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.ShardedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import java.io.Serializable;
@@ -38,7 +39,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface ExpandoValueModel extends AttachedModel, BaseModel<ExpandoValue> {
+public interface ExpandoValueModel extends AttachedModel, BaseModel<ExpandoValue>,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -78,6 +80,7 @@ public interface ExpandoValueModel extends AttachedModel, BaseModel<ExpandoValue
 	 *
 	 * @return the company ID of this expando value
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -85,6 +88,7 @@ public interface ExpandoValueModel extends AttachedModel, BaseModel<ExpandoValue
 	 *
 	 * @param companyId the company ID of this expando value
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**

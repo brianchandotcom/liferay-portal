@@ -40,7 +40,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface LayoutFriendlyURLModel extends BaseModel<LayoutFriendlyURL>,
-	MVCCModel, StagedGroupedModel {
+	MVCCModel, ShardedModel, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

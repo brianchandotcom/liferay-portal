@@ -78,7 +78,7 @@ public abstract class BaseActionableDynamicQuery
 	}
 
 	@Override
-	public PerformActionMethod getPerformActionMethod() {
+	public PerformActionMethod<?> getPerformActionMethod() {
 		return _performActionMethod;
 	}
 
@@ -187,7 +187,7 @@ public abstract class BaseActionableDynamicQuery
 
 	@Override
 	public void setPerformActionMethod(
-		PerformActionMethod performActionMethod) {
+		PerformActionMethod<?> performActionMethod) {
 
 		_performActionMethod = performActionMethod;
 	}
@@ -408,7 +408,10 @@ public abstract class BaseActionableDynamicQuery
 	private long _groupId;
 	private String _groupIdPropertyName = "groupId";
 	private int _interval = Indexer.DEFAULT_INTERVAL;
+
+	@SuppressWarnings("rawtypes")
 	private PerformActionMethod _performActionMethod;
+
 	private PerformCountMethod _performCountMethod;
 	private String _primaryKeyPropertyName;
 	private String _searchEngineId;

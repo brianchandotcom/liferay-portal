@@ -51,7 +51,9 @@ List<String> attributeNames = ListUtil.remove(Collections.list(expandoBridge.get
 	<c:if test="<%= attributeNames.isEmpty() %>">
 		<span class="field">
 			<span class="field-content">
-				<label><%= LanguageUtil.format(request, "no-custom-fields-are-defined-for-x", modelResourceName, false) %></label>
+				<label>
+					<liferay-ui:message arguments="<%= modelResourceName %>" key="no-custom-fields-are-defined-for-x" translateArguments="<%= false %>" />
+				</label>
 			</span>
 		</span>
 	</c:if>

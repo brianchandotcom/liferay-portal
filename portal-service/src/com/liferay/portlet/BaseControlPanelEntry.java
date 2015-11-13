@@ -112,6 +112,12 @@ public abstract class BaseControlPanelEntry implements ControlPanelEntry {
 
 		String category = portlet.getControlPanelEntryCategory();
 
+		if (category.startsWith(PortletCategoryKeys.SITE_ADMINISTRATION) &&
+			group.isLayoutPrototype()) {
+
+			return true;
+		}
+
 		if (category.equals(PortletCategoryKeys.SITE_ADMINISTRATION_CONTENT) &&
 			group.isLayout() && !portlet.isScopeable()) {
 

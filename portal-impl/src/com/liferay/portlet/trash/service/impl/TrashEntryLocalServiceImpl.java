@@ -81,6 +81,13 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 		User user = userPersistence.findByPrimaryKey(userId);
 		long classNameId = classNameLocalService.getClassNameId(className);
 
+		TrashEntry trashEntry = trashEntryPersistence.fetchByC_C(
+			classNameId, classPK);
+
+		if (trashEntry != null) {
+			return trashEntry;
+		}
+
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			className);
 
@@ -89,7 +96,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 
 		long entryId = counterLocalService.increment();
 
-		TrashEntry trashEntry = trashEntryPersistence.create(entryId);
+		trashEntry = trashEntryPersistence.create(entryId);
 
 		trashEntry.setGroupId(groupId);
 		trashEntry.setCompanyId(user.getCompanyId());

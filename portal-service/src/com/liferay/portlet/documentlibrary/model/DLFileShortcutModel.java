@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.ShardedModel;
 import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.model.WorkflowedModel;
@@ -48,7 +49,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface DLFileShortcutModel extends BaseModel<DLFileShortcut>,
-	StagedGroupedModel, TrashedModel, WorkflowedModel {
+	ShardedModel, StagedGroupedModel, TrashedModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

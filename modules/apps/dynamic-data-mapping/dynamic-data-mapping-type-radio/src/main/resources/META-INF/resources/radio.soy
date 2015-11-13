@@ -1,0 +1,46 @@
+{namespace ddm}
+
+/**
+ * Prints the DDM form radio field.
+ *
+ * @param childElementsHTML
+ * @param dir
+ * @param inline
+ * @param label
+ * @param name
+ * @param options
+ * @param required
+ * @param showLabel
+ * @param visible
+ */
+{template .radio}
+	<div class="form-group{$visible ? '' : ' hide'}" data-fieldname="{$name}">
+		{if $showLabel}
+			<label class="control-label">
+				{$label}
+
+				{if $required}
+					<b>*</b>
+				{/if}
+			</label>
+		{/if}
+
+		<div class="radio-options">
+			{foreach $option in $options}
+				{if not $inline}
+					<div class="radio">
+				{/if}
+
+				<label class="radio-default{$inline ? ' radio-inline' : ''}" for="{$option.value}">
+					<input class="field" dir="{$dir}" id="{$option.value}" name="{$name}" {$option.status} type="radio" value="{$option.value}" /> {$option.label}
+				</label>
+
+				{if not $inline}
+					</div>
+				{/if}
+			{/foreach}
+		</div>
+
+		{$childElementsHTML|noAutoescape}
+	</div>
+{/template}

@@ -1,16 +1,18 @@
 buildService {
-	apiDirName = "../calendar-api/src"
+	apiDirName = "../calendar-api/src/main/java"
 	autoNamespaceTables = false
-	testDirName = "../calendar-test/test/integration"
+	testDirName = "../calendar-test/src/testIntegration/java"
 }
 
 dependencies {
 	compile group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.2"
+	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
 	compile group: "javax.mail", name: "mail", version: "1.4"
 	compile group: "rome", name: "rome", version: "1.0"
 	compile project(":apps:calendar:calendar-api")
 	compile project(":apps:export-import:export-import-api")
 	compile project(":apps:export-import:export-import-service")
+	compile project(":portal:portal-upgrade")
 
 	provided group: "com.liferay", name: "com.google.ical", version: "20110304"
 	provided group: "com.liferay", name: "net.fortuna.ical4j", version: "1.0"

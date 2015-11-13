@@ -34,11 +34,13 @@ import javax.portlet.PortletResponse;
 public class DataSampleFactoryUtil {
 
 	public static DataSample createPortalRequestDataSample(
-		long companyId, long groupId, String remoteUser, String requestURI,
-		String requestURL) {
+		long companyId, long groupId, String referer, String remoteAddr,
+		String remoteUser, String requestURI, String requestURL,
+		String userAgent) {
 
 		return _getDataSampleFactory().createPortalRequestDataSample(
-			companyId, groupId, remoteUser, requestURI, requestURL);
+			companyId, groupId, referer, remoteAddr, remoteUser, requestURI,
+			requestURL, userAgent);
 	}
 
 	public static DataSample createPortletRequestDataSample(

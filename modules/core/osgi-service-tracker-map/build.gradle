@@ -12,5 +12,5 @@ dependencies {
 }
 
 liferay {
-	deployDir = file("${appServerLibGlobalDir}")
+	deployDir = appServerLibGlobalDir
 }

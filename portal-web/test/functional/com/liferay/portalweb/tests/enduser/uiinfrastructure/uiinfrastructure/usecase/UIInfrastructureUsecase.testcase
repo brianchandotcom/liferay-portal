@@ -2,79 +2,29 @@
 	<property name="testray.main.component.name" value="User Interface" />
 
 	<set-up>
-		<execute macro="User#firstLoginPG" />
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="SignIn#signInPortalInstance" />
+			</then>
+			<else>
+				<execute macro="User#firstLoginPG" />
+			</else>
+		</if>
 	</set-up>
 
-	<command name="CannotViewViewAllCP" priority="4">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="User Groups" />
-		</execute>
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
-		<execute function="AssertTextNotPresent" value1="View All" />
-
-		<take-screenshot />
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Roles" />
-		</execute>
-
-		<execute function="AssertTextNotPresent" value1="View All" />
-
-		<take-screenshot />
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Password Policies" />
-		</execute>
-
-		<execute function="AssertTextNotPresent" value1="View All" />
-
-		<take-screenshot />
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Site Templates" />
-		</execute>
-
-		<execute function="AssertTextNotPresent" value1="View All" />
-
-		<take-screenshot />
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Site Templates" />
-		</execute>
-
-		<execute function="AssertTextNotPresent" value1="View All" />
-
-		<take-screenshot />
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute function="AssertTextNotPresent" value1="View All" />
-
-		<take-screenshot />
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute function="AssertTextNotPresent" value1="View All" />
-
-		<take-screenshot />
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="DocumentsAndMedia#TOOLBAR_MANAGE" value1="Manage" />
-		<execute function="AssertClick" locator1="MenuItem#DOCUMENT_TYPES" value1="Document Types" />
-
-		<execute macro="DMDocumentType#selectDocumentTypeFrame" />
-
-		<execute function="AssertTextNotPresent" value1="View All" />
-
-		<take-screenshot />
-	</command>
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+		</if>
+	</tear-down>
 
 	<command description="Ensure that a user can access portlet options and drag and drop portlets." name="Smoke" priority="5">
 		<property name="portal.acceptance" value="true" />

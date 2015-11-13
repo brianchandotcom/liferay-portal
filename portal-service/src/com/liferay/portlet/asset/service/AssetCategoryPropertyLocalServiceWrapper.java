@@ -259,16 +259,6 @@ public class AssetCategoryPropertyLocalServiceWrapper
 		return _assetCategoryPropertyLocalService.getAssetCategoryProperty(categoryPropertyId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _assetCategoryPropertyLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public java.util.List<com.liferay.portlet.asset.model.AssetCategoryProperty> getCategoryProperties() {
 		return _assetCategoryPropertyLocalService.getCategoryProperties();
@@ -302,21 +292,21 @@ public class AssetCategoryPropertyLocalServiceWrapper
 			key);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _assetCategoryPropertyLocalService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetCategoryPropertyLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_assetCategoryPropertyLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>CATEGORY_ALERT</td>
+	<td>//div[contains(@id,'categorization')]/div[contains(@class,'alert-danger')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHECKOUT_SUCCESS</td>
 	<td>//div[contains(@class,'lfr-asset-column-details')]/div[contains(@class,'alert-success')]</td>
 	<td></td>
@@ -16,11 +21,6 @@
 <tr>
 	<td>CUSTOMIZED_PAGE_INFO</td>
 	<td>//div[contains(@class,'layout')]/span[contains(@class,'message-info')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EMPTY</td>
-	<td>//div[contains(@class,'empty-message')]/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -70,7 +70,7 @@
 </tr>
 <tr>
 	<td>INFO</td>
-	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
+	<td>//div[contains(@class,'alert alert-info') and not(contains(@class,'hide'))]</td>
 	<td></td>
 </tr>
 <tr>
@@ -119,6 +119,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INFO_NO_RESULTS_FOUND</td>
+	<td>//div[contains(@id,'EmptyResultsMessage') and contains(@class,'alert-info')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INFO_PAGE_DOES_NOT_EXIST</td>
 	<td>//div[@class='alert alert-info' and contains(.,'This page does not exist yet. Use the form below to create it')]</td>
 	<td></td>
@@ -150,7 +155,7 @@
 </tr>
 <tr>
 	<td>EMPTY_INFO</td>
-	<td>//div[contains(@class,'empty-message') and contains(@class,'text-center')]/span</td>
+	<td>//div[contains(@class,'empty-result-message')]//div[@class='card-footer']</td>
 	<td></td>
 </tr>
 <tr>
@@ -211,6 +216,11 @@
 <tr>
 	<td>SUCCESS_RESTORE_LOCATION</td>
 	<td>//div[@class='portlet-body']/div/em[2]/a[contains(.,'${key_assetRestoreLocation}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UNIQUE_SUCCESS</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success') and contains(.,'${key_uniqueSuccess}')]</td>
 	<td></td>
 </tr>
 <tr>

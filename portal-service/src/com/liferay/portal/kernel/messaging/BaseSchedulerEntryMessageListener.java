@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.messaging;
 
-import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.Trigger;
 
@@ -22,7 +21,7 @@ import com.liferay.portal.kernel.scheduler.Trigger;
  * @author Brian Wing Shun Chan
  */
 public abstract class BaseSchedulerEntryMessageListener
-	extends BaseMessageListener implements SchedulerEntry {
+	extends BaseMessageListener {
 
 	public BaseSchedulerEntryMessageListener() {
 		Class<?> clazz = getClass();
@@ -30,17 +29,14 @@ public abstract class BaseSchedulerEntryMessageListener
 		schedulerEntryImpl.setEventListenerClass(clazz.getName());
 	}
 
-	@Override
 	public String getDescription() {
 		return schedulerEntryImpl.getDescription();
 	}
 
-	@Override
 	public String getEventListenerClass() {
 		return schedulerEntryImpl.getEventListenerClass();
 	}
 
-	@Override
 	public Trigger getTrigger() {
 		return schedulerEntryImpl.getTrigger();
 	}

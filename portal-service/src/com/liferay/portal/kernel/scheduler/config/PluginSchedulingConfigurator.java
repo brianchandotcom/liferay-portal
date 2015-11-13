@@ -16,10 +16,12 @@ package com.liferay.portal.kernel.scheduler.config;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
+import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 /**
@@ -35,9 +37,6 @@ public class PluginSchedulingConfigurator
 
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
-		String servletContextName =
-			PortletClassLoaderUtil.getServletContextName();
-
 		boolean forceSync = ProxyModeThreadLocal.isForceSync();
 
 		ProxyModeThreadLocal.setForceSync(true);
@@ -50,9 +49,14 @@ public class PluginSchedulingConfigurator
 
 			for (SchedulerEntry schedulerEntry : schedulerEntries) {
 				try {
-					SchedulerEngineHelperUtil.schedule(
-						schedulerEntry, storageType, servletContextName,
-						exceptionsMaxSize);
+					MessageListener messageListener =
+						(MessageListener)InstanceFactory.newInstance(
+							PortletClassLoaderUtil.getClassLoader(),
+							schedulerEntry.getEventListenerClass());
+
+					messageListeners.put(
+						schedulerEntry.getEventListenerClass(),
+						messageListener);
 				}
 				catch (Exception e) {
 					_log.error("Unable to schedule " + schedulerEntry, e);
@@ -77,6 +81,12 @@ public class PluginSchedulingConfigurator
 		}
 
 		schedulerEntries.clear();
+
+		for (MessageListener messageListener : messageListeners.values()) {
+			SchedulerEngineHelperUtil.unregister(messageListener);
+		}
+
+		messageListeners.clear();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -197,19 +197,19 @@ public class ServiceComponentLocalServiceWrapper
 		return _serviceComponentLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _serviceComponentLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public java.util.List<com.liferay.portal.model.ServiceComponent> getLatestServiceComponents() {
 		return _serviceComponentLocalService.getLatestServiceComponents();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _serviceComponentLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -269,16 +269,6 @@ public class ServiceComponentLocalServiceWrapper
 		return _serviceComponentLocalService.initServiceComponent(serviceComponentConfiguration,
 			classLoader, buildNamespace, buildNumber, buildDate,
 			buildAutoUpgrade);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_serviceComponentLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

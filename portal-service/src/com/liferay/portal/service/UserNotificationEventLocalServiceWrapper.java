@@ -368,16 +368,6 @@ public class UserNotificationEventLocalServiceWrapper
 			deliveryType, archived);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _userNotificationEventLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public java.util.List<com.liferay.portal.model.UserNotificationEvent> getDeliveredUserNotificationEvents(
 		long userId, boolean delivered) {
@@ -462,6 +452,16 @@ public class UserNotificationEventLocalServiceWrapper
 		int deliveryType, boolean delivered, boolean actionRequired) {
 		return _userNotificationEventLocalService.getDeliveredUserNotificationEventsCount(userId,
 			deliveryType, delivered, actionRequired);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _userNotificationEventLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -619,16 +619,6 @@ public class UserNotificationEventLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userNotificationEventLocalService.sendUserNotificationEvents(userId,
 			portletId, deliveryType, notificationEventJSONObject);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_userNotificationEventLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

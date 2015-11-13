@@ -387,7 +387,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	protected void checkLanguageKeys(
 			String fileName, String content, Pattern pattern)
-		throws IOException {
+		throws Exception {
 
 		String fileExtension = FilenameUtils.getExtension(fileName);
 
@@ -429,10 +429,20 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 					continue;
 				}
 
-				Properties languageProperties = getLanguageProperties(fileName);
+				Properties moduleLanguageProperties =
+					getModuleLanguageProperties(fileName);
 
-				if ((languageProperties == null) ||
-					!languageProperties.containsKey(languageKey)) {
+				if ((moduleLanguageProperties != null) &&
+					moduleLanguageProperties.containsKey(languageKey)) {
+
+					continue;
+				}
+
+				Properties bndFileLanguageProperties =
+					getBNDFileLanguageProperties(fileName);
+
+				if ((bndFileLanguageProperties == null) ||
+					!bndFileLanguageProperties.containsKey(languageKey)) {
 
 					processErrorMessage(
 						fileName,
@@ -458,6 +468,28 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return newContent;
+	}
+
+	protected void checkResourceUtil(
+		String line, String fileName, int lineCount) {
+
+		if (!portalSource || fileName.endsWith("ResourceBundleUtil.java")) {
+			return;
+		}
+
+		if (line.contains("ResourceBundle.getBundle(")) {
+			processErrorMessage(
+				fileName,
+				"Use ResourceBundleUtil.getBundle instead of " +
+					"ResourceBundle.getBundle: " + fileName + " " + lineCount);
+		}
+
+		if (line.contains("resourceBundle.getString(")) {
+			processErrorMessage(
+				fileName,
+				"Use ResourceBundleUtil.getString instead of " +
+					"resourceBundle.getString: " + fileName + " " + lineCount);
+		}
 	}
 
 	protected void checkStringBundler(
@@ -1053,6 +1085,63 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return _annotationsExclusions;
 	}
 
+	protected Properties getBNDFileLanguageProperties(String fileName)
+		throws Exception {
+
+		Properties properties = _bndFileLanguageProperties.get(fileName);
+
+		if (properties != null) {
+			return properties;
+		}
+
+		String bndContent = null;
+		String bndFileLocation = fileName;
+
+		while (true) {
+			int pos = bndFileLocation.lastIndexOf(StringPool.SLASH);
+
+			if (pos == -1) {
+				return null;
+			}
+
+			bndFileLocation = bndFileLocation.substring(0, pos + 1);
+
+			File file = new File(bndFileLocation + "bnd.bnd");
+
+			if (file.exists()) {
+				bndContent = FileUtil.read(file);
+
+				break;
+			}
+
+			bndFileLocation = StringUtil.replaceLast(
+				bndFileLocation, StringPool.SLASH, StringPool.BLANK);
+		}
+
+		Matcher matcher = bndContentDirPattern.matcher(bndContent);
+
+		if (matcher.find()) {
+			File file = new File(
+				bndFileLocation + matcher.group(1) + "/Language.properties");
+
+			if (!file.exists()) {
+				return null;
+			}
+
+			properties = new Properties();
+
+			InputStream inputStream = new FileInputStream(file);
+
+			properties.load(inputStream);
+
+			_bndFileLanguageProperties.put(fileName, properties);
+
+			return properties;
+		}
+
+		return null;
+	}
+
 	protected Map<String, String> getCompatClassNamesMap() throws Exception {
 		if (_compatClassNamesMap != null) {
 			return _compatClassNamesMap;
@@ -1283,51 +1372,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return new String[0];
 	}
 
-	protected Properties getLanguageProperties(String fileName) {
-		StringBundler sb = new StringBundler(3);
-
-		int pos = fileName.indexOf("/docroot/");
-
-		if (pos != -1) {
-			sb.append(fileName.substring(0, pos + 9));
-			sb.append("WEB-INF/src/");
-		}
-		else {
-			pos = fileName.indexOf("src/main/resources/");
-
-			if (pos != -1) {
-				sb.append(fileName.substring(0, pos + 19));
-			}
-			else {
-				pos = fileName.indexOf("src/");
-
-				if (pos != -1) {
-					sb.append(fileName.substring(0, pos + 4));
-				}
-			}
-
-			if (pos == -1) {
-				return null;
-			}
-		}
-
-		sb.append("content/Language.properties");
-
-		try {
-			Properties properties = new Properties();
-
-			InputStream inputStream = new FileInputStream(sb.toString());
-
-			properties.load(inputStream);
-
-			return properties;
-		}
-		catch (Exception e) {
-		}
-
-		return null;
-	}
-
 	protected String getMainReleaseVersion() {
 		if (_mainReleaseVersion != null) {
 			return _mainReleaseVersion;
@@ -1340,6 +1384,54 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		_mainReleaseVersion = releaseVersion.substring(0, pos) + ".0";
 
 		return _mainReleaseVersion;
+	}
+
+	protected Properties getModuleLanguageProperties(String fileName) {
+		Properties properties = _moduleLanguageProperties.get(fileName);
+
+		if (properties != null) {
+			return properties;
+		}
+
+		StringBundler sb = new StringBundler(3);
+
+		int pos = fileName.indexOf("/docroot/");
+
+		if (pos != -1) {
+			sb.append(fileName.substring(0, pos + 9));
+			sb.append("WEB-INF/src/");
+		}
+		else {
+			pos = fileName.indexOf("src/");
+
+			if (pos == -1) {
+				return null;
+			}
+
+			sb.append(fileName.substring(0, pos + 4));
+
+			if (fileName.contains("src/main/")) {
+				sb.append("main/resources/");
+			}
+		}
+
+		sb.append("content/Language.properties");
+
+		try {
+			properties = new Properties();
+
+			InputStream inputStream = new FileInputStream(sb.toString());
+
+			properties.load(inputStream);
+
+			_moduleLanguageProperties.put(fileName, properties);
+
+			return properties;
+		}
+		catch (Exception e) {
+		}
+
+		return null;
 	}
 
 	protected String getProperty(String key) {
@@ -1804,6 +1896,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	protected static Pattern attributeNamePattern = Pattern.compile(
 		"[a-z]+[-_a-zA-Z0-9]*");
+	protected static Pattern bndContentDirPattern = Pattern.compile(
+		"\tcontent=(.*?)(,\\\\|\n)");
 	protected static Pattern emptyCollectionPattern = Pattern.compile(
 		"Collections\\.EMPTY_(LIST|MAP|SET)");
 	protected static Pattern javaSourceInsideJSPTagPattern = Pattern.compile(
@@ -1962,6 +2056,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	private Set<String> _annotationsExclusions;
+	private Map<String, Properties> _bndFileLanguageProperties =
+		new HashMap<>();
 	private Map<String, String> _compatClassNamesMap;
 	private String _copyright;
 	private Map<String, List<String>> _errorMessagesMap = new HashMap<>();
@@ -1970,6 +2066,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private Set<String> _immutableFieldTypes;
 	private String _mainReleaseVersion;
 	private final List<String> _modifiedFileNames = new ArrayList<>();
+	private Map<String, Properties> _moduleLanguageProperties = new HashMap<>();
 	private String _oldCopyright;
 	private Properties _portalLanguageProperties;
 	private Properties _properties;

@@ -60,14 +60,17 @@ public class IncorrectWhitespace {
 	 */
 	public void method2() {
 		String s1= "test";
+		String s2 = "hello ,world";
+		String s3 = "hello\" ,world";
+		String s4 = "hello\\\" ,world";
 
 		if(true) {
-			String s2 =s1;
+			s2 =s1;
 		}
 		else{
 			try {
 				while(true) {
-					String s3=s1;
+					s3=s1;
 				}
 			}
 			catch(Exception e){
@@ -84,7 +87,7 @@ public class IncorrectWhitespace {
 		List <String> list = null;
 
 		for (String s: list) {
-			String s2 = (String) s1;
+			s2 = (String) s1;
 		}
     }
 

@@ -71,6 +71,8 @@
 	</command>
 
 	<command name="JoinSitePrivateNo" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<var name="membershipType" value="Private" />
 		<var name="password" value="test" />
 		<var name="siteName" value="Site Name" />
@@ -216,6 +218,7 @@
 		<execute macro="Page#gotoMyDashboard" />
 
 		<execute macro="Site#viewMySitesViaMySitesPG">
+			<var name="memberCount" value="2" />
 			<var name="siteName" value="Site Name" />
 		</execute>
 

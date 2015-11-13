@@ -17,9 +17,11 @@
 <%@ include file="/html/taglib/ui/user_display/init.jsp" %>
 
 <liferay-util:buffer var="html">
-	<div class="<%= userIconCssClass %> user-icon user-icon-lg">
-		<img alt="thumbnail" class="img-responsive <%= imageCssClass %>" src="<%= HtmlUtil.escape(taglibSrc) %>">
-	</div>
+	<liferay-ui:user-portrait
+		imageCssClass="<%= imageCssClass %>"
+		userId="<%= (userDisplay != null) ? userDisplay.getUserId() : 0 %>"
+		userName="<%= (userDisplay != null) ? userDisplay.getFullName() : userName %>"
+	/>
 </liferay-util:buffer>
 
 <c:choose>

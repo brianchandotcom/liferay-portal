@@ -1,4 +1,6 @@
 <definition>
+	<var name="siteName" value="Liferay" />
+
 	<command name="_deleteCalendar">
 		<var name="key_menuListOption" value="Delete" />
 
@@ -35,11 +37,12 @@
 	</command>
 
 	<command name="_gotoSiteCalendarMenulist">
-		<var name="key_calendarName" value="${calendarName}" />
+		<var name="key_siteCalendarName" value="${siteCalendarName}" />
+		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="AssertTextEquals" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR" value1="${calendarName}" />
+		<execute function="AssertTextEquals" locator1="Calendar#CURRENT_SITE_CALENDARS_CALENDAR" value1="${siteCalendarName}" />
 
-		<execute function="Click" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR_MENULIST_ARROW" value1="${calendarName}" />
+		<execute function="Click" locator1="Calendar#CURRENT_SITE_CALENDARS_CALENDAR_MENULIST_ARROW" value1="${siteCalendarName}" />
 	</command>
 
 	<command name="_viewCalendarHidden">
@@ -163,7 +166,7 @@
 
 	<command name="chooseSiteCalendarMenulistOption">
 		<execute macro="Calendar#_gotoSiteCalendarMenulist">
-			<var name="calendarName" value="${calendarName}" />
+			<var name="siteCalendarName" value="${siteCalendarName}" />
 		</execute>
 
 		<execute macro="Calendar#_gotoMenulistOption">
@@ -577,6 +580,8 @@
 	</command>
 
 	<command name="gotoCurrentSiteCalendarsManage">
+		<var name="key_siteName" value="${siteName}" />
+
 		<execute function="Click" locator1="Calendar#CURRENT_SITE_CALENDARS_MENULIST_ARROW" />
 		<execute function="AssertClick" locator1="Calendar#CURRENT_SITE_CALENDARS_MENULIST_MANAGE_CALENDAR" value1="Manage Calendars" />
 	</command>
@@ -850,7 +855,7 @@
 	<command name="viewNoRSS">
 		<execute function="Open" locator1="${rssURL}" />
 
-		<execute function="AssertTextEquals" locator1="CalendarConfiguration#ERROR_HEADER"  value1="Not Found" />
+		<execute function="AssertElementPresent" locator1="CalendarConfiguration#ERROR_HEADER" />
 	</command>
 
 	<command name="viewOtherCalendarMenulist">
@@ -1000,7 +1005,7 @@
 
 	<command name="viewSiteCalendarNoMenulistOption">
 		<execute macro="Calendar#_gotoSiteCalendarMenulist">
-			<var name="calendarName" value="${calendarName}" />
+			<var name="siteCalendarName" value="${siteCalendarName}" />
 		</execute>
 
 		<var name="key_menuListOption" value="${menuListOption}" />

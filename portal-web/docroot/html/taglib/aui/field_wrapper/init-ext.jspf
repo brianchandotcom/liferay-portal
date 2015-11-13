@@ -23,10 +23,10 @@ if (Validator.isNotNull(name)) {
 	name = namespace + name;
 }
 
-String controlGroupCss = "form-group";
+String controlGroupCss = "lfr-ddm-field-group";
 
 if (inlineField) {
-	controlGroupCss = controlGroupCss.concat(" form-group-inline");
+	controlGroupCss = controlGroupCss.concat(" lfr-ddm-field-group-inline");
 }
 
 if (Validator.isNotNull(inlineLabel)) {

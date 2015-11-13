@@ -106,6 +106,7 @@
 
 		<!-- Audit fields -->
 
+		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="createDate" type="Date" />
 

@@ -29,13 +29,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PORTLET_TITLE</td>
-	<td>//span[contains(@class,'portlet-title-text')]</td>
+	<td>NAVBAR_CONTAINER</td>
+	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//div[contains(@class,'container')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>NAVBAR_CONTAINER</td>
-	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//div[contains(@class,'container')]</td>
+	<td>PORTLET_TITLE</td>
+	<td>//span[contains(@class,'portlet-title-text')]</td>
 	<td></td>
 </tr>
 <tr>

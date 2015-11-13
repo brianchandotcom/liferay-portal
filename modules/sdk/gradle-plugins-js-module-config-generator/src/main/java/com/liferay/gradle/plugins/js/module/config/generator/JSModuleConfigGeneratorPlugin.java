@@ -20,8 +20,10 @@ import com.liferay.gradle.util.GradleUtil;
 
 import java.io.File;
 
+import java.util.Collections;
 import java.util.concurrent.Callable;
 
+import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -29,6 +31,7 @@ import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
+import org.gradle.api.tasks.TaskContainer;
 
 /**
  * @author Andrea Di Giorgi
@@ -54,6 +57,16 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 		addTaskDownloadLfrModuleConfigGenerator(
 			project, jsModuleConfigGeneratorExtension);
 		addTaskConfigJSModules(project);
+
+		project.afterEvaluate(
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project project) {
+					configureTasksConfigJSModules(project);
+				}
+
+			});
 	}
 
 	protected ConfigJSModulesTask addTaskConfigJSModules(
@@ -116,6 +129,32 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 			});
 
 		return downloadLfrModuleConfigGeneratorTask;
+	}
+
+	protected void configureTaskConfigJSModulesEnabled(
+		ConfigJSModulesTask configJSModulesTask) {
+
+		File file = configJSModulesTask.getModuleConfigFile();
+
+		if ((file == null) || !file.exists()) {
+			configJSModulesTask.setDependsOn(Collections.emptySet());
+			configJSModulesTask.setEnabled(false);
+		}
+	}
+
+	protected void configureTasksConfigJSModules(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			ConfigJSModulesTask.class,
+			new Action<ConfigJSModulesTask>() {
+
+				@Override
+				public void execute(ConfigJSModulesTask configJSModulesTask) {
+					configureTaskConfigJSModulesEnabled(configJSModulesTask);
+				}
+
+			});
 	}
 
 }

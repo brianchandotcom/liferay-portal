@@ -55,6 +55,7 @@ public class ResourceBlockPermissionWrapper implements ResourceBlockPermission,
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("resourceBlockPermissionId",
 			getResourceBlockPermissionId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("resourceBlockId", getResourceBlockId());
 		attributes.put("roleId", getRoleId());
 		attributes.put("actionIds", getActionIds());
@@ -75,6 +76,12 @@ public class ResourceBlockPermissionWrapper implements ResourceBlockPermission,
 
 		if (resourceBlockPermissionId != null) {
 			setResourceBlockPermissionId(resourceBlockPermissionId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long resourceBlockId = (Long)attributes.get("resourceBlockId");
@@ -115,6 +122,16 @@ public class ResourceBlockPermissionWrapper implements ResourceBlockPermission,
 	@Override
 	public long getActionIds() {
 		return _resourceBlockPermission.getActionIds();
+	}
+
+	/**
+	* Returns the company ID of this resource block permission.
+	*
+	* @return the company ID of this resource block permission
+	*/
+	@Override
+	public long getCompanyId() {
+		return _resourceBlockPermission.getCompanyId();
 	}
 
 	@Override
@@ -215,6 +232,16 @@ public class ResourceBlockPermissionWrapper implements ResourceBlockPermission,
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_resourceBlockPermission.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this resource block permission.
+	*
+	* @param companyId the company ID of this resource block permission
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_resourceBlockPermission.setCompanyId(companyId);
 	}
 
 	@Override

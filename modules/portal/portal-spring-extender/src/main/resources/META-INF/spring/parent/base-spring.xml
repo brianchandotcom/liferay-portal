@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+>
+	<bean class="com.liferay.portal.spring.aop.ServiceBeanAutoProxyCreator">
+		<property name="beanMatcher">
+			<bean class="com.liferay.portal.spring.aop.ServiceBeanMatcher" />
+		</property>
+		<property name="methodInterceptor" ref="serviceAdvice" />
+	</bean>
+	<bean class="com.liferay.portal.spring.context.PortletBeanFactoryCleaner" />
+	<bean id="basePersistence" abstract="true">
+		<property name="dataSource" ref="liferayDataSource" />
+		<property name="sessionFactory" ref="liferaySessionFactory" />
+	</bean>
+	<bean id="serviceAdvice" class="com.liferay.portal.spring.aop.SkipAdvice">
+		<property name="nextMethodInterceptor" ref="accessControlAdvice" />
+	</bean>
+	<bean id="accessControlAdvice" class="com.liferay.portal.security.access.control.AccessControlAdvice">
+		<property name="accessControlAdvisor">
+			<bean class="com.liferay.portal.security.access.control.AccessControlAdvisorImpl" />
+		</property>
+		<property name="nextMethodInterceptor" ref="portalResiliencyAdvice" />
+	</bean>
+	<bean id="portalResiliencyAdvice" class="com.liferay.portal.resiliency.service.PortalResiliencyAdvice">
+		<property name="nextMethodInterceptor" ref="serviceMonitorAdvice" />
+	</bean>
+	<bean id="serviceMonitorAdvice" class="com.liferay.portal.monitoring.statistics.service.ServiceMonitorAdvice">
+		<property name="nextMethodInterceptor" ref="asyncAdvice" />
+	</bean>
+	<bean id="asyncAdvice" class="com.liferay.portal.messaging.async.AsyncAdvice">
+		<property name="defaultDestinationName" value="liferay/async_service" />
+		<property name="nextMethodInterceptor" ref="threadLocalCacheAdvice" />
+	</bean>
+	<bean id="threadLocalCacheAdvice" class="com.liferay.portal.cache.thread.local.ThreadLocalCacheAdvice">
+		<property name="nextMethodInterceptor" ref="bufferedIncrementAdvice" />
+	</bean>
+	<bean id="bufferedIncrementAdvice" class="com.liferay.portal.increment.BufferedIncrementAdvice">
+		<property name="nextMethodInterceptor" ref="indexableAdvice" />
+	</bean>
+	<bean id="indexableAdvice" class="com.liferay.portal.search.IndexableAdvice">
+		<property name="nextMethodInterceptor" ref="systemEventAdvice" />
+	</bean>
+	<bean id="systemEventAdvice" class="com.liferay.portal.systemevent.SystemEventAdvice">
+		<property name="nextMethodInterceptor" ref="serviceContextAdvice" />
+	</bean>
+	<bean id="serviceContextAdvice" class="com.liferay.portal.service.ServiceContextAdvice">
+		<property name="nextMethodInterceptor" ref="retryAdvice" />
+	</bean>
+	<bean id="retryAdvice" class="com.liferay.portal.spring.aop.RetryAdvice">
+		<property name="nextMethodInterceptor" ref="transactionAdvice" />
+	</bean>
+	<bean id="transactionAdvice" class="com.liferay.portal.dao.jdbc.aop.DynamicDataSourceAdviceFactoryUtil" factory-method="createDynamicDataSourceAdvice">
+		<constructor-arg>
+			<bean class="com.liferay.portal.spring.transaction.TransactionInterceptor">
+				<property name="platformTransactionManager" ref="liferayTransactionManager" />
+				<property name="transactionAttributeSource" ref="transactionAttributeSource" />
+				<property name="transactionExecutor" ref="transactionExecutor" />
+			</bean>
+		</constructor-arg>
+	</bean>
+	<bean id="transactionAttributeSource" class="com.liferay.portal.spring.transaction.AnnotationTransactionAttributeSource" />
+	<bean id="transactionExecutor" class="com.liferay.portal.spring.transaction.TransactionExecutorFactory" factory-method="createTransactionExecutor">
+		<constructor-arg ref="liferayTransactionManager" />
+		<constructor-arg value="false" />
+	</bean>
+</beans>

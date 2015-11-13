@@ -40,7 +40,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface UserTrackerPathModel extends BaseModel<UserTrackerPath>,
-	MVCCModel {
+	MVCCModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -90,6 +90,22 @@ public interface UserTrackerPathModel extends BaseModel<UserTrackerPath>,
 	 * @param userTrackerPathId the user tracker path ID of this user tracker path
 	 */
 	public void setUserTrackerPathId(long userTrackerPathId);
+
+	/**
+	 * Returns the company ID of this user tracker path.
+	 *
+	 * @return the company ID of this user tracker path
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this user tracker path.
+	 *
+	 * @param companyId the company ID of this user tracker path
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user tracker ID of this user tracker path.

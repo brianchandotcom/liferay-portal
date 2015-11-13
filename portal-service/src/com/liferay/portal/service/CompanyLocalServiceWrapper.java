@@ -297,16 +297,6 @@ public class CompanyLocalServiceWrapper implements CompanyLocalService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _companyLocalService.getBeanIdentifier();
-	}
-
-	/**
 	* Returns all the companies.
 	*
 	* @return the companies
@@ -473,6 +463,16 @@ public class CompanyLocalServiceWrapper implements CompanyLocalService,
 		return _companyLocalService.getCompanyIdByUserId(userId);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _companyLocalService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
@@ -543,16 +543,6 @@ public class CompanyLocalServiceWrapper implements CompanyLocalService,
 		java.lang.String type, java.lang.String keywords, int start, int end) {
 		return _companyLocalService.search(companyId, userId, portletId,
 			groupId, type, keywords, start, end);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_companyLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

@@ -64,10 +64,12 @@ public class TrashVersionCacheModel implements CacheModel<TrashVersion>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{versionId=");
 		sb.append(versionId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", entryId=");
 		sb.append(entryId);
 		sb.append(", classNameId=");
@@ -88,6 +90,7 @@ public class TrashVersionCacheModel implements CacheModel<TrashVersion>,
 		TrashVersionImpl trashVersionImpl = new TrashVersionImpl();
 
 		trashVersionImpl.setVersionId(versionId);
+		trashVersionImpl.setCompanyId(companyId);
 		trashVersionImpl.setEntryId(entryId);
 		trashVersionImpl.setClassNameId(classNameId);
 		trashVersionImpl.setClassPK(classPK);
@@ -109,6 +112,7 @@ public class TrashVersionCacheModel implements CacheModel<TrashVersion>,
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		versionId = objectInput.readLong();
+		companyId = objectInput.readLong();
 		entryId = objectInput.readLong();
 		classNameId = objectInput.readLong();
 		classPK = objectInput.readLong();
@@ -120,6 +124,7 @@ public class TrashVersionCacheModel implements CacheModel<TrashVersion>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(versionId);
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(entryId);
 		objectOutput.writeLong(classNameId);
 		objectOutput.writeLong(classPK);
@@ -135,6 +140,7 @@ public class TrashVersionCacheModel implements CacheModel<TrashVersion>,
 	}
 
 	public long versionId;
+	public long companyId;
 	public long entryId;
 	public long classNameId;
 	public long classPK;

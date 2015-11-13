@@ -98,7 +98,7 @@ public interface RepositoryLocalService extends BaseLocalService,
 		com.liferay.portal.model.PersistedModel persistedModel)
 		throws PortalException;
 
-	public void deleteRepositories(long groupId);
+	public void deleteRepositories(long groupId) throws PortalException;
 
 	/**
 	* Deletes the repository from the database. Also notifies the appropriate model listeners.
@@ -213,13 +213,6 @@ public interface RepositoryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext);
@@ -227,6 +220,13 @@ public interface RepositoryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Repository> getGroupRepositories(
 		long groupId);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -317,13 +317,6 @@ public interface RepositoryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties(
 		long repositoryId) throws PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	/**
 	* Updates the repository in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

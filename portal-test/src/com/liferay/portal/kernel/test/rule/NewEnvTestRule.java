@@ -25,11 +25,13 @@ import com.liferay.portal.kernel.process.local.LocalProcessExecutor;
 import com.liferay.portal.kernel.process.local.LocalProcessLauncher.ProcessContext;
 import com.liferay.portal.kernel.process.local.LocalProcessLauncher.ShutdownHook;
 import com.liferay.portal.kernel.test.rule.BaseTestRule.StatementWrapper;
+import com.liferay.portal.kernel.test.rule.NewEnv.JVMArgsLine;
 import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -43,6 +45,7 @@ import java.net.MalformedURLException;
 import java.net.URLClassLoader;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -146,6 +149,24 @@ public class NewEnvTestRule implements TestRule {
 	protected List<String> createArguments(Description description) {
 		List<String> arguments = new ArrayList<>();
 
+		Class<?> testClass = description.getTestClass();
+
+		JVMArgsLine jvmArgsLine = testClass.getAnnotation(JVMArgsLine.class);
+
+		if (jvmArgsLine != null) {
+			arguments.addAll(
+				Arrays.asList(
+					StringUtil.split(jvmArgsLine.value(), StringPool.SPACE)));
+		}
+
+		jvmArgsLine = description.getAnnotation(JVMArgsLine.class);
+
+		if (jvmArgsLine != null) {
+			arguments.addAll(
+				Arrays.asList(
+					StringUtil.split(jvmArgsLine.value(), StringPool.SPACE)));
+		}
+
 		arguments.add("-Djava.net.preferIPv4Stack=true");
 
 		if (Boolean.getBoolean("jvm.debug")) {
@@ -172,7 +193,9 @@ public class NewEnvTestRule implements TestRule {
 			arguments.add("-Dwhip.instrument.dump=true");
 		}
 
-		arguments.add("-Dwhip.static.instrument=true");
+		if (Boolean.getBoolean("whip.static.instrument")) {
+			arguments.add("-Dwhip.static.instrument=true");
+		}
 
 		return arguments;
 	}

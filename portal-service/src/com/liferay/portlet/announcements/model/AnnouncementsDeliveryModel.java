@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.ShardedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -39,7 +40,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface AnnouncementsDeliveryModel extends BaseModel<AnnouncementsDelivery> {
+public interface AnnouncementsDeliveryModel extends BaseModel<AnnouncementsDelivery>,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -79,6 +81,7 @@ public interface AnnouncementsDeliveryModel extends BaseModel<AnnouncementsDeliv
 	 *
 	 * @return the company ID of this announcements delivery
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -86,6 +89,7 @@ public interface AnnouncementsDeliveryModel extends BaseModel<AnnouncementsDeliv
 	 *
 	 * @param companyId the company ID of this announcements delivery
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**

@@ -67,15 +67,6 @@ public class DLFileEntryTypeServiceUtil {
 		getService().deleteFileEntryType(fileEntryTypeId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntryType getFileEntryType(
 		long fileEntryTypeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -103,6 +94,15 @@ public class DLFileEntryTypeServiceUtil {
 				   .getFolderFileEntryTypes(groupIds, folderId, inherited);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> search(
 		long companyId, long[] groupIds, java.lang.String keywords,
 		boolean includeBasicFileEntryType, int start, int end,
@@ -117,15 +117,6 @@ public class DLFileEntryTypeServiceUtil {
 		return getService()
 				   .searchCount(companyId, groupIds, keywords,
 			includeBasicFileEntryType);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static void updateFileEntryType(long fileEntryTypeId,

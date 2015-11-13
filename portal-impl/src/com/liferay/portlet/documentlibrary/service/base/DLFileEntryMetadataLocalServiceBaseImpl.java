@@ -17,7 +17,6 @@ package com.liferay.portlet.documentlibrary.service.base;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -29,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -66,7 +66,7 @@ import javax.sql.DataSource;
 @ProviderType
 public abstract class DLFileEntryMetadataLocalServiceBaseImpl
 	extends BaseLocalServiceImpl implements DLFileEntryMetadataLocalService,
-		IdentifiableBean {
+		IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -217,6 +217,20 @@ public abstract class DLFileEntryMetadataLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the document library file entry metadata with the matching UUID and company.
+	 *
+	 * @param uuid the document library file entry metadata's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
+	 */
+	@Override
+	public DLFileEntryMetadata fetchDLFileEntryMetadataByUuidAndCompanyId(
+		String uuid, long companyId) {
+		return dlFileEntryMetadataPersistence.fetchByUuid_C_First(uuid,
+			companyId, null);
+	}
+
+	/**
 	 * Returns the document library file entry metadata with the primary key.
 	 *
 	 * @param fileEntryMetadataId the primary key of the document library file entry metadata
@@ -264,6 +278,21 @@ public abstract class DLFileEntryMetadataLocalServiceBaseImpl
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return dlFileEntryMetadataPersistence.findByPrimaryKey(primaryKeyObj);
+	}
+
+	/**
+	 * Returns the document library file entry metadata with the matching UUID and company.
+	 *
+	 * @param uuid the document library file entry metadata's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching document library file entry metadata
+	 * @throws PortalException if a matching document library file entry metadata could not be found
+	 */
+	@Override
+	public DLFileEntryMetadata getDLFileEntryMetadataByUuidAndCompanyId(
+		String uuid, long companyId) throws PortalException {
+		return dlFileEntryMetadataPersistence.findByUuid_C_First(uuid,
+			companyId, null);
 	}
 
 	/**
@@ -525,23 +554,13 @@ public abstract class DLFileEntryMetadataLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the Spring bean ID for this bean.
+	 * Returns the OSGi service identifier.
 	 *
-	 * @return the Spring bean ID for this bean
+	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getBeanIdentifier() {
-		return _beanIdentifier;
-	}
-
-	/**
-	 * Sets the Spring bean ID for this bean.
-	 *
-	 * @param beanIdentifier the Spring bean ID for this bean
-	 */
-	@Override
-	public void setBeanIdentifier(String beanIdentifier) {
-		_beanIdentifier = beanIdentifier;
+	public String getOSGiServiceIdentifier() {
+		return DLFileEntryMetadataLocalService.class.getName();
 	}
 
 	protected Class<?> getModelClass() {
@@ -600,5 +619,4 @@ public abstract class DLFileEntryMetadataLocalServiceBaseImpl
 	protected DLFileEntryTypeFinder dlFileEntryTypeFinder;
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
-	private String _beanIdentifier;
 }

@@ -83,7 +83,7 @@ TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
 		"create index IX_1AA07A6D on Website (companyId, classNameId, classPK, primary_)",
 		"create index IX_F75690BB on Website (userId)",
-		"create index IX_712BCD35 on Website (uuid_, companyId)"
+		"create index IX_712BCD35 on Website (uuid_[$COLUMN_LENGTH:75$], companyId)"
 	};
 
 }

@@ -32,7 +32,7 @@
 		<execute function="AssertClick" locator1="NavListItem#ADD_BOOKMARK" value1="Add Bookmark" />
 
 		<if>
-			<condition function="IsElementPresent#pauseIsElementPresent" locator1="AssetRelatedAssets#HEADER_COLLAPSED" />
+			<condition function="IsElementPresent#waitForVisible" locator1="AssetRelatedAssets#HEADER_COLLAPSED" />
 			<then>
 				<execute function="Click" locator1="AssetRelatedAssets#HEADER_COLLAPSED" />
 				<execute function="AssertElementPresent" locator1="AssetRelatedAssets#HEADER_EXPANDED" />
@@ -145,6 +145,8 @@
 	</command>
 
 	<command name="viewDefaultPG">
+		<var name="key_portletName" value="Related Assets" />
+
 		<execute function="AssertTextEquals" locator1="PGRelatedassets#TITLE" value1="Related Assets" />
 		<execute function="AssertTextEquals" locator1="PGRelatedassets#INFO_MESSAGE" value1="There are no related assets available. This application will show all assets related to the main asset of the current page." />
 	</command>
@@ -158,7 +160,7 @@
 	</command>
 
 	<command name="viewNoSearchResultsCP">
-		<execute function="AssertTextEquals" locator1="CPRelatedassetsSelect#INFO_MESSAGE" value1="There are no results." />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no results." />
 	</command>
 
 	<command name="viewPG">

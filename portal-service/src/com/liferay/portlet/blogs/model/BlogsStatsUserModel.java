@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.ShardedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -40,7 +41,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface BlogsStatsUserModel extends BaseModel<BlogsStatsUser> {
+public interface BlogsStatsUserModel extends BaseModel<BlogsStatsUser>,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -108,6 +110,7 @@ public interface BlogsStatsUserModel extends BaseModel<BlogsStatsUser> {
 	 *
 	 * @return the company ID of this blogs stats user
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -115,6 +118,7 @@ public interface BlogsStatsUserModel extends BaseModel<BlogsStatsUser> {
 	 *
 	 * @param companyId the company ID of this blogs stats user
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**

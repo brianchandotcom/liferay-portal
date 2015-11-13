@@ -132,26 +132,26 @@
 
 		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
 
-		<execute function="AssertTextEquals" locator1="//thead[@class='table-columns']/tr/th[1]" value1="First Name" />
-		<execute function="AssertTextEquals" locator1="//thead[@class='table-columns']/tr/th[2]" value1="Last Name" />
-		<execute function="AssertTextEquals" locator1="//thead[@class='table-columns']/tr/th[3]" value1="What are you bringing?" />
-		<execute function="AssertTextEquals" locator1="//thead[@class='table-columns']/tr/th[4]" value1="Status" />
-		<execute function="AssertTextEquals" locator1="//thead[@class='table-columns']/tr/th[5]" value1="Modified Date" />
-		<execute function="AssertTextEquals" locator1="//thead[@class='table-columns']/tr/th[6]" value1="Author" />
+		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@id,'ocerSearchContainer')]//thead/tr/th[1])" value1="First Name" />
+		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@id,'ocerSearchContainer')]//thead/tr/th[2])" value1="Last Name" />
+		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@id,'ocerSearchContainer')]//thead/tr/th[3])" value1="What are you bringing?" />
+		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@id,'ocerSearchContainer')]//thead/tr/th[4])" value1="Status" />
+		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@id,'ocerSearchContainer')]//thead/tr/th[5])" value1="Modified Date" />
+		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@id,'ocerSearchContainer')]//thead/tr/th[6])" value1="Author" />
 
-		<execute function="AssertTextEquals" locator1="//tbody[@class='table-data']/tr/td[1]/a" value1="Jane" />
-		<execute function="AssertTextEquals" locator1="//tbody[@class='table-data']/tr/td[2]/a" value1="Smith" />
-		<execute function="AssertTextEquals" locator1="//tbody[@class='table-data']/tr/td[3]/a" value1="Carrots" />
-		<execute function="AssertTextEquals" locator1="//tbody[@class='table-data']/tr/td[4]/span/span/span/strong" value1="Approved" />
-		<execute function="AssertElementPresent" locator1="//tbody[@class='table-data']/tr/td[5]/a" value1="Modified Date" />
-		<execute function="AssertTextEquals" locator1="//tbody[@class='table-data']/tr/td[6]/a" value1="Test Test" />
+		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[1]/a)" value1="John" />
+		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[2]/a)" value1="Doe" />
+		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[3]/a)" value1="Beef Jerky" />
+		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[4]/span/span/span/strong)" value1="Approved" />
+		<execute function="AssertElementPresent" locator1="xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[5]/a)" value1="Modified Date" />
+		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[6]/a)" value1="Test Test" />
 
-		<execute function="AssertTextEquals" locator1="//tbody[@class='table-data']/tr[2]/td[1]/a" value1="John" />
-		<execute function="AssertTextEquals" locator1="//tbody[@class='table-data']/tr[2]/td[2]/a" value1="Doe" />
-		<execute function="AssertTextEquals" locator1="//tbody[@class='table-data']/tr[2]/td[3]/a" value1="Beef Jerky" />
-		<execute function="AssertTextEquals" locator1="//tbody[@class='table-data']/tr[2]/td[4]/span/span/span/strong" value1="Approved" />
-		<execute function="AssertElementPresent" locator1="//tbody[@class='table-data']/tr[2]/td[5]/a" value1="Modified Date" />
-		<execute function="AssertTextEquals" locator1="//tbody[@class='table-data']/tr[2]/td[6]/a" value1="Test Test" />
+		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@id,'ocerSearchContainer')]//tr[2]/td[1]/a)" value1="Jane" />
+		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@id,'ocerSearchContainer')]//tr[2]/td[2]/a)" value1="Smith" />
+		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@id,'ocerSearchContainer')]//tr[2]/td[3]/a)" value1="Carrots" />
+		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@id,'ocerSearchContainer')]//tr[2]/td[4]/span/span/span/strong)" value1="Approved" />
+		<execute function="AssertElementPresent" locator1="xpath=(//div[contains(@id,'ocerSearchContainer')]//tr[2]/td[5]/a)" value1="Modified Date" />
+		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@id,'ocerSearchContainer')]//tr[2]/td[6]/a)" value1="Test Test" />
 
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />

@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.ShardedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -39,7 +40,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface RatingsStatsModel extends AttachedModel, BaseModel<RatingsStats> {
+public interface RatingsStatsModel extends AttachedModel, BaseModel<RatingsStats>,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -73,6 +75,22 @@ public interface RatingsStatsModel extends AttachedModel, BaseModel<RatingsStats
 	 * @param statsId the stats ID of this ratings stats
 	 */
 	public void setStatsId(long statsId);
+
+	/**
+	 * Returns the company ID of this ratings stats.
+	 *
+	 * @return the company ID of this ratings stats
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this ratings stats.
+	 *
+	 * @param companyId the company ID of this ratings stats
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the fully qualified class name of this ratings stats.

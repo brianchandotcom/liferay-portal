@@ -1,6 +1,6 @@
-/src/META-INF/resources/classic/_diffs/css/alloy.css
-/src/META-INF/resources/classic/css
-/src/META-INF/resources/classic/images
-/src/META-INF/resources/classic/javascript
-/src/META-INF/resources/classic/js
-/src/META-INF/resources/classic/templates
+/src/main/resources/META-INF/resources/classic/_diffs/css/alloy.css
+/src/main/resources/META-INF/resources/classic/css
+/src/main/resources/META-INF/resources/classic/images
+/src/main/resources/META-INF/resources/classic/javascript
+/src/main/resources/META-INF/resources/classic/js
+/src/main/resources/META-INF/resources/classic/templates

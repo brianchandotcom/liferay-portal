@@ -102,7 +102,7 @@
 </tr>
 <tr>
 	<td>USER_TOOLS_TOGGLE_OFF</td>
-	<td>//input[contains(@data-label,'${key_userToolName}')]/following-sibling::div//span[contains(@class,'toggle-card-off')]</td>
+	<td>//input[contains(@data-label,'${key_userToolName}') or contains(@data-key,'${key_userToolName}')]/following-sibling::div//span[contains(@class,'toggle-card-off')]</td>
 	<td></td>
 </tr>
 <tr>

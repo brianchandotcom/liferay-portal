@@ -1,0 +1,26 @@
+@import "header_toolbar";
+
+$bg-color: #F5F7F8;
+
+body {
+	background-color: $bg-color;
+}
+
+#wrapper {
+	padding: 0;
+
+	.portlet-layout {
+		margin-left: 0;
+		margin-right: 0;
+
+		.portlet-column {
+			padding: 0;
+		}
+	}
+
+	.main-content-card {
+		box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+		margin-top: 20px;
+		min-height: 200px;
+	}
+}

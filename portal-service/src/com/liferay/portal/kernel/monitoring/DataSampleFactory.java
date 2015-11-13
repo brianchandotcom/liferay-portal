@@ -23,8 +23,9 @@ import javax.portlet.PortletResponse;
 public interface DataSampleFactory {
 
 	public DataSample createPortalRequestDataSample(
-		long companyId, long groupId, String remoteUser, String requestURI,
-		String requestURL);
+		long companyId, long groupId, String referer, String remoteAddr,
+		String remoteUser, String requestURI, String requestURL,
+		String userAgent);
 
 	public DataSample createPortletRequestDataSample(
 		PortletRequestType requestType, PortletRequest portletRequest,

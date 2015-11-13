@@ -903,10 +903,6 @@
 
 		<execute macro="MessageboardsPortlet#viewDefaultEmailFromCP" />
 
-		<execute macro="MessageboardsPortlet#configureMessageEmailFromCP">
-			<var method="TestPropsUtil#get('email.address.1')" name="emailFromAddress" />
-		</execute>
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>

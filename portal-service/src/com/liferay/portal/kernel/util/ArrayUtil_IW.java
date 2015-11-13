@@ -484,7 +484,7 @@ public class ArrayUtil_IW {
 		ArrayUtil.reverse(array);
 	}
 
-	public void reverse(java.lang.String[] array) {
+	public <T> void reverse(T[] array) {
 		ArrayUtil.reverse(array);
 	}
 

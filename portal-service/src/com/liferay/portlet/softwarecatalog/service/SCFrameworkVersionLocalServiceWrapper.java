@@ -315,16 +315,6 @@ public class SCFrameworkVersionLocalServiceWrapper
 		return _scFrameworkVersionLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _scFrameworkVersionLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion getFrameworkVersion(
 		long frameworkVersionId)
@@ -362,6 +352,16 @@ public class SCFrameworkVersionLocalServiceWrapper
 	public int getFrameworkVersionsCount(long groupId, boolean active) {
 		return _scFrameworkVersionLocalService.getFrameworkVersionsCount(groupId,
 			active);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _scFrameworkVersionLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -466,16 +466,6 @@ public class SCFrameworkVersionLocalServiceWrapper
 	@Override
 	public boolean hasSCProductVersionSCFrameworkVersions(long productVersionId) {
 		return _scFrameworkVersionLocalService.hasSCProductVersionSCFrameworkVersions(productVersionId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_scFrameworkVersionLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

@@ -21,13 +21,13 @@ url-encoder-class?, portlet-data-handler-class?,
 staged-model-data-handler-class*, template-handler?,
 portlet-layout-listener-class?, poller-processor-class?,
 pop-message-listener-class?, social-activity-interpreter-class*,
-social-request-interpreter-class?, social-interactions-configuration?,
-user-notification-definitions?, user-notification-handler-class*,
-webdav-storage-token?, webdav-storage-class?, xml-rpc-method-class?,
-application-type*, control-panel-entry-category?, control-panel-entry-weight?,
-control-panel-entry-class?, asset-renderer-factory*, atom-collection-adapter*,
-custom-attributes-display*, permission-propagator?, trash-handler*,
-workflow-handler*, preferences-company-wide?, preferences-unique-per-layout?,
+social-request-interpreter-class?, user-notification-definitions?,
+user-notification-handler-class*, webdav-storage-token?, webdav-storage-class?,
+xml-rpc-method-class?, application-type*, control-panel-entry-category?,
+control-panel-entry-weight?, control-panel-entry-class?,
+asset-renderer-factory*, atom-collection-adapter*, custom-attributes-display*,
+permission-propagator?, trash-handler*, workflow-handler*,
+preferences-company-wide?, preferences-unique-per-layout?,
 preferences-owned-by-group?, use-default-template?, show-portlet-access-denied?,
 show-portlet-inactive?, action-url-redirect?, restore-current-view?,
 maximize-edit?, maximize-help?, pop-up-print?, layout-cacheable?, instanceable?,
@@ -313,13 +313,6 @@ See:
 http://docs.liferay.com/portal/6.2/javadocs-all/com/liferay/portlet/social/model/SocialRequestInterpreter.html
 -->
 <!ELEMENT social-request-interpreter-class (#PCDATA)>
-
-<!--
-Set the active value to true if the portlet uses Social Interactions
-Configuration and it should be displayed in the Interactions Section of Portal
-Settings.
--->
-<!ELEMENT social-interactions-configuration (#PCDATA)>
 
 <!--
 The user-notification-handler-class value must be a class that implements

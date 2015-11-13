@@ -230,21 +230,21 @@ public class PortletPreferencesLocalServiceWrapper
 		return _portletPreferencesLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _portletPreferencesLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public javax.portlet.PortletPreferences getDefaultPreferences(
 		long companyId, java.lang.String portletId) {
 		return _portletPreferencesLocalService.getDefaultPreferences(companyId,
 			portletId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _portletPreferencesLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -406,16 +406,6 @@ public class PortletPreferencesLocalServiceWrapper
 	public javax.portlet.PortletPreferences getStrictPreferences(
 		com.liferay.portal.model.PortletPreferencesIds portletPreferencesIds) {
 		return _portletPreferencesLocalService.getStrictPreferences(portletPreferencesIds);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_portletPreferencesLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

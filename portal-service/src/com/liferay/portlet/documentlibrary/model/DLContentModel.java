@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.ShardedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -41,7 +42,7 @@ import java.sql.Blob;
  * @generated
  */
 @ProviderType
-public interface DLContentModel extends BaseModel<DLContent> {
+public interface DLContentModel extends BaseModel<DLContent>, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -95,6 +96,7 @@ public interface DLContentModel extends BaseModel<DLContent> {
 	 *
 	 * @return the company ID of this document library content
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -102,6 +104,7 @@ public interface DLContentModel extends BaseModel<DLContent> {
 	 *
 	 * @param companyId the company ID of this document library content
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**

@@ -123,8 +123,8 @@ TABLE_COLUMNS_MAP.put("viewCount", Types.INTEGER);
 		"create unique index IX_1E9D371D on AssetEntry (classNameId, classPK)",
 		"create index IX_7306C60 on AssetEntry (companyId)",
 		"create index IX_75D42FF9 on AssetEntry (expirationDate)",
-		"create index IX_1EBA6821 on AssetEntry (groupId, classUuid)",
-		"create index IX_FEC4A201 on AssetEntry (layoutUuid)",
+		"create index IX_1EBA6821 on AssetEntry (groupId, classUuid[$COLUMN_LENGTH:75$])",
+		"create index IX_FEC4A201 on AssetEntry (layoutUuid[$COLUMN_LENGTH:75$])",
 		"create index IX_2E4E3885 on AssetEntry (publishDate)",
 		"create index IX_9029E15A on AssetEntry (visible)"
 	};

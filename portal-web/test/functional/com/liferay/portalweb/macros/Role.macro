@@ -265,7 +265,10 @@
 		<execute function="AssertClick" locator1="MenuItem#DEFINE_PERMISSIONS" value1="Define Permissions" />
 
 		<if>
-			<condition function="IsVisible" locator1="Message#INFO" />
+			<and>
+				<condition function="IsElementPresent" locator1="Message#INFO" />
+				<condition function="IsVisible" locator1="Message#INFO" />
+			</and>
 			<then>
 				<execute function="AssertTextEquals" locator1="Message#INFO" value1="This role does not have any permissions." />
 			</then>
@@ -323,10 +326,24 @@
 					</then>
 				</elseif>
 				<elseif>
+					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_APPLICATIONS_BLOGS" />
+					<then>
+						<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_BLOGS" />
+						<var name="permissionNavigationValue" value="Blogs" />
+					</then>
+				</elseif>
+				<elseif>
 					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_APPLICATIONS_BOOKMARKS" />
 					<then>
 						<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_BOOKMARKS" />
 						<var name="permissionNavigationValue" value="Bookmarks" />
+					</then>
+				</elseif>
+				<elseif>
+					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_APPLICATIONS_CALENDAR" />
+					<then>
+						<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_CALENDAR" />
+						<var name="permissionNavigationValue" value="Calendar" />
 					</then>
 				</elseif>
 				<elseif>
@@ -414,6 +431,13 @@
 					</then>
 				</elseif>
 				<elseif>
+					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_USERS_SITE_TEAMS" />
+					<then>
+						<var name="permissionNavigationKey" value="SITE_ADMIN_USERS_SITE_TEAMS" />
+						<var name="permissionNavigationValue" value="Site Teams" />
+					</then>
+				</elseif>
+				<elseif>
 					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_PAGES_SITE_PAGES" />
 					<then>
 						<var name="permissionNavigationKey" value="SITE_ADMIN_PAGES_SITE_PAGES" />
@@ -432,6 +456,13 @@
 					<then>
 						<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_WIKI" />
 						<var name="permissionNavigationValue" value="Wiki" />
+					</then>
+				</elseif>
+				<elseif>
+					<contains string="${permissionDefinitionKey}" substring="USER_MY_ACCOUNT_MY_WORKFLOW_TASKS" />
+					<then>
+						<var name="permissionNavigationKey" value="USER_MY_ACCOUNT_MY_WORKFLOW_TASKS" />
+						<var name="permissionNavigationValue" value="My Workflow Tasks" />
 					</then>
 				</elseif>
 			</if>
@@ -861,10 +892,24 @@
 				</then>
 			</elseif>
 			<elseif>
+				<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_APPLICATIONS_BLOGS" />
+				<then>
+					<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_BLOGS" />
+					<var name="permissionNavigationValue" value="Blogs" />
+				</then>
+			</elseif>
+			<elseif>
 				<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_APPLICATIONS_BOOKMARKS" />
 				<then>
 					<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_BOOKMARKS" />
 					<var name="permissionNavigationValue" value="Bookmarks" />
+				</then>
+			</elseif>
+			<elseif>
+				<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_APPLICATIONS_CALENDAR" />
+				<then>
+					<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_CALENDAR" />
+					<var name="permissionNavigationValue" value="Calendar" />
 				</then>
 			</elseif>
 			<elseif>

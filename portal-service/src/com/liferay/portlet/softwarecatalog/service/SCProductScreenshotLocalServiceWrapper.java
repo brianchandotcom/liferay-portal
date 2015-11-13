@@ -205,13 +205,13 @@ public class SCProductScreenshotLocalServiceWrapper
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the OSGi service identifier.
 	*
-	* @return the Spring bean ID for this bean
+	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _scProductScreenshotLocalService.getBeanIdentifier();
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _scProductScreenshotLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -289,16 +289,6 @@ public class SCProductScreenshotLocalServiceWrapper
 	@Override
 	public int getSCProductScreenshotsCount() {
 		return _scProductScreenshotLocalService.getSCProductScreenshotsCount();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_scProductScreenshotLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

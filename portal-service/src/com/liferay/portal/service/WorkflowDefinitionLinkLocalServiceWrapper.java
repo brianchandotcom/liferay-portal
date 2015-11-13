@@ -230,22 +230,22 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 		return _workflowDefinitionLinkLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _workflowDefinitionLinkLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.portal.model.WorkflowDefinitionLink getDefaultWorkflowDefinitionLink(
 		long companyId, java.lang.String className, long classPK, long typePK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _workflowDefinitionLinkLocalService.getDefaultWorkflowDefinitionLink(companyId,
 			className, classPK, typePK);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _workflowDefinitionLinkLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -347,16 +347,6 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 		java.lang.String className, long classPK, long typePK) {
 		return _workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(companyId,
 			groupId, className, classPK, typePK);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_workflowDefinitionLinkLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

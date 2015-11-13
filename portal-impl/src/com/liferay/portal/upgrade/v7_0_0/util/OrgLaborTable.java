@@ -30,6 +30,7 @@ public class OrgLaborTable {
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT},
 		{"orgLaborId", Types.BIGINT},
+		{"companyId", Types.BIGINT},
 		{"organizationId", Types.BIGINT},
 		{"typeId", Types.BIGINT},
 		{"sunOpen", Types.INTEGER},
@@ -54,6 +55,8 @@ static {
 TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 
 TABLE_COLUMNS_MAP.put("orgLaborId", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 
 TABLE_COLUMNS_MAP.put("organizationId", Types.BIGINT);
 
@@ -88,7 +91,7 @@ TABLE_COLUMNS_MAP.put("satOpen", Types.INTEGER);
 TABLE_COLUMNS_MAP.put("satClose", Types.INTEGER);
 
 }
-	public static final String TABLE_SQL_CREATE = "create table OrgLabor (mvccVersion LONG default 0,orgLaborId LONG not null primary key,organizationId LONG,typeId LONG,sunOpen INTEGER,sunClose INTEGER,monOpen INTEGER,monClose INTEGER,tueOpen INTEGER,tueClose INTEGER,wedOpen INTEGER,wedClose INTEGER,thuOpen INTEGER,thuClose INTEGER,friOpen INTEGER,friClose INTEGER,satOpen INTEGER,satClose INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table OrgLabor (mvccVersion LONG default 0,orgLaborId LONG not null primary key,companyId LONG,organizationId LONG,typeId LONG,sunOpen INTEGER,sunClose INTEGER,monOpen INTEGER,monClose INTEGER,tueOpen INTEGER,tueClose INTEGER,wedOpen INTEGER,wedClose INTEGER,thuOpen INTEGER,thuClose INTEGER,friOpen INTEGER,friClose INTEGER,satOpen INTEGER,satClose INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table OrgLabor";
 

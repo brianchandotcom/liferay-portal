@@ -336,13 +336,6 @@
 		<execute function="Pause" locator1="5000" />
 	</command>
 
-	<command name="gotoExportSite">
-		<execute macro="LAR#gotoExportSiteCmd" />
-
-		<execute function="SelectFrameTop" value1="relative=top" />
-		<execute function="SelectFrame" locator1="BasePortletExport#EXPORT_IMPORT_IFRAME" />
-	</command>
-
 	<command name="gotoExportSiteCmd">
 		<execute macro="Page#gotoPublishingTools">
 			<var name="portletCategoryName" value="Publishing Tools" />

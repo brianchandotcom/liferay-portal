@@ -35,7 +35,9 @@ for (int i = 1; i<organizations.size(); i++) {
 <h2><%= selUser.getFullName() %></h2>
 
 <div class="details">
-	<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="avatar" />" class="avatar" id="<portlet:namespace />avatar" src="<%= selUser.getPortraitURL(themeDisplay) %>" />
+	<liferay-ui:user-portrait
+		userId="<%= selUser.getUserId() %>"
+	/>
 
 	<dl class="property-list">
 		<c:if test="<%= Validator.isNotNull(selUser.getDisplayEmailAddress()) %>">

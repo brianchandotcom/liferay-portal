@@ -39,7 +39,7 @@
 
 	<#local ddmStorageLinkModel = dataFactory.newDDMStorageLinkModel(_ddmStorageLinkId, ddmContentModel, _ddmStructureId)>
 
-	insert into DDMStorageLink values ('${ddmStorageLinkModel.uuid}', ${ddmStorageLinkModel.storageLinkId}, ${ddmStorageLinkModel.classNameId}, ${ddmStorageLinkModel.classPK}, ${ddmStorageLinkModel.structureId});
+	insert into DDMStorageLink values ('${ddmStorageLinkModel.uuid}', ${ddmStorageLinkModel.storageLinkId}, '${ddmStorageLinkModel.companyId}', ${ddmStorageLinkModel.classNameId}, ${ddmStorageLinkModel.classPK}, ${ddmStorageLinkModel.structureId});
 </#macro>
 
 <#macro insertDDMStructureLink
@@ -47,7 +47,7 @@
 >
 	<#local ddmStructureLinkModel = dataFactory.newDDMStructureLinkModel(_entry)>
 
-	insert into DDMStructureLink values (${ddmStructureLinkModel.structureLinkId},${ ddmStructureLinkModel.classNameId}, ${ddmStructureLinkModel.classPK}, ${ddmStructureLinkModel.structureId});
+	insert into DDMStructureLink values (${ddmStructureLinkModel.structureLinkId}, ${ddmStructureLinkModel.companyId}, ${ ddmStructureLinkModel.classNameId}, ${ddmStructureLinkModel.classPK}, ${ddmStructureLinkModel.structureId});
 </#macro>
 
 <#macro insertDLFolder
@@ -110,7 +110,7 @@
 
 				<#local dlFileEntryMetadataModel = dataFactory.newDLFileEntryMetadataModel(ddmStorageLinkId, _ddmStructureId, dlFileVersionModel)>
 
-				insert into DLFileEntryMetadata values ('${dlFileEntryMetadataModel.uuid}', ${dlFileEntryMetadataModel.fileEntryMetadataId}, ${dlFileEntryMetadataModel.DDMStorageId}, ${dlFileEntryMetadataModel.DDMStructureId}, ${dlFileEntryMetadataModel.fileEntryId}, ${dlFileEntryMetadataModel.fileVersionId});
+				insert into DLFileEntryMetadata values ('${dlFileEntryMetadataModel.uuid}', ${dlFileEntryMetadataModel.fileEntryMetadataId}, ${dlFileEntryMetadataModel.companyId}, ${dlFileEntryMetadataModel.DDMStorageId}, ${dlFileEntryMetadataModel.DDMStructureId}, ${dlFileEntryMetadataModel.fileEntryId}, ${dlFileEntryMetadataModel.fileVersionId});
 
 				<@insertDDMStructureLink
 					_entry = dlFileEntryMetadataModel
@@ -204,7 +204,7 @@
 <#macro insertPortletPreferences
 	_portletPreferencesModel
 >
-	insert into PortletPreferences values (${_portletPreferencesModel.mvccVersion}, ${_portletPreferencesModel.portletPreferencesId}, ${_portletPreferencesModel.ownerId}, ${_portletPreferencesModel.ownerType}, ${_portletPreferencesModel.plid}, '${_portletPreferencesModel.portletId}', '${_portletPreferencesModel.preferences}');
+	insert into PortletPreferences values (${_portletPreferencesModel.mvccVersion}, ${_portletPreferencesModel.portletPreferencesId}, ${_portletPreferencesModel.companyId}, ${_portletPreferencesModel.ownerId}, ${_portletPreferencesModel.ownerType}, ${_portletPreferencesModel.plid}, '${_portletPreferencesModel.portletId}', '${_portletPreferencesModel.preferences}');
 
 	<@insertResourcePermissions
 		_entry = _portletPreferencesModel
@@ -250,11 +250,11 @@
 	_groupIds = []
 	_roleIds = []
 >
-	insert into User_ values (${_userModel.mvccVersion}, '${_userModel.uuid}', ${_userModel.userId}, ${_userModel.companyId}, '${dataFactory.getDateString(_userModel.createDate)}', '${dataFactory.getDateString(_userModel.modifiedDate)}', ${_userModel.defaultUser?string}, ${_userModel.contactId}, '${_userModel.password}', ${_userModel.passwordEncrypted?string}, ${_userModel.passwordReset?string}, '${dataFactory.getDateString(_userModel.passwordModifiedDate)}', '${_userModel.digest}', '${_userModel.reminderQueryQuestion}', '${_userModel.reminderQueryAnswer}', ${_userModel.graceLoginCount}, '${_userModel.screenName}', '${_userModel.emailAddress}', ${_userModel.facebookId}, ${_userModel.ldapServerId}, '${_userModel.openId}', ${_userModel.portraitId}, '${_userModel.languageId}', '${_userModel.timeZoneId}', '${_userModel.greeting}', '${_userModel.comments}', '${_userModel.firstName}', '${_userModel.middleName}', '${_userModel.lastName}', '${_userModel.jobTitle}', '${dataFactory.getDateString(_userModel.loginDate)}', '${_userModel.loginIP}', '${dataFactory.getDateString(_userModel.lastLoginDate)}', '${_userModel.lastLoginIP}', '${dataFactory.getDateString(_userModel.lastFailedLoginDate)}', ${_userModel.failedLoginAttempts}, ${_userModel.lockout?string}, '${dataFactory.getDateString(_userModel.lockoutDate)}', ${_userModel.agreedToTermsOfUse?string}, ${_userModel.emailAddressVerified?string}, '${dataFactory.getDateString(_userModel.lastPublishDate)}', '${_userModel.status}');
+	insert into User_ values (${_userModel.mvccVersion}, '${_userModel.uuid}', ${_userModel.userId}, ${_userModel.companyId}, '${dataFactory.getDateString(_userModel.createDate)}', '${dataFactory.getDateString(_userModel.modifiedDate)}', ${_userModel.defaultUser?string}, ${_userModel.contactId}, '${_userModel.password}', ${_userModel.passwordEncrypted?string}, ${_userModel.passwordReset?string}, '${dataFactory.getDateString(_userModel.passwordModifiedDate)}', '${_userModel.digest}', '${_userModel.reminderQueryQuestion}', '${_userModel.reminderQueryAnswer}', ${_userModel.graceLoginCount}, '${_userModel.screenName}', '${_userModel.emailAddress}', ${_userModel.facebookId}, ${_userModel.ldapServerId}, '${_userModel.openId}', ${_userModel.portraitId}, '${_userModel.languageId}', '${_userModel.timeZoneId}', '${_userModel.greeting}', '${_userModel.comments}', '${_userModel.firstName}', '${_userModel.middleName}', '${_userModel.lastName}', '${_userModel.jobTitle}', '${dataFactory.getDateString(_userModel.loginDate)}', '${_userModel.loginIP}', '${dataFactory.getDateString(_userModel.lastLoginDate)}', '${_userModel.lastLoginIP}', '${dataFactory.getDateString(_userModel.lastFailedLoginDate)}', ${_userModel.failedLoginAttempts}, ${_userModel.lockout?string}, '${dataFactory.getDateString(_userModel.lockoutDate)}', ${_userModel.agreedToTermsOfUse?string}, ${_userModel.emailAddressVerified?string}, '${_userModel.status}');
 
 	<#local contactModel = dataFactory.newContactModel(_userModel)>
 
-	insert into Contact_ values (${contactModel.mvccVersion}, ${contactModel.contactId}, ${contactModel.companyId}, ${contactModel.userId}, '${contactModel.userName}', '${dataFactory.getDateString(contactModel.createDate)}', '${dataFactory.getDateString(contactModel.modifiedDate)}', ${contactModel.classNameId}, ${contactModel.classPK}, ${contactModel.accountId}, ${contactModel.parentContactId}, '${contactModel.emailAddress}', '${contactModel.firstName}', '${contactModel.middleName}', '${contactModel.lastName}', ${contactModel.prefixId}, ${contactModel.suffixId}, ${contactModel.male?string}, '${dataFactory.getDateString(contactModel.birthday)}', '${contactModel.smsSn}', '${contactModel.aimSn}', '${contactModel.facebookSn}', '${contactModel.icqSn}', '${contactModel.jabberSn}', '${contactModel.mySpaceSn}', '${contactModel.skypeSn}', '${contactModel.twitterSn}', '${contactModel.ymSn}', '${contactModel.employeeStatusId}', '${contactModel.employeeNumber}', '${contactModel.jobTitle}', '${contactModel.jobClass}', '${contactModel.hoursOfOperation}');
+	insert into Contact_ values (${contactModel.mvccVersion}, ${contactModel.contactId}, ${contactModel.companyId}, ${contactModel.userId}, '${contactModel.userName}', '${dataFactory.getDateString(contactModel.createDate)}', '${dataFactory.getDateString(contactModel.modifiedDate)}', ${contactModel.classNameId}, ${contactModel.classPK}, ${contactModel.accountId}, ${contactModel.parentContactId}, '${contactModel.emailAddress}', '${contactModel.firstName}', '${contactModel.middleName}', '${contactModel.lastName}', ${contactModel.prefixId}, ${contactModel.suffixId}, ${contactModel.male?string}, '${dataFactory.getDateString(contactModel.birthday)}', '${contactModel.smsSn}', '${contactModel.facebookSn}', '${contactModel.jabberSn}', '${contactModel.skypeSn}', '${contactModel.twitterSn}', '${contactModel.employeeStatusId}', '${contactModel.employeeNumber}', '${contactModel.jobTitle}', '${contactModel.jobClass}', '${contactModel.hoursOfOperation}');
 
 	<#list _roleIds as roleId>
 		insert into Users_Roles values (0, ${roleId}, ${_userModel.userId});

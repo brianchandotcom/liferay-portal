@@ -18,8 +18,10 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.LogFactory;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -27,6 +29,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
+
+import java.lang.reflect.Field;
 
 import java.net.URL;
 
@@ -141,7 +145,7 @@ public class Log4JUtil {
 	}
 
 	public static Map<String, String> getCustomLogSettings() {
-		return new HashMap<>(_customLogSettings);
+		return new HashMap<>(_getCustomLogSettings());
 	}
 
 	public static String getOriginalLevel(String className) {
@@ -197,7 +201,9 @@ public class Log4JUtil {
 		jdkLogger.setLevel(_getJdkLevel(priority));
 
 		if (custom) {
-			_customLogSettings.put(name, priority);
+			Map<String, String> customLogSettings = _getCustomLogSettings();
+
+			customLogSettings.put(name, priority);
 		}
 	}
 
@@ -213,6 +219,26 @@ public class Log4JUtil {
 		StreamUtil.transfer(inputStream, unsyncByteArrayOutputStream, -1, true);
 
 		return unsyncByteArrayOutputStream.toByteArray();
+	}
+
+	private static Map<String, String> _getCustomLogSettings() {
+		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+
+		if (Log4JUtil.class.getClassLoader() == classLoader) {
+			return _customLogSettings;
+		}
+
+		try {
+			Class<?> clazz = classLoader.loadClass(Log4JUtil.class.getName());
+
+			Field field = ReflectionUtil.getDeclaredField(
+				clazz, "_customLogSettings");
+
+			return (Map<String, String>)field.get(null);
+		}
+		catch (Exception e) {
+			return ReflectionUtil.throwException(e);
+		}
 	}
 
 	private static java.util.logging.Level _getJdkLevel(String priority) {

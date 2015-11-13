@@ -54,11 +54,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CHECK_ALL_NAME</td>
-	<td>//input[contains(@name,'allRowIds')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DISPLAY_IMMEDIATELY</td>
 	<td>//input[contains(@name,'displayImmediately')]</td>
 	<td></td>
@@ -255,7 +250,7 @@
 </tr>
 <tr>
 	<td>SELECT_ALL</td>
-	<td>//input[contains(@id,'allRowIds')]</td>
+	<td>//input[contains(@id,'allRowIds') or contains(@name,'allRowIds')]</td>
 	<td></td>
 </tr>
 <tr>

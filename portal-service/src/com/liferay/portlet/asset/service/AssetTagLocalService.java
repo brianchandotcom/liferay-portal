@@ -405,13 +405,6 @@ public interface AssetTagLocalService extends BaseLocalService,
 	public int getAssetTagsCount();
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
-	/**
 	* Returns the asset tags of the asset entry.
 	*
 	* @param entryId the primary key of the asset entry
@@ -465,6 +458,13 @@ public interface AssetTagLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getGroupsTags(
 		long[] groupIds);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -579,7 +579,7 @@ public interface AssetTagLocalService extends BaseLocalService,
 	* @param classPK the primary key of the entity
 	* @return the asset tags of the entity
 	*/
-	@com.liferay.portal.kernel.cache.ThreadLocalCachable
+	@com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags(
 		java.lang.String className, long classPK);
@@ -677,13 +677,6 @@ public interface AssetTagLocalService extends BaseLocalService,
 		long[] groupIds, java.lang.String name, int start, int end);
 
 	public void setAssetEntryAssetTags(long entryId, long[] tagIds);
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	/**
 	* Updates the asset tag in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

@@ -40,9 +40,8 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 			long userId, String className, long classPK, String emailAddress,
 			String firstName, String middleName, String lastName, long prefixId,
 			long suffixId, boolean male, int birthdayMonth, int birthdayDay,
-			int birthdayYear, String smsSn, String aimSn, String facebookSn,
-			String icqSn, String jabberSn, String mySpaceSn, String skypeSn,
-			String twitterSn, String ymSn, String jobTitle)
+			int birthdayYear, String smsSn, String facebookSn, String jabberSn,
+			String skypeSn, String twitterSn, String jobTitle)
 		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
@@ -70,14 +69,10 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 		contact.setMale(male);
 		contact.setBirthday(birthday);
 		contact.setSmsSn(smsSn);
-		contact.setAimSn(aimSn);
 		contact.setFacebookSn(facebookSn);
-		contact.setIcqSn(icqSn);
 		contact.setJabberSn(jabberSn);
-		contact.setMySpaceSn(mySpaceSn);
 		contact.setSkypeSn(skypeSn);
 		contact.setTwitterSn(twitterSn);
-		contact.setYmSn(ymSn);
 		contact.setJobTitle(jobTitle);
 
 		contactPersistence.update(contact);
@@ -152,9 +147,8 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 			long contactId, String emailAddress, String firstName,
 			String middleName, String lastName, long prefixId, long suffixId,
 			boolean male, int birthdayMonth, int birthdayDay, int birthdayYear,
-			String smsSn, String aimSn, String facebookSn, String icqSn,
-			String jabberSn, String mySpaceSn, String skypeSn, String twitterSn,
-			String ymSn, String jobTitle)
+			String smsSn, String facebookSn, String jabberSn, String skypeSn,
+			String twitterSn, String jobTitle)
 		throws PortalException {
 
 		Date birthday = PortalUtil.getDate(
@@ -172,14 +166,10 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 		contact.setMale(male);
 		contact.setBirthday(birthday);
 		contact.setSmsSn(smsSn);
-		contact.setAimSn(aimSn);
 		contact.setFacebookSn(facebookSn);
-		contact.setIcqSn(icqSn);
 		contact.setJabberSn(jabberSn);
-		contact.setMySpaceSn(mySpaceSn);
 		contact.setSkypeSn(skypeSn);
 		contact.setTwitterSn(twitterSn);
-		contact.setYmSn(ymSn);
 		contact.setJobTitle(jobTitle);
 
 		contactPersistence.update(contact);

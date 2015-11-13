@@ -105,7 +105,7 @@
 </tr>
 <tr>
 	<td>USER_NAME</td>
-	<td>//header[@class='lfr-discussion-message-author']/a | //span[@class='user-name']</td>
+	<td>//header[@class='lfr-discussion-message-author']/a | //header[@class='lfr-discussion-message-author']//span[contains(.,'${key_userFullName}')]</td>
 	<td></td>
 </tr>
 <tr>

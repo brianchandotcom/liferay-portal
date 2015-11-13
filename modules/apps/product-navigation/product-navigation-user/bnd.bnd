@@ -2,3 +2,4 @@ Bundle-Name: Liferay Product Navigation User
 Bundle-SymbolicName: com.liferay.product.navigation.user
 Bundle-Version: 1.0.0
 Include-Resource: classes
+Web-ContextPath: /product-navigation-user

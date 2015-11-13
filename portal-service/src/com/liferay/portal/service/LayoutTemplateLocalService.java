@@ -43,14 +43,6 @@ public interface LayoutTemplateLocalService extends BaseLocalService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutTemplateLocalServiceUtil} to access the layout template local service. Add custom service methods to {@link com.liferay.portal.service.impl.LayoutTemplateLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getContent(java.lang.String layoutTemplateId,
 		boolean standard, java.lang.String themeId);
@@ -66,6 +58,13 @@ public interface LayoutTemplateLocalService extends BaseLocalService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.LayoutTemplate> getLayoutTemplates(
 		java.lang.String themeId);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getWapContent(java.lang.String layoutTemplateId,
@@ -86,13 +85,6 @@ public interface LayoutTemplateLocalService extends BaseLocalService {
 		com.liferay.portal.kernel.xml.Element element, boolean standard,
 		java.lang.String themeId,
 		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage);
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public void uninstallLayoutTemplate(java.lang.String layoutTemplateId,
 		boolean standard);

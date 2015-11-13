@@ -21,6 +21,7 @@ import com.liferay.portal.upgrade.v7_0_0.UpgradeAsset;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeAssetTagsResourcePermission;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeBackgroundTask;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeCalEvent;
+import com.liferay.portal.upgrade.v7_0_0.UpgradeCompanyId;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeContact;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeDLPreferences;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeDocumentLibrary;
@@ -42,6 +43,7 @@ import com.liferay.portal.upgrade.v7_0_0.UpgradeRatings;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeRepositoryEntry;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeResourcePermission;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeSchema;
+import com.liferay.portal.upgrade.v7_0_0.UpgradeSharding;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeSubscription;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeWebsite;
 
@@ -64,6 +66,7 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 		upgrade(UpgradeAssetTagsResourcePermission.class);
 		upgrade(UpgradeBackgroundTask.class);
 		upgrade(UpgradeCalEvent.class);
+		upgrade(UpgradeCompanyId.class);
 		upgrade(UpgradeContact.class);
 		upgrade(UpgradeDLPreferences.class);
 		upgrade(UpgradeDocumentLibrary.class);
@@ -84,6 +87,7 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 		upgrade(UpgradeRatings.class);
 		upgrade(UpgradeRepositoryEntry.class);
 		upgrade(UpgradeResourcePermission.class);
+		upgrade(UpgradeSharding.class);
 		upgrade(UpgradeSubscription.class);
 		upgrade(UpgradeWebsite.class);
 	}

@@ -34,7 +34,6 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -66,6 +65,10 @@ public abstract class Watcher implements Runnable {
 
 	public void close() {
 		WatcherRegistry.unregister(_watchEventListener.getSyncAccountId());
+	}
+
+	public List<String> getDeletedFilePathNames() {
+		return _deletedFilePathNames;
 	}
 
 	public List<String> getDownloadedFilePathNames() {
@@ -326,6 +329,10 @@ public abstract class Watcher implements Runnable {
 
 			removeCreatedFilePathName(filePath.toString());
 
+			if (_deletedFilePathNames.remove(filePath.toString())) {
+				return;
+			}
+
 			processMissingFilePath(filePath);
 
 			if (Files.notExists(filePath.getParent())) {
@@ -382,7 +389,10 @@ public abstract class Watcher implements Runnable {
 	private final Path _baseFilePath;
 	private final ConcurrentNavigableMap<Long, String> _createdFilePathNames =
 		new ConcurrentSkipListMap<>();
-	private final List<String> _downloadedFilePathNames = new ArrayList<>();
+	private final List<String> _deletedFilePathNames =
+		new CopyOnWriteArrayList<>();
+	private final List<String> _downloadedFilePathNames =
+		new CopyOnWriteArrayList<>();
 	private final List<Path> _failedFilePaths = new CopyOnWriteArrayList<>();
 	private final WatchEventListener _watchEventListener;
 

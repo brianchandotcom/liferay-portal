@@ -2,6 +2,11 @@ import com.liferay.gradle.plugins.patcher.PatchTask
 
 apply plugin: "com.liferay.patcher"
 
+task patch(type: PatchTask)
+
+sourceCompatibility = "1.6"
+targetCompatibility = "1.6"
+
 dependencies {
 	compile group: "axis", name: "axis", optional, version: "1.4"
 }
@@ -9,11 +14,6 @@ dependencies {
 liferay {
 	deployDir = file("${liferayHome}/osgi/modules")
 }
-
-sourceCompatibility = "1.6"
-targetCompatibility = "1.6"
-
-task patch(type: PatchTask)
 
 patch {
 	ext {

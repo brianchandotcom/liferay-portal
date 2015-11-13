@@ -40,7 +40,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface OrganizationModel extends BaseModel<Organization>, MVCCModel,
-	StagedAuditedModel {
+	ShardedModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

@@ -66,6 +66,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FORM_FIELDS_PARAGRAPH_FIELD</td>
+	<td>//div[@class='portlet-body']/form/fieldset/div/p[@class='format-paragraph']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FORM_FIELDS_TEXT_BOX_FIELD</td>
 	<td>//div[contains(.,'${key_wfFieldName}')]/textarea</td>
 	<td></td>

@@ -282,9 +282,13 @@
 			<var name="maxAgeField" value="1" />
 		</execute>
 
-		<execute function="Pause" locator1="120000" />
+		<execute function="Pause" locator1="180000" />
 
 		<execute function="Refresh" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Recycle Bin" />
+		</execute>
 
 		<execute macro="RecycleBin#viewDefaultCP">
 			<var name="assetName" value="Web Content Title" />
@@ -346,69 +350,6 @@
 			<var name="threadBody" value="MB Body Edit" />
 			<var name="threadSubject" value="MB Subject" />
 			<var name="userName" value="Test Test" />
-		</execute>
-	</command>
-
-	<command name="RecycleBinRestoreDuplicate" priority="4">
-		<for list="1,2" param="wcNumber">
-			<execute macro="Page#gotoContentCP">
-				<var name="portletName" value="Web Content" />
-			</execute>
-
-			<execute macro="WebContentNavigator#gotoAddCP" />
-
-			<execute macro="WebContent#addCP">
-				<var name="webContentContent" value="WC Content ${wcNumber}" />
-				<var name="webContentTitle" value="WC Title ${wcNumber}" />
-			</execute>
-
-			<execute macro="WebContent#publish" />
-		</for>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContent#moveToRecycleBinCP">
-			<var name="assetType" value="Web Content Article" />
-			<var name="webContentContent" value="WC Content 1" />
-			<var name="webContentTitle" value="WC Title 1" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC Title 2" />
-		</execute>
-
-		<execute macro="WebContent#editCP">
-			<var name="webContentTitle" value="WC Title 2" />
-			<var name="webContentTitleEdit" value="WC Title 1" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="RecycleBin#restoreWarningCP">
-			<var name="assetName" value="WC Title 1" />
-			<var name="assetRestoreLocation" value="Home" />
-			<var name="assetType" value="Web Content Article" />
-			<var name="newAssetName" value="WC Title 2" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC Title 2" />
-		</execute>
-
-		<execute macro="WebContent#viewCP">
-			<var name="webContentTitle" value="WC Title 2" />
 		</execute>
 	</command>
 
@@ -783,11 +724,16 @@
 		</execute>
 
 		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="WC Structure Name" />
 			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateFieldNames" value="Text" />
 			<var name="templateName" value="WC Template Name" />
 		</execute>
+
+		<execute macro="WebContentTemplates#addStructure">
+			<var name="structureName" value="WC Structure Name" />
+			<var name="templateFieldNames" value="Text" />
+		</execute>
+
+		<execute macro="WebContentTemplates#save" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
@@ -986,6 +932,8 @@
 	</command>
 
 	<command name="RestoreDMDocumentFromFolderCP" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 			<var name="siteScopeName" value="Site Name" />

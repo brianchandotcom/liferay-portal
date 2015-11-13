@@ -667,15 +667,6 @@ public class ExpandoValueLocalServiceUtil {
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
 	* @deprecated As of 6.1.0, replaced by {@link #getColumnValues(long,
 	String, String, String, String, int, int)}
 	*/
@@ -1266,6 +1257,15 @@ public class ExpandoValueLocalServiceUtil {
 		return getService().getExpandoValuesCount();
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -1367,15 +1367,6 @@ public class ExpandoValueLocalServiceUtil {
 		long valueId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getValue(valueId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

@@ -408,15 +408,6 @@ public class AssetEntryLocalServiceUtil {
 		return getService().getAssetTagPrimaryKeys(entryId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
 	public static java.util.List<com.liferay.portlet.asset.model.AssetEntry> getChildEntries(
 		long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -491,6 +482,15 @@ public class AssetEntryLocalServiceUtil {
 		long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getNextEntry(entryId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.portlet.asset.model.AssetEntry getParentEntry(
@@ -687,15 +687,6 @@ public class AssetEntryLocalServiceUtil {
 
 	public static void setAssetTagAssetEntries(long tagId, long[] entryIds) {
 		getService().setAssetTagAssetEntries(tagId, entryIds);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

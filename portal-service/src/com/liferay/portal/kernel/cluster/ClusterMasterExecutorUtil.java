@@ -17,9 +17,7 @@ package com.liferay.portal.kernel.cluster;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.MethodHandler;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
+import com.liferay.portal.kernel.util.ProxyFactory;
 
 import java.util.concurrent.Future;
 
@@ -56,7 +54,7 @@ public class ClusterMasterExecutorUtil {
 	}
 
 	public static ClusterMasterExecutor getClusterMasterExecutor() {
-		return _instance._serviceTracker.getService();
+		return _instance;
 	}
 
 	public static boolean isEnabled() {
@@ -96,18 +94,7 @@ public class ClusterMasterExecutorUtil {
 			clusterMasterTokenTransitionListener);
 	}
 
-	private ClusterMasterExecutorUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(ClusterMasterExecutor.class);
-
-		_serviceTracker.open();
-	}
-
-	private static final ClusterMasterExecutorUtil _instance =
-		new ClusterMasterExecutorUtil();
-
-	private final ServiceTracker<ClusterMasterExecutor, ClusterMasterExecutor>
-		_serviceTracker;
+	private static final ClusterMasterExecutor _instance =
+		ProxyFactory.newServiceTrackedInstance(ClusterMasterExecutor.class);
 
 }

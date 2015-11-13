@@ -49,16 +49,6 @@ public class SCFrameworkVersionServiceWrapper
 		_scFrameworkVersionService.deleteFrameworkVersion(frameworkVersionId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _scFrameworkVersionService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion getFrameworkVersion(
 		long frameworkVersionId)
@@ -80,13 +70,13 @@ public class SCFrameworkVersionServiceWrapper
 	}
 
 	/**
-	* Sets the Spring bean ID for this bean.
+	* Returns the OSGi service identifier.
 	*
-	* @param beanIdentifier the Spring bean ID for this bean
+	* @return the OSGi service identifier
 	*/
 	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_scFrameworkVersionService.setBeanIdentifier(beanIdentifier);
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _scFrameworkVersionService.getOSGiServiceIdentifier();
 	}
 
 	@Override

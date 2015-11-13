@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.ShardedModel;
 import com.liferay.portal.model.TypedModel;
 import com.liferay.portal.service.ServiceContext;
 
@@ -39,7 +40,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface AssetTagStatsModel extends BaseModel<AssetTagStats>, TypedModel {
+public interface AssetTagStatsModel extends BaseModel<AssetTagStats>,
+	ShardedModel, TypedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -73,6 +75,22 @@ public interface AssetTagStatsModel extends BaseModel<AssetTagStats>, TypedModel
 	 * @param tagStatsId the tag stats ID of this asset tag stats
 	 */
 	public void setTagStatsId(long tagStatsId);
+
+	/**
+	 * Returns the company ID of this asset tag stats.
+	 *
+	 * @return the company ID of this asset tag stats
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this asset tag stats.
+	 *
+	 * @param companyId the company ID of this asset tag stats
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the tag ID of this asset tag stats.

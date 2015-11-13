@@ -42,7 +42,7 @@ public class SocketTest {
 	public void testAccept1() throws Exception {
 		try (ServerSocket serverSocket = new ServerSocket(4316)) {
 			serverSocket.setReuseAddress(true);
-			serverSocket.setSoTimeout(50);
+			serverSocket.setSoTimeout(0);
 
 			Runnable runnable = new Runnable() {
 
@@ -78,7 +78,7 @@ public class SocketTest {
 	public void testAccept2() throws Exception {
 		try (ServerSocket serverSocket = new ServerSocket(4316)) {
 			serverSocket.setReuseAddress(true);
-			serverSocket.setSoTimeout(50);
+			serverSocket.setSoTimeout(0);
 
 			Runnable runnable = new Runnable() {
 

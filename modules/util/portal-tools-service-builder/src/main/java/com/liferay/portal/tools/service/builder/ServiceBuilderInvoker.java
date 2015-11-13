@@ -35,6 +35,7 @@ public class ServiceBuilderInvoker {
 		Set<String> resourceActionModels =
 			ServiceBuilder.readResourceActionModels(
 				serviceBuilderArgs.getApiDirName(),
+				serviceBuilderArgs.getResourcesDirName(),
 				serviceBuilderArgs.getResourceActionsConfigs());
 
 		ModelHintsImpl modelHintsImpl = new ModelHintsImpl();

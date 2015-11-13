@@ -16,7 +16,9 @@ package com.liferay.portal.kernel.portlet.bridges.mvc;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -113,13 +115,15 @@ public class MVCCommandCache {
 	public List<? extends MVCCommand> getMVCCommands(String key) {
 		List<MVCCommand> mvcCommands = _mvcCommands.get(key);
 
-		if (mvcCommands != null) {
+		String[] mvcCommandNames = StringUtil.split(key);
+
+		if ((mvcCommands != null) &&
+			(mvcCommands.size() == mvcCommandNames.length)) {
+
 			return mvcCommands;
 		}
 
 		mvcCommands = new ArrayList<>();
-
-		String[] mvcCommandNames = StringUtil.split(key);
 
 		for (String mvcCommandName : mvcCommandNames) {
 			MVCCommand mvcCommand = getMVCCommand(mvcCommandName);
@@ -136,6 +140,20 @@ public class MVCCommandCache {
 
 		_mvcCommands.put(key, mvcCommands);
 
+		for (MVCCommand mvcCommand : mvcCommands) {
+			String mvcCommandClassName = ClassUtil.getClassName(mvcCommand);
+
+			List<String> keys = _mvcCommandKeys.get(mvcCommandClassName);
+
+			if (keys == null) {
+				keys = new ArrayList<>();
+
+				_mvcCommandKeys.put(mvcCommandClassName, keys);
+			}
+
+			keys.add(key);
+		}
+
 		return mvcCommands;
 	}
 
@@ -149,6 +167,8 @@ public class MVCCommandCache {
 	private final MVCCommand _emptyMVCCommand;
 	private final String _mvcComandPostFix;
 	private final Map<String, MVCCommand> _mvcCommandCache =
+		new ConcurrentHashMap<>();
+	private final Map<String, List<String>> _mvcCommandKeys =
 		new ConcurrentHashMap<>();
 	private final Map<String, List<MVCCommand>> _mvcCommands =
 		new ConcurrentHashMap<>();
@@ -199,6 +219,17 @@ public class MVCCommandCache {
 
 				for (List<MVCCommand> mvcCommands : _mvcCommands.values()) {
 					mvcCommands.remove(mvcCommand);
+				}
+
+				String mvcCommandClassName = ClassUtil.getClassName(mvcCommand);
+
+				List<String> mvcCommandKeys = _mvcCommandKeys.remove(
+					mvcCommandClassName);
+
+				if (ListUtil.isNotEmpty(mvcCommandKeys)) {
+					for (String mvcCommandKey : mvcCommandKeys) {
+						_mvcCommandCache.remove(mvcCommandKey);
+					}
 				}
 			}
 		}

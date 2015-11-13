@@ -511,13 +511,6 @@ public interface GroupLocalService extends BaseLocalService,
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
-	/**
 	* Returns the company group.
 	*
 	* @param companyId the primary key of the company
@@ -592,7 +585,7 @@ public interface GroupLocalService extends BaseLocalService,
 	* @return the group
 	* @throws PortalException if a group with the primary key could not be found
 	*/
-	@com.liferay.portal.kernel.cache.ThreadLocalCachable
+	@com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Group getGroup(long groupId)
 		throws PortalException;
@@ -882,6 +875,13 @@ public interface GroupLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Group> getNullFriendlyURLGroups();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Returns the specified organization group.
@@ -1643,7 +1643,7 @@ public interface GroupLocalService extends BaseLocalService,
 	inclusive)
 	* @return the matching groups ordered by name
 	*/
-	@com.liferay.portal.kernel.cache.ThreadLocalCachable
+	@com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Group> search(
 		long companyId, java.lang.String keywords,
@@ -1975,7 +1975,7 @@ public interface GroupLocalService extends BaseLocalService,
 	com.liferay.portal.service.persistence.GroupFinder}.
 	* @return the number of matching groups
 	*/
-	@com.liferay.portal.kernel.cache.ThreadLocalCachable
+	@com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long[] classNameIds,
 		java.lang.String keywords,
@@ -2002,7 +2002,7 @@ public interface GroupLocalService extends BaseLocalService,
 	one field.
 	* @return the number of matching groups
 	*/
-	@com.liferay.portal.kernel.cache.ThreadLocalCachable
+	@com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long[] classNameIds,
 		java.lang.String name, java.lang.String description,
@@ -2029,7 +2029,7 @@ public interface GroupLocalService extends BaseLocalService,
 	com.liferay.portal.service.persistence.GroupFinder}.
 	* @return the number of matching groups
 	*/
-	@com.liferay.portal.kernel.cache.ThreadLocalCachable
+	@com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long[] classNameIds,
 		long parentGroupId, java.lang.String keywords,
@@ -2058,7 +2058,7 @@ public interface GroupLocalService extends BaseLocalService,
 	one field.
 	* @return the number of matching groups
 	*/
-	@com.liferay.portal.kernel.cache.ThreadLocalCachable
+	@com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long[] classNameIds,
 		long parentGroupId, java.lang.String name,
@@ -2082,7 +2082,7 @@ public interface GroupLocalService extends BaseLocalService,
 	com.liferay.portal.service.persistence.GroupFinder}.
 	* @return the number of matching groups
 	*/
-	@com.liferay.portal.kernel.cache.ThreadLocalCachable
+	@com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, java.lang.String keywords,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params);
@@ -2107,7 +2107,7 @@ public interface GroupLocalService extends BaseLocalService,
 	one field.
 	* @return the number of matching groups
 	*/
-	@com.liferay.portal.kernel.cache.ThreadLocalCachable
+	@com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, java.lang.String name,
 		java.lang.String description,
@@ -2131,7 +2131,7 @@ public interface GroupLocalService extends BaseLocalService,
 	com.liferay.portal.service.persistence.GroupFinder}.
 	* @return the number of matching groups
 	*/
-	@com.liferay.portal.kernel.cache.ThreadLocalCachable
+	@com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long parentGroupId,
 		java.lang.String keywords,
@@ -2158,19 +2158,12 @@ public interface GroupLocalService extends BaseLocalService,
 	one field.
 	* @return the number of matching groups
 	*/
-	@com.liferay.portal.kernel.cache.ThreadLocalCachable
+	@com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long parentGroupId,
 		java.lang.String name, java.lang.String description,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator);
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public void setOrganizationGroups(long organizationId, long[] groupIds);
 

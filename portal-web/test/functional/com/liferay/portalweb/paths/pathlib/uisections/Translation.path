@@ -34,6 +34,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHANGE_DEFAULT_LANGUAGE</td>
+	<td>//a[contains(@class,'change') and contains(@class,'locale')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFAULT_LANGUAGE_SELECT</td>
+	<td>//select[contains(@class,'default-locale')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CURRENT_LOCALE</td>
 	<td>//span[@locale='${key_translationLocale}']</td>
 	<td></td>

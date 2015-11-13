@@ -428,13 +428,6 @@ public interface UserService extends BaseService {
 	*/
 	public void deleteUser(long userId) throws PortalException;
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.User> getCompanyUsers(
 		long companyId, int start, int end) throws PortalException;
@@ -468,6 +461,13 @@ public interface UserService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.User> getGroupUsers(
 		long groupId) throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Returns the primary keys of all the users belonging to the organization.
@@ -686,13 +686,6 @@ public interface UserService extends BaseService {
 	* @throws PortalException if a user with the user ID could not be found
 	*/
 	public boolean sendPasswordByUserId(long userId) throws PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	/**
 	* Sets the users in the role, removing and adding users to the role as
@@ -1051,14 +1044,10 @@ public interface UserService extends BaseService {
 	* @param birthdayDay the user's new birthday day
 	* @param birthdayYear the user's birthday year
 	* @param smsSn the user's new SMS screen name
-	* @param aimSn the user's new AIM screen name
 	* @param facebookSn the user's new Facebook screen name
-	* @param icqSn the user's new ICQ screen name
 	* @param jabberSn the user's new Jabber screen name
-	* @param mySpaceSn the user's new MySpace screen name
 	* @param skypeSn the user's new Skype screen name
 	* @param twitterSn the user's new Twitter screen name
-	* @param ymSn the user's new Yahoo! Messenger screen name
 	* @param jobTitle the user's new job title
 	* @param groupIds the primary keys of the user's groups
 	* @param organizationIds the primary keys of the user's organizations
@@ -1099,11 +1088,9 @@ public interface UserService extends BaseService {
 		java.lang.String comments, java.lang.String firstName,
 		java.lang.String middleName, java.lang.String lastName, long prefixId,
 		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
-		int birthdayYear, java.lang.String smsSn, java.lang.String aimSn,
-		java.lang.String facebookSn, java.lang.String icqSn,
-		java.lang.String jabberSn, java.lang.String mySpaceSn,
-		java.lang.String skypeSn, java.lang.String twitterSn,
-		java.lang.String ymSn, java.lang.String jobTitle, long[] groupIds,
+		int birthdayYear, java.lang.String smsSn, java.lang.String facebookSn,
+		java.lang.String jabberSn, java.lang.String skypeSn,
+		java.lang.String twitterSn, java.lang.String jobTitle, long[] groupIds,
 		long[] organizationIds, long[] roleIds,
 		java.util.List<com.liferay.portal.model.UserGroupRole> userGroupRoles,
 		long[] userGroupIds,
@@ -1147,14 +1134,10 @@ public interface UserService extends BaseService {
 	* @param birthdayDay the user's new birthday day
 	* @param birthdayYear the user's birthday year
 	* @param smsSn the user's new SMS screen name
-	* @param aimSn the user's new AIM screen name
 	* @param facebookSn the user's new Facebook screen name
-	* @param icqSn the user's new ICQ screen name
 	* @param jabberSn the user's new Jabber screen name
-	* @param mySpaceSn the user's new MySpace screen name
 	* @param skypeSn the user's new Skype screen name
 	* @param twitterSn the user's new Twitter screen name
-	* @param ymSn the user's new Yahoo! Messenger screen name
 	* @param jobTitle the user's new job title
 	* @param groupIds the primary keys of the user's groups
 	* @param organizationIds the primary keys of the user's organizations
@@ -1182,11 +1165,9 @@ public interface UserService extends BaseService {
 		java.lang.String comments, java.lang.String firstName,
 		java.lang.String middleName, java.lang.String lastName, long prefixId,
 		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
-		int birthdayYear, java.lang.String smsSn, java.lang.String aimSn,
-		java.lang.String facebookSn, java.lang.String icqSn,
-		java.lang.String jabberSn, java.lang.String mySpaceSn,
-		java.lang.String skypeSn, java.lang.String twitterSn,
-		java.lang.String ymSn, java.lang.String jobTitle, long[] groupIds,
+		int birthdayYear, java.lang.String smsSn, java.lang.String facebookSn,
+		java.lang.String jabberSn, java.lang.String skypeSn,
+		java.lang.String twitterSn, java.lang.String jobTitle, long[] groupIds,
 		long[] organizationIds, long[] roleIds,
 		java.util.List<com.liferay.portal.model.UserGroupRole> userGroupRoles,
 		long[] userGroupIds,
@@ -1227,14 +1208,10 @@ public interface UserService extends BaseService {
 	* @param birthdayDay the user's new birthday day
 	* @param birthdayYear the user's birthday year
 	* @param smsSn the user's new SMS screen name
-	* @param aimSn the user's new AIM screen name
 	* @param facebookSn the user's new Facebook screen name
-	* @param icqSn the user's new ICQ screen name
 	* @param jabberSn the user's new Jabber screen name
-	* @param mySpaceSn the user's new MySpace screen name
 	* @param skypeSn the user's new Skype screen name
 	* @param twitterSn the user's new Twitter screen name
-	* @param ymSn the user's new Yahoo! Messenger screen name
 	* @param jobTitle the user's new job title
 	* @param groupIds the primary keys of the user's groups
 	* @param organizationIds the primary keys of the user's organizations
@@ -1268,11 +1245,9 @@ public interface UserService extends BaseService {
 		java.lang.String firstName, java.lang.String middleName,
 		java.lang.String lastName, long prefixId, long suffixId, boolean male,
 		int birthdayMonth, int birthdayDay, int birthdayYear,
-		java.lang.String smsSn, java.lang.String aimSn,
-		java.lang.String facebookSn, java.lang.String icqSn,
-		java.lang.String jabberSn, java.lang.String mySpaceSn,
-		java.lang.String skypeSn, java.lang.String twitterSn,
-		java.lang.String ymSn, java.lang.String jobTitle, long[] groupIds,
+		java.lang.String smsSn, java.lang.String facebookSn,
+		java.lang.String jabberSn, java.lang.String skypeSn,
+		java.lang.String twitterSn, java.lang.String jobTitle, long[] groupIds,
 		long[] organizationIds, long[] roleIds,
 		java.util.List<com.liferay.portal.model.UserGroupRole> userGroupRoles,
 		long[] userGroupIds,

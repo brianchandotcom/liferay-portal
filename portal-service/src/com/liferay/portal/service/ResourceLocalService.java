@@ -255,11 +255,11 @@ public interface ResourceLocalService extends BaseLocalService {
 		int scope, java.lang.String primKey) throws PortalException;
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the OSGi service identifier.
 	*
-	* @return the Spring bean ID for this bean
+	* @return the OSGi service identifier
 	*/
-	public java.lang.String getBeanIdentifier();
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Returns a new resource with the name and primary key at the scope.
@@ -299,13 +299,6 @@ public interface ResourceLocalService extends BaseLocalService {
 	public boolean hasUserPermissions(long userId, long resourceId,
 		java.util.List<com.liferay.portal.model.Resource> resources,
 		java.lang.String actionId, long[] roleIds) throws PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	/**
 	* Updates the resources for the model, replacing their group and guest

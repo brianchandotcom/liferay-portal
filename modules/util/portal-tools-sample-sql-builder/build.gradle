@@ -10,6 +10,7 @@ dependencies {
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-web")
 	compile project(":apps:journal:journal-api")
 	compile project(":apps:journal:journal-service")
+	compile project(":apps:login:login-web")
 	compile project(":apps:message-boards:message-boards-web")
 	compile project(":apps:wiki:wiki-api")
 	compile project(":apps:wiki:wiki-service")

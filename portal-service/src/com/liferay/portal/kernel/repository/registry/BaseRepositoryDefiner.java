@@ -15,6 +15,8 @@
 package com.liferay.portal.kernel.repository.registry;
 
 import com.liferay.portal.kernel.repository.DocumentRepository;
+import com.liferay.portal.kernel.repository.RepositoryConfiguration;
+import com.liferay.portal.kernel.repository.RepositoryConfigurationBuilder;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 
 import java.util.Locale;
@@ -24,22 +26,24 @@ import java.util.Locale;
  */
 public abstract class BaseRepositoryDefiner implements RepositoryDefiner {
 
+	public BaseRepositoryDefiner() {
+		RepositoryConfigurationBuilder repositoryConfigurationBuilder =
+			new RepositoryConfigurationBuilder();
+
+		_repositoryConfiguration = repositoryConfigurationBuilder.build();
+	}
+
 	@Override
 	public abstract String getClassName();
 
 	@Override
+	public RepositoryConfiguration getRepositoryConfiguration() {
+		return _repositoryConfiguration;
+	}
+
+	@Override
 	public String getRepositoryTypeLabel(Locale locale) {
 		return ResourceActionsUtil.getModelResource(locale, getClassName());
-	}
-
-	@Override
-	public String[] getSupportedConfigurations() {
-		return _SUPPORTED_CONFIGURATIONS;
-	}
-
-	@Override
-	public String[][] getSupportedParameters() {
-		return _SUPPORTED_PARAMETERS;
 	}
 
 	@Override
@@ -59,8 +63,6 @@ public abstract class BaseRepositoryDefiner implements RepositoryDefiner {
 	public abstract void registerRepositoryFactory(
 		RepositoryFactoryRegistry repositoryFactoryRegistry);
 
-	private static final String[] _SUPPORTED_CONFIGURATIONS = {};
-
-	private static final String[][] _SUPPORTED_PARAMETERS = {};
+	private final RepositoryConfiguration _repositoryConfiguration;
 
 }

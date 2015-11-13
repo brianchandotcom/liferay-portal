@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.ShardedModel;
 import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.service.ServiceContext;
@@ -48,7 +49,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface DLFileEntryModel extends AttachedModel, BaseModel<DLFileEntry>,
-	StagedGroupedModel, TrashedModel {
+	ShardedModel, StagedGroupedModel, TrashedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

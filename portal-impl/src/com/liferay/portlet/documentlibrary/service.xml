@@ -245,6 +245,10 @@
 
 		<column name="fileEntryMetadataId" type="long" primary="true" />
 
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
 		<!-- Other fields -->
 
 		<column name="DDMStorageId" type="long" />
@@ -681,6 +685,7 @@
 
 		<!-- Audit fields -->
 
+		<column name="companyId" type="long" />
 		<column name="modifiedTime" type="long" />
 
 		<!-- Other fields -->

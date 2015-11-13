@@ -53,6 +53,7 @@ public class UserIdMapperWrapper implements UserIdMapper,
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("userIdMapperId", getUserIdMapperId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("type", getType());
 		attributes.put("description", getDescription());
@@ -73,6 +74,12 @@ public class UserIdMapperWrapper implements UserIdMapper,
 
 		if (userIdMapperId != null) {
 			setUserIdMapperId(userIdMapperId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -108,6 +115,16 @@ public class UserIdMapperWrapper implements UserIdMapper,
 	@Override
 	public int compareTo(com.liferay.portal.model.UserIdMapper userIdMapper) {
 		return _userIdMapper.compareTo(userIdMapper);
+	}
+
+	/**
+	* Returns the company ID of this user ID mapper.
+	*
+	* @return the company ID of this user ID mapper
+	*/
+	@Override
+	public long getCompanyId() {
+		return _userIdMapper.getCompanyId();
 	}
 
 	/**
@@ -228,6 +245,16 @@ public class UserIdMapperWrapper implements UserIdMapper,
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_userIdMapper.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this user ID mapper.
+	*
+	* @param companyId the company ID of this user ID mapper
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_userIdMapper.setCompanyId(companyId);
 	}
 
 	/**

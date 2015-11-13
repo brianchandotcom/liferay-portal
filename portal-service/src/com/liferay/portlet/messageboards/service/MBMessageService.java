@@ -124,13 +124,6 @@ public interface MBMessageService extends BaseService {
 	public void emptyMessageAttachments(long messageId)
 		throws PortalException;
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getCategoryMessages(
 		long groupId, long categoryId, int status, int start, int end)
@@ -184,6 +177,13 @@ public interface MBMessageService extends BaseService {
 		long messageId, int status, java.lang.String threadView,
 		boolean includePrevAndNext) throws PortalException;
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getThreadAnswersCount(long groupId, long categoryId,
 		long threadId);
@@ -207,13 +207,6 @@ public interface MBMessageService extends BaseService {
 
 	public void restoreMessageAttachmentFromTrash(long messageId,
 		java.lang.String fileName) throws PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public void subscribeMessage(long messageId) throws PortalException;
 

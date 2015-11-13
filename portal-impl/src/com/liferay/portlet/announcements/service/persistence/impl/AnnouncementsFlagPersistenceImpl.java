@@ -1168,6 +1168,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 		announcementsFlagImpl.setPrimaryKey(announcementsFlag.getPrimaryKey());
 
 		announcementsFlagImpl.setFlagId(announcementsFlag.getFlagId());
+		announcementsFlagImpl.setCompanyId(announcementsFlag.getCompanyId());
 		announcementsFlagImpl.setUserId(announcementsFlag.getUserId());
 		announcementsFlagImpl.setCreateDate(announcementsFlag.getCreateDate());
 		announcementsFlagImpl.setEntryId(announcementsFlag.getEntryId());

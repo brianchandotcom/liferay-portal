@@ -33,7 +33,7 @@ public class PortalExecutorManagerTestCallback
 		new PortalExecutorManagerTestCallback();
 
 	@Override
-	public void doAfterClass(Description description, Object o) {
+	public void afterClass(Description description, Object o) {
 		_portalExecutorManager.shutdown(true);
 	}
 

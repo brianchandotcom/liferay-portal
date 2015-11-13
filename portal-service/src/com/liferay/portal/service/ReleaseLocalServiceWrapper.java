@@ -205,20 +205,20 @@ public class ReleaseLocalServiceWrapper implements ReleaseLocalService,
 		return _releaseLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _releaseLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public int getBuildNumberOrCreate()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _releaseLocalService.getBuildNumberOrCreate();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _releaseLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -266,16 +266,6 @@ public class ReleaseLocalServiceWrapper implements ReleaseLocalService,
 	@Override
 	public int getReleasesCount() {
 		return _releaseLocalService.getReleasesCount();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_releaseLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

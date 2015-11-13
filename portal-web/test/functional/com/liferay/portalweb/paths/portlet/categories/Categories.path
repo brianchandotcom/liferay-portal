@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VOCABULARY_HEADER</td>
+	<td>//h3[@class='header-title']/span[contains(.,'${key_vocabularyName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_HEADER</td>
 	<td>//h3[@class='header-title']/span</td>
 	<td></td>

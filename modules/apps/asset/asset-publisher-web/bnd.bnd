@@ -7,7 +7,7 @@ Export-Package:\
 	com.liferay.asset.publisher.web.util
 Include-Resource:\
 	classes,\
-	META-INF/resources=src/META-INF/resources,\
+	META-INF/resources=src/main/resources/META-INF/resources,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/ContentUtil.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/RSSThreadLocal.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/RSSUtil.class

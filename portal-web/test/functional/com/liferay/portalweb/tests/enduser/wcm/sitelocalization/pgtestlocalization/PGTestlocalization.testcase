@@ -41,25 +41,6 @@
 		<execute function="AssertTextNotPresent" value1="FAILED" />
 	</command>
 
-	<command name="CheckLocalizationEnglish" priority="4">
-		<execute function="Click" locator1="TestLocalized#ENGLISH_LOCALIZATION" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_1" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_2" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_3" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_4" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_5" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_6" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_7" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_8" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_9" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_10" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_11" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_12" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_13" value1="PASSED" />
-		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_14" value1="PASSED" />
-		<execute function="AssertTextNotPresent" value1="FAILED" />
-	</command>
-
 	<command name="CheckLocalizationFrench" priority="4">
 		<execute function="Click" locator1="TestLocalized#FRENCH_LOCALIZATION" />
 		<execute function="AssertTextEquals" locator1="TestLocalized#LOCALIZATION_TEST_1" value1="PASSED" />

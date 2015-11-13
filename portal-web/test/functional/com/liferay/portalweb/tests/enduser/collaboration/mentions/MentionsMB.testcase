@@ -1,0 +1,145 @@
+<definition component-name="portal-collaboration">
+	<property name="portlet.plugins.includes" value="mentions-portlet" />
+	<property name="testray.main.component.name" value="Mentions" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="password" value="password" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<execute macro="MessageboardsCategory#tearDownCP" />
+
+		<execute macro="MessageboardsThread#tearDownCP">
+			<var name="assetType" value="Message Boards Thread" />
+		</execute>
+
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
+	<command name="ViewMentionViaMessageBoardsThread" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute macro="Mentions#addMentionViaMessageBoardThread">
+			<var name="mentionsUserFullName" value="userfn userln" />
+			<var name="mentionsUserScreenName" value="usersn" />
+			<var name="threadBody" value="Thread Body" />
+			<var name="threadSubject" value="Thread Subject" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewCP">
+			<var name="postsNumber" value="1" />
+			<var name="threadBody" value="Thread Body" />
+			<var name="threadSubject" value="Thread Subject" />
+		</execute>
+
+		<execute macro="Mentions#viewMentionTagLink">
+			<var name="mentionsUserFullName" value="userfn userln" />
+			<var name="mentionsUserScreenName" value="usersn" />
+		</execute>
+	</command>
+
+	<command name="ViewMentionViaMessageBoardsThreadReply" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addCP">
+			<var name="threadBody" value="Thread Body" />
+			<var name="threadSubject" value="Thread Subject" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute macro="Mentions#addMentionViaMessageBoardsReply">
+			<var name="mentionsUserFullName" value="userfn userln" />
+			<var name="mentionsUserScreenName" value="usersn" />
+			<var name="threadBody" value="Thread Reply Body" />
+			<var name="threadSubject" value="Thread Subject" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewReplyCP">
+			<var name="postsNumber" value="2" />
+			<var name="threadBody" value="Thread Body" />
+			<var name="threadBody2" value="Thread Reply Body" />
+			<var name="threadSubject" value="Thread Subject" />
+			<var name="userName" value="Test Test" />
+			<var name="userName2" value="Test Test" />
+		</execute>
+
+		<execute macro="Mentions#viewMentionTagLink">
+			<var name="mentionsUserFullName" value="userfn userln" />
+			<var name="mentionsUserScreenName" value="usersn" />
+		</execute>
+	</command>
+
+	<command name="ViewMentionViaUpdatedMessageBoardsThread" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addCP">
+			<var name="threadBody" value="Thread Body" />
+			<var name="threadSubject" value="Thread Subject" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute macro="Mentions#addMentionViaMessageBoardThread">
+			<var name="editMBThread" value="True" />
+			<var name="mentionsUserFullName" value="userfn userln" />
+			<var name="mentionsUserScreenName" value="usersn" />
+			<var name="threadBody" value="Thread Body" />
+			<var name="threadSubject" value="Thread Subject" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewCP">
+			<var name="postsNumber" value="1" />
+			<var name="threadBody" value="Thread Body" />
+			<var name="threadSubject" value="Thread Subject" />
+		</execute>
+
+		<execute macro="Mentions#viewMentionTagLink">
+			<var name="mentionsUserFullName" value="userfn userln" />
+			<var name="mentionsUserScreenName" value="usersn" />
+		</execute>
+	</command>
+</definition>

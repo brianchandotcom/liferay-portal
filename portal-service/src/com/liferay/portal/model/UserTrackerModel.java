@@ -39,7 +39,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface UserTrackerModel extends BaseModel<UserTracker>, MVCCModel {
+public interface UserTrackerModel extends BaseModel<UserTracker>, MVCCModel,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -95,6 +96,7 @@ public interface UserTrackerModel extends BaseModel<UserTracker>, MVCCModel {
 	 *
 	 * @return the company ID of this user tracker
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -102,6 +104,7 @@ public interface UserTrackerModel extends BaseModel<UserTracker>, MVCCModel {
 	 *
 	 * @param companyId the company ID of this user tracker
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**

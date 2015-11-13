@@ -206,42 +206,6 @@
 		<put name="portlet_content" value="/portlet/recent_documents/view.jsp" />
 	</definition>
 
-	<!-- Software Catalog -->
-
-	<definition name="portlet.software_catalog" extends="portlet" />
-
-	<definition name="portlet.software_catalog.edit_framework_version" extends="portlet.software_catalog">
-		<put name="portlet_content" value="/portlet/software_catalog/edit_framework_version.jsp" />
-	</definition>
-
-	<definition name="portlet.software_catalog.edit_license" extends="portlet.software_catalog">
-		<put name="portlet_content" value="/portlet/software_catalog/edit_license.jsp" />
-	</definition>
-
-	<definition name="portlet.software_catalog.edit_product_entry" extends="portlet.software_catalog">
-		<put name="portlet_content" value="/portlet/software_catalog/edit_product_entry.jsp" />
-	</definition>
-
-	<definition name="portlet.software_catalog.edit_product_version" extends="portlet.software_catalog">
-		<put name="portlet_content" value="/portlet/software_catalog/edit_product_version.jsp" />
-	</definition>
-
-	<definition name="portlet.software_catalog.error" extends="portlet.software_catalog">
-		<put name="portlet_content" value="/portlet/software_catalog/error.jsp" />
-	</definition>
-
-	<definition name="portlet.software_catalog.search" extends="portlet.software_catalog">
-		<put name="portlet_content" value="/portlet/software_catalog/search.jsp" />
-	</definition>
-
-	<definition name="portlet.software_catalog.view" extends="portlet.software_catalog">
-		<put name="portlet_content" value="/portlet/software_catalog/view.jsp" />
-	</definition>
-
-	<definition name="portlet.software_catalog.view_product_entry" extends="portlet.software_catalog">
-		<put name="portlet_content" value="/portlet/software_catalog/view_product_entry.jsp" />
-	</definition>
-
 	<!-- User Statistics -->
 
 	<definition name="portlet.user_statistics" extends="portlet" />

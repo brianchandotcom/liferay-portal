@@ -323,16 +323,6 @@ public class AnnouncementsEntryLocalServiceWrapper
 			companyId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _announcementsEntryLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> getEntries(
 		long classNameId, long classPK, boolean alert, int start, int end) {
@@ -439,6 +429,16 @@ public class AnnouncementsEntryLocalServiceWrapper
 		return _announcementsEntryLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _announcementsEntryLocalService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
@@ -455,16 +455,6 @@ public class AnnouncementsEntryLocalServiceWrapper
 	@Override
 	public int getUserEntriesCount(long userId) {
 		return _announcementsEntryLocalService.getUserEntriesCount(userId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_announcementsEntryLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

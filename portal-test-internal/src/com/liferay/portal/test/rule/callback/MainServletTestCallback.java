@@ -27,10 +27,14 @@ import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.servlet.MainServlet;
 import com.liferay.portal.test.mock.AutoDeployMockServletContext;
+import com.liferay.portal.test.rule.MainServletTestRule;
 
 import javax.servlet.ServletException;
 
+import org.junit.Assert;
 import org.junit.runner.Description;
+import org.junit.runner.RunWith;
+import org.junit.runner.Runner;
 
 import org.springframework.core.io.FileSystemResourceLoader;
 import org.springframework.mock.web.MockServletConfig;
@@ -49,7 +53,7 @@ public class MainServletTestCallback extends BaseTestCallback<Object, Object> {
 	}
 
 	@Override
-	public void doAfterClass(Description description, Object object) {
+	public void afterClass(Description description, Object object) {
 		try {
 			SearchEngineUtil.removeCompany(TestPropsValues.getCompanyId());
 		}
@@ -59,7 +63,13 @@ public class MainServletTestCallback extends BaseTestCallback<Object, Object> {
 	}
 
 	@Override
-	public Object doBeforeClass(Description description) {
+	public Object beforeClass(Description description) {
+		if (isArquillianTest(description)) {
+			Assert.fail(
+				description.getTestClass() + " is an Arquillian test and " +
+					"should not use " + MainServletTestRule.class);
+		}
+
 		if (_mainServlet == null) {
 			final MockServletContext mockServletContext =
 				new AutoDeployMockServletContext(
@@ -106,6 +116,27 @@ public class MainServletTestCallback extends BaseTestCallback<Object, Object> {
 	}
 
 	protected MainServletTestCallback() {
+	}
+
+	protected boolean isArquillianTest(Description description) {
+		RunWith runWith = description.getAnnotation(RunWith.class);
+
+		if (runWith == null) {
+			return false;
+		}
+
+		Class<? extends Runner> runnerClass = runWith.value();
+
+		String runnerClassName = runnerClass.getName();
+
+		if (runnerClassName.equals(
+				"com.liferay.arquillian.extension.junit.bridge.junit." +
+					"Arquillian")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

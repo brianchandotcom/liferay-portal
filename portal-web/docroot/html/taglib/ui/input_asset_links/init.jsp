@@ -16,7 +16,7 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.taglib.ui.context.InputAssetLinksDisplayContext" %>
+<%@ page import="com.liferay.taglib.ui.display.context.InputAssetLinksDisplayContext" %>
 
 <%
 InputAssetLinksDisplayContext inputAssetLinksDisplayContext = new InputAssetLinksDisplayContext(pageContext);

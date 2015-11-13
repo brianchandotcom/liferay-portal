@@ -226,20 +226,20 @@ public class WebsiteLocalServiceWrapper implements WebsiteLocalService,
 		return _websiteLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _websiteLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext) {
 		return _websiteLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _websiteLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -313,16 +313,6 @@ public class WebsiteLocalServiceWrapper implements WebsiteLocalService,
 	@Override
 	public int getWebsitesCount() {
 		return _websiteLocalService.getWebsitesCount();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_websiteLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

@@ -43,6 +43,10 @@ public class CSSBuilderArgs {
 		return _sassCompilerClassName;
 	}
 
+	public boolean isGenerateSourceMap() {
+		return _generateSourceMap;
+	}
+
 	public void setDirNames(String dirNames) {
 		setDirNames(_split(dirNames));
 	}
@@ -53,6 +57,10 @@ public class CSSBuilderArgs {
 
 	public void setDocrootDirName(String docrootDirName) {
 		_docrootDirName = docrootDirName;
+	}
+
+	public void setGenerateSourceMap(boolean generateSourceMap) {
+		_generateSourceMap = generateSourceMap;
 	}
 
 	public void setPortalCommonDirName(String portalCommonDirName) {
@@ -77,6 +85,7 @@ public class CSSBuilderArgs {
 
 	private String[] _dirNames = {DIR_NAME};
 	private String _docrootDirName = DOCROOT_DIR_NAME;
+	private boolean _generateSourceMap;
 	private String _portalCommonDirName;
 	private String[] _rtlExcludedPathRegexps = new String[0];
 	private String _sassCompilerClassName;

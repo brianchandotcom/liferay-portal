@@ -441,36 +441,12 @@ public class LiferayPortlet extends GenericPortlet {
 
 		int sessionMessagesSize = SessionMessages.size(actionRequest);
 
-		if (SessionMessages.contains(
-				actionRequest,
-				PortalUtil.getPortletId(actionRequest) +
-					SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA)) {
+		String portletId = PortalUtil.getPortletId(actionRequest);
 
-			sessionMessagesSize--;
-		}
-
-		if (SessionMessages.contains(
-				actionRequest,
-				PortalUtil.getPortletId(actionRequest) +
-					SessionMessages.KEY_SUFFIX_FORCE_SEND_REDIRECT)) {
-
-			sessionMessagesSize--;
-		}
-
-		if (SessionMessages.contains(
-				actionRequest,
-				PortalUtil.getPortletId(actionRequest) +
-					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE)) {
-
-			sessionMessagesSize--;
-		}
-
-		if (SessionMessages.contains(
-				actionRequest,
-				PortalUtil.getPortletId(actionRequest) +
-					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE)) {
-
-			sessionMessagesSize--;
+		for (String suffix : _IGNORED_SESSION_MESSAGE_SUFFIXES) {
+			if (SessionMessages.contains(actionRequest, portletId + suffix)) {
+				sessionMessagesSize--;
+			}
 		}
 
 		if (sessionMessagesSize == 0) {
@@ -572,6 +548,14 @@ public class LiferayPortlet extends GenericPortlet {
 
 	protected boolean addProcessActionSuccessMessage;
 	protected boolean alwaysSendRedirect;
+
+	private static final String[] _IGNORED_SESSION_MESSAGE_SUFFIXES = {
+		SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA,
+		SessionMessages.KEY_SUFFIX_FORCE_SEND_REDIRECT,
+		SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE,
+		SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE,
+		SessionMessages.KEY_SUFFIX_REFRESH_PORTLET
+	};
 
 	private static final boolean _PROCESS_PORTLET_REQUEST = true;
 

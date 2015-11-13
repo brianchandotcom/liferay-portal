@@ -33,6 +33,7 @@ public class AssetTagStatsSoap implements Serializable {
 		AssetTagStatsSoap soapModel = new AssetTagStatsSoap();
 
 		soapModel.setTagStatsId(model.getTagStatsId());
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setTagId(model.getTagId());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setAssetCount(model.getAssetCount());
@@ -96,6 +97,14 @@ public class AssetTagStatsSoap implements Serializable {
 		_tagStatsId = tagStatsId;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getTagId() {
 		return _tagId;
 	}
@@ -121,6 +130,7 @@ public class AssetTagStatsSoap implements Serializable {
 	}
 
 	private long _tagStatsId;
+	private long _companyId;
 	private long _tagId;
 	private long _classNameId;
 	private int _assetCount;

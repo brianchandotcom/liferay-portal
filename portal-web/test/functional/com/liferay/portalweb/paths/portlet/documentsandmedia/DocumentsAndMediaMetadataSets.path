@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SAVE_BUTTON</td>
+	<td>//div[@class='button-holder ']/button[@type='button']/span[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

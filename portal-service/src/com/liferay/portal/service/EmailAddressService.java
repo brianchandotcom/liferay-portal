@@ -78,13 +78,6 @@ public interface EmailAddressService extends BaseService {
 	public com.liferay.portal.model.EmailAddress fetchEmailAddress(
 		long emailAddressId) throws PortalException;
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.EmailAddress getEmailAddress(
 		long emailAddressId) throws PortalException;
@@ -94,11 +87,11 @@ public interface EmailAddressService extends BaseService {
 		java.lang.String className, long classPK) throws PortalException;
 
 	/**
-	* Sets the Spring bean ID for this bean.
+	* Returns the OSGi service identifier.
 	*
-	* @param beanIdentifier the Spring bean ID for this bean
+	* @return the OSGi service identifier
 	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
+	public java.lang.String getOSGiServiceIdentifier();
 
 	public com.liferay.portal.model.EmailAddress updateEmailAddress(
 		long emailAddressId, java.lang.String address, long typeId,

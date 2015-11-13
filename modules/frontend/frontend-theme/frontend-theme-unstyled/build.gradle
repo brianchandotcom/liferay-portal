@@ -4,13 +4,14 @@ import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 task buildAlloyTheme(type: Copy)
 task buildLexicon(type: Copy)
+task buildLexiconIcons(type: Copy)
 task buildTheme
 task publishNodeModule(type: PublishNodeModuleTask)
 
 String alloyVersion = "3.0.1"
-String lexiconVersion = "0.1.19"
+String lexiconVersion = "0.1.21"
 
-File themeDestinationDir = file("src/META-INF/resources/_unstyled");
+File themeDestinationDir = file("src/main/resources/META-INF/resources/_unstyled");
 File thirdPartyDir = file("../../../../portal-web/third-party")
 
 buildAlloyTheme {
@@ -104,9 +105,31 @@ buildLexicon {
 	}
 }
 
+buildLexiconIcons {
+	File lexiconIconsDestinationDir = new File(themeDestinationDir, "images/lexicon")
+	File lexiconZipFile = new File(thirdPartyDir, "lexicon-${lexiconVersion}.zip")
+
+	doFirst {
+		delete lexiconIconsDestinationDir
+	}
+
+	filesMatching "images/icons/**", new StripPathSegmentsAction(2)
+	from zipTree(lexiconZipFile)
+
+	include "images/icons/**"
+
+	includeEmptyDirs = false
+	into lexiconIconsDestinationDir
+
+	onlyIf {
+		!FileUtil.isUpToDate(project, lexiconZipFile, lexiconIconsDestinationDir)
+	}
+}
+
 buildTheme {
 	dependsOn buildAlloyTheme
 	dependsOn buildLexicon
+	dependsOn buildLexiconIcons
 }
 
 classes {
@@ -125,5 +148,5 @@ liferay {
 }
 
 publishNodeModule {
-	workingDir = "src/META-INF/resources/_unstyled"
+	workingDir = "src/main/resources/META-INF/resources/_unstyled"
 }

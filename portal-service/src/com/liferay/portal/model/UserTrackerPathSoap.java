@@ -35,6 +35,7 @@ public class UserTrackerPathSoap implements Serializable {
 
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUserTrackerPathId(model.getUserTrackerPathId());
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserTrackerId(model.getUserTrackerId());
 		soapModel.setPath(model.getPath());
 		soapModel.setPathDate(model.getPathDate());
@@ -108,6 +109,14 @@ public class UserTrackerPathSoap implements Serializable {
 		_userTrackerPathId = userTrackerPathId;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getUserTrackerId() {
 		return _userTrackerId;
 	}
@@ -134,6 +143,7 @@ public class UserTrackerPathSoap implements Serializable {
 
 	private long _mvccVersion;
 	private long _userTrackerPathId;
+	private long _companyId;
 	private long _userTrackerId;
 	private String _path;
 	private Date _pathDate;

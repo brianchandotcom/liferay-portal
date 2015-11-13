@@ -3,7 +3,6 @@ package ${packagePath}.service.base;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import ${beanLocatorUtil};
 import com.liferay.portal.kernel.dao.db.DB;
@@ -25,6 +24,7 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
@@ -105,7 +105,7 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 </#if>
 
 	@ProviderType
-	public abstract class ${entity.name}LocalServiceBaseImpl extends BaseLocalServiceImpl implements ${entity.name}LocalService, IdentifiableBean {
+	public abstract class ${entity.name}LocalServiceBaseImpl extends BaseLocalServiceImpl implements ${entity.name}LocalService, IdentifiableOSGiService {
 
 		/*
 		 * NOTE FOR DEVELOPERS:
@@ -133,7 +133,7 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 	@Deprecated
 </#if>
 
-	public abstract class ${entity.name}ServiceBaseImpl extends BaseServiceImpl implements ${entity.name}Service, IdentifiableBean {
+	public abstract class ${entity.name}ServiceBaseImpl extends BaseServiceImpl implements ${entity.name}Service, IdentifiableOSGiService {
 
 		/*
 		 * NOTE FOR DEVELOPERS:
@@ -1035,23 +1035,17 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 	}
 
 	/**
-	 * Returns the Spring bean ID for this bean.
+	 * Returns the OSGi service identifier.
 	 *
-	 * @return the Spring bean ID for this bean
+	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getBeanIdentifier() {
-		return _beanIdentifier;
-	}
-
-	/**
-	 * Sets the Spring bean ID for this bean.
-	 *
-	 * @param beanIdentifier the Spring bean ID for this bean
-	 */
-	@Override
-	public void setBeanIdentifier(String beanIdentifier) {
-		_beanIdentifier = beanIdentifier;
+	public String getOSGiServiceIdentifier() {
+		<#if sessionTypeName == "Local">
+			return ${entity.name}LocalService.class.getName();
+		<#else>
+			return ${entity.name}Service.class.getName();
+		</#if>
 	}
 
 	<#if pluginName != "">
@@ -1154,8 +1148,6 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 			protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 		</#if>
 	</#if>
-
-	private String _beanIdentifier;
 
 	<#if pluginName != "">
 		private ClassLoader _classLoader;

@@ -17,9 +17,10 @@ package com.liferay.portal.upgrade.v7_0_0;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -36,6 +37,11 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
+
+			DatabaseMetaData databaseMetaData = con.getMetaData();
+
+			boolean supportsBatchUpdates =
+				databaseMetaData.supportsBatchUpdates();
 
 			ps = con.prepareStatement(
 				"select resourcePermissionId, primKey, primKeyId, actionIds, " +
@@ -58,27 +64,64 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 					continue;
 				}
 
-				StringBundler sb = new StringBundler(6);
-
-				sb.append("update ResourcePermission set primKeyId = ");
-				sb.append(newPrimKeyId);
-				sb.append(", viewActionId = ");
-
-				if (newViewActionId) {
-					sb.append("[$TRUE$]");
-				}
-				else {
-					sb.append("[$FALSE$]");
-				}
-
-				sb.append(" where resourcePermissionId = ");
-				sb.append(resourcePermissionId);
-
-				runSQL(sb.toString());
+				updateResourcePermission(
+					con, supportsBatchUpdates, resourcePermissionId,
+					newPrimKeyId, newViewActionId);
 			}
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected void updateResourcePermission(
+			Connection con, boolean supportsBatchUpdates,
+			long resourcePermissionId, long newPrimKeyId,
+			boolean newViewActionId)
+		throws Exception {
+
+		PreparedStatement ps = null;
+
+		try {
+			ps = con.prepareStatement(
+				"update ResourcePermission set primKeyId = ?," +
+					"viewActionId = ?  where resourcePermissionId = ?");
+
+			ps.setLong(1, newPrimKeyId);
+
+			if (newViewActionId) {
+				ps.setBoolean(2, true);
+			}
+			else {
+				ps.setBoolean(2, false);
+			}
+
+			ps.setLong(3, resourcePermissionId);
+
+			int count = 0;
+
+			if (supportsBatchUpdates) {
+				ps.addBatch();
+
+				if (count == PropsValues.HIBERNATE_JDBC_BATCH_SIZE) {
+					ps.executeBatch();
+
+					count = 0;
+				}
+				else {
+					count++;
+				}
+			}
+			else {
+				ps.executeUpdate();
+			}
+
+			if (supportsBatchUpdates && (count > 0)) {
+				ps.executeBatch();
+			}
+		}
+		finally {
+			DataAccess.cleanUp(ps);
 		}
 	}
 

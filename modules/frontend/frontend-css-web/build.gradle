@@ -8,7 +8,7 @@ buildAlloyTheme {
 	}
 
 	from "../frontend-js-web/tmp/META-INF/resources/aui/aui_deprecated.css"
-	into "src/META-INF/resources/portal"
+	into "src/main/resources/META-INF/resources/portal"
 }
 
 buildCSS {

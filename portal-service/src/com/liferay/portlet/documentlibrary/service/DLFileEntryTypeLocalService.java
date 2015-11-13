@@ -244,13 +244,6 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
-	/**
 	* Returns the document library file entry type with the primary key.
 	*
 	* @param fileEntryTypeId the primary key of the document library file entry type
@@ -377,6 +370,13 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 		long[] groupIds, long folderId, boolean inherited)
 		throws PortalException;
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
@@ -398,13 +398,6 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long[] groupIds,
 		java.lang.String keywords, boolean includeBasicFileEntryType);
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public void setDLFolderDLFileEntryTypes(long folderId,
 		long[] fileEntryTypeIds);

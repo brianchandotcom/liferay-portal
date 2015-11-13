@@ -26,6 +26,7 @@ import com.liferay.sync.engine.session.Session;
 import com.liferay.sync.engine.session.SessionManager;
 import com.liferay.sync.engine.util.FileKeyUtil;
 import com.liferay.sync.engine.util.FileUtil;
+import com.liferay.sync.engine.util.GetterUtil;
 import com.liferay.sync.engine.util.IODeltaUtil;
 import com.liferay.sync.engine.util.MSOfficeFileUtil;
 import com.liferay.sync.engine.util.StreamUtil;
@@ -204,7 +205,14 @@ public class DownloadFileHandler extends BaseHandler {
 
 			downloadedFilePathNames.add(filePath.toString());
 
-			if (exists) {
+			if (GetterUtil.getBoolean(
+					syncFile.getLocalExtraSettingValue("restoreEvent"))) {
+
+				syncFile.unsetLocalExtraSetting("restoreEvent");
+
+				syncFile.setUiEvent(SyncFile.UI_EVENT_RESTORED_REMOTE);
+			}
+			else if (exists) {
 				syncFile.setUiEvent(SyncFile.UI_EVENT_DOWNLOADED_UPDATE);
 			}
 			else {
@@ -217,7 +225,7 @@ public class DownloadFileHandler extends BaseHandler {
 			FileUtil.setModifiedTime(tempFilePath, syncFile.getModifiedTime());
 
 			if (MSOfficeFileUtil.isLegacyExcelFile(filePath)) {
-				syncFile.setLocalExtraSettingsValue(
+				syncFile.setLocalExtraSetting(
 					"lastSavedDate",
 					MSOfficeFileUtil.getLastSavedDate(tempFilePath));
 			}

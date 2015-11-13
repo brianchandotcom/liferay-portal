@@ -118,7 +118,7 @@
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Site Page Name" />
-			<var name="pageType" value="Content Display Page" />
+			<var name="pageTemplateName" value="Content Display Page" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

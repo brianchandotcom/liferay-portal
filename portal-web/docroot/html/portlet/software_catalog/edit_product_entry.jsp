@@ -45,7 +45,7 @@ List productScreenshots = SCProductScreenshotLocalServiceUtil.getProductScreensh
 int screenshotsCount = ParamUtil.getInteger(request, "screenshotsCount", productScreenshots.size());
 %>
 
-<form action="<portlet:actionURL><portlet:param name="struts_action" value="/software_catalog/edit_product_entry" /></portlet:actionURL>" enctype="multipart/form-data" method="post" name="<portlet:namespace />fm" onSubmit="<portlet:namespace />saveProductEntry(); return false;">
+<form action="<portlet:actionURL name="/software_catalog/edit_product_entry" />" enctype="multipart/form-data" method="post" name="<portlet:namespace />fm" onSubmit="<portlet:namespace />saveProductEntry(); return false;">
 <input name="<portlet:namespace /><%= Constants.CMD %>" type="hidden" value="" />
 <input name="<portlet:namespace />redirect" type="hidden" value="<%= HtmlUtil.escapeAttribute(redirect) %>" />
 <input name="<portlet:namespace />productEntryId" type="hidden" value="<%= productEntryId %>" />
@@ -331,7 +331,7 @@ int screenshotsCount = ParamUtil.getInteger(request, "screenshotsCount", product
 if (productEntry != null) {
 	PortletURL portletURL = renderResponse.createRenderURL();
 
-	portletURL.setParameter("struts_action", "/software_catalog/view_product");
+	portletURL.setParameter("mvcRenderCommandName", "/software_catalog/view_product");
 	portletURL.setParameter("redirect", currentURL);
 	portletURL.setParameter("productEntryId", String.valueOf(productEntry.getProductEntryId()));
 

@@ -39,7 +39,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface TeamModel extends BaseModel<Team>, MVCCModel, StagedGroupedModel {
+public interface TeamModel extends BaseModel<Team>, MVCCModel, ShardedModel,
+	StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

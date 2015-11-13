@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.ShardedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -41,7 +42,7 @@ import java.io.Serializable;
  */
 @ProviderType
 public interface SocialRequestModel extends AttachedModel,
-	BaseModel<SocialRequest> {
+	BaseModel<SocialRequest>, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -110,6 +111,7 @@ public interface SocialRequestModel extends AttachedModel,
 	 *
 	 * @return the company ID of this social request
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -117,6 +119,7 @@ public interface SocialRequestModel extends AttachedModel,
 	 *
 	 * @param companyId the company ID of this social request
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**

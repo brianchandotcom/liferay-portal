@@ -435,7 +435,7 @@ public class FileUtil {
 
 				if ((lastSavedDate != null) && (lastSavedDate.getTime() ==
 						GetterUtil.getLong(
-							syncFile.getLocalExtraSettingsValue(
+							syncFile.getLocalExtraSettingValue(
 								"lastSavedDate")))) {
 
 					return false;

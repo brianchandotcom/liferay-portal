@@ -15,12 +15,12 @@
 package com.liferay.portal.service.base;
 
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.service.BaseServiceImpl;
 import com.liferay.portal.service.UserGroupService;
@@ -56,7 +56,7 @@ import javax.sql.DataSource;
  * @generated
  */
 public abstract class UserGroupServiceBaseImpl extends BaseServiceImpl
-	implements UserGroupService, IdentifiableBean {
+	implements UserGroupService, IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -687,23 +687,13 @@ public abstract class UserGroupServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the Spring bean ID for this bean.
+	 * Returns the OSGi service identifier.
 	 *
-	 * @return the Spring bean ID for this bean
+	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getBeanIdentifier() {
-		return _beanIdentifier;
-	}
-
-	/**
-	 * Sets the Spring bean ID for this bean.
-	 *
-	 * @param beanIdentifier the Spring bean ID for this bean
-	 */
-	@Override
-	public void setBeanIdentifier(String beanIdentifier) {
-		_beanIdentifier = beanIdentifier;
+	public String getOSGiServiceIdentifier() {
+		return UserGroupService.class.getName();
 	}
 
 	protected Class<?> getModelClass() {
@@ -804,5 +794,4 @@ public abstract class UserGroupServiceBaseImpl extends BaseServiceImpl
 	protected UserGroupGroupRolePersistence userGroupGroupRolePersistence;
 	@BeanReference(type = UserGroupGroupRoleFinder.class)
 	protected UserGroupGroupRoleFinder userGroupGroupRoleFinder;
-	private String _beanIdentifier;
 }

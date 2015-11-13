@@ -17,6 +17,7 @@ package com.liferay.portal.test.rule.callback;
 import aQute.bnd.osgi.Builder;
 import aQute.bnd.osgi.Jar;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.test.rule.callback.BaseTestCallback;
@@ -41,7 +42,9 @@ public class SyntheticBundleTestCallback extends BaseTestCallback<Long, Long> {
 	}
 
 	@Override
-	public void afterClass(Class<?> clazz, Long bundleId) throws Throwable {
+	public void afterClass(Description description, Long bundleId)
+		throws PortalException {
+
 		if (bundleId == null) {
 			return;
 		}
@@ -52,56 +55,46 @@ public class SyntheticBundleTestCallback extends BaseTestCallback<Long, Long> {
 	}
 
 	@Override
-	public Long beforeClass(Class<?> clazz) throws Throwable {
-		InputStream inputStream = createBundle(clazz);
+	public Long beforeClass(Description description) throws Exception {
+		Class<?> testClass = description.getTestClass();
+
+		InputStream inputStream = createBundle(testClass);
 
 		Long bundleId = ModuleFrameworkUtilAdapter.addBundle(
-			clazz.getName(), inputStream);
+			testClass.getName(), inputStream);
 
 		ModuleFrameworkUtilAdapter.startBundle(bundleId);
 
 		return bundleId;
 	}
 
-	@Override
-	public void doAfterClass(Description description, Long bundleId)
-		throws Throwable {
-
-		afterClass(description.getTestClass(), bundleId);
-	}
-
-	@Override
-	public Long doBeforeClass(Description description) throws Throwable {
-		return beforeClass(description.getTestClass());
-	}
-
 	protected InputStream createBundle(Class<?> clazz) throws Exception {
-		Builder builder = new Builder();
+		URL url = clazz.getResource("");
 
-		builder.setBundleSymbolicName(clazz.getName());
+		String protocol = url.getProtocol();
 
-		try {
-			URL url = clazz.getResource("");
+		if (!protocol.equals("file")) {
+			throw new IllegalStateException(
+				"Test classes are not on the file system");
+		}
 
-			String protocol = url.getProtocol();
+		String basePath = url.getPath();
 
-			if (!protocol.equals("file")) {
-				throw new IllegalStateException(
-					"Test classes are not on the file system");
-			}
+		Package pkg = clazz.getPackage();
 
-			String basePath = url.getPath();
+		String packageName = pkg.getName();
 
-			Package pkg = clazz.getPackage();
+		int index = basePath.indexOf(packageName.replace('.', '/') + '/');
 
-			String packageName = pkg.getName();
+		basePath = basePath.substring(0, index);
 
-			int index = basePath.indexOf(packageName.replace('.', '/') + '/');
+		File baseDir = new File(basePath);
 
-			basePath = basePath.substring(0, index);
+		try (Builder builder = new Builder();
+			InputStream inputStream = clazz.getResourceAsStream(
+				_bundlePackageName.replace('.', '/') + "/bnd.bnd")) {
 
-			File baseDir = new File(basePath);
-
+			builder.setBundleSymbolicName(clazz.getName());
 			builder.setBase(baseDir);
 			builder.setClasspath(new File[] {baseDir});
 			builder.setProperty(
@@ -109,22 +102,17 @@ public class SyntheticBundleTestCallback extends BaseTestCallback<Long, Long> {
 
 			Properties properties = builder.getProperties();
 
-			InputStream inputStream = clazz.getResourceAsStream(
-				_bundlePackageName.replace('.', '/') + "/bnd.bnd");
-
 			properties.load(inputStream);
 
-			Jar jar = builder.build();
+			try (Jar jar = builder.build()) {
+				UnsyncByteArrayOutputStream outputStream =
+					new UnsyncByteArrayOutputStream();
 
-			UnsyncByteArrayOutputStream outputStream =
-				new UnsyncByteArrayOutputStream();
+				jar.write(outputStream);
 
-			jar.write(outputStream);
-
-			return new UnsyncByteArrayInputStream(outputStream.toByteArray());
-		}
-		finally {
-			builder.close();
+				return new UnsyncByteArrayInputStream(
+					outputStream.unsafeGetByteArray(), 0, outputStream.size());
+			}
 		}
 	}
 

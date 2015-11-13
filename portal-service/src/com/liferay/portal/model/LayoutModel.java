@@ -43,7 +43,7 @@ import java.util.Map;
  */
 @ProviderType
 public interface LayoutModel extends BaseModel<Layout>, LocalizedModel, MVCCModel,
-	StagedGroupedModel {
+	ShardedModel, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

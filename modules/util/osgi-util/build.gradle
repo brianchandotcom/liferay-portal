@@ -1,3 +1,6 @@
+sourceCompatibility = "1.6"
+targetCompatibility = "1.6"
+
 dependencies {
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 
@@ -12,6 +15,3 @@ dependencies {
 liferay {
 	deployDir = file("${liferayHome}/osgi/modules")
 }
-
-sourceCompatibility = "1.6"
-targetCompatibility = "1.6"

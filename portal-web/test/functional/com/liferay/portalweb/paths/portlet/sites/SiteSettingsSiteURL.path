@@ -25,43 +25,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SITE_URL_FRIENDLY_URL_FIELD</td>
-	<td>//input[contains(@name,'friendlyURL')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SITE_URL_VIRTUAL_HOSTS_LABEL</td>
-	<td>//div[contains(@id,'siteUrl')]//span[contains(.,'Virtual Hosts')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SITE_URL_VIRTUAL_HOSTS_PUBLIC_PAGES_LABEL</td>
 	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group'))]/label[contains(@for,'publicVirtualHost')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SITE_URL_VIRTUAL_HOSTS_PUBLIC_PAGES_FIELD</td>
-	<td>//input[contains(@name,'publicVirtualHost')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SITE_URL_VIRTUAL_HOSTS_PRIVATE_PAGES_LABEL</td>
 	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group'))]/label[contains(@for,'privateVirtualHost')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SITE_URL_VIRTUAL_HOSTS_PRIVATE_PAGES_FIELD</td>
-	<td>//input[contains(@name,'privateVirtualHost')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SITE_URL_DOCUMENTS_AND_MEDIA_LABEL</td>
-	<td>//div[contains(@id,'siteUrl')]//span[contains(.,'Documents and Media')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SITE_URL_DOCUMENT_AND_MEDIA_DIRECTORY_INDEXING_ENABLED_CHECKBOX</td>
-	<td>//input[contains(@id,'directoryIndexingEnabled')]</td>
 	<td></td>
 </tr>
 </tbody>

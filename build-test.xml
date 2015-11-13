@@ -432,12 +432,17 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 		<sequential>
 			<var name="poshi.dir.name" unset="true" />
 
-			<get-poshi-test-name />
+			<if>
+				<isset property="test.class" />
+				<then>
+					<get-poshi-test-name />
 
-			<antelope:stringutil property="poshi.dir.name" string="${poshi.test.name}">
-				<antelope:replace regex="," replacement="_" />
-				<antelope:replace regex="#" replacement="_" />
-			</antelope:stringutil>
+					<antelope:stringutil property="poshi.dir.name" string="${poshi.test.name}">
+						<antelope:replace regex="," replacement="_" />
+						<antelope:replace regex="#" replacement="_" />
+					</antelope:stringutil>
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 
@@ -588,8 +593,6 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 
 	<macrodef name="get-test-url">
 		<sequential>
-			<get-testcase-property property.name="browser.type" />
-
 			<get-testcase-property property.name="testcase.url" />
 
 			<if>
@@ -643,6 +646,15 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 		<attribute name="property.name" />
 
 		<sequential>
+			<var name="property.value.default" unset="true" />
+
+			<if>
+				<isset property="@{property.name}" />
+				<then>
+					<propertycopy from="@{property.name}" name="property.value.default" />
+				</then>
+			</if>
+
 			<var name="@{property.name}" unset="true" />
 
 			<if>
@@ -658,6 +670,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 					<beanshell>
 						<![CDATA[
 							String propertyName = project.getProperty("property.name");
+							String propertyValueDefault = project.getProperty("property.value.default");
 							String testMethodName = project.getProperty("test.method.name");
 							String testSimpleClassName = project.getProperty("test.simple.class.name");
 
@@ -681,6 +694,10 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 								sb.append(propertyName);
 
 								propertyValue = project.getProperty(sb.toString());
+
+								if (propertyValue == null) {
+									propertyValue = propertyValueDefault;
+								}
 							}
 
 							project.setProperty(propertyName, propertyValue);
@@ -1783,17 +1800,15 @@ ${tomcat-gc-log}
 						directoryScanner.setBasedir(project.getBaseDir());
 						directoryScanner.setExcludes(
 							new String[] {
-								"modules/apps/social/social-networking-test/test/integration/**/*Test.java",
-								"modules/portal/portal-json-web-service-extender/test/integration/**/*Test.java",
-								"modules/portal/portal-template-freemarker/test/integration/**/*Test.java",
-								"modules/util/osgi-util/test/integration/**/*Test.java",
+								"modules/portal/portal-json-web-service-extender/src/testIntegration/java/**/*Test.java",
+								"modules/util/osgi-util/src/testIntegration/java/**/*Test.java",
 								"portal-service/test/unit/com/liferay/portal/log/assertor/PortalLogAssertorTest.java",
 								"*/pacl/test/[\\w]+Test.class",
 								"**/*ServiceHttpTest.java",
 								"**/*ServiceJsonTest.java",
 								"**/*ServiceSoapTest.java"
 							});
-						directoryScanner.setIncludes(new String[] {"**/test/integration/**/*Test.java", "**/test/unit/**/*Test.java"});
+						directoryScanner.setIncludes(new String[] {"**/src/test/**/*Test.java", "**/src/testIntegration/**/*Test.java", "**/test/integration/**/*Test.java", "**/test/unit/**/*Test.java"});
 
 						directoryScanner.scan();
 
@@ -2221,6 +2236,8 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 	<macrodef name="start-android-device">
 		<sequential>
 			<fail message="Please set the property ${mobile.android.home}." unless="mobile.android.home" />
+
+			<echo file="${user.home}/.android/ddms.cfg">pingId=0</echo>
 
 			<execute>
 				echo no | ${mobile.android.home}/tools/android create avd -f -n deviceName -t android-19
@@ -2749,10 +2766,10 @@ create database lportal${database.index} character set utf8;</echo>
 								</not>
 							</or>
 							<then>
-								<get-testcase-property property.name="database.minimal.enabled" />
+								<get-testcase-property property.name="database.bare.enabled" />
 
 								<if>
-									<equals arg1="${database.minimal.enabled}" arg2="true" />
+									<equals arg1="${database.bare.enabled}" arg2="true" />
 									<then>
 										<var name="database.create.suffix" value="-bare" />
 									</then>
@@ -2834,6 +2851,7 @@ go]]></replacevalue>
 		<get-env-java-jdk />
 		<get-env-liferay-portal />
 		<get-env-operating-system />
+		<get-poshi-dir-name />
 		<get-testray-case-defect />
 		<get-testray-components />
 		<get-testray-logs />
@@ -2875,7 +2893,7 @@ go]]></replacevalue>
 		</if>
 
 		<if>
-			<available file="portal-web/test-results/functional/report.html" />
+			<available file="portal-web/test-results/${poshi.dir.name}/index.html" />
 			<then>
 				<property name="test.case.attachments">
 					<![CDATA[
@@ -4288,6 +4306,8 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 		<if>
 			<equals arg1="${browser.type}" arg2="android" />
 			<then>
+				<stop-android-device />
+
 				<start-android-device />
 			</then>
 		</if>
@@ -4628,6 +4648,15 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		</if>
 
 		<if>
+			<equals arg1="${hot.deploy.dependency.management.enabled}" arg2="false" />
+			<then>
+				<echo file="portal-impl/src/portal-ext.properties" append="true">
+
+hot.deploy.dependency.management.enabled=false</echo>
+			</then>
+		</if>
+
+		<if>
 			<isset property="set.permission.algorithm.5" />
 			<then>
 				<replace file="portal-impl/src/portal-ext.properties" token="#permissions.user.check.algorithm=5" value="permissions.user.check.algorithm=5" />
@@ -4655,10 +4684,6 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 include-and-override=${liferay.home}/portal-setup-wizard.properties</echo>
 			</then>
 		</if>
-
-		<echo file="portal-impl/src/portal-ext.properties" append="true">
-
-hot.deploy.dependency.management.enabled=false</echo>
 
 		<if>
 			<isset property="test.set.default.portal.properties" />
@@ -4785,6 +4810,11 @@ module.framework.properties.osgi.console=11312</echo>
 					test.base.dir.name=${test.base.dir.name}
 				</echo>
 			</then>
+			<else>
+				<echo append="true" file="${test.ext.properties.file}">
+					test.base.dir.name=test/
+				</echo>
+			</else>
 		</if>
 
 		<if>
@@ -4843,10 +4873,21 @@ module.framework.properties.osgi.console=11312</echo>
 				</echo>
 			</then>
 		</if>
+
+		<if>
+			<isset property="test.portal.instance" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					test.portal.instance=${test.portal.instance}
+				</echo>
+			</then>
+		</if>
 	</target>
 
 	<target name="prepare-selenium">
 		<delete file="${test.ext.properties.file}" />
+
+		<get-testcase-property property.name="browser.type" />
 
 		<if>
 			<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
@@ -5017,10 +5058,10 @@ module.framework.properties.osgi.console=11312</echo>
 		</if>
 
 		<if>
-			<equals arg1="${test.skip.tear.down}" arg2="true" />
+			<isset property="test.skip.tear.down" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
-					test.skip.tear.down=true
+					test.skip.tear.down=${test.skip.tear.down}
 				</echo>
 			</then>
 		</if>
@@ -5622,21 +5663,6 @@ module.framework.properties.osgi.console=11312</echo>
 	</target>
 
 	<target name="prepare-selenium-testcase-properties">
-		<get-testcase-property property.name="browser.type" />
-
-		<if>
-			<or>
-				<equals arg1="${browser.type}" arg2="android" />
-				<equals arg1="${browser.type}" arg2="androidchrome" />
-				<equals arg1="${browser.type}" arg2="iossafari" />
-			</or>
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					mobile.browser=true
-				</echo>
-			</then>
-		</if>
-
 		<get-testcase-property property.name="cmis.repository.type" />
 
 		<if>
@@ -6214,8 +6240,6 @@ if (ppstate.equals("normal")) {
 	</target>
 
 	<target name="record-test-generated-properties">
-		<fail message="Please set the property ${test.class}." unless="test.class" />
-
 		<delete failonerror="false" file="${test.ext.properties.file}" />
 
 		<if>
@@ -6223,6 +6247,7 @@ if (ppstate.equals("normal")) {
 			<then>
 				<antcall inheritAll="false" target="prepare-poshi-runner-properties">
 					<param name="test.base.dir.name" value="${test.base.dir.name}" />
+					<param name="test.class" value="${test.class}" />
 				</antcall>
 			</then>
 			<else>
@@ -6238,14 +6263,65 @@ if (ppstate.equals("normal")) {
 
 		<move file="portal-web/test.generated.properties" tofile="test.generated.properties" />
 
-		<loadfile failonerror="false" property="test.generated.properties.content" srcfile="test.generated.properties" />
+		<if>
+			<isset property="test.class" />
+			<then>
+				<loadfile failonerror="false" property="test.generated.properties.content" srcfile="test.generated.properties" />
 
-		<echo>##</echo>
-		<echo>## test.generated.properties</echo>
-		<echo>##</echo>
-		<echo></echo>
-		<echo>${test.generated.properties.content}</echo>
-		<echo></echo>
+				<get-poshi-class-name />
+
+				<if>
+					<contains string="${test.class}" substring="#" />
+					<then>
+						<get-poshi-method-name />
+					</then>
+				</if>
+
+				<beanshell>
+					<![CDATA[
+						import java.util.regex.Matcher;
+						import java.util.regex.Pattern;
+
+						StringBuilder sb = new StringBuilder();
+
+						sb.append("(");
+						sb.append(project.getProperty("poshi.class.name"));
+						sb.append("TestCase\\.(test");
+
+						String poshiMethodName = project.getProperty("poshi.method.name");
+
+						if (poshiMethodName != null) {
+							sb.append(poshiMethodName);
+							sb.append("\\.|");
+						}
+						else {
+							sb.append("[^\\.]*\\.|");
+						}
+
+						sb.append("all\\.).*)\\\n");
+
+						Pattern pattern = Pattern.compile(sb.toString());
+
+						Matcher matcher = pattern.matcher(project.getProperty("test.generated.properties.content"));
+
+						sb = new StringBuilder();
+
+						while (matcher.find()) {
+							sb.append(matcher.group());
+						}
+
+						project.setProperty("test.generated.properties.content", sb.toString());
+					]]>
+				</beanshell>
+
+				<echo>##</echo>
+				<echo>## test.generated.properties</echo>
+				<echo>##</echo>
+				<echo></echo>
+				<echo>${test.generated.properties.content}</echo>
+				<echo></echo>
+			</then>
+		</if>
 	</target>
 
 	<target name="record-test-plugin-names">
@@ -6633,41 +6709,11 @@ jdbc.default.password=${database.mysql.password}</echo>
 					<then>
 						<copy
 							file="portal-web/test-results/${poshi.runner.results.dir}/index.html"
-							tofile="portal-web/test-results/functional/report.html"
-						/>
-					</then>
-				</if>
-
-				<if>
-					<available file="portal-web/test-results/${poshi.runner.results.dir}/screenshots" />
-					<then>
-						<copy todir="portal-web/test-results/functional/screenshots">
-							<fileset dir="portal-web/test-results/${poshi.runner.results.dir}/screenshots" erroronmissingdir="false" />
-						</copy>
-					</then>
-				</if>
-
-				<if>
-					<and>
-						<available file="portal-web/test-results/functional/report.html" />
-						<equals arg1="${test.selenium.logger.enabled}" arg2="true" />
-					</and>
-					<then>
-						<copy
-							file="portal-web/test-results/functional/report.html"
 							tofile="${jenkins.shared.results.dir}/${job.name}/builds/${env.BUILD_NUMBER}/report.html"
 						/>
-					</then>
-				</if>
 
-				<if>
-					<and>
-						<available file="portal-web/test-results/functional/screenshots" />
-						<equals arg1="${test.save.screenshot}" arg2="true" />
-					</and>
-					<then>
 						<copy todir="${jenkins.shared.results.dir}/${job.name}/builds/${env.BUILD_NUMBER}/screenshots">
-							<fileset dir="portal-web/test-results/functional/screenshots" erroronmissingdir="false" />
+							<fileset dir="portal-web/test-results/${poshi.runner.results.dir}/screenshots" erroronmissingdir="false" />
 						</copy>
 					</then>
 				</if>
@@ -6705,6 +6751,8 @@ jdbc.default.password=${database.mysql.password}</echo>
 				<move file="${jenkins.results.xml.file}" todir="${project.dir}/portal-web/test-results/functional" />
 			</then>
 		</if>
+
+		<antcall target="clean-up-mobile-device" />
 	</target>
 
 	<target name="run-simple-server">
@@ -6993,8 +7041,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 				<var name="app.server.bundle.index" unset="true" />
 			</then>
 		</if>
-
-		<antcall target="clean-up-mobile-device" />
 
 		<antcall target="clean-up-selenium-driver" />
 

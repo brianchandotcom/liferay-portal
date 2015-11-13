@@ -26,7 +26,9 @@ String fieldCss = AUIUtil.buildCss("field-wrapper", false, first, last, cssClass
 			<liferay-ui:message key="<%= label %>" localizeKey="<%= localizeLabel %>" />
 
 			<c:if test="<%= required %>">
-				<span class="label-required"><liferay-ui:message key="required" /></span>
+				<span class="icon-asterisk text-warning">
+					<span class="hide-accessible"><liferay-ui:message key="required" /></span>
+				</span>
 			</c:if>
 
 			<c:if test="<%= Validator.isNotNull(helpMessage) %>">

@@ -317,8 +317,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		// LPS-59076
 
 		if (_checkModulesServiceUtil) {
-			if (!fileName.endsWith("MessageListener.java") &&
-				content.contains("@Component") &&
+			if (content.contains("@Component") &&
 				content.contains("ServiceUtil.")) {
 
 				processErrorMessage(
@@ -607,6 +606,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		className = className.substring(0, pos);
 
 		String packagePath = ToolsUtil.getPackagePath(file);
+
+		if (!content.contains(
+				"package " + packagePath + StringPool.SEMICOLON)) {
+
+			processErrorMessage(
+				fileName, "Incorrect package path: " + fileName);
+		}
 
 		if (packagePath.endsWith(".model")) {
 			if (content.contains("extends " + className + "Model")) {
@@ -934,24 +940,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		// LPS-48156
 
 		newContent = checkPrincipalException(newContent);
-
-		// LPS-58529
-
-		if (portalSource && !fileName.endsWith("ResourceBundleUtil.java")) {
-			if (newContent.contains("ResourceBundle.getBundle(")) {
-				processErrorMessage(
-					fileName,
-					"Use ResourceBundleUtil.getBundle instead of " +
-						"ResourceBundle.getBundle: " + fileName);
-			}
-
-			if (newContent.contains("resourceBundle.getString(")) {
-				processErrorMessage(
-					fileName,
-					"Use ResourceBundleUtil.getString instead of " +
-						"resourceBundle.getString: " + fileName);
-			}
-		}
 
 		newContent = getCombinedLinesContent(
 			newContent, _combinedLinesPattern1);
@@ -1578,6 +1566,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				checkStringBundler(trimmedLine, fileName, lineCount);
 
 				checkEmptyCollection(trimmedLine, fileName, lineCount);
+
+				// LPS-58529
+
+				checkResourceUtil(line, fileName, lineCount);
 
 				if (trimmedLine.startsWith("* @deprecated") &&
 					_addMissingDeprecationReleaseVersion) {

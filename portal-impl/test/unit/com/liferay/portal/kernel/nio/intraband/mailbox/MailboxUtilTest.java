@@ -156,6 +156,8 @@ public class MailboxUtilTest {
 
 		recorderUncaughtExceptionHandler.await(10 * Time.MINUTE);
 
+		reaperThread.join();
+
 		Assert.assertFalse(
 			"Reaper thread " + reaperThread +
 				" failed to join back after waiting for 10 mins",

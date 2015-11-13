@@ -1,13 +1,14 @@
 dependencies {
+	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
 	compile group: "com.liferay.portal", name: "util-taglib", version: liferay.portalVersion
 	compile group: "javax.servlet.jsp", name: "jsp-api", version: "2.1"
 	compile project(":apps:calendar:calendar-api")
 	compile project(":apps:calendar:calendar-service")
+	compile project(":portal:portal-upgrade")
 
 	provided group: "com.liferay.portal", name: "util-java", version: liferay.portalVersion
 }
 
 liferay {
-	autoUpdateXml = true
 	deployDir = file("${liferayHome}/osgi/modules")
 }

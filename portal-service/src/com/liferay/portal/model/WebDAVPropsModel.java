@@ -40,7 +40,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface WebDAVPropsModel extends AttachedModel, BaseModel<WebDAVProps>,
-	MVCCModel {
+	MVCCModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -96,6 +96,7 @@ public interface WebDAVPropsModel extends AttachedModel, BaseModel<WebDAVProps>,
 	 *
 	 * @return the company ID of this web d a v props
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -103,6 +104,7 @@ public interface WebDAVPropsModel extends AttachedModel, BaseModel<WebDAVProps>,
 	 *
 	 * @param companyId the company ID of this web d a v props
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**

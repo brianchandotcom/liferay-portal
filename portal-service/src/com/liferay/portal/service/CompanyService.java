@@ -83,13 +83,6 @@ public interface CompanyService extends BaseService {
 	public void deleteLogo(long companyId) throws PortalException;
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
-	/**
 	* Returns the company with the primary key.
 	*
 	* @param companyId the primary key of the company
@@ -150,6 +143,13 @@ public interface CompanyService extends BaseService {
 		java.lang.String webId) throws PortalException;
 
 	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	/**
 	* Removes the values that match the keys of the company's preferences.
 	*
 	* This method is called by {@link
@@ -163,13 +163,6 @@ public interface CompanyService extends BaseService {
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	public void removePreferences(long companyId, java.lang.String[] keys)
 		throws PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	/**
 	* Updates the company with additional account information.

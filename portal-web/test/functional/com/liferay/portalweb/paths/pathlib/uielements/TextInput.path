@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>AIM</td>
-	<td>//div[label[contains(.,'AIM')]]//input[@type='text']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ANSWER</td>
 	<td>//div[label[contains(.,'Answer')]]/input[@type='text']</td>
 	<td></td>
@@ -45,7 +40,7 @@
 </tr>
 <tr>
 	<td>CUSTOM_FIELD</td>
-	<td>//input[contains(@name,'ExpandoAttribute')] | //textarea[contains(@name,'ExpandoAttribute')]</td>
+	<td>//input[@type='text' and contains(@name,'ExpandoAttribute')] | //textarea[contains(@name,'ExpandoAttribute')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -90,7 +85,7 @@
 </tr>
 <tr>
 	<td>EMAIL_ADDRESS</td>
-	<td>//div[label[contains(.,'Email Address')]]/input[@type='text']</td>
+	<td>//div[label[contains(.,'Email Address')]]/input[@type='text'] | //div[label[contains(.,'Dirección de correo')]]/input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>
@@ -139,6 +134,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRIENDLY_URL</td>
+	<td>//input[contains(@id,'friendlyURL')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FROM</td>
 	<td>//div[label[contains(.,'From')]]//input[@type='number']</td>
 	<td></td>
@@ -149,8 +149,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ICQ</td>
-	<td>//div[label[contains(.,'ICQ')]]//input[@type='text']</td>
+	<td>IMAGE_URL</td>
+	<td>//div[label[contains(.,'Image URL')]]//input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>
@@ -264,11 +264,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MYSPACE</td>
-	<td>//div[label[contains(.,'MySpace')]]//input[@type='text']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>NAME</td>
 	<td>//div[label[contains(.,'Name')]]//input[@type='text'] | //input[contains(@id,'name')]</td>
 	<td></td>
@@ -305,7 +300,7 @@
 </tr>
 <tr>
 	<td>PASSWORD</td>
-	<td>//div[label[contains(.,'Password')]]/input</td>
+	<td>//div[label[contains(.,'Password')]]/input | //div[label[contains(.,'Contraseña')]]/input</td>
 	<td></td>
 </tr>
 <tr>
@@ -331,6 +326,16 @@
 <tr>
 	<td>POSTAL_CODE</td>
 	<td>//div[label[contains(.,'Postal Code')]]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRIVATE_VIRTUAL_HOST_URL</td>
+	<td>//input[contains(@id,'privateVirtualHost')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLIC_VIRTUAL_HOST_URL</td>
+	<td>//input[contains(@id,'publicVirtualHost')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -470,11 +475,6 @@
 </tr>
 <tr>
 	<td>YIM</td>
-	<td>//div[label[contains(.,'YIM')]]//input[@type='text']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>YM</td>
 	<td>//div[label[contains(.,'YIM')]]//input[@type='text']</td>
 	<td></td>
 </tr>

@@ -58,13 +58,13 @@ public class ResourceBlockServiceWrapper implements ResourceBlockService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the OSGi service identifier.
 	*
-	* @return the Spring bean ID for this bean
+	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _resourceBlockService.getBeanIdentifier();
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _resourceBlockService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -100,16 +100,6 @@ public class ResourceBlockServiceWrapper implements ResourceBlockService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_resourceBlockService.removeIndividualScopePermission(companyId,
 			groupId, name, primKey, roleId, actionId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_resourceBlockService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

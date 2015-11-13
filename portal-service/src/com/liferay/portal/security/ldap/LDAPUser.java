@@ -31,10 +31,6 @@ import java.util.Map;
  */
 public class LDAPUser {
 
-	public String getAimSn() {
-		return _contact.getAimSn();
-	}
-
 	public Date getBirthday() {
 		return _contact.getBirthday();
 	}
@@ -79,10 +75,6 @@ public class LDAPUser {
 		return _groupIds;
 	}
 
-	public String getIcqSn() {
-		return _contact.getIcqSn();
-	}
-
 	public String getJabberSn() {
 		return _contact.getJabberSn();
 	}
@@ -105,10 +97,6 @@ public class LDAPUser {
 
 	public String getMiddleName() {
 		return _user.getMiddleName();
-	}
-
-	public String getMySpaceSn() {
-		return _contact.getMySpaceSn();
 	}
 
 	public String getOpenId() {
@@ -191,10 +179,6 @@ public class LDAPUser {
 		return _userGroupRoles;
 	}
 
-	public String getYmSn() {
-		return _contact.getYmSn();
-	}
-
 	public boolean isAutoPassword() {
 		return _autoPassword;
 	}
@@ -229,10 +213,6 @@ public class LDAPUser {
 
 	public boolean isUpdatePortrait() {
 		return _updatePortrait;
-	}
-
-	public void setAimSn(String aimSn) {
-		_contact.setAimSn(aimSn);
 	}
 
 	public void setAutoPassword(boolean autoPassword) {
@@ -289,10 +269,6 @@ public class LDAPUser {
 		_groupIds = groupIds;
 	}
 
-	public void setIcqSn(String icqSn) {
-		_contact.setIcqSn(icqSn);
-	}
-
 	public void setJabberSn(String jabberSn) {
 		_contact.setJabberSn(jabberSn);
 	}
@@ -319,10 +295,6 @@ public class LDAPUser {
 
 	public void setMiddleName(String middleName) {
 		_user.setMiddleName(middleName);
-	}
-
-	public void setMySpaceSn(String mySpaceSn) {
-		_contact.setMySpaceSn(mySpaceSn);
 	}
 
 	public void setOpenId(String openId) {
@@ -417,10 +389,6 @@ public class LDAPUser {
 
 	public void setUserGroupRoles(List<UserGroupRole> userGroupRoles) {
 		_userGroupRoles = userGroupRoles;
-	}
-
-	public void setYmSn(String ymSn) {
-		_contact.setYmSn(ymSn);
 	}
 
 	private boolean _autoPassword;

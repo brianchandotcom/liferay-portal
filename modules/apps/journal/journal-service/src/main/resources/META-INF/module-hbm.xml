@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="false" auto-import="false">
+	<import class="com.liferay.journal.model.JournalArticle" />
+	<import class="com.liferay.journal.model.JournalArticleImage" />
+	<import class="com.liferay.journal.model.JournalArticleResource" />
+	<import class="com.liferay.journal.model.JournalContentSearch" />
+	<import class="com.liferay.journal.model.JournalFeed" />
+	<import class="com.liferay.journal.model.JournalFolder" />
+	<class name="com.liferay.journal.model.impl.JournalArticleImpl" table="JournalArticle">
+		<id name="id" column="id_" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
+		<property name="resourcePrimKey" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="folderId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="treePath" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="articleId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="version" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="urlTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property name="content" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property name="DDMStructureKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="DDMTemplateKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="layoutUuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="displayDate" type="org.hibernate.type.TimestampType" />
+		<property name="expirationDate" type="org.hibernate.type.TimestampType" />
+		<property name="reviewDate" type="org.hibernate.type.TimestampType" />
+		<property name="indexable" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="smallImage" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="smallImageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="smallImageURL" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="statusDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="com.liferay.journal.model.impl.JournalArticleImageImpl" table="JournalArticleImage">
+		<id name="articleImageId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="articleId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="version" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="elInstanceId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="elName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="languageId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="tempImage" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+	</class>
+	<class name="com.liferay.journal.model.impl.JournalArticleResourceImpl" table="JournalArticleResource">
+		<id name="resourcePrimKey" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="articleId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.liferay.journal.model.impl.JournalContentSearchImpl" table="JournalContentSearch">
+		<id name="contentSearchId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="privateLayout" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="layoutId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="portletId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="articleId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.liferay.journal.model.impl.JournalFeedImpl" table="JournalFeed">
+		<id name="id" column="id_" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="feedId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="DDMStructureKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="DDMTemplateKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="DDMRendererTemplateKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="delta" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="orderByCol" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="orderByType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="targetLayoutFriendlyUrl" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="targetPortletId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="contentField" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="feedFormat" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="feedVersion" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="com.liferay.journal.model.impl.JournalFolderImpl" table="JournalFolder">
+		<id name="folderId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="parentFolderId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="treePath" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="restrictionType" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="statusDate" type="org.hibernate.type.TimestampType" />
+	</class>
+</hibernate-mapping>

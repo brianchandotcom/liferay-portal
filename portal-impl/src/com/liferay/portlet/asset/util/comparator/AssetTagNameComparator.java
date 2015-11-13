@@ -32,6 +32,10 @@ public class AssetTagNameComparator extends OrderByComparator<AssetTag> {
 		this(true, false);
 	}
 
+	public AssetTagNameComparator(boolean ascending) {
+		this(ascending, false);
+	}
+
 	public AssetTagNameComparator(boolean ascending, boolean caseSensitive) {
 		_ascending = ascending;
 		_caseSensitive = caseSensitive;

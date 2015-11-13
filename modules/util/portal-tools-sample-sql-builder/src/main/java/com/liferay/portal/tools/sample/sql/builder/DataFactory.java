@@ -56,6 +56,7 @@ import com.liferay.journal.model.impl.JournalArticleModelImpl;
 import com.liferay.journal.model.impl.JournalArticleResourceModelImpl;
 import com.liferay.journal.model.impl.JournalContentSearchModelImpl;
 import com.liferay.journal.social.JournalActivityKeys;
+import com.liferay.login.web.constants.LoginPortletKeys;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
@@ -1331,6 +1332,7 @@ public class DataFactory {
 			DDLRecordSetConstants.MIN_DISPLAY_ROWS_DEFAULT);
 		ddlRecordSetModel.setScope(
 			DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS);
+		ddlRecordSetModel.setTypeSettings(StringPool.BLANK);
 		ddlRecordSetModel.setLastPublishDate(new Date());
 
 		return ddlRecordSetModel;
@@ -2000,7 +2002,9 @@ public class DataFactory {
 	public List<LayoutModel> newPublicLayoutModels(long groupId) {
 		List<LayoutModel> layoutModels = new ArrayList<>();
 
-		layoutModels.add(newLayoutModel(groupId, "welcome", "58,", "47,"));
+		layoutModels.add(
+			newLayoutModel(
+				groupId, "welcome", LoginPortletKeys.LOGIN + ",", "47,"));
 		layoutModels.add(
 			newLayoutModel(groupId, "blogs", "", BlogsPortletKeys.BLOGS + ","));
 		layoutModels.add(
@@ -2009,10 +2013,9 @@ public class DataFactory {
 				DLPortletKeys.DOCUMENT_LIBRARY + ","));
 		layoutModels.add(
 			newLayoutModel(
-				groupId, "forums", "",
-				MBPortletKeys.MESSAGE_BOARDS + ","));
+				groupId, "forums", "", MBPortletKeys.MESSAGE_BOARDS + ","));
 		layoutModels.add(
-			newLayoutModel(groupId, "wiki", "", "36_WAR_wikiweb,"));
+			newLayoutModel(groupId, "wiki", "", WikiPortletKeys.WIKI + ","));
 
 		return layoutModels;
 	}

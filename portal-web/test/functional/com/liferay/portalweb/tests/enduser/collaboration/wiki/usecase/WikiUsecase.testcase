@@ -444,35 +444,6 @@
 		</execute>
 	</command>
 
-	<command name="ViewCKEditorResizerAfterEditing" priority="3">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiPage#gotoAllPagesPG" />
-
-		<execute macro="WikiPage#addPG">
-			<var name="viewCKEditorResizer" value="true" />
-			<var name="viewFormat" value="true" />
-			<var name="wikiFormat" value="Creole" />
-			<var name="wikiPageContent" value="Wiki Page Content" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Wiki Test Page" />
-		</execute>
-
-		<execute macro="WikiPage#gotoAllPagesPG" />
-
-		<execute macro="WikiPage#viewCKEditorResizer">
-			<var name="changeWikiFormat" value="true" />
-			<var name="newFormat" value="HTML" />
-			<var name="oldFormat" value="Creole" />
-			<var name="wikiPageTitle" value="Wiki Page Title" />
-		</execute>
-	</command>
-
 	<command name="ViewNoWikiXSSviaAddPage" priority="3">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Wiki Test Page" />

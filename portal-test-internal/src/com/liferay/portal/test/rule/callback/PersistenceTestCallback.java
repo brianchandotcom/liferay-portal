@@ -35,7 +35,7 @@ public class PersistenceTestCallback extends BaseTestCallback<Object, Object> {
 		new PersistenceTestCallback();
 
 	@Override
-	public void doAfterMethod(
+	public void afterMethod(
 		Description description, Object modelListeners, Object target) {
 
 		Object instance = ReflectionTestUtil.getFieldValue(
@@ -48,7 +48,7 @@ public class PersistenceTestCallback extends BaseTestCallback<Object, Object> {
 	}
 
 	@Override
-	public Object doBeforeMethod(Description description, Object target) {
+	public Object beforeMethod(Description description, Object target) {
 		initialize();
 
 		Object instance = ReflectionTestUtil.getFieldValue(

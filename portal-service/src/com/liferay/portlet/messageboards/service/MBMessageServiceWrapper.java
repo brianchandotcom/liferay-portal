@@ -165,16 +165,6 @@ public class MBMessageServiceWrapper implements MBMessageService,
 		_mbMessageService.emptyMessageAttachments(messageId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _mbMessageService.getBeanIdentifier();
-	}
-
 	@Override
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getCategoryMessages(
 		long groupId, long categoryId, int status, int start, int end)
@@ -256,6 +246,16 @@ public class MBMessageServiceWrapper implements MBMessageService,
 			threadView, includePrevAndNext);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _mbMessageService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public int getThreadAnswersCount(long groupId, long categoryId,
 		long threadId) {
@@ -294,16 +294,6 @@ public class MBMessageServiceWrapper implements MBMessageService,
 		java.lang.String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_mbMessageService.restoreMessageAttachmentFromTrash(messageId, fileName);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_mbMessageService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

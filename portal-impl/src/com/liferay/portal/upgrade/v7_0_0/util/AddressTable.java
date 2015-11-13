@@ -47,8 +47,7 @@ public class AddressTable {
 		{"countryId", Types.BIGINT},
 		{"typeId", Types.BIGINT},
 		{"mailing", Types.BOOLEAN},
-		{"primary_", Types.BOOLEAN},
-		{"lastPublishDate", Types.TIMESTAMP}
+		{"primary_", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -94,10 +93,8 @@ TABLE_COLUMNS_MAP.put("mailing", Types.BOOLEAN);
 
 TABLE_COLUMNS_MAP.put("primary_", Types.BOOLEAN);
 
-TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
-
 }
-	public static final String TABLE_SQL_CREATE = "create table Address (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,addressId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,street1 VARCHAR(75) null,street2 VARCHAR(75) null,street3 VARCHAR(75) null,city VARCHAR(75) null,zip VARCHAR(75) null,regionId LONG,countryId LONG,typeId LONG,mailing BOOLEAN,primary_ BOOLEAN,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table Address (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,addressId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,street1 VARCHAR(75) null,street2 VARCHAR(75) null,street3 VARCHAR(75) null,city VARCHAR(75) null,zip VARCHAR(75) null,regionId LONG,countryId LONG,typeId LONG,mailing BOOLEAN,primary_ BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table Address";
 
@@ -105,7 +102,7 @@ TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 		"create index IX_923BD178 on Address (companyId, classNameId, classPK, mailing)",
 		"create index IX_9226DBB4 on Address (companyId, classNameId, classPK, primary_)",
 		"create index IX_5BC8B0D4 on Address (userId)",
-		"create index IX_8FCB620E on Address (uuid_, companyId)"
+		"create index IX_8FCB620E on Address (uuid_[$COLUMN_LENGTH:75$], companyId)"
 	};
 
 }

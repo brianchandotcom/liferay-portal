@@ -225,16 +225,6 @@ public class DLContentLocalServiceWrapper implements DLContentLocalService,
 		return _dlContentLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _dlContentLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.portlet.documentlibrary.model.DLContent getContent(
 		long companyId, long repositoryId, java.lang.String path)
@@ -317,6 +307,16 @@ public class DLContentLocalServiceWrapper implements DLContentLocalService,
 		return _dlContentLocalService.getDataBlobModel(primaryKey);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _dlContentLocalService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
@@ -329,16 +329,6 @@ public class DLContentLocalServiceWrapper implements DLContentLocalService,
 		java.lang.String path, java.lang.String version) {
 		return _dlContentLocalService.hasContent(companyId, repositoryId, path,
 			version);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_dlContentLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

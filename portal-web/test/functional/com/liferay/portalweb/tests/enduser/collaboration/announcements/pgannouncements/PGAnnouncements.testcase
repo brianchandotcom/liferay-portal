@@ -25,6 +25,8 @@
 	</tear-down>
 
 	<command name="AddAnnouncementsEntry" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<var name="announcementType" value="General" />
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
@@ -225,6 +227,8 @@
 	</command>
 
 	<command name="DeleteAnnouncementsEntry" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />
@@ -258,6 +262,8 @@
 	</command>
 
 	<command name="EditAnnouncementsEntry" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryContentEdit" value="Announcements Entry Content Edit" />
@@ -302,6 +308,8 @@
 	</command>
 
 	<command name="HideAnnouncementsEntry" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
 		<var name="entryTitle" value="Announcements Entry Title" />

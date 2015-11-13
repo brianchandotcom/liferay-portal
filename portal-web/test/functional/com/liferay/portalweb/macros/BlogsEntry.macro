@@ -316,6 +316,8 @@
 
 		<execute function="Type" locator1="PGBlogsAdd#TITLE_FIELD" value1="${entryTitle}" />
 
+		<execute function="Click" locator1="Button#COG" />
+
 		<var locator="PGBlogsAdd#DISPLAY_DATE_DATE_HOUR" name="displayDateHour" />
 		<var name="displayDateHourLength" value="${displayDateHour?length()}" />
 
@@ -459,8 +461,6 @@
 					<var name="defaultURL" value="${defaultURL}" />
 					<var name="nodePort" value="${nodePort}" />
 					<var name="pageName" value="${pageName}" />
-					<var name="soDashboard" value="${soDashboard}" />
-					<var name="soPage" value="${soPage}" />
 					<var name="virtualHostsURL" value="${virtualHost1}" />
 				</execute>
 			</then>
@@ -469,8 +469,6 @@
 					<var name="defaultURL" value="${defaultURL}" />
 					<var name="nodePort" value="${nodePort}" />
 					<var name="pageName" value="${pageName}" />
-					<var name="soDashboard" value="${soDashboard}" />
-					<var name="soPage" value="${soPage}" />
 				</execute>
 			</else>
 		</if>
@@ -797,16 +795,18 @@
 	</command>
 
 	<command name="flagPG">
-		<var name="key_entryTitle" value="${entryTitle}" />
-
 		<execute function="AssertClick" locator1="PGBlogs#ENTRY_FLAG" value1="Flag" />
 
 		<execute function="AssertTextEquals" locator1="PGBlogs#REPORT_INAPPROPRIATE_CONTENT_HEADER" value1="Report Inappropriate Content" />
 		<execute function="AssertTextEquals" locator1="PGBlogs#REPORT_INAPPROPRIATE_CONTENT_WARNING" value1="You are about to report a violation of our Terms of Use. All reports are strictly confidential." />
 		<execute function="AssertTextEquals" locator1="PGBlogs#REPORT_INAPPROPRIATE_CONTENT_WARNING_TERMS_OF_USE_LINK" value1="Terms of Use" />
+
 		<execute function="Select" locator1="PGBlogs#REPORT_INAPPROPRIATE_CONTENT_REASON_SELECT" value1="${flagReason}" />
+
 		<execute function="AssertClick" locator1="PGBlogs#REPORT_INAPPROPRIATE_CONTENT_SAVE_BUTTON" value1="Save" />
+
 		<execute function="AssertTextEquals" locator1="PGBlogs#REPORT_INAPPROPRIATE_CONTENT_SUCCESS_MESSAGE" value1="Although we cannot disclose our final decision, we do review every report and appreciate your effort to make sure Liferay is a safe environment for everyone." />
+
 		<execute function="Click" locator1="PGBlogs#REPORT_INAPPROPRIATE_CONTENT_CLOSE_BUTTON" />
 	</command>
 
@@ -852,11 +852,16 @@
 	<command name="moveToRecycleBinDraftCP">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="AssertTextEquals" locator1="CPBlogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
-		<execute function="AssertTextEquals" locator1="CPBlogs#ENTRY_TABLE_STATUS" value1="Draft" />
-		<execute function="Click" locator1="CPBlogs#ENTRY_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="CPBlogs#ENTRY_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPBlogs#SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType} ${entryTitle} was moved to the Recycle Bin. Undo" />
+		<execute function="AssertTextEquals" locator1="Blogs#ICON_VIEW_ENTRY_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="Blogs#ICON_VIEW_ENTRY_STATUS" value1="Draft" />
+
+		<execute function="Click" locator1="Blogs#ICON_VIEW_ENTRY_OPTIONS_DROPDOWN" />
+
+		<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+
+		<var name="key_assetType" value="${assetType}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#RECYCLE_BIN_SUCCESS" value1="The ${assetType} ${entryTitle} was moved to the Recycle Bin. Undo" />
 	</command>
 
 	<command name="moveToRecycleBinNoPermissionPG">
@@ -1056,7 +1061,7 @@
 
 		<execute function="KeyPress" locator1="NavBar#BASIC_SEARCH_FIELD" value1="\RETURN" />
 
-		<execute function="AssertTextEquals" locator1="Message#EMPTY" value1="No entries were found." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No entries were found." />
 		<execute function="AssertElementNotPresent" locator1="Blogs#ICON_VIEW_ENTRY_TITLE" value1="${entryTitle}" />
 	</command>
 
@@ -1126,14 +1131,17 @@
 		</execute>
 
 		<if>
-			<condition function="IsElementPresent#isVisible" locator1="Blogs#ENTRY_TABLE_ALL_CHECKBOX" />
+			<condition function="IsElementPresent#isVisible" locator1="Message#EMPTY_INFO" value1="No entries were found." />
 			<then>
+				<execute macro="Blogs#viewNoEntryCP" />
+			</then>
+			<else>
 				<execute function="Click" locator1="Blogs#ENTRY_TABLE_ALL_CHECKBOX" />
 
 				<execute function="Click" locator1="Icon#DELETE" />
 
 				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="moved to the Recycle Bin. Undo" />
-			</then>
+			</else>
 		</if>
 
 		<execute macro="Page#gotoContentCP">
@@ -1153,6 +1161,7 @@
 	</command>
 
 	<command name="viewAbstractEntryViaAPPG">
+		<var name="key_assetContent" value="${entryContent}" />
 		<var name="key_assetTitle" value="${assetTitle}" />
 
 		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
@@ -1245,7 +1254,7 @@
 	</command>
 
 	<command name="viewDefaultCP">
-		<execute function="AssertTextEquals" locator1="Message#INFO_5" value1="No entries were found." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No entries were found." />
 		<execute function="AssertElementNotPresent" locator1="Blogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
 	</command>
 
@@ -1298,13 +1307,7 @@
 	</command>
 
 	<command name="viewDisabledSocialBookmarkSites">
-		<execute function="AssertClick" locator1="Button#SHARE" value1="Share" />
-
-		<for list="${socialBookmarkSites}" param="socialBookmarkSite">
-			<var name="key_socialBookmarkSite" value="${socialBookmarkSite}" />
-
-			<execute function="AssertElementNotPresent" locator1="SocialBookmarks#SOCIAL_BOOKMARKS_SITE_LINK" />
-		</for>
+		<execute function="AssertElementNotPresent" locator1="Button#SHARE" value1="Share" />
 	</command>
 
 	<command name="viewEditLinkPG">
@@ -1385,10 +1388,11 @@
 	</command>
 
 	<command name="viewEntryViaAPPG">
+		<var name="key_assetContent" value="${entryContent}" />
 		<var name="key_assetTitle" value="${assetTitle}" />
 
 		<execute function="AssertClick" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
-		<execute function="AssertTextEquals" locator1="APAsset#ASSET_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="APAsset#ASSET_TITLE_HEADER" value1="${entryTitle}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="APAsset#ASSET_CONTENT" value1="${entryContent}" />
 	</command>
 
@@ -1535,6 +1539,7 @@
 	</command>
 
 	<command name="viewPGViaAP">
+		<var name="key_assetContent" value="${entryContent}" />
 		<var name="key_assetTitle" value="${entryTitle}" />
 
 		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
@@ -1613,6 +1618,7 @@
 	<command name="viewRelatedAssetPG">
 		<var name="key_assetTitle" value="${assetTitle}" />
 		<var name="key_assetType" value="${assetType}" />
+		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
 		<execute function="AssertTextEquals" locator1="AssetRelatedAssets#HEADER" value1="Related Assets:" />
@@ -1621,7 +1627,9 @@
 	</command>
 
 	<command name="viewRSS">
-		<execute function="Open" locator1="http://localhost:8080/web/guest/blogs-page/-/blogs/rss" />
+		<execute function="AssertClick" locator1="Link#RSS" value1="RSS" />
+
+		<execute function="SelectWindow" locator1="title=Liferay" />
 
 		<execute function="AssertTextEquals" locator1="Blogs#RSS_FEED_TITLE" value1="Liferay" />
 		<execute function="AssertTextEquals" locator1="Blogs#RSS_FEED_SUBTITLE" value1="Liferay" />
@@ -1840,14 +1848,12 @@
 
 		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="BlogsEntry#CONTENT_ABSTRACT" value1="${entryAbstractDescription}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="BlogsEntry#READ_MORE" value1="Read More" />
 	</command>
 
 	<command name="viewWithTitleDisplayTemplatePG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="BlogsEntry#READ_MORE" value1="Read More" />
 		<execute function="AssertTextNotPresent" locator1="BlogsEntry#CONTENT" value1="${entryContent}" />
 	</command>
 

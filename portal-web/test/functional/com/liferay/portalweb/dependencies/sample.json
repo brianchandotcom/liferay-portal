@@ -1,0 +1,5077 @@
+{
+  "busyExecutors" : 25,
+  "computer" : [
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "master",
+      "executors" : [
+        {
+
+        },
+        {
+
+        },
+        {
+
+        },
+        {
+
+        },
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : false,
+      "launchSupported" : true,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 2054144000,
+          "availableSwapSpace" : 1931210752,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (amd64)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 0
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 164000829440
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 164000829440
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : 0
+        }
+      },
+      "numExecutors" : 5,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-12-171",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 7894499328,
+          "availableSwapSpace" : 1951993856,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 81
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 143991209984
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 143991209984
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -146
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-12-172",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 6744981504,
+          "availableSwapSpace" : 1925398528,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 59
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 134127972352
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 134127972352
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -199
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-12-173",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 2564505600,
+          "availableSwapSpace" : 1953394688,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 81
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 134828539904
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 134828539904
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -149
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-12-174",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 2725974016,
+          "availableSwapSpace" : 1920606208,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 76
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 142343700480
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 142343770112
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -155
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-12-175",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 2243682304,
+          "availableSwapSpace" : 1933336576,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 77
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 133671346176
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 133671346176
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -146
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-12-176",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : false,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 4229271552,
+          "availableSwapSpace" : 1898827776,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 75
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 133900824576
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 133900824576
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -166
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-12-177",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 4051120128,
+          "availableSwapSpace" : 1941192704,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 77
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 132995231744
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 132995231744
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -137
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-12-178",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : false,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 1046298624,
+          "availableSwapSpace" : 1941630976,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 76
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 142779457536
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 142779494400
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -147
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-12-179",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : false,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 3876536320,
+          "availableSwapSpace" : 1926017024,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 76
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 144008253440
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 144008253440
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -174
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-12-180",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 8007000064,
+          "availableSwapSpace" : 1963352064,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 74
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 133714718720
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 133714718720
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -146
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-12-181",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : false,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 3556425728,
+          "availableSwapSpace" : 1938280448,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 76
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 142727364608
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 142727364608
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -173
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-12-182",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 6996996096,
+          "availableSwapSpace" : 1981702144,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 77
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 143800619008
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 143800619008
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -144
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-12-183",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : false,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 3902443520,
+          "availableSwapSpace" : 1931952128,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 76
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 133536907264
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 133536907264
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -138
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-12-184",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 4341391360,
+          "availableSwapSpace" : 1282048,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 76
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 133635571712
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 133635571712
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -138
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-12-185",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 7578206208,
+          "availableSwapSpace" : 1979109376,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 76
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 133913194496
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 133913194496
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -137
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-12-186",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 8164958208,
+          "availableSwapSpace" : 2008412160,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 77
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 144875077632
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 144875077632
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -140
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-12-187",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : false,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 3897389056,
+          "availableSwapSpace" : 1928253440,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 77
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 134768427008
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 134768427008
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -142
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-12-188",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 3978403840,
+          "availableSwapSpace" : 1937481728,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 74
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 134680215552
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 134680215552
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -140
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-12-189",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 6365114368,
+          "availableSwapSpace" : 1926623232,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 74
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 133105672192
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 133105672192
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -141
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-12-190",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 6374883328,
+          "availableSwapSpace" : 1905504256,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 75
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 134087966720
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 134087966720
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -140
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-206",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : false,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 3796795392,
+          "availableSwapSpace" : 1937354752,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 73
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 133681680384
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 133681680384
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -138
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-207",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 4365160448,
+          "availableSwapSpace" : 7528448,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 74
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 134590480384
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 134590480384
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -138
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-208",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 7131136000,
+          "availableSwapSpace" : 2004783104,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 75
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 143489581056
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 143489581056
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -138
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-209",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 3880026112,
+          "availableSwapSpace" : 1937969152,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 74
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 133754904576
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 133754904576
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -137
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-210",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 7109738496,
+          "availableSwapSpace" : 2010808320,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 71
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 144068292608
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 144068292608
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -139
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-211",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : false,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 4382486528,
+          "availableSwapSpace" : 1954963456,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 73
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 134000590848
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 134000590848
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -139
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-212",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 7154130944,
+          "availableSwapSpace" : 1985290240,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 74
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 143800381440
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 143800381440
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -139
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-213",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : false,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 4257316864,
+          "availableSwapSpace" : 1957847040,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 74
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 134797852672
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 134797852672
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -152
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-214",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 7158165504,
+          "availableSwapSpace" : 2019504128,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 74
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 143735468032
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 143735468032
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -143
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-215",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : false,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 2523648000,
+          "availableSwapSpace" : 1852231680,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 74
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 142247014400
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 142247075840
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -158
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-216",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 3783073792,
+          "availableSwapSpace" : 1953239040,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 72
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 134325276672
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 134325276672
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -142
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-217",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 4083441664,
+          "availableSwapSpace" : 1938255872,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 64
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 133800280064
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 133800280064
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -141
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-218",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 7779381248,
+          "availableSwapSpace" : 2046447616,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 72
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 143585878016
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 143585878016
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -140
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-219",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 7732850688,
+          "availableSwapSpace" : 1341186048,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 51
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 134545670144
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 134545670144
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -143
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-220",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 4092305408,
+          "availableSwapSpace" : 1909694464,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 73
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 134087577600
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 134087577600
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -150
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-221",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 6834577408,
+          "availableSwapSpace" : 1961426944,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 71
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 133628305408
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 133628305408
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -145
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-222",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 7701901312,
+          "availableSwapSpace" : 1966837760,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 73
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 133818126336
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 133818126336
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -143
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-223",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : false,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 2475290624,
+          "availableSwapSpace" : 1907585024,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 72
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 142747926528
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 142747926528
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -171
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-224",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : false,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 4118573056,
+          "availableSwapSpace" : 1901801472,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 70
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 133256462336
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 133256462336
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -189
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+        {
+
+        },
+        {
+
+        },
+        {
+
+        }
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-225",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : false,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 2144432128,
+          "availableSwapSpace" : 1916370944,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 70
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 143234842624
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 143234908160
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -175
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-226",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 3997188096,
+          "availableSwapSpace" : 1964982272,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 70
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 134055645184
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 134055645184
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -147
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-227",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 7749988352,
+          "availableSwapSpace" : 2031366144,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 61
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 145437720576
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 145437720576
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -147
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-228",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : false,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 2412199936,
+          "availableSwapSpace" : 1927385088,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 68
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 142917189632
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 142917189632
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -182
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-229",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 4476805120,
+          "availableSwapSpace" : 1946828800,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 69
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 133809819648
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 133809819648
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -153
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-230",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 7748993024,
+          "availableSwapSpace" : 1982111744,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 65
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 133962694656
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 133962694656
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -155
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-231",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 4091187200,
+          "availableSwapSpace" : 1963847680,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 66
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 134882455552
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 134882455552
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -155
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-232",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 5790961664,
+          "availableSwapSpace" : 1948737536,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 65
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 133900386304
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 133900386304
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -151
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-233",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : false,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 4538204160,
+          "availableSwapSpace" : 5287936,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 67
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 134235348992
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 134235348992
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -150
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-234",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : false,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 2712825856,
+          "availableSwapSpace" : 1914961920,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 69
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 142094364672
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 142094385152
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -170
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-235",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : false,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 3888340992,
+          "availableSwapSpace" : 1938202624,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 68
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 134688714752
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 134688714752
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -170
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-236",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 5678616576,
+          "availableSwapSpace" : 1928032256,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 45
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 133811834880
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 133811834880
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -151
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-237",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : false,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 3714125824,
+          "availableSwapSpace" : 1849729024,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 65
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 142521262080
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 142521262080
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -158
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-238",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : false,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 4027117568,
+          "availableSwapSpace" : 1961582592,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 66
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 134089625600
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 134089625600
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -165
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-239",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : false,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 3583475712,
+          "availableSwapSpace" : 1937711104,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 64
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 143065157632
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 143065157632
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -173
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-240",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 3807236096,
+          "availableSwapSpace" : 1933594624,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 65
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 133235802112
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 133235802112
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -152
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-241",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 4047527936,
+          "availableSwapSpace" : 1947312128,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 67
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 133970268160
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 133970268160
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -151
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-242",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 6152843264,
+          "availableSwapSpace" : 2011865088,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 66
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 143874740224
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 143874740224
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -143
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-243",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 7854313472,
+          "availableSwapSpace" : 1982971904,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 67
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 143926276096
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 143926276096
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -142
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-244",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 7819972608,
+          "availableSwapSpace" : 1997463552,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 65
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 143948263424
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 143948263424
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -153
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-245",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 4301930496,
+          "availableSwapSpace" : 1947090944,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 65
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 133809127424
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 133809127424
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -166
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-246",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 6155870208,
+          "availableSwapSpace" : 1889034240,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 66
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 143601762304
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 143601762304
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -151
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-247",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 3155582976,
+          "availableSwapSpace" : 1928777728,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 65
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 132901154816
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 132901154816
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -152
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-248",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : false,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 4505894912,
+          "availableSwapSpace" : 1969180672,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 65
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 134088294400
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 134088294400
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -168
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-249",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : false,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 1976094720,
+          "availableSwapSpace" : 1765376,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 66
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 142520696832
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 142520107008
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -173
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-250",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 6997352448,
+          "availableSwapSpace" : 323584000,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 64
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 134741471232
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 134741471232
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -168
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-251",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 4314689536,
+          "availableSwapSpace" : 1942626304,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 64
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 133953859584
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 133953859584
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -164
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-252",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 7100534784,
+          "availableSwapSpace" : 1963802624,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 62
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 134011015168
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 134011015168
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -173
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-253",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : false,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 2592391168,
+          "availableSwapSpace" : 1899171840,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 64
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 143345299456
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 143345356800
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -175
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-254",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 3052302336,
+          "availableSwapSpace" : 1936269312,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 42
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 132735623168
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 132735623168
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -176
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-14-255",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 7836098560,
+          "availableSwapSpace" : 1943863296,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 64
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 134905769984
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 134905769984
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -158
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-16-1",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 3990798336,
+          "availableSwapSpace" : 1951170560,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 60
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 132993175552
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 132993175552
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -160
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-16-10",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 8215703552,
+          "availableSwapSpace" : 2006388736,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 63
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 144783409152
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 144783409152
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -166
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-16-11",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 3920338944,
+          "availableSwapSpace" : 1932951552,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 41
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 134767898624
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 134767898624
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -168
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-16-12",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 3993800704,
+          "availableSwapSpace" : 1932746752,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 62
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 133860265984
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 133860265984
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -166
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-16-13",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 4749488128,
+          "availableSwapSpace" : 1979723776,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 60
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 133974814720
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 133974814720
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -157
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-16-14",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 3101667328,
+          "availableSwapSpace" : 1952460800,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 62
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 133704323072
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 133704323072
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -158
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-16-15",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 4323414016,
+          "availableSwapSpace" : 1973366784,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 60
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 134742196224
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 134742196224
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -154
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-16-16",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 4452552704,
+          "availableSwapSpace" : 1963118592,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 33
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 134724927488
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 134724927488
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -172
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-16-17",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 8126300160,
+          "availableSwapSpace" : 1924329472,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 57
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 134792474624
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 134792474624
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -173
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-16-18",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 5681569792,
+          "availableSwapSpace" : 1931128832,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 56
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 134694244352
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 134694244352
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -163
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-16-19",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : false,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 1944043520,
+          "availableSwapSpace" : 1926713344,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 60
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 142181240832
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 142181253120
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -171
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-16-2",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 3651149824,
+          "availableSwapSpace" : 1944129536,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 57
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 134474665984
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 134474665984
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -165
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-16-20",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : false,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 3878244352,
+          "availableSwapSpace" : 1944821760,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 59
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 133795926016
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 133795926016
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -170
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-16-21",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 5237956608,
+          "availableSwapSpace" : 1951363072,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 59
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 134744846336
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 134744846336
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -158
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-16-22",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 8171016192,
+          "availableSwapSpace" : 1974333440,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 56
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 134649225216
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 134649225216
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -161
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-16-23",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 4292182016,
+          "availableSwapSpace" : 1805414400,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 59
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 134763339776
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 134763339776
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -158
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-16-24",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 3831762944,
+          "availableSwapSpace" : 933888,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 59
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 134673215488
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 134673215488
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -158
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-16-25",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : false,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 4071284736,
+          "availableSwapSpace" : 1948311552,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 57
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 133601697792
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 133601697792
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -162
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-16-26",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 7176474624,
+          "availableSwapSpace" : 2007334912,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 55
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 144687329280
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 144687329280
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -160
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-16-27",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 4432068608,
+          "availableSwapSpace" : 2007556096,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 58
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 142362300416
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 142362300416
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -163
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-16-28",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 5498404864,
+          "availableSwapSpace" : 2003247104,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 60
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 143817441280
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 143817441280
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -156
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-16-29",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 5519765504,
+          "availableSwapSpace" : 25305088,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 57
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 132944224256
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 132944224256
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -146
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-16-3",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 4962721792,
+          "availableSwapSpace" : 1923416064,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 57
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 133865435136
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 133865435136
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -147
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-16-30",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 4405841920,
+          "availableSwapSpace" : 1892503552,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 49
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 134011641856
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 134011641856
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -156
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-16-4",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 7858692096,
+          "availableSwapSpace" : 1953193984,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 35
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 134632816640
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 134632816640
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -159
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-16-5",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 7168245760,
+          "availableSwapSpace" : 1989906432,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 57
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 145424220160
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 145424220160
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -162
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-16-6",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 2597466112,
+          "availableSwapSpace" : 1933991936,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 57
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 142199074816
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 142199074816
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -158
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-16-7",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 3597172736,
+          "availableSwapSpace" : 1957330944,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 57
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 142860701696
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 142860701696
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -154
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-16-8",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 5427494912,
+          "availableSwapSpace" : 1946554368,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 54
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 133876690944
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 133876690944
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -177
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    },
+    {
+      "actions" : [
+
+      ],
+      "displayName" : "cloud-10-0-16-9",
+      "executors" : [
+        {
+
+        }
+      ],
+      "icon" : "computer.png",
+      "idle" : true,
+      "jnlpAgent" : true,
+      "launchSupported" : false,
+      "loadStatistics" : {
+
+      },
+      "manualLaunchAllowed" : true,
+      "monitorData" : {
+        "hudson.node_monitors.SwapSpaceMonitor" : {
+          "availablePhysicalMemory" : 3909693440,
+          "availableSwapSpace" : 1954779136,
+          "totalPhysicalMemory" : 8589934592,
+          "totalSwapSpace" : 2147483648
+        },
+        "hudson.node_monitors.ArchitectureMonitor" : "Linux (i386)",
+        "hudson.node_monitors.ResponseTimeMonitor" : {
+          "average" : 55
+        },
+        "hudson.node_monitors.TemporarySpaceMonitor" : {
+          "path" : "/tmp",
+          "size" : 133125681152
+        },
+        "hudson.node_monitors.DiskSpaceMonitor" : {
+          "path" : "/opt/java/jenkins",
+          "size" : 133125681152
+        },
+        "hudson.node_monitors.ClockMonitor" : {
+          "diff" : -160
+        }
+      },
+      "numExecutors" : 1,
+      "offline" : false,
+      "offlineCause" : null,
+      "offlineCauseReason" : "",
+      "oneOffExecutors" : [
+
+      ],
+      "temporarilyOffline" : false
+    }
+  ],
+  "displayName" : "nodes",
+  "totalExecutors" : 105
+}

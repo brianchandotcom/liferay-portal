@@ -54,21 +54,14 @@
 	<extension-point name="build-portal-web-dependencies" depends="build-css,build-dtd" />
 
 	<target name="build-common-css">
-		<property name="bourbon.version" value="3.2.3" />
-
 		<property name="bourbon.deploy" value="${sass.portal.common.dir}/bourbon" />
-
-		<property name="bourbon.file" value="bourbon-${bourbon.version}.zip" />
 
 		<if>
 			<not>
-				<uptodate
-					srcfile="third-party/${bourbon.file}"
-					targetfile="${bourbon.deploy}"
-				/>
+				<available file="${bourbon.deploy}" />
 			</not>
 			<then>
-				<gradle-execute dir="../modules/frontend/frontend-css-web" task="buildBourbon" />
+				<gradle-execute dir="../modules/frontend/frontend-common-css" task="buildBourbon" />
 			</then>
 		</if>
 	</target>
@@ -78,9 +71,13 @@
 
 		<mkdir dir="${sass.tmp.dir}" />
 
+		<path id="css.builder.classpath">
+			<fileset dir="${portal.tools.dir}/css-builder" includes="*.jar" />
+		</path>
+
 		<java
 			classname="com.liferay.css.builder.CSSBuilder"
-			classpathref="portal.tools.classpath"
+			classpathref="css.builder.classpath"
 			fork="true"
 			newenvironment="true"
 			outputproperty="build-css.output"
@@ -88,6 +85,7 @@
 			<jvmarg value="-Xmx1024m" />
 			<jvmarg value="-Djava.io.tmpdir=${sass.tmp.dir}" />
 			<arg value="sass.compiler.class.name=${sass.compiler.class.name}" />
+			<arg value="sass.generate.source.map=${sass.generate.source.map}" />
 			<arg value="sass.dir=/html/portlet" />
 			<arg value="sass.docroot.dir=${basedir}/docroot" />
 			<arg value="sass.portal.common.dir=${sass.portal.common.dir}" />

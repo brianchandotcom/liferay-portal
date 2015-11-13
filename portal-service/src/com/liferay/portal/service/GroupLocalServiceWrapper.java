@@ -695,16 +695,6 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _groupLocalService.getBeanIdentifier();
-	}
-
-	/**
 	* Returns the company group.
 	*
 	* @param companyId the primary key of the company
@@ -1136,6 +1126,16 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getNullFriendlyURLGroups() {
 		return _groupLocalService.getNullFriendlyURLGroups();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _groupLocalService.getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -2596,16 +2596,6 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 		boolean andOperator) {
 		return _groupLocalService.searchCount(companyId, parentGroupId, name,
 			description, params, andOperator);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_groupLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

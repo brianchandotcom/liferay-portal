@@ -103,6 +103,7 @@
 			<isset var="pageType" />
 			<then>
 				<execute macro="SitePage#selectSitePageTypeRadioCP">
+					<var name="columnName" value="${columnName}" />
 					<var name="componentName" value="${componentName}" />
 					<var name="pageTypeDescription" value="${pageTypeDescription}" />
 					<var name="pageTypeURL" value="${pageTypeURL}" />
@@ -240,6 +241,7 @@
 		<var name="key_pageName" value="${pageName}" />
 
 		<execute function="MouseOver#mouseOverClickNavigation" locator1="Home#PAGE" />
+		<execute function="ClickNoError" locator1="Icon#EDIT" />
 		<execute function="ClickNoError" locator1="Home#PAGE_DELETE" />
 		<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to delete this page?" />
 		<execute function="AssertElementNotPresent#assertElementNotPresentClickDockbar" locator1="Home#PAGE_DELETE" />
@@ -643,7 +645,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_TABS_MY_SPACE_NAVIGATION" value1="My Space" />
+		<execute function="Click" locator1="ProductMenu#PRODUCT_MENU_TABS_USER_NAVIGATION" />
 
 		<var name="key_portletName" value="${portletName}" />
 
@@ -815,15 +817,13 @@
 			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
-		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="ControlMenu#ADMIN" value1="${adminLocalized}" />
-
 		<var name="key_portletCategoryName" value="${portletCategoryName}" />
 
 		<execute function="AssertClick" locator1="ControlMenu#ADMIN_SITE_ADMINISTRATION_CATEGORY" value1="${portletCategoryName}" />
 
 		<var name="key_portletName" value="${portletName}" />
 
-		<execute function="AssertClick#assertPartialTextClickAtCPNavigation" locator1="Home#SITE_ADMINISTRATION_NAVIGATION" value1="${portletName}" />
+		<execute function="AssertClick" locator1="Home#SITE_ADMINISTRATION_NAVIGATION" value1="${portletName}" />
 	</command>
 
 	<command name="gotoUsersCP">
@@ -1024,7 +1024,7 @@
 		<if>
 			<isset var="viewChildPageDropdown" />
 			<then>
-				<execute function="Click" locator1="Home#${viewChildPageDropdown}" />
+				<execute function="ClickNoError" locator1="Home#${viewChildPageDropdown}" />
 
 				<if>
 					<isset var="javaScriptPage" />
@@ -1033,7 +1033,7 @@
 					</then>
 				</if>
 
-				<execute function="MouseOver" locator1="Home#${viewChildPageDropdown}" />
+				<execute function="MouseOver#mouseOverClickNavigation" locator1="Home#PAGE_2" />
 
 				<var name="key_childPageName" value="${childPageName}" />
 
@@ -1221,7 +1221,6 @@
 		</if>
 
 		<execute function="AssertLocation" value1="${localizationPageURL}" />
-		<execute function="AssertNotLocation" value1="${localePageURL}" />
 	</command>
 
 	<command name="viewUserPageLayoutPG">

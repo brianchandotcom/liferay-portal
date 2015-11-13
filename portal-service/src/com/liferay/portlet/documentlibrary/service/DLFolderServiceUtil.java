@@ -67,15 +67,6 @@ public class DLFolderServiceUtil {
 		getService().deleteFolder(groupId, parentFolderId, name);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
 	public static java.util.List<java.lang.Object> getFileEntriesAndFileShortcuts(
 		long groupId, long folderId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -209,6 +200,15 @@ public class DLFolderServiceUtil {
 	}
 
 	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	/**
 	* @deprecated As of 7.0.0, replaced by {@link #getSubfolderIds(List, long,
 	long, boolean)}
 	*/
@@ -271,15 +271,6 @@ public class DLFolderServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .refreshFolderLock(lockUuid, companyId, expirationTime);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static void unlockFolder(long folderId, java.lang.String lockUuid)

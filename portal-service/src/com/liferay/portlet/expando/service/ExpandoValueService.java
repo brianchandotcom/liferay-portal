@@ -64,13 +64,6 @@ public interface ExpandoValueService extends BaseService {
 		java.util.Map<java.lang.String, java.io.Serializable> attributeValues)
 		throws PortalException;
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.io.Serializable getData(long companyId,
 		java.lang.String className, java.lang.String tableName,
@@ -88,9 +81,9 @@ public interface ExpandoValueService extends BaseService {
 		java.lang.String columnName, long classPK) throws PortalException;
 
 	/**
-	* Sets the Spring bean ID for this bean.
+	* Returns the OSGi service identifier.
 	*
-	* @param beanIdentifier the Spring bean ID for this bean
+	* @return the OSGi service identifier
 	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
+	public java.lang.String getOSGiServiceIdentifier();
 }

@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.pop.POPServerUtil;
 import com.liferay.portal.spring.context.PortalContextLoaderListener;
 import com.liferay.portal.struts.AuthPublicPathRegistry;
 import com.liferay.portal.util.BrowserLauncher;
@@ -301,12 +300,6 @@ public class GlobalStartupAction extends SimpleAction {
 
 			},
 			PortalLifecycle.METHOD_INIT);
-
-		// POP server
-
-		if (PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED) {
-			POPServerUtil.start();
-		}
 
 		// Launch browser
 

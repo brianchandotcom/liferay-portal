@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -129,6 +130,21 @@ public class TestTemplateManager implements TemplateManager {
 		TemplateResource errorTemplateResource, boolean restricted) {
 
 		return getTemplate(templateResource, restricted);
+	}
+
+	@Override
+	public Template getTemplates(
+		List<TemplateResource> templateResources, boolean restricted) {
+
+		return this.getTemplate(templateResources.get(0), restricted);
+	}
+
+	@Override
+	public Template getTemplates(
+		List<TemplateResource> templateResources,
+		TemplateResource errorTemplateResource, boolean restricted) {
+
+		return this.getTemplates(templateResources, restricted);
 	}
 
 	@Override

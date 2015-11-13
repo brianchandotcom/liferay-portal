@@ -35,6 +35,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 import org.apache.tools.ant.filters.FixCrLfFilter;
 
@@ -55,6 +56,7 @@ import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.OutputFiles;
 import org.gradle.api.tasks.SkipWhenEmpty;
@@ -70,7 +72,14 @@ public class PatchTask extends DefaultTask {
 	public static final String PATCHED_SRC_DIR_MAPPING_DEFAULT_EXTENSION = "*";
 
 	public PatchTask() {
-		_project = getProject();
+		_originalLibSrcFile = new Callable<File>() {
+
+			@Override
+			public File call() throws Exception {
+				return FileUtil.get(getProject(), getOriginalLibSrcUrl());
+			}
+
+		};
 	}
 
 	public PatchTask fileNames(Iterable<Object> fileNames) {
@@ -95,7 +104,7 @@ public class PatchTask extends DefaultTask {
 
 	public File getOriginalLibFile() {
 		Configuration configuration = GradleUtil.getConfiguration(
-			_project, getOriginalLibConfigurationName());
+			getProject(), getOriginalLibConfigurationName());
 
 		ResolvedConfiguration resolvedConfiguration =
 			configuration.getResolvedConfiguration();
@@ -152,8 +161,9 @@ public class PatchTask extends DefaultTask {
 		return GradleUtil.toString(_originalLibSrcDirName);
 	}
 
+	@InputFile
 	public File getOriginalLibSrcFile() throws Exception {
-		return FileUtil.get(_project, getOriginalLibSrcUrl());
+		return GradleUtil.toFile(getProject(), _originalLibSrcFile);
 	}
 
 	public Map<String, File> getPatchedSrcDirMappings() {
@@ -163,7 +173,7 @@ public class PatchTask extends DefaultTask {
 				_patchedSrcDirMappings.entrySet()) {
 
 			String extension = entry.getKey();
-			File dir = GradleUtil.toFile(_project, entry.getValue());
+			File dir = GradleUtil.toFile(getProject(), entry.getValue());
 
 			patchedSrcDirMappings.put(extension, dir);
 		}
@@ -173,6 +183,8 @@ public class PatchTask extends DefaultTask {
 
 	@OutputFiles
 	public FileCollection getPatchedSrcFiles() {
+		Project project = getProject();
+
 		Map<File, ConfigurableFileTree> patchedSrcFileTreeMap = new HashMap<>();
 
 		for (String fileName : getFileNames()) {
@@ -182,7 +194,7 @@ public class PatchTask extends DefaultTask {
 				patchedSrcFileTreeMap.get(patchedDir);
 
 			if (configurableFileTree == null) {
-				configurableFileTree = _project.fileTree(patchedDir);
+				configurableFileTree = project.fileTree(patchedDir);
 
 				patchedSrcFileTreeMap.put(patchedDir, configurableFileTree);
 			}
@@ -193,21 +205,23 @@ public class PatchTask extends DefaultTask {
 		Collection<ConfigurableFileTree> patchedSrcFileTrees =
 			patchedSrcFileTreeMap.values();
 
-		return _project.files(patchedSrcFileTrees.toArray());
+		return project.files(patchedSrcFileTrees.toArray());
 	}
 
 	public File getPatchesDir() {
-		return GradleUtil.toFile(_project, _patchesDir);
+		return GradleUtil.toFile(getProject(), _patchesDir);
 	}
 
 	@InputFiles
 	@SkipWhenEmpty
 	public FileCollection getPatchFiles() {
+		Project project = getProject();
+
 		if (!_patchFiles.isEmpty()) {
-			return _project.files(_patchFiles);
+			return project.files(_patchFiles);
 		}
 		else {
-			return _project.fileTree(_patchesDir);
+			return project.fileTree(_patchesDir);
 		}
 	}
 
@@ -217,9 +231,10 @@ public class PatchTask extends DefaultTask {
 
 	@TaskAction
 	public void patch() throws Exception {
+		final Project project = getProject();
 		final File temporaryDir = getTemporaryDir();
 
-		_project.delete(temporaryDir);
+		project.delete(temporaryDir);
 
 		temporaryDir.mkdir();
 
@@ -241,7 +256,7 @@ public class PatchTask extends DefaultTask {
 				}
 
 				copySpec.filter(FixCrLfFilter.class);
-				copySpec.from(_project.zipTree(getOriginalLibSrcFile()));
+				copySpec.from(project.zipTree(getOriginalLibSrcFile()));
 				copySpec.include(getFileNames());
 				copySpec.into(temporaryDir);
 				copySpec.setIncludeEmptyDirs(false);
@@ -249,13 +264,13 @@ public class PatchTask extends DefaultTask {
 
 		};
 
-		_project.copy(closure);
+		project.copy(closure);
 
 		for (final File patchFile : getSortedPatchFiles()) {
 			final ByteArrayOutputStream byteArrayOutputStream =
 				new ByteArrayOutputStream();
 
-			_project.exec(
+			project.exec(
 				new Action<ExecSpec>() {
 
 					@Override
@@ -277,7 +292,7 @@ public class PatchTask extends DefaultTask {
 			System.out.println(byteArrayOutputStream.toString());
 		}
 
-		FileTree fileTree = _project.fileTree(temporaryDir);
+		FileTree fileTree = project.fileTree(temporaryDir);
 
 		for (File file : fileTree) {
 			File patchedSrcDir = getPatchedSrcDir(file.getName());
@@ -344,6 +359,10 @@ public class PatchTask extends DefaultTask {
 		_originalLibSrcDirName = originalLibSrcDirName;
 	}
 
+	public void setOriginalLibSrcFile(Object originalLibSrcFile) {
+		_originalLibSrcFile = originalLibSrcFile;
+	}
+
 	public void setPatchedSrcDirMappings(
 		Map<String, Object> patchedSrcDirMappings) {
 
@@ -364,7 +383,7 @@ public class PatchTask extends DefaultTask {
 
 	protected Dependency getOriginalLibDependency() {
 		Configuration configuration = GradleUtil.getConfiguration(
-			_project, getOriginalLibConfigurationName());
+			getProject(), getOriginalLibConfigurationName());
 
 		ResolvableDependencies resolvableDependencies =
 			configuration.getIncoming();
@@ -429,7 +448,7 @@ public class PatchTask extends DefaultTask {
 				PATCHED_SRC_DIR_MAPPING_DEFAULT_EXTENSION);
 		}
 
-		return GradleUtil.toFile(_project, patchedSrcDir);
+		return GradleUtil.toFile(getProject(), patchedSrcDir);
 	}
 
 	protected List<File> getSortedPatchFiles() {
@@ -452,9 +471,9 @@ public class PatchTask extends DefaultTask {
 	private Object _originalLibModuleName;
 	private Object _originalLibSrcBaseUrl;
 	private Object _originalLibSrcDirName = ".";
+	private Object _originalLibSrcFile;
 	private final Map<String, Object> _patchedSrcDirMappings = new HashMap<>();
 	private Object _patchesDir = "patches";
 	private final List<Object> _patchFiles = new ArrayList<>();
-	private final Project _project;
 
 }

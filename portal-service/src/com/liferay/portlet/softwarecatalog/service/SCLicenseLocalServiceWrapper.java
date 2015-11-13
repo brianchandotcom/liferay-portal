@@ -269,16 +269,6 @@ public class SCLicenseLocalServiceWrapper implements SCLicenseLocalService,
 		return _scLicenseLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _scLicenseLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.portlet.softwarecatalog.model.SCLicense getLicense(
 		long licenseId)
@@ -318,6 +308,16 @@ public class SCLicenseLocalServiceWrapper implements SCLicenseLocalService,
 	@Override
 	public int getLicensesCount(boolean active, boolean recommended) {
 		return _scLicenseLocalService.getLicensesCount(active, recommended);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _scLicenseLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -421,16 +421,6 @@ public class SCLicenseLocalServiceWrapper implements SCLicenseLocalService,
 	@Override
 	public boolean hasSCProductEntrySCLicenses(long productEntryId) {
 		return _scLicenseLocalService.hasSCProductEntrySCLicenses(productEntryId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_scLicenseLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

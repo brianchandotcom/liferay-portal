@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portlet.ratings.RatingsType;
 import com.liferay.portlet.ratings.definition.PortletRatingsDefinitionUtil;
 import com.liferay.portlet.ratings.definition.PortletRatingsDefinitionValues;
+import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -161,8 +162,8 @@ public class RatingsDataTransformerUtil {
 		RatingsDataTransformer ratingsDataTransformer =
 			_serviceTracker.getService();
 
-		ActionableDynamicQuery.PerformActionMethod performActionMethod =
-			ratingsDataTransformer.transformRatingsData(
+		ActionableDynamicQuery.PerformActionMethod<RatingsEntry>
+			performActionMethod = ratingsDataTransformer.transformRatingsData(
 				fromRatingsType, toRatingsType);
 
 		if (performActionMethod == null) {

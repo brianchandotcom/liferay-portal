@@ -16,6 +16,7 @@ package com.liferay.poshi.runner.logger;
 
 import com.liferay.poshi.runner.PoshiRunnerContext;
 import com.liferay.poshi.runner.PoshiRunnerVariablesUtil;
+import com.liferay.poshi.runner.util.HtmlUtil;
 import com.liferay.poshi.runner.util.StringUtil;
 import com.liferay.poshi.runner.util.Validator;
 
@@ -36,7 +37,7 @@ public final class SummaryLoggerHandler {
 
 	public static void failSummary(Element element, String message) {
 		if (_isCurrentMajorStep(element)) {
-			_causeBodyLoggerElement.setText(message);
+			_causeBodyLoggerElement.setText(HtmlUtil.escape(message));
 
 			_failStepLoggerElement(_majorStepLoggerElement);
 
@@ -47,7 +48,7 @@ public final class SummaryLoggerHandler {
 		}
 
 		if (_isCurrentMinorStep(element)) {
-			_causeBodyLoggerElement.setText(message);
+			_causeBodyLoggerElement.setText(HtmlUtil.escape(message));
 
 			_failStepLoggerElement(_minorStepLoggerElement);
 
@@ -513,9 +514,10 @@ public final class SummaryLoggerHandler {
 		}
 
 		if (summary != null) {
-			summary = PoshiRunnerVariablesUtil.replaceCommandVars(summary);
+			summary = HtmlUtil.escape(
+				PoshiRunnerVariablesUtil.replaceCommandVars(summary));
 
-			return _replaceCommandVars(summary, element);
+			return _replaceExecuteVars(summary, element);
 		}
 
 		return null;
@@ -736,7 +738,7 @@ public final class SummaryLoggerHandler {
 		return sb.toString();
 	}
 
-	private static String _replaceCommandVars(String token, Element element)
+	private static String _replaceExecuteVars(String token, Element element)
 		throws Exception {
 
 		Matcher matcher = _pattern.matcher(token);
@@ -747,8 +749,8 @@ public final class SummaryLoggerHandler {
 
 			String varName = matcher.group(1);
 
-			String varValue = PoshiRunnerVariablesUtil.getValueFromExecuteMap(
-				varName);
+			String varValue = HtmlUtil.escape(
+				PoshiRunnerVariablesUtil.getValueFromExecuteMap(varName));
 
 			if ((element.attributeValue("function") != null) &&
 				varName.startsWith("locator")) {

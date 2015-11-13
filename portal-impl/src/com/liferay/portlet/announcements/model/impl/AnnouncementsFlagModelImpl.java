@@ -71,6 +71,7 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 	public static final String TABLE_NAME = "AnnouncementsFlag";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "flagId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "createDate", Types.TIMESTAMP },
 			{ "entryId", Types.BIGINT },
@@ -80,13 +81,14 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 
 	static {
 		TABLE_COLUMNS_MAP.put("flagId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("entryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("value", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table AnnouncementsFlag (flagId LONG not null primary key,userId LONG,createDate DATE null,entryId LONG,value INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table AnnouncementsFlag (flagId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,entryId LONG,value INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table AnnouncementsFlag";
 	public static final String ORDER_BY_JPQL = " ORDER BY announcementsFlag.userId ASC, announcementsFlag.createDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY AnnouncementsFlag.userId ASC, AnnouncementsFlag.createDate ASC";
@@ -121,6 +123,7 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 		AnnouncementsFlag model = new AnnouncementsFlagImpl();
 
 		model.setFlagId(soapModel.getFlagId());
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setEntryId(soapModel.getEntryId());
@@ -191,6 +194,7 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("flagId", getFlagId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("entryId", getEntryId());
@@ -208,6 +212,12 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 
 		if (flagId != null) {
 			setFlagId(flagId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -244,6 +254,17 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 	@Override
 	public void setFlagId(long flagId) {
 		_flagId = flagId;
+	}
+
+	@JSON
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	@JSON
@@ -350,7 +371,7 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			AnnouncementsFlag.class.getName(), getPrimaryKey());
 	}
 
@@ -376,6 +397,7 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 		AnnouncementsFlagImpl announcementsFlagImpl = new AnnouncementsFlagImpl();
 
 		announcementsFlagImpl.setFlagId(getFlagId());
+		announcementsFlagImpl.setCompanyId(getCompanyId());
 		announcementsFlagImpl.setUserId(getUserId());
 		announcementsFlagImpl.setCreateDate(getCreateDate());
 		announcementsFlagImpl.setEntryId(getEntryId());
@@ -476,6 +498,8 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 
 		announcementsFlagCacheModel.flagId = getFlagId();
 
+		announcementsFlagCacheModel.companyId = getCompanyId();
+
 		announcementsFlagCacheModel.userId = getUserId();
 
 		Date createDate = getCreateDate();
@@ -496,10 +520,12 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{flagId=");
 		sb.append(getFlagId());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", createDate=");
@@ -515,7 +541,7 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.announcements.model.AnnouncementsFlag");
@@ -524,6 +550,10 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 		sb.append(
 			"<column><column-name>flagId</column-name><column-value><![CDATA[");
 		sb.append(getFlagId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -552,6 +582,7 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 			AnnouncementsFlag.class
 		};
 	private long _flagId;
+	private long _companyId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;

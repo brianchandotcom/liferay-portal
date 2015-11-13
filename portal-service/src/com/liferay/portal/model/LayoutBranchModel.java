@@ -37,7 +37,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface LayoutBranchModel extends BaseModel<LayoutBranch>, MVCCModel {
+public interface LayoutBranchModel extends BaseModel<LayoutBranch>, MVCCModel,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -107,6 +108,7 @@ public interface LayoutBranchModel extends BaseModel<LayoutBranch>, MVCCModel {
 	 *
 	 * @return the company ID of this layout branch
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -114,6 +116,7 @@ public interface LayoutBranchModel extends BaseModel<LayoutBranch>, MVCCModel {
 	 *
 	 * @param companyId the company ID of this layout branch
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**

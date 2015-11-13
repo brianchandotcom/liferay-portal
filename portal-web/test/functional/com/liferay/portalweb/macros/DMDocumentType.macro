@@ -72,9 +72,9 @@
 		<if>
 			<isset var="metadataSetName" />
 			<then>
-				<var name="key_metadataSetName" value="${metadataSetName}" />
-
-				<execute macro="DMDocumentType#selectPGMetadataSet" />
+				<execute macro="DMDocumentType#selectPGMetadataSet">
+					<var name="key_metadataSetName" value="${metadataSetName}" />
+				</execute>
 
 				<execute macro="DMDocumentType#selectDocumentTypeFrame" />
 			</then>

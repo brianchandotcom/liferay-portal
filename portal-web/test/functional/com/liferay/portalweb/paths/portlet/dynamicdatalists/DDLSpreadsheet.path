@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>SPREADSHEET_CONTAINER</td>
-	<td>//div[@class='lfr-spreadsheet-container']</td>
+	<td>//div[contains(@class,'lfr-spreadsheet-container')]</td>
 	<td></td>
 </tr>
 <tr>

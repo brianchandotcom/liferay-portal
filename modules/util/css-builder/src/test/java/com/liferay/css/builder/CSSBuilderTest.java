@@ -101,7 +101,7 @@ public class CSSBuilderTest {
 
 	private void _testSassToCssBuilder(String compiler) throws Exception {
 		CSSBuilder cssBuilder = new CSSBuilder(
-			_docrootDirName,
+			_docrootDirName, false,
 			"../../frontend/frontend-common-css/tmp/META-INF/resources",
 			new String[0], compiler);
 

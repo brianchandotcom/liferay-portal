@@ -379,13 +379,13 @@ public class ResourcePermissionLocalServiceWrapper
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the OSGi service identifier.
 	*
-	* @return the Spring bean ID for this bean
+	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _resourcePermissionLocalService.getBeanIdentifier();
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _resourcePermissionLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -819,16 +819,6 @@ public class ResourcePermissionLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_resourcePermissionLocalService.removeResourcePermissions(companyId,
 			name, scope, roleId, actionId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_resourcePermissionLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

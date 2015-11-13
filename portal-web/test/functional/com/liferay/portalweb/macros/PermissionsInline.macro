@@ -93,6 +93,8 @@
 			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
 		<execute function="AssertClick" locator1="Blogs#PERMISSIONS" value1="Permissions" />
 
 		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />

@@ -54,6 +54,7 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("flagId", getFlagId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("entryId", getEntryId());
@@ -68,6 +69,12 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 
 		if (flagId != null) {
 			setFlagId(flagId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -104,6 +111,16 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 	public int compareTo(
 		com.liferay.portlet.announcements.model.AnnouncementsFlag announcementsFlag) {
 		return _announcementsFlag.compareTo(announcementsFlag);
+	}
+
+	/**
+	* Returns the company ID of this announcements flag.
+	*
+	* @return the company ID of this announcements flag
+	*/
+	@Override
+	public long getCompanyId() {
+		return _announcementsFlag.getCompanyId();
 	}
 
 	/**
@@ -214,6 +231,16 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_announcementsFlag.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this announcements flag.
+	*
+	* @param companyId the company ID of this announcements flag
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_announcementsFlag.setCompanyId(companyId);
 	}
 
 	/**

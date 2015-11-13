@@ -552,11 +552,11 @@ public interface SocialActivityCounterLocalService extends BaseLocalService,
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the OSGi service identifier.
 	*
-	* @return the Spring bean ID for this bean
+	* @return the OSGi service identifier
 	*/
-	public java.lang.String getBeanIdentifier();
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Returns all the activity counters with the given name and period offsets.
@@ -734,13 +734,6 @@ public interface SocialActivityCounterLocalService extends BaseLocalService,
 	*/
 	public void incrementUserAchievementCounter(long userId, long groupId)
 		throws PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	/**
 	* Updates the social activity counter in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

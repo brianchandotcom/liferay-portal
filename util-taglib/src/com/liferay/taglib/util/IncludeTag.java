@@ -92,18 +92,7 @@ public class IncludeTag extends AttributesTagSupport {
 			throw new JspException(e);
 		}
 		finally {
-			clearDynamicAttributes();
-			clearParams();
-			clearProperties();
-
-			cleanUpSetAttributes();
-
-			if (!ServerDetector.isResin()) {
-				setPage(null);
-				setUseCustomPage(true);
-
-				cleanUp();
-			}
+			doClearTag();
 		}
 	}
 
@@ -190,6 +179,21 @@ public class IncludeTag extends AttributesTagSupport {
 			}
 
 			_trackedRequest = null;
+		}
+	}
+
+	protected void doClearTag() {
+		clearDynamicAttributes();
+		clearParams();
+		clearProperties();
+
+		cleanUpSetAttributes();
+
+		if (!ServerDetector.isResin()) {
+			setPage(null);
+			setUseCustomPage(true);
+
+			cleanUp();
 		}
 	}
 

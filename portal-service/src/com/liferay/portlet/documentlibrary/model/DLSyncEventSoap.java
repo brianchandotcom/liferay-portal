@@ -33,6 +33,7 @@ public class DLSyncEventSoap implements Serializable {
 		DLSyncEventSoap soapModel = new DLSyncEventSoap();
 
 		soapModel.setSyncEventId(model.getSyncEventId());
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setModifiedTime(model.getModifiedTime());
 		soapModel.setEvent(model.getEvent());
 		soapModel.setType(model.getType());
@@ -97,6 +98,14 @@ public class DLSyncEventSoap implements Serializable {
 		_syncEventId = syncEventId;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getModifiedTime() {
 		return _modifiedTime;
 	}
@@ -130,6 +139,7 @@ public class DLSyncEventSoap implements Serializable {
 	}
 
 	private long _syncEventId;
+	private long _companyId;
 	private long _modifiedTime;
 	private String _event;
 	private String _type;

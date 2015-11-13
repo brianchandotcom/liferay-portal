@@ -37,7 +37,7 @@ import java.io.Serializable;
  */
 @ProviderType
 public interface PasswordPolicyRelModel extends AttachedModel,
-	BaseModel<PasswordPolicyRel>, MVCCModel {
+	BaseModel<PasswordPolicyRel>, MVCCModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -87,6 +87,22 @@ public interface PasswordPolicyRelModel extends AttachedModel,
 	 * @param passwordPolicyRelId the password policy rel ID of this password policy rel
 	 */
 	public void setPasswordPolicyRelId(long passwordPolicyRelId);
+
+	/**
+	 * Returns the company ID of this password policy rel.
+	 *
+	 * @return the company ID of this password policy rel
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this password policy rel.
+	 *
+	 * @param companyId the company ID of this password policy rel
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the password policy ID of this password policy rel.

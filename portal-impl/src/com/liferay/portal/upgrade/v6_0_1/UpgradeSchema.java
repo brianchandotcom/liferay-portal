@@ -15,7 +15,7 @@
 package com.liferay.portal.upgrade.v6_0_1;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.UpgradeMVCC;
+import com.liferay.portal.upgrade.UpgradeMVCCVersion;
 
 /**
  * @author Brian Wing Shun Chan
@@ -26,7 +26,7 @@ public class UpgradeSchema extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		runSQLTemplate("update-6.0.0-6.0.1.sql", false);
 
-		upgrade(UpgradeMVCC.class);
+		upgrade(UpgradeMVCCVersion.class);
 	}
 
 }

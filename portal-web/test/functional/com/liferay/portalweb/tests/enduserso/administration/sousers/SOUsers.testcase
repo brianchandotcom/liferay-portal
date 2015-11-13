@@ -608,11 +608,8 @@
 		</execute>
 
 		<execute macro="SOProfile#addInstantMessenger">
-			<var name="userInstantMessengerAIM" value="socialofficesn" />
-			<var name="userInstantMessengerICQ" value="socialofficesn" />
 			<var name="userInstantMessengerJabber" value="socialofficesn" />
 			<var name="userInstantMessengerSkype" value="socialofficesn" />
-			<var name="userInstantMessengerYM" value="socialofficesn" />
 		</execute>
 
 		<execute macro="SOProfile#addIntroduction">
@@ -662,11 +659,8 @@
 		</execute>
 
 		<execute macro="SOProfile#editInstantMessenger">
-			<var name="userInstantMessengerAIM" value="socialofficesnedit" />
-			<var name="userInstantMessengerICQ" value="socialofficesnedit" />
 			<var name="userInstantMessengerJabber" value="socialofficesnedit" />
 			<var name="userInstantMessengerSkype" value="socialofficesnedit" />
-			<var name="userInstantMessengerYM" value="socialofficesnedit" />
 		</execute>
 
 		<execute macro="SOProfile#editIntroduction">

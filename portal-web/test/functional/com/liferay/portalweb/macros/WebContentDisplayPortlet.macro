@@ -56,11 +56,16 @@
 			<then>
 				<execute function="Click" locator1="WCDConfiguration#USER_TOOLS_SELECT_BUTTON" />
 
+				<execute function="SelectFrameTop" />
+
 				<for list="${userToolNameList}" param="userToolName">
 					<var name="key_userToolName" value="${userToolName}" />
 
 					<if>
-						<condition function="IsElementPresent#isVisible" locator1="WCDConfiguration#USER_TOOLS_TOGGLE_OFF" />
+						<and>
+							<condition function="IsElementPresent" locator1="WCDConfiguration#USER_TOOLS_TOGGLE_OFF" />
+							<condition function="IsVisible" locator1="WCDConfiguration#USER_TOOLS_TOGGLE_OFF" />
+						</and>
 						<then>
 							<execute function="Click" locator1="WCDConfiguration#USER_TOOLS_TOGGLE" />
 						</then>
@@ -74,6 +79,8 @@
 		<if>
 			<isset var="metadataNameList" />
 			<then>
+				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
 				<execute function="Click" locator1="WCDConfiguration#CONTENT_METADATA_SELECT" />
 
 				<for list="${metadataNameList}" param="metadataName">
@@ -87,7 +94,10 @@
 					<execute function="SelectFrameTop" />
 
 					<if>
-						<condition function="IsElementPresent#isVisible" locator1="WCDConfiguration#CONTENT_METADATA_TOGGLE_OFF" />
+						<and>
+							<condition function="IsElementPresent" locator1="WCDConfiguration#CONTENT_METADATA_TOGGLE_OFF" />
+							<condition function="IsVisible" locator1="WCDConfiguration#CONTENT_METADATA_TOGGLE_OFF" />
+						</and>
 						<then>
 							<execute function="Click" locator1="WCDConfiguration#CONTENT_METADATA_TOGGLE" />
 						</then>
@@ -133,7 +143,7 @@
 		<if>
 			<isset var="templateScript" />
 			<then>
-				<execute function="Type#typeAceEditor" locator1="DDMEditTemplate#SCRIPT_CONTENT_FIELD" value1="${templateScript}" />
+				<execute function="Type#typeAceEditor" locator1="DDMEditTemplate#SCRIPT_CONTENT_FIELD_TEXT_AREA" value1="${templateScript}" />
 			</then>
 		</if>
 
@@ -146,7 +156,7 @@
 			</then>
 			<else>
 				<execute function="Pause" locator1="2000" />
-				<execute function="SikuliClick" locator1="Button#CLOSE_IFRAME" />
+				<execute function="Click" locator1="Button#CLOSE_IFRAME" />
 
 				<execute function="SelectFrame" value1="relative=top" />
 				<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
@@ -282,7 +292,7 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="WCD#RELATED_ASSETS" value1="${relatedAssetTitle}" />
 
-		<execute function="Type#typeAlloyEditor" locator1="PGWebcontentdisplay#COMMENT_EDITOR" value1="Hello!" />
+		<execute function="Type#typeAlloyEditor" locator1="Comments#COMMENT_FIELD" value1="Hello!" />
 
 		<execute function="AssertClick" locator1="Button#REPLY" value1="Reply" />
 

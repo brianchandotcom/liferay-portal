@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
+import com.liferay.portal.model.ShardedModel;
 import com.liferay.portal.model.StagedAuditedModel;
 import com.liferay.portal.service.ServiceContext;
 
@@ -46,7 +47,7 @@ import java.util.Date;
 @Deprecated
 @ProviderType
 public interface CalEventModel extends BaseModel<CalEvent>, GroupedModel,
-	StagedAuditedModel {
+	ShardedModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

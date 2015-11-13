@@ -62,11 +62,9 @@ public interface ContactLocalService extends BaseLocalService,
 		java.lang.String emailAddress, java.lang.String firstName,
 		java.lang.String middleName, java.lang.String lastName, long prefixId,
 		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
-		int birthdayYear, java.lang.String smsSn, java.lang.String aimSn,
-		java.lang.String facebookSn, java.lang.String icqSn,
-		java.lang.String jabberSn, java.lang.String mySpaceSn,
-		java.lang.String skypeSn, java.lang.String twitterSn,
-		java.lang.String ymSn, java.lang.String jobTitle)
+		int birthdayYear, java.lang.String smsSn, java.lang.String facebookSn,
+		java.lang.String jabberSn, java.lang.String skypeSn,
+		java.lang.String twitterSn, java.lang.String jobTitle)
 		throws PortalException;
 
 	/**
@@ -178,13 +176,6 @@ public interface ContactLocalService extends BaseLocalService,
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
-	/**
 	* Returns the contact with the primary key.
 	*
 	* @param contactId the primary key of the contact
@@ -226,17 +217,17 @@ public interface ContactLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getContactsCount(long classNameId, long classPK);
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj) throws PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	/**
 	* Updates the contact in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -253,10 +244,8 @@ public interface ContactLocalService extends BaseLocalService,
 		java.lang.String emailAddress, java.lang.String firstName,
 		java.lang.String middleName, java.lang.String lastName, long prefixId,
 		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
-		int birthdayYear, java.lang.String smsSn, java.lang.String aimSn,
-		java.lang.String facebookSn, java.lang.String icqSn,
-		java.lang.String jabberSn, java.lang.String mySpaceSn,
-		java.lang.String skypeSn, java.lang.String twitterSn,
-		java.lang.String ymSn, java.lang.String jobTitle)
+		int birthdayYear, java.lang.String smsSn, java.lang.String facebookSn,
+		java.lang.String jabberSn, java.lang.String skypeSn,
+		java.lang.String twitterSn, java.lang.String jobTitle)
 		throws PortalException;
 }

@@ -17,6 +17,7 @@ package com.liferay.portlet.ratings.transformer;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portlet.ratings.RatingsType;
+import com.liferay.portlet.ratings.model.RatingsEntry;
 
 /**
  * Provides an interface defining the transformations to be applied to the
@@ -53,7 +54,8 @@ public interface RatingsDataTransformer {
 	 * @throws PortalException if the transformation could not be applied
 	 *         successfully
 	 */
-	public ActionableDynamicQuery.PerformActionMethod transformRatingsData(
+	public ActionableDynamicQuery.PerformActionMethod<RatingsEntry>
+		transformRatingsData(
 			final RatingsType fromRatingsType, final RatingsType toRatingsType)
 		throws PortalException;
 

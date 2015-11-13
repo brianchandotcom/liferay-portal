@@ -41,8 +41,7 @@ public class PhoneTable {
 		{"number_", Types.VARCHAR},
 		{"extension", Types.VARCHAR},
 		{"typeId", Types.BIGINT},
-		{"primary_", Types.BOOLEAN},
-		{"lastPublishDate", Types.TIMESTAMP}
+		{"primary_", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -76,17 +75,15 @@ TABLE_COLUMNS_MAP.put("typeId", Types.BIGINT);
 
 TABLE_COLUMNS_MAP.put("primary_", Types.BOOLEAN);
 
-TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
-
 }
-	public static final String TABLE_SQL_CREATE = "create table Phone (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,phoneId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,number_ VARCHAR(75) null,extension VARCHAR(75) null,typeId LONG,primary_ BOOLEAN,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table Phone (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,phoneId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,number_ VARCHAR(75) null,extension VARCHAR(75) null,typeId LONG,primary_ BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table Phone";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
 		"create index IX_812CE07A on Phone (companyId, classNameId, classPK, primary_)",
 		"create index IX_F202B9CE on Phone (userId)",
-		"create index IX_B271FA88 on Phone (uuid_, companyId)"
+		"create index IX_B271FA88 on Phone (uuid_[$COLUMN_LENGTH:75$], companyId)"
 	};
 
 }

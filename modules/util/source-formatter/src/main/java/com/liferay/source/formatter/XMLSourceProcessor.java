@@ -1036,7 +1036,15 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		if (portalSource) {
 			tablesContent = getContent(
-				fileName.substring(0, pos) + "/src/META-INF/sql/tables.sql", 1);
+				fileName.substring(0, pos) +
+					"/src/main/resources/META-INF/sql/tables.sql",
+				1);
+
+			if (Validator.isNull(tablesContent)) {
+				tablesContent = getContent(
+					fileName.substring(0, pos) + "/src/META-INF/sql/tables.sql",
+					1);
+			}
 		}
 		else {
 			tablesContent = getContent(

@@ -57,7 +57,6 @@ public class IconDeactivateTag extends IconTag {
 
 		url = sb.toString();
 
-		setIconCssClass("icon-ban-circle");
 		setMessage("deactivate");
 		setUrl(url);
 

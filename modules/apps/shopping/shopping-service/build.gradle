@@ -1,7 +1,7 @@
 buildService {
-	apiDirName = "../shopping-api/src"
+	apiDirName = "../shopping-api/src/main/java"
 	autoNamespaceTables = false
-	testDirName = "../shopping-test/test/integration"
+	testDirName = "../shopping-test/src/testIntegration/java"
 }
 
 dependencies {

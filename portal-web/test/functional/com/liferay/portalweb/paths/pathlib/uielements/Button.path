@@ -415,7 +415,7 @@
 </tr>
 <tr>
 	<td>PUBLISH</td>
-	<td>//button[contains(.,'Publish')]</td>
+	<td>//button[span[contains(.,'Publish')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -560,7 +560,7 @@
 </tr>
 <tr>
 	<td>SIGN_IN</td>
-	<td>//button[contains(.,'Sign In')]</td>
+	<td>//button[contains(.,'Sign In')] | //button[contains(.,'Acceder')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -610,7 +610,7 @@
 </tr>
 <tr>
 	<td>VIEW_HISTORY</td>
-	<td>//button[contains(.,'View History')]</td>
+	<td>//button[contains(.,'View History')] | //a[contains(.,'View History')]</td>
 	<td></td>
 </tr>
 <tr>

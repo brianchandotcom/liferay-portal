@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.ShardedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -40,7 +41,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface AnnouncementsFlagModel extends BaseModel<AnnouncementsFlag> {
+public interface AnnouncementsFlagModel extends BaseModel<AnnouncementsFlag>,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -74,6 +76,22 @@ public interface AnnouncementsFlagModel extends BaseModel<AnnouncementsFlag> {
 	 * @param flagId the flag ID of this announcements flag
 	 */
 	public void setFlagId(long flagId);
+
+	/**
+	 * Returns the company ID of this announcements flag.
+	 *
+	 * @return the company ID of this announcements flag
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this announcements flag.
+	 *
+	 * @param companyId the company ID of this announcements flag
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this announcements flag.

@@ -15,7 +15,7 @@ buildscript {
 	}
 
 	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.19"
+		classpath group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.23"
 	}
 }
 
@@ -23,6 +23,7 @@ apply plugin: "com.liferay.plugin"
 apply plugin: "eclipse"
 apply plugin: "findbugs"
 apply plugin: "idea"
+apply plugin: "pmd"
 
 File appServerClassesPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/classes")
 File appServerLibPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/lib")
@@ -65,7 +66,7 @@ buildService {
 		if (project.name.endsWith("-service")) {
 			String requiredApiDirName = "../${project.name[0 .. -9]}-api/src"
 
-			if (apiDirName != requiredApiDirName) {
+			if (!apiDirName.startsWith(requiredApiDirName)) {
 				throw new GradleException("Please configure the 'buildService' task.")
 			}
 		}
@@ -121,6 +122,7 @@ dependencies {
 	cssBuilder group: "com.liferay", name: "com.liferay.css.builder", version: "default"
 	javadocFormatter group: "com.liferay", name: "com.liferay.javadoc.formatter", version: "default"
 	langBuilder group: "com.liferay", name: "com.liferay.lang.builder", version: "default"
+	pmd group: "com.liferay", name: "com.liferay.pmd", version: "default"
 
 	portal files(appServerClassesPortalDir)
 	portal fileTree(dir: appServerLibPortalDir, include: "*.jar")
@@ -131,7 +133,7 @@ dependencies {
 	portal group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	portal group: "javax.servlet.jsp", name: "jsp-api", version: "2.1"
 
-	serviceBuilder fileTree(dir: rootProject.file("../tools/sdk/tmp/portal-tools"), include: "*.jar")
+	serviceBuilder fileTree(dir: rootProject.file("../tools/sdk/tmp/portal-tools/portal-tools-service-builder"), include: "*.jar")
 	sourceFormatter group: "com.liferay", name: "com.liferay.source.formatter", version: "default"
 
 	testCompile group: "com.liferay.portal", name: "portal-test", version: liferay.portalVersion
@@ -172,6 +174,38 @@ eclipseProject {
 
 idea {
 	module {
+		excludeDirs += sourceSets.main.output.classesDir
+
+		iml {
+			withXml {
+				XmlProvider xmlProvider ->
+
+				if (!FileUtil.exists(project, "src/main/resources/META-INF/resources")) {
+					return
+				}
+
+				Node node = xmlProvider.node.component.find {
+					it.@name == "NewModuleRootManager"
+				}
+
+				node.plus {
+					NodeBuilder nodeBuilder = new NodeBuilder()
+
+					nodeBuilder.module(name: "NewModuleRootManager") {
+						component(name: "FacetManager") {
+							facet(name: "Web", type: "web") {
+								configuration {
+									webroots {
+										root relative: "/", url: 'file://$MODULE_DIR$/src/main/resources/META-INF/resources'
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
 		scopes.TEST.plus += [configurations.testIntegrationRuntime]
 	}
 }
@@ -199,6 +233,11 @@ node {
 	npmArgs "--fetch-retries", "10"
 	npmArgs "--fetch-retry-maxtimeout", "120000"
 	npmArgs "--fetch-retry-mintimeout", "60000"
+}
+
+pmd {
+	ruleSetFiles = rootProject.files("../tools/sdk/dependencies/net.sourceforge.pmd/rulesets/java/standard-rules.xml")
+	ruleSets = []
 }
 
 repositories {
@@ -291,6 +330,10 @@ tasks.withType(FindBugs) {
 tasks.withType(JavaCompile) {
 	options.encoding = "UTF-8"
 	options.warnings = false
+}
+
+tasks.withType(Pmd) {
+	classpath = null
 }
 
 if (gradle.hasProperty("testClassGroupIndex")) {

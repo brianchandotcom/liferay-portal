@@ -732,6 +732,7 @@ public class ServicePreAction extends Action {
 		ThemeDisplay themeDisplay = ThemeDisplayFactory.create();
 
 		themeDisplay.setRequest(request);
+		themeDisplay.setResponse(response);
 
 		// Set attributes first that other methods (getCDNBaseURL and
 		// setLookAndFeel) depend on

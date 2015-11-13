@@ -6,7 +6,7 @@
 	</command>
 
 	<command name="viewNoResults">
-		<execute function="AssertTextEquals" locator1="Message#INFO_1" value1="No pages were found that matched the keywords: ${webContentSearchTerm}." />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No pages were found that matched the keywords: ${webContentSearchTerm}." />
 	</command>
 
 	<command name="viewResultsEntry">

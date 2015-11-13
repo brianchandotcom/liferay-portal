@@ -121,6 +121,12 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RECORD_TABLE_PREVIEW_INVALID_IMG</td>
+	<td>//img[@src='x']</td>
+	<td></td>
+</tr>
+
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

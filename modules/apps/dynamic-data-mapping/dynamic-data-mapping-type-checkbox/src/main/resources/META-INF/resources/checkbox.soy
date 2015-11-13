@@ -1,0 +1,46 @@
+{namespace ddm}
+
+/**
+ * Prints the DDM form checkbox field.
+ *
+ * @param childElementsHTML
+ * @param label
+ * @param name
+ * @param required
+ * @param showAsSwitcher
+ * @param showLabel
+ * @param status
+ * @param visible
+ */
+{template .checkbox}
+	<div class="form-group form-inline{$visible ? '' : ' hide'}" data-fieldname="{$name}">
+		{if $showAsSwitcher}
+			<div class="checkbox">
+				<label class="control-label" for="{$name}">
+					<input class="toggle-switch" id="{$name}" name="{$name}" type="checkbox" {$status} value="true" />
+
+					<span aria-hidden="true" class="toggle-switch-bar">
+						<span class="toggle-switch-handle" data-label-off="{$label}" data-label-on="{$label}"></span>
+					</span>
+				</label>
+			</div>
+		{else}
+			<div class="checkbox checkbox-default">
+				{if $showLabel}
+					<label class="control-label" for="{$name}">
+				{/if}
+
+				<input id="{$name}" name="{$name}" type="checkbox" {$status} value="true" />{if $showLabel} {$label}{/if}
+
+				{if $showLabel}
+						{if $required}
+							<b>*</b>
+						{/if}
+					</label>
+				{/if}
+			</div>
+		{/if}
+
+		{$childElementsHTML|noAutoescape}
+	</div>
+{/template}

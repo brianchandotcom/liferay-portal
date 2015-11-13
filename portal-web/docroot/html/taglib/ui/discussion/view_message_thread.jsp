@@ -107,15 +107,13 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 								<%
 								User parentMessageUser = parentDiscussionComment.getUser();
-
-								boolean male = (parentMessageUser == null) ? true : parentMessageUser.isMale();
-								long portraitId = (parentMessageUser == null) ? 0 : parentMessageUser.getPortraitId();
-								String userUuid = (parentMessageUser == null) ? null : parentMessageUser.getUserUuid();
 								%>
 
 								<span>
 									<div class="lfr-discussion-reply-user-avatar">
-										<img alt="<%= HtmlUtil.escapeAttribute(parentDiscussionComment.getUserName()) %>" class="user-status-avatar-image" src="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), male, portraitId, userUuid) %>" width="30" />
+										<liferay-ui:user-portrait
+											userId="<%= parentMessageUser.getUserId() %>"
+										/>
 									</div>
 
 									<div class="lfr-discussion-reply-user-name">
@@ -134,7 +132,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 								</a>
 							</liferay-util:buffer>
 
-							<%= LanguageUtil.format(request, "x-ago-in-reply-to-x", new Object[] {createDateDescription, parentCommentBodyBuffer}, false) %>
+							<liferay-ui:message arguments="<%= new Object[] {createDateDescription, parentCommentBodyBuffer} %>" key="x-ago-in-reply-to-x" translateArguments="<%= false %>" />
 						</c:otherwise>
 					</c:choose>
 

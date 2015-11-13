@@ -81,7 +81,7 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 					if (!entries.isEmpty()) {
 						if (rowChecker != null) {
 							if (i == 0) {
-								cssClass = "checkbox-cell checkbox-default";
+								cssClass = "checkbox-cell checkbox-default list-group-item-field";
 							}
 							else {
 								com.liferay.portal.kernel.dao.search.SearchEntry entry = (com.liferay.portal.kernel.dao.search.SearchEntry)entries.get(i - 1);
@@ -270,7 +270,8 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 				rowClassNameAlternate: '<%= _ROW_CLASS_NAME_ALTERNATE %>',
 				rowClassNameAlternateHover: '<%= _ROW_CLASS_NAME_ALTERNATE_HOVER %>',
 				rowClassNameBody: '<%= _ROW_CLASS_NAME_BODY %>',
-				rowClassNameBodyHover: '<%= _ROW_CLASS_NAME_BODY %>'
+				rowClassNameBodyHover: '<%= _ROW_CLASS_NAME_BODY %>',
+				rowSelector: 'tr.selectable'
 			}
 		).render();
 

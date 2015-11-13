@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.ShardedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -40,7 +41,7 @@ import java.io.Serializable;
  */
 @ProviderType
 public interface SocialActivityModel extends AttachedModel,
-	BaseModel<SocialActivity> {
+	BaseModel<SocialActivity>, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -94,6 +95,7 @@ public interface SocialActivityModel extends AttachedModel,
 	 *
 	 * @return the company ID of this social activity
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -101,6 +103,7 @@ public interface SocialActivityModel extends AttachedModel,
 	 *
 	 * @param companyId the company ID of this social activity
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**

@@ -42,7 +42,7 @@ import java.util.Map;
  */
 @ProviderType
 public interface GroupModel extends AttachedModel, BaseModel<Group>,
-	LocalizedModel, MVCCModel {
+	LocalizedModel, MVCCModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -113,6 +113,7 @@ public interface GroupModel extends AttachedModel, BaseModel<Group>,
 	 *
 	 * @return the company ID of this group
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -120,6 +121,7 @@ public interface GroupModel extends AttachedModel, BaseModel<Group>,
 	 *
 	 * @param companyId the company ID of this group
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**

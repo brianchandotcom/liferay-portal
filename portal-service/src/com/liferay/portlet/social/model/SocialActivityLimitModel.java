@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.ShardedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -41,7 +42,7 @@ import java.io.Serializable;
  */
 @ProviderType
 public interface SocialActivityLimitModel extends AttachedModel,
-	BaseModel<SocialActivityLimit> {
+	BaseModel<SocialActivityLimit>, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -95,6 +96,7 @@ public interface SocialActivityLimitModel extends AttachedModel,
 	 *
 	 * @return the company ID of this social activity limit
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -102,6 +104,7 @@ public interface SocialActivityLimitModel extends AttachedModel,
 	 *
 	 * @param companyId the company ID of this social activity limit
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**

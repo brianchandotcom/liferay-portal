@@ -60,7 +60,7 @@ TABLE_COLUMNS_MAP.put("typeSettings", Types.CLOB);
 	public static final String TABLE_SQL_DROP = "drop table ExpandoColumn";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create unique index IX_FEFC8DA7 on ExpandoColumn (tableId, name)"
+		"create unique index IX_FEFC8DA7 on ExpandoColumn (tableId, name[$COLUMN_LENGTH:75$])"
 	};
 
 }

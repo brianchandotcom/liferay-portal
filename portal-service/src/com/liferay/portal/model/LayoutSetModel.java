@@ -39,7 +39,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface LayoutSetModel extends BaseModel<LayoutSet>, MVCCModel {
+public interface LayoutSetModel extends BaseModel<LayoutSet>, MVCCModel,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -109,6 +110,7 @@ public interface LayoutSetModel extends BaseModel<LayoutSet>, MVCCModel {
 	 *
 	 * @return the company ID of this layout set
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -116,6 +118,7 @@ public interface LayoutSetModel extends BaseModel<LayoutSet>, MVCCModel {
 	 *
 	 * @param companyId the company ID of this layout set
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**

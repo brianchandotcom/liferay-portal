@@ -152,7 +152,8 @@ public class ToolsUtil {
 		String fileName = StringUtil.replace(
 			file.toString(), StringPool.BACK_SLASH, StringPool.SLASH);
 
-		int x = fileName.lastIndexOf("/com/liferay/");
+		int x = Math.max(
+			fileName.lastIndexOf("/com/"), fileName.lastIndexOf("/org/"));
 		int y = fileName.lastIndexOf(StringPool.SLASH);
 
 		String packagePath = fileName.substring(x + 1, y);
@@ -168,11 +169,23 @@ public class ToolsUtil {
 			char c = s.charAt(i);
 
 			if (insideQuotes) {
-				if ((c == CharPool.QUOTE) &&
-					((c <= 1) || (s.charAt(i - 1) != CharPool.BACK_SLASH) ||
-					 (s.charAt(i - 2) == CharPool.BACK_SLASH))) {
+				if (c == CharPool.QUOTE) {
+					int precedingBackSlashCount = 0;
 
-					insideQuotes = false;
+					for (int j = (i - 1); j >= 0; j--) {
+						if (s.charAt(j) == CharPool.BACK_SLASH) {
+							precedingBackSlashCount += 1;
+						}
+						else {
+							break;
+						}
+					}
+
+					if ((precedingBackSlashCount == 0) ||
+						((precedingBackSlashCount % 2) == 0)) {
+
+						insideQuotes = false;
+					}
 				}
 			}
 			else if (c == CharPool.QUOTE) {

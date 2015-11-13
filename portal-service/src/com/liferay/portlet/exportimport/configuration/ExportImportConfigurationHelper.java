@@ -105,6 +105,11 @@ public class ExportImportConfigurationHelper {
 			WebKeys.THEME_DISPLAY);
 
 		long groupId = ParamUtil.getLong(portletRequest, "groupId");
+
+		if (type == ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT) {
+			groupId = ParamUtil.getLong(portletRequest, "liveGroupId");
+		}
+
 		String name = ParamUtil.getString(portletRequest, "name");
 		String description = ParamUtil.getString(portletRequest, "description");
 

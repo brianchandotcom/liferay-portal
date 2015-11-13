@@ -253,16 +253,6 @@ public class MBBanLocalServiceWrapper implements MBBanLocalService,
 		return _mbBanLocalService.getBansCount(groupId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _mbBanLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext) {
@@ -355,6 +345,16 @@ public class MBBanLocalServiceWrapper implements MBBanLocalService,
 		return _mbBanLocalService.getMBBansCount();
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _mbBanLocalService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
@@ -365,16 +365,6 @@ public class MBBanLocalServiceWrapper implements MBBanLocalService,
 	@Override
 	public boolean hasBan(long groupId, long banUserId) {
 		return _mbBanLocalService.hasBan(groupId, banUserId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_mbBanLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

@@ -18,7 +18,7 @@
 		<if>
 			<isset var="subcategoryDescription" />
 			<then>
-				<execute function="Type" locator1="CPCategoriesAddSubcategory#DESCRIPTION_FIELD" value1="${subcategoryDescription}" />
+				<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${subcategoryDescription}" />
 			</then>
 		</if>
 
@@ -123,7 +123,7 @@
 		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<execute function="Type" locator1="CPCategoriesEditSubcategory#NAME_FIELD" value1="${subcategoryNameEdit}" />
+		<execute function="Type" locator1="TextInput#TITLE" value1="${subcategoryNameEdit}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
@@ -185,8 +185,8 @@
 		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<execute function="AssertTextEquals" locator1="CPCategoriesEditSubcategory#PROPERTIES_KEY_FIELD_DEFAULT" value1="${propertiesKeyField}" />
-		<execute function="AssertTextEquals" locator1="CPCategoriesEditSubcategory#PROPERTIES_VALUE_FIELD_DEFAULT" value1="${propertiesValueField}" />
+		<execute function="AssertTextEquals" locator1="CategoriesEditSubcategory#PROPERTIES_KEY_FIELD_DEFAULT" value1="${propertiesKeyField}" />
+		<execute function="AssertTextEquals" locator1="CategoriesEditSubcategory#PROPERTIES_VALUE_FIELD_DEFAULT" value1="${propertiesValueField}" />
 	</command>
 
 	<command name="viewCP">

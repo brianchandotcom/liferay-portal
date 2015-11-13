@@ -250,7 +250,7 @@ public class SyncEngine {
 		_executorService.execute(watcher);
 
 		if (!ConnectionRetryUtil.retryInProgress(syncAccountId)) {
-			synchronizeSyncFiles(syncAccountFilePath, syncAccountId);
+			synchronizeSyncFiles(syncAccountId);
 		}
 
 		scheduleGetSyncDLObjectUpdateEvent(
@@ -377,11 +377,18 @@ public class SyncEngine {
 			});
 	}
 
-	protected static void synchronizeSyncFiles(
-			Path filePath, long syncAccountId)
+	protected static void synchronizeSyncFiles(long syncAccountId)
 		throws IOException {
 
-		FileUtil.fireDeleteEvents(filePath);
+		List<SyncSite> syncSites = SyncSiteService.findSyncSites(syncAccountId);
+
+		for (SyncSite syncSite : syncSites) {
+			if (!syncSite.isActive()) {
+				continue;
+			}
+
+			FileUtil.fireDeleteEvents(Paths.get(syncSite.getFilePathName()));
+		}
 
 		FileEventUtil.retryFileTransfers(syncAccountId);
 	}

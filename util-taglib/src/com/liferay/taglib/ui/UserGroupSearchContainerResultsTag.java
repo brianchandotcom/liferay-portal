@@ -31,6 +31,10 @@ public class UserGroupSearchContainerResultsTag<R> extends IncludeTag {
 		_searchTerms = searchTerms;
 	}
 
+	public void setUseIndexer(boolean useIndexer) {
+		_useIndexer = useIndexer;
+	}
+
 	public void setUserGroupParams(
 		LinkedHashMap<String, Object> userGroupParams) {
 
@@ -40,6 +44,7 @@ public class UserGroupSearchContainerResultsTag<R> extends IncludeTag {
 	@Override
 	protected void cleanUp() {
 		_searchTerms = null;
+		_useIndexer = true;
 		_userGroupParams = null;
 	}
 
@@ -58,6 +63,9 @@ public class UserGroupSearchContainerResultsTag<R> extends IncludeTag {
 			searchContainerTag.getSearchContainer();
 
 		request.setAttribute(
+			"liferay-ui:user-group-search-container-results:useIndexer",
+			_useIndexer);
+		request.setAttribute(
 			"liferay-ui:user-group-search-container-results:searchContainer",
 			searchContainer);
 		request.setAttribute(
@@ -72,6 +80,7 @@ public class UserGroupSearchContainerResultsTag<R> extends IncludeTag {
 		"/html/taglib/ui/user_group_search_container_results/page.jsp";
 
 	private DisplayTerms _searchTerms;
+	private boolean _useIndexer = true;
 	private LinkedHashMap<String, Object> _userGroupParams;
 
 }

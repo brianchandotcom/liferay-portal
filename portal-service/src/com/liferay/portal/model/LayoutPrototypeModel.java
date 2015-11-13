@@ -43,7 +43,7 @@ import java.util.Map;
  */
 @ProviderType
 public interface LayoutPrototypeModel extends BaseModel<LayoutPrototype>,
-	LocalizedModel, MVCCModel, StagedAuditedModel {
+	LocalizedModel, MVCCModel, ShardedModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

@@ -59,6 +59,31 @@
 	<td>//img[@title='español']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ICON_MENU_DROPDOWN</td>
+	<td>//a[contains(@id,'LanguagePortlet')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ICON_MENU_LANGUAGE</td>
+	<td>//a[contains(.,'${key_language}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LANGUAGE_MENU_SELECT</td>
+	<td>//select[contains(@title,'Language')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LONG_TEXT_LINK</td>
+	<td>//a[contains(@class,'long-text') and contains(.,'${key_language}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHORT_TEXT_LINK</td>
+	<td>//a[contains(@class,'short-text') and contains(.,'${key_languageKey}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

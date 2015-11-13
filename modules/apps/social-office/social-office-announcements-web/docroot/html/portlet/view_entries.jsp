@@ -77,7 +77,7 @@ List<AnnouncementsEntry> results = AnnouncementsEntryLocalServiceUtil.getEntries
 		<c:when test="<%= readEntries %>">
 			<c:if test="<%= themeDisplay.isSignedIn() && !results.isEmpty() %>">
 				<div class="header">
-					<span><%= LanguageUtil.get(request, "read-entries") %></span>
+					<span><liferay-ui:message key="read-entries" /></span>
 				</div>
 
 				<%

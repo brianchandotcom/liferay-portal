@@ -192,7 +192,7 @@ public class ServiceBuilder {
 		String testDirName = arguments.get("service.test.dir");
 
 		Set<String> resourceActionModels = readResourceActionModels(
-			implDirName, resourceActionsConfigs);
+			implDirName, resourcesDirName, resourceActionsConfigs);
 
 		ModelHintsUtil modelHintsUtil = new ModelHintsUtil();
 
@@ -324,7 +324,8 @@ public class ServiceBuilder {
 	}
 
 	public static Set<String> readResourceActionModels(
-			String implDir, String[] resourceActionsConfigs)
+			String implDir, String resourcesDir,
+			String[] resourceActionsConfigs)
 		throws Exception {
 
 		Set<String> resourceActionModels = new HashSet<>();
@@ -343,7 +344,8 @@ public class ServiceBuilder {
 					InputStream inputStream = url.openStream();
 
 					_readResourceActionModels(
-						implDir, inputStream, resourceActionModels);
+						implDir, resourcesDir, inputStream,
+						resourceActionModels);
 				}
 			}
 			else {
@@ -355,7 +357,8 @@ public class ServiceBuilder {
 
 						try (InputStream inputStream = url.openStream()) {
 							_readResourceActionModels(
-								implDir, inputStream, resourceActionModels);
+								implDir, resourcesDir, inputStream,
+								resourceActionModels);
 						}
 					}
 				}
@@ -366,13 +369,18 @@ public class ServiceBuilder {
 						file = new File(implDir, config);
 					}
 
+					if (!file.exists() && Validator.isNotNull(resourcesDir)) {
+						file = new File(resourcesDir, config);
+					}
+
 					if (!file.exists()) {
 						continue;
 					}
 
 					try (InputStream inputStream = new FileInputStream(file)) {
 						_readResourceActionModels(
-							implDir, inputStream, resourceActionModels);
+							implDir, resourcesDir, inputStream,
+							resourceActionModels);
 					}
 				}
 			}
@@ -1687,6 +1695,10 @@ public class ServiceBuilder {
 		return SAXReaderFactory.getSAXReader(null, false, false);
 	}
 
+	private static void _mkdir(File dir) throws IOException {
+		Files.createDirectories(dir.toPath());
+	}
+
 	private static void _move(File sourceFile, File destinationFile)
 		throws IOException {
 
@@ -1708,7 +1720,7 @@ public class ServiceBuilder {
 	}
 
 	private static void _readResourceActionModels(
-			String implDir, InputStream inputStream,
+			String implDir, String resourcesDir, InputStream inputStream,
 			Set<String> resourceActionModels)
 		throws Exception {
 
@@ -1723,7 +1735,7 @@ public class ServiceBuilder {
 		for (Element resourceElement : resourceElements) {
 			resourceActionModels.addAll(
 				readResourceActionModels(
-					implDir,
+					implDir, resourcesDir,
 					new String[] {resourceElement.attributeValue("file")}));
 		}
 
@@ -1737,6 +1749,8 @@ public class ServiceBuilder {
 	}
 
 	private static void _touch(File file) throws IOException {
+		_mkdir(file.getParentFile());
+
 		Files.createFile(file.toPath());
 	}
 
@@ -3181,7 +3195,7 @@ public class ServiceBuilder {
 		File sqlDir = new File(_sqlDirName);
 
 		if (!sqlDir.exists()) {
-			return;
+			_mkdir(sqlDir);
 		}
 
 		// indexes.sql loading
@@ -3383,7 +3397,7 @@ public class ServiceBuilder {
 		File sqlDir = new File(_sqlDirName);
 
 		if (!sqlDir.exists()) {
-			return;
+			_mkdir(sqlDir);
 		}
 
 		File sqlFile = new File(_sqlDirName + "/" + _sqlSequencesFileName);
@@ -3466,7 +3480,7 @@ public class ServiceBuilder {
 		File sqlDir = new File(_sqlDirName);
 
 		if (!sqlDir.exists()) {
-			return;
+			_mkdir(sqlDir);
 		}
 
 		File sqlFile = new File(_sqlDirName + "/" + _sqlFileName);

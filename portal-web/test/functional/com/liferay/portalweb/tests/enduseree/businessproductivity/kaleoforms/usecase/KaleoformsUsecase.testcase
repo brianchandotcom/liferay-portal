@@ -3004,11 +3004,6 @@
 			<var name="kfProcessFieldData" value="Userfn" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#populateFieldSelect">
-			<var name="fieldName" value="imService" />
-			<var name="kfProcessFieldData" value="AOL" />
-		</execute>
-
 		<execute macro="KaleoFormsPortlet#populateFieldText">
 			<var name="fieldName" value="imUserName" />
 			<var name="kfProcessFieldData" value="IMUsername" />
@@ -3073,11 +3068,6 @@
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
 			<var name="fieldName" value="First Name" />
 			<var name="kfProcessFieldData" value="Userfn" />
-		</execute>
-
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Instant Messenger Service" />
-			<var name="kfProcessFieldData" value="AOL" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">

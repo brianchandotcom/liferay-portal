@@ -166,13 +166,6 @@ public interface ResourceTypePermissionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getCompanyScopeActionIds(long companyId, java.lang.String name,
 		long roleId);
@@ -184,6 +177,13 @@ public interface ResourceTypePermissionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.ResourceTypePermission> getGroupScopeResourceTypePermissions(
 		long companyId, java.lang.String name, long roleId);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -246,13 +246,6 @@ public interface ResourceTypePermissionLocalService extends BaseLocalService,
 	public boolean hasGroupScopePermission(long companyId, long groupId,
 		java.lang.String name, long roleId, java.lang.String actionId)
 		throws PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public void updateCompanyScopeResourceTypePermissions(long companyId,
 		java.lang.String name, long roleId, long actionIdsLong, long operator);

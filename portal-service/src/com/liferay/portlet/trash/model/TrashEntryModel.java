@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.ShardedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -42,7 +43,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface TrashEntryModel extends AttachedModel, BaseModel<TrashEntry> {
+public interface TrashEntryModel extends AttachedModel, BaseModel<TrashEntry>,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -96,6 +98,7 @@ public interface TrashEntryModel extends AttachedModel, BaseModel<TrashEntry> {
 	 *
 	 * @return the company ID of this trash entry
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -103,6 +106,7 @@ public interface TrashEntryModel extends AttachedModel, BaseModel<TrashEntry> {
 	 *
 	 * @param companyId the company ID of this trash entry
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**

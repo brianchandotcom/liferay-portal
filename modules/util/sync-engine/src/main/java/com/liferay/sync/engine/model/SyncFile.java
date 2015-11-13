@@ -101,6 +101,10 @@ public class SyncFile extends StateAwareModel {
 
 	public static final int UI_EVENT_RENAMED_REMOTE = 22;
 
+	public static final int UI_EVENT_RESTORED_LOCAL = 26;
+
+	public static final int UI_EVENT_RESTORED_REMOTE = 27;
+
 	public static final int UI_EVENT_TRASHED_LOCAL = 15;
 
 	public static final int UI_EVENT_TRASHED_REMOTE = 16;
@@ -175,7 +179,7 @@ public class SyncFile extends StateAwareModel {
 		return localExtraSettings;
 	}
 
-	public String getLocalExtraSettingsValue(String key) {
+	public String getLocalExtraSettingValue(String key) {
 		try {
 			JsonNode jsonNode = JSONUtil.readTree(localExtraSettings);
 
@@ -329,11 +333,7 @@ public class SyncFile extends StateAwareModel {
 		this.filePathName = filePathName;
 	}
 
-	public void setLocalExtraSettings(String localExtraSettings) {
-		this.localExtraSettings = localExtraSettings;
-	}
-
-	public void setLocalExtraSettingsValue(String key, Object value)
+	public void setLocalExtraSetting(String key, Object value)
 		throws IOException {
 
 		Map<String, Object> map = new HashMap();
@@ -345,6 +345,10 @@ public class SyncFile extends StateAwareModel {
 		map.put(key, value);
 
 		localExtraSettings = JSONUtil.writeValueAsString(map);
+	}
+
+	public void setLocalExtraSettings(String localExtraSettings) {
+		this.localExtraSettings = localExtraSettings;
 	}
 
 	public void setLocalSyncTime(long localSyncTime) {
@@ -425,6 +429,23 @@ public class SyncFile extends StateAwareModel {
 
 	public void setVersionId(long versionId) {
 		this.versionId = versionId;
+	}
+
+	public void unsetLocalExtraSetting(String key) throws IOException {
+		if (localExtraSettings == null) {
+			return;
+		}
+
+		Map map = JSONUtil.readValue(localExtraSettings, Map.class);
+
+		map.remove(key);
+
+		if (map.isEmpty()) {
+			localExtraSettings = null;
+		}
+		else {
+			localExtraSettings = JSONUtil.writeValueAsString(map);
+		}
 	}
 
 	@DatabaseField(defaultValue = "", useGetSet = true)

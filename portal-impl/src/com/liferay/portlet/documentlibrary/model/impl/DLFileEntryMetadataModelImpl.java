@@ -62,6 +62,7 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "uuid_", Types.VARCHAR },
 			{ "fileEntryMetadataId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
 			{ "DDMStorageId", Types.BIGINT },
 			{ "DDMStructureId", Types.BIGINT },
 			{ "fileEntryId", Types.BIGINT },
@@ -72,13 +73,14 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("fileEntryMetadataId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("DDMStorageId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("DDMStructureId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("fileEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("fileVersionId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table DLFileEntryMetadata (uuid_ VARCHAR(75) null,fileEntryMetadataId LONG not null primary key,DDMStorageId LONG,DDMStructureId LONG,fileEntryId LONG,fileVersionId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table DLFileEntryMetadata (uuid_ VARCHAR(75) null,fileEntryMetadataId LONG not null primary key,companyId LONG,DDMStorageId LONG,DDMStructureId LONG,fileEntryId LONG,fileVersionId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table DLFileEntryMetadata";
 	public static final String ORDER_BY_JPQL = " ORDER BY dlFileEntryMetadata.fileEntryMetadataId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DLFileEntryMetadata.fileEntryMetadataId ASC";
@@ -95,10 +97,11 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 				"value.object.column.bitmask.enabled.com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata"),
 			true);
 	public static final long DDMSTRUCTUREID_COLUMN_BITMASK = 1L;
-	public static final long FILEENTRYID_COLUMN_BITMASK = 2L;
-	public static final long FILEVERSIONID_COLUMN_BITMASK = 4L;
-	public static final long UUID_COLUMN_BITMASK = 8L;
-	public static final long FILEENTRYMETADATAID_COLUMN_BITMASK = 16L;
+	public static final long COMPANYID_COLUMN_BITMASK = 2L;
+	public static final long FILEENTRYID_COLUMN_BITMASK = 4L;
+	public static final long FILEVERSIONID_COLUMN_BITMASK = 8L;
+	public static final long UUID_COLUMN_BITMASK = 16L;
+	public static final long FILEENTRYMETADATAID_COLUMN_BITMASK = 32L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata"));
 
@@ -141,6 +144,7 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 
 		attributes.put("uuid", getUuid());
 		attributes.put("fileEntryMetadataId", getFileEntryMetadataId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("DDMStorageId", getDDMStorageId());
 		attributes.put("DDMStructureId", getDDMStructureId());
 		attributes.put("fileEntryId", getFileEntryId());
@@ -164,6 +168,12 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 
 		if (fileEntryMetadataId != null) {
 			setFileEntryMetadataId(fileEntryMetadataId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long DDMStorageId = (Long)attributes.get("DDMStorageId");
@@ -222,6 +232,28 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 	@Override
 	public void setFileEntryMetadataId(long fileEntryMetadataId) {
 		_fileEntryMetadataId = fileEntryMetadataId;
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@Override
@@ -306,7 +338,7 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			DLFileEntryMetadata.class.getName(), getPrimaryKey());
 	}
 
@@ -333,6 +365,7 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 
 		dlFileEntryMetadataImpl.setUuid(getUuid());
 		dlFileEntryMetadataImpl.setFileEntryMetadataId(getFileEntryMetadataId());
+		dlFileEntryMetadataImpl.setCompanyId(getCompanyId());
 		dlFileEntryMetadataImpl.setDDMStorageId(getDDMStorageId());
 		dlFileEntryMetadataImpl.setDDMStructureId(getDDMStructureId());
 		dlFileEntryMetadataImpl.setFileEntryId(getFileEntryId());
@@ -401,6 +434,10 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 
 		dlFileEntryMetadataModelImpl._originalUuid = dlFileEntryMetadataModelImpl._uuid;
 
+		dlFileEntryMetadataModelImpl._originalCompanyId = dlFileEntryMetadataModelImpl._companyId;
+
+		dlFileEntryMetadataModelImpl._setOriginalCompanyId = false;
+
 		dlFileEntryMetadataModelImpl._originalDDMStructureId = dlFileEntryMetadataModelImpl._DDMStructureId;
 
 		dlFileEntryMetadataModelImpl._setOriginalDDMStructureId = false;
@@ -430,6 +467,8 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 
 		dlFileEntryMetadataCacheModel.fileEntryMetadataId = getFileEntryMetadataId();
 
+		dlFileEntryMetadataCacheModel.companyId = getCompanyId();
+
 		dlFileEntryMetadataCacheModel.DDMStorageId = getDDMStorageId();
 
 		dlFileEntryMetadataCacheModel.DDMStructureId = getDDMStructureId();
@@ -443,12 +482,14 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
 		sb.append(", fileEntryMetadataId=");
 		sb.append(getFileEntryMetadataId());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append(", DDMStorageId=");
 		sb.append(getDDMStorageId());
 		sb.append(", DDMStructureId=");
@@ -464,7 +505,7 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("<model><model-name>");
 		sb.append(
@@ -478,6 +519,10 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 		sb.append(
 			"<column><column-name>fileEntryMetadataId</column-name><column-value><![CDATA[");
 		sb.append(getFileEntryMetadataId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>DDMStorageId</column-name><column-value><![CDATA[");
@@ -508,6 +553,9 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 	private String _uuid;
 	private String _originalUuid;
 	private long _fileEntryMetadataId;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _DDMStorageId;
 	private long _DDMStructureId;
 	private long _originalDDMStructureId;

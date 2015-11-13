@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.ShardedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -39,7 +40,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface SocialActivityAchievementModel extends BaseModel<SocialActivityAchievement> {
+public interface SocialActivityAchievementModel extends BaseModel<SocialActivityAchievement>,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -93,6 +95,7 @@ public interface SocialActivityAchievementModel extends BaseModel<SocialActivity
 	 *
 	 * @return the company ID of this social activity achievement
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -100,6 +103,7 @@ public interface SocialActivityAchievementModel extends BaseModel<SocialActivity
 	 *
 	 * @param companyId the company ID of this social activity achievement
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**

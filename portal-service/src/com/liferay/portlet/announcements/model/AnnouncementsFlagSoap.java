@@ -35,6 +35,7 @@ public class AnnouncementsFlagSoap implements Serializable {
 		AnnouncementsFlagSoap soapModel = new AnnouncementsFlagSoap();
 
 		soapModel.setFlagId(model.getFlagId());
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setEntryId(model.getEntryId());
@@ -102,6 +103,14 @@ public class AnnouncementsFlagSoap implements Serializable {
 		_flagId = flagId;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getUserId() {
 		return _userId;
 	}
@@ -135,6 +144,7 @@ public class AnnouncementsFlagSoap implements Serializable {
 	}
 
 	private long _flagId;
+	private long _companyId;
 	private long _userId;
 	private Date _createDate;
 	private long _entryId;

@@ -411,6 +411,29 @@ public class LocalizationImplTest {
 			LocalizationUtil.getLocalization(xml, _GERMAN_LANGUAGE_ID, false));
 	}
 
+	@Test
+	public void testUpdateLocalizationWithAmpersand() {
+		Map<Locale, String> localizationMap = new HashMap<>();
+
+		String spanishValue = "bar&foo";
+
+		localizationMap.put(LocaleUtil.SPAIN, spanishValue);
+
+		String englishValue = "foo&bar";
+
+		localizationMap.put(LocaleUtil.US, englishValue);
+
+		String xml = LocalizationUtil.updateLocalization(
+			localizationMap, _xml, "static-content", "en_US");
+
+		Assert.assertEquals(
+			spanishValue,
+			LocalizationUtil.getLocalization(xml, _SPANISH_LANGUAGE_ID));
+		Assert.assertEquals(
+			englishValue,
+			LocalizationUtil.getLocalization(xml, _ENGLISH_LANGUAGE_ID));
+	}
+
 	private static final String _ENGLISH_HELLO = "Hello World";
 
 	private static final String _ENGLISH_LANGUAGE_ID = LocaleUtil.toLanguageId(

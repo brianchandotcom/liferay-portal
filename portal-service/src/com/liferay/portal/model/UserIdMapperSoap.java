@@ -34,6 +34,7 @@ public class UserIdMapperSoap implements Serializable {
 
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUserIdMapperId(model.getUserIdMapperId());
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setType(model.getType());
 		soapModel.setDescription(model.getDescription());
@@ -106,6 +107,14 @@ public class UserIdMapperSoap implements Serializable {
 		_userIdMapperId = userIdMapperId;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getUserId() {
 		return _userId;
 	}
@@ -140,6 +149,7 @@ public class UserIdMapperSoap implements Serializable {
 
 	private long _mvccVersion;
 	private long _userIdMapperId;
+	private long _companyId;
 	private long _userId;
 	private String _type;
 	private String _description;

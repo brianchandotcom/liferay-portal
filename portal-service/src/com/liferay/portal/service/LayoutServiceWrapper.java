@@ -556,16 +556,6 @@ public class LayoutServiceWrapper implements LayoutService,
 		return _layoutService.getAncestorLayouts(plid);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _layoutService.getBeanIdentifier();
-	}
-
 	@Override
 	public long getDefaultPlid(long groupId, long scopeGroupId,
 		java.lang.String portletId)
@@ -658,7 +648,8 @@ public class LayoutServiceWrapper implements LayoutService,
 
 	@Override
 	public java.util.List<com.liferay.portal.model.Layout> getLayouts(
-		long groupId, boolean privateLayout, long parentLayoutId) {
+		long groupId, boolean privateLayout, long parentLayoutId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutService.getLayouts(groupId, privateLayout, parentLayoutId);
 	}
 
@@ -676,6 +667,16 @@ public class LayoutServiceWrapper implements LayoutService,
 		long parentLayoutId) {
 		return _layoutService.getLayoutsCount(groupId, privateLayout,
 			parentLayoutId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _layoutService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -1153,16 +1154,6 @@ public class LayoutServiceWrapper implements LayoutService,
 			remotePathContext, secureConnection, remoteGroupId,
 			remotePrivateLayout, startDate, endDate, groupName, cronText,
 			schedulerStartDate, schedulerEndDate, description);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_layoutService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

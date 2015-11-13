@@ -40,7 +40,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface SystemEventModel extends AttachedModel, BaseModel<SystemEvent>,
-	MVCCModel {
+	MVCCModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -110,6 +110,7 @@ public interface SystemEventModel extends AttachedModel, BaseModel<SystemEvent>,
 	 *
 	 * @return the company ID of this system event
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -117,6 +118,7 @@ public interface SystemEventModel extends AttachedModel, BaseModel<SystemEvent>,
 	 *
 	 * @param companyId the company ID of this system event
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**

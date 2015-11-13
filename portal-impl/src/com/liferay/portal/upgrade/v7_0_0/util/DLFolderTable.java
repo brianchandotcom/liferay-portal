@@ -111,12 +111,12 @@ TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 		"create index IX_E79BE432 on DLFolder (companyId, status)",
 		"create index IX_C88430AB on DLFolder (groupId, mountPoint, parentFolderId, hidden_, status)",
 		"create index IX_CE360BF6 on DLFolder (groupId, parentFolderId, hidden_, status)",
-		"create unique index IX_902FD874 on DLFolder (groupId, parentFolderId, name)",
-		"create index IX_51556082 on DLFolder (parentFolderId, name)",
+		"create unique index IX_902FD874 on DLFolder (groupId, parentFolderId, name[$COLUMN_LENGTH:255$])",
+		"create index IX_51556082 on DLFolder (parentFolderId, name[$COLUMN_LENGTH:255$])",
 		"create index IX_6F63F140 on DLFolder (repositoryId, mountPoint)",
 		"create index IX_6747B2BC on DLFolder (repositoryId, parentFolderId)",
-		"create index IX_DA448450 on DLFolder (uuid_, companyId)",
-		"create unique index IX_3CC1DED2 on DLFolder (uuid_, groupId)"
+		"create index IX_DA448450 on DLFolder (uuid_[$COLUMN_LENGTH:75$], companyId)",
+		"create unique index IX_3CC1DED2 on DLFolder (uuid_[$COLUMN_LENGTH:75$], groupId)"
 	};
 
 }

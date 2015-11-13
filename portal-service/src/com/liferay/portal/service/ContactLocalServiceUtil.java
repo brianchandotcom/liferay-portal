@@ -57,17 +57,15 @@ public class ContactLocalServiceUtil {
 		java.lang.String emailAddress, java.lang.String firstName,
 		java.lang.String middleName, java.lang.String lastName, long prefixId,
 		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
-		int birthdayYear, java.lang.String smsSn, java.lang.String aimSn,
-		java.lang.String facebookSn, java.lang.String icqSn,
-		java.lang.String jabberSn, java.lang.String mySpaceSn,
-		java.lang.String skypeSn, java.lang.String twitterSn,
-		java.lang.String ymSn, java.lang.String jobTitle)
+		int birthdayYear, java.lang.String smsSn, java.lang.String facebookSn,
+		java.lang.String jabberSn, java.lang.String skypeSn,
+		java.lang.String twitterSn, java.lang.String jobTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addContact(userId, className, classPK, emailAddress,
 			firstName, middleName, lastName, prefixId, suffixId, male,
-			birthdayMonth, birthdayDay, birthdayYear, smsSn, aimSn, facebookSn,
-			icqSn, jabberSn, mySpaceSn, skypeSn, twitterSn, ymSn, jobTitle);
+			birthdayMonth, birthdayDay, birthdayYear, smsSn, facebookSn,
+			jabberSn, skypeSn, twitterSn, jobTitle);
 	}
 
 	/**
@@ -199,15 +197,6 @@ public class ContactLocalServiceUtil {
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
 	* Returns the contact with the primary key.
 	*
 	* @param contactId the primary key of the contact
@@ -256,19 +245,19 @@ public class ContactLocalServiceUtil {
 		return getService().getContactsCount(classNameId, classPK);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	/**
@@ -287,17 +276,15 @@ public class ContactLocalServiceUtil {
 		java.lang.String firstName, java.lang.String middleName,
 		java.lang.String lastName, long prefixId, long suffixId, boolean male,
 		int birthdayMonth, int birthdayDay, int birthdayYear,
-		java.lang.String smsSn, java.lang.String aimSn,
-		java.lang.String facebookSn, java.lang.String icqSn,
-		java.lang.String jabberSn, java.lang.String mySpaceSn,
-		java.lang.String skypeSn, java.lang.String twitterSn,
-		java.lang.String ymSn, java.lang.String jobTitle)
+		java.lang.String smsSn, java.lang.String facebookSn,
+		java.lang.String jabberSn, java.lang.String skypeSn,
+		java.lang.String twitterSn, java.lang.String jobTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateContact(contactId, emailAddress, firstName,
 			middleName, lastName, prefixId, suffixId, male, birthdayMonth,
-			birthdayDay, birthdayYear, smsSn, aimSn, facebookSn, icqSn,
-			jabberSn, mySpaceSn, skypeSn, twitterSn, ymSn, jobTitle);
+			birthdayDay, birthdayYear, smsSn, facebookSn, jabberSn, skypeSn,
+			twitterSn, jobTitle);
 	}
 
 	public static ContactLocalService getService() {

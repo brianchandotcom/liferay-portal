@@ -102,6 +102,10 @@ public class RepositoryServiceSoap {
 		}
 	}
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@Deprecated
 	public static java.lang.String[] getSupportedConfigurations(
 		long classNameId) throws RemoteException {
 		try {
@@ -117,8 +121,7 @@ public class RepositoryServiceSoap {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	#getSupportedParameters(String, String)}
+	* @deprecated As of 7.0.0, with no direct replacement
 	*/
 	@Deprecated
 	public static java.lang.String[] getSupportedParameters(long classNameId,
@@ -136,6 +139,10 @@ public class RepositoryServiceSoap {
 		}
 	}
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@Deprecated
 	public static java.lang.String[] getSupportedParameters(
 		java.lang.String className, java.lang.String configuration)
 		throws RemoteException {

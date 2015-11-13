@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.ShardedModel;
 import com.liferay.portal.model.TypedModel;
 import com.liferay.portal.service.ServiceContext;
 
@@ -38,7 +39,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface ExpandoTableModel extends BaseModel<ExpandoTable>, TypedModel {
+public interface ExpandoTableModel extends BaseModel<ExpandoTable>, ShardedModel,
+	TypedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -78,6 +80,7 @@ public interface ExpandoTableModel extends BaseModel<ExpandoTable>, TypedModel {
 	 *
 	 * @return the company ID of this expando table
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -85,6 +88,7 @@ public interface ExpandoTableModel extends BaseModel<ExpandoTable>, TypedModel {
 	 *
 	 * @param companyId the company ID of this expando table
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**

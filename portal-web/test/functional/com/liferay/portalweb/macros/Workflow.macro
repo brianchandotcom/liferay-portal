@@ -650,10 +650,10 @@
 	</command>
 
 	<command name="viewDefaultMySubmissionsCP">
-		<execute function="AssertTextEquals" locator1="Message#EMPTY" value1="There are no pending publications requested by me." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no pending publications requested by me." />
 		<execute function="AssertClick" locator1="MenuItem#COMPLETED" value1="Completed" />
 
-		<execute function="AssertTextEquals" locator1="Message#EMPTY" value1="There are no completed publications requested by me." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no completed publications requested by me." />
 	</command>
 
 	<command name="viewDefaultMyWorkflowTasksCP">
@@ -661,7 +661,7 @@
 		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_INFO_MESSAGE" value1="There are no pending tasks assigned to your roles." />
 		<execute function="AssertClick" locator1="MenuItem#COMPLETED" value1="Completed" />
 
-		<execute function="AssertTextEquals" locator1="Message#EMPTY" value1="There are no completed tasks." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no completed tasks." />
 	</command>
 
 	<command name="viewDefinition">
@@ -700,6 +700,17 @@
 		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${workflowDefinition}" />
 	</command>
 
+	<command name="viewPendingTasks">
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
+		<execute function="AssertTextEquals" locator1="WorkflowSubmissions#PENDING_TABLE_DEFINITION" value1="${workflowDefinition}" />
+		<execute function="AssertTextEquals" locator1="WorkflowSubmissions#PENDING_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+		<execute function="AssertTextEquals" locator1="WorkflowSubmissions#PENDING_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
+		<execute function="AssertTextEquals" locator1="WorkflowSubmissions#PENDING_TABLE_STATUS" value1="${workflowTask}" />
+		<execute function="AssertElementPresent" locator1="WorkflowSubmissions#PENDING_TABLE_LAST_ACTIVITY_DATE" />
+		<execute function="AssertElementPresent" locator1="WorkflowSubmissions#PENDING_TABLE_END_DATE" />
+	</command>
+
 	<command name="viewRejectedTask">
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 		<var name="key_workflowTask" value="Update" />
@@ -719,6 +730,12 @@
 		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
 		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_LAST_ACTIVITY_DATE" />
 		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_DUE_DATE" />
+	</command>
+
+	<command name="viewSubmissionNotPresent">
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
+		<execute function="AssertElementNotPresent" locator1="WorkflowSubmissions#PENDING_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
 	</command>
 
 	<command name="viewTaskAssignedToMe">

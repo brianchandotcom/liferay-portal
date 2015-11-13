@@ -1,0 +1,30 @@
+.marketplace-portlet {
+	iframe {
+		border-width: 0;
+		min-width: 975px;
+		min-height: 320px;
+		width: 100%;
+	}
+
+	.authorize {
+		margin: 0 auto;
+		max-width: 960px;
+		padding: 6em 4em;
+
+		p {
+			margin: 2em 0;
+		}
+
+		a.btn {
+			border-color: #1C75B9;
+			color: #1C75B9;
+		}
+	}
+
+	.sign-out {
+		box-sizing: content-box;
+		margin: 0 auto 2em;
+		padding: 0 4em;
+		width: 960px;
+	}
+}

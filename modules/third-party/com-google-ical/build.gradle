@@ -3,25 +3,19 @@ import com.liferay.gradle.util.OSDetector
 
 import groovy.io.FileType
 
-dependencies {
-	compile group: "joda-time", name: "joda-time", version: "1.5.2"
-}
-
-ext {
-	srcUrl = "http://google-rfc-2445.googlecode.com/svn/trunk/src@36"
-}
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}
+task downloadSrc(type: Exec)
 
 sourceCompatibility = "1.6"
 targetCompatibility = "1.6"
 
-task downloadSrc(type: Exec)
+String srcUrl = "http://google-rfc-2445.googlecode.com/svn/trunk/src@36"
 
 compileJava {
 	dependsOn downloadSrc
+}
+
+dependencies {
+	compile group: "joda-time", name: "joda-time", version: "1.5.2"
 }
 
 downloadSrc {
@@ -67,4 +61,8 @@ downloadSrc {
 	onlyIf {
 		!FileUtil.exists(project, "src/main/java")
 	}
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
 }

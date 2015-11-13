@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Poshi Runner
 Bundle-SymbolicName: com.liferay.poshi.runner
-Bundle-Version: 1.0.22
+Bundle-Version: 1.0.23
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources

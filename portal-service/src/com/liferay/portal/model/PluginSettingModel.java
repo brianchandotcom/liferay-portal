@@ -37,7 +37,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface PluginSettingModel extends BaseModel<PluginSetting>, MVCCModel {
+public interface PluginSettingModel extends BaseModel<PluginSetting>, MVCCModel,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -93,6 +94,7 @@ public interface PluginSettingModel extends BaseModel<PluginSetting>, MVCCModel 
 	 *
 	 * @return the company ID of this plugin setting
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -100,6 +102,7 @@ public interface PluginSettingModel extends BaseModel<PluginSetting>, MVCCModel 
 	 *
 	 * @param companyId the company ID of this plugin setting
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**

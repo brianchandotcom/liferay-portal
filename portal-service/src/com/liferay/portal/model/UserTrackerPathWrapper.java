@@ -54,6 +54,7 @@ public class UserTrackerPathWrapper implements UserTrackerPath,
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("userTrackerPathId", getUserTrackerPathId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("userTrackerId", getUserTrackerId());
 		attributes.put("path", getPath());
 		attributes.put("pathDate", getPathDate());
@@ -73,6 +74,12 @@ public class UserTrackerPathWrapper implements UserTrackerPath,
 
 		if (userTrackerPathId != null) {
 			setUserTrackerPathId(userTrackerPathId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long userTrackerId = (Long)attributes.get("userTrackerId");
@@ -103,6 +110,16 @@ public class UserTrackerPathWrapper implements UserTrackerPath,
 	public int compareTo(
 		com.liferay.portal.model.UserTrackerPath userTrackerPath) {
 		return _userTrackerPath.compareTo(userTrackerPath);
+	}
+
+	/**
+	* Returns the company ID of this user tracker path.
+	*
+	* @return the company ID of this user tracker path
+	*/
+	@Override
+	public long getCompanyId() {
+		return _userTrackerPath.getCompanyId();
 	}
 
 	@Override
@@ -203,6 +220,16 @@ public class UserTrackerPathWrapper implements UserTrackerPath,
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_userTrackerPath.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this user tracker path.
+	*
+	* @param companyId the company ID of this user tracker path
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_userTrackerPath.setCompanyId(companyId);
 	}
 
 	@Override

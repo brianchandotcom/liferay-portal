@@ -104,6 +104,8 @@
 	</command>
 
 	<command name="AddWebContent" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
@@ -114,7 +116,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWebContentPortalScopeCurrentPage" priority="4">
+	<command name="AddWebContentPortalScopeCurrentPage" priority="3">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
@@ -294,11 +296,18 @@
 		</execute>
 
 		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="WC Structure Name" />
 			<var name="templateFieldNames" value="Text" />
 			<var name="templateLanguage" value="ftl" />
 			<var name="templateName" value="WC Template Name" />
 		</execute>
+
+		<execute macro="WebContentTemplates#addStructure">
+			<var name="structureName" value="WC Structure Name" />
+			<var name="templateFieldNames" value="Text" />
+			<var name="templateLanguage" value="ftl" />
+		</execute>
+
+		<execute macro="WebContentTemplates#save" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Display Page" />
@@ -322,9 +331,11 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
 
-		<execute macro="WebContent#expirePGViaWCD">
+		<execute macro="WebContent#expireSpecificVersionCP">
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
@@ -344,11 +355,18 @@
 		</execute>
 
 		<execute macro="WebContentTemplates#addCP">
-			<var name="structureName" value="Basic Web Content" />
 			<var name="templateFieldNames" value="Content,Content,Content" />
 			<var name="templateLanguage" value="ftl" />
 			<var name="templateName" value="Second Basic Template" />
 		</execute>
+
+		<execute macro="WebContentTemplates#addStructure">
+			<var name="structureName" value="Basic Web Content" />
+			<var name="templateFieldNames" value="Content,Content,Content" />
+			<var name="templateLanguage" value="ftl" />
+		</execute>
+
+		<execute macro="WebContentTemplates#save" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Display Page" />
@@ -448,6 +466,8 @@
 	</command>
 
 	<command name="RemoveWCDPortletSite" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Portlet#deletePG">
 			<var name="portletName" value="Web Content Display" />
 		</execute>
@@ -507,6 +527,8 @@
 	</command>
 
 	<command name="SelectWebContent" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -537,7 +559,7 @@
 		</execute>
 	</command>
 
-	<command name="SelectWebContentScopeGlobal" priority="4">
+	<command name="SelectWebContentScopeGlobal" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Global" />
@@ -612,7 +634,7 @@
 		</execute>
 
 		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletNameBorderless" value="Web Content Display" />
+			<var name="portletName" value="Web Content Display" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -694,7 +716,7 @@
 		</execute>
 
 		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletNameBorderless" value="Web Content Display" />
+			<var name="portletName" value="Web Content Display" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -873,7 +895,7 @@
 		</execute>
 
 		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletNameBorderless" value="Web Content Display" />
+			<var name="portletName" value="Web Content Display" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 

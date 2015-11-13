@@ -38,7 +38,7 @@ import java.io.Serializable;
  */
 @ProviderType
 public interface ResourcePermissionModel extends BaseModel<ResourcePermission>,
-	MVCCModel {
+	MVCCModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -94,6 +94,7 @@ public interface ResourcePermissionModel extends BaseModel<ResourcePermission>,
 	 *
 	 * @return the company ID of this resource permission
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -101,6 +102,7 @@ public interface ResourcePermissionModel extends BaseModel<ResourcePermission>,
 	 *
 	 * @param companyId the company ID of this resource permission
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**

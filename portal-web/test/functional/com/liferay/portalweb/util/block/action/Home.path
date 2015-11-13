@@ -308,7 +308,7 @@
 </tr>
 <tr>
 	<td>PAGE_DELETE</td>
-	<td>//li[contains(@class,'lfr-nav-deletable') and contains(@class,'lfr-nav-hover')]/span[@class='delete-tab']</td>
+	<td>//li[contains(@class,'nav-deletable')]/span[contains(@class,'delete')]</td>
 	<td>Delete Page Button</td>
 </tr>
 <tr>
@@ -438,7 +438,7 @@
 <!--PORTLET_COLUMN-->
 <tr>
 	<td>PORTLET_COLUMN_1</td>
-	<td>//div[contains(@class,'col-md-6 portlet-column portlet-column-first')]//div[contains(@id,'NestedPortletsPortlet') and contains(@class,'portlet-dropzone portlet-column-content portlet-column-content-first empty')]</td>
+	<td>//div[contains(@class,'col-md-6 portlet-column portlet-column-first')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -448,7 +448,7 @@
 </tr>
 <tr>
 	<td>PORTLET_COLUMN_1_NESTED_PORTLET_TITLE</td>
-	<td>//div[contains(@id,'column-1')]//h1[@class='portlet-title' and contains(.,'${key_portletTitleName}')]/span</td>
+	<td>//div[contains(@id,'column-1')]//h2[contains(@class,'portlet-title') and contains(.,'${key_portletTitleName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -582,7 +582,7 @@
 </tr>
 <tr>
 	<td>SITE_ADMINISTRATION_NAVIGATION</td>
-	<td>//ul[contains(@class,'category-portlets')]/li[contains(.,'${key_portletName}')]/span/a</td>
+	<td>//div[contains(@id,'site_administration')]//li/a[contains(.,'${key_portletName}')]</td>
 	<td>Site Administration Navigation</td>
 </tr>
 <tr>

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.ShardedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -43,7 +44,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface SCProductVersionModel extends AuditedModel,
-	BaseModel<SCProductVersion> {
+	BaseModel<SCProductVersion>, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

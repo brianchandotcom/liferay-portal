@@ -64,16 +64,16 @@ public interface TeamService extends BaseService {
 
 	public void deleteTeam(long teamId) throws PortalException;
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Team> getGroupTeams(
 		long groupId) throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Team getTeam(long groupId,
@@ -106,13 +106,6 @@ public interface TeamService extends BaseService {
 	public int searchCount(long groupId, java.lang.String name,
 		java.lang.String description,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params);
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public com.liferay.portal.model.Team updateTeam(long teamId,
 		java.lang.String name, java.lang.String description)

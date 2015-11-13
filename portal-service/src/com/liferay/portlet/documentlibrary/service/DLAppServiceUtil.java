@@ -561,15 +561,6 @@ public class DLAppServiceUtil {
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
 	* Returns all the file entries in the folder.
 	*
 	* @param repositoryId the primary key of the file entry's repository
@@ -1579,6 +1570,15 @@ public class DLAppServiceUtil {
 	}
 
 	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	/**
 	* Returns all the descendant folders of the folder with the primary key.
 	*
 	* @param repositoryId the primary key of the repository
@@ -1916,15 +1916,6 @@ public class DLAppServiceUtil {
 		com.liferay.portal.kernel.search.Query query)
 		throws com.liferay.portal.kernel.search.SearchException {
 		return getService().search(repositoryId, searchContext, query);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

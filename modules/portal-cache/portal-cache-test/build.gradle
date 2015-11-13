@@ -1,0 +1,9 @@
+dependencies {
+	compile group: "commons-lang", name: "commons-lang", version: "2.6"
+	compile group: "junit", name: "junit", version: "4.12"
+	compile project(":portal-cache:portal-cache")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/test")
+}

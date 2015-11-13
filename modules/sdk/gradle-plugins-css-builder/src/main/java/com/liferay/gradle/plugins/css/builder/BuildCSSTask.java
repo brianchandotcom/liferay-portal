@@ -36,6 +36,7 @@ import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputDirectories;
+import org.gradle.api.tasks.OutputFiles;
 import org.gradle.api.tasks.SkipWhenEmpty;
 import org.gradle.process.JavaExecSpec;
 
@@ -90,6 +91,7 @@ public class BuildCSSTask extends JavaExec {
 
 		args.add(
 			"sass.docroot.dir=" + _removeTrailingSlash(getDocrootDirName()));
+		args.add("sass.generate.source.map=" + isGenerateSourceMap());
 		args.add("sass.portal.common.dir=" + getPortalCommonDirName());
 		args.add(
 			"sass.rtl.excluded.path.regexps=" +
@@ -191,9 +193,31 @@ public class BuildCSSTask extends JavaExec {
 		return _cssBuilderArgs.getSassCompilerClassName();
 	}
 
+	@OutputFiles
+	public FileCollection getSourceMapFiles() {
+		List<File> sourceMapFiles = new ArrayList<>();
+
+		if (isGenerateSourceMap()) {
+			FileCollection cssFiles = getCSSFiles();
+
+			for (File cssFile : cssFiles) {
+				File sourceMapFile = _project.file(cssFile + ".map");
+
+				sourceMapFiles.add(sourceMapFile);
+			}
+		}
+
+		return _project.files(sourceMapFiles);
+	}
+
 	@Override
 	public File getWorkingDir() {
 		return _project.getProjectDir();
+	}
+
+	@Input
+	public boolean isGenerateSourceMap() {
+		return _cssBuilderArgs.isGenerateSourceMap();
 	}
 
 	@Override
@@ -212,6 +236,10 @@ public class BuildCSSTask extends JavaExec {
 
 	public void setDocrootDirName(String docrootDirName) {
 		_cssBuilderArgs.setDocrootDirName(docrootDirName);
+	}
+
+	public void setGenerateSourceMap(boolean generateSourceMap) {
+		_cssBuilderArgs.setGenerateSourceMap(generateSourceMap);
 	}
 
 	public void setPortalCommonDirName(String portalCommonDirName) {

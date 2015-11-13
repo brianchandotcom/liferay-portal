@@ -241,6 +241,7 @@
 
 		<for list="Home,Wiki" param="sitePageName">
 			<execute macro="SitePage#viewNoDeletePagesAssociatedWithSiteTemplateCP">
+				<var name="iframe" value="true" />
 				<var name="sitePageName" value="${sitePageName}" />
 				<var name="userGroupName" value="UG UserGroup Name" />
 			</execute>
@@ -828,7 +829,7 @@
 		<execute macro="DMDocument#addPG">
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentFile" value="Document_1.png" />
-			<var name="dmDocumentTitle" value="${dmDocumentFile}" />
+			<var name="dmDocumentTitle" value="Document_1.png" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -874,7 +875,7 @@
 		<execute macro="DMDocument#viewPG">
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentFile" value="Document_1.png" />
-			<var name="dmDocumentTitle" value="${dmDocumentFile}" />
+			<var name="dmDocumentTitle" value="Document_1.png" />
 		</execute>
 
 		<execute macro="SOTasks#addTask">
@@ -890,7 +891,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewInlineGuestPermissionsInSiteTemplatesViaWCD" priority="4">
+	<command name="ViewInlineGuestPermissionsInSiteTemplatesViaWCD" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Site Templates" />
 		</execute>
@@ -932,7 +933,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewNoAddPageTabViaPageTemplatesCP" priority="4">
+	<command name="ViewNoAddPageTabViaPageTemplatesCP" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Page Templates" />
 		</execute>

@@ -234,16 +234,6 @@ public class MBThreadFlagLocalServiceWrapper implements MBThreadFlagLocalService
 		return _mbThreadFlagLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _mbThreadFlagLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext) {
@@ -339,6 +329,16 @@ public class MBThreadFlagLocalServiceWrapper implements MBThreadFlagLocalService
 		return _mbThreadFlagLocalService.getMBThreadFlagsCount();
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _mbThreadFlagLocalService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
@@ -358,16 +358,6 @@ public class MBThreadFlagLocalServiceWrapper implements MBThreadFlagLocalService
 		com.liferay.portlet.messageboards.model.MBThread thread)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbThreadFlagLocalService.hasThreadFlag(userId, thread);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_mbThreadFlagLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

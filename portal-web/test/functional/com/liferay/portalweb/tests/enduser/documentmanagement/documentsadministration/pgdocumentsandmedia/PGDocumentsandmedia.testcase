@@ -195,6 +195,7 @@
 			<execute macro="DMDocument#addPG">
 				<var name="dmDocumentDescription" value="DM Document Description" />
 				<var name="dmDocumentFile" value="Document_${entryCount}.doc" />
+				<var name="dmDocumentTitle" value="Document_${entryCount}.doc" />
 			</execute>
 		</for>
 
@@ -219,7 +220,7 @@
 
 		<execute macro="DMDocumentType#addPG">
 			<var name="dmDocumentTypeDescription" value="DM Document Type Description" />
-			<var name="dmDocumentTypeFieldNames" value="TextBox" />
+			<var name="dmDocumentTypeFieldNames" value="Text Box" />
 			<var name="dmDocumentTypeName" value="DM Document Type Name" />
 		</execute>
 
@@ -241,7 +242,7 @@
 
 		<execute macro="DMDocumentType#addPG">
 			<var name="dmDocumentTypeDescription" value="DM Document Type 1 Description" />
-			<var name="dmDocumentTypeFieldNames" value="TextBox" />
+			<var name="dmDocumentTypeFieldNames" value="Text Box" />
 			<var name="dmDocumentTypeName" value="DM Document Type 1 Name" />
 		</execute>
 
@@ -261,7 +262,7 @@
 
 		<execute macro="DMDocumentType#addPG">
 			<var name="dmDocumentTypeDescription" value="DM Document Type 2 Description" />
-			<var name="dmDocumentTypeFieldNames" value="TextBox" />
+			<var name="dmDocumentTypeFieldNames" value="Text Box" />
 			<var name="dmDocumentTypeName" value="DM Document Type 2 Name" />
 		</execute>
 
@@ -281,7 +282,7 @@
 
 		<execute macro="DMDocumentType#addPG">
 			<var name="dmDocumentTypeDescription" value="DM Document Type 3 Description" />
-			<var name="dmDocumentTypeFieldNames" value="TextBox" />
+			<var name="dmDocumentTypeFieldNames" value="Text Box" />
 			<var name="dmDocumentTypeName" value="DM Document Type 3 Name" />
 		</execute>
 
@@ -838,7 +839,7 @@
 
 		<execute macro="DMDocumentType#addPG">
 			<var name="dmDocumentTypeDescription" value="DM Document Type Description" />
-			<var name="dmDocumentTypeFieldNames" value="TextBox" />
+			<var name="dmDocumentTypeFieldNames" value="Text Box" />
 			<var name="dmDocumentTypeName" value="DM Document Type Name" />
 		</execute>
 
@@ -1062,7 +1063,7 @@
 
 		<execute macro="DMDocumentType#addPG">
 			<var name="dmDocumentTypeDescription" value="DM Document Type Description" />
-			<var name="dmDocumentTypeFieldNames" value="TextBox" />
+			<var name="dmDocumentTypeFieldNames" value="Text Box" />
 			<var name="dmDocumentTypeName" value="DM Document Type Name" />
 		</execute>
 

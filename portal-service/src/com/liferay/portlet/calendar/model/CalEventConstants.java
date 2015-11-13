@@ -31,17 +31,11 @@ public class CalEventConstants {
 
 	public static final int END_DATE_TYPE_NONE = 0;
 
-	public static final int REMIND_BY_AIM = 3;
-
 	public static final int REMIND_BY_EMAIL = 1;
-
-	public static final int REMIND_BY_ICQ = 4;
 
 	public static final int REMIND_BY_NONE = 0;
 
 	public static final int REMIND_BY_SMS = 2;
-
-	public static final int REMIND_BY_YM = 6;
 
 	public static final long[] REMINDERS = {
 		Time.MINUTE * 5, Time.MINUTE * 15, Time.MINUTE * 30, Time.HOUR,

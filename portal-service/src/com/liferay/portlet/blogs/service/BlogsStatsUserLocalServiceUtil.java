@@ -202,15 +202,6 @@ public class BlogsStatsUserLocalServiceUtil {
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
 	* Returns the blogs stats user with the primary key.
 	*
 	* @param statsUserId the primary key of the blogs stats user
@@ -283,6 +274,15 @@ public class BlogsStatsUserLocalServiceUtil {
 		return getService().getGroupsStatsUsers(companyId, groupId, start, end);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> getOrganizationStatsUsers(
 		long organizationId, int start, int end) {
 		return getService().getOrganizationStatsUsers(organizationId, start, end);
@@ -309,15 +309,6 @@ public class BlogsStatsUserLocalServiceUtil {
 		long groupId, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getStatsUser(groupId, userId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

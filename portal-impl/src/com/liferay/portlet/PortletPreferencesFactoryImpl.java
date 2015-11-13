@@ -498,6 +498,13 @@ public class PortletPreferencesFactoryImpl
 				ownerType = PortletKeys.PREFS_OWNER_TYPE_LAYOUT;
 				plid = layout.getPlid();
 
+				LayoutTypePortlet layoutTypePortlet =
+					(LayoutTypePortlet)layout.getLayoutType();
+
+				if (layoutTypePortlet.isPortletEmbedded(portletId)) {
+					plid = PortletKeys.PREFS_PLID_SHARED;
+				}
+
 				if (portlet.isPreferencesOwnedByGroup()) {
 				}
 				else {

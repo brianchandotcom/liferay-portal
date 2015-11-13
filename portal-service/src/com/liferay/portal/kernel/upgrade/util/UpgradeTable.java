@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.upgrade.util;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -29,6 +30,10 @@ public interface UpgradeTable {
 	public void appendColumn(
 			StringBuilder sb, ResultSet rs, String name, Integer type,
 			boolean last)
+		throws Exception;
+
+	public void copyTable(
+			Connection sourceConnection, Connection targetConnection)
 		throws Exception;
 
 	public String getCreateSQL() throws Exception;

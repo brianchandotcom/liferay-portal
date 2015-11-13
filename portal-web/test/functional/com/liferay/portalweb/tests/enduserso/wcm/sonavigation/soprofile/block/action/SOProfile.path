@@ -228,16 +228,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PROFILE_INFO_INSTANT_MESSENGER_AIM_CONTENT</td>
-	<td>//div[@data-title='Instant Messenger']/ul/li[contains(.,'AIM')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PROFILE_INFO_INSTANT_MESSENGER_ICQ_CONTENT</td>
-	<td>//div[@data-title='Instant Messenger']/ul/li[contains(.,'ICQ')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PROFILE_INFO_INSTANT_MESSENGER_JABBER_CONTENT</td>
 	<td>//div[@data-title='Instant Messenger']/ul/li[contains(.,'Jabber')]</td>
 	<td></td>
@@ -245,11 +235,6 @@
 <tr>
 	<td>PROFILE_INFO_INSTANT_MESSENGER_SKYPE_CONTENT</td>
 	<td>//div[@data-title='Instant Messenger']/ul/li[contains(.,'Skype')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PROFILE_INFO_INSTANT_MESSENGER_YM_CONTENT</td>
-	<td>//div[@data-title='Instant Messenger']/ul/li[contains(.,'ym')]</td>
 	<td></td>
 </tr>
 <tr>

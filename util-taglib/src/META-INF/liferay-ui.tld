@@ -2336,6 +2336,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether to mark the date input as required</description>
+			<name>required</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<description>A variable name to refer to the year of the component</description>
 			<name>yearParam</name>
 			<required>false</required>
@@ -3071,6 +3078,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The time format for the time displayed. Acceptable values include <![CDATA[<code>24-hour</code>]]> for 24 hour format (i.e., 13:00 for 1:00 PM) , <![CDATA[<code>am-pm</code>]]> for 12 hour format (i.e., 1:00 PM and 1:00 AM), and <![CDATA[<code>locale</code>]]> for the locale's default time format.</description>
 			<name>timeFormat</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3552,6 +3560,13 @@
 			<name>parentOrganizationId</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Whether to use the indexer for search. The default value is <![CDATA[<code>true</code>]]>.</description>
+			<name>useIndexer</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 	</tag>
 	<tag>
@@ -5726,6 +5741,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether to use the indexer for search. The default value is <![CDATA[<code>true</code>]]>.</description>
+			<name>useIndexer</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<name>userGroupParams</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -5757,6 +5779,31 @@
 		<body-content>JSP</body-content>
 	</tag>
 	<tag>
+		<name>user-portrait</name>
+		<tag-class>com.liferay.taglib.ui.UserPortraitTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>imageCssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>userId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>userName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<name>user-search</name>
 		<tag-class>com.liferay.taglib.ui.UserSearchTag</tag-class>
 		<body-content>JSP</body-content>
@@ -5780,6 +5827,13 @@
 		<name>user-search-container-results</name>
 		<tag-class>com.liferay.taglib.ui.UserSearchContainerResultsTag</tag-class>
 		<body-content>JSP</body-content>
+		<attribute>
+			<description>Whether to use the indexer for search. The default value is <![CDATA[<code>true</code>]]>.</description>
+			<name>useIndexer</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
 		<attribute>
 			<name>userParams</name>
 			<required>true</required>

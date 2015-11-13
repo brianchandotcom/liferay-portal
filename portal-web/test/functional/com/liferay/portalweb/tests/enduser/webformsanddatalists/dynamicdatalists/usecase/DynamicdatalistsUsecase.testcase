@@ -61,6 +61,37 @@
 		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please enter a valid definition." />
 	</command>
 
+	<command name="AddListWithXSSWorkflowDefinition" priority="4">
+		<description message="This is a use case for LPS-50557." />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Workflow Definition" />
+		</execute>
+
+		<execute macro="Workflow#uploadDefinition">
+			<var name="workflowDefinitionFile" value="workflow_definition_xss.xml" />
+			<var name="workflowDefinitionTitle" value="New Uploaded Definition" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLList#addCP" />
+
+		<execute macro="DDLDataDefinition#selectCP">
+			<var name="ddlDataDefinitionName" value="To Do" />
+		</execute>
+
+		<execute macro="DDLList#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLList#viewCP" />
+	</command>
+
 	<command name="AddRecord" priority="4">
 		<var name="ddlDataDefinitionName" value="DDL Definition" />
 		<var name="ddlListName" value="DDL List" />
@@ -388,6 +419,114 @@
 		<execute function="AssertElementPresent" locator1="xpath=(//div[@data-fieldname='Text'][3]/input[@value='${ddlRecordFieldData} 3'])" />
 	</command>
 
+	<command name="AddXSSToHTMLField" priority="4">
+		<description message="This is a use case for LPS-50549." />
+
+		<property name="hook.plugins.includes" value="antisamy-hook" />
+
+		<var name="ddlRecordFieldData1">
+			<![CDATA[<img src=x onerror=alert(/xss/) />]]>
+		</var>
+
+		<var name="ddlRecordFieldData2"><![CDATA['+alert('xss')+'"+alert("xss")+"]]></var>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#addCP" />
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="HTML" />
+			<var name="fieldFieldLabel" value="HTML" />
+			<var name="fieldName" value="HTML" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#editFieldPredefinedValue">
+			<var name="field" value="HTML" />
+			<var name="fieldFieldLabel" value="HTML" />
+			<var name="fieldName" value="HTML" />
+			<var name="fieldPredefinedValue" value="${ddlRecordFieldData2}" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#viewCP">
+			<var name="fieldFieldLabel" value="HTML" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#viewField">
+			<var name="field" value="HTML" />
+			<var name="fieldFieldLabel" value="HTML" />
+			<var name="fieldName" value="HTML" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLList#addCP" />
+
+		<execute macro="DDLDataDefinition#selectCP" />
+
+		<execute macro="DDLList#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLRecord#addCP" />
+
+		<execute macro="DDLRecord#populateFieldHTML">
+			<var name="ddlRecordFieldData" value="${ddlRecordFieldData1}" />
+			<var name="fieldFieldLabel" value="HTML" />
+			<var name="fieldName" value="HTML" />
+		</execute>
+
+		<execute macro="DDLRecord#publishCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLRecord#viewCP" />
+
+		<execute macro="DDLRecord#gotoRecordPreview" />
+
+		<execute macro="DDLRecord#viewInvalidHTMLfield" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLRecord#deleteCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLRecord#addCP" />
+
+		<execute macro="DDLRecord#publishCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLRecord#viewCP" />
+
+		<execute macro="DDLRecord#viewFirstFieldCP">
+			<var name="ddlRecordFieldData" value="${ddlRecordFieldData2}" />
+			<var name="field" value="HTML" />
+			<var name="fieldFieldLabel" value="HTML" />
+			<var name="fieldName" value="HTML" />
+		</execute>
+	</command>
+
 	<command name="AssertConfigurationMenulist" priority="2">
 		<var name="ddlDataDefinitionName" value="To Do" />
 		<var name="ddlListName" value="List Name" />
@@ -416,7 +555,7 @@
 
 		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
-		<execute macro="Page#addPG">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -426,28 +565,22 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute function="Check" locator1="DDLConfiguration#TEMPLATES_SPREADSHEET_VIEW_CHECKBOX" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DDLDisplayPortlet#configureListViewPG">
+			<var name="configureCheckBoxName" value="TEMPLATES_SPREADSHEET_VIEW_CHECKBOX" />
+			<var name="ddlListName" value="${ddlListName}" />
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute function="AssertTextNotPresent" locator1="DDLSpreadsheet#SPREADSHEET_EDIT_CONTROLS_ADD_ROWS_BUTTON" value1="Add" />
-		<execute function="AssertElementNotPresent" locator1="DDLSpreadsheet#SPREADSHEET_EDIT_CONTROLS_ADD_ROWS_SELECT_MENULIST" />
+		<execute macro="DDLDisplayPortlet#assertCannotEditSpreadsheet" />
 
-		<execute function="Click" locator1="BasePortlet#OPTIONS_ICON" />
-		<execute function="AssertTextEquals" locator1="BasePortlet#OPTIONS_MENULIST_LOOK_AND_FEEL" value1="Look and Feel" />
-		<execute function="AssertTextEquals" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
-		<execute function="AssertTextEquals" locator1="BasePortlet#OPTIONS_MENULIST_EXPORT_IMPORT" value1="Export / Import" />
-		<execute function="AssertTextEquals" locator1="BasePortlet#MAXIMIZE" value1="Maximize" />
-		<execute function="AssertTextEquals" locator1="BasePortlet#MINIMIZE" value1="Minimize" />
-		<execute function="AssertTextEquals" locator1="BasePortlet#OPTION_MENULIST_REMOVE" value1="Remove" />
-
-		<execute function="Click" locator1="DDL#PORTLET_ACTIONS_SELECT_LIST" value1="Select List" />
-
-		<execute function="SelectFrame" locator1="DDLConfiguration#CONFIGURATION_IFRAME" />
+		<execute macro="Portlet#viewPortletOptionsMenulist" />
 	</command>
 
 	<command name="AssertDecimalFieldInvalidDataErrorMessage" priority="3">
@@ -1080,6 +1213,39 @@
 		</execute>
 
 		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="CONTROL_PANEL_GENERAL_PERMISSIONS_GO_TO_CONTROL_PANEL_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Go to Control Panel" />
+			<var name="roleName" value="Authenticated" />
+			<var name="roleUser" value="User" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="USER_MY_ACCOUNT_MY_WORKFLOW_TASKS_ACCESS_IN_MY_ACCOUNT_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Access in My Account" />
+			<var name="roleName" value="Authenticated" />
+			<var name="roleUser" value="User" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="USER_MY_ACCOUNT_MY_WORKFLOW_TASKS_ACCESS_IN_MY_ACCOUNT_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="View" />
+			<var name="roleName" value="Authenticated" />
+			<var name="roleUser" value="User" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
@@ -1267,349 +1433,6 @@
 
 		<execute macro="DDLDataDefinition#deleteCP">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-		</execute>
-	</command>
-
-	<command name="FormTemplate" priority="3">
-		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
-		<var name="ddlDataDefinitionName" value="Employee Profile Data Definition" />
-		<var name="ddlFormTemplateName" value="Data Definition Form Template Name" />
-		<var name="ddlListDescription" value="Liferay Employee Profiles" />
-		<var name="ddlListName" value="Employees" />
-		<var name="pageName" value="Dynamic Data Lists Page" />
-		<var name="portletName" value="Dynamic Data Lists Display" />
-
-		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
-		</execute>
-
-		<execute macro="DDLList#addViaDDLDisplayPG">
-			<var name="ddlListDescription" value="${ddlListDescription}" />
-			<var name="ddlListName" value="${ddlListName}" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#addViaDDLDisplayPG">
-			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#setupUseCase" />
-
-		<execute macro="DDLDataDefinition#saveViaDDLDisplayPG" />
-
-		<execute macro="DDLDataDefinition#selectViaDDLDisplayPG">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-		</execute>
-
-		<execute macro="DDLList#saveViaDDLDisplayPG" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="DDLTemplate#addFormTemplateViaDDLDisplayPG">
-			<var name="ddlFormTemplateName" value="${ddlFormTemplateName}" />
-		</execute>
-
-		<for list="Employee,Start Date,Salary,Profile Picture,Resume,Age,Weekly Hours,Department,Years Worked,Name,Description" param="fieldFieldLabel">
-			<execute macro="DynamicDataMapping#viewCannotAddField">
-				<var name="field" value="${fieldFieldLabel}" />
-			</execute>
-
-			<execute macro="DynamicDataMapping#deleteField">
-				<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-			</execute>
-
-			<execute macro="DynamicDataMapping#viewCanAddField">
-				<var name="field" value="${fieldFieldLabel}" />
-			</execute>
-		</for>
-
-		<for list="Employee,Start Date,Salary,Profile Picture,Resume,Age,Weekly Hours,Department,Years Worked,Name,Description" param="fieldFieldLabel">
-			<execute macro="DynamicDataMapping#addFieldFormTemplateSpecific">
-				<var name="field" value="${fieldFieldLabel}" />
-			</execute>
-
-			<execute macro="DynamicDataMapping#viewCannotAddField">
-				<var name="field" value="${fieldFieldLabel}" />
-			</execute>
-		</for>
-
-		<execute macro="DynamicDataMapping#viewField">
-			<var name="fieldFieldLabel" value="Employee" />
-			<var name="fieldName" value="Employee" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#viewField">
-			<var name="fieldFieldLabel" value="Start Date" />
-			<var name="fieldName" value="StartDate" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#viewField">
-			<var name="fieldFieldLabel" value="Salary" />
-			<var name="fieldName" value="Salary" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#viewField">
-			<var name="fieldFieldLabel" value="Profile Picture" />
-			<var name="fieldName" value="ProfilePicture" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#viewField">
-			<var name="fieldFieldLabel" value="Resume" />
-			<var name="fieldName" value="Resume" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#viewField">
-			<var name="fieldFieldLabel" value="Age" />
-			<var name="fieldName" value="Age" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#viewField">
-			<var name="fieldFieldLabel" value="Weekly Hours" />
-			<var name="fieldName" value="WeeklyHours" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#viewField">
-			<var name="fieldEditable" value="false" />
-			<var name="fieldFieldLabel" value="Department" />
-			<var name="fieldName" value="Department" />
-			<var name="fieldOptionsNames" value="Core Engineer,QA Engineer,Support Engineer" />
-			<var name="fieldOptionsValues" value="1,2,3" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#viewField">
-			<var name="fieldEditable" value="false" />
-			<var name="fieldFieldLabel" value="Years Worked" />
-			<var name="fieldName" value="YearsWorked" />
-			<var name="fieldOptionsNames" value="1-2,3-5,5+" />
-			<var name="fieldOptionsValues" value="1,2,3" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#viewField">
-			<var name="fieldFieldLabel" value="Name" />
-			<var name="fieldName" value="Name" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#viewField">
-			<var name="fieldFieldLabel" value="Description" />
-			<var name="fieldName" value="Description" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addFieldFormTemplateSpecific">
-			<var name="field" value="Separator" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addFieldFormTemplateSpecific">
-			<var name="field" value="Paragraph" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#editFieldStyle">
-			<var name="fieldFieldLabel" value="Paragraph" />
-			<var name="fieldStyle" value="" />
-		</execute>
-
-		<execute macro="DDLTemplate#saveFormTemplateViaDDLDisplayPG" />
-
-		<execute macro="DDLRecord#addViaDDLDisplayPG">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-		</execute>
-
-		<execute macro="DDLRecord#populateFieldBoolean">
-			<var name="ddlRecordFieldData" value="Yes" />
-			<var name="fieldFieldLabel" value="Employee" />
-			<var name="fieldName" value="Employee" />
-		</execute>
-
-		<execute macro="DDLRecord#populateFieldDate">
-			<var name="ddlRecordFieldData" value="04/01/2015" />
-			<var name="fieldFieldLabel" value="Start Date" />
-			<var name="fieldName" value="StartDate" />
-		</execute>
-
-		<execute macro="DDLRecord#populateFieldDecimal">
-			<var name="ddlRecordFieldData" value="35000" />
-			<var name="fieldFieldLabel" value="Salary" />
-			<var name="fieldName" value="Salary" />
-		</execute>
-
-		<execute macro="DDLRecord#populateFieldDocumentsAndMediaChooseFromDocumentLibrary">
-			<var name="document" value="Document_1.txt" />
-			<var name="fieldFieldLabel" value="Resume" />
-			<var name="fieldName" value="Resume" />
-		</execute>
-
-		<execute macro="DDLRecord#populateFieldInteger">
-			<var name="ddlRecordFieldData" value="30" />
-			<var name="fieldFieldLabel" value="Age" />
-			<var name="fieldName" value="Age" />
-		</execute>
-
-		<execute macro="DDLRecord#populateFieldNumber">
-			<var name="ddlRecordFieldData" value="40" />
-			<var name="fieldFieldLabel" value="Weekly Hours" />
-			<var name="fieldName" value="WeeklyHours" />
-		</execute>
-
-		<execute macro="DDLRecord#populateFieldRadio">
-			<var name="ddlRecordFieldData" value="QA Engineer" />
-			<var name="fieldFieldLabel" value="Department" />
-			<var name="fieldName" value="Department" />
-		</execute>
-
-		<execute macro="DDLRecord#populateFieldSelect">
-			<var name="ddlRecordFieldData" value="5+" />
-			<var name="fieldFieldLabel" value="Years Worked" />
-			<var name="fieldName" value="YearsWorked" />
-		</execute>
-
-		<execute macro="DDLRecord#populateFieldText">
-			<var name="ddlRecordFieldData" value="Joe Engineer" />
-			<var name="fieldFieldLabel" value="Name" />
-			<var name="fieldName" value="Name" />
-		</execute>
-
-		<execute macro="DDLRecord#populateFieldTextBox">
-			<var name="ddlRecordFieldData" value="Joe Engineer works in QA" />
-			<var name="fieldFieldLabel" value="Description" />
-			<var name="fieldName" value="Description" />
-		</execute>
-
-		<execute macro="DDLRecord#viewFieldFormTemplateSpecific">
-			<var name="field" value="Separator" />
-		</execute>
-
-		<execute macro="DDLRecord#viewFieldFormTemplateSpecific">
-			<var name="field" value="Paragraph" />
-			<var name="fieldText" value="Paragraph" />
-		</execute>
-
-		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
-
-		<execute function="AssertTextEquals" locator1="//thead[@class='table-columns']/tr/th[1]" value1="Employee" />
-		<execute function="AssertTextEquals" locator1="//thead[@class='table-columns']/tr/th[2]" value1="Age" />
-		<execute function="AssertTextEquals" locator1="//thead[@class='table-columns']/tr/th[3]" value1="Department" />
-		<execute function="AssertTextEquals" locator1="//thead[@class='table-columns']/tr/th[4]" value1="Description" />
-		<execute function="AssertTextEquals" locator1="//thead[@class='table-columns']/tr/th[5]" value1="Start Date" />
-		<execute function="AssertTextEquals" locator1="//thead[@class='table-columns']/tr/th[6]" value1="Salary" />
-		<execute function="AssertTextEquals" locator1="//thead[@class='table-columns']/tr/th[7]" value1="Profile Picture" />
-		<execute function="AssertTextEquals" locator1="//thead[@class='table-columns']/tr/th[8]" value1="Name" />
-		<execute function="AssertTextEquals" locator1="//thead[@class='table-columns']/tr/th[9]" value1="Resume" />
-		<execute function="AssertTextEquals" locator1="//thead[@class='table-columns']/tr/th[10]" value1="Weekly Hours" />
-		<execute function="AssertTextEquals" locator1="//thead[@class='table-columns']/tr/th[11]" value1="Years Worked" />
-		<execute function="AssertTextEquals" locator1="//thead[@class='table-columns']/tr/th[12]" value1="Status" />
-		<execute function="AssertTextEquals" locator1="//thead[@class='table-columns']/tr/th[13]" value1="Modified Date" />
-		<execute function="AssertTextEquals" locator1="//thead[@class='table-columns']/tr/th[14]" value1="Author" />
-		<execute function="AssertTextEquals" locator1="//tbody[@class='table-data']/tr/td[1]/a" value1="true" />
-		<execute function="AssertTextEquals" locator1="//tbody[@class='table-data']/tr/td[2]/a" value1="30" />
-		<execute function="AssertTextEquals" locator1="//tbody[@class='table-data']/tr/td[3]/a" value1="QA Engineer" />
-		<execute function="AssertTextEquals" locator1="//tbody[@class='table-data']/tr/td[4]/a" value1="Joe Engineer works in QA" />
-		<execute function="AssertTextEquals" locator1="//tbody[@class='table-data']/tr/td[5]/a" value1="4/1/15" />
-		<execute function="AssertTextEquals" locator1="//tbody[@class='table-data']/tr/td[6]/a" value1="35000.0" />
-		<execute function="AssertTextEquals" locator1="//tbody[@class='table-data']/tr/td[7]" value1="" />
-		<execute function="AssertTextEquals" locator1="//tbody[@class='table-data']/tr/td[8]/a" value1="Joe Engineer" />
-		<execute function="AssertTextEquals" locator1="//tbody[@class='table-data']/tr/td[9]/a" value1="Document Title" />
-		<execute function="AssertTextEquals" locator1="//tbody[@class='table-data']/tr/td[10]/a" value1="40" />
-		<execute function="AssertTextEquals" locator1="//tbody[@class='table-data']/tr/td[11]/a" value1="5+" />
-		<execute function="AssertTextEquals" locator1="//tbody[@class='table-data']/tr/td[12]/span/span/span/strong" value1="Approved" />
-		<execute function="AssertElementPresent" locator1="//tbody[@class='table-data']/tr/td[13]/a" value1="Modified Date" />
-		<execute function="AssertTextEquals" locator1="//tbody[@class='table-data']/tr/td[14]/a" value1="Test Test" />
-
-		<execute macro="DDLTemplate#editFormTemplatePG">
-			<var name="ddlFormTemplateNameEdit" value="Template Rev" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#editField">
-			<var name="fieldFieldLabel" value="Salary" />
-			<var name="fieldFieldLabelEdit" value="Pay" />
-			<var name="fieldFieldNameEdit" value="Pay" />
-		</execute>
-
-		<execute macro="DDLTemplate#saveFormTemplateViaDDLDisplayPG" />
-
-		<execute function="AssertTextEquals" locator1="//thead[@class='table-columns']/tr/th[6]" value1="Pay" />
-
-		<execute macro="DDLTemplate#editFormTemplatePG">
-			<var name="ddlFormTemplateNameEdit" value="Template Rev" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#editFieldPredefinedValue">
-			<var name="field" value="Number" />
-			<var name="fieldFieldLabel" value="Weekly Hours" />
-			<var name="fieldName" value="WeeklyHours" />
-			<var name="fieldPredefinedValue" value="40" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#editFieldStyle">
-			<var name="fieldFieldLabel" value="Paragraph" />
-			<var name="fieldStyle" value="1" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#editFieldText">
-			<var name="fieldFieldLabel" value="Paragraph" />
-			<var name="fieldText" value="HR Department only" />
-		</execute>
-
-		<execute macro="DDLTemplate#saveFormTemplateViaDDLDisplayPG" />
-
-		<execute macro="DDLRecord#addViaDDLDisplayPG">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-		</execute>
-
-		<execute macro="DDLRecord#viewFieldPredefinedValue">
-			<var name="field" value="Number" />
-			<var name="fieldFieldLabel" value="Weekly Hours" />
-			<var name="fieldName" value="WeeklyHours" />
-			<var name="fieldPredefinedValue" value="40" />
-		</execute>
-
-		<execute macro="DDLRecord#viewFieldFormTemplateSpecific">
-			<var name="field" value="Paragraph" />
-			<var name="fieldText" value="HR Department only" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#copyCP">
-			<var name="ddlDataDefinitionCopyName" value="Data Definition Clone With No Templates" />
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute macro="DDLTemplate#viewDefaultNoTemplatesCP">
-			<var name="ddlDataDefinitionName" value="Data Definition Clone With No Templates" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#copyCP">
-			<var name="copyFormTemplates" value="true" />
-			<var name="ddlDataDefinitionCopyName" value="Data Definition Clone With Form Template" />
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute macro="DDLTemplate#viewFormTemplateCP">
-			<var name="ddlDataDefinitionName" value="Data Definition Clone With Form Template" />
-			<var name="ddlTemplateName" value="Template Rev" />
 		</execute>
 	</command>
 
@@ -1891,6 +1714,8 @@
 
 		<execute macro="DynamicDataMapping#addFieldNested">
 			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#editFieldNestedWithDuplicateName">
@@ -1922,6 +1747,8 @@
 
 		<execute macro="DynamicDataMapping#addFieldNested">
 			<var name="field" value="Integer" />
+			<var name="fieldFieldLabel" value="Integer" />
+			<var name="fieldName" value="Integer" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#saveCP" />
@@ -2091,7 +1918,6 @@
 			<var name="field" value="Integer" />
 			<var name="fieldFieldLabel" value="Integer" />
 			<var name="fieldName" value="Integer" />
-			<var name="parentField" value="Text" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#saveCP" />
@@ -2169,7 +1995,6 @@
 			<var name="field" value="Integer" />
 			<var name="fieldFieldLabel" value="Integer" />
 			<var name="fieldName" value="Integer" />
-			<var name="parentField" value="Text" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#saveCP" />
@@ -2221,6 +2046,46 @@
 		</execute>
 	</command>
 
+	<command name="ViewUniqueFieldLabels" priority="4">
+		<description message="This is a use case for LPS-51684." />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#addCP" />
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text1" />
+			<var name="fieldName" value="Text1" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text2" />
+			<var name="fieldName" value="Text2" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#viewCP">
+			<var name="fieldFieldLabel" value="Text1" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#viewCP">
+			<var name="fieldFieldLabel" value="Text2" />
+		</execute>
+	</command>
+
 	<command name="ViewVisualGroupingOfRepeatableNestedFields" priority="3">
 		<description message="This is a use case for LPS-42060." />
 
@@ -2240,6 +2105,8 @@
 
 		<execute macro="DynamicDataMapping#addFieldNested">
 			<var name="field" value="Documents and Media" />
+			<var name="fieldFieldLabel" value="Documents and Media" />
+			<var name="fieldName" value="DocumentsAndMedia" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#editFieldRepeatable">

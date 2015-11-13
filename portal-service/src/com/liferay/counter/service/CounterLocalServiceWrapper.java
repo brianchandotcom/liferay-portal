@@ -182,16 +182,6 @@ public class CounterLocalServiceWrapper implements CounterLocalService,
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _counterLocalService.getBeanIdentifier();
-	}
-
-	/**
 	* Returns the counter with the primary key.
 	*
 	* @param name the primary key of the counter
@@ -236,6 +226,16 @@ public class CounterLocalServiceWrapper implements CounterLocalService,
 		return _counterLocalService.getNames();
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _counterLocalService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
@@ -271,16 +271,6 @@ public class CounterLocalServiceWrapper implements CounterLocalService,
 	@Override
 	public void reset(java.lang.String name, long size) {
 		_counterLocalService.reset(name, size);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_counterLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

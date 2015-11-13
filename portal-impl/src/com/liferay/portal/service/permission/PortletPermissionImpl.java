@@ -23,6 +23,7 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
+import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.impl.VirtualLayout;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -31,6 +32,8 @@ import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.service.ResourceLocalServiceUtil;
+import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.util.PortletCategoryKeys;
 import com.liferay.portlet.ControlPanelEntry;
 import com.liferay.portlet.exportimport.staging.permission.StagingPermissionUtil;
@@ -290,7 +293,13 @@ public class PortletPermissionImpl implements PortletPermission {
 				groupId, name, primKey, actionId);
 		}
 
-		if (!actionId.equals(ActionKeys.VIEW) && !layout.isTypeControlPanel() &&
+		if ((layout instanceof VirtualLayout) && layout.isTypeControlPanel()) {
+			VirtualLayout virtualLayout = (VirtualLayout)layout;
+
+			layout = virtualLayout.getSourceLayout();
+		}
+
+		if (!actionId.equals(ActionKeys.VIEW) &&
 			(layout instanceof VirtualLayout)) {
 
 			return hasCustomizePermission(
@@ -299,7 +308,7 @@ public class PortletPermissionImpl implements PortletPermission {
 
 		Group group = layout.getGroup();
 
-		if (!group.isLayoutSetPrototype() && !layout.isTypeControlPanel() &&
+		if (!group.isLayoutSetPrototype() &&
 			actionId.equals(ActionKeys.CONFIGURATION) &&
 			!SitesUtil.isLayoutUpdateable(layout)) {
 
@@ -336,6 +345,12 @@ public class PortletPermissionImpl implements PortletPermission {
 				permissionChecker, layout, portletId, actionId)) {
 
 			return true;
+		}
+
+		if (!hasIndividualResource(permissionChecker, name, primKey)) {
+			ResourceLocalServiceUtil.addResources(
+				permissionChecker.getCompanyId(), groupId,
+				permissionChecker.getUserId(), name, primKey, true, true, true);
 		}
 
 		return permissionChecker.hasPermission(
@@ -636,6 +651,21 @@ public class PortletPermissionImpl implements PortletPermission {
 		}
 
 		return false;
+	}
+
+	protected boolean hasIndividualResource(
+		PermissionChecker permissionChecker, String name, String primKey) {
+
+		int count =
+			ResourcePermissionLocalServiceUtil.getResourcePermissionsCount(
+				permissionChecker.getCompanyId(), name,
+				ResourceConstants.SCOPE_INDIVIDUAL, primKey);
+
+		if (count == 0) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final boolean _CHECK_STAGING_PERMISSION_DEFAULT = true;

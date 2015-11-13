@@ -10,7 +10,7 @@
 					<exclude name="solrconfig.xml" />
 				</fileset>
 
-				<fileset dir="modules/portal/portal-search-solr/src/META-INF/resources">
+				<fileset dir="modules/portal/portal-search-solr/src/main/resources/META-INF/resources">
 					<include name="schema.xml" />
 					<include name="solrconfig.xml" />
 				</fileset>

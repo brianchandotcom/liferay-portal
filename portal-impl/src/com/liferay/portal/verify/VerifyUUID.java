@@ -75,7 +75,8 @@ public class VerifyUUID extends VerifyProcess {
 	}
 
 	protected void updateUUID(
-			VerifiableUUIDModel verifiableUUIDModel, long primKey)
+			Connection con, VerifiableUUIDModel verifiableUUIDModel,
+			long primKey)
 		throws Exception {
 
 		DB db = DBFactoryUtil.getDB();
@@ -91,19 +92,16 @@ public class VerifyUUID extends VerifyProcess {
 		sb.append(" = ");
 		sb.append(primKey);
 
-		db.runSQL(sb.toString());
+		db.runSQL(con, sb.toString());
 	}
 
 	protected void verifyUUID(VerifiableUUIDModel verifiableUUIDModel)
 		throws Exception {
 
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
 			ps = con.prepareStatement(
 				"select " + verifiableUUIDModel.getPrimaryKeyColumnName() +
 					" from " + verifiableUUIDModel.getTableName() +
@@ -115,11 +113,11 @@ public class VerifyUUID extends VerifyProcess {
 				long pk = rs.getLong(
 					verifiableUUIDModel.getPrimaryKeyColumnName());
 
-				updateUUID(verifiableUUIDModel, pk);
+				updateUUID(con, verifiableUUIDModel, pk);
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 

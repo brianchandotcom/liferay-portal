@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.ClassName;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -30,14 +29,11 @@ import java.sql.ResultSet;
 public class VerifyWorkflow extends VerifyProcess {
 
 	protected void deleteOrphanedWorkflowDefinitionLinks() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select distinct classNameId from WorkflowDefinitionLink");
 
 			rs = ps.executeQuery();
@@ -70,7 +66,7 @@ public class VerifyWorkflow extends VerifyProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(null, ps, rs);
 		}
 	}
 

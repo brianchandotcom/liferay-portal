@@ -115,6 +115,8 @@ public class SCLicensePersistenceTest {
 
 		SCLicense newSCLicense = _persistence.create(pk);
 
+		newSCLicense.setCompanyId(RandomTestUtil.nextLong());
+
 		newSCLicense.setName(RandomTestUtil.randomString());
 
 		newSCLicense.setUrl(RandomTestUtil.randomString());
@@ -131,6 +133,8 @@ public class SCLicensePersistenceTest {
 
 		Assert.assertEquals(existingSCLicense.getLicenseId(),
 			newSCLicense.getLicenseId());
+		Assert.assertEquals(existingSCLicense.getCompanyId(),
+			newSCLicense.getCompanyId());
 		Assert.assertEquals(existingSCLicense.getName(), newSCLicense.getName());
 		Assert.assertEquals(existingSCLicense.getUrl(), newSCLicense.getUrl());
 		Assert.assertEquals(existingSCLicense.getOpenSource(),
@@ -181,8 +185,8 @@ public class SCLicensePersistenceTest {
 
 	protected OrderByComparator<SCLicense> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("SCLicense", "licenseId",
-			true, "name", true, "url", true, "openSource", true, "active",
-			true, "recommended", true);
+			true, "companyId", true, "name", true, "url", true, "openSource",
+			true, "active", true, "recommended", true);
 	}
 
 	@Test
@@ -381,6 +385,8 @@ public class SCLicensePersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		SCLicense scLicense = _persistence.create(pk);
+
+		scLicense.setCompanyId(RandomTestUtil.nextLong());
 
 		scLicense.setName(RandomTestUtil.randomString());
 

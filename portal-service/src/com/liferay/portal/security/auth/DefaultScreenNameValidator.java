@@ -28,8 +28,6 @@ import java.util.Locale;
  */
 public class DefaultScreenNameValidator implements ScreenNameValidator {
 
-	public static final String CYRUS = "cyrus";
-
 	public static final String POSTFIX = "postfix";
 
 	@Override
@@ -44,13 +42,12 @@ public class DefaultScreenNameValidator implements ScreenNameValidator {
 		return LanguageUtil.format(
 			locale,
 			"the-screen-name-cannot-be-an-email-address-or-a-reserved-word",
-			new String[] {CYRUS + ", " + POSTFIX, getSpecialChars()}, false);
+			new String[] {POSTFIX, getSpecialChars()}, false);
 	}
 
 	@Override
 	public boolean validate(long companyId, String screenName) {
 		if (Validator.isEmailAddress(screenName) ||
-			StringUtil.equalsIgnoreCase(screenName, CYRUS) ||
 			StringUtil.equalsIgnoreCase(screenName, POSTFIX) ||
 			hasInvalidChars(screenName)) {
 

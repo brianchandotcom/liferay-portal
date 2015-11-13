@@ -27,5 +27,5 @@ if (portletTitle == null) {
 %>
 
 <div class="alert alert-danger">
-	<%= LanguageUtil.format(request, "is-not-ready", portletTitle, false) %>
+	<liferay-ui:message arguments="<%= portletTitle %>" key="is-not-ready" translateArguments="<%= false %>" />
 </div>

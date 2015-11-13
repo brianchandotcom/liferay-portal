@@ -25,12 +25,12 @@
 </tr>
 <tr>
 	<td>PAGES_DELETE_MISSING_PAGES_CHECKBOX</td>
-	<td>//input[@id='_88_DELETE_MISSING_LAYOUTS']</td>
+	<td>//input[contains(@id,'DELETE_MISSING_LAYOUTS')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGES_LOGO_CHECKBOX</td>
-	<td>//input[@id='_88_LOGO']</td>
+	<td>//input[contains(@id,'LOGO')]</td>
 	<td></td>
 </tr>
 <tr>

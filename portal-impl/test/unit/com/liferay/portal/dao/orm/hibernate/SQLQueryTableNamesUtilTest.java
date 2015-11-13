@@ -14,9 +14,7 @@
 
 package com.liferay.portal.dao.orm.hibernate;
 
-import com.liferay.portal.cache.test.TestPortalCache;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -43,15 +41,6 @@ public class SQLQueryTableNamesUtilTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		ToolDependencies.wireCaches();
-
-		Class<SQLQueryTableNamesUtil> clazz = SQLQueryTableNamesUtil.class;
-
-		String className = clazz.getName();
-
-		Class.forName(className);
-
-		ReflectionTestUtil.setFieldValue(
-			clazz, "_portalCache", new TestPortalCache<>(className));
 	}
 
 	@Test

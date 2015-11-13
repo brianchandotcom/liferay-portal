@@ -16,7 +16,6 @@ package com.liferay.portal.repository;
 
 import com.liferay.portal.NoSuchRepositoryException;
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
 import com.liferay.portal.kernel.repository.LocalRepository;
@@ -46,14 +45,11 @@ import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Iván Zaera
  */
-public class RepositoryProviderImpl
-	implements RepositoryProvider, CacheRegistryItem {
+public class RepositoryProviderImpl implements RepositoryProvider {
 
 	@Override
 	public LocalRepository getFileEntryLocalRepository(long fileEntryId)
@@ -165,56 +161,24 @@ public class RepositoryProviderImpl
 	public LocalRepository getLocalRepository(long repositoryId)
 		throws PortalException {
 
-		LocalRepository localRepository = _localRepositories.get(repositoryId);
-
-		if (localRepository != null) {
-			return localRepository;
-		}
-
-		localRepository = repositoryFactory.createLocalRepository(repositoryId);
+		LocalRepository localRepository =
+			repositoryFactory.createLocalRepository(repositoryId);
 
 		checkRepository(repositoryId);
 		checkRepositoryAccess(repositoryId);
-
-		_localRepositories.put(repositoryId, localRepository);
 
 		return localRepository;
 	}
 
 	@Override
-	public String getRegistryName() {
-		return RepositoryProviderImpl.class.getName();
-	}
-
-	@Override
 	public Repository getRepository(long repositoryId) throws PortalException {
-		Repository repository = _repositories.get(repositoryId);
-
-		if (repository != null) {
-			return repository;
-		}
-
-		repository = repositoryFactory.createRepository(repositoryId);
+		Repository repository = repositoryFactory.createRepository(
+			repositoryId);
 
 		checkRepository(repositoryId);
 		checkRepositoryAccess(repositoryId);
 
-		_repositories.put(repositoryId, repository);
-
 		return repository;
-	}
-
-	@Override
-	public void invalidate() {
-		_localRepositories.clear();
-		_repositories.clear();
-	}
-
-	@Override
-	public void invalidateRepository(long repositoryId) {
-		_localRepositories.remove(repositoryId);
-
-		_repositories.remove(repositoryId);
 	}
 
 	protected void checkFileEntryPermissions(long fileEntryId)
@@ -449,10 +413,5 @@ public class RepositoryProviderImpl
 
 	@BeanReference(type = RepositoryLocalService.class)
 	protected RepositoryLocalService repositoryLocalService;
-
-	private final Map<Long, LocalRepository> _localRepositories =
-		new ConcurrentHashMap<>();
-	private final Map<Long, Repository> _repositories =
-		new ConcurrentHashMap<>();
 
 }

@@ -178,26 +178,6 @@
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#PHONE_NUMBERS_NUMBER_FIELD" value1="${orgPhoneNumber}" />
 	</command>
 
-	<command name="addPrivatePageToSiteViaSiteTemplateCP">
-		<var name="key_orgName" value="${orgName}" />
-
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="SitesEditSite#PAGES_PRIVATE_PAGES_LABEL" value1="Private Pages" />
-		<execute function="Select" locator1="SitesEditSite#PAGES_PRIVATE_PAGES_SITE_TEMPLATE_SELECT" value1="${organizationSite}" />
-
-		<if>
-			<equals arg1="${checkEnablePropagationCheckbox}" arg2="true" />
-			<then>
-				<execute function="AssertChecked" locator1="Checkbox#ENABLE_PROPAGATION" />
-			</then>
-			<else>
-				<execute function="Uncheck" locator1="Checkbox#ENABLE_PROPAGATION" />
-			</else>
-		</if>
-
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-	</command>
-
 	<command name="addReminderQueriesCP">
 		<execute macro="Organization#gotoActionsCmd">
 			<var name="orgName" value="${orgName}" />
@@ -539,9 +519,12 @@
 				<execute function="AssertClick" locator1="UsersAndOrganizationsAssignUsers#CURRENT_TAB" value1="Current" />
 
 				<if>
-					<condition function="IsElementPresent#isVisible" locator1="Checkbox#CHECK_ALL_NAME" />
+					<and>
+						<condition function="IsElementPresent" locator1="Checkbox#SELECT_ALL" />
+						<condition function="IsVisible" locator1="Checkbox#SELECT_ALL" />
+					</and>
 					<then>
-						<execute function="Uncheck" locator1="Checkbox#CHECK_ALL_NAME" />
+						<execute function="Uncheck" locator1="Checkbox#SELECT_ALL" />
 						<execute function="AssertClick" locator1="Button#UPDATE_ASSOCIATIONS" value1="Update Associations" />
 						<execute function="AssertTextEquals" locator1="Message#INFO" value1="No users were found." />
 					</then>

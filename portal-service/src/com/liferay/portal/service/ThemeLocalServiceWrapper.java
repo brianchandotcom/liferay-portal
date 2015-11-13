@@ -50,16 +50,6 @@ public class ThemeLocalServiceWrapper implements ThemeLocalService,
 		return _themeLocalService.fetchTheme(companyId, themeId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _themeLocalService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.portal.model.ColorScheme getColorScheme(long companyId,
 		java.lang.String themeId, java.lang.String colorSchemeId,
@@ -73,6 +63,16 @@ public class ThemeLocalServiceWrapper implements ThemeLocalService,
 		long companyId, long userId, boolean wapTheme) {
 		return _themeLocalService.getControlPanelThemes(companyId, userId,
 			wapTheme);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _themeLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -136,16 +136,6 @@ public class ThemeLocalServiceWrapper implements ThemeLocalService,
 		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage) {
 		return _themeLocalService.init(servletContextName, servletContext,
 			themesPath, loadFromServletContext, xmls, pluginPackage);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_themeLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

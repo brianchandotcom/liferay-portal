@@ -40,8 +40,7 @@ public class EmailAddressTable {
 		{"classPK", Types.BIGINT},
 		{"address", Types.VARCHAR},
 		{"typeId", Types.BIGINT},
-		{"primary_", Types.BOOLEAN},
-		{"lastPublishDate", Types.TIMESTAMP}
+		{"primary_", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -73,17 +72,15 @@ TABLE_COLUMNS_MAP.put("typeId", Types.BIGINT);
 
 TABLE_COLUMNS_MAP.put("primary_", Types.BOOLEAN);
 
-TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
-
 }
-	public static final String TABLE_SQL_CREATE = "create table EmailAddress (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,emailAddressId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,address VARCHAR(75) null,typeId LONG,primary_ BOOLEAN,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table EmailAddress (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,emailAddressId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,address VARCHAR(75) null,typeId LONG,primary_ BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table EmailAddress";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
 		"create index IX_2A2CB130 on EmailAddress (companyId, classNameId, classPK, primary_)",
 		"create index IX_7B43CD8 on EmailAddress (userId)",
-		"create index IX_F74AB912 on EmailAddress (uuid_, companyId)"
+		"create index IX_F74AB912 on EmailAddress (uuid_[$COLUMN_LENGTH:75$], companyId)"
 	};
 
 }

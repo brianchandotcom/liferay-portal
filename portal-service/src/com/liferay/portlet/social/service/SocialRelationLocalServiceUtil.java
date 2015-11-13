@@ -276,15 +276,6 @@ public class SocialRelationLocalServiceUtil {
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
 	* Returns a range of all the inverse relations of the given type for which
 	* the user is User2 of the relation.
 	*
@@ -319,6 +310,15 @@ public class SocialRelationLocalServiceUtil {
 	*/
 	public static int getInverseRelationsCount(long userId, int type) {
 		return getService().getInverseRelationsCount(userId, type);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
@@ -515,15 +515,6 @@ public class SocialRelationLocalServiceUtil {
 	*/
 	public static boolean isRelatable(long userId1, long userId2, int type) {
 		return getService().isRelatable(userId1, userId2, type);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

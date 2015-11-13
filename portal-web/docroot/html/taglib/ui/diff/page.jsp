@@ -96,7 +96,7 @@ List<DiffResult> targetResults = diffResults[1];
 		</table>
 	</c:when>
 	<c:otherwise>
-		<%= LanguageUtil.format(request, "there-are-no-differences-between-x-and-x", new Object[] {sourceName, targetName}, false) %>
+		<liferay-ui:message arguments="<%= new Object[] {sourceName, targetName} %>" key="there-are-no-differences-between-x-and-x" translateArguments="<%= false %>" />
 	</c:otherwise>
 </c:choose>
 

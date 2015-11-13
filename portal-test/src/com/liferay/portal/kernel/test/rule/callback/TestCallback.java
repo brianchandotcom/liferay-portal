@@ -14,21 +14,21 @@
 
 package com.liferay.portal.kernel.test.rule.callback;
 
-import java.lang.reflect.Method;
+import org.junit.runner.Description;
 
 /**
  * @author Shuyang Zhou
  */
 public interface TestCallback<C, M> {
 
-	public void afterClass(Class<?> clazz, C c) throws Throwable;
+	public void afterClass(Description description, C c) throws Throwable;
 
-	public void afterMethod(Class<?> clazz, Method method, M m, Object target)
+	public void afterMethod(Description description, M m, Object target)
 		throws Throwable;
 
-	public C beforeClass(Class<?> clazz) throws Throwable;
+	public C beforeClass(Description description) throws Throwable;
 
-	public M beforeMethod(Class<?> clazz, Method method, Object target)
+	public M beforeMethod(Description description, Object target)
 		throws Throwable;
 
 }

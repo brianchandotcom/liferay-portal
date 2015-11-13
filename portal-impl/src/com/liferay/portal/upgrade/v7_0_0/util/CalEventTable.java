@@ -110,10 +110,10 @@ TABLE_COLUMNS_MAP.put("secondReminder", Types.INTEGER);
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
 		"create index IX_D6FD9496 on CalEvent (companyId)",
 		"create index IX_4FDDD2BF on CalEvent (groupId, repeating)",
-		"create index IX_FD93CBFA on CalEvent (groupId, type_, repeating)",
+		"create index IX_FD93CBFA on CalEvent (groupId, type_[$COLUMN_LENGTH:75$], repeating)",
 		"create index IX_F6006202 on CalEvent (remindBy)",
-		"create index IX_299639C6 on CalEvent (uuid_, companyId)",
-		"create unique index IX_5CCE79C8 on CalEvent (uuid_, groupId)"
+		"create index IX_299639C6 on CalEvent (uuid_[$COLUMN_LENGTH:75$], companyId)",
+		"create unique index IX_5CCE79C8 on CalEvent (uuid_[$COLUMN_LENGTH:75$], groupId)"
 	};
 
 }

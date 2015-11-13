@@ -39,7 +39,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface TicketModel extends AttachedModel, BaseModel<Ticket>, MVCCModel {
+public interface TicketModel extends AttachedModel, BaseModel<Ticket>, MVCCModel,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -95,6 +96,7 @@ public interface TicketModel extends AttachedModel, BaseModel<Ticket>, MVCCModel
 	 *
 	 * @return the company ID of this ticket
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -102,6 +104,7 @@ public interface TicketModel extends AttachedModel, BaseModel<Ticket>, MVCCModel
 	 *
 	 * @param companyId the company ID of this ticket
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**

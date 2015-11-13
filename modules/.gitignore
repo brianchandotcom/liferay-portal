@@ -1,8 +1,7 @@
-/*/*/*/*/*/*/*/*/npm-debug.log
-/*/*/*/*/*/*/favicon.ico
+/*/*/*/*/*/*/*/*/favicon.ico
+/*/*/*/*/*/*/*/portal/aui_deprecated.css
+/*/*/*/*/*/*/*/portal/bootstrap.css
 /*/*/*/*/*/genesis
-/*/*/*/*/*/portal/aui_deprecated.css
-/*/*/*/*/*/portal/bootstrap.css
 /*/*/*/*/.classpath
 /*/*/*/*/.js-cache
 /*/*/*/*/.project
@@ -54,4 +53,5 @@
 /*/*/test-coverage
 /*/*/test-results
 /*/*/tmp
+npm-debug.log
 uptodate.properties

@@ -17,6 +17,8 @@ package com.liferay.sync.engine.documentlibrary.handler;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import com.liferay.sync.engine.documentlibrary.event.Event;
+import com.liferay.sync.engine.filesystem.Watcher;
+import com.liferay.sync.engine.filesystem.util.WatcherRegistry;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.service.SyncFileService;
@@ -26,8 +28,11 @@ import com.liferay.sync.engine.util.ConnectionRetryUtil;
 import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.JSONUtil;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
+import java.util.List;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.http.Header;
@@ -199,7 +204,17 @@ public class BaseJSONHandler extends BaseHandler {
 
 			Path filePath = Paths.get(syncFile.getFilePathName());
 
-			FileUtil.deleteFile(filePath);
+			if (Files.exists(filePath)) {
+				Watcher watcher = WatcherRegistry.getWatcher(
+					getSyncAccountId());
+
+				List<String> deletedFilePathNames =
+					watcher.getDeletedFilePathNames();
+
+				deletedFilePathNames.add(syncFile.getFilePathName());
+
+				FileUtil.deleteFile(filePath);
+			}
 
 			SyncFileService.deleteSyncFile(syncFile, false);
 		}

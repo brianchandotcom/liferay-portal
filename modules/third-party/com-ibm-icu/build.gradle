@@ -1,3 +1,6 @@
+task jar(type: Jar, overwrite: true)
+task deployJar(type: Copy)
+
 configurations {
 	jarjar
 }
@@ -7,13 +10,6 @@ dependencies {
 
 	jarjar group: "com.googlecode.jarjar", name: "jarjar", version: "1.3"
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}
-
-task jar(type: Jar, overwrite: true)
-task deployJar(type: Copy)
 
 jar {
 	deleteAllActions()
@@ -50,4 +46,8 @@ deployJar {
 	rename {
 		"liferay-icu4j.jar"
 	}
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
 }

@@ -53,6 +53,7 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("portletPreferencesId", getPortletPreferencesId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("ownerId", getOwnerId());
 		attributes.put("ownerType", getOwnerType());
 		attributes.put("plid", getPlid());
@@ -74,6 +75,12 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 
 		if (portletPreferencesId != null) {
 			setPortletPreferencesId(portletPreferencesId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long ownerId = (Long)attributes.get("ownerId");
@@ -116,6 +123,16 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 	public int compareTo(
 		com.liferay.portal.model.PortletPreferences portletPreferences) {
 		return _portletPreferences.compareTo(portletPreferences);
+	}
+
+	/**
+	* Returns the company ID of this portlet preferences.
+	*
+	* @return the company ID of this portlet preferences
+	*/
+	@Override
+	public long getCompanyId() {
+		return _portletPreferences.getCompanyId();
 	}
 
 	@Override
@@ -236,6 +253,16 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_portletPreferences.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this portlet preferences.
+	*
+	* @param companyId the company ID of this portlet preferences
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_portletPreferences.setCompanyId(companyId);
 	}
 
 	@Override

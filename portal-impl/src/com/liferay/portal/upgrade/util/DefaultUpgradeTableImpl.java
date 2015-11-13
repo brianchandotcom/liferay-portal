@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.comparator.ColumnsComparator;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -33,6 +34,14 @@ import java.util.List;
  */
 public class DefaultUpgradeTableImpl
 	extends BaseUpgradeTableImpl implements UpgradeTable {
+
+	@Override
+	public void copyTable(
+			Connection sourceConnection, Connection targetConnection)
+		throws Exception {
+
+		updateTable(sourceConnection, targetConnection, false);
+	}
 
 	@Override
 	public String getExportedData(ResultSet rs) throws Exception {

@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.portlet.FriendlyURLMapperTracker;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.ResourceBundleTracker;
-import com.liferay.portal.kernel.scheduler.SchedulerEntry;
+import com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListener;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.OpenSearch;
 import com.liferay.portal.kernel.servlet.URLEncoder;
@@ -65,7 +65,7 @@ public class PortletBagImpl implements PortletBag {
 		Portlet portletInstance, ResourceBundleTracker resourceBundleTracker,
 		List<ConfigurationAction> configurationActionInstances,
 		List<Indexer<?>> indexerInstances, List<OpenSearch> openSearchInstances,
-		List<SchedulerEntry> schedulerEntryInstances,
+		List<SchedulerEventMessageListener> schedulerEventMessageListeners,
 		FriendlyURLMapperTracker friendlyURLMapperTracker,
 		List<URLEncoder> urlEncoderInstances,
 		List<PortletDataHandler> portletDataHandlerInstances,
@@ -96,7 +96,7 @@ public class PortletBagImpl implements PortletBag {
 		_configurationActionInstances = configurationActionInstances;
 		_indexerInstances = indexerInstances;
 		_openSearchInstances = openSearchInstances;
-		_schedulerEntryInstances = schedulerEntryInstances;
+		_schedulerEventMessageListeners = schedulerEventMessageListeners;
 		_friendlyURLMapperTracker = friendlyURLMapperTracker;
 		_urlEncoderInstances = urlEncoderInstances;
 		_portletDataHandlerInstances = portletDataHandlerInstances;
@@ -129,7 +129,7 @@ public class PortletBagImpl implements PortletBag {
 			getPortletName(), getServletContext(), getPortletInstance(),
 			getResourceBundleTracker(), getConfigurationActionInstances(),
 			getIndexerInstances(), getOpenSearchInstances(),
-			getSchedulerEntryInstances(), getFriendlyURLMapperTracker(),
+			getSchedulerEventMessageListeners(), getFriendlyURLMapperTracker(),
 			getURLEncoderInstances(), getPortletDataHandlerInstances(),
 			getStagedModelDataHandlerInstances(), getTemplateHandlerInstances(),
 			getPortletLayoutListenerInstances(), getPollerProcessorInstances(),
@@ -163,7 +163,7 @@ public class PortletBagImpl implements PortletBag {
 		close(_portletLayoutListenerInstances);
 		close(_preferencesValidatorInstances);
 		close(_resourceBundleTracker);
-		close(_schedulerEntryInstances);
+		close(_schedulerEventMessageListeners);
 		close(_socialActivityInterpreterInstances);
 		close(_socialRequestInterpreterInstances);
 		close(_stagedModelDataHandlerInstances);
@@ -282,8 +282,10 @@ public class PortletBagImpl implements PortletBag {
 	}
 
 	@Override
-	public List<SchedulerEntry> getSchedulerEntryInstances() {
-		return _schedulerEntryInstances;
+	public List<SchedulerEventMessageListener>
+		getSchedulerEventMessageListeners() {
+
+		return _schedulerEventMessageListeners;
 	}
 
 	@Override
@@ -397,7 +399,8 @@ public class PortletBagImpl implements PortletBag {
 	private String _portletName;
 	private final List<PreferencesValidator> _preferencesValidatorInstances;
 	private final ResourceBundleTracker _resourceBundleTracker;
-	private final List<SchedulerEntry> _schedulerEntryInstances;
+	private final List<SchedulerEventMessageListener>
+		_schedulerEventMessageListeners;
 	private final ServletContext _servletContext;
 	private final List<SocialActivityInterpreter>
 		_socialActivityInterpreterInstances;

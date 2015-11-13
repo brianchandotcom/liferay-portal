@@ -210,7 +210,7 @@ public class JSONWebServiceNaming {
 	}
 
 	protected Set<String> excludedMethodNames = SetUtil.fromArray(
-		new String[] {"getBeanIdentifier", "setBeanIdentifier"});
+		PropsUtil.getArray(PropsKeys.JSON_SERVICE_INVALID_METHOD_NAMES));
 	protected String[] excludedPaths = PropsUtil.getArray(
 		PropsKeys.JSONWS_WEB_SERVICE_PATHS_EXCLUDES);
 	protected String[] excludedTypesNames =

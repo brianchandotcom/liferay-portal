@@ -57,6 +57,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
+import com.liferay.portlet.exportimport.service.StagingLocalServiceUtil;
 import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.io.File;
@@ -137,19 +138,10 @@ public class CompanyLocalServiceTest {
 
 		Group companyGroup = company.getGroup();
 
-		ServiceContext serviceContext = new ServiceContext();
+		StagingLocalServiceUtil.enableLocalStaging(
+			userId, companyGroup, false, false, new ServiceContext());
 
-		serviceContext.setAttribute("staging", Boolean.TRUE);
-
-		Group companyStagingGroup = GroupLocalServiceUtil.addGroup(
-			userId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
-			companyGroup.getClassName(), companyGroup.getClassPK(),
-			companyGroup.getGroupId(), RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(), companyGroup.getType(),
-			companyGroup.isManualMembership(),
-			companyGroup.getMembershipRestriction(),
-			companyGroup.getFriendlyURL(), false, companyGroup.isActive(),
-			serviceContext);
+		Group companyStagingGroup = companyGroup.getStagingGroup();
 
 		CompanyLocalServiceUtil.deleteCompany(company.getCompanyId());
 

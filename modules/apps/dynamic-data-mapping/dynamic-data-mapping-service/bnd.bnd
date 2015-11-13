@@ -5,7 +5,7 @@ Import-Package:\
 	com.liferay.portal.xml,\
 	*
 Export-Package:\
-    com.liferay.dynamic.data.mapping.configuration,\
+	com.liferay.dynamic.data.mapping.configuration,\
 	com.liferay.dynamic.data.mapping.model.impl,\
 	com.liferay.dynamic.data.mapping.search,\
 	com.liferay.dynamic.data.mapping.service.permission,\

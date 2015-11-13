@@ -82,16 +82,6 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService,
 		_blogsEntryService.deleteEntry(entryId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _blogsEntryService.getBeanIdentifier();
-	}
-
 	@Override
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getCompanyEntries(
 		long companyId, java.util.Date displayDate, int status, int max)
@@ -205,6 +195,16 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService,
 			displayDate, status, max);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _blogsEntryService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getOrganizationEntries(
 		long organizationId, java.util.Date displayDate, int status, int max)
@@ -236,16 +236,6 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService,
 	public void restoreEntryFromTrash(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_blogsEntryService.restoreEntryFromTrash(entryId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_blogsEntryService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

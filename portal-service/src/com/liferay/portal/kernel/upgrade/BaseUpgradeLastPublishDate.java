@@ -86,8 +86,8 @@ public class BaseUpgradeLastPublishDate extends UpgradeProcess {
 
 			ps.setLong(1, LayoutConstants.DEFAULT_PLID);
 			ps.setInt(2, PortletKeys.PREFS_OWNER_TYPE_GROUP);
-			ps.setString(3, portletId);
-			ps.setLong(4, groupId);
+			ps.setLong(3, groupId);
+			ps.setString(4, portletId);
 
 			rs = ps.executeQuery();
 
@@ -97,6 +97,11 @@ public class BaseUpgradeLastPublishDate extends UpgradeProcess {
 				if (Validator.isNotNull(preferences)) {
 					int x = preferences.lastIndexOf(
 						"last-publish-date</name><value>");
+
+					if (x < 0) {
+						break;
+					}
+
 					int y = preferences.indexOf("</value>", x);
 
 					String lastPublishDateString = preferences.substring(x, y);

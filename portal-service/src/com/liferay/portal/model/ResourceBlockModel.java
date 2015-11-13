@@ -37,7 +37,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface ResourceBlockModel extends BaseModel<ResourceBlock>, MVCCModel {
+public interface ResourceBlockModel extends BaseModel<ResourceBlock>, MVCCModel,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -93,6 +94,7 @@ public interface ResourceBlockModel extends BaseModel<ResourceBlock>, MVCCModel 
 	 *
 	 * @return the company ID of this resource block
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -100,6 +102,7 @@ public interface ResourceBlockModel extends BaseModel<ResourceBlock>, MVCCModel 
 	 *
 	 * @param companyId the company ID of this resource block
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**

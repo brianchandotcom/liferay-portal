@@ -187,9 +187,11 @@ public class CapabilityRepository
 
 		FileVersion fileVersion = repository.cancelCheckOut(fileEntryId);
 
-		_repositoryEventTrigger.trigger(
-			RepositoryEventType.Update.class, FileEntry.class,
-			fileVersion.getFileEntry());
+		if (fileVersion != null) {
+			_repositoryEventTrigger.trigger(
+				RepositoryEventType.Update.class, FileEntry.class,
+				fileVersion.getFileEntry());
+		}
 
 		return fileVersion;
 	}

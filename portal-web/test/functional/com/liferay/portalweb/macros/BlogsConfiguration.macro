@@ -91,13 +91,14 @@
 
 	<command name="selectScopeCP">
 		<var name="key_scopeDefault" value="${scopeDefault}" />
-		<var name="key_scopeSelection" value="${scopeSelection}" />
 
-		<execute function="Click#pauseClickAt" locator1="MenuItem#SCOPE_DEFAULT" />
+		<execute function="Click#pauseClickAt" locator1="ProductMenu#PRODUCT_MENU_PANEL_SCOPE_COG" />
+
+		<var name="key_scopeSelection" value="${scopeSelection}" />
 
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="MenuItem#SCOPE_SELECTION" value1="${scopeSelection}" />
 
-		<execute function="AssertTextEquals" locator1="MenuItem#SCOPE" value1="${scopeSelection}" />
+		<execute function="AssertTextEquals" locator1="ProductMenu#PRODUCT_MENU_PANEL_SCOPE" value1="${scopeSelection}" />
 	</command>
 
 	<command name="selectScopePG">
@@ -167,11 +168,29 @@
 	</command>
 
 	<command name="viewNoPermissionPG">
-		<execute function="AssertElementNotPresent" locator1="Portlet#TITLE" />
 		<execute function="AssertElementNotPresent" locator1="PGBlogs#ADD_ENTRY_BUTTON" value1="Add Blog Entry" />
-		<execute function="AssertElementNotPresent" locator1="PGBlogs#PERMISSIONS_BUTTON" value1="Permissions" />
 		<execute function="AssertElementNotPresent" locator1="PGBlogs#SUBSCRIBE_LINK" />
 		<execute function="AssertTextEquals" locator1="PGBlogs#RSS_LINK" value1="RSS" />
+
+		<if>
+			<condition function="IsElementPresent" locator1="BasePortlet#OPTIONS_ICON" />
+			<then>
+				<execute function="Click#mouseOverClick" locator1="BasePortlet#OPTIONS_ICON" />
+
+				<execute function="AssertElementNotPresent" locator1="PGBlogs#PERMISSIONS_BUTTON" value1="Permissions" />
+
+				<if>
+					<condition function="IsElementPresent" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" />
+					<then>
+						<execute function="Click" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" />
+
+						<execute function="SelectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
+
+						<execute function="AssertElementNotPresent" locator1="PGBlogs#PERMISSIONS_BUTTON" value1="Permissions" />
+					</then>
+				</if>
+			</then>
+		</if>
 	</command>
 
 	<command name="viewNoSubscribePG">
@@ -179,6 +198,17 @@
 	</command>
 
 	<command name="viewPermissionsPG">
+		<execute function="Click#mouseOverClick" locator1="BasePortlet#OPTIONS_ICON" />
+
+		<if>
+			<condition function="IsElementPresent" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" />
+			<then>
+				<execute function="Click" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" />
+
+				<execute function="SelectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
+			</then>
+		</if>
+
 		<execute function="AssertTextEquals" locator1="PGBlogs#PERMISSIONS_BUTTON" value1="Permissions" />
 	</command>
 
@@ -198,9 +228,9 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Home#CONTENT_SCOPE_SELECTOR" value1="${contentScopeName}" />
+		<execute function="AssertTextEquals" locator1="ProductMenu#PRODUCT_MENU_PANEL_SCOPE" value1="${contentScopeName}" />
 
-		<execute function="AssertTextEquals" locator1="CPBlogs#INFO_MESSAGE" value1="No entries were found." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No entries were found." />
 	</command>
 
 	<command name="viewScopePG">

@@ -2,6 +2,11 @@ import com.liferay.gradle.plugins.patcher.PatchTask
 
 apply plugin: "com.liferay.patcher"
 
+task patch(type: PatchTask)
+
+sourceCompatibility = "1.6"
+targetCompatibility = "1.6"
+
 dependencies {
 	compile group: "com.google.protobuf", name: "protobuf-java", version: "2.4.1"
 	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
@@ -17,11 +22,6 @@ dependencies {
 liferay {
 	deployDir = file("${liferayHome}/osgi/modules")
 }
-
-sourceCompatibility = "1.6"
-targetCompatibility = "1.6"
-
-task patch(type: PatchTask)
 
 patch {
 	ext {

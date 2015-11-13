@@ -168,7 +168,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototyp
 			<c:if test="<%= showAddPollIcon %>">
 
 				<%
-				PortletURL editQuestionURL = PortalUtil.getControlPanelPortletURL(request, PollsPortletKeys.POLLS, 0, PortletRequest.RENDER_PHASE);
+				PortletURL editQuestionURL = PortalUtil.getControlPanelPortletURL(request, PollsPortletKeys.POLLS, plid, PortletRequest.RENDER_PHASE);
 
 				editQuestionURL.setParameter("struts_action", "/polls/edit_question");
 				editQuestionURL.setParameter("redirect", redirectURL.toString());

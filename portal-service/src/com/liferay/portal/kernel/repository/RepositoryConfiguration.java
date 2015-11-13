@@ -14,13 +14,22 @@
 
 package com.liferay.portal.kernel.repository;
 
+import java.util.Collection;
+import java.util.Locale;
+
 /**
  * @author Adolfo Pérez
  */
 public interface RepositoryConfiguration {
 
-	public String[] getSupportedConfigurations();
+	public Collection<Parameter> getParameters();
 
-	public String[][] getSupportedParameters();
+	public interface Parameter {
+
+		public String getLabel(Locale locale);
+
+		public String getName();
+
+	}
 
 }

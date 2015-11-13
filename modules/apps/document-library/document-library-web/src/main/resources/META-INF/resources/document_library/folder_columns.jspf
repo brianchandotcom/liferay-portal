@@ -1,0 +1,197 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+int curFoldersCount = 0;
+int curFileEntriesCount = 0;
+
+boolean repositoryAccess = true;
+
+try {
+	curFoldersCount = DLAppServiceUtil.getFoldersCount(curFolder.getRepositoryId(), curFolder.getFolderId());
+	curFileEntriesCount = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(curFolder.getRepositoryId(), curFolder.getFolderId(), status);
+}
+catch (RepositoryException re) {
+	_log.error(re.getMessage());
+}
+catch (Exception e) {
+	repositoryAccess = false;
+
+	row.setClassName("repository-error");
+}
+
+for (int j = 0; j < folderColumns.length; j++) {
+	String folderColumn = folderColumns[j];
+%>
+
+	<c:choose>
+		<c:when test='<%= folderColumn.equals("action") && dlPortletInstanceSettingsHelper.isShowActions() %>'>
+
+			<%
+			String align = SearchEntry.DEFAULT_ALIGN;
+
+			if ((j + 1) == folderColumns.length) {
+				align = "right";
+			}
+			%>
+
+			<liferay-ui:search-container-column-jsp
+				align="<%= align %>"
+				cssClass="entry-action"
+				path="/document_library/folder_action.jsp"
+			/>
+		</c:when>
+		<c:when test='<%= folderColumn.equals("downloads") %>'>
+			<liferay-ui:search-container-column-text
+				name="<%= folderColumn %>"
+				value="--"
+			/>
+		</c:when>
+		<c:when test='<%= folderColumn.equals("folder") || folderColumn.equals("name") %>'>
+			<liferay-ui:search-container-column-text
+				href="<%= repositoryAccess ? rowURL : null %>"
+				name="<%= folderColumn %>"
+			>
+				<c:if test="<%= repositoryAccess %>">
+					<a href="<%= rowURL %>">
+				</c:if>
+
+				<span class="entry-thumbnail">
+
+					<%
+					AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
+
+					AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(curFolder.getFolderId());
+					%>
+
+					<i class="<%= assetRenderer.getIconCssClass() %>"></i>
+				</span>
+
+				<div class="entry-metadata">
+
+					<c:if test="<%= !repositoryAccess %>">
+						<span title="<liferay-ui:message key="an-unexpected-error-occurred-while-connecting-to-the-repository" />">
+					</c:if>
+
+					<span class="entry-title">
+						<span class="entry-title-text">
+							<%= HtmlUtil.escape(curFolder.getName()) %>
+						</span>
+					</span>
+
+					<c:if test="<%= !repositoryAccess %>">
+						</span>
+					</c:if>
+
+					<c:if test="<%= Validator.isNotNull(curFolder.getDescription()) %>">
+						<div class="entry-description">
+							<%= HtmlUtil.escape(curFolder.getDescription()) %>
+						</div>
+					</c:if>
+				</div>
+
+				<c:if test="<%= repositoryAccess %>">
+					</a>
+				</c:if>
+
+				<c:if test="<%= dlPortletInstanceSettings.isShowSubfolders() %>">
+
+					<%
+					List subfolders = new ArrayList();
+
+					try {
+						subfolders = DLAppServiceUtil.getFolders(curFolder.getRepositoryId(), curFolder.getFolderId(), 0, 5);
+					}
+					catch (Exception e) {
+					}
+					%>
+
+					<c:if test="<%= !subfolders.isEmpty() %>">
+						<div class="entry-metadata">
+							<liferay-ui:message key="subfolders" />:
+
+							<%
+							for (int k = 0; k < subfolders.size(); k++) {
+								Folder subfolder = (Folder)subfolders.get(k);
+
+								rowURL.setParameter("folderId", String.valueOf(subfolder.getFolderId()));
+
+								String name = HtmlUtil.escape(subfolder.getName());
+
+								if (((k + 1) < subfolders.size()) || (curFoldersCount > subfolders.size())) {
+									name += StringPool.COMMA_AND_SPACE;
+								}
+							%>
+
+								<a href="<%= rowURL %>" /><%= name %></a>
+
+							<%
+							}
+
+							rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
+							%>
+
+							<c:if test="<%= curFoldersCount > subfolders.size() %>">
+								<a href="<%= rowURL %>"><liferay-ui:message key="more" /> &raquo;</a>
+							</c:if>
+						</div>
+					</c:if>
+				</c:if>
+			</liferay-ui:search-container-column-text>
+		</c:when>
+		<c:when test='<%= folderColumn.equals("locked") %>'>
+
+			<%
+			boolean isLocked = curFolder.isLocked();
+			%>
+
+			<liferay-ui:search-container-column-text
+				href="<%= repositoryAccess ? rowURL : null %>"
+				name="<%= folderColumn %>"
+				value='<%= LanguageUtil.get(request, isLocked ? "yes" : "no") %>'
+			/>
+		</c:when>
+		<c:when test='<%= folderColumn.equals("num-of-documents") %>'>
+			<liferay-ui:search-container-column-text
+				href="<%= repositoryAccess ? rowURL : null %>"
+				name="<%= folderColumn %>"
+				value="<%= String.valueOf(curFileEntriesCount) %>"
+			/>
+		</c:when>
+		<c:when test='<%= folderColumn.equals("num-of-folders") %>'>
+			<liferay-ui:search-container-column-text
+				href="<%= repositoryAccess ? rowURL : null %>"
+				name="<%= folderColumn %>"
+				value="<%= String.valueOf(curFoldersCount) %>"
+			/>
+		</c:when>
+		<c:when test='<%= folderColumn.equals("size") %>'>
+			<liferay-ui:search-container-column-text
+				name="<%= folderColumn %>"
+				value="--"
+			/>
+		</c:when>
+		<c:when test='<%= folderColumn.equals("tags") %>'>
+			<liferay-ui:search-container-column-text
+				name="<%= folderColumn %>"
+				value="--"
+			/>
+		</c:when>
+	</c:choose>
+
+<%
+}
+%>

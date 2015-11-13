@@ -181,7 +181,9 @@ if (Validator.isNotNull(languageId)) {
 							</span>
 
 							<div class="pull-left version-avatar">
-								<img alt="<%= HtmlUtil.escapeAttribute(userDisplay.getFullName()) %>" class="avatar img-circle" src="<%= HtmlUtil.escape(userDisplay.getPortraitURL(themeDisplay)) %>" />
+								<liferay-ui:user-portrait
+									userId="<%= userDisplay.getUserId() %>"
+								/>
 							</div>
 
 							<div class="version-info">

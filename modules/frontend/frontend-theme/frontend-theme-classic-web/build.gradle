@@ -10,7 +10,7 @@ task buildTheme(type: CompileThemeTask)
 task buildThumbnails(type: BuildThumbnailsTask)
 task copyFavicon(type: Copy)
 
-File themeDestinationDir = file("src/META-INF/resources/classic")
+File themeDestinationDir = file("src/main/resources/META-INF/resources/classic")
 
 buildCSS {
 	dependsOn buildTheme
@@ -40,8 +40,8 @@ copyFavicon {
 		autoClean = false
 	}
 
-	from "../frontend-theme-unstyled/src/META-INF/resources/_unstyled/images/favicon.ico"
-	into "src/META-INF/resources"
+	from "../frontend-theme-unstyled/src/main/resources/META-INF/resources/_unstyled/images/favicon.ico"
+	into "src/main/resources/META-INF/resources"
 }
 
 dependencies {

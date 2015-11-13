@@ -51,8 +51,8 @@ TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 	public static final String TABLE_SQL_DROP = "drop table ListType";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create index IX_77729718 on ListType (name, type_)",
-		"create index IX_2932DD37 on ListType (type_)"
+		"create index IX_77729718 on ListType (name[$COLUMN_LENGTH:75$], type_[$COLUMN_LENGTH:75$])",
+		"create index IX_2932DD37 on ListType (type_[$COLUMN_LENGTH:75$])"
 	};
 
 }

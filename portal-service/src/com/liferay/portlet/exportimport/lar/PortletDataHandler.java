@@ -172,6 +172,8 @@ public interface PortletDataHandler {
 
 	public String getPortletId();
 
+	public int getRank();
+
 	public String getServiceName();
 
 	/**
@@ -250,5 +252,7 @@ public interface PortletDataHandler {
 		throws PortletDataException;
 
 	public void setPortletId(String portletId);
+
+	public void setRank(int rank);
 
 }

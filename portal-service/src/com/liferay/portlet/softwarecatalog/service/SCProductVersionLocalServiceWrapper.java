@@ -288,13 +288,13 @@ public class SCProductVersionLocalServiceWrapper
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the OSGi service identifier.
 	*
-	* @return the Spring bean ID for this bean
+	* @return the OSGi service identifier
 	*/
 	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _scProductVersionLocalService.getBeanIdentifier();
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _scProductVersionLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -420,16 +420,6 @@ public class SCProductVersionLocalServiceWrapper
 	public boolean hasSCFrameworkVersionSCProductVersions(
 		long frameworkVersionId) {
 		return _scProductVersionLocalService.hasSCFrameworkVersionSCProductVersions(frameworkVersionId);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_scProductVersionLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override

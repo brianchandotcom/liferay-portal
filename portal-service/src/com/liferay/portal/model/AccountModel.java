@@ -39,7 +39,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface AccountModel extends AuditedModel, BaseModel<Account>, MVCCModel {
+public interface AccountModel extends AuditedModel, BaseModel<Account>, MVCCModel,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

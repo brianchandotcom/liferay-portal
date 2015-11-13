@@ -38,7 +38,7 @@ import java.io.Serializable;
  */
 @ProviderType
 public interface UserNotificationEventModel extends BaseModel<UserNotificationEvent>,
-	MVCCModel {
+	MVCCModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -109,6 +109,7 @@ public interface UserNotificationEventModel extends BaseModel<UserNotificationEv
 	 *
 	 * @return the company ID of this user notification event
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -116,6 +117,7 @@ public interface UserNotificationEventModel extends BaseModel<UserNotificationEv
 	 *
 	 * @param companyId the company ID of this user notification event
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**

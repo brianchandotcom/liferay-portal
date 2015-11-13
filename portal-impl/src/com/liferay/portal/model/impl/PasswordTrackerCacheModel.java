@@ -79,12 +79,14 @@ public class PasswordTrackerCacheModel implements CacheModel<PasswordTracker>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", passwordTrackerId=");
 		sb.append(passwordTrackerId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", createDate=");
@@ -102,6 +104,7 @@ public class PasswordTrackerCacheModel implements CacheModel<PasswordTracker>,
 
 		passwordTrackerImpl.setMvccVersion(mvccVersion);
 		passwordTrackerImpl.setPasswordTrackerId(passwordTrackerId);
+		passwordTrackerImpl.setCompanyId(companyId);
 		passwordTrackerImpl.setUserId(userId);
 
 		if (createDate == Long.MIN_VALUE) {
@@ -127,6 +130,7 @@ public class PasswordTrackerCacheModel implements CacheModel<PasswordTracker>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 		passwordTrackerId = objectInput.readLong();
+		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		password = objectInput.readUTF();
@@ -137,6 +141,7 @@ public class PasswordTrackerCacheModel implements CacheModel<PasswordTracker>,
 		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(passwordTrackerId);
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 		objectOutput.writeLong(createDate);
 
@@ -150,6 +155,7 @@ public class PasswordTrackerCacheModel implements CacheModel<PasswordTracker>,
 
 	public long mvccVersion;
 	public long passwordTrackerId;
+	public long companyId;
 	public long userId;
 	public long createDate;
 	public String password;

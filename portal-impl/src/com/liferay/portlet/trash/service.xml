@@ -66,6 +66,10 @@
 
 		<column name="versionId" type="long" primary="true" />
 
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
 		<!-- Other fields  -->
 
 		<column name="entryId" type="long" />

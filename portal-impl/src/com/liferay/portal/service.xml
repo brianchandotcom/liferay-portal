@@ -110,6 +110,7 @@
 
 		<!-- Audit fields -->
 
+		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 
 		<!-- Other fields -->
@@ -231,14 +232,10 @@
 		<column name="male" type="boolean" />
 		<column name="birthday" type="Date" />
 		<column name="smsSn" type="String" />
-		<column name="aimSn" type="String" />
 		<column name="facebookSn" type="String" />
-		<column name="icqSn" type="String" />
 		<column name="jabberSn" type="String" />
-		<column name="mySpaceSn" type="String" />
 		<column name="skypeSn" type="String" />
 		<column name="twitterSn" type="String" />
-		<column name="ymSn" type="String" />
 		<column name="employeeStatusId" type="String" />
 		<column name="employeeNumber" type="String" />
 		<column name="jobTitle" type="String" />
@@ -527,6 +524,7 @@
 
 		<!-- Audit fields -->
 
+		<column name="companyId" type="long" />
 		<column name="modifiedDate" type="Date" />
 
 		<!-- Other fields -->
@@ -1283,6 +1281,10 @@
 		<column name="groupId" type="long" primary="true" />
 		<column name="roleId" type="long" primary="true" />
 
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
 		<!-- Finder methods -->
 
 		<finder name="GroupId" return-type="Collection">
@@ -1297,6 +1299,10 @@
 		<!-- PK fields -->
 
 		<column name="orgLaborId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
 
 		<!-- Other fields -->
 
@@ -1405,6 +1411,10 @@
 
 		<column name="passwordPolicyRelId" type="long" primary="true" />
 
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
 		<!-- Other fields -->
 
 		<column name="passwordPolicyId" type="long" />
@@ -1433,6 +1443,7 @@
 
 		<!-- Audit fields -->
 
+		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="createDate" type="Date" />
 
@@ -1674,6 +1685,10 @@
 		<!-- PK fields -->
 
 		<column name="portletPreferencesId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
 
 		<!-- Other fields -->
 
@@ -1979,6 +1994,10 @@
 		<!-- PK fields -->
 
 		<column name="resourceBlockPermissionId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
 
 		<!-- Other fields -->
 
@@ -2658,6 +2677,10 @@
 		<column name="groupId" type="long" primary="true" />
 		<column name="roleId" type="long" primary="true" />
 
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
 		<!-- Finder methods -->
 
 		<finder name="UserGroupId" return-type="Collection">
@@ -2690,6 +2713,10 @@
 		<column name="userId" type="long" primary="true" />
 		<column name="groupId" type="long" primary="true" accessor="true" />
 		<column name="roleId" type="long" primary="true" accessor="true" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
 
 		<!-- Finder methods -->
 
@@ -2725,6 +2752,7 @@
 
 		<!-- Audit fields -->
 
+		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 
 		<!-- Other fields -->
@@ -2905,6 +2933,10 @@
 		<!-- PK fields -->
 
 		<column name="userTrackerPathId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
 
 		<!-- Other fields -->
 
@@ -3196,6 +3228,7 @@
 		<exception>PasswordPolicyName</exception>
 		<exception>PendingBackgroundTask</exception>
 		<exception>PhoneNumber</exception>
+		<exception>PhoneNumberExtension</exception>
 		<exception>PortletActive</exception>
 		<exception>PortletDefaultPreferences</exception>
 		<exception>PortletId</exception>

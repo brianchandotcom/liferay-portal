@@ -29,7 +29,7 @@ public class ClearThreadLocalTestCallback
 		new ClearThreadLocalTestCallback();
 
 	@Override
-	public void doAfterClass(Description description, Object object) {
+	public void afterClass(Description description, Object object) {
 		CentralizedThreadLocal.clearShortLivedThreadLocals();
 	}
 

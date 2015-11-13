@@ -1694,6 +1694,7 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 
 		resourceBlockPermissionImpl.setMvccVersion(resourceBlockPermission.getMvccVersion());
 		resourceBlockPermissionImpl.setResourceBlockPermissionId(resourceBlockPermission.getResourceBlockPermissionId());
+		resourceBlockPermissionImpl.setCompanyId(resourceBlockPermission.getCompanyId());
 		resourceBlockPermissionImpl.setResourceBlockId(resourceBlockPermission.getResourceBlockId());
 		resourceBlockPermissionImpl.setRoleId(resourceBlockPermission.getRoleId());
 		resourceBlockPermissionImpl.setActionIds(resourceBlockPermission.getActionIds());

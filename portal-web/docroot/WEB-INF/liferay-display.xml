@@ -17,7 +17,6 @@
 		<portlet id="136" />
 		<portlet id="157" />
 		<portlet id="158" />
-		<portlet id="164" />
 		<portlet id="176" />
 		<portlet id="195" />
 		<portlet id="196" />
@@ -26,7 +25,6 @@
 		<portlet id="47" />
 	</category>
 	<category name="category.tools">
-		<portlet id="58" />
 		<portlet id="98" />
 	</category>
 </display>

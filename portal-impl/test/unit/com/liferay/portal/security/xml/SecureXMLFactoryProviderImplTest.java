@@ -14,6 +14,10 @@
 
 package com.liferay.portal.security.xml;
 
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.rule.NewEnv;
+import com.liferay.portal.kernel.test.rule.NewEnv.JVMArgsLine;
+import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -29,14 +33,8 @@ import javax.xml.stream.XMLEventReader;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
-import org.powermock.reflect.Whitebox;
 
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXParseException;
@@ -46,12 +44,14 @@ import org.xml.sax.helpers.DefaultHandler;
 /**
  * @author Tomas Polesovsky
  */
-@PrepareForTest({PropsValues.class})
-@RunWith(PowerMockRunner.class)
-public class SecureXMLFactoryProviderImplTest extends PowerMockito {
+@JVMArgsLine("-Dattached=true -Xmx2m")
+@NewEnv(type = NewEnv.Type.JVM)
+public class SecureXMLFactoryProviderImplTest {
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
+	@Before
+	public void setUp() throws Exception {
+		_secureXMLFactoryProvider = new SecureXMLFactoryProviderImpl();
+
 		_xmlBombBillionLaughsXML = readDependency(
 			"xml-bomb-billion-laughs.xml");
 		_xmlBombQuadraticBlowupXML = readDependency(
@@ -64,14 +64,9 @@ public class SecureXMLFactoryProviderImplTest extends PowerMockito {
 			"xxe-parameter-entities-2.xml");
 	}
 
-	@Before
-	public void setUp() throws Exception {
-		_secureXMLFactoryProvider = new SecureXMLFactoryProviderImpl();
-	}
-
 	@Test
 	public void testNewDocumentBuilderFactory() throws Throwable {
-		XMLSecurityTest documentBuilderTestCase = new XMLSecurityTest() {
+		XMLSecurityTest documentBuilderTest = new XMLSecurityTest() {
 
 			@Override
 			public void run(String xml) throws Exception {
@@ -87,36 +82,36 @@ public class SecureXMLFactoryProviderImplTest extends PowerMockito {
 		};
 
 		runXMLSecurityTest(
-			documentBuilderTestCase, _xmlBombBillionLaughsXML,
+			documentBuilderTest, _xmlBombBillionLaughsXML,
 			OutOfMemoryError.class, "Billion Laughs XML attack does not work.",
 			SAXParseException.class,
 			"Vulnerable to Billion Laughs XML attack.");
 		runXMLSecurityTest(
-			documentBuilderTestCase, _xmlBombQuadraticBlowupXML,
+			documentBuilderTest, _xmlBombQuadraticBlowupXML,
 			OutOfMemoryError.class,
 			"Quadratic Blowup XML attack does not work.",
 			SAXParseException.class,
 			"Vulnerable to Quadratic Blowup XML attack.");
 		runXMLSecurityTest(
-			documentBuilderTestCase, _xxeGeneralEntitiesXML1,
+			documentBuilderTest, _xxeGeneralEntitiesXML1,
 			ConnectException.class,
 			"General Entities XXE attack using SYSTEM entity does not work.",
 			SAXParseException.class,
 			"Vulnerable to General Entities XXE attack using SYSTEM entity.");
 		runXMLSecurityTest(
-			documentBuilderTestCase, _xxeGeneralEntitiesXML2,
+			documentBuilderTest, _xxeGeneralEntitiesXML2,
 			ConnectException.class,
 			"General Entities XXE attack using PUBLIC entity does not work.",
 			SAXParseException.class,
 			"Vulnerable to General Entities XXE attack using PUBLIC entity.");
 		runXMLSecurityTest(
-			documentBuilderTestCase, _xxeParameterEntitiesXML1,
+			documentBuilderTest, _xxeParameterEntitiesXML1,
 			ConnectException.class,
 			"Parameter Entities XXE using SYSTEM entity does not work.",
 			SAXParseException.class,
 			"Vulnerable to Parameter Entities XXE using SYSTEM entity.");
 		runXMLSecurityTest(
-			documentBuilderTestCase, _xxeParameterEntitiesXML2,
+			documentBuilderTest, _xxeParameterEntitiesXML2,
 			ConnectException.class,
 			"Parameter Entities XXE attack using PUBLIC entity does not work.",
 			SAXParseException.class,
@@ -197,8 +192,7 @@ public class SecureXMLFactoryProviderImplTest extends PowerMockito {
 							_contentLenght += length;
 
 							if (_contentLenght > (1024 * 1024 * 10)) {
-								throw new RuntimeException(
-									new OutOfMemoryError());
+								throw new OutOfMemoryError();
 							}
 						}
 
@@ -241,6 +235,9 @@ public class SecureXMLFactoryProviderImplTest extends PowerMockito {
 			SAXParseException.class,
 			"Vulnerable to Parameter Entities XXE attack using PUBLIC entity.");
 	}
+
+	@Rule
+	public final NewEnvTestRule newEnvTestRule = NewEnvTestRule.INSTANCE;
 
 	protected static String readDependency(String name) throws IOException {
 		return StringUtil.read(
@@ -287,19 +284,28 @@ public class SecureXMLFactoryProviderImplTest extends PowerMockito {
 			String enableXMLSecurityFailMessage)
 		throws Throwable {
 
-		Whitebox.setInternalState(
-			PropsValues.class, "XML_SECURITY_ENABLED", false);
+		boolean xmlSecurityEnabled = ReflectionTestUtil.getFieldValue(
+			PropsValues.class, "XML_SECURITY_ENABLED");
 
-		runXMLSecurityTest(
-			xmlSecurityTest, xml, disableXMLSecurityExpectedException,
-			disableXMLSecurityFailMessage);
+		try {
+			ReflectionTestUtil.setFieldValue(
+				PropsValues.class, "XML_SECURITY_ENABLED", false);
 
-		Whitebox.setInternalState(
-			PropsValues.class, "XML_SECURITY_ENABLED", true);
+			runXMLSecurityTest(
+				xmlSecurityTest, xml, disableXMLSecurityExpectedException,
+				disableXMLSecurityFailMessage);
 
-		runXMLSecurityTest(
-			xmlSecurityTest, xml, enableXMLSecurityExpectedException,
-			enableXMLSecurityFailMessage);
+			ReflectionTestUtil.setFieldValue(
+				PropsValues.class, "XML_SECURITY_ENABLED", true);
+
+			runXMLSecurityTest(
+				xmlSecurityTest, xml, enableXMLSecurityExpectedException,
+				enableXMLSecurityFailMessage);
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				PropsValues.class, "XML_SECURITY_ENABLED", xmlSecurityEnabled);
+		}
 	}
 
 	private static String _xmlBombBillionLaughsXML;

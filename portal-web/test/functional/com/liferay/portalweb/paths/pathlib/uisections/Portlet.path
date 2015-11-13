@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>LAYOUT_2_COLUMNS</td>
-	<td>//input[contains(@id,'layoutTemplateId2')]</td>
+	<td>//input[contains(@id,'layoutTemplateId0')]</td>
 	<td></td>
 </tr>
 <tr>

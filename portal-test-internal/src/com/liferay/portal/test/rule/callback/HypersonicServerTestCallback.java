@@ -50,7 +50,7 @@ public class HypersonicServerTestCallback
 	}
 
 	@Override
-	public void doAfterClass(Description description, Server server)
+	public void afterClass(Description description, Server server)
 		throws SQLException {
 
 		try (Connection connection = DriverManager.getConnection(
@@ -64,7 +64,7 @@ public class HypersonicServerTestCallback
 	}
 
 	@Override
-	public Server doBeforeClass(Description description) throws Exception {
+	public Server beforeClass(Description description) throws Exception {
 		final CountDownLatch startCountDownLatch = new CountDownLatch(1);
 
 		Server server = new Server() {

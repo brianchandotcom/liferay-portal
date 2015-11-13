@@ -35,14 +35,17 @@ import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletRequestImpl;
+import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.RenderParametersPool;
-import com.liferay.portlet.login.util.LoginUtil;
 
+import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -115,8 +118,16 @@ public class LayoutAction extends Action {
 				}
 
 				if (Validator.isNull(authLoginURL)) {
-					PortletURL loginURL = LoginUtil.getLoginURL(
-						request, themeDisplay.getPlid());
+					PortletURL loginURL = PortletURLFactoryUtil.create(
+						request, PortletKeys.LOGIN, themeDisplay.getPlid(),
+						PortletRequest.RENDER_PHASE);
+
+					loginURL.setParameter(
+						"saveLastPath", Boolean.FALSE.toString());
+					loginURL.setParameter(
+						"mvcRenderCommandName", "/login/login");
+					loginURL.setPortletMode(PortletMode.VIEW);
+					loginURL.setWindowState(WindowState.MAXIMIZED);
 
 					authLoginURL = loginURL.toString();
 				}

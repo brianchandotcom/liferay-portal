@@ -103,6 +103,8 @@
 	</command>
 
 	<command name="AddMember" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -151,6 +153,8 @@
 	</command>
 
 	<command name="AddOrganization" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -486,6 +490,8 @@
 	</command>
 
 	<command name="AddUser" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -1322,6 +1328,8 @@
 	</command>
 
 	<command name="DeleteOrganization" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -1378,6 +1386,8 @@
 	</command>
 
 	<command name="DeleteUser" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -1408,6 +1418,8 @@
 	</command>
 
 	<command name="EditOrganizationSite" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -1528,6 +1540,8 @@
 	</command>
 
 	<command name="EditUserSite" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>

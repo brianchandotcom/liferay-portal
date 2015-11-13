@@ -37,11 +37,16 @@ public class OrganizationSearchContainerResultsTag<R> extends IncludeTag {
 		_parentOrganizationId = parentOrganizationId;
 	}
 
+	public void setUseIndexer(boolean useIndexer) {
+		_useIndexer = useIndexer;
+	}
+
 	@Override
 	protected void cleanUp() {
 		_organizationParams = null;
 		_parentOrganizationId = 0;
 		_searchTerms = null;
+		_useIndexer = true;
 	}
 
 	@Override
@@ -60,6 +65,9 @@ public class OrganizationSearchContainerResultsTag<R> extends IncludeTag {
 
 		_searchTerms = searchContainer.getSearchTerms();
 
+		request.setAttribute(
+			"liferay-ui:organization-search-container-results:useIndexer",
+			_useIndexer);
 		request.setAttribute(
 			"liferay-ui:organization-search-container-results:searchContainer",
 			searchContainer);
@@ -82,5 +90,6 @@ public class OrganizationSearchContainerResultsTag<R> extends IncludeTag {
 	private LinkedHashMap<String, Object> _organizationParams;
 	private long _parentOrganizationId;
 	private DisplayTerms _searchTerms;
+	private boolean _useIndexer = true;
 
 }

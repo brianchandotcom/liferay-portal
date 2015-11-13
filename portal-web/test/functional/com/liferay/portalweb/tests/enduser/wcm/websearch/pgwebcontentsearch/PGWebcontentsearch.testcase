@@ -241,7 +241,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchWebContentCategoryQuotes" priority="4">
+	<command name="SearchWebContentCategoryQuotes" priority="3">
 		<var name="categoryName" value="Category Name" />
 		<var name="pageName" value="Web Content Display Page" />
 		<var name="portletName" value="Web Content Display" />
@@ -346,7 +346,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchWebContentQuotes" priority="4">
+	<command name="SearchWebContentQuotes" priority="3">
 		<var name="pageName" value="Web Content Display Page" />
 		<var name="portletName" value="Web Content Display" />
 		<var name="webContentContent" value="WC WebContent Content" />
@@ -585,7 +585,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchWebContentTagQuotes" priority="4">
+	<command name="SearchWebContentTagQuotes" priority="3">
 		<var name="pageName" value="Web Content Display Page" />
 		<var name="portletName" value="Web Content Display" />
 		<var name="tagName" value="tag name" />

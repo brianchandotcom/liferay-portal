@@ -158,7 +158,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="Message#EMPTY" value1="There are no templates." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no templates." />
 	</command>
 
 	<command name="viewADTviaPortletPG">

@@ -195,6 +195,19 @@ public class DLFileEntryMetadataLocalServiceUtil {
 		return getService().fetchDLFileEntryMetadata(fileEntryMetadataId);
 	}
 
+	/**
+	* Returns the document library file entry metadata with the matching UUID and company.
+	*
+	* @param uuid the document library file entry metadata's UUID
+	* @param companyId the primary key of the company
+	* @return the matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata fetchDLFileEntryMetadataByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService()
+				   .fetchDLFileEntryMetadataByUuidAndCompanyId(uuid, companyId);
+	}
+
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata fetchFileEntryMetadata(
 		long ddmStructureId, long fileVersionId) {
 		return getService().fetchFileEntryMetadata(ddmStructureId, fileVersionId);
@@ -210,15 +223,6 @@ public class DLFileEntryMetadataLocalServiceUtil {
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
 	* Returns the document library file entry metadata with the primary key.
 	*
 	* @param fileEntryMetadataId the primary key of the document library file entry metadata
@@ -229,6 +233,21 @@ public class DLFileEntryMetadataLocalServiceUtil {
 		long fileEntryMetadataId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDLFileEntryMetadata(fileEntryMetadataId);
+	}
+
+	/**
+	* Returns the document library file entry metadata with the matching UUID and company.
+	*
+	* @param uuid the document library file entry metadata's UUID
+	* @param companyId the primary key of the company
+	* @return the matching document library file entry metadata
+	* @throws PortalException if a matching document library file entry metadata could not be found
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata getDLFileEntryMetadataByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getDLFileEntryMetadataByUuidAndCompanyId(uuid, companyId);
 	}
 
 	/**
@@ -295,19 +314,19 @@ public class DLFileEntryMetadataLocalServiceUtil {
 		return getService().getNoStructuresFileEntryMetadatas();
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

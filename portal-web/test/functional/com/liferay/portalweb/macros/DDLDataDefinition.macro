@@ -1,4 +1,8 @@
 <definition>
+	<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
+	<var name="ddlDataDefinitionName" value="Data Definition Name" />
+	<var name="ddlListName" value="List Name" />
+
 	<command name="_add">
 		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME_1" />
 		<execute function="Click" locator1="Button#PLUS" />
@@ -196,101 +200,11 @@
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
+		<execute function="SelectFrameTop" />
+
 		<execute function="SelectFrame" locator1="PGDynamicdatalistsAddlist#IFRAME" />
 
 		<execute function="AssertTextEquals#assertValue" locator1="TextInput#DATA_DEFINITION" value1="${ddlDataDefinitionName}" />
-	</command>
-
-	<command name="setupUseCase">
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Boolean" />
-			<var name="fieldFieldLabel" value="Employee" />
-			<var name="fieldName" value="Employee" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Date" />
-			<var name="fieldFieldLabel" value="Start Date" />
-			<var name="fieldName" value="StartDate" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Decimal" />
-			<var name="fieldFieldLabel" value="Salary" />
-			<var name="fieldName" value="Salary" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Documents and Media" />
-			<var name="fieldFieldLabel" value="Profile Picture" />
-			<var name="fieldName" value="ProfilePicture" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Documents and Media" />
-			<var name="fieldFieldLabel" value="Resume" />
-			<var name="fieldName" value="Resume" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Integer" />
-			<var name="fieldFieldLabel" value="Age" />
-			<var name="fieldName" value="Age" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Number" />
-			<var name="fieldFieldLabel" value="Weekly Hours" />
-			<var name="fieldName" value="WeeklyHours" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Radio" />
-			<var name="fieldFieldLabel" value="Department" />
-			<var name="fieldName" value="Department" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#editFieldOptions">
-			<var name="field" value="Radio" />
-			<var name="fieldFieldLabel" value="Department" />
-			<var name="fieldName" value="Department" />
-			<var name="fieldOptionsName" value="${fieldOptionsName}" />
-			<var name="fieldOptionsNames" value="Core Engineer,QA Engineer,Support Engineer" />
-			<var name="fieldOptionsValue" value="${fieldOptionsValue}" />
-			<var name="fieldOptionsvalues" value="${fieldOptionsvalues}" />
-			<var name="i" value="${i}" />
-			<var name="j" value="${j}" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Select" />
-			<var name="fieldFieldLabel" value="Years Worked" />
-			<var name="fieldName" value="YearsWorked" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#editFieldOptions">
-			<var name="field" value="Select" />
-			<var name="fieldFieldLabel" value="Years Worked" />
-			<var name="fieldName" value="YearsWorked" />
-			<var name="fieldOptionsName" value="${fieldOptionsName}" />
-			<var name="fieldOptionsNames" value="1-2,3-5,5+" />
-			<var name="fieldOptionsValue" value="${fieldOptionsValue}" />
-			<var name="fieldOptionsvalues" value="${fieldOptionsvalues}" />
-			<var name="i" value="${i}" />
-			<var name="j" value="${j}" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Name" />
-			<var name="fieldName" value="Name" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text Box" />
-			<var name="fieldFieldLabel" value="Description" />
-			<var name="fieldName" value="Description" />
-		</execute>
 	</command>
 
 	<command name="tearDownCP">
@@ -361,7 +275,7 @@
 			<then>
 				<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 
-				<execute function="AssertElementPresent" locator1="CPDynamicdatalistsDatadefinitionsEdit#FORM_FIELD" value1="${fieldFieldLabel}" />
+				<execute function="AssertElementPresent" locator1="DDMEditStructure#FORM_FIELD" value1="${fieldFieldLabel}" />
 			</then>
 		</if>
 

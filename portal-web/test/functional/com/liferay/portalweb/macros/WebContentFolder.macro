@@ -67,6 +67,8 @@
 
 					<execute function="AssertClick" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_CHOOSE_BUTTON" value1="Choose" />
 
+					<execute function="SelectFrame" value1="relative=top" />
+
 					<execute function="Select" locator1="WCEditFolder#WORKFLOW_SPECIFIC_RESTRICTIONS_STRUCTURE_WORKFLOW_SELECT" value1="${workflowDefinition}" />
 				</then>
 			</elseif>

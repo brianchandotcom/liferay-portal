@@ -212,13 +212,6 @@ public interface SocialActivityService extends BaseService {
 		long activitySetId, int start, int end) throws PortalException;
 
 	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
-	/**
 	* Returns a range of all the activities done in the group.
 	*
 	* <p>
@@ -308,6 +301,13 @@ public interface SocialActivityService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.social.model.SocialActivity getMirrorActivity(
 		long mirrorActivityId) throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Returns a range of all the activities done in the organization. This
@@ -574,11 +574,4 @@ public interface SocialActivityService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserOrganizationsActivitiesCount(long userId);
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 }

@@ -18,46 +18,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<tr>
-	<td>PORTLET_TITLE</td>
-	<td>//h2[@id='cpPortletTitle']/span[@class='portlet-title-text']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVBAR_CONTAINER</td>
-	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//div[contains(@class,'container')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SUCCESS_MESSAGE_RECYCLE_BIN</td>
-	<td>//div[contains(@class,'alert') and contains(@class,'alert-success') and contains(@class,'taglib-trash-undo')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>INFO_MESSAGE</td>
-	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>OPTIONS_WRENCH_ICON</td>
-	<td>//div[@id='main-content']//a[@title='Options']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEARCH_FIELD</td>
-	<td>//input[@id='_198_WAR_bookmarksweb_keywords1']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEARCH_BUTTON</td>
-	<td>//button[contains(.,'Search')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--OPTIONS_MENULIST-->
 <tr>
 	<td>OPTIONS_MENULIST_EXPORT_IMPORT</td>
@@ -93,22 +53,22 @@
 <!--FOLDERS_TABLE-->
 <tr>
 	<td>FOLDERS_TABLE_FOLDER_NAME</td>
-	<td>//div[@id='_198_WAR_bookmarksweb_bookmarksFoldersSearchContainer']//tr[contains(.,'${key_folderName}')]/td[1]/a/strong</td>
+	<td>//tbody[contains(@class,'table-data')]//tr[contains(.,'${key_folderName}')]/td[1]/a/strong</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FOLDERS_TABLE_FOLDER_DESCRIPTION</td>
-	<td>//div[@id='_198_WAR_bookmarksweb_bookmarksFoldersSearchContainer']//tr[contains(.,'${key_folderName}')]/td[1]/a</td>
+	<td>//tbody[contains(@class,'table-data')]//tr[contains(.,'${key_folderName}')]/td[1]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FOLDERS_TABLE_FOLDER_ACTIONS_BUTTON</td>
-	<td>//div[@id='_198_WAR_bookmarksweb_bookmarksFoldersSearchContainer']//tr[contains(.,'${key_folderName}')]/td[4]/div/a</td>
+	<td>//div[contains(@id,'bookmarksFolder')]//tr[contains(.,'${key_folderName}')]/td[4]/div/a[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FOLDERS_TABLE_FOLDER_ACTIONS_BUTTON_GENERIC</td>
-	<td>//div[@id='_198_WAR_bookmarksweb_bookmarksFoldersSearchContainer']//tr/td[4]/div/a</td>
+	<td>//div[contains(@id,'bookmarksFolder')]//tr/td[4]/div/a[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>

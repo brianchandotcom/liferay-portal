@@ -72,21 +72,21 @@ public class LayoutSetPrototypeServiceWrapper
 		return _layoutSetPrototypeService.fetchLayoutSetPrototype(layoutSetPrototypeId);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _layoutSetPrototypeService.getBeanIdentifier();
-	}
-
 	@Override
 	public com.liferay.portal.model.LayoutSetPrototype getLayoutSetPrototype(
 		long layoutSetPrototypeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutSetPrototypeService.getLayoutSetPrototype(layoutSetPrototypeId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _layoutSetPrototypeService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -95,16 +95,6 @@ public class LayoutSetPrototypeServiceWrapper
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.LayoutSetPrototype> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutSetPrototypeService.search(companyId, active, obc);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_layoutSetPrototypeService.setBeanIdentifier(beanIdentifier);
 	}
 
 	/**

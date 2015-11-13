@@ -85,12 +85,12 @@ public class ExportImportLocalServiceUtil {
 	}
 
 	/**
-	* Returns the Spring bean ID for this bean.
+	* Returns the OSGi service identifier.
 	*
-	* @return the Spring bean ID for this bean
+	* @return the OSGi service identifier
 	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static void importLayouts(
@@ -201,15 +201,6 @@ public class ExportImportLocalServiceUtil {
 		return getService()
 				   .importPortletInfoInBackground(userId,
 			exportImportConfigurationId, inputStream);
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static com.liferay.portlet.exportimport.lar.MissingReferences validateImportLayoutsFile(

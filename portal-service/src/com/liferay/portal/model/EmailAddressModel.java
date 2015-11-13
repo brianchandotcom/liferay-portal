@@ -40,7 +40,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface EmailAddressModel extends AttachedModel, BaseModel<EmailAddress>,
-	MVCCModel, StagedAuditedModel {
+	MVCCModel, ShardedModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

@@ -23,6 +23,7 @@ import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.model.MVCCModel;
+import com.liferay.portal.model.ShardedModel;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.model.WorkflowedModel;
 import com.liferay.portal.service.ServiceContext;
@@ -49,7 +50,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface ExportImportConfigurationModel extends BaseModel<ExportImportConfiguration>,
-	GroupedModel, MVCCModel, TrashedModel, WorkflowedModel {
+	GroupedModel, MVCCModel, ShardedModel, TrashedModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

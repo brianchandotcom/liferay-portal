@@ -15,6 +15,8 @@
 package com.liferay.portal.repository.registry.bundle.repositoryclassdefinitioncatalogimpl;
 
 import com.liferay.portal.kernel.repository.DocumentRepository;
+import com.liferay.portal.kernel.repository.RepositoryConfiguration;
+import com.liferay.portal.kernel.repository.RepositoryConfigurationBuilder;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
@@ -33,23 +35,25 @@ import org.osgi.service.component.annotations.Component;
 )
 public class TestRepositoryDefiner implements RepositoryDefiner {
 
+	public TestRepositoryDefiner() {
+		RepositoryConfigurationBuilder repositoryConfigurationBuilder =
+			new RepositoryConfigurationBuilder();
+
+		_repositoryConfiguration = repositoryConfigurationBuilder.build();
+	}
+
 	@Override
 	public String getClassName() {
 		return TestRepositoryDefiner.class.getName();
 	}
 
 	@Override
+	public RepositoryConfiguration getRepositoryConfiguration() {
+		return _repositoryConfiguration;
+	}
+
+	@Override
 	public String getRepositoryTypeLabel(Locale locale) {
-		return null;
-	}
-
-	@Override
-	public String[] getSupportedConfigurations() {
-		return null;
-	}
-
-	@Override
-	public String[][] getSupportedParameters() {
 		return null;
 	}
 
@@ -72,5 +76,7 @@ public class TestRepositoryDefiner implements RepositoryDefiner {
 	public void registerRepositoryFactory(
 		RepositoryFactoryRegistry repositoryFactoryRegistry) {
 	}
+
+	private final RepositoryConfiguration _repositoryConfiguration;
 
 }

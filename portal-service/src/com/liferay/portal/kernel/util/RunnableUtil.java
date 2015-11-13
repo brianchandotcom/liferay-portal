@@ -20,6 +20,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -28,15 +31,15 @@ public class RunnableUtil {
 	public static void runWithSwappedSystemOut(
 		Runnable runnable, OutputStream outputStream) {
 
-		PrintStream printStream = null;
+		SwappedOutputStream swappedOutputStream = null;
 
 		synchronized (RunnableUtil.class) {
-			printStream = System.out;
+			swappedOutputStream = new SwappedOutputStream(
+				outputStream, System.out, Thread.currentThread());
 
-			System.setOut(
-				new PrintStream(
-					new SwappedOutputStream(
-						outputStream, printStream, Thread.currentThread())));
+			_swappedOutputStreams.push(swappedOutputStream);
+
+			System.setOut(new PrintStream(swappedOutputStream));
 		}
 
 		try {
@@ -44,10 +47,34 @@ public class RunnableUtil {
 		}
 		finally {
 			synchronized (RunnableUtil.class) {
-				System.setOut(printStream);
+				swappedOutputStream._enabled = false;
+
+				if (_swappedOutputStreams.peek() == swappedOutputStream) {
+					_swappedOutputStreams.pop();
+
+					System.setOut(swappedOutputStream._fallbackPrintStream);
+
+					Iterator<SwappedOutputStream> iterator =
+						_swappedOutputStreams.iterator();
+
+					while (iterator.hasNext()) {
+						swappedOutputStream = iterator.next();
+
+						if (swappedOutputStream._enabled) {
+							break;
+						}
+
+						iterator.remove();
+
+						System.setOut(swappedOutputStream._fallbackPrintStream);
+					}
+				}
 			}
 		}
 	}
+
+	private static final LinkedList<SwappedOutputStream> _swappedOutputStreams =
+		new LinkedList<>();
 
 	private static class SwappedOutputStream extends UnsyncFilterOutputStream {
 
@@ -57,11 +84,11 @@ public class RunnableUtil {
 
 			Thread thread = Thread.currentThread();
 
-			if (thread == _thread) {
+			if ((thread == _thread) && _enabled) {
 				super.write(bytes, offset, length);
 			}
 			else {
-				_fallbackOutputStream.write(bytes, offset, length);
+				_fallbackPrintStream.write(bytes, offset, length);
 			}
 		}
 
@@ -69,25 +96,26 @@ public class RunnableUtil {
 		public void write(int b) throws IOException {
 			Thread thread = Thread.currentThread();
 
-			if (thread == _thread) {
+			if ((thread == _thread) && _enabled) {
 				super.write(b);
 			}
 			else {
-				_fallbackOutputStream.write(b);
+				_fallbackPrintStream.write(b);
 			}
 		}
 
 		private SwappedOutputStream(
-			OutputStream outputStream, OutputStream fallbackOutputStream,
+			OutputStream outputStream, PrintStream fallbackPrintStream,
 			Thread thread) {
 
 			super(outputStream);
 
-			_fallbackOutputStream = fallbackOutputStream;
+			_fallbackPrintStream = fallbackPrintStream;
 			_thread = thread;
 		}
 
-		private final OutputStream _fallbackOutputStream;
+		private volatile boolean _enabled = true;
+		private final PrintStream _fallbackPrintStream;
 		private final Thread _thread;
 
 	}

@@ -40,7 +40,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface PhoneModel extends AttachedModel, BaseModel<Phone>, MVCCModel,
-	StagedAuditedModel {
+	ShardedModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

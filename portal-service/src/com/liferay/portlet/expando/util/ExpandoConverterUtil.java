@@ -17,8 +17,10 @@ package com.liferay.portlet.expando.util;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 
 import java.io.Serializable;
@@ -48,11 +50,10 @@ public class ExpandoConverterUtil {
 			return GetterUtil.getBooleanValues(StringUtil.split(attribute));
 		}
 		else if (type == ExpandoColumnConstants.DATE) {
-			return GetterUtil.getDate(attribute, _getDateFormat());
+			return _getDate(attribute);
 		}
 		else if (type == ExpandoColumnConstants.DATE_ARRAY) {
-			return GetterUtil.getDateValues(
-				StringUtil.split(attribute), _getDateFormat());
+			return _getDates(StringUtil.split(attribute));
 		}
 		else if (type == ExpandoColumnConstants.DOUBLE) {
 			return GetterUtil.getDouble(attribute);
@@ -87,6 +88,9 @@ public class ExpandoConverterUtil {
 		else if (type == ExpandoColumnConstants.STRING_ARRAY) {
 			return StringUtil.split(attribute);
 		}
+		else if (type == ExpandoColumnConstants.STRING_LOCALIZED) {
+			return (Serializable)LocalizationUtil.getLocalizationMap(attribute);
+		}
 		else {
 			return attribute;
 		}
@@ -106,10 +110,10 @@ public class ExpandoConverterUtil {
 			return GetterUtil.getBooleanValues(attribute);
 		}
 		else if (type == ExpandoColumnConstants.DATE) {
-			return GetterUtil.getDate(attribute[0], _getDateFormat());
+			return _getDate(attribute[0]);
 		}
 		else if (type == ExpandoColumnConstants.DATE_ARRAY) {
-			return GetterUtil.getDateValues(attribute, _getDateFormat());
+			return _getDates(attribute);
 		}
 		else if (type == ExpandoColumnConstants.DOUBLE) {
 			return GetterUtil.getDouble(attribute[0]);
@@ -190,8 +194,26 @@ public class ExpandoConverterUtil {
 		}
 	}
 
+	private static Date _getDate(String dateString) {
+		if (Validator.isNumber(dateString)) {
+			return new Date(GetterUtil.getLong(dateString));
+		}
+
+		return GetterUtil.getDate(dateString, _getDateFormat());
+	}
+
 	private static DateFormat _getDateFormat() {
 		return DateUtil.getISO8601Format();
+	}
+
+	private static Date[] _getDates(String[] dateStrings) {
+		Date[] dates = new Date[dateStrings.length];
+
+		for (int i = 0; i < dateStrings.length; i++) {
+			dates[i] = _getDate(dateStrings[i]);
+		}
+
+		return dates;
 	}
 
 }

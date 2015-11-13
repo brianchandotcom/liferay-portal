@@ -117,6 +117,8 @@ public class ImagePersistenceTest {
 
 		newImage.setMvccVersion(RandomTestUtil.nextLong());
 
+		newImage.setCompanyId(RandomTestUtil.nextLong());
+
 		newImage.setModifiedDate(RandomTestUtil.nextDate());
 
 		newImage.setType(RandomTestUtil.randomString());
@@ -134,6 +136,8 @@ public class ImagePersistenceTest {
 		Assert.assertEquals(existingImage.getMvccVersion(),
 			newImage.getMvccVersion());
 		Assert.assertEquals(existingImage.getImageId(), newImage.getImageId());
+		Assert.assertEquals(existingImage.getCompanyId(),
+			newImage.getCompanyId());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingImage.getModifiedDate()),
 			Time.getShortTimestamp(newImage.getModifiedDate()));
@@ -174,8 +178,8 @@ public class ImagePersistenceTest {
 
 	protected OrderByComparator<Image> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Image", "mvccVersion",
-			true, "imageId", true, "modifiedDate", true, "type", true,
-			"height", true, "width", true, "size", true);
+			true, "imageId", true, "companyId", true, "modifiedDate", true,
+			"type", true, "height", true, "width", true, "size", true);
 	}
 
 	@Test
@@ -372,6 +376,8 @@ public class ImagePersistenceTest {
 		Image image = _persistence.create(pk);
 
 		image.setMvccVersion(RandomTestUtil.nextLong());
+
+		image.setCompanyId(RandomTestUtil.nextLong());
 
 		image.setModifiedDate(RandomTestUtil.nextDate());
 

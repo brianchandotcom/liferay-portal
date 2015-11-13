@@ -445,7 +445,7 @@
 </tr>
 <tr>
 	<td>PERMISSIONS</td>
-	<td>//div[contains(@class,'open') and contains(@class,'dropdown')]//a[contains(.,'Permissions')] | //li[contains(@class,'open')]//a[contains(.,'Permissions')]</td>
+	<td>//div[contains(@class,'open')]//a[contains(.,'Permissions')] | //li[contains(@class,'open')]//a[contains(.,'Permissions')] | //ul[contains(@class,'dropdown')]//a[contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -666,6 +666,11 @@
 <tr>
 	<td>VIEW_PAGES</td>
 	<td>//div[contains(@class,'open') and contains(@class,'dropdown')]//a[@role='menuitem' and contains(.,'View Pages')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_HISTORY</td>
+	<td>//div[contains(@class,'open')]//a[contains(.,'View History')]</td>
 	<td></td>
 </tr>
 <tr>

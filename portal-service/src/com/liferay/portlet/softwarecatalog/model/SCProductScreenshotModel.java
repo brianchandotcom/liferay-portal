@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.ShardedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -38,7 +39,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface SCProductScreenshotModel extends BaseModel<SCProductScreenshot> {
+public interface SCProductScreenshotModel extends BaseModel<SCProductScreenshot>,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -78,6 +80,7 @@ public interface SCProductScreenshotModel extends BaseModel<SCProductScreenshot>
 	 *
 	 * @return the company ID of this s c product screenshot
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -85,6 +88,7 @@ public interface SCProductScreenshotModel extends BaseModel<SCProductScreenshot>
 	 *
 	 * @param companyId the company ID of this s c product screenshot
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**

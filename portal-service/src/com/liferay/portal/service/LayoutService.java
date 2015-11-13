@@ -480,14 +480,7 @@ public interface LayoutService extends BaseService {
 	public java.util.List<com.liferay.portal.model.Layout> getAncestorLayouts(
 		long plid) throws PortalException;
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
-	@com.liferay.portal.kernel.cache.ThreadLocalCachable
+	@com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getDefaultPlid(long groupId, long scopeGroupId,
 		java.lang.String portletId) throws PortalException;
@@ -562,7 +555,8 @@ public interface LayoutService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Layout> getLayouts(
-		long groupId, boolean privateLayout, long parentLayoutId);
+		long groupId, boolean privateLayout, long parentLayoutId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Layout> getLayouts(
@@ -572,6 +566,13 @@ public interface LayoutService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getLayoutsCount(long groupId, boolean privateLayout,
 		long parentLayoutId);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String[] getTempFileNames(long groupId,
@@ -944,13 +945,6 @@ public interface LayoutService extends BaseService {
 		java.lang.String groupName, java.lang.String cronText,
 		java.util.Date schedulerStartDate, java.util.Date schedulerEndDate,
 		java.lang.String description) throws PortalException;
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	/**
 	* Sets the layouts for the group, replacing and prioritizing all layouts of

@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.ShardedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -39,7 +40,7 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface DLSyncEventModel extends BaseModel<DLSyncEvent> {
+public interface DLSyncEventModel extends BaseModel<DLSyncEvent>, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -73,6 +74,22 @@ public interface DLSyncEventModel extends BaseModel<DLSyncEvent> {
 	 * @param syncEventId the sync event ID of this d l sync event
 	 */
 	public void setSyncEventId(long syncEventId);
+
+	/**
+	 * Returns the company ID of this d l sync event.
+	 *
+	 * @return the company ID of this d l sync event
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this d l sync event.
+	 *
+	 * @param companyId the company ID of this d l sync event
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the modified time of this d l sync event.

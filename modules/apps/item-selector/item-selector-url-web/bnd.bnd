@@ -4,5 +4,5 @@ Bundle-Version: 1.0.0
 Import-Package:	*
 Include-Resource:\
 	classes,\
-	META-INF/resources=src/META-INF/resources
+	META-INF/resources=src/main/resources/META-INF/resources
 Web-ContextPath: /item-selector-url-web

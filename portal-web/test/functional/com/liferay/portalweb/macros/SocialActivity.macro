@@ -85,8 +85,17 @@
 		<var name="key_userName" value="${userName}" />
 
 		<execute function="AssertTextEquals" locator1="UserStatistics#RANKING_TABLE_USER_NAME" value1="${userName}" />
-		<execute function="AssertTextEquals" locator1="UserStatistics#RANKING_TABLE_USER_NAME" value1="${userRank}" />
-		<execute function="AssertTextEquals" locator1="UserStatistics#RANKING_TABLE_USER_NAME" value1="${contributionScore}" />
-		<execute function="AssertTextEquals" locator1="UserStatistics#RANKING_TABLE_USER_NAME" value1="${participationScore}" />
+
+		<var name="key_userRank" value="${userRank}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="UserStatistics#RANKING_TABLE_RANK" value1="${userRank}" />
+
+		<var name="key_userContributionScore" value="${contributionScore}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="UserStatistics#RANKING_TABLE_CONTRIBUTION_SCORE" value1="${contributionScore}" />
+
+		<var name="key_userParticipationScore" value="${participationScore}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="UserStatistics#RANKING_TABLE_PARTICIPATION_SCORE" value1="${participationScore}" />
 	</command>
 </definition>

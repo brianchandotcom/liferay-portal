@@ -55,16 +55,6 @@ public class CountryServiceWrapper implements CountryService,
 		return _countryService.fetchCountryByA3(a3);
 	}
 
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _countryService.getBeanIdentifier();
-	}
-
 	@Override
 	public java.util.List<com.liferay.portal.model.Country> getCountries() {
 		return _countryService.getCountries();
@@ -102,13 +92,13 @@ public class CountryServiceWrapper implements CountryService,
 	}
 
 	/**
-	* Sets the Spring bean ID for this bean.
+	* Returns the OSGi service identifier.
 	*
-	* @param beanIdentifier the Spring bean ID for this bean
+	* @return the OSGi service identifier
 	*/
 	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_countryService.setBeanIdentifier(beanIdentifier);
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _countryService.getOSGiServiceIdentifier();
 	}
 
 	/**

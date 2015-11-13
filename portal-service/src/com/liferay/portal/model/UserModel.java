@@ -39,7 +39,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface UserModel extends BaseModel<User>, MVCCModel, StagedModel {
+public interface UserModel extends BaseModel<User>, MVCCModel, ShardedModel,
+	StagedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

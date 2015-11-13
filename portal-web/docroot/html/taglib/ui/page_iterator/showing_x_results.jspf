@@ -17,21 +17,21 @@
 <small class="search-results">
 	<c:choose>
 		<c:when test='<%= type.equals("approximate") %>'>
-			<%= LanguageUtil.format(request, "page-x-of-approximately-x-results", new Object[] {numberFormat.format(cur), numberFormat.format(total)}, false) %>
+			<liferay-ui:message arguments="<%= new Object[] {numberFormat.format(cur), numberFormat.format(total)} %>" key="page-x-of-approximately-x-results" translateArguments="<%= false %>" />
 		</c:when>
 		<c:when test='<%= type.equals("more") %>'>
-			<%= LanguageUtil.format(request, "showing-x-x", new Object[] {numberFormat.format(start + 1), numberFormat.format(end)}, false) %>
+			<liferay-ui:message arguments="<%= new Object[] {numberFormat.format(start + 1), numberFormat.format(end)} %>" key="showing-x-x" translateArguments="<%= false %>" />
 		</c:when>
 		<c:when test="<%= total > resultRowsSize %>">
-			<%= LanguageUtil.format(request, "showing-x-x-of-x-results", new Object[] {numberFormat.format(start + 1), numberFormat.format(end), numberFormat.format(total)}, false) %>
+			<liferay-ui:message arguments="<%= new Object[] {numberFormat.format(start + 1), numberFormat.format(end), numberFormat.format(total)} %>" key="showing-x-x-of-x-results" translateArguments="<%= false %>" />
 		</c:when>
 		<c:otherwise>
 			<c:choose>
 				<c:when test="<%= total != 1 %>">
-					<%= LanguageUtil.format(request, "showing-x-results", numberFormat.format(total), false) %>
+					<liferay-ui:message arguments="<%= numberFormat.format(total) %>" key="showing-x-results" translateArguments="<%= false %>" />
 				</c:when>
 				<c:otherwise>
-					<%= LanguageUtil.format(request, "showing-x-result", numberFormat.format(total), false) %>
+					<liferay-ui:message arguments="<%= numberFormat.format(total) %>" key="showing-x-result" translateArguments="<%= false %>" />
 				</c:otherwise>
 			</c:choose>
 		</c:otherwise>

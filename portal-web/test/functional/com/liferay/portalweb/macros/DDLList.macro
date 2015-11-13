@@ -54,7 +54,7 @@
 	<command name="assertCannotDeleteRecordViaDDLDisplayPG">
 		<execute function="AssertElementNotPresent" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
 		<execute function="AssertElementNotPresent" locator1="MenuItem#DELETE" value1="Delete" />
-		<execute function="AssertElementPresent" locator1="DDL#RECORD_TABLE_COLUMN_TWO_RECORD_1_WORKFLOW_STATUS" value1="View" />
+		<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_COLUMN_TWO_RECORD_1_VIEW" value1="View" />
 	</command>
 
 	<command name="attemptDeleteRecordViaDDLDisplayPG">

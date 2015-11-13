@@ -192,20 +192,30 @@ public class DDMDataProviderDisplayContext {
 			DDMDataProviderInstance.class.getName());
 	}
 
-	public boolean isShowDeleteDataProviderIcon(long dataProviderInstanceId)
+	public boolean isShowDeleteDataProviderIcon(
+			DDMDataProviderInstance dataProviderInstance)
 		throws PortalException {
 
 		return DDMDataProviderInstancePermission.contains(
 			_ddmDataProviderRequestHelper.getPermissionChecker(),
-			dataProviderInstanceId, ActionKeys.DELETE);
+			dataProviderInstance, ActionKeys.DELETE);
 	}
 
-	public boolean isShowEditDataProviderIcon(long dataProviderInstanceId)
+	public boolean isShowEditDataProviderIcon(
+			DDMDataProviderInstance dataProviderInstance)
 		throws PortalException {
 
 		return DDMDataProviderInstancePermission.contains(
 			_ddmDataProviderRequestHelper.getPermissionChecker(),
-			dataProviderInstanceId, ActionKeys.UPDATE);
+			dataProviderInstance, ActionKeys.UPDATE);
+	}
+
+	public boolean isShowPermissionsIcon(
+		DDMDataProviderInstance dataProviderInstance) {
+
+		return DDMDataProviderInstancePermission.contains(
+			_ddmDataProviderRequestHelper.getPermissionChecker(),
+			dataProviderInstance, ActionKeys.PERMISSIONS);
 	}
 
 	protected DDMFormRenderingContext createDDMFormRenderingContext() {

@@ -68,8 +68,8 @@ public class BookmarksEntryTrashHandlerTest
 	implements WhenHasGrandParent, WhenHasMyBaseModel,
 			   WhenHasRecentBaseModelCount, WhenIsAssetableBaseModel,
 			   WhenIsAssetableParentModel, WhenIsIndexableBaseModel,
-			   WhenIsMoveableFromTrashBaseModel,
-			   WhenIsRestorableBaseModel, WhenIsUpdatableBaseModel {
+			   WhenIsMoveableFromTrashBaseModel, WhenIsRestorableBaseModel,
+			   WhenIsUpdatableBaseModel {
 
 	@ClassRule
 	@Rule

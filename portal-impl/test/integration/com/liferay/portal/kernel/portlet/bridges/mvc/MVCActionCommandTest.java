@@ -167,8 +167,8 @@ public class MVCActionCommandTest {
 	private static ServiceTracker<GenericPortlet, GenericPortlet>
 		_genericPortletServiceTracker;
 
-	private class MockLiferayPortletRequest extends MockActionRequest
-		implements LiferayPortletRequest {
+	private class MockLiferayPortletRequest
+		extends MockActionRequest implements LiferayPortletRequest {
 
 		@Override
 		public void addParameter(String name, String value) {

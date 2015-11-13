@@ -25,6 +25,6 @@ import com.liferay.portal.security.permission.BaseModelPermissionChecker;
 		"model.class.name=com.liferay.portlet.messageboards.model.MBThread"
 	}
 )
-public class MBThreadPermission extends MBMessagePermission
-	implements BaseModelPermissionChecker {
+public class MBThreadPermission
+	extends MBMessagePermission implements BaseModelPermissionChecker {
 }

@@ -23,8 +23,8 @@ import java.util.Collection;
  * @author Bruno Farache
  * @author Tina Tian
  */
-public class IndexWriterProxyBean extends BaseMultiDestinationProxyBean
-	implements IndexWriter {
+public class IndexWriterProxyBean
+	extends BaseMultiDestinationProxyBean implements IndexWriter {
 
 	@Override
 	public void addDocument(SearchContext searchContext, Document document) {

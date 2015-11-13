@@ -28,8 +28,8 @@ import java.util.Date;
 /**
  * @author Mate Thurzo
  */
-public class StagedAssetLinkImpl extends AssetLinkImpl
-	implements StagedAssetLink {
+public class StagedAssetLinkImpl
+	extends AssetLinkImpl implements StagedAssetLink {
 
 	public StagedAssetLinkImpl() {
 	}

@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 /**
  * @author Raymond Augé
  */
-public class TermRangeQueryImpl extends BaseQueryImpl
-	implements TermRangeQuery {
+public class TermRangeQueryImpl
+	extends BaseQueryImpl implements TermRangeQuery {
 
 	public TermRangeQueryImpl(
 		String field, String lowerTerm, String upperTerm, boolean includesLower,

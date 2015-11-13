@@ -23,8 +23,7 @@ import java.util.Map;
  * @author Shuyang Zhou
  */
 public class StrictPortletPreferencesImpl
-	extends PortletPreferencesImpl
-	implements Cloneable, Serializable {
+	extends PortletPreferencesImpl implements Cloneable, Serializable {
 
 	public StrictPortletPreferencesImpl() {
 	}

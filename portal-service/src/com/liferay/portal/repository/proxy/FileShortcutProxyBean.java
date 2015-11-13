@@ -31,8 +31,8 @@ import java.util.Map;
 /**
  * @author Roberto Díaz
  */
-public class FileShortcutProxyBean extends RepositoryModelProxyBean
-	implements FileShortcut {
+public class FileShortcutProxyBean
+	extends RepositoryModelProxyBean implements FileShortcut {
 
 	public FileShortcutProxyBean(
 		FileShortcut fileShortcut, ClassLoader classLoader) {

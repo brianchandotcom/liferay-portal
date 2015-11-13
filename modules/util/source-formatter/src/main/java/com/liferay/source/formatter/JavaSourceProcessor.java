@@ -320,15 +320,15 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			if (content.contains("@Component")) {
 				checkOSGIComponents(fileName, absolutePath, content);
 			}
+		}
 
-			if (!absolutePath.contains("/modules/core/") &&
-				!absolutePath.contains("/test/") &&
-				!absolutePath.contains("/testIntegration/") &&
-				content.contains("import com.liferay.registry.Registry")) {
+		if (!absolutePath.contains("/modules/core/") &&
+			!absolutePath.contains("/test/") &&
+			!absolutePath.contains("/testIntegration/") &&
+			content.contains("import com.liferay.registry.Registry")) {
 
-				processErrorMessage(
-					fileName, "Do not use Registry in modules: " + fileName);
-			}
+			processErrorMessage(
+				fileName, "Do not use Registry in modules: " + fileName);
 		}
 	}
 

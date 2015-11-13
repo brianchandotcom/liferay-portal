@@ -1,0 +1,12 @@
+Bundle-Name: Sync Security Shared
+Import-Package: *
+Include-Resource:\
+	classes,\
+	@lib/commons-codec.jar,\
+	@lib/google-collections.jar,\
+	@lib/gson.jar,\
+	@lib/httpcore.jar,\
+	@lib/joda-time.jar,\
+	@lib/jsontoken.jar
+
+Service-Component: *

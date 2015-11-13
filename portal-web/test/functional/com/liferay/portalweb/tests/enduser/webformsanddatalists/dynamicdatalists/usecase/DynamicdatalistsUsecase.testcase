@@ -1108,10 +1108,9 @@
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute function="Click" locator1="DDL#LIST_TABLE_ELLIPSIS_1" />
-		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
-
-		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
+		<execute macro="DDLList#editPermissions">
+			<var name="ddlListName" value="DDL List Name" />
+		</execute>
 
 		<execute macro="Role#definePermissionPG">
 			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_DELETE_CHECKBOX" />
@@ -1143,10 +1142,9 @@
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute function="Click" locator1="DDL#LIST_TABLE_ELLIPSIS_1" />
-		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
-
-		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
+		<execute macro="DDLList#editPermissions">
+			<var name="ddlListName" value="DDL List Name" />
+		</execute>
 
 		<execute macro="Role#removePermissionPG">
 			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_DELETE_CHECKBOX" />

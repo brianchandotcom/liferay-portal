@@ -13,6 +13,11 @@ create table DDMDataProviderInstance (
 	type_ VARCHAR(75) null
 );
 
+create index IX_DB54A6E5 on DDMDataProviderInstance (companyId);
+create index IX_1333A2A7 on DDMDataProviderInstance (groupId);
+create index IX_C903C097 on DDMDataProviderInstance (uuid_[$COLUMN_LENGTH:75$], companyId);
+create unique index IX_B4E180D9 on DDMDataProviderInstance (uuid_[$COLUMN_LENGTH:75$], groupId);
+
 alter table DDMStructure add versionUserId LONG;
 alter table DDMStructure add versionUserName VARCHAR(75) null;
 alter table DDMStructure add version VARCHAR(75) null;

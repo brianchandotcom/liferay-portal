@@ -5,6 +5,7 @@ Export-Package:\
 	com.liferay.osgi.service.tracker.collections.map,\
 	com.liferay.osgi.service.tracker.collections.list
 Private-Package:\
+	com.liferay.osgi.service.tracker.collections.common,\
 	com.liferay.osgi.service.tracker.collections.map.internal,\
 	com.liferay.osgi.service.tracker.collections.list.internal
 Include-Resource:\

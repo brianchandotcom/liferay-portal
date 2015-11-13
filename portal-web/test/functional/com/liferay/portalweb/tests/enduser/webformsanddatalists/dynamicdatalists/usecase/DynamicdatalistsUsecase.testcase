@@ -1167,10 +1167,6 @@
 		</execute>
 
 		<execute macro="DDLList#assertCannotDeleteRecordViaDDLDisplayPG" />
-
-		<execute function="Close" locator1="title=Data Definition Page Page Name - Liferay" />
-
-		<execute function="SelectWindow" locator1="title=Dynamic Data Lists - Control Panel - Liferay" />
 	</command>
 
 	<command name="AssertUserUpdateRejectedRecord" priority="4">

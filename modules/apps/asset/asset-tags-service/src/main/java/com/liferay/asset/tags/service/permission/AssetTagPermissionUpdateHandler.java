@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.categories.service.permission;
+package com.liferay.asset.tags.service.permission;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.security.permission.PermissionUpdateHandler;

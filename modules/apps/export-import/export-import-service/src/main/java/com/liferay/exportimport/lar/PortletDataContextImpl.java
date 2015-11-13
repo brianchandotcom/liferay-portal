@@ -16,6 +16,7 @@ package com.liferay.exportimport.lar;
 
 import com.liferay.exportimport.xstream.ConverterAdapter;
 import com.liferay.exportimport.xstream.configurator.XStreamConfigurator;
+import com.liferay.exportimport.xstream.configurator.XStreamConfiguratorRegistryUtil;
 import com.liferay.portal.NoSuchRoleException;
 import com.liferay.portal.NoSuchTeamException;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
@@ -38,6 +39,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -93,7 +95,6 @@ import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
 import com.liferay.portlet.exportimport.lar.UserIdStrategy;
 import com.liferay.portlet.exportimport.xstream.XStreamAlias;
-import com.liferay.portlet.exportimport.xstream.XStreamAliasRegistryUtil;
 import com.liferay.portlet.exportimport.xstream.XStreamConverter;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.ratings.model.RatingsEntry;
@@ -116,10 +117,6 @@ import java.util.Map;
 import java.util.Set;
 
 import jodd.bean.BeanUtil;
-
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
 
 /**
  * <p>
@@ -2530,16 +2527,19 @@ public class PortletDataContextImpl implements PortletDataContext {
 		_xStream = new XStream(
 			null, new XppDriver(),
 			new ClassLoaderReference(
-				XStreamAliasRegistryUtil.getAliasesClassLoader(
+				XStreamConfiguratorRegistryUtil.getConfiguratorsClassLoader(
 					XStream.class.getClassLoader())));
 
 		_xStream.omitField(HashMap.class, "cache_bitmask");
 
-		if (ListUtil.isEmpty(_xStreamConfigurators)) {
+		Set<XStreamConfigurator> xStreamConfigurators =
+			XStreamConfiguratorRegistryUtil.getXStreamConfigurators();
+
+		if (SetUtil.isEmpty(xStreamConfigurators)) {
 			return;
 		}
 
-		for (XStreamConfigurator xStreamConfigurator : _xStreamConfigurators) {
+		for (XStreamConfigurator xStreamConfigurator : xStreamConfigurators) {
 			List<XStreamAlias> xStreamAliases =
 				xStreamConfigurator.getXStreamAliases();
 
@@ -2553,10 +2553,12 @@ public class PortletDataContextImpl implements PortletDataContext {
 			List<XStreamConverter> xStreamConverters =
 				xStreamConfigurator.getXStreamConverters();
 
-			for (XStreamConverter xStreamConverter : xStreamConverters) {
-				_xStream.registerConverter(
-					new ConverterAdapter(xStreamConverter),
-					XStream.PRIORITY_VERY_HIGH);
+			if (ListUtil.isNotEmpty(xStreamConverters)) {
+				for (XStreamConverter xStreamConverter : xStreamConverters) {
+					_xStream.registerConverter(
+						new ConverterAdapter(xStreamConverter),
+						XStream.PRIORITY_VERY_HIGH);
+				}
 			}
 		}
 	}
@@ -2569,16 +2571,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 
 		return true;
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC
-	)
-	protected void setXStreamConfigurators(
-		List<XStreamConfigurator> xStreamConfigurators) {
-
-		_xStreamConfigurators = xStreamConfigurators;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -2627,7 +2619,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private transient UserIdStrategy _userIdStrategy;
 	private long _userPersonalSiteGroupId;
 	private transient XStream _xStream;
-	private transient List<XStreamConfigurator> _xStreamConfigurators;
 	private transient ZipReader _zipReader;
 	private transient ZipWriter _zipWriter;
 

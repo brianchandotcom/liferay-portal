@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.web.exportimport.xstream.configurator;
+package com.liferay.document.library.exportimport.xstream.configurator;
 
 import com.liferay.document.library.lar.xstream.FileEntryConverter;
 import com.liferay.document.library.lar.xstream.FileVersionConverter;
@@ -30,34 +30,43 @@ import com.liferay.portlet.exportimport.xstream.XStreamConverter;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Mate Thurzo
  */
 @Component(immediate = true, service = XStreamConfigurator.class)
-public class DLPortletXStreamConfigurator implements XStreamConfigurator {
+public class DocumentLibraryXStreamConfigurator implements XStreamConfigurator {
 
 	@Override
 	public List<XStreamAlias> getXStreamAliases() {
-		return ListUtil.toList(
-			new XStreamAlias[] {
-				new XStreamAlias(DLFileEntryImpl.class, "DLFileEntry"),
-				new XStreamAlias(DLFileEntryTypeImpl.class, "DLFileEntryType"),
-				new XStreamAlias(DLFileShortcutImpl.class, "DLFileShortcut"),
-				new XStreamAlias(DLFolderImpl.class, "DLFolder"),
-				new XStreamAlias(RepositoryImpl.class, "Repository"),
-				new XStreamAlias(RepositoryEntryImpl.class, "RepositoryEntry")
-			});
+		return ListUtil.toList(_xStreamAliases);
 	}
 
 	@Override
 	public List<XStreamConverter> getXStreamConverters() {
-		return ListUtil.toList(
-			new XStreamConverter[] {
-				new FileEntryConverter(), new FileVersionConverter(),
-				new FolderConverter()
-			});
+		return ListUtil.toList(_xStreamConverters);
 	}
+
+	@Activate
+	protected void activate() {
+		_xStreamAliases = new XStreamAlias[] {
+			new XStreamAlias(DLFileEntryImpl.class, "DLFileEntry"),
+			new XStreamAlias(DLFileEntryTypeImpl.class, "DLFileEntryType"),
+			new XStreamAlias(DLFileShortcutImpl.class, "DLFileShortcut"),
+			new XStreamAlias(DLFolderImpl.class, "DLFolder"),
+			new XStreamAlias(RepositoryImpl.class, "Repository"),
+			new XStreamAlias(RepositoryEntryImpl.class, "RepositoryEntry")
+		};
+
+		_xStreamConverters = new XStreamConverter[] {
+			new FileEntryConverter(), new FileVersionConverter(),
+			new FolderConverter()
+		};
+	}
+
+	private XStreamAlias[] _xStreamAliases;
+	private XStreamConverter[] _xStreamConverters;
 
 }

@@ -18,15 +18,11 @@ import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
-import com.liferay.dynamic.data.lists.model.impl.DDLRecordImpl;
-import com.liferay.dynamic.data.lists.model.impl.DDLRecordSetImpl;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.lists.service.permission.DDLPermission;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.dynamic.data.mapping.model.impl.DDMStructureImpl;
-import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateImpl;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -48,7 +44,6 @@ import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
-import com.liferay.portlet.exportimport.xstream.XStreamAliasRegistryUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,13 +81,6 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "data-definitions", true, false, null,
 				DDMStructure.class.getName(), DDLRecordSet.class.getName()));
-
-		XStreamAliasRegistryUtil.register(DDLRecordImpl.class, "DDLRecord");
-		XStreamAliasRegistryUtil.register(
-			DDLRecordSetImpl.class, "DDLRecordSet");
-		XStreamAliasRegistryUtil.register(
-			DDMStructureImpl.class, "DDMStructure");
-		XStreamAliasRegistryUtil.register(DDMTemplateImpl.class, "DDMTemplate");
 	}
 
 	@Override

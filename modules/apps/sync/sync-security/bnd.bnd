@@ -1,5 +1,6 @@
-Bundle-Name: Sync Security Shared
-Import-Package: *
+Bundle-Name: Liferay Sync Security
+Bundle-SymbolicName: com.liferay.sync.security
+Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\
 	@lib/commons-codec.jar,\
@@ -8,5 +9,3 @@ Include-Resource:\
 	@lib/httpcore.jar,\
 	@lib/joda-time.jar,\
 	@lib/jsontoken.jar
-
-Service-Component: *

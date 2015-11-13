@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.AccessControlContext;
 import com.liferay.portal.security.auth.AuthException;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.sync.security.service.access.policy.SyncTokenPolicy;
 
 import java.util.Date;
@@ -53,6 +53,7 @@ import net.oauth.jsontoken.discovery.VerifierProviders;
 import org.joda.time.Instant;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael Young
@@ -87,7 +88,7 @@ public class SyncAuthVerifier implements AuthVerifier {
 
 			long userId = userIdJsonPrimitive.getAsLong();
 
-			User user = UserLocalServiceUtil.fetchUser(userId);
+			User user = _userLocalService.fetchUser(userId);
 
 			Date passwordModifiedDate = user.getPasswordModifiedDate();
 
@@ -149,7 +150,7 @@ public class SyncAuthVerifier implements AuthVerifier {
 
 		Instant instant = new Instant();
 
-		jsonToken.setExpiration(instant.plus(_expiration));
+		jsonToken.setExpiration(instant.plus(_EXPIRATION));
 		jsonToken.setIssuedAt(instant);
 
 		JsonObject payloadJsonObject = jsonToken.getPayloadAsJsonObject();
@@ -211,7 +212,7 @@ public class SyncAuthVerifier implements AuthVerifier {
 			return _jsonTokenParser;
 		}
 
-		final Verifier verifier = new HmacSHA256Verifier(_secret.getBytes());
+		final Verifier verifier = new HmacSHA256Verifier(_SECRET.getBytes());
 
 		VerifierProvider verifierProvider = new VerifierProvider() {
 
@@ -246,7 +247,7 @@ public class SyncAuthVerifier implements AuthVerifier {
 		}
 
 		try {
-			_signer = new HmacSHA256Signer(null, null, _secret.getBytes());
+			_signer = new HmacSHA256Signer(null, null, _SECRET.getBytes());
 
 			return _signer;
 		}
@@ -255,11 +256,20 @@ public class SyncAuthVerifier implements AuthVerifier {
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	private static final long _EXPIRATION = 3600000;
+
+	private static final String _SECRET = PwdGenerator.getPassword();
+
 	private static final String _TOKEN_HEADER = "Sync-JWT";
 
-	private static long _expiration = 3600000;
 	private static JsonTokenParser _jsonTokenParser;
-	private static String _secret = PwdGenerator.getPassword();
 	private static Signer _signer;
+
+	private UserLocalService _userLocalService;
 
 }

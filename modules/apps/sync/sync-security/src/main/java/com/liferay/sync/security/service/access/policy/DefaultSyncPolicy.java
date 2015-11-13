@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.service.access.policy.model.SAPEntry;
 import com.liferay.service.access.policy.service.SAPEntryLocalService;
 
@@ -66,7 +66,7 @@ public class DefaultSyncPolicy {
 			return;
 		}
 
-		long userId = UserLocalServiceUtil.getDefaultUserId(companyId);
+		long userId = _userLocalService.getDefaultUserId(companyId);
 		String allowedServiceSignatures = _POLICY_SERVICES;
 		boolean defaultSAPEntry = true;
 		boolean enabled = true;
@@ -95,10 +95,16 @@ public class DefaultSyncPolicy {
 		_sapEntryLocalService = sapEntryLocalService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	private static final String _POLICY_SERVICES =
 		"com.liferay.sync.service.SyncDLObjectService#getSyncContext";
 
 	private CompanyLocalService _companyLocalService;
 	private SAPEntryLocalService _sapEntryLocalService;
+	private UserLocalService _userLocalService;
 
 }

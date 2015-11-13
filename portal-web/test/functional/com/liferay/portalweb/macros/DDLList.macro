@@ -96,6 +96,15 @@
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
+	<command name="editPermissions">
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlListName}" />
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute function="Click" locator1="DDL#LIST_TABLE_ELLIPSIS_1" />
+		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
+
+		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
+	</command>
+
 	<command name="editViaDDLDisplayPG">
 		<execute function="Click" locator1="DDL#TOOLBAR_EDIT_LIST" value1="Edit List" />
 

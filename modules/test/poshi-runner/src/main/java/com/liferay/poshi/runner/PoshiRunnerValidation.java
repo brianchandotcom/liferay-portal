@@ -165,6 +165,9 @@ public class PoshiRunnerValidation {
 			else if (elementName.equals("property")) {
 				validatePropertyElement(childElement, filePath);
 			}
+			else if (elementName.equals("return")) {
+				validateCommandReturnElement(childElement, filePath);
+			}
 			else if (elementName.equals("take-screenshot")) {
 				validateTakeScreenshotElement(childElement, filePath);
 			}
@@ -222,7 +225,16 @@ public class PoshiRunnerValidation {
 
 		List<Element> returnElements = element.elements("return");
 
-		if (returns != null) {
+		if (returns == null) {
+			if (returnElements.size() > 0) {
+				_exceptions.add(
+					new Exception(
+						element.attributeValue("name") +
+							" does not return values\n" + filePath + ":" +
+								element.attributeValue("line-number")));
+			}
+		}
+		else {
 			List<String> returnsList = Arrays.asList(StringUtil.split(returns));
 
 			for (Element returnElement : returnElements) {
@@ -238,6 +250,17 @@ public class PoshiRunnerValidation {
 				}
 			}
 		}
+	}
+
+	protected static void validateCommandReturnElement(
+		Element element, String filePath) {
+
+		List<String> attributeNames = Arrays.asList(
+			"line-number", "name", "value");
+
+		validateHasNoChildElements(element, filePath);
+		validatePossibleAttributeNames(element, attributeNames, filePath);
+		validateRequiredAttributeNames(element, attributeNames, filePath);
 	}
 
 	protected static void validateConditionElement(
@@ -547,7 +570,30 @@ public class PoshiRunnerValidation {
 								childElement.attributeValue("line-number")));
 				}
 			}
+
+			List<Element> varElements = element.elements("var");
+
+			for (Element varElement : varElements) {
+				validateVarElement(varElement, filePath);
+			}
+
+			List<Element> returnElements = element.elements("return");
+
+			for (Element returnElement : returnElements) {
+				validateExecuteReturnElement(returnElement, filePath);
+			}
 		}
+	}
+
+	protected static void validateExecuteReturnElement(
+		Element element, String filePath) {
+
+		List<String> attributeNames = Arrays.asList(
+			"from", "line-number", "name");
+
+		validateHasNoChildElements(element, filePath);
+		validatePossibleAttributeNames(element, attributeNames, filePath);
+		validateRequiredAttributeNames(element, attributeNames, filePath);
 	}
 
 	protected static void validateForElement(Element element, String filePath) {

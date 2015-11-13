@@ -78,40 +78,40 @@ public class DefaultDLViewFileVersionDisplayContext
 		String mimeType = _fileVersion.getMimeType();
 
 		if (_containsMimeType(_dlConfiguration.codeFileMimeTypes(), mimeType)) {
-			return "code";
+			return "file-icon-color-7";
 		}
 		else if (_containsMimeType(
 					_dlConfiguration.compressedFileMimeTypes(), mimeType)) {
 
-			return "compressed";
+			return "file-icon-color-1";
 		}
 		else if (_containsMimeType(
 					_dlConfiguration.multimediaFileMimeTypes(), mimeType)) {
 
-			return "multimedia";
+			return "file-icon-color-3";
 		}
 		else if (_containsMimeType(
 					_dlConfiguration.presentationFileMimeTypes(), mimeType)) {
 
-			return "presentation";
+			return "file-icon-color-4";
 		}
 		else if (_containsMimeType(
 					_dlConfiguration.textFileMimeTypes(), mimeType)) {
 
-			return "text";
+			return "file-icon-color-6";
 		}
 		else if (_containsMimeType(
 					_dlConfiguration.vectorialFileMimeTypes(), mimeType)) {
 
-			return "vectorial";
+			return "file-icon-color-5";
 		}
 		else if (_containsMimeType(
 					_dlConfiguration.spreadSheetFileMimeTypes(), mimeType)) {
 
-			return "spreadsheet";
+			return "file-icon-color-2";
 		}
 
-		return "unknown";
+		return "file-icon-color-0";
 	}
 
 	@Override

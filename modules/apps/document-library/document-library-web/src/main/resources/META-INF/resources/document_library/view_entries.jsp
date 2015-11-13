@@ -245,10 +245,16 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 						latestFileVersion = fileEntry.getLatestFileVersion();
 					}
 
+					DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = null;
+
 					if (fileShortcut == null) {
+						dlViewFileVersionDisplayContext = dlDisplayContextProvider.getDLViewFileVersionDisplayContext(request, response, fileEntry.getFileVersion());
+
 						row.setPrimaryKey(String.valueOf(fileEntry.getFileEntryId()));
 					}
 					else {
+						dlViewFileVersionDisplayContext = dlDisplayContextProvider.getDLViewFileVersionDisplayContext(request, response, fileShortcut);
+
 						row.setPrimaryKey(String.valueOf(fileShortcut.getFileShortcutId()));
 					}
 
@@ -323,10 +329,9 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 									url="<%= rowURL != null ? rowURL.toString() : null %>"
 								>
 									<liferay-frontend:vertical-card-sticker-bottom>
-										<liferay-ui:user-portrait
-											cssClass="sticker sticker-bottom"
-											userId="<%= fileEntry.getUserId() %>"
-										/>
+										<div class="sticker sticker-bottom <%= dlViewFileVersionDisplayContext.getCssClassFileMimeType() %>">
+											<%= latestFileVersion.getExtension() %>
+										</div>
 									</liferay-frontend:vertical-card-sticker-bottom>
 
 									<liferay-frontend:vertical-card-header>

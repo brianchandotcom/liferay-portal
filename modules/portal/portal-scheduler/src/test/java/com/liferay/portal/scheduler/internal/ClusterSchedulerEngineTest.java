@@ -2065,10 +2065,6 @@ public class ClusterSchedulerEngineTest {
 		}
 
 		@Override
-		public void notifyMasterTokenTransitionListeners() {
-		}
-
-		@Override
 		public void removeClusterMasterTokenTransitionListener(
 			ClusterMasterTokenTransitionListener
 				clusterMasterTokenAcquisitionListener) {

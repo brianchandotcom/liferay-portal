@@ -89,3 +89,28 @@ ddmDataProviderSearch.setOrderByType(orderByType);
 		</liferay-ui:search-container>
 	</aui:form>
 </div>
+
+<c:if test="<%= ddmDataProviderDisplayContext.isShowAddDataProviderButton() %>">
+	<liferay-frontend:add-menu>
+
+		<%
+		Set<String> dataProviderTypes = ddmDataProviderDisplayContext.getDataProviderTypes();
+
+		for (String dataProviderType : dataProviderTypes) {
+		%>
+
+			<portlet:renderURL var="addDataProviderURL">
+				<portlet:param name="mvcPath" value="/edit_data_provider.jsp" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+				<portlet:param name="dataProviderType" value="<%= dataProviderType %>" />
+			</portlet:renderURL>
+
+			<liferay-frontend:add-menu-item title="<%= LanguageUtil.get(request, dataProviderType) %>" url="<%= addDataProviderURL.toString() %>" />
+
+		<%
+		}
+		%>
+
+	</liferay-frontend:add-menu>
+</c:if>

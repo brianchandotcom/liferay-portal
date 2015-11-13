@@ -34,6 +34,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -159,8 +160,8 @@ public class DDMFormRendererHelper {
 	protected Value createDefaultValue(DDMFormField ddmFormField) {
 		LocalizedValue predefinedValue = ddmFormField.getPredefinedValue();
 
-		String defaultValueString = predefinedValue.getString(
-			_ddmFormRenderingContext.getLocale());
+		String defaultValueString = GetterUtil.getString(
+			predefinedValue.getString(_ddmFormRenderingContext.getLocale()));
 
 		if (ddmFormField.isLocalizable()) {
 			return createDefaultLocalizedValue(defaultValueString);

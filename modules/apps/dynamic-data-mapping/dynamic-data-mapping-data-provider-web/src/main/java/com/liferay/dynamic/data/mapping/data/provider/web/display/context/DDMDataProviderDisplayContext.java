@@ -14,16 +14,28 @@
 
 package com.liferay.dynamic.data.mapping.data.provider.web.display.context;
 
+import com.liferay.dynamic.data.mapping.constants.DDMActionKeys;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderSettings;
 import com.liferay.dynamic.data.mapping.data.provider.web.display.context.util.DDMDataProviderRequestHelper;
 import com.liferay.dynamic.data.mapping.data.provider.web.search.DDMDataProviderSearchTerms;
+import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
+import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService;
+import com.liferay.dynamic.data.mapping.service.permission.DDMPermission;
+import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalService;
+import com.liferay.portal.util.PortalUtil;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -37,15 +49,63 @@ public class DDMDataProviderDisplayContext {
 	public DDMDataProviderDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse,
 		DDMDataProviderInstanceService ddmDataProviderInstanceService,
-		UserLocalService userLocalService) {
+		DDMDataProviderInstanceLocalService ddmDataProviderInstanceLocalService,
+		DDMFormRenderer ddmFormRenderer, UserLocalService userLocalService,
+		Map<String, DDMDataProviderSettings> ddmDataProvidersMap) {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_ddmDataProviderInstanceService = ddmDataProviderInstanceService;
+		_ddmDataProviderInstanceLocalService =
+			ddmDataProviderInstanceLocalService;
+		_ddmFormRenderer = ddmFormRenderer;
+		_ddmDataProvidersMap = ddmDataProvidersMap;
 		_userLocalService = userLocalService;
 
 		_ddmDataProviderRequestHelper = new DDMDataProviderRequestHelper(
 			renderRequest);
+	}
+
+	public DDMDataProviderInstance getDataProviderInstance()
+		throws PortalException {
+
+		if (_ddmDataProviderInstance != null) {
+			return _ddmDataProviderInstance;
+		}
+
+		long dataProviderInstanceId = ParamUtil.getLong(
+			_renderRequest, "dataProviderInstanceId");
+
+		_ddmDataProviderInstance =
+			_ddmDataProviderInstanceLocalService.fetchDDMDataProviderInstance(
+				dataProviderInstanceId);
+
+		return _ddmDataProviderInstance;
+	}
+
+	public String getDataProviderInstanceDefinition() throws PortalException {
+		if (_ddmDataProviderInstance != null) {
+			return _ddmDataProviderInstance.getDefinition();
+		}
+
+		String dataProviderType = ParamUtil.getString(
+			_renderRequest, "dataProviderType");
+
+		DDMDataProviderSettings ddmDataProviderSettings =
+			_ddmDataProvidersMap.get(dataProviderType);
+
+		Class<?> clazz = ddmDataProviderSettings.getSettings();
+
+		DDMForm ddmForm = DDMFormFactory.create(clazz);
+
+		DDMFormRenderingContext ddmFormRenderingContext =
+			createDDMFormRenderingContext();
+
+		return _ddmFormRenderer.render(ddmForm, ddmFormRenderingContext);
+	}
+
+	public Set<String> getDataProviderTypes() {
+		return _ddmDataProvidersMap.keySet();
 	}
 
 	public PortletURL getPortletURL() {
@@ -113,9 +173,38 @@ public class DDMDataProviderDisplayContext {
 			_ddmDataProviderRequestHelper.getThemeDisplay());
 	}
 
+	public boolean isShowAddDataProviderButton() {
+		return DDMPermission.contains(
+			_ddmDataProviderRequestHelper.getPermissionChecker(),
+			_ddmDataProviderRequestHelper.getScopeGroupId(),
+			DDMActionKeys.ADD_DATA_PROVIDER_INSTANCE,
+			DDMDataProviderInstance.class.getName());
+	}
+
+	protected DDMFormRenderingContext createDDMFormRenderingContext() {
+		DDMFormRenderingContext ddmFormRenderingContext =
+			new DDMFormRenderingContext();
+
+		ddmFormRenderingContext.setHttpServletRequest(
+			PortalUtil.getHttpServletRequest(_renderRequest));
+		ddmFormRenderingContext.setHttpServletResponse(
+			PortalUtil.getHttpServletResponse(_renderResponse));
+		ddmFormRenderingContext.setLocale(
+			_ddmDataProviderRequestHelper.getLocale());
+		ddmFormRenderingContext.setPortletNamespace(
+			_renderResponse.getNamespace());
+
+		return ddmFormRenderingContext;
+	}
+
+	private DDMDataProviderInstance _ddmDataProviderInstance;
+	private final DDMDataProviderInstanceLocalService
+		_ddmDataProviderInstanceLocalService;
 	private final DDMDataProviderInstanceService
 		_ddmDataProviderInstanceService;
 	private final DDMDataProviderRequestHelper _ddmDataProviderRequestHelper;
+	private final Map<String, DDMDataProviderSettings> _ddmDataProvidersMap;
+	private final DDMFormRenderer _ddmFormRenderer;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final UserLocalService _userLocalService;

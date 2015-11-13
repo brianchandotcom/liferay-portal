@@ -16,20 +16,25 @@ package com.liferay.portlet.asset.model.adapter.impl;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.model.adapter.StagedAssetLink;
-import com.liferay.portlet.asset.model.impl.AssetLinkImpl;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
 
+import java.io.Serializable;
+
 import java.util.Date;
+import java.util.Map;
 
 /**
  * @author Mate Thurzo
  */
-public class StagedAssetLinkImpl
-	extends AssetLinkImpl implements StagedAssetLink {
+public class StagedAssetLinkImpl implements StagedAssetLink {
 
 	public StagedAssetLinkImpl() {
 	}
@@ -41,6 +46,26 @@ public class StagedAssetLinkImpl
 		populateEntry2Attributes();
 
 		populateUuid();
+	}
+
+	@Override
+	public Object clone() {
+		return new StagedAssetLinkImpl(_assetLink);
+	}
+
+	@Override
+	public int compareTo(AssetLink assetLink) {
+		return _assetLink.compareTo(assetLink);
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _assetLink.getCompanyId();
+	}
+
+	@Override
+	public Date getCreateDate() {
+		return _assetLink.getCreateDate();
 	}
 
 	@Override
@@ -88,13 +113,78 @@ public class StagedAssetLinkImpl
 	}
 
 	@Override
+	public long getEntryId1() {
+		return _assetLink.getEntryId1();
+	}
+
+	@Override
+	public long getEntryId2() {
+		return _assetLink.getEntryId2();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _assetLink.getExpandoBridge();
+	}
+
+	@Override
+	public long getLinkId() {
+		return _assetLink.getLinkId();
+	}
+
+	@Override
+	public Map<String, Object> getModelAttributes() {
+		return _assetLink.getModelAttributes();
+	}
+
+	@Override
+	public Class<?> getModelClass() {
+		return StagedAssetLink.class;
+	}
+
+	@Override
+	public String getModelClassName() {
+		return StagedAssetLink.class.getName();
+	}
+
+	@Override
 	public Date getModifiedDate() {
 		return _assetLink.getCreateDate();
 	}
 
 	@Override
+	public long getPrimaryKey() {
+		return _assetLink.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _assetLink.getPrimaryKeyObj();
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(StagedAssetLink.class);
+	}
+
+	@Override
+	public int getType() {
+		return _assetLink.getType();
+	}
+
+	@Override
+	public long getUserId() {
+		return _assetLink.getUserId();
+	}
+
+	@Override
+	public String getUserName() {
+		return _assetLink.getUserName();
+	}
+
+	@Override
+	public String getUserUuid() {
+		return _assetLink.getUserUuid();
 	}
 
 	@Override
@@ -108,8 +198,98 @@ public class StagedAssetLinkImpl
 		return _uuid;
 	}
 
+	@Override
+	public int getWeight() {
+		return _assetLink.getWeight();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return false;
+	}
+
+	@Override
+	public boolean isEntityCacheEnabled() {
+		return false;
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return false;
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return false;
+	}
+
+	@Override
+	public boolean isNew() {
+		return false;
+	}
+
+	@Override
+	public void persist() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void resetOriginalValues() {
+		throw new UnsupportedOperationException();
+	}
+
 	public void setAssetLink(AssetLink assetLink) {
 		_assetLink = assetLink;
+	}
+
+	@Override
+	public void setCachedModel(boolean cachedModel) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setCreateDate(Date createDate) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setEntryId1(long entryId1) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setEntryId2(long entryId2) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setLinkId(long linkId) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setModelAttributes(Map<String, Object> attributes) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -118,8 +298,68 @@ public class StagedAssetLinkImpl
 	}
 
 	@Override
+	public void setNew(boolean n) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setType(int type) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setUserId(long userId) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setUserName(String userName) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setUserUuid(String userUuid) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public void setUuid(String uuid) {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setWeight(int weight) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public CacheModel<AssetLink> toCacheModel() {
+		return null;
+	}
+
+	@Override
+	public AssetLink toEscapedModel() {
+		return null;
+	}
+
+	@Override
+	public AssetLink toUnescapedModel() {
+		return null;
+	}
+
+	@Override
+	public String toXmlString() {
+		return null;
 	}
 
 	protected void populateEntry1Attributes() {

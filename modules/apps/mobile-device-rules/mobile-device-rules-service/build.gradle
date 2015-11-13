@@ -1,6 +1,6 @@
 buildService {
-	apiDirName = "../mobile-device-rules-api/src/main/java"
-	testDirName = "../mobile-device-rules-test/src/testIntegration/java"
+	apiDir = "../mobile-device-rules-api/src/main/java"
+	testDir = "../mobile-device-rules-test/src/testIntegration/java"
 }
 
 dependencies {

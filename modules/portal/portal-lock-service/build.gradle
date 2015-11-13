@@ -1,7 +1,7 @@
 buildService {
-	apiDirName = "../portal-lock-api/src/main/java"
+	apiDir = "../portal-lock-api/src/main/java"
 	autoNamespaceTables = false
-	testDirName = "../portal-lock-test/src/testIntegration/java"
+	testDir = "../portal-lock-test/src/testIntegration/java"
 }
 
 dependencies {

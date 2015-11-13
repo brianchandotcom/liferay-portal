@@ -1,7 +1,7 @@
 buildService {
-	apiDirName = "../calendar-api/src/main/java"
+	apiDir = "../calendar-api/src/main/java"
 	autoNamespaceTables = false
-	testDirName = "../calendar-test/src/testIntegration/java"
+	testDir = "../calendar-test/src/testIntegration/java"
 }
 
 dependencies {

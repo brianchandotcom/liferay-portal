@@ -19,6 +19,7 @@ import java.util.Comparator;
 import org.osgi.framework.ServiceReference;
 
 /**
+ * @author Adolfo Pérez
  * @author Carlos Sierra Andrés
  */
 public class ServiceReferenceServiceTupleComparator<S>

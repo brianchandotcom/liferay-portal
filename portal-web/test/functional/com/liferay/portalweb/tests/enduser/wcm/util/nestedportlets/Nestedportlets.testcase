@@ -3,7 +3,9 @@
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />
+	</set-up>
 
+	<command name="ViewWCDNestedPortlets" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Nested Portlets Page" />
 		</execute>
@@ -13,13 +15,21 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Nested Portlets" />
+			<var name="portletName" value="Web Content Display" />
 		</execute>
-	</set-up>
 
-	<command name="ViewWCDNestedPortlets" priority="4">
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Nested Portlets Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Nested Portlets" />
 		</execute>
 
 		<execute macro="NestedPortlets#viewConfigurationDefaultLayoutTemplate" />
@@ -28,17 +38,8 @@
 			<var name="pageName" value="Nested Portlets Page" />
 		</execute>
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Nested Portlets Page" />
-		</execute>
-
 		<execute macro="NestedPortlets#dragAndDropPortletToPortletColumnPG">
-			<var name="columnNumberFrom" value="1" />
-			<var name="columnNumberTo" value="1" />
+			<var name="columnNumberFrom" value="2" />
 			<var name="portletColumnNumberTo" value="1" />
 			<var name="portletName" value="Web Content Display" />
 		</execute>
@@ -47,28 +48,8 @@
 			<var name="pageName" value="Nested Portlets Page" />
 		</execute>
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Nested Portlets Page" />
-		</execute>
-
-		<execute macro="NestedPortlets#dragAndDropPortletToPortletColumnPG">
-			<var name="columnNumberFrom" value="1" />
-			<var name="columnNumberTo" value="2" />
-			<var name="portletColumnNumberTo" value="2" />
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
 		<execute macro="NestedPortlets#viewPG">
 			<var name="portletColumnNumberTo" value="1" />
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="NestedPortlets#viewPG">
-			<var name="portletColumnNumberTo" value="2" />
 			<var name="portletName" value="Web Content Display" />
 		</execute>
 	</command>

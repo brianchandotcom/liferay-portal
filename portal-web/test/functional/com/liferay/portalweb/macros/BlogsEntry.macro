@@ -585,14 +585,14 @@
 	</command>
 
 	<command name="editContentPG">
-		<var name="key_entryTitle" value="${entryTitle}" />
+		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertTextEquals" locator1="PGBlogs#ENTRY_TITLE" value1="${entryTitle}" />
-		<execute function="AssertTextEquals" locator1="PGBlogs#ENTRY_CONTENT" value1="${entryContent}" />
-		<execute function="AssertClick" locator1="PGBlogs#ENTRY_EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<execute function="Type" locator1="PGBlogsEdit#TITLE_FIELD" value1="${entryTitle}" />
-		<execute function="Type" locator1="PGBlogsEdit#CONTENT_FIELD" value1="${entryContentEdit}" />
+		<execute macro="BlogsEntry#editContent">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryContentEdit" value="${entryContentEdit}" />
+		</execute>
 
 		<if>
 			<equals arg1="${saveAsDraft}" arg2="true" />

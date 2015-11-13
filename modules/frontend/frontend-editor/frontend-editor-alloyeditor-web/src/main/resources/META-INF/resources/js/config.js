@@ -17,6 +17,7 @@
 						'liferay-alloy-editor-source': {
 							path: 'alloyeditor_source.js',
 							requires: [
+								'aui-debounce',
 								'liferay-fullscreen-source-editor',
 								'liferay-source-editor'
 							]

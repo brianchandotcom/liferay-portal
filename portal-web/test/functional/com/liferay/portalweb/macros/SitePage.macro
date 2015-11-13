@@ -756,6 +756,18 @@
 		<execute function="AssertChecked" locator1="SitePagesEditPage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_CHECKBOX_GENERIC" />
 	</command>
 
+	<command name="viewPageTemplateTypeNotPresentCP">
+		<var name="key_pageType" value="${pageTemplateName}" />
+
+		<execute function="AssertTextNotPresent" locator1="SitePagesEditPage#PAGE_TYPE_LABEL" value1="${pageTemplateName}" />
+	</command>
+
+	<command name="viewPageTemplateTypePresentCP">
+		<var name="key_pageType" value="${pageTemplateName}" />
+
+		<execute function="AssertTextEquals" locator1="SitePagesEditPage#PAGE_TYPE_LABEL" value1="${pageTemplateName}" />
+	</command>
+
 	<command name="viewPageTypeLayoutCP">
 		<var name="key_pageType" value="${pageType}" />
 

@@ -1325,22 +1325,20 @@
 
 	<command name="viewCustomADTSocialPG" >
 		<execute function="AssertClick" locator1="Wiki#NAVIGATION_FRONTPAGE" value1="FrontPage" />
-		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="FrontPage" />
+		<execute function="AssertTextEquals" locator1="Portlet#H1_HEADER" value1="FrontPage" />
 		<execute function="AssertTextEquals" locator1="Wiki#BODY" value1="${wikiPageContent}" />
 
 		<if>
 			<equals arg1="${pageStaging}" arg2="true" />
 			<then>
-				<execute function="AssertElementNotPresent" locator1="Wiki#LINK_ADD_CHILD_PAGE" />
-				<execute function="AssertElementNotPresent" locator1="Icon#EDIT" />
-				<execute function="AssertElementNotPresent" locator1="PGWiki#COMMENTS_BE_THE_FIRST_LINK" />
-				<execute function="AssertElementNotPresent" locator1="Comments#SUBSCRIBE_TO_COMMENTS_LINK" />
-			</then>
-			<else>
 				<execute function="AssertElementPresent" locator1="Wiki#LINK_ADD_CHILD_PAGE" />
-				<execute function="AssertElementPresent" locator1="Icon#EDIT" />
 				<execute function="AssertElementPresent" locator1="PGWiki#COMMENTS_BE_THE_FIRST_LINK" />
 				<execute function="AssertElementPresent" locator1="Comments#SUBSCRIBE_TO_COMMENTS_LINK" />
+			</then>
+			<else>
+				<execute function="AssertElementNotPresent" locator1="Wiki#LINK_ADD_CHILD_PAGE" />
+				<execute function="AssertElementNotPresent" locator1="PGWiki#COMMENTS_BE_THE_FIRST_LINK" />
+				<execute function="AssertElementNotPresent" locator1="Comments#SUBSCRIBE_TO_COMMENTS_LINK" />
 			</else>
 		</if>
 

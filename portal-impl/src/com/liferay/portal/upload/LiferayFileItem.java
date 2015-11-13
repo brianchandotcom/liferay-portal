@@ -101,6 +101,36 @@ public class LiferayFileItem extends DiskFileItem implements FileItem {
 		return _fileName;
 	}
 
+	public long getItemSize() {
+		long size = getSize();
+
+		String contentType = getContentType();
+
+		if (contentType != null) {
+			byte[] bytes = contentType.getBytes();
+
+			size += bytes.length;
+		}
+
+		String fieldName = getFieldName();
+
+		if (fieldName != null) {
+			byte[] bytes = fieldName.getBytes();
+
+			size += bytes.length;
+		}
+
+		String fileName = getFileName();
+
+		if (fileName != null) {
+			byte[] bytes = fileName.getBytes();
+
+			size += bytes.length;
+		}
+
+		return size;
+	}
+
 	@Override
 	public int getSizeThreshold() {
 		return _sizeThreshold;

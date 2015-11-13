@@ -184,6 +184,9 @@ public class PoshiRunnerExecutor {
 			else if (childElementName.equals("for")) {
 				runForElement(childElement);
 			}
+			else if (childElementName.equals("return")) {
+				runReturnElement(childElement);
+			}
 			else if (childElementName.equals("task")) {
 				runTaskElement(childElement);
 			}
@@ -567,6 +570,26 @@ public class PoshiRunnerExecutor {
 		PoshiRunnerStackTraceUtil.popStackTrace();
 
 		XMLLoggerHandler.updateStatus(executeElement, "pass");
+	}
+
+	public static void runReturnElement(Element returnElement)
+		throws Exception {
+
+		PoshiRunnerStackTraceUtil.setCurrentElement(returnElement);
+
+		if (returnElement.attributeValue("value") != null) {
+			String returnValue = returnElement.attributeValue("value");
+
+			returnValue = PoshiRunnerVariablesUtil.replaceCommandVars(
+				returnValue);
+
+			String returnVariable = returnElement.attributeValue("name"); 
+
+			PoshiRunnerVariablesUtil.putIntoCommandMap(
+				returnVariable, returnValue);
+		}
+
+		XMLLoggerHandler.updateStatus(returnElement, "pass");
 	}
 
 	public static void runSeleniumElement(Element executeElement)

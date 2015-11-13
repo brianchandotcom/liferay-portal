@@ -178,17 +178,6 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 			   MessageBodyException | MessageSubjectException |
 			   SanitizerException e) {
 
-			UploadException uploadException =
-				(UploadException)actionRequest.getAttribute(
-					WebKeys.UPLOAD_EXCEPTION);
-
-			if (uploadException != null) {
-				String uploadExceptionRedirect = ParamUtil.getString(
-					actionRequest, "uploadExceptionRedirect");
-
-				actionResponse.sendRedirect(uploadExceptionRedirect);
-			}
-
 			if (e instanceof AntivirusScannerException) {
 				SessionErrors.add(actionRequest, e.getClass(), e);
 			}

@@ -3288,15 +3288,12 @@
 
 		<execute macro="Staging#markAsReadyForPublication" />
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Wiki" />
-			<var name="pageStaging" value="true" />
-			<var name="siteName" value="Community Site Name" />
-			<var name="siteURL" value="true" />
-		</execute>
+		<execute macro="ProductMenuHelper#openProductMenu" />
 
-		<execute macro="Portlet#deletePG">
-			<var name="portletName" value="Wiki" />
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="Wiki" />
+			<var name="sitePageName" value="Community Site Name" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">

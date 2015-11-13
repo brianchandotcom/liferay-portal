@@ -16,9 +16,12 @@ package com.liferay.portal.store.cmis.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.configuration.admin.ConfigurationAdmin;
+
 /**
  * @author Manuel de la Peña
  */
+@ConfigurationAdmin(category = "platform")
 @Meta.OCD(
 	id = "com.liferay.portal.store.cmis.configuration.CMISStoreConfiguration",
 	localization = "content/Language", name = "%cmis.store.configuration.name"

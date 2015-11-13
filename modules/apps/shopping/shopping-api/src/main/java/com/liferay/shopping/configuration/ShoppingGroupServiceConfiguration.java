@@ -16,11 +16,13 @@ package com.liferay.shopping.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.configuration.admin.ConfigurationAdmin;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 
 /**
  * @author Peter Fellwock
  */
+@ConfigurationAdmin(category = "other")
 @Meta.OCD(
 	id = "com.liferay.shopping.configuration.ShoppingGroupServiceConfiguration"
 )

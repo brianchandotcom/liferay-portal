@@ -24,9 +24,13 @@ import com.liferay.portal.kernel.util.StringPool;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -50,6 +54,9 @@ public class ConfigurationHelper {
 		_extendedMetaTypeService = extendedMetaTypeService;
 
 		_configurationModels = _getConfigurationModels(languageId);
+
+		_categorizedConfigurationModels = _getCategorizedConfigurationModels(
+			_configurationModels);
 	}
 
 	public Configuration getConfiguration(String pid) {
@@ -70,12 +77,38 @@ public class ConfigurationHelper {
 		return null;
 	}
 
+	public List<String> getConfigurationCategories() {
+		TreeSet orderedCategories = new TreeSet(
+			new ConfigurationCategoryComparator());
+
+		orderedCategories.addAll(_categorizedConfigurationModels.keySet());
+
+		return new ArrayList<>(orderedCategories);
+	}
+
 	public ConfigurationModel getConfigurationModel(String pid) {
 		return _configurationModels.get(pid);
 	}
 
 	public List<ConfigurationModel> getConfigurationModels() {
-		return new ArrayList<>(_configurationModels.values());
+		TreeSet orderedConfigurationModels = new TreeSet(
+			new ConfigurationModelComparator());
+
+		orderedConfigurationModels.addAll(_configurationModels.values());
+
+		return new ArrayList<>(orderedConfigurationModels);
+	}
+
+	public List<ConfigurationModel> getConfigurationModels(
+		String configurationCategory) {
+
+		TreeSet orderedConfigurationModels = new TreeSet(
+			new ConfigurationModelComparator());
+
+		orderedConfigurationModels.addAll(
+			_categorizedConfigurationModels.get(configurationCategory));
+
+		return new ArrayList<>(orderedConfigurationModels);
 	}
 
 	public List<ConfigurationModel> getFactoryInstances(
@@ -152,6 +185,34 @@ public class ConfigurationHelper {
 		}
 	}
 
+	private Map<String, Set<ConfigurationModel>>
+		_getCategorizedConfigurationModels(
+			Map<String, ConfigurationModel> configurationModels) {
+
+		Map<String, Set<ConfigurationModel>> categorizedConfigurationModels =
+			new HashMap<>();
+
+		for (ConfigurationModel configurationModel :
+				configurationModels.values()) {
+
+			String configurationCategory = configurationModel.getCategory();
+
+			Set<ConfigurationModel> curConfigurationModels =
+				categorizedConfigurationModels.get(configurationCategory);
+
+			if (curConfigurationModels == null) {
+				curConfigurationModels = new HashSet<>();
+
+				categorizedConfigurationModels.put(
+					configurationCategory, curConfigurationModels);
+			}
+
+			curConfigurationModels.add(configurationModel);
+		}
+
+		return categorizedConfigurationModels;
+	}
+
 	private ConfigurationModel _getConfigurationModel(
 		Bundle bundle, String pid, boolean factory, String locale) {
 
@@ -204,8 +265,65 @@ public class ConfigurationHelper {
 	}
 
 	private final BundleContext _bundleContext;
+	private final Map<String, Set<ConfigurationModel>>
+		_categorizedConfigurationModels;
 	private final ConfigurationAdmin _configurationAdmin;
 	private final Map<String, ConfigurationModel> _configurationModels;
 	private final ExtendedMetaTypeService _extendedMetaTypeService;
+
+	private class ConfigurationCategoryComparator
+		implements Comparator<String> {
+
+		@Override
+		public int compare(
+			String configurationCategory1, String configurationCategory2) {
+
+			if (configurationCategory1.equals("other")) {
+				return 1;
+			}
+			else if (configurationCategory1.equals(
+						"web-experience-management")) {
+
+				return -1;
+			}
+			else if (configurationCategory1.equals("collaboration")) {
+				if (configurationCategory2.equals(
+						"web-experience-management")) {
+
+					return 1;
+				}
+				else {
+					return -1;
+				}
+			}
+			else if (configurationCategory1.equals("productivity")) {
+				if (configurationCategory2.equals(
+						"web-experience-management") ||
+					configurationCategory2.equals("collaboration")) {
+
+					return 1;
+				}
+				else {
+					return -1;
+				}
+			}
+
+			return configurationCategory1.compareTo(configurationCategory2);
+		}
+
+	}
+
+	private class ConfigurationModelComparator
+		implements Comparator<ConfigurationModel> {
+
+		@Override
+		public int compare(ConfigurationModel cm1, ConfigurationModel cm2) {
+			String name1 = cm1.getName();
+			String name2 = cm2.getName();
+
+			return name1.compareTo(name2);
+		}
+
+	}
 
 }

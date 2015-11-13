@@ -16,9 +16,12 @@ package com.liferay.xsl.content.web.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.configuration.admin.ConfigurationAdmin;
+
 /**
  * @author Raymond Augé
  */
+@ConfigurationAdmin(category = "collaboration")
 @Meta.OCD(
 	id = "com.liferay.xsl.content.web.configuration.XSLContentConfiguration",
 	localization = "content/Language"

@@ -3,6 +3,7 @@ dependencies {
 	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	compile project(":apps:configuration-admin:configuration-admin-api")
 
 	provided group: "org.jgroups", name: "jgroups", version: "3.6.4.Final"
 

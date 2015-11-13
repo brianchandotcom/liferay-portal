@@ -15,10 +15,12 @@
 package com.liferay.social.activity.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
+import com.liferay.configuration.admin.ConfigurationAdmin;
 
 /**
  * @author Roberto Díaz
  */
+@ConfigurationAdmin(category = "collaboration")
 @Meta.OCD(
 	id = "com.liferay.social.activity.configuration.SocialActivityGroupServiceConfiguration"
 )

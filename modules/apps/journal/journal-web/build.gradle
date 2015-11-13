@@ -1,6 +1,7 @@
 dependencies {
 	compile group: "rome", name: "rome", version: "1.0"
 	compile project(":apps:application-list:application-list-api")
+	compile project(":apps:configuration-admin:configuration-admin-api")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-taglib")
 	compile project(":apps:item-selector:item-selector-api")

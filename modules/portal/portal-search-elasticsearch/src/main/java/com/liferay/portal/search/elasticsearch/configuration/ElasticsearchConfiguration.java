@@ -16,11 +16,13 @@ package com.liferay.portal.search.elasticsearch.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.configuration.admin.ConfigurationAdmin;
 import com.liferay.portal.search.elasticsearch.connection.OperationMode;
 
 /**
  * @author Michael C. Han
  */
+@ConfigurationAdmin(category = "platform")
 @Meta.OCD(
 	id = "com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration"
 )

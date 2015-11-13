@@ -15,10 +15,12 @@
 package com.liferay.currency.converter.web.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
+import com.liferay.configuration.admin.ConfigurationAdmin;
 
 /**
  * @author Peter Fellwock
  */
+@ConfigurationAdmin(category = "other")
 @Meta.OCD(
 	id = "com.liferay.currency.converter.web.configuration.CurrencyConverterConfiguration"
 )

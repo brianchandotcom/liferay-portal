@@ -17,6 +17,7 @@ package com.liferay.osgi.service.tracker.collections.common;
 import org.osgi.framework.ServiceReference;
 
 /**
+* @author Adolfo Pérez
 * @author Carlos Sierra Andrés
 */
 public class ServiceReferenceServiceTuple<S, T>

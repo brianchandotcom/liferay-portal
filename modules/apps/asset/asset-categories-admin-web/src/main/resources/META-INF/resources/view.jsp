@@ -49,7 +49,7 @@ int vocabulariesCount = 0;
 if (Validator.isNotNull(keywords)) {
 	Sort sort = new Sort("createDate", Sort.LONG_TYPE, orderByAsc);
 
-	AssetVocabularyDisplay assetVocabularyDisplay = AssetVocabularyServiceUtil.searchVocabulariesDisplay(scopeGroupId, keywords, vocabulariesSearchContainer.getStart(), vocabulariesSearchContainer.getEnd(), sort, true);
+	AssetVocabularyDisplay assetVocabularyDisplay = AssetVocabularyServiceUtil.searchVocabulariesDisplay(scopeGroupId, keywords, true, vocabulariesSearchContainer.getStart(), vocabulariesSearchContainer.getEnd(), sort);
 
 	vocabulariesCount = assetVocabularyDisplay.getTotal();
 

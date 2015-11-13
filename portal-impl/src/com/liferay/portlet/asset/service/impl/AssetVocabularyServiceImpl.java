@@ -402,18 +402,18 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 
 	@Override
 	public AssetVocabularyDisplay searchVocabulariesDisplay(
-			long groupId, String title, int start, int end,
-			boolean addDefaultVocabulary)
+			long groupId, String title, boolean addDefaultVocabulary, int start,
+			int end)
 		throws PortalException {
 
 		return searchVocabulariesDisplay(
-			groupId, title, start, end, null, addDefaultVocabulary);
+			groupId, title, addDefaultVocabulary, start, end, null);
 	}
 
 	@Override
 	public AssetVocabularyDisplay searchVocabulariesDisplay(
-			long groupId, String title, int start, int end, Sort sort,
-			boolean addDefaultVocabulary)
+			long groupId, String title, boolean addDefaultVocabulary, int start,
+			int end, Sort sort)
 		throws PortalException {
 
 		User user = getUser();

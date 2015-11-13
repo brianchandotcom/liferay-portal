@@ -1134,9 +1134,13 @@
 			<var name="ddlListRecordName" value="Text" />
 		</execute>
 
-		<execute function="Close" locator1="title=Data Definition Page Page Name - Liferay" />
+		<execute macro="Navigator#closeSpecificWindow">
+			<var name="windowTitle" value="Data Definition Page Page Name - Liferay" />
+		</execute>
 
-		<execute function="SelectWindow" locator1="title=Users and Organizations - Liferay" />
+		<execute macro="Navigator#selectSpecificWindow">
+			<var name="windowTitle" value="Users and Organizations - Liferay" />
+		</execute>
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />

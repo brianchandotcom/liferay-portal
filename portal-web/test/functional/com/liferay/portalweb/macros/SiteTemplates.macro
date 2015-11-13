@@ -29,14 +29,13 @@
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${siteTemplateName}" />
 
+		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="This is a site template description" />
+
 		<if>
 			<equals arg1="${siteTemplateActive}" arg2="No" />
 			<then>
-				<execute function="Uncheck" locator1="Checkbox#ACTIVE" />
+				<execute function="Click" locator1="ToggleSwitch#ACTIVE" />
 			</then>
-			<else>
-				<execute function="Check" locator1="Checkbox#ACTIVE" />
-			</else>
 		</if>
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
@@ -135,12 +134,12 @@
 		<if>
 			<equals arg1="${allowSiteAdminsToModifyPages}" arg2="true" />
 			<then>
-				<execute function="Check" locator1="Checkbox#ALLOW_SITE_ADMIN_MODIFY_PAGES" />
+				<execute function="Click" locator1="ToggleSwitch#ALLOW_SITE_ADMIN_MODIFY_PAGES" />
 			</then>
 			<elseif>
 				<equals arg1="${allowSiteAdminsToModifyPages}" arg2="false" />
 				<then>
-					<execute function="Uncheck" locator1="Checkbox#ALLOW_SITE_ADMIN_MODIFY_PAGES" />
+					<execute function="Click" locator1="ToggleSwitch#ALLOW_SITE_ADMIN_MODIFY_PAGES" />
 				</then>
 			</elseif>
 		</if>
@@ -168,11 +167,8 @@
 				<if>
 					<equals arg1="${siteTemplateActiveEdit}" arg2="No" />
 					<then>
-						<execute function="Uncheck" locator1="Checkbox#ACTIVE" />
+						<execute function="Click" locator1="ToggleSwitch#ACTIVE" />
 					</then>
-					<else>
-						<execute function="Check" locator1="Checkbox#ACTIVE" />
-					</else>
 				</if>
 			</then>
 		</if>
@@ -183,7 +179,7 @@
 	<command name="gotoSettingsCP">
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
-		<execute function="AssertTextEquals" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}" />
 		<execute function="Click" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_ACTIONS" />
 		<execute function="AssertClick" locator1="MenuItem#MANAGE" value1="Manage" />
 
@@ -201,9 +197,8 @@
 	<command name="gotoViewPages">
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
-		<execute function="AssertTextEquals" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}" />
-		<execute function="Click" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="MenuItem#VIEW_PAGES" value1="View Pages (Opens New Window)" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}" />
+
 		<execute function="SelectWindow" locator1="home - ${siteTemplateName} - Liferay" />
 	</command>
 
@@ -227,7 +222,7 @@
 			<var name="portletName" value="Site Templates" />
 		</execute>
 
-		<var name="key_siteTemplateName" value="${siteTemplateName}" />
+		<var name="key_siteTemplateName" value="Site Template Name" />
 
 		<while>
 			<condition function="IsElementPresent" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_ACTIONS" />
@@ -244,7 +239,7 @@
 		<for list="${siteTemplateNameList}" param="siteTemplateName" >
 			<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
-			<execute function="AssertTextEquals" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}" />
+			<execute function="AssertTextEquals#assertPartialText" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}" />
 		</for>
 
 		<execute function="AssertElementNotPresent" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME_3" />
@@ -254,7 +249,7 @@
 		<for list="${siteTemplateNameList}" param="siteTemplateNameTranslation" >
 			<var name="key_siteTemplateName" value="${siteTemplateNameTranslation}" />
 
-			<execute function="AssertTextEquals" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateNameTranslation}" />
+			<execute function="AssertTextEquals#assertPartialText" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateNameTranslation}" />
 		</for>
 
 		<for list="${siteTemplateDescriptionList}" param="DescriptionTranslation" >
@@ -267,7 +262,7 @@
 	<command name="viewEditCP">
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
-		<execute function="AssertTextEquals" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName} Edit" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName} Edit" />
 	</command>
 
 	<command name="viewNoInfoMessage">
@@ -280,8 +275,10 @@
 		<var name="key_portletName" value="${portletName}" />
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
-		<execute function="AssertTextEquals" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}" />
+
 		<execute function="Click" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_ACTIONS" />
+
 		<execute function="AssertClick" locator1="MenuItem#MANAGE" value1="Manage" />
 
 		<if>
@@ -316,7 +313,7 @@
 	<command name="viewTemplateStatusCP">
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
-		<execute function="AssertTextEquals" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}" />
 		<execute function="AssertTextEquals" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_ACTIVE" value1="${siteTemplateActiveEdit}" />
 	</command>
 </definition>

@@ -1037,6 +1037,15 @@
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea1@liferay.com" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
 		<execute macro="User#unassignRegularRoleCP">
 			<var name="roleName" value="Power User" />
 			<var name="userScreenName" value="usersn1" />
@@ -1099,10 +1108,9 @@
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute function="Click" locator1="DDL#LIST_TABLE_ELLIPSIS_1" />
-		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
-
-		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
+		<execute macro="DDLList#editPermissions">
+			<var name="ddlListName" value="DDL List Name" />
+		</execute>
 
 		<execute macro="Role#definePermissionPG">
 			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_DELETE_CHECKBOX" />
@@ -1126,31 +1134,41 @@
 			<var name="ddlListRecordName" value="Text" />
 		</execute>
 
-		<execute function="SelectWindow" locator1="title=Users and Organizations - Control Panel - Liferay" />
+		<execute macro="Navigator#closeSpecificWindow">
+			<var name="windowTitle" value="Data Definition Page Page Name - Liferay" />
+		</execute>
+
+		<execute macro="Navigator#selectSpecificWindow">
+			<var name="windowTitle" value="Users and Organizations - Liferay" />
+		</execute>
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute function="Click" locator1="DDL#LIST_TABLE_ELLIPSIS_1" />
-		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
-
-		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
+		<execute macro="DDLList#editPermissions">
+			<var name="ddlListName" value="DDL List Name" />
+		</execute>
 
 		<execute macro="Role#removePermissionPG">
 			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_DELETE_CHECKBOX" />
 			<var name="roleName" value="Guest" />
 		</execute>
 
-		<execute function="SelectWindow" locator1="title=Data Definition Page Name - Liferay" />
-
-		<execute macro="DDLList#attemptDeleteRecordViaDDLDisplayPG">
-			<var name="ddlListRecordName" value="Text" />
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
-		<execute function="Close" locator1="title=Data Definition Page Page Name - Liferay" />
+		<execute macro="User#impersonateCP">
+			<var name="userScreenName" value="usersn1" />
+		</execute>
 
-		<execute function="SelectWindow" locator1="title=Dynamic Data Lists - Control Panel - Liferay" />
+		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="false" />
+			<var name="pageName" value="Data Definition Page Name" />
+		</execute>
+
+		<execute macro="DDLList#assertCannotDeleteRecordViaDDLDisplayPG" />
 	</command>
 
 	<command name="AssertUserUpdateRejectedRecord" priority="4">

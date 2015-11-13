@@ -7,6 +7,10 @@
 		<execute function="AssertClick" locator1="Home#PAGE" value1="${pageName}" />
 	</command>
 
+	<command name="closeSpecificWindow">
+		<execute function="Close" locator1="title=${windowTitle}" />
+	</command>
+
 	<command name="closeWindow">
 		<execute function="Close#closeWindow" />
 	</command>
@@ -72,5 +76,9 @@
 
 	<command name="openURL">
 		<execute function="Open" locator1="/web/guest/home" />
+	</command>
+
+	<command name="selectSpecificWindow">
+		<execute function="SelectWindow" locator1="title=${windowTitle}" />
 	</command>
 </definition>

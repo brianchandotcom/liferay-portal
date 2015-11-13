@@ -1136,7 +1136,7 @@
 
 		<execute function="Close" locator1="title=Data Definition Page Page Name - Liferay" />
 
-		<execute function="SelectWindow" locator1="title=Users and Organizations - Control Panel - Liferay" />
+		<execute function="SelectWindow" locator1="title=Users and Organizations - Liferay" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />

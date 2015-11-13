@@ -572,15 +572,9 @@ public class ClusterSchedulerEngine
 
 		ClusterableContextThreadLocal.putThreadLocalContext(
 			PLUGIN_READY, pluginReady);
-
-		boolean schedulerClusterInvoking = true;
-
-		if (!SchedulerClusterInvokingThreadLocal.isEnabled()) {
-			schedulerClusterInvoking = false;
-		}
-
 		ClusterableContextThreadLocal.putThreadLocalContext(
-			SCHEDULER_CLUSTER_INVOKING, schedulerClusterInvoking);
+			SCHEDULER_CLUSTER_INVOKING,
+			SchedulerClusterInvokingThreadLocal.isEnabled());
 	}
 
 	protected void setClusterMasterExecutor(

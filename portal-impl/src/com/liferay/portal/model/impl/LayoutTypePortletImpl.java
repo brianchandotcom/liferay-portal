@@ -844,7 +844,7 @@ public class LayoutTypePortletImpl
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			layout.getCompanyId(), portletId);
 
-		long scopeGroupId = PortalUtil.getScopeGroupId(getLayout(), portletId);
+		long scopeGroupId = PortalUtil.getScopeGroupId(layout, portletId);
 
 		if (PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
 				scopeGroupId, PortletKeys.PREFS_OWNER_TYPE_LAYOUT,

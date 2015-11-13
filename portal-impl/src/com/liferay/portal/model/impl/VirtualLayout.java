@@ -23,9 +23,11 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
+import com.liferay.portal.model.LayoutType;
 import com.liferay.portal.model.LayoutWrapper;
 import com.liferay.portal.model.VirtualLayoutConstants;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.LayoutTypePortletFactoryUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Locale;
@@ -47,6 +49,15 @@ public class VirtualLayout extends LayoutWrapper {
 	@Override
 	public Object clone() {
 		return new VirtualLayout((Layout)_sourceLayout.clone(), _targetGroup);
+	}
+
+	@Override
+	public LayoutType getLayoutType() {
+		if (_layoutType == null) {
+			_layoutType = LayoutTypePortletFactoryUtil.create(this);
+		}
+
+		return _layoutType;
 	}
 
 	@Override
@@ -189,6 +200,7 @@ public class VirtualLayout extends LayoutWrapper {
 
 	private static final Log _log = LogFactoryUtil.getLog(VirtualLayout.class);
 
+	private LayoutType _layoutType;
 	private final Layout _sourceLayout;
 	private final Group _targetGroup;
 

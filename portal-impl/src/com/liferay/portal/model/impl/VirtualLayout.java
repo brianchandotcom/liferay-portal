@@ -25,11 +25,13 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutType;
 import com.liferay.portal.model.LayoutWrapper;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.VirtualLayoutConstants;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.LayoutTypePortletFactoryUtil;
 import com.liferay.portal.util.PropsValues;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -52,12 +54,8 @@ public class VirtualLayout extends LayoutWrapper {
 	}
 
 	@Override
-	public LayoutType getLayoutType() {
-		if (_layoutType == null) {
-			_layoutType = LayoutTypePortletFactoryUtil.create(this);
-		}
-
-		return _layoutType;
+	public List<Portlet> getEmbeddedPortlets() {
+		return super.getEmbeddedPortlets(getGroupId());
 	}
 
 	@Override
@@ -111,6 +109,15 @@ public class VirtualLayout extends LayoutWrapper {
 		}
 
 		return _targetGroup.getPublicLayoutSet();
+	}
+
+	@Override
+	public LayoutType getLayoutType() {
+		if (_layoutType == null) {
+			_layoutType = LayoutTypePortletFactoryUtil.create(this);
+		}
+
+		return _layoutType;
 	}
 
 	@Override

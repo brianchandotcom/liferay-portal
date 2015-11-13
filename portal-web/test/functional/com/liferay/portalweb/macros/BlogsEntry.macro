@@ -697,6 +697,30 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="CPBlogsEntry#ENTRY_CONTENT" value1="${entryContent}" />
 	</command>
 
+	<command name="editTitlePG">
+		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+
+		<execute macro="BlogsEntry#editTitle">
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryTitleEdit" value="${entryTitleEdit}" />
+		</execute>
+
+		<if>
+			<equals arg1="${saveAsDraft}" arg2="true" />
+			<then>
+				<execute function="AssertClick" locator1="PGBlogsEdit#SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
+				<execute function="AssertTextEquals" locator1="PGBlogsEdit#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+			</then>
+			<else>
+				<execute function="AssertClick" locator1="PGBlogsEdit#PUBLISH_BUTTON" value1="Publish" />
+
+				<execute function="AssertTextEquals" locator1="PGBlogs#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+			</else>
+		</if>
+	</command>
+
 	<command name="entryAddPermissions">
 		<if>
 			<isset var="viewableBy" />

@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderSettings;
 import com.liferay.dynamic.data.mapping.data.provider.web.constants.DDMDataProviderPortletKeys;
 import com.liferay.dynamic.data.mapping.data.provider.web.display.context.DDMDataProviderDisplayContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -77,7 +78,8 @@ public class DDMDataProviderPortlet extends MVCPortlet {
 			new DDMDataProviderDisplayContext(
 				renderRequest, renderResponse, _ddmDataProviderInstanceService,
 				_ddmDataProviderInstanceLocalService, _ddmFormRenderer,
-				_userLocalService, _ddmDataProvidersMap);
+				_ddmFormValuesJSONDeserializer, _userLocalService,
+				_ddmDataProvidersMap);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, ddmDataProviderDisplayContext);
@@ -122,6 +124,13 @@ public class DDMDataProviderPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
+	protected void setDDMFormValuesJSONDeserializer(
+		DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer) {
+
+		_ddmFormValuesJSONDeserializer = ddmFormValuesJSONDeserializer;
+	}
+
+	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}
@@ -141,6 +150,7 @@ public class DDMDataProviderPortlet extends MVCPortlet {
 	private final Map<String, DDMDataProviderSettings> _ddmDataProvidersMap =
 		new ConcurrentHashMap<>();
 	private DDMFormRenderer _ddmFormRenderer;
+	private DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
 	private UserLocalService _userLocalService;
 
 }

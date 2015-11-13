@@ -138,7 +138,7 @@ AUI.add(
 
 						RadioField.superclass._renderErrorMessage.apply(instance, arguments);
 
-						container.all('.validation-message').appendTo(container.one('.form-group'));
+						container.all('.help-block').appendTo(container.one('.form-group'));
 					},
 
 					_showFeedback: function() {

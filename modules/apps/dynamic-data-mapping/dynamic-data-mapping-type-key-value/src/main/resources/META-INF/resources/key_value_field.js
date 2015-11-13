@@ -209,7 +209,7 @@ AUI.add(
 
 						var editorNode = container.one('.key-value-editor');
 
-						editorNode.insert(container.one('.validation-message'), 'after');
+						editorNode.insert(container.one('.help-block'), 'after');
 					},
 
 					_uiSetEditing: function(editing) {

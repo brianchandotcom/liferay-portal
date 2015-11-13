@@ -79,7 +79,7 @@
 		}
 	}
 
-	.validation-message {
+	.help-block {
 		font-size: 14px;
 		position: absolute;
 	}
@@ -108,7 +108,6 @@
 			padding-left: 0;
 
 			.help-block {
-				position: absolute;
 				top: -15px;
 			}
 
@@ -229,7 +228,7 @@
 			}
 		}
 
-		.liferay-ddm-form-field-key-value .validation-message {
+		.liferay-ddm-form-field-key-value .help-block {
 			height: 22px;
 			position: relative;
 		}

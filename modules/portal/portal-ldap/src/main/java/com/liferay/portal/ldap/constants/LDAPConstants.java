@@ -68,6 +68,9 @@ public class LDAPConstants {
 
 	public static final String GROUP_SEARCH_FILTER = "groupSearchFilter";
 
+	public static final String GROUP_SEARCH_FILTER_ENABLED =
+		"groupSearchFilterEnabled";
+
 	public static final String GROUPS_DN = "groupsDN";
 
 	public static final String IMPORT_CREATE_ROLE_PER_GROUP =
@@ -77,9 +80,6 @@ public class LDAPConstants {
 
 	public static final String IMPORT_GROUP_CACHE_ENABLED =
 		"importGroupCacheEnabled";
-
-	public static final String GROUP_SEARCH_FILTER_ENABLED =
-		"groupSearchFilterEnabled";
 
 	public static final String IMPORT_INTERVAL = "importInterval";
 

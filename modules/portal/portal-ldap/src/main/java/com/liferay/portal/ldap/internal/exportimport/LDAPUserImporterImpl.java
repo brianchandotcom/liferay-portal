@@ -136,8 +136,12 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		LDAPImportConfiguration ldapImportConfiguration =
 			_ldapImportConfigurationProvider.getConfiguration(companyId);
 
+		LDAPServerConfiguration ldapServerConfiguration =
+			_ldapServerConfigurationProvider.getConfiguration(
+				companyId, ldapServerId);
+
 		String[] userIgnoreAttributes =
-			ldapImportConfiguration.userIgnoreAttributes();
+			ldapServerConfiguration.userIgnoreAttributes();
 
 		Set<String> ldapUserIgnoreAttributes = new HashSet<>(
 			Arrays.asList(userIgnoreAttributes));
@@ -423,8 +427,12 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		LDAPImportConfiguration ldapImportConfiguration =
 			_ldapImportConfigurationProvider.getConfiguration(companyId);
 
+		LDAPServerConfiguration ldapServerConfiguration =
+			_ldapServerConfigurationProvider.getConfiguration(
+				companyId, ldapServerId);
+
 		String[] userIgnoreAttributes =
-			ldapImportConfiguration.userIgnoreAttributes();
+			ldapServerConfiguration.userIgnoreAttributes();
 
 		Set<String> ldapUserIgnoreAttributes = new HashSet<>(
 			Arrays.asList(userIgnoreAttributes));
@@ -1011,8 +1019,8 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 				attributes, "modifyTimestamp");
 
 			user = updateUser(
-				companyId, ldapUser, user, userMappings, contactMappings,
-				password, modifyTimestamp, isNew);
+				companyId, ldapServerId, ldapUser, user, userMappings,
+				contactMappings, password, modifyTimestamp, isNew);
 
 			updateExpandoAttributes(
 				user, ldapUser, userExpandoMappings, contactExpandoMappings,
@@ -1353,7 +1361,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 	}
 
 	protected User updateUser(
-			long companyId, LDAPUser ldapUser, User user,
+			long companyId, long ldapServerId, LDAPUser ldapUser, User user,
 			Properties userMappings, Properties contactMappings,
 			String password, String modifyTimestamp, boolean isNew)
 		throws Exception {
@@ -1413,14 +1421,18 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			}
 		}
 
-		LDAPImportConfiguration ldapImportConfiguration =
-			_ldapImportConfigurationProvider.getConfiguration(companyId);
+		LDAPServerConfiguration ldapServerConfiguration =
+			_ldapServerConfigurationProvider.getConfiguration(
+				companyId, ldapServerId);
 
 		String[] userIgnoreAttributes =
-			ldapImportConfiguration.userIgnoreAttributes();
+			ldapServerConfiguration.userIgnoreAttributes();
 
 		Set<String> ldapUserIgnoreAttributes = new HashSet<>(
 			Arrays.asList(userIgnoreAttributes));
+
+		LDAPImportConfiguration ldapImportConfiguration =
+			_ldapImportConfigurationProvider.getConfiguration(companyId);
 
 		if (!ldapImportConfiguration.importUserPasswordEnabled()) {
 			password = ldapImportConfiguration.importUserPasswordDefault();

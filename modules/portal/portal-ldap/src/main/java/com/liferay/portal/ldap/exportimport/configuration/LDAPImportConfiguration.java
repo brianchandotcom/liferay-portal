@@ -68,7 +68,4 @@ public interface LDAPImportConfiguration extends CompanyScopedConfiguration {
 	)
 	public String importUserSyncStrategy();
 
-	@Meta.AD(deflt = "", required = false)
-	public String[] userIgnoreAttributes();
-
 }

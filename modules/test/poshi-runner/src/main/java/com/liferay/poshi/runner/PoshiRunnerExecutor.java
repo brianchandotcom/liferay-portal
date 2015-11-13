@@ -24,12 +24,15 @@ import com.liferay.poshi.runner.util.GetterUtil;
 import com.liferay.poshi.runner.util.PropsUtil;
 import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.RegexUtil;
+import com.liferay.poshi.runner.util.StringUtil;
 import com.liferay.poshi.runner.util.Validator;
 
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -575,7 +578,23 @@ public class PoshiRunnerExecutor {
 			classCommandName);
 
 		try {
-			runMacroCommandElement(classCommandName, commandElement);
+			Map<String, String> returnValues = runMacroCommandElement(classCommandName, commandElement);
+
+			List<Element> returnElements = executeElement.elements("return");
+
+			for (Element returnElement : returnElements) {
+				String returnVariable = returnElement.attributeValue("from");
+
+				String returnValue = returnValues.get(returnVariable);
+
+				if (returnValue != null) {
+					String returnVariableCommandName = 
+						returnElement.attributeValue("name");
+
+					PoshiRunnerVariablesUtil.putIntoCommandMap(
+						returnVariableCommandName, returnValue);
+				}
+			}
 		}
 		catch (Exception e) {
 			SummaryLoggerHandler.failSummary(executeElement, e.getMessage());

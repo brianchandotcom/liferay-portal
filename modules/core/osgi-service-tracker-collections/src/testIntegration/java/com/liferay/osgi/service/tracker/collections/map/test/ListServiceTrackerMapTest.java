@@ -14,6 +14,7 @@
 
 package com.liferay.osgi.service.tracker.collections.map.test;
 
+import com.liferay.osgi.service.tracker.collections.common.DefaultServiceTrackerCustomizer;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
@@ -21,7 +22,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
 import com.liferay.osgi.service.tracker.collections.map.internal.BundleContextWrapper;
-import com.liferay.osgi.service.tracker.collections.map.internal.DefaultServiceTrackerCustomizer;
 import com.liferay.osgi.service.tracker.collections.map.internal.TrackedOne;
 
 import java.util.ArrayList;

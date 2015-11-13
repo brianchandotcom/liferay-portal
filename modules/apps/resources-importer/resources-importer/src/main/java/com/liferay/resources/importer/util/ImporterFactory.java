@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalService;
 
 import java.net.URL;
 import java.net.URLConnection;
@@ -102,7 +102,7 @@ public class ImporterFactory {
 		else if ((templatePaths != null) && !templatePaths.isEmpty()) {
 			importer = getResourceImporter();
 
-			Group group = GroupLocalServiceUtil.getCompanyGroup(companyId);
+			Group group = _groupLocalService.getCompanyGroup(companyId);
 
 			importer.setGroupId(group.getGroupId());
 			importer.setJournalConverter(_journalConverter);
@@ -176,11 +176,17 @@ public class ImporterFactory {
 		return new ResourceImporter();
 	}
 
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
 	@Reference
 	protected void setJournalConverter(JournalConverter journalConverter) {
 		_journalConverter = journalConverter;
 	}
 
+	private GroupLocalService _groupLocalService;
 	private JournalConverter _journalConverter;
 
 }

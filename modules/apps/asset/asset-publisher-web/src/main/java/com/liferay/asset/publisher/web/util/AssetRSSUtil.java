@@ -198,7 +198,9 @@ public class AssetRSSUtil {
 		searchContainer.setDelta(assetPublisherDisplayContext.getRSSDelta());
 
 		List<AssetEntryResult> assetEntryResults =
-			assetPublisherDisplayContext.getAssetEntryResults(searchContainer);
+			AssetPublisherUtil.getAssetEntryResults(
+					assetPublisherDisplayContext,
+				searchContainer, portletPreferences);
 
 		for (AssetEntryResult assetEntryResult : assetEntryResults) {
 			assetEntries.addAll(assetEntryResult.getAssetEntries());

@@ -93,6 +93,7 @@ import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.io.IOException;
 import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -103,6 +104,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.TimeZone;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.portlet.PortletException;
@@ -378,6 +380,38 @@ public class AssetPublisherUtil {
 		}
 
 		return assetCategoryIds;
+	}
+
+	public static BaseModelSearchResult<AssetEntry> getAssetEntries(
+			AssetEntryQuery assetEntryQuery, Layout layout,
+			PortletPreferences portletPreferences, String portletName,
+			Locale locale, TimeZone timeZone, long companyId, long scopeGroupId,
+			long userId, Map<String, Serializable> attributes, int start,
+			int end)
+		throws Exception {
+
+		List<AssetEntry> results = new ArrayList<>();
+		int total = 0;
+
+		if (isSearchWithIndex(portletName, assetEntryQuery)) {
+			long[] assetCategoryIds = getAssetCategoryIds(portletPreferences);
+			String[] assetTagNames = getAssetTagNames(portletPreferences);
+			String keywords = assetEntryQuery.getKeywords();
+
+			return AssetUtil.searchAssetEntries(
+					assetCategoryIds, assetTagNames, keywords, locale,
+					assetEntryQuery, companyId, scopeGroupId, layout, timeZone,
+					userId, start, end, attributes);
+		}
+
+		total = _assetEntryService.getEntriesCount(assetEntryQuery);
+
+		assetEntryQuery.setStart(start);
+		assetEntryQuery.setEnd(end);
+
+		results = _assetEntryService.getEntries(assetEntryQuery);
+
+		return new BaseModelSearchResult<>(results, total);
 	}
 
 	public static List<AssetEntry> getAssetEntries(
@@ -708,6 +742,69 @@ public class AssetPublisherUtil {
 		getAssetEntryQueryProcessors() {
 
 		return _instance._assetEntryQueryProcessors;
+	}
+
+	public static List<AssetEntryResult> getAssetEntryResults(
+			AssetPublisherDisplayContext assetPublisherDisplayContext,
+			SearchContainer searchContainer,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		AssetEntryQuery assetEntryQuery =
+			assetPublisherDisplayContext.getAssetEntryQuery();
+
+		String portletName = assetPublisherDisplayContext.getPortletName();
+
+		long[] classNameIds = assetPublisherDisplayContext.getClassNameIds();
+
+		Locale locale = assetPublisherDisplayContext.getLocale();
+
+		long companyId = assetPublisherDisplayContext.getCompanyId();
+		long scopeGroupId = assetPublisherDisplayContext.getScopeGroupId();
+		Layout layout = assetPublisherDisplayContext.getLayout();
+		TimeZone timeZone = assetPublisherDisplayContext.getTimeZone();
+		long userId = assetPublisherDisplayContext.getUserId();
+		Map<String, Serializable> attributes =
+			assetPublisherDisplayContext.getAttributes();
+
+		return getAssetEntryResults(
+			searchContainer, assetEntryQuery, layout, portletPreferences,
+			portletName, locale, timeZone, companyId, scopeGroupId, userId,
+			classNameIds, attributes);
+	}
+
+	public static List<AssetEntryResult> getAssetEntryResults(
+			SearchContainer searchContainer, AssetEntryQuery assetEntryQuery,
+			Layout layout, PortletPreferences portletPreferences,
+			String portletName, Locale locale, TimeZone timeZone,
+			long companyId, long scopeGroupId, long userId, long[] classNameIds,
+			Map<String, Serializable> attributes)
+		throws Exception {
+
+		if (!showAssetEntryResults(portletName, assetEntryQuery)) {
+			return Collections.emptyList();
+		}
+
+		long assetVocabularyId = GetterUtil.getLong(
+			portletPreferences.getValue("assetVocabularyId", null));
+
+		if (assetVocabularyId > 0) {
+			return getAssetEntryResultsByVocabulary(
+				searchContainer, assetEntryQuery, layout, portletPreferences,
+				portletName, locale, timeZone, companyId, scopeGroupId, userId,
+				classNameIds, assetVocabularyId, attributes);
+		}
+		else if (assetVocabularyId <= -1) {
+			return getAssetEntryResultsByClassName(
+				searchContainer, assetEntryQuery, layout, portletPreferences,
+				portletName, locale, timeZone, companyId, scopeGroupId, userId,
+				classNameIds, attributes);
+		}
+
+		return getAssetEntryResultsByDefault(
+			searchContainer, assetEntryQuery, layout, portletPreferences,
+			portletName, locale, timeZone, companyId, scopeGroupId, userId,
+			classNameIds, attributes);
 	}
 
 	public static String[] getAssetTagNames(
@@ -1321,6 +1418,185 @@ public class AssetPublisherUtil {
 			getSubscriptionClassPK(plid, portletId));
 	}
 
+	protected static List<AssetEntryResult> getAssetEntryResultsByClassName(
+			SearchContainer searchContainer, AssetEntryQuery assetEntryQuery,
+			Layout layout, PortletPreferences portletPreferences,
+			String portletName, Locale locale, TimeZone timeZone,
+			long companyId, long scopeGroupId, long userId, long[] classNameIds,
+			Map<String, Serializable> attributes)
+		throws Exception {
+
+		List<AssetEntryResult> assetEntryResults = new ArrayList<>();
+
+		int end = searchContainer.getEnd();
+		int start = searchContainer.getStart();
+
+		int total = 0;
+
+		for (long classNameId : classNameIds) {
+			assetEntryQuery.setClassNameIds(new long[] {classNameId});
+
+			BaseModelSearchResult<AssetEntry> baseModelSearchResult =
+				getAssetEntries(
+					assetEntryQuery, layout, portletPreferences, portletName,
+					locale, timeZone, companyId, scopeGroupId, userId,
+					attributes, start, end);
+
+			int groupTotal = baseModelSearchResult.getLength();
+
+			total += groupTotal;
+
+			List<AssetEntry> assetEntries =
+				baseModelSearchResult.getBaseModels();
+
+			if (!assetEntries.isEmpty() && (start < groupTotal)) {
+				AssetRendererFactory<?> groupAssetRendererFactory =
+					AssetRendererFactoryRegistryUtil.
+						getAssetRendererFactoryByClassNameId(classNameId);
+
+				String title = ResourceActionsUtil.getModelResource(
+					locale, groupAssetRendererFactory.getClassName());
+
+				assetEntryResults.add(
+					new AssetEntryResult(title, assetEntries));
+			}
+
+			if (!portletName.equals(AssetPublisherPortletKeys.RECENT_CONTENT)) {
+				if (groupTotal > 0) {
+					if ((end > 0) && (end > groupTotal)) {
+						end -= groupTotal;
+					}
+					else {
+						end = 0;
+					}
+
+					if ((start > 0) && (start > groupTotal)) {
+						start -= groupTotal;
+					}
+					else {
+						start = 0;
+					}
+				}
+
+				assetEntryQuery.setEnd(QueryUtil.ALL_POS);
+				assetEntryQuery.setStart(QueryUtil.ALL_POS);
+			}
+		}
+
+		searchContainer.setTotal(total);
+
+		return assetEntryResults;
+	}
+
+	protected static List<AssetEntryResult> getAssetEntryResultsByDefault(
+			SearchContainer searchContainer, AssetEntryQuery assetEntryQuery,
+			Layout layout, PortletPreferences portletPreferences,
+			String portletName, Locale locale, TimeZone timeZone,
+			long companyId, long scopeGroupId, long userId, long[] classNameIds,
+			Map<String, Serializable> attributes)
+		throws Exception {
+
+		List<AssetEntryResult> assetEntryResults = new ArrayList<>();
+
+		int end = searchContainer.getEnd();
+		int start = searchContainer.getStart();
+
+		assetEntryQuery.setClassNameIds(classNameIds);
+
+		BaseModelSearchResult<AssetEntry> baseModelSearchResult =
+			getAssetEntries(
+				assetEntryQuery, layout, portletPreferences, portletName,
+				locale, timeZone, companyId, scopeGroupId, userId, attributes,
+				start, end);
+
+		int total = baseModelSearchResult.getLength();
+
+		searchContainer.setTotal(total);
+
+		List<AssetEntry> assetEntries = baseModelSearchResult.getBaseModels();
+
+		if (!assetEntries.isEmpty() && (start < total)) {
+			assetEntryResults.add(new AssetEntryResult(assetEntries));
+		}
+
+		return assetEntryResults;
+	}
+
+	protected static List<AssetEntryResult> getAssetEntryResultsByVocabulary(
+			SearchContainer searchContainer, AssetEntryQuery assetEntryQuery,
+			Layout layout, PortletPreferences portletPreferences,
+			String portletName, Locale locale, TimeZone timeZone,
+			long companyId, long scopeGroupId, long userId, long[] classNameIds,
+			long assetVocabularyId, Map<String, Serializable> attributes)
+		throws Exception {
+
+		List<AssetEntryResult> assetEntryResults = new ArrayList<>();
+
+		List<AssetCategory> assetCategories =
+			_assetCategoryLocalService.getVocabularyRootCategories(
+				assetVocabularyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		assetEntryQuery.setClassNameIds(classNameIds);
+
+		int end = searchContainer.getEnd();
+		int start = searchContainer.getStart();
+
+		int total = 0;
+
+		for (AssetCategory assetCategory : assetCategories) {
+			long[] oldAllCategoryIds = assetEntryQuery.getAllCategoryIds();
+
+			long[] newAllAssetCategoryIds = ArrayUtil.append(
+				oldAllCategoryIds, assetCategory.getCategoryId());
+
+			assetEntryQuery.setAllCategoryIds(newAllAssetCategoryIds);
+
+			BaseModelSearchResult<AssetEntry> baseModelSearchResult =
+				getAssetEntries(
+					assetEntryQuery, layout, portletPreferences, portletName,
+					locale, timeZone, companyId, scopeGroupId, userId,
+					attributes, start, end);
+
+			int groupTotal = baseModelSearchResult.getLength();
+
+			total += groupTotal;
+
+			List<AssetEntry> assetEntries =
+				baseModelSearchResult.getBaseModels();
+
+			if (!assetEntries.isEmpty() && (start < groupTotal)) {
+				String title = assetCategory.getTitle(locale);
+
+				assetEntryResults.add(
+					new AssetEntryResult(title, assetEntries));
+			}
+
+			if (groupTotal > 0) {
+				if ((end > 0) && (end > groupTotal)) {
+					end -= groupTotal;
+				}
+				else {
+					end = 0;
+				}
+
+				if ((start > 0) && (start > groupTotal)) {
+					start -= groupTotal;
+				}
+				else {
+					start = 0;
+				}
+			}
+
+			assetEntryQuery.setAllCategoryIds(oldAllCategoryIds);
+			assetEntryQuery.setEnd(QueryUtil.ALL_POS);
+			assetEntryQuery.setStart(QueryUtil.ALL_POS);
+		}
+
+		searchContainer.setTotal(total);
+
+		return assetEntryResults;
+	}
+
 	protected static long[] getSiteGroupIds(long[] groupIds) {
 		Set<Long> siteGroupIds = new HashSet<>();
 
@@ -1329,6 +1605,35 @@ public class AssetPublisherUtil {
 		}
 
 		return ArrayUtil.toLongArray(siteGroupIds);
+	}
+
+	protected static boolean isSearchWithIndex(
+			String portletName, AssetEntryQuery assetEntryQuery)
+		throws Exception {
+
+		if (AssetPublisherWebConfigurationValues.SEARCH_WITH_INDEX &&
+			(assetEntryQuery.getLinkedAssetEntryId() == 0) &&
+			!portletName.equals(
+				AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS) &&
+			!portletName.equals(AssetPublisherPortletKeys.MOST_VIEWED_ASSETS)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	protected static boolean showAssetEntryResults(
+			String portletName, AssetEntryQuery assetEntryQuery)
+		throws Exception {
+
+		if (!portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS) ||
+			(assetEntryQuery.getLinkedAssetEntryId() > 0)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Activate
@@ -1604,279 +1909,4 @@ public class AssetPublisherUtil {
 	private final List<AssetEntryQueryProcessor>
 		_assetEntryQueryProcessors = new CopyOnWriteArrayList<>();
 
-	public static BaseModelSearchResult<AssetEntry> getAssetEntries(
-			AssetEntryQuery assetEntryQuery,
-			String portletName, int start, int end)
-		throws Exception {
-
-		List<AssetEntry> results = new ArrayList<>();
-		int total = 0;
-
-		if (isSearchWithIndex(portletName, assetEntryQuery)) {
-			return AssetUtil.searchAssetEntries(request, assetEntryQuery, start, end);
-		}
-
-		total = _assetEntryService.getEntriesCount(assetEntryQuery);
-
-		assetEntryQuery.setStart(start);
-		assetEntryQuery.setEnd(end);
-
-		results = _assetEntryService.getEntries(assetEntryQuery);
-
-		return new BaseModelSearchResult<AssetEntry>(results, total);
-	}
-
-	public static BaseModelSearchResult<AssetEntry> getAssetEntryQueryResult(
-			PortletPreferences portletPreferences,
-			AssetEntryQuery assetEntryQuery, long[] classNameIds, int start,
-			int end, String portletName,
-			AssetCategory assetCategory, boolean searchWithIndex)
-		throws Exception {
-
-		assetEntryQuery.setClassNameIds(classNameIds);
-
-		long[] oldAllCategoryIds = assetEntryQuery.getAllCategoryIds();
-
-		long[] newAllAssetCategoryIds = ArrayUtil.append(
-			oldAllCategoryIds, assetCategory.getCategoryId());
-
-		assetEntryQuery.setAllCategoryIds(newAllAssetCategoryIds);
-
-		BaseModelSearchResult<AssetEntry> baseModelSearchResult =
-			getAssetEntries(
-				assetEntryQuery, portletName, start, end);
-
-		assetEntryQuery.setAllCategoryIds(oldAllCategoryIds);
-
-		return baseModelSearchResult;
-	}
-
-	protected static boolean isSearchWithIndex(
-			String portletName, AssetEntryQuery assetEntryQuery)
-			throws Exception {
-
-		if (AssetPublisherWebConfigurationValues.SEARCH_WITH_INDEX &&
-			(assetEntryQuery.getLinkedAssetEntryId() == 0) &&
-			!portletName.equals(
-				AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS) &&
-			!portletName.equals(AssetPublisherPortletKeys.MOST_VIEWED_ASSETS)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	protected boolean showAssetEntryResults(String portletName, AssetEntryQuery assetEntryQuery) throws Exception {
-
-		if (!portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS) ||
-			(assetEntryQuery.getLinkedAssetEntryId() > 0)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public List<AssetEntryResult> getAssetEntryResults(
-			SearchContainer searchContainer, Locale locale,
-			PortletPreferences portletPreferences,
-			AssetPublisherDisplayContext assetPublisherDisplayContext)
-		throws Exception {
-
-		AssetEntryQuery assetEntryQuery = assetPublisherDisplayContext.getAssetEntryQuery();
-
-		String portletName = portletPreferences.getValue(
-		"portletName", AssetPublisherPortletKeys.RELATED_ASSETS);
-
-		if (!showAssetEntryResults(portletName, assetEntryQuery)) {
-			return Collections.emptyList();
-		}
-
-		long[] classNameIds = assetPublisherDisplayContext.getClassNameIds();
-
-		long assetVocabularyId = GetterUtil.getLong(
-			portletPreferences.getValue("assetVocabularyId", null));
-
-		if (assetVocabularyId > 0) {
-			return getAssetEntryResultsByVocabulary(
-				assetVocabularyId, searchContainer, locale, portletName, classNameIds, assetEntryQuery);
-		}
-		else if (assetVocabularyId != -1) {
-			return getAssetEntryResultsByClassName(searchContainer, locale, assetEntryQuery, classNameIds, portletName);
-		}
-
-		return getAssetEntryResultsByDefault(searchContainer, assetEntryQuery, classNameIds, portletName);
-	}
-
-	protected List<AssetEntryResult> getAssetEntryResultsByClassName(
-			SearchContainer searchContainer, Locale locale,
-			AssetEntryQuery assetEntryQuery, long[] classNameIds, String portletName)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		AssetEntryQuery assetEntryQuery = getAssetEntryQuery();
-
-		List<AssetEntryResult> assetEntryResults = new ArrayList<>();
-
-		int end = searchContainer.getEnd();
-		int start = searchContainer.getStart();
-
-		int total = 0;
-
-		for (long classNameId : classNameIds) {
-			assetEntryQuery.setClassNameIds(new long[] {classNameId});
-
-			BaseModelSearchResult<AssetEntry> baseModelSearchResult =
-				getAssetEntries(assetEntryQuery, portletName, start, end);
-
-			int groupTotal = baseModelSearchResult.getLength();
-
-			total += groupTotal;
-
-			List<AssetEntry> assetEntries =
-				baseModelSearchResult.getBaseModels();
-
-			if (!assetEntries.isEmpty() && (start < groupTotal)) {
-				AssetRendererFactory<?> groupAssetRendererFactory =
-					AssetRendererFactoryRegistryUtil.
-						getAssetRendererFactoryByClassNameId(classNameId);
-
-				String title = ResourceActionsUtil.getModelResource(
-					locale,
-					groupAssetRendererFactory.getClassName());
-
-				assetEntryResults.add(
-					new AssetEntryResult(title, assetEntries));
-			}
-
-			if (!portletName.equals(AssetPublisherPortletKeys.RECENT_CONTENT)) {
-				if (groupTotal > 0) {
-					if ((end > 0) && (end > groupTotal)) {
-						end -= groupTotal;
-					}
-					else {
-						end = 0;
-					}
-
-					if ((start > 0) && (start > groupTotal)) {
-						start -= groupTotal;
-					}
-					else {
-						start = 0;
-					}
-				}
-
-				assetEntryQuery.setEnd(QueryUtil.ALL_POS);
-				assetEntryQuery.setStart(QueryUtil.ALL_POS);
-			}
-		}
-
-		searchContainer.setTotal(total);
-
-		return assetEntryResults;
-	}
-
-	protected List<AssetEntryResult> getAssetEntryResultsByDefault(
-			SearchContainer searchContainer, AssetEntryQuery assetEntryQuery, long[] classNameIds, String portletName)
-		throws Exception {
-
-		List<AssetEntryResult> assetEntryResults = new ArrayList<>();
-
-		int end = searchContainer.getEnd();
-		int start = searchContainer.getStart();
-
-		assetEntryQuery.setClassNameIds(classNameIds);
-
-		BaseModelSearchResult<AssetEntry> baseModelSearchResult =
-			getAssetEntries(assetEntryQuery, portletName, start, end);
-
-		int total = baseModelSearchResult.getLength();
-
-		searchContainer.setTotal(total);
-
-		List<AssetEntry> assetEntries = baseModelSearchResult.getBaseModels();
-
-		if (!assetEntries.isEmpty() && (start < total)) {
-			assetEntryResults.add(new AssetEntryResult(assetEntries));
-		}
-
-		return assetEntryResults;
-	}
-
-	protected List<AssetEntryResult> getAssetEntryResultsByVocabulary(
-			long assetVocabularyId, SearchContainer searchContainer, Locale locale, String portletName, long[] classNameIds, AssetEntryQuery assetEntryQuery)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		AssetEntryQuery assetEntryQuery = getAssetEntryQuery();
-
-		List<AssetEntryResult> assetEntryResults = new ArrayList<>();
-
-		List<AssetCategory> assetCategories =
-			_assetCategoryLocalService.getVocabularyRootCategories(
-				assetVocabularyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-		assetEntryQuery.setClassNameIds(classNameIds);
-
-		int end = searchContainer.getEnd();
-		int start = searchContainer.getStart();
-
-		int total = 0;
-
-		for (AssetCategory assetCategory : assetCategories) {
-			long[] oldAllCategoryIds = assetEntryQuery.getAllCategoryIds();
-
-			long[] newAllAssetCategoryIds = ArrayUtil.append(
-				oldAllCategoryIds, assetCategory.getCategoryId());
-
-			assetEntryQuery.setAllCategoryIds(newAllAssetCategoryIds);
-
-			BaseModelSearchResult<AssetEntry> baseModelSearchResult =
-				getAssetEntries(assetEntryQuery, portletName, start, end);
-
-			int groupTotal = baseModelSearchResult.getLength();
-
-			total += groupTotal;
-
-			List<AssetEntry> assetEntries =
-				baseModelSearchResult.getBaseModels();
-
-			if (!assetEntries.isEmpty() && (start < groupTotal)) {
-				String title = assetCategory.getTitle(themeDisplay.getLocale());
-				String title = assetCategory.getTitle(locale);
-
-				assetEntryResults.add(
-					new AssetEntryResult(title, assetEntries));
-			}
-
-			if (groupTotal > 0) {
-				if ((end > 0) && (end > groupTotal)) {
-					end -= groupTotal;
-				}
-				else {
-					end = 0;
-				}
-
-				if ((start > 0) && (start > groupTotal)) {
-					start -= groupTotal;
-				}
-				else {
-					start = 0;
-				}
-			}
-
-			assetEntryQuery.setAllCategoryIds(oldAllCategoryIds);
-			assetEntryQuery.setEnd(QueryUtil.ALL_POS);
-			assetEntryQuery.setStart(QueryUtil.ALL_POS);
-		}
-
-		searchContainer.setTotal(total);
-
-		return assetEntryResults;
-	}
 }

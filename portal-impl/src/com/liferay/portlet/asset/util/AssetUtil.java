@@ -82,6 +82,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.TimeZone;
 import java.util.TreeMap;
 
 import javax.portlet.PortletMode;
@@ -616,6 +617,20 @@ public class AssetUtil {
 		throws Exception {
 
 		SearchContext searchContext = SearchContextFactory.getInstance(request);
+
+		return searchAssetEntries(searchContext, assetEntryQuery, start, end);
+	}
+
+	public static BaseModelSearchResult<AssetEntry> searchAssetEntries(
+			long[] assetCategoryIds, String[] assetTagNames, String keywords,
+			Locale locale, AssetEntryQuery assetEntryQuery, long companyId,
+			long scopeGroupId, Layout layout, TimeZone timeZone, long userId,
+			int start, int end, Map<String, Serializable> attributes)
+		throws Exception {
+
+		SearchContext searchContext = SearchContextFactory.getInstance(
+				assetCategoryIds, assetTagNames, keywords, locale, companyId,
+				scopeGroupId, layout, timeZone, userId, attributes);
 
 		return searchAssetEntries(searchContext, assetEntryQuery, start, end);
 	}

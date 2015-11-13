@@ -217,6 +217,27 @@ public class PoshiRunnerValidation {
 			element, possibleAttributeNames, filePath);
 		validateRequiredAttributeNames(
 			element, Arrays.asList("name"), filePath);
+
+		String returns = element.attributeValue("returns");
+
+		List<Element> returnElements = element.elements("return");
+
+		if (returns != null) {
+			List<String> returnsList = Arrays.asList(StringUtil.split(returns));
+
+			for (Element returnElement : returnElements) {
+				String returnVariable = returnElement.attributeValue("name");
+
+				if (!returnsList.contains(returnVariable)) {
+					_exceptions.add(
+						new Exception(
+							returnVariable +
+								" not listed as a return variable\n" +
+									filePath + ":" +
+										element.attributeValue("line-number")));
+				}
+			}
+		}
 	}
 
 	protected static void validateConditionElement(

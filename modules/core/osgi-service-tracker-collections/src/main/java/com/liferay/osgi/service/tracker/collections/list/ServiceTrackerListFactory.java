@@ -14,6 +14,7 @@
 
 package com.liferay.osgi.service.tracker.collections.list;
 
+import com.liferay.osgi.service.tracker.collections.common.DefaultServiceTrackerCustomizer;
 import com.liferay.osgi.service.tracker.collections.list.internal.ServiceTrackerListImpl;
 
 import java.util.Comparator;
@@ -53,7 +54,7 @@ public class ServiceTrackerListFactory {
 		throws InvalidSyntaxException {
 
 		ServiceTrackerCustomizer<T, T> serviceTrackerCustomizer =
-			new IdenticalServiceTrackerCustomizer<>(bundleContext);
+			new DefaultServiceTrackerCustomizer<>(bundleContext);
 
 		return new ServiceTrackerListImpl<>(
 			bundleContext, clazz, null, serviceTrackerCustomizer, null);
@@ -65,7 +66,7 @@ public class ServiceTrackerListFactory {
 		throws InvalidSyntaxException {
 
 		ServiceTrackerCustomizer<T, T> serviceTrackerCustomizer =
-			new IdenticalServiceTrackerCustomizer<>(bundleContext);
+			new DefaultServiceTrackerCustomizer<>(bundleContext);
 
 		return new ServiceTrackerListImpl<>(
 			bundleContext, clazz, null, serviceTrackerCustomizer, comparator);
@@ -76,7 +77,7 @@ public class ServiceTrackerListFactory {
 		throws InvalidSyntaxException {
 
 		ServiceTrackerCustomizer<T, T> serviceTrackerCustomizer =
-			new IdenticalServiceTrackerCustomizer<>(bundleContext);
+			new DefaultServiceTrackerCustomizer<>(bundleContext);
 
 		return new ServiceTrackerListImpl<>(
 			bundleContext, clazz, filterString, serviceTrackerCustomizer, null);
@@ -88,37 +89,11 @@ public class ServiceTrackerListFactory {
 		throws InvalidSyntaxException {
 
 		ServiceTrackerCustomizer<T, T> serviceTrackerCustomizer =
-			new IdenticalServiceTrackerCustomizer<>(bundleContext);
+			new DefaultServiceTrackerCustomizer<>(bundleContext);
 
 		return new ServiceTrackerListImpl<>(
 			bundleContext, clazz, filterString, serviceTrackerCustomizer,
 			comparator);
-	}
-
-	private static class IdenticalServiceTrackerCustomizer<T>
-		implements ServiceTrackerCustomizer<T, T> {
-
-		public IdenticalServiceTrackerCustomizer(BundleContext bundleContext) {
-			_bundleContext = bundleContext;
-		}
-
-		@Override
-		public T addingService(ServiceReference<T> serviceReference) {
-			return _bundleContext.getService(serviceReference);
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<T> serviceReference, T service) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<T> serviceReference, T service) {
-		}
-
-		private final BundleContext _bundleContext;
-
 	}
 
 }

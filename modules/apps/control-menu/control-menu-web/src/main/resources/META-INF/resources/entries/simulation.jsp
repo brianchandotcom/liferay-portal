@@ -27,13 +27,12 @@ data.put("panelURL", previewContentURL);
 %>
 
 <li>
-	<liferay-ui:icon
+	<aui:icon
+		cssClass="control-menu-icon"
 		data="<%= data %>"
-		iconCssClass="icon-desktop icon-monospaced"
 		id="previewPanel"
-		label="<%= false %>"
-		linkCssClass="control-menu-icon"
-		message="simulation"
+		image="simulation-menu-closed"
+		markupView="lexicon"
 		url="javascript:;"
 	/>
 </li>

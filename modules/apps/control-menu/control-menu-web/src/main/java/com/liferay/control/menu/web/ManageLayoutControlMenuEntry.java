@@ -50,7 +50,7 @@ public class ManageLayoutControlMenuEntry
 
 	@Override
 	public String getIconCssClass(HttpServletRequest request) {
-		return "icon-cog";
+		return "cog";
 	}
 
 	@Override

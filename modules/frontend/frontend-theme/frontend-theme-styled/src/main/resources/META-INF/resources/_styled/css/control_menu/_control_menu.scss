@@ -27,7 +27,7 @@
 		}
 
 		> .active {
-			.control-menu-icon .icon-monospaced {
+			.control-menu-icon .lexicon-icon {
 				background-color: $control-menu-level-2-nav-item-active-bg;
 				border-radius: $control-menu-level-2-nav-item-active-border-radius;
 				color: $control-menu-level-2-nav-item-active-color;
@@ -92,9 +92,8 @@
 		text-decoration: none;
 	}
 
-	&.icon-monospaced,
-	.icon-monospaced {
-		font-size: $control-menu-icon-font-size;
+	.lexicon-icon {
+		margin: $control-menu-icon-spacing;
 	}
 }
 

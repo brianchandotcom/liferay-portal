@@ -33,17 +33,19 @@ data.put("panelURL", addURL);
 %>
 
 <li>
-	<liferay-ui:icon
-		iconCssClass="icon-info icon-monospaced"
+	<aui:icon
+		cssClass="control-menu-icon"
+		data="<%= data %>"
 		id="infoButton"
-		linkCssClass="control-menu-icon"
+		image="information-live"
+		markupView="lexicon"
 		url="javascript:;"
 	/>
 
 	<liferay-util:buffer var="infoContainer">
 		<c:if test="<%= informationMessagesControlMenuEntry.isModifiedLayout(themeDisplay) %>">
 			<div class="modified-layout">
-				<i class="icon-info-sign"></i>
+				<aui:icon image="information-live" markupView="lexicon" />
 
 				<span class="message-info">
 					<liferay-ui:message key="this-page-has-been-changed-since-the-last-update-from-the-site-template-excerpt" />
@@ -68,7 +70,7 @@ data.put("panelURL", addURL);
 
 		<c:if test="<%= informationMessagesControlMenuEntry.isLinkedLayout(themeDisplay) %>">
 			<div class="linked-layout">
-				<i class="icon-info-sign"></i>
+				<aui:icon image="information-live" markupView="lexicon" />
 
 				<span class="message-info">
 
@@ -93,7 +95,7 @@ data.put("panelURL", addURL);
 
 		<c:if test="<%= informationMessagesControlMenuEntry.isCustomizableLayout(themeDisplay) %>">
 			<div class="customizable-layout">
-				<i class="icon-info-sign"></i>
+				<aui:icon image="information-live" markupView="lexicon" />
 
 				<span class="message-info">
 					<c:choose>

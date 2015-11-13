@@ -530,7 +530,8 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				hideDefaultSuccessMessage(actionRequest);
 
 				actionResponse.setRenderParameter(
-					"mvcPath", "/document_library/edit_file_entry.jsp");
+					"mvcRenderCommandName",
+					"/document_library/edit_file_entry");
 			}
 			else if (!windowState.equals(LiferayWindowState.POP_UP)) {
 			}

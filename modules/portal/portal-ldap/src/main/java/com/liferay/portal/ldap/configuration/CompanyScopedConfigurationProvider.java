@@ -194,6 +194,10 @@ public abstract class CompanyScopedConfigurationProvider
 
 		Dictionary<String, Object> properties = configuration.getProperties();
 
+		if (properties == null) {
+			properties = new HashMapDictionary<>();
+		}
+
 		T configurable = Configurable.createConfigurable(
 			getMetatype(), properties);
 
@@ -208,6 +212,10 @@ public abstract class CompanyScopedConfigurationProvider
 
 		Dictionary<String, Object> properties = configuration.getProperties();
 
+		if (properties == null) {
+			properties = new HashMapDictionary<>();
+		}
+
 		T configurable = Configurable.createConfigurable(
 			getMetatype(), properties);
 
@@ -219,6 +227,10 @@ public abstract class CompanyScopedConfigurationProvider
 	@Override
 	public void updateProperties(
 		long companyId, Dictionary<String, Object> properties) {
+
+		if (properties == null) {
+			properties = new HashMapDictionary<>();
+		}
 
 		Configuration configuration = _configurations.get(companyId);
 

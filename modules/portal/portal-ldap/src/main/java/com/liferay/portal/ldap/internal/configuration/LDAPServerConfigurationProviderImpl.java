@@ -276,6 +276,10 @@ public class LDAPServerConfigurationProviderImpl
 	public void registerConfiguration(Configuration configuration) {
 		Dictionary<String, Object> properties = configuration.getProperties();
 
+		if (properties == null) {
+			properties = new HashMapDictionary<>();
+		}
+
 		LDAPServerConfiguration ldapServerConfiguration =
 			Configurable.createConfigurable(getMetatype(), properties);
 
@@ -299,6 +303,10 @@ public class LDAPServerConfigurationProviderImpl
 	@Override
 	public void unregisterConfiguration(Configuration configuration) {
 		Dictionary<String, Object> properties = configuration.getProperties();
+
+		if (properties == null) {
+			properties = new HashMapDictionary<>();
+		}
 
 		LDAPServerConfiguration ldapServerConfiguration =
 			Configurable.createConfigurable(getMetatype(), properties);
@@ -324,6 +332,10 @@ public class LDAPServerConfigurationProviderImpl
 	public void updateProperties(
 		long companyId, long ldapServerId,
 		Dictionary<String, Object> properties) {
+
+		if (properties == null) {
+			properties = new HashMapDictionary<>();
+		}
 
 		Map<Long, Configuration> configurations = _configurations.get(
 			companyId);

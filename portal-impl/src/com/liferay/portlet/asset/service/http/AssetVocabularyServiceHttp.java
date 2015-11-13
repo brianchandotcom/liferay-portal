@@ -801,7 +801,7 @@ public class AssetVocabularyServiceHttp {
 
 	public static com.liferay.portlet.asset.model.AssetVocabularyDisplay searchVocabulariesDisplay(
 		HttpPrincipal httpPrincipal, long groupId, java.lang.String title,
-		int start, int end, boolean addDefaultVocabulary)
+		boolean addDefaultVocabulary, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetVocabularyServiceUtil.class,
@@ -809,7 +809,7 @@ public class AssetVocabularyServiceHttp {
 					_searchVocabulariesDisplayParameterTypes24);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					title, start, end, addDefaultVocabulary);
+					title, addDefaultVocabulary, start, end);
 
 			Object returnObj = null;
 
@@ -835,8 +835,8 @@ public class AssetVocabularyServiceHttp {
 
 	public static com.liferay.portlet.asset.model.AssetVocabularyDisplay searchVocabulariesDisplay(
 		HttpPrincipal httpPrincipal, long groupId, java.lang.String title,
-		int start, int end, com.liferay.portal.kernel.search.Sort sort,
-		boolean addDefaultVocabulary)
+		boolean addDefaultVocabulary, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AssetVocabularyServiceUtil.class,
@@ -844,7 +844,7 @@ public class AssetVocabularyServiceHttp {
 					_searchVocabulariesDisplayParameterTypes25);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					title, start, end, sort, addDefaultVocabulary);
+					title, addDefaultVocabulary, start, end, sort);
 
 			Object returnObj = null;
 
@@ -991,12 +991,12 @@ public class AssetVocabularyServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _searchVocabulariesDisplayParameterTypes24 = new Class[] {
-			long.class, java.lang.String.class, int.class, int.class,
-			boolean.class
+			long.class, java.lang.String.class, boolean.class, int.class,
+			int.class
 		};
 	private static final Class<?>[] _searchVocabulariesDisplayParameterTypes25 = new Class[] {
-			long.class, java.lang.String.class, int.class, int.class,
-			com.liferay.portal.kernel.search.Sort.class, boolean.class
+			long.class, java.lang.String.class, boolean.class, int.class,
+			int.class, com.liferay.portal.kernel.search.Sort.class
 		};
 	private static final Class<?>[] _updateVocabularyParameterTypes26 = new Class[] {
 			long.class, java.lang.String.class, java.util.Map.class,

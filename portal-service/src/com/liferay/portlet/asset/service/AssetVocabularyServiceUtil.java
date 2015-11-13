@@ -222,21 +222,21 @@ public class AssetVocabularyServiceUtil {
 	}
 
 	public static com.liferay.portlet.asset.model.AssetVocabularyDisplay searchVocabulariesDisplay(
-		long groupId, java.lang.String title, int start, int end,
-		boolean addDefaultVocabulary)
+		long groupId, java.lang.String title, boolean addDefaultVocabulary,
+		int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .searchVocabulariesDisplay(groupId, title, start, end,
-			addDefaultVocabulary);
+				   .searchVocabulariesDisplay(groupId, title,
+			addDefaultVocabulary, start, end);
 	}
 
 	public static com.liferay.portlet.asset.model.AssetVocabularyDisplay searchVocabulariesDisplay(
-		long groupId, java.lang.String title, int start, int end,
-		com.liferay.portal.kernel.search.Sort sort, boolean addDefaultVocabulary)
+		long groupId, java.lang.String title, boolean addDefaultVocabulary,
+		int start, int end, com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .searchVocabulariesDisplay(groupId, title, start, end, sort,
-			addDefaultVocabulary);
+				   .searchVocabulariesDisplay(groupId, title,
+			addDefaultVocabulary, start, end, sort);
 	}
 
 	public static com.liferay.portlet.asset.model.AssetVocabulary updateVocabulary(

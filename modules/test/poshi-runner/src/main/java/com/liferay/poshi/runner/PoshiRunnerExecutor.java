@@ -504,7 +504,7 @@ public class PoshiRunnerExecutor {
 		}
 	}
 
-	public static void runMacroCommandElement(
+	public static Map<String,String> runMacroCommandElement(
 			String classCommandName, Element commandElement)
 		throws Exception {
 
@@ -514,7 +514,25 @@ public class PoshiRunnerExecutor {
 
 		parseElement(commandElement);
 
+		Map<String,String> returnValues = new HashMap<String,String>();
+
+		String returns = commandElement.attributeValue("returns");
+
+		if (returns != null) {
+			String[] returnsArray = StringUtil.split(returns);
+
+			for (String returnVariable : returnsArray) {
+				String returnValue = 
+					PoshiRunnerVariablesUtil.getValueFromCommandMap(
+						returnVariable);
+
+				returnValues.put(returnVariable, returnValue);
+			}
+		}
+
 		PoshiRunnerVariablesUtil.popCommandMap();
+
+		return returnValues;
 	}
 
 	public static void runMacroExecuteElement(

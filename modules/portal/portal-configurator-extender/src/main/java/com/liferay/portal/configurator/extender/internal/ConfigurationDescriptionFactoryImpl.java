@@ -16,10 +16,8 @@ package com.liferay.portal.configurator.extender.internal;
 
 import com.liferay.portal.configurator.extender.ConfigurationDescription;
 import com.liferay.portal.configurator.extender.ConfigurationDescriptionFactory;
-import com.liferay.portal.configurator.extender.FactoryConfigurationDescription;
 import com.liferay.portal.configurator.extender.NamedConfigurationContent;
 import com.liferay.portal.configurator.extender.PropertiesFileNamedConfigurationContent;
-import com.liferay.portal.configurator.extender.SingleConfigurationDescription;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -49,7 +47,15 @@ public class ConfigurationDescriptionFactoryImpl
 
 		String name = namedConfigurationContent.getName();
 
-		int lastIndexOfDash = name.lastIndexOf('-');
+		String factoryPid = null;
+		String pid = name;
+
+		int index = name.lastIndexOf('-');
+
+		if (index > 0) {
+			factoryPid = name.substring(0, index);
+			pid = name.substring(index + 1);
+		}
 
 		try (InputStream inputStream =
 				namedConfigurationContent.getInputStream()) {
@@ -58,15 +64,8 @@ public class ConfigurationDescriptionFactoryImpl
 
 			properties.load(inputStream);
 
-			Dictionary<String, Object> dictionary = _cast(properties);
-
-			if (lastIndexOfDash > 0) {
-				return new FactoryConfigurationDescription(
-					name.substring(0, lastIndexOfDash),
-					name.substring(lastIndexOfDash + 1), dictionary);
-			}
-
-			return new SingleConfigurationDescription(name, dictionary);
+			return new ConfigurationDescription(
+				factoryPid, pid, _cast(properties));
 		}
 	}
 

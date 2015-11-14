@@ -16,9 +16,7 @@ package com.liferay.portal.configurator.extender.internal;
 
 import com.liferay.portal.configurator.extender.ConfigurationDescription;
 import com.liferay.portal.configurator.extender.ConfigurationDescriptionFactory;
-import com.liferay.portal.configurator.extender.FactoryConfigurationDescription;
 import com.liferay.portal.configurator.extender.NamedConfigurationContent;
-import com.liferay.portal.configurator.extender.SingleConfigurationDescription;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.io.IOException;
@@ -86,9 +84,8 @@ public class ConfiguratorExtension implements Extension {
 			NamedConfigurationContent namedConfigurationContent)
 		throws Exception {
 
-		for (ConfigurationDescriptionFactory
-			configurationDescriptionFactory :
-			_configurationDescriptionFactories) {
+		for (ConfigurationDescriptionFactory configurationDescriptionFactory :
+				_configurationDescriptionFactories) {
 
 			ConfigurationDescription configurationDescription = null;
 
@@ -111,34 +108,38 @@ public class ConfiguratorExtension implements Extension {
 				continue;
 			}
 
-			if (configurationDescription
-					instanceof SingleConfigurationDescription) {
-
-				_process(
-					(SingleConfigurationDescription)configurationDescription);
-			}
-			else if (configurationDescription
-						instanceof FactoryConfigurationDescription) {
-
-				_process(
-					(FactoryConfigurationDescription)configurationDescription);
+			if (configurationDescription.getFactoryPid() == null) {
+				_processConfigurationDescription(configurationDescription);
 			}
 			else {
-				_logger.log(
-					Logger.LOG_ERROR,
-					configurationDescriptionFactory + " returned " +
-						"unsupported ConfigurationDescription " +
-							configurationDescription);
+				_processFactoryConfigurationDescription(
+					configurationDescription);
 			}
 		}
 	}
 
-	private void _process(
-			FactoryConfigurationDescription factoryConfigurationDescription)
+	private void _processConfigurationDescription(
+			ConfigurationDescription configurationDescription)
 		throws InvalidSyntaxException, IOException {
 
-		String factoryPid = factoryConfigurationDescription.getFactoryPid();
-		String pid = factoryConfigurationDescription.getPid();
+		String pid = configurationDescription.getPid();
+
+		if (_configurationExists("(service.pid=" + pid + ")")) {
+			return;
+		}
+
+		Configuration configuration = _configurationAdmin.getConfiguration(
+			pid, null);
+
+		configuration.update(configurationDescription.getProperties());
+	}
+
+	private void _processFactoryConfigurationDescription(
+			ConfigurationDescription configurationDescription)
+		throws InvalidSyntaxException, IOException {
+
+		String factoryPid = configurationDescription.getFactoryPid();
+		String pid = configurationDescription.getPid();
 
 		String configuratorUrl = _namespace + "#" + pid;
 
@@ -152,26 +153,11 @@ public class ConfiguratorExtension implements Extension {
 			_configurationAdmin.createFactoryConfiguration(factoryPid, null);
 
 		Dictionary<String, Object> properties =
-			factoryConfigurationDescription.getProperties();
+			configurationDescription.getProperties();
 
 		properties.put("configurator.url", configuratorUrl);
 
 		configuration.update(properties);
-	}
-
-	private void _process(SingleConfigurationDescription description)
-		throws InvalidSyntaxException, IOException {
-
-		String pid = description.getPid();
-
-		if (_configurationExists("(service.pid=" + pid + ")")) {
-			return;
-		}
-
-		Configuration configuration = _configurationAdmin.getConfiguration(
-			pid, null);
-
-		configuration.update(description.getProperties());
 	}
 
 	private final ConfigurationAdmin _configurationAdmin;

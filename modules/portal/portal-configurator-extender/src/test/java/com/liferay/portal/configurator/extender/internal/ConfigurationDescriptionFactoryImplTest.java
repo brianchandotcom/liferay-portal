@@ -16,10 +16,8 @@ package com.liferay.portal.configurator.extender.internal;
 
 import com.liferay.portal.configurator.extender.ConfigurationDescription;
 import com.liferay.portal.configurator.extender.ConfigurationDescriptionFactory;
-import com.liferay.portal.configurator.extender.FactoryConfigurationDescription;
 import com.liferay.portal.configurator.extender.NamedConfigurationContent;
 import com.liferay.portal.configurator.extender.PropertiesFileNamedConfigurationContent;
-import com.liferay.portal.configurator.extender.SingleConfigurationDescription;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -52,20 +50,12 @@ public class ConfigurationDescriptionFactoryImplTest {
 						configurationContent.getBytes(
 							Charset.forName("UTF-8")))));
 
-		Assert.assertTrue(
-			configurationDescription
-				instanceof FactoryConfigurationDescription);
-
-		FactoryConfigurationDescription factoryConfigurationDescription =
-			(FactoryConfigurationDescription)configurationDescription;
-
 		Assert.assertEquals(
-			"factory.pid", factoryConfigurationDescription.getFactoryPid());
-		Assert.assertEquals(
-			"config.pid", factoryConfigurationDescription.getPid());
+			"factory.pid", configurationDescription.getFactoryPid());
+		Assert.assertEquals("config.pid", configurationDescription.getPid());
 
 		Dictionary<String, Object> properties =
-			factoryConfigurationDescription.getProperties();
+			configurationDescription.getProperties();
 
 		Assert.assertEquals("value", properties.get("key"));
 		Assert.assertEquals("anotherValue", properties.get("anotherKey"));
@@ -111,17 +101,11 @@ public class ConfigurationDescriptionFactoryImplTest {
 						configurationContent.getBytes(
 							Charset.forName("UTF-8")))));
 
-		Assert.assertTrue(
-			configurationDescription instanceof SingleConfigurationDescription);
-
-		SingleConfigurationDescription singleConfigurationDescription =
-			(SingleConfigurationDescription)configurationDescription;
-
-		Assert.assertEquals(
-			"config.pid", singleConfigurationDescription.getPid());
+		Assert.assertNull(configurationDescription.getFactoryPid());
+		Assert.assertEquals("config.pid", configurationDescription.getPid());
 
 		Dictionary<String, Object> properties =
-			singleConfigurationDescription.getProperties();
+			configurationDescription.getProperties();
 
 		Assert.assertEquals("value", properties.get("key"));
 		Assert.assertEquals("anotherValue", properties.get("anotherKey"));

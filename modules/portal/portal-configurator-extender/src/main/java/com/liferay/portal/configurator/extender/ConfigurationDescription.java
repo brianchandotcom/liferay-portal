@@ -14,8 +14,51 @@
 
 package com.liferay.portal.configurator.extender;
 
+import com.liferay.portal.kernel.util.StringBundler;
+
+import java.util.Dictionary;
+
 /**
 * @author Carlos Sierra Andrés
 */
-public abstract class ConfigurationDescription {
+public class ConfigurationDescription {
+
+	public ConfigurationDescription(
+		String factoryPid, String pid, Dictionary<String, Object> properties) {
+
+		_factoryPid = factoryPid;
+		_pid = pid;
+		_properties = properties;
+	}
+
+	public String getFactoryPid() {
+		return _factoryPid;
+	}
+
+	public String getPid() {
+		return _pid;
+	}
+
+	public Dictionary<String, Object> getProperties() {
+		return _properties;
+	}
+
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(6);
+
+		sb.append("{factoryPid=");
+		sb.append(_factoryPid);
+		sb.append(", pid=");
+		sb.append(_pid);
+		sb.append(", properties=");
+		sb.append(_properties);
+
+		return sb.toString();
+	}
+
+	private final String _factoryPid;
+	private final String _pid;
+	private final Dictionary<String, Object> _properties;
+
 }

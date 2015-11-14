@@ -16,9 +16,7 @@ package com.liferay.portal.configurator.extender.internal.test;
 
 import com.liferay.portal.configurator.extender.ConfigurationDescription;
 import com.liferay.portal.configurator.extender.ConfigurationDescriptionFactory;
-import com.liferay.portal.configurator.extender.FactoryConfigurationDescription;
 import com.liferay.portal.configurator.extender.NamedConfigurationContent;
-import com.liferay.portal.configurator.extender.SingleConfigurationDescription;
 import com.liferay.portal.configurator.extender.internal.ConfiguratorExtension;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 
@@ -360,8 +358,8 @@ public class ConfiguratorExtensionTest {
 				Dictionary<?, ?> properties = PropertiesUtil.load(
 					ssncc.getInputStream(), "UTF-8");
 
-				return new SingleConfigurationDescription(
-					ssncc._pid, (Dictionary<String, Object>)properties);
+				return new ConfigurationDescription(
+					null, ssncc._pid, (Dictionary<String, Object>)properties);
 			}
 			else {
 				StringFactoryNamedConfigurationContent sfncc =
@@ -371,7 +369,7 @@ public class ConfiguratorExtensionTest {
 				Dictionary<?, ?> properties = PropertiesUtil.load(
 					sfncc.getInputStream(), "UTF-8");
 
-				return new FactoryConfigurationDescription(
+				return new ConfigurationDescription(
 					sfncc._factoryPid, sfncc._pid,
 					(Dictionary<String, Object>)properties);
 			}

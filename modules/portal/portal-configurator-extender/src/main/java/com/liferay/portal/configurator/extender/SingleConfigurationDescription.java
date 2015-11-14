@@ -14,8 +14,6 @@
 
 package com.liferay.portal.configurator.extender;
 
-import com.liferay.portal.kernel.util.Supplier;
-
 import java.util.Dictionary;
 
 /**
@@ -25,18 +23,18 @@ public final class SingleConfigurationDescription
 	extends ConfigurationDescription {
 
 	public SingleConfigurationDescription(
-		String pid, Supplier<Dictionary<String, Object>> propertiesSupplier) {
+		String pid, Dictionary<String, Object> properties) {
 
 		_pid = pid;
-		_propertiesSupplier = propertiesSupplier;
+		_properties = properties;
 	}
 
 	public String getPid() {
 		return _pid;
 	}
 
-	public Supplier<Dictionary<String, Object>> getPropertiesSupplier() {
-		return _propertiesSupplier;
+	public Dictionary<String, Object> getProperties() {
+		return _properties;
 	}
 
 	@Override
@@ -45,6 +43,6 @@ public final class SingleConfigurationDescription
 	}
 
 	private final String _pid;
-	private final Supplier<Dictionary<String, Object>> _propertiesSupplier;
+	private final Dictionary<String, Object> _properties;
 
 }

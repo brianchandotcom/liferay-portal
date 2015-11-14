@@ -21,7 +21,6 @@ import com.liferay.portal.configurator.extender.NamedConfigurationContent;
 import com.liferay.portal.configurator.extender.SingleConfigurationDescription;
 import com.liferay.portal.configurator.extender.internal.ConfiguratorExtension;
 import com.liferay.portal.kernel.util.PropertiesUtil;
-import com.liferay.portal.kernel.util.Supplier;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -104,18 +103,10 @@ public class ConfiguratorExtensionTest {
 				new ConfigurationDescriptionFactory() {
 					@Override
 					public ConfigurationDescription create(
-						NamedConfigurationContent namedConfigurationContent) {
+							NamedConfigurationContent namedConfigurationContent)
+						throws IOException {
 
-						return new SingleConfigurationDescription(
-							"exception",
-							new Supplier<Dictionary<String, Object>>() {
-
-								@Override
-								public Dictionary<String, Object> get() {
-									throw new RuntimeException(
-										"This should be handled");
-								}
-							});
+						throw new IOException("This should be handled");
 					}
 				},
 				new StringConfigurationDescriptionFactory()));
@@ -356,54 +347,33 @@ public class ConfiguratorExtensionTest {
 
 		@Override
 		public ConfigurationDescription create(
-			NamedConfigurationContent namedConfigurationContent) {
+				NamedConfigurationContent namedConfigurationContent)
+			throws IOException {
 
 			if (namedConfigurationContent
 					instanceof StringSingleNamedConfigurationContent) {
 
-				final StringSingleNamedConfigurationContent ssncc =
+				StringSingleNamedConfigurationContent ssncc =
 					(StringSingleNamedConfigurationContent)
 						namedConfigurationContent;
 
+				Dictionary<?, ?> properties = PropertiesUtil.load(
+					ssncc.getInputStream(), "UTF-8");
+
 				return new SingleConfigurationDescription(
-					ssncc._pid, new Supplier<Dictionary<String, Object>>() {
-
-					@Override
-					public Dictionary<String, Object> get() {
-						try {
-							Dictionary<?, ?> properties = PropertiesUtil.load(
-								ssncc.getInputStream(), "UTF-8");
-
-							return (Dictionary<String, Object>)properties;
-						}
-						catch (IOException e) {
-							throw new RuntimeException(e);
-						}
-					}
-				});
+					ssncc._pid, (Dictionary<String, Object>)properties);
 			}
 			else {
-				final StringFactoryNamedConfigurationContent sfncc =
+				StringFactoryNamedConfigurationContent sfncc =
 					(StringFactoryNamedConfigurationContent)
 						namedConfigurationContent;
 
+				Dictionary<?, ?> properties = PropertiesUtil.load(
+					sfncc.getInputStream(), "UTF-8");
+
 				return new FactoryConfigurationDescription(
 					sfncc._factoryPid, sfncc._pid,
-					new Supplier<Dictionary<String, Object>>() {
-
-					@Override
-					public Dictionary<String, Object> get() {
-						try {
-							Dictionary<?, ?> properties = PropertiesUtil.load(
-								sfncc.getInputStream(), "UTF-8");
-
-							return (Dictionary<String, Object>)properties;
-						}
-						catch (IOException e) {
-							throw new RuntimeException(e);
-						}
-					}
-				});
+					(Dictionary<String, Object>)properties);
 			}
 		}
 

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.configurator.extender;
 
-import com.liferay.portal.kernel.util.Supplier;
-
 import java.util.Dictionary;
 
 /**
@@ -26,11 +24,11 @@ public final class FactoryConfigurationDescription
 
 	public FactoryConfigurationDescription(
 		String factoryPid, String pid,
-		Supplier<Dictionary<String, Object>> propertiesSupplier) {
+		Dictionary<String, Object> properties) {
 
 		_factoryPid = factoryPid;
 		_pid = pid;
-		_propertiesSupplier = propertiesSupplier;
+		_properties = properties;
 	}
 
 	public String getFactoryPid() {
@@ -41,8 +39,8 @@ public final class FactoryConfigurationDescription
 		return _pid;
 	}
 
-	public Supplier<Dictionary<String, Object>> getPropertiesSupplier() {
-		return _propertiesSupplier;
+	public Dictionary<String, Object> getProperties() {
+		return _properties;
 	}
 
 	@Override
@@ -53,6 +51,6 @@ public final class FactoryConfigurationDescription
 
 	private final String _factoryPid;
 	private final String _pid;
-	private final Supplier<Dictionary<String, Object>> _propertiesSupplier;
+	private final Dictionary<String, Object> _properties;
 
 }

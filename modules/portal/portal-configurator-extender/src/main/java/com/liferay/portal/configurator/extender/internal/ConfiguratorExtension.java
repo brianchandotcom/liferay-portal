@@ -20,7 +20,6 @@ import com.liferay.portal.configurator.extender.FactoryConfigurationDescription;
 import com.liferay.portal.configurator.extender.NamedConfigurationContent;
 import com.liferay.portal.configurator.extender.SingleConfigurationDescription;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Supplier;
 
 import java.io.IOException;
 
@@ -91,9 +90,22 @@ public class ConfiguratorExtension implements Extension {
 			configurationDescriptionFactory :
 			_configurationDescriptionFactories) {
 
-			ConfigurationDescription configurationDescription =
-				configurationDescriptionFactory.create(
-					namedConfigurationContent);
+			ConfigurationDescription configurationDescription = null;
+
+			try {
+				configurationDescription =
+					configurationDescriptionFactory.create(
+						namedConfigurationContent);
+			}
+			catch (IOException ioe) {
+				_logger.log(
+					Logger.LOG_WARNING,
+					"Unable to create ConfigurationDescription from " +
+						namedConfigurationContent,
+					ioe);
+
+				continue;
+			}
 
 			if (configurationDescription == null) {
 				continue;
@@ -139,24 +151,8 @@ public class ConfiguratorExtension implements Extension {
 		Configuration configuration =
 			_configurationAdmin.createFactoryConfiguration(factoryPid, null);
 
-		Supplier<Dictionary<String, Object>> propertiesSupplier =
-			factoryConfigurationDescription.getPropertiesSupplier();
-
-		Dictionary<String, Object> properties;
-
-		try {
-			properties = propertiesSupplier.get();
-		}
-		catch (Throwable t) {
-			_logger.log(
-				Logger.LOG_WARNING,
-				"Supplier from factoryConfigurationDescription " +
-					factoryConfigurationDescription + " threw " +
-					"Exception: ",
-				t);
-
-			return;
-		}
+		Dictionary<String, Object> properties =
+			factoryConfigurationDescription.getProperties();
 
 		properties.put("configurator.url", configuratorUrl);
 
@@ -175,25 +171,7 @@ public class ConfiguratorExtension implements Extension {
 		Configuration configuration = _configurationAdmin.getConfiguration(
 			pid, null);
 
-		Supplier<Dictionary<String, Object>> propertiesSupplier =
-			description.getPropertiesSupplier();
-
-		Dictionary<String, Object> properties;
-
-		try {
-			properties = propertiesSupplier.get();
-		}
-		catch (Throwable t) {
-			_logger.log(
-				Logger.LOG_WARNING,
-				"Supplier from description " + description + " threw " +
-					"Exception: ",
-				t);
-
-			return;
-		}
-
-		configuration.update(properties);
+		configuration.update(description.getProperties());
 	}
 
 	private final ConfigurationAdmin _configurationAdmin;

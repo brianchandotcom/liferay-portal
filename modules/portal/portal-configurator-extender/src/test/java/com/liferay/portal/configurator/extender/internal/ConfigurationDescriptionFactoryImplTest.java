@@ -20,9 +20,9 @@ import com.liferay.portal.configurator.extender.FactoryConfigurationDescription;
 import com.liferay.portal.configurator.extender.NamedConfigurationContent;
 import com.liferay.portal.configurator.extender.PropertiesFileNamedConfigurationContent;
 import com.liferay.portal.configurator.extender.SingleConfigurationDescription;
-import com.liferay.portal.kernel.util.Supplier;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.nio.charset.Charset;
@@ -38,7 +38,7 @@ import org.junit.Test;
 public class ConfigurationDescriptionFactoryImplTest {
 
 	@Test
-	public void testCreateFactoryConfiguration() {
+	public void testCreateFactoryConfiguration() throws IOException {
 		ConfigurationDescriptionFactory configurationDescriptionFactory =
 			new ConfigurationDescriptionFactoryImpl();
 
@@ -64,17 +64,17 @@ public class ConfigurationDescriptionFactoryImplTest {
 		Assert.assertEquals(
 			"config.pid", factoryConfigurationDescription.getPid());
 
-		Supplier<Dictionary<String, Object>> propertiesSupplier =
-			factoryConfigurationDescription.getPropertiesSupplier();
-
-		Dictionary<String, Object> properties = propertiesSupplier.get();
+		Dictionary<String, Object> properties =
+			factoryConfigurationDescription.getProperties();
 
 		Assert.assertEquals("value", properties.get("key"));
 		Assert.assertEquals("anotherValue", properties.get("anotherKey"));
 	}
 
 	@Test
-	public void testCreateReturnsNullWhenNotPropertiesFileNamedConfigurationContent() {
+	public void testCreateReturnsNullWhenNotPropertiesFileNamedConfigurationContent()
+		throws IOException {
+
 		ConfigurationDescriptionFactory configurationDescriptionFactory =
 			new ConfigurationDescriptionFactoryImpl();
 
@@ -97,7 +97,7 @@ public class ConfigurationDescriptionFactoryImplTest {
 	}
 
 	@Test
-	public void testCreateSimpleConfiguration() {
+	public void testCreateSimpleConfiguration() throws IOException {
 		ConfigurationDescriptionFactory configurationDescriptionFactory =
 			new ConfigurationDescriptionFactoryImpl();
 
@@ -120,10 +120,8 @@ public class ConfigurationDescriptionFactoryImplTest {
 		Assert.assertEquals(
 			"config.pid", singleConfigurationDescription.getPid());
 
-		Supplier<Dictionary<String, Object>> propertiesSupplier =
-			singleConfigurationDescription.getPropertiesSupplier();
-
-		Dictionary<String, Object> properties = propertiesSupplier.get();
+		Dictionary<String, Object> properties =
+			singleConfigurationDescription.getProperties();
 
 		Assert.assertEquals("value", properties.get("key"));
 		Assert.assertEquals("anotherValue", properties.get("anotherKey"));

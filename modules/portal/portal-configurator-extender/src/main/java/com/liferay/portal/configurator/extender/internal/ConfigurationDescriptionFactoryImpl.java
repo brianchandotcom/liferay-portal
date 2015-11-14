@@ -20,13 +20,12 @@ import com.liferay.portal.configurator.extender.FactoryConfigurationDescription;
 import com.liferay.portal.configurator.extender.NamedConfigurationContent;
 import com.liferay.portal.configurator.extender.PropertiesFileNamedConfigurationContent;
 import com.liferay.portal.configurator.extender.SingleConfigurationDescription;
-import com.liferay.portal.kernel.util.PropertiesUtil;
-import com.liferay.portal.kernel.util.Supplier;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.Dictionary;
+import java.util.Properties;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -39,7 +38,8 @@ public class ConfigurationDescriptionFactoryImpl
 
 	@Override
 	public ConfigurationDescription create(
-		NamedConfigurationContent namedConfigurationContent) {
+			NamedConfigurationContent namedConfigurationContent)
+		throws IOException {
 
 		if (!(namedConfigurationContent
 			instanceof PropertiesFileNamedConfigurationContent)) {
@@ -51,56 +51,30 @@ public class ConfigurationDescriptionFactoryImpl
 
 		int lastIndexOfDash = name.lastIndexOf('-');
 
-		String factoryPid = null;
-		String pid = null;
+		try (InputStream inputStream =
+				namedConfigurationContent.getInputStream()) {
 
-		if (lastIndexOfDash > 0) {
-			factoryPid = name.substring(0, lastIndexOfDash);
-			pid = name.substring(lastIndexOfDash + 1);
+			Properties properties = new Properties();
 
-			return new FactoryConfigurationDescription(
-				factoryPid, pid,
-				new PropertiesSupplier(
-					namedConfigurationContent.getInputStream()));
-		}
-		else {
-			pid = name;
+			properties.load(inputStream);
 
-			return new SingleConfigurationDescription(
-				pid,
-				new PropertiesSupplier(
-					namedConfigurationContent.getInputStream()));
+			Dictionary<String, Object> dictionary = _cast(properties);
+
+			if (lastIndexOfDash > 0) {
+				return new FactoryConfigurationDescription(
+					name.substring(0, lastIndexOfDash),
+					name.substring(lastIndexOfDash + 1), dictionary);
+			}
+
+			return new SingleConfigurationDescription(name, dictionary);
 		}
 	}
 
-	private class PropertiesSupplier
-		implements Supplier<Dictionary<String, Object>> {
+	@SuppressWarnings("unchecked")
+	private static Dictionary<String, Object> _cast(
+		Dictionary<?, ?> dictionary) {
 
-		public PropertiesSupplier(InputStream inputStream) {
-			_inputStream = inputStream;
-		}
-
-		@Override
-		public Dictionary<String, Object> get() {
-			try {
-				return _loadProperties();
-			}
-			catch (IOException ioe) {
-				throw new RuntimeException(ioe);
-			}
-		}
-
-		private Dictionary<String, Object> _loadProperties()
-			throws IOException {
-
-			Dictionary<?, ?> properties = PropertiesUtil.load(
-				_inputStream, "UTF-8");
-
-			return (Dictionary<String, Object>)properties;
-		}
-
-		private final InputStream _inputStream;
-
+		return (Dictionary<String, Object>)dictionary;
 	}
 
 }

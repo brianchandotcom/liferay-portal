@@ -14,6 +14,8 @@
 
 package com.liferay.deployment.helper.servlet;
 
+import com.liferay.portal.kernel.util.PropsUtil;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -50,10 +52,11 @@ public class DeploymentHelperContextListener implements ServletContextListener {
 			"deployment-path");
 
 		if ((deploymentPath == null) || deploymentPath.equals("")) {
-			servletContext.log(
-				"No deployment path is specified in the web.xml");
+			deploymentPath = PropsUtil.get("auto.deploy.deploy.dir");
 
-			return;
+			servletContext.log(
+				"No deployment path is specified in the web.xml, using " +
+				deploymentPath);
 		}
 
 		File deploymentPathFile = new File(deploymentPath);

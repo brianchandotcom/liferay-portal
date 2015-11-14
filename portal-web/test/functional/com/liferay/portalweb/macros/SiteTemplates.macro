@@ -126,27 +126,6 @@
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
-	<command name="editAllowSiteAdminToModifyPageCP">
-		<execute macro="SiteTemplates#gotoSettingsCP">
-			<var name="siteTemplateName" value="${siteTemplateName}" />
-		</execute>
-
-		<if>
-			<equals arg1="${allowSiteAdminsToModifyPages}" arg2="true" />
-			<then>
-				<execute function="Click" locator1="ToggleSwitch#ALLOW_SITE_ADMIN_MODIFY_PAGES" />
-			</then>
-			<elseif>
-				<equals arg1="${allowSiteAdminsToModifyPages}" arg2="false" />
-				<then>
-					<execute function="Click" locator1="ToggleSwitch#ALLOW_SITE_ADMIN_MODIFY_PAGES" />
-				</then>
-			</elseif>
-		</if>
-
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-	</command>
-
 	<command name="editCP">
 		<execute macro="SiteTemplates#gotoSettingsCP">
 			<var name="siteTemplateName" value="${siteTemplateName}" />
@@ -233,6 +212,21 @@
 				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 			</then>
 		</while>
+	</command>
+
+	<command name="toggleSiteAdminModifyPageCP">
+		<execute macro="SiteTemplates#gotoSettingsCP">
+			<var name="siteTemplateName" value="${siteTemplateName}" />
+		</execute>
+
+		<if>
+			<equals arg1="${toggleSiteAdminModifyPage}" arg2="true" />
+			<then>
+				<execute function="Click" locator1="ToggleSwitch#ALLOW_SITE_ADMIN_MODIFY_PAGES" />
+			</then>
+		</if>
+
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 	</command>
 
 	<command name="viewDefaultCP">

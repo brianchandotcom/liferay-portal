@@ -669,9 +669,9 @@
 			<var name="portlet" value="Site Templates" />
 		</execute>
 
-		<execute macro="SiteTemplates#editAllowSiteAdminToModifyPageCP">
-			<var name="allowSiteAdminsToModifyPages" value="false" />
+		<execute macro="SiteTemplates#toggleSiteAdminModifyPageCP">
 			<var name="siteTemplateName" value="Site Template Name" />
+			<var name="toggleSiteAdminModifyPage" value="true" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -725,9 +725,9 @@
 			<var name="portlet" value="Site Templates" />
 		</execute>
 
-		<execute macro="SiteTemplates#editAllowSiteAdminToModifyPageCP">
-			<var name="allowSiteAdminsToModifyPages" value="true" />
+		<execute macro="SiteTemplates#toggleSiteAdminModifyPageCP">
 			<var name="siteTemplateName" value="Site Template Name" />
+			<var name="toggleSiteAdminModifyPage" value="true" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">

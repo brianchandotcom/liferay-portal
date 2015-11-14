@@ -157,16 +157,11 @@
 						/>
 
 						<#if configurationModel.getConfiguration()??>
-							<@portlet["actionURL"] name="deleteConfiguration" varImpl="deleteConfigActionURL">
-								<@portlet["param"]
-									name="factoryPid"
-									value="${configurationModel.getFactoryPid()}"
-								/>
-								<@portlet["param"]
-									name="pid"
-									value="${configurationModel.getID()}"
-								/>
-							</@>
+
+							<#assign deleteConfigActionURL = renderResponse.createActionURL() />
+							${deleteConfigActionURL.setParameter("factoryPid", configurationModel.getFactoryPid())}
+							${deleteConfigActionURL.setParameter("pid", configurationModel.getID())}
+							${deleteConfigActionURL.setParameter("javax.portlet.action", "deleteConfiguration")}
 
 							<@liferay_ui["icon"]
 								message="delete"

@@ -116,11 +116,11 @@ public class DeploymentHelper {
 
 		String webInfDeploymentFileName = "WEB-INF/" + file.getName();
 
-		zipEntrySources.add(new FileSource(webInfDeploymentFileName, file));
-
 		sb.append('/');
 		sb.append(webInfDeploymentFileName);
 		sb.append(',');
+
+		zipEntrySources.add(new FileSource(webInfDeploymentFileName, file));
 	}
 
 	protected void addDeploymentFiles(

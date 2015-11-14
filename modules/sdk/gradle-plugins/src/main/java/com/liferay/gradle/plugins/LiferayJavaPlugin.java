@@ -1346,6 +1346,15 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		copy.into(liferayExtension.getDeployDir());
 	}
 
+	protected void configureTaskDirectDeployAppServerDir(
+		DirectDeployTask directDeployTask, LiferayExtension liferayExtension) {
+
+		if (directDeployTask.getAppServerDir() == null) {
+			directDeployTask.setAppServerDir(
+				liferayExtension.getAppServerDir());
+		}
+	}
+
 	protected void configureTaskDirectDeployAppServerLibGlobalDir(
 		DirectDeployTask directDeployTask, LiferayExtension liferayExtension) {
 
@@ -1678,6 +1687,8 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 					LiferayExtension liferayExtension = GradleUtil.getExtension(
 						directDeployTask.getProject(), LiferayExtension.class);
 
+					configureTaskDirectDeployAppServerDir(
+						directDeployTask, liferayExtension);
 					configureTaskDirectDeployAppServerLibGlobalDir(
 						directDeployTask, liferayExtension);
 					configureTaskDirectDeployAppServerPortalDir(

@@ -237,10 +237,6 @@ public class StartupAction extends SimpleAction {
 						if (!clusterMasterExecutor.isEnabled()) {
 							BackgroundTaskManagerUtil.cleanUpBackgroundTasks();
 						}
-						else {
-							clusterMasterExecutor.
-								notifyMasterTokenTransitionListeners();
-						}
 					}
 
 					@Override

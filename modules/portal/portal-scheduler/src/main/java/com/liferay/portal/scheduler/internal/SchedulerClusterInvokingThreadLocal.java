@@ -12,14 +12,26 @@
  * details.
  */
 
-package com.liferay.portal.kernel.scheduler.config;
+package com.liferay.portal.scheduler.internal;
+
+import com.liferay.portal.kernel.util.InitialThreadLocal;
 
 /**
- * @author Shuyang Zhou
  * @author Tina Tian
  */
-public interface SchedulingConfigurator {
+public class SchedulerClusterInvokingThreadLocal {
 
-	public void configure();
+	public static boolean isEnabled() {
+		return _enabled.get();
+	}
+
+	public static void setEnabled(boolean enabled) {
+		_enabled.set(enabled);
+	}
+
+	private static final ThreadLocal<Boolean> _enabled =
+		new InitialThreadLocal<Boolean>(
+			SchedulerClusterInvokingThreadLocal.class + "._enabled",
+			Boolean.TRUE);
 
 }

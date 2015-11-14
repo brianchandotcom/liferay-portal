@@ -27,9 +27,9 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
+import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.util.Date;
 
@@ -38,11 +38,6 @@ import java.util.Date;
  */
 public class SchedulerEventMessageListenerWrapper
 	implements SchedulerEventMessageListener {
-
-	@Override
-	public String getMessageListenerUUID() {
-		return _messageListenerUUID;
-	}
 
 	@Override
 	public SchedulerEntry getSchedulerEntry() {
@@ -54,11 +49,15 @@ public class SchedulerEventMessageListenerWrapper
 		String destinationName = GetterUtil.getString(
 			message.getString(SchedulerEngine.DESTINATION_NAME));
 
-		if (destinationName.equals(DestinationNames.SCHEDULER_DISPATCH)) {
-			String messageListenerUUID = message.getString(
-				SchedulerEngine.MESSAGE_LISTENER_UUID);
+		String jobName = message.getString(SchedulerEngine.JOB_NAME);
+		String groupName = message.getString(SchedulerEngine.GROUP_NAME);
 
-			if (!_messageListenerUUID.equals(messageListenerUUID)) {
+		if (destinationName.equals(DestinationNames.SCHEDULER_DISPATCH)) {
+			Trigger trigger = _schedulerEntry.getTrigger();
+
+			if (!jobName.equals(trigger.getJobName()) ||
+				! groupName.equals(trigger.getGroupName())) {
+
 				return;
 			}
 		}
@@ -89,9 +88,6 @@ public class SchedulerEventMessageListenerWrapper
 						destinationName, this);
 				}
 
-				String jobName = message.getString(SchedulerEngine.JOB_NAME);
-				String groupName = message.getString(
-					SchedulerEngine.GROUP_NAME);
 				StorageType storageType = (StorageType)message.get(
 					SchedulerEngine.STORAGE_TYPE);
 
@@ -144,10 +140,6 @@ public class SchedulerEventMessageListenerWrapper
 		_messageListener = messageListener;
 	}
 
-	public void setMessageListenerUUID(String messageListenerUUID) {
-		_messageListenerUUID = messageListenerUUID;
-	}
-
 	public void setSchedulerEntry(SchedulerEntry schedulerEntry) {
 		_schedulerEntry = schedulerEntry;
 	}
@@ -178,7 +170,6 @@ public class SchedulerEventMessageListenerWrapper
 	private String _jobName;
 
 	private MessageListener _messageListener;
-	private String _messageListenerUUID = PortalUUIDUtil.generate();
 	private SchedulerEntry _schedulerEntry;
 
 }

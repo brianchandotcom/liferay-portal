@@ -35,8 +35,6 @@ public interface ClusterMasterExecutor {
 
 	public boolean isMaster();
 
-	public void notifyMasterTokenTransitionListeners();
-
 	public void removeClusterMasterTokenTransitionListener(
 		ClusterMasterTokenTransitionListener
 			clusterMasterTokenAcquisitionListener);

@@ -135,11 +135,6 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 	}
 
 	@Override
-	public void notifyMasterTokenTransitionListeners() {
-		notifyMasterTokenTransitionListeners(isMaster());
-	}
-
-	@Override
 	public void removeClusterMasterTokenTransitionListener(
 		ClusterMasterTokenTransitionListener
 			clusterMasterTokenTransitionListener) {

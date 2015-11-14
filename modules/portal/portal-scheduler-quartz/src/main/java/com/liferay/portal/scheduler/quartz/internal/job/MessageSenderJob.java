@@ -69,14 +69,12 @@ public class MessageSenderJob implements Job {
 
 		String messageJSON = (String)jobDataMap.get(SchedulerEngine.MESSAGE);
 
-		Message message = null;
-
 		if (messageJSON == null) {
-			message = new Message();
+			throw new NullPointerException(
+				"Message retrieved from job data map is null");
 		}
-		else {
-			message = (Message)JSONFactoryUtil.deserialize(messageJSON);
-		}
+
+		Message message = (Message)JSONFactoryUtil.deserialize(messageJSON);
 
 		message.put(SchedulerEngine.DESTINATION_NAME, destinationName);
 
@@ -107,9 +105,7 @@ public class MessageSenderJob implements Job {
 			}
 		}
 
-		message.put(SchedulerEngine.JOB_NAME, jobKey.getName());
 		message.put(SchedulerEngine.JOB_STATE, jobState);
-		message.put(SchedulerEngine.GROUP_NAME, jobKey.getGroup());
 		message.put(SchedulerEngine.STORAGE_TYPE, storageType);
 
 		MessageBusUtil.sendMessage(destinationName, message);

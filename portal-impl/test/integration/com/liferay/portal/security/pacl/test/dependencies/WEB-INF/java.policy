@@ -1,4 +1,5 @@
 grant {
 	permission java.lang.RuntimePermission "loadLibrary.test_b";
 	permission java.net.NetPermission "specifyStreamHandler";
+	permission java.util.PropertyPermission "com.liferay.portal.kernel.security.SecureRandomUtil.buffer.size", "read";
 };

@@ -14,6 +14,7 @@
 
 package com.liferay.deployment.helper;
 
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ArgumentsUtil;
 
@@ -49,11 +50,8 @@ public class DeploymentHelper {
 				"The \"deployment.files\" argument is required");
 		}
 
-		String deploymentPath = arguments.get("deployment.path");
-
-		if (Validator.isNull(deploymentPath)) {
-			deploymentPath = "";
-		}
+		String deploymentPath = GetterUtil.getString(
+			arguments.get("deployment.path"));
 
 		String outputFileName = arguments.get("deployment.output.file");
 

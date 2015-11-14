@@ -31,7 +31,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.AccessControlContext;
 import com.liferay.portal.security.auth.AuthException;
 import com.liferay.portal.service.UserLocalService;
-import com.liferay.sync.security.service.access.policy.DefaultSyncPolicy;
+import com.liferay.sync.security.service.access.policy.SyncPolicies;
 
 import java.util.Date;
 import java.util.List;
@@ -139,7 +139,7 @@ public class SyncAuthVerifier implements AuthVerifier {
 					GetterUtil.getLong(credentials[0]));
 
 				ServiceAccessPolicyThreadLocal.addActiveServiceAccessPolicyName(
-					DefaultSyncPolicy.POLICY_NAMES[1]);
+					SyncPolicies.POLICY_NAMES[1]);
 			}
 			else {
 

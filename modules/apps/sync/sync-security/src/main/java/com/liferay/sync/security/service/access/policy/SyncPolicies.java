@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Tomas Polesovsky
  */
 @Component(immediate = true)
-public class DefaultSyncPolicy {
+public class SyncPolicies {
 
 	public static final String[] POLICY_NAMES = {"SYNC_DEFAULT", "SYNC_TOKEN"};
 

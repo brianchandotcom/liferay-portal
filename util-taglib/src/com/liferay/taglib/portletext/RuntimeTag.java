@@ -257,13 +257,13 @@ public class RuntimeTag extends TagSupport {
 					request, StringPool.BLANK, portlet, jsonObject);
 			}
 
-			if (writeJSONObject && (jsonObject != null)) {
+			if (jsonObject != null) {
 				PortletJSONUtil.writeHeaderPaths(response, jsonObject);
 			}
 
 			PortletContainerUtil.render(request, response, portlet);
 
-			if (writeJSONObject && (jsonObject != null)) {
+			if (jsonObject != null) {
 				PortletJSONUtil.writeFooterPaths(response, jsonObject);
 			}
 		}

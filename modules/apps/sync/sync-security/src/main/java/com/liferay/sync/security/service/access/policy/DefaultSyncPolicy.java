@@ -37,33 +37,38 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true)
 public class DefaultSyncPolicy {
 
-	public static final String POLICY_NAME = "SYNC_DEFAULT";
+	public static final String[] POLICY_NAMES = {"SYNC_DEFAULT", "SYNC_TOKEN"};
 
 	@Activate
 	public void activated() throws Exception {
 		for (Company company : _companyLocalService.getCompanies()) {
-			SAPEntry sapEntry = _sapEntryLocalService.fetchSAPEntry(
-				company.getCompanyId(), POLICY_NAME);
+			long defaultUserId = _userLocalService.getDefaultUserId(
+				company.getCompanyId());
 
-			if (sapEntry != null) {
-				continue;
-			}
+			for (int i = 0; i < POLICY_NAMES.length; i++) {
+				SAPEntry sapEntry = _sapEntryLocalService.fetchSAPEntry(
+					company.getCompanyId(), POLICY_NAMES[i]);
 
-			try {
-				Map<Locale, String> map = new HashMap<>();
+				if (sapEntry != null) {
+					continue;
+				}
 
-				map.put(LocaleUtil.getDefault(), POLICY_NAME);
+				try {
+					Map<Locale, String> map = new HashMap<>();
 
-				_sapEntryLocalService.addSAPEntry(
-					_userLocalService.getDefaultUserId(company.getCompanyId()),
-					_ALLOWED_SERVICE_SIGNATURES, true, true, POLICY_NAME, map,
-					new ServiceContext());
-			}
-			catch (PortalException e) {
-				throw new Exception(
-					"Unable to add SAP default policy for company " +
-						company.getCompanyId(),
-					e);
+					map.put(LocaleUtil.getDefault(), POLICY_NAMES[i]);
+
+					_sapEntryLocalService.addSAPEntry(
+						defaultUserId, _ALLOWED_SERVICE_SIGNATURES[i],
+						_DEFAULT_SAP_ENTRY[i], true, POLICY_NAMES[i], map,
+						new ServiceContext());
+				}
+				catch (PortalException e) {
+					throw new Exception(
+						"Unable to add SAP default policy for company " +
+							company.getCompanyId(),
+						e);
+				}
 			}
 		}
 	}
@@ -87,8 +92,12 @@ public class DefaultSyncPolicy {
 		_userLocalService = userLocalService;
 	}
 
-	private static final String _ALLOWED_SERVICE_SIGNATURES =
-		"com.liferay.sync.service.SyncDLObjectService#getSyncContext";
+	private static final String[] _ALLOWED_SERVICE_SIGNATURES =
+		{"com.liferay.sync.service.SyncDLObjectService#getSyncContext",
+			"com.liferay.sync.service.*"
+		};
+
+	private static final boolean[] _DEFAULT_SAP_ENTRY = {true, false};
 
 	private CompanyLocalService _companyLocalService;
 	private SAPEntryLocalService _sapEntryLocalService;

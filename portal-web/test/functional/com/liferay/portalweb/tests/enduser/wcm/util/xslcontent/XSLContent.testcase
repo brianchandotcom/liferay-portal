@@ -101,7 +101,7 @@
 
 		<execute function="Pause" locator1="5000" />
 
-		<var method="selenium#getValue('//input[contains(@id,\'url\')]')" name="valueName" />
+		<var method="selenium#getElementValue('//input[contains(@id,\'url\')]')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
@@ -121,7 +121,7 @@
 
 		<execute function="Pause" locator1="5000" />
 
-		<var method="selenium#getValue('//input[contains(@id,\'url\')]')" name="valueName" />
+		<var method="selenium#getElementValue('//input[contains(@id,\'url\')]')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
@@ -225,7 +225,7 @@
 
 		<execute function="Pause" locator1="5000" />
 
-		<var method="selenium#getValue('//input[contains(@id,\'url\')]')" name="valueName" />
+		<var method="selenium#getElementValue('//input[contains(@id,\'url\')]')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
@@ -245,7 +245,7 @@
 
 		<execute function="Pause" locator1="5000" />
 
-		<var method="selenium#getValue('//input[contains(@id,\'url\')]')" name="valueName" />
+		<var method="selenium#getElementValue('//input[contains(@id,\'url\')]')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
@@ -337,7 +337,7 @@
 
 		<execute function="Pause" locator1="5000" />
 
-		<var method="selenium#getValue('//input[contains(@id,\'url\')]')" name="valueName" />
+		<var method="selenium#getElementValue('//input[contains(@id,\'url\')]')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
@@ -357,7 +357,7 @@
 
 		<execute function="Pause" locator1="5000" />
 
-		<var method="selenium#getValue('//input[contains(@id,\'url\')]')" name="valueName" />
+		<var method="selenium#getElementValue('//input[contains(@id,\'url\')]')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
@@ -447,7 +447,7 @@
 
 		<execute function="Pause" locator1="5000" />
 
-		<var method="selenium#getValue('//input[contains(@id,\'url\')]')" name="valueName" />
+		<var method="selenium#getElementValue('//input[contains(@id,\'url\')]')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
@@ -467,7 +467,7 @@
 
 		<execute function="Pause" locator1="5000" />
 
-		<var method="selenium#getValue('//input[contains(@id,\'url\')]')" name="valueName" />
+		<var method="selenium#getElementValue('//input[contains(@id,\'url\')]')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 

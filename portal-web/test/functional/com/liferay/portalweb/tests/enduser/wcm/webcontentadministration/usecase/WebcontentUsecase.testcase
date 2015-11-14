@@ -286,7 +286,7 @@
 
 		<execute function="AssertClick" locator1="Link#URL" value1="URL" />
 
-		<var method="selenium#getValue('//input[contains(@id,\'url\')]')" name="dmDocumentURL" />
+		<var method="selenium#getElementValue('//input[contains(@id,\'url\')]')" name="dmDocumentURL" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />

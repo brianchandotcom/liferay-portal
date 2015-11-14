@@ -14,7 +14,6 @@
 
 package com.liferay.portal.configurator.extender.internal;
 
-import com.liferay.portal.configurator.extender.BundleStorage;
 import com.liferay.portal.configurator.extender.NamedConfigurationContent;
 import com.liferay.portal.configurator.extender.NamedConfigurationContentFactory;
 import com.liferay.portal.configurator.extender.PropertiesFileNamedConfigurationContent;
@@ -28,6 +27,7 @@ import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.List;
 
+import org.osgi.framework.Bundle;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -38,8 +38,8 @@ public class NamedConfigurationPathContentFactory
 	implements NamedConfigurationContentFactory {
 
 	@Override
-	public List<NamedConfigurationContent> create(BundleStorage bundleStorage) {
-		Dictionary<String, String> headers = bundleStorage.getHeaders();
+	public List<NamedConfigurationContent> create(Bundle bundle) {
+		Dictionary<String, String> headers = bundle.getHeaders();
 
 		String configurationPath = headers.get("ConfigurationPath");
 
@@ -47,7 +47,7 @@ public class NamedConfigurationPathContentFactory
 			return null;
 		}
 
-		final Enumeration<URL> entries = bundleStorage.findEntries(
+		final Enumeration<URL> entries = bundle.findEntries(
 			configurationPath, "*", true);
 
 		return ListUtil.fromEnumeration(

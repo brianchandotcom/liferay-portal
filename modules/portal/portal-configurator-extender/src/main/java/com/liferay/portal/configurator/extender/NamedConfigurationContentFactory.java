@@ -16,11 +16,13 @@ package com.liferay.portal.configurator.extender;
 
 import java.util.List;
 
+import org.osgi.framework.Bundle;
+
 /**
  * @author Carlos Sierra Andrés
  */
 public interface NamedConfigurationContentFactory {
 
-	public List<NamedConfigurationContent> create(BundleStorage bundleStorage);
+	public List<NamedConfigurationContent> create(Bundle bundle);
 
 }

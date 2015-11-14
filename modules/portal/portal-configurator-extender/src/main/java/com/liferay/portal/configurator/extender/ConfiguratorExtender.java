@@ -16,14 +16,8 @@ package com.liferay.portal.configurator.extender;
 
 import com.liferay.portal.configurator.extender.internal.ConfiguratorExtension;
 
-import java.io.IOException;
-
-import java.net.URL;
-
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Dictionary;
-import java.util.Enumeration;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.apache.felix.utils.extender.AbstractExtender;
@@ -102,8 +96,7 @@ public class ConfiguratorExtender extends AbstractExtender {
 
 			try {
 				configurationURLs.addAll(
-					namedConfigurationContentFactory.create(
-						new BundleStorageImpl(bundle)));
+					namedConfigurationContentFactory.create(bundle));
 			}
 			catch (Throwable t) {
 				_logger.log(
@@ -159,64 +152,5 @@ public class ConfiguratorExtender extends AbstractExtender {
 	private Logger _logger;
 	private final Collection<NamedConfigurationContentFactory>
 		_namedConfigurationContentFactories = new CopyOnWriteArrayList<>();
-
-	private static class BundleStorageImpl implements BundleStorage {
-
-		public BundleStorageImpl(Bundle bundle) {
-			_bundle = bundle;
-		}
-
-		@Override
-		public Enumeration<URL> findEntries(String s, String s1, boolean b) {
-			return _bundle.findEntries(s, s1, b);
-		}
-
-		@Override
-		public long getBundleId() {
-			return _bundle.getBundleId();
-		}
-
-		@Override
-		public URL getEntry(String s) {
-			return _bundle.getEntry(s);
-		}
-
-		@Override
-		public Enumeration<String> getEntryPaths(String s) {
-			return _bundle.getEntryPaths(s);
-		}
-
-		@Override
-		public Dictionary<String, String> getHeaders() {
-			return _bundle.getHeaders();
-		}
-
-		public Dictionary<String, String> getHeaders(String s) {
-			return _bundle.getHeaders(s);
-		}
-
-		@Override
-		public String getLocation() {
-			return _bundle.getLocation();
-		}
-
-		@Override
-		public URL getResource(String s) {
-			return _bundle.getResource(s);
-		}
-
-		@Override
-		public Enumeration<URL> getResources(String s) throws IOException {
-			return _bundle.getResources(s);
-		}
-
-		@Override
-		public String getSymbolicName() {
-			return _bundle.getSymbolicName();
-		}
-
-		private final Bundle _bundle;
-
-	}
 
 }

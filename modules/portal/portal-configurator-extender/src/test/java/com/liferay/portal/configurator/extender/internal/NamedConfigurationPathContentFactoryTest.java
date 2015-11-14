@@ -14,9 +14,9 @@
 
 package com.liferay.portal.configurator.extender.internal;
 
-import com.liferay.portal.configurator.extender.BundleStorage;
 import com.liferay.portal.configurator.extender.NamedConfigurationContent;
 import com.liferay.portal.configurator.extender.NamedConfigurationContentFactory;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
@@ -24,13 +24,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+
 import java.net.URI;
 import java.net.URL;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Dictionary;
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -40,6 +42,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+
+import org.osgi.framework.Bundle;
 
 /**
  * @author Carlos Sierra Andrés
@@ -74,14 +78,14 @@ public class NamedConfigurationPathContentFactoryTest {
 	public void testCreate() throws IOException {
 		URI uri = _file.toURI();
 
-		BundleStorage bundleStorage = new DummyBundleStorage(
+		Bundle bundle = _createDummyBundle(
 			100, "aLocation", _headers, Arrays.asList(uri.toURL()));
 
 		NamedConfigurationContentFactory namedConfigurationContentFactory =
 			new NamedConfigurationPathContentFactory();
 
 		List<NamedConfigurationContent> namedConfigurationContents =
-			namedConfigurationContentFactory.create(bundleStorage);
+			namedConfigurationContentFactory.create(bundle);
 
 		Assert.assertEquals(1, namedConfigurationContents.size());
 
@@ -108,7 +112,7 @@ public class NamedConfigurationPathContentFactoryTest {
 
 		URI uri2 = file.toURI();
 
-		BundleStorage bundleStorage = new DummyBundleStorage(
+		Bundle bundle = _createDummyBundle(
 			100, "aLocation", _headers,
 			Arrays.asList(uri1.toURL(), uri2.toURL()));
 
@@ -116,7 +120,7 @@ public class NamedConfigurationPathContentFactoryTest {
 			new NamedConfigurationPathContentFactory();
 
 		List<NamedConfigurationContent> namedConfigurationContents =
-			contentFactory.create(bundleStorage);
+			contentFactory.create(bundle);
 
 		Assert.assertEquals(2, namedConfigurationContents.size());
 
@@ -155,7 +159,7 @@ public class NamedConfigurationPathContentFactoryTest {
 
 		URI uri2 = file.toURI();
 
-		BundleStorage bundleStorage = new DummyBundleStorage(
+		Bundle bundle = _createDummyBundle(
 			100, "aLocation", _headers,
 			Arrays.asList(uri1.toURL(), uri2.toURL()));
 
@@ -163,7 +167,7 @@ public class NamedConfigurationPathContentFactoryTest {
 			new NamedConfigurationPathContentFactory();
 
 		List<NamedConfigurationContent> namedConfigurationContents =
-			contentFactory.create(bundleStorage);
+			contentFactory.create(bundle);
 
 		Assert.assertEquals(2, namedConfigurationContents.size());
 
@@ -192,6 +196,50 @@ public class NamedConfigurationPathContentFactoryTest {
 	@Rule
 	public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
+	private static Bundle _createDummyBundle(
+		final long bundleId, final String location,
+		final Dictionary<String, String> headers, final List<URL> findEntries) {
+
+		return (Bundle)ProxyUtil.newProxyInstance(
+			Bundle.class.getClassLoader(), new Class<?>[] {Bundle.class},
+			new InvocationHandler() {
+
+				@Override
+				public Object invoke(Object proxy, Method method, Object[] args)
+					throws ReflectiveOperationException {
+
+					if (method.equals(
+							Bundle.class.getMethod(
+								"findEntries", String.class, String.class,
+								boolean.class))) {
+
+						return Collections.enumeration(findEntries);
+					}
+
+					if (method.equals(Bundle.class.getMethod("getBundleId"))) {
+						return bundleId;
+					}
+
+					if (method.equals(Bundle.class.getMethod("getHeaders"))) {
+						return headers;
+					}
+
+					if (method.equals(Bundle.class.getMethod("getLocation"))) {
+						return location;
+					}
+
+					if (method.equals(
+							Bundle.class.getMethod("getSymbolicName"))) {
+
+						return headers.get("Bundle-SymbolicName");
+					}
+
+					return null;
+				}
+
+			});
+	}
+
 	private void _writeToFile(File file, String content) {
 		try (Writer writer = new FileWriter(file)) {
 			writer.write(content);
@@ -207,71 +255,5 @@ public class NamedConfigurationPathContentFactoryTest {
 
 	private File _file;
 	private Hashtable<String, String> _headers;
-
-	private static class DummyBundleStorage implements BundleStorage {
-
-		public DummyBundleStorage(
-			long bundleId, String location, Dictionary<String, String> headers,
-			List<URL> findEntries) {
-
-			_bundleId = bundleId;
-			_location = location;
-			_headers = headers;
-			_findEntries = findEntries;
-		}
-
-		@Override
-		public Enumeration<URL> findEntries(
-			String var1, String var2, boolean var3) {
-
-			return Collections.enumeration(_findEntries);
-		}
-
-		@Override
-		public long getBundleId() {
-			return _bundleId;
-		}
-
-		@Override
-		public URL getEntry(String var1) {
-			return null;
-		}
-
-		@Override
-		public Enumeration<String> getEntryPaths(String var1) {
-			return null;
-		}
-
-		@Override
-		public Dictionary<String, String> getHeaders() {
-			return _headers;
-		}
-
-		@Override
-		public String getLocation() {
-			return _location;
-		}
-
-		@Override
-		public URL getResource(String var1) {
-			return null;
-		}
-
-		@Override
-		public Enumeration<URL> getResources(String var1) throws IOException {
-			return null;
-		}
-
-		@Override
-		public String getSymbolicName() {
-			return getHeaders().get("Bundle-SymbolicName");
-		}
-
-		private final long _bundleId;
-		private final List<URL> _findEntries;
-		private final Dictionary<String, String> _headers;
-		private final String _location;
-
-	}
 
 }

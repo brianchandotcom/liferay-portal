@@ -27,7 +27,6 @@ import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
 import com.liferay.gradle.plugins.tasks.DirectDeployTask;
 import com.liferay.gradle.plugins.wsdd.builder.BuildWSDDTask;
 import com.liferay.gradle.plugins.wsdd.builder.WSDDBuilderPlugin;
-import com.liferay.gradle.plugins.xsd.builder.XSDBuilderPlugin;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
@@ -73,7 +72,6 @@ import org.gradle.api.tasks.TaskInputs;
 import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.api.tasks.bundling.Jar;
 import org.gradle.api.tasks.bundling.War;
-import org.gradle.api.tasks.bundling.Zip;
 import org.gradle.internal.Factory;
 
 /**
@@ -675,22 +673,6 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 	}
 
 	@Override
-	protected void configureTaskBuildXSD(Project project) {
-		Zip zip = (Zip)GradleUtil.getTask(
-			project, XSDBuilderPlugin.BUILD_XSD_TASK_NAME);
-
-		configureTaskBuildXSDArchiveName(zip);
-	}
-
-	protected void configureTaskBuildXSDArchiveName(Zip zip) {
-		String bundleSymbolicName = getBundleInstruction(
-			zip.getProject(), Constants.BUNDLE_SYMBOLICNAME);
-
-		zip.setArchiveName(
-			bundleSymbolicName + "-xbean." + Jar.DEFAULT_EXTENSION);
-	}
-
-	@Override
 	protected void configureTaskClassesDependsOn(Task classesTask) {
 		super.configureTaskClassesDependsOn(classesTask);
 
@@ -770,8 +752,6 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		Project project, LiferayExtension liferayExtension) {
 
 		super.configureTasks(project, liferayExtension);
-
-		configureTaskBuildXSD(project);
 
 		configureTaskAutoUpdateXml(project);
 	}

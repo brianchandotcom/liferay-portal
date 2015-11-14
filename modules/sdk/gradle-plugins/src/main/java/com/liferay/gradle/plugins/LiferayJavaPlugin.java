@@ -45,7 +45,6 @@ import com.liferay.gradle.plugins.wsdl.builder.BuildWSDLTask;
 import com.liferay.gradle.plugins.xml.formatter.FormatXMLTask;
 import com.liferay.gradle.plugins.xml.formatter.XMLFormatterPlugin;
 import com.liferay.gradle.plugins.xsd.builder.BuildXSDTask;
-import com.liferay.gradle.plugins.xsd.builder.XSDBuilderPlugin;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.StringUtil;
@@ -180,7 +179,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		configureArtifacts(project);
 
-		configureTaskBuildXSD(project);
 		configureTaskConfigJSModules(project);
 		configureTaskTranspileJS(project);
 		configureTasksBuildUpgradeTable(project);
@@ -321,12 +319,27 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		return formatXMLTask;
 	}
 
-	protected FormatXMLTask addTaskFormatXSD(Project project) {
-		FormatXMLTask formatXMLTask = GradleUtil.addTask(
-			project, FORMAT_XSD_TASK_NAME, FormatXMLTask.class);
+	protected FormatXMLTask addTaskFormatXSD(final BuildXSDTask buildXSDTask) {
+		Project project = buildXSDTask.getProject();
+
+		TaskContainer taskContainer = project.getTasks();
+
+		FormatXMLTask formatXMLTask = taskContainer.maybeCreate(
+			FORMAT_XSD_TASK_NAME, FormatXMLTask.class);
 
 		formatXMLTask.setDescription(
 			"Runs Liferay XML Formatter to format XSD files.");
+		formatXMLTask.setIncludes(Collections.singleton("**/*.xsd"));
+
+		formatXMLTask.source(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return buildXSDTask.getInputDir();
+				}
+
+			});
 
 		return formatXMLTask;
 	}
@@ -462,7 +475,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	protected void addTasks(Project project) {
 		addTaskDeploy(project);
-		addTaskFormatXSD(project);
 		addTaskInitGradle(project);
 		addTaskJarSources(project);
 		addTaskSetupArquillian(project);
@@ -481,6 +493,17 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 				@Override
 				public void execute(BuildWSDLTask buildWSDLTask) {
 					addTaskFormatWSDL(buildWSDLTask);
+				}
+
+			});
+
+		taskContainer.withType(
+			BuildXSDTask.class,
+			new Action<BuildXSDTask>() {
+
+				@Override
+				public void execute(BuildXSDTask buildXSDTask) {
+					addTaskFormatXSD(buildXSDTask);
 				}
 
 			});
@@ -906,7 +929,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, TLDFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, WhipPlugin.class);
 		GradleUtil.applyPlugin(project, XMLFormatterPlugin.class);
-		GradleUtil.applyPlugin(project, XSDBuilderPlugin.class);
 	}
 
 	protected void configureArtifacts(Project project) {
@@ -1172,28 +1194,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		buildUpgradeTableTask.setUpgradeTableDir(file);
 	}
 
-	protected void configureTaskBuildXSD(Project project) {
-		BuildXSDTask buildXSDTask = (BuildXSDTask)GradleUtil.getTask(
-			project, XSDBuilderPlugin.BUILD_XSD_TASK_NAME);
-
-		configureTaskBuildXSDDestinationDir(buildXSDTask);
-		configureTaskBuildXSDInputDir(buildXSDTask);
-	}
-
-	protected void configureTaskBuildXSDDestinationDir(
-		BuildXSDTask buildXSDTask) {
-
-		buildXSDTask.setDestinationDir(getLibDir(buildXSDTask.getProject()));
-	}
-
-	protected void configureTaskBuildXSDInputDir(BuildXSDTask buildXSDTask) {
-		Project project = buildXSDTask.getProject();
-
-		File inputDir = project.file("xsd");
-
-		buildXSDTask.setInputDir(inputDir);
-	}
-
 	protected void configureTaskClasses(Project project) {
 		Task classesTask = GradleUtil.getTask(
 			project, JavaPlugin.CLASSES_TASK_NAME);
@@ -1397,27 +1397,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		return task.getEnabled();
 	}
 
-	protected void configureTaskFormatXSD(Project project) {
-		FormatXMLTask formatXMLTask = (FormatXMLTask)GradleUtil.getTask(
-			project, FORMAT_XSD_TASK_NAME);
-
-		configureTaskFormatXSDSource(formatXMLTask);
-	}
-
-	protected void configureTaskFormatXSDSource(FormatXMLTask formatXMLTask) {
-		FileTree fileTree = formatXMLTask.getSource();
-
-		if (!fileTree.isEmpty()) {
-			return;
-		}
-
-		BuildXSDTask buildXSDTask = (BuildXSDTask)GradleUtil.getTask(
-			formatXMLTask.getProject(), XSDBuilderPlugin.BUILD_XSD_TASK_NAME);
-
-		formatXMLTask.setSource(buildXSDTask.getInputDir());
-		formatXMLTask.include("**/*.xsd");
-	}
-
 	protected void configureTaskInitGradle(Project project) {
 		InitGradleTask initGradleTask = (InitGradleTask)GradleUtil.getTask(
 			project, INIT_GRADLE_TASK_NAME);
@@ -1604,7 +1583,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureTaskClasses(project);
 		configureTaskClean(project);
 		configureTaskDeploy(project, liferayExtension);
-		configureTaskFormatXSD(project);
 		configureTaskInitGradle(project);
 		configureTaskJar(project);
 		configureTaskSetupTestableTomcat(project, liferayExtension);
@@ -1979,13 +1957,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	protected String getDeployedFileName(Project project, File sourceFile) {
 		return sourceFile.getName();
-	}
-
-	protected File getJavaDir(Project project) {
-		SourceSet sourceSet = GradleUtil.getSourceSet(
-			project, SourceSet.MAIN_SOURCE_SET_NAME);
-
-		return getSrcDir(sourceSet.getJava());
 	}
 
 	protected File getLibDir(Project project) {

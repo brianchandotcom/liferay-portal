@@ -14,10 +14,13 @@
 
 package com.liferay.gradle.plugins.xsd.builder;
 
+import com.liferay.gradle.util.GradleUtil;
+
 import java.io.File;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
@@ -33,14 +36,22 @@ import org.gradle.api.tasks.bundling.Zip;
 public class BuildXSDTask extends Zip {
 
 	public BuildXSDTask() {
+		setAppendix("xbean");
 		setExtension(Jar.DEFAULT_EXTENSION);
+	}
+
+	@Override
+	public File getDestinationDir() {
+		if (_destinationDir != null) {
+			return GradleUtil.toFile(getProject(), _destinationDir);
+		}
+
+		return super.getDestinationDir();
 	}
 
 	@InputDirectory
 	public File getInputDir() {
-		Project project = getProject();
-
-		return project.file(_inputDir);
+		return GradleUtil.toFile(getProject(), _inputDir);
 	}
 
 	@InputFiles
@@ -48,15 +59,9 @@ public class BuildXSDTask extends Zip {
 	public FileCollection getInputFiles() {
 		Project project = getProject();
 
-		File inputDir = getInputDir();
-
-		if (inputDir == null) {
-			return project.files();
-		}
-
 		Map<String, Object> args = new HashMap<>();
 
-		args.put("dir", inputDir);
+		args.put("dir", getInputDir());
 		args.put("include", "**/*.*");
 
 		return project.fileTree(args);
@@ -66,6 +71,11 @@ public class BuildXSDTask extends Zip {
 		_inputDir = inputDir;
 	}
 
-	private Object _inputDir = "xsd";
+	protected void setDestinationDir(Callable<File> callable) {
+		_destinationDir = callable;
+	}
+
+	private Callable<File> _destinationDir;
+	private Object _inputDir;
 
 }

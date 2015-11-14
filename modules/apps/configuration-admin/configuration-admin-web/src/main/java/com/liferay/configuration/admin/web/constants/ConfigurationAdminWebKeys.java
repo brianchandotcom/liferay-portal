@@ -12,22 +12,25 @@
  * details.
  */
 
-package com.liferay.portal.wab.extender.internal.configuration;
-
-import aQute.bnd.annotation.metatype.Meta;
-
-import com.liferay.configuration.admin.ConfigurationAdmin;
+package com.liferay.configuration.admin.web.constants;
 
 /**
- * @author Iván Zaera
+ * @author Brian Wing Shun Chan
  */
-@ConfigurationAdmin(category = "platform")
-@Meta.OCD(
-	id = "com.liferay.portal.wab.extender.internal.configuration.WabExtenderConfiguration"
-)
-public interface WabExtenderConfiguration {
+public class ConfigurationAdminWebKeys {
 
-	@Meta.AD(deflt = "60000", required = false)
-	public long stopTimeout();
+	public static final String CONFIGURATION_CATEGORIES =
+		"CONFIGURATION_CATEGORIES";
+
+	public static final String CONFIGURATION_CATEGORY =
+		"CONFIGURATION_CATEGORY";
+
+	public static final String CONFIGURATION_MODEL = "CONFIGURATION_MODEL";
+
+	public static final String CONFIGURATION_MODEL_ITERATOR =
+		"CONFIGURATION_MODEL_ITERATOR";
+
+	public static final String FACTORY_CONFIGURATION_MODEL =
+		"FACTORY_CONFIGURATION_MODEL";
 
 }

@@ -6,6 +6,7 @@ buildService {
 
 dependencies {
 	compile group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.2"
+	compile project(":apps:configuration-admin:configuration-admin-api")
 	compile project(":apps:dynamic-data-lists:dynamic-data-lists-api")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-io")
 	compile project(":apps:export-import:export-import-api")

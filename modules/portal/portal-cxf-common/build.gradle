@@ -9,6 +9,7 @@ dependencies {
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compile group: "org.slf4j", name: "slf4j-api", version: "1.7.2"
+	compile project(":apps:configuration-admin:configuration-admin-api")
 
 	provided group: "org.apache.cxf", name: "cxf-rt-transports-http", version: "3.0.3"
 	provided group: "org.apache.cxf", name: "cxf-tools-common", version: "3.0.3"

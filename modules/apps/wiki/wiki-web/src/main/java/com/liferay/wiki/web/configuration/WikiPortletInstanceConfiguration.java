@@ -16,9 +16,12 @@ package com.liferay.wiki.web.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.configuration.admin.ConfigurationAdmin;
+
 /**
  * @author Iván Zaera
  */
+@ConfigurationAdmin(category = "collaboration")
 @Meta.OCD(
 	id = "com.liferay.wiki.configuration.WikiPortletInstanceConfiguration"
 )

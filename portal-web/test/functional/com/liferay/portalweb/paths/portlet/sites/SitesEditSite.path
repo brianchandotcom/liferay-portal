@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DETAILS_NAME</td>
+	<td>//input[contains(@id,'SiteSettingsPortlet_name')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>APPLICATION_ADAPTER_SELECT</td>
 	<td>//select[contains(@id,'customJspServletContextName')]</td>
 	<td></td>

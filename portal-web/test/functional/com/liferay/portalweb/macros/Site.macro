@@ -122,7 +122,7 @@
 
 		<execute function="Click" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="CPSitesEdit#DETAILS_NAME" value1="${siteName}" />
+		<execute function="AssertTextEquals" locator1="SitesEditSite#DETAILS_NAME" value1="${siteName}" />
 
 		<if>
 			<isset var="siteLimitMembership" />

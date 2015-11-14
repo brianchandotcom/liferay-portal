@@ -46,6 +46,8 @@ import com.liferay.portal.model.LayoutType;
 import com.liferay.portal.model.LayoutTypeController;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.LayoutTypePortletConstants;
+import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -53,6 +55,8 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
+import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.service.ThemeLocalServiceUtil;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -60,7 +64,9 @@ import com.liferay.portal.util.LayoutClone;
 import com.liferay.portal.util.LayoutCloneFactory;
 import com.liferay.portal.util.LayoutTypePortletFactoryUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletURLImpl;
 
 import java.io.IOException;
@@ -387,6 +393,76 @@ public class LayoutImpl extends LayoutBaseImpl {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	@Override
+	public List<Portlet> getEmbeddedPortlets() {
+		return getEmbeddedPortlets(getGroupId());
+	}
+
+	@Override
+	public List<Portlet> getEmbeddedPortlets(long groupId) {
+		List<Portlet> portlets = new ArrayList<>();
+
+		List<PortletPreferences> portletPreferences =
+			PortletPreferencesLocalServiceUtil.getPortletPreferences(
+				groupId, PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+				PortletKeys.PREFS_PLID_SHARED);
+
+		if (isTypePortlet()) {
+			LayoutTypePortlet layoutTypePortlet =
+				(LayoutTypePortlet)getLayoutType();
+
+			PortalPreferences portalPreferences =
+				layoutTypePortlet.getPortalPreferences();
+
+			if (layoutTypePortlet.isCustomizable() &&
+				(portalPreferences != null)) {
+
+				portletPreferences = ListUtil.copy(portletPreferences);
+
+				portletPreferences.addAll(
+					PortletPreferencesLocalServiceUtil.getPortletPreferences(
+						portalPreferences.getUserId(),
+						PortletKeys.PREFS_OWNER_TYPE_USER, getPlid()));
+			}
+		}
+
+		for (PortletPreferences portletPreference : portletPreferences) {
+			String portletId = portletPreference.getPortletId();
+
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+				getCompanyId(), portletId);
+
+			if ((portlet == null) || !portlet.isReady() ||
+				portlet.isUndeployedPortlet() || !portlet.isActive()) {
+
+				continue;
+			}
+
+			Portlet embeddedPortlet = portlet;
+
+			if (portlet.isInstanceable()) {
+
+				// Instanceable portlets do not need to be cloned because they
+				// are already cloned. See the method getPortletById in the
+				// class PortletLocalServiceImpl and how it references the
+				// method getClonedInstance in the class PortletImpl.
+
+			}
+			else {
+				embeddedPortlet = (Portlet)embeddedPortlet.clone();
+			}
+
+			// We set embedded portlets as static on order to avoid adding the
+			// close and/or move icons.
+
+			embeddedPortlet.setStatic(true);
+
+			portlets.add(embeddedPortlet);
+		}
+
+		return portlets;
 	}
 
 	/**

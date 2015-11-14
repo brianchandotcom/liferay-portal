@@ -155,6 +155,11 @@ public interface Layout extends LayoutModel, PersistedModel {
 	public java.lang.String getDefaultThemeSetting(java.lang.String key,
 		java.lang.String device, boolean inheritLookAndFeel);
 
+	public java.util.List<com.liferay.portal.model.Portlet> getEmbeddedPortlets();
+
+	public java.util.List<com.liferay.portal.model.Portlet> getEmbeddedPortlets(
+		long groupId);
+
 	/**
 	* Returns the layout's friendly URL for the given locale.
 	*

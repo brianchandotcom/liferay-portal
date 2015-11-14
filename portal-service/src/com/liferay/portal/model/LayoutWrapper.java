@@ -542,6 +542,17 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	}
 
 	@Override
+	public java.util.List<com.liferay.portal.model.Portlet> getEmbeddedPortlets() {
+		return _layout.getEmbeddedPortlets();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.Portlet> getEmbeddedPortlets(
+		long groupId) {
+		return _layout.getEmbeddedPortlets(groupId);
+	}
+
+	@Override
 	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
 		return _layout.getExpandoBridge();
 	}

@@ -17,7 +17,6 @@ package com.liferay.gradle.plugins;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
 import com.liferay.gradle.plugins.tasks.DirectDeployTask;
-import com.liferay.gradle.plugins.wsdl.builder.BuildWSDLTask;
 import com.liferay.gradle.plugins.xsd.builder.BuildXSDTask;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
@@ -246,18 +245,6 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 
 		configureSourceSet(
 			project, SourceSet.MAIN_SOURCE_SET_NAME, classesDir, srcDir);
-	}
-
-	@Override
-	protected void configureTaskBuildWSDLInputDir(BuildWSDLTask buildWSDLTask) {
-		File inputDir = buildWSDLTask.getInputDir();
-
-		if (!inputDir.exists()) {
-			inputDir = new File(
-				getWebAppDir(buildWSDLTask.getProject()), "WEB-INF/wsdl");
-
-			buildWSDLTask.setInputDir(inputDir);
-		}
 	}
 
 	@Override

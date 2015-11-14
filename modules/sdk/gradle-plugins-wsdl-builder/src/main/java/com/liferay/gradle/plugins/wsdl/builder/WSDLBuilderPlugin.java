@@ -19,6 +19,8 @@ import com.liferay.gradle.util.GradleUtil;
 
 import java.io.File;
 
+import java.util.concurrent.Callable;
+
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -27,6 +29,9 @@ import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.plugins.PluginContainer;
+import org.gradle.api.plugins.WarPlugin;
+import org.gradle.api.plugins.WarPluginConvention;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskInputs;
@@ -45,7 +50,9 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		addWSDLBuilderConfiguration(project);
+		GradleUtil.applyPlugin(project, JavaPlugin.class);
+
+		addConfigurationWSDLBuilder(project);
 
 		addTaskBuildWSDL(project);
 
@@ -54,18 +61,79 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
-					configureTaskBuildWSDL(project);
+					configureTasksBuildWSDL(project);
 				}
 
 			});
 	}
 
+	protected Configuration addConfigurationWSDLBuilder(final Project project) {
+		Configuration configuration = GradleUtil.addConfiguration(
+			project, CONFIGURATION_NAME);
+
+		configuration.setDescription(
+			"Configures Apache Axis for generating WSDL client stubs.");
+		configuration.setVisible(false);
+
+		GradleUtil.executeIfEmpty(
+			configuration,
+			new Action<Configuration>() {
+
+				@Override
+				public void execute(Configuration configuration) {
+					addDependenciesWSDLBuilder(project);
+				}
+
+			});
+
+		return configuration;
+	}
+
+	protected void addDependenciesWSDLBuilder(Project project) {
+		GradleUtil.addDependency(
+			project, CONFIGURATION_NAME, "axis", "axis-wsdl4j", "1.5.1");
+		GradleUtil.addDependency(
+			project, CONFIGURATION_NAME, "com.liferay", "org.apache.axis",
+			"1.4.LIFERAY-PATCHED-1");
+		GradleUtil.addDependency(
+			project, CONFIGURATION_NAME, "commons-discovery",
+			"commons-discovery", "0.2");
+		GradleUtil.addDependency(
+			project, CONFIGURATION_NAME, "commons-logging", "commons-logging",
+			"1.0.4");
+		GradleUtil.addDependency(
+			project, CONFIGURATION_NAME, "javax.activation", "activation",
+			"1.1");
+		GradleUtil.addDependency(
+			project, CONFIGURATION_NAME, "javax.mail", "mail", "1.4");
+		GradleUtil.addDependency(
+			project, CONFIGURATION_NAME, "org.apache.axis", "axis-jaxrpc",
+			"1.4");
+		GradleUtil.addDependency(
+			project, CONFIGURATION_NAME, "org.apache.axis", "axis-saaj", "1.4");
+	}
+
 	protected BuildWSDLTask addTaskBuildWSDL(Project project) {
-		BuildWSDLTask buildWSDLTask = GradleUtil.addTask(
+		final BuildWSDLTask buildWSDLTask = GradleUtil.addTask(
 			project, BUILD_WSDL_TASK_NAME, BuildWSDLTask.class);
 
 		buildWSDLTask.setDescription("Generates WSDL client stubs.");
+		buildWSDLTask.setDestinationDir("lib");
 		buildWSDLTask.setGroup(BasePlugin.BUILD_GROUP);
+		buildWSDLTask.setInputDir("wsdl");
+
+		PluginContainer pluginContainer = project.getPlugins();
+
+		pluginContainer.withType(
+			WarPlugin.class,
+			new Action<WarPlugin>() {
+
+				@Override
+				public void execute(WarPlugin warPlugin) {
+					configureTaskBuildWSDLForWarPlugin(buildWSDLTask);
+				}
+
+			});
 
 		return buildWSDLTask;
 	}
@@ -177,52 +245,6 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 		taskOutputs.file(jarTask.getOutputs());
 	}
 
-	protected Configuration addWSDLBuilderConfiguration(final Project project) {
-		Configuration configuration = GradleUtil.addConfiguration(
-			project, CONFIGURATION_NAME);
-
-		configuration.setDescription(
-			"Configures Apache Axis for generating WSDL client stubs.");
-		configuration.setVisible(false);
-
-		GradleUtil.executeIfEmpty(
-			configuration,
-			new Action<Configuration>() {
-
-				@Override
-				public void execute(Configuration configuration) {
-					addWSDLBuilderDependencies(project);
-				}
-
-			});
-
-		return configuration;
-	}
-
-	protected void addWSDLBuilderDependencies(Project project) {
-		GradleUtil.addDependency(
-			project, CONFIGURATION_NAME, "axis", "axis-wsdl4j", "1.5.1");
-		GradleUtil.addDependency(
-			project, CONFIGURATION_NAME, "com.liferay", "org.apache.axis",
-			"1.4.LIFERAY-PATCHED-1");
-		GradleUtil.addDependency(
-			project, CONFIGURATION_NAME, "commons-discovery",
-			"commons-discovery", "0.2");
-		GradleUtil.addDependency(
-			project, CONFIGURATION_NAME, "commons-logging", "commons-logging",
-			"1.0.4");
-		GradleUtil.addDependency(
-			project, CONFIGURATION_NAME, "javax.activation", "activation",
-			"1.1");
-		GradleUtil.addDependency(
-			project, CONFIGURATION_NAME, "javax.mail", "mail", "1.4");
-		GradleUtil.addDependency(
-			project, CONFIGURATION_NAME, "org.apache.axis", "axis-jaxrpc",
-			"1.4");
-		GradleUtil.addDependency(
-			project, CONFIGURATION_NAME, "org.apache.axis", "axis-saaj", "1.4");
-	}
-
 	protected void configureTaskBuildWSDL(BuildWSDLTask buildWSDLTask) {
 		FileCollection inputFiles = buildWSDLTask.getInputFiles();
 
@@ -241,7 +263,35 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 			taskOutputs.getFiles());
 	}
 
-	protected void configureTaskBuildWSDL(Project project) {
+	protected void configureTaskBuildWSDLForWarPlugin(
+		final BuildWSDLTask buildWSDLTask) {
+
+		buildWSDLTask.setDestinationDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return new File(
+						getWebAppDir(buildWSDLTask.getProject()),
+						"WEB-INF/lib");
+				}
+
+			});
+
+		buildWSDLTask.setInputDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return new File(
+						getWebAppDir(buildWSDLTask.getProject()),
+						"WEB-INF/wsdl");
+				}
+
+			});
+	}
+
+	protected void configureTasksBuildWSDL(Project project) {
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(
@@ -254,6 +304,13 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 				}
 
 			});
+	}
+
+	protected File getWebAppDir(Project project) {
+		WarPluginConvention warPluginConvention = GradleUtil.getConvention(
+			project, WarPluginConvention.class);
+
+		return warPluginConvention.getWebAppDir();
 	}
 
 }

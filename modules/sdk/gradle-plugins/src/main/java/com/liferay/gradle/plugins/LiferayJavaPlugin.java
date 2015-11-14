@@ -42,7 +42,6 @@ import com.liferay.gradle.plugins.upgrade.table.builder.BuildUpgradeTableTask;
 import com.liferay.gradle.plugins.whip.WhipPlugin;
 import com.liferay.gradle.plugins.whip.WhipTaskExtension;
 import com.liferay.gradle.plugins.wsdl.builder.BuildWSDLTask;
-import com.liferay.gradle.plugins.wsdl.builder.WSDLBuilderPlugin;
 import com.liferay.gradle.plugins.xml.formatter.FormatXMLTask;
 import com.liferay.gradle.plugins.xml.formatter.XMLFormatterPlugin;
 import com.liferay.gradle.plugins.xsd.builder.BuildXSDTask;
@@ -181,7 +180,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		configureArtifacts(project);
 
-		configureTaskBuildWSDL(project);
 		configureTaskBuildXSD(project);
 		configureTaskConfigJSModules(project);
 		configureTaskTranspileJS(project);
@@ -296,12 +294,29 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		return copy;
 	}
 
-	protected FormatXMLTask addTaskFormatWSDL(Project project) {
-		FormatXMLTask formatXMLTask = GradleUtil.addTask(
-			project, FORMAT_WSDL_TASK_NAME, FormatXMLTask.class);
+	protected FormatXMLTask addTaskFormatWSDL(
+		final BuildWSDLTask buildWSDLTask) {
+
+		Project project = buildWSDLTask.getProject();
+
+		TaskContainer taskContainer = project.getTasks();
+
+		FormatXMLTask formatXMLTask = taskContainer.maybeCreate(
+			FORMAT_WSDL_TASK_NAME, FormatXMLTask.class);
 
 		formatXMLTask.setDescription(
 			"Runs Liferay XML Formatter to format WSDL files.");
+		formatXMLTask.setIncludes(Collections.singleton("**/*.wsdl"));
+
+		formatXMLTask.source(
+			new Callable<File>() {
+
+			@Override
+			public File call() throws Exception {
+				return buildWSDLTask.getInputDir();
+			}
+
+		});
 
 		return formatXMLTask;
 	}
@@ -447,7 +462,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	protected void addTasks(Project project) {
 		addTaskDeploy(project);
-		addTaskFormatWSDL(project);
 		addTaskFormatXSD(project);
 		addTaskInitGradle(project);
 		addTaskJarSources(project);
@@ -457,6 +471,19 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		addTaskStopTestableTomcat(project);
 		addTaskTestIntegration(project);
 		addTaskZipJavadoc(project);
+
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			BuildWSDLTask.class,
+			new Action<BuildWSDLTask>() {
+
+				@Override
+				public void execute(BuildWSDLTask buildWSDLTask) {
+					addTaskFormatWSDL(buildWSDLTask);
+				}
+
+			});
 	}
 
 	protected Task addTaskSetupArquillian(Project project) {
@@ -877,7 +904,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, SourceFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, SoyPlugin.class);
 		GradleUtil.applyPlugin(project, TLDFormatterPlugin.class);
-		GradleUtil.applyPlugin(project, WSDLBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, WhipPlugin.class);
 		GradleUtil.applyPlugin(project, XMLFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, XSDBuilderPlugin.class);
@@ -1146,33 +1172,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		buildUpgradeTableTask.setUpgradeTableDir(file);
 	}
 
-	protected void configureTaskBuildWSDL(Project project) {
-		BuildWSDLTask buildWSDLTask = (BuildWSDLTask)GradleUtil.getTask(
-			project, WSDLBuilderPlugin.BUILD_WSDL_TASK_NAME);
-
-		configureTaskBuildWSDLDestinationDir(buildWSDLTask);
-		configureTaskBuildWSDLInputDir(buildWSDLTask);
-	}
-
-	protected void configureTaskBuildWSDLDestinationDir(
-		BuildWSDLTask buildWSDLTask) {
-
-		File destinationDir = buildWSDLTask.getDestinationDir();
-
-		if (!destinationDir.exists()) {
-			buildWSDLTask.setDestinationDir(
-				getLibDir(buildWSDLTask.getProject()));
-		}
-	}
-
-	protected void configureTaskBuildWSDLInputDir(BuildWSDLTask buildWSDLTask) {
-		File inputDir = buildWSDLTask.getInputDir();
-
-		if (!inputDir.exists()) {
-			buildWSDLTask.setInputDir("wsdl");
-		}
-	}
-
 	protected void configureTaskBuildXSD(Project project) {
 		BuildXSDTask buildXSDTask = (BuildXSDTask)GradleUtil.getTask(
 			project, XSDBuilderPlugin.BUILD_XSD_TASK_NAME);
@@ -1389,27 +1388,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		return task.getEnabled();
 	}
 
-	protected void configureTaskFormatWSDL(Project project) {
-		FormatXMLTask formatXMLTask = (FormatXMLTask)GradleUtil.getTask(
-			project, FORMAT_WSDL_TASK_NAME);
-
-		configureTaskFormatWSDLSource(formatXMLTask);
-	}
-
-	protected void configureTaskFormatWSDLSource(FormatXMLTask formatXMLTask) {
-		FileTree fileTree = formatXMLTask.getSource();
-
-		if (!fileTree.isEmpty()) {
-			return;
-		}
-
-		BuildWSDLTask buildWSDLTask = (BuildWSDLTask)GradleUtil.getTask(
-			formatXMLTask.getProject(), WSDLBuilderPlugin.BUILD_WSDL_TASK_NAME);
-
-		formatXMLTask.setSource(buildWSDLTask.getInputDir());
-		formatXMLTask.include("**/*.wsdl");
-	}
-
 	protected void configureTaskFormatXSD(Project project) {
 		FormatXMLTask formatXMLTask = (FormatXMLTask)GradleUtil.getTask(
 			project, FORMAT_XSD_TASK_NAME);
@@ -1617,7 +1595,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureTaskClasses(project);
 		configureTaskClean(project);
 		configureTaskDeploy(project, liferayExtension);
-		configureTaskFormatWSDL(project);
 		configureTaskFormatXSD(project);
 		configureTaskInitGradle(project);
 		configureTaskJar(project);

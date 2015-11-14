@@ -14,6 +14,8 @@
 
 package com.liferay.gradle.plugins.wsdl.builder;
 
+import com.liferay.gradle.util.GradleUtil;
+
 import java.io.File;
 
 import java.util.HashMap;
@@ -31,16 +33,14 @@ import org.gradle.api.tasks.SkipWhenEmpty;
  */
 public class BuildWSDLTask extends DefaultTask {
 
+	@Input
 	public File getDestinationDir() {
-		Project project = getProject();
-
-		return project.file(_destinationDir);
+		return GradleUtil.toFile(getProject(), _destinationDir);
 	}
 
+	@Input
 	public File getInputDir() {
-		Project project = getProject();
-
-		return project.file(_inputDir);
+		return GradleUtil.toFile(getProject(), _inputDir);
 	}
 
 	@InputFiles
@@ -48,15 +48,9 @@ public class BuildWSDLTask extends DefaultTask {
 	public FileCollection getInputFiles() {
 		Project project = getProject();
 
-		File wsdlDir = getInputDir();
-
-		if (wsdlDir == null) {
-			return project.files();
-		}
-
 		Map<String, Object> args = new HashMap<>();
 
-		args.put("dir", wsdlDir);
+		args.put("dir", getInputDir());
 		args.put("include", "*.wsdl");
 
 		return project.fileTree(args);
@@ -79,8 +73,8 @@ public class BuildWSDLTask extends DefaultTask {
 		_inputDir = inputDir;
 	}
 
-	private Object _destinationDir = "lib";
+	private Object _destinationDir;
 	private boolean _includeSource = true;
-	private Object _inputDir = "wsdl";
+	private Object _inputDir;
 
 }

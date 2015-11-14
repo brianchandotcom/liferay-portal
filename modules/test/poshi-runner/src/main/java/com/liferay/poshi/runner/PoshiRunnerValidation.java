@@ -581,6 +581,11 @@ public class PoshiRunnerValidation {
 
 			for (Element returnElement : returnElements) {
 				validateExecuteReturnElement(returnElement, filePath);
+
+				if (primaryAttributeName.equals("macro")) {
+					validateMacroReturns(
+						element, "macro", returnElement, filePath);
+				}
 			}
 		}
 	}
@@ -908,6 +913,26 @@ public class PoshiRunnerValidation {
 			else if (childElementName.equals("var")) {
 				validateVarElement(childElement, filePath);
 			}
+		}
+	}
+
+	protected static void validateMacroReturns(
+		Element element, String macroType, Element returnElement,
+		String filePath) {
+
+		String classCommandName = element.attributeValue(macroType);
+
+		List<String> returns = PoshiRunnerContext.getMacroCommandReturns(
+			classCommandName);
+
+		String returnVariable = returnElement.attributeValue("from");
+
+		if (!returns.contains(returnVariable)) {
+			_exceptions.add(
+				new Exception(
+					returnVariable + " not specified as a return variable\n" +
+						filePath + ":" +
+							element.attributeValue("line-number")));
 		}
 	}
 

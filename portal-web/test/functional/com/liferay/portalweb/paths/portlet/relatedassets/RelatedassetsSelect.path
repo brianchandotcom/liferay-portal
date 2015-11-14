@@ -1,0 +1,106 @@
+<html>
+<head>
+<title>RelatedassetsSelect</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">RelatedassetsSelect</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>IFRAME</td>
+	<td>//iframe[@class='dialog-iframe-node ']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_ADVANCED_MENULIST</td>
+	<td>//a[contains(@id,'searchtoggleAdvanced')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_FIELD</td>
+	<td>//input[contains(@id,'_asset_searchkeywords')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_BUTTON</td>
+	<td>//button[contains(.,'Search')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='alert alert-info']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADVANCED_SEARCH-->
+<tr>
+	<td>ADVANCED_SEARCH_OPERATOR_SELECTION</td>
+	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group'))]/select[contains(@id,'andOperator')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_TITLE_FIELD</td>
+	<td>//div[contains(@id,'searchadvancedContent')]//input[contains(@id,'title')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_DESCRIPTION_FIELD</td>
+	<td>//div[contains(@id,'searchadvancedContent')]//input[contains(@id,'description')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_USER_NAME_FIELD</td>
+	<td>//div[contains(@id,'searchadvancedContent')]//input[contains(@id,'user-name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_MY_SITES_SELECTION</td>
+	<td>xpath=(//div[contains(@id,'searchadvancedContent')]//select)[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ASSET_TABLE-->
+<tr>
+	<td>ASSET_TABLE_TITLE</td>
+	<td>//tr[contains(.,'${key_assetTitle}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_TABLE_DESCRIPTION</td>
+	<td>//tr[contains(.,'${key_assetTitle}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_TABLE_USER_NAME</td>
+	<td>//tr[contains(.,'${key_assetTitle}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_TABLE_MODIFIED_DATE</td>
+	<td>//tr[contains(.,'${key_assetTitle}')]/td[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_TABLE_SITE</td>
+	<td>//tr[contains(.,'${key_assetTitle}')]/td[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_TABLE_CHOOSE</td>
+	<td>//tr[contains(.,'${key_assetTitle}')]/td/button[contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

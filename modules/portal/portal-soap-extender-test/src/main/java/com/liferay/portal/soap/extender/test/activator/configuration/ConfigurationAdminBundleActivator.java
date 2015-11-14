@@ -89,12 +89,13 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 						HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME +
 							"=soap-test))";
 
-			if (!WaiterUtil.waitForFilter(
-					bundleContext, _filterString, 10_000)) {
-
+			try {
+				WaiterUtil.waitForFilter(bundleContext, _filterString, 10_000);
+			}
+			catch (TimeoutException te) {
 				_cleanUp();
 
-				throw new TimeoutException("Service register waiting timeout");
+				throw te;
 			}
 		}
 		finally {

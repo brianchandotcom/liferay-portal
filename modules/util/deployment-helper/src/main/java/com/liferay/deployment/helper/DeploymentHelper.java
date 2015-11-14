@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.tools.ant.DirectoryScanner;
+
 import org.zeroturnaround.zip.ByteSource;
 import org.zeroturnaround.zip.FileSource;
 import org.zeroturnaround.zip.ZipEntrySource;
@@ -50,8 +52,7 @@ public class DeploymentHelper {
 		String deploymentPath = arguments.get("deployment.path");
 
 		if (Validator.isNull(deploymentPath)) {
-			throw new IllegalArgumentException(
-				"The \"deployment.path\" argument is required");
+			deploymentPath = "";
 		}
 
 		String outputFileName = arguments.get("deployment.output.file");
@@ -79,16 +80,48 @@ public class DeploymentHelper {
 
 		StringBuilder sb = new StringBuilder();
 
+		DirectoryScanner scanner = new DirectoryScanner();
+
+		scanner.setIncludes(new String[] {"**/*.jar"});
+		scanner.setCaseSensitive(false);
+
 		for (String deploymentFileName : deploymentFileNames.split(",")) {
-			File file = new File(deploymentFileName.trim());
+			File deploymentFile = new File(deploymentFileName.trim());
 
-			String webInfDeploymentFileName = "WEB-INF/" + file.getName();
+			if (deploymentFile.isDirectory()) {
+				String deploymentFilePath = deploymentFile.getCanonicalPath();
 
-			zipEntrySources.add(new FileSource(webInfDeploymentFileName, file));
+				scanner.setBasedir(deploymentFilePath);
+				scanner.scan();
+				String[] fileNames = scanner.getIncludedFiles();
 
-			sb.append('/');
-			sb.append(webInfDeploymentFileName);
-			sb.append(',');
+				System.out.println("Adding jars in " + deploymentFilePath);
+
+				for (String fileName : fileNames) {
+					File file = new File(deploymentFilePath, fileName);
+
+					String webInfDeploymentFileName =
+						"WEB-INF/" + file.getName();
+
+					zipEntrySources.add(
+						new FileSource(webInfDeploymentFileName, file));
+
+					sb.append('/');
+					sb.append(webInfDeploymentFileName);
+					sb.append(',');
+				}
+			}
+			else {
+				String webInfDeploymentFileName =
+					"WEB-INF/" + deploymentFile.getName();
+
+				zipEntrySources.add(
+					new FileSource(webInfDeploymentFileName, deploymentFile));
+
+				sb.append('/');
+				sb.append(webInfDeploymentFileName);
+				sb.append(',');
+			}
 		}
 
 		sb.setLength(sb.length() - 1);

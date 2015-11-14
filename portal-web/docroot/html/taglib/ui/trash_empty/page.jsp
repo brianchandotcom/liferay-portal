@@ -34,7 +34,7 @@ int totalEntries = GetterUtil.getInteger(request.getAttribute("liferay-ui:trash-
 
 			<liferay-ui:message arguments="<%= StringUtil.toLowerCase(trashEntriesMaxAgeTimeDescription) %>" key="<%= infoMessage %>" translateArguments="<%= false %>" />
 
-			<a class="alert-link trash-empty-link" href="javascript:;" id="<%= namespace %>empty"><liferay-ui:message key="<%= emptyMessage %>" /></a>
+			<aui:a cssClass="alert-link trash-empty-link" href="javascript:;" id="empty" label="<%= emptyMessage %>" />
 
 			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.EMPTY_TRASH %>" />
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />

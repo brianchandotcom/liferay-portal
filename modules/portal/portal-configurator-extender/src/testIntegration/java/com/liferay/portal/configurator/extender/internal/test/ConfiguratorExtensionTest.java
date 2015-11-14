@@ -14,9 +14,9 @@
 
 package com.liferay.portal.configurator.extender.internal.test;
 
+import com.liferay.portal.configurator.extender.ConfigurationContent;
 import com.liferay.portal.configurator.extender.ConfigurationDescription;
 import com.liferay.portal.configurator.extender.ConfigurationDescriptionFactory;
-import com.liferay.portal.configurator.extender.NamedConfigurationContent;
 import com.liferay.portal.configurator.extender.internal.ConfiguratorExtension;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 
@@ -94,18 +94,19 @@ public class ConfiguratorExtensionTest {
 	public void testExceptionInSupplierDoesNotStopExtension() throws Exception {
 		ConfiguratorExtension configuratorExtension = new ConfiguratorExtension(
 			_configurationAdmin, new Logger(_bundleContext), "aBundle",
-			Arrays.<NamedConfigurationContent>asList(
-				new StringSingleNamedConfigurationContent(
-					"test.pid", "key=value")),
+			Arrays.<ConfigurationContent>asList(
+				new StringConfigurationContent(null, "test.pid", "key=value")),
 			Arrays.asList(
 				new ConfigurationDescriptionFactory() {
+
 					@Override
 					public ConfigurationDescription create(
-							NamedConfigurationContent namedConfigurationContent)
+							ConfigurationContent configurationContent)
 						throws IOException {
 
 						throw new IOException("This should be handled");
 					}
+
 				},
 				new StringConfigurationDescriptionFactory()));
 
@@ -123,7 +124,7 @@ public class ConfiguratorExtensionTest {
 	public void testFactoryConfiguration() throws Exception {
 		_startExtension(
 			"aBundle",
-			new StringFactoryNamedConfigurationContent(
+			new StringConfigurationContent(
 				"test.factory.pid", "default", "key=value"));
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
@@ -144,7 +145,7 @@ public class ConfiguratorExtensionTest {
 
 		_startExtension(
 			"aBundle",
-			new StringFactoryNamedConfigurationContent(
+			new StringConfigurationContent(
 				"test.factory.pid", "default", "key=value2"));
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
@@ -165,9 +166,9 @@ public class ConfiguratorExtensionTest {
 
 		_startExtension(
 			"aBundle",
-			new StringFactoryNamedConfigurationContent(
+			new StringConfigurationContent(
 				"test.factory.pid", "default", "key=value"),
-			new StringFactoryNamedConfigurationContent(
+			new StringConfigurationContent(
 				"test.factory.pid", "default2", "key=value"));
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
@@ -182,9 +183,9 @@ public class ConfiguratorExtensionTest {
 
 		_startExtension(
 			"aBundle",
-			new StringFactoryNamedConfigurationContent(
+			new StringConfigurationContent(
 				"test.factory.pid", "default", "key=value"),
-			new StringFactoryNamedConfigurationContent(
+			new StringConfigurationContent(
 				"test.factory.pid", "default", "key=value2"));
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
@@ -204,12 +205,12 @@ public class ConfiguratorExtensionTest {
 
 		_startExtension(
 			"aBundle",
-			new StringFactoryNamedConfigurationContent(
+			new StringConfigurationContent(
 				"test.factory.pid", "default", "key=value"));
 
 		_startExtension(
 			"otherBundle",
-			new StringFactoryNamedConfigurationContent(
+			new StringConfigurationContent(
 				"test.factory.pid", "default", "key=value"));
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
@@ -222,7 +223,7 @@ public class ConfiguratorExtensionTest {
 	public void testSingleConfiguration() throws Exception {
 		_startExtension(
 			"aBundle",
-			new StringSingleNamedConfigurationContent("test.pid", "key=value"));
+			new StringConfigurationContent(null, "test.pid", "key=value"));
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			null);
@@ -242,8 +243,7 @@ public class ConfiguratorExtensionTest {
 
 		_startExtension(
 			"aBundle",
-			new StringSingleNamedConfigurationContent(
-				"test.pid", "key=value2"));
+			new StringConfigurationContent(null, "test.pid", "key=value2"));
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			null);
@@ -262,9 +262,8 @@ public class ConfiguratorExtensionTest {
 
 		_startExtension(
 			"aBundle",
-			new StringSingleNamedConfigurationContent("test.pid", "key=value"),
-			new StringSingleNamedConfigurationContent(
-				"test.pid", "key=value2"));
+			new StringConfigurationContent(null, "test.pid", "key=value"),
+			new StringConfigurationContent(null, "test.pid", "key=value2"));
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			null);
@@ -283,12 +282,11 @@ public class ConfiguratorExtensionTest {
 
 		_startExtension(
 			"aBundle",
-			new StringSingleNamedConfigurationContent("test.pid", "key=value"));
+			new StringConfigurationContent(null, "test.pid", "key=value"));
 
 		_startExtension(
 			"otherBundle",
-			new StringSingleNamedConfigurationContent(
-				"test.pid", "key=value2"));
+			new StringConfigurationContent(null, "test.pid", "key=value2"));
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			null);
@@ -305,9 +303,8 @@ public class ConfiguratorExtensionTest {
 	public void testSingleConfigurationWithMultipleContents() throws Exception {
 		_startExtension(
 			"aBundle",
-			new StringSingleNamedConfigurationContent("test.pid", "key=value"),
-			new StringSingleNamedConfigurationContent(
-				"test.pid2", "key=value"));
+			new StringConfigurationContent(null, "test.pid", "key=value"),
+			new StringConfigurationContent(null, "test.pid2", "key=value"));
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			null);
@@ -316,13 +313,12 @@ public class ConfiguratorExtensionTest {
 	}
 
 	private void _startExtension(
-			String namespace,
-			NamedConfigurationContent... namedConfigurationContents)
+			String namespace, ConfigurationContent... configurationContents)
 		throws Exception {
 
 		ConfiguratorExtension configuratorExtension = new ConfiguratorExtension(
 			_configurationAdmin, new Logger(_bundleContext), namespace,
-			Arrays.asList(namedConfigurationContents),
+			Arrays.asList(configurationContents),
 			Arrays.<ConfigurationDescriptionFactory>asList(
 				new StringConfigurationDescriptionFactory())
 		);
@@ -340,52 +336,12 @@ public class ConfiguratorExtensionTest {
 		new ArrayList<>();
 	private ServiceReference<ConfigurationAdmin> _serviceReference;
 
-	private static class StringConfigurationDescriptionFactory
-		implements ConfigurationDescriptionFactory {
+	private static class StringConfigurationContent
+		implements ConfigurationContent {
 
 		@Override
-		public ConfigurationDescription create(
-				NamedConfigurationContent namedConfigurationContent)
-			throws IOException {
-
-			if (namedConfigurationContent
-					instanceof StringSingleNamedConfigurationContent) {
-
-				StringSingleNamedConfigurationContent ssncc =
-					(StringSingleNamedConfigurationContent)
-						namedConfigurationContent;
-
-				Dictionary<?, ?> properties = PropertiesUtil.load(
-					ssncc.getInputStream(), "UTF-8");
-
-				return new ConfigurationDescription(
-					null, ssncc._pid, (Dictionary<String, Object>)properties);
-			}
-			else {
-				StringFactoryNamedConfigurationContent sfncc =
-					(StringFactoryNamedConfigurationContent)
-						namedConfigurationContent;
-
-				Dictionary<?, ?> properties = PropertiesUtil.load(
-					sfncc.getInputStream(), "UTF-8");
-
-				return new ConfigurationDescription(
-					sfncc._factoryPid, sfncc._pid,
-					(Dictionary<String, Object>)properties);
-			}
-		}
-
-	}
-
-	private static class StringFactoryNamedConfigurationContent
-		implements NamedConfigurationContent {
-
-		public StringFactoryNamedConfigurationContent(
-			String factoryPid, String pid, String content) {
-
-			_factoryPid = factoryPid;
-			_pid = pid;
-			_content = content;
+		public String getFactoryPid() {
+			return _factoryPid;
 		}
 
 		@Override
@@ -395,8 +351,16 @@ public class ConfiguratorExtensionTest {
 		}
 
 		@Override
-		public String getName() {
+		public String getPid() {
 			return _pid;
+		}
+
+		private StringConfigurationContent(
+			String factoryPid, String pid, String content) {
+
+			_factoryPid = factoryPid;
+			_pid = pid;
+			_content = content;
 		}
 
 		private final String _content;
@@ -405,29 +369,22 @@ public class ConfiguratorExtensionTest {
 
 	}
 
-	private static class StringSingleNamedConfigurationContent
-		implements NamedConfigurationContent {
-
-		public StringSingleNamedConfigurationContent(
-			String pid, String content) {
-
-			_pid = pid;
-			_content = content;
-		}
+	private static class StringConfigurationDescriptionFactory
+		implements ConfigurationDescriptionFactory {
 
 		@Override
-		public InputStream getInputStream() {
-			return new ByteArrayInputStream(
-				_content.getBytes(Charset.forName("UTF-8")));
-		}
+		public ConfigurationDescription create(
+				ConfigurationContent configurationContent)
+			throws IOException {
 
-		@Override
-		public String getName() {
-			return _pid;
-		}
+			Dictionary<?, ?> properties = PropertiesUtil.load(
+				configurationContent.getInputStream(), "UTF-8");
 
-		private final String _content;
-		private final String _pid;
+			return new ConfigurationDescription(
+				configurationContent.getFactoryPid(),
+				configurationContent.getPid(),
+				(Dictionary<String, Object>)properties);
+		}
 
 	}
 

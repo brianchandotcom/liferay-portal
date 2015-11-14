@@ -14,10 +14,9 @@
 
 package com.liferay.portal.configurator.extender.internal;
 
+import com.liferay.portal.configurator.extender.ConfigurationContent;
 import com.liferay.portal.configurator.extender.ConfigurationDescription;
 import com.liferay.portal.configurator.extender.ConfigurationDescriptionFactory;
-import com.liferay.portal.configurator.extender.NamedConfigurationContent;
-import com.liferay.portal.configurator.extender.PropertiesFileNamedConfigurationContent;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,36 +35,17 @@ public class ConfigurationDescriptionFactoryImpl
 
 	@Override
 	public ConfigurationDescription create(
-			NamedConfigurationContent namedConfigurationContent)
+			ConfigurationContent configurationContent)
 		throws IOException {
 
-		if (!(namedConfigurationContent
-			instanceof PropertiesFileNamedConfigurationContent)) {
-
-			return null;
-		}
-
-		String name = namedConfigurationContent.getName();
-
-		String factoryPid = null;
-		String pid = name;
-
-		int index = name.lastIndexOf('-');
-
-		if (index > 0) {
-			factoryPid = name.substring(0, index);
-			pid = name.substring(index + 1);
-		}
-
-		try (InputStream inputStream =
-				namedConfigurationContent.getInputStream()) {
-
+		try (InputStream inputStream = configurationContent.getInputStream()) {
 			Properties properties = new Properties();
 
 			properties.load(inputStream);
 
 			return new ConfigurationDescription(
-				factoryPid, pid, _cast(properties));
+				configurationContent.getFactoryPid(),
+				configurationContent.getPid(), _cast(properties));
 		}
 	}
 

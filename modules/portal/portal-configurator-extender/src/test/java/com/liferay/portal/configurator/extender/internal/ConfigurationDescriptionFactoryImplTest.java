@@ -16,12 +16,10 @@ package com.liferay.portal.configurator.extender.internal;
 
 import com.liferay.portal.configurator.extender.ConfigurationDescription;
 import com.liferay.portal.configurator.extender.ConfigurationDescriptionFactory;
-import com.liferay.portal.configurator.extender.NamedConfigurationContent;
-import com.liferay.portal.configurator.extender.PropertiesFileNamedConfigurationContent;
+import com.liferay.portal.configurator.extender.PropertiesFileConfigurationContent;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.nio.charset.Charset;
 
@@ -44,8 +42,8 @@ public class ConfigurationDescriptionFactoryImplTest {
 
 		ConfigurationDescription configurationDescription =
 			configurationDescriptionFactory.create(
-				new PropertiesFileNamedConfigurationContent(
-					"factory.pid-config.pid",
+				new PropertiesFileConfigurationContent(
+					"factory.pid", "config.pid",
 					new ByteArrayInputStream(
 						configurationContent.getBytes(
 							Charset.forName("UTF-8")))));
@@ -62,31 +60,6 @@ public class ConfigurationDescriptionFactoryImplTest {
 	}
 
 	@Test
-	public void testCreateReturnsNullWhenNotPropertiesFileNamedConfigurationContent()
-		throws IOException {
-
-		ConfigurationDescriptionFactory configurationDescriptionFactory =
-			new ConfigurationDescriptionFactoryImpl();
-
-		ConfigurationDescription configurationDescription =
-			configurationDescriptionFactory.create(
-				new NamedConfigurationContent() {
-
-					@Override
-					public String getName() {
-						return "aName";
-					}
-
-					@Override
-					public InputStream getInputStream() {
-						return new ByteArrayInputStream(new byte[0]);
-					}
-				});
-
-		Assert.assertNull(configurationDescription);
-	}
-
-	@Test
 	public void testCreateSimpleConfiguration() throws IOException {
 		ConfigurationDescriptionFactory configurationDescriptionFactory =
 			new ConfigurationDescriptionFactoryImpl();
@@ -95,8 +68,8 @@ public class ConfigurationDescriptionFactoryImplTest {
 
 		ConfigurationDescription configurationDescription =
 			configurationDescriptionFactory.create(
-				new PropertiesFileNamedConfigurationContent(
-					"config.pid",
+				new PropertiesFileConfigurationContent(
+					null, "config.pid",
 					new ByteArrayInputStream(
 						configurationContent.getBytes(
 							Charset.forName("UTF-8")))));

@@ -14,9 +14,9 @@
 
 package com.liferay.portal.configurator.extender.internal;
 
+import com.liferay.portal.configurator.extender.ConfigurationContent;
 import com.liferay.portal.configurator.extender.ConfigurationDescription;
 import com.liferay.portal.configurator.extender.ConfigurationDescriptionFactory;
-import com.liferay.portal.configurator.extender.NamedConfigurationContent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.io.IOException;
@@ -38,7 +38,7 @@ public class ConfiguratorExtension implements Extension {
 
 	public ConfiguratorExtension(
 		ConfigurationAdmin configurationAdmin, Logger logger, String namespace,
-		Collection<NamedConfigurationContent> configurationContents,
+		Collection<ConfigurationContent> configurationContents,
 		Collection<ConfigurationDescriptionFactory>
 			configurationDescriptionFactories) {
 
@@ -55,11 +55,11 @@ public class ConfiguratorExtension implements Extension {
 
 	@Override
 	public void start() throws Exception {
-		for (NamedConfigurationContent namedConfigurationContent :
+		for (ConfigurationContent configurationContent :
 				_configurationContents) {
 
 			try {
-				_createConfiguration(namedConfigurationContent);
+				_createConfiguration(configurationContent);
 			}
 			catch (IOException ioe) {
 				continue;
@@ -80,8 +80,7 @@ public class ConfiguratorExtension implements Extension {
 		return false;
 	}
 
-	private void _createConfiguration(
-			NamedConfigurationContent namedConfigurationContent)
+	private void _createConfiguration(ConfigurationContent configurationContent)
 		throws Exception {
 
 		for (ConfigurationDescriptionFactory configurationDescriptionFactory :
@@ -92,13 +91,13 @@ public class ConfiguratorExtension implements Extension {
 			try {
 				configurationDescription =
 					configurationDescriptionFactory.create(
-						namedConfigurationContent);
+						configurationContent);
 			}
 			catch (IOException ioe) {
 				_logger.log(
 					Logger.LOG_WARNING,
 					"Unable to create ConfigurationDescription from " +
-						namedConfigurationContent,
+						configurationContent,
 					ioe);
 
 				continue;
@@ -161,7 +160,7 @@ public class ConfiguratorExtension implements Extension {
 	}
 
 	private final ConfigurationAdmin _configurationAdmin;
-	private final Collection<NamedConfigurationContent> _configurationContents;
+	private final Collection<ConfigurationContent> _configurationContents;
 	private final Collection<ConfigurationDescriptionFactory>
 		_configurationDescriptionFactories;
 	private final Logger _logger;

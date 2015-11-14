@@ -22,7 +22,7 @@ import java.io.IOException;
 public interface ConfigurationDescriptionFactory {
 
 	public ConfigurationDescription create(
-			NamedConfigurationContent namedConfigurationContent)
+			ConfigurationContent configurationContent)
 		throws IOException;
 
 }

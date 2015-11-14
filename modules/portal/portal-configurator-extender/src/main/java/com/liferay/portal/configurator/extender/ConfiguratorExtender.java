@@ -70,10 +70,9 @@ public class ConfiguratorExtender extends AbstractExtender {
 		unbind = "removeConfigurationURLLocator"
 	)
 	protected void addConfigurationURLLocator(
-		NamedConfigurationContentFactory namedConfigurationContentFactory) {
+		ConfigurationContentFactory configurationContentFactory) {
 
-		_namedConfigurationContentFactories.add(
-			namedConfigurationContentFactory);
+		_configurationContentFactories.add(configurationContentFactory);
 	}
 
 	@Deactivate
@@ -88,15 +87,14 @@ public class ConfiguratorExtender extends AbstractExtender {
 
 	@Override
 	protected Extension doCreateExtension(Bundle bundle) throws Exception {
-		Collection<NamedConfigurationContent> configurationURLs =
-			new ArrayList<>();
+		Collection<ConfigurationContent> configurationURLs = new ArrayList<>();
 
-		for (NamedConfigurationContentFactory namedConfigurationContentFactory :
-				_namedConfigurationContentFactories) {
+		for (ConfigurationContentFactory configurationContentFactory :
+				_configurationContentFactories) {
 
 			try {
 				configurationURLs.addAll(
-					namedConfigurationContentFactory.create(bundle));
+					configurationContentFactory.create(bundle));
 			}
 			catch (Throwable t) {
 				_logger.log(
@@ -128,10 +126,9 @@ public class ConfiguratorExtender extends AbstractExtender {
 	}
 
 	protected void removeConfigurationURLLocator(
-		NamedConfigurationContentFactory namedConfigurationContentFactory) {
+		ConfigurationContentFactory configurationContentFactory) {
 
-		_namedConfigurationContentFactories.remove(
-			namedConfigurationContentFactory);
+		_configurationContentFactories.remove(configurationContentFactory);
 	}
 
 	@Reference
@@ -147,10 +144,10 @@ public class ConfiguratorExtender extends AbstractExtender {
 	}
 
 	private ConfigurationAdmin _configurationAdmin;
+	private final Collection<ConfigurationContentFactory>
+		_configurationContentFactories = new CopyOnWriteArrayList<>();
 	private final Collection<ConfigurationDescriptionFactory>
 		_configurationDescriptionFactories = new CopyOnWriteArrayList<>();
 	private Logger _logger;
-	private final Collection<NamedConfigurationContentFactory>
-		_namedConfigurationContentFactories = new CopyOnWriteArrayList<>();
 
 }

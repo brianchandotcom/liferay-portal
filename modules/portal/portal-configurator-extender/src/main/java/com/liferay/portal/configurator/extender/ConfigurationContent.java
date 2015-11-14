@@ -14,15 +14,17 @@
 
 package com.liferay.portal.configurator.extender;
 
-import java.util.List;
-
-import org.osgi.framework.Bundle;
+import java.io.InputStream;
 
 /**
  * @author Carlos Sierra Andrés
  */
-public interface NamedConfigurationContentFactory {
+public interface ConfigurationContent {
 
-	public List<NamedConfigurationContent> create(Bundle bundle);
+	public String getFactoryPid();
+
+	public InputStream getInputStream();
+
+	public String getPid();
 
 }

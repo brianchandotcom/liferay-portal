@@ -14,8 +14,8 @@
 
 package com.liferay.portal.configurator.extender.internal;
 
-import com.liferay.portal.configurator.extender.NamedConfigurationContent;
-import com.liferay.portal.configurator.extender.NamedConfigurationContentFactory;
+import com.liferay.portal.configurator.extender.ConfigurationContent;
+import com.liferay.portal.configurator.extender.ConfigurationContentFactory;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -48,7 +48,7 @@ import org.osgi.framework.Bundle;
 /**
  * @author Carlos Sierra Andrés
  */
-public class NamedConfigurationPathContentFactoryTest {
+public class ConfigurationPathContentFactoryTest {
 
 	@Before
 	public void setUp() throws IOException {
@@ -81,24 +81,23 @@ public class NamedConfigurationPathContentFactoryTest {
 		Bundle bundle = _createDummyBundle(
 			100, "aLocation", _headers, Arrays.asList(uri.toURL()));
 
-		NamedConfigurationContentFactory namedConfigurationContentFactory =
-			new NamedConfigurationPathContentFactory();
+		ConfigurationContentFactory configurationContentFactory =
+			new ConfigurationPathContentFactory();
 
-		List<NamedConfigurationContent> namedConfigurationContents =
-			namedConfigurationContentFactory.create(bundle);
+		List<ConfigurationContent> configurationContents =
+			configurationContentFactory.create(bundle);
 
-		Assert.assertEquals(1, namedConfigurationContents.size());
+		Assert.assertEquals(1, configurationContents.size());
 
-		NamedConfigurationContent namedConfigurationContent =
-			namedConfigurationContents.get(0);
+		ConfigurationContent configurationContent = configurationContents.get(
+			0);
 
 		Assert.assertEquals(
-			"com.liferay.test.aConfigFile",
-			namedConfigurationContent.getName());
+			"com.liferay.test.aConfigFile", configurationContent.getPid());
 
 		Assert.assertEquals(
 			"key=value\nanotherKey=anotherValue",
-			StringUtil.read(namedConfigurationContent.getInputStream()));
+			StringUtil.read(configurationContent.getInputStream()));
 	}
 
 	@Test
@@ -116,34 +115,33 @@ public class NamedConfigurationPathContentFactoryTest {
 			100, "aLocation", _headers,
 			Arrays.asList(uri1.toURL(), uri2.toURL()));
 
-		NamedConfigurationContentFactory contentFactory =
-			new NamedConfigurationPathContentFactory();
+		ConfigurationContentFactory contentFactory =
+			new ConfigurationPathContentFactory();
 
-		List<NamedConfigurationContent> namedConfigurationContents =
+		List<ConfigurationContent> configurationContents =
 			contentFactory.create(bundle);
 
-		Assert.assertEquals(2, namedConfigurationContents.size());
+		Assert.assertEquals(2, configurationContents.size());
 
-		NamedConfigurationContent namedConfigurationContent =
-			namedConfigurationContents.get(0);
+		ConfigurationContent configurationContent = configurationContents.get(
+			0);
 
 		Assert.assertEquals(
-			"com.liferay.test.aConfigFile",
-			namedConfigurationContent.getName());
+			"com.liferay.test.aConfigFile", configurationContent.getPid());
 
 		Assert.assertEquals(
 			"key=value\nanotherKey=anotherValue",
-			StringUtil.read(namedConfigurationContent.getInputStream()));
+			StringUtil.read(configurationContent.getInputStream()));
 
-		namedConfigurationContent = namedConfigurationContents.get(1);
+		configurationContent = configurationContents.get(1);
 
 		Assert.assertEquals(
 			"com.liferay.test.anotherConfigFile",
-			namedConfigurationContent.getName());
+			configurationContent.getPid());
 
 		Assert.assertEquals(
 			"key2=value2\nanotherKey2=anotherValue2",
-			StringUtil.read(namedConfigurationContent.getInputStream()));
+			StringUtil.read(configurationContent.getInputStream()));
 	}
 
 	@Test
@@ -163,34 +161,33 @@ public class NamedConfigurationPathContentFactoryTest {
 			100, "aLocation", _headers,
 			Arrays.asList(uri1.toURL(), uri2.toURL()));
 
-		NamedConfigurationContentFactory contentFactory =
-			new NamedConfigurationPathContentFactory();
+		ConfigurationContentFactory contentFactory =
+			new ConfigurationPathContentFactory();
 
-		List<NamedConfigurationContent> namedConfigurationContents =
+		List<ConfigurationContent> configurationContents =
 			contentFactory.create(bundle);
 
-		Assert.assertEquals(2, namedConfigurationContents.size());
+		Assert.assertEquals(2, configurationContents.size());
 
-		NamedConfigurationContent namedConfigurationContent =
-			namedConfigurationContents.get(0);
+		ConfigurationContent configurationContent = configurationContents.get(
+			0);
 
 		Assert.assertEquals(
-			"com.liferay.test.aConfigFile",
-			namedConfigurationContent.getName());
+			"com.liferay.test.aConfigFile", configurationContent.getPid());
 
 		Assert.assertEquals(
 			"key=value\nanotherKey=anotherValue",
-			StringUtil.read(namedConfigurationContent.getInputStream()));
+			StringUtil.read(configurationContent.getInputStream()));
 
-		namedConfigurationContent = namedConfigurationContents.get(1);
+		configurationContent = configurationContents.get(1);
 
 		Assert.assertEquals(
 			"com.liferay.test.anotherConfigFile",
-			namedConfigurationContent.getName());
+			configurationContent.getPid());
 
 		Assert.assertEquals(
 			"key2=value2\nanotherKey2=anotherValue2",
-			StringUtil.read(namedConfigurationContent.getInputStream()));
+			StringUtil.read(configurationContent.getInputStream()));
 	}
 
 	@Rule

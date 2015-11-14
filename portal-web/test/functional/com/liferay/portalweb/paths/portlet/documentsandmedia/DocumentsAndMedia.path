@@ -112,27 +112,27 @@
 <!--ICON_FOLDER-->
 <tr>
 	<td>ICON_FOLDER_THUMBNAIL</td>
-	<td>//div[contains(@id,'entriesContainer')]//div[contains(.,'${key_dmFolderName}')]/a</td>
+	<td>//div[contains(@class,'selectable') and contains(.,'${key_dmFolderName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ICON_FOLDER_THUMBNAIL_GENERIC</td>
-	<td>//a[@data-folder='true']/div[@class='entry-thumbnail']</td>
+	<td>//div[contains(@class,'card-row') and contains(@class,'selectable')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ICON_FOLDER_CHECKBOX</td>
-	<td>//div[@data-title='${key_dmFolderName}']//input[@type='checkbox']</td>
+	<td>//div[contains(@class,'selectable') and contains(.,'${key_dmFolderName}')]//input[(@type='checkbox')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ICON_FOLDER_ACTIONS</td>
-	<td>//div[contains(@id,'entriesContainer')]//div[contains(.,'${key_dmFolderName}')]/span/div/a</td>
+	<td>//div[contains(@class,'selectable') and contains(.,'${key_dmFolderName}')]//span[contains(@class,'ellipsis-vertical')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ICON_FOLDER_TITLE</td>
-	<td>//div[contains(.,'${key_dmFolderName}') and a[@data-folder='true']]//span[@class='entry-title']/span</td>
+	<td>//div[contains(@class,'selectable') and contains(.,'${key_dmFolderName}')]//h4/a</td>
 	<td></td>
 </tr>
 <tr>

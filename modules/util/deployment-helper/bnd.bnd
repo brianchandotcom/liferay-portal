@@ -8,7 +8,6 @@ Import-Package:\
 	*
 Include-Resource:\
 	classes,\
-	@lib/ant.jar,\
 	@lib/slf4j-api.jar,\
 	@lib/slf4j-simple.jar,\
 	@lib/zt-zip.jar,\

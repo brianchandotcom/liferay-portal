@@ -20,15 +20,22 @@ import com.liferay.portal.tools.ArgumentsUtil;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.PathMatcher;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.tools.ant.DirectoryScanner;
 
 import org.zeroturnaround.zip.ByteSource;
 import org.zeroturnaround.zip.FileSource;
@@ -78,47 +85,14 @@ public class DeploymentHelper {
 
 		StringBuilder sb = new StringBuilder();
 
-		DirectoryScanner scanner = new DirectoryScanner();
-
-		scanner.setIncludes(new String[] {"**/*.jar"});
-		scanner.setCaseSensitive(false);
-
 		for (String deploymentFileName : deploymentFileNames.split(",")) {
 			File deploymentFile = new File(deploymentFileName.trim());
 
 			if (deploymentFile.isDirectory()) {
-				String deploymentFilePath = deploymentFile.getCanonicalPath();
-
-				scanner.setBasedir(deploymentFilePath);
-				scanner.scan();
-				String[] fileNames = scanner.getIncludedFiles();
-
-				System.out.println("Adding jars in " + deploymentFilePath);
-
-				for (String fileName : fileNames) {
-					File file = new File(deploymentFilePath, fileName);
-
-					String webInfDeploymentFileName =
-						"WEB-INF/" + file.getName();
-
-					zipEntrySources.add(
-						new FileSource(webInfDeploymentFileName, file));
-
-					sb.append('/');
-					sb.append(webInfDeploymentFileName);
-					sb.append(',');
-				}
+				addDeploymentFiles(deploymentFile, sb, zipEntrySources);
 			}
 			else {
-				String webInfDeploymentFileName =
-					"WEB-INF/" + deploymentFile.getName();
-
-				zipEntrySources.add(
-					new FileSource(webInfDeploymentFileName, deploymentFile));
-
-				sb.append('/');
-				sb.append(webInfDeploymentFileName);
-				sb.append(',');
+				addDeploymentFile(deploymentFile, sb, zipEntrySources);
 			}
 		}
 
@@ -135,6 +109,47 @@ public class DeploymentHelper {
 		ZipUtil.pack(
 			zipEntrySources.toArray(new ZipEntrySource[zipEntrySources.size()]),
 			new File(outputFileName));
+	}
+
+	protected void addDeploymentFile(
+		File file, StringBuilder sb, List<ZipEntrySource> zipEntrySources) {
+
+		String webInfDeploymentFileName = "WEB-INF/" + file.getName();
+
+		zipEntrySources.add(new FileSource(webInfDeploymentFileName, file));
+
+		sb.append('/');
+		sb.append(webInfDeploymentFileName);
+		sb.append(',');
+	}
+
+	protected void addDeploymentFiles(
+			File dir, final StringBuilder sb,
+			final List<ZipEntrySource> zipEntrySources)
+		throws IOException {
+
+		FileSystem fileSystem = FileSystems.getDefault();
+
+		final PathMatcher pathMatcher = fileSystem.getPathMatcher(
+			"glob:**/*.jar");
+
+		Files.walkFileTree(
+			dir.toPath(),
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult visitFile(
+						Path path, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					if (pathMatcher.matches(path)) {
+						addDeploymentFile(path.toFile(), sb, zipEntrySources);
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
 	}
 
 	protected ZipEntrySource getClassZipEntrySource(String fileName)

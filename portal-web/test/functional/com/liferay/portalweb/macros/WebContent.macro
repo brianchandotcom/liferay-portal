@@ -368,21 +368,14 @@
 	</command>
 
 	<command name="addWithCategoryCP">
-		<execute function="Type" locator1="TextInput#TITLE" value1="${webContentTitle}" />
-		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${webContentContent}" />
-		<execute function="AssertClick" locator1="NavListItem#CATEGORIZATION" value1="Categorization" />
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
 
-		<if>
-			<isset var="userSegmentDetailTitle" />
-			<then>
-				<var name="key_userSegmentDetailTitle" value="${userSegmentDetailTitle}" />
-
-				<execute function="AssertTextEquals" locator1="WCEditWebContent#USER_SEGMENT_DETAIL_TITLE" value1="${userSegmentDetailTitle}" />
-			</then>
-		</if>
-
-		<execute macro="AssetCategorization#addCategory">
+		<execute macro="WebContent#selectCategory">
 			<var name="categoryName" value="${categoryName}" />
+			<var name="userSegmentDetailTitle" value="${userSegmentDetailTitle}" />
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 
@@ -1059,6 +1052,24 @@
 		<execute function="AssertTextNotPresent" locator1="WC#SEARCH_BODY" value1="${webContentContent}" />
 		<execute function="Click" locator1="WC#SEARCH_FILTER_REMOVE_BUTTON" />
 		<execute function="AssertTextPresent" locator1="WC#SEARCH_TITLE" value1="${webContentTitle}" />
+	</command>
+
+	<command name="selectCategory">
+		<execute function="AssertClick" locator1="NavListItem#CATEGORIZATION" value1="Categorization" />
+
+		<if>
+			<isset var="userSegmentDetailTitle" />
+			<then>
+				<var name="key_userSegmentDetailTitle" value="${userSegmentDetailTitle}" />
+
+				<execute function="AssertTextEquals" locator1="WCEditWebContent#USER_SEGMENT_DETAIL_TITLE" value1="${userSegmentDetailTitle}" />
+			</then>
+		</if>
+
+		<execute macro="AssetCategorization#addCategory">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
 	</command>
 
 	<command name="selectTemplateCP">

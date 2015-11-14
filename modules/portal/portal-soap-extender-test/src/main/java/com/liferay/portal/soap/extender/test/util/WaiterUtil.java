@@ -19,8 +19,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Filter;
-import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -51,15 +49,14 @@ public class WaiterUtil {
 	}
 
 	public static Waiter waitForFilterToDisappear(
-			BundleContext bundleContext, String filterString, int number)
-		throws InterruptedException, InvalidSyntaxException {
+			BundleContext bundleContext, final String filterString)
+		throws Exception {
 
-		final CountDownLatch countDownLatch = new CountDownLatch(number);
-
-		Filter filter = bundleContext.createFilter(filterString);
+		final CountDownLatch countDownLatch = new CountDownLatch(1);
 
 		ServiceTracker<?, ?> serviceTracker =
-			new ServiceTracker<Object, Object>(bundleContext, filter, null) {
+			new ServiceTracker<Object, Object>(
+				bundleContext, bundleContext.createFilter(filterString), null) {
 
 			@Override
 			public void removedService(
@@ -69,24 +66,27 @@ public class WaiterUtil {
 
 				close();
 			}
+
 		};
 
 		serviceTracker.open();
 
 		return new Waiter() {
-			@Override
-			public boolean waitFor(long timeout) throws InterruptedException {
-				if (!countDownLatch.await(timeout, TimeUnit.MILLISECONDS)) {
-					return false;
-				}
 
-				return true;
+			@Override
+			public void waitFor(long timeout) throws Exception {
+				if (!countDownLatch.await(timeout, TimeUnit.MILLISECONDS)) {
+					throw new TimeoutException(
+						"Time out on waiting for " + filterString +
+							" to disappear after " + timeout);
+				}
 			}
 		};
 	}
 
 	public interface Waiter {
-		public boolean waitFor(long timeout) throws InterruptedException;
+
+		public void waitFor(long timeout) throws Exception;
 
 	}
 

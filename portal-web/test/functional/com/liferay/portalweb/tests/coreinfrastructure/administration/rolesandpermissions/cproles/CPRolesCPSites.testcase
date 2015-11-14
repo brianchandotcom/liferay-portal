@@ -50,7 +50,7 @@
 		</execute>
 
 		<execute function="Type" locator1="RolesPermissionsNavigation#SEARCH_FIELD" value1="Roles" />
-		
+
 		<execute function="AssertClick" locator1="RolesPermissionsNavigation#CONTROL_PANEL_USERS_ROLES" value1="Roles" />
 
 		<var name="permissionNavigationValue" value="Roles" />

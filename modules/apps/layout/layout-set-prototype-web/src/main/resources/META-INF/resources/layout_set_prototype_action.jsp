@@ -34,22 +34,22 @@ Group group = layoutSetPrototype.getGroup();
 	<c:if test="<%= LayoutSetPrototypePermissionUtil.contains(permissionChecker, layoutSetPrototypeId, ActionKeys.UPDATE) %>">
 
 		<%
-		String href = (String)request.getAttribute(WebKeys.SEARCH_ENTRY_HREF);
+		PortletURL siteAdministrationURL = null;
+
+		PanelCategoryHelper panelCategoryHelper = (PanelCategoryHelper)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_HELPER);
+
+		String portletId = panelCategoryHelper.getFirstPortletId(PanelCategoryKeys.SITE_ADMINISTRATION, permissionChecker, group);
+
+		if (Validator.isNotNull(portletId)) {
+			siteAdministrationURL = PortalUtil.getControlPanelPortletURL(request, group, portletId, 0, 0, PortletRequest.RENDER_PHASE);
+		}
 		%>
 
-		<c:if test="<%= Validator.isNotNull(href) %>">
+		<c:if test="<%= Validator.isNotNull(siteAdministrationURL) %>">
 			<liferay-ui:icon
 				message="manage"
 				method="get"
-				url="<%= href %>"
-			/>
-		</c:if>
-
-		<c:if test="<%= group.getPrivateLayoutsPageCount() > 0 %>">
-			<liferay-ui:icon
-				message="view-pages"
-				target="_blank"
-				url="<%= group.getDisplayURL(themeDisplay, true) %>"
+				url="<%= siteAdministrationURL.toString() %>"
 			/>
 		</c:if>
 	</c:if>

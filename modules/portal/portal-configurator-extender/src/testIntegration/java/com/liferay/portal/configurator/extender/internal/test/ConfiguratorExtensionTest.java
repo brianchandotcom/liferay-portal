@@ -14,25 +14,15 @@
 
 package com.liferay.portal.configurator.extender.internal.test;
 
-import com.liferay.portal.configurator.extender.ConfigurationContent;
-import com.liferay.portal.configurator.extender.ConfigurationDescription;
-import com.liferay.portal.configurator.extender.ConfigurationDescriptionFactory;
+import com.liferay.portal.configurator.extender.Configuration;
 import com.liferay.portal.configurator.extender.internal.ConfiguratorExtension;
-import com.liferay.portal.kernel.util.PropertiesUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-
-import java.nio.charset.Charset;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Dictionary;
-import java.util.Hashtable;
-
-import org.apache.felix.utils.log.Logger;
 
 import org.arquillian.liferay.deploymentscenario.annotations.BndFile;
 
@@ -48,7 +38,6 @@ import org.junit.runner.RunWith;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
-import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
@@ -60,16 +49,21 @@ public class ConfiguratorExtensionTest {
 
 	@Before
 	public void setUp() throws InvalidSyntaxException, IOException {
+		_dictionary1.put("key", "value");
+		_dictionary2.put("key", "value2");
+
 		_serviceReference = _bundleContext.getServiceReference(
 			ConfigurationAdmin.class);
 
 		_configurationAdmin = _bundleContext.getService(_serviceReference);
 
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			null);
+		org.osgi.service.cm.Configuration[] configurations =
+			_configurationAdmin.listConfigurations(null);
 
 		if (configurations != null) {
-			for (Configuration configuration : configurations) {
+			for (org.osgi.service.cm.Configuration configuration :
+					configurations) {
+
 				configuration.delete();
 			}
 		}
@@ -91,65 +85,36 @@ public class ConfiguratorExtensionTest {
 	}
 
 	@Test
-	public void testExceptionInSupplierDoesNotStopExtension() throws Exception {
-		ConfiguratorExtension configuratorExtension = new ConfiguratorExtension(
-			_configurationAdmin, new Logger(_bundleContext), "aBundle",
-			Arrays.<ConfigurationContent>asList(
-				new StringConfigurationContent(null, "test.pid", "key=value")),
-			Arrays.asList(
-				new ConfigurationDescriptionFactory() {
-
-					@Override
-					public ConfigurationDescription create(
-							ConfigurationContent configurationContent)
-						throws IOException {
-
-						throw new IOException("This should be handled");
-					}
-
-				},
-				new StringConfigurationDescriptionFactory()));
-
-		configuratorExtension.start();
-
-		_configurationExtensions.add(configuratorExtension);
-
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			null);
-
-		Assert.assertEquals(1, configurations.length);
-	}
-
-	@Test
 	public void testFactoryConfiguration() throws Exception {
 		_startExtension(
 			"aBundle",
-			new StringConfigurationContent(
-				"test.factory.pid", "default", "key=value"));
+			new Configuration("test.factory.pid", "default", _dictionary1));
 
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			null);
+		org.osgi.service.cm.Configuration[] osgiconfigurations =
+			_configurationAdmin.listConfigurations(null);
 
-		Assert.assertEquals(1, configurations.length);
+		Assert.assertEquals(1, osgiconfigurations.length);
+
+		Dictionary<String, Object> dictionary =
+			osgiconfigurations[0].getProperties();
+
+		Assert.assertEquals("value", dictionary.get("key"));
 	}
 
 	@Test
 	public void testFactoryConfigurationCreatesAnother() throws Exception {
-		Configuration configuration =
+		org.osgi.service.cm.Configuration osgiConfiguration =
 			_configurationAdmin.createFactoryConfiguration(
 				"test.factory.pid", null);
 
-		configuration.update(new Hashtable<String, Object>() { {
-			put("key", "value");
-		}});
+		osgiConfiguration.update(_dictionary1);
 
 		_startExtension(
 			"aBundle",
-			new StringConfigurationContent(
-				"test.factory.pid", "default", "key=value2"));
+			new Configuration("test.factory.pid", "default", _dictionary2));
 
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			null);
+		org.osgi.service.cm.Configuration[] configurations =
+			_configurationAdmin.listConfigurations(null);
 
 		Assert.assertEquals(2, configurations.length);
 
@@ -166,15 +131,13 @@ public class ConfiguratorExtensionTest {
 
 		_startExtension(
 			"aBundle",
-			new StringConfigurationContent(
-				"test.factory.pid", "default", "key=value"),
-			new StringConfigurationContent(
-				"test.factory.pid", "default2", "key=value"));
+			new Configuration("test.factory.pid", "default", _dictionary1),
+			new Configuration("test.factory.pid", "default2", _dictionary1));
 
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			null);
+		org.osgi.service.cm.Configuration[] osgiConfigurations =
+			_configurationAdmin.listConfigurations(null);
 
-		Assert.assertEquals(2, configurations.length);
+		Assert.assertEquals(2, osgiConfigurations.length);
 	}
 
 	@Test
@@ -183,18 +146,16 @@ public class ConfiguratorExtensionTest {
 
 		_startExtension(
 			"aBundle",
-			new StringConfigurationContent(
-				"test.factory.pid", "default", "key=value"),
-			new StringConfigurationContent(
-				"test.factory.pid", "default", "key=value2"));
+			new Configuration("test.factory.pid", "default", _dictionary1),
+			new Configuration("test.factory.pid", "default", _dictionary2));
 
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			null);
+		org.osgi.service.cm.Configuration[] osgiConfigurations =
+			_configurationAdmin.listConfigurations(null);
 
-		Assert.assertEquals(1, configurations.length);
+		Assert.assertEquals(1, osgiConfigurations.length);
 
 		Dictionary<String, Object> properties =
-			configurations[0].getProperties();
+			osgiConfigurations[0].getProperties();
 
 		Assert.assertEquals("value", properties.get("key"));
 	}
@@ -205,53 +166,48 @@ public class ConfiguratorExtensionTest {
 
 		_startExtension(
 			"aBundle",
-			new StringConfigurationContent(
-				"test.factory.pid", "default", "key=value"));
+			new Configuration("test.factory.pid", "default", _dictionary1));
 
 		_startExtension(
 			"otherBundle",
-			new StringConfigurationContent(
-				"test.factory.pid", "default", "key=value"));
+			new Configuration("test.factory.pid", "default", _dictionary1));
 
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			null);
+		org.osgi.service.cm.Configuration[] osgiConfigurations =
+			_configurationAdmin.listConfigurations(null);
 
-		Assert.assertEquals(2, configurations.length);
+		Assert.assertEquals(2, osgiConfigurations.length);
 	}
 
 	@Test
 	public void testSingleConfiguration() throws Exception {
 		_startExtension(
 			"aBundle",
-			new StringConfigurationContent(null, "test.pid", "key=value"));
+			new Configuration("test.factory.pid", "default", _dictionary1));
 
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			null);
+		org.osgi.service.cm.Configuration[] osgiConfigurations =
+			_configurationAdmin.listConfigurations(null);
 
-		Assert.assertEquals(1, configurations.length);
+		Assert.assertEquals(1, osgiConfigurations.length);
 	}
 
 	@Test
 	public void testSingleConfigurationRespectsExistingConfiguration()
 		throws Exception {
 
-		Configuration configuration = _configurationAdmin.getConfiguration(
-			"test.pid", null);
-		configuration.update(new Hashtable<String, Object>() { {
-			put("key", "value");
-		}});
+		org.osgi.service.cm.Configuration osgiConfiguration =
+			_configurationAdmin.getConfiguration("test.pid", null);
 
-		_startExtension(
-			"aBundle",
-			new StringConfigurationContent(null, "test.pid", "key=value2"));
+		osgiConfiguration.update(_dictionary1);
 
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			null);
+		_startExtension("aBundle", new Configuration("test.pid", _dictionary2));
 
-		Assert.assertEquals(1, configurations.length);
+		org.osgi.service.cm.Configuration[] osgiConfigurations =
+			_configurationAdmin.listConfigurations(null);
+
+		Assert.assertEquals(1, osgiConfigurations.length);
 
 		Dictionary<String, Object> properties =
-			configurations[0].getProperties();
+			osgiConfigurations[0].getProperties();
 
 		Assert.assertEquals("value", properties.get("key"));
 	}
@@ -261,12 +217,11 @@ public class ConfiguratorExtensionTest {
 		throws Exception {
 
 		_startExtension(
-			"aBundle",
-			new StringConfigurationContent(null, "test.pid", "key=value"),
-			new StringConfigurationContent(null, "test.pid", "key=value2"));
+			"aBundle", new Configuration("test.pid", _dictionary1),
+			new Configuration("test.pid", _dictionary2));
 
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			null);
+		org.osgi.service.cm.Configuration[] configurations =
+			_configurationAdmin.listConfigurations(null);
 
 		Assert.assertEquals(1, configurations.length);
 
@@ -280,16 +235,13 @@ public class ConfiguratorExtensionTest {
 	public void testSingleConfigurationWithClashingMultipleContentsAndDifferentNamespaces()
 		throws Exception {
 
-		_startExtension(
-			"aBundle",
-			new StringConfigurationContent(null, "test.pid", "key=value"));
+		_startExtension("aBundle", new Configuration("test.pid", _dictionary1));
 
 		_startExtension(
-			"otherBundle",
-			new StringConfigurationContent(null, "test.pid", "key=value2"));
+			"otherBundle", new Configuration("test.pid", _dictionary2));
 
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			null);
+		org.osgi.service.cm.Configuration[] configurations =
+			_configurationAdmin.listConfigurations(null);
 
 		Assert.assertEquals(1, configurations.length);
 
@@ -302,26 +254,21 @@ public class ConfiguratorExtensionTest {
 	@Test
 	public void testSingleConfigurationWithMultipleContents() throws Exception {
 		_startExtension(
-			"aBundle",
-			new StringConfigurationContent(null, "test.pid", "key=value"),
-			new StringConfigurationContent(null, "test.pid2", "key=value"));
+			"aBundle", new Configuration("test.pid", _dictionary1),
+			new Configuration("test.pid2", _dictionary2));
 
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			null);
+		org.osgi.service.cm.Configuration[] configurations =
+			_configurationAdmin.listConfigurations(null);
 
 		Assert.assertEquals(2, configurations.length);
 	}
 
 	private void _startExtension(
-			String namespace, ConfigurationContent... configurationContents)
+			String namespace, Configuration... configurations)
 		throws Exception {
 
 		ConfiguratorExtension configuratorExtension = new ConfiguratorExtension(
-			_configurationAdmin, new Logger(_bundleContext), namespace,
-			Arrays.asList(configurationContents),
-			Arrays.<ConfigurationDescriptionFactory>asList(
-				new StringConfigurationDescriptionFactory())
-		);
+			_configurationAdmin, namespace, configurations);
 
 		configuratorExtension.start();
 
@@ -334,58 +281,10 @@ public class ConfiguratorExtensionTest {
 	private ConfigurationAdmin _configurationAdmin;
 	private final Collection<ConfiguratorExtension> _configurationExtensions =
 		new ArrayList<>();
+	private final Dictionary<String, Object> _dictionary1 =
+		new HashMapDictionary<>();
+	private final Dictionary<String, Object> _dictionary2 =
+		new HashMapDictionary<>();
 	private ServiceReference<ConfigurationAdmin> _serviceReference;
-
-	private static class StringConfigurationContent
-		implements ConfigurationContent {
-
-		@Override
-		public String getFactoryPid() {
-			return _factoryPid;
-		}
-
-		@Override
-		public InputStream getInputStream() {
-			return new ByteArrayInputStream(
-				_content.getBytes(Charset.forName("UTF-8")));
-		}
-
-		@Override
-		public String getPid() {
-			return _pid;
-		}
-
-		private StringConfigurationContent(
-			String factoryPid, String pid, String content) {
-
-			_factoryPid = factoryPid;
-			_pid = pid;
-			_content = content;
-		}
-
-		private final String _content;
-		private final String _factoryPid;
-		private final String _pid;
-
-	}
-
-	private static class StringConfigurationDescriptionFactory
-		implements ConfigurationDescriptionFactory {
-
-		@Override
-		public ConfigurationDescription create(
-				ConfigurationContent configurationContent)
-			throws IOException {
-
-			Dictionary<?, ?> properties = PropertiesUtil.load(
-				configurationContent.getInputStream(), "UTF-8");
-
-			return new ConfigurationDescription(
-				configurationContent.getFactoryPid(),
-				configurationContent.getPid(),
-				(Dictionary<String, Object>)properties);
-		}
-
-	}
 
 }

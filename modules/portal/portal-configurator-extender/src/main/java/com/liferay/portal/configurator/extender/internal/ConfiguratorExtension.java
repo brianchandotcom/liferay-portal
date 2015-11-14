@@ -14,21 +14,16 @@
 
 package com.liferay.portal.configurator.extender.internal;
 
-import com.liferay.portal.configurator.extender.ConfigurationContent;
-import com.liferay.portal.configurator.extender.ConfigurationDescription;
-import com.liferay.portal.configurator.extender.ConfigurationDescriptionFactory;
+import com.liferay.portal.configurator.extender.Configuration;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.io.IOException;
 
-import java.util.Collection;
 import java.util.Dictionary;
 
 import org.apache.felix.utils.extender.Extension;
-import org.apache.felix.utils.log.Logger;
 
 import org.osgi.framework.InvalidSyntaxException;
-import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
@@ -37,16 +32,12 @@ import org.osgi.service.cm.ConfigurationAdmin;
 public class ConfiguratorExtension implements Extension {
 
 	public ConfiguratorExtension(
-		ConfigurationAdmin configurationAdmin, Logger logger, String namespace,
-		Collection<ConfigurationContent> configurationContents,
-		Collection<ConfigurationDescriptionFactory>
-			configurationDescriptionFactories) {
+		ConfigurationAdmin configurationAdmin, String namespace,
+		Configuration... configurations) {
 
 		_configurationAdmin = configurationAdmin;
-		_logger = logger;
 		_namespace = namespace;
-		_configurationContents = configurationContents;
-		_configurationDescriptionFactories = configurationDescriptionFactories;
+		_configurations = configurations;
 	}
 
 	@Override
@@ -55,11 +46,14 @@ public class ConfiguratorExtension implements Extension {
 
 	@Override
 	public void start() throws Exception {
-		for (ConfigurationContent configurationContent :
-				_configurationContents) {
-
+		for (Configuration configuration : _configurations) {
 			try {
-				_createConfiguration(configurationContent);
+				if (configuration.getFactoryPid() == null) {
+					_processConfiguration(configuration);
+				}
+				else {
+					_processFactoryConfiguration(configuration);
+				}
 			}
 			catch (IOException ioe) {
 				continue;
@@ -70,8 +64,8 @@ public class ConfiguratorExtension implements Extension {
 	private boolean _configurationExists(String filter)
 		throws InvalidSyntaxException, IOException {
 
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			filter);
+		org.osgi.service.cm.Configuration[] configurations =
+			_configurationAdmin.listConfigurations(filter);
 
 		if (ArrayUtil.isNotEmpty(configurations)) {
 			return true;
@@ -80,65 +74,26 @@ public class ConfiguratorExtension implements Extension {
 		return false;
 	}
 
-	private void _createConfiguration(ConfigurationContent configurationContent)
-		throws Exception {
-
-		for (ConfigurationDescriptionFactory configurationDescriptionFactory :
-				_configurationDescriptionFactories) {
-
-			ConfigurationDescription configurationDescription = null;
-
-			try {
-				configurationDescription =
-					configurationDescriptionFactory.create(
-						configurationContent);
-			}
-			catch (IOException ioe) {
-				_logger.log(
-					Logger.LOG_WARNING,
-					"Unable to create ConfigurationDescription from " +
-						configurationContent,
-					ioe);
-
-				continue;
-			}
-
-			if (configurationDescription == null) {
-				continue;
-			}
-
-			if (configurationDescription.getFactoryPid() == null) {
-				_processConfigurationDescription(configurationDescription);
-			}
-			else {
-				_processFactoryConfigurationDescription(
-					configurationDescription);
-			}
-		}
-	}
-
-	private void _processConfigurationDescription(
-			ConfigurationDescription configurationDescription)
+	private void _processConfiguration(Configuration configuration)
 		throws InvalidSyntaxException, IOException {
 
-		String pid = configurationDescription.getPid();
+		String pid = configuration.getPid();
 
 		if (_configurationExists("(service.pid=" + pid + ")")) {
 			return;
 		}
 
-		Configuration configuration = _configurationAdmin.getConfiguration(
-			pid, null);
+		org.osgi.service.cm.Configuration osgiConfiguration =
+			_configurationAdmin.getConfiguration(pid, null);
 
-		configuration.update(configurationDescription.getProperties());
+		osgiConfiguration.update(configuration.getProperties());
 	}
 
-	private void _processFactoryConfigurationDescription(
-			ConfigurationDescription configurationDescription)
+	private void _processFactoryConfiguration(Configuration configuration)
 		throws InvalidSyntaxException, IOException {
 
-		String factoryPid = configurationDescription.getFactoryPid();
-		String pid = configurationDescription.getPid();
+		String factoryPid = configuration.getFactoryPid();
+		String pid = configuration.getPid();
 
 		String configuratorUrl = _namespace + "#" + pid;
 
@@ -148,22 +103,18 @@ public class ConfiguratorExtension implements Extension {
 			return;
 		}
 
-		Configuration configuration =
+		org.osgi.service.cm.Configuration osgiConfiguration =
 			_configurationAdmin.createFactoryConfiguration(factoryPid, null);
 
-		Dictionary<String, Object> properties =
-			configurationDescription.getProperties();
+		Dictionary<String, Object> properties = configuration.getProperties();
 
 		properties.put("configurator.url", configuratorUrl);
 
-		configuration.update(properties);
+		osgiConfiguration.update(properties);
 	}
 
 	private final ConfigurationAdmin _configurationAdmin;
-	private final Collection<ConfigurationContent> _configurationContents;
-	private final Collection<ConfigurationDescriptionFactory>
-		_configurationDescriptionFactories;
-	private final Logger _logger;
+	private final Configuration[] _configurations;
 	private final String _namespace;
 
 }

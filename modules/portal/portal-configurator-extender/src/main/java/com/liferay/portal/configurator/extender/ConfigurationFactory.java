@@ -14,6 +14,8 @@
 
 package com.liferay.portal.configurator.extender;
 
+import java.io.IOException;
+
 import java.util.List;
 
 import org.osgi.framework.Bundle;
@@ -21,8 +23,8 @@ import org.osgi.framework.Bundle;
 /**
  * @author Carlos Sierra Andrés
  */
-public interface ConfigurationContentFactory {
+public interface ConfigurationFactory {
 
-	public List<ConfigurationContent> create(Bundle bundle);
+	public List<Configuration> create(Bundle bundle) throws IOException;
 
 }

@@ -18,6 +18,7 @@ import com.liferay.portal.configurator.extender.internal.ConfiguratorExtension;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.apache.felix.utils.extender.AbstractExtender;
@@ -55,24 +56,12 @@ public class ConfiguratorExtender extends AbstractExtender {
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "removeConfigurationDescriptionFactory"
+		unbind = "removeConfigurationFactory"
 	)
-	protected void addConfigurationDescriptionFactory(
-		ConfigurationDescriptionFactory configurationDescriptionFactory) {
+	protected void addConfigurationFactory(
+		ConfigurationFactory configurationFactory) {
 
-		_configurationDescriptionFactories.add(configurationDescriptionFactory);
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "removeConfigurationURLLocator"
-	)
-	protected void addConfigurationURLLocator(
-		ConfigurationContentFactory configurationContentFactory) {
-
-		_configurationContentFactories.add(configurationContentFactory);
+		_configurationFactories.add(configurationFactory);
 	}
 
 	@Deactivate
@@ -87,14 +76,13 @@ public class ConfiguratorExtender extends AbstractExtender {
 
 	@Override
 	protected Extension doCreateExtension(Bundle bundle) throws Exception {
-		Collection<ConfigurationContent> configurationURLs = new ArrayList<>();
+		List<Configuration> configurations = new ArrayList<>();
 
-		for (ConfigurationContentFactory configurationContentFactory :
-				_configurationContentFactories) {
+		for (ConfigurationFactory configurationFactory :
+				_configurationFactories) {
 
 			try {
-				configurationURLs.addAll(
-					configurationContentFactory.create(bundle));
+				configurations.addAll(configurationFactory.create(bundle));
 			}
 			catch (Throwable t) {
 				_logger.log(
@@ -103,14 +91,13 @@ public class ConfiguratorExtender extends AbstractExtender {
 			}
 		}
 
-		if (configurationURLs.isEmpty()) {
+		if (configurations.isEmpty()) {
 			return null;
 		}
 
 		return new ConfiguratorExtension(
-			_configurationAdmin, new Logger(bundle.getBundleContext()),
-			bundle.getSymbolicName(), configurationURLs,
-			_configurationDescriptionFactories);
+			_configurationAdmin, bundle.getSymbolicName(),
+			configurations.toArray(new Configuration[configurations.size()]));
 	}
 
 	@Override
@@ -118,17 +105,10 @@ public class ConfiguratorExtender extends AbstractExtender {
 		_logger.log(Logger.LOG_ERROR, s, throwable);
 	}
 
-	protected void removeConfigurationDescriptionFactory(
-		ConfigurationDescriptionFactory configurationDescriptionFactory) {
+	protected void removeConfigurationFactory(
+		ConfigurationFactory configurationFactory) {
 
-		_configurationDescriptionFactories.remove(
-			configurationDescriptionFactory);
-	}
-
-	protected void removeConfigurationURLLocator(
-		ConfigurationContentFactory configurationContentFactory) {
-
-		_configurationContentFactories.remove(configurationContentFactory);
+		_configurationFactories.remove(configurationFactory);
 	}
 
 	@Reference
@@ -144,10 +124,8 @@ public class ConfiguratorExtender extends AbstractExtender {
 	}
 
 	private ConfigurationAdmin _configurationAdmin;
-	private final Collection<ConfigurationContentFactory>
-		_configurationContentFactories = new CopyOnWriteArrayList<>();
-	private final Collection<ConfigurationDescriptionFactory>
-		_configurationDescriptionFactories = new CopyOnWriteArrayList<>();
+	private final Collection<ConfigurationFactory> _configurationFactories =
+		new CopyOnWriteArrayList<>();
 	private Logger _logger;
 
 }

@@ -21,9 +21,13 @@ import java.util.Dictionary;
 /**
 * @author Carlos Sierra Andrés
 */
-public class ConfigurationDescription {
+public class Configuration {
 
-	public ConfigurationDescription(
+	public Configuration(String pid, Dictionary<String, Object> properties) {
+		this(null, pid, properties);
+	}
+
+	public Configuration(
 		String factoryPid, String pid, Dictionary<String, Object> properties) {
 
 		_factoryPid = factoryPid;

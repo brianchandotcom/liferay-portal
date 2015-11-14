@@ -29,26 +29,25 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class WaiterUtil {
 
-	public static boolean waitForFilter(
+	public static void waitForFilter(
 			BundleContext bundleContext, String filterString, long timeout)
-		throws InterruptedException, InvalidSyntaxException, TimeoutException {
-
-		Filter filter = bundleContext.createFilter(filterString);
+		throws Exception {
 
 		ServiceTracker<?, ?> serviceTracker = new ServiceTracker<>(
-			bundleContext, filter, null);
+			bundleContext, bundleContext.createFilter(filterString), null);
 
 		serviceTracker.open();
 
-		Object object = serviceTracker.waitForService(timeout);
-
-		serviceTracker.close();
-
-		if (object == null) {
-			return false;
+		try {
+			if (serviceTracker.waitForService(timeout) == null) {
+				throw new TimeoutException(
+					"Time out on waiting for " + filterString + " after " +
+						timeout + "ms");
+			}
 		}
-
-		return true;
+		finally {
+			serviceTracker.close();
+		}
 	}
 
 	public static Waiter waitForFilterToDisappear(

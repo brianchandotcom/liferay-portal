@@ -15,6 +15,7 @@
 package com.liferay.portal.soap.extender.test.activator.configuration;
 
 import com.liferay.portal.soap.extender.test.util.WaiterUtil;
+import com.liferay.portal.soap.extender.test.util.WaiterUtil.Waiter;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
@@ -105,14 +106,12 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 
 	@Override
 	public void stop(BundleContext bundleContext) throws Exception {
-		WaiterUtil.Waiter waiter = WaiterUtil.waitForFilterToDisappear(
-			bundleContext, _filterString, 1);
+		Waiter waiter = WaiterUtil.waitForFilterToDisappear(
+			bundleContext, _filterString);
 
 		_cleanUp();
 
-		if (!waiter.waitFor(10_000 * 60)) {
-			throw new TimeoutException("Service unregister waiting timeout");
-		}
+		waiter.waitFor(10_000 * 60);
 	}
 
 	private void _cleanUp() {

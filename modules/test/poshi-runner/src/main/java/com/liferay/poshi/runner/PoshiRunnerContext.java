@@ -47,6 +47,7 @@ public class PoshiRunnerContext {
 	public static void clear() {
 		_actionExtendClassName.clear();
 		_commandElements.clear();
+		_commandReturns.clear();
 		_commandSummaries.clear();
 		_filePaths.clear();
 		_filePathsList.clear();
@@ -136,6 +137,10 @@ public class PoshiRunnerContext {
 
 	public static Element getMacroCommandElement(String classCommandName) {
 		return _commandElements.get("macro#" + classCommandName);
+	}
+
+	public static List<String> getMacroCommandReturns(String classCommandName) {
+		return _commandReturns.get("macro#" + classCommandName);
 	}
 
 	public static String getMacroCommandSummary(String classCommandName) {
@@ -243,6 +248,16 @@ public class PoshiRunnerContext {
 		}
 
 		_componentClassCommandNames.put(componentName, classCommandNames);
+	}
+
+	private static List<String> _getCommandReturns(Element commandElement) {
+		String returns = commandElement.attributeValue("returns");
+
+		if (returns == null) {
+			return new ArrayList<>();
+		}
+
+		return Arrays.asList(StringUtil.split(returns));
 	}
 
 	private static String _getCommandSummary(
@@ -600,6 +615,10 @@ public class PoshiRunnerContext {
 					_getCommandSummary(
 						classCommandName, classType, commandElement));
 
+				_commandReturns.put(
+					classType + "#" + classCommandName,
+						_getCommandReturns(commandElement));
+
 				if (Validator.equals(classType, "test-case") &&
 					Validator.isNotNull(
 						commandElement.attributeValue("description"))) {
@@ -902,6 +921,8 @@ public class PoshiRunnerContext {
 	private static final Map<String, String> _actionExtendClassName =
 		new HashMap<>();
 	private static final Map<String, Element> _commandElements =
+		new HashMap<>();
+	private static final Map<String, List<String>> _commandReturns =
 		new HashMap<>();
 	private static final Map<String, String> _commandSummaries =
 		new HashMap<>();

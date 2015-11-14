@@ -1125,6 +1125,18 @@
 		</run-batch-test>
 	</target>
 
+	<target name="plugins-functional-release-tomcat-mysql">
+		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
+
+		<run-functional-test
+			app.server.type="tomcat"
+			database.type="mysql"
+			test.license.xml.url="${test.license.xml.url}"
+			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.release.bundle="true"
+		/>
+	</target>
+
 	<target name="plugins-functional-tomcat-mysql">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" />
 	</target>

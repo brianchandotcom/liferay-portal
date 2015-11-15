@@ -15,7 +15,6 @@
 package com.liferay.portal.ldap.configuration;
 
 import aQute.bnd.annotation.metatype.Configurable;
-import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -34,13 +33,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.cm.Configuration;
-import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
  * @author Michael C. Han
  */
 public abstract class CompanyScopedConfigurationProvider
-	<T extends CompanyScopedConfiguration> implements ConfigurationProvider<T> {
+	<T extends CompanyScopedConfiguration>
+	extends AbstractConfigurationProvider<T>
+	implements ConfigurationProvider<T> {
 
 	@Override
 	public boolean delete(long companyId) {
@@ -259,30 +259,6 @@ public abstract class CompanyScopedConfigurationProvider
 
 		updateProperties(companyId, properties);
 	}
-
-	protected String getMetatypeId() {
-		Class<T> metatype = getMetatype();
-
-		Meta.OCD metaOCD = metatype.getAnnotation(Meta.OCD.class);
-
-		if (metaOCD == null) {
-			return null;
-		}
-
-		String id = metaOCD.id();
-
-		if (id == null) {
-			id = metatype.getName();
-		}
-
-		return id;
-	}
-
-	protected abstract void setConfigurationAdmin(
-		ConfigurationAdmin configurationAdmin);
-
-	protected ConfigurationAdmin configurationAdmin;
-	protected String factoryPid;
 
 	private final Map<Long, Configuration> _configurations = new HashMap<>();
 

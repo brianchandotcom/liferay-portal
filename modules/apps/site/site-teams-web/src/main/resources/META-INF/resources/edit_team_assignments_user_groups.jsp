@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+
 String tabs1 = (String)request.getAttribute("edit_team_assignments.jsp-tabs1");
 String tabs2 = (String)request.getAttribute("edit_team_assignments.jsp-tabs2");
 
@@ -29,7 +31,19 @@ Team team = (Team)request.getAttribute("edit_team_assignments.jsp-team");
 Group group = (Group)request.getAttribute("edit_team_assignments.jsp-group");
 
 PortletURL portletURL = (PortletURL)request.getAttribute("edit_team_assignments.jsp-portletURL");
+
+RowChecker rowChecker = new UserGroupTeamChecker(renderResponse, team);
 %>
+
+<liferay-frontend:management-bar>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
+</liferay-frontend:management-bar>
 
 <liferay-ui:tabs
 	names="current,available"
@@ -38,7 +52,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_team_assignments.
 />
 
 <liferay-ui:search-container
-	rowChecker="<%= new UserGroupTeamChecker(renderResponse, team) %>"
+	rowChecker="<%= rowChecker %>"
 	searchContainer="<%= new UserGroupSearch(renderRequest, portletURL) %>"
 >
 	<portlet:renderURL var="searchURL">
@@ -89,21 +103,17 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_team_assignments.
 
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.model.UserGroup"
+		cssClass="selectable"
 		escapedModel="<%= true %>"
 		keyProperty="userGroupId"
 		modelVar="userGroup"
 	>
-		<liferay-ui:search-container-column-text
-			name="name"
-			orderable="<%= true %>"
-			property="name"
-		/>
 
-		<liferay-ui:search-container-column-text
-			name="description"
-			orderable="<%= true %>"
-			property="description"
-		/>
+		<%
+		boolean showActions = true;
+		%>
+
+		<%@ include file="/user_group_columns.jspf" %>
 	</liferay-ui:search-container-row>
 
 	<portlet:actionURL name="editTeamUserGroups" var="editTeamUserGroupsURL" />
@@ -127,7 +137,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_team_assignments.
 
 		<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
 
-		<liferay-ui:search-iterator />
+		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 	</aui:form>
 </liferay-ui:search-container>
 

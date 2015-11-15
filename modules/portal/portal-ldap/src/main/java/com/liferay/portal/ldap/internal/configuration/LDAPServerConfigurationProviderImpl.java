@@ -20,6 +20,9 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.ldap.configuration.AbstractConfigurationProvider;
 import com.liferay.portal.ldap.configuration.ConfigurationProvider;
 import com.liferay.portal.ldap.configuration.LDAPServerConfiguration;
 import com.liferay.portal.ldap.constants.LDAPConstants;
@@ -51,6 +54,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = ConfigurationProvider.class
 )
 public class LDAPServerConfigurationProviderImpl
+	extends AbstractConfigurationProvider<LDAPServerConfiguration>
 	implements ConfigurationProvider<LDAPServerConfiguration> {
 
 	@Override
@@ -276,6 +280,10 @@ public class LDAPServerConfigurationProviderImpl
 	public void registerConfiguration(Configuration configuration) {
 		Dictionary<String, Object> properties = configuration.getProperties();
 
+		if (properties == null) {
+			properties = new HashMapDictionary<>();
+		}
+
 		LDAPServerConfiguration ldapServerConfiguration =
 			Configurable.createConfigurable(getMetatype(), properties);
 
@@ -299,6 +307,10 @@ public class LDAPServerConfigurationProviderImpl
 	@Override
 	public void unregisterConfiguration(Configuration configuration) {
 		Dictionary<String, Object> properties = configuration.getProperties();
+
+		if (properties == null) {
+			properties = new HashMapDictionary<>();
+		}
 
 		LDAPServerConfiguration ldapServerConfiguration =
 			Configurable.createConfigurable(getMetatype(), properties);
@@ -325,6 +337,10 @@ public class LDAPServerConfigurationProviderImpl
 		long companyId, long ldapServerId,
 		Dictionary<String, Object> properties) {
 
+		if (properties == null) {
+			properties = new HashMapDictionary<>();
+		}
+
 		Map<Long, Configuration> configurations = _configurations.get(
 			companyId);
 
@@ -334,25 +350,16 @@ public class LDAPServerConfigurationProviderImpl
 			_configurations.put(companyId, configurations);
 		}
 
-		Map<Long, Configuration> defaultConfigurations = _configurations.get(
-			0L);
-
-		if (defaultConfigurations == null) {
-			Class<?> metatype = getMetatype();
-
-			throw new IllegalArgumentException(
-				"No default configuration for " + metatype.getName());
-		}
-
 		try {
 			Configuration configuration = configurations.get(ldapServerId);
 
 			if (configuration == null) {
-				Configuration defaultConfiguration = defaultConfigurations.get(
-					0L);
+				if (Validator.isNull(factoryPid)) {
+					factoryPid = getMetatypeId();
+				}
 
-				configuration = _configurationAdmin.createFactoryConfiguration(
-					defaultConfiguration.getFactoryPid());
+				configuration = configurationAdmin.createFactoryConfiguration(
+					factoryPid, StringPool.QUESTION);
 			}
 
 			properties.put(LDAPConstants.COMPANY_ID, companyId);
@@ -369,10 +376,9 @@ public class LDAPServerConfigurationProviderImpl
 	protected void setConfigurationAdmin(
 		ConfigurationAdmin configurationAdmin) {
 
-		_configurationAdmin = configurationAdmin;
+		super.configurationAdmin = configurationAdmin;
 	}
 
-	private ConfigurationAdmin _configurationAdmin;
 	private final Map<Long, Map<Long, Configuration>>
 		_configurations = new ConcurrentHashMap<>();
 

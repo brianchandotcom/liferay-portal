@@ -36,17 +36,17 @@
 <!--USER_TABLE-->
 <tr>
 	<td>USER_TABLE_CHECKBOX</td>
-	<td>//div[contains(@id,'usersSearchContainerSearchContainer')]//tr[contains(.,'${key_userScreenName}')]/td[1]//input[contains(@name,'rowIds')]</td>
+	<td>//div[contains(@id,'usersSearchContainer')]//tr[td[contains(.,'${key_userScreenName}')]]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_TABLE_NAME</td>
-	<td>//div[contains(@id,'usersSearchContainerSearchContainer')]//tr[contains(.,'${key_userScreenName}')]/td[2]</td>
+	<td>//div[contains(@id,'usersSearchContainer')]//tr[td[contains(.,'${key_userScreenName}')]]//td[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_TABLE_SCREEN_NAME</td>
-	<td>//div[contains(@id,'usersSearchContainerSearchContainer')]//tr[contains(.,'${key_userScreenName}')]/td[3]</td>
+	<td>//div[contains(@id,'usersSearchContainer')]//tr[td[contains(.,'${key_userScreenName}')]]//td[3]</td>
 	<td></td>
 </tr>
 <tr>

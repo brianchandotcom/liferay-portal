@@ -56,7 +56,7 @@ else {
 			<portlet:param name="mvcPath" value="/move_entries.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="referringPortletResource" value="<%= referringPortletResource %>" />
-			<portlet:param name="articleIds" value="<%= article.getArticleId() %>" />
+			<portlet:param name="rowIdsJournalArticle" value="<%= article.getArticleId() %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon

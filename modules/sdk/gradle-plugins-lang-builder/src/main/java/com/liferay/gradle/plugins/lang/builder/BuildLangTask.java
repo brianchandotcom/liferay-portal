@@ -36,6 +36,10 @@ import org.gradle.api.tasks.Optional;
  */
 public class BuildLangTask extends JavaExec {
 
+	public BuildLangTask() {
+		setMain("com.liferay.lang.builder.LangBuilder");
+	}
+
 	@Override
 	public JavaExec classpath(Object... paths) {
 		throw new UnsupportedOperationException();
@@ -69,11 +73,6 @@ public class BuildLangTask extends JavaExec {
 	@Input
 	public String getLangFileName() {
 		return GradleUtil.toString(_langFileName);
-	}
-
-	@Override
-	public String getMain() {
-		return "com.liferay.lang.builder.LangBuilder";
 	}
 
 	@InputFile

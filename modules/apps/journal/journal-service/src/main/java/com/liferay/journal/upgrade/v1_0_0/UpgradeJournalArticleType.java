@@ -16,6 +16,9 @@ package com.liferay.journal.upgrade.v1_0_0;
 
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.service.CompanyLocalService;
@@ -39,11 +42,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eudaldo Alonso
  */
-public class UpgradeJournalArticleType extends UpgradeBaseJournal {
+public class UpgradeJournalArticleType extends UpgradeProcess {
 
 	public UpgradeJournalArticleType(
 		AssetCategoryLocalService assetCategoryLocalService,
@@ -227,9 +231,14 @@ public class UpgradeJournalArticleType extends UpgradeBaseJournal {
 		List<Company> companies = _companyLocalService.getCompanies();
 
 		for (Company company : companies) {
+			Set<Locale> locales = LanguageUtil.getAvailableLocales(
+				company.getGroupId());
+
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+				locales, "type");
+
 			AssetVocabulary assetVocabulary = addAssetVocabulary(
-				company.getGroupId(), company.getCompanyId(), "type",
-				localize(company.getGroupId(), "type"),
+				company.getGroupId(), company.getCompanyId(), "type", nameMap,
 				new HashMap<Locale, String>());
 
 			Map<String, Long> journalArticleTypesToAssetCategoryIds =

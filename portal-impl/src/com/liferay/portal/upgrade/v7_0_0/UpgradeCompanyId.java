@@ -88,7 +88,7 @@ public class UpgradeCompanyId
 				"productEntryId"),
 			new TableUpdater("TrashVersion", "TrashEntry", "entryId"),
 			new TableUpdater("UserGroupGroupRole", "UserGroup", "userGroupId"),
-			new TableUpdater("UserGroupRole", "UserGroup", "userGroupId"),
+			new TableUpdater("UserGroupRole", "User_", "userId"),
 			new TableUpdater("UserGroups_Teams", "UserGroup", "userGroupId"),
 			new TableUpdater("UserIdMapper", "User_", "userId"),
 			new TableUpdater("Users_Groups", "User_", "userId"),

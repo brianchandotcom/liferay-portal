@@ -144,7 +144,7 @@ public interface Localization {
 		String defaultValue);
 
 	public Map<Locale, String> getLocalizationMap(
-		Collection<Locale> locales, String key);
+		Collection<Locale> locales, Locale defaultLocale, String key);
 
 	/**
 	 * Returns a map of locales and localized strings for the parameter in the

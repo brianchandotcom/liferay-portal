@@ -62,7 +62,6 @@
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageAccess" value="${pageAccess}" />
 			<var name="pageStaging" value="${pageStaging}" />
-			<var name="portletName" value="Site Pages" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteNameURL" value="${siteNameURL}" />
 			<var name="siteURL" value="${siteURL}" />
@@ -70,19 +69,13 @@
 			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
-		<if>
-			<isset var="privatePage" />
-			<then>
-				<execute function="AssertClick" locator1="SitePages#NAVIGATION_PRIVATE_PAGES" value1="Private Pages" />
-			</then>
-			<else>
-				<execute function="AssertClick" locator1="SitePages#NAVIGATION_PUBLIC_PAGES" value1="Public Pages" />
-			</else>
-		</if>
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="Public Pages" />
+		</execute>
 
 		<execute macro-mobile="MobileNavigator#clickReorderIcon" />
 
-		<execute function="AssertClick" locator1="SitePages#TOOLBAR_ADD_PAGE" value1="Add Page" />
+		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
 
 		<execute function="Type#typeClickAt" locator1="TextInput#NAME" value1="${pageName}" />
 
@@ -112,7 +105,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
+		<execute function="AssertClick" locator1="Button#ADD_PAGE_BTN" value1="Add Page" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 

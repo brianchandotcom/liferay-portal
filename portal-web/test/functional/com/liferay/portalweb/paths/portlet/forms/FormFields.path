@@ -113,6 +113,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TEXT_FIELD_LINE_OPTION</td>
+	<td>//div[@class='radio-options']//input[@id='${key_textFieldLineOption}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TEXT_LABEL</td>
 	<td>//div[contains(@data-fieldname,'${key_fieldName}')]/label[contains(.,'${key_fieldLabel}')]</td>
 	<td></td>

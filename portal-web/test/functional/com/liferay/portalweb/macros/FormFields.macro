@@ -70,6 +70,12 @@
 		<execute function="Select" locator1="FormFields#SELECT_OPTION" value1="${selectOption}" />
 	</command>
 
+	<command name="selectTextFieldLineOption">
+		<var name="key_textFieldLineOption" value="textFieldLineOption" />
+
+		<execute function="Click" locator1="FormFields#TEXT_FIELD_LINE_OPTION" />
+	</command>
+
 	<command name="viewCheckboxLabel">
 		<var name="key_fieldName" value="${fieldName}" />
 

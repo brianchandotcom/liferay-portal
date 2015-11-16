@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -113,8 +112,8 @@ public class JournalMoveEntriesDisplayContext {
 
 		List<JournalArticle> articles = new ArrayList<>();
 
-		String[] articleIds = StringUtil.split(
-			ParamUtil.getString(_liferayPortletRequest, "articleIds"));
+		String[] articleIds = ParamUtil.getStringValues(
+			_liferayPortletRequest, "rowIdsJournalArticle");
 
 		for (String articleId : articleIds) {
 			JournalArticle article = JournalArticleServiceUtil.fetchArticle(
@@ -129,8 +128,8 @@ public class JournalMoveEntriesDisplayContext {
 	}
 
 	public List<JournalFolder> getMoveFolders() throws PortalException {
-		long[] folderIds = StringUtil.split(
-			ParamUtil.getString(_liferayPortletRequest, "folderIds"), 0L);
+		long[] folderIds = ParamUtil.getLongValues(
+			_liferayPortletRequest, "rowIdsJournalFolder");
 
 		List<JournalFolder> folders = new ArrayList<>();
 

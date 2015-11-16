@@ -68,6 +68,11 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 				_assetCategoryLocalService, _assetEntryLocalService,
 				_assetVocabularyLocalService, _companyLocalService,
 				_userLocalService),
+
+			// UpgradeJournalArticles must be executed after calling
+			// updateArticleType because journal article types must already be
+			// converted to asset categories and asset vocabularies
+
 			new UpgradeJournalArticles(
 				_assetCategoryLocalService, _ddmStructureLocalService,
 				_groupLocalService, _layoutLocalService),

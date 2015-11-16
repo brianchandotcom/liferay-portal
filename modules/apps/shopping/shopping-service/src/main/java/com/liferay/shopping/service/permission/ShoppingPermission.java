@@ -15,16 +15,15 @@
 package com.liferay.shopping.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
-
-import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Jorge Ferrer
  */
-@Component(
-	immediate = true, property = {"resource.name=com.liferay.shopping"},
+@OSGiBeanProperties(
+	property = {"resource.name=com.liferay.shopping"},
 	service = ShoppingPermission.class
 )
 public class ShoppingPermission {

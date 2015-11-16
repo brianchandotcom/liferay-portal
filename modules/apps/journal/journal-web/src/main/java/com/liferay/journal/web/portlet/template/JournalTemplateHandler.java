@@ -25,9 +25,6 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.JournalContent;
-import com.liferay.journal.web.configuration.JournalWebConfigurationUtil;
-import com.liferay.journal.web.configuration.JournalWebConfigurationValues;
-import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -56,6 +53,24 @@ import org.osgi.service.component.annotations.Reference;
 	service = TemplateHandler.class
 )
 public class JournalTemplateHandler extends BaseDDMTemplateHandler {
+
+	public static final Map<String, String> journalArticleLanguageContent =
+		new HashMap<>();
+
+	static {
+		journalArticleLanguageContent.put(
+			"css",
+			"com/liferay/journal/web/portlet/template/dependencies/" +
+				"template.css");
+		journalArticleLanguageContent.put(
+			"ftl",
+			"com/liferay/journal/web/portlet/template/dependencies/" +
+				"template.ftl");
+		journalArticleLanguageContent.put(
+			"vm",
+			"com/liferay/journal/web/portlet/template/dependencies/" +
+				"template.vm");
+	}
 
 	@Override
 	public String getClassName() {
@@ -99,14 +114,7 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 
 	@Override
 	public String getTemplatesHelpPath(String language) {
-		return JournalWebConfigurationUtil.get(
-			getTemplatesHelpPropertyKey(), new Filter(language));
-	}
-
-	@Override
-	public String getTemplatesHelpPropertyKey() {
-		return JournalWebConfigurationValues.
-			JOURNAL_ARTICLE_TEMPLATE_LANGUAGE_CONTENT;
+		return journalArticleLanguageContent.get(language);
 	}
 
 	@Override

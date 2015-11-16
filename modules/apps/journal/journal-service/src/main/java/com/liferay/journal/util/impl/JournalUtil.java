@@ -109,7 +109,6 @@ import java.util.Map;
 import java.util.Stack;
 import java.util.regex.Pattern;
 
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 import javax.portlet.PortletURL;
@@ -562,22 +561,6 @@ public class JournalUtil {
 				themeDisplay.getLocale(), "the-name-of-the-email-recipient"));
 
 		return definitionTerms;
-	}
-
-	public static String getEmailFromAddress(
-		PortletPreferences preferences, long companyId) {
-
-		return PortalUtil.getEmailFromAddress(
-			preferences, companyId,
-			JournalServiceConfigurationValues.EMAIL_FROM_ADDRESS);
-	}
-
-	public static String getEmailFromName(
-		PortletPreferences preferences, long companyId) {
-
-		return PortalUtil.getEmailFromName(
-			preferences, companyId,
-			JournalServiceConfigurationValues.EMAIL_FROM_NAME);
 	}
 
 	public static String getJournalControlPanelLink(

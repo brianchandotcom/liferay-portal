@@ -41,6 +41,7 @@ import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.util.ContentUtil;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -339,6 +340,19 @@ public class LocalizationImpl implements Localization {
 		_setCachedValue(xml, requestedLanguageId, useDefault, value);
 
 		return value;
+	}
+
+	@Override
+	public Map<Locale, String> getLocalizationMap(
+		Collection<Locale> locales, String key) {
+
+		Map<Locale, String> localizationMap = new HashMap<>();
+
+		for (Locale locale : locales) {
+			localizationMap.put(locale, LanguageUtil.get(locale, key));
+		}
+
+		return localizationMap;
 	}
 
 	@Override

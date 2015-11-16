@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.xml.Document;
 
+import java.util.Collection;
 import java.util.Locale;
 import java.util.Map;
 
@@ -141,6 +142,9 @@ public interface Localization {
 	public String getLocalization(
 		String xml, String requestedLanguageId, boolean useDefault,
 		String defaultValue);
+
+	public Map<Locale, String> getLocalizationMap(
+		Collection<Locale> locales, String key);
 
 	/**
 	 * Returns a map of locales and localized strings for the parameter in the

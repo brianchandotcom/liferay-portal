@@ -305,8 +305,8 @@ public class JournalPortlet extends MVCPortlet {
 
 		long newFolderId = ParamUtil.getLong(actionRequest, "newFolderId");
 
-		long[] folderIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "folderIds"), 0L);
+		long[] folderIds = ParamUtil.getLongValues(
+			actionRequest, "rowIdsJournalFolder");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			JournalArticle.class.getName(), actionRequest);
@@ -321,8 +321,8 @@ public class JournalPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String[] articleIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "articleIds"));
+		String[] articleIds = ParamUtil.getStringValues(
+			actionRequest, "rowIdsJournalArticle");
 
 		for (String articleId : articleIds) {
 			try {

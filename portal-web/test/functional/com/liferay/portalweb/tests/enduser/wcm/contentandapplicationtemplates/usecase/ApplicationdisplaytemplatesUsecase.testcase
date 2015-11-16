@@ -19,9 +19,9 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
+			<var name="page" value="Public Pages" />
 			<var name="siteName" value="${siteName}" />
 			<var name="sitePageName" value="ADT Test Page" />
-			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 	</set-up>
 
@@ -545,10 +545,10 @@
 		</execute>
 
 		<execute macro="SitePage#addChildCP">
+			<var name="page" value="Public Pages" />
 			<var name="siteChildPageName" value="ADT Child Page Name" />
 			<var name="siteName" value="${siteName}" />
 			<var name="sitePageName" value="ADT Test Page" />
-			<var name="sitePagePrivacy" value="Public" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 

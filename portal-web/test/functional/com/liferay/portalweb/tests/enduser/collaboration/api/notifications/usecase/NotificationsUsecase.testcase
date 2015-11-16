@@ -80,9 +80,9 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
+			<var name="page" value="Public Pages" />
 			<var name="siteName" value="Community Site Name" />
 			<var name="sitePageName" value="Blank Page" />
-			<var name="sitePagePrivacy" value="Public" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
@@ -93,8 +93,8 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
+			<var name="page" value="Public Pages" />
 			<var name="sitePageName" value="Invite Members Page" />
-			<var name="sitePagePrivacy" value="Public" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 

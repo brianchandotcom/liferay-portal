@@ -41,18 +41,9 @@ MembershipRequest membershipRequest = MembershipRequestLocalServiceUtil.getMembe
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= replyMembershipRequestURL %>" method="post" name="fm">
+<aui:form action="<%= replyMembershipRequestURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="membershipRequestId" type="hidden" value="<%= membershipRequest.getMembershipRequestId() %>" />
-
-	<c:if test="<%= !layout.isTypeControlPanel() %>">
-		<liferay-ui:header
-			backURL="<%= redirect %>"
-			escapeXml="<%= false %>"
-			localizeTitle="<%= false %>"
-			title='<%= LanguageUtil.format(request, "reply-membership-request-for-x", HtmlUtil.escape(group.getDescriptiveName(locale)), false) %>'
-		/>
-	</c:if>
 
 	<liferay-ui:error exception="<%= DuplicateGroupException.class %>" message="please-enter-a-unique-name" />
 	<liferay-ui:error exception="<%= GroupKeyException.class %>" message="please-enter-a-valid-name" />
@@ -71,22 +62,28 @@ MembershipRequest membershipRequest = MembershipRequestLocalServiceUtil.getMembe
 		</aui:field-wrapper>
 	</c:if>
 
-	<aui:fieldset>
-		<aui:input name="userName" type="resource" value="<%= PortalUtil.getUserName(membershipRequest.getUserId(), StringPool.BLANK) %>" />
+	<aui:fieldset-group>
+		<aui:fieldset>
+			<liferay-ui:user-portrait
+				userId="<%= membershipRequest.getUserId() %>"
+			/>
 
-		<aui:input name="userComments" readonly="<%= true %>" type="textarea" value="<%= membershipRequest.getComments() %>" />
+			<aui:input name="userName" type="resource" value="<%= PortalUtil.getUserName(membershipRequest.getUserId(), StringPool.BLANK) %>" />
 
-		<aui:select autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" label="status" name="statusId">
-			<aui:option label="approve" value="<%= MembershipRequestConstants.STATUS_APPROVED %>" />
-			<aui:option label="deny" value="<%= MembershipRequestConstants.STATUS_DENIED %>" />
-		</aui:select>
+			<aui:input name="userComments" readonly="<%= true %>" type="textarea" value="<%= membershipRequest.getComments() %>" />
 
-		<aui:input name="replyComments" />
-	</aui:fieldset>
+			<aui:select autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" label="status" name="statusId">
+				<aui:option label="approve" value="<%= MembershipRequestConstants.STATUS_APPROVED %>" />
+				<aui:option label="deny" value="<%= MembershipRequestConstants.STATUS_DENIED %>" />
+			</aui:select>
+
+			<aui:input name="replyComments" />
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:button-row>
-		<aui:button type="submit" />
+		<aui:button cssClass="btn-lg" type="submit" />
 
-		<aui:button href="<%= redirect %>" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>

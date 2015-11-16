@@ -344,12 +344,20 @@ public class LocalizationImpl implements Localization {
 
 	@Override
 	public Map<Locale, String> getLocalizationMap(
-		Collection<Locale> locales, String key) {
+		Collection<Locale> locales, Locale defaultLocale, String key) {
+
+		String defaultValue = LanguageUtil.get(defaultLocale, key);
 
 		Map<Locale, String> localizationMap = new HashMap<>();
 
 		for (Locale locale : locales) {
-			localizationMap.put(locale, LanguageUtil.get(locale, key));
+			String value = LanguageUtil.get(locale, key);
+
+			if (!locale.equals(defaultLocale) && value.equals(defaultValue)) {
+				continue;
+			}
+
+			localizationMap.put(locale, value);
 		}
 
 		return localizationMap;

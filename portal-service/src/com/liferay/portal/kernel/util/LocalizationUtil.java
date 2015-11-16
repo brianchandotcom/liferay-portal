@@ -129,9 +129,10 @@ public class LocalizationUtil {
 	}
 
 	public static Map<Locale, String> getLocalizationMap(
-		Collection<Locale> locales, String key) {
+		Collection<Locale> locales, Locale defaultLocale, String key) {
 
-		return getLocalization().getLocalizationMap(locales, key);
+		return getLocalization().getLocalizationMap(
+			locales, defaultLocale, key);
 	}
 
 	public static Map<Locale, String> getLocalizationMap(

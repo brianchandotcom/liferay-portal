@@ -1,4 +1,8 @@
 buildscript {
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.lang.builder", version: "latest.release"
+	}
+
 	repositories {
 		mavenLocal()
 
@@ -6,10 +10,14 @@ buildscript {
 			url "http://cdn.repository.liferay.com/nexus/content/groups/public"
 		}
 	}
+}
 
-	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.lang.builder", version: "latest.release"
-	}
+apply plugin: "com.liferay.lang.builder"
+apply plugin: "java"
+
+buildLang {
+	translateClientId = "microsoft.translator.client.id"
+	translateClientSecret = "microsoft.translator.client.secret"
 }
 
 repositories {
@@ -18,12 +26,4 @@ repositories {
 	maven {
 		url "http://cdn.repository.liferay.com/nexus/content/groups/public"
 	}
-}
-
-apply plugin: "com.liferay.lang.builder"
-
-buildLang {
-	langDirName = "."
-	translateClientId = "microsoft.translator.client.id"
-	translateClientSecret = "microsoft.translator.client.secret"
 }

@@ -1060,6 +1060,24 @@
 		</execute>
 	</command>
 
+	<command name="SubmitFormWithoutAFormNameAndViewErrorMessage" priority="3">
+		<description message="This is a use case for LPS-59664." />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoAdd" />
+
+		<execute macro="Form#saveWithoutFormName" />
+
+		<execute macro="Form#editName" />
+
+		<execute macro="Form#editDescription" />
+
+		<execute macro="Form#save" />
+	</command>
+
 	<command name="ViewRepeatableTextFieldLabel" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Forms" />

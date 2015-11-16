@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_PAGE_BTN</td>
+	<td>//div[contains(@class,'add-page-toolbar')]/button[contains(.,'Add Page')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_PRODUCER</td>
 	<td>//a[contains(.,'Add Producer')]</td>
 	<td></td>

@@ -67,7 +67,7 @@
 		<execute macro="Organization#addSiteCP">
 			<var name="organizationSite" value="Community Site" />
 			<var name="orgName" value="Organization Name" />
-			<var name="sitePagePrivacy" value="Public" />
+			<var name="page" value="Public Pages" />
 		</execute>
 
 		<for list="Home,Documents and Media,News" param="sitePageName">
@@ -76,9 +76,9 @@
 			</execute>
 
 			<execute macro="SitePage#addCP">
+				<var name="page" value="Private Pages" />
 				<var name="siteName" value="Organization Name" />
 				<var name="sitePageName" value="${sitePageName}" />
-				<var name="sitePagePrivacy" value="Private" />
 			</execute>
 		</for>
 
@@ -1083,9 +1083,9 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
+			<var name="page" value="Public Pages" />
 			<var name="siteName" value="Site Name" />
 			<var name="sitePageName" value="Site Page" />
-			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1197,9 +1197,9 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
+			<var name="page" value="Public Pages" />
 			<var name="siteName" value="Site Name" />
 			<var name="sitePageName" value="Site Page" />
-			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1526,9 +1526,9 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
+			<var name="page" value="Public Pages" />
 			<var name="siteName" value="Site Name" />
 			<var name="sitePageName" value="Asset Publisher Page" />
-			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#gotoCP">

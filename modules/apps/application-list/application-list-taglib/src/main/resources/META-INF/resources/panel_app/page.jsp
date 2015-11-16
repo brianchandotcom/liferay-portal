@@ -26,8 +26,8 @@ String url = (String)request.getAttribute("liferay-application-list:panel-app:ur
 
 <c:if test="<%= Validator.isNotNull(url) %>">
 	<li
-		aria-selected='<%= active ? "true" : StringPool.BLANK %>'
-		class='<%= active ? "active" : StringPool.BLANK %>'
+		aria-selected="<%= active ? "true" : StringPool.BLANK %>"
+		class="<%= active ? "active" : StringPool.BLANK %>"
 		role="presentation"
 	>
 		<aui:a

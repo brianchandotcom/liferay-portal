@@ -106,7 +106,7 @@ public class FacetedSearcher extends BaseSearcher {
 		List<Group> inactiveGroups = GroupLocalServiceUtil.getActiveGroups(
 			searchContext.getCompanyId(), false);
 
-		if (!inactiveGroups.isEmpty()) {
+		if (ListUtil.isNotEmpty(inactiveGroups)) {
 			TermsFilter groupTermsFilter = new TermsFilter(Field.GROUP_ID);
 
 			groupTermsFilter.addValues(

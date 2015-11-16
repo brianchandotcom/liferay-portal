@@ -14,10 +14,10 @@
 
 package com.liferay.portal.search;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.FacetedSearcher;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.MultiValueFacet;
@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
@@ -65,17 +67,26 @@ public class FacetedSearchTest {
 	public void setUp() throws Exception {
 		WorkflowThreadLocal.setEnabled(false);
 
-		_group = GroupTestUtil.addGroup();
+		_group1 = GroupTestUtil.addGroup();
+		_group2 = GroupTestUtil.addGroup();
+	}
 
-		updateUser(_group.getGroupId(), _TAG_NAME);
+	@Test
+	public void testAHappyDay() throws Exception {
+		String tag = RandomTestUtil.randomString();
+
+		addUser(_group1, tag);
+
+		assertSearch(tag, 1);
 	}
 
 	@Test
 	public void testAssetTagNamesFacet() throws Exception {
-		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
-			_group.getGroupId());
+		String tag = "enterprise. open-source for life";
 
-		searchContext.setKeywords(_TAG_NAME);
+		addUser(_group1, tag);
+
+		SearchContext searchContext = getSearchContext(tag);
 
 		MultiValueFacet multiValueFacet = new MultiValueFacet(searchContext);
 
@@ -84,11 +95,9 @@ public class FacetedSearchTest {
 
 		searchContext.addFacet(multiValueFacet);
 
-		Indexer<?> indexer = FacetedSearcher.getInstance();
+		FacetedSearcher indexer = new FacetedSearcher();
 
-		Hits hits = indexer.search(searchContext);
-
-		Assert.assertNotEquals(0, hits.getLength());
+		indexer.search(searchContext);
 
 		Map<String, Facet> facets = searchContext.getFacets();
 
@@ -102,27 +111,71 @@ public class FacetedSearchTest {
 
 		TermCollector termCollector = termCollectors.get(0);
 
-		Assert.assertEquals(_TAG_NAME, termCollector.getTerm());
+		Assert.assertEquals(tag, termCollector.getTerm());
 		Assert.assertEquals(1, termCollector.getFrequency());
 	}
 
-	protected void updateUser(long groupId, String assetTagName)
-		throws Exception {
+	@Test
+	public void testInactiveGroupsAreIgnored() throws Exception {
+		addUser(_group1, "Liferay " + RandomTestUtil.randomString());
+		addUser(_group2, "Liferay " + RandomTestUtil.randomString());
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				groupId, TestPropsValues.getUserId());
+		assertSearch("Liferay", 2);
 
-		serviceContext.setAssetTagNames(new String[] {assetTagName});
+		deactivate(_group1);
 
-		User user = UserTestUtil.addUser();
+		assertSearch("Liferay", 1);
+
+		deactivate(_group2);
+
+		assertSearch("Liferay", 0);
+	}
+
+	protected static void addUser(Group group, String tag) throws Exception {
+		ServiceContext serviceContext = getServiceContext(group, tag);
+
+		User user = UserTestUtil.addUser(group.getGroupId());
 
 		UserTestUtil.updateUser(user, serviceContext);
 	}
 
-	private static final String _TAG_NAME = "enterprise. open-source for life";
+	protected static void assertSearch(String tag, int count) throws Exception {
+		FacetedSearcher indexer = new FacetedSearcher();
+
+		Hits hits = indexer.search(getSearchContext(tag));
+
+		Assert.assertEquals(count, hits.getLength());
+	}
+
+	protected static void deactivate(Group group) {
+		group.setActive(false);
+
+		GroupLocalServiceUtil.updateGroup(group);
+	}
+
+	protected static SearchContext getSearchContext(String keywords)
+		throws Exception {
+
+		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
+
+		searchContext.setKeywords(keywords);
+
+		return searchContext;
+	}
+
+	protected static ServiceContext getServiceContext(Group group, String tag)
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
+
+		serviceContext.setAssetTagNames(new String[] {tag});
+
+		return serviceContext;
+	}
 
 	@DeleteAfterTestRun
-	private Group _group;
+	private Group _group1, _group2;
 
 }

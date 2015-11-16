@@ -100,7 +100,7 @@ public class LiferayFileItemTest {
 	}
 
 	@Test
-	public void testGetEncodingStringAfterCreateItemShouldBeNull() {
+	public void testGetEncodedStringAfterCreateItemShouldBeNull() {
 		String contentType = RandomTestUtil.randomString();
 		String fieldName = RandomTestUtil.randomString();
 		String fileName = RandomTestUtil.randomString();

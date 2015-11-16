@@ -32,22 +32,12 @@ public class LangBuilderPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		addLangBuilderConfiguration(project);
+		addConfigurationLangBuilder(project);
 
-		addBuildLangTask(project);
+		addTaskBuildLang(project);
 	}
 
-	protected BuildLangTask addBuildLangTask(Project project) {
-		BuildLangTask buildLangTask = GradleUtil.addTask(
-			project, BUILD_LANG_TASK_NAME, BuildLangTask.class);
-
-		buildLangTask.setDescription(
-			"Runs Liferay Lang Builder to translate language property files.");
-
-		return buildLangTask;
-	}
-
-	protected Configuration addLangBuilderConfiguration(final Project project) {
+	protected Configuration addConfigurationLangBuilder(final Project project) {
 		Configuration configuration = GradleUtil.addConfiguration(
 			project, CONFIGURATION_NAME);
 
@@ -61,7 +51,7 @@ public class LangBuilderPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Configuration configuration) {
-					addLangBuilderDependencies(project);
+					addDependenciesLangBuilder(project);
 				}
 
 			});
@@ -69,10 +59,20 @@ public class LangBuilderPlugin implements Plugin<Project> {
 		return configuration;
 	}
 
-	protected void addLangBuilderDependencies(Project project) {
+	protected void addDependenciesLangBuilder(Project project) {
 		GradleUtil.addDependency(
 			project, CONFIGURATION_NAME, "com.liferay",
 			"com.liferay.lang.builder", "latest.release");
+	}
+
+	protected BuildLangTask addTaskBuildLang(Project project) {
+		BuildLangTask buildLangTask = GradleUtil.addTask(
+			project, BUILD_LANG_TASK_NAME, BuildLangTask.class);
+
+		buildLangTask.setDescription(
+			"Runs Liferay Lang Builder to translate language property files.");
+
+		return buildLangTask;
 	}
 
 }

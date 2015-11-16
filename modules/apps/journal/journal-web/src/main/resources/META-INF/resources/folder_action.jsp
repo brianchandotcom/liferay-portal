@@ -154,7 +154,7 @@ else {
 	</c:if>
 
 	<c:if test="<%= (folder != null) && JournalFolderPermission.contains(permissionChecker, folder, ActionKeys.DELETE) %>">
-		<portlet:actionURL name='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "moveFoldersToTrash" : "deleteFolders" %>' var="deleteURL">
+		<portlet:actionURL name='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "moveFolderToTrash" : "deleteFolder" %>' var="deleteURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(folder.getGroupId()) %>" />
 			<portlet:param name="folderId" value="<%= String.valueOf(folder.getFolderId()) %>" />

@@ -193,7 +193,7 @@ public abstract class BaseJenkinsResultsParserTestCase {
 		write(expectedMessageFile, expectedMessage);
 	}
 
-	protected final File dependenciesDir = new File(
+	protected File dependenciesDir = new File(
 		"src/test/resources/com/liferay/results/parser/dependencies/" +
 			getSimpleClassName());
 

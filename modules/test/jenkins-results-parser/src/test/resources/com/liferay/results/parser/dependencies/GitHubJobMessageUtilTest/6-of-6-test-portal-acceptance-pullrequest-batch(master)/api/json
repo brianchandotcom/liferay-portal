@@ -7,7 +7,7 @@
     "url": "https://test-1-19.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/1287/",
     "artifacts": [],
     "timestamp": 1445902308000,
-    "estimatedDuration": 708594,
+    "estimatedDuration": 962929,
     "id": "2015-10-26_16-31-48",
     "duration": 863320,
     "fullDisplayName": "test-portal-acceptance-pullrequest-batch(master) #1287",
@@ -81,15 +81,15 @@
         },
         {
             "number": 1287,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/results/parser/dependencies/GithubJobMessageUtilTest/6-of-6-test-portal-acceptance-pullrequest-batch(master)/run-15/1287/"
+            "url": "file:${user.dir}/src/test/resources/com/liferay/results/parser/dependencies/GitHubJobMessageUtilTest/6-of-6-test-portal-acceptance-pullrequest-batch(master)/run-15/1287/"
         },
         {
             "number": 1287,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/results/parser/dependencies/GithubJobMessageUtilTest/6-of-6-test-portal-acceptance-pullrequest-batch(master)/run-16/1287/"
+            "url": "file:${user.dir}/src/test/resources/com/liferay/results/parser/dependencies/GitHubJobMessageUtilTest/6-of-6-test-portal-acceptance-pullrequest-batch(master)/run-16/1287/"
         },
         {
             "number": 1287,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/results/parser/dependencies/GithubJobMessageUtilTest/6-of-6-test-portal-acceptance-pullrequest-batch(master)/run-17/1287/"
+            "url": "file:${user.dir}/src/test/resources/com/liferay/results/parser/dependencies/GitHubJobMessageUtilTest/6-of-6-test-portal-acceptance-pullrequest-batch(master)/run-17/1287/"
         },
         {
             "number": 1272,
@@ -97,15 +97,15 @@
         },
         {
             "number": 1287,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/results/parser/dependencies/GithubJobMessageUtilTest/6-of-6-test-portal-acceptance-pullrequest-batch(master)/run-19/1287/"
+            "url": "file:${user.dir}/src/test/resources/com/liferay/results/parser/dependencies/GitHubJobMessageUtilTest/6-of-6-test-portal-acceptance-pullrequest-batch(master)/run-19/1287/"
         },
         {
             "number": 1287,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/results/parser/dependencies/GithubJobMessageUtilTest/6-of-6-test-portal-acceptance-pullrequest-batch(master)/run-20/1287/"
+            "url": "file:${user.dir}/src/test/resources/com/liferay/results/parser/dependencies/GitHubJobMessageUtilTest/6-of-6-test-portal-acceptance-pullrequest-batch(master)/run-20/1287/"
         },
         {
             "number": 1287,
-            "url": "file:${user.dir}/src/test/resources/com/liferay/results/parser/dependencies/GithubJobMessageUtilTest/6-of-6-test-portal-acceptance-pullrequest-batch(master)/run-21/1287/"
+            "url": "file:${user.dir}/src/test/resources/com/liferay/results/parser/dependencies/GitHubJobMessageUtilTest/6-of-6-test-portal-acceptance-pullrequest-batch(master)/run-21/1287/"
         }
     ],
     "actions": [

@@ -206,7 +206,7 @@ public class UpgradeJournal extends UpgradeProcess {
 
 		return _ddmTemplateLocalService.addTemplate(
 			userId, groupId,
-			PortalUtil.getClassNameId(_CLASS_NAME_DDM_STRUCTURE),
+			PortalUtil.getClassNameId(DDMStructure.class.getName()),
 			ddmStructureId,
 			PortalUtil.getClassNameId(JournalArticle.class.getName()),
 			templateKey, nameMap, descriptionMap,
@@ -217,7 +217,8 @@ public class UpgradeJournal extends UpgradeProcess {
 	}
 
 	protected void addDDMTemplateLinks() throws Exception {
-		long classNameId = PortalUtil.getClassNameId(_CLASS_NAME_DDM_STRUCTURE);
+		long classNameId = PortalUtil.getClassNameId(
+			DDMStructure.class.getName());
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -396,9 +397,6 @@ public class UpgradeJournal extends UpgradeProcess {
 			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
-
-	private static final String _CLASS_NAME_DDM_STRUCTURE =
-		"com.liferay.dynamic.data.mapping.model.DDMStructure";
 
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeJournal.class);
 

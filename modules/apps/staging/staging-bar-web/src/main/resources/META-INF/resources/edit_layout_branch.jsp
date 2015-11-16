@@ -1,3 +1,4 @@
+
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -28,12 +29,52 @@ if (layoutBranchId > 0) {
 }
 
 long layoutRevisionId = ParamUtil.getLong(request, "layoutRevisionId");
+
+if (layoutRevisionId <= 0) {
+	layoutRevisionId = ParamUtil.getLong(request, "copyLayoutRevisionId");
+}
 %>
 
-<div class='<%= (layoutBranch != null) ? StringPool.BLANK : "hide" %>' data-namespace="<portlet:namespace />" id="<portlet:namespace /><%= layoutBranch != null ? "updateBranch" : "addBranch" %>">
+<liferay-ui:error exception="<%= LayoutBranchNameException.class %>">
+
+	<%
+		LayoutBranchNameException lbne = (LayoutBranchNameException)errorException;
+	%>
+
+	<c:if test="<%= lbne.getType() == LayoutBranchNameException.DUPLICATE %>">
+		<liferay-ui:message key="a-page-variation-with-that-name-already-exists" />
+	</c:if>
+
+	<c:if test="<%= lbne.getType() == LayoutBranchNameException.TOO_LONG %>">
+		<liferay-ui:message arguments="<%= new Object[] {4, 100} %>" key="please-enter-a-value-between-x-and-x-characters-long" translateArguments="<%= false %>" />
+	</c:if>
+
+	<c:if test="<%= lbne.getType() == LayoutBranchNameException.TOO_SHORT %>">
+		<liferay-ui:message arguments="<%= new Object[] {4, 100} %>" key="please-enter-a-value-between-x-and-x-characters-long" translateArguments="<%= false %>" />
+	</c:if>
+</liferay-ui:error>
+
+<%
+String title = "add-page-variation";
+
+if (layoutBranch != null) {
+	title = "update-page-variation";
+}
+%>
+
+<liferay-ui:header
+	backURL="<%= redirect %>"
+	localizeTitle="<%= true %>"
+	showBackURL="<%= true %>"
+	title="<%= title %>"
+/>
+
+<div data-namespace="<portlet:namespace />" id="<portlet:namespace /><%= (layoutBranch != null) ? "updateBranch" : "addBranch" %>">
 	<aui:model-context bean="<%= layoutBranch %>" model="<%= LayoutBranch.class %>" />
 
-	<portlet:actionURL name="updateLayoutBranch" var="editLayoutBranchURL" />
+	<portlet:actionURL name="editLayoutBranch" var="editLayoutBranchURL">
+		<portlet:param name="mvcRenderCommandName" value="editLayoutBranch" />
+	</portlet:actionURL>
 
 	<aui:form action="<%= editLayoutBranchURL %>" method="post" name="fm3">
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
@@ -48,6 +89,8 @@ long layoutRevisionId = ParamUtil.getLong(request, "layoutRevisionId");
 
 		<aui:button-row>
 			<aui:button type="submit" value='<%= (layoutBranch != null) ? "update" : "add" %>' />
+
+			<aui:button href="<%= redirect %>" type="cancel" />
 		</aui:button-row>
 	</aui:form>
 </div>

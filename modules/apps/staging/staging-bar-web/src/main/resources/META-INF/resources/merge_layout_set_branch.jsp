@@ -32,9 +32,16 @@ if (layoutSetBranches.contains(layoutSetBranch)) {
 }
 %>
 
+<liferay-ui:header
+	backURL="<%= redirect %>"
+	localizeTitle="<%= true %>"
+	showBackURL="<%= true %>"
+	title="merge-site-pages-variation"
+/>
+
 <div id="<portlet:namespace />mergeLayoutSetBranch">
 	<portlet:actionURL name="mergeLayoutSetBranch" var="mergeLayoutSetBranchURL">
-		<portlet:param name="mvcPath" value="/view_layout_set_branches.jsp" />
+		<portlet:param name="mvcRenderCommandName" value="viewLayoutSetBranches" />
 	</portlet:actionURL>
 
 	<aui:form action="<%= mergeLayoutSetBranchURL %>" enctype="multipart/form-data" method="post" name="fm4">
@@ -62,7 +69,12 @@ if (layoutSetBranches.contains(layoutSetBranch)) {
 				/>
 
 				<liferay-ui:search-container-column-text>
-					<a class="layout-set-branch" data-layoutSetBranchId="<%= curLayoutSetBranch.getLayoutSetBranchId() %>" data-layoutSetBranchMessage="<%= HtmlUtil.escapeAttribute(LanguageUtil.format(request, "are-you-sure-you-want-to-merge-changes-from-x", curLayoutSetBranch.getName(), false)) %>" data-layoutSetBranchName="<%= HtmlUtil.escapeAttribute(curLayoutSetBranch.getName()) %>" href="#">
+
+					<%
+					long curLayoutSetBranchId = curLayoutSetBranch.getLayoutSetBranchId();
+					%>
+
+					<a class="layout-set-branch" data-layoutSetBranchId="<%= curLayoutSetBranchId %>" data-layoutSetBranchMessage="<%= HtmlUtil.escapeAttribute(LanguageUtil.format(request, "are-you-sure-you-want-to-merge-changes-from-x", curLayoutSetBranch.getName(), false)) %>" data-layoutSetBranchName="<%= HtmlUtil.escapeAttribute(curLayoutSetBranch.getName()) %>" href="#" id="<portlet:namespace /><%= curLayoutSetBranchId %>" onClick="<portlet:namespace />selectLayoutSetBranch('<%= curLayoutSetBranchId %>');">
 						<liferay-ui:message key="select" />
 					</a>
 				</liferay-ui:search-container-column-text>
@@ -72,3 +84,25 @@ if (layoutSetBranches.contains(layoutSetBranch)) {
 		</liferay-ui:search-container>
 	</aui:form>
 </div>
+
+<aui:script >
+	function <portlet:namespace />selectLayoutSetBranch(layoutSetBranchId) {
+		var layoutSetBranch = AUI.$('#<portlet:namespace />' + layoutSetBranchId);
+
+		var mergeLayoutSetBranchId = layoutSetBranch.attr('data-layoutSetBranchId');
+		var mergeLayoutSetBranchName = layoutSetBranch.attr('data-layoutSetBranchName');
+		var mergeLayoutSetBranchMessage = layoutSetBranch.attr('data-layoutSetBranchMessage');
+
+		if (confirm(mergeLayoutSetBranchMessage)) {
+			var form = document.<portlet:namespace />fm4;
+
+			alert(form.<portlet:namespace />mergeLayoutSetBranchId.value);
+
+			form.<portlet:namespace />mergeLayoutSetBranchId.value = mergeLayoutSetBranchId;
+
+			alert(form.<portlet:namespace />mergeLayoutSetBranchId.value);
+
+			submitForm(form);
+		}
+	}
+</aui:script>

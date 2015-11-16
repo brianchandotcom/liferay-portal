@@ -28,11 +28,49 @@ if (layoutSetBranchId > 0) {
 }
 %>
 
-<div class='<%= (layoutSetBranch != null) ? StringPool.BLANK : "hide" %>' data-namespace="<portlet:namespace />" id="<portlet:namespace /><%= layoutSetBranch != null ? "updateBranch" : "addBranch" %>">
+<liferay-ui:error exception="<%= LayoutSetBranchNameException.class %>">
+
+	<%
+		LayoutSetBranchNameException lsbne = (LayoutSetBranchNameException)errorException;
+	%>
+
+	<c:if test="<%= lsbne.getType() == LayoutSetBranchNameException.DUPLICATE %>">
+		<liferay-ui:message key="a-site-pages-variation-with-that-name-already-exists" />
+	</c:if>
+
+	<c:if test="<%= lsbne.getType() == LayoutSetBranchNameException.MASTER %>">
+		<liferay-ui:message key="only-one-site-pages-variation-can-be-the-main-one" />
+	</c:if>
+
+	<c:if test="<%= lsbne.getType() == LayoutSetBranchNameException.TOO_LONG %>">
+		<liferay-ui:message arguments="<%= new Object[] {4, 100} %>" key="please-enter-a-value-between-x-and-x-characters-long" translateArguments="<%= false %>" />
+	</c:if>
+
+	<c:if test="<%= lsbne.getType() == LayoutSetBranchNameException.TOO_SHORT %>">
+		<liferay-ui:message arguments="<%= new Object[] {4, 100} %>" key="please-enter-a-value-between-x-and-x-characters-long" translateArguments="<%= false %>" />
+	</c:if>
+</liferay-ui:error>
+
+<%
+String title = "add-site-pages-variation";
+
+if (layoutSetBranch != null) {
+	title = "update-site-pages-variation";
+}
+%>
+
+<liferay-ui:header
+	backURL="<%= redirect %>"
+	localizeTitle="<%= true %>"
+	showBackURL="<%= true %>"
+	title="<%= title %>"
+/>
+
+<div data-namespace="<portlet:namespace />" id="<portlet:namespace /><%= layoutSetBranch != null ? "updateBranch" : "addBranch" %>">
 	<aui:model-context bean="<%= layoutSetBranch %>" model="<%= LayoutSetBranch.class %>" />
 
-	<portlet:actionURL name="updateLayoutSetBranch" var="editLayoutSetBranchURL">
-		<portlet:param name="mvcPath" value="/view_layout_set_branches.jsp" />
+	<portlet:actionURL name="editLayoutSetBranch" var="editLayoutSetBranchURL">
+		<portlet:param name="mvcRenderCommandName" value="editLayoutSetBranch" />
 	</portlet:actionURL>
 
 	<aui:form action="<%= editLayoutSetBranchURL %>" enctype="multipart/form-data" method="post" name="fm3">
@@ -73,6 +111,8 @@ if (layoutSetBranchId > 0) {
 
 		<aui:button-row>
 			<aui:button type="submit" value='<%= (layoutSetBranch != null) ? "update" : "add" %>' />
+
+			<aui:button href="<%= redirect %>" type="cancel" />
 		</aui:button-row>
 	</aui:form>
 </div>

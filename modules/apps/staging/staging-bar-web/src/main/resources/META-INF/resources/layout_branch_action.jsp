@@ -28,25 +28,21 @@ long currentLayoutBranchId = GetterUtil.getLong((String)request.getAttribute("vi
 
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<c:if test="<%= LayoutBranchPermissionUtil.contains(permissionChecker, layoutBranch, ActionKeys.UPDATE) %>">
-		<portlet:renderURL var="editURL">
-			<portlet:param name="mvcPath" value="/edit_layout_branch.jsp" />
+		<liferay-portlet:renderURL var="editLayoutBranchURL">
+			<portlet:param name="mvcRenderCommandName" value="editLayoutBranch" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(layoutBranch.getGroupId()) %>" />
 			<portlet:param name="layoutBranchId" value="<%= String.valueOf(layoutBranch.getLayoutBranchId()) %>" />
-		</portlet:renderURL>
-
-		<%
-		String taglibURL = "javascript:Liferay.StagingBar.updateBranch({uri: '" + HtmlUtil.escapeJS(editURL) + "', dialogTitle: '" + HtmlUtil.escapeJS(LanguageUtil.get(request, "update-page-variation")) + "'});";
-		%>
+		</liferay-portlet:renderURL>
 
 		<liferay-ui:icon
 			iconCssClass="icon-edit"
 			message="edit"
-			url="<%= taglibURL %>"
+			url="<%= editLayoutBranchURL %>"
 		/>
 
 		<c:if test="<%= !rootLayoutRevision.isPending() && !layoutBranch.isMaster() && !rootLayoutRevision.isHead() && LayoutBranchPermissionUtil.contains(permissionChecker, layoutBranch, ActionKeys.DELETE) %>">
-			<portlet:actionURL name="deleteLayoutBranch" var="deleteURL">
+			<portlet:actionURL name="deleteLayoutBranch" var="deleteLayoutBranchURL">
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(layoutBranch.getGroupId()) %>" />
 				<portlet:param name="layoutBranchId" value="<%= String.valueOf(layoutBranch.getLayoutBranchId()) %>" />
@@ -54,7 +50,7 @@ long currentLayoutBranchId = GetterUtil.getLong((String)request.getAttribute("vi
 			</portlet:actionURL>
 
 			<liferay-ui:icon-delete
-				url="<%= deleteURL %>"
+				url="<%= deleteLayoutBranchURL %>"
 			/>
 		</c:if>
 	</c:if>

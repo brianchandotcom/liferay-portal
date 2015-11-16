@@ -18,20 +18,14 @@ import com.liferay.portal.LayoutBranchNameException;
 import com.liferay.portal.LayoutSetBranchNameException;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.LayoutRevision;
-import com.liferay.portal.model.LayoutSet;
-import com.liferay.portal.model.LayoutSetBranch;
-import com.liferay.portal.model.LayoutSetBranchConstants;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.service.LayoutBranchService;
 import com.liferay.portal.service.LayoutRevisionLocalService;
 import com.liferay.portal.service.LayoutSetBranchLocalService;
 import com.liferay.portal.service.LayoutSetBranchService;
@@ -46,16 +40,12 @@ import com.liferay.staging.bar.web.upgrade.StagingBarWebUpgrade;
 
 import java.io.IOException;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -94,30 +84,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class StagingBarPortlet extends MVCPortlet {
 
-	public void deleteLayoutBranch(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long layoutBranchId = ParamUtil.getLong(
-			actionRequest, "layoutBranchId");
-
-		long currentLayoutBranchId = ParamUtil.getLong(
-			actionRequest, "currentLayoutBranchId");
-
-		_layoutBranchService.deleteLayoutBranch(layoutBranchId);
-
-		SessionMessages.add(actionRequest, "pageVariationDeleted");
-
-		if (layoutBranchId == currentLayoutBranchId) {
-			SessionMessages.add(
-				actionRequest,
-				PortalUtil.getPortletId(actionRequest) +
-					SessionMessages.KEY_SUFFIX_PORTLET_NOT_AJAXABLE);
-		}
-
-		addLayoutBranchSessionMessages(actionRequest, actionResponse);
-	}
-
 	public void deleteLayoutRevision(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -144,133 +110,6 @@ public class StagingBarPortlet extends MVCPortlet {
 		}
 
 		addLayoutRevisionSessionMessages(actionRequest, actionResponse);
-	}
-
-	public void deleteLayoutSetBranch(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long layoutSetBranchId = ParamUtil.getLong(
-			actionRequest, "layoutSetBranchId");
-
-		long currentLayoutBranchId = ParamUtil.getLong(
-			actionRequest, "currentLayoutBranchId");
-
-		if (layoutSetBranchId == currentLayoutBranchId) {
-			SessionMessages.add(
-				actionRequest,
-				PortalUtil.getPortletId(actionRequest) +
-					SessionMessages.KEY_SUFFIX_PORTLET_NOT_AJAXABLE);
-		}
-
-		_layoutSetBranchService.deleteLayoutSetBranch(layoutSetBranchId);
-
-		SessionMessages.add(actionRequest, "sitePageVariationDeleted");
-
-		addLayoutBranchSessionMessages(actionRequest, actionResponse);
-	}
-
-	public void mergeLayoutSetBranch(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long layoutSetBranchId = ParamUtil.getLong(
-			actionRequest, "layoutSetBranchId");
-
-		long mergeLayoutSetBranchId = ParamUtil.getLong(
-			actionRequest, "mergeLayoutSetBranchId");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
-
-		_layoutSetBranchService.mergeLayoutSetBranch(
-			layoutSetBranchId, mergeLayoutSetBranchId, serviceContext);
-
-		SessionMessages.add(actionRequest, "sitePageVariationMerged");
-
-		addLayoutBranchSessionMessages(actionRequest, actionResponse);
-	}
-
-	public void selectLayoutBranch(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws IOException {
-
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			actionRequest);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long layoutSetBranchId = ParamUtil.getLong(
-			actionRequest, "layoutSetBranchId");
-
-		long layoutBranchId = ParamUtil.getLong(
-			actionRequest, "layoutBranchId");
-
-		StagingUtil.setRecentLayoutBranchId(
-			request, layoutSetBranchId, themeDisplay.getPlid(), layoutBranchId);
-
-		addLayoutBranchSessionMessages(actionRequest, actionResponse);
-	}
-
-	public void selectLayoutSetBranch(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			actionRequest);
-
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-		boolean privateLayout = ParamUtil.getBoolean(
-			actionRequest, "privateLayout");
-
-		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
-			groupId, privateLayout);
-
-		long layoutSetBranchId = ParamUtil.getLong(
-			actionRequest, "layoutSetBranchId");
-
-		// Ensure layout set branch exists
-
-		LayoutSetBranch layoutSetBranch =
-			_layoutSetBranchLocalService.getLayoutSetBranch(layoutSetBranchId);
-
-		StagingUtil.setRecentLayoutSetBranchId(
-			request, layoutSet.getLayoutSetId(),
-			layoutSetBranch.getLayoutSetBranchId());
-
-		addLayoutBranchSessionMessages(actionRequest, actionResponse);
-	}
-
-	public void updateLayoutBranch(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long layoutBranchId = ParamUtil.getLong(
-			actionRequest, "layoutBranchId");
-
-		long layoutRevisionId = ParamUtil.getLong(
-			actionRequest, "copyLayoutRevisionId");
-		String name = ParamUtil.getString(actionRequest, "name");
-		String description = ParamUtil.getString(actionRequest, "description");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
-
-		if (layoutBranchId <= 0) {
-			_layoutBranchService.addLayoutBranch(
-				layoutRevisionId, name, description, false, serviceContext);
-
-			SessionMessages.add(actionRequest, "pageVariationAdded");
-		}
-		else {
-			_layoutBranchService.updateLayoutBranch(
-				layoutBranchId, name, description, serviceContext);
-
-			SessionMessages.add(actionRequest, "pageVariationUpdated");
-		}
-
-		addLayoutBranchSessionMessages(actionRequest, actionResponse);
 	}
 
 	public void updateLayoutRevision(
@@ -349,74 +188,6 @@ public class StagingBarPortlet extends MVCPortlet {
 		addLayoutRevisionSessionMessages(actionRequest, actionResponse);
 	}
 
-	public void updateLayoutSetBranch(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long layoutSetBranchId = ParamUtil.getLong(
-			actionRequest, "layoutSetBranchId");
-
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-		boolean privateLayout = ParamUtil.getBoolean(
-			actionRequest, "privateLayout");
-		String name = ParamUtil.getString(actionRequest, "name");
-		String description = ParamUtil.getString(actionRequest, "description");
-		long copyLayoutSetBranchId = ParamUtil.getLong(
-			actionRequest, "copyLayoutSetBranchId",
-			LayoutSetBranchConstants.ALL_BRANCHES);
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
-
-		if (layoutSetBranchId <= 0) {
-			_layoutSetBranchService.addLayoutSetBranch(
-				groupId, privateLayout, name, description, false,
-				copyLayoutSetBranchId, serviceContext);
-
-			SessionMessages.add(actionRequest, "sitePageVariationAdded");
-		}
-		else {
-			_layoutSetBranchLocalService.updateLayoutSetBranch(
-				layoutSetBranchId, name, description, serviceContext);
-
-			SessionMessages.add(actionRequest, "sitePageVariationUpdated");
-		}
-
-		addLayoutBranchSessionMessages(actionRequest, actionResponse);
-	}
-
-	protected void addLayoutBranchSessionMessages(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws IOException {
-
-		if (SessionErrors.isEmpty(actionRequest)) {
-			SessionMessages.add(
-				actionRequest,
-				PortalUtil.getPortletId(actionRequest) +
-					SessionMessages.KEY_SUFFIX_REFRESH_PORTLET,
-				StagingBarPortletKeys.STAGING_BAR);
-
-			Map<String, String> data = new HashMap<>();
-
-			data.put("preventNotification", Boolean.TRUE.toString());
-
-			SessionMessages.add(
-				actionRequest,
-				PortalUtil.getPortletId(actionRequest) +
-					SessionMessages.KEY_SUFFIX_REFRESH_PORTLET_DATA,
-				data);
-		}
-
-		String redirect = PortalUtil.escapeRedirect(
-			ParamUtil.getString(actionRequest, "redirect"));
-
-		WindowState windowState = actionRequest.getWindowState();
-
-		if (windowState.equals(LiferayWindowState.POP_UP)) {
-			actionResponse.sendRedirect(redirect);
-		}
-	}
-
 	protected void addLayoutRevisionSessionMessages(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException {
@@ -460,13 +231,6 @@ public class StagingBarPortlet extends MVCPortlet {
 	}
 
 	@Reference
-	protected void setLayoutBranchService(
-		LayoutBranchService layoutBranchService) {
-
-		_layoutBranchService = layoutBranchService;
-	}
-
-	@Reference
 	protected void setLayoutRevisionLocalService(
 		LayoutRevisionLocalService layoutRevisionLocalService) {
 
@@ -499,12 +263,6 @@ public class StagingBarPortlet extends MVCPortlet {
 		StagingBarWebUpgrade stagingBarWebUpgrade) {
 	}
 
-	protected void unsetLayoutBranchService(
-		LayoutBranchService layoutBranchService) {
-
-		_layoutBranchService = null;
-	}
-
 	protected void unsetLayoutRevisionLocalService(
 		LayoutRevisionLocalService layoutRevisionLocalService) {
 
@@ -529,7 +287,6 @@ public class StagingBarPortlet extends MVCPortlet {
 		_layoutSetLocalService = null;
 	}
 
-	private LayoutBranchService _layoutBranchService;
 	private LayoutRevisionLocalService _layoutRevisionLocalService;
 	private LayoutSetBranchLocalService _layoutSetBranchLocalService;
 	private LayoutSetBranchService _layoutSetBranchService;

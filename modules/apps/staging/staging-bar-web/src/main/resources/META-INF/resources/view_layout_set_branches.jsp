@@ -29,46 +29,18 @@ request.setAttribute("view_layout_set_branches.jsp-currentLayoutSetBranchId", St
 <liferay-ui:success key="sitePageVariationMerged" message="site-page-variation-was-merged" />
 <liferay-ui:success key="sitePageVariationUpdated" message="site-page-variation-was-updated" />
 
-<liferay-ui:error exception="<%= LayoutSetBranchNameException.class %>">
-
-	<%
-	LayoutSetBranchNameException lsbne = (LayoutSetBranchNameException)errorException;
-	%>
-
-	<c:if test="<%= lsbne.getType() == LayoutSetBranchNameException.DUPLICATE %>">
-		<liferay-ui:message key="a-site-pages-variation-with-that-name-already-exists" />
-	</c:if>
-
-	<c:if test="<%= lsbne.getType() == LayoutSetBranchNameException.MASTER %>">
-		<liferay-ui:message key="only-one-site-pages-variation-can-be-the-main-one" />
-	</c:if>
-
-	<c:if test="<%= lsbne.getType() == LayoutSetBranchNameException.TOO_LONG %>">
-		<liferay-ui:message arguments="<%= new Object[] {4, 100} %>" key="please-enter-a-value-between-x-and-x-characters-long" translateArguments="<%= false %>" />
-	</c:if>
-
-	<c:if test="<%= lsbne.getType() == LayoutSetBranchNameException.TOO_SHORT %>">
-		<liferay-ui:message arguments="<%= new Object[] {4, 100} %>" key="please-enter-a-value-between-x-and-x-characters-long" translateArguments="<%= false %>" />
-	</c:if>
-</liferay-ui:error>
-
 <div class="alert alert-info">
 	<liferay-ui:message key="pages-variations-help" />
 </div>
 
 <c:if test="<%= GroupPermissionUtil.contains(permissionChecker, stagingGroup, ActionKeys.ADD_LAYOUT_SET_BRANCH) %>">
-	<liferay-util:html-top>
-		<liferay-util:include page="/edit_layout_set_branch.jsp" servletContext="<%= application %>">
-			<liferay-util:param name="redirect" value="<%= currentURL %>" />
-		</liferay-util:include>
-	</liferay-util:html-top>
-
-	<%
-	String taglibOnClick = "javascript:Liferay.StagingBar.addBranch('" + LanguageUtil.get(request, "add-site-pages-variation") + "');";
-	%>
+	<liferay-portlet:renderURL var="addLayoutSetBranchURL">
+		<portlet:param name="mvcRenderCommandName" value="editLayoutSetBranch" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+	</liferay-portlet:renderURL>
 
 	<aui:button-row>
-		<aui:button name="addBranchButton" onClick="<%= taglibOnClick %>" value="add-site-pages-variation" />
+		<aui:button href="<%= addLayoutSetBranchURL %>" name="addBranchButton" value="add-site-pages-variation" />
 	</aui:button-row>
 </c:if>
 

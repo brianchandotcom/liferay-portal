@@ -72,7 +72,7 @@ List<LayoutRevision> layoutRevisions = LayoutRevisionLocalServiceUtil.getChildLa
 	</c:choose>
 
 	<portlet:renderURL var="layoutBranchesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="mvcPath" value="/view_layout_branches.jsp" />
+		<portlet:param name="mvcRenderCommandName" value="viewLayoutBranches" />
 		<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranch.getLayoutSetBranchId()) %>" />
 	</portlet:renderURL>
 

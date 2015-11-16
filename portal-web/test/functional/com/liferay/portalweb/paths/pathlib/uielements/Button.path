@@ -65,7 +65,7 @@
 </tr>
 <tr>
 	<td>ADD_PAGE_VARIATION</td>
-	<td>//button[contains(.,'Add Page Variation')]</td>
+	<td>//a[contains(.,'Add Page Variation')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -69,7 +69,7 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 		</c:choose>
 
 		<portlet:renderURL var="layoutSetBranchesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-			<portlet:param name="mvcPath" value="/view_layout_set_branches.jsp" />
+			<portlet:param name="mvcRenderCommandName" value="viewLayoutSetBranches" />
 		</portlet:renderURL>
 
 		<div class="manage-layout-set-branches page-variations">

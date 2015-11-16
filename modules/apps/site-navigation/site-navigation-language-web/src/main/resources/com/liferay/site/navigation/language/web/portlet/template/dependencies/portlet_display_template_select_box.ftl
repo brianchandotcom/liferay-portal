@@ -34,6 +34,9 @@
 	<@aui["script"]>
 		<#list entries as entry>
 			document.${namespace + formName}.${name}.options[${entry_index}].style.backgroundImage = 'url(${themeDisplay.getPathThemeImages()}/language/${entry.getLanguageId()}.png)';
+			document.${namespace + formName}.${name}.options[${entry_index}].style.backgroundPosition = 'left center';
+			document.${namespace + formName}.${name}.options[${entry_index}].style.backgroundRepeat = 'no-repeat';
+			document.${namespace + formName}.${name}.options[${entry_index}].style.paddingLeft = '20px';
 		</#list>
 
 		function ${namespace}changeLanguage() {

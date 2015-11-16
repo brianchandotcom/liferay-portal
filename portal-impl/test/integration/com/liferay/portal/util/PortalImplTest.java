@@ -70,7 +70,7 @@ public class PortalImplTest {
 		try {
 			PortalUtil.getUploadPortletRequest(new MockPortletRequest());
 
-			Assert.fail("A RuntimeException should have been thrown.");
+			Assert.fail();
 		}
 		catch (Exception e) {
 			Assert.assertTrue(e instanceof RuntimeException);
@@ -86,7 +86,9 @@ public class PortalImplTest {
 			testGetUploadServletRequestShouldReturnUploadServletRequestImpl()
 		throws Exception {
 
-		InputStream inputStream = getClass().getResourceAsStream(
+		Class<?> clazz = getClass();
+
+		InputStream inputStream = clazz.getResourceAsStream(
 			"/com/liferay/portal/util/dependencies/test.txt");
 
 		LiferayServletRequest liferayServletRequest =

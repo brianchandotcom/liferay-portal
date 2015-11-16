@@ -104,7 +104,7 @@ public class PortletContainerTestUtil {
 					RandomTestUtil.randomString());
 
 				try (OutputStream outputStream =
-					liferayFileItems[j].getOutputStream()) {
+						liferayFileItems[j].getOutputStream()) {
 
 					outputStream.write(bytes);
 				}
@@ -150,15 +150,12 @@ public class PortletContainerTestUtil {
 		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =
 			new MockMultipartHttpServletRequest();
 
-		mockMultipartHttpServletRequest.setContentType(
-			"multipart/form-data;boundary=" + System.currentTimeMillis());
-
 		mockMultipartHttpServletRequest.addFile(
 			new MockMultipartFile(fileNameParameter, bytes));
-
-		mockMultipartHttpServletRequest.setCharacterEncoding("UTF-8");
-
 		mockMultipartHttpServletRequest.setContent(bytes);
+		mockMultipartHttpServletRequest.setContentType(
+			"multipart/form-data;boundary=" + System.currentTimeMillis());
+		mockMultipartHttpServletRequest.setCharacterEncoding("UTF-8");
 
 		MockHttpSession mockHttpSession = new MockHttpSession();
 
@@ -206,17 +203,17 @@ public class PortletContainerTestUtil {
 		throws IOException, URISyntaxException {
 
 		if (mockMultipartHttpServletRequest.getInputStream() == null) {
-			throw new IllegalStateException(
-				"An inputStream must be present on the mock request.");
+			throw new IllegalStateException("Input stream is null");
 		}
 
 		String[] cookies = mockMultipartHttpServletRequest.getParameterValues(
 			"Cookie");
 
 		if ((cookies == null) || (cookies.length == 0)) {
-			throw new IllegalStateException(
-				"Valid cookies must be present on the mock request.");
+			throw new IllegalStateException("Cookie is null");
 		}
+
+		HttpClient httpClient = new HttpClient();
 
 		PostMethod postMethod = new PostMethod(url);
 
@@ -238,9 +235,7 @@ public class PortletContainerTestUtil {
 
 		postMethod.setRequestEntity(multipartRequestEntity);
 
-		HttpClient client = new HttpClient();
-
-		client.executeMethod(postMethod);
+		httpClient.executeMethod(postMethod);
 
 		StatusLine statusLine = postMethod.getStatusLine();
 
@@ -262,8 +257,8 @@ public class PortletContainerTestUtil {
 		HttpURLConnection httpURLConnection =
 			(HttpURLConnection)urlObject.openConnection();
 
-		httpURLConnection.setInstanceFollowRedirects(true);
 		httpURLConnection.setConnectTimeout(1500 * 1000);
+		httpURLConnection.setInstanceFollowRedirects(true);
 		httpURLConnection.setReadTimeout(1500 * 1000);
 
 		for (Map.Entry<String, List<String>> entry : headers.entrySet()) {

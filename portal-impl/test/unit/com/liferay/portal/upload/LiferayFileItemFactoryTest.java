@@ -41,10 +41,10 @@ public class LiferayFileItemFactoryTest {
 		LiferayFileItemFactory liferayFileItemFactory =
 			new LiferayFileItemFactory(temporaryFolder.getRoot());
 
-		FileItem item = liferayFileItemFactory.createItem(
+		FileItem fileItem = liferayFileItemFactory.createItem(
 			"fieldName", "contentType", false, "fileName");
 
-		Assert.assertNotNull(item);
+		Assert.assertNotNull(fileItem);
 	}
 
 	@Test
@@ -52,10 +52,10 @@ public class LiferayFileItemFactoryTest {
 		LiferayFileItemFactory liferayFileItemFactory =
 			new LiferayFileItemFactory(new File("file://foo"));
 
-		FileItem item = liferayFileItemFactory.createItem(
+		FileItem fileItem = liferayFileItemFactory.createItem(
 			"fieldName", "contentType", false, "fileName");
 
-		Assert.assertNotNull(item);
+		Assert.assertNotNull(fileItem);
 	}
 
 	@Test
@@ -63,10 +63,10 @@ public class LiferayFileItemFactoryTest {
 		LiferayFileItemFactory liferayFileItemFactory =
 			new LiferayFileItemFactory(null);
 
-		FileItem item = liferayFileItemFactory.createItem(
+		FileItem fileItem = liferayFileItemFactory.createItem(
 			"fieldName", "contentType", false, "fileName");
 
-		Assert.assertNotNull(item);
+		Assert.assertNotNull(fileItem);
 	}
 
 	@Test
@@ -74,10 +74,10 @@ public class LiferayFileItemFactoryTest {
 		LiferayFileItemFactory liferayFileItemFactory =
 			new LiferayFileItemFactory(temporaryFolder.getRoot());
 
-		FileItem item = liferayFileItemFactory.createItem(
+		FileItem fileItem = liferayFileItemFactory.createItem(
 			null, null, false, null);
 
-		Assert.assertNotNull(item);
+		Assert.assertNotNull(fileItem);
 	}
 
 	@Rule

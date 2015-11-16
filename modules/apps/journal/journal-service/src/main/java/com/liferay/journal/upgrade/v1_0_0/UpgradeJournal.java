@@ -103,9 +103,10 @@ public class UpgradeJournal extends UpgradeProcess {
 		Set<Locale> locales = LanguageUtil.getAvailableLocales(groupId);
 
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-			locales, name);
+			locales, defaultLocale, name);
 		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(locales, description);
+			LocalizationUtil.getLocalizationMap(
+				locales, defaultLocale, description);
 
 		Element structureElementDefinitionElement = structureElement.element(
 			"definition");

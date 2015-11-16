@@ -18,6 +18,8 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.Company;
@@ -234,8 +236,12 @@ public class UpgradeJournalArticleType extends UpgradeProcess {
 			Set<Locale> locales = LanguageUtil.getAvailableLocales(
 				company.getGroupId());
 
+			Locale defaultLocale = LocaleUtil.fromLanguageId(
+				UpgradeProcessUtil.getDefaultLanguageId(
+					company.getCompanyId()));
+
 			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-				locales, "type");
+				locales, defaultLocale, "type");
 
 			AssetVocabulary assetVocabulary = addAssetVocabulary(
 				company.getGroupId(), company.getCompanyId(), "type", nameMap,

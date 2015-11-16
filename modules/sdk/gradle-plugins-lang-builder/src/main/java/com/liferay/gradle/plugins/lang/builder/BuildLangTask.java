@@ -27,22 +27,11 @@ import org.gradle.api.Project;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.tasks.JavaExec;
-import org.gradle.process.JavaExecSpec;
 
 /**
  * @author Andrea Di Giorgi
  */
 public class BuildLangTask extends JavaExec {
-
-	@Override
-	public JavaExecSpec args(Iterable<?> args) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public JavaExec args(Object... args) {
-		throw new UnsupportedOperationException();
-	}
 
 	@Override
 	public JavaExec classpath(Object... paths) {
@@ -51,30 +40,12 @@ public class BuildLangTask extends JavaExec {
 
 	@Override
 	public void exec() {
-		super.setArgs(getArgs());
+		setArgs(getCompleteArgs());
+
 		super.setClasspath(getClasspath());
 		super.setWorkingDir(getWorkingDir());
 
 		super.exec();
-	}
-
-	@Override
-	public List<String> getArgs() {
-		List<String> args = new ArrayList<>();
-
-		args.add(
-			"lang.dir=" + FileUtil.relativize(getLangDir(), getWorkingDir()));
-		args.add("lang.file=" + getLangFileName());
-		args.add("lang.plugin=" + isPlugin());
-		args.add(
-			"lang.portal.language.properties.file=" +
-				FileUtil.relativize(
-					getPortalLanguagePropertiesFile(), getWorkingDir()));
-		args.add("lang.translate=" + isTranslate());
-		args.add("lang.translate.client.id=" + getTranslateClientId());
-		args.add("lang.translate.client.secret=" + getTranslateClientSecret());
-
-		return args;
 	}
 
 	@Override
@@ -129,11 +100,6 @@ public class BuildLangTask extends JavaExec {
 	}
 
 	@Override
-	public JavaExec setArgs(Iterable<?> applicationArgs) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public JavaExec setClasspath(FileCollection classpath) {
 		throw new UnsupportedOperationException();
 	}
@@ -171,6 +137,24 @@ public class BuildLangTask extends JavaExec {
 	@Override
 	public void setWorkingDir(Object dir) {
 		throw new UnsupportedOperationException();
+	}
+
+	protected List<String> getCompleteArgs() {
+		List<String> args = new ArrayList<>(getArgs());
+
+		args.add(
+			"lang.dir=" + FileUtil.relativize(getLangDir(), getWorkingDir()));
+		args.add("lang.file=" + getLangFileName());
+		args.add("lang.plugin=" + isPlugin());
+		args.add(
+			"lang.portal.language.properties.file=" +
+				FileUtil.relativize(
+					getPortalLanguagePropertiesFile(), getWorkingDir()));
+		args.add("lang.translate=" + isTranslate());
+		args.add("lang.translate.client.id=" + getTranslateClientId());
+		args.add("lang.translate.client.secret=" + getTranslateClientSecret());
+
+		return args;
 	}
 
 	private Object _langDir;

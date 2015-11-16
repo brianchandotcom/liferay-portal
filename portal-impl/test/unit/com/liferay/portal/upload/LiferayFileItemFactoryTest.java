@@ -48,7 +48,7 @@ public class LiferayFileItemFactoryTest {
 	}
 
 	@Test
-	public void testCreateItemFromInvalidTempDir() throws Exception {
+	public void testCreateItemWithInvalidTempDir() throws Exception {
 		LiferayFileItemFactory liferayFileItemFactory =
 			new LiferayFileItemFactory(new File("file://foo"));
 
@@ -59,7 +59,7 @@ public class LiferayFileItemFactoryTest {
 	}
 
 	@Test
-	public void testCreateItemFromNullTempDir() throws Exception {
+	public void testCreateItemWithNullTempDir() throws Exception {
 		LiferayFileItemFactory liferayFileItemFactory =
 			new LiferayFileItemFactory(null);
 

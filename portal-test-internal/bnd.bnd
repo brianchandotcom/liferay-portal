@@ -26,6 +26,9 @@ Include-Resource:\
 	classes,\
 	@${project.dir}/../lib/development/dumbster.jar,\
 	@${project.dir}/../lib/portal/commons-compress.jar,\
+	@${project.dir}/../lib/portal/httpclient.jar,\
+	@${project.dir}/../lib/portal/httpcore.jar,\
+	@${project.dir}/../lib/portal/httpmime.jar,\
 	@${project.dir}/../lib/portal/juniversalchardet.jar,\
 	@${project.dir}/../lib/portal/poi.jar,\
 	@${project.dir}/../lib/portal/tika-core.jar,\

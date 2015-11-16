@@ -12,13 +12,12 @@
  * details.
  */
 
-package com.liferay.staging.processes.web.portlet.action.publication;
+package com.liferay.staging.processes.web.portlet.action;
 
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.staging.processes.web.portlet.action.util.ActionUtil;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;

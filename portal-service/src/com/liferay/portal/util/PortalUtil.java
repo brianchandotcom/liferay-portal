@@ -616,10 +616,6 @@ public class PortalUtil {
 		return getPortal().getControlPanelFullURL(scopeGroupId, ppid, params);
 	}
 
-	public static Layout getControlPanelLayout(long companyId, Group group) {
-		return getPortal().getControlPanelLayout(companyId, group);
-	}
-
 	public static long getControlPanelPlid(long companyId)
 		throws PortalException {
 

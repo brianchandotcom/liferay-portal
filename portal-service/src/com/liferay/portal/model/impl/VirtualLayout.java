@@ -17,6 +17,8 @@ package com.liferay.portal.model.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -29,7 +31,6 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.VirtualLayoutConstants;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.LayoutTypePortletFactoryUtil;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.List;
 import java.util.Locale;
@@ -180,10 +181,8 @@ public class VirtualLayout extends LayoutWrapper {
 
 			if (_targetGroup.isUser() && isPrivateLayout()) {
 				layoutURL = layoutURL.replaceFirst(
-					PropsValues.
-						LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING,
-					PropsValues.
-						LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING);
+					_LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING,
+					_LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING);
 			}
 
 			int pos = layoutURL.indexOf(group.getFriendlyURL());
@@ -204,6 +203,14 @@ public class VirtualLayout extends LayoutWrapper {
 			throw new IllegalStateException(e);
 		}
 	}
+
+	private static final String _LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING =
+		PropsUtil.get(
+			PropsKeys.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING);
+
+	private static final String _LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING =
+		PropsUtil.get(
+			PropsKeys.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING);
 
 	private static final Log _log = LogFactoryUtil.getLog(VirtualLayout.class);
 

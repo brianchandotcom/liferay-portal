@@ -93,7 +93,7 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 
 			StringBundler sb = new StringBundler(10);
 
-			sb.append("select companyId from ");
+			sb.append("select max(companyId) from ");
 			sb.append(foreignTableName);
 			sb.append(" where ");
 			sb.append(foreignTableName);

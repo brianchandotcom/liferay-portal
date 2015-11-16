@@ -51,15 +51,15 @@ public class LiferayFileItemTest {
 	}
 
 	@Test
-	public void testCreateFromFactory() {
-		String contentType = RandomTestUtil.randomString();
+	public void testCreateItem() {
 		String fieldName = RandomTestUtil.randomString();
+		String contentType = RandomTestUtil.randomString();
 		String fileName = RandomTestUtil.randomString();
 
-		FileItem item = _liferayFileItemFactory.createItem(
+		FileItem fileItem = _liferayFileItemFactory.createItem(
 			fieldName, contentType, false, fileName);
 
-		LiferayFileItem liferayFileItem = (LiferayFileItem)item;
+		LiferayFileItem liferayFileItem = (LiferayFileItem)fileItem;
 
 		Assert.assertEquals(fieldName, liferayFileItem.getFieldName());
 		Assert.assertEquals(fileName, liferayFileItem.getFullFileName());
@@ -67,39 +67,36 @@ public class LiferayFileItemTest {
 	}
 
 	@Test(expected = NullPointerException.class)
-	public void
-		testGetContentTypeFromInvalidFileShouldThrowNullPointerException() {
-
-		String contentType = RandomTestUtil.randomString();
+	public void testGetContentTypeFromInvalidFile() {
 		String fieldName = RandomTestUtil.randomString();
+		String contentType = RandomTestUtil.randomString();
 		String fileName = RandomTestUtil.randomString();
 
-		FileItem item = _liferayFileItemFactory.createItem(
+		FileItem fileItem = _liferayFileItemFactory.createItem(
 			fieldName, contentType, false, fileName);
 
-		Assert.assertNotNull(item);
+		Assert.assertNotNull(fileItem);
 
-		item.getContentType();
+		fileItem.getContentType();
 	}
 
 	@Test(expected = NullPointerException.class)
-	public void
-			testGetContentTypeFromRealFileShouldThrowNullPointerException()
+	public void testGetContentTypeFromRealFile()
 		throws Exception {
 
 		File file = DependenciesTestUtil.getDependencyAsFile(
 			this.getClass(), "LiferayFileItem.txt");
 
-		String contentType = Files.probeContentType(file.toPath());
 		String fieldName = RandomTestUtil.randomString();
+		String contentType = Files.probeContentType(file.toPath());
 		String fileName = file.getName();
 
-		FileItem item = _liferayFileItemFactory.createItem(
+		FileItem fileItem = _liferayFileItemFactory.createItem(
 			fieldName, contentType, false, fileName);
 
-		Assert.assertNotNull(item);
+		Assert.assertNotNull(fileItem);
 
-		item.getContentType();
+		fileItem.getContentType();
 	}
 
 	@Test
@@ -108,10 +105,10 @@ public class LiferayFileItemTest {
 		String fieldName = RandomTestUtil.randomString();
 		String fileName = RandomTestUtil.randomString();
 
-		FileItem item = _liferayFileItemFactory.createItem(
+		FileItem fileItem = _liferayFileItemFactory.createItem(
 			fieldName, contentType, false, fileName);
 
-		LiferayFileItem liferayFileItem = (LiferayFileItem)item;
+		LiferayFileItem liferayFileItem = (LiferayFileItem)fileItem;
 
 		Assert.assertNotNull(liferayFileItem);
 		Assert.assertNull(liferayFileItem.getEncodedString());
@@ -119,28 +116,28 @@ public class LiferayFileItemTest {
 
 	@Test
 	public void testGetFileNameExtensionShouldReturnFileExtension() {
-		String contentType = RandomTestUtil.randomString();
 		String fieldName = RandomTestUtil.randomString();
+		String contentType = RandomTestUtil.randomString();
 		String fileName = RandomTestUtil.randomString() + ".txt";
 
-		FileItem item = _liferayFileItemFactory.createItem(
+		FileItem fileItem = _liferayFileItemFactory.createItem(
 			fieldName, contentType, false, fileName);
 
-		LiferayFileItem liferayFileItem = (LiferayFileItem)item;
+		LiferayFileItem liferayFileItem = (LiferayFileItem)fileItem;
 
 		Assert.assertEquals("txt", liferayFileItem.getFileNameExtension());
 	}
 
 	@Test
 	public void testGetFileNameExtensionWithNullValueShouldReturnBlank() {
-		String contentType = RandomTestUtil.randomString();
 		String fieldName = RandomTestUtil.randomString();
+		String contentType = RandomTestUtil.randomString();
 		String fileName = "theFile";
 
-		FileItem item = _liferayFileItemFactory.createItem(
+		FileItem fileItem = _liferayFileItemFactory.createItem(
 			fieldName, contentType, false, fileName);
 
-		LiferayFileItem liferayFileItem = (LiferayFileItem)item;
+		LiferayFileItem liferayFileItem = (LiferayFileItem)fileItem;
 
 		Assert.assertEquals("", liferayFileItem.getFileNameExtension());
 	}
@@ -151,10 +148,10 @@ public class LiferayFileItemTest {
 		String fieldName = RandomTestUtil.randomString();
 		String fileName = RandomTestUtil.randomString() + ".txt";
 
-		FileItem item = _liferayFileItemFactory.createItem(
+		FileItem fileItem = _liferayFileItemFactory.createItem(
 			fieldName, contentType, false, fileName);
 
-		LiferayFileItem liferayFileItem = (LiferayFileItem)item;
+		LiferayFileItem liferayFileItem = (LiferayFileItem)fileItem;
 
 		liferayFileItem.getOutputStream();
 
@@ -167,14 +164,14 @@ public class LiferayFileItemTest {
 	public void testSetStringWithoutOutputStreamThrowsNullPointerException()
 		throws Exception {
 
-		String contentType = RandomTestUtil.randomString();
 		String fieldName = RandomTestUtil.randomString();
+		String contentType = RandomTestUtil.randomString();
 		String fileName = RandomTestUtil.randomString() + ".txt";
 
-		FileItem item = _liferayFileItemFactory.createItem(
+		FileItem fileItem = _liferayFileItemFactory.createItem(
 			fieldName, contentType, false, fileName);
 
-		LiferayFileItem liferayFileItem = (LiferayFileItem)item;
+		LiferayFileItem liferayFileItem = (LiferayFileItem)fileItem;
 
 		Assert.assertNotNull(liferayFileItem);
 
@@ -183,14 +180,14 @@ public class LiferayFileItemTest {
 
 	@Test
 	public void testWriteNeedsCallingGetOutputStream() throws Exception {
-		String contentType = RandomTestUtil.randomString();
 		String fieldName = RandomTestUtil.randomString();
+		String contentType = RandomTestUtil.randomString();
 		String fileName = RandomTestUtil.randomString() + ".txt";
 
-		FileItem item = _liferayFileItemFactory.createItem(
+		FileItem fileItem = _liferayFileItemFactory.createItem(
 			fieldName, contentType, false, fileName);
 
-		LiferayFileItem liferayFileItem = (LiferayFileItem)item;
+		LiferayFileItem liferayFileItem = (LiferayFileItem)fileItem;
 
 		liferayFileItem.getOutputStream();
 

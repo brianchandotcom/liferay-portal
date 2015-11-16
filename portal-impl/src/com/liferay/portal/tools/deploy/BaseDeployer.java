@@ -1810,17 +1810,22 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 				_log.info("Process output: " + line);
 			}
 
-			int exitValue = process.exitValue();
+			try {
+				int exitValue = process.exitValue();
 
-			if (exitValue == 0) {
-				_log.info(
-					"Successfully executed command with an exit value of " +
-						exitValue);
+				if (exitValue == 0) {
+					_log.info(
+						"Successfully executed command with an exit value of " +
+							exitValue);
+				}
+				else {
+					_log.info(
+						"Unsuccessfully executed command with an exit value " +
+							"of " + exitValue);
+				}
 			}
-			else {
-				_log.info(
-					"Unsuccessfully executed command with an exit value of " +
-						exitValue);
+			catch (IllegalThreadStateException e) {
+				_log.info("Executed command has not yet terminated");
 			}
 		}
 

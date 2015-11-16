@@ -152,7 +152,7 @@ if (recurrence != null) {
 						for (Weekday weekday : weekdaysArray) {
 						%>
 
-							<aui:input checked="<%= weekdays.contains(weekday) %>" data-weekday='<%= LanguageUtil.get(request, "weekday." + weekday.getValue()) %>' label="<%= weekday.getValue() %>" name="<%= weekday.getValue() %>" type="checkbox" />
+							<aui:input checked="<%= weekdays.contains(weekday) %>" id="<%= weekday.getValue() %>" label="<%= weekday.getValue() %>" name="weekdays" type="checkbox" value="<%= weekday.getValue() %>" />
 
 						<%
 						}

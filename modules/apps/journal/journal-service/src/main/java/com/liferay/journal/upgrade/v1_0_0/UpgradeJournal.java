@@ -21,12 +21,15 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
@@ -53,12 +56,13 @@ import java.sql.ResultSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Gergely Mathe
  * @author Eudaldo Alonso
  */
-public class UpgradeJournal extends UpgradeBaseJournal {
+public class UpgradeJournal extends UpgradeProcess {
 
 	public UpgradeJournal(
 		CompanyLocalService companyLocalService,
@@ -96,8 +100,12 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 
 		String description = structureElement.elementText("description");
 
-		Map<Locale, String> nameMap = localize(groupId, name);
-		Map<Locale, String> descriptionMap = localize(groupId, description);
+		Set<Locale> locales = LanguageUtil.getAvailableLocales(groupId);
+
+		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+			locales, name);
+		Map<Locale, String> descriptionMap =
+			LocalizationUtil.getLocalizationMap(locales, description);
 
 		Element structureElementDefinitionElement = structureElement.element(
 			"definition");

@@ -1663,28 +1663,6 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
-	public Layout getControlPanelLayout(long companyId, Group group) {
-		Layout layout = null;
-
-		try {
-			long plid = getControlPanelPlid(companyId);
-
-			layout = LayoutLocalServiceUtil.getLayout(plid);
-		}
-		catch (PortalException pe) {
-			_log.error("Unable to get control panel layout", pe);
-
-			return null;
-		}
-
-		if (group.isControlPanel()) {
-			return layout;
-		}
-
-		return new VirtualLayout(layout, group);
-	}
-
-	@Override
 	public long getControlPanelPlid(long companyId) throws PortalException {
 		Group controlPanelGroup = GroupLocalServiceUtil.getGroup(
 			companyId, GroupConstants.CONTROL_PANEL);

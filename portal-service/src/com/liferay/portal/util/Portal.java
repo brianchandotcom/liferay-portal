@@ -474,8 +474,6 @@ public interface Portal {
 			long scopeGroupId, String ppid, Map<String, String[]> params)
 		throws PortalException;
 
-	public Layout getControlPanelLayout(long companyId, Group group);
-
 	public long getControlPanelPlid(long companyId) throws PortalException;
 
 	public long getControlPanelPlid(PortletRequest portletRequest)

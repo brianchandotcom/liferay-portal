@@ -14,12 +14,18 @@
 
 package com.liferay.portlet;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.impl.VirtualLayout;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
@@ -59,6 +65,27 @@ public class RequestBackedPortletURLFactoryUtil {
 			PortalUtil.getLiferayPortletResponse(portletResponse));
 	}
 
+	private static Layout _getControlPanelLayout(long companyId, Group group) {
+		Layout layout = null;
+
+		try {
+			long plid = PortalUtil.getControlPanelPlid(companyId);
+
+			layout = LayoutLocalServiceUtil.getLayout(plid);
+		}
+		catch (PortalException pe) {
+			_log.error("Unable to get control panel layout", pe);
+
+			return null;
+		}
+
+		if (group.isControlPanel()) {
+			return layout;
+		}
+
+		return new VirtualLayout(layout, group);
+	}
+
 	private static PortletURL _populateControlPanelPortletURL(
 		LiferayPortletURL liferayPortletURL, long refererGroupId,
 		long refererPlid) {
@@ -79,6 +106,9 @@ public class RequestBackedPortletURLFactoryUtil {
 
 		return liferayPortletURL;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		RequestBackedPortletURLFactoryUtil.class);
 
 	private static class HttpServletRequestRequestBackedPortletURLFactory
 		implements RequestBackedPortletURLFactory {
@@ -114,8 +144,7 @@ public class RequestBackedPortletURLFactoryUtil {
 
 			LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
 				_request, portletId,
-				PortalUtil.getControlPanelLayout(
-					themeDisplay.getCompanyId(), group),
+				_getControlPanelLayout(themeDisplay.getCompanyId(), group),
 				lifecycle);
 
 			return _populateControlPanelPortletURL(
@@ -204,8 +233,7 @@ public class RequestBackedPortletURLFactoryUtil {
 
 			LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
 				_liferayPortletRequest, portletId,
-				PortalUtil.getControlPanelLayout(
-					themeDisplay.getCompanyId(), group),
+				_getControlPanelLayout(themeDisplay.getCompanyId(), group),
 				lifecycle);
 
 			return _populateControlPanelPortletURL(

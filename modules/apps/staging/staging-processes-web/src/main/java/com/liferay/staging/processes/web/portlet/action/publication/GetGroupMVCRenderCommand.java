@@ -43,7 +43,7 @@ public abstract class GetGroupMVCRenderCommand implements MVCRenderCommand {
 
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return "/new_publication/error_handling/error.jsp";
+				return "/error/error.jsp";
 			}
 			else {
 				throw new PortletException(e);

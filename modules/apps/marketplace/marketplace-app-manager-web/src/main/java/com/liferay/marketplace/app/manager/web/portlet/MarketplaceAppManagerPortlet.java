@@ -19,6 +19,7 @@ import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.marketplace.app.manager.web.constants.MarketplaceAppManagerPortletKeys;
+import com.liferay.marketplace.bundle.BundleManagerUtil;
 import com.liferay.marketplace.service.AppService;
 import com.liferay.portal.kernel.deploy.DeployManagerUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -70,6 +71,7 @@ import javax.portlet.RenderResponse;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.framework.Bundle;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -100,6 +102,22 @@ import org.osgi.service.component.annotations.Reference;
 	service = {javax.portlet.Portlet.class}
 )
 public class MarketplaceAppManagerPortlet extends MVCPortlet {
+
+	public void deactivateBundles(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long[] bundleIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "bundleIds"), 0L);
+
+		List<Bundle> bundles = BundleManagerUtil.getInstalledBundles();
+
+		for (Bundle bundle : bundles) {
+			if (ArrayUtil.contains(bundleIds, bundle.getBundleId())) {
+				bundle.stop();
+			}
+		}
+	}
 
 	public void installApp(
 			ActionRequest actionRequest, ActionResponse actionResponse)

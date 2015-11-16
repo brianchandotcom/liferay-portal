@@ -743,7 +743,7 @@ public class HookHotDeployListener
 			registerService(
 				servletContextName,
 				AUTH_TOKEN_IGNORE_ACTIONS + authTokenIgnoreAction, Object.class,
-				new Object());
+				new Object(), AUTH_TOKEN_IGNORE_ACTIONS, authTokenIgnoreAction);
 		}
 	}
 

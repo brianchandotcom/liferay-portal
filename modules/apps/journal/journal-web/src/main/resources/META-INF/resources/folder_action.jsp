@@ -72,7 +72,7 @@ else {
 			<portlet:renderURL var="moveURL">
 				<portlet:param name="mvcPath" value="/move_entries.jsp" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="folderIds" value="<%= String.valueOf(folder.getFolderId()) %>" />
+				<portlet:param name="rowIdsJournalFolder" value="<%= String.valueOf(folder.getFolderId()) %>" />
 			</portlet:renderURL>
 
 			<liferay-ui:icon

@@ -200,7 +200,7 @@ public class PortletContainerTestUtil {
 			String url,
 			MockMultipartHttpServletRequest mockMultipartHttpServletRequest,
 			String fileNameParameter)
-		throws IOException, URISyntaxException {
+		throws IOException {
 
 		if (mockMultipartHttpServletRequest.getInputStream() == null) {
 			throw new IllegalStateException("Input stream is null");

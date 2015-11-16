@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
@@ -122,8 +123,9 @@ public class UpgradeJournal extends UpgradeProcess {
 		}
 
 		try {
-			long ddmStructureId = addDDMStructure(
-				groupId, companyId, name, nameMap, descriptionMap, definition);
+			ddmStructure = addDDMStructure(
+				null, groupId, companyId, name, nameMap, descriptionMap,
+				definition);
 
 			Element templateElement = structureElement.element("template");
 
@@ -132,20 +134,21 @@ public class UpgradeJournal extends UpgradeProcess {
 			boolean cacheable = GetterUtil.getBoolean(
 				templateElement.elementText("cacheable"));
 
-			addDDMTemplate(
-				groupId, companyId, ddmStructureId, name, nameMap,
-				descriptionMap, getContent(fileName), cacheable);
+			DDMTemplate ddmTemplate = addDDMTemplate(
+				null, groupId, companyId, ddmStructure.getStructureId(), name,
+				nameMap, descriptionMap, getContent(fileName), cacheable);
 
 			if (group.hasStagingGroup()) {
 				Group stagingGroup = group.getStagingGroup();
 
-				ddmStructureId = addDDMStructure(
-					stagingGroup.getGroupId(), companyId, name, nameMap,
-					descriptionMap, definition);
+				ddmStructure = addDDMStructure(
+					ddmStructure.getUuid(), stagingGroup.getGroupId(),
+					companyId, name, nameMap, descriptionMap, definition);
 
 				addDDMTemplate(
-					stagingGroup.getGroupId(), companyId, ddmStructureId, name,
-					nameMap, descriptionMap, getContent(fileName), cacheable);
+					ddmTemplate.getUuid(), stagingGroup.getGroupId(), companyId,
+					ddmStructure.getStructureId(), name, nameMap,
+					descriptionMap, getContent(fileName), cacheable);
 			}
 		}
 		catch (Exception e) {
@@ -157,8 +160,8 @@ public class UpgradeJournal extends UpgradeProcess {
 		return name;
 	}
 
-	protected long addDDMStructure(
-			long groupId, long companyId, String ddmStructureKey,
+	protected DDMStructure addDDMStructure(
+			String uuid, long groupId, long companyId, String ddmStructureKey,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			String definition)
 		throws Exception {
@@ -168,21 +171,23 @@ public class UpgradeJournal extends UpgradeProcess {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
+		if (Validator.isNotNull(uuid)) {
+			serviceContext.setUuid(uuid);
+		}
+
 		long userId = _userLocalService.getDefaultUserId(companyId);
 
-		DDMStructure ddmStructure = _ddmStructureLocalService.addStructure(
+		return _ddmStructureLocalService.addStructure(
 			userId, groupId,
 			DDMStructureManager.STRUCTURE_DEFAULT_PARENT_STRUCTURE_ID,
 			PortalUtil.getClassNameId(JournalArticle.class.getName()),
 			ddmStructureKey, nameMap, descriptionMap, definition,
 			StorageEngineManager.STORAGE_TYPE_DEFAULT,
 			DDMStructureManager.STRUCTURE_TYPE_DEFAULT, serviceContext);
-
-		return ddmStructure.getStructureId();
 	}
 
-	protected long addDDMTemplate(
-			long groupId, long companyId, long ddmStructureId,
+	protected DDMTemplate addDDMTemplate(
+			String uuid, long groupId, long companyId, long ddmStructureId,
 			String templateKey, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String script,
 			boolean cacheable)
@@ -193,9 +198,13 @@ public class UpgradeJournal extends UpgradeProcess {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
+		if (Validator.isNotNull(uuid)) {
+			serviceContext.setUuid(uuid);
+		}
+
 		long userId = _userLocalService.getDefaultUserId(companyId);
 
-		DDMTemplate ddmTemplate = _ddmTemplateLocalService.addTemplate(
+		return _ddmTemplateLocalService.addTemplate(
 			userId, groupId,
 			PortalUtil.getClassNameId(_CLASS_NAME_DDM_STRUCTURE),
 			ddmStructureId,
@@ -205,8 +214,6 @@ public class UpgradeJournal extends UpgradeProcess {
 			DDMTemplateManager.TEMPLATE_MODE_CREATE,
 			TemplateConstants.LANG_TYPE_FTL, script, cacheable, false, null,
 			null, serviceContext);
-
-		return ddmTemplate.getTemplateId();
 	}
 
 	protected void addDDMTemplateLinks() throws Exception {

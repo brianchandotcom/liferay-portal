@@ -147,15 +147,15 @@
 		</execute>
 	</command>
 
-	<command name="gotoSitesPages" summary="Navigate to Product Menu > Sites > Pages > ${portlet}">
+	<command name="gotoSitesPages" summary="Navigate to Product Menu > Sites > Pages > ${page}">
 		<execute macro="ProductMenuHelper#gotoSites" />
 
 		<execute macro="ProductMenuHelper#expandCategory">
 			<var name="category" value="Pages" />
 		</execute>
 
-		<execute macro="ProductMenuHelper#gotoPortlet">
-			<var name="portlet" value="${portlet}" />
+		<execute macro="ProductMenuHelper#gotoAddPage">
+			<var name="page" value="${page}" />
 		</execute>
 	</command>
 

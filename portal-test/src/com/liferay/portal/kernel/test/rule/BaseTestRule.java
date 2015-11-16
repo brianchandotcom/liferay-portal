@@ -14,8 +14,14 @@
 
 package com.liferay.portal.kernel.test.rule;
 
+import com.liferay.portal.kernel.concurrent.ConcurrentReferenceKeyHashMap;
+import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.callback.TestCallback;
+
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.Map;
 
 import org.junit.internal.runners.statements.ExpectException;
 import org.junit.internal.runners.statements.FailOnTimeout;
@@ -24,54 +30,112 @@ import org.junit.internal.runners.statements.RunAfters;
 import org.junit.internal.runners.statements.RunBefores;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
+import org.junit.runner.RunWith;
+import org.junit.runner.Runner;
 import org.junit.runners.model.Statement;
 
 /**
  * @author Shuyang Zhou
  */
-public class BaseTestRule<C, M> implements TestRule {
+public class BaseTestRule<C, M>
+	implements ArquillianClassRuleHandler, TestRule {
 
-	public BaseTestRule(TestCallback<C, M> TestCallback) {
-		_testCallback = TestCallback;
+	public BaseTestRule(TestCallback<C, M> testCallback) {
+		_testCallback = testCallback;
 	}
 
 	@Override
 	public final Statement apply(
 		Statement statement, final Description description) {
 
+		String methodName = description.getMethodName();
+
+		if (methodName != null) {
+			return new StatementWrapper(statement) {
+
+				@Override
+				public void evaluate() throws Throwable {
+					Object target = inspectTarget(statement);
+
+					M m = _testCallback.beforeMethod(description, target);
+
+					try {
+						statement.evaluate();
+					}
+					finally {
+						_testCallback.afterMethod(description, m, target);
+					}
+				}
+
+			};
+		}
+
+		boolean arquillianTest = _isArquillianTest(description);
+
+		if (!arquillianTest) {
+			return new StatementWrapper(statement) {
+
+				@Override
+				public void evaluate() throws Throwable {
+					C c = _testCallback.beforeClass(description);
+
+					try {
+						statement.evaluate();
+					}
+					finally {
+						_testCallback.afterClass(description, c);
+					}
+				}
+
+			};
+		}
+
 		return new StatementWrapper(statement) {
 
 			@Override
 			public void evaluate() throws Throwable {
-				String methodName = description.getMethodName();
+				Class<?> clazz = description.getTestClass();
 
-				C c = null;
-				M m = null;
-				Object target = null;
+				if (_handleBeforeClassThreadLocal.get()) {
+					Deque<Object> deque = _classCarryOnMap.get(clazz);
 
-				if (methodName == null) {
-					c = _testCallback.beforeClass(description);
-				}
-				else {
-					target = inspectTarget(statement);
+					if (deque == null) {
+						deque = new LinkedList<>();
 
-					m = _testCallback.beforeMethod(description, target);
+						_classCarryOnMap.put(clazz, deque);
+					}
+
+					deque.addLast(_testCallback.beforeClass(description));
 				}
 
 				try {
 					statement.evaluate();
 				}
 				finally {
-					if (methodName == null) {
-						_testCallback.afterClass(description, c);
-					}
-					else {
-						_testCallback.afterMethod(description, m, target);
+					if (_handleAfterClassThreadLocal.get()) {
+						Deque<Object> deque = _classCarryOnMap.get(clazz);
+
+						_testCallback.afterClass(
+							description, (C)deque.removeLast());
+
+						if (deque.isEmpty()) {
+							_classCarryOnMap.remove(clazz);
+						}
 					}
 				}
 			}
 
 		};
+	}
+
+	@Override
+	public void handleAfterClass(boolean enable) {
+		_handleAfterClassThreadLocal.set(enable);
+	}
+
+	@Override
+	public void handleBeforeClass(boolean enable) {
+		_handleBeforeClassThreadLocal.set(enable);
 	}
 
 	public static abstract class StatementWrapper extends Statement {
@@ -113,6 +177,51 @@ public class BaseTestRule<C, M> implements TestRule {
 
 		throw new IllegalStateException("Unknow statement " + statement);
 	}
+
+	private static boolean _isArquillianTest(Description description) {
+		RunWith runWith = description.getAnnotation(RunWith.class);
+
+		if (runWith == null) {
+			return false;
+		}
+
+		Class<? extends Runner> runnerClass = runWith.value();
+
+		String runnerClassName = runnerClass.getName();
+
+		if (runnerClassName.equals(
+				"com.liferay.arquillian.extension.junit.bridge.junit." +
+					"Arquillian")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private static final Map<Class<?>, Deque<Object>> _classCarryOnMap =
+		new ConcurrentReferenceKeyHashMap<>(
+			FinalizeManager.WEAK_REFERENCE_FACTORY);
+
+	private final ThreadLocal<Boolean> _handleAfterClassThreadLocal =
+		new ThreadLocal<Boolean>() {
+
+			@Override
+			protected Boolean initialValue() {
+				return Boolean.FALSE;
+			}
+
+		};
+
+	private final ThreadLocal<Boolean> _handleBeforeClassThreadLocal =
+		new ThreadLocal<Boolean>() {
+
+			@Override
+			protected Boolean initialValue() {
+				return Boolean.FALSE;
+			}
+
+		};
 
 	private final TestCallback<C, M> _testCallback;
 

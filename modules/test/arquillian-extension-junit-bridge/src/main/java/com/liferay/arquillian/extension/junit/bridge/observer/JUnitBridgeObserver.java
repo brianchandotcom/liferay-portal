@@ -14,9 +14,13 @@
 
 package com.liferay.arquillian.extension.junit.bridge.observer;
 
+import com.liferay.arquillian.extension.junit.bridge.util.FrameworkMethodComparator;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.jboss.arquillian.core.api.annotation.Observes;
@@ -29,6 +33,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.internal.runners.statements.InvokeMethod;
 import org.junit.internal.runners.statements.RunAfters;
@@ -79,17 +84,116 @@ public class JUnitBridgeObserver {
 			Description.createTestDescription(
 				clazz, method.getName(), method.getAnnotations()));
 
-		statement = withBefores(
-			statement, BeforeClass.class, junitTestClass, null);
+		List<FrameworkMethod> frameworkMethods = new ArrayList<>(
+			junitTestClass.getAnnotatedMethods(org.junit.Test.class));
 
-		statement = withAfters(
-			statement, AfterClass.class, junitTestClass, null);
+		frameworkMethods.removeAll(
+			junitTestClass.getAnnotatedMethods(Ignore.class));
 
-		statement = withRules(
-			statement, ClassRule.class, junitTestClass, null,
-			Description.createSuiteDescription(clazz));
+		Collections.sort(frameworkMethods, FrameworkMethodComparator.INSTANCE);
 
-		statement.evaluate();
+		FrameworkMethod firstFrameworkMethod = frameworkMethods.get(0);
+
+		Method firstMethod = firstFrameworkMethod.getMethod();
+
+		boolean isFirstMethod = false;
+
+		if (firstMethod.equals(method)) {
+			isFirstMethod = true;
+
+			statement = withBefores(
+				statement, BeforeClass.class, junitTestClass, null);
+		}
+
+		FrameworkMethod lastFrameworkMethod = frameworkMethods.get(
+			frameworkMethods.size() - 1);
+
+		Method lastMethod = lastFrameworkMethod.getMethod();
+
+		boolean isLastMethod = false;
+
+		if (lastMethod.equals(method)) {
+			isLastMethod = true;
+
+			statement = withAfters(
+				statement, AfterClass.class, junitTestClass, null);
+		}
+
+		evaluateWithClassRule(
+			statement, junitTestClass, target,
+			Description.createSuiteDescription(clazz), isFirstMethod,
+			isLastMethod);
+	}
+
+	protected void evaluateWithClassRule(
+			Statement statement,
+			org.junit.runners.model.TestClass junitTestClass, Object target,
+			Description description, boolean isFirstMethod,
+			boolean isLastMethod)
+		throws Throwable {
+
+		if (!isFirstMethod && !isLastMethod) {
+			statement.evaluate();
+
+			return;
+		}
+
+		List<TestRule> testRules = junitTestClass.getAnnotatedMethodValues(
+			target, ClassRule.class, TestRule.class);
+
+		testRules.addAll(
+			junitTestClass.getAnnotatedFieldValues(
+				target, ClassRule.class, TestRule.class));
+
+		if (testRules.isEmpty()) {
+			statement.evaluate();
+
+			return;
+		}
+
+		handleClassRules(testRules, isFirstMethod, isLastMethod, true);
+
+		statement = new RunRules(statement, testRules, description);
+
+		try {
+			statement.evaluate();
+		}
+		finally {
+			handleClassRules(testRules, isFirstMethod, isLastMethod, false);
+		}
+	}
+
+	protected void handleClassRules(
+		List<TestRule> testRules, boolean isFirstMethod, boolean isLastMethod,
+		boolean enable) {
+
+		for (TestRule testRule : testRules) {
+			Class<?> testRuleClass = testRule.getClass();
+
+			if (isFirstMethod) {
+				try {
+					Method handleBeforeClassMethod = testRuleClass.getMethod(
+						"handleBeforeClass", boolean.class);
+
+					handleBeforeClassMethod.invoke(testRule, enable);
+				}
+				catch (ReflectiveOperationException roe) {
+					continue;
+				}
+			}
+
+			if (isLastMethod) {
+				try {
+					Method handleAfterClassMethod = testRuleClass.getMethod(
+						"handleAfterClass", boolean.class);
+
+					handleAfterClassMethod.invoke(testRule, enable);
+				}
+				catch (ReflectiveOperationException roe) {
+					continue;
+				}
+			}
+		}
 	}
 
 	protected Statement withAfters(

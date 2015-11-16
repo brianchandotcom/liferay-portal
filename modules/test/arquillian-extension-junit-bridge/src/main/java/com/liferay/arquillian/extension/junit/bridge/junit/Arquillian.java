@@ -14,8 +14,11 @@
 
 package com.liferay.arquillian.extension.junit.bridge.junit;
 
+import com.liferay.arquillian.extension.junit.bridge.util.FrameworkMethodComparator;
+
 import java.lang.annotation.Annotation;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -56,7 +59,13 @@ public class Arquillian extends org.jboss.arquillian.junit.Arquillian {
 					return Collections.emptyList();
 				}
 
-				return super.getAnnotatedMethods(annotationClass);
+				List<FrameworkMethod> frameworkMethods = new ArrayList<>(
+					super.getAnnotatedMethods(annotationClass));
+
+				Collections.sort(
+					frameworkMethods, FrameworkMethodComparator.INSTANCE);
+
+				return frameworkMethods;
 			}
 
 		};

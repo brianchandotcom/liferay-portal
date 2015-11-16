@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.staging.processes.web.portlet.action.util;
+package com.liferay.staging.processes.web.portlet.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletConfigurationLayoutUtil;

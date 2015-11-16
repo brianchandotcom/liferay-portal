@@ -1668,7 +1668,7 @@ public class LayoutTypePortletImpl
 			try {
 				if (!PortletPermissionUtil.contains(
 						permissionChecker, getLayout(), portletId,
-						ActionKeys.VIEW)) {
+						ActionKeys.VIEW, true)) {
 
 					continue;
 				}

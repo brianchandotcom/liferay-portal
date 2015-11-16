@@ -12,11 +12,15 @@
  * details.
  */
 
-package com.liferay.staging.processes.web.portlet.action.process;
+package com.liferay.staging.processes.web.portlet.action;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.staging.processes.web.constants.StagingProcessesPortletKeys;
-import com.liferay.staging.processes.web.portlet.action.publication.GetGroupMVCRenderCommand;
+
+import javax.portlet.PortletRequestDispatcher;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -27,15 +31,22 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + StagingProcessesPortletKeys.STAGING_PROCESSES,
-		"mvc.command.name=processesList"
+		"mvc.command.name=publishLayouts"
 	},
-	service = MVCRenderCommand.class
+	service = MVCResourceCommand.class
 )
-public class ProcessesListMVCRenderCommand extends GetGroupMVCRenderCommand {
+public class PublishLayoutsMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Override
-	protected String getPath() {
-		return "/view.jsp";
+	protected void doServeResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws Exception {
+
+		PortletRequestDispatcher portletRequestDispatcher =
+			getPortletRequestDispatcher(
+				resourceRequest, "/processes_list/view.jsp");
+
+		portletRequestDispatcher.include(resourceRequest, resourceResponse);
 	}
 
 }

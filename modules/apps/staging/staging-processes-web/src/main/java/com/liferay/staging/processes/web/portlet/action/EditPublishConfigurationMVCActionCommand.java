@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.staging.processes.web.portlet.action.shared;
+package com.liferay.staging.processes.web.portlet.action;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;

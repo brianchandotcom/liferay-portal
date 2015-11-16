@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.staging.processes.web.portlet.action.publication;
+package com.liferay.staging.processes.web.portlet.action;
 
 import com.liferay.portal.LayoutPrototypeException;
 import com.liferay.portal.RemoteOptionsException;

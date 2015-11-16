@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.staging.processes.web.portlet.action.process;
+package com.liferay.staging.processes.web.portlet.action;
 
 import com.liferay.portal.NoSuchBackgroundTaskException;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;

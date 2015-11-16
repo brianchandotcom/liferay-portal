@@ -317,80 +317,81 @@ public class FriendlyURLServlet extends HttpServlet {
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 		}
 
-		if (Validator.isNotNull(friendlyURL)) {
-			try {
-				LayoutFriendlyURLComposite layoutFriendlyURLComposite =
-					PortalUtil.getLayoutFriendlyURLComposite(
-						group.getGroupId(), _private, friendlyURL, params,
-						requestContext);
+		try {
+			LayoutFriendlyURLComposite layoutFriendlyURLComposite =
+				PortalUtil.getLayoutFriendlyURLComposite(
+					group.getGroupId(), _private, friendlyURL, params,
+					requestContext);
 
-				Layout layout = layoutFriendlyURLComposite.getLayout();
+			Layout layout = layoutFriendlyURLComposite.getLayout();
 
-				request.setAttribute(WebKeys.LAYOUT, layout);
+			request.setAttribute(WebKeys.LAYOUT, layout);
 
-				String layoutFriendlyURLCompositeFriendlyURL =
-					layoutFriendlyURLComposite.getFriendlyURL();
+			Locale locale = PortalUtil.getLocale(request);
 
-				pos = layoutFriendlyURLCompositeFriendlyURL.indexOf(
-					Portal.FRIENDLY_URL_SEPARATOR);
+			String layoutFriendlyURLCompositeFriendlyURL =
+				layoutFriendlyURLComposite.getFriendlyURL();
 
-				if (pos != 0) {
-					if (pos != -1) {
-						layoutFriendlyURLCompositeFriendlyURL =
-							layoutFriendlyURLCompositeFriendlyURL.substring(
-								0, pos);
-					}
-
-					Locale locale = PortalUtil.getLocale(request);
-
-					boolean i18nRedirect = false;
-
-					String i18nLanguageId = (String)request.getAttribute(
-						WebKeys.I18N_LANGUAGE_ID);
-
-					if (Validator.isNotNull(i18nLanguageId)) {
-						Locale i18nLocale = LocaleUtil.fromLanguageId(
-							i18nLanguageId);
-
-						if (!LanguageUtil.isAvailableLocale(
-								group.getGroupId(), i18nLocale)) {
-
-							i18nRedirect = true;
-						}
-					}
-
-					if (i18nRedirect ||
-						!StringUtil.equalsIgnoreCase(
-							layoutFriendlyURLCompositeFriendlyURL,
-							layout.getFriendlyURL(locale))) {
-
-						Locale originalLocale = setAlternativeLayoutFriendlyURL(
-							request, layout,
-							layoutFriendlyURLCompositeFriendlyURL);
-
-						String redirect = PortalUtil.getLocalizedFriendlyURL(
-							request, layout, locale, originalLocale);
-
-						return new Object[] {redirect, Boolean.TRUE};
-					}
-				}
+			if (Validator.isNull(layoutFriendlyURLCompositeFriendlyURL)) {
+				layoutFriendlyURLCompositeFriendlyURL = layout.getFriendlyURL(
+					locale);
 			}
-			catch (NoSuchLayoutException nsle) {
-				List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-					group.getGroupId(), _private,
-					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
-				for (Layout layout : layouts) {
-					if (layout.matches(request, friendlyURL)) {
-						String redirect = PortalUtil.getLayoutActualURL(
-							layout, mainPath);
+			pos = layoutFriendlyURLCompositeFriendlyURL.indexOf(
+				Portal.FRIENDLY_URL_SEPARATOR);
 
-						return new Object[] {redirect, Boolean.FALSE};
+			if (pos != 0) {
+				if (pos != -1) {
+					layoutFriendlyURLCompositeFriendlyURL =
+						layoutFriendlyURLCompositeFriendlyURL.substring(0, pos);
+				}
+
+				boolean i18nRedirect = false;
+
+				String i18nLanguageId = (String)request.getAttribute(
+					WebKeys.I18N_LANGUAGE_ID);
+
+				if (Validator.isNotNull(i18nLanguageId)) {
+					Locale i18nLocale = LocaleUtil.fromLanguageId(
+						i18nLanguageId);
+
+					if (!LanguageUtil.isAvailableLocale(
+							group.getGroupId(), i18nLocale)) {
+
+						i18nRedirect = true;
 					}
 				}
 
-				throw nsle;
+				if (i18nRedirect ||
+					!StringUtil.equalsIgnoreCase(
+						layoutFriendlyURLCompositeFriendlyURL,
+						layout.getFriendlyURL(locale))) {
+
+					Locale originalLocale = setAlternativeLayoutFriendlyURL(
+						request, layout, layoutFriendlyURLCompositeFriendlyURL);
+
+					String redirect = PortalUtil.getLocalizedFriendlyURL(
+						request, layout, locale, originalLocale);
+
+					return new Object[] {redirect, Boolean.TRUE};
+				}
 			}
+		}
+		catch (NoSuchLayoutException nsle) {
+			List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+				group.getGroupId(), _private,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+			for (Layout layout : layouts) {
+				if (layout.matches(request, friendlyURL)) {
+					String redirect = PortalUtil.getLayoutActualURL(
+						layout, mainPath);
+
+					return new Object[] {redirect, Boolean.FALSE};
+				}
+			}
+
+			throw nsle;
 		}
 
 		String actualURL = PortalUtil.getActualURL(

@@ -12,7 +12,7 @@ buildscript {
 	}
 
 	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins", version: "1.0.36"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins", version: "1.0.37"
 		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.alloy.taglib", version: "1.0.1"
 		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.cache", version: "1.0.1"
 		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.maven.plugin.builder", version: "1.0.2"

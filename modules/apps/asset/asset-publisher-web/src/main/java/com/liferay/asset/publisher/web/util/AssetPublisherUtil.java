@@ -390,26 +390,26 @@ public class AssetPublisherUtil {
 			int end)
 		throws Exception {
 
-		List<AssetEntry> results = new ArrayList<>();
-		int total = 0;
-
 		if (isSearchWithIndex(portletName, assetEntryQuery)) {
 			long[] assetCategoryIds = getAssetCategoryIds(portletPreferences);
+
 			String[] assetTagNames = getAssetTagNames(portletPreferences);
+
 			String keywords = assetEntryQuery.getKeywords();
 
 			return AssetUtil.searchAssetEntries(
-					assetCategoryIds, assetTagNames, keywords, locale,
-					assetEntryQuery, companyId, scopeGroupId, layout, timeZone,
-					userId, start, end, attributes);
+				assetCategoryIds, assetTagNames, keywords, locale,
+				assetEntryQuery, companyId, scopeGroupId, layout, timeZone,
+				userId, start, end, attributes);
 		}
 
-		total = _assetEntryService.getEntriesCount(assetEntryQuery);
+		int total = _assetEntryService.getEntriesCount(assetEntryQuery);
 
 		assetEntryQuery.setStart(start);
 		assetEntryQuery.setEnd(end);
 
-		results = _assetEntryService.getEntries(assetEntryQuery);
+		List<AssetEntry> results = _assetEntryService.getEntries(
+			assetEntryQuery);
 
 		return new BaseModelSearchResult<>(results, total);
 	}
@@ -753,17 +753,20 @@ public class AssetPublisherUtil {
 		AssetEntryQuery assetEntryQuery =
 			assetPublisherDisplayContext.getAssetEntryQuery();
 
-		String portletName = assetPublisherDisplayContext.getPortletName();
+		Layout layout = assetPublisherDisplayContext.getLayout();
 
-		long[] classNameIds = assetPublisherDisplayContext.getClassNameIds();
+		String portletName = assetPublisherDisplayContext.getPortletName();
 
 		Locale locale = assetPublisherDisplayContext.getLocale();
 
+		TimeZone timeZone = assetPublisherDisplayContext.getTimeZone();
+
 		long companyId = assetPublisherDisplayContext.getCompanyId();
 		long scopeGroupId = assetPublisherDisplayContext.getScopeGroupId();
-		Layout layout = assetPublisherDisplayContext.getLayout();
-		TimeZone timeZone = assetPublisherDisplayContext.getTimeZone();
 		long userId = assetPublisherDisplayContext.getUserId();
+
+		long[] classNameIds = assetPublisherDisplayContext.getClassNameIds();
+
 		Map<String, Serializable> attributes =
 			assetPublisherDisplayContext.getAttributes();
 

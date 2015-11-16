@@ -199,8 +199,8 @@ public class AssetRSSUtil {
 
 		List<AssetEntryResult> assetEntryResults =
 			AssetPublisherUtil.getAssetEntryResults(
-					assetPublisherDisplayContext,
-				searchContainer, portletPreferences);
+				assetPublisherDisplayContext, searchContainer,
+				portletPreferences);
 
 		for (AssetEntryResult assetEntryResult : assetEntryResults) {
 			assetEntries.addAll(assetEntryResult.getAssetEntries());

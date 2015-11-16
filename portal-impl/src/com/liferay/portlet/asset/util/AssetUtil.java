@@ -629,8 +629,8 @@ public class AssetUtil {
 		throws Exception {
 
 		SearchContext searchContext = SearchContextFactory.getInstance(
-				assetCategoryIds, assetTagNames, keywords, locale, companyId,
-				scopeGroupId, layout, timeZone, userId, attributes);
+			assetCategoryIds, assetTagNames, keywords, locale, companyId,
+			scopeGroupId, layout, timeZone, userId, attributes);
 
 		return searchAssetEntries(searchContext, assetEntryQuery, start, end);
 	}

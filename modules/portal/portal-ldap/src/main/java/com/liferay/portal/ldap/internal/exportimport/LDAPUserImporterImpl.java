@@ -133,9 +133,6 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		Properties contactExpandoMappings =
 			_ldapSettings.getContactExpandoMappings(ldapServerId, companyId);
 
-		LDAPImportConfiguration ldapImportConfiguration =
-			_ldapImportConfigurationProvider.getConfiguration(companyId);
-
 		LDAPServerConfiguration ldapServerConfiguration =
 			_ldapServerConfigurationProvider.getConfiguration(
 				companyId, ldapServerId);
@@ -873,9 +870,6 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		String groupMappingsUser = groupMappings.getProperty("user");
 
 		Set<Long> newUserGroupIds = new LinkedHashSet<>();
-
-		LDAPImportConfiguration ldapImportConfiguration =
-			_ldapImportConfigurationProvider.getConfiguration(companyId);
 
 		LDAPServerConfiguration ldapServerConfiguration =
 			_ldapServerConfigurationProvider.getConfiguration(

@@ -95,7 +95,6 @@ public class VerifyProperties extends VerifyProcess {
 		StoreFactory storeFactory = StoreFactory.getInstance();
 
 		storeFactory.checkProperties();
-
 	}
 
 	protected InputStream getPropertiesResourceAsStream(String resourceName)

@@ -35,7 +35,6 @@
 <aui:script>
 	<portlet:renderURL var="scheduledEventsURL">
 		<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
-		<portlet:param name="tabs2" value="scheduled" />
 		<portlet:param name="closeRedirect" value="<%= closeRedirect %>" />
 		<portlet:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
 		<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />

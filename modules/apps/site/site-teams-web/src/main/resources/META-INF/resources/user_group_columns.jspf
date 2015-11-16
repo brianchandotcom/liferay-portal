@@ -86,9 +86,9 @@ int usersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), String
 
 		<liferay-ui:search-container-column-text
 			cssClass="list-group-item-field"
-		>
-			<liferay-ui:message arguments="<%= usersCount %>" key="x-users" />
-		</liferay-ui:search-container-column-text>
+			name="users"
+			value="<%= String.valueOf(usersCount) %>"
+		/>
 
 		<c:if test="<%= showActions %>">
 			<liferay-ui:search-container-column-jsp

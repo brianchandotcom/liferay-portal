@@ -37,7 +37,6 @@ import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskInputs;
 import org.gradle.api.tasks.TaskOutputs;
-import org.gradle.api.tasks.bundling.Jar;
 import org.gradle.api.tasks.compile.JavaCompile;
 
 /**
@@ -100,8 +99,6 @@ public class XSDBuilderPlugin implements Plugin<Project> {
 		final BuildXSDTask buildXSDTask = GradleUtil.addTask(
 			project, BUILD_XSD_TASK_NAME, BuildXSDTask.class);
 
-		buildXSDTask.setArchiveName(
-			project.getName() + "-xbean." + Jar.DEFAULT_EXTENSION);
 		buildXSDTask.setDescription("Generates XMLBeans bindings.");
 		buildXSDTask.setDestinationDir(project.file("lib"));
 		buildXSDTask.setGroup(BasePlugin.BUILD_GROUP);

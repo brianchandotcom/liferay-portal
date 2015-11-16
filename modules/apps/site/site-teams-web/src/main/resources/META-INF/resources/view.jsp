@@ -132,7 +132,7 @@ teamSearchContainer.setTotal(teamsCount);
 			<c:choose>
 				<c:when test='<%= displayStyle.equals("descriptive") %>'>
 					<liferay-ui:search-container-column-icon
-						icon="icon-group"
+						icon="users"
 						toggleRowChecker="<%= true %>"
 					/>
 

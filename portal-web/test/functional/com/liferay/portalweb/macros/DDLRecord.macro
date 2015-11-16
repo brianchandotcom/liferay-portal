@@ -253,7 +253,7 @@
 				<if>
 					<condition function="IsElementPresent" locator1="xpath=(//div[@data-fieldname='${key_fieldName}']/a[contains(@class,'ddm-repeatable-add-button')])[${i}]" />
 					<then>
-						<execute function="Type" locator1="xpath=(//div[@data-fieldname='${key_fieldName}']/a[contains(@class,'ddm-repeatable-add-button')]/../input)[${i}]" value1="${ddlRecordFieldData} ${i}" />
+						<execute function="Type" locator1="xpath=(//div[@data-fieldname='${key_fieldName}'][${i}]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)" value1="${ddlRecordFieldData} ${i}" />
 					</then>
 				</if>
 			</then>
@@ -292,14 +292,14 @@
 		<var name="i" value="1" />
 
 		<while>
-			<condition function="IsElementPresent" locator1="xpath=(//div[@data-fieldname='Text']/input)[${i}]" />
+			<condition function="IsElementPresent" locator1="xpath=(//div[@data-fieldname='Text']//input)[${i}]" />
 			<then>
 				<var method="MathUtil#sum('${i}', '1')" name="i" />
 
 				<if>
-					<condition function="IsElementPresent" locator1="xpath=(//div[@data-fieldname='Text']/input)[${i}]" />
+					<condition function="IsElementPresent" locator1="xpath=(//div[@data-fieldname='Text']//input)[${i}]" />
 					<then>
-						<execute function="Type" locator1="xpath=(//div[@data-fieldname='Text']/input)[${i}]" value1="${ddlRecordFieldData} ${i}" />
+						<execute function="Type" locator1="xpath=(//div[@data-fieldname='Text']//input)[${i}]" value1="${ddlRecordFieldData} ${i}" />
 					</then>
 				</if>
 			</then>
@@ -669,6 +669,12 @@
 		<execute function="AssertClick" locator1="PGDynamicdatalists#RECORD_MENULIST_VIEW" value1="View" />
 
 		<execute function="AssertTextEquals" locator1="DDLRecord#FIELD_2" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
+	</command>
+
+	<command name="viewTextFieldRepeated">
+		<execute function="AssertTextEquals" locator1="xpath=(//div[@data-fieldname='Text'][1]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)" value1="${ddlRecordFieldData1}" />
+		<execute function="AssertTextEquals" locator1="xpath=(//div[@data-fieldname='Text'][2]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)" value1="${ddlRecordFieldData2}" />
+		<execute function="AssertTextEquals" locator1="xpath=(//div[@data-fieldname='Text'][3]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)" value1="${ddlRecordFieldData3}" />
 	</command>
 
 	<command name="viewViaDDLDisplayPG">

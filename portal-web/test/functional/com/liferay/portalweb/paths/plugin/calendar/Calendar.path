@@ -279,7 +279,7 @@
 </tr>
 <tr>
 	<td>CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL</td>
-	<td>//div[contains(@id,'CalendarPortlet_siteCalendarList')]/div/div/span[contains(.,'${key_site} - ${key_siteCalendarName}')]</td>
+	<td>//div[contains(@id,'CalendarPortlet_siteCalendarList')]/div/div/span[contains(.,'${key_site} - ${key_calendarName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -294,7 +294,7 @@
 </tr>
 <tr>
 	<td>CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL_MENULIST_ARROW</td>
-	<td>//div[contains(@id,'CalendarPortlet_siteCalendarList')]/div/div[contains(., '${key_site} - ${key_siteCalendarName}')]/div[@class='calendar-list-item-arrow']/i[@class='icon-caret-down']</td>
+	<td>//div[contains(@id,'CalendarPortlet_siteCalendarList')]/div/div[contains(., '${key_site} - ${key_calendarName}')]/div[@class='calendar-list-item-arrow']/i[@class='icon-caret-down']</td>
 	<td></td>
 </tr>
 <tr>

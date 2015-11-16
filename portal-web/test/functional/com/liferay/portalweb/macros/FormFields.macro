@@ -15,6 +15,12 @@
 		<execute function="Uncheck" locator1="FormFields#CHECKBOX" />
 	</command>
 
+	<command name="editBlankMultiTextFieldWithEnterKey">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="KeyPress" locator1="FormFields#TEXT_MULTILINE_TEXT_FIELD" value1="\RETURN" />
+	</command>
+
 	<command name="editOptionsRow">
 		<var name="key_rowNumber" value="${rowNumber}" />
 

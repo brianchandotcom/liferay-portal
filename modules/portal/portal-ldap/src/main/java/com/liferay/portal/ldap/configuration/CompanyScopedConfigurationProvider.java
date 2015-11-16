@@ -203,6 +203,8 @@ public abstract class CompanyScopedConfigurationProvider
 
 		long companyId = configurable.companyId();
 
+		_pidToCompanyId.put(configuration.getPid(), companyId);
+
 		_configurations.put(companyId, configuration);
 	}
 
@@ -210,18 +212,13 @@ public abstract class CompanyScopedConfigurationProvider
 	public synchronized void unregisterConfiguration(
 		Configuration configuration) {
 
-		Dictionary<String, Object> properties = configuration.getProperties();
+		String pid = configuration.getPid();
 
-		if (properties == null) {
-			properties = new HashMapDictionary<>();
+		Long companyId = _pidToCompanyId.get(pid);
+
+		if (companyId != null) {
+			_configurations.remove(companyId);
 		}
-
-		T configurable = Configurable.createConfigurable(
-			getMetatype(), properties);
-
-		long companyId = configurable.companyId();
-
-		_configurations.remove(companyId);
 	}
 
 	@Override
@@ -261,5 +258,6 @@ public abstract class CompanyScopedConfigurationProvider
 	}
 
 	private final Map<Long, Configuration> _configurations = new HashMap<>();
+	private final Map<String, Long> _pidToCompanyId = new HashMap<>();
 
 }

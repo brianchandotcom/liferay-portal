@@ -43,7 +43,6 @@ public class BuildLangTask extends JavaExec {
 		setArgs(getCompleteArgs());
 
 		super.setClasspath(getClasspath());
-		super.setWorkingDir(getWorkingDir());
 
 		super.exec();
 	}
@@ -82,13 +81,6 @@ public class BuildLangTask extends JavaExec {
 
 	public String getTranslateClientSecret() {
 		return GradleUtil.toString(_translateClientSecret);
-	}
-
-	@Override
-	public File getWorkingDir() {
-		Project project = getProject();
-
-		return project.getProjectDir();
 	}
 
 	public boolean isPlugin() {
@@ -132,11 +124,6 @@ public class BuildLangTask extends JavaExec {
 
 	public void setTranslateClientSecret(Object translateClientSecret) {
 		_translateClientSecret = translateClientSecret;
-	}
-
-	@Override
-	public void setWorkingDir(Object dir) {
-		throw new UnsupportedOperationException();
 	}
 
 	protected List<String> getCompleteArgs() {

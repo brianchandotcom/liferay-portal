@@ -71,7 +71,8 @@ public class UpgradeCompanyId
 					{"BookmarksFolder", "folderId"}, {"BlogsEntry", "entryId"},
 					{"CalendarBooking", "calendarBookingId"},
 					{"DDLRecord", "recordId"}, {"DLFileEntry", "fileEntryId"},
-					{"DLFolder", "folderId"}, {"JournalArticle", "articleId"},
+					{"DLFolder", "folderId"},
+					{"JournalArticle", "resourcePrimKey"},
 					{"JournalFolder", "folderId"},
 					{"MBDiscussion", "discussionId"},
 					{"MBMessage", "messageId"}, {"WikiPage", "pageId"}

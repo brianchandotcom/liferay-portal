@@ -181,6 +181,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		configureTaskConfigJSModules(project);
 		configureTaskTranspileJS(project);
+		configureTasksBuildLang(project);
 		configureTasksBuildUpgradeTable(project);
 		configureTasksTest(project);
 
@@ -1137,31 +1138,8 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		buildCSSTask.setSassCompilerClassName(sassCompilerClassName);
 	}
 
-	protected void configureTaskBuildLang(Project project) {
-		BuildLangTask buildLangTask = (BuildLangTask)GradleUtil.getTask(
-			project, LangBuilderPlugin.BUILD_LANG_TASK_NAME);
-
-		configureTaskBuildLangLangDirName(buildLangTask);
-		configureTaskBuildLangTranslateClientId(buildLangTask);
-		configureTaskBuildLangTranslateClientSecret(buildLangTask);
-	}
-
-	protected void configureTaskBuildLangLangDirName(
-		BuildLangTask buildLangTask) {
-
-		Project project = buildLangTask.getProject();
-
-		File langDir = new File(getResourcesDir(project), "content");
-
-		buildLangTask.setLangDirName(project.relativePath(langDir));
-	}
-
 	protected void configureTaskBuildLangTranslateClientId(
 		BuildLangTask buildLangTask) {
-
-		if (Validator.isNotNull(buildLangTask.getTranslateClientId())) {
-			return;
-		}
 
 		String translateClientId = GradleUtil.getProperty(
 			buildLangTask.getProject(), "microsoft.translator.client.id",
@@ -1172,10 +1150,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	protected void configureTaskBuildLangTranslateClientSecret(
 		BuildLangTask buildLangTask) {
-
-		if (Validator.isNotNull(buildLangTask.getTranslateClientSecret())) {
-			return;
-		}
 
 		String translateClientSecret = GradleUtil.getProperty(
 			buildLangTask.getProject(), "microsoft.translator.client.secret",
@@ -1579,7 +1553,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	protected void configureTasks(
 		Project project, LiferayExtension liferayExtension) {
 
-		configureTaskBuildLang(project);
 		configureTaskClasses(project);
 		configureTaskClean(project);
 		configureTaskDeploy(project, liferayExtension);
@@ -1631,6 +1604,22 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 				public void execute(BuildCSSTask buildCSSTask) {
 					configureTaskBuildCSSGenerateSourceMap(buildCSSTask);
 					configureTaskBuildCSSSassCompilerClassName(buildCSSTask);
+				}
+
+			});
+	}
+
+	protected void configureTasksBuildLang(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			BuildLangTask.class,
+			new Action<BuildLangTask>() {
+
+				@Override
+				public void execute(BuildLangTask buildLangTask) {
+					configureTaskBuildLangTranslateClientId(buildLangTask);
+					configureTaskBuildLangTranslateClientSecret(buildLangTask);
 				}
 
 			});

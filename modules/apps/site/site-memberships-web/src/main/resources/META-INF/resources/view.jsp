@@ -68,64 +68,55 @@ request.setAttribute("edit_site_assignments.jsp-selUser", selUser);
 request.setAttribute("edit_site_assignments.jsp-portletURL", portletURL);
 %>
 
-<c:choose>
-	<c:when test="<%= (selUser == null) && (userGroupId == 0) %>">
-		<c:choose>
-			<c:when test='<%= tabs2.equals("available") %>'>
-				<liferay-ui:header
-					backURL="<%= redirect %>"
-					escapeXml="<%= false %>"
-					localizeTitle="<%= false %>"
-					title='<%= LanguageUtil.get(request, "add-members") + ": " + LanguageUtil.get(request, tabs1) %>'
-				/>
-			</c:when>
-			<c:otherwise>
-				<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
-					<liferay-util:param name="toolbarItem" value='<%= tabs2.equals("available") ? "add-role" : null %>' />
-				</liferay-util:include>
-			</c:otherwise>
-		</c:choose>
+<c:if test="<%= (selUser == null) && (userGroupId == 0) %>">
+	<c:if test='<%= tabs2.equals("available") %>'>
+		<liferay-ui:header
+			backURL="<%= redirect %>"
+			escapeXml="<%= false %>"
+			localizeTitle="<%= false %>"
+			title='<%= LanguageUtil.get(request, "add-members") + ": " + LanguageUtil.get(request, tabs1) %>'
+		/>
+	</c:if>
 
-		<c:if test='<%= tabs1.equals("summary") || tabs2.equals("current") %>'>
-			<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-				<aui:nav cssClass="navbar-nav">
+	<c:if test='<%= tabs1.equals("summary") || tabs2.equals("current") %>'>
+		<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+			<aui:nav cssClass="navbar-nav">
 
-					<%
-					PortletURL summaryURL = PortletURLUtil.clone(portletURL, renderResponse);
+				<%
+				PortletURL summaryURL = PortletURLUtil.clone(portletURL, renderResponse);
 
-					summaryURL.setParameter("tabs1", "summary");
-					%>
+				summaryURL.setParameter("tabs1", "summary");
+				%>
 
-					<aui:nav-item href="<%= summaryURL.toString() %>" label="summary" selected='<%= tabs1.equals("summary") %>' />
+				<aui:nav-item href="<%= summaryURL.toString() %>" label="summary" selected='<%= tabs1.equals("summary") %>' />
 
-					<%
-					PortletURL usersURL = PortletURLUtil.clone(portletURL, renderResponse);
+				<%
+				PortletURL usersURL = PortletURLUtil.clone(portletURL, renderResponse);
 
-					usersURL.setParameter("tabs1", "users");
-					%>
+				usersURL.setParameter("tabs1", "users");
+				%>
 
-					<aui:nav-item href="<%= usersURL.toString() %>" label="users" selected='<%= tabs1.equals("users") %>' />
+				<aui:nav-item href="<%= usersURL.toString() %>" label="users" selected='<%= tabs1.equals("users") %>' />
 
-					<%
-					PortletURL organizationsURL = PortletURLUtil.clone(portletURL, renderResponse);
+				<%
+				PortletURL organizationsURL = PortletURLUtil.clone(portletURL, renderResponse);
 
-					organizationsURL.setParameter("tabs1", "organizations");
-					%>
+				organizationsURL.setParameter("tabs1", "organizations");
+				%>
 
-					<aui:nav-item href="<%= organizationsURL.toString() %>" label="organizations" selected='<%= tabs1.equals("organizations") %>' />
+				<aui:nav-item href="<%= organizationsURL.toString() %>" label="organizations" selected='<%= tabs1.equals("organizations") %>' />
 
-					<%
-					PortletURL userGroupsURL = PortletURLUtil.clone(portletURL, renderResponse);
+				<%
+				PortletURL userGroupsURL = PortletURLUtil.clone(portletURL, renderResponse);
 
-					userGroupsURL.setParameter("tabs1", "user-groups");
-					%>
+				userGroupsURL.setParameter("tabs1", "user-groups");
+				%>
 
-					<aui:nav-item href="<%= userGroupsURL.toString() %>" label="user-groups" selected='<%= tabs1.equals("user-groups") %>' />
-				</aui:nav>
-			</aui:nav-bar>
-		</c:if>
-	</c:when>
-</c:choose>
+				<aui:nav-item href="<%= userGroupsURL.toString() %>" label="user-groups" selected='<%= tabs1.equals("user-groups") %>' />
+			</aui:nav>
+		</aui:nav-bar>
+	</c:if>
+</c:if>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "submit();" %>'>
 	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />

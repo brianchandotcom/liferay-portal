@@ -205,12 +205,9 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 					viewUsersURL.setParameter("redirect", currentURL);
 					%>
 
-					<liferay-ui:icon
-						iconCssClass="icon-user"
-						label="<%= true %>"
-						message="assign-users"
-						url="<%= viewUsersURL.toString() %>"
-					/>
+					<liferay-frontend:add-menu>
+						<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "assign-users") %>' url="<%= viewUsersURL.toString() %>" />
+					</liferay-frontend:add-menu>
 
 					<%
 					viewUsersURL.setParameter("tabs2", "current");

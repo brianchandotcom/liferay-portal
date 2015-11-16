@@ -103,6 +103,22 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class MarketplaceAppManagerPortlet extends MVCPortlet {
 
+	public void activateBundles(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long[] bundleIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "bundleIds"), 0L);
+
+		List<Bundle> bundles = BundleManagerUtil.getInstalledBundles();
+
+		for (Bundle bundle : bundles) {
+			if (ArrayUtil.contains(bundleIds, bundle.getBundleId())) {
+				bundle.start();
+			}
+		}
+	}
+
 	public void deactivateBundles(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {

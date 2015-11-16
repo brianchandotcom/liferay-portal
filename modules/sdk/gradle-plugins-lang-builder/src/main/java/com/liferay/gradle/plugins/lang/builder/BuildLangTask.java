@@ -14,6 +14,8 @@
 
 package com.liferay.gradle.plugins.lang.builder;
 
+import com.liferay.gradle.util.FileUtil;
+import com.liferay.gradle.util.GradleUtil;
 import com.liferay.lang.builder.LangBuilderArgs;
 
 import java.io.File;
@@ -60,12 +62,14 @@ public class BuildLangTask extends JavaExec {
 	public List<String> getArgs() {
 		List<String> args = new ArrayList<>();
 
-		args.add("lang.dir=" + getLangDirName());
+		args.add(
+			"lang.dir=" + FileUtil.relativize(getLangDir(), getWorkingDir()));
 		args.add("lang.file=" + getLangFileName());
 		args.add("lang.plugin=" + isPlugin());
 		args.add(
 			"lang.portal.language.properties.file=" +
-				getPortalLanguagePropertiesFileName());
+				FileUtil.relativize(
+					getPortalLanguagePropertiesFile(), getWorkingDir()));
 		args.add("lang.translate=" + isTranslate());
 		args.add("lang.translate.client.id=" + getTranslateClientId());
 		args.add("lang.translate.client.secret=" + getTranslateClientSecret());
@@ -84,12 +88,12 @@ public class BuildLangTask extends JavaExec {
 			LangBuilderPlugin.CONFIGURATION_NAME);
 	}
 
-	public String getLangDirName() {
-		return _langBuilderArgs.getLangDirName();
+	public File getLangDir() {
+		return GradleUtil.toFile(getProject(), _langDir);
 	}
 
 	public String getLangFileName() {
-		return _langBuilderArgs.getLangFileName();
+		return GradleUtil.toString(_langFileName);
 	}
 
 	@Override
@@ -97,16 +101,16 @@ public class BuildLangTask extends JavaExec {
 		return "com.liferay.lang.builder.LangBuilder";
 	}
 
-	public String getPortalLanguagePropertiesFileName() {
-		return _langBuilderArgs.getPortalLanguagePropertiesFileName();
+	public File getPortalLanguagePropertiesFile() {
+		return GradleUtil.toFile(getProject(), _portalLanguagePropertiesFile);
 	}
 
 	public String getTranslateClientId() {
-		return _langBuilderArgs.getTranslateClientId();
+		return GradleUtil.toString(_translateClientId);
 	}
 
 	public String getTranslateClientSecret() {
-		return _langBuilderArgs.getTranslateClientSecret();
+		return GradleUtil.toString(_translateClientSecret);
 	}
 
 	@Override
@@ -117,11 +121,11 @@ public class BuildLangTask extends JavaExec {
 	}
 
 	public boolean isPlugin() {
-		return _langBuilderArgs.isPlugin();
+		return _plugin;
 	}
 
 	public boolean isTranslate() {
-		return _langBuilderArgs.isTranslate();
+		return _translate;
 	}
 
 	@Override
@@ -134,35 +138,34 @@ public class BuildLangTask extends JavaExec {
 		throw new UnsupportedOperationException();
 	}
 
-	public void setLangDirName(String langDirName) {
-		_langBuilderArgs.setLangDirName(langDirName);
+	public void setLangDir(Object langDir) {
+		_langDir = langDir;
 	}
 
-	public void setLangFileName(String langFileName) {
-		_langBuilderArgs.setLangFileName(langFileName);
+	public void setLangFileName(Object langFileName) {
+		_langFileName = langFileName;
 	}
 
 	public void setPlugin(boolean plugin) {
-		_langBuilderArgs.setPlugin(plugin);
+		_plugin = plugin;
 	}
 
-	public void setPortalLanguagePropertiesFileName(
-		String portalLanguagePropertiesFileName) {
+	public void setPortalLanguagePropertiesFile(
+		Object portalLanguagePropertiesFile) {
 
-		_langBuilderArgs.setPortalLanguagePropertiesFileName(
-			portalLanguagePropertiesFileName);
+		_portalLanguagePropertiesFile = portalLanguagePropertiesFile;
 	}
 
 	public void setTranslate(boolean translate) {
-		_langBuilderArgs.setTranslate(translate);
+		_translate = translate;
 	}
 
-	public void setTranslateClientId(String translateClientId) {
-		_langBuilderArgs.setTranslateClientId(translateClientId);
+	public void setTranslateClientId(Object translateClientId) {
+		_translateClientId = translateClientId;
 	}
 
-	public void setTranslateClientSecret(String translateClientSecret) {
-		_langBuilderArgs.setTranslateClientSecret(translateClientSecret);
+	public void setTranslateClientSecret(Object translateClientSecret) {
+		_translateClientSecret = translateClientSecret;
 	}
 
 	@Override
@@ -170,6 +173,12 @@ public class BuildLangTask extends JavaExec {
 		throw new UnsupportedOperationException();
 	}
 
-	private final LangBuilderArgs _langBuilderArgs = new LangBuilderArgs();
+	private Object _langDir;
+	private Object _langFileName = LangBuilderArgs.LANG_FILE_NAME;
+	private boolean _plugin = LangBuilderArgs.PLUGIN;
+	private Object _portalLanguagePropertiesFile;
+	private boolean _translate = LangBuilderArgs.TRANSLATE;
+	private Object _translateClientId;
+	private Object _translateClientSecret;
 
 }

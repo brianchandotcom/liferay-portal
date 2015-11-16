@@ -664,6 +664,13 @@
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no completed tasks." />
 	</command>
 
+	<command name="viewDefaultWorkflowSubmissions">
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no pending publication requests." />
+		<execute function="AssertClick" locator1="MenuItem#COMPLETED" value1="Completed" />
+
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no completed publication requests." />
+	</command>
+
 	<command name="viewDefinition">
 		<var name="key_workflowDefinitionName" value="${workflowDefinitionName}" />
 

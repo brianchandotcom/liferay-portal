@@ -361,6 +361,6 @@
 			<var name="workflowTask" value="Update" />
 		</execute>
 
-		<execute macro="Workflow#viewDefaultMySubmissionsCP" />
+		<execute macro="Workflow#viewDefaultWorkflowSubmissions" />
 	</command>
 </definition>

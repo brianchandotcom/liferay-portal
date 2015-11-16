@@ -149,12 +149,9 @@ userGroupSearch.setEmptyResultsMessage(emptyResultsMessage);
 					viewUserGroupsURL.setParameter("tabs2", "available");
 					%>
 
-					<liferay-ui:icon
-						iconCssClass="icon-globe"
-						label="<%= true %>"
-						message="assign-user-groups"
-						url="<%= viewUserGroupsURL.toString() %>"
-					/>
+					<liferay-frontend:add-menu>
+						<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "assign-user-groups") %>' url="<%= viewUserGroupsURL.toString() %>" />
+					</liferay-frontend:add-menu>
 
 					<%
 					viewUserGroupsURL.setParameter("tabs2", "current");

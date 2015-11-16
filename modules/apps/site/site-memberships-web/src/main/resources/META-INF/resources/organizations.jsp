@@ -169,12 +169,9 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 					viewOrganizationsURL.setParameter("tabs2", "available");
 					%>
 
-					<liferay-ui:icon
-						iconCssClass="icon-globe"
-						label="<%= true %>"
-						message="assign-organizations"
-						url="<%= viewOrganizationsURL.toString() %>"
-					/>
+					<liferay-frontend:add-menu>
+						<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "assign-organizations") %>' url="<%= viewOrganizationsURL.toString() %>" />
+					</liferay-frontend:add-menu>
 
 					<%
 					viewOrganizationsURL.setParameter("tabs2", "current");

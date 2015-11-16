@@ -25,13 +25,10 @@ import com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerControl;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
-import com.liferay.portlet.exportimport.xstream.XStreamAliasRegistryUtil;
 import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.model.impl.WikiNodeImpl;
-import com.liferay.wiki.model.impl.WikiPageImpl;
 import com.liferay.wiki.service.WikiNodeLocalService;
 import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.service.permission.WikiResourcePermissionChecker;
@@ -104,9 +101,6 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 				},
 				WikiPage.class.getName()));
 		setImportControls(getExportControls());
-
-		XStreamAliasRegistryUtil.register(WikiNodeImpl.class, "WikiNode");
-		XStreamAliasRegistryUtil.register(WikiPageImpl.class, "WikiPage");
 	}
 
 	@Override

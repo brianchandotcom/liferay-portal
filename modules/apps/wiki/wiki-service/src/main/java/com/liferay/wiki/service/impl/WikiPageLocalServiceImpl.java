@@ -2097,20 +2097,43 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 							page.getGroupId(), WikiConstants.SERVICE_NAME));
 
 			if ((oldStatus != WorkflowConstants.STATUS_IN_TRASH) &&
-				(page.getVersion() == WikiPageConstants.VERSION_DEFAULT) &&
 				(!page.isMinorEdit() ||
 				 wikiGroupServiceOverriddenConfiguration.
 					 pageMinorEditAddSocialActivity())) {
 
-				JSONObject extraDataJSONObject =
-					JSONFactoryUtil.createJSONObject();
+				WikiPage oldPage = null;
 
-				extraDataJSONObject.put("title", page.getTitle());
-				extraDataJSONObject.put("version", page.getVersion());
+				if (!serviceContext.isCommandAdd()) {
+					oldPage = getPage(page.getResourcePrimKey(), true);
+				}
 
-				SocialActivityManagerUtil.addActivity(
-					userId, page, WikiActivityKeys.ADD_PAGE,
-					extraDataJSONObject.toString(), 0);
+				if ((oldPage != null) &&
+					(page.getVersion() == oldPage.getVersion())) {
+
+					Date pageCreateDate = page.getCreateDate();
+
+					Date createDate = new Date(pageCreateDate.getTime() + 1);
+
+					SocialActivityManagerUtil.updateLastSocialActivity(
+						serviceContext.getUserId(), page,
+						WikiActivityKeys.UPDATE_PAGE, createDate);
+				}
+				else {
+					JSONObject extraDataJSONObject =
+						JSONFactoryUtil.createJSONObject();
+
+					extraDataJSONObject.put("title", page.getTitle());
+					extraDataJSONObject.put("version", page.getVersion());
+
+					int type = WikiActivityKeys.UPDATE_PAGE;
+
+					if (serviceContext.isCommandAdd()) {
+						type = WikiActivityKeys.ADD_PAGE;
+					}
+
+					SocialActivityManagerUtil.addActivity(
+						userId, page, type, extraDataJSONObject.toString(), 0);
+				}
 			}
 
 			// Subscriptions
@@ -3199,43 +3222,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			userId, page, serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames(),
 			serviceContext.getAssetLinkEntryIds());
-
-		// Social
-
-		if (serviceContext.getWorkflowAction() !=
-				WorkflowConstants.ACTION_SAVE_DRAFT) {
-
-			WikiGroupServiceOverriddenConfiguration
-				wikiGroupServiceOverriddenConfiguration =
-					configurationFactory.getConfiguration(
-						WikiGroupServiceOverriddenConfiguration.class,
-						new GroupServiceSettingsLocator(
-							node.getGroupId(), WikiConstants.SERVICE_NAME));
-
-			if (!page.isMinorEdit() ||
-				wikiGroupServiceOverriddenConfiguration.
-					pageMinorEditAddSocialActivity()) {
-
-				if (oldPage.getVersion() == newVersion) {
-					Date createDate = new Date(now.getTime() + 1);
-
-					SocialActivityManagerUtil.updateLastSocialActivity(
-						serviceContext.getUserId(), page,
-						WikiActivityKeys.UPDATE_PAGE, createDate);
-				}
-				else {
-					JSONObject extraDataJSONObject =
-						JSONFactoryUtil.createJSONObject();
-
-					extraDataJSONObject.put("title", page.getTitle());
-					extraDataJSONObject.put("version", page.getVersion());
-
-					SocialActivityManagerUtil.addActivity(
-						userId, page, WikiActivityKeys.UPDATE_PAGE,
-						extraDataJSONObject.toString(), 0);
-				}
-			}
-		}
 
 		// Workflow
 

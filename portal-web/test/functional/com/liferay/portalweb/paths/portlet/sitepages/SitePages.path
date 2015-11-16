@@ -153,12 +153,12 @@
 </tr>
 <tr>
 	<td>PAGE_TREE_PAGE_LINK</td>
-	<td>xpath=(//a[contains(@id,'layoutsTree_layout_') and contains(.,'${key_sitePageName}')])</td>
+	<td>//div[@class='list-group-item']//span/a[contains(.,'${key_sitePageName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TREE_PAGE_LINK_1</td>
-	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')])[1]</td>
+	<td>//span[a[contains(.,'${key_sitePageName}')]]/a[contains(@title,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>

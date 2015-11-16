@@ -750,7 +750,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 							}
 							else if (trimmedLine.endsWith(
 										StringPool.APOSTROPHE) &&
-									 !trimmedLine.contains(StringPool.QUOTE)) {
+									 (!trimmedLine.contains(StringPool.QUOTE) ||
+									  !tag.contains(StringPool.COLON))) {
 
 								line = StringUtil.replace(
 									line, StringPool.APOSTROPHE,
@@ -759,6 +760,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 								readAttributes = false;
 							}
 							else if (trimmedLine.endsWith(StringPool.QUOTE) &&
+									 tag.contains(StringPool.COLON) &&
 									 (StringUtil.count(
 										trimmedLine, StringPool.QUOTE) > 2)) {
 

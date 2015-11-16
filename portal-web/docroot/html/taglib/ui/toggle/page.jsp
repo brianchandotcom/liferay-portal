@@ -34,7 +34,7 @@ String defaultMessage = (String)request.getAttribute("liferay-ui:toggle:defaultM
 	</c:when>
 	<c:otherwise>
 		<img
-			alt='<liferay-ui:message escapeAttribute="<%= true %>" key="toggle" />'
+			alt="<liferay-ui:message escapeAttribute="<%= true %>" key="toggle" />"
 			id="<%= id %>_image"
 			onclick="<%= stateVar %>Toggle();"
 			src="<%= defaultImage %>"

@@ -22,13 +22,12 @@
 
 	<command name="AddSiteRegRole" priority="4">
 		<execute macro="Permissions#setUpRegRoleLoginUserCP">
+			<var name="page" value="Public Pages" />
 			<var name="portletName" value="Sites" />
 			<var name="roleName" value="Regrole Name" />
-			<var name="sitePagePrivacy" value="Public" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userFirstName" value="userfn" />
 			<var name="userLastName" value="userln" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
 			<var name="userScreenName" value="usersn" />
@@ -267,12 +266,12 @@
 
 	<command name="ViewSiteManageChildSiteSiteRole" priority="4">
 		<execute macro="Permissions#setUpSiteRoleLoginUserCP">
+			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Site Page" />
 			<var name="portletName" value="Sites" />
 			<var name="roleName" value="Siterole Name" />
 			<var name="roleType" value="Site" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePagePrivacy" value="Public" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userFirstName" value="userfn" />
 			<var name="userLastName" value="userln" />
@@ -446,9 +445,9 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
+			<var name="page" value="Public Pages" />
 			<var name="siteName" value="Site Name" />
 			<var name="sitePageName" value="Site Page" />
-			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionLoginUserCP">

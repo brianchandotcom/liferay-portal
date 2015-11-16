@@ -354,9 +354,9 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
+			<var name="page" value="Public Pages" />
 			<var name="siteName" value="Site Name" />
 			<var name="sitePageName" value="AP Test Page" />
-			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#openURL">
@@ -373,9 +373,9 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
+			<var name="page" value="Public Pages" />
 			<var name="siteName" value="Child SiteName" />
 			<var name="sitePageName" value="WC Test Page" />
-			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#openURL">
@@ -482,10 +482,10 @@
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="liferaySiteName" value="Liferay" />
+		<var name="page" value="Public Pages" />
 		<var name="pageName" value="AP Test Page" />
 		<var name="portletName" value="Asset Publisher" />
 		<var name="siteName" value="Site Name" />
-		<var name="sitePagePrivacy" value="Public" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Portal Settings" />
@@ -512,9 +512,9 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
+			<var name="page" value="Public Pages" />
 			<var name="siteName" value="Site Name" />
 			<var name="sitePageName" value="AP Test Page" />
-			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#openURL">

@@ -108,7 +108,7 @@ public class PublishLayoutsMVCActionCommand extends BaseMVCActionCommand {
 				SessionErrors.add(actionRequest, e.getClass());
 
 				actionResponse.setRenderParameter(
-					"mvcPath", "/new_publication/error_handling/error.jsp");
+					"mvcPath", "/error/error.jsp");
 			}
 			else if (e instanceof AuthException ||
 					 e instanceof DuplicateLockException ||

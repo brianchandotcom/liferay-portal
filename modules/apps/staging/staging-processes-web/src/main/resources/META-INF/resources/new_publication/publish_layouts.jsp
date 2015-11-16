@@ -163,13 +163,13 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 		</ul>
 	</liferay-ui:error>
 
-	<%@ include file="/new_publication/error_handling/error_auth_exception.jspf" %>
+	<%@ include file="/error/error_auth_exception.jspf" %>
 
-	<%@ include file="/new_publication/error_handling/error_illegal_argument_exception.jspf" %>
+	<%@ include file="/error/error_illegal_argument_exception.jspf" %>
 
-	<%@ include file="/new_publication/error_handling/error_remote_export_exception.jspf" %>
+	<%@ include file="/error/error_remote_export_exception.jspf" %>
 
-	<%@ include file="/new_publication/error_handling/error_remote_options_exception.jspf" %>
+	<%@ include file="/error/error_remote_options_exception.jspf" %>
 
 	<liferay-ui:error exception="<%= SystemException.class %>">
 

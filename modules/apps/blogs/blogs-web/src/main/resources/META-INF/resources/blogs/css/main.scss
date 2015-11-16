@@ -337,6 +337,7 @@
 			line-height: 80px;
 			margin-bottom: 25px;
 			text-align: center;
+			word-wrap: break-word;
 		}
 
 		h2 {
@@ -355,6 +356,7 @@
 		a {
 			color: inherit;
 			font-weight: bold;
+			word-wrap: break-word;
 
 			&:hover {
 				text-decoration: none;

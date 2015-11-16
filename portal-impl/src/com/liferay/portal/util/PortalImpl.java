@@ -1634,7 +1634,9 @@ public class PortalImpl implements Portal {
 		Group controlPanelDisplayGroup = getControlPanelDisplayGroup(
 			group.getCompanyId(), scopeGroupId, 0, ppid);
 
-		if (controlPanelDisplayGroup != null) {
+		if ((controlPanelDisplayGroup != null) &&
+			!controlPanelDisplayGroup.isControlPanel()) {
+
 			sb.append(controlPanelDisplayGroup.getFriendlyURL());
 			sb.append(VirtualLayoutConstants.CANONICAL_URL_SEPARATOR);
 		}
@@ -1675,7 +1677,7 @@ public class PortalImpl implements Portal {
 			return null;
 		}
 
-		if (group == null) {
+		if (group.isControlPanel()) {
 			return layout;
 		}
 
@@ -7575,7 +7577,8 @@ public class PortalImpl implements Portal {
 			portletCategory.equals(
 				PortletCategoryKeys.USER_MY_ACCOUNT)) {
 
-			return null;
+			return GroupLocalServiceUtil.fetchGroup(
+				companyId, GroupConstants.CONTROL_PANEL);
 		}
 		else {
 			Group group = null;

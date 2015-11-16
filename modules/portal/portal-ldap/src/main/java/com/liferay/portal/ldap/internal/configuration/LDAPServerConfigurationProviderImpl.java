@@ -287,6 +287,9 @@ public class LDAPServerConfigurationProviderImpl
 		LDAPServerConfiguration ldapServerConfiguration =
 			Configurable.createConfigurable(getMetatype(), properties);
 
+		_pidToCompanyId.put(
+			configuration.getPid(), ldapServerConfiguration.companyId());
+
 		synchronized (_configurations) {
 			Map<Long, Configuration> ldapServerConfigurations =
 				_configurations.get(ldapServerConfiguration.companyId());
@@ -306,21 +309,28 @@ public class LDAPServerConfigurationProviderImpl
 
 	@Override
 	public void unregisterConfiguration(Configuration configuration) {
+		Long companyId = _pidToCompanyId.get(configuration.getPid());
+
+		if (companyId == null) {
+			return;
+		}
+
 		Dictionary<String, Object> properties = configuration.getProperties();
 
 		if (properties == null) {
 			properties = new HashMapDictionary<>();
 		}
 
+		Map<Long, Configuration> configurations = _configurations.get(
+			companyId);
+
 		LDAPServerConfiguration ldapServerConfiguration =
 			Configurable.createConfigurable(getMetatype(), properties);
 
 		synchronized (_configurations) {
-			Map<Long, Configuration> configurations = _configurations.get(
-				ldapServerConfiguration.companyId());
-
 			if (!MapUtil.isEmpty(configurations)) {
-				configurations.remove(ldapServerConfiguration.ldapServerId());
+				configurations.remove(
+					ldapServerConfiguration.ldapServerId());
 			}
 		}
 	}
@@ -381,5 +391,7 @@ public class LDAPServerConfigurationProviderImpl
 
 	private final Map<Long, Map<Long, Configuration>>
 		_configurations = new ConcurrentHashMap<>();
+
+	private final Map<String, Long> _pidToCompanyId = new HashMap<>();
 
 }

@@ -112,11 +112,11 @@ public class StartupAction extends SimpleAction {
 		ServiceDependencyManager portalResiliencyServiceDependencyManager =
 			new ServiceDependencyManager();
 
-		portalResiliencyServiceDependencyManager.registerDependencies(
-			MessageBus.class, PortalExecutorManager.class);
-
 		portalResiliencyServiceDependencyManager.addServiceDependencyListener(
 			new PortalResiliencyServiceDependencyLister());
+
+		portalResiliencyServiceDependencyManager.registerDependencies(
+			MessageBus.class, PortalExecutorManager.class);
 
 		// Shutdown hook
 
@@ -133,9 +133,6 @@ public class StartupAction extends SimpleAction {
 		ServiceDependencyManager indexerRegistryServiceDependencyManager =
 			new ServiceDependencyManager();
 
-		indexerRegistryServiceDependencyManager.registerDependencies(
-			IndexerRegistry.class);
-
 		indexerRegistryServiceDependencyManager.addServiceDependencyListener(
 			new ServiceDependencyListener() {
 
@@ -150,6 +147,9 @@ public class StartupAction extends SimpleAction {
 				}
 
 			});
+
+		indexerRegistryServiceDependencyManager.registerDependencies(
+			IndexerRegistry.class);
 
 		// MySQL version
 

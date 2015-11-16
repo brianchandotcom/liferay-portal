@@ -58,6 +58,36 @@ public class UpgradeSubscription extends UpgradeProcess {
 		updateSubscriptionGroupIds();
 	}
 
+	protected long getClassNameId(String className) throws Exception {
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		if (classNameId == 0) {
+			Connection con = null;
+			PreparedStatement ps = null;
+
+			try {
+				con = DataAccess.getUpgradeOptimizedConnection();
+
+				classNameId = increment();
+
+				ps = con.prepareStatement(
+					"insert into ClassName_ (mvccVersion, classNameId, " +
+						"value) values (?, ?, ?)");
+
+				ps.setLong(1, 0);
+				ps.setLong(2, classNameId);
+				ps.setString(3, className);
+
+				ps.executeUpdate();
+			}
+			finally {
+				DataAccess.cleanUp(con, ps);
+			}
+		}
+
+		return classNameId;
+	}
+
 	protected long getGroupId(long classNameId, long classPK) throws Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -139,7 +169,7 @@ public class UpgradeSubscription extends UpgradeProcess {
 		StringBundler sb = new StringBundler(4);
 
 		sb.append("update Subscription set classNameId = ");
-		sb.append(PortalUtil.getClassNameId(newClassName));
+		sb.append(getClassNameId(newClassName));
 		sb.append(" where classNameId = ");
 		sb.append(PortalUtil.getClassNameId(oldClassName));
 

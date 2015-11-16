@@ -26,7 +26,10 @@ import java.util.List;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.JavaExec;
+import org.gradle.api.tasks.Optional;
 
 /**
  * @author Andrea Di Giorgi
@@ -58,10 +61,12 @@ public class BuildLangTask extends JavaExec {
 			LangBuilderPlugin.CONFIGURATION_NAME);
 	}
 
+	@Input
 	public File getLangDir() {
 		return GradleUtil.toFile(getProject(), _langDir);
 	}
 
+	@Input
 	public String getLangFileName() {
 		return GradleUtil.toString(_langFileName);
 	}
@@ -71,22 +76,28 @@ public class BuildLangTask extends JavaExec {
 		return "com.liferay.lang.builder.LangBuilder";
 	}
 
+	@InputFile
+	@Optional
 	public File getPortalLanguagePropertiesFile() {
 		return GradleUtil.toFile(getProject(), _portalLanguagePropertiesFile);
 	}
 
+	@Input
 	public String getTranslateClientId() {
 		return GradleUtil.toString(_translateClientId);
 	}
 
+	@Input
 	public String getTranslateClientSecret() {
 		return GradleUtil.toString(_translateClientSecret);
 	}
 
+	@Input
 	public boolean isPlugin() {
 		return _plugin;
 	}
 
+	@Input
 	public boolean isTranslate() {
 		return _translate;
 	}
@@ -133,10 +144,16 @@ public class BuildLangTask extends JavaExec {
 			"lang.dir=" + FileUtil.relativize(getLangDir(), getWorkingDir()));
 		args.add("lang.file=" + getLangFileName());
 		args.add("lang.plugin=" + isPlugin());
-		args.add(
-			"lang.portal.language.properties.file=" +
-				FileUtil.relativize(
-					getPortalLanguagePropertiesFile(), getWorkingDir()));
+
+		File portalLanguagePropertiesFile = getPortalLanguagePropertiesFile();
+
+		if (portalLanguagePropertiesFile != null) {
+			args.add(
+				"lang.portal.language.properties.file=" +
+					FileUtil.relativize(
+						getPortalLanguagePropertiesFile(), getWorkingDir()));
+		}
+
 		args.add("lang.translate=" + isTranslate());
 		args.add("lang.translate.client.id=" + getTranslateClientId());
 		args.add("lang.translate.client.secret=" + getTranslateClientSecret());

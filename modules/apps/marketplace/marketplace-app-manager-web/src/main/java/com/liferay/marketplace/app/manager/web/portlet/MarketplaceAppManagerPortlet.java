@@ -217,6 +217,22 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 		SessionMessages.add(actionRequest, "triggeredPortletUndeploy");
 	}
 
+	public void uninstallBundles(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long[] bundleIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "bundleIds"), 0L);
+
+		List<Bundle> bundles = BundleManagerUtil.getInstalledBundles();
+
+		for (Bundle bundle : bundles) {
+			if (ArrayUtil.contains(bundleIds, bundle.getBundleId())) {
+				bundle.uninstall();
+			}
+		}
+	}
+
 	public void updatePluginSetting(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {

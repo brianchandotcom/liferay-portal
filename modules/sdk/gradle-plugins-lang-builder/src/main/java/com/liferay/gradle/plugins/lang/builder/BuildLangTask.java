@@ -107,7 +107,7 @@ public class BuildLangTask extends JavaExec {
 		throw new UnsupportedOperationException();
 	}
 
-	public void setLangDirName(Object langDir) {
+	public void setLangDir(Object langDir) {
 		_langDir = langDir;
 	}
 
@@ -119,7 +119,7 @@ public class BuildLangTask extends JavaExec {
 		_plugin = plugin;
 	}
 
-	public void setPortalLanguagePropertiesFileName(
+	public void setPortalLanguagePropertiesFile(
 		Object portalLanguagePropertiesFile) {
 
 		_portalLanguagePropertiesFile = portalLanguagePropertiesFile;
@@ -162,7 +162,7 @@ public class BuildLangTask extends JavaExec {
 	}
 
 	private Object _langDir;
-	private Object _langFileName;
+	private Object _langFileName = LangBuilderArgs.LANG_FILE_NAME;
 	private boolean _plugin = LangBuilderArgs.PLUGIN;
 	private Object _portalLanguagePropertiesFile;
 	private boolean _translate = LangBuilderArgs.TRANSLATE;

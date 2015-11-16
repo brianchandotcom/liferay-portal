@@ -100,7 +100,7 @@ public class LiferayFileItemTest {
 	}
 
 	@Test
-	public void testGetEncodedStringAfterCreateItemShouldBeNull() {
+	public void testGetEncodedStringAfterCreateItem() {
 		String contentType = RandomTestUtil.randomString();
 		String fieldName = RandomTestUtil.randomString();
 		String fileName = RandomTestUtil.randomString();
@@ -129,7 +129,7 @@ public class LiferayFileItemTest {
 	}
 
 	@Test
-	public void testGetFileNameExtensionWithNullValueShouldReturnBlank() {
+	public void testGetFileNameExtensionWithNullValue() {
 		String fieldName = RandomTestUtil.randomString();
 		String contentType = RandomTestUtil.randomString();
 		String fileName = "theFile";
@@ -143,7 +143,7 @@ public class LiferayFileItemTest {
 	}
 
 	@Test
-	public void testSetStringNeedsAValidCharacterEncoding() throws Exception {
+	public void testSetStringRequiresCharacterEncoding() throws Exception {
 		String contentType = RandomTestUtil.randomString();
 		String fieldName = RandomTestUtil.randomString();
 		String fileName = RandomTestUtil.randomString() + ".txt";
@@ -161,9 +161,7 @@ public class LiferayFileItemTest {
 	}
 
 	@Test(expected = NullPointerException.class)
-	public void testSetStringWithoutOutputStreamThrowsNullPointerException()
-		throws Exception {
-
+	public void testSetStringWithoutOutputStream() throws Exception {
 		String fieldName = RandomTestUtil.randomString();
 		String contentType = RandomTestUtil.randomString();
 		String fileName = RandomTestUtil.randomString() + ".txt";
@@ -179,7 +177,7 @@ public class LiferayFileItemTest {
 	}
 
 	@Test
-	public void testWriteNeedsCallingGetOutputStream() throws Exception {
+	public void testWriteRequiresCallingGetOutputStream() throws Exception {
 		String fieldName = RandomTestUtil.randomString();
 		String contentType = RandomTestUtil.randomString();
 		String fileName = RandomTestUtil.randomString() + ".txt";

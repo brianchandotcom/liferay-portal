@@ -147,7 +147,7 @@ public class UpgradeCompanyId
 			// Group
 
 			selectSQL =
-				"select companyId from Group_ where Group_.organizationId = " +
+				"select companyId from Group_ where Group_.groupId = " +
 					"PortletPreferences.ownerId";
 
 			runSQL(getUpdateSQL(selectSQL));

@@ -14,9 +14,7 @@
 
 package com.liferay.portal.security.ldap;
 
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
+import com.liferay.portal.kernel.util.ProxyFactory;
 
 import java.util.Properties;
 
@@ -30,7 +28,7 @@ public class LDAPSettingsUtil {
 			String screenName, String userId)
 		throws Exception {
 
-		return _getInstance().getAuthSearchFilter(
+		return _ldapSettings.getAuthSearchFilter(
 			ldapServerId, companyId, emailAddress, screenName, userId);
 	}
 
@@ -38,80 +36,66 @@ public class LDAPSettingsUtil {
 			long ldapServerId, long companyId)
 		throws Exception {
 
-		return _getInstance().getContactExpandoMappings(
-			ldapServerId, companyId);
+		return _ldapSettings.getContactExpandoMappings(ldapServerId, companyId);
 	}
 
 	public static Properties getContactMappings(
 			long ldapServerId, long companyId)
 		throws Exception {
 
-		return _getInstance().getContactMappings(ldapServerId, companyId);
+		return _ldapSettings.getContactMappings(ldapServerId, companyId);
 	}
 
 	public static Properties getGroupMappings(long ldapServerId, long companyId)
 		throws Exception {
 
-		return _getInstance().getGroupMappings(ldapServerId, companyId);
+		return _ldapSettings.getGroupMappings(ldapServerId, companyId);
 	}
 
 	public static long getPreferredLDAPServerId(
 		long companyId, String screenName) {
 
-		return _getInstance().getPreferredLDAPServerId(companyId, screenName);
+		return _ldapSettings.getPreferredLDAPServerId(companyId, screenName);
 	}
 
 	public static String getPropertyPostfix(long ldapServerId) {
-		return _getInstance().getPropertyPostfix(ldapServerId);
+		return _ldapSettings.getPropertyPostfix(ldapServerId);
 	}
 
 	public static Properties getUserExpandoMappings(
 			long ldapServerId, long companyId)
 		throws Exception {
 
-		return _getInstance().getUserExpandoMappings(ldapServerId, companyId);
+		return _ldapSettings.getUserExpandoMappings(ldapServerId, companyId);
 	}
 
 	public static Properties getUserMappings(long ldapServerId, long companyId)
 		throws Exception {
 
-		return _getInstance().getUserMappings(ldapServerId, companyId);
+		return _ldapSettings.getUserMappings(ldapServerId, companyId);
 	}
 
 	public static boolean isExportEnabled(long companyId) {
-		return _getInstance().isExportEnabled(companyId);
+		return _ldapSettings.isExportEnabled(companyId);
 	}
 
 	public static boolean isExportGroupEnabled(long companyId) {
-		return _getInstance().isExportGroupEnabled(companyId);
+		return _ldapSettings.isExportGroupEnabled(companyId);
 	}
 
 	public static boolean isImportEnabled(long companyId) {
-		return _getInstance().isImportEnabled(companyId);
+		return _ldapSettings.isImportEnabled(companyId);
 	}
 
 	public static boolean isImportOnStartup(long companyId) {
-		return _getInstance().isImportOnStartup(companyId);
+		return _ldapSettings.isImportOnStartup(companyId);
 	}
 
 	public static boolean isPasswordPolicyEnabled(long companyId) {
-		return _getInstance().isPasswordPolicyEnabled(companyId);
+		return _ldapSettings.isPasswordPolicyEnabled(companyId);
 	}
 
-	private static LDAPSettings _getInstance() {
-		return _instance._serviceTracker.getService();
-	}
-
-	private LDAPSettingsUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(LDAPSettings.class);
-
-		_serviceTracker.open();
-	}
-
-	private static final LDAPSettingsUtil _instance = new LDAPSettingsUtil();
-
-	private final ServiceTracker<LDAPSettings, LDAPSettings> _serviceTracker;
+	private static final LDAPSettings _ldapSettings =
+		ProxyFactory.newServiceTrackedInstance(LDAPSettings.class);
 
 }

@@ -21,6 +21,12 @@
 		<execute function="KeyPress" locator1="FormFields#TEXT_MULTILINE_TEXT_FIELD" value1="\RETURN" />
 	</command>
 
+	<command name="editMultiText">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="Type" locator1="FormFields#TEXT_MULTILINE_TEXT_FIELD" value1="${fieldValue}" />
+	</command>
+
 	<command name="editOptionsRow">
 		<var name="key_rowNumber" value="${rowNumber}" />
 

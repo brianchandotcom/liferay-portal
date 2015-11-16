@@ -108,6 +108,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TEXT_FIELD_2</td>
+	<td>//div[contains(@class,'ddm-form')][2]//input[@type='text' and contains(@id,'${key_fieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TEXT_LABEL</td>
 	<td>//div[contains(@data-fieldname,'${key_fieldName}')]/label[contains(.,'${key_fieldLabel}')]</td>
 	<td></td>

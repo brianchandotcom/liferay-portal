@@ -23,6 +23,14 @@
 		<execute function="AssertElementPresent" locator1="FormFields#OPTIONS_OPTION_NAME_FIELD" value1="Field Name:${optionName}" />
 	</command>
 
+	<command name="editRepeatingText">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="Type" locator1="FormFields#TEXT_FIELD" value1="${fieldValue}" />
+
+		<execute function="Type" locator1="FormFields#TEXT_FIELD_2" value1="${fieldValueRepeat}" />
+	</command>
+
 	<command name="editText">
 		<var name="key_fieldName" value="${fieldName}" />
 

@@ -3,18 +3,26 @@ Bundle-ClassPath: \
 	lib/antlr-runtime.jar,\
 	lib/asm-commons.jar,\
 	lib/asm.jar,\
-	lib/elasticsearch-analysis-icu.jar,\
-	lib/elasticsearch-analysis-kuromoji.jar,\
-	lib/elasticsearch-analysis-phonetic.jar,\
-	lib/elasticsearch-analysis-smartcn.jar,\
-	lib/elasticsearch-analysis-stempel.jar,\
+	lib/commons-lang.jar,\
+	lib/compress-lzf.jar,\
+	lib/analysis-icu.jar,\
+	lib/analysis-kuromoji.jar,\
+	lib/analysis-smartcn.jar,\
+	lib/analysis-stempel.jar,\
 	lib/elasticsearch.jar,\
+	lib/guava.jar,\
+	lib/hppc.jar,\
 	lib/icu4j.jar,\
+	lib/jackson-core.jar,\
+	lib/jackson-dataformat-smile.jar,\
+	lib/jackson-dataformat-yaml.jar,\
+	lib/joda-convert.jar,\
+	lib/joda-time.jar,\
+	lib/jsr166e.jar,\
 	lib/jts.jar,\
 	lib/lucene-analyzers-common.jar,\
 	lib/lucene-analyzers-icu.jar,\
 	lib/lucene-analyzers-kuromoji.jar,\
-	lib/lucene-analyzers-phonetic.jar,\
 	lib/lucene-analyzers-smartcn.jar,\
 	lib/lucene-analyzers-stempel.jar,\
 	lib/lucene-core.jar,\
@@ -28,8 +36,10 @@ Bundle-ClassPath: \
 	lib/lucene-sandbox.jar,\
 	lib/lucene-spatial.jar,\
 	lib/lucene-suggest.jar,\
+	lib/netty.jar,\
 	lib/snakeyaml.jar,\
-	lib/spatial4j.jar
+	lib/spatial4j.jar,\
+	lib/t-digest.jar
 Bundle-Name: Liferay Portal Search Elasticsearch
 Bundle-SymbolicName: com.liferay.portal.search.elasticsearch
 Bundle-Version: 1.0.0
@@ -39,18 +49,27 @@ Export-Package:\
 	com.liferay.portal.search.elasticsearch.settings,\
 	org.elasticsearch.common.settings
 Import-Package:\
+	!com.carrotsearch.hppc.*,\
+	!com.fasterxml.jackson.*,\
+	!com.github.mustachejava.*,\
+	!com.google.common.*,\
 	!com.google.protobuf.*,\
+	!com.ning.compress.*,\
 	!com.sun.jna.*,\
+	!com.tdunning.math.stats.*,\
 	!com.thoughtworks.qdox.*,\
 	!com.thoughtworks.xstream.*,\
+	!com.twitter.jsr166e.*,\
 	!groovy.*,\
 	!jline.*,\
 	!junit.*,\
 	!org.antlr.stringtemplate.*,\
 	!org.apache.bsf.*,\
 	!org.apache.commons.cli.*,\
+	!org.apache.commons.lang.*,\
 	!org.apache.ivy.*,\
 	!org.apache.lucene.expressions.*,\
+	!org.apache.lucene.geo3d.*,\
 	!org.apache.tomcat.jni.*,\
 	!org.bouncycastle.*,\
 	!org.codehaus.groovy.*,\
@@ -58,8 +77,11 @@ Import-Package:\
 	!org.elasticsearch.index.shard.service.*,\
 	!org.fusesource.*,\
 	!org.hyperic.sigar.*,\
+	!org.HdrHistogram.*,\
 	!org.jboss.logging.*,\
 	!org.jboss.marshalling.*,\
+	!org.jboss.netty.*,\
+	!org.joda.time.*,\
 	!org.junit.*,\
 	!sun.security.*,\
 	*
@@ -68,18 +90,26 @@ Include-Resource:\
 	lib/antlr-runtime.jar=lib/antlr-runtime.jar,\
 	lib/asm-commons.jar=lib/asm-commons.jar,\
 	lib/asm.jar=lib/asm.jar,\
-	lib/elasticsearch-analysis-icu.jar=lib/elasticsearch-analysis-icu.jar,\
-	lib/elasticsearch-analysis-kuromoji.jar=lib/elasticsearch-analysis-kuromoji.jar,\
-	lib/elasticsearch-analysis-phonetic.jar=lib/elasticsearch-analysis-phonetic.jar,\
-	lib/elasticsearch-analysis-smartcn.jar=lib/elasticsearch-analysis-smartcn.jar,\
-	lib/elasticsearch-analysis-stempel.jar=lib/elasticsearch-analysis-stempel.jar,\
+	lib/commons-lang.jar=lib/commons-lang.jar,\
+	lib/compress-lzf.jar=lib/compress-lzf.jar,\
+	lib/analysis-icu.jar=lib/analysis-icu.jar,\
+	lib/analysis-kuromoji.jar=lib/analysis-kuromoji.jar,\
+	lib/analysis-smartcn.jar=lib/analysis-smartcn.jar,\
+	lib/analysis-stempel.jar=lib/analysis-stempel.jar,\
 	lib/elasticsearch.jar=lib/elasticsearch.jar,\
+	lib/guava.jar=lib/guava.jar,\
+	lib/hppc.jar=lib/hppc.jar,\
 	lib/icu4j.jar=lib/icu4j.jar,\
+	lib/jackson-core.jar=lib/jackson-core.jar,\
+	lib/jackson-dataformat-smile.jar=lib/jackson-dataformat-smile.jar,\
+	lib/jackson-dataformat-yaml.jar=lib/jackson-dataformat-yaml.jar,\
+	lib/joda-convert.jar=lib/joda-convert.jar,\
+	lib/joda-time.jar=lib/joda-time.jar,\
+	lib/jsr166e.jar=lib/jsr166e.jar,\
 	lib/jts.jar=lib/jts.jar,\
 	lib/lucene-analyzers-common.jar=lib/lucene-analyzers-common.jar,\
 	lib/lucene-analyzers-icu.jar=lib/lucene-analyzers-icu.jar,\
 	lib/lucene-analyzers-kuromoji.jar=lib/lucene-analyzers-kuromoji.jar,\
-	lib/lucene-analyzers-phonetic.jar=lib/lucene-analyzers-phonetic.jar,\
 	lib/lucene-analyzers-smartcn.jar=lib/lucene-analyzers-smartcn.jar,\
 	lib/lucene-analyzers-stempel.jar=lib/lucene-analyzers-stempel.jar,\
 	lib/lucene-core.jar=lib/lucene-core.jar,\
@@ -93,5 +123,7 @@ Include-Resource:\
 	lib/lucene-sandbox.jar=lib/lucene-sandbox.jar,\
 	lib/lucene-spatial.jar=lib/lucene-spatial.jar,\
 	lib/lucene-suggest.jar=lib/lucene-suggest.jar,\
+	lib/netty.jar=lib/netty.jar,\
 	lib/snakeyaml.jar=lib/snakeyaml.jar,\
-	lib/spatial4j.jar=lib/spatial4j.jar
+	lib/spatial4j.jar=lib/spatial4j.jar,\
+	lib/t-digest.jar=lib/t-digest.jar

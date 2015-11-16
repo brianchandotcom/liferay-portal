@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.xml.Document;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -125,6 +126,12 @@ public class LocalizationUtil {
 
 		return getLocalization().getLocalization(
 			xml, requestedLanguageId, useDefault, defaultValue);
+	}
+
+	public static Map<Locale, String> getLocalizationMap(
+		Collection<Locale> locales, String key) {
+
+		return getLocalization().getLocalizationMap(locales, key);
 	}
 
 	public static Map<Locale, String> getLocalizationMap(

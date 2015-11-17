@@ -140,9 +140,9 @@ public class FacetedSearchTest {
 	}
 
 	protected static void assertSearch(String tag, int count) throws Exception {
-		FacetedSearcher facetedSearcher = new FacetedSearcher();
+		FacetedSearcher indexer = new FacetedSearcher();
 
-		Hits hits = facetedSearcher.search(getSearchContext(tag));
+		Hits hits = indexer.search(getSearchContext(tag));
 
 		Assert.assertEquals(count, hits.getLength());
 	}

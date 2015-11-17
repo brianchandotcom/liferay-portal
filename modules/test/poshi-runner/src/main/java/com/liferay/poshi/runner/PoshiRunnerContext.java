@@ -916,38 +916,33 @@ public class PoshiRunnerContext {
 		StringBuilder sb = new StringBuilder();
 
 		for (String className : _testCaseClassNames) {
-			Element rootElement = getTestCaseRootElement(className);
+			List<String> classProperties = _getTestCaseClassProperties(
+				className);
 
-			List<Element> rootPropertyElements = rootElement.elements(
-				"property");
-
-			for (Element rootPropertyElement : rootPropertyElements) {
+			for (String classProperty : classProperties) {
 				sb.append(className);
 				sb.append("TestCase.all.");
-				sb.append(rootPropertyElement.attributeValue("name"));
-				sb.append("=");
-				sb.append(rootPropertyElement.attributeValue("value"));
+				sb.append(classProperty);
 				sb.append("\n");
 			}
 
-			List<Element> commandElements = rootElement.elements("command");
+			Set<String> commandNames = _getTestCaseCommandNames(className);
 
-			for (Element commandElement : commandElements) {
-				String commandName = commandElement.attributeValue("name");
+			for (String commandName : commandNames) {
+				List<String> commandProperties = _getTestCaseCommandProperties(
+					className, commandName);
 
-				List<Element> commandPropertyElements = commandElement.elements(
-					"property");
-
-				for (Element commandPropertyElement : commandPropertyElements) {
+				for (String commandProperty : commandProperties) {
 					sb.append(className);
 					sb.append("TestCase.test");
 					sb.append(commandName);
 					sb.append(".");
-					sb.append(commandPropertyElement.attributeValue("name"));
-					sb.append("=");
-					sb.append(commandPropertyElement.attributeValue("value"));
+					sb.append(commandProperty);
 					sb.append("\n");
 				}
+
+				Element commandElement = getTestCaseCommandElement(
+					className, commandName);
 
 				List<Attribute> commandAttributes = commandElement.attributes();
 

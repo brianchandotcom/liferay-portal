@@ -27,6 +27,7 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.service.util.test.PortletPreferencesTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
@@ -94,8 +95,11 @@ public class LayoutTypePortletImplTest {
 			Portlet nonCacheablePortlet =
 				PortletLocalServiceUtil.getPortletById(PortletKeys.LOGIN);
 
-			PortletPreferencesTestUtil.addLayoutPortletPreferences(
-				_layout, nonCacheablePortlet);
+			PortletPreferencesLocalServiceUtil.addPortletPreferences(
+				TestPropsValues.getCompanyId(), _layout.getGroupId(),
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+				PortletKeys.PREFS_PLID_SHARED,
+				nonCacheablePortlet.getPortletId(), nonCacheablePortlet, null);
 
 			String cacheablePortletId = PortletProviderUtil.getPortletId(
 				"com.liferay.journal.model.JournalArticle",

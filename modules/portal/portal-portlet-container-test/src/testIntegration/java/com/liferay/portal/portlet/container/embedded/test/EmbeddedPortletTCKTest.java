@@ -80,7 +80,7 @@ import org.junit.runner.RunWith;
  * LayoutTypePortletImpl.getEmbeddedPortlets method)
  *
  * - a portlet preference exists for the portlet in an specific layout, being
- * its owner id 'default', and its owner type 'layout'.
+ * its owner id the layout's groupId, and its owner type 'shared-plid'.
  *
  * Once the first condition is satisfied, if any of the following premises is
  * true, then the portlet is NOT embedded.
@@ -152,9 +152,9 @@ public class EmbeddedPortletTCKTest {
 
 			PortletPreferencesLocalServiceUtil.addPortletPreferences(
 				TestPropsValues.getCompanyId(),
-				PortletKeys.PREFS_OWNER_ID_DEFAULT,
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
-				portlet.getPortletId(), portlet, null);
+				_layout.getGroupId(), PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+				PortletKeys.PREFS_PLID_SHARED, portlet.getPortletId(), portlet,
+				null);
 
 			List<Portlet> allPortlets = _layoutTypePortlet.getAllPortlets();
 
@@ -168,9 +168,9 @@ public class EmbeddedPortletTCKTest {
 
 			PortletPreferencesLocalServiceUtil.addPortletPreferences(
 				TestPropsValues.getCompanyId(),
-				PortletKeys.PREFS_OWNER_ID_DEFAULT,
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
-				portlet.getPortletId(), portlet, null);
+				_layout.getGroupId(), PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+				PortletKeys.PREFS_PLID_SHARED, portlet.getPortletId(), portlet,
+				null);
 
 			List<Portlet> embeddedPortlets =
 				_layoutTypePortlet.getEmbeddedPortlets();

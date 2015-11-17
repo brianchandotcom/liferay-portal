@@ -21,35 +21,34 @@ BlogsItemSelectorViewDisplayContext blogsItemSelectorViewDisplayContext = (Blogs
 
 BlogsItemSelectorCriterion blogsItemSelectorCriterion = blogsItemSelectorViewDisplayContext.getBlogsItemSelectorCriterion();
 
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "curBlogsAttachments", SearchContainer.DEFAULT_DELTA, blogsItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse), null, LanguageUtil.get(resourceBundle, "there-are-no-blog-attachments"));
+int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_CUR);
+int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM, SearchContainer.DEFAULT_DELTA);
 
-String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(cur, delta);
 
-OrderByComparator<?> orderByComparator = DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType);
-
-searchContainer.setOrderByComparator(orderByComparator);
+int start = startAndEnd[0];
+int end = startAndEnd[1];
 
 Folder folder = blogsItemSelectorViewDisplayContext.fetchAttachmentsFolder(themeDisplay.getUserId(), scopeGroupId);
 
-int total = 0;
-List<FileEntry> results = new ArrayList<FileEntry>();
+List portletFileEntries = null;
+int portletFileEntriesCount = 0;
 
 if (folder != null) {
 	if (blogsItemSelectorViewDisplayContext.isSearch()) {
 		SearchContext searchContext = SearchContextFactory.getInstance(request);
 
-		searchContext.setEnd(searchContainer.getEnd());
+		searchContext.setEnd(end);
 		searchContext.setFolderIds(new long[] {folder.getFolderId()});
-		searchContext.setStart(searchContainer.getStart());
+		searchContext.setStart(start);
 
 		Hits hits = PortletFileRepositoryUtil.searchPortletFileEntries(folder.getRepositoryId(), searchContext);
 
-		total = hits.getLength();
+		portletFileEntriesCount = hits.getLength();
 
 		Document[] docs = hits.getDocs();
 
-		results = new ArrayList(docs.length);
+		portletFileEntries = new ArrayList(docs.length);
 
 		for (Document doc : docs) {
 			long fileEntryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
@@ -67,24 +66,28 @@ if (folder != null) {
 				continue;
 			}
 
-			results.add(fileEntry);
+			portletFileEntries.add(fileEntry);
 		}
 	}
 	else {
-		total = PortletFileRepositoryUtil.getPortletFileEntriesCount(scopeGroupId, folder.getFolderId(), WorkflowConstants.STATUS_APPROVED);
-		results = PortletFileRepositoryUtil.getPortletFileEntries(scopeGroupId, folder.getFolderId(), WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+		String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
+		String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
+		OrderByComparator<FileEntry> orderByComparator = DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType);
+
+		portletFileEntriesCount = PortletFileRepositoryUtil.getPortletFileEntriesCount(scopeGroupId, folder.getFolderId(), WorkflowConstants.STATUS_APPROVED);
+		portletFileEntries = PortletFileRepositoryUtil.getPortletFileEntries(scopeGroupId, folder.getFolderId(), WorkflowConstants.STATUS_APPROVED, start, end, orderByComparator);
 	}
 }
-
-searchContainer.setTotal(total);
-searchContainer.setResults(results);
 %>
 
 <liferay-item-selector:repository-entry-browser
 	desiredItemSelectorReturnTypes="<%= blogsItemSelectorCriterion.getDesiredItemSelectorReturnTypes() %>"
+	emptyResultsMessage='<%= LanguageUtil.get(resourceBundle, "there-are-no-blog-attachments") %>'
 	itemSelectedEventName="<%= blogsItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
 	portletURL="<%= blogsItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse) %>"
-	searchContainer="<%= searchContainer %>"
+	repositoryEntries="<%= portletFileEntries %>"
+	repositoryEntriesCount="<%= portletFileEntriesCount %>"
 	showDragAndDropZone="<%= false %>"
 	tabName="<%= blogsItemSelectorViewDisplayContext.getTitle(locale) %>"
 	uploadURL="<%= blogsItemSelectorViewDisplayContext.getUploadURL(liferayPortletResponse) %>"

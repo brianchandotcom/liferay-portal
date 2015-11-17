@@ -21,37 +21,36 @@ WikiAttachmentItemSelectorViewDisplayContext wikiAttachmentItemSelectorViewDispl
 
 WikiAttachmentItemSelectorCriterion wikiAttachmentItemSelectorCriterion = wikiAttachmentItemSelectorViewDisplayContext.getWikiAttachmentItemSelectorCriterion();
 
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "curPageAttachments", SearchContainer.DEFAULT_DELTA, wikiAttachmentItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse), null, LanguageUtil.get(resourceBundle, "there-are-no-wiki-attachments"));
+int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_CUR);
+int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM, SearchContainer.DEFAULT_DELTA);
 
-String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(cur, delta);
 
-OrderByComparator<?> orderByComparator = DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType);
-
-searchContainer.setOrderByComparator(orderByComparator);
+int start = startAndEnd[0];
+int end = startAndEnd[1];
 
 WikiPage wikiPage = wikiAttachmentItemSelectorViewDisplayContext.getWikiPage();
 
-int total = 0;
-List<FileEntry> results = new ArrayList<FileEntry>();
+List portletFileEntries = null;
+int portletFileEntriesCount = 0;
 
 if (wikiPage.getAttachmentsFolderId() != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	if (wikiAttachmentItemSelectorViewDisplayContext.isSearch()) {
 		SearchContext searchContext = SearchContextFactory.getInstance(request);
 
-		searchContext.setEnd(searchContainer.getEnd());
+		searchContext.setEnd(end);
 		searchContext.setFolderIds(new long[] {wikiPage.getAttachmentsFolderId()});
-		searchContext.setStart(searchContainer.getStart());
+		searchContext.setStart(start);
 
 		Folder folder = DLAppServiceUtil.getFolder(wikiPage.getAttachmentsFolderId());
 
 		Hits hits = PortletFileRepositoryUtil.searchPortletFileEntries(folder.getRepositoryId(), searchContext);
 
-		total = hits.getLength();
+		portletFileEntriesCount = hits.getLength();
 
 		Document[] docs = hits.getDocs();
 
-		results = new ArrayList(docs.length);
+		portletFileEntries = new ArrayList(docs.length);
 
 		for (Document doc : docs) {
 			long fileEntryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
@@ -69,24 +68,28 @@ if (wikiPage.getAttachmentsFolderId() != DLFolderConstants.DEFAULT_PARENT_FOLDER
 				continue;
 			}
 
-			results.add(fileEntry);
+			portletFileEntries.add(fileEntry);
 		}
 	}
 	else {
-		total = wikiPage.getAttachmentsFileEntriesCount();
-		results = wikiPage.getAttachmentsFileEntries(searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+		String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
+		String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
+		OrderByComparator<FileEntry> orderByComparator = DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType);
+
+		portletFileEntriesCount = wikiPage.getAttachmentsFileEntriesCount();
+		portletFileEntries = wikiPage.getAttachmentsFileEntries(start, end, orderByComparator);
 	}
 }
-
-searchContainer.setTotal(total);
-searchContainer.setResults(results);
 %>
 
 <liferay-item-selector:repository-entry-browser
 	desiredItemSelectorReturnTypes="<%= wikiAttachmentItemSelectorCriterion.getDesiredItemSelectorReturnTypes() %>"
+	emptyResultsMessage='<%= LanguageUtil.get(resourceBundle, "there-are-no-wiki-attachments") %>'
 	itemSelectedEventName="<%= wikiAttachmentItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
 	portletURL="<%= wikiAttachmentItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse) %>"
-	searchContainer="<%= searchContainer %>"
+	repositoryEntries="<%= portletFileEntries %>"
+	repositoryEntriesCount="<%= portletFileEntriesCount %>"
 	tabName="<%= wikiAttachmentItemSelectorViewDisplayContext.getTitle(locale) %>"
 	uploadURL="<%= wikiAttachmentItemSelectorViewDisplayContext.getUploadURL(liferayPortletResponse) %>"
 />

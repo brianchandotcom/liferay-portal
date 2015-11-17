@@ -24,6 +24,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>emptyResultsMessage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>itemSelectedEventName</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -34,7 +39,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>searchContainer</name>
+			<name>repositoryEntries</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>repositoryEntriesCount</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

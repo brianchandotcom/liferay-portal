@@ -371,13 +371,22 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		matcher = _setReferenceMethodPattern.matcher(content);
 
 		while (matcher.find()) {
+			String methodContent = matcher.group(6);
+
+			Matcher referenceMethodContentMatcher =
+				_setReferenceMethodContentPattern.matcher(methodContent);
+
+			if (!referenceMethodContentMatcher.find()) {
+				continue;
+			}
+
 			if (moduleServicePackagePath == null) {
 				moduleServicePackagePath = getModuleServicePackagePath(
 					fileName);
 			}
 
 			if (Validator.isNotNull(moduleServicePackagePath)) {
-				String typeName = matcher.group(3);
+				String typeName = matcher.group(5);
 
 				StringBundler sb = new StringBundler(5);
 
@@ -387,11 +396,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				sb.append(typeName);
 				sb.append(StringPool.SEMICOLON);
 
-				Pattern pattern = Pattern.compile(sb.toString());
+				Pattern importPattern = Pattern.compile(sb.toString());
 
-				matcher = pattern.matcher(content);
+				Matcher importMatcher = importPattern.matcher(content);
 
-				if (matcher.find()) {
+				if (importMatcher.find()) {
 					processErrorMessage(
 						fileName,
 						"LPS-59076: Convert OSGi Component to Spring bean: " +
@@ -3518,9 +3527,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private List<String> _secureXmlExclusionFiles;
 	private Pattern _serviceUtilImportPattern = Pattern.compile(
 		"\nimport ([A-Za-z1-9\\.]*)\\.([A-Za-z1-9]*ServiceUtil);");
+	private Pattern _setReferenceMethodContentPattern = Pattern.compile(
+		"^\\w+ =\\s+\\w+;$");
 	private Pattern _setReferenceMethodPattern = Pattern.compile(
-		"@Reference(.*|\\(\n(.*\n)*?\t*\\))\\s+protected void set\\w+?\\(\\s*" +
-			"([ ,<>\\w]+)\\s+\\w+\\) \\{\\s+(\\w+) =\\s+\\w+;\\s+\\}");
+		"\n(\t+)@Reference([\\s\\S]*?)\\s+(protected|public) void (set\\w+?)" +
+			"\\(\\s*([ ,<>\\w]+)\\s+\\w+\\) \\{\\s+([\\s\\S]*?)\\s*?\\}");
 	private Pattern _stagedModelTypesPattern = Pattern.compile(
 		"StagedModelType\\(([a-zA-Z.]*(class|getClassName[\\(\\)]*))\\)");
 	private List<String> _staticLogVariableExclusionFiles;

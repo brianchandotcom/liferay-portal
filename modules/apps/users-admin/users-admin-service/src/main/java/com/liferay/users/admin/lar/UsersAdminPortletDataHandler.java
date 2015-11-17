@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.OrganizationConstants;
-import com.liferay.portal.model.impl.OrganizationImpl;
 import com.liferay.portal.service.OrganizationLocalService;
 import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
 import com.liferay.portlet.exportimport.lar.DataLevel;
@@ -27,7 +26,6 @@ import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
-import com.liferay.portlet.exportimport.xstream.XStreamAliasRegistryUtil;
 import com.liferay.users.admin.web.constants.UsersAdminPortletKeys;
 
 import java.util.List;
@@ -60,9 +58,6 @@ public class UsersAdminPortletDataHandler extends BasePortletDataHandler {
 				NAMESPACE, "organizations", true, true, null,
 				Organization.class.getName()));
 		setSupportsDataStrategyCopyAsNew(false);
-
-		XStreamAliasRegistryUtil.register(
-			OrganizationImpl.class, "Organization");
 	}
 
 	@Override

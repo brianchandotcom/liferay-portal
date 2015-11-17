@@ -15,12 +15,22 @@
 package com.liferay.gradle.plugins.lang.builder;
 
 import com.liferay.gradle.util.GradleUtil;
-import com.liferay.gradle.util.Validator;
+
+import java.io.File;
+
+import java.util.Iterator;
+import java.util.Set;
+import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.file.FileCollection;
+import org.gradle.api.file.SourceDirectorySet;
+import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.plugins.PluginContainer;
+import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskContainer;
 
 /**
@@ -34,32 +44,15 @@ public class LangBuilderPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		addLangBuilderConfiguration(project);
+		Configuration langBuilderConfiguration = addConfigurationLangBuilder(
+			project);
 
-		addBuildLangTask(project);
+		addTaskBuildLang(project);
 
-		project.afterEvaluate(
-			new Action<Project>() {
-
-				@Override
-				public void execute(Project project) {
-					configureBuildLangTask(project);
-				}
-
-			});
+		configureTasksBuildLang(project, langBuilderConfiguration);
 	}
 
-	protected BuildLangTask addBuildLangTask(Project project) {
-		BuildLangTask buildLangTask = GradleUtil.addTask(
-			project, BUILD_LANG_TASK_NAME, BuildLangTask.class);
-
-		buildLangTask.setDescription(
-			"Runs Liferay Lang Builder to translate language property files.");
-
-		return buildLangTask;
-	}
-
-	protected Configuration addLangBuilderConfiguration(final Project project) {
+	protected Configuration addConfigurationLangBuilder(final Project project) {
 		Configuration configuration = GradleUtil.addConfiguration(
 			project, CONFIGURATION_NAME);
 
@@ -73,7 +66,7 @@ public class LangBuilderPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Configuration configuration) {
-					addLangBuilderDependencies(project);
+					addDependenciesLangBuilder(project);
 				}
 
 			});
@@ -81,31 +74,59 @@ public class LangBuilderPlugin implements Plugin<Project> {
 		return configuration;
 	}
 
-	protected void addLangBuilderDependencies(Project project) {
+	protected void addDependenciesLangBuilder(Project project) {
 		GradleUtil.addDependency(
 			project, CONFIGURATION_NAME, "com.liferay",
 			"com.liferay.lang.builder", "latest.release");
 	}
 
-	protected void configureBuildLangTask(BuildLangTask buildLangTask) {
-		Project project = buildLangTask.getProject();
+	protected BuildLangTask addTaskBuildLang(Project project) {
+		final BuildLangTask buildLangTask = GradleUtil.addTask(
+			project, BUILD_LANG_TASK_NAME, BuildLangTask.class);
 
-		if (Validator.isNull(buildLangTask.getTranslateClientId()) &&
-			project.hasProperty("microsoftTranslatorClientId")) {
+		buildLangTask.setDescription(
+			"Runs Liferay Lang Builder to translate language property files.");
 
-			buildLangTask.setTranslateClientId(
-				(String)project.property("microsoftTranslatorClientId"));
-		}
+		PluginContainer pluginContainer = project.getPlugins();
 
-		if (Validator.isNull(buildLangTask.getTranslateClientSecret()) &&
-			project.hasProperty("microsoftTranslatorClientSecret")) {
+		pluginContainer.withType(
+			JavaPlugin.class,
+			new Action<JavaPlugin>() {
 
-			buildLangTask.setTranslateClientSecret(
-				(String)project.property("microsoftTranslatorClientSecret"));
-		}
+				@Override
+				public void execute(JavaPlugin javaPlugin) {
+					configureTaskBuildLangForJavaPlugin(buildLangTask);
+				}
+
+			});
+
+		return buildLangTask;
 	}
 
-	protected void configureBuildLangTask(Project project) {
+	protected void configureTaskBuildLangClasspath(
+		BuildLangTask buildLangTask, FileCollection fileCollection) {
+
+		buildLangTask.setClasspath(fileCollection);
+	}
+
+	protected void configureTaskBuildLangForJavaPlugin(
+		final BuildLangTask buildLangTask) {
+
+		buildLangTask.setLangDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return new File(
+						getResourcesDir(buildLangTask.getProject()), "content");
+				}
+
+			});
+	}
+
+	protected void configureTasksBuildLang(
+		Project project, final Configuration langBuilderConfiguration) {
+
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(
@@ -114,10 +135,26 @@ public class LangBuilderPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(BuildLangTask buildLangTask) {
-					configureBuildLangTask(buildLangTask);
+					configureTaskBuildLangClasspath(
+						buildLangTask, langBuilderConfiguration);
 				}
 
 			});
+	}
+
+	protected File getResourcesDir(Project project) {
+		SourceSet sourceSet = GradleUtil.getSourceSet(
+			project, SourceSet.MAIN_SOURCE_SET_NAME);
+
+		return getSrcDir(sourceSet.getResources());
+	}
+
+	protected File getSrcDir(SourceDirectorySet sourceDirectorySet) {
+		Set<File> srcDirs = sourceDirectorySet.getSrcDirs();
+
+		Iterator<File> iterator = srcDirs.iterator();
+
+		return iterator.next();
 	}
 
 }

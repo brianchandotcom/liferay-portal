@@ -10,8 +10,8 @@
 	<short-name>liferay-item-selector</short-name>
 	<uri>http://liferay.com/tld/item-selector</uri>
 	<tag>
-		<name>browser</name>
-		<tag-class>com.liferay.item.selector.taglib.servlet.taglib.BrowserTag</tag-class>
+		<name>repository-entry-browser</name>
+		<tag-class>com.liferay.item.selector.taglib.servlet.taglib.RepositoryEntryBrowserTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>desiredItemSelectorReturnTypes</name>

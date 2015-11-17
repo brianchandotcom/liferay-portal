@@ -318,7 +318,7 @@ String iconMenuId = null;
 			<c:when test="<%= portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY) %>">
 				<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) && ((folder == null) || !folder.isMountPoint()) %>">
 					<c:if test="<%= (folder == null) || folder.isSupportsMultipleUpload() %>">
-						<portlet:renderURL var="editFileEntryURL">
+						<portlet:renderURL var="addMultipleFileEntriesURL">
 							<portlet:param name="mvcPath" value="/document_library/upload_multiple_file_entries.jsp" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 							<portlet:param name="backURL" value="<%= currentURL %>" />
@@ -329,7 +329,7 @@ String iconMenuId = null;
 						<liferay-ui:icon
 							cssClass="hide upload-multiple-documents"
 							message='<%= portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY) ? "multiple-media" : "multiple-documents" %>'
-							url="<%= editFileEntryURL %>"
+							url="<%= addMultipleFileEntriesURL %>"
 						/>
 					</c:if>
 				</c:if>

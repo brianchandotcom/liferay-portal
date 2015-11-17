@@ -14,7 +14,7 @@
 
 package com.liferay.password.policies.admin.web.portlet;
 
-import com.liferay.password.policies.admin.web.constants.PasswordPoliciesAdminPortletKeys;
+import com.liferay.password.policies.admin.constants.PasswordPoliciesAdminPortletKeys;
 import com.liferay.portal.DuplicatePasswordPolicyException;
 import com.liferay.portal.NoSuchPasswordPolicyException;
 import com.liferay.portal.PasswordPolicyNameException;

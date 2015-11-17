@@ -14,7 +14,7 @@
 
 package com.liferay.password.policies.admin.web.upgrade.v1_0_0;
 
-import com.liferay.password.policies.admin.web.constants.PasswordPoliciesAdminPortletKeys;
+import com.liferay.password.policies.admin.constants.PasswordPoliciesAdminPortletKeys;
 
 /**
  * @author Drew Brokke

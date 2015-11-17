@@ -67,7 +67,7 @@
 <!--SELECT_FILE-->
 <tr>
 	<td>SELECT_FILE_IMAGE_PREVIEW</td>
-	<td>//div[contains(@class,'item-preview')]//div[contains(@style,'${key_imageFileName}')]</td>
+	<td>//div[contains(@class,'card-dm')]//div[contains(@style,'${key_imageFileName}')]</td>
 	<td></td>
 </tr>
 <tr>

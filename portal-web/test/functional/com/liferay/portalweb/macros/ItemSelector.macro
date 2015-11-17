@@ -44,13 +44,15 @@
 
 		<execute function="AssertClick" locator1="ItemSelector#NAVIGATION_DOCUMENTS_AND_MEDIA" value1="Documents and Media" />
 
-		<execute function="AssertClick" locator1="ItemSelector#SELECT_FILE_IMAGE_PREVIEW" value1="${imageFileName}" />
+		<var method="StringUtil#replace('${imageFileName}', ' ', '+')" name="key_imageFileName" />
 
-		<execute function="AssertTextEquals" locator1="ItemSelector#CAPTION" value1="${imageFileName}" />
+		<execute function="Click" locator1="ItemSelector#SELECT_FILE_IMAGE_PREVIEW" />
 
-		<execute function="AssertClick" locator1="ItemSelector#ADD_BUTTON" value1="Add" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="ItemSelector#CAPTION" value1="${uploadFileName}" />
 
 		<execute function="SelectFrameTop" value1="relative=top" />
+
+		<execute function="Click" locator1="Button#ADD" />
 	</command>
 
 	<command name="uploadFile">

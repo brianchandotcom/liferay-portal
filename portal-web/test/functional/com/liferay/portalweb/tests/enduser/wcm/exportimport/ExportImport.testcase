@@ -683,9 +683,15 @@
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
-		<execute macro="DMDocument#linkImage">
-			<var name="documentName" value="DM Document Title" />
-			<var name="siteName" value="Liferay" />
+		<execute function="Click#pauseClickAt" locator1="AlloyEditor#CONTENT_FIELD" />
+
+		<execute function="Click" locator1="AlloyEditor#CONTENT_ADD_BUTTON" />
+
+		<execute function="Click" locator1="AlloyEditor#CONTENT_ADD_MENUBAR_IMAGE" />
+
+		<execute macro="ItemSelector#selectDMImage">
+			<var name="imageFileName" value="DM Document Title" />
+			<var name="uploadFileName" value="DM Document Title" />
 		</execute>
 
 		<execute macro="BlogsEntry#publishCP" />

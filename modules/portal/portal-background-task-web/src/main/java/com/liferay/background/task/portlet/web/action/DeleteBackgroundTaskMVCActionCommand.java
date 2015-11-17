@@ -12,40 +12,53 @@
  * details.
  */
 
-package com.liferay.portlet.backgroundtask.action;
+package com.liferay.background.task.portlet.web.action;
 
 import com.liferay.portal.NoSuchBackgroundTaskException;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.struts.PortletAction;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionMapping;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Michael C. Han
+ * @author Peter Fellwock
  */
-public class DeleteBackgroundTaskAction extends PortletAction {
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=*",
+		"mvc.command.name=deleteBackgroundTask"
+	},
+	service = MVCActionCommand.class
+)
+public class DeleteBackgroundTaskMVCActionCommand extends BaseMVCActionCommand {
+
+	protected void deleteBackgroundTask(ActionRequest actionRequest)
+		throws PortalException {
+
+		long backgroundTaskId = ParamUtil.getLong(
+			actionRequest, "backgroundTaskId");
+
+		BackgroundTaskManagerUtil.deleteBackgroundTask(backgroundTaskId);
+	}
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		try {
 			deleteBackgroundTask(actionRequest);
-
-			sendRedirect(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchBackgroundTaskException ||
@@ -53,21 +66,12 @@ public class DeleteBackgroundTaskAction extends PortletAction {
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				setForward(actionRequest, "portlet.background_task.error");
+				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else {
 				throw e;
 			}
 		}
-	}
-
-	protected void deleteBackgroundTask(ActionRequest actionRequest)
-		throws PortalException {
-
-		long backgroundTaskId = ParamUtil.getLong(
-			actionRequest, BackgroundTaskConstants.BACKGROUND_TASK_ID);
-
-		BackgroundTaskManagerUtil.deleteBackgroundTask(backgroundTaskId);
 	}
 
 }

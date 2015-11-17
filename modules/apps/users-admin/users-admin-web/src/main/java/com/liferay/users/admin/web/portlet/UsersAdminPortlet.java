@@ -15,7 +15,7 @@
 package com.liferay.users.admin.web.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.users.admin.web.constants.UsersAdminPortletKeys;
+import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
 import javax.portlet.Portlet;
 

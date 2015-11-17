@@ -95,9 +95,9 @@ public class FacetedSearchTest {
 
 		searchContext.addFacet(multiValueFacet);
 
-		FacetedSearcher indexer = new FacetedSearcher();
+		FacetedSearcher facetedSearcher = new FacetedSearcher();
 
-		indexer.search(searchContext);
+		facetedSearcher.search(searchContext);
 
 		Map<String, Facet> facets = searchContext.getFacets();
 
@@ -116,7 +116,7 @@ public class FacetedSearchTest {
 	}
 
 	@Test
-	public void testInactiveGroupsAreIgnored() throws Exception {
+	public void testInactiveGroups() throws Exception {
 		addUser(_group1, "Liferay " + RandomTestUtil.randomString());
 		addUser(_group2, "Liferay " + RandomTestUtil.randomString());
 
@@ -140,9 +140,9 @@ public class FacetedSearchTest {
 	}
 
 	protected static void assertSearch(String tag, int count) throws Exception {
-		FacetedSearcher indexer = new FacetedSearcher();
+		FacetedSearcher facetedSearcher = new FacetedSearcher();
 
-		Hits hits = indexer.search(getSearchContext(tag));
+		Hits hits = facetedSearcher.search(getSearchContext(tag));
 
 		Assert.assertEquals(count, hits.getLength());
 	}

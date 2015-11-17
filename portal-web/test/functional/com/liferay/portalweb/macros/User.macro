@@ -1340,28 +1340,6 @@
 		</if>
 	</command>
 
-	<command name="fastLoginGuestPG">
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-
-		<execute function="AssertClick" locator1="Link#GUEST" value1="Guest" />
-
-		<execute function="Type" locator1="TextInput#FIRST_NAME" value1="${userFirstName}" />
-		<execute function="Type" locator1="PGFastloginGuest#LAST_NAME_FIELD" value1="${userLastName}" />
-		<execute function="Type" locator1="TextInput#EMAIL_ADDRESS" value1="${userEmailAddress}" />
-
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-
-		<var name="key_uniqueSuccess" value="${uniqueSuccess}" />
-
-		<execute function="AssertTextEquals" locator1="Message#UNIQUE_SUCCESS" value1="${uniqueSuccess}" />
-
-		<execute function="AssertClick" locator1="Button#CANCEL" value1="Cancel" />
-
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
-
 	<command name="firstLoginPG" summary="Log into Liferay Portal as '${userEmailAddress}' using the password '${password}'; if not logged in as '${userEmailAddress}', then log out first">
 		<echo message="Checking to see if TCat is enabled..." />
 

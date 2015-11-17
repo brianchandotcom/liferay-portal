@@ -16,13 +16,13 @@ package com.liferay.portal.search.elasticsearch.filter;
 
 import com.liferay.portal.kernel.search.filter.PrefixFilter;
 
-import org.elasticsearch.index.query.FilterBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
 
 /**
  * @author Michael C. Han
  */
 public interface PrefixFilterTranslator {
 
-	public FilterBuilder translate(PrefixFilter prefixFilter);
+	public QueryBuilder translate(PrefixFilter prefixFilter);
 
 }

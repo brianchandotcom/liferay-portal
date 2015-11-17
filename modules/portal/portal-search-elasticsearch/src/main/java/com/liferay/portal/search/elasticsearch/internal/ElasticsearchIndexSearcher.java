@@ -72,7 +72,7 @@ import org.elasticsearch.client.Client;
 import org.elasticsearch.common.geo.GeoDistance;
 import org.elasticsearch.common.text.Text;
 import org.elasticsearch.common.unit.TimeValue;
-import org.elasticsearch.index.query.FilterBuilder;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
@@ -468,21 +468,25 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		}
 
 		if (query.getPostFilter() != null) {
-			FilterBuilder filterBuilder = _filterTranslator.translate(
+			QueryBuilder postFilterQueryBuilder = _filterTranslator.translate(
 				query.getPostFilter(), searchContext);
 
-			searchRequestBuilder.setPostFilter(filterBuilder);
+			searchRequestBuilder.setPostFilter(postFilterQueryBuilder);
 		}
 
 		QueryBuilder queryBuilder = _queryTranslator.translate(
 			query, searchContext);
 
 		if (query.getPreBooleanFilter() != null) {
-			FilterBuilder filterBuilder = _filterTranslator.translate(
+			QueryBuilder preFilterQueryBuilder = _filterTranslator.translate(
 				query.getPreBooleanFilter(), searchContext);
 
-			queryBuilder = QueryBuilders.filteredQuery(
-				queryBuilder, filterBuilder);
+			BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+
+			boolQueryBuilder.filter(preFilterQueryBuilder);
+			boolQueryBuilder.must(queryBuilder);
+
+			queryBuilder = boolQueryBuilder;
 		}
 
 		searchRequestBuilder.setQuery(queryBuilder);
@@ -636,7 +640,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")
 	protected void setFilterTranslator(
-		FilterTranslator<FilterBuilder> filterTranslator) {
+		FilterTranslator<QueryBuilder> filterTranslator) {
 
 		_filterTranslator = filterTranslator;
 	}
@@ -757,7 +761,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 	private volatile ElasticsearchConnectionManager
 		_elasticsearchConnectionManager;
 	private volatile FacetProcessor<SearchRequestBuilder> _facetProcessor;
-	private volatile FilterTranslator<FilterBuilder> _filterTranslator;
+	private volatile FilterTranslator<QueryBuilder> _filterTranslator;
 	private volatile GroupByTranslator _groupByTranslator;
 	private boolean _logExceptionsOnly;
 	private volatile QueryTranslator<QueryBuilder> _queryTranslator;

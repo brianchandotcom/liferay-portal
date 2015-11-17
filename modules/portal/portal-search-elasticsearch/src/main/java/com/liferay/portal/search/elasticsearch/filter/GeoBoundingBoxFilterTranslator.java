@@ -16,13 +16,13 @@ package com.liferay.portal.search.elasticsearch.filter;
 
 import com.liferay.portal.kernel.search.filter.GeoBoundingBoxFilter;
 
-import org.elasticsearch.index.query.FilterBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
 
 /**
  * @author Michael C. Han
  */
 public interface GeoBoundingBoxFilterTranslator {
 
-	public FilterBuilder translate(GeoBoundingBoxFilter geoBoundingBoxFilter);
+	public QueryBuilder translate(GeoBoundingBoxFilter geoBoundingBoxFilter);
 
 }

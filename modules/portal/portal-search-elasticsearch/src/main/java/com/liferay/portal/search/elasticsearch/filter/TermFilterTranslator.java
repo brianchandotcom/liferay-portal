@@ -16,13 +16,13 @@ package com.liferay.portal.search.elasticsearch.filter;
 
 import com.liferay.portal.kernel.search.filter.TermFilter;
 
-import org.elasticsearch.index.query.FilterBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
 
 /**
  * @author Michael C. Han
  */
 public interface TermFilterTranslator {
 
-	public FilterBuilder translate(TermFilter termFilter);
+	public QueryBuilder translate(TermFilter termFilter);
 
 }

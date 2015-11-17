@@ -17,9 +17,9 @@ package com.liferay.portal.search.elasticsearch.internal.filter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.search.elasticsearch.filter.TermsFilterTranslator;
 
-import org.elasticsearch.index.query.FilterBuilder;
-import org.elasticsearch.index.query.FilterBuilders;
-import org.elasticsearch.index.query.TermsFilterBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.TermsQueryBuilder;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -30,30 +30,26 @@ import org.osgi.service.component.annotations.Component;
 public class TermsFilterTranslatorImpl implements TermsFilterTranslator {
 
 	@Override
-	public FilterBuilder translate(TermsFilter termsFilter) {
-		TermsFilterBuilder termsFilterBuilder = FilterBuilders.termsFilter(
+	public QueryBuilder translate(TermsFilter termsFilter) {
+		TermsQueryBuilder termsQueryBuilder = QueryBuilders.termsQuery(
 			termsFilter.getField(), termsFilter.getValues());
 
-		if (termsFilter.isCached() != null) {
-			termsFilterBuilder.cache(termsFilter.isCached());
-		}
-
 		if (termsFilter.getExecution() == TermsFilter.Execution.AND) {
-			termsFilterBuilder.execution("and");
+			termsQueryBuilder.execution("and");
 		}
 		else if (termsFilter.getExecution() == TermsFilter.Execution.BOOL) {
-			termsFilterBuilder.execution("bool");
+			termsQueryBuilder.execution("bool");
 		}
 		else if (termsFilter.getExecution() ==
 					TermsFilter.Execution.FIELD_DATA) {
 
-			termsFilterBuilder.execution("fielddata");
+			termsQueryBuilder.execution("fielddata");
 		}
 		else if (termsFilter.getExecution() == TermsFilter.Execution.OR) {
-			termsFilterBuilder.execution("or");
+			termsQueryBuilder.execution("or");
 		}
 
-		return termsFilterBuilder;
+		return termsQueryBuilder;
 	}
 
 }

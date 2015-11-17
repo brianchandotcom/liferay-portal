@@ -3950,6 +3950,22 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the layout set branch
+	*
+	* @param pk the primary key of the layout set branch
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		LayoutSetBranch layoutSetBranch = fetchByPrimaryKey(pk);
+
+		if (layoutSetBranch == null) {
+			throw new RuntimeException("The entity LayoutSetBranch with PK " +
+				pk + " was not found");
+		}
+
+		return layoutSetBranch.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

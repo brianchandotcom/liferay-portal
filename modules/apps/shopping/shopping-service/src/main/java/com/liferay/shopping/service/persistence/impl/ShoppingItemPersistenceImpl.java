@@ -2754,6 +2754,22 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the shopping item
+	*
+	* @param pk the primary key of the shopping item
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		ShoppingItem shoppingItem = fetchByPrimaryKey(pk);
+
+		if (shoppingItem == null) {
+			throw new RuntimeException("The entity ShoppingItem with PK " + pk +
+				" was not found");
+		}
+
+		return shoppingItem.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

@@ -3047,6 +3047,22 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the system event
+	*
+	* @param pk the primary key of the system event
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		SystemEvent systemEvent = fetchByPrimaryKey(pk);
+
+		if (systemEvent == null) {
+			throw new RuntimeException("The entity SystemEvent with PK " + pk +
+				" was not found");
+		}
+
+		return systemEvent.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

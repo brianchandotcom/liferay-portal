@@ -3536,6 +3536,22 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the message boards thread flag
+	*
+	* @param pk the primary key of the message boards thread flag
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		MBThreadFlag mbThreadFlag = fetchByPrimaryKey(pk);
+
+		if (mbThreadFlag == null) {
+			throw new RuntimeException("The entity MBThreadFlag with PK " + pk +
+				" was not found");
+		}
+
+		return mbThreadFlag.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

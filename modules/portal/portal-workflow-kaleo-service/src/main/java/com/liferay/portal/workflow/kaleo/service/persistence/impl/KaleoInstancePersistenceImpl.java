@@ -4305,6 +4305,22 @@ public class KaleoInstancePersistenceImpl extends BasePersistenceImpl<KaleoInsta
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the kaleo instance
+	*
+	* @param pk the primary key of the kaleo instance
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		KaleoInstance kaleoInstance = fetchByPrimaryKey(pk);
+
+		if (kaleoInstance == null) {
+			throw new RuntimeException("The entity KaleoInstance with PK " +
+				pk + " was not found");
+		}
+
+		return kaleoInstance.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return KaleoInstanceModelImpl.TABLE_COLUMNS_MAP;

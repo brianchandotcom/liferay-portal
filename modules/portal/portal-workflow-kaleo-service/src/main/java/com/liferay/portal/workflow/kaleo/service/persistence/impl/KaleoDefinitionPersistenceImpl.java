@@ -3457,6 +3457,22 @@ public class KaleoDefinitionPersistenceImpl extends BasePersistenceImpl<KaleoDef
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the kaleo definition
+	*
+	* @param pk the primary key of the kaleo definition
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		KaleoDefinition kaleoDefinition = fetchByPrimaryKey(pk);
+
+		if (kaleoDefinition == null) {
+			throw new RuntimeException("The entity KaleoDefinition with PK " +
+				pk + " was not found");
+		}
+
+		return kaleoDefinition.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

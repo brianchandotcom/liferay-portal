@@ -3833,6 +3833,22 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the d d l record
+	*
+	* @param pk the primary key of the d d l record
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		DDLRecord ddlRecord = fetchByPrimaryKey(pk);
+
+		if (ddlRecord == null) {
+			throw new RuntimeException("The entity DDLRecord with PK " + pk +
+				" was not found");
+		}
+
+		return ddlRecord.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

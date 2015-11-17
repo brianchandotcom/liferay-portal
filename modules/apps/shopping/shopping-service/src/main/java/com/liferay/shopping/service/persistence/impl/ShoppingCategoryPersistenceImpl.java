@@ -2901,6 +2901,22 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the shopping category
+	*
+	* @param pk the primary key of the shopping category
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		ShoppingCategory shoppingCategory = fetchByPrimaryKey(pk);
+
+		if (shoppingCategory == null) {
+			throw new RuntimeException("The entity ShoppingCategory with PK " +
+				pk + " was not found");
+		}
+
+		return shoppingCategory.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return ShoppingCategoryModelImpl.TABLE_COLUMNS_MAP;

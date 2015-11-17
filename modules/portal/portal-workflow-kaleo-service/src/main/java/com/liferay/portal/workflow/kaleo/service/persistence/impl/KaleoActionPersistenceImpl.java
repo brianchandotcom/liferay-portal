@@ -3123,6 +3123,22 @@ public class KaleoActionPersistenceImpl extends BasePersistenceImpl<KaleoAction>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the kaleo action
+	*
+	* @param pk the primary key of the kaleo action
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		KaleoAction kaleoAction = fetchByPrimaryKey(pk);
+
+		if (kaleoAction == null) {
+			throw new RuntimeException("The entity KaleoAction with PK " + pk +
+				" was not found");
+		}
+
+		return kaleoAction.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return KaleoActionModelImpl.TABLE_COLUMNS_MAP;

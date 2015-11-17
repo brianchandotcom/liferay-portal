@@ -13205,6 +13205,22 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the bookmarks entry
+	*
+	* @param pk the primary key of the bookmarks entry
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		BookmarksEntry bookmarksEntry = fetchByPrimaryKey(pk);
+
+		if (bookmarksEntry == null) {
+			throw new RuntimeException("The entity BookmarksEntry with PK " +
+				pk + " was not found");
+		}
+
+		return bookmarksEntry.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

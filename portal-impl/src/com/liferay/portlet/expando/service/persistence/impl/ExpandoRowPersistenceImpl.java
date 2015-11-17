@@ -2020,6 +2020,22 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the expando row
+	*
+	* @param pk the primary key of the expando row
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		ExpandoRow expandoRow = fetchByPrimaryKey(pk);
+
+		if (expandoRow == null) {
+			throw new RuntimeException("The entity ExpandoRow with PK " + pk +
+				" was not found");
+		}
+
+		return expandoRow.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

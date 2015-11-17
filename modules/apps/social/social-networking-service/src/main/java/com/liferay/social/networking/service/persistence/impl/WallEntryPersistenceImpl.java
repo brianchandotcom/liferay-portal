@@ -2324,6 +2324,22 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the wall entry
+	*
+	* @param pk the primary key of the wall entry
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		WallEntry wallEntry = fetchByPrimaryKey(pk);
+
+		if (wallEntry == null) {
+			throw new RuntimeException("The entity WallEntry with PK " + pk +
+				" was not found");
+		}
+
+		return wallEntry.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return WallEntryModelImpl.TABLE_COLUMNS_MAP;

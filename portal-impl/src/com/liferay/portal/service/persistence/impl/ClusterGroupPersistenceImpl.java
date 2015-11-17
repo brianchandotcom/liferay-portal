@@ -700,6 +700,15 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the cluster group
+	*
+	* @param pk the primary key of the cluster group
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		return 0;
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return ClusterGroupModelImpl.TABLE_COLUMNS_MAP;

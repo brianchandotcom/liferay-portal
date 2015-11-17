@@ -2037,6 +2037,22 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the asset tag stats
+	*
+	* @param pk the primary key of the asset tag stats
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		AssetTagStats assetTagStats = fetchByPrimaryKey(pk);
+
+		if (assetTagStats == null) {
+			throw new RuntimeException("The entity AssetTagStats with PK " +
+				pk + " was not found");
+		}
+
+		return assetTagStats.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return AssetTagStatsModelImpl.TABLE_COLUMNS_MAP;

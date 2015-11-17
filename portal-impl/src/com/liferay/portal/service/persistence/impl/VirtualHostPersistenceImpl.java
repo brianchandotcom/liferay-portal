@@ -1258,6 +1258,22 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the virtual host
+	*
+	* @param pk the primary key of the virtual host
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		VirtualHost virtualHost = fetchByPrimaryKey(pk);
+
+		if (virtualHost == null) {
+			throw new RuntimeException("The entity VirtualHost with PK " + pk +
+				" was not found");
+		}
+
+		return virtualHost.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return VirtualHostModelImpl.TABLE_COLUMNS_MAP;

@@ -9110,6 +9110,22 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the layout
+	*
+	* @param pk the primary key of the layout
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		Layout layout = fetchByPrimaryKey(pk);
+
+		if (layout == null) {
+			throw new RuntimeException("The entity Layout with PK " + pk +
+				" was not found");
+		}
+
+		return layout.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

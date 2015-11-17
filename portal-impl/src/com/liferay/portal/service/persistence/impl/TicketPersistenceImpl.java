@@ -1592,6 +1592,22 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the ticket
+	*
+	* @param pk the primary key of the ticket
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		Ticket ticket = fetchByPrimaryKey(pk);
+
+		if (ticket == null) {
+			throw new RuntimeException("The entity Ticket with PK " + pk +
+				" was not found");
+		}
+
+		return ticket.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

@@ -3078,6 +3078,22 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the repository entry
+	*
+	* @param pk the primary key of the repository entry
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		RepositoryEntry repositoryEntry = fetchByPrimaryKey(pk);
+
+		if (repositoryEntry == null) {
+			throw new RuntimeException("The entity RepositoryEntry with PK " +
+				pk + " was not found");
+		}
+
+		return repositoryEntry.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

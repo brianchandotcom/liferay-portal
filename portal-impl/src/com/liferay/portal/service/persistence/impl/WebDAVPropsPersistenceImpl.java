@@ -1016,6 +1016,22 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the web d a v props
+	*
+	* @param pk the primary key of the web d a v props
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		WebDAVProps webDAVProps = fetchByPrimaryKey(pk);
+
+		if (webDAVProps == null) {
+			throw new RuntimeException("The entity WebDAVProps with PK " + pk +
+				" was not found");
+		}
+
+		return webDAVProps.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return WebDAVPropsModelImpl.TABLE_COLUMNS_MAP;

@@ -2128,6 +2128,22 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the d d l record version
+	*
+	* @param pk the primary key of the d d l record version
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		DDLRecordVersion ddlRecordVersion = fetchByPrimaryKey(pk);
+
+		if (ddlRecordVersion == null) {
+			throw new RuntimeException("The entity DDLRecordVersion with PK " +
+				pk + " was not found");
+		}
+
+		return ddlRecordVersion.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return DDLRecordVersionModelImpl.TABLE_COLUMNS_MAP;

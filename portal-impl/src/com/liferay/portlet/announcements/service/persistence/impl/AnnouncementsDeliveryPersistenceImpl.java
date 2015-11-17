@@ -1565,6 +1565,23 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the announcements delivery
+	*
+	* @param pk the primary key of the announcements delivery
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		AnnouncementsDelivery announcementsDelivery = fetchByPrimaryKey(pk);
+
+		if (announcementsDelivery == null) {
+			throw new RuntimeException(
+				"The entity AnnouncementsDelivery with PK " + pk +
+				" was not found");
+		}
+
+		return announcementsDelivery.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

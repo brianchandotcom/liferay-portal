@@ -3263,6 +3263,22 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the d d m content
+	*
+	* @param pk the primary key of the d d m content
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		DDMContent ddmContent = fetchByPrimaryKey(pk);
+
+		if (ddmContent == null) {
+			throw new RuntimeException("The entity DDMContent with PK " + pk +
+				" was not found");
+		}
+
+		return ddmContent.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

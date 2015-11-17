@@ -1608,6 +1608,15 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the list type
+	*
+	* @param pk the primary key of the list type
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		return 0;
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

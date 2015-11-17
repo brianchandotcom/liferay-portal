@@ -1245,6 +1245,22 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the user tracker path
+	*
+	* @param pk the primary key of the user tracker path
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		UserTrackerPath userTrackerPath = fetchByPrimaryKey(pk);
+
+		if (userTrackerPath == null) {
+			throw new RuntimeException("The entity UserTrackerPath with PK " +
+				pk + " was not found");
+		}
+
+		return userTrackerPath.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

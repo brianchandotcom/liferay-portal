@@ -1532,6 +1532,22 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the portlet
+	*
+	* @param pk the primary key of the portlet
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		Portlet portlet = fetchByPrimaryKey(pk);
+
+		if (portlet == null) {
+			throw new RuntimeException("The entity Portlet with PK " + pk +
+				" was not found");
+		}
+
+		return portlet.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

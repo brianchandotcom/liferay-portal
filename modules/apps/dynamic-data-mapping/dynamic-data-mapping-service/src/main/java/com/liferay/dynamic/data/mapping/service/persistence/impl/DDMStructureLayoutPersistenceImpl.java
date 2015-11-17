@@ -2499,6 +2499,22 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the d d m structure layout
+	*
+	* @param pk the primary key of the d d m structure layout
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		DDMStructureLayout ddmStructureLayout = fetchByPrimaryKey(pk);
+
+		if (ddmStructureLayout == null) {
+			throw new RuntimeException("The entity DDMStructureLayout with PK " +
+				pk + " was not found");
+		}
+
+		return ddmStructureLayout.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

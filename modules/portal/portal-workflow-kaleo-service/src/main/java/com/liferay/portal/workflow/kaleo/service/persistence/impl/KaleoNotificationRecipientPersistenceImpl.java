@@ -2392,6 +2392,23 @@ public class KaleoNotificationRecipientPersistenceImpl
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the kaleo notification recipient
+	*
+	* @param pk the primary key of the kaleo notification recipient
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		KaleoNotificationRecipient kaleoNotificationRecipient = fetchByPrimaryKey(pk);
+
+		if (kaleoNotificationRecipient == null) {
+			throw new RuntimeException(
+				"The entity KaleoNotificationRecipient with PK " + pk +
+				" was not found");
+		}
+
+		return kaleoNotificationRecipient.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return KaleoNotificationRecipientModelImpl.TABLE_COLUMNS_MAP;

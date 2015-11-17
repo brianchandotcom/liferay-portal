@@ -1449,6 +1449,22 @@ public class DLSyncEventPersistenceImpl extends BasePersistenceImpl<DLSyncEvent>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the d l sync event
+	*
+	* @param pk the primary key of the d l sync event
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		DLSyncEvent dlSyncEvent = fetchByPrimaryKey(pk);
+
+		if (dlSyncEvent == null) {
+			throw new RuntimeException("The entity DLSyncEvent with PK " + pk +
+				" was not found");
+		}
+
+		return dlSyncEvent.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

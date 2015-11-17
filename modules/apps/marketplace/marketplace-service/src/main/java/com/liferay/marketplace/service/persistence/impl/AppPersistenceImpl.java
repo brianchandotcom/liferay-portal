@@ -3206,6 +3206,22 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the app
+	*
+	* @param pk the primary key of the app
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		App app = fetchByPrimaryKey(pk);
+
+		if (app == null) {
+			throw new RuntimeException("The entity App with PK " + pk +
+				" was not found");
+		}
+
+		return app.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

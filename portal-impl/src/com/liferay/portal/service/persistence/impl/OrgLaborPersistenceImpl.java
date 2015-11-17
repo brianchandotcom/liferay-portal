@@ -1244,6 +1244,22 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the org labor
+	*
+	* @param pk the primary key of the org labor
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		OrgLabor orgLabor = fetchByPrimaryKey(pk);
+
+		if (orgLabor == null) {
+			throw new RuntimeException("The entity OrgLabor with PK " + pk +
+				" was not found");
+		}
+
+		return orgLabor.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return OrgLaborModelImpl.TABLE_COLUMNS_MAP;

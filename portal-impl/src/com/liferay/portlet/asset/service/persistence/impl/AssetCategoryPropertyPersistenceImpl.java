@@ -2747,6 +2747,23 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the asset category property
+	*
+	* @param pk the primary key of the asset category property
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		AssetCategoryProperty assetCategoryProperty = fetchByPrimaryKey(pk);
+
+		if (assetCategoryProperty == null) {
+			throw new RuntimeException(
+				"The entity AssetCategoryProperty with PK " + pk +
+				" was not found");
+		}
+
+		return assetCategoryProperty.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

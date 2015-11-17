@@ -2760,6 +2760,22 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the layout branch
+	*
+	* @param pk the primary key of the layout branch
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		LayoutBranch layoutBranch = fetchByPrimaryKey(pk);
+
+		if (layoutBranch == null) {
+			throw new RuntimeException("The entity LayoutBranch with PK " + pk +
+				" was not found");
+		}
+
+		return layoutBranch.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return LayoutBranchModelImpl.TABLE_COLUMNS_MAP;

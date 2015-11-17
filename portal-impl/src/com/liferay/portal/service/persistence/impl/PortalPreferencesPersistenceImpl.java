@@ -1005,6 +1005,15 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the portal preferences
+	*
+	* @param pk the primary key of the portal preferences
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		return 0;
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return PortalPreferencesModelImpl.TABLE_COLUMNS_MAP;

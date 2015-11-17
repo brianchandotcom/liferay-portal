@@ -2155,6 +2155,23 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the meetups registration
+	*
+	* @param pk the primary key of the meetups registration
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		MeetupsRegistration meetupsRegistration = fetchByPrimaryKey(pk);
+
+		if (meetupsRegistration == null) {
+			throw new RuntimeException(
+				"The entity MeetupsRegistration with PK " + pk +
+				" was not found");
+		}
+
+		return meetupsRegistration.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return MeetupsRegistrationModelImpl.TABLE_COLUMNS_MAP;

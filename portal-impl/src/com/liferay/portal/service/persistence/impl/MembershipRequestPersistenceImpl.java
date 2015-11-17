@@ -2938,6 +2938,22 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the membership request
+	*
+	* @param pk the primary key of the membership request
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		MembershipRequest membershipRequest = fetchByPrimaryKey(pk);
+
+		if (membershipRequest == null) {
+			throw new RuntimeException("The entity MembershipRequest with PK " +
+				pk + " was not found");
+		}
+
+		return membershipRequest.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return MembershipRequestModelImpl.TABLE_COLUMNS_MAP;

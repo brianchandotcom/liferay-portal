@@ -2738,6 +2738,22 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the lock
+	*
+	* @param pk the primary key of the lock
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		Lock lock = fetchByPrimaryKey(pk);
+
+		if (lock == null) {
+			throw new RuntimeException("The entity Lock with PK " + pk +
+				" was not found");
+		}
+
+		return lock.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

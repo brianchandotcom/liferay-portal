@@ -3989,6 +3989,23 @@ public class SocialActivityAchievementPersistenceImpl
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the social activity achievement
+	*
+	* @param pk the primary key of the social activity achievement
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		SocialActivityAchievement socialActivityAchievement = fetchByPrimaryKey(pk);
+
+		if (socialActivityAchievement == null) {
+			throw new RuntimeException(
+				"The entity SocialActivityAchievement with PK " + pk +
+				" was not found");
+		}
+
+		return socialActivityAchievement.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return SocialActivityAchievementModelImpl.TABLE_COLUMNS_MAP;

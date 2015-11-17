@@ -3715,6 +3715,22 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the subscription
+	*
+	* @param pk the primary key of the subscription
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		Subscription subscription = fetchByPrimaryKey(pk);
+
+		if (subscription == null) {
+			throw new RuntimeException("The entity Subscription with PK " + pk +
+				" was not found");
+		}
+
+		return subscription.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return SubscriptionModelImpl.TABLE_COLUMNS_MAP;

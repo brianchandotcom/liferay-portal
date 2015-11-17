@@ -4751,6 +4751,23 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the kaleo task assignment instance
+	*
+	* @param pk the primary key of the kaleo task assignment instance
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance = fetchByPrimaryKey(pk);
+
+		if (kaleoTaskAssignmentInstance == null) {
+			throw new RuntimeException(
+				"The entity KaleoTaskAssignmentInstance with PK " + pk +
+				" was not found");
+		}
+
+		return kaleoTaskAssignmentInstance.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return KaleoTaskAssignmentInstanceModelImpl.TABLE_COLUMNS_MAP;

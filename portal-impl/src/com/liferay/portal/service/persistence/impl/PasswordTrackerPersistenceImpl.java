@@ -1234,6 +1234,22 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the password tracker
+	*
+	* @param pk the primary key of the password tracker
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		PasswordTracker passwordTracker = fetchByPrimaryKey(pk);
+
+		if (passwordTracker == null) {
+			throw new RuntimeException("The entity PasswordTracker with PK " +
+				pk + " was not found");
+		}
+
+		return passwordTracker.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

@@ -3586,6 +3586,23 @@ public class ExportImportConfigurationPersistenceImpl
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the export import configuration
+	*
+	* @param pk the primary key of the export import configuration
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		ExportImportConfiguration exportImportConfiguration = fetchByPrimaryKey(pk);
+
+		if (exportImportConfiguration == null) {
+			throw new RuntimeException(
+				"The entity ExportImportConfiguration with PK " + pk +
+				" was not found");
+		}
+
+		return exportImportConfiguration.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

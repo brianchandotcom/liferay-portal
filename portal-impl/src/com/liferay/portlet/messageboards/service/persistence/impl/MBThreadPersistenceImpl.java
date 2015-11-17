@@ -13828,6 +13828,22 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the message boards thread
+	*
+	* @param pk the primary key of the message boards thread
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		MBThread mbThread = fetchByPrimaryKey(pk);
+
+		if (mbThread == null) {
+			throw new RuntimeException("The entity MBThread with PK " + pk +
+				" was not found");
+		}
+
+		return mbThread.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

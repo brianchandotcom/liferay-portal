@@ -3056,6 +3056,22 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the polls choice
+	*
+	* @param pk the primary key of the polls choice
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		PollsChoice pollsChoice = fetchByPrimaryKey(pk);
+
+		if (pollsChoice == null) {
+			throw new RuntimeException("The entity PollsChoice with PK " + pk +
+				" was not found");
+		}
+
+		return pollsChoice.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

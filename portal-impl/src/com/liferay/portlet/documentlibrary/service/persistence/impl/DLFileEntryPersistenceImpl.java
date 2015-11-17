@@ -12905,6 +12905,22 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the document library file entry
+	*
+	* @param pk the primary key of the document library file entry
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		DLFileEntry dlFileEntry = fetchByPrimaryKey(pk);
+
+		if (dlFileEntry == null) {
+			throw new RuntimeException("The entity DLFileEntry with PK " + pk +
+				" was not found");
+		}
+
+		return dlFileEntry.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

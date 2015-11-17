@@ -2313,6 +2313,22 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the user tracker
+	*
+	* @param pk the primary key of the user tracker
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		UserTracker userTracker = fetchByPrimaryKey(pk);
+
+		if (userTracker == null) {
+			throw new RuntimeException("The entity UserTracker with PK " + pk +
+				" was not found");
+		}
+
+		return userTracker.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return UserTrackerModelImpl.TABLE_COLUMNS_MAP;

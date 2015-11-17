@@ -7226,6 +7226,22 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the social request
+	*
+	* @param pk the primary key of the social request
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		SocialRequest socialRequest = fetchByPrimaryKey(pk);
+
+		if (socialRequest == null) {
+			throw new RuntimeException("The entity SocialRequest with PK " +
+				pk + " was not found");
+		}
+
+		return socialRequest.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

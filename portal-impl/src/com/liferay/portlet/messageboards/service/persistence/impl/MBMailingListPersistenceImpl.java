@@ -3042,6 +3042,22 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the message boards mailing list
+	*
+	* @param pk the primary key of the message boards mailing list
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		MBMailingList mbMailingList = fetchByPrimaryKey(pk);
+
+		if (mbMailingList == null) {
+			throw new RuntimeException("The entity MBMailingList with PK " +
+				pk + " was not found");
+		}
+
+		return mbMailingList.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

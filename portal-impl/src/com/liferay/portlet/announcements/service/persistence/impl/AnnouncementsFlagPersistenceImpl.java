@@ -1556,6 +1556,22 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the announcements flag
+	*
+	* @param pk the primary key of the announcements flag
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		AnnouncementsFlag announcementsFlag = fetchByPrimaryKey(pk);
+
+		if (announcementsFlag == null) {
+			throw new RuntimeException("The entity AnnouncementsFlag with PK " +
+				pk + " was not found");
+		}
+
+		return announcementsFlag.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return AnnouncementsFlagModelImpl.TABLE_COLUMNS_MAP;

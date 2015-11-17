@@ -4780,6 +4780,22 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the email address
+	*
+	* @param pk the primary key of the email address
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		EmailAddress emailAddress = fetchByPrimaryKey(pk);
+
+		if (emailAddress == null) {
+			throw new RuntimeException("The entity EmailAddress with PK " + pk +
+				" was not found");
+		}
+
+		return emailAddress.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

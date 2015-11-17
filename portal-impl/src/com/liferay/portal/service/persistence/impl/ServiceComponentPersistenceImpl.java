@@ -1623,6 +1623,15 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the service component
+	*
+	* @param pk the primary key of the service component
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		return 0;
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

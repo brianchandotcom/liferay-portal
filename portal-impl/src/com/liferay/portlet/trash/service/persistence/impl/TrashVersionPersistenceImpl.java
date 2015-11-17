@@ -2072,6 +2072,22 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the trash version
+	*
+	* @param pk the primary key of the trash version
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		TrashVersion trashVersion = fetchByPrimaryKey(pk);
+
+		if (trashVersion == null) {
+			throw new RuntimeException("The entity TrashVersion with PK " + pk +
+				" was not found");
+		}
+
+		return trashVersion.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return TrashVersionModelImpl.TABLE_COLUMNS_MAP;

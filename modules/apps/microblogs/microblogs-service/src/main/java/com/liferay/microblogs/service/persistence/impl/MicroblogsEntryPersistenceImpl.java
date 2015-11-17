@@ -6005,6 +6005,22 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the microblogs entry
+	*
+	* @param pk the primary key of the microblogs entry
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		MicroblogsEntry microblogsEntry = fetchByPrimaryKey(pk);
+
+		if (microblogsEntry == null) {
+			throw new RuntimeException("The entity MicroblogsEntry with PK " +
+				pk + " was not found");
+		}
+
+		return microblogsEntry.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

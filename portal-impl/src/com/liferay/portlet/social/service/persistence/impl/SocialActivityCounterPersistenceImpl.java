@@ -3345,6 +3345,23 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the social activity counter
+	*
+	* @param pk the primary key of the social activity counter
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		SocialActivityCounter socialActivityCounter = fetchByPrimaryKey(pk);
+
+		if (socialActivityCounter == null) {
+			throw new RuntimeException(
+				"The entity SocialActivityCounter with PK " + pk +
+				" was not found");
+		}
+
+		return socialActivityCounter.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

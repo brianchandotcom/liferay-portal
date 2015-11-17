@@ -3395,6 +3395,22 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the ratings entry
+	*
+	* @param pk the primary key of the ratings entry
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		RatingsEntry ratingsEntry = fetchByPrimaryKey(pk);
+
+		if (ratingsEntry == null) {
+			throw new RuntimeException("The entity RatingsEntry with PK " + pk +
+				" was not found");
+		}
+
+		return ratingsEntry.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

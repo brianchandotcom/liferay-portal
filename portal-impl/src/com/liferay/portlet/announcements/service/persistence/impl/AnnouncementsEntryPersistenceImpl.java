@@ -5648,6 +5648,22 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the announcements entry
+	*
+	* @param pk the primary key of the announcements entry
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		AnnouncementsEntry announcementsEntry = fetchByPrimaryKey(pk);
+
+		if (announcementsEntry == null) {
+			throw new RuntimeException("The entity AnnouncementsEntry with PK " +
+				pk + " was not found");
+		}
+
+		return announcementsEntry.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

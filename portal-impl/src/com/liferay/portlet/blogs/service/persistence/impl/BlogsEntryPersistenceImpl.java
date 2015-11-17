@@ -19165,6 +19165,22 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the blogs entry
+	*
+	* @param pk the primary key of the blogs entry
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		BlogsEntry blogsEntry = fetchByPrimaryKey(pk);
+
+		if (blogsEntry == null) {
+			throw new RuntimeException("The entity BlogsEntry with PK " + pk +
+				" was not found");
+		}
+
+		return blogsEntry.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

@@ -6552,6 +6552,22 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the social relation
+	*
+	* @param pk the primary key of the social relation
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		SocialRelation socialRelation = fetchByPrimaryKey(pk);
+
+		if (socialRelation == null) {
+			throw new RuntimeException("The entity SocialRelation with PK " +
+				pk + " was not found");
+		}
+
+		return socialRelation.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

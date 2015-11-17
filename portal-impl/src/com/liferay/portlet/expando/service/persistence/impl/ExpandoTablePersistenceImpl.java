@@ -1615,6 +1615,22 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the expando table
+	*
+	* @param pk the primary key of the expando table
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		ExpandoTable expandoTable = fetchByPrimaryKey(pk);
+
+		if (expandoTable == null) {
+			throw new RuntimeException("The entity ExpandoTable with PK " + pk +
+				" was not found");
+		}
+
+		return expandoTable.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return ExpandoTableModelImpl.TABLE_COLUMNS_MAP;

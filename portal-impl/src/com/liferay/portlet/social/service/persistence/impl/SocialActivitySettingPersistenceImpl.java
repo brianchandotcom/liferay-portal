@@ -3397,6 +3397,23 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the social activity setting
+	*
+	* @param pk the primary key of the social activity setting
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		SocialActivitySetting socialActivitySetting = fetchByPrimaryKey(pk);
+
+		if (socialActivitySetting == null) {
+			throw new RuntimeException(
+				"The entity SocialActivitySetting with PK " + pk +
+				" was not found");
+		}
+
+		return socialActivitySetting.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return SocialActivitySettingModelImpl.TABLE_COLUMNS_MAP;

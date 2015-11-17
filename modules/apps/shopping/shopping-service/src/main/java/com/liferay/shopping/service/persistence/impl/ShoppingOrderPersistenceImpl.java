@@ -3321,6 +3321,22 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the shopping order
+	*
+	* @param pk the primary key of the shopping order
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		ShoppingOrder shoppingOrder = fetchByPrimaryKey(pk);
+
+		if (shoppingOrder == null) {
+			throw new RuntimeException("The entity ShoppingOrder with PK " +
+				pk + " was not found");
+		}
+
+		return shoppingOrder.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

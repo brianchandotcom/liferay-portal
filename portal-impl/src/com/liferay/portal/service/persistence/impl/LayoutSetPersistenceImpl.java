@@ -2134,6 +2134,22 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the layout set
+	*
+	* @param pk the primary key of the layout set
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		LayoutSet layoutSet = fetchByPrimaryKey(pk);
+
+		if (layoutSet == null) {
+			throw new RuntimeException("The entity LayoutSet with PK " + pk +
+				" was not found");
+		}
+
+		return layoutSet.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

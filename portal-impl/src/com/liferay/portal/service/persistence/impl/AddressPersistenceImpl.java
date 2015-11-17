@@ -5414,6 +5414,22 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the address
+	*
+	* @param pk the primary key of the address
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		Address address = fetchByPrimaryKey(pk);
+
+		if (address == null) {
+			throw new RuntimeException("The entity Address with PK " + pk +
+				" was not found");
+		}
+
+		return address.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

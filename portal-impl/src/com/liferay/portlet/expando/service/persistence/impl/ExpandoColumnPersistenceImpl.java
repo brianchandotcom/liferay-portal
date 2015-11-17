@@ -2435,6 +2435,22 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the expando column
+	*
+	* @param pk the primary key of the expando column
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		ExpandoColumn expandoColumn = fetchByPrimaryKey(pk);
+
+		if (expandoColumn == null) {
+			throw new RuntimeException("The entity ExpandoColumn with PK " +
+				pk + " was not found");
+		}
+
+		return expandoColumn.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

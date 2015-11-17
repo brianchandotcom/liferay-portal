@@ -1408,6 +1408,23 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the workflow instance link
+	*
+	* @param pk the primary key of the workflow instance link
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		WorkflowInstanceLink workflowInstanceLink = fetchByPrimaryKey(pk);
+
+		if (workflowInstanceLink == null) {
+			throw new RuntimeException(
+				"The entity WorkflowInstanceLink with PK " + pk +
+				" was not found");
+		}
+
+		return workflowInstanceLink.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return WorkflowInstanceLinkModelImpl.TABLE_COLUMNS_MAP;

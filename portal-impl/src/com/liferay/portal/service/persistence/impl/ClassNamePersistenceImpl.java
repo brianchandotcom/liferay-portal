@@ -980,6 +980,15 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the class name
+	*
+	* @param pk the primary key of the class name
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		return 0;
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return ClassNameModelImpl.TABLE_COLUMNS_MAP;

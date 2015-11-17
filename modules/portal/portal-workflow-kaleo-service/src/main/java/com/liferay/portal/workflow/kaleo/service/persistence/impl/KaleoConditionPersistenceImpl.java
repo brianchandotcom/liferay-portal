@@ -2070,6 +2070,22 @@ public class KaleoConditionPersistenceImpl extends BasePersistenceImpl<KaleoCond
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the kaleo condition
+	*
+	* @param pk the primary key of the kaleo condition
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		KaleoCondition kaleoCondition = fetchByPrimaryKey(pk);
+
+		if (kaleoCondition == null) {
+			throw new RuntimeException("The entity KaleoCondition with PK " +
+				pk + " was not found");
+		}
+
+		return kaleoCondition.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return KaleoConditionModelImpl.TABLE_COLUMNS_MAP;

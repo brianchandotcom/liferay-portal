@@ -2055,6 +2055,22 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the shopping cart
+	*
+	* @param pk the primary key of the shopping cart
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		ShoppingCart shoppingCart = fetchByPrimaryKey(pk);
+
+		if (shoppingCart == null) {
+			throw new RuntimeException("The entity ShoppingCart with PK " + pk +
+				" was not found");
+		}
+
+		return shoppingCart.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return ShoppingCartModelImpl.TABLE_COLUMNS_MAP;

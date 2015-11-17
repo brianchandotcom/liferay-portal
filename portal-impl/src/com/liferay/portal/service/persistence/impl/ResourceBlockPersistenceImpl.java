@@ -2387,6 +2387,22 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the resource block
+	*
+	* @param pk the primary key of the resource block
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		ResourceBlock resourceBlock = fetchByPrimaryKey(pk);
+
+		if (resourceBlock == null) {
+			throw new RuntimeException("The entity ResourceBlock with PK " +
+				pk + " was not found");
+		}
+
+		return resourceBlock.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return ResourceBlockModelImpl.TABLE_COLUMNS_MAP;

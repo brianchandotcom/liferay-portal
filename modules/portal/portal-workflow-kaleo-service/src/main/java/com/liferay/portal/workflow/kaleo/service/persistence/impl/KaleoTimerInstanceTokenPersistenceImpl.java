@@ -2815,6 +2815,23 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the kaleo timer instance token
+	*
+	* @param pk the primary key of the kaleo timer instance token
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		KaleoTimerInstanceToken kaleoTimerInstanceToken = fetchByPrimaryKey(pk);
+
+		if (kaleoTimerInstanceToken == null) {
+			throw new RuntimeException(
+				"The entity KaleoTimerInstanceToken with PK " + pk +
+				" was not found");
+		}
+
+		return kaleoTimerInstanceToken.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return KaleoTimerInstanceTokenModelImpl.TABLE_COLUMNS_MAP;

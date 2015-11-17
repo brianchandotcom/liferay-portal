@@ -1673,6 +1673,23 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the user notification delivery
+	*
+	* @param pk the primary key of the user notification delivery
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		UserNotificationDelivery userNotificationDelivery = fetchByPrimaryKey(pk);
+
+		if (userNotificationDelivery == null) {
+			throw new RuntimeException(
+				"The entity UserNotificationDelivery with PK " + pk +
+				" was not found");
+		}
+
+		return userNotificationDelivery.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return UserNotificationDeliveryModelImpl.TABLE_COLUMNS_MAP;

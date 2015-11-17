@@ -6280,6 +6280,22 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the cal event
+	*
+	* @param pk the primary key of the cal event
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		CalEvent calEvent = fetchByPrimaryKey(pk);
+
+		if (calEvent == null) {
+			throw new RuntimeException("The entity CalEvent with PK " + pk +
+				" was not found");
+		}
+
+		return calEvent.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

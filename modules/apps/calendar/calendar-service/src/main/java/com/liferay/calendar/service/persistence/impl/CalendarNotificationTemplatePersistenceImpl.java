@@ -3231,6 +3231,23 @@ public class CalendarNotificationTemplatePersistenceImpl
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the calendar notification template
+	*
+	* @param pk the primary key of the calendar notification template
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		CalendarNotificationTemplate calendarNotificationTemplate = fetchByPrimaryKey(pk);
+
+		if (calendarNotificationTemplate == null) {
+			throw new RuntimeException(
+				"The entity CalendarNotificationTemplate with PK " + pk +
+				" was not found");
+		}
+
+		return calendarNotificationTemplate.getCompanyId();
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;

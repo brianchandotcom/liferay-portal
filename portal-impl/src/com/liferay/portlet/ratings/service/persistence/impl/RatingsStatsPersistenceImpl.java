@@ -991,6 +991,22 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 		return count.intValue();
 	}
 
+	/**
+	* Get the companyId associated with the ratings stats
+	*
+	* @param pk the primary key of the ratings stats
+	*/
+	protected long getCompanyIdFromPK(long pk) {
+		RatingsStats ratingsStats = fetchByPrimaryKey(pk);
+
+		if (ratingsStats == null) {
+			throw new RuntimeException("The entity RatingsStats with PK " + pk +
+				" was not found");
+		}
+
+		return ratingsStats.getCompanyId();
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return RatingsStatsModelImpl.TABLE_COLUMNS_MAP;

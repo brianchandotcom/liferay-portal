@@ -10,7 +10,7 @@ import org.json.JSONObject;
 
 public class JenkinsPerformanceDataProcessor {
 
-	public List<Result> getLongestResults(JSONObject jobJSONObject, Project project, int resultCount) throws Exception {
+	protected static List<Result> getLongestResults(JSONObject jobJSONObject, Project project, int resultCount) throws Exception {
 		JSONArray childReportsJSONArray = jobJSONObject.getJSONArray("childReports");
 		List<Result> resultList = new ArrayList<>();
 
@@ -39,35 +39,19 @@ public class JenkinsPerformanceDataProcessor {
 		}
 
 		Collections.sort(resultList);
+		
+		truncateList(resultList, resultCount);
 
-		return truncateList(resultList, resultCount);
+		return resultList;
 	}
 
-	public List<Result> truncateList(List<Result> list, int maxSize) {
-		List<Result> truncatedList = null;
-
-		if (list != null) {
-			int size = maxSize;
-
-			if (size > list.size()) {
-				size = list.size();
-			}
-
-			truncatedList = new ArrayList<>(list.subList(0, size));
+	protected static void truncateList(List<Result> list, int maxSize) {
+		while (list.size() > maxSize) {
+			list.remove(list.size() - 1);
 		}
-		else {
-			truncatedList = new ArrayList<>(0);
-		}
-
-		return truncatedList;
 	}
 	
-	public void processPerformanceData(Project project) {
-		if (beanShellMap.get("start-time") == null) {
-			Long start = System.currentTimeMillis();
-
-			beanShellMap.put("start-time", start);
-		}
+	public static void processPerformanceData(Project project) throws Exception {
 
 		String jenkinsJobURL = project.getProperty("jenkins.job.url");
 		String reportSizeString = project.getProperty("report.size");
@@ -79,22 +63,16 @@ public class JenkinsPerformanceDataProcessor {
 		if (jobJSONObject != null) {
 			List<Result> resultList = getLongestResults(jobJSONObject, project, reportSize);
 
-			List<Result> globalList = beanShellMap.get("global-result-list");
+			_globalList.addAll(resultList);
 
-			if (globalList == null) {
-				globalList = new ArrayList<>();
-			}
+			Collections.sort(_globalList);
 
-			globalList.addAll(resultList);
-
-			Collections.sort(globalList);
-
-			globalList = truncateList(globalList, reportSize);
-
-			beanShellMap.put("global-result-list", globalList);
+			truncateList(_globalList, reportSize);
 		}
 		else {
 			System.out.println("JSON data could not be loaded. URL: " + jenkinsJobURL + "testReport/api/json");
 		}
 	}
+	
+	protected static final List<Result> _globalList = new ArrayList<>();
 }

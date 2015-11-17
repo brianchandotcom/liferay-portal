@@ -8,7 +8,7 @@ import org.dom4j.tree.DefaultElement;
 
 public class JenkinsPerformanceTable {
 
-	public Element createRow(
+	protected static Element createRow(
 		String cellTag, String axis, String batch, String className,
 		String duration, String name, String status, String url) {
 
@@ -64,13 +64,13 @@ public class JenkinsPerformanceTable {
 		return row;
 	}
 
-	public Element createTableHeader() {
+	protected static Element createTableHeader() {
 		return createRow(
 			"th", "Axis", "Batch", "Class Name",
 			"Duration (Seconds)", "Name", "Status", null);
 	}
 
-	public Element createRow(Object result) {
+	protected static Element createRow(Result result) {
 		return createRow(
 			"td", result.getAxis(), result.getBatch(),
 			result.getClassName(),
@@ -79,53 +79,45 @@ public class JenkinsPerformanceTable {
 			result.getUrl());
 	}	
 	
-	public void getTable(Project project) {
+	public static String generateTableHTML(Project project) {
 		Element tableElement = new DefaultElement("table");
 
 		Element headerElement = createTableHeader();
 
 		tableElement.add(headerElement);
+		
+		if (JenkinsPerformanceDataProcessor._globalList == null) {
+			return "";
+		}
+		
+		for (Result result : JenkinsPerformanceDataProcessor._globalList) {
+			Element row = createRow(result);
 
-		List<Result> resultList = (List)beanShellMap.get("global-result-list");
-
-		if (resultList != null) {
-			for (Object result : resultList) {
-				Element row = createRow(result);
-
-				tableElement.add(row);
-			}
-
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("<style>\n");
-			sb.append("    table {\n");
-			sb.append("        table-layout: fixed;\n");
-			sb.append("        width: 95%;\n");
-			sb.append("    }\n");
-			sb.append("    table, th, td {\n");
-			sb.append("        border: 1px solid black;\n");
-			sb.append("        border-collapse: collapse;\n");
-			sb.append("    }\n");
-			sb.append("    th, td {\n");
-			sb.append("        word-wrap: break-word;\n");
-			sb.append("        padding: 3px;\n");
-			sb.append("        text-align: left;\n");
-			sb.append("    }\n");
-			sb.append("</style>\n");
-
-			sb.append(tableElement.asXML());
-
-			project.setProperty("performance.table", sb.toString());
+			tableElement.add(row);
 		}
 
-		Long start = (Long)beanShellMap.get("start-time");
+		JenkinsPerformanceDataProcessor._globalList.clear();
 
-		long end = System.currentTimeMillis();
+		StringBuilder sb = new StringBuilder();
 
-		long total = (end - start) / 1000;
+		sb.append("<style>\n");
+		sb.append("    table {\n");
+		sb.append("        table-layout: fixed;\n");
+		sb.append("        width: 95%;\n");
+		sb.append("    }\n");
+		sb.append("    table, th, td {\n");
+		sb.append("        border: 1px solid black;\n");
+		sb.append("        border-collapse: collapse;\n");
+		sb.append("    }\n");
+		sb.append("    th, td {\n");
+		sb.append("        word-wrap: break-word;\n");
+		sb.append("        padding: 3px;\n");
+		sb.append("        text-align: left;\n");
+		sb.append("    }\n");
+		sb.append("</style>\n");
 
-		System.out.println("Performance report generation time: " + total + " seconds.");
+		sb.append(tableElement.asXML());
 
-		beanShellMap.clear();
+		return sb.toString();
 	}
 }

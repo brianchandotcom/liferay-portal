@@ -14,7 +14,7 @@
 
 package com.liferay.password.policies.admin.web.lar;
 
-import com.liferay.password.policies.admin.web.constants.PasswordPoliciesAdminPortletKeys;
+import com.liferay.password.policies.admin.constants.PasswordPoliciesAdminPortletKeys;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;

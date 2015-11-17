@@ -26,7 +26,7 @@ import org.apache.tools.ant.Project;
  */
 public class GitHubMessageUtil {
 
-	public static void getGithubMessage(Project project) throws Exception {
+	public static void getGitHubMessage(Project project) throws Exception {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("<h1>");

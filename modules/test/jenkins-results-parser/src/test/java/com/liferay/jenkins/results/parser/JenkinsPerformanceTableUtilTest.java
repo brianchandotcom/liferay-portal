@@ -15,13 +15,9 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 
 import java.net.URL;
 
-import java.util.Map.Entry;
-import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -35,7 +31,7 @@ import org.junit.Test;
 /**
  * @author Peter Yoo
  */
-public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
+public class JenkinsPerformanceTableUtilTest extends BaseJenkinsResultsParserTestCase {
 
 	@Before
 	public void setUp() throws Exception {
@@ -54,19 +50,11 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 
 	@Override
 	protected void downloadSample(File sampleDir, URL url) throws Exception {
-		Properties properties = new Properties();
-
 		downloadSampleJobMessages(
-			url.toString() + "/logText/progressiveText", properties, sampleDir);
+			url.toString() + "/logText/progressiveText", sampleDir);
 
 		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
 			JenkinsResultsParserUtil.getLocalURL(url.toString() + "/api/json"));
-
-		properties.setProperty("env.BUILD_URL", toURLString(sampleDir));
-		properties.setProperty(
-			"top.level.result", jsonObject.getString("result"));
-
-		saveProperties(new File(sampleDir, "sample.properties"), properties);
 	}
 
 	protected void downloadSample(
@@ -87,7 +75,7 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 	}
 
 	protected void downloadSampleJobMessages(
-			String progressiveTextURL, Properties properties, File sampleDir)
+			String progressiveTextURL, File sampleDir)
 		throws Exception {
 
 		gitHubJobMessageUtilTest.dependenciesDir = sampleDir;
@@ -139,13 +127,6 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 
 			jobCount++;
 		}
-
-		properties.setProperty(
-			"top.level.fail.count", String.valueOf(jobCount - passCount));
-		properties.setProperty(
-			"top.level.pass.count", String.valueOf(passCount));
-		properties.setProperty(
-			"top.level.report.files", reportFilesSB.toString());
 	}
 
 	@Override
@@ -168,16 +149,6 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 		throws Exception {
 
 		Project project = new Project();
-
-		if (samplePropertiesFile != null) {
-			Properties properties = loadProperties(samplePropertiesFile);
-
-			for (Entry<Object, Object> entry : properties.entrySet()) {
-				project.setProperty(
-					String.valueOf(entry.getKey()),
-					String.valueOf(entry.getValue()));
-			}
-		}
 
 		project.setProperty("branch.name", "junit-branch-name");
 		project.setProperty("build.url", buildURLString);
@@ -202,24 +173,6 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 			"top.level.shared.dir.url", "junit-top-level-shared-dir-url");
 
 		return project;
-	}
-
-	protected Properties loadProperties(File file) throws Exception {
-		Properties properties = new Properties();
-
-		try (FileInputStream fis = new FileInputStream(file)) {
-			properties.load(fis);
-		}
-
-		return properties;
-	}
-
-	protected void saveProperties(File file, Properties properties)
-		throws Exception {
-
-		try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
-			properties.store(fileOutputStream, null);
-		}
 	}
 
 	protected GitHubJobMessageUtilTest gitHubJobMessageUtilTest =

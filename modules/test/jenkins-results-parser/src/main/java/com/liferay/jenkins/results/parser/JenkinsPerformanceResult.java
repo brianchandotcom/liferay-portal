@@ -125,12 +125,12 @@ public class JenkinsPerformanceResult implements Comparable<JenkinsPerformanceRe
 		_url = uri.toASCIIString();
 	}
 
-	private String _axis;
-	private String _batch;
-	private String _class;
-	private float _duration;
-	private String _name;
-	private String _status;
-	private String _url;
+	protected String _axis;
+	protected String _batch;
+	protected String _class;
+	protected float _duration;
+	protected String _name;
+	protected String _status;
+	protected String _url;
 
 }

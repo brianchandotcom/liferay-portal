@@ -19,9 +19,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
 import java.net.URL;
+
 import java.nio.file.Files;
 import java.nio.file.Paths;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -252,7 +255,8 @@ public class JenkinsResultsParserUtil {
 				InputStreamReader inputStreamReader = new InputStreamReader(
 					urlObject.openStream());
 
-				BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+				BufferedReader bufferedReader = new BufferedReader(
+					inputStreamReader);
 
 				String line = null;
 
@@ -268,26 +272,29 @@ public class JenkinsResultsParserUtil {
 				}
 
 				return sb.toString();
-			} catch (FileNotFoundException e) {
+			}
+			catch (FileNotFoundException e) {
 				retryCount++;
 
-				if (retryCount > _maxRetries) {
+				if (retryCount > _MAX_RETRIES) {
 					throw e;
 				}
 
 				System.out.println(
-					"Download file not found. Waiting 5 seconds before retry. Retry " +
-						retryCount + " of " + _maxRetries);
+					"Download file not found. Waiting 5 seconds before retry." +
+						" Retry " + retryCount + " of " + _MAX_RETRIES);
 
 				Thread.sleep(5000);
 			}
 		}
 	}
+
+	private static final int _MAX_RETRIES = 3;
+
 	private static final Pattern _localURLPattern1 = Pattern.compile(
 		"https://test.liferay.com/([0-9]+)/");
 	private static final Pattern _localURLPattern2 = Pattern.compile(
 		"https://(test-[0-9]+-[0-9]+).liferay.com/");
-	private static final int _maxRetries = 3;
 	private static final Map<String, String> _toStringCache = new HashMap<>();
 
 }

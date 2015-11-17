@@ -1300,6 +1300,7 @@ ${output.content}</echo>
 				<if>
 					<or>
 						<contains string="${output.content}" substring="Database 'lportal' already exists" />
+						<contains string="${output.content}" substring="sp_dboption" />
 						<contains string="${output.content}" substring="The model database is unavailable. It is being used to create a new database." />
 					</or>
 					<then>

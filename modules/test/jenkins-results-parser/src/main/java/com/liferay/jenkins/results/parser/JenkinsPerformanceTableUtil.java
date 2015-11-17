@@ -20,10 +20,10 @@ import org.dom4j.tree.DefaultElement;
 /**
  * @author Peter Yoo
  */
-public class JenkinsPerformanceTableGenerator {
+public class JenkinsPerformanceTableUtil {
 
 	public static String generateHTML() {
-		if (JenkinsPerformanceDataProcessor.resultsList == null) {
+		if (JenkinsPerformanceDataUtil.resultsList == null) {
 			return "";
 		}
 
@@ -33,15 +33,15 @@ public class JenkinsPerformanceTableGenerator {
 
 		tableElement.add(headerElement);
 
-		for (JenkinsPerformanceResult result :
-				JenkinsPerformanceDataProcessor.resultsList) {
+		for (JenkinsPerformanceDataUtil.Result result :
+				JenkinsPerformanceDataUtil.resultsList) {
 
 			Element row = createRow(result);
 
 			tableElement.add(row);
 		}
 
-		JenkinsPerformanceDataProcessor.resultsList.clear();
+		JenkinsPerformanceDataUtil.resultsList.clear();
 
 		StringBuilder sb = new StringBuilder();
 
@@ -66,7 +66,9 @@ public class JenkinsPerformanceTableGenerator {
 		return sb.toString();
 	}
 
-	protected static Element createRow(JenkinsPerformanceResult result) {
+	protected static Element createRow(
+		JenkinsPerformanceDataUtil.Result result) {
+
 		return createRow(
 			"td", result.getAxis(), result.getBatch(), result.getClassName(),
 			Float.toString(result.getDuration()), result.getName(),

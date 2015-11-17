@@ -14,39 +14,41 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/com.liferay.portal.settings.web/init.jsp" %>
 
 <%
-boolean facebookConnectAuthEnabled = FacebookConnectUtil.isEnabled(company.getCompanyId());
-boolean facebookConnectVerifiedAccountRequired = FacebookConnectUtil.isVerifiedAccountRequired(company.getCompanyId());
-String facebookConnectAppId = FacebookConnectUtil.getAppId(company.getCompanyId());
+FacebookConnectConfiguration facebookConnectConfiguration = ConfigurationFactoryUtil.getConfiguration(FacebookConnectConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), "facebook--", new CompanyServiceSettingsLocator(company.getCompanyId(), FacebookConnectConstants.SERVICE_NAME)));
 
-String facebookConnectAppSecret = FacebookConnectUtil.getAppSecret(company.getCompanyId());
+boolean authEnabled = facebookConnectConfiguration.enabled();
+boolean verifiedAccountRequired = facebookConnectConfiguration.verifiedAccountRequired();
+String appId = facebookConnectConfiguration.appId();
 
-if (Validator.isNotNull(facebookConnectAppSecret)) {
-	facebookConnectAppSecret = Portal.TEMP_OBFUSCATION_VALUE;
+String appSecret = facebookConnectConfiguration.appSecret();
+
+if (Validator.isNotNull(appSecret)) {
+	appSecret = Portal.TEMP_OBFUSCATION_VALUE;
 }
 
-String facebookConnectGraphURL = FacebookConnectUtil.getGraphURL(company.getCompanyId());
-String facebookConnectOauthAuthURL = FacebookConnectUtil.getAuthURL(company.getCompanyId());
-String facebookConnectOauthTokenURL = FacebookConnectUtil.getAccessTokenURL(company.getCompanyId());
-String facebookConnectRedirectURL = FacebookConnectUtil.getRedirectURL(company.getCompanyId());
+String graphURL = facebookConnectConfiguration.graphURL();
+String oauthAuthURL = facebookConnectConfiguration.oauthAuthURL();
+String oauthTokenURL = facebookConnectConfiguration.oauthTokenURL();
+String oauthRedirectURL = facebookConnectConfiguration.oauthRedirectURL();
 %>
 
 <aui:fieldset>
-	<aui:input label="enabled" name='<%= "settings--" + PropsKeys.FACEBOOK_CONNECT_AUTH_ENABLED + "--" %>' type="checkbox" value="<%= facebookConnectAuthEnabled %>" />
+	<aui:input label="enabled" name="facebook--enabled" type="checkbox" value="<%= authEnabled %>" />
 
-	<aui:input label="require-verified-account" name='<%= "settings--" + PropsKeys.FACEBOOK_CONNECT_VERIFIED_ACCOUNT_REQUIRED + "--" %>' type="checkbox" value="<%= facebookConnectVerifiedAccountRequired %>" />
+	<aui:input label="require-verified-account" name="facebook--verifiedAccountRequired" type="checkbox" value="<%= verifiedAccountRequired %>" />
 
-	<aui:input cssClass="lfr-input-text-container" label="application-id" name='<%= "settings--" + PropsKeys.FACEBOOK_CONNECT_APP_ID + "--" %>' type="text" value="<%= facebookConnectAppId %>" />
+	<aui:input cssClass="lfr-input-text-container" label="application-id" name="facebook--appId" type="text" value="<%= appId %>" />
 
-	<aui:input cssClass="lfr-input-text-container" label="application-secret" name='<%= "settings--" + PropsKeys.FACEBOOK_CONNECT_APP_SECRET + "--" %>' type="password" value="<%= facebookConnectAppSecret %>" />
+	<aui:input cssClass="lfr-input-text-container" label="application-secret" name="facebook--appSecret" type="password" value="<%= appSecret %>" />
 
-	<aui:input cssClass="lfr-input-text-container" label="graph-url" name='<%= "settings--" + PropsKeys.FACEBOOK_CONNECT_GRAPH_URL + "--" %>' type="text" value="<%= facebookConnectGraphURL %>" />
+	<aui:input cssClass="lfr-input-text-container" label="graph-url" name="facebook--graphURL" type="text" value="<%= graphURL %>" />
 
-	<aui:input cssClass="lfr-input-text-container" label="oauth-authentication-url" name='<%= "settings--" + PropsKeys.FACEBOOK_CONNECT_OAUTH_AUTH_URL + "--" %>' type="text" value="<%= facebookConnectOauthAuthURL %>" />
+	<aui:input cssClass="lfr-input-text-container" label="oauth-authentication-url" name="facebook--oauthAuthURL" type="text" value="<%= oauthAuthURL %>" />
 
-	<aui:input cssClass="lfr-input-text-container" label="oauth-token-url" name='<%= "settings--" + PropsKeys.FACEBOOK_CONNECT_OAUTH_TOKEN_URL + "--" %>' type="text" value="<%= facebookConnectOauthTokenURL %>" />
+	<aui:input cssClass="lfr-input-text-container" label="oauth-token-url" name="facebook--oauthTokenURL" type="text" value="<%= oauthTokenURL %>" />
 
-	<aui:input cssClass="lfr-input-text-container" label="redirect-url" name='<%= "settings--" + PropsKeys.FACEBOOK_CONNECT_OAUTH_REDIRECT_URL + "--" %>' type="text" value="<%= facebookConnectRedirectURL %>" />
+	<aui:input cssClass="lfr-input-text-container" label="redirect-url" name="facebook--oauthRedirectURL" type="text" value="<%= oauthRedirectURL %>" />
 </aui:fieldset>

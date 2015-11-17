@@ -3,6 +3,10 @@
 }
 
 .portlet-dynamic-data-lists, .portlet-dynamic-data-lists-display {
+	.form-group.geolocation-field .button-holder .btn {
+		margin-top: 0;
+	}
+
 	.lfr-spreadsheet-container .table {
 		overflow: auto;
 
@@ -13,9 +17,5 @@
 
 	.view-records-container {
 		overflow: auto;
-	}
-
-	.form-group.geolocation-field .button-holder .btn {
-		margin-top: 0;
 	}
 }

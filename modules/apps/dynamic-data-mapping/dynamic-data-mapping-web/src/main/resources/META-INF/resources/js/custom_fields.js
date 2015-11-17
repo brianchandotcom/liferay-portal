@@ -141,39 +141,85 @@ AUI.add(
 					_onClickChoose: function() {
 						var instance = this;
 
-						var portletURL = Liferay.PortletURL.createURL(themeDisplay.getURLControlPanel());
+						var portletNamespace = instance.get('portletNamespace');
 
-						portletURL.setDoAsGroupId(themeDisplay.getScopeGroupId());
-						portletURL.setParameter('eventName', 'selectDocumentLibrary');
-						portletURL.setParameter('groupId', themeDisplay.getScopeGroupId());
-						portletURL.setParameter('refererPortletName', '167');
-						portletURL.setParameter('mvcPath', '/view.jsp');
-						portletURL.setParameter('tabs1Names', 'documents');
-						portletURL.setPortletId(Liferay.PortletKeys.ITEM_SELECTOR);
-						portletURL.setWindowState('pop_up');
-
-						Liferay.Util.selectEntity(
+						var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 							{
-								dialog: {
-									constrain: true,
-									destroyOnHide: true,
-									modal: true
+								eventName: portletNamespace + 'selectDocumentLibrary',
+								on: {
+									selectedItemChange: function(event) {
+										var selectedItem = event.newVal;
+
+										if (selectedItem) {
+											var itemValue = JSON.parse(selectedItem.value);
+
+											instance._selectFileEntry(itemValue.groupId, itemValue.title, itemValue.uuid);
+										}
+									}
 								},
-								eventName: 'selectDocumentLibrary',
-								id: 'selectDocumentLibrary',
-								title: Liferay.Language.get('select-document'),
-								uri: portletURL.toString()
-							},
-							function(event) {
-								instance._selectFileEntry(event.url, event.uuid, event.groupid, event.title, event.version);
+								url: instance._getDocumentLibrarySelectorURL()
 							}
 						);
+
+						itemSelectorDialog.open();
+
 					},
 
 					_onClickClear: function() {
 						var instance = this;
 
 						instance.set('value', STR_BLANK);
+					},
+
+					_getUploadURL: function() {
+						var instance = this;
+
+						var scopeGroupId = Liferay.ThemeDisplay.getScopeGroupId();
+
+						var portletURL = Liferay.PortletURL.createURL(themeDisplay.getURLControlPanel());
+
+						portletURL.setDoAsGroupId(scopeGroupId);
+						portletURL.setLifecycle(Liferay.PortletURL.ACTION_PHASE);
+						portletURL.setParameter('cmd', 'add_temp');
+						portletURL.setParameter('javax.portlet.action', '/document_library/upload_file_entry');
+						portletURL.setParameter('p_auth', Liferay.authToken);
+						portletURL.setPortletId(Liferay.PortletKeys.DOCUMENT_LIBRARY);
+
+						return portletURL.toString();
+					},
+
+					_getDocumentLibrarySelectorURL: function() {
+						var instance = this;
+
+						var scopeGroupId = Liferay.ThemeDisplay.getScopeGroupId();
+
+						var portletNamespace = instance.get('portletNamespace');
+
+						var portletURL = Liferay.PortletURL.createURL(themeDisplay.getURLControlPanel());
+
+						portletURL.setDoAsGroupId(scopeGroupId);
+						portletURL.setParameter('criteria', 'com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion');
+						portletURL.setParameter('itemSelectedEventName', portletNamespace + 'selectDocumentLibrary');
+
+						var criterionJSON = {
+							desiredItemSelectorReturnTypes: 'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType,com.liferay.item.selector.criteria.UploadableFileReturnType'
+						};
+
+						portletURL.setParameter('0_json', JSON.stringify(criterionJSON));
+						portletURL.setParameter('1_json', JSON.stringify(criterionJSON));
+
+						var uploadCriterionJSON = {
+							desiredItemSelectorReturnTypes: 'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType,com.liferay.item.selector.criteria.UploadableFileReturnType',
+							URL: instance._getUploadURL()
+						};
+
+						portletURL.setParameter('2_json', JSON.stringify(uploadCriterionJSON));
+
+						portletURL.setPortletId(Liferay.PortletKeys.ITEM_SELECTOR);
+						portletURL.setPortletMode('view');
+						portletURL.setWindowState('pop_up');
+
+						return portletURL.toString();
 					},
 
 					_selectFileEntry: function(groupId, title, uuid) {

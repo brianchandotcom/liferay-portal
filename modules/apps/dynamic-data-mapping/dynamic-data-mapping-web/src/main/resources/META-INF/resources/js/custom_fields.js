@@ -112,24 +112,6 @@ AUI.add(
 						return instance.get('value');
 					},
 
-					_onDocMouseDownExt: function(event) {
-						var instance = this;
-						var boundingBox = instance.get('boundingBox');
-
-						var isDocumentLibraryDialogOpen = instance._isDocumentLibraryDialogOpen();
-
-						if (!isDocumentLibraryDialogOpen && !boundingBox.contains(event.target)) {
-							instance.set('visible', false);
-						}
-					},
-
-					_isDocumentLibraryDialogOpen: function() {
-						var instance = this;
-						var portletNamespace = instance.get('portletNamespace');
-
-						return !!Liferay.Util.getWindow(portletNamespace + 'selectDocumentLibrary');
-					},
-
 					_defInitToolbarFn: function() {
 						var instance = this;
 
@@ -154,6 +136,65 @@ AUI.add(
 							},
 							2
 						);
+					},
+
+					_getDocumentLibrarySelectorURL: function() {
+						var instance = this;
+
+						var scopeGroupId = Liferay.ThemeDisplay.getScopeGroupId();
+
+						var portletNamespace = instance.get('portletNamespace');
+
+						var portletURL = Liferay.PortletURL.createURL(themeDisplay.getURLControlPanel());
+
+						portletURL.setDoAsGroupId(scopeGroupId);
+						portletURL.setParameter('criteria', 'com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion');
+						portletURL.setParameter('itemSelectedEventName', portletNamespace + 'selectDocumentLibrary');
+
+						var criterionJSON = {
+							desiredItemSelectorReturnTypes: 'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType,com.liferay.item.selector.criteria.UploadableFileReturnType'
+						};
+
+						portletURL.setParameter('0_json', JSON.stringify(criterionJSON));
+						portletURL.setParameter('1_json', JSON.stringify(criterionJSON));
+
+						var uploadCriterionJSON = {
+							desiredItemSelectorReturnTypes: 'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType,com.liferay.item.selector.criteria.UploadableFileReturnType',
+							URL: instance._getUploadURL()
+						};
+
+						portletURL.setParameter('2_json', JSON.stringify(uploadCriterionJSON));
+
+						portletURL.setPortletId(Liferay.PortletKeys.ITEM_SELECTOR);
+						portletURL.setPortletMode('view');
+						portletURL.setWindowState('pop_up');
+
+						return portletURL.toString();
+					},
+
+					_getUploadURL: function() {
+						var instance = this;
+
+						var scopeGroupId = Liferay.ThemeDisplay.getScopeGroupId();
+
+						var portletURL = Liferay.PortletURL.createURL(themeDisplay.getURLControlPanel());
+
+						portletURL.setDoAsGroupId(scopeGroupId);
+						portletURL.setLifecycle(Liferay.PortletURL.ACTION_PHASE);
+						portletURL.setParameter('cmd', 'add_temp');
+						portletURL.setParameter('javax.portlet.action', '/document_library/upload_file_entry');
+						portletURL.setParameter('p_auth', Liferay.authToken);
+						portletURL.setPortletId(Liferay.PortletKeys.DOCUMENT_LIBRARY);
+
+						return portletURL.toString();
+					},
+
+					_isDocumentLibraryDialogOpen: function() {
+						var instance = this;
+
+						var portletNamespace = instance.get('portletNamespace');
+
+						return !!Liferay.Util.getWindow(portletNamespace + 'selectDocumentLibrary');
 					},
 
 					_onClickChoose: function() {
@@ -189,55 +230,16 @@ AUI.add(
 						instance.set('value', STR_BLANK);
 					},
 
-					_getUploadURL: function() {
+					_onDocMouseDownExt: function(event) {
 						var instance = this;
 
-						var scopeGroupId = Liferay.ThemeDisplay.getScopeGroupId();
+						var boundingBox = instance.get('boundingBox');
 
-						var portletURL = Liferay.PortletURL.createURL(themeDisplay.getURLControlPanel());
+						var documentLibraryDialogOpen = instance._isDocumentLibraryDialogOpen();
 
-						portletURL.setDoAsGroupId(scopeGroupId);
-						portletURL.setLifecycle(Liferay.PortletURL.ACTION_PHASE);
-						portletURL.setParameter('cmd', 'add_temp');
-						portletURL.setParameter('javax.portlet.action', '/document_library/upload_file_entry');
-						portletURL.setParameter('p_auth', Liferay.authToken);
-						portletURL.setPortletId(Liferay.PortletKeys.DOCUMENT_LIBRARY);
-
-						return portletURL.toString();
-					},
-
-					_getDocumentLibrarySelectorURL: function() {
-						var instance = this;
-
-						var scopeGroupId = Liferay.ThemeDisplay.getScopeGroupId();
-
-						var portletNamespace = instance.get('portletNamespace');
-
-						var portletURL = Liferay.PortletURL.createURL(themeDisplay.getURLControlPanel());
-
-						portletURL.setDoAsGroupId(scopeGroupId);
-						portletURL.setParameter('criteria', 'com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion');
-						portletURL.setParameter('itemSelectedEventName', portletNamespace + 'selectDocumentLibrary');
-
-						var criterionJSON = {
-							desiredItemSelectorReturnTypes: 'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType,com.liferay.item.selector.criteria.UploadableFileReturnType'
-						};
-
-						portletURL.setParameter('0_json', JSON.stringify(criterionJSON));
-						portletURL.setParameter('1_json', JSON.stringify(criterionJSON));
-
-						var uploadCriterionJSON = {
-							desiredItemSelectorReturnTypes: 'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType,com.liferay.item.selector.criteria.UploadableFileReturnType',
-							URL: instance._getUploadURL()
-						};
-
-						portletURL.setParameter('2_json', JSON.stringify(uploadCriterionJSON));
-
-						portletURL.setPortletId(Liferay.PortletKeys.ITEM_SELECTOR);
-						portletURL.setPortletMode('view');
-						portletURL.setWindowState('pop_up');
-
-						return portletURL.toString();
+						if (!documentLibraryDialogOpen && !boundingBox.contains(event.target)) {
+							instance.set('visible', false);
+						}
 					},
 
 					_selectFileEntry: function(groupId, title, uuid) {
@@ -1411,6 +1413,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-portlet-dynamic-data-mapping', 'liferay-item-selector-dialog']
+		requires: ['liferay-item-selector-dialog', 'liferay-portlet-dynamic-data-mapping']
 	}
 );

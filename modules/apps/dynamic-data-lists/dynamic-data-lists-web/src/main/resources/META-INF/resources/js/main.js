@@ -238,7 +238,7 @@ AUI.add(
 							editor.setAttrs(
 								{
 									data: data,
-									portletNamespace : portletNamespace,
+									portletNamespace: portletNamespace,
 									record: record,
 									recordsetId: recordsetId,
 									structure: structure,

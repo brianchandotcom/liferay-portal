@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NAME_FIELD</td>
+	<td>//input[contains(@class,'field tag-name')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

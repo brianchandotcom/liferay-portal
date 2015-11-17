@@ -33,6 +33,11 @@
 	<td>//div[contains(@id,'breadcrumb')]//a[contains(.,'${key_breadcrumbName}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>BREADCRUMB_ADT</td>
+	<td>//div/ul[contains(@class,'breadcrumb-${key_breadcrumbADTType}')] | //div[contains(@class,'breadcrumb-${key_breadcrumbADTType}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

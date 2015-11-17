@@ -154,9 +154,9 @@
 
 		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${tagName}" />
 
-		<execute function="Type" locator1="CPTagsEdit#NAME_FIELD" value1="${tagNameEdit}" />
+		<execute function="Type" locator1="Tags#NAME_FIELD" value1="${tagNameEdit}" />
 
-		<execute function="AssertClick" locator1="CPTagsEdit#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>

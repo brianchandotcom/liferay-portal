@@ -1,11 +1,11 @@
 <html>
 <head>
-<title>PGRelatedassetsSelect</title>
+<title>RelatedassetsSelect</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">PGRelatedassetsSelect</td></tr>
+<tr><td rowspan="1" colspan="3">RelatedassetsSelect</td></tr>
 </thead>
 <tbody>
 <tr>

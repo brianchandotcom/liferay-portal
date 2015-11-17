@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RSS_FEEDS</td>
+	<td>//ul[@class='palette-item-content']//li/span[contains(.,'RSS Feeds')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

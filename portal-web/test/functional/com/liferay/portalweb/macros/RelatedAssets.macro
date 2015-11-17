@@ -61,78 +61,78 @@
 
 	<command name="searchAdvancedRelatedAssetsCP">
 		<if>
-			<condition function="IsElementNotPresent" locator1="CPRelatedassetsSelect#ADVANCED_SEARCH_OPERATOR_SELECTION" />
+			<condition function="IsElementNotPresent" locator1="AdvancedSearch#MATCH_SELECT" />
 			<then>
-				<execute function="Click" locator1="CPRelatedassetsSelect#SEARCH_ADVANCED_MENULIST" />
+				<execute function="Click" locator1="RelatedassetsSelect#SEARCH_ADVANCED_MENULIST" />
 			</then>
 		</if>
 
 		<if>
-			<condition function="IsTextNotEqual" locator1="CPRelatedassetsSelect#ADVANCED_SEARCH_OPERATOR_SELECTION" value1="All" />
+			<condition function="IsTextNotEqual" locator1="AdvancedSearch#MATCH_SELECT" value1="All" />
 			<then>
-				<execute function="Select" locator1="CPRelatedassetsSelect#ADVANCED_SEARCH_OPERATOR_SELECTION" value1="All" />
+				<execute function="Select" locator1="AdvancedSearch#MATCH_SELECT" value1="All" />
 			</then>
 		</if>
 
 		<for list="ADVANCED_SEARCH_TITLE_FIELD,ADVANCED_SEARCH_DESCRIPTION_FIELD,ADVANCED_SEARCH_USER_NAME_FIELD" param="advancedSearchKey">
 			<if>
-				<condition function="IsTextNotEqual" locator1="CPRelatedassetsSelect#${advancedSearchKey}" value1="" />
+				<condition function="IsTextNotEqual" locator1="RelatedassetsSelect#${advancedSearchKey}" value1="" />
 				<then>
-					<execute function="Type" locator1="CPRelatedassetsSelect#${advancedSearchKey}" value1="" />
+					<execute function="Type" locator1="RelatedassetsSelect#${advancedSearchKey}" value1="" />
 				</then>
 			</if>
 		</for>
 
 		<if>
-			<condition function="IsTextNotEqual" locator1="CPRelatedassetsSelect#ADVANCED_SEARCH_MY_SITES_SELECTION" value1="Liferay" />
+			<condition function="IsTextNotEqual" locator1="RelatedassetsSelect#ADVANCED_SEARCH_MY_SITES_SELECTION" value1="Liferay" />
 			<then>
-				<execute function="Select" locator1="CPRelatedassetsSelect#ADVANCED_SEARCH_MY_SITES_SELECTION" value1="Liferay" />
+				<execute function="Select" locator1="RelatedassetsSelect#ADVANCED_SEARCH_MY_SITES_SELECTION" value1="Liferay" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="searchOperator" />
 			<then>
-				<execute function="Select" locator1="CPRelatedassetsSelect#ADVANCED_SEARCH_OPERATOR_SELECTION" value1="${searchOperator}" />
+				<execute function="Select" locator1="AdvancedSearch#MATCH_SELECT" value1="${searchOperator}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="searchTitle" />
 			<then>
-				<execute function="Type" locator1="CPRelatedassetsSelect#ADVANCED_SEARCH_TITLE_FIELD" value1="${searchTitle}" />
+				<execute function="Type" locator1="RelatedassetsSelect#ADVANCED_SEARCH_TITLE_FIELD" value1="${searchTitle}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="searchDescription" />
 			<then>
-				<execute function="Type" locator1="CPRelatedassetsSelect#ADVANCED_SEARCH_DESCRIPTION_FIELD" value1="${searchDescription}" />
+				<execute function="Type" locator1="RelatedassetsSelect#ADVANCED_SEARCH_DESCRIPTION_FIELD" value1="${searchDescription}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="searchUserName" />
 			<then>
-				<execute function="Type" locator1="CPRelatedassetsSelect#ADVANCED_SEARCH_USER_NAME_FIELD" value1="${searchUserName}" />
+				<execute function="Type" locator1="RelatedassetsSelect#ADVANCED_SEARCH_USER_NAME_FIELD" value1="${searchUserName}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="searchSite" />
 			<then>
-				<execute function="Select" locator1="CPRelatedassetsSelect#ADVANCED_SEARCH_MY_SITES_SELECTION" value1="${searchSite}" />
+				<execute function="Select" locator1="RelatedassetsSelect#ADVANCED_SEARCH_MY_SITES_SELECTION" value1="${searchSite}" />
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="CPRelatedassetsSelect#SEARCH_BUTTON" value1="Search" />
+		<execute function="AssertClick" locator1="RelatedassetsSelect#SEARCH_BUTTON" value1="Search" />
 	</command>
 
 	<command name="viewAdvancedSearchNoResultCP">
 		<for list="${forList}" param="assetTitle">
 			<var name="key_assetTitle" value="${assetTitle}" />
 
-			<execute function="AssertTextNotPresent" locator1="CPRelatedassetsSelect#ASSET_TABLE_TITLE" value1="${assetTitle}" />
+			<execute function="AssertTextNotPresent" locator1="RelatedassetsSelect#ASSET_TABLE_TITLE" value1="${assetTitle}" />
 		</for>
 	</command>
 
@@ -140,15 +140,15 @@
 		<for list="${forList}" param="assetTitle">
 			<var name="key_assetTitle" value="${assetTitle}" />
 
-			<execute function="AssertTextEquals" locator1="CPRelatedassetsSelect#ASSET_TABLE_TITLE" value1="${assetTitle}" />
+			<execute function="AssertTextEquals" locator1="RelatedassetsSelect#ASSET_TABLE_TITLE" value1="${assetTitle}" />
 		</for>
 	</command>
 
 	<command name="viewDefaultPG">
 		<var name="key_portletName" value="Related Assets" />
 
-		<execute function="AssertTextEquals" locator1="PGRelatedassets#TITLE" value1="Related Assets" />
-		<execute function="AssertTextEquals" locator1="PGRelatedassets#INFO_MESSAGE" value1="There are no related assets available. This application will show all assets related to the main asset of the current page." />
+		<execute function="AssertTextEquals" locator1="BasePortlet#TITLE" value1="Related Assets" />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no related assets available. This application will show all assets related to the main asset of the current page." />
 	</command>
 
 	<command name="viewNoPG">
@@ -170,15 +170,15 @@
 	</command>
 
 	<command name="viewViaSelectCP">
-		<execute function="SelectFrame" locator1="CPRelatedassetsSelect#IFRAME" />
-		<execute function="AssertElementPresent" locator1="CPRelatedassetsSelect#SEARCH_ADVANCED_MENULIST" />
-		<execute function="AssertElementPresent" locator1="CPRelatedassetsSelect#SEARCH_FIELD" />
-		<execute function="AssertTextEquals" locator1="CPRelatedassetsSelect#SEARCH_BUTTON" value1="Search" />
+		<execute function="SelectFrame" locator1="RelatedassetsSelect#IFRAME" />
+		<execute function="AssertElementPresent" locator1="RelatedassetsSelect#SEARCH_ADVANCED_MENULIST" />
+		<execute function="AssertElementPresent" locator1="RelatedassetsSelect#SEARCH_FIELD" />
+		<execute function="AssertTextEquals" locator1="RelatedassetsSelect#SEARCH_BUTTON" value1="Search" />
 
 		<for list="${forList}" param="assetTitle">
 			<var name="key_assetTitle" value="${assetTitle}" />
 
-			<execute function="AssertTextEquals" locator1="CPRelatedassetsSelect#ASSET_TABLE_TITLE" value1="${assetTitle}" />
+			<execute function="AssertTextEquals" locator1="RelatedassetsSelect#ASSET_TABLE_TITLE" value1="${assetTitle}" />
 		</for>
 	</command>
 </definition>

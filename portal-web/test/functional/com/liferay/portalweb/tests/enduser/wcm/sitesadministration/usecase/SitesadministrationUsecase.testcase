@@ -224,7 +224,7 @@
 
 		<var name="key_portletName" value="Navigation" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="PGNavigation#PORTLET_BODY" value1="This was modified by the Sample Application Adapter." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="BasePortlet#PORTLET_BODY" value1="This was modified by the Sample Application Adapter." />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
@@ -256,7 +256,7 @@
 
 		<var name="key_portletName" value="Navigation" />
 
-		<execute function="AssertTextNotPresent" locator1="PGNavigation#PORTLET_BODY" value1="This was modified by the Sample Application Adapter." />
+		<execute function="AssertTextNotPresent" locator1="BasePortlet#PORTLET_BODY" value1="This was modified by the Sample Application Adapter." />
 
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
@@ -274,7 +274,7 @@
 
 		<var name="key_portletName" value="Navigation" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="PGNavigation#PORTLET_BODY" value1="This was modified by the Sample Application Adapter." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="BasePortlet#PORTLET_BODY" value1="This was modified by the Sample Application Adapter." />
 
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
@@ -292,7 +292,7 @@
 
 		<var name="key_portletName" value="Navigation" />
 
-		<execute function="AssertTextNotPresent" locator1="PGNavigation#PORTLET_BODY" value1="This was modified by the Sample Application Adapter." />
+		<execute function="AssertTextNotPresent" locator1="BasePortlet#PORTLET_BODY" value1="This was modified by the Sample Application Adapter." />
 	</command>
 
 	<command name="MySitesDropDownDoesNotShowUserOrganizationOnTop" priority="3">

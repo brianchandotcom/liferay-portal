@@ -1267,8 +1267,8 @@
 		<execute function="AssertLocation" value1="http://localhost:8080/web/page-type-test-site-name/embedded-page" />
 
 		<execute function="SelectFrame" locator1="Embedded#EMBEDDED_IFRAME" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="PGEmbedded#EMBEDDED_SITE_TEXT" value1="Yes" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="PGEmbedded#EMBEDDED_SITE_TEXT" value1="updated" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Embedded#EMBEDDED_SITE_TEXT" value1="Yes" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Embedded#EMBEDDED_SITE_TEXT" value1="updated" />
 		<execute function="SelectFrameTop" value1="relative=top" />
 
 		<execute macro="Page#gotoPG">

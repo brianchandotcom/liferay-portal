@@ -14,7 +14,9 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/search_iterator/lexicon/top.jsp" %>
+<%@ include file="/html/taglib/ui/search_iterator/init.jsp" %>
+
+<%@ include file="/html/taglib/ui/search_iterator/lexicon/top.jspf" %>
 
 <div id="<%= namespace + id %>SearchContainer">
 
@@ -127,4 +129,4 @@
 String rowHtmlTag = "li";
 %>
 
-<%@ include file="/html/taglib/ui/search_iterator/lexicon/bottom.jsp" %>
+<%@ include file="/html/taglib/ui/search_iterator/lexicon/bottom.jspf" %>

@@ -104,6 +104,10 @@ public class ProductMenuDisplayContext {
 		return getMySiteGroupURL(mySiteGroup, privateLayout);
 	}
 
+	public PanelCategoryHelper getPanelCategoryHelper() {
+		return _panelCategoryHelper;
+	}
+
 	public String getRootPanelCategoryKey() {
 		if (_rootPanelCategoryKey != null) {
 			return _rootPanelCategoryKey;

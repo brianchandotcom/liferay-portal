@@ -39,6 +39,16 @@
 					<c:if test="<%= !childPanelCategory.includeHeader(request, new PipingServletResponse(pageContext)) %>">
 						<div class="product-menu-tab-icon">
 							<span class="<%= childPanelCategory.getIconCssClass() %> icon-monospaced"></span>
+
+							<%
+							PanelCategoryHelper panelCategoryHelper = productMenuDisplayContext.getPanelCategoryHelper();
+
+							int notificationsCount = panelCategoryHelper.getNotificationsCount(childPanelCategory.getKey(), permissionChecker, themeDisplay.getScopeGroup());
+							%>
+
+							<c:if test="<%= notificationsCount > 0 %>">
+								<span class="sticker sticker-right sticker-rounded sticker-sm sticker-warning"><%= notificationsCount %></span>
+							</c:if>
 						</div>
 
 						<div class="product-menu-tab-text">

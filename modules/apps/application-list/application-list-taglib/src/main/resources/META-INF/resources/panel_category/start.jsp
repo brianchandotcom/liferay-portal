@@ -20,6 +20,14 @@
 	<a aria-expanded="false" class="collapse-icon <%= active ? StringPool.BLANK : "collapsed" %> list-group-heading" data-toggle="collapse" href="#<%= id %>">
 		<c:if test="<%= !panelCategory.includeHeader(request, new PipingServletResponse(pageContext)) %>">
 			<%= panelCategory.getLabel(themeDisplay.getLocale()) %>
+
+			<%
+			int notificationsCount = panelCategoryHelper.getNotificationsCount(panelCategory.getKey(), permissionChecker, themeDisplay.getScopeGroup());
+			%>
+
+			<c:if test="<%= notificationsCount > 0 %>">
+				<span class="badge badge-sm badge-warning"><%= notificationsCount %></span>
+			</c:if>
 		</c:if>
 	</a>
 

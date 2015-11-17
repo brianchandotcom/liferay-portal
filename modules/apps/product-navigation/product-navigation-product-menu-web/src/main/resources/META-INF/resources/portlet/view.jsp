@@ -41,9 +41,7 @@
 							<span class="<%= childPanelCategory.getIconCssClass() %> icon-monospaced"></span>
 
 							<%
-							PanelCategoryHelper panelCategoryHelper = productMenuDisplayContext.getPanelCategoryHelper();
-
-							int notificationsCount = panelCategoryHelper.getNotificationsCount(childPanelCategory.getKey(), permissionChecker, themeDisplay.getScopeGroup());
+							int notificationsCount = productMenuDisplayContext.getNotificationsCount(childPanelCategory);
 							%>
 
 							<c:if test="<%= notificationsCount > 0 %>">

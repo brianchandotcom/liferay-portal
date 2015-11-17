@@ -14,15 +14,21 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
-<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+<%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %>
+<%
+PanelCategoryHelper panelCategoryHelper = (PanelCategoryHelper)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_HELPER);
 
-<liferay-theme:defineObjects />
+UserPanelCategory userPanelCategory = (UserPanelCategory)request.getAttribute(PanelCategoryKeys.CONTROL_PANEL_APPS);
+
+int notificationsCount = panelCategoryHelper.getNotificationsCount(userPanelCategory.getKey(), permissionChecker, themeDisplay.getScopeGroup());
+%>
 
 <div class="product-menu-tab-icon user-tab">
 	<div class="icon-monospaced">
+		<c:if test="<%= notificationsCount > 0 %>">
+			<span class="sticker sticker-right sticker-rounded sticker-sm sticker-warning"><%= notificationsCount %></span>
+		</c:if>
 		<liferay-ui:user-portrait
 			userId="<%= user.getUserId() %>"
 		/>

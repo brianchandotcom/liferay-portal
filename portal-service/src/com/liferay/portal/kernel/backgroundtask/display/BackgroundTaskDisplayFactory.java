@@ -12,30 +12,22 @@
  * details.
  */
 
-package com.liferay.portal.kernel.backgroundtask;
+package com.liferay.portal.kernel.backgroundtask.display;
 
-import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 
 /**
- * @author Michael C. Han
+ * @author Andrew Betts
  */
-public interface BackgroundTaskExecutor {
-
-	public BackgroundTaskExecutor clone();
-
-	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
-		throws Exception;
+@ProviderType
+public interface BackgroundTaskDisplayFactory {
 
 	public BackgroundTaskDisplay getBackgroundTaskDisplay(
 		BackgroundTask backgroundTask);
 
-	public BackgroundTaskStatusMessageTranslator
-		getBackgroundTaskStatusMessageTranslator();
-
-	public int getIsolationLevel();
-
-	public String handleException(BackgroundTask backgroundTask, Exception e);
-
-	public boolean isSerial();
+	public BackgroundTaskDisplay getBackgroundTaskDisplay(
+		long backgroundTaskId);
 
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.backgroundtask;
 
+import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
+
 /**
  * @author Michael C. Han
  */
@@ -39,6 +41,13 @@ public class DelegatingBackgroundTaskExecutor
 		throws Exception {
 
 		return _backgroundTaskExecutor.execute(backgroundTask);
+	}
+
+	@Override
+	public BackgroundTaskDisplay getBackgroundTaskDisplay(
+		BackgroundTask backgroundTask) {
+
+		return _backgroundTaskExecutor.getBackgroundTaskDisplay(backgroundTask);
 	}
 
 	@Override

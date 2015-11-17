@@ -42,7 +42,7 @@ public class GroupModelListener extends BaseModelListener<Group> {
 		}
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setSubscriptionLocalService(
 		SubscriptionLocalService subscriptionLocalService) {
 

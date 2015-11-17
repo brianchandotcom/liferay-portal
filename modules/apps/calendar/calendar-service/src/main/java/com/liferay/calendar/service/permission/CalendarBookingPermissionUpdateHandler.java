@@ -49,7 +49,7 @@ public class CalendarBookingPermissionUpdateHandler
 		_calendarBookingLocalService.updateCalendarBooking(calendarBooking);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setCalendarBookingSetLocalService(
 		CalendarBookingLocalService calendarBookingLocalService) {
 

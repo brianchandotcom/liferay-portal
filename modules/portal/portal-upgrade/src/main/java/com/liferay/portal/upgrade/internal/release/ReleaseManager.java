@@ -126,7 +126,7 @@ public class ReleaseManager {
 		}
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setOutputStreamTracker(
 		OutputStreamContainerFactoryTracker
 			outputStreamContainerFactoryTracker) {
@@ -217,14 +217,14 @@ public class ReleaseManager {
 		return release.getSchemaVersion();
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setReleaseLocalService(
 		ReleaseLocalService releaseLocalService) {
 
 		_releaseLocalService = releaseLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setReleasePublisher(ReleasePublisher releasePublisher) {
 		_releasePublisher = releasePublisher;
 	}

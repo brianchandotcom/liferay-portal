@@ -62,7 +62,7 @@ public class CalendarActivationListener {
 		}
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setCalendarImporterLocalService(
 		CalendarImporterLocalService calendarImporterLocalService) {
 

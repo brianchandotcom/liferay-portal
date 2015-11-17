@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class ConfigurationMessageListener extends BaseMessageListener {
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setReloadablePersistenceManager(
 		ReloadablePersistenceManager reloadablePersistenceManager) {
 
@@ -98,7 +98,7 @@ public class ConfigurationMessageListener extends BaseMessageListener {
 		}
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setConfigurationAdmin(
 		ConfigurationAdmin configurationAdmin) {
 

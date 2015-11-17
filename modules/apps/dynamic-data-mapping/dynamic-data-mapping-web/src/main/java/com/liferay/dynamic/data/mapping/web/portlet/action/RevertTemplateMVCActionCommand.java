@@ -56,7 +56,7 @@ public class RevertTemplateMVCActionCommand extends BaseMVCActionCommand {
 		_ddmTemplateService.revertTemplate(templateId, version, serviceContext);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMTemplateService(
 		DDMTemplateService ddmTemplateService) {
 

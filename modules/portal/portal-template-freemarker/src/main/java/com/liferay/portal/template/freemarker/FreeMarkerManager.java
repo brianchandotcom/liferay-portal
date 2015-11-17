@@ -263,7 +263,7 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 		}
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setTemplateClassResolver(
 		TemplateClassResolver templateClassResolver) {
 

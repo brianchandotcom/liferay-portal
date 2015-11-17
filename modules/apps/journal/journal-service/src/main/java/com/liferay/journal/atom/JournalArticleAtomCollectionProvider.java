@@ -277,7 +277,7 @@ public class JournalArticleAtomCollectionProvider
 			status, articleURL, serviceContext);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setJournalArticleService(
 		JournalArticleService journalArticleService) {
 

@@ -828,26 +828,26 @@ public class JournalArticleIndexer
 			getArticleVersions(article), isCommitImmediately());
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMStructureLocalService(
 		DDMStructureLocalService ddmStructureLocalService) {
 
 		_ddmStructureLocalService = ddmStructureLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setJournalArticleLocalService(
 		JournalArticleLocalService journalArticleLocalService) {
 
 		_journalArticleLocalService = journalArticleLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setJournalContent(JournalContent journalContent) {
 		_journalContent = journalContent;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setJournalConverter(JournalConverter journalConverter) {
 		_journalConverter = journalConverter;
 	}

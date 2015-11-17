@@ -375,7 +375,7 @@ public class DLFileEntryTypeStagedModelDataHandler
 		return existingDLFileEntryType;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMStructureLocalService(
 		DDMStructureLocalService ddmStructureLocalService) {
 

@@ -82,14 +82,14 @@ public class PortletDisplayTemplateManagerImpl
 			request, response, templateId, entries, contextObjects);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMTemplateManager(
 		DDMTemplateManager ddmTemplateManager) {
 
 		_ddmTemplateManager = ddmTemplateManager;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setPortletDisplayTemplate(
 		PortletDisplayTemplate portletDisplayTemplate) {
 

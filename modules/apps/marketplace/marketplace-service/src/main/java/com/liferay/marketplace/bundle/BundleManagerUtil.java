@@ -61,7 +61,7 @@ public class BundleManagerUtil {
 		_bundleManager.uninstallBundle(symbolicName, version);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setBundleManager(BundleManager bundleManager) {
 		_bundleManager = bundleManager;
 	}

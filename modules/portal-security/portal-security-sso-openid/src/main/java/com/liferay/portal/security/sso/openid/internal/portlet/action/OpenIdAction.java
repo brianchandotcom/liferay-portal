@@ -184,7 +184,7 @@ public class OpenIdAction extends BaseStrutsPortletAction {
 		return _forwards.get("portlet.login.open_id");
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setOpenIdProviderRegistry(
 		OpenIdProviderRegistry openIdProviderRegistry) {
 
@@ -518,7 +518,7 @@ public class OpenIdAction extends BaseStrutsPortletAction {
 		response.sendRedirect(authRequest.getDestinationUrl(true));
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setOpenId(OpenId openId) {
 		_openId = openId;
 	}

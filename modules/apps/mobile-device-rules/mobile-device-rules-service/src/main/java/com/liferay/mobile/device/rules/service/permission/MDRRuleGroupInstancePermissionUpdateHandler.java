@@ -52,7 +52,7 @@ public class MDRRuleGroupInstancePermissionUpdateHandler
 			mdrRuleGroupInstance);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setMDRRuleGroupInstanceLocalService(
 		MDRRuleGroupInstanceLocalService mdrRuleGroupInstanceLocalService) {
 

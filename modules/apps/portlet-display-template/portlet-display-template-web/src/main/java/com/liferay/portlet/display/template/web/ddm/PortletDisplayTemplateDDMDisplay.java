@@ -162,7 +162,7 @@ public class PortletDisplayTemplateDDMDisplay extends BaseDDMDisplay {
 		return LanguageUtil.get(locale, "application-display-templates");
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setPortletDisplayTemplate(
 		PortletDisplayTemplate portletDisplayTemplate) {
 

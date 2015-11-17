@@ -48,7 +48,7 @@ public class DLFolderPermissionUpdateHandler
 		_dLFolderLocalService.updateDLFolder(dlFolder);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDLFolderLocalService(
 		DLFolderLocalService dLFolderLocalService) {
 

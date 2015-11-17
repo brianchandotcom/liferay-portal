@@ -180,7 +180,7 @@ public class EditPublishConfigurationMVCActionCommand
 		}
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setExportImportConfigurationLocalService(
 		ExportImportConfigurationLocalService
 			exportImportConfigurationLocalService) {

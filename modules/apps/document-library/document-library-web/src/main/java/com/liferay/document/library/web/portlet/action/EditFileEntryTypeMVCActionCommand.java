@@ -156,12 +156,12 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 		return StringUtil.split(GetterUtil.getString(value), 0L);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDM(DDM ddm) {
 		_ddm = ddm;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMBeanTranslator(DDMBeanTranslator ddmBeanTranslator) {
 		_ddmBeanTranslator = ddmBeanTranslator;
 	}

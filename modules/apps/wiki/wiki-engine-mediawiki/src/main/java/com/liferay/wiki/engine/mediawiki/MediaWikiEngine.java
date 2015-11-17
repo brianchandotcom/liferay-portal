@@ -268,7 +268,8 @@ public class MediaWikiEngine extends BaseInputEditorWikiEngine {
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.wiki.engine.mediawiki)"
+		target = "(osgi.web.symbolicname=com.liferay.wiki.engine.mediawiki)",
+		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;

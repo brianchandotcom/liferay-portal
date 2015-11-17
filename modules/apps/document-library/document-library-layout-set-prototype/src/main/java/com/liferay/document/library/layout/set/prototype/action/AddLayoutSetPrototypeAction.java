@@ -118,7 +118,8 @@ public class AddLayoutSetPrototypeAction {
 	}
 
 	@Reference(
-		target = "(javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY + ")"
+		target = "(javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY + ")",
+		unbind = "-"
 	)
 	protected void setPortlet(Portlet portlet) {
 	}

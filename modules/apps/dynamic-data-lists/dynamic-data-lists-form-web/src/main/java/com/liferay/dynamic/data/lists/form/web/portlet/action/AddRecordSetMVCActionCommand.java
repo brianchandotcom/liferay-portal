@@ -159,28 +159,28 @@ public class AddRecordSetMVCActionCommand
 		return localizedMap;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDLRecordSetService(
 		DDLRecordSetService ddlRecordSetService) {
 
 		_ddlRecordSetService = ddlRecordSetService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMFormJSONDeserializer(
 		DDMFormJSONDeserializer ddmFormJSONDeserializer) {
 
 		_ddmFormJSONDeserializer = ddmFormJSONDeserializer;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMFormLayoutJSONDeserializer(
 		DDMFormLayoutJSONDeserializer ddmFormLayoutJSONDeserializer) {
 
 		_ddmFormLayoutJSONDeserializer = ddmFormLayoutJSONDeserializer;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMStructureService(
 		DDMStructureService ddmStructureService) {
 

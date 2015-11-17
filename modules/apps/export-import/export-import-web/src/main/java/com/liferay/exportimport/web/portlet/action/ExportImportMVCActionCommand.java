@@ -290,14 +290,14 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDLFileEntryLocalService(
 		DLFileEntryLocalService dlFileEntryLocalService) {
 
 		_dlFileEntryLocalService = dlFileEntryLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setExportImportConfigurationLocalService(
 		ExportImportConfigurationLocalService
 			exportImportConfigurationLocalService) {
@@ -306,14 +306,14 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 			exportImportConfigurationLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setExportImportService(
 		ExportImportService exportImportService) {
 
 		_exportImportService = exportImportService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setImportLayoutsMVCActionCommand(
 		ImportLayoutsMVCActionCommand importLayoutsMVCActionCommand) {
 

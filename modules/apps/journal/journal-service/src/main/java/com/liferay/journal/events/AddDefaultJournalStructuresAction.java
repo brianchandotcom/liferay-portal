@@ -95,26 +95,26 @@ public class AddDefaultJournalStructuresAction extends SimpleAction {
 			serviceContext);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setCompanyLocalService(
 		CompanyLocalService companyLocalService) {
 
 		_companyLocalService = companyLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDefaultDDMStructureHelper(
 		DefaultDDMStructureHelper defaultDDMStructureHelper) {
 
 		_defaultDDMStructureHelper = defaultDDMStructureHelper;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 		_groupLocalService = groupLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setJournalArticleLocalService(
 		JournalArticleLocalService journalArticleLocalService) {
 	}
@@ -124,7 +124,7 @@ public class AddDefaultJournalStructuresAction extends SimpleAction {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}

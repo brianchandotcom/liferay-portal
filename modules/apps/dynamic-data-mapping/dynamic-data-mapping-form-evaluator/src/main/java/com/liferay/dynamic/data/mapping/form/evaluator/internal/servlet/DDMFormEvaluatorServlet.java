@@ -107,26 +107,26 @@ public class DDMFormEvaluatorServlet extends HttpServlet {
 			response, jsonSerializer.serializeDeep(ddmFormEvaluationResult));
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMFormEvaluator(DDMFormEvaluator ddmFormEvaluator) {
 		_ddmFormEvaluator = ddmFormEvaluator;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMFormJSONDeserializer(
 		DDMFormJSONDeserializer ddmFormJSONDeserializer) {
 
 		_ddmFormJSONDeserializer = ddmFormJSONDeserializer;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMFormValuesJSONDeserializer(
 		DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer) {
 
 		_ddmFormValuesJSONDeserializer = ddmFormValuesJSONDeserializer;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setJSONFactory(JSONFactory jsonFactory) {
 		_jsonFactory = jsonFactory;
 	}

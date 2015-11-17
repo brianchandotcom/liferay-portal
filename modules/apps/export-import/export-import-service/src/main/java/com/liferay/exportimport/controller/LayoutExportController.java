@@ -778,52 +778,52 @@ public class LayoutExportController implements ExportController {
 		_exportImportLifecycleManager = exportImportLifecycleManager;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 		_groupLocalService = groupLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setImageLocalService(ImageLocalService imageLocalService) {
 		_imageLocalService = imageLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setLayoutLocalService(
 		LayoutLocalService layoutLocalService) {
 
 		_layoutLocalService = layoutLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setLayoutPrototypeLocalService(
 		LayoutPrototypeLocalService layoutPrototypeLocalService) {
 
 		_layoutPrototypeLocalService = layoutPrototypeLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setLayoutRevisionLocalService(
 		LayoutRevisionLocalService layoutRevisionLocalService) {
 
 		_layoutRevisionLocalService = layoutRevisionLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setLayoutSetBranchLocalService(
 		LayoutSetBranchLocalService layoutSetBranchLocalService) {
 
 		_layoutSetBranchLocalService = layoutSetBranchLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setLayoutSetLocalService(
 		LayoutSetLocalService layoutSetLocalService) {
 
 		_layoutSetLocalService = layoutSetLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setLayoutSetPrototypeLocalService(
 		LayoutSetPrototypeLocalService layoutSetPrototypeLocalService) {
 
@@ -837,7 +837,7 @@ public class LayoutExportController implements ExportController {
 		_portletExportController = portletExportController;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}

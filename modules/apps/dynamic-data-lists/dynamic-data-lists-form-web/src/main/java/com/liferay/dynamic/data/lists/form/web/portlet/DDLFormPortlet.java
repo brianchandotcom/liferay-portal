@@ -280,14 +280,14 @@ public class DDLFormPortlet extends MVCPortlet {
 		return false;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDLRecordSetService(
 		DDLRecordSetService ddlRecordSetService) {
 
 		_ddlRecordSetService = ddlRecordSetService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMFormRenderer(DDMFormRenderer ddmFormRenderer) {
 		_ddmFormRenderer = ddmFormRenderer;
 	}

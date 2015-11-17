@@ -44,7 +44,7 @@ public class CalendarBookingModelListener
 		}
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setCalEventLocalService(
 		CalEventLocalService calEventLocalService) {
 

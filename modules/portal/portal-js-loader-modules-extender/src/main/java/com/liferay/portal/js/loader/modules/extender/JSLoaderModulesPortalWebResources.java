@@ -51,14 +51,14 @@ public class JSLoaderModulesPortalWebResources {
 		}
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setJSLoaderModulesServlet(
 		JSLoaderModulesServlet jsLoaderModulesServlet) {
 
 		_jsLoaderModulesServlet = jsLoaderModulesServlet;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setJSLoaderModulesTracker(
 		JSLoaderModulesTracker jsLoaderModulesTracker) {
 

@@ -174,7 +174,7 @@ public class BookmarksFolderStagedModelRepository
 			bookmarksFolder.getDescription(), serviceContext);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setBookmarksEntryLocalService(
 		BookmarksFolderLocalService bookmarksFolderLocalService) {
 

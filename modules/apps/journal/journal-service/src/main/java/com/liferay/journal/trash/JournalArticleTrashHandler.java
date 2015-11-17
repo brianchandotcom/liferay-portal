@@ -383,21 +383,21 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 			permissionChecker, classPK, actionId);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMStructureLocalService(
 		DDMStructureLocalService ddmStructureLocalService) {
 
 		_ddmStructureLocalService = ddmStructureLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setJournalArticleLocalService(
 		JournalArticleLocalService journalArticleLocalService) {
 
 		_journalArticleLocalService = journalArticleLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setJournalArticleResourceLocalService(
 		JournalArticleResourceLocalService journalArticleResourceLocalService) {
 
@@ -405,7 +405,7 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 			journalArticleResourceLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setJournalFolderLocalService(
 		JournalFolderLocalService journalFolderLocalService) {
 

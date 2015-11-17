@@ -65,7 +65,7 @@ public class DeleteTemplateMVCActionCommand extends DDMBaseMVCActionCommand {
 		setRedirectAttribute(actionRequest);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMTemplateService(
 		DDMTemplateService ddmTemplateService) {
 

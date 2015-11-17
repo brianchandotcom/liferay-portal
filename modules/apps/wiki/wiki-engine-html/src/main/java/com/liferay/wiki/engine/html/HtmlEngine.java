@@ -89,7 +89,10 @@ public class HtmlEngine extends BaseInputEditorWikiEngine {
 		return null;
 	}
 
-	@Reference(target = "(javax.portlet.name=" + WikiPortletKeys.WIKI + ")")
+	@Reference(
+		target = "(javax.portlet.name=" + WikiPortletKeys.WIKI + ")",
+		unbind = "-"
+	)
 	protected void setFriendlyURLMapper(FriendlyURLMapper friendlyURLMapper) {
 		_friendlyURLMapping =
 			Portal.FRIENDLY_URL_SEPARATOR + friendlyURLMapper.getMapping();

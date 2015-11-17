@@ -83,7 +83,7 @@ public class ConvertWikiCreole extends BaseConvertProcess {
 		}
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setWikiPageLocalService(
 		WikiPageLocalService wikiPageLocalService) {
 

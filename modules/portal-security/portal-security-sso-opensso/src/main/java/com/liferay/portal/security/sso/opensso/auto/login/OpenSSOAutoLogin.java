@@ -241,12 +241,12 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 		_configurationFactory = configurationFactory;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setOpenSSO(OpenSSO openSSO) {
 		_openSSO = openSSO;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setScreenNameGenerator(
 		ScreenNameGenerator screenNameGenerator) {
 

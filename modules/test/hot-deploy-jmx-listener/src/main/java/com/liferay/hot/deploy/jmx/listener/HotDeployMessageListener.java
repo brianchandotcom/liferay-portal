@@ -84,12 +84,12 @@ public class HotDeployMessageListener extends BaseMessageListener {
 		}
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setMessageBus(MessageBus messageBus) {
 		_messageBus = messageBus;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setPluginStatisticsManager(
 		PluginStatisticsManager pluginStatisticsManager) {
 

@@ -57,7 +57,8 @@ public class CKEditorPortalWebResources implements PortalWebResources {
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.frontend.editor.ckeditor.web)"
+		target = "(osgi.web.symbolicname=com.liferay.frontend.editor.ckeditor.web)",
+		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;

@@ -680,7 +680,7 @@ public class JournalRSSUtil {
 		_journalArticleLocalService = journalArticleLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setJournalContent(JournalContent journalContent) {
 		_journalContent = journalContent;
 	}

@@ -49,7 +49,7 @@ public class CalendarResourcePermissionUpdateHandler
 		_calendarResourceLocalService.updateCalendarResource(calendarResource);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setCalendarResourceSetLocalService(
 		CalendarResourceLocalService calendarResourceLocalService) {
 

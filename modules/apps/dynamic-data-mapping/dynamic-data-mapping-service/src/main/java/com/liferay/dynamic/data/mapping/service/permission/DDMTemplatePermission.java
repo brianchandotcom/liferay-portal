@@ -280,7 +280,7 @@ public class DDMTemplatePermission {
 		return templatePermissionSupport.getResourceName(classNameId);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMPermissionSupportTracker(
 		DDMPermissionSupportTracker ddmPermissionSupportTracker) {
 

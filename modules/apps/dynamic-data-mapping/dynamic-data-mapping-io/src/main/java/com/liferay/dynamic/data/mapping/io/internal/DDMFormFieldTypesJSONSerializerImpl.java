@@ -54,28 +54,28 @@ public class DDMFormFieldTypesJSONSerializerImpl
 		return jsonArray.toString();
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMFormFieldTypeServicesTracker(
 		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker) {
 
 		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMFormJSONSerializer(
 		DDMFormJSONSerializer ddmFormJSONSerializer) {
 
 		_ddmFormJSONSerializer = ddmFormJSONSerializer;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMFormLayoutJSONSerializer(
 		DDMFormLayoutJSONSerializer ddmFormLayoutJSONSerializer) {
 
 		_ddmFormLayoutJSONSerializer = ddmFormLayoutJSONSerializer;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setJSONFactory(JSONFactory jsonFactory) {
 		_jsonFactory = jsonFactory;
 	}

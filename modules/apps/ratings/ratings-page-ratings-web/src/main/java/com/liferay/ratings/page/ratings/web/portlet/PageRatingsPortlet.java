@@ -51,7 +51,8 @@ import org.osgi.service.component.annotations.Reference;
 public class PageRatingsPortlet extends MVCPortlet {
 
 	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.ratings.page.ratings.web)(release.schema.version=1.0.0))"
+		target = "(&(release.bundle.symbolic.name=com.liferay.ratings.page.ratings.web)(release.schema.version=1.0.0))",
+		unbind = "-"
 	)
 	protected void setRelease(Release release) {
 	}

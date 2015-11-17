@@ -239,47 +239,47 @@ public class DefaultDDMStructureHelperImpl
 		return rootElement.elements("structure");
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDM(DDM ddm) {
 		_ddm = ddm;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMFormJSONDeserializer(
 		DDMFormJSONDeserializer ddmFormJSONDeserializer) {
 
 		_ddmFormJSONDeserializer = ddmFormJSONDeserializer;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMFormLayoutJSONDeserializer(
 		DDMFormLayoutJSONDeserializer ddmFormLayoutJSONDeserializer) {
 
 		_ddmFormLayoutJSONDeserializer = ddmFormLayoutJSONDeserializer;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMFormXSDDeserializer(
 		DDMFormXSDDeserializer ddmFormXSDDeserializer) {
 
 		_ddmFormXSDDeserializer = ddmFormXSDDeserializer;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMStructureLocalService(
 		DDMStructureLocalService ddmStructureLocalService) {
 
 		_ddmStructureLocalService = ddmStructureLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMTemplateLocalService(
 		DDMTemplateLocalService ddmTemplateLocalService) {
 
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMXML(DDMXML ddmXML) {
 		_ddmXML = ddmXML;
 	}

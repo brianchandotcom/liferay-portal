@@ -55,14 +55,14 @@ public class UpdateRecordSetSettingsMVCActionCommand
 		updateWorkflowDefinitionLink(actionRequest);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDLRecordSetService(
 		DDLRecordSetService ddlRecordSetService) {
 
 		_ddlRecordSetService = ddlRecordSetService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setWorkflowDefinitionLinkLocalService(
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
 

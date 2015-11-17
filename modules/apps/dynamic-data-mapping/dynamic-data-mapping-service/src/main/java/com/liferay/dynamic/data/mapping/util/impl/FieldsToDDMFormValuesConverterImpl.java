@@ -191,7 +191,7 @@ public class FieldsToDDMFormValuesConverterImpl
 		return String.valueOf(fieldValue);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDM(DDM ddm) {
 		_ddm = ddm;
 	}

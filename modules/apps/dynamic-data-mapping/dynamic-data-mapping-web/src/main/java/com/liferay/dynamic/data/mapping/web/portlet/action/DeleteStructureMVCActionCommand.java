@@ -63,7 +63,7 @@ public class DeleteStructureMVCActionCommand extends DDMBaseMVCActionCommand {
 		setRedirectAttribute(actionRequest);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMStructureService(
 		DDMStructureService ddmStructureService) {
 

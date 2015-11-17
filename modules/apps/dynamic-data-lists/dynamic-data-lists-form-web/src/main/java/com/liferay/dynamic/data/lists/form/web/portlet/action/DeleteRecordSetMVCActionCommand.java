@@ -56,14 +56,14 @@ public class DeleteRecordSetMVCActionCommand
 		_ddmStructureService.deleteStructure(recordSet.getDDMStructureId());
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDLRecordSetService(
 		DDLRecordSetService ddlRecordSetService) {
 
 		_ddlRecordSetService = ddlRecordSetService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMStructureService(
 		DDMStructureService ddmStructureService) {
 

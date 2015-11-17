@@ -104,7 +104,7 @@ public class DDLDisplayPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setDDLRecordService(DDLRecordService ddlRecordService) {
 		_ddlRecordService = ddlRecordService;
 	}
@@ -172,7 +172,7 @@ public class DDLDisplayPortlet extends MVCPortlet {
 			DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD_SET, recordSet);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDLRecordSetService(
 		DDLRecordSetService ddlRecordSetService) {
 

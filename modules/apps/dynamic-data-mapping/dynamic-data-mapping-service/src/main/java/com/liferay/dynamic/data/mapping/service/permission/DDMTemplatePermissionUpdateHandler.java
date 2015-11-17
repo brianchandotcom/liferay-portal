@@ -50,7 +50,7 @@ public class DDMTemplatePermissionUpdateHandler
 		_ddmTemplateLocalService.updateDDMTemplate(ddmTemplate);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMTemplateLocalService(
 		DDMTemplateLocalService ddmTemplateLocalService) {
 

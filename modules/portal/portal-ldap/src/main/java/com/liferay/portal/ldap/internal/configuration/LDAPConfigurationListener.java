@@ -79,7 +79,7 @@ public class LDAPConfigurationListener implements ConfigurationListener {
 		_configurationProviders.clear();
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setConfigurationAdmin(
 		ConfigurationAdmin configurationAdmin) {
 

@@ -87,7 +87,7 @@ public final class ReleasePublisher {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setReleaseLocalService(
 		ReleaseLocalService releaseLocalService) {
 

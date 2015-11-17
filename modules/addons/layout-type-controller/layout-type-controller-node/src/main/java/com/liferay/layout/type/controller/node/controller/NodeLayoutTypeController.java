@@ -85,7 +85,8 @@ public class NodeLayoutTypeController extends BaseLayoutTypeControllerImpl {
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.node)"
+		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.node)",
+		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
 		this.servletContext = servletContext;

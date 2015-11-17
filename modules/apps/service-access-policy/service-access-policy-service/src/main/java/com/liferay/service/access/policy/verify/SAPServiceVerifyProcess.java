@@ -44,14 +44,14 @@ public class SAPServiceVerifyProcess extends VerifyProcess {
 		verifyDefaultSAPEntry();
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setCompanyLocalService(
 		CompanyLocalService companyLocalService) {
 
 		_companyLocalService = companyLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setSAPEntryLocalService(
 		SAPEntryLocalService sapEntryLocalService) {
 

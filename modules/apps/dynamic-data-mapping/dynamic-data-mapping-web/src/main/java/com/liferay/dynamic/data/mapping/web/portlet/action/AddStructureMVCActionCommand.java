@@ -87,12 +87,12 @@ public class AddStructureMVCActionCommand extends DDMBaseMVCActionCommand {
 		setRedirectAttribute(actionRequest, structure);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDM(DDM ddm) {
 		_ddm = ddm;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMStructureService(
 		DDMStructureService ddmStructureService) {
 

@@ -103,12 +103,12 @@ public class DDLPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setDDLRecordService(DDLRecordService ddlRecordService) {
 		_ddlRecordService = ddlRecordService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setDDLRecordSetService(
 		DDLRecordSetService ddlRecordSetService) {
 

@@ -113,7 +113,7 @@ public class JSBundleConfigServlet extends HttpServlet {
 		_details = details;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setJSBundleConfigTracker(
 		JSBundleConfigTracker jsBundleConfigTracker) {
 

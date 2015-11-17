@@ -38,7 +38,9 @@ public class PortalSettingsTestLDAPConnectionDynamicInclude
 		return _JSP_PATH;
 	}
 
-	@Reference(target = "(osgi.web.symbolicname=com.liferay.portal.ldap)")
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.portal.ldap)", unbind = "-"
+	)
 	protected void setServletContext(ServletContext servletContext) {
 		super.servletContext = servletContext;
 	}

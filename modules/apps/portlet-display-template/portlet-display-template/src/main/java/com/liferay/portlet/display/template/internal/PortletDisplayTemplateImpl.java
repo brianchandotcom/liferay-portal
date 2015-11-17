@@ -480,7 +480,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 			request, response, ddmTemplate, entries, contextObjects);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMTemplateLocalService(
 		DDMTemplateLocalService ddmTemplateLocalService) {
 

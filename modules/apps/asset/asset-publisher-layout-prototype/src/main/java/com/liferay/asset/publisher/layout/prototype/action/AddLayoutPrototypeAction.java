@@ -104,19 +104,22 @@ public class AddLayoutPrototypeAction {
 	}
 
 	@Reference(
-		target = "(javax.portlet.name=" + AssetCategoriesNavigationPortletKeys.ASSET_CATEGORIES_NAVIGATION + ")"
+		target = "(javax.portlet.name=" + AssetCategoriesNavigationPortletKeys.ASSET_CATEGORIES_NAVIGATION + ")",
+		unbind = "-"
 	)
 	protected void setAssetCategoriesNavigationPortlet(Portlet portlet) {
 	}
 
 	@Reference(
-		target = "(javax.portlet.name=" + AssetPublisherPortletKeys.ASSET_PUBLISHER + ")"
+		target = "(javax.portlet.name=" + AssetPublisherPortletKeys.ASSET_PUBLISHER + ")",
+		unbind = "-"
 	)
 	protected void setAssetPublisherPortlet(Portlet portlet) {
 	}
 
 	@Reference(
-		target = "(javax.portlet.name=" + AssetTagsNavigationPortletKeys.ASSET_TAGS_NAVIGATION + ")"
+		target = "(javax.portlet.name=" + AssetTagsNavigationPortletKeys.ASSET_TAGS_NAVIGATION + ")",
+		unbind = "-"
 	)
 	protected void setAssetTagsNavigationPortlet(Portlet portlet) {
 	}
@@ -147,7 +150,10 @@ public class AddLayoutPrototypeAction {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	@Reference(target = "(javax.portlet.name=" + SearchPortletKeys.SEARCH + ")")
+	@Reference(
+		target = "(javax.portlet.name=" + SearchPortletKeys.SEARCH + ")",
+		unbind = "-"
+	)
 	protected void setSearchPortlet(Portlet portlet) {
 	}
 

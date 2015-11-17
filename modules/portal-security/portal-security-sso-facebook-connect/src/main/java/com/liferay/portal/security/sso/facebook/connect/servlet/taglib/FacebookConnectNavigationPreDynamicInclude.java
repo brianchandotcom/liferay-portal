@@ -99,13 +99,14 @@ public class FacebookConnectNavigationPreDynamicInclude
 			"/html/portlet/login/navigation.jsp#pre");
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setFacebookConnect(FacebookConnect facebookConnect) {
 		_facebookConnect = facebookConnect;
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.security.sso.facebook.connect)"
+		target = "(osgi.web.symbolicname=com.liferay.portal.security.sso.facebook.connect)",
+		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;

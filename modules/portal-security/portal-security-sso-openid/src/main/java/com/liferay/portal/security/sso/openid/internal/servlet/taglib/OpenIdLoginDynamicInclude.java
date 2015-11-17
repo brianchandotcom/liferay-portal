@@ -63,7 +63,8 @@ public class OpenIdLoginDynamicInclude extends BaseDynamicInclude {
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.security.sso.openid)"
+		target = "(osgi.web.symbolicname=com.liferay.portal.security.sso.openid)",
+		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;

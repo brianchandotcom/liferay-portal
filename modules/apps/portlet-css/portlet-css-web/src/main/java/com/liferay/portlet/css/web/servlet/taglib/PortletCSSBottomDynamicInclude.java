@@ -60,7 +60,10 @@ public class PortletCSSBottomDynamicInclude extends BaseDynamicInclude {
 		dynamicIncludeRegistry.register("/html/common/themes/bottom.jsp#post");
 	}
 
-	@Reference(target = "(osgi.web.symbolicname=com.liferay.portlet.css.web)")
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.portlet.css.web)",
+		unbind = "-"
+	)
 	protected void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
 	}

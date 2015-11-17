@@ -62,7 +62,7 @@ public class CheckBookingsMessageListener
 		_calendarBookingLocalService.checkCalendarBookings();
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setCalendarBookingLocalService(
 		CalendarBookingLocalService calendarBookingLocalService) {
 

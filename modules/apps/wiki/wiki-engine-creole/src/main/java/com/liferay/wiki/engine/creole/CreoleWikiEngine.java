@@ -156,7 +156,8 @@ public class CreoleWikiEngine extends BaseInputEditorWikiEngine {
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.wiki.engine.creole)"
+		target = "(osgi.web.symbolicname=com.liferay.wiki.engine.creole)",
+		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;

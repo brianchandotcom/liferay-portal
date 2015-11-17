@@ -81,13 +81,14 @@ public class ItemSelectorPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setItemSelector(ItemSelector itemSelector) {
 		_itemSelector = itemSelector;
 	}
 
 	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.item.selector.web)(release.schema.version=1.0.0))"
+		target = "(&(release.bundle.symbolic.name=com.liferay.item.selector.web)(release.schema.version=1.0.0))",
+		unbind = "-"
 	)
 	protected void setRelease(Release release) {
 	}

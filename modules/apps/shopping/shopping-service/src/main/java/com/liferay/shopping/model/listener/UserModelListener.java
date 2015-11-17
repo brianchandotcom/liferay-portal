@@ -39,7 +39,7 @@ public class UserModelListener extends BaseModelListener<User> {
 		}
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setShoppingCartLocalService(
 		ShoppingCartLocalService shoppingCartLocalService) {
 

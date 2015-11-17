@@ -101,7 +101,7 @@ public class ResourcesImporterHotDeployMessageListener
 		initialize(message);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setCompanyLocalService(
 		CompanyLocalService companyLocalService) {
 
@@ -115,7 +115,7 @@ public class ResourcesImporterHotDeployMessageListener
 	protected void setDestination(Destination destination) {
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setImporterFactory(ImporterFactory importerFactory) {
 		_importerFactory = importerFactory;
 	}

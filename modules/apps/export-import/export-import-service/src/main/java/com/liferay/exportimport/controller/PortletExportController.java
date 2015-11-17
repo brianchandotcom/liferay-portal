@@ -1251,7 +1251,7 @@ public class PortletExportController implements ExportController {
 		return PROCESS_FLAG_PORTLET_EXPORT_IN_PROCESS;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setAssetEntryLocalService(
 		AssetEntryLocalService assetEntryLocalService) {
 
@@ -1265,40 +1265,40 @@ public class PortletExportController implements ExportController {
 		_exportImportLifecycleManager = exportImportLifecycleManager;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 		_groupLocalService = groupLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setLayoutLocalService(
 		LayoutLocalService layoutLocalService) {
 
 		_layoutLocalService = layoutLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setPortletItemLocalService(
 		PortletItemLocalService portletItemLocalService) {
 
 		_portletItemLocalService = portletItemLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setPortletLocalService(
 		PortletLocalService portletLocalService) {
 
 		_portletLocalService = portletLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setPortletPreferencesLocalService(
 		PortletPreferencesLocalService portletPreferencesLocalService) {
 
 		_portletPreferencesLocalService = portletPreferencesLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}

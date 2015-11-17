@@ -150,7 +150,7 @@ public class ExportArticleUtil {
 			request, response, fileName, is, contentType);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setJournalContent(JournalContent journalContent) {
 		_journalContent = journalContent;
 	}

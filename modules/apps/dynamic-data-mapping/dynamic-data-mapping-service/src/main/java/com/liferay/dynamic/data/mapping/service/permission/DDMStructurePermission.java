@@ -228,7 +228,7 @@ public class DDMStructurePermission {
 		return structurePermissionSupport.getResourceName();
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMPermissionSupportTracker(
 		DDMPermissionSupportTracker ddmPermissionSupportTracker) {
 

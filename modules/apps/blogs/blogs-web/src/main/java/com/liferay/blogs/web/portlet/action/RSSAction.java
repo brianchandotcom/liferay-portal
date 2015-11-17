@@ -135,7 +135,7 @@ public class RSSAction extends BaseRSSStrutsAction {
 		_blogsEntryService = blogsEntryService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setConfigurationFactory(
 		ConfigurationFactory configurationFactory) {
 

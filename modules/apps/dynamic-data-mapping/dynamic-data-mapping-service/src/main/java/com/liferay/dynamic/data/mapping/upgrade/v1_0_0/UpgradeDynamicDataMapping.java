@@ -64,11 +64,17 @@ import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.service.ResourceActionLocalService;
+import com.liferay.portal.service.ResourcePermissionLocalService;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.asset.service.AssetEntryLocalService;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 
 import java.io.File;
@@ -94,6 +100,22 @@ import java.util.Set;
  * @author Marcellus Tavares
  */
 public class UpgradeDynamicDataMapping extends UpgradeProcess {
+
+	public UpgradeDynamicDataMapping(
+		AssetEntryLocalService assetEntryLocalService,
+		DLFileEntryLocalService dLFileEntryLocalService,
+		DLFileVersionLocalService dlFileVersionLocalService,
+		DLFolderLocalService dlFolderLocalService,
+		ResourceActionLocalService resourceActionLocalService,
+		ResourcePermissionLocalService resourcePermissionLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
+		_dLFileEntryLocalService = dLFileEntryLocalService;
+		_dlFileVersionLocalService = dlFileVersionLocalService;
+		_dlFolderLocalService = dlFolderLocalService;
+		_resourceActionLocalService = resourceActionLocalService;
+		_resourcePermissionLocalService = resourcePermissionLocalService;
+	}
 
 	protected void addStructureLayout(
 			String uuid_, long structureLayoutId, long groupId, long companyId,
@@ -961,7 +983,14 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				DDMTemplate.class.getName());
 	}
 
+private final AssetEntryLocalService _assetEntryLocalService;
 	private final Map<Long, DDMForm> _ddmForms = new HashMap<>();
+	private final DLFileEntryLocalService _dLFileEntryLocalService;
+	private final DLFileVersionLocalService _dlFileVersionLocalService;
+	private final DLFolderLocalService _dlFolderLocalService;
+	private final ResourceActionLocalService _resourceActionLocalService;
+	private final ResourcePermissionLocalService
+		_resourcePermissionLocalService;
 	private final Map<Long, Long> _structureClassNameIds = new HashMap<>();
 	private final Map<Long, Long> _templateResourceClassNameIds =
 		new HashMap<>();

@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 package com.liferay.jenkins.results.parser;
 
 import java.net.URI;
@@ -5,109 +19,110 @@ import java.net.URLDecoder;
 
 import org.json.JSONObject;
 
-public class JenkinsPerformanceResult implements Comparable<JenkinsPerformanceResult>{
+/**
+ * @author Peter Yoo
+ */
+public class JenkinsPerformanceResult
+	implements Comparable<JenkinsPerformanceResult> {
+
+	public JenkinsPerformanceResult(
+			String buildName, JSONObject caseJSONObject,
+			JSONObject childJSONObject)
+		throws Exception {
+
+		batch = buildName;
+
+		setAxis(childJSONObject);
+		setCaseInfo(caseJSONObject);
+		setUrl(childJSONObject);
+	}
 
 	public int compareTo(JenkinsPerformanceResult result) {
 		return -1 * Float.compare(getDuration(), result.getDuration());
 	}
 
 	public String getAxis() {
-		return _axis;
+		return axis;
 	}
 
 	public String getBatch() {
-		return _batch;
+		return batch;
 	}
 
 	public String getClassName() {
-		return _class;
+		return className;
 	}
 
 	public float getDuration() {
-		return _duration;
+		return duration;
 	}
 
 	public String getName() {
-		return _name;
+		return name;
 	}
 
 	public String getStatus() {
-		return _status;
+		return status;
 	}
 
 	public String getUrl() {
-		return _url;
+		return url;
+	}
+
+	public JSONObject toJSONObject() {
+		JSONObject jsonObject = new JSONObject();
+
+		jsonObject.put("axis", axis);
+		jsonObject.put("batch", batch);
+		jsonObject.put("className", className);
+		jsonObject.put("duration", duration);
+		jsonObject.put("name", name);
+		jsonObject.put("status", status);
+
+		return jsonObject;
 	}
 
 	public String toString() {
 		return toJSONObject().toString(4);
 	}
 
-	public JenkinsPerformanceResult(String buildName, JSONObject caseJSONObject, JSONObject childJSONObject) throws Exception {
-		_batch = buildName;
+	protected void setAxis(JSONObject childJSONObject) throws Exception {
+		String urlString = childJSONObject.getString("url");
 
-		extractAxisInfo(childJSONObject);
-		extractCaseInfo(caseJSONObject);
-		extractURLInfo(childJSONObject);
+		urlString = URLDecoder.decode(urlString, "UTF-8");
+
+		int x = urlString.indexOf("AXIS_VARIABLE");
+
+		urlString = urlString.substring(x);
+
+		int y = urlString.indexOf(",");
+
+		axis = urlString.substring(0, y);
 	}
 
-	public JSONObject toJSONObject() {
-		JSONObject obj = new JSONObject();
-
-		obj.put("axis", _axis);
-		obj.put("batch", _batch);
-		obj.put("className", _class);
-		obj.put("duration", _duration);
-		obj.put("name", _name);
-		obj.put("status", _status);
-
-		return obj;
+	protected void setCaseInfo(JSONObject caseObject) {
+		className = caseObject.getString("className");
+		duration = caseObject.getLong("duration");
+		name = caseObject.getString("name");
+		status = caseObject.getString("status");
 	}
 
-	private void extractAxisInfo(JSONObject childJSONObject) throws Exception {
-		String url = childJSONObject.getString("url");
+	protected void setUrl(JSONObject childJSONObject) throws Exception {
+		String urlString = childJSONObject.getString("url");
 
-		url = URLDecoder.decode(url, "UTF-8");
-
-		int startIdx = url.indexOf("AXIS_VARIABLE");
-
-		url = url.substring(startIdx);
-
-		int endIdx = url.indexOf(",");
-
-		_axis = url.substring(0, endIdx);
-	}
-
-	private void extractCaseInfo(JSONObject caseObject) {
-		_class = caseObject.getString("className");
-		_duration = caseObject.getLong("duration");
-		_name = caseObject.getString("name");
-		_status = caseObject.getString("status");
-	}
-
-	private void extractURLInfo(JSONObject childJSONObject) throws Exception {
-		String url = childJSONObject.getString("url");
-
-		StringBuilder sb = new StringBuilder(url);
+		StringBuilder sb = new StringBuilder(urlString);
 
 		sb.append("testReport/");
 
-		int x = _class.lastIndexOf(".");
+		int x = className.lastIndexOf(".");
 
-		String packageName = _class.substring(0, x);
-
-		String className = _class.substring(x + 1);
-
-		sb.append(packageName);
-
+		sb.append(className.substring(0, x));
+		sb.append("/");
+		sb.append(className.substring(x + 1));
 		sb.append("/");
 
-		sb.append(className);
-
-		sb.append("/");
-
-		if (packageName.contains("poshi")) {
-			String poshiName = _name;
+		if (className.contains("poshi")) {
+			String poshiName = name;
 
 			poshiName = poshiName.replaceAll("\\[", "_");
 			poshiName = poshiName.replaceAll("\\]", "_");
@@ -117,20 +132,20 @@ public class JenkinsPerformanceResult implements Comparable<JenkinsPerformanceRe
 			sb.append("/");
 		}
 		else {
-			sb.append(_name);
+			sb.append(name);
 		}
 
 		URI uri = new URI(sb.toString());
 
-		_url = uri.toASCIIString();
+		url = uri.toASCIIString();
 	}
 
-	protected String _axis;
-	protected String _batch;
-	protected String _class;
-	protected float _duration;
-	protected String _name;
-	protected String _status;
-	protected String _url;
+	protected String axis;
+	protected String batch;
+	protected String className;
+	protected float duration;
+	protected String name;
+	protected String status;
+	protected String url;
 
 }

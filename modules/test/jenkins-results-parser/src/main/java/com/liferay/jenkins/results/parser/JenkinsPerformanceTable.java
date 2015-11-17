@@ -1,12 +1,79 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 package com.liferay.jenkins.results.parser;
 
-import java.util.List;
-
 import org.apache.tools.ant.Project;
+
 import org.dom4j.Element;
 import org.dom4j.tree.DefaultElement;
 
+/**
+ * @author Peter Yoo
+ */
 public class JenkinsPerformanceTable {
+
+	public static String generateTableHTML(Project project) {
+		Element tableElement = new DefaultElement("table");
+
+		Element headerElement = createTableHeader();
+
+		tableElement.add(headerElement);
+
+		if (JenkinsPerformanceDataProcessor.resultsList == null) {
+			return "";
+		}
+
+		for (JenkinsPerformanceResult result :
+				JenkinsPerformanceDataProcessor.resultsList) {
+
+			Element row = createRow(result);
+
+			tableElement.add(row);
+		}
+
+		JenkinsPerformanceDataProcessor.resultsList.clear();
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("<style>\n");
+		sb.append(" table {\n");
+		sb.append("  table-layout: fixed;\n");
+		sb.append("  width: 95%;\n");
+		sb.append(" }\n");
+		sb.append(" table, th, td {\n");
+		sb.append("  border: 1px solid black;\n");
+		sb.append("  border-collapse: collapse;\n");
+		sb.append(" }\n");
+		sb.append(" th, td {\n");
+		sb.append("  word-wrap: break-word;\n");
+		sb.append("  padding: 3px;\n");
+		sb.append("  text-align: left;\n");
+		sb.append(" }\n");
+		sb.append("</style>\n");
+
+		sb.append(tableElement.asXML());
+
+		return sb.toString();
+	}
+
+	protected static Element createRow(JenkinsPerformanceResult result) {
+		return createRow(
+			"td", result.getAxis(), result.getBatch(), result.getClassName(),
+			Float.toString(result.getDuration()), result.getName(),
+			result.getStatus(), result.getUrl());
+	}
 
 	protected static Element createRow(
 		String cellTag, String axis, String batch, String className,
@@ -66,58 +133,8 @@ public class JenkinsPerformanceTable {
 
 	protected static Element createTableHeader() {
 		return createRow(
-			"th", "Axis", "Batch", "Class Name",
-			"Duration (Seconds)", "Name", "Status", null);
+			"th", "Axis", "Batch", "Class Name", "Duration (Seconds)", "Name",
+			"Status", null);
 	}
 
-	protected static Element createRow(JenkinsPerformanceResult result) {
-		return createRow(
-			"td", result.getAxis(), result.getBatch(),
-			result.getClassName(),
-			Float.toString(result.getDuration()),
-			result.getName(), result.getStatus(),
-			result.getUrl());
-	}	
-	
-	public static String generateTableHTML(Project project) {
-		Element tableElement = new DefaultElement("table");
-
-		Element headerElement = createTableHeader();
-
-		tableElement.add(headerElement);
-		
-		if (JenkinsPerformanceDataProcessor._globalList == null) {
-			return "";
-		}
-		
-		for (JenkinsPerformanceResult result : JenkinsPerformanceDataProcessor._globalList) {
-			Element row = createRow(result);
-
-			tableElement.add(row);
-		}
-
-		JenkinsPerformanceDataProcessor._globalList.clear();
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("<style>\n");
-		sb.append("    table {\n");
-		sb.append("        table-layout: fixed;\n");
-		sb.append("        width: 95%;\n");
-		sb.append("    }\n");
-		sb.append("    table, th, td {\n");
-		sb.append("        border: 1px solid black;\n");
-		sb.append("        border-collapse: collapse;\n");
-		sb.append("    }\n");
-		sb.append("    th, td {\n");
-		sb.append("        word-wrap: break-word;\n");
-		sb.append("        padding: 3px;\n");
-		sb.append("        text-align: left;\n");
-		sb.append("    }\n");
-		sb.append("</style>\n");
-
-		sb.append(tableElement.asXML());
-
-		return sb.toString();
-	}
 }

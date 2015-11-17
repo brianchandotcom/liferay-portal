@@ -79,7 +79,7 @@ public class QuartzSchemaManager {
 		}
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setInfrastructureUtil(
 		InfrastructureUtil infrastructureUtil) {
 	}

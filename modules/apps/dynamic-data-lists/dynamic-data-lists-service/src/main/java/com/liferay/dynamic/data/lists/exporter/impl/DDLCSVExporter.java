@@ -119,28 +119,28 @@ public class DDLCSVExporter extends BaseDDLExporter {
 		return csv.getBytes();
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDLRecordLocalService(
 		DDLRecordLocalService ddlRecordLocalService) {
 
 		_ddlRecordLocalService = ddlRecordLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDLRecordSetService(
 		DDLRecordSetService ddlRecordSetService) {
 
 		_ddlRecordSetService = ddlRecordSetService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMFormValuesToFieldsConverter(
 		DDMFormValuesToFieldsConverter ddmFormValuesToFieldsConverter) {
 
 		_ddmFormValuesToFieldsConverter = ddmFormValuesToFieldsConverter;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setStorageEngine(StorageEngine storageEngine) {
 		_storageEngine = storageEngine;
 	}

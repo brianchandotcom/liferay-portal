@@ -75,7 +75,7 @@ public class DateDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 		template.put("displayValue", displayValue);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDateDDMFormFieldValueRenderer(
 		DateDDMFormFieldValueRenderer dateDDMFormFieldValueRenderer) {
 

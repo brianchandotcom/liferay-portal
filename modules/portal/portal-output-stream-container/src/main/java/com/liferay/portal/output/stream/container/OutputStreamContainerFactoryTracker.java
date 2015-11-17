@@ -58,7 +58,7 @@ public class OutputStreamContainerFactoryTracker {
 		return _outputStreamContainerFactories.keySet();
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setOutputStreamContainerFactory(
 		OutputStreamContainerFactory outputStreamContainerFactory) {
 

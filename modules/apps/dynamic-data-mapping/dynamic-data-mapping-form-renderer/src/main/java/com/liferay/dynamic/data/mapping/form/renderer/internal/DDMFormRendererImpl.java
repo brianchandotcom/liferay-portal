@@ -268,24 +268,24 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		return writer.toString();
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDM(DDM ddm) {
 		_ddm = ddm;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMFormEvaluator(DDMFormEvaluator ddmFormEvaluator) {
 		_ddmFormEvaluator = ddmFormEvaluator;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMFormFieldTypeServicesTracker(
 		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker) {
 
 		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setJSONFactory(JSONFactory jsonFactory) {
 		_jsonFactory = jsonFactory;
 	}

@@ -382,52 +382,52 @@ public class AddDefaultDocumentLibraryStructuresAction extends SimpleAction {
 		return localizationMap;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setCompanyLocalService(
 		CompanyLocalService companyLocalService) {
 
 		_companyLocalService = companyLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDM(DDM ddm) {
 		_ddm = ddm;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMBeanTranslator(DDMBeanTranslator ddmBeanTranslator) {
 		_ddmBeanTranslator = ddmBeanTranslator;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMFormXSDDeserializer(
 		DDMFormXSDDeserializer ddmFormXSDDeserializer) {
 
 		_ddmFormXSDDeserializer = ddmFormXSDDeserializer;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMStructureLocalService(
 		DDMStructureLocalService ddmStructureLocalService) {
 
 		_ddmStructureLocalService = ddmStructureLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDefaultDDMStructureHelper(
 		DefaultDDMStructureHelper defaultDDMStructureHelper) {
 
 		_defaultDDMStructureHelper = defaultDDMStructureHelper;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDLFileEntryTypeLocalService(
 		DLFileEntryTypeLocalService dlFileEntryTypeLocalService) {
 
 		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 		_groupLocalService = groupLocalService;
 	}
@@ -437,7 +437,7 @@ public class AddDefaultDocumentLibraryStructuresAction extends SimpleAction {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}

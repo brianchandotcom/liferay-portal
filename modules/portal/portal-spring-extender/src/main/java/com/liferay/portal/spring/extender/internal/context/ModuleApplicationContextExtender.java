@@ -102,11 +102,14 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 		_logger.log(Logger.LOG_ERROR, s, throwable);
 	}
 
-	@Reference(target = "(&(bean.id=liferayDataSource)(original.bean=true))")
+	@Reference(
+		target = "(&(bean.id=liferayDataSource)(original.bean=true))",
+		unbind = "-"
+	)
 	protected void setDataSource(DataSource dataSource) {
 	}
 
-	@Reference(target = "(original.bean=true)")
+	@Reference(target = "(original.bean=true)", unbind = "-")
 	protected void setInfrastructureUtil(
 		InfrastructureUtil infrastructureUtil) {
 	}
@@ -116,11 +119,11 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	@Reference(target = "(original.bean=true)")
+	@Reference(target = "(original.bean=true)", unbind = "-")
 	protected void setSaxReaderUtil(SAXReaderUtil saxReaderUtil) {
 	}
 
-	@Reference(target = "(original.bean=true)")
+	@Reference(target = "(original.bean=true)", unbind = "-")
 	protected void setServiceConfigurator(
 		ServiceConfigurator serviceConfigurator) {
 

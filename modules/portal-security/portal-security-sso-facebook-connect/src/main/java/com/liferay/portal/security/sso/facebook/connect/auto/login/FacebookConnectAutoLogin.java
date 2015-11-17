@@ -93,7 +93,7 @@ public class FacebookConnectAutoLogin extends BaseAutoLogin {
 		return null;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setFacebookConnect(FacebookConnect facebookConnect) {
 		_facebookConnect = facebookConnect;
 	}

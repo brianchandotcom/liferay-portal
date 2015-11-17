@@ -144,7 +144,7 @@ public class JournalFolderPermission implements BaseModelPermissionChecker {
 		check(permissionChecker, groupId, primaryKey, actionId);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setJournalFolderLocalService(
 		JournalFolderLocalService journalFolderLocalService) {
 

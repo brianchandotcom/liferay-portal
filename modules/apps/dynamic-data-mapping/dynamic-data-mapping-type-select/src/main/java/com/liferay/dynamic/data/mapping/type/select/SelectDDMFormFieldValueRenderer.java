@@ -69,7 +69,7 @@ public class SelectDDMFormFieldValueRenderer
 		return ddmFormField.getDDMFormFieldOptions();
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setSelectDDMFormFieldValueAccessor(
 		SelectDDMFormFieldValueAccessor selectDDMFormFieldValueAccessor) {
 

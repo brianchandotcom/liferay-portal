@@ -68,7 +68,7 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 	}
 
 	@Override
-	@Reference
+	@Reference(unbind = "-")
 	public void setIndexFactory(IndexFactory indexFactory) {
 		super.setIndexFactory(indexFactory);
 	}

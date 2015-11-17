@@ -314,7 +314,7 @@ public class JournalFolderTrashHandler extends JournalBaseTrashHandler {
 			permissionChecker, folder, actionId);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setJournalFolderLocalService(
 		JournalFolderLocalService journalFolderLocalService) {
 

@@ -135,28 +135,28 @@ public class JournalArticleWorkflowHandler
 		return themeDisplay.getPathThemeImages() + "/common/history.png";
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMStructureLocalService(
 		DDMStructureLocalService ddmStructureLocalService) {
 
 		_ddmStructureLocalService = ddmStructureLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setJournalArticleLocalService(
 		JournalArticleLocalService journalArticleLocalService) {
 
 		_journalArticleLocalService = journalArticleLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setJournalFolderLocalService(
 		JournalFolderLocalService journalFolderLocalService) {
 
 		_journalFolderLocalService = journalFolderLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setWorkflowDefinitionLinkLocalService(
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
 

@@ -57,7 +57,8 @@ public class BBCodeEditorPortalWebResources implements PortalWebResources {
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.frontend.editor.bbcode.web)"
+		target = "(osgi.web.symbolicname=com.liferay.frontend.editor.bbcode.web)",
+		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;

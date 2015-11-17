@@ -67,7 +67,7 @@ public class OpenIdAutoLogin extends BaseAutoLogin {
 		return credentials;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setOpenId(OpenId openId) {
 		_openId = openId;
 	}

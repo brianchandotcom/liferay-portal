@@ -467,21 +467,21 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		}
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setAttributesTransformer(
 		AttributesTransformer attributesTransformer) {
 
 		_attributesTransformer = attributesTransformer;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setLDAPToPortalConverter(
 		LDAPToPortalConverter ldapToPortalConverter) {
 
 		_ldapToPortalConverter = ldapToPortalConverter;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setSingleVMPool(SingleVMPool singleVMPool) {
 		_portalCache = (PortalCache<String, Long>)singleVMPool.getPortalCache(
 			UserImporter.class.getName(), false);

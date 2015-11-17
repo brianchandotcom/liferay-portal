@@ -68,7 +68,7 @@ public class UserGroupModelListener extends BaseModelListener<UserGroup> {
 		}
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setUserExporter(UserExporter userExporter) {
 		_userExporter = userExporter;
 	}

@@ -98,14 +98,14 @@ public class NtlmFilter extends BaseFilter {
 		return false;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setNetlogonConnectionManager(
 		NetlogonConnectionManager netlogonConnectionManager) {
 
 		_netlogonConnectionManager = netlogonConnectionManager;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setSingleVMPool(SingleVMPool singleVMPool) {
 		_portalCache = (PortalCache<String, byte[]>)singleVMPool.getPortalCache(
 			NtlmFilter.class.getName());

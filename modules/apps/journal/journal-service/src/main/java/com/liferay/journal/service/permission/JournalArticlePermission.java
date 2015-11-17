@@ -252,14 +252,14 @@ public class JournalArticlePermission implements BaseModelPermissionChecker {
 		check(permissionChecker, primaryKey, actionId);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setJournalArticleLocalService(
 		JournalArticleLocalService journalArticleLocalService) {
 
 		_journalArticleLocalService = journalArticleLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setJournalFolderLocalService(
 		JournalFolderLocalService journalFolderLocalService) {
 

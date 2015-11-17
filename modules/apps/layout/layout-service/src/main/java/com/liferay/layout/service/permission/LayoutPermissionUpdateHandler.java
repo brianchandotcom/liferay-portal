@@ -47,7 +47,7 @@ public class LayoutPermissionUpdateHandler implements PermissionUpdateHandler {
 		_layoutLocalService.updateLayout(layout);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setLayoutSetLocalService(
 		LayoutLocalService layoutLocalService) {
 

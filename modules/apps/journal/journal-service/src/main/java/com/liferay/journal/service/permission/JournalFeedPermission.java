@@ -126,7 +126,7 @@ public class JournalFeedPermission implements BaseModelPermissionChecker {
 		check(permissionChecker, primaryKey, actionId);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setJournalArticleLocalService(
 		JournalFeedLocalService journalFeedLocalService) {
 

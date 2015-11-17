@@ -93,26 +93,26 @@ public class AddDefaultDDLStructuresAction extends SimpleAction {
 			serviceContext);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setCompanyLocalService(
 		CompanyLocalService companyLocalService) {
 
 		_companyLocalService = companyLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDLRecordSetLocalService(
 		DDLRecordSetLocalService ddlRecordSetLocalService) {
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDefaultDDMStructureHelper(
 		DefaultDDMStructureHelper defaultDDMStructureHelper) {
 
 		_defaultDDMStructureHelper = defaultDDMStructureHelper;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 		_groupLocalService = groupLocalService;
 	}
@@ -121,7 +121,7 @@ public class AddDefaultDDLStructuresAction extends SimpleAction {
 	protected void setServletContext(ServletContext servletContext) {
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}

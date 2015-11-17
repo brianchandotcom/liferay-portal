@@ -91,7 +91,7 @@ public class ExportRecordSetMVCResourceCommand extends BaseMVCResourceCommand {
 			request, response, fileName, bytes, contentType);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDLExporterFactory(
 		DDLExporterFactory ddlExporterFactory) {
 

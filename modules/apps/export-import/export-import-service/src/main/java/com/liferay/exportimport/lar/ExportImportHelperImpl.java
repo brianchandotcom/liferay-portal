@@ -1555,45 +1555,45 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		return false;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDlFileEntryLocalService(
 		DLFileEntryLocalService dlFileEntryLocalService) {
 
 		_dlFileEntryLocalService = dlFileEntryLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 		_groupLocalService = groupLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setLayoutLocalService(
 		LayoutLocalService layoutLocalService) {
 
 		_layoutLocalService = layoutLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setLayoutService(LayoutService layoutService) {
 		_layoutService = layoutService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setPortletLocalService(
 		PortletLocalService portletLocalService) {
 
 		_portletLocalService = portletLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setSystemEventLocalService(
 		SystemEventLocalService systemEventLocalService) {
 
 		_systemEventLocalService = systemEventLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}

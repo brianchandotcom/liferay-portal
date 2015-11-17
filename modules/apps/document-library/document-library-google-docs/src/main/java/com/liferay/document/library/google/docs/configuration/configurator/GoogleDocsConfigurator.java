@@ -83,47 +83,47 @@ public class GoogleDocsConfigurator {
 		actionableDynamicQuery.performActions();
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setClassNameLocalService(
 		ClassNameLocalService classNameLocalService) {
 
 		_classNameLocalService = classNameLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setCompanyLocalService(
 		CompanyLocalService companyLocalService) {
 
 		_companyLocalService = companyLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMStructureLinkManager(
 		DDMStructureLinkManager ddmStructureLinkManager) {
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMStructureLocalService(
 		DDMStructureLocalService ddmStructureLocalService) {
 
 		_ddmStructureLocalService = ddmStructureLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDLFileEntryLocalService(
 		DLFileEntryLocalService dlFileEntryLocalService) {
 
 		_dlFileEntryLocalService = dlFileEntryLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDLFileEntryMetadataLocalService(
 		DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService) {
 
 		_dlFileEntryMetadataLocalService = dlFileEntryMetadataLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDLFileEntryTypeLocalService(
 		DLFileEntryTypeLocalService dlFileEntryTypeLocalService) {
 
@@ -135,12 +135,12 @@ public class GoogleDocsConfigurator {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setStorageEngine(StorageEngine storageEngine) {
 		_storageEngine = storageEngine;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}

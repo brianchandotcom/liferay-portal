@@ -131,7 +131,8 @@ public class ControlPanelLayoutTypeController
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.control.panel)"
+		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.control.panel)",
+		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
 		this.servletContext = servletContext;

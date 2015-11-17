@@ -68,7 +68,7 @@ public class GetStructureMVCResourceCommand extends BaseMVCResourceCommand {
 			definition.getBytes(), ContentTypes.TEXT_XML_UTF8);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMStructureService(
 		DDMStructureService ddmStructureService) {
 

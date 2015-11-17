@@ -47,7 +47,7 @@ public class PluginManager extends StandardMBean implements PluginMBeanManager {
 		return _pluginStatisticsManager.getRegisteredLegacyPlugins();
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setPluginStatistics(
 		PluginStatisticsManager pluginStatisticsManager) {
 

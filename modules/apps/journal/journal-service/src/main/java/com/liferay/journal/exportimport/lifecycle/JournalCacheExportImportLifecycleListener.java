@@ -61,7 +61,7 @@ public class JournalCacheExportImportLifecycleListener
 		clearCache();
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setJournalContent(JournalContent journalContent) {
 		_journalContent = journalContent;
 	}

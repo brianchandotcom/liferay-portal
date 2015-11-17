@@ -53,7 +53,8 @@ public class DDMStructuresPortletConfigurationIconFactory
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.dynamic.data.lists.web)"
+		target = "(osgi.web.symbolicname=com.liferay.dynamic.data.lists.web)",
+		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);

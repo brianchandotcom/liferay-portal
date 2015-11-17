@@ -134,7 +134,7 @@ public class ExportImportConfigurationTrashHandler extends BaseTrashHandler {
 		return GroupPermissionUtil.contains(permissionChecker, group, actionId);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setExportImportConfigurationLocalService(
 		ExportImportConfigurationLocalService
 			exportImportConfigurationLocalService) {
@@ -143,7 +143,7 @@ public class ExportImportConfigurationTrashHandler extends BaseTrashHandler {
 			exportImportConfigurationLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 		_groupLocalService = groupLocalService;
 	}

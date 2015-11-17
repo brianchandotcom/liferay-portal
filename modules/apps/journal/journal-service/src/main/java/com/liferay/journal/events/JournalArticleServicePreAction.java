@@ -86,14 +86,14 @@ public class JournalArticleServicePreAction extends Action {
 		}
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setAssetEntryLocalService(
 		AssetEntryLocalService assetEntryLocalService) {
 
 		_assetEntryLocalService = assetEntryLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setJournalArticleService(
 		JournalArticleService journalArticleService) {
 

@@ -57,7 +57,8 @@ public class SimpleEditorPortalWebResources implements PortalWebResources {
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.frontend.editor.simple.web)"
+		target = "(osgi.web.symbolicname=com.liferay.frontend.editor.simple.web)",
+		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;

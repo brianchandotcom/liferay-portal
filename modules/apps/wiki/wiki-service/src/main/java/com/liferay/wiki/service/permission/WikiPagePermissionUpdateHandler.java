@@ -49,7 +49,7 @@ public class WikiPagePermissionUpdateHandler
 		_wikiPageLocalService.updateWikiPage(wikiPage);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setWikiPageLocalService(
 		WikiPageLocalService wikiPageLocalService) {
 

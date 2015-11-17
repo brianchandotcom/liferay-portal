@@ -50,7 +50,7 @@ public class MBCategoryPermissionUpdateHandler
 		_mbCategoryLocalService.updateMBCategory(mbCategory);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setMBCategoryLocalService(
 		MBCategoryLocalService mbCategoryLocalService) {
 

@@ -218,21 +218,21 @@ public class EditExportConfigurationMVCActionCommand
 		}
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setExportImportConfigurationService(
 		ExportImportConfigurationService exportImportConfigurationService) {
 
 		_exportImportConfigurationService = exportImportConfigurationService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setExportImportService(
 		ExportImportService exportImportService) {
 
 		_exportImportService = exportImportService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setTrashEntryService(TrashEntryService trashEntryService) {
 		_trashEntryService = trashEntryService;
 	}

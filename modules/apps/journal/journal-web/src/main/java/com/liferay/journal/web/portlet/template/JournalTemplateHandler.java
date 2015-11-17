@@ -140,7 +140,7 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 		return _templateVariableCodeHandler;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setJournalContent(JournalContent journalContent) {
 		_journalContent = journalContent;
 	}

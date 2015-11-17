@@ -59,7 +59,7 @@ public class RadioDDMFormFieldValueRenderer
 		return ddmFormField.getDDMFormFieldOptions();
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setRadioDDMFormFieldValueAccessor(
 		RadioDDMFormFieldValueAccessor radioDDMFormFieldValueAccessor) {
 

@@ -86,17 +86,17 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 		}
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDM(DDM ddm) {
 		_ddm = ddm;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMBeanTranslator(DDMBeanTranslator ddmBeanTranslator) {
 		_ddmBeanTranslator = ddmBeanTranslator;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setStorageEngine(StorageEngine storageEngine) {
 		_storageEngine = storageEngine;
 	}

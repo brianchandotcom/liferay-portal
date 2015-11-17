@@ -80,7 +80,7 @@ public class ElasticsearchCluster {
 		_companyLocalService = companyLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setElasticsearchConnectionManager(
 		ElasticsearchConnectionManager elasticsearchConnectionManager) {
 

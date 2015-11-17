@@ -181,7 +181,7 @@ public class ImporterFactory {
 		_groupLocalService = groupLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setJournalConverter(JournalConverter journalConverter) {
 		_journalConverter = journalConverter;
 	}

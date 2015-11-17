@@ -199,7 +199,7 @@ public class OpenSSOFilter extends BaseFilter {
 		_configurationFactory = configurationFactory;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setOpenSSO(OpenSSO openSSO) {
 		_openSSO = openSSO;
 	}

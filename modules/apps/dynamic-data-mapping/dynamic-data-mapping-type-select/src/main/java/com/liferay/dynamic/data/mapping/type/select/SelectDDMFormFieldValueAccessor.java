@@ -57,7 +57,7 @@ public class SelectDDMFormFieldValueAccessor
 		}
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setJSONFactory(JSONFactory jsonFactory) {
 		_jsonFactory = jsonFactory;
 	}

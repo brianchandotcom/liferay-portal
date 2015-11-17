@@ -103,7 +103,7 @@ public class CommentsContentMetadataAssetAddonEntry
 		return super.isEnabled();
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setCommentRatingsContentMetadataAssetAddonEntry(
 		CommentRatingsContentMetadataAssetAddonEntry
 			commentRatingsContentMetadataAssetAddonEntry) {

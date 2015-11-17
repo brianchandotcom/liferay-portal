@@ -121,14 +121,14 @@ public class AddRecordSetMVCActionCommand extends BaseMVCActionCommand {
 		return portletPreferences;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDLRecordSetService(
 		DDLRecordSetService ddlRecordSetService) {
 
 		this.ddlRecordSetService = ddlRecordSetService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setWorkflowDefinitionLinkLocalService(
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
 

@@ -49,7 +49,7 @@ public class PollsQuestionPermissionUpdateHandler
 		_pollsQuestionLocalService.updatePollsQuestion(pollsQuestion);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setPollsQuestionLocalService(
 		PollsQuestionLocalService pollsQuestionLocalService) {
 

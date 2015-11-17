@@ -139,7 +139,8 @@ public class FullPageApplicationLayoutTypeController
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.full.page.application)"
+		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.full.page.application)",
+		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
 		this.servletContext = servletContext;

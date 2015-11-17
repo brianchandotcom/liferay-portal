@@ -57,7 +57,8 @@ public class ThemeClassicPortalWebResources implements PortalWebResources {
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.frontend.theme.classic.web)"
+		target = "(osgi.web.symbolicname=com.liferay.frontend.theme.classic.web)",
+		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;

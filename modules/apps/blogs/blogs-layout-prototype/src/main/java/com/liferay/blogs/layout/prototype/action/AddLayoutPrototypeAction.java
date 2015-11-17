@@ -84,12 +84,16 @@ public class AddLayoutPrototypeAction {
 	}
 
 	@Reference(
-		target = "(javax.portlet.name=" + AssetTagsNavigationPortletKeys.ASSET_TAGS_CLOUD + ")"
+		target = "(javax.portlet.name=" + AssetTagsNavigationPortletKeys.ASSET_TAGS_CLOUD + ")",
+		unbind = "-"
 	)
 	protected void setAssetTagsCloudPortlet(Portlet portlet) {
 	}
 
-	@Reference(target = "(javax.portlet.name=" + BlogsPortletKeys.BLOGS + ")")
+	@Reference(
+		target = "(javax.portlet.name=" + BlogsPortletKeys.BLOGS + ")",
+		unbind = "-"
+	)
 	protected void setBlogsPortlet(Portlet portlet) {
 	}
 
@@ -113,7 +117,8 @@ public class AddLayoutPrototypeAction {
 	}
 
 	@Reference(
-		target = "(javax.portlet.name=" + RecentBloggersPortletKeys.RECENT_BLOGGERS + ")"
+		target = "(javax.portlet.name=" + RecentBloggersPortletKeys.RECENT_BLOGGERS + ")",
+		unbind = "-"
 	)
 	protected void setRecentBloggersPortlet(Portlet portlet) {
 	}

@@ -184,7 +184,7 @@ public class SoapExtender {
 		activate(bundleContext, properties);
 	}
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
+	@Reference(policyOption = ReferencePolicyOption.GREEDY, unbind = "-")
 	protected void setSoapDescriptorBuilder(
 		SoapDescriptorBuilder soapDescriptorBuilder) {
 

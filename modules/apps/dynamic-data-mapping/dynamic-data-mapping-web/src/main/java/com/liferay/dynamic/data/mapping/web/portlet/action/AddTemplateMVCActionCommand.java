@@ -155,7 +155,7 @@ public class AddTemplateMVCActionCommand extends DDMBaseMVCActionCommand {
 		return false;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMTemplateService(
 		DDMTemplateService ddmTemplateService) {
 

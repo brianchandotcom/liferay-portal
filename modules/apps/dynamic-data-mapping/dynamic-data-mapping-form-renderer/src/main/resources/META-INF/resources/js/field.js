@@ -455,9 +455,13 @@ AUI.add(
 						var value = '';
 
 						if (instance.get('localizable')) {
-							value = {};
-
-							value[instance.get('locale')] = '';
+							value = instance.get('predefinedValue');
+							
+							if(!Lang.isObject(value)){
+								value = {};
+								value[instance.get('locale')] = '';
+							}
+							
 						}
 
 						return value;

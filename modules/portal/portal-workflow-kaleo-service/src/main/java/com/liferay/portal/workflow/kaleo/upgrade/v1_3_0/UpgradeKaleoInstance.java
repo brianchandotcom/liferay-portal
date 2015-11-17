@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.upgrade.v1_3_0;
 
+import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.PortalUtil;
@@ -22,6 +23,10 @@ import com.liferay.portal.util.PortalUtil;
  * @author Christopher Kian
  */
 public class UpgradeKaleoInstance extends UpgradeProcess {
+
+	public UpgradeKaleoInstance(DDLRecordLocalService ddlRecordLocalService) {
+		_ddlRecordLocalService = ddlRecordLocalService;
+	}
 
 	protected void deleteOrphanedWorkflowInstanceLinks(
 			String tableName, String columnName, Object columnValue)
@@ -53,5 +58,7 @@ public class UpgradeKaleoInstance extends UpgradeProcess {
 			PortalUtil.getClassNameId(
 				"com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess"));
 	}
+
+	private final DDLRecordLocalService _ddlRecordLocalService;
 
 }

@@ -391,6 +391,27 @@ public class PoshiRunnerContext {
 		return runTestClassCommandNames;
 	}
 
+	private static List<String> _getTestCaseClassProperties(String className)
+		throws Exception {
+
+		List<String> classProperties = new ArrayList<>();
+		Element rootElement = getTestCaseRootElement(className);
+
+		List<Element> rootPropertyElements = rootElement.elements("property");
+
+		for (Element rootPropertyElement : rootPropertyElements) {
+			StringBuilder sb = new StringBuilder(3);
+
+			sb.append(rootPropertyElement.attributeValue("name"));
+			sb.append("=");
+			sb.append(rootPropertyElement.attributeValue("value"));
+
+			classProperties.add(sb.toString());
+		}
+
+		return classProperties;
+	}
+
 	private static Set<String> _getTestCaseCommandNames(String className)
 		throws Exception {
 
@@ -406,6 +427,29 @@ public class PoshiRunnerContext {
 		}
 
 		return commandNames;
+	}
+
+	private static List<String> _getTestCaseCommandProperties(
+			String classCommandName)
+		throws Exception {
+
+		Element commandElement = getTestCaseCommandElement(classCommandName);
+		List<String> commandProperties = new ArrayList<>();
+
+		List<Element> commandPropertyElements = commandElement.elements(
+			"property");
+
+		for (Element commandPropertyElement : commandPropertyElements) {
+			StringBuilder sb = new StringBuilder(3);
+
+			sb.append(commandPropertyElement.attributeValue("name"));
+			sb.append("=");
+			sb.append(commandPropertyElement.attributeValue("value"));
+
+			commandProperties.add(sb.toString());
+		}
+
+		return commandProperties;
 	}
 
 	private static void _initComponentCommandNamesMap() {

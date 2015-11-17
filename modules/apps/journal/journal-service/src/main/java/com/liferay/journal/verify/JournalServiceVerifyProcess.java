@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.verify.VerifyLayout;
+import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalService;
@@ -81,7 +82,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alexander Chow
  * @author Shinn Lok
  */
-@Component(immediate = true, service = JournalServiceVerifyProcess.class)
+@Component(
+	immediate = true,
+	property = {"verify.process.name=com.liferay.journal.service"},
+	service = VerifyProcess.class
+)
 public class JournalServiceVerifyProcess extends VerifyLayout {
 
 	public static final long DEFAULT_GROUP_ID = 14;

@@ -21,17 +21,16 @@ DLItemSelectorViewDisplayContext dlItemSelectorViewDisplayContext = (DLItemSelec
 
 ItemSelectorCriterion itemSelectorCriterion = dlItemSelectorViewDisplayContext.getItemSelectorCriterion();
 
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "curDocuments", SearchContainer.DEFAULT_DELTA, dlItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse), null, LanguageUtil.get(request, "there-are-no-documents-or-media-files-in-this-folder"));
+int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_CUR);
+int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM, SearchContainer.DEFAULT_DELTA);
 
-String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(cur, delta);
 
-OrderByComparator<?> orderByComparator = DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType, true);
+int start = startAndEnd[0];
+int end = startAndEnd[1];
 
-searchContainer.setOrderByComparator(orderByComparator);
-
-List results = null;
-int total = 0;
+List repositoryEntries = null;
+int repositoryEntriesCount = 0;
 
 long folderId = dlItemSelectorViewDisplayContext.getFolderId(request);
 String[] mimeTypes = dlItemSelectorViewDisplayContext.getMimeTypes();
@@ -40,17 +39,17 @@ if (dlItemSelectorViewDisplayContext.isSearch()) {
 	SearchContext searchContext = SearchContextFactory.getInstance(request);
 
 	searchContext.setAttribute("mimeTypes", mimeTypes);
-	searchContext.setEnd(searchContainer.getEnd());
+	searchContext.setEnd(end);
 	searchContext.setFolderIds(new long[] {dlItemSelectorViewDisplayContext.getFolderId(request)});
-	searchContext.setStart(searchContainer.getStart());
+	searchContext.setStart(start);
 
 	Hits hits = DLAppServiceUtil.search(themeDisplay.getScopeGroupId(), searchContext);
 
-	total = hits.getLength();
+	repositoryEntriesCount = hits.getLength();
 
 	Document[] docs = hits.getDocs();
 
-	results = new ArrayList(docs.length);
+	repositoryEntries = new ArrayList(docs.length);
 
 	List<SearchResult> searchResultsList = SearchResultUtil.getSearchResults(hits, locale);
 
@@ -60,13 +59,13 @@ if (dlItemSelectorViewDisplayContext.isSearch()) {
 		String className = searchResult.getClassName();
 
 		if (className.equals(DLFileEntryConstants.getClassName()) || FileEntry.class.isAssignableFrom(Class.forName(className))) {
-			results.add(DLAppServiceUtil.getFileEntry(searchResult.getClassPK()));
+			repositoryEntries.add(DLAppServiceUtil.getFileEntry(searchResult.getClassPK()));
 		}
 		else if (className.equals(DLFileShortcutConstants.getClassName())) {
-			results.add(DLAppServiceUtil.getFileShortcut(searchResult.getClassPK()));
+			repositoryEntries.add(DLAppServiceUtil.getFileShortcut(searchResult.getClassPK()));
 		}
 		else if (className.equals(DLFolderConstants.getClassName())) {
-			results.add(DLAppServiceUtil.getFolder(searchResult.getClassPK()));
+			repositoryEntries.add(DLAppServiceUtil.getFolder(searchResult.getClassPK()));
 		}
 		else {
 			continue;
@@ -74,19 +73,21 @@ if (dlItemSelectorViewDisplayContext.isSearch()) {
 	}
 }
 else {
-	total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(themeDisplay.getScopeGroupId(), folderId, WorkflowConstants.STATUS_APPROVED, mimeTypes, false);
-	results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(themeDisplay.getScopeGroupId(), folderId, WorkflowConstants.STATUS_APPROVED, mimeTypes, false, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-}
+	String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
+	String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
-searchContainer.setTotal(total);
-searchContainer.setResults(results);
+	repositoryEntriesCount = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(themeDisplay.getScopeGroupId(), folderId, WorkflowConstants.STATUS_APPROVED, mimeTypes, false);
+	repositoryEntries = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(themeDisplay.getScopeGroupId(), folderId, WorkflowConstants.STATUS_APPROVED, mimeTypes, false, start, end, DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType, true));
+}
 %>
 
 <liferay-item-selector:repository-entry-browser
 	desiredItemSelectorReturnTypes="<%= itemSelectorCriterion.getDesiredItemSelectorReturnTypes() %>"
+	emptyResultsMessage='<%= LanguageUtil.get(request, "there-are-no-documents-or-media-files-in-this-folder") %>'
 	itemSelectedEventName="<%= dlItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
 	portletURL="<%= dlItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse) %>"
-	searchContainer="<%= searchContainer %>"
+	repositoryEntries="<%= repositoryEntries %>"
+	repositoryEntriesCount="<%= repositoryEntriesCount %>"
 	showBreadcrumb="<%= true %>"
 	tabName="<%= dlItemSelectorViewDisplayContext.getTitle(locale) %>"
 	uploadURL="<%= dlItemSelectorViewDisplayContext.getUploadURL(request, liferayPortletResponse) %>"

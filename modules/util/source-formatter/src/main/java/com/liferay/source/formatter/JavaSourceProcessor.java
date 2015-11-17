@@ -268,182 +268,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected String formatModulesFile(
-		String fileName, String absolutePath, String packagePath,
-		String content) {
-
-		// LPS-56706 and LPS-57722
-
-		if (fileName.endsWith("Test.java")) {
-			if (absolutePath.contains("/src/testIntegration/java/") ||
-				absolutePath.contains("/test/integration/")) {
-
-				if (content.contains("@RunWith(Arquillian.class)") &&
-					content.contains("import org.powermock.")) {
-
-					processErrorMessage(
-						fileName,
-						"Do not use PowerMock inside Arquillian tests: " +
-							fileName);
-				}
-
-				if (!packagePath.endsWith(".test")) {
-					processErrorMessage(
-						fileName,
-						"Module integration test must be under a test " +
-							"subpackage" + fileName);
-				}
-			}
-			else if ((absolutePath.contains("/test/unit/") ||
-					  absolutePath.contains("/src/test/java/")) &&
-					 packagePath.endsWith(".test")) {
-
-				processErrorMessage(
-					fileName,
-					"Module unit test should not be under a test subpackage" +
-						fileName);
-			}
-		}
-
-		// LPS-57358
-
-		if (content.contains("ProxyFactory.newServiceTrackedInstance(")) {
-			processErrorMessage(
-				fileName,
-				"Do not use ProxyFactory.newServiceTrackedInstance in " +
-					"modules: " + fileName);
-		}
-
-		// LPS-59076
-
-		if (_checkModulesServiceUtil) {
-			if (content.contains("@Component")) {
-				content = formatOSGIComponents(fileName, absolutePath, content);
-			}
-		}
-
-		if (!absolutePath.contains("/modules/core/") &&
-			!absolutePath.contains("/test/") &&
-			!absolutePath.contains("/testIntegration/") &&
-			content.contains("import com.liferay.registry.Registry")) {
-
-			processErrorMessage(
-				fileName, "Do not use Registry in modules: " + fileName);
-		}
-
-		return content;
-	}
-
-	protected String formatOSGIComponents(
-		String fileName, String absolutePath, String content) {
-
-		String moduleServicePackagePath = null;
-
-		Matcher matcher = _serviceUtilImportPattern.matcher(content);
-
-		while (matcher.find()) {
-			String serviceUtilClassName = matcher.group(2);
-
-			if (moduleServicePackagePath == null) {
-				moduleServicePackagePath = getModuleServicePackagePath(
-					fileName);
-			}
-
-			if (Validator.isNotNull(moduleServicePackagePath)) {
-				String serviceUtilClassPackagePath = matcher.group(1);
-
-				if (serviceUtilClassPackagePath.startsWith(
-						moduleServicePackagePath)) {
-
-					processErrorMessage(
-						fileName,
-						"LPS-59076: Convert OSGi Component to Spring bean: " +
-							fileName);
-
-					continue;
-				}
-			}
-
-			processErrorMessage(
-				fileName,
-				"LPS-59076: Use @Reference instead of calling " +
-					serviceUtilClassName + " directly: " + fileName);
-		}
-
-		matcher = _setReferenceMethodPattern.matcher(content);
-
-		while (matcher.find()) {
-			String annotationParameters = matcher.group(2);
-
-			if (!annotationParameters.contains("unbind =")) {
-				String setMethodName = matcher.group(4);
-
-				if (!content.contains("un" + setMethodName + "(")) {
-					if (Validator.isNull(annotationParameters)) {
-						return StringUtil.insert(
-							content, "(unbind = \"-\")", matcher.start(2));
-					}
-
-					if (!annotationParameters.contains(StringPool.NEW_LINE)) {
-						return StringUtil.insert(
-							content, ", unbind = \"-\"", matcher.end(2) - 1);
-					}
-
-					if (!annotationParameters.contains("\n\n")) {
-						String indent = matcher.group(1) + StringPool.TAB;
-
-						int x = content.lastIndexOf("\n", matcher.end(2) - 1);
-
-						return StringUtil.replaceFirst(
-							content, "\n",
-							",\n" + indent + "unbind = \"-\"" + "\n", x - 1);
-					}
-				}
-			}
-
-			String methodContent = matcher.group(6);
-
-			Matcher referenceMethodContentMatcher =
-				_setReferenceMethodContentPattern.matcher(methodContent);
-
-			if (!referenceMethodContentMatcher.find()) {
-				continue;
-			}
-
-			if (moduleServicePackagePath == null) {
-				moduleServicePackagePath = getModuleServicePackagePath(
-					fileName);
-			}
-
-			if (Validator.isNotNull(moduleServicePackagePath)) {
-				String typeName = matcher.group(5);
-
-				StringBundler sb = new StringBundler(5);
-
-				sb.append("\nimport ");
-				sb.append(moduleServicePackagePath);
-				sb.append(".*\\.");
-				sb.append(typeName);
-				sb.append(StringPool.SEMICOLON);
-
-				Pattern importPattern = Pattern.compile(sb.toString());
-
-				Matcher importMatcher = importPattern.matcher(content);
-
-				if (importMatcher.find()) {
-					processErrorMessage(
-						fileName,
-						"LPS-59076: Convert OSGi Component to Spring bean: " +
-							fileName);
-
-					break;
-				}
-			}
-		}
-
-		return content;
-	}
-
 	protected void checkRegexPattern(
 		String regexPattern, String fileName, int lineCount) {
 
@@ -2313,6 +2137,182 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return newContent;
+	}
+
+	protected String formatModulesFile(
+		String fileName, String absolutePath, String packagePath,
+		String content) {
+
+		// LPS-56706 and LPS-57722
+
+		if (fileName.endsWith("Test.java")) {
+			if (absolutePath.contains("/src/testIntegration/java/") ||
+				absolutePath.contains("/test/integration/")) {
+
+				if (content.contains("@RunWith(Arquillian.class)") &&
+					content.contains("import org.powermock.")) {
+
+					processErrorMessage(
+						fileName,
+						"Do not use PowerMock inside Arquillian tests: " +
+							fileName);
+				}
+
+				if (!packagePath.endsWith(".test")) {
+					processErrorMessage(
+						fileName,
+						"Module integration test must be under a test " +
+							"subpackage" + fileName);
+				}
+			}
+			else if ((absolutePath.contains("/test/unit/") ||
+					  absolutePath.contains("/src/test/java/")) &&
+					 packagePath.endsWith(".test")) {
+
+				processErrorMessage(
+					fileName,
+					"Module unit test should not be under a test subpackage" +
+						fileName);
+			}
+		}
+
+		// LPS-57358
+
+		if (content.contains("ProxyFactory.newServiceTrackedInstance(")) {
+			processErrorMessage(
+				fileName,
+				"Do not use ProxyFactory.newServiceTrackedInstance in " +
+					"modules: " + fileName);
+		}
+
+		// LPS-59076
+
+		if (_checkModulesServiceUtil) {
+			if (content.contains("@Component")) {
+				content = formatOSGIComponents(fileName, absolutePath, content);
+			}
+		}
+
+		if (!absolutePath.contains("/modules/core/") &&
+			!absolutePath.contains("/test/") &&
+			!absolutePath.contains("/testIntegration/") &&
+			content.contains("import com.liferay.registry.Registry")) {
+
+			processErrorMessage(
+				fileName, "Do not use Registry in modules: " + fileName);
+		}
+
+		return content;
+	}
+
+	protected String formatOSGIComponents(
+		String fileName, String absolutePath, String content) {
+
+		String moduleServicePackagePath = null;
+
+		Matcher matcher = _serviceUtilImportPattern.matcher(content);
+
+		while (matcher.find()) {
+			String serviceUtilClassName = matcher.group(2);
+
+			if (moduleServicePackagePath == null) {
+				moduleServicePackagePath = getModuleServicePackagePath(
+					fileName);
+			}
+
+			if (Validator.isNotNull(moduleServicePackagePath)) {
+				String serviceUtilClassPackagePath = matcher.group(1);
+
+				if (serviceUtilClassPackagePath.startsWith(
+						moduleServicePackagePath)) {
+
+					processErrorMessage(
+						fileName,
+						"LPS-59076: Convert OSGi Component to Spring bean: " +
+							fileName);
+
+					continue;
+				}
+			}
+
+			processErrorMessage(
+				fileName,
+				"LPS-59076: Use @Reference instead of calling " +
+					serviceUtilClassName + " directly: " + fileName);
+		}
+
+		matcher = _setReferenceMethodPattern.matcher(content);
+
+		while (matcher.find()) {
+			String annotationParameters = matcher.group(2);
+
+			if (!annotationParameters.contains("unbind =")) {
+				String setMethodName = matcher.group(4);
+
+				if (!content.contains("un" + setMethodName + "(")) {
+					if (Validator.isNull(annotationParameters)) {
+						return StringUtil.insert(
+							content, "(unbind = \"-\")", matcher.start(2));
+					}
+
+					if (!annotationParameters.contains(StringPool.NEW_LINE)) {
+						return StringUtil.insert(
+							content, ", unbind = \"-\"", matcher.end(2) - 1);
+					}
+
+					if (!annotationParameters.contains("\n\n")) {
+						String indent = matcher.group(1) + StringPool.TAB;
+
+						int x = content.lastIndexOf("\n", matcher.end(2) - 1);
+
+						return StringUtil.replaceFirst(
+							content, "\n",
+							",\n" + indent + "unbind = \"-\"" + "\n", x - 1);
+					}
+				}
+			}
+
+			String methodContent = matcher.group(6);
+
+			Matcher referenceMethodContentMatcher =
+				_setReferenceMethodContentPattern.matcher(methodContent);
+
+			if (!referenceMethodContentMatcher.find()) {
+				continue;
+			}
+
+			if (moduleServicePackagePath == null) {
+				moduleServicePackagePath = getModuleServicePackagePath(
+					fileName);
+			}
+
+			if (Validator.isNotNull(moduleServicePackagePath)) {
+				String typeName = matcher.group(5);
+
+				StringBundler sb = new StringBundler(5);
+
+				sb.append("\nimport ");
+				sb.append(moduleServicePackagePath);
+				sb.append(".*\\.");
+				sb.append(typeName);
+				sb.append(StringPool.SEMICOLON);
+
+				Pattern importPattern = Pattern.compile(sb.toString());
+
+				Matcher importMatcher = importPattern.matcher(content);
+
+				if (importMatcher.find()) {
+					processErrorMessage(
+						fileName,
+						"LPS-59076: Convert OSGi Component to Spring bean: " +
+							fileName);
+
+					break;
+				}
+			}
+		}
+
+		return content;
 	}
 
 	protected String getCombinedLinesContent(String content, Pattern pattern) {

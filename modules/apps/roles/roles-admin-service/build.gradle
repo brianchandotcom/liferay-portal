@@ -1,7 +1,7 @@
 dependencies {
 	compile project(":apps:export-import:export-import-api")
 	compile project(":apps:export-import:export-import-service")
-	compile project(":apps:roles:roles-admin-web")
+	compile project(":apps:roles:roles-admin-api")
 }
 
 liferay {

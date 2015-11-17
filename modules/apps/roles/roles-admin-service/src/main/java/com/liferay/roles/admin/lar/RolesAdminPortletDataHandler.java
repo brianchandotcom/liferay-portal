@@ -34,7 +34,7 @@ import com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerControl;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
-import com.liferay.roles.admin.web.constants.RolesAdminPortletKeys;
+import com.liferay.roles.admin.constants.RolesAdminPortletKeys;
 
 import java.util.List;
 

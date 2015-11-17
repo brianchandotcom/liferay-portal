@@ -19,7 +19,6 @@ import com.liferay.portal.search.elasticsearch.filter.TermsFilterTranslator;
 
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.query.TermsQueryBuilder;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -31,25 +30,8 @@ public class TermsFilterTranslatorImpl implements TermsFilterTranslator {
 
 	@Override
 	public QueryBuilder translate(TermsFilter termsFilter) {
-		TermsQueryBuilder termsQueryBuilder = QueryBuilders.termsQuery(
+		return QueryBuilders.termsQuery(
 			termsFilter.getField(), termsFilter.getValues());
-
-		if (termsFilter.getExecution() == TermsFilter.Execution.AND) {
-			termsQueryBuilder.execution("and");
-		}
-		else if (termsFilter.getExecution() == TermsFilter.Execution.BOOL) {
-			termsQueryBuilder.execution("bool");
-		}
-		else if (termsFilter.getExecution() ==
-					TermsFilter.Execution.FIELD_DATA) {
-
-			termsQueryBuilder.execution("fielddata");
-		}
-		else if (termsFilter.getExecution() == TermsFilter.Execution.OR) {
-			termsQueryBuilder.execution("or");
-		}
-
-		return termsQueryBuilder;
 	}
 
 }

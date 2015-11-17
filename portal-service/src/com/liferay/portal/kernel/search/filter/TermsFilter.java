@@ -42,10 +42,6 @@ public class TermsFilter extends BaseFilter {
 		_values.addAll(Arrays.asList(values));
 	}
 
-	public Execution getExecution() {
-		return _execution;
-	}
-
 	public String getField() {
 		return _field;
 	}
@@ -63,10 +59,6 @@ public class TermsFilter extends BaseFilter {
 		return _values.isEmpty();
 	}
 
-	public void setExecution(Execution execution) {
-		_execution = execution;
-	}
-
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(7);
@@ -82,13 +74,6 @@ public class TermsFilter extends BaseFilter {
 		return sb.toString();
 	}
 
-	public enum Execution {
-
-		AND, BOOL, FIELD_DATA, OR, PLAIN;
-
-	}
-
-	private Execution _execution = Execution.PLAIN;
 	private final String _field;
 	private final Set<String> _values = new HashSet<>();
 

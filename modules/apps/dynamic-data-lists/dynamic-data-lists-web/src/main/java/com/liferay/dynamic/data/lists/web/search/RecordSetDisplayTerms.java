@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.lists.web.search;
 
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.PortletRequest;
 
@@ -41,6 +42,15 @@ public class RecordSetDisplayTerms extends DisplayTerms {
 
 	public String getName() {
 		return name;
+	}
+
+	@Override
+	public boolean isAndOperator() {
+		if (Validator.isNull(description) && Validator.isNull(name)) {
+			return true;
+		}
+
+		return super.isAndOperator();
 	}
 
 	protected String description;

@@ -14,7 +14,9 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/search_iterator/lexicon/top.jsp" %>
+<%@ include file="/html/taglib/ui/search_iterator/init.jsp" %>
+
+<%@ include file="/html/taglib/ui/search_iterator/lexicon/top.jspf" %>
 
 <ul class="<%= searchContainer.getCssClass() %> <%= resultRows.isEmpty() ? "hide" : StringPool.BLANK %> tabular-list-group" id="<%= namespace + id %>SearchContainer">
 	<c:if test="<%= (headerNames != null) && Validator.isNotNull(headerNames.get(0)) %>">
@@ -115,4 +117,4 @@
 String rowHtmlTag = "li";
 %>
 
-<%@ include file="/html/taglib/ui/search_iterator/lexicon/bottom.jsp" %>
+<%@ include file="/html/taglib/ui/search_iterator/lexicon/bottom.jspf" %>

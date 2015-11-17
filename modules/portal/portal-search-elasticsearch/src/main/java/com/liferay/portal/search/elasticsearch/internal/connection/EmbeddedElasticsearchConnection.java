@@ -41,7 +41,7 @@ import java.util.Map;
 import org.apache.commons.lang.time.StopWatch;
 
 import org.elasticsearch.client.Client;
-import org.elasticsearch.common.settings.ImmutableSettings;
+import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.node.NodeBuilder;
 
@@ -109,12 +109,12 @@ public class EmbeddedElasticsearchConnection
 		super.addSettingsContributor(settingsContributor);
 	}
 
-	protected void configureClustering(ImmutableSettings.Builder builder) {
+	protected void configureClustering(Settings.Builder builder) {
 		builder.put("cluster.name", elasticsearchConfiguration.clusterName());
 		builder.put("discovery.zen.ping.multicast.enabled", false);
 	}
 
-	protected void configureHttp(ImmutableSettings.Builder builder) {
+	protected void configureHttp(Settings.Builder builder) {
 		builder.put("http.enabled", elasticsearchConfiguration.httpEnabled());
 
 		if (!elasticsearchConfiguration.httpEnabled()) {
@@ -148,7 +148,7 @@ public class EmbeddedElasticsearchConnection
 		}
 	}
 
-	protected void configurePaths(ImmutableSettings.Builder builder) {
+	protected void configurePaths(Settings.Builder builder) {
 		builder.put(
 			"path.data",
 			_props.get(PropsKeys.LIFERAY_HOME) + "/data/elasticsearch/indices");
@@ -164,7 +164,7 @@ public class EmbeddedElasticsearchConnection
 	}
 
 	@Override
-	protected Client createClient(ImmutableSettings.Builder builder) {
+	protected Client createClient(Settings.Builder builder) {
 		StopWatch stopWatch = new StopWatch();
 
 		stopWatch.start();
@@ -203,9 +203,7 @@ public class EmbeddedElasticsearchConnection
 	}
 
 	@Override
-	protected void loadRequiredDefaultConfigurations(
-		ImmutableSettings.Builder builder) {
-
+	protected void loadRequiredDefaultConfigurations(Settings.Builder builder) {
 		builder.put(
 			"bootstrap.mlockall",
 			elasticsearchConfiguration.bootstrapMlockAll());
@@ -250,7 +248,7 @@ public class EmbeddedElasticsearchConnection
 		_props = props;
 	}
 
-	private void configureNetworking(ImmutableSettings.Builder builder) {
+	private void configureNetworking(Settings.Builder builder) {
 		String networkBindHost = elasticsearchConfiguration.networkBindHost();
 
 		if (Validator.isNotNull(networkBindHost)) {

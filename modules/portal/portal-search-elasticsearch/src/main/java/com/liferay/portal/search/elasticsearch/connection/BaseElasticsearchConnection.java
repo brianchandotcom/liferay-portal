@@ -32,7 +32,7 @@ import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
 import org.elasticsearch.client.AdminClient;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.ClusterAdminClient;
-import org.elasticsearch.common.settings.ImmutableSettings;
+import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.unit.TimeValue;
 
 /**
@@ -54,7 +54,7 @@ public abstract class BaseElasticsearchConnection
 
 	@Override
 	public void connect() {
-		ImmutableSettings.Builder builder = ImmutableSettings.settingsBuilder();
+		Settings.Builder builder = Settings.builder();
 
 		loadOptionalDefaultConfigurations(builder);
 
@@ -130,15 +130,13 @@ public abstract class BaseElasticsearchConnection
 		_settingsContributors.add(settingsContributor);
 	}
 
-	protected abstract Client createClient(ImmutableSettings.Builder builder);
+	protected abstract Client createClient(Settings.Builder builder);
 
 	protected IndexFactory getIndexFactory() {
 		return _indexFactory;
 	}
 
-	protected void loadOptionalDefaultConfigurations(
-		ImmutableSettings.Builder builder) {
-
+	protected void loadOptionalDefaultConfigurations(Settings.Builder builder) {
 		try {
 			Class<?> clazz = getClass();
 
@@ -155,9 +153,9 @@ public abstract class BaseElasticsearchConnection
 	}
 
 	protected abstract void loadRequiredDefaultConfigurations(
-		ImmutableSettings.Builder builder);
+		Settings.Builder builder);
 
-	protected void loadSettingsContributors(ImmutableSettings.Builder builder) {
+	protected void loadSettingsContributors(Settings.Builder builder) {
 		for (SettingsContributor settingsContributor : _settingsContributors) {
 			settingsContributor.populate(builder);
 		}

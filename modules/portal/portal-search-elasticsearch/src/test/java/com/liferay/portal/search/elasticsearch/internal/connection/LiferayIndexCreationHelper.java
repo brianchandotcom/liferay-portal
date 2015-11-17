@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
-import org.elasticsearch.common.settings.ImmutableSettings;
+import org.elasticsearch.common.settings.Settings;
 
 /**
  * @author André de Oliveira
@@ -37,7 +37,7 @@ public class LiferayIndexCreationHelper implements IndexCreationHelper {
 			LiferayTypeMappingsConstants.TYPE,
 			read(LiferayTypeMappingsConstants.FILE));
 
-		ImmutableSettings.Builder builder = ImmutableSettings.settingsBuilder();
+		Settings.Builder builder = Settings.settingsBuilder();
 
 		builder.loadFromSource(read(IndexSettingsConstants.FILE));
 

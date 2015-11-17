@@ -41,8 +41,8 @@ import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsReques
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsResponse;
 import org.elasticsearch.client.AdminClient;
 import org.elasticsearch.client.IndicesAdminClient;
-import org.elasticsearch.common.settings.ImmutableSettings;
-import org.elasticsearch.common.settings.ImmutableSettings.Builder;
+import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.settings.Settings.Builder;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -198,7 +198,7 @@ public class CompanyIndexFactory implements IndexFactory {
 		builder.loadFromSource(source);
 	}
 
-	protected void loadIndexConfigFile(ImmutableSettings.Builder builder) {
+	protected void loadIndexConfigFile(Settings.Builder builder) {
 		if (Validator.isNull(_indexConfigFileName)) {
 			return;
 		}
@@ -210,9 +210,7 @@ public class CompanyIndexFactory implements IndexFactory {
 		builder.loadFromClasspath(_indexConfigFileName);
 	}
 
-	protected void loadIndexSettingsContributors(
-		ImmutableSettings.Builder builder) {
-
+	protected void loadIndexSettingsContributors(Settings.Builder builder) {
 		for (IndexSettingsContributor indexSettingsContributor :
 				_indexSettingsContributors) {
 
@@ -235,7 +233,7 @@ public class CompanyIndexFactory implements IndexFactory {
 	protected void setSettings(
 		CreateIndexRequestBuilder createIndexRequestBuilder) {
 
-		ImmutableSettings.Builder builder = ImmutableSettings.settingsBuilder();
+		Settings.Builder builder = Settings.settingsBuilder();
 
 		loadIndexConfigFile(builder);
 

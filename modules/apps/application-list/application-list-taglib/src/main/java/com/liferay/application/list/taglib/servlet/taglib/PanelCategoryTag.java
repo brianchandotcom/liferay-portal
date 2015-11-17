@@ -84,10 +84,10 @@ public class PanelCategoryTag extends BasePanelTag {
 			_panelCategory, themeDisplay.getPermissionChecker(),
 			themeDisplay.getScopeGroup());
 
-		if (!_showOpen && !panelApps.isEmpty()) {
-			PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
-				panelAppRegistry, panelCategoryRegistry);
+		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
+			panelAppRegistry, panelCategoryRegistry);
 
+		if (!_showOpen && !panelApps.isEmpty()) {
 			active = panelCategoryHelper.containsPortlet(
 				themeDisplay.getPpid(), _panelCategory);
 		}
@@ -107,6 +107,9 @@ public class PanelCategoryTag extends BasePanelTag {
 		request.setAttribute(
 			"liferay-application-list:panel-category:panelCategory",
 			_panelCategory);
+		request.setAttribute(
+			"liferay-application-list:panel-category:panelCategoryHelper",
+			panelCategoryHelper);
 		request.setAttribute(
 			"liferay-application-list:panel-category:showHeader", _showHeader);
 		request.setAttribute(

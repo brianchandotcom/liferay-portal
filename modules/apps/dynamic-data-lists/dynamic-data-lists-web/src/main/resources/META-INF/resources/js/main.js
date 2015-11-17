@@ -228,6 +228,7 @@ AUI.add(
 						var record = instance.getRecord(alignNode);
 
 						var data = instance.get('data');
+						var portletNamespace = instance.get('portletNamespace');
 						var recordsetId = instance.get('recordsetId');
 						var structure = instance.get('structure');
 
@@ -237,6 +238,7 @@ AUI.add(
 							editor.setAttrs(
 								{
 									data: data,
+									portletNamespace : portletNamespace,
 									record: record,
 									recordsetId: recordsetId,
 									structure: structure,

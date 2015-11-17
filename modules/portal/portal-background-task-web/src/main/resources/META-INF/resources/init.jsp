@@ -14,8 +14,10 @@
  */
 --%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.NoSuchBackgroundTaskException" %>
 
-<%@ include file="/html/portlet/background_task/init-ext.jsp" %>
+<portlet:defineObjects />
+
+<liferay-theme:defineObjects />

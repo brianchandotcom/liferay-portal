@@ -112,6 +112,24 @@ AUI.add(
 						return instance.get('value');
 					},
 
+					_onDocMouseDownExt: function(event) {
+						var instance = this;
+						var boundingBox = instance.get('boundingBox');
+
+						var isDocumentLibraryDialogOpen = instance._isDocumentLibraryDialogOpen();
+
+						if (!isDocumentLibraryDialogOpen && !boundingBox.contains(event.target)) {
+							instance.set('visible', false);
+						}
+					},
+
+					_isDocumentLibraryDialogOpen: function() {
+						var instance = this;
+						var portletNamespace = instance.get('portletNamespace');
+
+						return !!Liferay.Util.getWindow(portletNamespace + 'selectDocumentLibrary');
+					},
+
 					_defInitToolbarFn: function() {
 						var instance = this;
 

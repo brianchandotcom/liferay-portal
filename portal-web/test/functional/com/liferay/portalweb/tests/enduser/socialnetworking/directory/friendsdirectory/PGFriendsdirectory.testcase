@@ -61,6 +61,8 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
+		<execute macro="ProductMenuHelper#openProductMenu" />
+
 		<execute macro="ProductMenu#gotoPersonalSite" />
 
 		<execute macro="ProductMenu#gotoSitesPages">
@@ -70,6 +72,12 @@
 		<execute macro="SitePage#addFromMyProfile">
 			<var name="pageName" value="Friends Request Page" />
 		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="ProductMenuHelper#openProductMenu" />
 
 		<execute macro="ProductMenu#gotoPersonalSite" />
 
@@ -85,6 +93,8 @@
 			<var name="siteName" value="test" />
 			<var name="siteURL" value="true" />
 		</execute>
+
+		<execute macro="ProductMenuHelper#openProductMenu" />
 
 		<execute macro="ProductMenu#gotoPersonalSite" />
 

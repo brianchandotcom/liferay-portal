@@ -21,32 +21,32 @@
 <!--ADVANCED_SEARCH-->
 <tr>
 	<td>ADVANCED_SEARCH_MATCH_SELECT</td>
-	<td>//select[@name='_186_andOperator']</td>
+	<td>//select[contains(@name,'andOperator')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_FIRST_NAME_FIELD</td>
-	<td>//input[@name='_186_firstName']</td>
+	<td>//input[contains(@name,'firstName')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_MIDDLE_NAME_FIELD</td>
-	<td>//input[@name='_186_middleName']</td>
+	<td>//input[contains(@name,'middleName')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_LAST_NAME_FIELD</td>
-	<td>//input[@name='_186_lastName']</td>
+	<td>//input[contains(@name,'lastName')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_SCREEN_NAME_FIELD</td>
-	<td>//input[@name='_186_screenName']</td>
+	<td>//input[contains(@name,'screenName')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_EMAIL_ADDRESS_FIELD</td>
-	<td>//input[@name='_186_emailAddress']</td>
+	<td>//input[contains(@name,'emailAddress')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -330,6 +330,8 @@
 				<execute macro="Page#changeSiteScope">
 					<var name="siteName" value="${siteScopeName}" />
 				</execute>
+
+				<execute function="Click" locator1="ProductMenu#TOGGLE" />
 			</then>
 		</if>
 

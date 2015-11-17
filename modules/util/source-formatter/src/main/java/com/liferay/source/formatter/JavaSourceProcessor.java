@@ -268,7 +268,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected String checkModulesFile(
+	protected String formatModulesFile(
 		String fileName, String absolutePath, String packagePath,
 		String content) {
 
@@ -318,7 +318,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		if (_checkModulesServiceUtil) {
 			if (content.contains("@Component")) {
-				content = checkOSGIComponents(fileName, absolutePath, content);
+				content = formatOSGIComponents(fileName, absolutePath, content);
 			}
 		}
 
@@ -334,7 +334,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
-	protected String checkOSGIComponents(
+	protected String formatOSGIComponents(
 		String fileName, String absolutePath, String content) {
 
 		String moduleServicePackagePath = null;
@@ -1042,7 +1042,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		if (portalSource && isModulesFile(absolutePath)) {
-			newContent = checkModulesFile(
+			newContent = formatModulesFile(
 				fileName, absolutePath, packagePath, newContent);
 		}
 

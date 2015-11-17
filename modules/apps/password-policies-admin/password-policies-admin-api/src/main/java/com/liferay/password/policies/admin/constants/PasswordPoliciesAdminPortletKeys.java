@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.password.policies.admin.web.constants;
+package com.liferay.password.policies.admin.constants;
 
 /**
  * @author Drew Brokke

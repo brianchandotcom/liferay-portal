@@ -548,7 +548,7 @@
 
 		<execute macro="FormPortlet#submitBlankFormWithRequiredField" />
 
-		<execute macro="FormFields#editMultiText">
+		<execute macro="FormFields#editTextMultiline">
 			<var name="fieldName" value="TextField" />
 			<var name="fieldValue" value="Text Field Value" />
 		</execute>

@@ -128,7 +128,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TEXT_MULTILINE_TEXT_FIELD</td>
+	<td>TEXT_MULTILINE_FIELD</td>
 	<td>//textarea[contains(@id,'${key_fieldName}')]</td>
 	<td></td>
 </tr>

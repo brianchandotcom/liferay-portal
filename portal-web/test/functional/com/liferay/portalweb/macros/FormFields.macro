@@ -18,13 +18,7 @@
 	<command name="editBlankMultiTextFieldWithEnterKey">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute function="KeyPress" locator1="FormFields#TEXT_MULTILINE_TEXT_FIELD" value1="\RETURN" />
-	</command>
-
-	<command name="editMultiText">
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<execute function="Type" locator1="FormFields#TEXT_MULTILINE_TEXT_FIELD" value1="${fieldValue}" />
+		<execute function="KeyPress" locator1="FormFields#TEXT_MULTILINE_FIELD" value1="\RETURN" />
 	</command>
 
 	<command name="editOptionsRow">
@@ -39,7 +33,6 @@
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute function="Type" locator1="FormFields#TEXT_FIELD" value1="${fieldValue}" />
-
 		<execute function="Type" locator1="FormFields#TEXT_FIELD_2" value1="${fieldValueRepeat}" />
 	</command>
 
@@ -47,6 +40,12 @@
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute function="Type" locator1="FormFields#TEXT_FIELD" value1="${fieldValue}" />
+	</command>
+
+	<command name="editTextMultiline">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="Type" locator1="FormFields#TEXT_MULTILINE_FIELD" value1="${fieldValue}" />
 	</command>
 
 	<command name="enableAdvancedOptions">

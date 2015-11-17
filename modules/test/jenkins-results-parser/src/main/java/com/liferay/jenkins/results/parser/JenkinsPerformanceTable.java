@@ -70,7 +70,7 @@ public class JenkinsPerformanceTable {
 			"Duration (Seconds)", "Name", "Status", null);
 	}
 
-	protected static Element createRow(Result result) {
+	protected static Element createRow(JenkinsPerformanceResult result) {
 		return createRow(
 			"td", result.getAxis(), result.getBatch(),
 			result.getClassName(),
@@ -90,7 +90,7 @@ public class JenkinsPerformanceTable {
 			return "";
 		}
 		
-		for (Result result : JenkinsPerformanceDataProcessor._globalList) {
+		for (JenkinsPerformanceResult result : JenkinsPerformanceDataProcessor._globalList) {
 			Element row = createRow(result);
 
 			tableElement.add(row);

@@ -144,7 +144,7 @@ String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
 		rootLinkTemplate="<%= rootLinkTemplate %>"
 		rootNodeName="<%= liveGroup.getLayoutRootNodeName(false, themeDisplay.getLocale()) %>"
 		selectedLayoutIds="<%= selectedLayoutIds %>"
-		selPlid="<%= selPlid %>"
+		selPlid="<%= ((selPlid > 0) || !privateLayout) ? selPlid : null %>"
 		treeId="publicLayoutsTree"
 	/>
 </c:if>
@@ -165,7 +165,7 @@ editPrivateLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
 	rootLinkTemplate="<%= rootLinkTemplate %>"
 	rootNodeName="<%= liveGroup.getLayoutRootNodeName(true, themeDisplay.getLocale()) %>"
 	selectedLayoutIds="<%= selectedLayoutIds %>"
-	selPlid="<%= selPlid %>"
+	selPlid="<%= ((selPlid > 0) || privateLayout) ? selPlid : null %>"
 	treeId="privateLayoutsTree"
 />
 

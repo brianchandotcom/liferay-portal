@@ -15,21 +15,17 @@
 package com.liferay.shopping.model.listener;
 
 import com.liferay.portal.ModelListenerException;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.model.BaseModelListener;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.shopping.service.ShoppingCartLocalService;
 import com.liferay.shopping.service.ShoppingCategoryLocalService;
 import com.liferay.shopping.service.ShoppingCouponLocalService;
 import com.liferay.shopping.service.ShoppingOrderLocalService;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Peter Fellwock
  */
-@Component(immediate = true, service = ModelListener.class)
 public class GroupModelListener extends BaseModelListener<Group> {
 
 	@Override
@@ -48,37 +44,16 @@ public class GroupModelListener extends BaseModelListener<Group> {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setShoppingCartLocalService(
-		ShoppingCartLocalService shoppingCartLocalService) {
-
-		_shoppingCartLocalService = shoppingCartLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setShoppingCategoryLocalService(
-		ShoppingCategoryLocalService shoppingCategoryLocalService) {
-
-		_shoppingCategoryLocalService = shoppingCategoryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setShoppingCouponLocalService(
-		ShoppingCouponLocalService shoppingCouponLocalService) {
-
-		_shoppingCouponLocalService = shoppingCouponLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setShoppingOrderLocalService(
-		ShoppingOrderLocalService shoppingOrderLocalService) {
-
-		_shoppingOrderLocalService = shoppingOrderLocalService;
-	}
-
+	@BeanReference(type = ShoppingCartLocalService.class)
 	private ShoppingCartLocalService _shoppingCartLocalService;
+
+	@BeanReference(type = ShoppingCategoryLocalService.class)
 	private ShoppingCategoryLocalService _shoppingCategoryLocalService;
+
+	@BeanReference(type = ShoppingCouponLocalService.class)
 	private ShoppingCouponLocalService _shoppingCouponLocalService;
+
+	@BeanReference(type = ShoppingOrderLocalService.class)
 	private ShoppingOrderLocalService _shoppingOrderLocalService;
 
 }

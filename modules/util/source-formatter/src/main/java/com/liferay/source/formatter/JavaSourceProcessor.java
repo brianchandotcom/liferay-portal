@@ -268,7 +268,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected void checkModulesFile(
+	protected String checkModulesFile(
 		String fileName, String absolutePath, String packagePath,
 		String content) {
 
@@ -318,7 +318,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		if (_checkModulesServiceUtil) {
 			if (content.contains("@Component")) {
-				checkOSGIComponents(fileName, absolutePath, content);
+				content = checkOSGIComponents(fileName, absolutePath, content);
 			}
 		}
 
@@ -330,9 +330,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			processErrorMessage(
 				fileName, "Do not use Registry in modules: " + fileName);
 		}
+
+		return content;
 	}
 
-	protected void checkOSGIComponents(
+	protected String checkOSGIComponents(
 		String fileName, String absolutePath, String content) {
 
 		String moduleServicePackagePath = null;
@@ -371,6 +373,34 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		matcher = _setReferenceMethodPattern.matcher(content);
 
 		while (matcher.find()) {
+			String annotationParameters = matcher.group(2);
+
+			if (!annotationParameters.contains("unbind =")) {
+				String setMethodName = matcher.group(4);
+
+				if (!content.contains("un" + setMethodName + "(")) {
+					if (Validator.isNull(annotationParameters)) {
+						return StringUtil.insert(
+							content, "(unbind = \"-\")", matcher.start(2));
+					}
+
+					if (!annotationParameters.contains(StringPool.NEW_LINE)) {
+						return StringUtil.insert(
+							content, ", unbind = \"-\"", matcher.end(2) - 1);
+					}
+
+					if (!annotationParameters.contains("\n\n")) {
+						String indent = matcher.group(1) + StringPool.TAB;
+
+						int x = content.lastIndexOf("\n", matcher.end(2) - 1);
+
+						return StringUtil.replaceFirst(
+							content, "\n",
+							",\n" + indent + "unbind = \"-\"" + "\n", x - 1);
+					}
+				}
+			}
+
 			String methodContent = matcher.group(6);
 
 			Matcher referenceMethodContentMatcher =
@@ -410,6 +440,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				}
 			}
 		}
+
+		return content;
 	}
 
 	protected void checkRegexPattern(
@@ -1010,7 +1042,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		if (portalSource && isModulesFile(absolutePath)) {
-			checkModulesFile(fileName, absolutePath, packagePath, newContent);
+			newContent = checkModulesFile(
+				fileName, absolutePath, packagePath, newContent);
 		}
 
 		// LPS-48156

@@ -120,6 +120,12 @@ String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
 	<a data-url="{url}" data-uuid="{uuid}" href="{layoutURL}" id="{id}" title="<liferay-ui:message arguments="{label}" key="edit-x" />"><span class="icon-cog icon-monospaced"></span></a>
 </liferay-util:buffer>
 
+<liferay-util:buffer var="rootLinkTemplate">
+	<span class="{cssClass}" data-url="{url}" data-uuid="{uuid}" id="{id}" title="{label}">{label}</span>
+
+	<a data-url="{url}" data-uuid="{uuid}" href="{layoutURL}" id="{id}" title="<liferay-ui:message arguments="{label}" key="edit-x" />"><span class="icon-cog icon-monospaced"></span></a>
+</liferay-util:buffer>
+
 <c:if test="<%= !selGroup.isLayoutSetPrototype() && !selGroup.isLayoutPrototype() %>">
 
 	<%
@@ -135,6 +141,7 @@ String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
 		linkTemplate="<%= linkTemplate %>"
 		portletURL="<%= editPublicLayoutURL %>"
 		privateLayout="<%= false %>"
+		rootLinkTemplate="<%= rootLinkTemplate %>"
 		rootNodeName="<%= liveGroup.getLayoutRootNodeName(false, themeDisplay.getLocale()) %>"
 		selectedLayoutIds="<%= selectedLayoutIds %>"
 		selPlid="<%= selPlid %>"
@@ -155,6 +162,7 @@ editPrivateLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
 	linkTemplate="<%= linkTemplate %>"
 	portletURL="<%= editPrivateLayoutURL %>"
 	privateLayout="<%= true %>"
+	rootLinkTemplate="<%= rootLinkTemplate %>"
 	rootNodeName="<%= liveGroup.getLayoutRootNodeName(true, themeDisplay.getLocale()) %>"
 	selectedLayoutIds="<%= selectedLayoutIds %>"
 	selPlid="<%= selPlid %>"

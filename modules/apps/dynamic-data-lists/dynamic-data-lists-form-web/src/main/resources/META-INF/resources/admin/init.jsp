@@ -32,6 +32,7 @@ page import="com.liferay.dynamic.data.lists.form.web.display.context.DDLFormAdmi
 page import="com.liferay.dynamic.data.lists.form.web.display.context.DDLFormViewRecordsDisplayContext" %><%@
 page import="com.liferay.dynamic.data.lists.form.web.search.RecordSetDisplayTerms" %><%@
 page import="com.liferay.dynamic.data.lists.form.web.search.RecordSetSearch" %><%@
+page import="com.liferay.dynamic.data.lists.form.web.util.DDLFormEmailNotificationUtil" %><%@
 page import="com.liferay.dynamic.data.lists.form.web.util.DDLFormPortletUtil" %><%@
 page import="com.liferay.dynamic.data.lists.model.DDLRecord" %><%@
 page import="com.liferay.dynamic.data.lists.model.DDLRecordSet" %><%@

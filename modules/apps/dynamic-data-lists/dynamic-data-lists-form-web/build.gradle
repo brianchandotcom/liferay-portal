@@ -1,6 +1,7 @@
 dependencies {
 	compile group: "com.liferay.portal", name: "util-taglib", version: liferay.portalVersion
 	compile group: "javax.servlet.jsp", name: "jsp-api", version: "2.1"
+	compile group: "javax.mail", name: "mail", version: "1.4"
 	compile project(":apps:application-list:application-list-api")
 	compile project(":apps:configuration-admin:configuration-admin-api")
 	compile project(":apps:dynamic-data-lists:dynamic-data-lists-api")
@@ -8,6 +9,8 @@ dependencies {
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-field-type")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-renderer")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-values-factory")
+	
+	provided group: "com.liferay.portal", name: "util-java", version: liferay.portalVersion
 }
 
 liferay {

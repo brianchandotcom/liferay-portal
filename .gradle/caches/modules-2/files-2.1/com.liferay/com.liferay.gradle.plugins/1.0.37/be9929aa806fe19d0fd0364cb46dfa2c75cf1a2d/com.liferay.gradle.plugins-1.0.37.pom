@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.liferay</groupId>
   <artifactId>com.liferay.gradle.plugins</artifactId>
-  <version>1.0.36</version>
+  <version>1.0.37</version>
   <licenses>
     <license>
       <name>LGPL 2.1</name>
@@ -153,7 +153,7 @@
     <dependency>
       <groupId>com.liferay</groupId>
       <artifactId>com.liferay.gradle.plugins.lang.builder</artifactId>
-      <version>1.0.1</version>
+      <version>1.0.3</version>
       <scope>compile</scope>
     </dependency>
   </dependencies>

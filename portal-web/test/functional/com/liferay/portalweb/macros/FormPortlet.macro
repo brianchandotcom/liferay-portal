@@ -26,6 +26,6 @@
 	<command name="submitBlankFormWithRequiredField">
 		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Submit" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR_FIELD_REQUIRED" value1="This field is required." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR_FORM_FIELD_REQUIRED" value1="This field is required." />
 	</command>
 </definition>

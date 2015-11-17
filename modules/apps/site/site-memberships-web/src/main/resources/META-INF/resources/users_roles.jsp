@@ -30,6 +30,10 @@ User selUser = (User)request.getAttribute("edit_site_assignments.jsp-selUser");
 PortletURL portletURL = (PortletURL)request.getAttribute("edit_site_assignments.jsp-portletURL");
 
 portletURL.setParameter("p_u_i_d", String.valueOf(selUser.getUserId()));
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+renderResponse.setTitle(LanguageUtil.get(request, "edit-site-roles-for-user") + ": " + HtmlUtil.escape(selUser.getFullName()));
 %>
 
 <aui:form action="<%= portletURL.toString() %>" name="fm">
@@ -40,13 +44,6 @@ portletURL.setParameter("p_u_i_d", String.valueOf(selUser.getUserId()));
 	<aui:input name="p_u_i_d" type="hidden" value="<%= selUser.getUserId() %>" />
 	<aui:input name="addRoleIds" type="hidden" />
 	<aui:input name="removeRoleIds" type="hidden" />
-
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		escapeXml="<%= false %>"
-		localizeTitle="<%= false %>"
-		title='<%= LanguageUtil.get(request, "edit-site-roles-for-user") + ": " + HtmlUtil.escape(selUser.getFullName()) %>'
-	/>
 
 	<liferay-ui:membership-policy-error />
 

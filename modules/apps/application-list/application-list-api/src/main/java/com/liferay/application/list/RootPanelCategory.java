@@ -14,6 +14,7 @@
 
 package com.liferay.application.list;
 
+import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
@@ -48,6 +49,15 @@ public class RootPanelCategory implements PanelCategory {
 	@Override
 	public String getLabel(Locale locale) {
 		return StringPool.BLANK;
+	}
+
+	@Override
+	public int getNotificationsCount(
+		PanelCategoryHelper panelCategoryHelper,
+		PermissionChecker permissionChecker, Group group) {
+
+		return panelCategoryHelper.getNotificationsCount(
+			this.getKey(), permissionChecker, group);
 	}
 
 	@Override

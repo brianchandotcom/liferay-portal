@@ -62,15 +62,20 @@ import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.model.CompanyConstants;
+import com.liferay.portal.model.ResourceAction;
 import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.service.ResourceActionLocalService;
 import com.liferay.portal.service.ResourcePermissionLocalService;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalService;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
+import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService;
@@ -646,53 +651,62 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	}
 
 	protected void upgradeStructurePermissions() throws Exception {
+		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			StringBundler sb = new StringBundler(5);
+			con = DataAccess.getUpgradeOptimizedConnection();
 
-			sb.append("select resourcePermissionId, primKey from ");
-			sb.append("ResourcePermission where name = '");
-			sb.append(DDMStructure.class.getName());
-			sb.append("' and scope = ");
-			sb.append(ResourceConstants.SCOPE_INDIVIDUAL);
+			ps = con.prepareStatement("select * from DDMStructure");
 
 			ps = connection.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				long resourcePermissionId = rs.getLong("resourcePermissionId");
-				long primKey = rs.getLong("primKey");
+				long companyId = rs.getLong("companyId");
+				long structureId = rs.getLong("structureId");
 
-				Long classNameId = _structureClassNameIds.get(primKey);
+				List<ResourcePermission> list =
+					_resourcePermissionLocalService.getResourcePermissions(
+							companyId, DDMStructure.class.getName(),
+						ResourceConstants.SCOPE_INDIVIDUAL,
+						StringUtil.valueOf(structureId));
 
-				if (classNameId == null) {
-					continue;
+				for (ResourcePermission resourcePermission : list) {
+					Long classNameId = _structureClassNameIds.get(
+						resourcePermission.getPrimKey());
+
+					if (classNameId == null) {
+						continue;
+					}
+
+					String resourceName =
+						DDMStructurePermission.getStructureModelResourceName(
+							classNameId);
+					resourcePermission.setName(resourceName);
+
+					_resourcePermissionLocalService.updateResourcePermission(
+						resourcePermission);
 				}
-
-				String resourceName = getStructureModelResourceName(
-					classNameId);
-
-				runSQL(
-					"update ResourcePermission set name = '" + resourceName +
-						"' where resourcePermissionId = " +
-							resourcePermissionId);
 			}
 		}
 		finally {
-			DataAccess.cleanUp(ps, rs);
+			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
 
 	protected void upgradeStructuresAndAddStructureVersionsAndLayouts()
 		throws Exception {
 
+		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
 			ps = connection.prepareStatement("select * from DDMStructure");
 
 			rs = ps.executeQuery();
@@ -746,45 +760,48 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(ps, rs);
+			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
 
 	protected void upgradeTemplatePermissions() throws Exception {
+		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			StringBundler sb = new StringBundler(5);
+			con = DataAccess.getUpgradeOptimizedConnection();
 
-			sb.append("select resourcePermissionId, primKey from ");
-			sb.append("ResourcePermission where name = '");
-			sb.append(DDMTemplate.class.getName());
-			sb.append("' and scope = ");
-			sb.append(ResourceConstants.SCOPE_INDIVIDUAL);
-
-			ps = connection.prepareStatement(sb.toString());
+			ps = con.prepareStatement("select * from DDMTemplate");
 
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				long resourcePermissionId = rs.getLong("resourcePermissionId");
-				long primKey = rs.getLong("primKey");
+				long companyId = rs.getLong("companyId");
+				long templateId = rs.getLong("templateId");
 
-				Long resourceClassNameId = _templateResourceClassNameIds.get(
-					primKey);
+				List<ResourcePermission> list =
+					_resourcePermissionLocalService.getResourcePermissions(
+							companyId, DDMTemplate.class.getName(),
+						ResourceConstants.SCOPE_INDIVIDUAL,
+						StringUtil.valueOf(templateId));
 
-				if (resourceClassNameId == null) {
-					continue;
+				for (ResourcePermission resourcePermission : list) {
+					Long classNameId = _templateResourceClassNameIds.get(
+						resourcePermission.getPrimKey());
+
+					if (classNameId == null) {
+						continue;
+					}
+
+					String resourceName =
+						DDMTemplatePermission.getTemplateModelResourceName(
+							classNameId);
+					resourcePermission.setName(resourceName);
+
+					_resourcePermissionLocalService.updateResourcePermission(
+						resourcePermission);
 				}
-
-				String resourceName = getTemplateModelResourceName(
-					resourceClassNameId);
-
-				runSQL(
-					"update ResourcePermission set name = '" + resourceName +
-						"' where resourcePermissionId = " +
-							resourcePermissionId);
 			}
 		}
 		finally {
@@ -1575,57 +1592,36 @@ private final AssetEntryLocalService _assetEntryLocalService;
 				int viewCount)
 			throws Exception {
 
-			PreparedStatement ps = null;
+			AssetEntry assetEntry = _assetEntryLocalService.createAssetEntry(
+				entryId);
 
-			try {
-				StringBundler sb = new StringBundler(9);
+			assetEntry.setGroupId(groupId);
+			assetEntry.setCompanyId(companyId);
+			assetEntry.setUserId(userId);
+			assetEntry.setUserName(userName);
+			assetEntry.setCreateDate(createDate);
+			assetEntry.setModifiedDate(modifiedDate);
+			assetEntry.setClassNameId(classNameId);
+			assetEntry.setClassPK(classPK);
+			assetEntry.setClassUuid(classUuid);
+			assetEntry.setClassTypeId(classTypeId);
+			assetEntry.setVisible(visible);
+			assetEntry.setStartDate(startDate);
+			assetEntry.setEndDate(endDate);
+			assetEntry.setPublishDate(publishDate);
+			assetEntry.setExpirationDate(expirationDate);
+			assetEntry.setMimeType(mimeType);
+			assetEntry.setTitle(title);
+			assetEntry.setDescription(description);
+			assetEntry.setSummary(summary);
+			assetEntry.setUrl(url);
+			assetEntry.setLayoutUuid(layoutUuid);
+			assetEntry.setHeight(height);
+			assetEntry.setWidth(width);
+			assetEntry.setPriority(priority);
+			assetEntry.setViewCount(viewCount);
 
-				sb.append("insert into AssetEntry (entryId, groupId, ");
-				sb.append("companyId, userId, userName, createDate, ");
-				sb.append("modifiedDate, classNameId, classPK, classUuid, ");
-				sb.append("classTypeId, visible, startDate, endDate, ");
-				sb.append("publishDate, expirationDate, mimeType, title, ");
-				sb.append("description, summary, url, layoutUuid, height, ");
-				sb.append("width, priority, viewCount) values (?, ?, ?, ?, ");
-				sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
-				sb.append("?, ?, ?, ?, ?, ?)");
-
-				String sql = sb.toString();
-
-				ps = connection.prepareStatement(sql);
-
-				ps.setLong(1, entryId);
-				ps.setLong(2, groupId);
-				ps.setLong(3, companyId);
-				ps.setLong(4, userId);
-				ps.setString(5, userName);
-				ps.setTimestamp(6, createDate);
-				ps.setTimestamp(7, modifiedDate);
-				ps.setLong(8, classNameId);
-				ps.setLong(9, classPK);
-				ps.setString(10, classUuid);
-				ps.setLong(11, classTypeId);
-				ps.setBoolean(12, visible);
-				ps.setTimestamp(13, startDate);
-				ps.setTimestamp(14, endDate);
-				ps.setTimestamp(15, publishDate);
-				ps.setTimestamp(16, expirationDate);
-				ps.setString(17, mimeType);
-				ps.setString(18, title);
-				ps.setString(19, description);
-				ps.setString(20, summary);
-				ps.setString(21, url);
-				ps.setString(22, layoutUuid);
-				ps.setInt(23, height);
-				ps.setInt(24, width);
-				ps.setDouble(25, priority);
-				ps.setInt(26, viewCount);
-
-				ps.executeUpdate();
-			}
-			finally {
-				DataAccess.cleanUp(ps);
-			}
+			_assetEntryLocalService.updateAssetEntry(assetEntry);
 		}
 
 		protected long addDDMDLFolder() throws Exception {
@@ -1659,61 +1655,39 @@ private final AssetEntryLocalService _assetEntryLocalService;
 				long custom2ImageId, boolean manualCheckInRequired)
 			throws Exception {
 
-			PreparedStatement ps = null;
+			DLFileEntry dlFileEntry =
+				_dLFileEntryLocalService.createDLFileEntry(fileEntryId);
 
-			try {
-				StringBundler sb = new StringBundler(9);
+			dlFileEntry.setUuid(uuid);
+			dlFileEntry.setGroupId(groupId);
+			dlFileEntry.setCompanyId(companyId);
+			dlFileEntry.setUserId(userId);
+			dlFileEntry.setUserName(userName);
+			dlFileEntry.setCreateDate(createDate);
+			dlFileEntry.setModifiedDate(modifiedDate);
+			dlFileEntry.setClassNameId(classNameId);
+			dlFileEntry.setClassPK(classPK);
+			dlFileEntry.setRepositoryId(repositoryId);
+			dlFileEntry.setFolderId(folderId);
+			dlFileEntry.setTreePath(treePath);
+			dlFileEntry.setName(name);
+			dlFileEntry.setFileName(fileName);
+			dlFileEntry.setExtension(extension);
+			dlFileEntry.setMimeType(mimeType);
+			dlFileEntry.setTitle(title);
+			dlFileEntry.setDescription(description);
+			dlFileEntry.setExtraSettings(extraSettings);
+			dlFileEntry.setFileEntryTypeId(fileEntryTypeId);
+			dlFileEntry.setVersion(version);
+			dlFileEntry.setSize(size);
+			dlFileEntry.setReadCount(readCount);
+			dlFileEntry.setSmallImageId(smallImageId);
+			dlFileEntry.setLargeImageId(largeImageId);
+			dlFileEntry.setCustom1ImageId(custom1ImageId);
+			dlFileEntry.setCustom2ImageId(custom2ImageId);
+			dlFileEntry.setManualCheckInRequired(manualCheckInRequired);
 
-				sb.append("insert into DLFileEntry (uuid_, fileEntryId, ");
-				sb.append("groupId, companyId, userId, userName, createDate, ");
-				sb.append("modifiedDate, classNameId, classPK, repositoryId, ");
-				sb.append("folderId, treePath, name, fileName, extension, ");
-				sb.append("mimeType, title, description, extraSettings, ");
-				sb.append("fileEntryTypeId, version, size_, readCount,  ");
-				sb.append("smallImageId, largeImageId, custom1ImageId, ");
-				sb.append("custom2ImageId, manualCheckInRequired) values (?, ");
-				sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
-				sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-
-				String sql = sb.toString();
-
-				ps = connection.prepareStatement(sql);
-
-				ps.setString(1, uuid);
-				ps.setLong(2, fileEntryId);
-				ps.setLong(3, groupId);
-				ps.setLong(4, companyId);
-				ps.setLong(5, userId);
-				ps.setString(6, userName);
-				ps.setTimestamp(7, createDate);
-				ps.setTimestamp(8, modifiedDate);
-				ps.setLong(9, classNameId);
-				ps.setLong(10, classPK);
-				ps.setLong(11, repositoryId);
-				ps.setLong(12, folderId);
-				ps.setString(13, treePath);
-				ps.setString(14, name);
-				ps.setString(15, fileName);
-				ps.setString(16, extension);
-				ps.setString(17, mimeType);
-				ps.setString(18, title);
-				ps.setString(19, description);
-				ps.setString(20, extraSettings);
-				ps.setLong(21, fileEntryTypeId);
-				ps.setString(22, version);
-				ps.setLong(23, size);
-				ps.setInt(24, readCount);
-				ps.setLong(25, smallImageId);
-				ps.setLong(26, largeImageId);
-				ps.setLong(27, custom1ImageId);
-				ps.setLong(28, custom2ImageId);
-				ps.setBoolean(29, manualCheckInRequired);
-
-				ps.executeUpdate();
-			}
-			finally {
-				DataAccess.cleanUp(ps);
-			}
+			_dLFileEntryLocalService.updateDLFileEntry(dlFileEntry);
 		}
 
 		protected void addDLFileVersion(
@@ -1728,59 +1702,37 @@ private final AssetEntryLocalService _assetEntryLocalService;
 				String statusByUserName, Timestamp statusDate)
 			throws Exception {
 
-			PreparedStatement ps = null;
+			DLFileVersion dlFileVersion =
+				_dlFileVersionLocalService.createDLFileVersion(fileVersionId);
 
-			try {
-				StringBundler sb = new StringBundler(10);
+			dlFileVersion.setUuid(uuid);
+			dlFileVersion.setGroupId(groupId);
+			dlFileVersion.setCompanyId(companyId);
+			dlFileVersion.setUserId(userId);
+			dlFileVersion.setUserName(userName);
+			dlFileVersion.setCreateDate(createDate);
+			dlFileVersion.setModifiedDate(modifiedDate);
+			dlFileVersion.setRepositoryId(repositoryId);
+			dlFileVersion.setFolderId(folderId);
+			dlFileVersion.setFileEntryId(fileEntryId);
+			dlFileVersion.setTreePath(treePath);
+			dlFileVersion.setFileName(fileName);
+			dlFileVersion.setExtension(extension);
+			dlFileVersion.setMimeType(mimeType);
+			dlFileVersion.setTitle(title);
+			dlFileVersion.setDescription(description);
+			dlFileVersion.setChangeLog(changeLog);
+			dlFileVersion.setExtraSettings(extraSettings);
+			dlFileVersion.setFileEntryTypeId(fileEntryTypeId);
+			dlFileVersion.setVersion(version);
+			dlFileVersion.setSize(size);
+			dlFileVersion.setChecksum(checksum);
+			dlFileVersion.setStatus(status);
+			dlFileVersion.setStatusByUserId(statusByUserId);
+			dlFileVersion.setStatusByUserName(statusByUserName);
+			dlFileVersion.setStatusDate(statusDate);
 
-				sb.append("insert into DLFileVersion (uuid_, fileVersionId, ");
-				sb.append("groupId, companyId, userId, userName, createDate, ");
-				sb.append("modifiedDate, repositoryId, folderId, ");
-				sb.append("fileEntryId, treePath, fileName, extension, ");
-				sb.append("mimeType, title, description, changeLog, ");
-				sb.append("extraSettings, fileEntryTypeId, version, size_, ");
-				sb.append("checksum, status, statusByUserId, ");
-				sb.append("statusByUserName, statusDate) values (?, ?, ?, ?, ");
-				sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
-				sb.append("?, ?, ?, ?, ?, ?, ?)");
-
-				String sql = sb.toString();
-
-				ps = connection.prepareStatement(sql);
-
-				ps.setString(1, uuid);
-				ps.setLong(2, fileVersionId);
-				ps.setLong(3, groupId);
-				ps.setLong(4, companyId);
-				ps.setLong(5, userId);
-				ps.setString(6, userName);
-				ps.setTimestamp(7, createDate);
-				ps.setTimestamp(8, modifiedDate);
-				ps.setLong(9, repositoryId);
-				ps.setLong(10, folderId);
-				ps.setLong(11, fileEntryId);
-				ps.setString(12, treePath);
-				ps.setString(13, fileName);
-				ps.setString(14, extension);
-				ps.setString(15, mimeType);
-				ps.setString(16, title);
-				ps.setString(17, description);
-				ps.setString(18, changeLog);
-				ps.setString(19, extraSettings);
-				ps.setLong(20, fileEntryTypeId);
-				ps.setString(21, version);
-				ps.setLong(22, size);
-				ps.setString(23, checksum);
-				ps.setInt(24, status);
-				ps.setLong(25, statusByUserId);
-				ps.setString(26, statusByUserName);
-				ps.setTimestamp(27, statusDate);
-
-				ps.executeUpdate();
-			}
-			finally {
-				DataAccess.cleanUp(ps);
-			}
+			_dlFileVersionLocalService.updateDLFileVersion(dlFileVersion);
 		}
 
 		protected void addDLFolder(
@@ -1790,50 +1742,29 @@ private final AssetEntryLocalService _assetEntryLocalService;
 				String name, String description, Timestamp lastPostDate)
 			throws Exception {
 
-			PreparedStatement ps = null;
+			DLFolder dlFolder = _dlFolderLocalService.createDLFolder(folderId);
 
-			try {
-				StringBundler sb = new StringBundler(5);
+			dlFolder.setUuid(uuid);
+			dlFolder.setGroupId(groupId);
+			dlFolder.setCompanyId(companyId);
+			dlFolder.setUserId(userId);
+			dlFolder.setUserName(userName);
+			dlFolder.setCreateDate(createDate);
+			dlFolder.setModifiedDate(modifiedDate);
+			dlFolder.setRepositoryId(repositoryId);
+			dlFolder.setMountPoint(false);
+			dlFolder.setParentFolderId(parentFolderId);
+			dlFolder.setName(name);
+			dlFolder.setDescription(description);
+			dlFolder.setLastPostDate(lastPostDate);
+			dlFolder.setDefaultFileEntryTypeId(0);
+			dlFolder.setHidden(false);
+			dlFolder.setStatus(WorkflowConstants.STATUS_APPROVED);
+			dlFolder.setStatusByUserId(0);
+			dlFolder.setStatusByUserName(StringPool.BLANK);
+			dlFolder.setRestrictionType(0);
 
-				sb.append("insert into DLFolder (uuid_, folderId, groupId, ");
-				sb.append("companyId, userId, userName, createDate, ");
-				sb.append("modifiedDate, repositoryId, mountPoint, ");
-				sb.append("parentFolderId, name, description, lastPostDate, ");
-				sb.append("defaultFileEntryTypeId, hidden_, status, ");
-				sb.append("statusByUserId, statusByUserName, restrictionType");
-				sb.append(") values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
-				sb.append("?, ?, ?, ?, ?, ?, ?)");
-
-				String sql = sb.toString();
-
-				ps = connection.prepareStatement(sql);
-
-				ps.setString(1, uuid);
-				ps.setLong(2, folderId);
-				ps.setLong(3, groupId);
-				ps.setLong(4, companyId);
-				ps.setLong(5, userId);
-				ps.setString(6, userName);
-				ps.setTimestamp(7, createDate);
-				ps.setTimestamp(8, modifiedDate);
-				ps.setLong(9, repositoryId);
-				ps.setBoolean(10, false);
-				ps.setLong(11, parentFolderId);
-				ps.setString(12, name);
-				ps.setString(13, description);
-				ps.setTimestamp(14, lastPostDate);
-				ps.setLong(15, 0);
-				ps.setBoolean(16, false);
-				ps.setInt(17, WorkflowConstants.STATUS_APPROVED);
-				ps.setInt(18, 0);
-				ps.setString(19, StringPool.BLANK);
-				ps.setInt(20, 0);
-
-				ps.executeUpdate();
-			}
-			finally {
-				DataAccess.cleanUp(ps);
-			}
+			_dlFolderLocalService.updateDLFolder(dlFolder);
 		}
 
 		protected long addDLFolderTree(String ddmFormFieldName)
@@ -1930,35 +1861,12 @@ private final AssetEntryLocalService _assetEntryLocalService;
 				DataAccess.cleanUp(ps);
 			}
 		}
+		protected long getActionBitwiseValue(String actionId)throws Exception {
+			ResourceAction resourceAction =
+				_resourceActionLocalService.getResourceAction(
+					DLFileEntry.class.getName(), actionId);
 
-		protected long getActionBitwiseValue(String action) throws Exception {
-			PreparedStatement ps = null;
-			ResultSet rs = null;
-
-			try {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append("select bitwiseValue from ResourceAction where ");
-				sb.append("name = ? and actionId = ?");
-
-				String sql = sb.toString();
-
-				ps = connection.prepareStatement(sql);
-
-				ps.setString(1, DLFileEntry.class.getName());
-				ps.setString(2, action);
-
-				rs = ps.executeQuery();
-
-				if (rs.next()) {
-					return rs.getLong("bitwiseValue");
-				}
-
-				return 0;
-			}
-			finally {
-				DataAccess.cleanUp(ps, rs);
-			}
+			return resourceAction.getBitwiseValue();
 		}
 
 		protected long getActionIdsLong(String[] actions) throws Exception {
@@ -1972,34 +1880,20 @@ private final AssetEntryLocalService _assetEntryLocalService;
 		}
 
 		protected long getDLFolderId(
-				long groupId, long parentFolderId, String name)
-			throws Exception {
-
-			PreparedStatement ps = null;
-			ResultSet rs = null;
+			long groupId, long parentFolderId, String name) {
 
 			try {
-				String sql =
-					"select folderId from DLFolder where groupId = ? and " +
-					"parentFolderId = ? and name = ?";
-
-				ps = connection.prepareStatement(sql);
-
-				ps.setLong(1, groupId);
-				ps.setLong(2, parentFolderId);
-				ps.setString(3, name);
-
-				rs = ps.executeQuery();
-
-				if (rs.next()) {
-					return rs.getLong("folderId");
+				DLFolder dlFolder = _dlFolderLocalService.getFolder(
+					groupId, parentFolderId, name);
+				return dlFolder.getFolderId();
+			}
+			catch (PortalException e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Unable to get DLfolder ID " + e);
 				}
-			}
-			finally {
-				DataAccess.cleanUp(ps, rs);
-			}
+				return 0;
 
-			return 0;
+			}
 		}
 
 		protected String getExtension(String fileName) {
@@ -2015,10 +1909,13 @@ private final AssetEntryLocalService _assetEntryLocalService;
 		}
 
 		protected long getRoleId(String roleName) throws Exception {
+			Connection con = null;
 			PreparedStatement ps = null;
 			ResultSet rs = null;
 
 			try {
+				con = DataAccess.getUpgradeOptimizedConnection();
+
 				StringBundler sb = new StringBundler(4);
 
 				sb.append("select roleId from role_ where companyId = ? and ");
@@ -2091,25 +1988,22 @@ private final AssetEntryLocalService _assetEntryLocalService;
 
 				// Resource permissions
 
-				addResourcePermissions(
-					0, increment(), _companyId, DLFileEntry.class.getName(),
-					ResourceConstants.SCOPE_INDIVIDUAL, fileEntryId,
-					getRoleId(RoleConstants.OWNER), _userId,
+				_resourcePermissionLocalService.addResourcePermissions(
+					DLFileEntry.class.getName(), RoleConstants.OWNER,
+					ResourceConstants.SCOPE_INDIVIDUAL,
 					getActionIdsLong(_ownerPermissions));
 
 				if (_groupId > 0) {
-					addResourcePermissions(
-						0, increment(), _companyId, DLFileEntry.class.getName(),
-						ResourceConstants.SCOPE_INDIVIDUAL, fileEntryId,
-						getRoleId(RoleConstants.SITE_MEMBER), 0,
+					_resourcePermissionLocalService.addResourcePermissions(
+						DLFileEntry.class.getName(), RoleConstants.SITE_MEMBER,
+						ResourceConstants.SCOPE_INDIVIDUAL,
 						getActionIdsLong(_groupPermissions));
 				}
 
-				addResourcePermissions(
-					0, increment(), _companyId, DLFileEntry.class.getName(),
-					ResourceConstants.SCOPE_INDIVIDUAL, fileEntryId,
-					getRoleId(RoleConstants.GUEST), 0,
-					getActionIdsLong(_guestPermissions));
+				_resourcePermissionLocalService.addResourcePermissions(
+						DLFileEntry.class.getName(), RoleConstants.GUEST,
+						ResourceConstants.SCOPE_INDIVIDUAL,
+						getActionIdsLong(_guestPermissions));
 
 				// File version
 

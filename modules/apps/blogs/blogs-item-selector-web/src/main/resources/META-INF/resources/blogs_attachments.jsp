@@ -56,7 +56,7 @@ if (folder != null) {
 			FileEntry fileEntry = null;
 
 			try {
-				fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
+				fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(fileEntryId);
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {

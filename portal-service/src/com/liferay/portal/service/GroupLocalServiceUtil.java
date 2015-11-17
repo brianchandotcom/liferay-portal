@@ -866,6 +866,10 @@ public class GroupLocalServiceUtil {
 		return getService().getGroupsCount(companyId, parentGroupId, site);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the group associated with the layout.
 	*

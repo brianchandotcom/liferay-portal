@@ -1788,6 +1788,11 @@ public class JournalArticleLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _journalArticleLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	@Override
 	public java.util.List<com.liferay.journal.model.JournalArticle> getIndexableArticlesByDDMStructureKey(
 		java.lang.String[] ddmStructureKeys) {
 		return _journalArticleLocalService.getIndexableArticlesByDDMStructureKey(ddmStructureKeys);

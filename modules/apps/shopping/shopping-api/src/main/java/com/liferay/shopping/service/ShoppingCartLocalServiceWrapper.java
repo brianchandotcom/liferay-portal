@@ -206,6 +206,11 @@ public class ShoppingCartLocalServiceWrapper implements ShoppingCartLocalService
 	}
 
 	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _shoppingCartLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	@Override
 	public java.util.Map<com.liferay.shopping.model.ShoppingCartItem, java.lang.Integer> getItems(
 		long groupId, java.lang.String itemIds) {
 		return _shoppingCartLocalService.getItems(groupId, itemIds);

@@ -268,6 +268,10 @@ public class AssetCategoryPropertyLocalServiceUtil {
 		return getService().getCategoryPropertyValues(groupId, key);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

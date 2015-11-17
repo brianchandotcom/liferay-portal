@@ -247,6 +247,11 @@ public class KaleoDefinitionLocalServiceWrapper
 		return _kaleoDefinitionLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _kaleoDefinitionLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the kaleo definition with the primary key.
 	*

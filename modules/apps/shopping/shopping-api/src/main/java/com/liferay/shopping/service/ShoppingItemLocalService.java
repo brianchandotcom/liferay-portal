@@ -214,6 +214,9 @@ public interface ShoppingItemLocalService extends BaseLocalService,
 		long groupId, long categoryId, int numOfItems);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.shopping.model.ShoppingItem getItem(long companyId,
 		java.lang.String sku) throws PortalException;
 

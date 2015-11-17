@@ -223,6 +223,11 @@ public class SocialActivitySettingLocalServiceWrapper
 		return _socialActivitySettingLocalService.getActivitySettings(groupId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _socialActivitySettingLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

@@ -478,6 +478,10 @@ public class OrganizationLocalServiceUtil {
 		return getService().getGroupUserOrganizations(groupId, userId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
 	public static java.util.List<com.liferay.portal.model.Organization> getNoAssetOrganizations() {
 		return getService().getNoAssetOrganizations();
 	}

@@ -479,6 +479,10 @@ public class MBMessageLocalServiceUtil {
 		return getService().getGroupMessagesCount(groupId, userId, status);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the message-boards message with the primary key.
 	*

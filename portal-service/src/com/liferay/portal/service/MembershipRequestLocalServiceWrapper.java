@@ -214,6 +214,11 @@ public class MembershipRequestLocalServiceWrapper
 		return _membershipRequestLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _membershipRequestLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the membership request with the primary key.
 	*

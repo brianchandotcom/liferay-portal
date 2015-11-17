@@ -391,6 +391,10 @@ public class BookmarksFolderLocalServiceUtil {
 		return getService().getFoldersCount(groupId, parentFolderId, status);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
 	public static java.util.List<com.liferay.bookmarks.model.BookmarksFolder> getNoAssetFolders() {
 		return getService().getNoAssetFolders();
 	}

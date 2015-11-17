@@ -238,6 +238,11 @@ public class ShoppingCouponLocalServiceWrapper
 		return _shoppingCouponLocalService.getCoupon(couponId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _shoppingCouponLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

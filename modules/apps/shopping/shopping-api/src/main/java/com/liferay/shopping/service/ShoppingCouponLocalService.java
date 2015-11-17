@@ -192,6 +192,9 @@ public interface ShoppingCouponLocalService extends BaseLocalService,
 	public com.liferay.shopping.model.ShoppingCoupon getCoupon(long couponId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
 	/**
 	* Returns the OSGi service identifier.
 	*

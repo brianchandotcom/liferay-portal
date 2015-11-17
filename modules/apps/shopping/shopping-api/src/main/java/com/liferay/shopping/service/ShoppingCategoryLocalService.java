@@ -218,6 +218,9 @@ public interface ShoppingCategoryLocalService extends BaseLocalService,
 	public com.liferay.shopping.model.ShoppingCategory getCategory(
 		long groupId, java.lang.String categoryName);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
 	/**
 	* Returns the OSGi service identifier.
 	*

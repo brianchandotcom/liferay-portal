@@ -412,6 +412,11 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService,
 			subscribed, queryDefinition);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _mbThreadLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the message boards thread with the primary key.
 	*

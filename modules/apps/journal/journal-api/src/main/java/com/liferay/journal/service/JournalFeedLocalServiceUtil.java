@@ -296,6 +296,10 @@ public class JournalFeedLocalServiceUtil {
 		return getService().getFeedsCount(groupId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the journal feed with the primary key.
 	*

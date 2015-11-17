@@ -97,7 +97,7 @@ public class LayoutsTreeTag extends IncludeTag {
 		_selectedLayoutIds = selectedLayoutIds;
 	}
 
-	public void setSelPlid(long selPlid) {
+	public void setSelPlid(Long selPlid) {
 		_selPlid = selPlid;
 	}
 
@@ -121,7 +121,7 @@ public class LayoutsTreeTag extends IncludeTag {
 		_saveState = true;
 		_selectableTree = false;
 		_selectedLayoutIds = null;
-		_selPlid = 0;
+		_selPlid = null;
 		_treeId = null;
 	}
 
@@ -219,8 +219,7 @@ public class LayoutsTreeTag extends IncludeTag {
 			String.valueOf(_selectableTree));
 		request.setAttribute(
 			"liferay-ui:layouts-tree:selectedLayoutIds", _selectedLayoutIds);
-		request.setAttribute(
-			"liferay-ui:layouts-tree:selPlid", String.valueOf(_selPlid));
+		request.setAttribute("liferay-ui:layouts-tree:selPlid", _selPlid);
 		request.setAttribute("liferay-ui:layouts-tree:treeId", _treeId);
 	}
 
@@ -242,7 +241,7 @@ public class LayoutsTreeTag extends IncludeTag {
 	private boolean _saveState = true;
 	private boolean _selectableTree;
 	private String _selectedLayoutIds;
-	private long _selPlid;
+	private Long _selPlid;
 	private String _treeId;
 
 }

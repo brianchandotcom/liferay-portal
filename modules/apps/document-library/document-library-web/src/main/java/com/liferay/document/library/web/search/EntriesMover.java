@@ -44,8 +44,16 @@ public class EntriesMover extends RowMover {
 			moveToTrashDropTarget.setActiveCssClass("active");
 			moveToTrashDropTarget.setContainer("body");
 			moveToTrashDropTarget.setInfoCssClass("active");
+
+			String productMenuPortletId = PortletProviderUtil.getPortletId(
+				PortalProductMenuApplicationType.ProductMenu.CLASS_NAME,
+				PortletProvider.Action.VIEW);
+
+			String trashPortletId = PortletProviderUtil.getPortletId(
+				TrashEntry.class.getName(), PortletProvider.Action.VIEW);
+
 			moveToTrashDropTarget.setSelector(
-				"#_" + PortletProviderUtil.getPortletId(PortalProductMenuApplicationType.ProductMenu.CLASS_NAME, PortletProvider.Action.VIEW) + "_portlet_" + PortletProviderUtil.getPortletId(TrashEntry.class.getName(), PortletProvider.Action.VIEW));
+				"#_" + productMenuPortletId + "_portlet_" + trashPortletId);
 
 			addDropTarget(moveToTrashDropTarget);
 		}

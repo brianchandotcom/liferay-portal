@@ -18,8 +18,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.tools.ant.Project;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -28,13 +26,9 @@ import org.json.JSONObject;
  */
 public class JenkinsPerformanceDataProcessor {
 
-	public static void processPerformanceData(Project project)
+	public static void processPerformanceData(
+			String buildName, String jenkinsJobURL, int reportSize)
 		throws Exception {
-
-		String jenkinsJobURL = project.getProperty("jenkins.job.url");
-		String reportSizeString = project.getProperty("report.size");
-
-		int reportSize = Integer.parseInt(reportSizeString);
 
 		JSONObject jobJSONObject = JenkinsResultsParserUtil.toJSONObject(
 			JenkinsResultsParserUtil.getLocalURL(
@@ -42,7 +36,7 @@ public class JenkinsPerformanceDataProcessor {
 
 		if (jobJSONObject != null) {
 			List<JenkinsPerformanceResult> resultList = getLongestResults(
-				jobJSONObject, project, reportSize);
+				buildName, jobJSONObject, reportSize);
 
 			resultsList.addAll(resultList);
 
@@ -58,7 +52,7 @@ public class JenkinsPerformanceDataProcessor {
 	}
 
 	protected static List<JenkinsPerformanceResult> getLongestResults(
-			JSONObject jobJSONObject, Project project, int resultCount)
+			String buildName, JSONObject jobJSONObject, int resultCount)
 		throws Exception {
 
 		JSONArray childReportsJSONArray = jobJSONObject.getJSONArray(
@@ -88,8 +82,7 @@ public class JenkinsPerformanceDataProcessor {
 
 					JenkinsPerformanceResult result =
 						new JenkinsPerformanceResult(
-							project.getProperty("jenkins.build.name"),
-							caseJSONObject, childJSONObject);
+							buildName, caseJSONObject, childJSONObject);
 
 					resultList.add(result);
 				}

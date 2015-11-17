@@ -17,23 +17,38 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = (String)request.getAttribute("edit_team_assignments.jsp-tabs1");
+String redirect = ParamUtil.getString(request, "redirect");
 
-Team team = (Team)request.getAttribute("edit_team_assignments.jsp-team");
+String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectUserGroup");
 
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
-PortletURL portletURL = (PortletURL)request.getAttribute("edit_team_assignments.jsp-portletURL");
+long teamId = ParamUtil.getLong(request, "teamId");
 
-SearchContainer userGroupSearchContainer = new UserGroupSearch(renderRequest, portletURL);
+Team team = TeamLocalServiceUtil.fetchTeam(teamId);
+
+PortletURL portletURL = renderResponse.createRenderURL();
+
+portletURL.setParameter("mvcPath", "/select_user_groups.jsp");
+portletURL.setParameter("redirect", redirect);
+portletURL.setParameter("eventName", eventName);
+portletURL.setParameter("teamId", String.valueOf(teamId));
+
+SearchContainer userGroupSearchContainer = new UserGroupSearch(renderRequest, PortletURLUtil.clone(portletURL, renderResponse));
 
 UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)userGroupSearchContainer.getSearchTerms();
 
 LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
 
-userGroupParams.put("userGroupsTeams", Long.valueOf(team.getTeamId()));
+Group group = GroupLocalServiceUtil.getGroup(team.getGroupId());
+
+if (group != null) {
+	group = StagingUtil.getLiveGroup(group.getGroupId());
+}
+
+userGroupParams.put("userGroupsGroups", Long.valueOf(group.getGroupId()));
 
 int userGroupsCount = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams);
 
@@ -43,8 +58,16 @@ List<UserGroup> userGroups = UserGroupLocalServiceUtil.search(company.getCompany
 
 userGroupSearchContainer.setResults(userGroups);
 
-RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
+RowChecker rowChecker = new UserGroupTeamChecker(renderResponse, team);
 %>
+
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav-bar-search>
+		<aui:form action="<%= portletURL.toString() %>" name="searchFm">
+			<liferay-ui:input-search markupView="lexicon" />
+		</aui:form>
+	</aui:nav-bar-search>
+</aui:nav-bar>
 
 <c:if test="<%= userGroupsCount > 0 %>">
 	<liferay-frontend:management-bar
@@ -72,29 +95,11 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 				selectedDisplayStyle="<%= displayStyle %>"
 			/>
 		</liferay-frontend:management-bar-buttons>
-
-		<liferay-frontend:management-bar-action-buttons>
-			<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-trash" id="deleteUserGroups" />
-		</liferay-frontend:management-bar-action-buttons>
 	</liferay-frontend:management-bar>
 </c:if>
 
-<aui:button-row cssClass="text-center">
-	<aui:button cssClass="btn-lg btn-primary" id="addUserGroups" value="add-team-members" />
-</aui:button-row>
-
-<portlet:actionURL name="editTeamUserGroups" var="editTeamUserGroupsURL" />
-
-<aui:form action="<%= editTeamUserGroupsURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="assignmentsRedirect" type="hidden" />
-	<aui:input name="teamId" type="hidden" value="<%= String.valueOf(team.getTeamId()) %>" />
-	<aui:input name="addUserGroupIds" type="hidden" />
-	<aui:input name="removeUserGroupIds" type="hidden" />
-
+<aui:form cssClass="container-fluid-1280" name="selectUserGroupFm">
 	<liferay-ui:search-container
-		emptyResultsMessage="there-are-no-members.-you-can-add-a-member-by-clicking-the-button-on-the-top-of-this-box"
 		id="userGroups"
 		rowChecker="<%= rowChecker %>"
 		searchContainer="<%= userGroupSearchContainer %>"
@@ -109,7 +114,7 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 		>
 
 			<%
-			boolean showActions = true;
+			boolean showActions = false;
 			%>
 
 			<%@ include file="/user_group_columns.jspf" %>
@@ -119,55 +124,34 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script use="liferay-item-selector-dialog">
-	var Util = Liferay.Util;
+<aui:script>
+	var A = AUI();
 
-	var form = $(document.<portlet:namespace />fm);
+	var <portlet:namespace />userGroupIds = [];
 
-	<portlet:renderURL var="selectUserGroupURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="mvcPath" value="/select_user_groups.jsp" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="teamId" value="<%= String.valueOf(team.getTeamId()) %>" />
-	</portlet:renderURL>
-
-	$('#<portlet:namespace />addUserGroups').on(
-		'click',
+	$('input[name="<portlet:namespace />rowIds"]').on(
+		'change',
 		function(event) {
-			event.preventDefault();
+			var target = event.target;
 
-			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-				{
-					eventName: '<portlet:namespace />selectUserGroup',
-					on: {
-						selectedItemChange: function(event) {
-							var selectedItem = event.newVal;
-
-							if (selectedItem) {
-								var form = AUI.$(document.<portlet:namespace />fm);
-
-								form.fm('addUserGroupIds').val(selectedItem.value);
-
-								submitForm(form);
-							}
-						}
-					},
-					title: '<liferay-ui:message arguments="<%= team.getName() %>" key="add-new-user-group-to-x" />',
-					url: '<%= selectUserGroupURL %>'
-				}
-			);
-
-			itemSelectorDialog.open();
-		}
-	);
-
-	$('#<portlet:namespace />deleteUserGroups').on(
-		'click',
-		function() {
-			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-				form.fm('removeUserGroupIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-
-				submitForm(form);
+			if (target.checked) {
+				<portlet:namespace />userGroupIds.push(target.value);
 			}
+			else {
+				A.Array.removeItem(<portlet:namespace />userGroupIds, target.value);
+			}
+
+			var event = {};
+
+			if (<portlet:namespace />userGroupIds.length > 0) {
+				event = {
+					data: {
+						value: <portlet:namespace />userGroupIds.join(',')
+					}
+				};
+			}
+
+			Liferay.Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', event);
 		}
 	);
 </aui:script>

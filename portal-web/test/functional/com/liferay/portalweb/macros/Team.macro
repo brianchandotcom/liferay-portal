@@ -25,9 +25,13 @@
 
 		<execute function="AssertClick" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />
 
-		<execute function="AssertClick" locator1="SiteTeamsAssignMembers#AVAILABLE" value1="Available" />
-		<execute function="Type" locator1="TextInput#KEYWORDS" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
+		<execute function="AssertClick" locator1="Button#ADD_TEAM_MEMBERS" value1="Add Team Members" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute function="Type" locator1="TextInput#SEARCH" value1="${userScreenName}" />
+
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 
 		<if>
 			<equals arg1="${userNameIsNotFound}" arg2="true" />
@@ -37,10 +41,14 @@
 			<else>
 				<execute function="AssertTextEquals" locator1="SiteTeamsAssignMembers#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 				<execute function="Check" locator1="SiteTeamsAssignMembers#USER_TABLE_CHECKBOX" />
-				<execute function="AssertClick" locator1="Button#UPDATE_ASSOCIATIONS" value1="Update Associations" />
+
+				<execute function="SelectFrameTop" />
+
+				<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
 
 				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-				<execute function="AssertChecked" locator1="SiteTeamsAssignMembers#USER_TABLE_CHECKBOX" />
+
+				<execute function="AssertElementPresent" locator1="SiteTeamsAssignMembers#USER_TABLE_NAME" />
 			</else>
 		</if>
 	</command>

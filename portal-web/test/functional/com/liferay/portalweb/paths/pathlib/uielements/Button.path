@@ -99,6 +99,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_TEAM_MEMBERS</td>
+	<td>//button[span[contains(.,'Add Team Members')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_WIKI</td>
 	<td>//a[contains(@id,'addNodeButton') and contains(.,'Add Wiki')]</td>
 	<td></td>

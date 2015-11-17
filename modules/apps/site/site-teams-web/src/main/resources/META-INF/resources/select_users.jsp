@@ -17,24 +17,40 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = (String)request.getAttribute("edit_team_assignments.jsp-tabs1");
+String redirect = ParamUtil.getString(request, "redirect");
 
-Team team = (Team)request.getAttribute("edit_team_assignments.jsp-team");
+String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectUser");
 
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 String orderByCol = ParamUtil.getString(request, "orderByCol", "first-name");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
-PortletURL portletURL = (PortletURL)request.getAttribute("edit_team_assignments.jsp-portletURL");
+long teamId = ParamUtil.getLong(request, "teamId");
 
-SearchContainer userSearchContainer = new UserSearch(renderRequest, portletURL);
+Team team = TeamLocalServiceUtil.fetchTeam(teamId);
+
+PortletURL portletURL = renderResponse.createRenderURL();
+
+portletURL.setParameter("mvcPath", "/select_users.jsp");
+portletURL.setParameter("redirect", redirect);
+portletURL.setParameter("eventName", eventName);
+portletURL.setParameter("teamId", String.valueOf(teamId));
+
+SearchContainer userSearchContainer = new UserSearch(renderRequest, PortletURLUtil.clone(portletURL, renderResponse));
 
 UserSearchTerms searchTerms = (UserSearchTerms)userSearchContainer.getSearchTerms();
 
 LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
 userParams.put("inherit", Boolean.TRUE);
-userParams.put("usersTeams", team.getTeamId());
+
+Group group = GroupLocalServiceUtil.getGroup(team.getGroupId());
+
+if (group != null) {
+	group = StagingUtil.getLiveGroup(group.getGroupId());
+}
+
+userParams.put("usersGroups", group.getGroupId());
 
 int usersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams);
 
@@ -44,8 +60,16 @@ List<User> users = UserLocalServiceUtil.search(company.getCompanyId(), searchTer
 
 userSearchContainer.setResults(users);
 
-RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
+RowChecker rowChecker = new UserTeamChecker(renderResponse, team);
 %>
+
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav-bar-search>
+		<aui:form action="<%= portletURL.toString() %>" name="searchFm">
+			<liferay-ui:input-search markupView="lexicon" />
+		</aui:form>
+	</aui:nav-bar-search>
+</aui:nav-bar>
 
 <c:if test="<%= usersCount > 0 %>">
 	<liferay-frontend:management-bar
@@ -73,34 +97,15 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 				selectedDisplayStyle="<%= displayStyle %>"
 			/>
 		</liferay-frontend:management-bar-buttons>
-
-		<liferay-frontend:management-bar-action-buttons>
-			<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-trash" id="deleteUsers" />
-		</liferay-frontend:management-bar-action-buttons>
 	</liferay-frontend:management-bar>
 </c:if>
 
-<aui:button-row cssClass="text-center">
-	<aui:button cssClass="btn-lg btn-primary" id="addUsers" value="add-team-members" />
-</aui:button-row>
-
-<portlet:actionURL name="editTeamUsers" var="editTeamUsersURL" />
-
-<aui:form action="<%= editTeamUsersURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="assignmentsRedirect" type="hidden" />
-	<aui:input name="teamId" type="hidden" value="<%= String.valueOf(team.getTeamId()) %>" />
-	<aui:input name="addUserIds" type="hidden" />
-	<aui:input name="removeUserIds" type="hidden" />
-
+<aui:form cssClass="container-fluid-1280" name="selectUserFm">
 	<liferay-ui:search-container
-		emptyResultsMessage="there-are-no-members.-you-can-add-a-member-by-clicking-the-button-on-the-top-of-this-box"
 		id="users"
 		rowChecker="<%= rowChecker %>"
 		searchContainer="<%= userSearchContainer %>"
 	>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.model.User"
 			cssClass="selectable"
@@ -111,7 +116,7 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 		>
 
 			<%
-			boolean showActions = true;
+			boolean showActions = false;
 			%>
 
 			<%@ include file="/user_columns.jspf" %>
@@ -121,55 +126,34 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script use="liferay-item-selector-dialog">
-	var Util = Liferay.Util;
+<aui:script>
+	var A = AUI();
 
-	var form = $(document.<portlet:namespace />fm);
+	var <portlet:namespace />userIds = [];
 
-	<portlet:renderURL var="selectUserURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="mvcPath" value="/select_users.jsp" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="teamId" value="<%= String.valueOf(team.getTeamId()) %>" />
-	</portlet:renderURL>
-
-	$('#<portlet:namespace />addUsers').on(
-		'click',
+	$('input[name="<portlet:namespace />rowIds"]').on(
+		'change',
 		function(event) {
-			event.preventDefault();
+			var target = event.target;
 
-			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-				{
-					eventName: '<portlet:namespace />selectUser',
-					on: {
-						selectedItemChange: function(event) {
-							var selectedItem = event.newVal;
-
-							if (selectedItem) {
-								var form = AUI.$(document.<portlet:namespace />fm);
-
-								form.fm('addUserIds').val(selectedItem.value);
-
-								submitForm(form);
-							}
-						}
-					},
-					title: '<liferay-ui:message arguments="<%= team.getName() %>" key="add-new-user-to-x" />',
-					url: '<%= selectUserURL %>'
-				}
-			);
-
-			itemSelectorDialog.open();
-		}
-	);
-
-	$('#<portlet:namespace />deleteUsers').on(
-		'click',
-		function() {
-			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-				form.fm('removeUserIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-
-				submitForm(form);
+			if (target.checked) {
+				<portlet:namespace />userIds.push(target.value);
 			}
+			else {
+				A.Array.removeItem(<portlet:namespace />userIds, target.value);
+			}
+
+			var event = {};
+
+			if (<portlet:namespace />userIds.length > 0) {
+				event = {
+					data: {
+						value: <portlet:namespace />userIds.join(',')
+					}
+				};
+			}
+
+			Liferay.Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', event);
 		}
 	);
 </aui:script>

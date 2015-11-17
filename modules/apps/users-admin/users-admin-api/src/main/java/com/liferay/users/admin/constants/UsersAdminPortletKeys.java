@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.roles.admin.web.constants;
+package com.liferay.users.admin.constants;
 
 /**
- * @author Drew Brokke
+ * @author Pei-Jung Lan
  */
-public class RolesAdminPortletKeys {
+public class UsersAdminPortletKeys {
 
-	public static final String ROLES_ADMIN =
-		"com_liferay_roles_admin_web_portlet_RolesAdminPortlet";
+	public static final String USERS_ADMIN =
+		"com_liferay_users_admin_web_portlet_UsersAdminPortlet";
 
 }

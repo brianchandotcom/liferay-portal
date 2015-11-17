@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Password Policies Admin API
+Bundle-SymbolicName: com.liferay.password.policies.admin.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.password.policies.admin.constants
+Include-Resource: classes

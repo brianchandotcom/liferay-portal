@@ -14,7 +14,7 @@
 
 package com.liferay.users.admin.web.upgrade.v1_0_0;
 
-import com.liferay.users.admin.web.constants.UsersAdminPortletKeys;
+import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
 /**
  * @author Pei-Jung Lan

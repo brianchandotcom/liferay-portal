@@ -107,14 +107,14 @@ public class FacetedSearcher extends BaseSearcher {
 			searchContext.getCompanyId(), false);
 
 		if (ListUtil.isNotEmpty(inactiveGroups)) {
-			TermsFilter groupTermsFilter = new TermsFilter(Field.GROUP_ID);
+			TermsFilter groupIdTermsFilter = new TermsFilter(Field.GROUP_ID);
 
-			groupTermsFilter.addValues(
+			groupIdTermsFilter.addValues(
 				ArrayUtil.toStringArray(
 					ListUtil.toArray(inactiveGroups, Group.GROUP_ID_ACCESSOR)));
 
 			fullQueryBooleanFilter.add(
-				groupTermsFilter, BooleanClauseOccur.MUST_NOT);
+				groupIdTermsFilter, BooleanClauseOccur.MUST_NOT);
 		}
 
 		for (String entryClassName : searchContext.getEntryClassNames()) {

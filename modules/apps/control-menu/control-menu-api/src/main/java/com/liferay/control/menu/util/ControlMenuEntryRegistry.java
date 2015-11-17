@@ -16,9 +16,9 @@ package com.liferay.control.menu.util;
 
 import com.liferay.control.menu.ControlMenuCategory;
 import com.liferay.control.menu.ControlMenuEntry;
-import com.liferay.osgi.service.tracker.map.PropertyServiceReferenceComparator;
-import com.liferay.osgi.service.tracker.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.map.ServiceTrackerMapFactory;
+import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

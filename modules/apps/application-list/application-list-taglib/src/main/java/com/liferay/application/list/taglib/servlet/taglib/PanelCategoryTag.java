@@ -107,9 +107,14 @@ public class PanelCategoryTag extends BasePanelTag {
 		request.setAttribute(
 			"liferay-application-list:panel-category:panelCategory",
 			_panelCategory);
+
+		int notificationsCount = panelCategoryHelper.getNotificationsCount(
+			_panelCategory.getKey(), themeDisplay.getPermissionChecker(),
+			themeDisplay.getScopeGroup());
+
 		request.setAttribute(
-			"liferay-application-list:panel-category:panelCategoryHelper",
-			panelCategoryHelper);
+			"liferay-application-list:panel-category:notificationsCount",
+			notificationsCount);
 		request.setAttribute(
 			"liferay-application-list:panel-category:showHeader", _showHeader);
 		request.setAttribute(

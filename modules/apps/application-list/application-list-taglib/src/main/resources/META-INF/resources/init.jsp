@@ -25,7 +25,6 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.application.list.PanelApp" %><%@
 page import="com.liferay.application.list.PanelCategory" %><%@
-page import="com.liferay.application.list.display.context.logic.PanelCategoryHelper" %><%@
 page import="com.liferay.application.list.taglib.display.context.logic.PanelAppContentHelper" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@

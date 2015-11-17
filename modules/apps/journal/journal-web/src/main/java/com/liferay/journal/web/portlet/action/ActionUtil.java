@@ -65,7 +65,6 @@ import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -341,39 +340,6 @@ public class ActionUtil {
 		return article;
 	}
 
-	public static List<JournalArticle> getArticles(HttpServletRequest request)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		List<JournalArticle> articles = new ArrayList<>();
-
-		String[] articleIds = StringUtil.split(
-			ParamUtil.getString(request, "articleIds"));
-
-		for (String articleId : articleIds) {
-			JournalArticle article = JournalArticleServiceUtil.fetchArticle(
-				themeDisplay.getScopeGroupId(), articleId);
-
-			if (article != null) {
-				articles.add(article);
-			}
-		}
-
-		return articles;
-	}
-
-	public static List<JournalArticle> getArticles(
-			PortletRequest portletRequest)
-		throws Exception {
-
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
-
-		return getArticles(request);
-	}
-
 	public static JournalFeed getFeed(HttpServletRequest request)
 		throws Exception {
 
@@ -429,35 +395,6 @@ public class ActionUtil {
 			portletRequest);
 
 		return getFolder(request);
-	}
-
-	public static List<JournalFolder> getFolders(HttpServletRequest request)
-		throws PortalException {
-
-		long[] folderIds = StringUtil.split(
-			ParamUtil.getString(request, "folderIds"), 0L);
-
-		List<JournalFolder> folders = new ArrayList<>();
-
-		for (long folderId : folderIds) {
-			JournalFolder folder = JournalFolderServiceUtil.fetchFolder(
-				folderId);
-
-			if (folder != null) {
-				folders.add(folder);
-			}
-		}
-
-		return folders;
-	}
-
-	public static List<JournalFolder> getFolders(PortletRequest portletRequest)
-		throws PortalException {
-
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
-
-		return getFolders(request);
 	}
 
 	public static Map<String, byte[]> getImages(String content, Fields fields)

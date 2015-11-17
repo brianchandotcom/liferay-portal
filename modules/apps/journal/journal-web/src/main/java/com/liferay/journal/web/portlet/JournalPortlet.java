@@ -229,13 +229,15 @@ public class JournalPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		String[] deleteFeedIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "deleteFeedIds"));
 
 		for (int i = 0; i < deleteFeedIds.length; i++) {
-			_journalFeedService.deleteFeed(groupId, deleteFeedIds[i]);
+			_journalFeedService.deleteFeed(
+				themeDisplay.getScopeGroupId(), deleteFeedIds[i]);
 		}
 	}
 

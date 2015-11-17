@@ -14,15 +14,8 @@
 
 package com.liferay.marketplace.app.manager.web.util;
 
-import com.liferay.marketplace.app.manager.web.constants.BundleConstants;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Validator;
-
 import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.osgi.framework.Bundle;
 
@@ -31,78 +24,10 @@ import org.osgi.framework.Bundle;
  */
 public class AppDisplay implements Comparable<AppDisplay> {
 
-	public static AppDisplay getAppDisplay(
-		List<Bundle> bundles, String appName) {
-
-		AppDisplay appDisplay = new AppDisplay(appName);
-
-		if (appName.equals(_APP_NAME_UNCATEGORIZED)) {
-			appName = null;
-		}
-
-		for (Bundle bundle : bundles) {
-			Dictionary<String, String> headers = bundle.getHeaders();
-
-			String curAppName = headers.get(
-				BundleConstants.LIFERAY_RELENG_APP_NAME);
-
-			if (Validator.isNotNull(appName) && !appName.equals(curAppName)) {
-				continue;
-			}
-			else if (curAppName != null) {
-				continue;
-			}
-
-			appDisplay.addBundle(bundle);
-		}
-
-		return appDisplay;
-	}
-
-	public static List<AppDisplay> getAppDisplays(
-		List<Bundle> bundles, String category, int state) {
-
-		Map<String, AppDisplay> appDisplaysMap = new HashMap<>();
-
-		for (Bundle bundle : bundles) {
-			Dictionary<String, String> headers = bundle.getHeaders();
-
-			if (Validator.isNotNull(category)) {
-				String curCategory = headers.get(
-					BundleConstants.LIFERAY_RELENG_CATEGORY);
-
-				if (!category.equals(curCategory)) {
-					continue;
-				}
-			}
-
-			if ((state > 0) && (state != bundle.getState())) {
-				continue;
-			}
-
-			String appName = headers.get(
-				BundleConstants.LIFERAY_RELENG_APP_NAME);
-
-			if (appName == null) {
-				appName = _APP_NAME_UNCATEGORIZED;
-			}
-
-			AppDisplay appDisplay = appDisplaysMap.get(appName);
-
-			if (appDisplay == null) {
-				appDisplay = new AppDisplay(appName);
-
-				appDisplaysMap.put(appName, appDisplay);
-			}
-
-			appDisplay.addBundle(bundle);
-		}
-
-		return ListUtil.fromMapValues(appDisplaysMap);
-	}
+	public static final String APP_NAME_UNCATEGORIZED = "Uncategorized";
 
 	public AppDisplay() {
-		_name = _APP_NAME_UNCATEGORIZED;
+		_name = APP_NAME_UNCATEGORIZED;
 	}
 
 	public AppDisplay(String name) {
@@ -125,8 +50,6 @@ public class AppDisplay implements Comparable<AppDisplay> {
 	public String getName() {
 		return _name;
 	}
-
-	private static final String _APP_NAME_UNCATEGORIZED = "Uncategorized";
 
 	private final List<Bundle> _bundles = new ArrayList<>();
 	private final String _name;

@@ -329,11 +329,14 @@ AUI.add(
 				var instance = this;
 
 				var rootLabel = instance._createNodeLink(
-					{
-						label: LString.escapeHTML(rootConfig.label),
-						navigation: true,
-						plid: rootConfig.defaultParentLayoutId
-					},
+					A.merge(
+						{
+							label: LString.escapeHTML(rootConfig.label),
+							navigation: true,
+							plid: rootConfig.defaultParentLayoutId
+						},
+						rootConfig
+					),
 					rootConfig.linkTemplate
 				);
 

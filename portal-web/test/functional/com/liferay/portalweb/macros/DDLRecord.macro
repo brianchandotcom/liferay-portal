@@ -378,7 +378,10 @@
 				<execute function="AssertTextEquals#assertPartialText" locator1="DDLRecord#FIELD" value1="${fieldFieldLabel}${ddlRecordFieldData}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals#assertPartialText" locator1="DDLRecord#FIELD" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
+				<execute macro="DDLRecord#viewPopulatedField">
+					<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
+					<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+				</execute>
 			</else>
 		</if>
 
@@ -635,6 +638,12 @@
 		<execute function="SikuliAssertElementPresent" locator1="DDLRecord#NESTED_FIELD_VISUAL_GROUPING_DDL_DISPLAY_PNG" />
 	</command>
 
+	<command name="viewPopulatedField">
+		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="DDLRecord#FIELD" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
+	</command>
+
 	<command name="viewRepeatableNestedFieldsVisualGrouping">
 		<execute function="SikuliAssertElementPresent" locator1="DDLRecord#NESTED_FIELD_REPEATABLE_VISUAL_GROUPING_PNG" />
 	</command>
@@ -656,7 +665,10 @@
 				<execute function="AssertTextEquals#assertPartialText" locator1="DDLRecord#FIELD" value1="${fieldFieldLabel}${ddlRecordFieldData}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals#assertPartialText" locator1="DDLRecord#FIELD" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
+				<execute macro="DDLRecord#viewPopulatedField">
+					<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
+					<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+				</execute>
 			</else>
 		</if>
 	</command>

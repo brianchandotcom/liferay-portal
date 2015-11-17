@@ -19,7 +19,6 @@ import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.util.PortalUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -90,10 +89,6 @@ public class UpgradeKaleoInstance extends UpgradeProcess {
 		deleteOrphanedWorkflowInstanceLinks(
 			"KaleoInstanceToken", "className",
 			"'com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess'");
-		deleteOrphanedWorkflowInstanceLinks(
-			"WorkflowInstanceLink", "classNameId",
-			PortalUtil.getClassNameId(
-				"com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess"));
 	}
 
 	private final DDLRecordLocalService _ddlRecordLocalService;

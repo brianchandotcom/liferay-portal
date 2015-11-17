@@ -48,6 +48,7 @@ import com.liferay.portal.upgrade.v7_0_0.UpgradeSchema;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeSharding;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeSubscription;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeWebsite;
+import com.liferay.portal.upgrade.v7_0_0.UpgradeWorkflowInstanceLink;
 
 /**
  * @author Julio Camarero
@@ -94,6 +95,7 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 		upgrade(UpgradeSharding.class);
 		upgrade(UpgradeSubscription.class);
 		upgrade(UpgradeWebsite.class);
+		upgrade(UpgradeWorkflowInstanceLink.class);
 	}
 
 }

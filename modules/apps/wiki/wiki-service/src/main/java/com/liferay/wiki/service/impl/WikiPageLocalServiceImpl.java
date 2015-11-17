@@ -2101,39 +2101,20 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				 wikiGroupServiceOverriddenConfiguration.
 					 pageMinorEditAddSocialActivity())) {
 
-				WikiPage oldPage = null;
+				JSONObject extraDataJSONObject =
+					JSONFactoryUtil.createJSONObject();
 
-				if (!serviceContext.isCommandAdd()) {
-					oldPage = getPage(page.getResourcePrimKey(), true);
+				extraDataJSONObject.put("title", page.getTitle());
+				extraDataJSONObject.put("version", page.getVersion());
+
+				int type = WikiActivityKeys.UPDATE_PAGE;
+
+				if (serviceContext.isCommandAdd()) {
+					type = WikiActivityKeys.ADD_PAGE;
 				}
 
-				if ((oldPage != null) &&
-					(page.getVersion() == oldPage.getVersion())) {
-
-					Date pageCreateDate = page.getCreateDate();
-
-					Date createDate = new Date(pageCreateDate.getTime() + 1);
-
-					SocialActivityManagerUtil.updateLastSocialActivity(
-						serviceContext.getUserId(), page,
-						WikiActivityKeys.UPDATE_PAGE, createDate);
-				}
-				else {
-					JSONObject extraDataJSONObject =
-						JSONFactoryUtil.createJSONObject();
-
-					extraDataJSONObject.put("title", page.getTitle());
-					extraDataJSONObject.put("version", page.getVersion());
-
-					int type = WikiActivityKeys.UPDATE_PAGE;
-
-					if (serviceContext.isCommandAdd()) {
-						type = WikiActivityKeys.ADD_PAGE;
-					}
-
-					SocialActivityManagerUtil.addActivity(
-						userId, page, type, extraDataJSONObject.toString(), 0);
-				}
+				SocialActivityManagerUtil.addActivity(
+					userId, page, type, extraDataJSONObject.toString(), 0);
 			}
 
 			// Subscriptions

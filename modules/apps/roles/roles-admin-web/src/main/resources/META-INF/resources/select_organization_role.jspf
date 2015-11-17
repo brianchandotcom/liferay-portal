@@ -18,6 +18,7 @@
 String p_u_i_d = ParamUtil.getString(request, "p_u_i_d");
 int step = ParamUtil.getInteger(request, "step");
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectOrganizationRole");
+String syncEntitiesEventName = ParamUtil.getString(request, "syncEntitiesEventName", liferayPortletResponse.getNamespace() + "syncOrganizationRoles");
 
 User selUser = PortalUtil.getSelectedUser(request);
 
@@ -288,7 +289,7 @@ if (step == 1) {
 	var openingLiferay = Util.getOpener().Liferay;
 
 	openingLiferay.fire(
-		'<portlet:namespace />syncOrganizationRoles',
+		'<%= HtmlUtil.escape(syncEntitiesEventName) %>',
 		{
 			selectors: A.all('.selector-button')
 		}

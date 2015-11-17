@@ -14,7 +14,9 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/search_iterator/lexicon/top.jsp" %>
+<%@ include file="/html/taglib/ui/search_iterator/init.jsp" %>
+
+<%@ include file="/html/taglib/ui/search_iterator/lexicon/top.jspf" %>
 
 <div class="<%= resultRows.isEmpty() ? "hide" : StringPool.BLANK %> <%= searchContainer.getCssClass() %>">
 	<div id="<%= namespace + id %>SearchContainer">
@@ -244,4 +246,4 @@
 String rowHtmlTag = "tr";
 %>
 
-<%@ include file="/html/taglib/ui/search_iterator/lexicon/bottom.jsp" %>
+<%@ include file="/html/taglib/ui/search_iterator/lexicon/bottom.jspf" %>

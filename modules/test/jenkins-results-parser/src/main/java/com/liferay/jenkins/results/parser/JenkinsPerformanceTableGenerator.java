@@ -22,7 +22,7 @@ import org.dom4j.tree.DefaultElement;
 /**
  * @author Peter Yoo
  */
-public class JenkinsPerformanceTable {
+public class JenkinsPerformanceTableGenerator {
 
 	public static String generateTableHTML(Project project) {
 		Element tableElement = new DefaultElement("table");

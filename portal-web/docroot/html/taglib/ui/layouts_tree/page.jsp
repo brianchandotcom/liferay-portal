@@ -107,6 +107,16 @@ String treeId = (String)request.getAttribute("liferay-ui:layouts-tree:treeId");
 			</c:if>
 
 			maxChildren: <%= PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN %>,
+			on: {
+				'*:select': function(event) {
+					Liferay.fire(
+						'<%= namespace + treeId %>:selectedNode',
+						{
+							selectedNode: event.target
+						}
+					);
+				}
+			},
 			plugins: plugins,
 			root: {
 				defaultParentLayoutId: <%= LayoutConstants.DEFAULT_PARENT_LAYOUT_ID %>,
@@ -120,7 +130,8 @@ String treeId = (String)request.getAttribute("liferay-ui:layouts-tree:treeId");
 
 				privateLayout: <%= privateLayout %>
 			}
-	        <c:if test="<%= selPlid != null %>">
+
+			<c:if test="<%= selPlid != null %>">
 				,
 				selPlid: '<%= selPlid %>'
 			</c:if>

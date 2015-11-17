@@ -3290,10 +3290,13 @@
 
 		<execute macro="ProductMenuHelper#openProductMenu" />
 
-		<execute macro="SitePage#addCP">
-			<var name="siteName" value="Wiki" />
-			<var name="sitePageName" value="Community Site Name" />
-			<var name="sitePagePrivacy" value="Public" />
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="Community Site Name" />
+		</execute>
+
+		<execute macro="Portlet#deletePG">
+			<var name="portletName" value="Wiki" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">

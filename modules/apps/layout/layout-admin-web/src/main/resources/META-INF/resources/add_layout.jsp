@@ -113,7 +113,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "add-new-page"));
 
 	<aui:fieldset>
 		<div class="col-md-12">
-			<aui:input id="addLayoutName" name="name" />
+			<aui:input autoFocus="<%= true %>" id="addLayoutName" name="name" />
 
 			<aui:input id="addLayoutHidden" label="hide-from-navigation-menu" name="hidden" />
 

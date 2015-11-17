@@ -1,43 +1,18 @@
 package com.liferay.jenkins.results.parser;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import org.apache.tools.ant.Project;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 public class JenkinsPerformanceDataProcessor {
-	public String getLocalURL(String remoteURL) {
-		Pattern pattern = Pattern.compile("https://test.liferay.com/([0-9]+)/");
 
-		Matcher matcher = pattern.matcher(remoteURL);
-
-		if (matcher.find()) {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("http://test-");
-			sb.append(matcher.group(1));
-			sb.append("/");
-			sb.append(matcher.group(1));
-			sb.append("/");
-
-			return remoteURL.replaceAll(matcher.group(0), sb.toString());
-		}
-
-		pattern = Pattern.compile("https://(test-[0-9]+-[0-9]+).liferay.com/");
-
-		matcher = pattern.matcher(remoteURL);
-
-		if (matcher.find()) {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("http://");
-			sb.append(matcher.group(1));
-			sb.append("/");
-
-			return remoteURL.replaceAll(matcher.group(0), sb.toString());
-		}
-
-		return remoteURL;
-	}
-
-	public List getLongestResults(JSONObject jobJSONObject, int resultCount) {
+	public List<Result> getLongestResults(JSONObject jobJSONObject, Project project, int resultCount) throws Exception {
 		JSONArray childReportsJSONArray = jobJSONObject.getJSONArray("childReports");
-		List resultList = new ArrayList();
+		List<Result> resultList = new ArrayList<>();
 
 		for (int i=0; i < childReportsJSONArray.length(); i++) {
 			JSONObject childReportJSONObject = childReportsJSONArray.getJSONObject(i);
@@ -56,7 +31,7 @@ public class JenkinsPerformanceDataProcessor {
 				for (int k=0; k < casesJSONArray.length(); k++) {
 					JSONObject caseJSONObject = casesJSONArray.getJSONObject(k);
 
-					Result result = new Result(caseJSONObject, childJSONObject);
+					Result result = new Result(project.getProperty("jenkins.build.name"), caseJSONObject, childJSONObject);
 
 					resultList.add(result);
 				}
@@ -68,44 +43,8 @@ public class JenkinsPerformanceDataProcessor {
 		return truncateList(resultList, resultCount);
 	}
 
-	public String toString(String url) {
-		URI uri = new URI(url);
-
-		URL urlObject = uri.toURL();
-
-		InputStreamReader inputStreamReader = new InputStreamReader(urlObject.openStream());
-
-		BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-
-		String line = null;
-
-		StringBuilder sb = new StringBuilder();
-
-		while ((line = bufferedReader.readLine()) != null) {
-			sb.append(line);
-			sb.append("\n");
-		}
-
-		bufferedReader.close();
-
-		return sb.toString();
-	}
-
-	public JSONObject toJSONObject(String url) {
-		String localURL = getLocalURL(url);
-
-		try {
-			return new JSONObject(toString(localURL));
-		}
-		catch (IOException e) {
-			System.out.println("IOException while reading url: " + localURL);
-		}
-
-		return null;
-	}
-
-	public List truncateList(List list, int maxSize) {
-		List truncatedList = null;
+	public List<Result> truncateList(List<Result> list, int maxSize) {
+		List<Result> truncatedList = null;
 
 		if (list != null) {
 			int size = maxSize;
@@ -114,16 +53,16 @@ public class JenkinsPerformanceDataProcessor {
 				size = list.size();
 			}
 
-			truncatedList = new ArrayList(list.subList(0, size));
+			truncatedList = new ArrayList<>(list.subList(0, size));
 		}
 		else {
-			truncatedList = new ArrayList(0);
+			truncatedList = new ArrayList<>(0);
 		}
 
 		return truncatedList;
 	}
 	
-	public void processPerformanceData() {
+	public void processPerformanceData(Project project) {
 		if (beanShellMap.get("start-time") == null) {
 			Long start = System.currentTimeMillis();
 
@@ -135,15 +74,15 @@ public class JenkinsPerformanceDataProcessor {
 
 		int reportSize = Integer.parseInt(reportSizeString);
 
-		JSONObject jobJSONObject = toJSONObject(jenkinsJobURL + "testReport/api/json");
+		JSONObject jobJSONObject = JenkinsResultsParserUtil.toJSONObject(JenkinsResultsParserUtil.getLocalURL(jenkinsJobURL + "testReport/api/json"));
 
 		if (jobJSONObject != null) {
-			List resultList = getLongestResults(jobJSONObject, reportSize);
+			List<Result> resultList = getLongestResults(jobJSONObject, project, reportSize);
 
-			List globalList = beanShellMap.get("global-result-list");
+			List<Result> globalList = beanShellMap.get("global-result-list");
 
 			if (globalList == null) {
-				globalList = new ArrayList();
+				globalList = new ArrayList<>();
 			}
 
 			globalList.addAll(resultList);

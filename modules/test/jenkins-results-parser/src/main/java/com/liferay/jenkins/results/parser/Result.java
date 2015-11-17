@@ -1,8 +1,14 @@
 package com.liferay.jenkins.results.parser;
 
-public class Result implements Comparable{
-	public int compareTo(Object o) {
-		return -1 * Float.compare(getDuration(), o.getDuration());
+import java.net.URI;
+import java.net.URLDecoder;
+
+import org.json.JSONObject;
+
+public class Result implements Comparable<Result>{
+
+	public int compareTo(Result result) {
+		return -1 * Float.compare(getDuration(), result.getDuration());
 	}
 
 	public String getAxis() {
@@ -37,8 +43,8 @@ public class Result implements Comparable{
 		return toJSONObject().toString(4);
 	}
 
-	public Result(JSONObject caseJSONObject, JSONObject childJSONObject) {
-		_batch = project.getProperty("jenkins.build.name");
+	public Result(String buildName, JSONObject caseJSONObject, JSONObject childJSONObject) throws Exception {
+		_batch = buildName;
 
 		extractAxisInfo(childJSONObject);
 		extractCaseInfo(caseJSONObject);
@@ -58,10 +64,10 @@ public class Result implements Comparable{
 		return obj;
 	}
 
-	private void extractAxisInfo(JSONObject childJSONObject) {
+	private void extractAxisInfo(JSONObject childJSONObject) throws Exception {
 		String url = childJSONObject.getString("url");
 
-		url = URLDecoder.decode(url);
+		url = URLDecoder.decode(url, "UTF-8");
 
 		int startIdx = url.indexOf("AXIS_VARIABLE");
 
@@ -79,7 +85,7 @@ public class Result implements Comparable{
 		_status = caseObject.getString("status");
 	}
 
-	private void extractURLInfo(JSONObject childJSONObject) {
+	private void extractURLInfo(JSONObject childJSONObject) throws Exception {
 		String url = childJSONObject.getString("url");
 
 		StringBuilder sb = new StringBuilder(url);
@@ -126,6 +132,5 @@ public class Result implements Comparable{
 	private String _name;
 	private String _status;
 	private String _url;
-}
 
 }

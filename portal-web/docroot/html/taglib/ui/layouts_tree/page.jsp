@@ -32,7 +32,7 @@ String rootLinkTemplate = (String)request.getAttribute("liferay-ui:layouts-tree:
 String rootNodeName = (String)request.getAttribute("liferay-ui:layouts-tree:rootNodeName");
 boolean saveState = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:layouts-tree:saveState"));
 boolean selectableTree = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:layouts-tree:selectableTree"));
-long selPlid = GetterUtil.getLong((String)request.getAttribute("liferay-ui:layouts-tree:selPlid"));
+Long selPlid = (Long)request.getAttribute("liferay-ui:layouts-tree:selPlid");
 String treeId = (String)request.getAttribute("liferay-ui:layouts-tree:treeId");
 %>
 
@@ -119,8 +119,12 @@ String treeId = (String)request.getAttribute("liferay-ui:layouts-tree:treeId");
 				</c:if>
 
 				privateLayout: <%= privateLayout %>
-			},
-			selPlid: '<%= selPlid %>'
+			}
+	        <c:if test="<%= selPlid != null %>">
+				,
+				selPlid: '<%= selPlid %>'
+			</c:if>
+
 		}
 	).render();
 </aui:script>

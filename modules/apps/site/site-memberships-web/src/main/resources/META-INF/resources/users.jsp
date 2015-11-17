@@ -125,78 +125,8 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 			modelVar="user2"
 			rowIdProperty="screenName"
 		>
-			<liferay-ui:search-container-row-parameter
-				name="group"
-				value="<%= group %>"
-			/>
 
-			<liferay-ui:search-container-column-text
-				name="name"
-			>
-
-				<%= user2.getFullName() %>
-
-				<%
-				List<String> names = new ArrayList<String>();
-
-				List<String> organizationNames = SitesUtil.getOrganizationNames(group, user2);
-
-				names.addAll(organizationNames);
-
-				boolean organizationUser = !organizationNames.isEmpty();
-
-				row.setParameter("organizationUser", organizationUser);
-
-				List<String> userGroupNames = SitesUtil.getUserGroupNames(group, user2);
-
-				names.addAll(userGroupNames);
-
-				boolean userGroupUser = !userGroupNames.isEmpty();
-
-				row.setParameter("userGroupUser", userGroupUser);
-				%>
-
-				<c:if test="<%= organizationUser || userGroupUser %>">
-					<c:choose>
-						<c:when test="<%= names.size() == 1 %>">
-							<liferay-ui:icon-help message='<%= LanguageUtil.format(request, "this-user-is-a-member-of-x-because-he-belongs-to-x", new Object[] {HtmlUtil.escape(group.getDescriptiveName(locale)), names.get(0)}, false) %>' />
-						</c:when>
-						<c:otherwise>
-							<liferay-ui:icon-help message='<%= LanguageUtil.format(request, "this-user-is-a-member-of-x-because-he-belongs-to-x-and-x", new Object[] {HtmlUtil.escape(group.getDescriptiveName(locale)), StringUtil.merge(names.subList(0, names.size() - 1).toArray(new String[names.size() - 1]), ", "), names.get(names.size() - 1)}, false) %>' />
-						</c:otherwise>
-					</c:choose>
-				</c:if>
-			</liferay-ui:search-container-column-text>
-
-			<liferay-ui:search-container-column-text
-				name="screen-name"
-				orderable="<%= true %>"
-				property="screenName"
-			/>
-
-			<c:if test='<%= tabs1.equals("summary") || tabs2.equals("current") %>'>
-
-				<%
-				List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(user2.getUserId(), group.getGroupId());
-
-				List<Team> teams = TeamLocalServiceUtil.getUserOrUserGroupTeams(group.getGroupId(), user2.getUserId());
-
-				List<String> names = ListUtil.toList(userGroupRoles, UsersAdmin.USER_GROUP_ROLE_TITLE_ACCESSOR);
-
-				names.addAll(ListUtil.toList(teams, Team.NAME_ACCESSOR));
-				%>
-
-				<liferay-ui:search-container-column-text
-					name="site-roles-and-teams"
-					value="<%= StringUtil.merge(names, StringPool.COMMA_AND_SPACE) %>"
-				/>
-
-				<liferay-ui:search-container-column-jsp
-					align="right"
-					cssClass="entry-action"
-					path="/user_action.jsp"
-				/>
-			</c:if>
+			<%@ include file="/user_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
 		<liferay-util:buffer var="formButton">

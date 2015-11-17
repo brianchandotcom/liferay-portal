@@ -104,14 +104,6 @@
 		<put name="content" value="/portal/verify_email_address.jsp" />
 	</definition>
 
-	<!-- Background Task-->
-
-	<definition name="portlet.background_task" extends="portlet" />
-
-	<definition name="portlet.background_task.error" extends="portlet.background_task">
-		<put name="portlet_content" value="/portlet/background_task/error.jsp" />
-	</definition>
-
 	<!-- Calendar -->
 
 	<definition name="portlet.calendar" extends="portlet" />

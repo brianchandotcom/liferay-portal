@@ -2112,63 +2112,36 @@
 	</command>
 
 	<command name="TeamPermissionsSite" priority="4">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
+		<for list="1,2" param="userNumber">
+			<execute macro="Page#gotoCP">
+				<var name="portletName" value="Users and Organizations" />
+			</execute>
 
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea1@liferay.com" />
-			<var name="userFirstName" value="userfn1" />
-			<var name="userLastName" value="userln1" />
-			<var name="userScreenName" value="usersn1" />
-		</execute>
+			<execute macro="User#addCP">
+				<var name="userEmailAddress" value="userea${userNumber}@liferay.com" />
+				<var name="userFirstName" value="userfn${userNumber}" />
+				<var name="userLastName" value="userln${userNumber}" />
+				<var name="userScreenName" value="usersn${userNumber}" />
+			</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
+			<execute macro="Page#gotoCP">
+				<var name="portletName" value="Users and Organizations" />
+			</execute>
 
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea1@liferay.com" />
-			<var name="userScreenName" value="usersn1" />
-		</execute>
+			<execute macro="User#editPasswordCP">
+				<var name="userEmailAddress" value="userea${userNumber}@liferay.com" />
+				<var name="userScreenName" value="usersn${userNumber}" />
+			</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
+			<execute macro="Page#gotoCP">
+				<var name="portletName" value="Users and Organizations" />
+			</execute>
 
-		<execute macro="User#editUserSiteCP">
-			<var name="siteName" value="Liferay" />
-			<var name="userScreenName" value="usersn1" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea2@liferay.com" />
-			<var name="userFirstName" value="userfn2" />
-			<var name="userLastName" value="userln2" />
-			<var name="userScreenName" value="usersn2" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea2@liferay.com" />
-			<var name="userScreenName" value="usersn2" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#editUserSiteCP">
-			<var name="siteName" value="Liferay" />
-			<var name="userScreenName" value="usersn2" />
-		</execute>
+			<execute macro="User#editUserSiteCP">
+				<var name="siteName" value="Liferay" />
+				<var name="userScreenName" value="usersn${userNumber}" />
+			</execute>
+		</for>
 
 		<execute macro="Page#gotoUsersCP">
 			<var name="portletName" value="Site Teams" />
@@ -2197,7 +2170,7 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No teams were found." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no site teams. You can add a site team by clicking the plus button on the bottom right corner." />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="USA Ice Hockey Team Blog" />
@@ -2227,55 +2200,12 @@
 			<var name="roleName" value="site-member" />
 		</execute>
 
-		<execute macro="Team#definePermissionPG">
-			<var name="permissionDefinitionKey" value="ACTION_ADD_DISCUSSION" />
-			<var name="teamName" value="Site Team Name" />
-		</execute>
-
-		<execute macro="Team#definePermissionPG">
-			<var name="permissionDefinitionKey" value="ACTION_ADD_LAYOUT" />
-			<var name="teamName" value="Site Team Name" />
-		</execute>
-
-		<execute macro="Team#definePermissionPG">
-			<var name="permissionDefinitionKey" value="ACTION_CONFIGURE_PORTLETS" />
-			<var name="teamName" value="Site Team Name" />
-		</execute>
-
-		<execute macro="Team#definePermissionPG">
-			<var name="permissionDefinitionKey" value="ACTION_CUSTOMIZE" />
-			<var name="teamName" value="Site Team Name" />
-		</execute>
-
-		<execute macro="Team#definePermissionPG">
-			<var name="permissionDefinitionKey" value="ACTION_DELETE" />
-			<var name="teamName" value="Site Team Name" />
-		</execute>
-
-		<execute macro="Team#definePermissionPG">
-			<var name="permissionDefinitionKey" value="ACTION_DELETE_DISCUSSION" />
-			<var name="teamName" value="Site Team Name" />
-		</execute>
-
-		<execute macro="Team#definePermissionPG">
-			<var name="permissionDefinitionKey" value="ACTION_PERMISSIONS" />
-			<var name="teamName" value="Site Team Name" />
-		</execute>
-
-		<execute macro="Team#definePermissionPG">
-			<var name="permissionDefinitionKey" value="ACTION_UPDATE" />
-			<var name="teamName" value="Site Team Name" />
-		</execute>
-
-		<execute macro="Team#definePermissionPG">
-			<var name="permissionDefinitionKey" value="ACTION_UPDATE_DISCUSSION" />
-			<var name="teamName" value="Site Team Name" />
-		</execute>
-
-		<execute macro="Team#definePermissionPG">
-			<var name="permissionDefinitionKey" value="ACTION_VIEW" />
-			<var name="teamName" value="Site Team Name" />
-		</execute>
+		<for list="ACTION_ADD_DISCUSSION,ACTION_ADD_LAYOUT,ACTION_CONFIGURE_PORTLETS,ACTION_CUSTOMIZE,ACTION_DELETE,ACTION_DELETE_DISCUSSION,ACTION_PERMISSIONS,ACTION_UPDATE,ACTION_UPDATE_DISCUSSION,ACTION_VIEW" param="permissionDefinitionKey">
+			<execute macro="Team#definePermissionPG">
+				<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
+				<var name="teamName" value="Site Team Name" />
+			</execute>
+		</for>
 
 		<execute macro="User#logoutPG" />
 

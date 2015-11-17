@@ -37,7 +37,7 @@ public class FuzzyQueryTranslatorImpl implements FuzzyQueryTranslator {
 
 		if (fuzzyQuery.getFuzziness() != null) {
 			fuzzyQueryBuilder.fuzziness(
-				Fuzziness.fromSimilarity(fuzzyQuery.getFuzziness()));
+				Fuzziness.build(fuzzyQuery.getFuzziness()));
 		}
 
 		if (fuzzyQuery.getMaxExpansions() != null) {

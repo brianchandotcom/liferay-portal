@@ -66,7 +66,7 @@ public class MultiMatchQuery extends BaseQueryImpl {
 		return _fieldsBoosts;
 	}
 
-	public Float getFuzziness() {
+	public String getFuzziness() {
 		return _fuzziness;
 	}
 
@@ -134,7 +134,7 @@ public class MultiMatchQuery extends BaseQueryImpl {
 		_cutOffFrequency = cutOffFrequency;
 	}
 
-	public void setFuzziness(Float fuzziness) {
+	public void setFuzziness(String fuzziness) {
 		_fuzziness = fuzziness;
 	}
 
@@ -194,7 +194,7 @@ public class MultiMatchQuery extends BaseQueryImpl {
 	private Float _cutOffFrequency;
 	private final Set<String> _fields = new HashSet<>();
 	private final Map<String, Float> _fieldsBoosts = new HashMap<>();
-	private Float _fuzziness;
+	private String _fuzziness;
 	private MatchQuery.RewriteMethod _fuzzyRewriteMethod;
 	private Boolean _lenient;
 	private Integer _maxExpansions;

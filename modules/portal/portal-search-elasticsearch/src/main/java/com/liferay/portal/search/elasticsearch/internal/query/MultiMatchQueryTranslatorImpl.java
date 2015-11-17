@@ -70,7 +70,7 @@ public class MultiMatchQueryTranslatorImpl
 
 		if (multiMatchQuery.getFuzziness() != null) {
 			multiMatchQueryBuilder.fuzziness(
-				Fuzziness.fromSimilarity(multiMatchQuery.getFuzziness()));
+				Fuzziness.build(multiMatchQuery.getFuzziness()));
 		}
 
 		if (multiMatchQuery.getFuzzyRewriteMethod() != null) {

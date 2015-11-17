@@ -67,7 +67,7 @@ public class MatchQueryTranslatorImpl
 
 		if (matchQuery.getFuzziness() != null) {
 			matchQueryBuilder.fuzziness(
-				Fuzziness.fromSimilarity(matchQuery.getFuzziness()));
+				Fuzziness.build(matchQuery.getFuzziness()));
 		}
 
 		if (matchQuery.getFuzzyRewriteMethod() != null) {

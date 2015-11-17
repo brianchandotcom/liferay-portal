@@ -105,6 +105,7 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
 			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>

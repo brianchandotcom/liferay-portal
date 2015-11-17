@@ -40,7 +40,6 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.ResourceBundleUtil" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil" %><%@
-page import="com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.DLUtil" %>
 
 <%@ page import="java.util.ArrayList" %><%@

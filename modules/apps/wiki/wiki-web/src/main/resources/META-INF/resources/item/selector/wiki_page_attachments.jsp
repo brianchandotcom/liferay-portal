@@ -42,7 +42,7 @@ if (wikiPage.getAttachmentsFolderId() != DLFolderConstants.DEFAULT_PARENT_FOLDER
 		searchContext.setFolderIds(new long[] {wikiPage.getAttachmentsFolderId()});
 		searchContext.setStart(start);
 
-		Folder folder = DLAppServiceUtil.getFolder(wikiPage.getAttachmentsFolderId());
+		Folder folder = PortletFileRepositoryUtil.getPortletFolder(wikiPage.getAttachmentsFolderId());
 
 		Hits hits = PortletFileRepositoryUtil.searchPortletFileEntries(folder.getRepositoryId(), searchContext);
 
@@ -58,7 +58,7 @@ if (wikiPage.getAttachmentsFolderId() != DLFolderConstants.DEFAULT_PARENT_FOLDER
 			FileEntry fileEntry = null;
 
 			try {
-				fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
+				fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(fileEntryId);
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {

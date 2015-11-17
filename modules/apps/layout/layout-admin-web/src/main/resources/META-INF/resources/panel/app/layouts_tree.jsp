@@ -115,15 +115,15 @@ String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
 %>
 
 <liferay-util:buffer var="linkTemplate">
-	<a class="{cssClass}" data-url="{url}" data-uuid="{uuid}" href="{regularURL}" id="{id}" title="{label}">{label}</a>
+	<a class="{cssClass}" data-plid="{plid}" data-url="{url}" data-uuid="{uuid}" href="{regularURL}" id="{id}" title="{label}">{label}</a>
 
-	<a data-url="{url}" data-uuid="{uuid}" href="{layoutURL}" id="{id}" title="<liferay-ui:message arguments="{label}" key="edit-x" />"><span class="icon-cog icon-monospaced"></span></a>
+	<a data-plid="{plid}" data-url="{url}" data-uuid="{uuid}" href="{layoutURL}" id="{id}" title="<liferay-ui:message arguments="{label}" key="edit-x" />"><span class="icon-cog icon-monospaced"></span></a>
 </liferay-util:buffer>
 
 <liferay-util:buffer var="rootLinkTemplate">
-	<span class="{cssClass}" data-url="{url}" data-uuid="{uuid}" id="{id}" title="{label}">{label}</span>
+	<span class="{cssClass}" data-plid="{plid}" data-url="{url}" data-uuid="{uuid}" id="{id}" title="{label}">{label}</span>
 
-	<a data-url="{url}" data-uuid="{uuid}" href="{layoutURL}" id="{id}" title="<liferay-ui:message arguments="{label}" key="edit-x" />"><span class="icon-cog icon-monospaced"></span></a>
+	<a data-plid="{plid}" data-privateLayout="{privateLayout}" data-url="{url}" data-uuid="{uuid}" href="{layoutURL}" id="{id}" title="<liferay-ui:message arguments="{label}" key="edit-x" />"><span class="icon-cog icon-monospaced"></span></a>
 </liferay-util:buffer>
 
 <c:if test="<%= !selGroup.isLayoutSetPrototype() && !selGroup.isLayoutPrototype() %>">
@@ -182,11 +182,43 @@ if (selGroup.isLayoutSetPrototype() || selGroup.isLayoutPrototype()) {
 
 	addPagesURL.setParameter("mvcPath", "/add_layout.jsp");
 	addPagesURL.setParameter("groupId", String.valueOf(selGroup.getGroupId()));
+	addPagesURL.setParameter("selPlid", "{selPlid}");
+	addPagesURL.setParameter("privateLayout", "{privateLayout}");
+
+	Map<String, Object> data = new HashMap<>();
+
+	data.put("selPlid", (selLayout != null) ? String.valueOf(selLayout.getPlid()) : StringPool.BLANK);
+	data.put("privateLayout", String.valueOf(privateLayout));
+	data.put("url", StringUtil.replace(addPagesURL.toString(), new String[] {HttpUtil.encodePath("{selPlid}"), HttpUtil.encodePath("{privateLayout}")}, new String[] {"{selPlid}", "{privateLayout}"}));
+
 	addPagesURL.setParameter("selPlid", (selLayout != null) ? String.valueOf(selLayout.getPlid()) : StringPool.BLANK);
 	addPagesURL.setParameter("privateLayout", String.valueOf(privateLayout));
 	%>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-block btn-primary" href="<%= addPagesURL.toString() %>" value="add-page" />
+		<aui:button cssClass="btn-block btn-primary" data="<%= data %>" href="<%= addPagesURL.toString() %>" name="addButton" value="add-page" />
 	</aui:button-row>
 </c:if>
+
+<aui:script use="aui-base">
+	var addButton = A.one('#<portlet:namespace/>addButton');
+
+	var onSelectedNode = function(event) {
+		var pageNode = event.selectedNode.get('contentBox');
+
+		var link = pageNode.one('a');
+
+		var url = A.Lang.sub(
+			addButton.attr('data-url'),
+			{
+				privateLayout: link.attr('data-privateLayout'),
+				selPlid: link.attr('data-plid')
+			}
+		);
+
+		addButton.attr('href', url);
+	};
+
+	Liferay.on('<portlet:namespace/>privateLayoutsTree:selectedNode', onSelectedNode);
+	Liferay.on('<portlet:namespace/>publicLayoutsTree:selectedNode', onSelectedNode);
+</aui:script>

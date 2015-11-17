@@ -753,13 +753,13 @@ AUI.add(
 
 			var translationManager = builder.translationManager;
 
+			var defaultLocale = translationManager.get('defaultLocale');
+
 			translationManager.get('availableLocales').forEach(
 				function(locale) {
 					var value = A.Object.getValue(localizationMap, [locale, attribute]);
 
 					if (!isValue(value)) {
-						var defaultLocale = translationManager.get('defaultLocale');
-
 						value = A.Object.getValue(localizationMap, [defaultLocale, attribute]);
 
 						if (!isValue(value)) {

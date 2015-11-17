@@ -82,7 +82,7 @@ searchContainer.setTotal(total);
 searchContainer.setResults(results);
 %>
 
-<liferay-item-selector:browser
+<liferay-item-selector:repository-entry-browser
 	desiredItemSelectorReturnTypes="<%= itemSelectorCriterion.getDesiredItemSelectorReturnTypes() %>"
 	itemSelectedEventName="<%= dlItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
 	portletURL="<%= dlItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse) %>"

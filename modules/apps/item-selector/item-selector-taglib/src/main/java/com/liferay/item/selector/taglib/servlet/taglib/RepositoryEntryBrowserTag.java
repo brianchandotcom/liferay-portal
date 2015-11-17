@@ -16,7 +16,7 @@ package com.liferay.item.selector.taglib.servlet.taglib;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UploadableFileReturnType;
-import com.liferay.item.selector.taglib.ItemSelectorBrowserReturnTypeUtil;
+import com.liferay.item.selector.taglib.ItemSelectorRepositoryEntryBrowserReturnTypeUtil;
 import com.liferay.item.selector.taglib.servlet.ServletContextUtil;
 import com.liferay.item.selector.web.constants.ItemSelectorPortletKeys;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -38,7 +38,7 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Roberto Díaz
  */
-public class BrowserTag extends IncludeTag {
+public class RepositoryEntryBrowserTag extends IncludeTag {
 
 	public static final String[] DISPLAY_STYLES =
 		new String[] {"icon", "descriptive", "list"};
@@ -130,7 +130,7 @@ public class BrowserTag extends IncludeTag {
 
 	protected ItemSelectorReturnType getDraggableFileReturnType() {
 		ItemSelectorReturnType firstDraggableFileReturnType =
-			ItemSelectorBrowserReturnTypeUtil.
+			ItemSelectorRepositoryEntryBrowserReturnTypeUtil.
 				getFirstAvailableDraggableFileReturnType(
 					_desiredItemSelectorReturnTypes);
 
@@ -147,7 +147,7 @@ public class BrowserTag extends IncludeTag {
 
 	@Override
 	protected String getPage() {
-		return "/browser/page.jsp";
+		return "/repository_entry_browser/page.jsp";
 	}
 
 	protected String getSafeDisplayStyle(String displayStyle) {
@@ -161,30 +161,40 @@ public class BrowserTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-item-selector:browser:displayStyle", getDisplayStyle());
+			"liferay-item-selector:repository-entry-browser:displayStyle",
+			getDisplayStyle());
 		request.setAttribute(
-			"liferay-item-selector:browser:draggableFileReturnType",
+			"liferay-item-selector:repository-entry-browser:" +
+				"draggableFileReturnType",
 			getDraggableFileReturnType());
 		request.setAttribute(
-			"liferay-item-selector:browser:existingFileEntryReturnType",
-			ItemSelectorBrowserReturnTypeUtil.
+			"liferay-item-selector:repository-entry-browser:" +
+				"existingFileEntryReturnType",
+			ItemSelectorRepositoryEntryBrowserReturnTypeUtil.
 				getFirstAvailableExistingFileEntryReturnType(
 					_desiredItemSelectorReturnTypes));
 		request.setAttribute(
-			"liferay-item-selector:browser:itemSelectedEventName",
+			"liferay-item-selector:repository-entry-browser:" +
+				"itemSelectedEventName",
 			_itemSelectedEventName);
 		request.setAttribute(
-			"liferay-item-selector:browser:portletURL", _portletURL);
+			"liferay-item-selector:repository-entry-browser:portletURL",
+			_portletURL);
 		request.setAttribute(
-			"liferay-item-selector:browser:searchContainer", _searchContainer);
+			"liferay-item-selector:repository-entry-browser:searchContainer",
+			_searchContainer);
 		request.setAttribute(
-			"liferay-item-selector:browser:showBreadcrumb", _showBreadcrumb);
+			"liferay-item-selector:repository-entry-browser:showBreadcrumb",
+			_showBreadcrumb);
 		request.setAttribute(
-			"liferay-item-selector:browser:showDragAndDropZone",
+			"liferay-item-selector:repository-entry-browser:" +
+				"showDragAndDropZone",
 			_showDragAndDropZone);
-		request.setAttribute("liferay-item-selector:browser:tabName", _tabName);
 		request.setAttribute(
-			"liferay-item-selector:browser:uploadURL", _uploadURL);
+			"liferay-item-selector:repository-entry-browser:tabName", _tabName);
+		request.setAttribute(
+			"liferay-item-selector:repository-entry-browser:uploadURL",
+			_uploadURL);
 	}
 
 	private List<ItemSelectorReturnType> _desiredItemSelectorReturnTypes;

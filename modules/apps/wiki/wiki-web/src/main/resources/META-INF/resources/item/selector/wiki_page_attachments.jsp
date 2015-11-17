@@ -82,7 +82,7 @@ searchContainer.setTotal(total);
 searchContainer.setResults(results);
 %>
 
-<liferay-item-selector:browser
+<liferay-item-selector:repository-entry-browser
 	desiredItemSelectorReturnTypes="<%= wikiAttachmentItemSelectorCriterion.getDesiredItemSelectorReturnTypes() %>"
 	itemSelectedEventName="<%= wikiAttachmentItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
 	portletURL="<%= wikiAttachmentItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse) %>"

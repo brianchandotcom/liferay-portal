@@ -61,4 +61,12 @@
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
+
+	<command name="saveWithoutFormName">
+		<execute function="AssertClick" locator1="Form#SAVE_BUTTON" value1="Save" />
+
+		<execute function="AssertTextEquals" locator1="Message#ERROR_REQUEST_FAILED_TO_COMPLETE" value1="Your request failed to complete." />
+
+		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please enter a valid form name." />
+	</command>
 </definition>

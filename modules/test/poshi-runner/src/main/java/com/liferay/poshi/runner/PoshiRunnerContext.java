@@ -176,6 +176,15 @@ public class PoshiRunnerContext {
 		return _commandElements.get("test-case#" + classCommandName);
 	}
 
+	public static Element getTestCaseCommandElement(
+		String className, String commandName) {
+
+		String classCommandName = PoshiRunnerGetterUtil.getClassCommandName(
+			className, commandName);
+
+		return getTestCaseCommandElement(classCommandName);
+	}
+
 	public static String getTestCaseCommandName() {
 		return _testClassCommandName;
 	}
@@ -450,6 +459,16 @@ public class PoshiRunnerContext {
 		}
 
 		return commandProperties;
+	}
+
+	private static List<String> _getTestCaseCommandProperties(
+			String className, String commandName)
+		throws Exception {
+
+		String classCommandName = PoshiRunnerGetterUtil.getClassCommandName(
+			className, commandName);
+
+		return _getTestCaseCommandProperties(classCommandName);
 	}
 
 	private static void _initComponentCommandNamesMap() {

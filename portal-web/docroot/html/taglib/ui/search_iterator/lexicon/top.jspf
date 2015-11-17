@@ -14,8 +14,6 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/search_iterator/init.jsp" %>
-
 <%
 SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:search:searchContainer");
 

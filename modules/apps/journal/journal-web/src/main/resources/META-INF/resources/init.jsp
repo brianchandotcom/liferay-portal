@@ -97,6 +97,7 @@ page import="com.liferay.journal.web.asset.JournalArticleAssetRenderer" %><%@
 page import="com.liferay.journal.web.configuration.JournalWebConfiguration" %><%@
 page import="com.liferay.journal.web.dao.search.JournalResultRowSplitter" %><%@
 page import="com.liferay.journal.web.display.context.JournalDisplayContext" %><%@
+page import="com.liferay.journal.web.display.context.JournalMoveEntriesDisplayContext" %><%@
 page import="com.liferay.journal.web.display.context.util.JournalWebRequestHelper" %><%@
 page import="com.liferay.journal.web.portlet.JournalPortlet" %><%@
 page import="com.liferay.journal.web.portlet.action.ActionUtil" %><%@

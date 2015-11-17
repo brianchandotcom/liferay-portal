@@ -758,7 +758,13 @@ AUI.add(
 					var value = A.Object.getValue(localizationMap, [locale, attribute]);
 
 					if (!isValue(value)) {
-						value = STR_BLANK;
+						var defaultLocale = translationManager.get('defaultLocale');
+
+						value = A.Object.getValue(localizationMap, [defaultLocale, attribute]);
+
+						if (!isValue(value)) {
+							value = STR_BLANK;
+						}
 					}
 
 					localizedValue[locale] = LiferayFormBuilderUtil.normalizeValue(value);

@@ -14,8 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import org.apache.tools.ant.Project;
-
 import org.dom4j.Element;
 import org.dom4j.tree.DefaultElement;
 
@@ -24,16 +22,17 @@ import org.dom4j.tree.DefaultElement;
  */
 public class JenkinsPerformanceTableGenerator {
 
-	public static String generateTableHTML(Project project) {
+	public static String generateHTML() {
+		if (JenkinsPerformanceDataProcessor.resultsList == null) {
+			return "";
+		}
+		
 		Element tableElement = new DefaultElement("table");
 
 		Element headerElement = createTableHeader();
 
 		tableElement.add(headerElement);
 
-		if (JenkinsPerformanceDataProcessor.resultsList == null) {
-			return "";
-		}
 
 		for (JenkinsPerformanceResult result :
 				JenkinsPerformanceDataProcessor.resultsList) {

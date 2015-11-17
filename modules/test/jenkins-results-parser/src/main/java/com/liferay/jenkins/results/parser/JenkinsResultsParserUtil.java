@@ -16,14 +16,12 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
 import java.net.URL;
-
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -241,37 +239,55 @@ public class JenkinsResultsParserUtil {
 			return _toStringCache.get(key);
 		}
 
-		System.out.println("Downloading " + url);
+		int retryCount = 0;
 
-		StringBuilder sb = new StringBuilder();
+		while (true) {
+			try {
+				System.out.println("Downloading " + url);
 
-		URL urlObject = new URL(url);
+				StringBuilder sb = new StringBuilder();
 
-		InputStreamReader inputStreamReader = new InputStreamReader(
-			urlObject.openStream());
+				URL urlObject = new URL(url);
 
-		BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+				InputStreamReader inputStreamReader = new InputStreamReader(
+					urlObject.openStream());
 
-		String line = null;
+				BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
-		while ((line = bufferedReader.readLine()) != null) {
-			sb.append(line);
-			sb.append("\n");
+				String line = null;
+
+				while ((line = bufferedReader.readLine()) != null) {
+					sb.append(line);
+					sb.append("\n");
+				}
+
+				bufferedReader.close();
+
+				if (!url.startsWith("file:")) {
+					_toStringCache.put(key, sb.toString());
+				}
+
+				return sb.toString();
+			} catch (FileNotFoundException e) {
+				retryCount++;
+
+				if (retryCount > _maxRetries) {
+					throw e;
+				}
+
+				System.out.println(
+					"Download file not found. Waiting 5 seconds before retry. Retry " +
+						retryCount + " of " + _maxRetries);
+
+				Thread.sleep(5000);
+			}
 		}
-
-		bufferedReader.close();
-
-		if (!url.startsWith("file:")) {
-			_toStringCache.put(key, sb.toString());
-		}
-
-		return sb.toString();
 	}
-
 	private static final Pattern _localURLPattern1 = Pattern.compile(
 		"https://test.liferay.com/([0-9]+)/");
 	private static final Pattern _localURLPattern2 = Pattern.compile(
 		"https://(test-[0-9]+-[0-9]+).liferay.com/");
+	private static final int _maxRetries = 3;
 	private static final Map<String, String> _toStringCache = new HashMap<>();
 
 }

@@ -391,6 +391,23 @@ public class PoshiRunnerContext {
 		return runTestClassCommandNames;
 	}
 
+	private static Set<String> _getTestCaseCommandNames(String className)
+		throws Exception {
+
+		Element rootElement = getTestCaseRootElement(className);
+
+		List<Element> commandElements = rootElement.elements("command");
+		Set<String> commandNames = new TreeSet<>();
+
+		for (Element commandElement : commandElements) {
+			String commandName = commandElement.attributeValue("name");
+
+			commandNames.add(commandName);
+		}
+
+		return commandNames;
+	}
+
 	private static void _initComponentCommandNamesMap() {
 		for (String testCaseClassName : _testCaseClassNames) {
 			Element rootElement = getTestCaseRootElement(testCaseClassName);

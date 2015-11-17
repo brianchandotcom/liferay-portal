@@ -99,7 +99,7 @@ public final class SummaryLoggerHandler {
 			String className = loggerElement.getClassName();
 
 			if (className.equals("steps")) {
-				_reduceStepsLoggerElement(loggerElement);
+				_removeUnneededStepsFromLoggerElement(loggerElement);
 			}
 			else if (className.equals("screenshots")) {
 				summaryLogLoggerElement.removeChildLoggerElement(loggerElement);
@@ -724,7 +724,9 @@ public final class SummaryLoggerHandler {
 		return sb.toString();
 	}
 
-	private static void _reduceStepsLoggerElement(LoggerElement loggerElement) {
+	private static void _removeUnneededStepsFromLoggerElement(
+		LoggerElement loggerElement) {
+
 		LoggerElement majorStepsLoggerElement = loggerElement.loggerElement(
 			"ul");
 

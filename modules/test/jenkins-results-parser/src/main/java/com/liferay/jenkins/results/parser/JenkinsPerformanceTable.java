@@ -1,5 +1,11 @@
 package com.liferay.jenkins.results.parser;
 
+import java.util.List;
+
+import org.apache.tools.ant.Project;
+import org.dom4j.Element;
+import org.dom4j.tree.DefaultElement;
+
 public class JenkinsPerformanceTable {
 
 	public Element createRow(
@@ -73,14 +79,14 @@ public class JenkinsPerformanceTable {
 			result.getUrl());
 	}	
 	
-	public void getTable() {
+	public void getTable(Project project) {
 		Element tableElement = new DefaultElement("table");
 
 		Element headerElement = createTableHeader();
 
 		tableElement.add(headerElement);
 
-		List resultList = (List)beanShellMap.get("global-result-list");
+		List<Result> resultList = (List)beanShellMap.get("global-result-list");
 
 		if (resultList != null) {
 			for (Object result : resultList) {
@@ -116,7 +122,7 @@ public class JenkinsPerformanceTable {
 
 		long end = System.currentTimeMillis();
 
-		int total = (end - start) / 1000;
+		long total = (end - start) / 1000;
 
 		System.out.println("Performance report generation time: " + total + " seconds.");
 

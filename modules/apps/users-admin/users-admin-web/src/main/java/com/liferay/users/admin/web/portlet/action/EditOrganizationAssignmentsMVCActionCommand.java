@@ -28,7 +28,7 @@ import com.liferay.portal.security.membershippolicy.MembershipPolicyException;
 import com.liferay.portal.service.OrganizationLocalService;
 import com.liferay.portal.service.UserGroupService;
 import com.liferay.portal.service.UserService;
-import com.liferay.users.admin.web.constants.UsersAdminPortletKeys;
+import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;

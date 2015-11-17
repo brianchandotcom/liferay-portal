@@ -18,7 +18,7 @@ import com.liferay.portal.model.Organization;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
 import com.liferay.portlet.expando.model.CustomAttributesDisplay;
-import com.liferay.users.admin.web.constants.UsersAdminPortletKeys;
+import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 

@@ -15,6 +15,12 @@
 		<execute function="Uncheck" locator1="FormFields#CHECKBOX" />
 	</command>
 
+	<command name="editBlankMultiTextFieldWithEnterKey">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="KeyPress" locator1="FormFields#TEXT_MULTILINE_FIELD" value1="\RETURN" />
+	</command>
+
 	<command name="editOptionsRow">
 		<var name="key_rowNumber" value="${rowNumber}" />
 
@@ -23,10 +29,23 @@
 		<execute function="AssertElementPresent" locator1="FormFields#OPTIONS_OPTION_NAME_FIELD" value1="Field Name:${optionName}" />
 	</command>
 
+	<command name="editRepeatingText">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="Type" locator1="FormFields#TEXT_FIELD" value1="${fieldValue}" />
+		<execute function="Type" locator1="FormFields#TEXT_FIELD_2" value1="${fieldValueRepeat}" />
+	</command>
+
 	<command name="editText">
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute function="Type" locator1="FormFields#TEXT_FIELD" value1="${fieldValue}" />
+	</command>
+
+	<command name="editTextMultiline">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="Type" locator1="FormFields#TEXT_MULTILINE_FIELD" value1="${fieldValue}" />
 	</command>
 
 	<command name="enableAdvancedOptions">
@@ -60,6 +79,12 @@
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute function="Select" locator1="FormFields#SELECT_OPTION" value1="${selectOption}" />
+	</command>
+
+	<command name="selectTextFieldLineOption">
+		<var name="key_textFieldLineOption" value="textFieldLineOption" />
+
+		<execute function="Click" locator1="FormFields#TEXT_FIELD_LINE_OPTION" />
 	</command>
 
 	<command name="viewCheckboxLabel">

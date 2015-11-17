@@ -14,6 +14,7 @@
 
 package com.liferay.marketplace.app.manager.web.util;
 
+import com.liferay.marketplace.app.manager.web.constants.BundleConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -42,7 +43,8 @@ public class AppDisplay implements Comparable<AppDisplay> {
 		for (Bundle bundle : bundles) {
 			Dictionary<String, String> headers = bundle.getHeaders();
 
-			String curAppName = headers.get("Liferay-Releng-App-Name");
+			String curAppName = headers.get(
+				BundleConstants.LIFERAY_RELENG_APP_NAME);
 
 			if (Validator.isNotNull(appName) && !appName.equals(curAppName)) {
 				continue;
@@ -66,7 +68,8 @@ public class AppDisplay implements Comparable<AppDisplay> {
 			Dictionary<String, String> headers = bundle.getHeaders();
 
 			if (Validator.isNotNull(category)) {
-				String curCategory = headers.get("Liferay-Releng-Category");
+				String curCategory = headers.get(
+					BundleConstants.LIFERAY_RELENG_CATEGORY);
 
 				if (!category.equals(curCategory)) {
 					continue;
@@ -77,7 +80,8 @@ public class AppDisplay implements Comparable<AppDisplay> {
 				continue;
 			}
 
-			String appName = headers.get("Liferay-Releng-App-Name");
+			String appName = headers.get(
+				BundleConstants.LIFERAY_RELENG_APP_NAME);
 
 			if (appName == null) {
 				appName = _APP_NAME_UNCATEGORIZED;

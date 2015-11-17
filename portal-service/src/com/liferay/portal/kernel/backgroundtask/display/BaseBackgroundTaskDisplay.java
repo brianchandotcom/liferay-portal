@@ -32,8 +32,7 @@ import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Writer;
 
@@ -48,33 +47,55 @@ public abstract class BaseBackgroundTaskDisplay
 	implements BackgroundTaskDisplay {
 
 	public BaseBackgroundTaskDisplay(BackgroundTask backgroundTask) {
-		_backgroundTask = backgroundTask;
+		this.backgroundTask = backgroundTask;
 
-		_backgroundTaskStatus =
+		backgroundTaskStatus =
 			BackgroundTaskStatusRegistryUtil.getBackgroundTaskStatus(
 				backgroundTask.getBackgroundTaskId());
 	}
 
 	@Override
-	public String getDetailsBody() {
-		return getDetailsBody(LocaleUtil.getDefault());
+	public abstract int getPercentage();
+
+	@Override
+	public int getStatus() {
+		return backgroundTask.getStatus();
 	}
 
 	@Override
-	public String getDetailsBody(Locale locale) {
+	public String getStatusLabel() {
+		return getStatusLabel(Locale.getDefault());
+	}
+
+	@Override
+	public String getStatusLabel(Locale locale) {
+		return LanguageUtil.get(locale, backgroundTask.getStatusLabel());
+	}
+
+	@Override
+	public String getStatusMessage() {
+		return getStatusMessage(Locale.getDefault());
+	}
+
+	@Override
+	public String getStatusMessage(Locale locale) {
+		TemplateResource templateResource = getTemplateResource();
+
+		if (templateResource == null) {
+			return StringPool.BLANK;
+		}
+
 		TemplateManager templateManager =
 			TemplateManagerUtil.getTemplateManager(
 				TemplateConstants.LANG_TYPE_FTL);
 
-		Template template = templateManager.getTemplate(
-			getTemplateResource(), true);
+		Template template = templateManager.getTemplate(templateResource, true);
 
-		JSONObject jsonObject = getDetailsJSONObject(locale);
-
-		template.put("backgroundTask", _backgroundTask);
-		template.put("backgroundTaskStatus", _backgroundTaskStatus);
+		template.put("backgroundTask", backgroundTask);
 		template.put("backgroundTaskDisplay", this);
-		template.put("jsonObject", jsonObject);
+		template.put("backgroundTaskStatus", backgroundTaskStatus);
+		template.put(
+			"statusMessageJSONObject", getStatusMessageJSONObject(locale));
 
 		template.putAll(getTemplateVars());
 
@@ -88,80 +109,39 @@ public abstract class BaseBackgroundTaskDisplay
 				_log.debug(te, te);
 			}
 
-			return "";
+			return StringPool.BLANK;
 		}
 
 		return writer.toString();
 	}
 
 	@Override
-	public String getMessage() {
-		return getMessage(Locale.getDefault());
-	}
-
-	@Override
-	public String getMessage(Locale locale) {
-		return LanguageUtil.get(locale, createMessageKey());
-	}
-
-	@Override
-	public abstract int getPercentage();
-
-	@Override
-	public boolean hasDetails() {
-		if (Validator.isNotNull(_backgroundTask.getStatusMessage())) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean hasMessage() {
-		if (Validator.isNotNull(createMessageKey())) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
 	public boolean hasPercentage() {
-		if (getPercentage() >= 0) {
+		if (getPercentage() >= PERCENTAGE_MIN) {
 			return true;
 		}
 
 		return false;
-	}
-
-	protected abstract String createMessageKey();
-
-	protected BackgroundTask getBackgroundTask() {
-		return _backgroundTask;
-	}
-
-	protected BackgroundTaskStatus getBackgroundTaskStatus() {
-		return _backgroundTaskStatus;
 	}
 
 	protected long getBackgroundTaskStatusAttributeLong(String attributeKey) {
 		return GetterUtil.getLong(
-			_backgroundTaskStatus.getAttribute(attributeKey));
+			backgroundTaskStatus.getAttribute(attributeKey));
 	}
 
 	protected String getBackgroundTaskStatusAttributeString(
 		String attributeKey) {
 
 		return GetterUtil.getString(
-			_backgroundTaskStatus.getAttribute(attributeKey));
+			backgroundTaskStatus.getAttribute(attributeKey));
 	}
 
-	protected JSONObject getDetailsJSONObject(Locale locale) {
+	protected JSONObject getStatusMessageJSONObject(Locale locale) {
 		JSONObject jsonObject = null;
 
 		try {
 			jsonObject = JSONFactoryUtil.createJSONObject(
-				_backgroundTask.getStatusMessage());
+				backgroundTask.getStatusMessage());
 		}
 		catch (JSONException e) {
 			if (_log.isDebugEnabled()) {
@@ -169,15 +149,17 @@ public abstract class BaseBackgroundTaskDisplay
 			}
 		}
 
-		return jsonObject;
+		return translateJSON(jsonObject, locale);
 	}
+
+	protected abstract String getStatusMessageKey();
 
 	protected abstract TemplateResource getTemplateResource();
 
-	protected abstract Map<String, ?> getTemplateVars();
+	protected abstract Map<String, Object> getTemplateVars();
 
 	protected boolean hasBackgroundTaskStatus() {
-		if (_backgroundTaskStatus != null) {
+		if (backgroundTaskStatus != null) {
 			return true;
 		}
 
@@ -206,6 +188,10 @@ public abstract class BaseBackgroundTaskDisplay
 	}
 
 	protected JSONObject translateJSON(JSONObject jsonObject, Locale locale) {
+		if (locale == null) {
+			return jsonObject;
+		}
+
 		JSONObject translatedJSON = JSONFactoryUtil.createJSONObject();
 
 		Iterator<String> itr = jsonObject.keys();
@@ -234,12 +220,14 @@ public abstract class BaseBackgroundTaskDisplay
 
 	protected static final int PERCENTAGE_MAX = 100;
 
+	protected static final int PERCENTAGE_MIN = 0;
+
 	protected static final int PERCENTAGE_NONE = -1;
+
+	protected final BackgroundTask backgroundTask;
+	protected final BackgroundTaskStatus backgroundTaskStatus;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseBackgroundTaskDisplay.class);
-
-	private final BackgroundTask _backgroundTask;
-	private final BackgroundTaskStatus _backgroundTaskStatus;
 
 }

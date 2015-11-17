@@ -15,7 +15,6 @@
 package com.liferay.exportimport.background.task.display;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
 import com.liferay.portal.kernel.backgroundtask.display.BaseBackgroundTaskDisplay;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
@@ -47,9 +46,6 @@ public class ExportImportBackgroundTaskDisplay
 			backgroundTask.getTaskContextMap();
 
 		_cmd = MapUtil.getString(taskContextMap, Constants.CMD);
-
-		BackgroundTaskStatus backgroundTaskStatus = getBackgroundTaskStatus();
-
 		_percentage = PERCENTAGE_NONE;
 
 		if (backgroundTaskStatus == null) {
@@ -89,15 +85,6 @@ public class ExportImportBackgroundTaskDisplay
 	}
 
 	@Override
-	public String getMessage(Locale locale) {
-		if (hasStagedModelMessage()) {
-			return translateStagedModelMessage(locale);
-		}
-
-		return LanguageUtil.get(locale, createMessageKey());
-	}
-
-	@Override
 	public int getPercentage() {
 		if (_percentage > PERCENTAGE_NONE) {
 			return _percentage;
@@ -105,7 +92,7 @@ public class ExportImportBackgroundTaskDisplay
 
 		_percentage = PERCENTAGE_MAX;
 
-		if (_allProgressBarCountersTotal > 0) {
+		if (_allProgressBarCountersTotal > PERCENTAGE_MIN) {
 			int base = PERCENTAGE_MAX;
 
 			if (_phase.equals(Constants.EXPORT) &&
@@ -123,16 +110,16 @@ public class ExportImportBackgroundTaskDisplay
 	}
 
 	@Override
-	public boolean hasMessage() {
-		if (!hasBackgroundTaskStatus()) {
-			return false;
+	public String getStatusMessage(Locale locale) {
+		if (!backgroundTask.isInProgress()) {
+			return super.getStatusMessage(locale);
 		}
 
-		if (hasRemoteMessage() || hasStagedModelMessage()) {
-			return true;
+		if (hasStagedModelMessage()) {
+			return getStagedModelMessage(locale);
 		}
 
-		return false;
+		return LanguageUtil.get(locale, getStatusMessageKey());
 	}
 
 	@Override
@@ -141,7 +128,7 @@ public class ExportImportBackgroundTaskDisplay
 			return false;
 		}
 
-		if ((_allProgressBarCountersTotal > 0) &&
+		if ((_allProgressBarCountersTotal > PERCENTAGE_MIN) &&
 			(!Validator.equals(_cmd, Constants.PUBLISH_TO_REMOTE) ||
 			 (getPercentage() < PERCENTAGE_MAX))) {
 
@@ -151,8 +138,24 @@ public class ExportImportBackgroundTaskDisplay
 		return false;
 	}
 
+	protected String getStagedModelMessage(Locale locale) {
+		StringBundler sb = new StringBundler(8);
+
+		sb.append("<strong>");
+		sb.append(LanguageUtil.get(locale, getStatusMessageKey()));
+		sb.append(StringPool.TRIPLE_PERIOD);
+		sb.append("</strong>");
+		sb.append(
+			ResourceActionsUtil.getModelResource(locale, _stagedModelType));
+		sb.append("<em>");
+		sb.append(HtmlUtil.escape(_stagedModelName));
+		sb.append("</em>");
+
+		return sb.toString();
+	}
+
 	@Override
-	protected String createMessageKey() {
+	protected String getStatusMessageKey() {
 		if (Validator.isNotNull(_messageKey)) {
 			return _messageKey;
 		}
@@ -190,10 +193,8 @@ public class ExportImportBackgroundTaskDisplay
 	}
 
 	@Override
-	protected Map<String, ?> getTemplateVars() {
+	protected Map<String, Object> getTemplateVars() {
 		Map<String, Object> templateVars = new HashMap<>();
-
-		BackgroundTask backgroundTask = getBackgroundTask();
 
 		templateVars.put(
 			"exported",
@@ -226,22 +227,6 @@ public class ExportImportBackgroundTaskDisplay
 		}
 
 		return false;
-	}
-
-	protected String translateStagedModelMessage(Locale locale) {
-		StringBundler sb = new StringBundler(8);
-
-		sb.append("<strong>");
-		sb.append(LanguageUtil.get(locale, createMessageKey()));
-		sb.append(StringPool.TRIPLE_PERIOD);
-		sb.append("</strong>");
-		sb.append(
-			ResourceActionsUtil.getModelResource(locale, _stagedModelType));
-		sb.append("<em>");
-		sb.append(HtmlUtil.escape(_stagedModelName));
-		sb.append("</em>");
-
-		return sb.toString();
 	}
 
 	private static final String _DETIALS_TEMPLATE =

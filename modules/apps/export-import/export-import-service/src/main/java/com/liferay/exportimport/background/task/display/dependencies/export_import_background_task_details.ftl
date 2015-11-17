@@ -7,9 +7,9 @@
 		</#if>
 	</h4>
 
-	<span class="error-message">${htmlUtil.escape(jsonObject.getString("message"))}</span>
+	<span class="error-message">${htmlUtil.escape(statusMessageJSONObject.getString("message"))}</span>
 
-	<#assign messageListItemsJSONArray = jsonObject.getJSONArray("messageListItems")! >
+	<#assign messageListItemsJSONArray = statusMessageJSONObject.getJSONArray("messageListItems")! >
 
 	<#if (messageListItemsJSONArray.iterator())?has_content >
 		<ul class="error-list-items">
@@ -36,7 +36,7 @@
 	</#if>
 </div>
 
-<#assign warningMessagesJSONArray = jsonObject.getJSONArray("warningMessages")! >
+<#assign warningMessagesJSONArray = statusMessageJSONObject.getJSONArray("warningMessages")! >
 
 <#if (warningMessagesJSONArray.iterator())?has_content >
 	<div class="alert upload-error">

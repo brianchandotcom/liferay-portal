@@ -26,13 +26,12 @@ public class JenkinsPerformanceTableGenerator {
 		if (JenkinsPerformanceDataProcessor.resultsList == null) {
 			return "";
 		}
-		
+
 		Element tableElement = new DefaultElement("table");
 
 		Element headerElement = createTableHeader();
 
 		tableElement.add(headerElement);
-
 
 		for (JenkinsPerformanceResult result :
 				JenkinsPerformanceDataProcessor.resultsList) {

@@ -176,7 +176,7 @@ AUI.add(
 						instance.set('value', STR_BLANK);
 					},
 
-					_selectFileEntry: function(url, uuid, groupId, title, version) {
+					_selectFileEntry: function(groupId, title, uuid) {
 						var instance = this;
 
 						instance.set(
@@ -185,8 +185,7 @@ AUI.add(
 								{
 									groupId: groupId,
 									title: title,
-									uuid: uuid,
-									version: version
+									uuid: uuid
 								}
 							)
 						);

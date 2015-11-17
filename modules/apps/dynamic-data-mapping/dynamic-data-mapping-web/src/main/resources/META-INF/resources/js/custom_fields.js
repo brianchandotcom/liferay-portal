@@ -1348,6 +1348,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-portlet-dynamic-data-mapping']
+		requires: ['liferay-portlet-dynamic-data-mapping', 'liferay-item-selector-dialog']
 	}
 );

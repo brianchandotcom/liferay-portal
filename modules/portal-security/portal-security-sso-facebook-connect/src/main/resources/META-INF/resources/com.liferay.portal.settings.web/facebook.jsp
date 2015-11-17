@@ -35,7 +35,14 @@ String oauthTokenURL = facebookConnectConfiguration.oauthTokenURL();
 String oauthRedirectURL = facebookConnectConfiguration.oauthRedirectURL();
 %>
 
+<liferay-ui:error key="facebookConnectGraphURLInvalid" message="the-facebook-connect-graph-url-is-invalid" />
+<liferay-ui:error key="facebookConnectOauthAuthURLInvalid" message="the-facebook-connect-oauth-auth-url-is-invalid" />
+<liferay-ui:error key="facebookConnectOauthRedirectURLInvalid" message="the-facebook-connect-oauth-redirect-url-is-invalid" />
+<liferay-ui:error key="facebookConnectOauthTokenURLInvalid" message="the-facebook-connect-oauth-token-url-is-invalid" />
+
 <aui:fieldset>
+	<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="/portal_settings/edit_company_facebook_connect_configuration" />
+
 	<aui:input label="enabled" name="facebook--enabled" type="checkbox" value="<%= authEnabled %>" />
 
 	<aui:input label="require-verified-account" name="facebook--verifiedAccountRequired" type="checkbox" value="<%= verifiedAccountRequired %>" />

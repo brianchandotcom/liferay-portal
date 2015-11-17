@@ -2187,10 +2187,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		// LPS-59076
 
-		if (_checkModulesServiceUtil) {
-			if (content.contains("@Component")) {
-				content = formatOSGIComponents(fileName, absolutePath, content);
-			}
+		if (content.contains("@Component")) {
+			content = formatOSGIComponents(fileName, absolutePath, content);
 		}
 
 		if (!absolutePath.contains("/modules/core/") &&
@@ -2210,38 +2208,40 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		String moduleServicePackagePath = null;
 
-		Matcher matcher = _serviceUtilImportPattern.matcher(content);
+		if (_checkModulesServiceUtil) {
+			Matcher matcher = _serviceUtilImportPattern.matcher(content);
 
-		while (matcher.find()) {
-			String serviceUtilClassName = matcher.group(2);
+			while (matcher.find()) {
+				String serviceUtilClassName = matcher.group(2);
 
-			if (moduleServicePackagePath == null) {
-				moduleServicePackagePath = getModuleServicePackagePath(
-					fileName);
-			}
-
-			if (Validator.isNotNull(moduleServicePackagePath)) {
-				String serviceUtilClassPackagePath = matcher.group(1);
-
-				if (serviceUtilClassPackagePath.startsWith(
-						moduleServicePackagePath)) {
-
-					processErrorMessage(
-						fileName,
-						"LPS-59076: Convert OSGi Component to Spring bean: " +
-							fileName);
-
-					continue;
+				if (moduleServicePackagePath == null) {
+					moduleServicePackagePath = getModuleServicePackagePath(
+						fileName);
 				}
-			}
 
-			processErrorMessage(
-				fileName,
-				"LPS-59076: Use @Reference instead of calling " +
-					serviceUtilClassName + " directly: " + fileName);
+				if (Validator.isNotNull(moduleServicePackagePath)) {
+					String serviceUtilClassPackagePath = matcher.group(1);
+
+					if (serviceUtilClassPackagePath.startsWith(
+							moduleServicePackagePath)) {
+
+						processErrorMessage(
+							fileName,
+							"LPS-59076: Convert OSGi Component to Spring " +
+								"bean: " + fileName);
+
+						continue;
+					}
+				}
+
+				processErrorMessage(
+					fileName,
+					"LPS-59076: Use @Reference instead of calling " +
+						serviceUtilClassName + " directly: " + fileName);
+			}
 		}
 
-		matcher = _setReferenceMethodPattern.matcher(content);
+		Matcher matcher = _setReferenceMethodPattern.matcher(content);
 
 		while (matcher.find()) {
 			String annotationParameters = matcher.group(2);
@@ -2270,6 +2270,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 							",\n" + indent + "unbind = \"-\"" + "\n", x - 1);
 					}
 				}
+			}
+
+			if (!_checkModulesServiceUtil) {
+				continue;
 			}
 
 			String methodContent = matcher.group(6);

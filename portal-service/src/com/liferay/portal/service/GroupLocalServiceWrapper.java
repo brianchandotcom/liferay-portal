@@ -671,6 +671,12 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 		return _groupLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.model.Group> getActiveGroups(
+		long companyId, boolean active) {
+		return _groupLocalService.getActiveGroups(companyId, active);
+	}
+
 	/**
 	* Returns the company group.
 	*

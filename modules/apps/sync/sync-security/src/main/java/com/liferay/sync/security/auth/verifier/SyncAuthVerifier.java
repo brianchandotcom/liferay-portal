@@ -139,7 +139,7 @@ public class SyncAuthVerifier implements AuthVerifier {
 					GetterUtil.getLong(credentials[0]));
 
 				ServiceAccessPolicyThreadLocal.addActiveServiceAccessPolicyName(
-					SyncPolicies.POLICY_NAMES[1]);
+					String.valueOf(SyncPolicies.POLICIES[1][0]));
 			}
 			else {
 

@@ -15,6 +15,7 @@
 package com.liferay.sync.security.service.access.policy;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.service.CompanyLocalService;
@@ -37,17 +38,24 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true)
 public class SyncPolicies {
 
-	public static final String[] POLICY_NAMES = {"SYNC_DEFAULT", "SYNC_TOKEN"};
+	public static final Object[][] POLICIES = new Object[][] {
+		{
+			"SYNC_DEFAULT",
+			"com.liferay.sync.service.SyncDLObjectService#getSyncContext", true
+		},
+		{"SYNC_TOKEN", "com.liferay.sync.service.*", false}
+	};
 
 	@Activate
 	public void activated() throws Exception {
 		for (Company company : _companyLocalService.getCompanies()) {
-			long defaultUserId = _userLocalService.getDefaultUserId(
-				company.getCompanyId());
+			for (Object[] policy : POLICIES) {
+				String name = String.valueOf(policy[0]);
+				String allowedServiceSignatures = String.valueOf(policy[1]);
+				boolean defaultSAPEntry = GetterUtil.getBoolean(policy[2]);
 
-			for (int i = 0; i < POLICY_NAMES.length; i++) {
 				SAPEntry sapEntry = _sapEntryLocalService.fetchSAPEntry(
-					company.getCompanyId(), POLICY_NAMES[i]);
+					company.getCompanyId(), name);
 
 				if (sapEntry != null) {
 					continue;
@@ -56,12 +64,13 @@ public class SyncPolicies {
 				try {
 					Map<Locale, String> map = new HashMap<>();
 
-					map.put(LocaleUtil.getDefault(), POLICY_NAMES[i]);
+					map.put(LocaleUtil.getDefault(), name);
 
 					_sapEntryLocalService.addSAPEntry(
-						defaultUserId, _ALLOWED_SERVICE_SIGNATURES[i],
-						_DEFAULT_SAP_ENTRY[i], true, POLICY_NAMES[i], map,
-						new ServiceContext());
+						_userLocalService.getDefaultUserId(
+							company.getCompanyId()),
+						allowedServiceSignatures, defaultSAPEntry, true, name,
+						map, new ServiceContext());
 				}
 				catch (PortalException e) {
 					throw new Exception(
@@ -91,13 +100,6 @@ public class SyncPolicies {
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}
-
-	private static final String[] _ALLOWED_SERVICE_SIGNATURES =
-		{"com.liferay.sync.service.SyncDLObjectService#getSyncContext",
-			"com.liferay.sync.service.*"
-		};
-
-	private static final boolean[] _DEFAULT_SAP_ENTRY = {true, false};
 
 	private CompanyLocalService _companyLocalService;
 	private SAPEntryLocalService _sapEntryLocalService;

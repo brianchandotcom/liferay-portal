@@ -56,8 +56,7 @@ public class RootPanelCategory implements PanelCategory {
 		PanelCategoryHelper panelCategoryHelper,
 		PermissionChecker permissionChecker, Group group) {
 
-		return panelCategoryHelper.getNotificationsCount(
-			this.getKey(), permissionChecker, group);
+		return 0;
 	}
 
 	@Override

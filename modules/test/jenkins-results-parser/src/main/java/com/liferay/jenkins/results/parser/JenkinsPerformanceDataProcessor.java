@@ -10,9 +10,9 @@ import org.json.JSONObject;
 
 public class JenkinsPerformanceDataProcessor {
 
-	protected static List<Result> getLongestResults(JSONObject jobJSONObject, Project project, int resultCount) throws Exception {
+	protected static List<JenkinsPerformanceResult> getLongestResults(JSONObject jobJSONObject, Project project, int resultCount) throws Exception {
 		JSONArray childReportsJSONArray = jobJSONObject.getJSONArray("childReports");
-		List<Result> resultList = new ArrayList<>();
+		List<JenkinsPerformanceResult> resultList = new ArrayList<>();
 
 		for (int i=0; i < childReportsJSONArray.length(); i++) {
 			JSONObject childReportJSONObject = childReportsJSONArray.getJSONObject(i);
@@ -31,7 +31,7 @@ public class JenkinsPerformanceDataProcessor {
 				for (int k=0; k < casesJSONArray.length(); k++) {
 					JSONObject caseJSONObject = casesJSONArray.getJSONObject(k);
 
-					Result result = new Result(project.getProperty("jenkins.build.name"), caseJSONObject, childJSONObject);
+					JenkinsPerformanceResult result = new JenkinsPerformanceResult(project.getProperty("jenkins.build.name"), caseJSONObject, childJSONObject);
 
 					resultList.add(result);
 				}
@@ -45,7 +45,7 @@ public class JenkinsPerformanceDataProcessor {
 		return resultList;
 	}
 
-	protected static void truncateList(List<Result> list, int maxSize) {
+	protected static void truncateList(List<JenkinsPerformanceResult> list, int maxSize) {
 		while (list.size() > maxSize) {
 			list.remove(list.size() - 1);
 		}
@@ -61,7 +61,7 @@ public class JenkinsPerformanceDataProcessor {
 		JSONObject jobJSONObject = JenkinsResultsParserUtil.toJSONObject(JenkinsResultsParserUtil.getLocalURL(jenkinsJobURL + "testReport/api/json"));
 
 		if (jobJSONObject != null) {
-			List<Result> resultList = getLongestResults(jobJSONObject, project, reportSize);
+			List<JenkinsPerformanceResult> resultList = getLongestResults(jobJSONObject, project, reportSize);
 
 			_globalList.addAll(resultList);
 
@@ -74,5 +74,5 @@ public class JenkinsPerformanceDataProcessor {
 		}
 	}
 	
-	protected static final List<Result> _globalList = new ArrayList<>();
+	protected static final List<JenkinsPerformanceResult> _globalList = new ArrayList<>();
 }

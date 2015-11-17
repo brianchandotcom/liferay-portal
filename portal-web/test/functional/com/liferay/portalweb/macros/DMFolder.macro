@@ -59,11 +59,16 @@
 	</command>
 
 	<command name="addPGViaMG">
+		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
 		<execute function="AssertClick" locator1="MenuItem#ADD_FOLDER" value1="Add Folder" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${mgFolderName}" />
+
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${mgFolderDescription}" />
+
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<var name="key_mgFolderName" value="${mgFolderName}" />
@@ -107,11 +112,16 @@
 	</command>
 
 	<command name="addSubfolderPGViaMG">
+		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
 		<execute function="AssertClick" locator1="PGMediagallery#FOLDER_MENU_ADD_SUBFOLDER" value1="Add Subfolder" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${mgSubfolderName}" />
+
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${mgSubfolderDescription}" />
+
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
@@ -233,10 +243,14 @@
 	</command>
 
 	<command name="editPGViaMG">
+		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
 		<execute function="AssertClick" locator1="MediaGallery#ENTRY_EDIT_ICON" value1="Edit" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${mgFolderNameEdit}" />
+
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${mgFolderDescriptionEdit}" />
+
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />

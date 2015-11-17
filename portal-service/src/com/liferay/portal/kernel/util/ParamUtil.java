@@ -917,6 +917,45 @@ public class ParamUtil {
 		return get(serviceContext, param, defaultValue);
 	}
 
+	public static String[] getStringValues(
+		HttpServletRequest request, String param) {
+
+		return getStringValues(request, param, new String[0]);
+	}
+
+	public static String[] getStringValues(
+		HttpServletRequest request, String param, String[] defaultValue) {
+
+		return GetterUtil.getStringValues(
+			getParameterValues(request, param, null), defaultValue);
+	}
+
+	public static String[] getStringValues(
+		PortletRequest portletRequest, String param) {
+
+		return getStringValues(portletRequest, param, new String[0]);
+	}
+
+	public static String[] getStringValues(
+		PortletRequest portletRequest, String param, String[] defaultValue) {
+
+		return GetterUtil.getStringValues(
+			getParameterValues(portletRequest, param, null), defaultValue);
+	}
+
+	public static String[] getStringValues(
+		ServiceContext serviceContext, String param) {
+
+		return getStringValues(serviceContext, param, new String[0]);
+	}
+
+	public static String[] getStringValues(
+		ServiceContext serviceContext, String param, String[] defaultValue) {
+
+		return GetterUtil.getStringValues(
+			serviceContext.getAttribute(param), defaultValue);
+	}
+
 	public static void print(HttpServletRequest request) {
 		Map<String, String[]> parameters = request.getParameterMap();
 

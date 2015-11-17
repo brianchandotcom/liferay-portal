@@ -16,6 +16,7 @@ package com.liferay.product.navigation.user.application.list;
 
 import com.liferay.application.list.BaseJSPPanelCategory;
 import com.liferay.application.list.PanelCategory;
+import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 
 import java.io.IOException;
@@ -72,7 +73,7 @@ public class UserPanelCategory extends BaseJSPPanelCategory {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
-		request.setAttribute(PanelCategoryKeys.CONTROL_PANEL_APPS, this);
+		request.setAttribute(ApplicationListWebKeys.PANEL_APP, this);
 
 		return super.includeHeader(request, response);
 	}

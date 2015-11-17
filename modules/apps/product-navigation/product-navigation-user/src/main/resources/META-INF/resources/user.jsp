@@ -19,7 +19,7 @@
 <%
 PanelCategoryHelper panelCategoryHelper = (PanelCategoryHelper)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_HELPER);
 
-UserPanelCategory userPanelCategory = (UserPanelCategory)request.getAttribute(PanelCategoryKeys.CONTROL_PANEL_APPS);
+UserPanelCategory userPanelCategory = (UserPanelCategory)request.getAttribute(ApplicationListWebKeys.PANEL_APP);
 
 int notificationsCount = panelCategoryHelper.getNotificationsCount(userPanelCategory.getKey(), permissionChecker, themeDisplay.getScopeGroup());
 %>

@@ -48,8 +48,9 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Ambrin Chaudhary
+ * @author Roberto Díaz
  */
-public class ItemSelectorBrowserUtil {
+public class ItemSelectorRepositoryEntryBrowserUtil {
 
 	public static void addPortletBreadcrumbEntries(
 			long folderId, String displayStyle, HttpServletRequest request,
@@ -197,6 +198,6 @@ public class ItemSelectorBrowserUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ItemSelectorBrowserUtil.class);
+		ItemSelectorRepositoryEntryBrowserUtil.class);
 
 }

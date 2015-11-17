@@ -17,7 +17,6 @@ package com.liferay.staging.processes.web.portlet.action;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.staging.processes.web.constants.StagingProcessesPortletKeys;
 
-import com.liferay.staging.processes.web.portlet.action.GetGroupMVCRenderCommand;
 import org.osgi.service.component.annotations.Component;
 
 /**

@@ -122,38 +122,7 @@ request.setAttribute("edit_site_assignments.jsp-portletURL", portletURL);
 	<c:when test='<%= tabs1.equals("summary") %>'>
 		<aui:input name="keywords" type="hidden" value="" />
 
-		<div class="site-membership-type">
-			<liferay-ui:icon
-				iconCssClass="icon-signin"
-				label="<%= true %>"
-				message='<%= LanguageUtil.get(request, "membership-type") + StringPool.COLON + StringPool.SPACE + LanguageUtil.get(request, GroupConstants.getTypeLabel(group.getType())) %>'
-			/>
-
-			<liferay-ui:icon-help message='<%= LanguageUtil.get(request, "membership-type-" + GroupConstants.getTypeLabel(group.getType()) + "-help") %>' />
-
-			<c:if test="<%= group.getType() == GroupConstants.TYPE_SITE_RESTRICTED %>">
-
-				<%
-				int pendingRequests = MembershipRequestLocalServiceUtil.searchCount(group.getGroupId(), MembershipRequestConstants.STATUS_PENDING);
-				%>
-
-				<c:if test="<%= pendingRequests > 0 %>">
-					<br />
-
-					<portlet:renderURL var="viewMembershipRequestsURL">
-						<portlet:param name="mvcPath" value="/view_membership_requests.jsp" />
-						<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-					</portlet:renderURL>
-
-					<liferay-ui:icon
-						iconCssClass="icon-tasks"
-						label="<%= true %>"
-						message='<%= LanguageUtil.format(request, "there-are-x-membership-requests-pending", String.valueOf(pendingRequests), false) %>'
-						url="<%= viewMembershipRequestsURL %>"
-					/>
-				</c:if>
-			</c:if>
-		</div>
+		<liferay-util:include page="/info_message.jsp" servletContext="<%= application %>" />
 
 		<liferay-util:include page="/users.jsp" servletContext="<%= application %>" />
 

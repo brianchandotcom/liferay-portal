@@ -14,6 +14,7 @@
 
 package com.liferay.application.list;
 
+import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -47,6 +48,15 @@ public abstract class BasePanelCategory implements PanelCategory {
 		}
 
 		return false;
+	}
+
+	@Override
+	public int getNotificationsCount(
+		PanelCategoryHelper panelCategoryHelper,
+		PermissionChecker permissionChecker, Group group) {
+
+		return panelCategoryHelper.getNotificationsCount(
+			this.getKey(), permissionChecker, group);
 	}
 
 	@Override

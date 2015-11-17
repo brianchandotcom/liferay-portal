@@ -5,9 +5,9 @@ import java.net.URLDecoder;
 
 import org.json.JSONObject;
 
-public class Result implements Comparable<Result>{
+public class JenkinsPerformanceResult implements Comparable<JenkinsPerformanceResult>{
 
-	public int compareTo(Result result) {
+	public int compareTo(JenkinsPerformanceResult result) {
 		return -1 * Float.compare(getDuration(), result.getDuration());
 	}
 
@@ -43,7 +43,7 @@ public class Result implements Comparable<Result>{
 		return toJSONObject().toString(4);
 	}
 
-	public Result(String buildName, JSONObject caseJSONObject, JSONObject childJSONObject) throws Exception {
+	public JenkinsPerformanceResult(String buildName, JSONObject caseJSONObject, JSONObject childJSONObject) throws Exception {
 		_batch = buildName;
 
 		extractAxisInfo(childJSONObject);

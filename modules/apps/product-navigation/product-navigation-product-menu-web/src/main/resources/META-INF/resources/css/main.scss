@@ -63,40 +63,6 @@ body {
 }
 
 .product-menu {
-	.sidebar-user {
-		padding: 10px 24px;
-
-		@include sm() {
-			padding-bottom: 16px;
-			padding-top: 16px;
-		}
-
-		.nameplate-content,
-		.nameplate-field {
-			vertical-align: middle;
-
-			@include media-query(null, 320px) {
-				display: block;
-			}
-		}
-
-		.user-heading {
-			margin: 0 8px;
-		}
-
-		.user-icon {
-			height: 32px;
-			line-height: 32px;
-			width: 32px;
-
-			@include sm() {
-				height: 48px;
-				line-height: 48px;
-				width: 48px;
-			}
-		}
-	}
-
 	.user-tab {
 		.icon-monospaced {
 			padding-top: 10px;

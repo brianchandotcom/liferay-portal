@@ -463,17 +463,17 @@ AUI.add(
 						var fieldDefinition = instance.getFieldDefinition();
 
 						var labelsMap = fieldDefinition.label;
-						
+
 						var definition = instance.get('definition');
-						
-						var defaultLocale = '';
-						
-						if(definition){
+
+						var defaultLocale = themeDisplay.getDefaultLanguageId();
+
+						if (definition) {
 							defaultLocale = definition['defaultLanguageId'];
 						}
 
 						var label = labelsMap[instance.get('displayLocale')] || labelsMap[defaultLocale];
-							
+
 						instance.setLabel(label);
 					},
 

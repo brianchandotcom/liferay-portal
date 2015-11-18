@@ -549,17 +549,17 @@ AUI.add(
 			var instance = this;
 
 			var builder = instance.get('builder');
-			
+
 			var localizationMap = instance.get('localizationMap');
 
 			var translationManager = builder.translationManager;
-			
-			var defaultLocale = '';
-			
-			if(translationManager){
+
+			var defaultLocale = themeDisplay.getDefaultLanguageId();
+
+			if (translationManager) {
 				defaultLocale = translationManager.get('defaultLocale');
 			}
-			
+
 			var localeMap = localizationMap[locale] || localizationMap[defaultLocale];
 
 			if (isObject(localeMap)) {

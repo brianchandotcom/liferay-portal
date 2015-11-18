@@ -14,6 +14,8 @@
 
 package com.liferay.poshi.runner;
 
+import com.google.common.collect.Lists;
+
 import com.liferay.poshi.runner.selenium.LiferaySelenium;
 import com.liferay.poshi.runner.util.FileUtil;
 import com.liferay.poshi.runner.util.OSDetector;
@@ -844,7 +846,7 @@ public class PoshiRunnerContext {
 			String[] propertyNames = PropsValues.TEST_BATCH_PROPERTY_NAMES;
 			String[] propertyValues = PropsValues.TEST_BATCH_PROPERTY_VALUES;
 
-			Set<String> classCommandNames = new TreeSet<>();
+			List<String> classCommandNames = new ArrayList<>();
 
 			if (propertyNames.length != propertyValues.length) {
 				throw new Exception(
@@ -858,40 +860,20 @@ public class PoshiRunnerContext {
 						propertyNames[i], propertyValues[i]));
 			}
 
-			int totalGroupCount =
-				classCommandNames.size() /
-					PropsValues.TEST_BATCH_MAX_GROUP_SIZE;
+			int maxGroupSize = PropsValues.TEST_BATCH_MAX_GROUP_SIZE;
+			double totalTestCount = classCommandNames.size();
 
-			int incompleteGroupCount =
-				classCommandNames.size() %
-					PropsValues.TEST_BATCH_MAX_GROUP_SIZE;
+			double totalGroupCount = Math.ceil(totalTestCount / maxGroupSize);
 
-			if (incompleteGroupCount > 0) {
-				totalGroupCount++;
-			}
+			double groupSize = Math.ceil(totalTestCount / totalGroupCount);
 
 			Map<Integer, List<String>> classCommandNameGroups = new HashMap<>();
-
 			int classCommandNameIndex = 0;
 
-			for (String classCommandName : classCommandNames) {
-				List<String> classCommandNameGroup = new ArrayList<>();
+			for (List<String> partition : Lists.partition(
+				classCommandNames, (int)groupSize)) {
 
-				int classCommandNameGroupIndex =
-					classCommandNameIndex % totalGroupCount;
-
-				if (classCommandNameGroups.containsKey(
-						classCommandNameGroupIndex)) {
-
-					classCommandNameGroup.addAll(
-						classCommandNameGroups.get(classCommandNameGroupIndex));
-				}
-
-				classCommandNameGroup.add(classCommandName);
-
-				classCommandNameGroups.put(
-					classCommandNameGroupIndex, classCommandNameGroup);
-
+				classCommandNameGroups.put(classCommandNameIndex, partition);
 				classCommandNameIndex++;
 			}
 

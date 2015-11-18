@@ -36,9 +36,7 @@ public class JenkinsPerformanceTableUtil {
 		for (JenkinsPerformanceDataUtil.Result result :
 				JenkinsPerformanceDataUtil.resultsList) {
 
-			Element row = createRow(result);
-
-			tableElement.add(row);
+			tableElement.add(createRow(result));
 		}
 
 		JenkinsPerformanceDataUtil.resultsList.clear();

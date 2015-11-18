@@ -1,6 +1,3 @@
-import com.liferay.gradle.util.FileUtil
-
-task deploy(type: Zip, overwrite: true)
 task jar(type: Jar, overwrite: true)
 
 String gradleVersion = version.substring(0, version.lastIndexOf('.'))
@@ -11,25 +8,6 @@ if (gradleVersion != gradle.gradleVersion) {
 
 dependencies {
 	compile gradleApi()
-}
-
-deploy {
-	baseName = "gradle"
-	classifier = "bin"
-	destinationDir = rootProject.file("../tools")
-	exclude "gradle-${gradleVersion}/lib/plugins/gradle-resources-http-${gradleVersion}.jar"
-
-	ext {
-		autoClean = false
-	}
-
-	from {
-		zipTree(FileUtil.get(project, "https://services.gradle.org/distributions/gradle-${gradleVersion}-bin.zip"))
-	}
-
-	into("gradle-${gradleVersion}/lib/plugins") {
-		from jar
-	}
 }
 
 jar {

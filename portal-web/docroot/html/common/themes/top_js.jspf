@@ -120,7 +120,6 @@
 			PortletKeys: {
 				DOCUMENT_LIBRARY: '<%= PortletKeys.DOCUMENT_LIBRARY %>',
 				DYNAMIC_DATA_MAPPING: 'com_liferay_dynamic_data_mapping_web_portlet_DDMPortlet',
-				DYNAMIC_DATA_MAPPING_DATA_PROVIDER: 'com_liferay_dynamic_data_mapping_data_provider_web_portlet_DDMDataProviderPortlet',
 				ITEM_SELECTOR: '<%= PortletKeys.ITEM_SELECTOR %>',
 				PORTLET_SHARING: '<%= PortletKeys.PORTLET_SHARING %>'
 			},

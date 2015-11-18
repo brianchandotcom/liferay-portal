@@ -35,7 +35,7 @@ import java.util.List;
  * @author Sergio González
  * @author Roberto Díaz
  */
-public class ItemSelectorBrowserReturnTypeUtil
+public class ItemSelectorRepositoryEntryBrowserReturnTypeUtil
 	implements ItemSelectorReturnType {
 
 	public static ItemSelectorReturnType

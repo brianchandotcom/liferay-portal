@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Document;
@@ -61,6 +62,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -148,8 +150,13 @@ public class AddDefaultDocumentLibraryStructuresAction extends SimpleAction {
 				groupId, dlFileEntryTypeKey);
 
 		if (dlFileEntryType == null) {
-			Map<Locale, String> localizationMap = getLocalizationMap(
-				languageKey);
+			Set<Locale> locales = LanguageUtil.getSupportedLocales();
+
+			Locale defaultLocale = LocaleUtil.getDefault();
+
+			Map<Locale, String> localizationMap =
+				LocalizationUtil.getLocalizationMap(
+					locales, defaultLocale, languageKey);
 
 			_dlFileEntryTypeLocalService.addFileEntryType(
 				userId, groupId, dlFileEntryTypeKey, localizationMap,
@@ -360,26 +367,6 @@ public class AddDefaultDocumentLibraryStructuresAction extends SimpleAction {
 		addDLFileEntryTypes(defaultUserId, group.getGroupId(), serviceContext);
 		addDLRawMetadataStructures(
 			defaultUserId, group.getGroupId(), serviceContext);
-	}
-
-	protected Map<Locale, String> getLocalizationMap(String content) {
-		Map<Locale, String> localizationMap = new HashMap<>();
-
-		Locale defaultLocale = LocaleUtil.getDefault();
-
-		String defaultValue = LanguageUtil.get(defaultLocale, content);
-
-		for (Locale locale : LanguageUtil.getSupportedLocales()) {
-			String value = LanguageUtil.get(locale, content);
-
-			if (!locale.equals(defaultLocale) && value.equals(defaultValue)) {
-				continue;
-			}
-
-			localizationMap.put(locale, value);
-		}
-
-		return localizationMap;
 	}
 
 	@Reference(unbind = "-")

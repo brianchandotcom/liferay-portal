@@ -223,7 +223,7 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 	<aui:button onClick='<%= renderResponse.getNamespace() + "saveSelectBoxes();" %>' type="submit" />
 </aui:button-row>
 
-<aui:script sandbox="<%= true %>">
+<aui:script>
 	function selectAsset(assetEntryId, assetClassName, assetType, assetEntryTitle, groupName) {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'add-selection';
 		document.<portlet:namespace />fm.<portlet:namespace />assetEntryId.value = assetEntryId;
@@ -232,7 +232,9 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 
 		submitForm(document.<portlet:namespace />fm);
 	}
+</aui:script>
 
+<aui:script sandbox="<%= true %>">
 	$('body').on(
 		'click',
 		'.asset-selector a',

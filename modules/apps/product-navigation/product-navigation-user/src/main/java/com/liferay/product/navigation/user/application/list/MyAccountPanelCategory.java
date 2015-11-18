@@ -14,28 +14,44 @@
 
 package com.liferay.product.navigation.user.application.list;
 
-import com.liferay.application.list.BasePanelCategory;
+import com.liferay.application.list.BaseJSPPanelCategory;
 import com.liferay.application.list.PanelCategory;
+import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
+import java.io.IOException;
+
 import java.util.Locale;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
  */
 @Component(
 	immediate = true,
-	property = {"panel.category.key=" + PanelCategoryKeys.USER},
+	property = {
+		"panel.category.key=" + PanelCategoryKeys.USER,
+		"service.ranking:Integer=100"
+	},
 	service = PanelCategory.class
 )
-public class MyAccountPanelCategory extends BasePanelCategory {
+public class MyAccountPanelCategory extends BaseJSPPanelCategory {
 
 	@Override
 	public String getIconCssClass() {
 		return "icon-user";
+	}
+
+	@Override
+	public String getJspPath() {
+		return "/my_account.jsp";
 	}
 
 	@Override
@@ -46,6 +62,25 @@ public class MyAccountPanelCategory extends BasePanelCategory {
 	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(locale, "my-account");
+	}
+
+	@Override
+	public boolean include(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
+
+		request.setAttribute(ApplicationListWebKeys.PANEL_CATEGORY, this);
+
+		return super.include(request, response);
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.product.navigation.user)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 }

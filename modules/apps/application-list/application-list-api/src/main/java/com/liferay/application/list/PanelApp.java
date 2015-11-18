@@ -29,6 +29,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface PanelApp extends PanelEntry {
 
+	public int getNotificationsCount();
+
 	public Portlet getPortlet();
 
 	public String getPortletId();

@@ -142,7 +142,7 @@
 </tr>
 <tr>
 	<td>PRODUCT_MENU_PANEL_MENU_ITEM</td>
-	<td>//div[contains(@class,'active')]//a[.='${key_portletName}']</td>
+	<td>//div[contains(@class,'active')]//a[contains(.,'${key_portletName}')]</td>
 	<td></td>
 </tr>
 <tr>

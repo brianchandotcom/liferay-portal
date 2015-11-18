@@ -84,6 +84,35 @@ public class PanelCategoryHelper {
 		return null;
 	}
 
+	public int getNotificationsCount(
+		String panelCategoryKey, PermissionChecker permissionChecker,
+		Group group) {
+
+		int count = 0;
+
+		// Child Categories
+
+		List<PanelCategory> panelCategories =
+			_panelCategoryRegistry.getChildPanelCategories(
+				panelCategoryKey, permissionChecker, group);
+
+		for (PanelCategory panelCategory : panelCategories) {
+			count += panelCategory.getNotificationsCount(
+				this, permissionChecker, group);
+		}
+
+		// Child Apps
+
+		Iterable<PanelApp> panelApps = _panelAppRegistry.getPanelApps(
+			panelCategoryKey, permissionChecker, group);
+
+		for (PanelApp panelApp : panelApps) {
+			count += panelApp.getNotificationsCount();
+		}
+
+		return count;
+	}
+
 	public boolean hasPanelApp(String portletId) {
 		return containsPortlet(portletId, PanelCategoryKeys.ROOT);
 	}

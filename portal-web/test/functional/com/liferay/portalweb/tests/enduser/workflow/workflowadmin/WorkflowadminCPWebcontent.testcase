@@ -807,6 +807,19 @@
 			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Submissions" />
+		</execute>
+
+		<execute macro="Workflow#gotoViewCompletedAssetViaMySubmissions">
+			<var name="workflowAssetTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="WebContent#viewEntryAsWorkflowAsset">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
 	</command>
 
 	<command name="RejectInWebContentFolderNoWorkflowWithHomeFolderSingleApproverWorkflowCP" priority="3">

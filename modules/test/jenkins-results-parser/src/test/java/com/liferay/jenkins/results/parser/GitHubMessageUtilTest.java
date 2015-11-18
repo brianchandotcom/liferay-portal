@@ -51,7 +51,7 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 	}
 
 	@Test
-	public void testGetFailedJobsMessage() throws Exception {
+	public void testGetGitHubMessage() throws Exception {
 		assertSamples();
 	}
 

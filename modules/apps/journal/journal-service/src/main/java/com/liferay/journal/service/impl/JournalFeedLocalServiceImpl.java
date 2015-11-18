@@ -328,39 +328,6 @@ public class JournalFeedLocalServiceImpl
 		return feed;
 	}
 
-	protected boolean isValidStructureField(
-		long groupId, String ddmStructureKey, String contentField) {
-
-		if (contentField.equals(JournalFeedConstants.WEB_CONTENT_DESCRIPTION) ||
-			contentField.equals(JournalFeedConstants.RENDERED_WEB_CONTENT)) {
-
-			return true;
-		}
-
-		try {
-			DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
-				groupId,
-				classNameLocalService.getClassNameId(JournalArticle.class),
-				ddmStructureKey, true);
-
-			DDMForm ddmForm = ddmStructure.getDDMForm();
-
-			Map<String, DDMFormField> ddmFormFieldsMap =
-				ddmForm.getDDMFormFieldsMap(true);
-
-			if (ddmFormFieldsMap.containsKey(contentField)) {
-				return true;
-			}
-
-			return isValidStructureOptionValue(ddmFormFieldsMap, contentField);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return false;
-	}
-
 	protected boolean isValidStructureOptionValue(
 		Map<String, DDMFormField> ddmFormFieldsMap, String contentField) {
 
@@ -440,8 +407,33 @@ public class JournalFeedLocalServiceImpl
 			throw new FeedTargetLayoutFriendlyUrlException();
 		}
 
-		if (!isValidStructureField(groupId, ddmStructureKey, contentField)) {
-			throw new FeedContentFieldException();
+		if (contentField.equals(JournalFeedConstants.WEB_CONTENT_DESCRIPTION) ||
+			contentField.equals(JournalFeedConstants.RENDERED_WEB_CONTENT)) {
+
+			return;
+		}
+
+		try {
+			DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
+				groupId,
+				classNameLocalService.getClassNameId(JournalArticle.class),
+				ddmStructureKey, true);
+
+			DDMForm ddmForm = ddmStructure.getDDMForm();
+
+			Map<String, DDMFormField> ddmFormFieldsMap =
+				ddmForm.getDDMFormFieldsMap(true);
+
+			if (ddmFormFieldsMap.containsKey(contentField)) {
+				return;
+			}
+
+			if (!isValidStructureOptionValue(ddmFormFieldsMap, contentField)) {
+				throw new FeedContentFieldException();
+			}
+		}
+		catch (Exception e) {
+			throw new FeedContentFieldException(e);
 		}
 	}
 

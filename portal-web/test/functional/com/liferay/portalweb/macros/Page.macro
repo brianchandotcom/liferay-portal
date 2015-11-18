@@ -333,6 +333,13 @@
 			</then>
 		</if>
 
+		<if>
+			<condition function="IsElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_OPENED" />
+			<then>
+				<execute function="Click" locator1="ProductMenu#TOGGLE" />
+			</then>
+		</if>
+
 		<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_TABS_SITES_NAVIGATION" value1="Sites" />
 
 		<var name="key_portletName" value="${portletName}" />

@@ -79,6 +79,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_SITE_ROLES_TO_USERS</td>
+	<td>//a[@role='menuitem' and contains(.,'Add Site Roles to Users')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_SITE_ROLES_TO_USER_GROUPS</td>
+	<td>//a[@role='menuitem' and contains(.,'Add Site Roles to User Groups')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_SUBCATEGORY</td>
 	<td>//div[contains(@class,'open')]//a[contains(.,'Add Subcategory')]</td>
 	<td></td>

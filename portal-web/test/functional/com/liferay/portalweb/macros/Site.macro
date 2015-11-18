@@ -306,8 +306,9 @@
 	</command>
 
 	<command name="assignRoleCP">
-		<execute function="AssertClick" locator1="SiteMemberships#TOOLBAR_ADD_SITE_ROLES_TO" value1="Add Site Roles to" />
-		<execute function="AssertClick" locator1="MenuItem#USERS" value1="Users" />
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#ADD_SITE_ROLES_TO_USERS" value1="Add Site Roles to Users" />
 
 		<var name="key_roleName" value="${roleName}" />
 
@@ -363,8 +364,9 @@
 	</command>
 
 	<command name="assignSiteRolesUserGroupsCP">
-		<execute function="AssertClick" locator1="SiteMemberships#TOOLBAR_ADD_SITE_ROLES_TO" value1="Add Site Roles to" />
-		<execute function="AssertClick" locator1="MenuItem#USER_GROUPS" value1="User Groups" />
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#ADD_SITE_ROLES_TO_USER_GROUPS" value1="Add Site Roles to User Groups" />
 
 		<var name="key_roleName" value="${roleName}" />
 

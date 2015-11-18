@@ -1,6 +1,10 @@
 @import "bourbon";
 @import "mixins";
 
+.form-group .checkbox .toggle-switch-handle {
+	padding-left: 8px;
+}
+
 .portlet-forms {
 	.aspect-ratio img {
 		top: 0;
@@ -50,6 +54,14 @@
 		.input-select-wrapper,
 		.checkbox {
 			margin-bottom: 50px;
+		}
+
+		.checkbox .toggle-switch-bar {
+			font-size: inherit;
+
+			.toggle-switch-handle {
+				text-transform: none;
+			}
 		}
 	}
 }

@@ -18,10 +18,16 @@
 		{if $showAsSwitcher}
 			<div class="checkbox">
 				<label class="control-label" for="{$name}">
-					<input class="toggle-switch" {if $readOnly}disabled{/if} id="{$name}" name="{$name}" type="checkbox" {$status} value="true" />
+					<input class="hide toggle-switch" {if $readOnly}disabled{/if} id="{$name}" name="{$name}" type="checkbox" {$status} value="true" />
 
 					<span aria-hidden="true" class="toggle-switch-bar">
-						<span class="toggle-switch-handle" data-label-off="{$label}" data-label-on="{$label}"></span>
+						<span class="toggle-switch-handle">
+							{$label}
+							
+							{if $required}
+								<b>*</b>
+							{/if}
+						</span>
 					</span>
 				</label>
 			</div>

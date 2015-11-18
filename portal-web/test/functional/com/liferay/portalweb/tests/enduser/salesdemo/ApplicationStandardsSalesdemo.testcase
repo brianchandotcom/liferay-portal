@@ -31,7 +31,7 @@
 			<var name="pageName" value="Web Proxy Page" />
 		</execute>
 
-		<execute function="AssertElementPresent" locator1="//div[@title='Google Images']" />
+		<execute function="AssertTextPresent" locator1="Portlet#H2_HEADER" value1="Google Images" />
 
 		<take-screenshot />
 

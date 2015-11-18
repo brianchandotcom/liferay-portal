@@ -7638,22 +7638,20 @@ public class JournalArticleLocalServiceImpl
 
 		String smallImageName = smallImageFile.getName();
 
-		if (smallImageName != null) {
-			boolean validSmallImageExtension = false;
+		boolean validSmallImageExtension = false;
 
-			for (String _imageExtension : imageExtensions) {
-				if (StringPool.STAR.equals(_imageExtension) ||
-					StringUtil.endsWith(smallImageName, _imageExtension)) {
+		for (String _imageExtension : imageExtensions) {
+			if (StringPool.STAR.equals(_imageExtension) ||
+				StringUtil.endsWith(smallImageName, _imageExtension)) {
 
-					validSmallImageExtension = true;
+				validSmallImageExtension = true;
 
-					break;
-				}
+				break;
 			}
+		}
 
-			if (!validSmallImageExtension) {
-				throw new ArticleSmallImageNameException(smallImageName);
-			}
+		if (!validSmallImageExtension) {
+			throw new ArticleSmallImageNameException(smallImageName);
 		}
 
 		long smallImageMaxSize = PrefsPropsUtil.getLong(

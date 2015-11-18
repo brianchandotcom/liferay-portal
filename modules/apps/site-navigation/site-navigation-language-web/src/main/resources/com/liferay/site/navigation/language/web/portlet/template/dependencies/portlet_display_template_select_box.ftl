@@ -21,6 +21,7 @@
 			<#list entries as entry>
 				<@aui["option"]
 					cssClass="taglib-language-option"
+					disabled=entry.isDisabled()
 					label=entry.getLongDisplayName()
 					lang=entry.getW3cLanguageId()
 					selected=entry.isSelected()

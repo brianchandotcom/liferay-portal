@@ -180,6 +180,7 @@ public class LanguageTag extends IncludeTag {
 		}
 
 		for (Locale locale : locales) {
+			boolean disabled = false;
 			String url = null;
 
 			if (!LocaleUtil.equals(locale, currentLocale)) {
@@ -187,12 +188,13 @@ public class LanguageTag extends IncludeTag {
 					formAction, parameterName, LocaleUtil.toLanguageId(locale));
 			}
 			else if (!displayCurrentLocale) {
-				continue;
+				disabled = true;
 			}
 
-			languageEntries.add(
-				new LanguageEntry(
-					duplicateLanguages, currentLocale, locale, url));
+			LanguageEntry languageEntry = new LanguageEntry(
+				disabled, duplicateLanguages, currentLocale, locale, url);
+
+			languageEntries.add(languageEntry);
 		}
 
 		return languageEntries;

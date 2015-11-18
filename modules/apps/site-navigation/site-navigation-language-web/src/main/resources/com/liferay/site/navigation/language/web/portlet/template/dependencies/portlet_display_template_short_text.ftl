@@ -8,11 +8,13 @@
 
 <#if entries?has_content>
 	<#list entries as entry>
-		<@aui["a"]
-			cssClass="language-entry-short-text"
-			href=entry.getURL()
-			label=entry.getShortDisplayName()
-			lang=entry.getW3cLanguageId()
-		/>
+		<#if !entry.isDisabled()>
+			<@aui["a"]
+				cssClass="language-entry-short-text"
+				href=entry.getURL()
+				label=entry.getShortDisplayName()
+				lang=entry.getW3cLanguageId()
+			/>
+		</#if>
 	</#list>
 </#if>

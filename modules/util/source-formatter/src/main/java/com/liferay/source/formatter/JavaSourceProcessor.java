@@ -2202,6 +2202,18 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				fileName, "Do not use Registry in modules: " + fileName);
 		}
 
+		// LPS-60186
+
+		if (fileName.endsWith("Configuration.java") &&
+			!fileName.endsWith("OverriddenConfiguration.java") &&
+			absolutePath.contains("/modules/apps/") &&
+			!content.contains("@ConfigurationAdmin")) {
+
+			processErrorMessage(
+				fileName,
+				"Specify category using @ConfigurationAdmin: " + fileName);
+		}
+
 		return content;
 	}
 

@@ -1,0 +1,12 @@
+dependencies {
+	compile group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "2.4.1"
+	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	compile group: "org.eclipse.osgi", name: "org.eclipse.osgi", version: "3.10.200-SNAPSHOT"
+
+	compile project(":core:portal-app-license-api")
+	compile project(":core:registry-api")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/core")
+}

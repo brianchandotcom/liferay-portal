@@ -34,11 +34,11 @@ if (recordSet != null) {
 	</c:when>
 	<c:otherwise>
 		<liferay-util:include page="/view_record_set.jsp" servletContext="<%= application %>">
+			<liferay-util:param name="mvcPath" value="/view_selected_record_set.jsp" />
 			<liferay-util:param name="displayDDMTemplateId" value="<%= String.valueOf(ddlDisplayContext.getDisplayDDMTemplateId()) %>" />
 			<liferay-util:param name="formDDMTemplateId" value="<%= String.valueOf(ddlDisplayContext.getFormDDMTemplateId()) %>" />
 			<liferay-util:param name="editable" value="<%= String.valueOf(ddlDisplayContext.isEditable()) %>" />
 			<liferay-util:param name="spreadsheet" value="<%= String.valueOf(ddlDisplayContext.isSpreadsheet()) %>" />
-			<liferay-util:param name="mvcPath" value="/view_selected_record_set.jsp" />
 		</liferay-util:include>
 	</c:otherwise>
 </c:choose>

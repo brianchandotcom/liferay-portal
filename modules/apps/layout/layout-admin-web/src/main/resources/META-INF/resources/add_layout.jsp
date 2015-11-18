@@ -46,14 +46,15 @@ String[] types = LayoutTypeControllerTracker.getTypes();
 
 <portlet:renderURL var="backURL">
 	<portlet:param name="mvcPath" value="/view.jsp" />
-	<portlet:param name="tabs1" value="<%= layoutsAdminDisplayContext.getTabs1() %>" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 </portlet:renderURL>
 
-<liferay-ui:header
-	backURL="<%= backURL %>"
-	title="add-new-page"
-/>
+<%
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(backURL);
+
+renderResponse.setTitle(LanguageUtil.get(request, "add-new-page"));
+%>
 
 <portlet:actionURL name="addLayout" var="addLayoutURL" windowState="<%= themeDisplay.isStateExclusive() ? LiferayWindowState.EXCLUSIVE.toString() : WindowState.NORMAL.toString() %>">
 	<portlet:param name="mvcPath" value="/add_layout.jsp" />
@@ -61,11 +62,12 @@ String[] types = LayoutTypeControllerTracker.getTypes();
 
 <portlet:renderURL var="editLayoutRenderURL" windowState="<%= themeDisplay.isStateExclusive() ? LiferayWindowState.EXCLUSIVE.toString() : WindowState.NORMAL.toString() %>">
 	<portlet:param name="mvcPath" value="/view.jsp" />
-	<portlet:param name="tabs1" value="<%= layoutsAdminDisplayContext.getTabs1() %>" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+	<portlet:param name="selPlid" value="<%= String.valueOf(parentPlid) %>" />
+	<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 </portlet:renderURL>
 
-<aui:form action="<%= addLayoutURL %>" enctype="multipart/form-data" method="post" name="addPageFm">
+<aui:form action="<%= addLayoutURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="addPageFm">
 	<aui:input id="addLayoutRedirect" name="redirect" type="hidden" value="<%= editLayoutRenderURL %>" />
 	<aui:input id="addLayoutGroupId" name="groupId" type="hidden" value="<%= String.valueOf(groupId) %>" />
 	<aui:input id="addLayoutPrivateLayout" name="privateLayout" type="hidden" value="<%= privateLayout %>" />
@@ -113,7 +115,7 @@ String[] types = LayoutTypeControllerTracker.getTypes();
 
 	<aui:fieldset>
 		<div class="col-md-12">
-			<aui:input id="addLayoutName" name="name" />
+			<aui:input autoFocus="<%= true %>" id="addLayoutName" name="name" />
 
 			<aui:input id="addLayoutHidden" label="hide-from-navigation-menu" name="hidden" />
 

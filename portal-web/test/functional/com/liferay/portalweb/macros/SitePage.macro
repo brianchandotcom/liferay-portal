@@ -14,11 +14,11 @@
 			</then>
 		</if>
 
-		<execute macro="SitePage#addCmd">
-			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="${page}" />
 		</execute>
 
-		<execute macro="SitePage#expandRootCP" />
+		<var name="key_sitePageName" value="${sitePageName}" />
 
 		<if>
 			<isset var="childSitepageName" />
@@ -31,12 +31,15 @@
 		</if>
 
 		<execute function="Pause" locator1="5000" />
-		<execute function="AssertClick" locator1="SitePages#TOOLBAR_ADD_CHILD_PAGE" value1="Add Child Page" />
+
+		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
 
 		<execute function="AssertElementPresent#pauseAssertVisible" locator1="Icon#BACK" />
 
 		<execute function="Type#mouseOverFocusType" locator1="TextInput#NAME" value1="${siteChildPageName}" />
-		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
+
+		<execute function="AssertClick" locator1="Button#ADD_PAGE_BTN" value1="Add Page" />
+
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
@@ -74,17 +77,13 @@
 				<execute function="AssertClick" locator1="MenuItem#SITE_ADMINISTRATION" value1="Site Administration" />
 
 				<execute macro="ProductMenu#gotoSitesPages">
-					<var name="portlet" value="Site Pages" />
+					<var name="page" value="${page}" />
 				</execute>
 			</then>
 		</if>
 
-		<execute macro="SitePage#addCmd">
-			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
-		</execute>
-
 		<execute function="Pause" locator1="5000" />
-		<execute function="AssertClick" locator1="SitePages#TOOLBAR_ADD_PAGE" value1="Add Page" />
+		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
 
 		<execute function="Type#mouseOverFocusType" locator1="TextInput#NAME" value1="${sitePageName}" />
 
@@ -113,11 +112,11 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
+		<execute function="AssertClick" locator1="Button#ADD_PAGE_BTN" value1="Add Page" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
-		<execute macro="SitePage#expandRootCP" />
+		<execute macro="ProductMenuHelper#openProductMenu" />
 
 		<var name="key_sitePageName" value="${sitePageName}" />
 
@@ -141,7 +140,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
+		<execute function="AssertClick" locator1="Button#ADD_PAGE_BTN" value1="Add Page" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
@@ -350,9 +349,14 @@
 	</command>
 
 	<command name="editCP">
-		<execute function="AssertClick" locator1="SitePages#PAGE_TREE_PAGE_LINK_2" value1="${sitePageName}" />
+		<var name="key_sitePageName" value="${sitePageName}" />
+
+		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_LINK_1" />
+
 		<execute function="Type" locator1="TextInput#NAME" value1="${sitePageNameEdit}" />
+
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
@@ -404,7 +408,7 @@
 	<command name="gotoCP">
 		<var name="key_sitePageName" value="${sitePageName}" />
 
-		<execute function="AssertClick" locator1="SitePages#PAGE_TREE_PAGE_SPECIFIC_PAGE" value1="${sitePageName}" />
+		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_LINK_1" />
 	</command>
 
 	<command name="openPageTree">
@@ -587,7 +591,10 @@
 	<command name="viewCP">
 		<var name="key_sitePageName" value="${sitePageName}" />
 
-		<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_SPECIFIC_PAGE" value1="${sitePageName}" />
+		<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_LINK" value1="${sitePageName}" />
+
+		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_LINK_1" />
+
 		<execute function="AssertTextEquals" locator1="TextInput#NAME" value1="${sitePageName}" />
 	</command>
 

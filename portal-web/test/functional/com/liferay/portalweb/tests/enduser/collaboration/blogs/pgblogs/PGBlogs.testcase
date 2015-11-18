@@ -495,9 +495,9 @@
 	<command name="AddPortletToOrganizationSitePublicPage" priority="4">
 		<var name="orgName" value="Organization Name" />
 		<var name="orgType" value="Regular Organization" />
+		<var name="page" value="Public Pages" />
 		<var name="siteName" value="Organization Name" />
 		<var name="sitePageName" value="${pageName}" />
-		<var name="sitePagePrivacy" value="Public" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />

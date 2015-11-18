@@ -52,7 +52,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 			<div class="dropdown pagination-items-per-page">
 				<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;" type="button"><liferay-ui:message arguments="<%= delta %>" key="x-entries" /><span class="icon-sort"></span></a>
 
-				<ul class="dropdown-menu dropdown-menu-top-center">
+				<ul class="dropdown-menu dropdown-menu-top">
 
 					<%
 					for (int curDelta : PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) {

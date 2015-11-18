@@ -105,6 +105,30 @@
 		<execute function="Click" locator1="ProductMenu#USER_PROFILE" />
 	</command>
 
+	<command name="gotoPrivatePages" summary="Navigate to Product Menu > Sites > Pages > Private Pages > ${page}">
+		<execute macro="ProductMenuHelper#gotoSites" />
+
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="Pages" />
+		</execute>
+
+		<execute macro="ProductMenuHelper#gotoAddPage">
+			<var name="page" value="Private Pages" />
+		</execute>
+	</command>
+
+	<command name="gotoPublicPages" summary="Navigate to Product Menu > Sites > Pages > Public Pages > ${page}">
+		<execute macro="ProductMenuHelper#gotoSites" />
+
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="Pages" />
+		</execute>
+
+		<execute macro="ProductMenuHelper#gotoAddPage">
+			<var name="page" value="Public Pages" />
+		</execute>
+	</command>
+
 	<command name="gotoSite" summary="Navigate to Product Menu > Sites > Back Arrow > ${site}">
 		<execute macro="ProductMenuHelper#gotoSites" />
 

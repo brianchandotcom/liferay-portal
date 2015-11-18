@@ -90,13 +90,11 @@ public class ControlMenuEntryRegistry {
 	protected void activate(BundleContext bundleContext)
 		throws InvalidSyntaxException {
 
-		_serviceTrackerMap = ServiceTrackerMapFactory.multiValueMap(
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, ControlMenuEntry.class,
 			"(control.menu.category.key=*)",
 			new ControlMenuEntryServiceReferenceMapper(),
 			new ServiceRankingPropertyServiceReferenceComparator());
-
-		_serviceTrackerMap.open();
 	}
 
 	@Deactivate

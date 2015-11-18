@@ -141,15 +141,13 @@ public class PanelCategoryRegistry {
 		throws InvalidSyntaxException {
 
 		_childPanelCategoriesServiceTrackerMap =
-			ServiceTrackerMapFactory.multiValueMap(
+			ServiceTrackerMapFactory.openMultiValueMap(
 				bundleContext, PanelCategory.class, "(panel.category.key=*)",
 				new PanelCategoryServiceReferenceMapper(),
 				new ServiceRankingPropertyServiceReferenceComparator());
 
-		_childPanelCategoriesServiceTrackerMap.open();
-
 		_panelCategoryServiceTrackerMap =
-			ServiceTrackerMapFactory.singleValueMap(
+			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, PanelCategory.class, null,
 				new ServiceReferenceMapper<String, PanelCategory>() {
 
@@ -170,8 +168,6 @@ public class PanelCategoryRegistry {
 					}
 
 				});
-
-		_panelCategoryServiceTrackerMap.open();
 	}
 
 	@Deactivate

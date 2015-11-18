@@ -135,7 +135,7 @@ public class ReleaseManager {
 				new UpgradeInfoServiceTrackerMapListener();
 		}
 
-		_serviceTrackerMap = ServiceTrackerMapFactory.multiValueMap(
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, UpgradeStep.class,
 			"(&(upgrade.bundle.symbolic.name=*)(|(upgrade.db.type=any)" +
 				"(upgrade.db.type=" + db.getType() + ")))",
@@ -146,8 +146,6 @@ public class ReleaseManager {
 				new PropertyServiceReferenceComparator<UpgradeStep>(
 					"upgrade.from.schema.version")),
 			serviceTrackerMapListener);
-
-		_serviceTrackerMap.open();
 	}
 
 	@Deactivate

@@ -127,34 +127,26 @@ public class DDMFormFieldTypeServicesTrackerImpl
 		throws InvalidSyntaxException {
 
 		_ddmFormFieldRendererServiceTrackerMap =
-			ServiceTrackerMapFactory.singleValueMap(
+			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, DDMFormFieldRenderer.class,
 			"ddm.form.field.type.name");
 
-		_ddmFormFieldRendererServiceTrackerMap.open();
-
 		_ddmFormFieldTypeServiceTrackerMap =
-			ServiceTrackerMapFactory.singleValueMap(
+			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, DDMFormFieldType.class,
 				"ddm.form.field.type.name",
 			ServiceTrackerCustomizerFactory.<DDMFormFieldType>serviceWrapper(
 				bundleContext));
 
-		_ddmFormFieldTypeServiceTrackerMap.open();
-
 		_ddmFormFieldValueAccessorServiceTrackerMap =
-			ServiceTrackerMapFactory.singleValueMap(
+			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, DDMFormFieldValueAccessor.class,
 				"ddm.form.field.type.name");
 
-		_ddmFormFieldValueAccessorServiceTrackerMap.open();
-
 		_ddmFormFieldValueRendererServiceTrackerMap =
-			ServiceTrackerMapFactory.singleValueMap(
+			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, DDMFormFieldValueRenderer.class,
 				"ddm.form.field.type.name");
-
-		_ddmFormFieldValueRendererServiceTrackerMap.open();
 	}
 
 	@Deactivate

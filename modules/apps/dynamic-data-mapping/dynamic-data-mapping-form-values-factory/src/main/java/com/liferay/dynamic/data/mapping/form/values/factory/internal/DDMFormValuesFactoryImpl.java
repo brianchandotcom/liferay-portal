@@ -86,11 +86,9 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 	protected void activate(BundleContext bundleContext)
 		throws InvalidSyntaxException {
 
-		_serviceTrackerMap = ServiceTrackerMapFactory.singleValueMap(
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, DDMFormFieldValueRequestParameterRetriever.class,
 			"ddm.form.field.type.name");
-
-		_serviceTrackerMap.open();
 	}
 
 	protected void checkDDMFormFieldParameterNames(

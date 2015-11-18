@@ -21,7 +21,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 long newFolderId = ParamUtil.getLong(request, "newFolderId");
 
-String fileShortcutIds = ParamUtil.getString(request, "fileShortcutIds");
+long[] fileShortcutIds = ParamUtil.getLongValues(request, "rowIdsDLFileShortcut");
 
 List<Folder> folders = (List<Folder>)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDERS);
 
@@ -196,7 +196,7 @@ if (portletTitleBasedNavigation) {
 			</div>
 		</c:if>
 
-		<aui:input name="folderIds" type="hidden" value="<%= ListUtil.toString(validMoveFolders, Folder.FOLDER_ID_ACCESSOR) %>" />
+		<aui:input name="rowIdsFolder" type="hidden" value="<%= ListUtil.toString(validMoveFolders, Folder.FOLDER_ID_ACCESSOR) %>" />
 
 		<c:if test="<%= !validMoveFileEntries.isEmpty() %>">
 			<div class="move-list-info">
@@ -273,7 +273,7 @@ if (portletTitleBasedNavigation) {
 			</div>
 		</c:if>
 
-		<aui:input name="fileEntryIds" type="hidden" value="<%= ListUtil.toString(validMoveFileEntries, FileEntry.FILE_ENTRY_ID_ACCESSOR) %>" />
+		<aui:input name="rowIdsFileEntry" type="hidden" value="<%= ListUtil.toString(validMoveFileEntries, FileEntry.FILE_ENTRY_ID_ACCESSOR) %>" />
 
 		<c:if test="<%= !validShortcutEntries.isEmpty() %>">
 			<div class="move-list-info">
@@ -331,7 +331,7 @@ if (portletTitleBasedNavigation) {
 			</div>
 		</c:if>
 
-		<aui:input name="fileShortcutIds" type="hidden" value="<%= fileShortcutIds %>" />
+		<aui:input name="fileShortcutIds" type="hidden" value="<%= StringUtil.merge(fileShortcutIds) %>" />
 
 		<aui:fieldset>
 

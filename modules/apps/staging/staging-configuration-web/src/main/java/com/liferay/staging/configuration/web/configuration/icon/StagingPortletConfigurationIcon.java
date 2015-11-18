@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.configuration.icon.exportimport;
+package com.liferay.staging.configuration.web.configuration.icon;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
@@ -25,10 +25,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class ExportImportPortletConfigurationIcon
+public class StagingPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public ExportImportPortletConfigurationIcon(HttpServletRequest request) {
+	public StagingPortletConfigurationIcon(HttpServletRequest request) {
 		super(request);
 	}
 
@@ -39,7 +39,7 @@ public class ExportImportPortletConfigurationIcon
 
 	@Override
 	public String getMessage() {
-		return "export-import";
+		return "staging";
 	}
 
 	@Override
@@ -60,9 +60,9 @@ public class ExportImportPortletConfigurationIcon
 		sb.append("_', portletId: '");
 		sb.append(portletDisplay.getId());
 		sb.append("', title: '");
-		sb.append(LanguageUtil.get(themeDisplay.getLocale(), "export-import"));
+		sb.append(LanguageUtil.get(themeDisplay.getLocale(), "staging"));
 		sb.append("', uri: '");
-		sb.append(HtmlUtil.escapeJS(portletDisplay.getURLExportImport()));
+		sb.append(HtmlUtil.escapeJS(portletDisplay.getURLStaging()));
 		sb.append("'}); return false;");
 
 		return sb.toString();
@@ -72,14 +72,14 @@ public class ExportImportPortletConfigurationIcon
 	public String getURL() {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		return portletDisplay.getURLExportImport();
+		return portletDisplay.getURLStaging();
 	}
 
 	@Override
 	public boolean isShow() {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		return portletDisplay.isShowExportImportIcon();
+		return portletDisplay.isShowStagingIcon();
 	}
 
 	@Override

@@ -12,12 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.configuration.icon.staging;
+package com.liferay.portlet.configuration.web.configuration.icon;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
-import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.theme.PortletDisplay;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,21 +22,21 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class StagingPortletConfigurationIcon
+public class ConfigurationPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
-	public StagingPortletConfigurationIcon(HttpServletRequest request) {
+	public ConfigurationPortletConfigurationIcon(HttpServletRequest request) {
 		super(request);
 	}
 
 	@Override
 	public String getCssClass() {
-		return "portlet-export-import portlet-export-import-icon";
+		return "portlet-configuration portlet-configuration-icon";
 	}
 
 	@Override
 	public String getMessage() {
-		return "staging";
+		return "configuration";
 	}
 
 	@Override
@@ -51,35 +48,21 @@ public class StagingPortletConfigurationIcon
 	public String getOnClick() {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		StringBundler sb = new StringBundler(11);
-
-		sb.append("Liferay.Portlet.openWindow({namespace: '");
-		sb.append(portletDisplay.getNamespace());
-		sb.append("', portlet: '#p_p_id_");
-		sb.append(portletDisplay.getId());
-		sb.append("_', portletId: '");
-		sb.append(portletDisplay.getId());
-		sb.append("', title: '");
-		sb.append(LanguageUtil.get(themeDisplay.getLocale(), "staging"));
-		sb.append("', uri: '");
-		sb.append(HtmlUtil.escapeJS(portletDisplay.getURLStaging()));
-		sb.append("'}); return false;");
-
-		return sb.toString();
+		return portletDisplay.getURLConfigurationJS();
 	}
 
 	@Override
 	public String getURL() {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		return portletDisplay.getURLStaging();
+		return portletDisplay.getURLConfiguration();
 	}
 
 	@Override
 	public boolean isShow() {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		return portletDisplay.isShowStagingIcon();
+		return portletDisplay.isShowConfigurationIcon();
 	}
 
 	@Override

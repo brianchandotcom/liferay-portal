@@ -7658,8 +7658,7 @@ public class JournalArticleLocalServiceImpl
 			PropsKeys.JOURNAL_IMAGE_SMALL_MAX_SIZE);
 
 		if ((smallImageMaxSize > 0) &&
-			((smallImageBytes == null) ||
-			 (smallImageBytes.length > smallImageMaxSize))) {
+			(smallImageBytes.length > smallImageMaxSize)) {
 
 			throw new ArticleSmallImageSizeException();
 		}

@@ -31,7 +31,6 @@ import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.LayoutType;
-import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.VirtualLayout;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -444,17 +443,11 @@ public class LayoutsTreeUtil {
 				layout);
 
 			if (layoutRevision != null) {
-				User user = themeDisplay.getUser();
+				long layoutSetBranchId = layoutRevision.getLayoutSetBranchId();
 
-				long recentLayoutSetBranchId =
-					StagingUtil.getRecentLayoutSetBranchId(
-						user, layout.getLayoutSet().getLayoutSetId());
-
-				if (StagingUtil.isIncomplete(layout, recentLayoutSetBranchId)) {
+				if (StagingUtil.isIncomplete(layout, layoutSetBranchId)) {
 					jsonObject.put("incomplete", true);
 				}
-
-				long layoutSetBranchId = layoutRevision.getLayoutSetBranchId();
 
 				LayoutSetBranch layoutSetBranch =
 					LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(

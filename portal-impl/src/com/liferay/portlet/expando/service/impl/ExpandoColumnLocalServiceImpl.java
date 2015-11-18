@@ -399,7 +399,7 @@ public class ExpandoColumnLocalServiceImpl
 		throws PortalException {
 
 		if (Validator.isNull(name)) {
-			throw new ColumnNameException();
+			throw new ColumnNameException("Name is null");
 		}
 
 		ExpandoColumn column = expandoColumnPersistence.fetchByT_N(
@@ -440,7 +440,7 @@ public class ExpandoColumnLocalServiceImpl
 			(type != ExpandoColumnConstants.STRING_ARRAY_LOCALIZED) &&
 			(type != ExpandoColumnConstants.STRING_LOCALIZED)) {
 
-			throw new ColumnTypeException();
+			throw new ColumnTypeException("Invalid type " + type);
 		}
 
 		ExpandoValue value = new ExpandoValueImpl();

@@ -300,7 +300,7 @@ public class ExpandoTableLocalServiceImpl
 		throws PortalException {
 
 		if (Validator.isNull(name)) {
-			throw new TableNameException();
+			throw new TableNameException("Name is null");
 		}
 
 		ExpandoTable table = expandoTablePersistence.fetchByC_C_N(

@@ -16,6 +16,8 @@
 	</tear-down>
 
 	<command name="NavigateToCorrectForm" priority="4">
+		<description message="This is a use case for LPS-59331" />
+
 		<var name="formNameText" value="Text" />
 		<var name="formNameCheckbox" value="Checkbox" />
 

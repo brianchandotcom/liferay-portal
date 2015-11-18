@@ -15,15 +15,12 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
-
 import java.net.URL;
 import java.net.URLDecoder;
 
 import org.apache.tools.ant.Project;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -78,7 +75,7 @@ public class GitHubJobMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 		urlString = replaceToken(urlString, "hostName", hostName);
 		urlString = replaceToken(urlString, "jobName", jobName);
 
-		URL url = createURL(urlString);
+		URL url = JenkinsResultsParserUtil.createURL(urlString);
 
 		downloadSample(sampleKey + "-" + jobName, url);
 	}
@@ -100,7 +97,7 @@ public class GitHubJobMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 				continue;
 			}
 
-			URL runURL = createURL(
+			URL runURL = JenkinsResultsParserUtil.createURL(
 				URLDecoder.decode(runJSONObject.getString("url"), "UTF-8"));
 
 			File runDir = new File(sampleDir, "run-" + i + "/" + number + "/");

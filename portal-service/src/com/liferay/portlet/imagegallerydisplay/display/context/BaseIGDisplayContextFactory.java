@@ -24,8 +24,8 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Iván Zaera
  */
-public class BaseIGDisplayContextFactory extends BaseDisplayContextFactory
-	implements IGDisplayContextFactory {
+public class BaseIGDisplayContextFactory
+	extends BaseDisplayContextFactory implements IGDisplayContextFactory {
 
 	@Override
 	public IGViewFileVersionDisplayContext

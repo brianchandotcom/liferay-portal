@@ -146,16 +146,20 @@ public class UserInfoFactory {
 						portletContextBagCustomUserAttributes.get(
 							customUserAttributesClassName);
 
-					customUserAttributes =
-						(CustomUserAttributes)customUserAttributes.clone();
+					if (customUserAttributes != null) {
+						customUserAttributes =
+							(CustomUserAttributes)customUserAttributes.clone();
+					}
 				}
 				else {
 					customUserAttributes = newInstance(
 						customUserAttributesClassName);
 				}
 
-				customUserAttributesMap.put(
-					customUserAttributesClassName, customUserAttributes);
+				if (customUserAttributes != null) {
+					customUserAttributesMap.put(
+						customUserAttributesClassName, customUserAttributes);
+				}
 			}
 
 			if (customUserAttributes != null) {

@@ -48,9 +48,6 @@ public class SocialRelationLocalServiceUtil {
 	* @param userId2 the user at the other end of the relation
 	* @param type the type of the relation
 	* @return the social relation
-	* @throws PortalException if the users could not be found, if the users
-	were not from the same company, or if either of the users was the
-	default user
 	*/
 	public static com.liferay.portlet.social.model.SocialRelation addRelation(
 		long userId1, long userId2, int type)
@@ -94,8 +91,6 @@ public class SocialRelationLocalServiceUtil {
 	* relation) from the database.
 	*
 	* @param relation the relation to be removed
-	* @throws PortalException if the relation is bidirectional and its inverse
-	relation could not be found
 	*/
 	public static void deleteRelation(
 		com.liferay.portlet.social.model.SocialRelation relation)
@@ -108,7 +103,6 @@ public class SocialRelationLocalServiceUtil {
 	* relation) from the database.
 	*
 	* @param relationId the primary key of the relation
-	* @throws PortalException if the relation could not be found
 	*/
 	public static void deleteRelation(long relationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -122,8 +116,6 @@ public class SocialRelationLocalServiceUtil {
 	* @param userId1 the user that is the subject of the relation
 	* @param userId2 the user at the other end of the relation
 	* @param type the relation's type
-	* @throws PortalException if the relation or its inverse relation (if
-	applicable) could not be found
 	*/
 	public static void deleteRelation(long userId1, long userId2, int type)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -144,7 +136,6 @@ public class SocialRelationLocalServiceUtil {
 	*
 	* @param userId1 the user that is the subject of the relation
 	* @param userId2 the user at the other end of the relation
-	* @throws PortalException if the inverse relation could not be found
 	*/
 	public static void deleteRelations(long userId1, long userId2)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -332,7 +323,6 @@ public class SocialRelationLocalServiceUtil {
 	*
 	* @param relationId the primary key of the relation
 	* @return Returns the relation
-	* @throws PortalException if the relation could not be found
 	*/
 	public static com.liferay.portlet.social.model.SocialRelation getRelation(
 		long relationId)
@@ -347,7 +337,6 @@ public class SocialRelationLocalServiceUtil {
 	* @param userId2 the user at the other end of the relation
 	* @param type the relation's type
 	* @return Returns the relation
-	* @throws PortalException if the relation could not be found
 	*/
 	public static com.liferay.portlet.social.model.SocialRelation getRelation(
 		long userId1, long userId2, int type)

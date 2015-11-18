@@ -2,6 +2,7 @@ dependencies {
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-taglib")
 	compile project(":apps:portlet-display-template:portlet-display-template")
 	compile project(":portal:portal-upgrade")
+	compile project(":apps:configuration-admin:configuration-admin-api")
 }
 
 liferay {

@@ -155,8 +155,8 @@ public interface BookmarksFolderService extends BaseService {
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #updateFolder(long, long,
-	String, String, ServiceContext)} and {@link #mergeFolders(
-	long, long)}
+	String, String, ServiceContext)} and {@link
+	#mergeFolders(long, long)}
 	*/
 	@java.lang.Deprecated
 	public com.liferay.bookmarks.model.BookmarksFolder updateFolder(

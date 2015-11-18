@@ -84,7 +84,7 @@ public class EmbeddedElasticsearchConnection
 	}
 
 	@Override
-	@Reference
+	@Reference(unbind = "-")
 	public void setIndexFactory(IndexFactory indexFactory) {
 		super.setIndexFactory(indexFactory);
 	}

@@ -16,7 +16,7 @@
 </tr>
 <tr>
 	<td>ADD_SITE_PAGES_VARIATIONS_BUTTON</td>
-	<td>//button[contains(@id,'_addBranchButton')]</td>
+	<td>//a[contains(@id,'_addBranchButton')]</td>
 	<td></td>
 </tr>
 <tr>

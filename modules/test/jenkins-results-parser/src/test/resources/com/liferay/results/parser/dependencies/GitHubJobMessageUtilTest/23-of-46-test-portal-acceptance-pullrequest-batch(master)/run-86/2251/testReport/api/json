@@ -1,0 +1,33 @@
+{
+  "duration" : 0.0,
+  "empty" : false,
+  "failCount" : 1,
+  "passCount" : 0,
+  "skipCount" : 0,
+  "suites" : [
+    {
+      "cases" : [
+        {
+          "age" : 1,
+          "className" : "com.liferay.jenkins.Jenkins",
+          "duration" : 0.0,
+          "errorDetails" : "The following error occurred while executing this line: /opt/dev/projects/github/liferay-portal/build-test-batch.xml:1036: The following error occurred while executing this line: /opt/dev/projects/github/liferay-portal/build-test-batch.xml:825: The following error occurred while executing this line: /opt/dev/projects/github/liferay-portal/build-test-batch.xml:774: /opt/dev/projects/github/liferay-portal/build-test-batch.xml:827: The following error occurred while executing this line: /opt/dev/projects/github/liferay-portal/build-test-batch.xml:364: The following error occurred while executing this line: /opt/dev/projects/github/liferay-portal/build-test-batch.xml:829: The following error occurred while executing this line: /opt/dev/projects/github/liferay-portal/build-test-tomcat.xml:58: The following error occurred while executing this line: /opt/dev/projects/github/liferay-portal/build-test-tomcat.xml:68: The following error occurred while executing this line: /opt/dev/projects/github/liferay-portal/build-test.xml:6941: The following error occurred while executing this line: /opt/dev/projects/github/liferay-portal/build-test.xml:2301: The following error occurred while executing this line: /opt/dev/projects/github/liferay-portal/build-test.xml:2380: The following error occurred while executing this line: /opt/dev/projects/github/liferay-portal/build-test.xml:2672: App server waiting timeout on http://localhost:8080/web/guest",
+          "errorStackTrace" : "The following error occurred while executing this line:\n/opt/dev/projects/github/liferay-portal/build-test-batch.xml:1036: The following error occurred while executing this line:\n/opt/dev/projects/github/liferay-portal/build-test-batch.xml:825: The following error occurred while executing this line:\n/opt/dev/projects/github/liferay-portal/build-test-batch.xml:774: /opt/dev/projects/github/liferay-portal/build-test-batch.xml:827: The following error occurred while executing this line:\n/opt/dev/projects/github/liferay-portal/build-test-batch.xml:364: The following error occurred while executing this line:\n/opt/dev/projects/github/liferay-portal/build-test-batch.xml:829: The following error occurred while executing this line:\n/opt/dev/projects/github/liferay-portal/build-test-tomcat.xml:58: The following error occurred while executing this line:\n/opt/dev/projects/github/liferay-portal/build-test-tomcat.xml:68: The following error occurred while executing this line:\n/opt/dev/projects/github/liferay-portal/build-test.xml:6941: The following error occurred while executing this line:\n/opt/dev/projects/github/liferay-portal/build-test.xml:2301: The following error occurred while executing this line:\n/opt/dev/projects/github/liferay-portal/build-test.xml:2380: The following error occurred while executing this line:\n/opt/dev/projects/github/liferay-portal/build-test.xml:2672: App server waiting timeout on http://localhost:8080/web/guest",
+          "failedSince" : 2251,
+          "name" : "test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=CPRoles#DeleteRegularRole,label_exp=!master_functional-tomcat-mysql/0",
+          "skipped" : false,
+          "skippedMessage" : null,
+          "status" : "FAILED",
+          "stderr" : "",
+          "stdout" : ""
+        }
+      ],
+      "duration" : 0.0,
+      "id" : null,
+      "name" : "com.liferay.jenkins.Jenkins",
+      "stderr" : "",
+      "stdout" : "",
+      "timestamp" : null
+    }
+  ]
+}

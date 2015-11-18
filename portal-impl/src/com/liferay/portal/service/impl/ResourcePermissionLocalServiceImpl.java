@@ -106,17 +106,14 @@ public class ResourcePermissionLocalServiceImpl
 	 * com.liferay.portal.model.impl.ResourcePermissionImpl}.
 	 * </p>
 	 *
-	 * @param  companyId the primary key of the company
-	 * @param  name the resource's name, which can be either a class name or a
-	 *         portlet ID
-	 * @param  scope the scope. This method only supports company, group, and
-	 *         group-template scope.
-	 * @param  primKey the primary key
-	 * @param  roleId the primary key of the role
-	 * @param  actionId the action ID
-	 * @throws PortalException if scope was set to individual scope or if a role
-	 *         with the primary key or a resource action with the name and
-	 *         action ID could not be found
+	 * @param companyId the primary key of the company
+	 * @param name the resource's name, which can be either a class name or a
+	 *        portlet ID
+	 * @param scope the scope. This method only supports company, group, and
+	 *        group-template scope.
+	 * @param primKey the primary key
+	 * @param roleId the primary key of the role
+	 * @param actionId the action ID
 	 */
 	@Override
 	@Retry(
@@ -289,12 +286,11 @@ public class ResourcePermissionLocalServiceImpl
 	 * com.liferay.portal.model.impl.ResourcePermissionImpl}.
 	 * </p>
 	 *
-	 * @param  companyId the primary key of the company
-	 * @param  name the resource's name, which can be either a class name or a
-	 *         portlet ID
-	 * @param  scope the scope
-	 * @param  primKey the primary key
-	 * @throws PortalException if a portal exception occurred
+	 * @param companyId the primary key of the company
+	 * @param name the resource's name, which can be either a class name or a
+	 *        portlet ID
+	 * @param scope the scope
+	 * @param primKey the primary key
 	 */
 	@Override
 	public void deleteResourcePermissions(
@@ -320,12 +316,11 @@ public class ResourcePermissionLocalServiceImpl
 	 * com.liferay.portal.model.impl.ResourcePermissionImpl}.
 	 * </p>
 	 *
-	 * @param  companyId the primary key of the company
-	 * @param  name the resource's name, which can be either a class name or a
-	 *         portlet ID
-	 * @param  scope the scope
-	 * @param  primKey the primary key
-	 * @throws PortalException if a portal exception occurred
+	 * @param companyId the primary key of the company
+	 * @param name the resource's name, which can be either a class name or a
+	 *        portlet ID
+	 * @param scope the scope
+	 * @param primKey the primary key
 	 */
 	@Override
 	public void deleteResourcePermissions(
@@ -400,8 +395,6 @@ public class ResourcePermissionLocalServiceImpl
 	 * @param  actionIds the action IDs
 	 * @return the intersection of action IDs the role has permission at the
 	 *         scope to perform on resources of the type
-	 * @throws PortalException if a resouce action could not be found for any
-	 *         one of the actions on the resource
 	 */
 	@Override
 	public List<String> getAvailableResourcePermissionActionIds(
@@ -458,7 +451,6 @@ public class ResourcePermissionLocalServiceImpl
 	 * @param  roleId the primary key of the role
 	 * @return the resource permission for the role at the scope to perform the
 	 *         actions on resources of the type
-	 * @throws PortalException if no matching resources could be found
 	 */
 	@Override
 	public ResourcePermission getResourcePermission(
@@ -658,9 +650,6 @@ public class ResourcePermissionLocalServiceImpl
 	 * @return <code>true</code> if any one of the roles has permission to
 	 *         perform the action on any one of the resources;
 	 *         <code>false</code> otherwise
-	 * @throws PortalException if any one of the roles with the primary keys
-	 *         could not be found or if a resource action with the name and
-	 *         action ID could not be found
 	 */
 	@Override
 	public boolean hasResourcePermission(
@@ -744,8 +733,6 @@ public class ResourcePermissionLocalServiceImpl
 	 * @param  actionId the action ID
 	 * @return <code>true</code> if the role has permission to perform the
 	 *         action on the resource; <code>false</code> otherwise
-	 * @throws PortalException if a role with the primary key or a resource
-	 *         action with the name and action ID could not be found
 	 */
 	@Override
 	public boolean hasResourcePermission(
@@ -790,9 +777,6 @@ public class ResourcePermissionLocalServiceImpl
 	 * @param  actionId the action ID
 	 * @return <code>true</code> if any one of the roles has permission to
 	 *         perform the action on the resource; <code>false</code> otherwise
-	 * @throws PortalException if any one of the roles with the primary keys
-	 *         could not be found or if a resource action with the name and
-	 *         action ID could not be found
 	 */
 	@Override
 	public boolean hasResourcePermission(
@@ -901,8 +885,6 @@ public class ResourcePermissionLocalServiceImpl
 	 * @param  actionId the action ID
 	 * @return <code>true</code> if the role has permission to perform the
 	 *         action on the resource; <code>false</code> otherwise
-	 * @throws PortalException if a role with the primary key or a resource
-	 *         action with the name and action ID could not be found
 	 */
 	@Override
 	public boolean hasScopeResourcePermission(
@@ -929,9 +911,8 @@ public class ResourcePermissionLocalServiceImpl
 	 * Reassigns all the resource permissions from the source role to the
 	 * destination role, and deletes the source role.
 	 *
-	 * @param  fromRoleId the primary key of the source role
-	 * @param  toRoleId the primary key of the destination role
-	 * @throws PortalException if a role with the primary key could not be found
+	 * @param fromRoleId the primary key of the source role
+	 * @param toRoleId the primary key of the destination role
 	 */
 	@Override
 	public void mergePermissions(long fromRoleId, long toRoleId)
@@ -971,10 +952,8 @@ public class ResourcePermissionLocalServiceImpl
 	 * permission, and deletes the resource permission's role if it has no
 	 * permissions remaining.
 	 *
-	 * @param  resourcePermissionId the primary key of the resource permission
-	 * @param  toRoleId the primary key of the role
-	 * @throws PortalException if a resource permission or role with the primary
-	 *         key could not be found
+	 * @param resourcePermissionId the primary key of the resource permission
+	 * @param toRoleId the primary key of the role
 	 */
 	@Override
 	public void reassignPermissions(long resourcePermissionId, long toRoleId)
@@ -1028,15 +1007,13 @@ public class ResourcePermissionLocalServiceImpl
 	 * com.liferay.portal.model.impl.ResourcePermissionImpl}.
 	 * </p>
 	 *
-	 * @param  companyId the primary key of the company
-	 * @param  name the resource's name, which can be either a class name or a
-	 *         portlet ID
-	 * @param  scope the scope
-	 * @param  primKey the primary key
-	 * @param  roleId the primary key of the role
-	 * @param  actionId the action ID
-	 * @throws PortalException if a role with the primary key or a resource
-	 *         action with the name and action ID could not be found
+	 * @param companyId the primary key of the company
+	 * @param name the resource's name, which can be either a class name or a
+	 *        portlet ID
+	 * @param scope the scope
+	 * @param primKey the primary key
+	 * @param roleId the primary key of the role
+	 * @param actionId the action ID
 	 */
 	@Override
 	public void removeResourcePermission(
@@ -1055,14 +1032,12 @@ public class ResourcePermissionLocalServiceImpl
 	 * revoke all individual scope permissions to edit blog posts from site
 	 * members.
 	 *
-	 * @param  companyId the primary key of the company
-	 * @param  name the resource's name, which can be either a class name or a
-	 *         portlet ID
-	 * @param  scope the scope
-	 * @param  roleId the primary key of the role
-	 * @param  actionId the action ID
-	 * @throws PortalException if a role with the primary key or a resource
-	 *         action with the name and action ID could not be found
+	 * @param companyId the primary key of the company
+	 * @param name the resource's name, which can be either a class name or a
+	 *        portlet ID
+	 * @param scope the scope
+	 * @param roleId the primary key of the role
+	 * @param actionId the action ID
 	 */
 	@Override
 	public void removeResourcePermissions(
@@ -1098,17 +1073,15 @@ public class ResourcePermissionLocalServiceImpl
 	 * com.liferay.portal.model.impl.ResourcePermissionImpl}.
 	 * </p>
 	 *
-	 * @param  companyId the primary key of the company
-	 * @param  name the resource's name, which can be either a class name or a
-	 *         portlet ID
-	 * @param  scope the scope
-	 * @param  primKey the primary key
-	 * @param  roleId the primary key of the role
-	 * @param  ownerId the primary key of the owner (generally the user that
-	 *         created the resource)
-	 * @param  actionIds the action IDs of the actions
-	 * @throws PortalException if a role with the primary key or a resource
-	 *         action with the name and action ID could not be found
+	 * @param companyId the primary key of the company
+	 * @param name the resource's name, which can be either a class name or a
+	 *        portlet ID
+	 * @param scope the scope
+	 * @param primKey the primary key
+	 * @param roleId the primary key of the role
+	 * @param ownerId the primary key of the owner (generally the user that
+	 *        created the resource)
+	 * @param actionIds the action IDs of the actions
 	 */
 	@Override
 	@Retry(
@@ -1147,15 +1120,13 @@ public class ResourcePermissionLocalServiceImpl
 	 * com.liferay.portal.model.impl.ResourcePermissionImpl}.
 	 * </p>
 	 *
-	 * @param  companyId the primary key of the company
-	 * @param  name the resource's name, which can be either a class name or a
-	 *         portlet ID
-	 * @param  scope the scope
-	 * @param  primKey the primary key
-	 * @param  roleId the primary key of the role
-	 * @param  actionIds the action IDs of the actions
-	 * @throws PortalException if a role with the primary key or a resource
-	 *         action with the name and action ID could not be found
+	 * @param companyId the primary key of the company
+	 * @param name the resource's name, which can be either a class name or a
+	 *        portlet ID
+	 * @param scope the scope
+	 * @param primKey the primary key
+	 * @param roleId the primary key of the role
+	 * @param actionIds the action IDs of the actions
 	 */
 	@Override
 	@Retry(
@@ -1194,14 +1165,12 @@ public class ResourcePermissionLocalServiceImpl
 	 * com.liferay.portal.model.impl.ResourcePermissionImpl}.
 	 * </p>
 	 *
-	 * @param  companyId the primary key of the company
-	 * @param  name the resource's name, which can be either a class name or a
-	 *         portlet ID
-	 * @param  scope the scope
-	 * @param  primKey the primary key
-	 * @param  roleIdsToActionIds a map of role IDs to action IDs of the actions
-	 * @throws PortalException if a role with the primary key or a resource
-	 *         action with the name and action ID could not be found
+	 * @param companyId the primary key of the company
+	 * @param name the resource's name, which can be either a class name or a
+	 *        portlet ID
+	 * @param scope the scope
+	 * @param primKey the primary key
+	 * @param roleIdsToActionIds a map of role IDs to action IDs of the actions
 	 */
 	@Override
 	@Retry(
@@ -1344,19 +1313,17 @@ public class ResourcePermissionLocalServiceImpl
 	 * com.liferay.portal.model.impl.ResourcePermissionImpl}.
 	 * </p>
 	 *
-	 * @param  companyId the primary key of the company
-	 * @param  name the resource's name, which can be either a class name or a
-	 *         portlet ID
-	 * @param  scope the scope
-	 * @param  primKey the primary key
-	 * @param  roleId the primary key of the role
-	 * @param  ownerId the primary key of the owner
-	 * @param  actionIds the action IDs of the actions
-	 * @param  operator whether to add to, remove from, or set/replace the
-	 *         existing actions. Possible values can be found in {@link
-	 *         ResourcePermissionConstants}.
-	 * @throws PortalException if a role with the primary key or a resource
-	 *         action with the name and action ID could not be found
+	 * @param companyId the primary key of the company
+	 * @param name the resource's name, which can be either a class name or a
+	 *        portlet ID
+	 * @param scope the scope
+	 * @param primKey the primary key
+	 * @param roleId the primary key of the role
+	 * @param ownerId the primary key of the owner
+	 * @param actionIds the action IDs of the actions
+	 * @param operator whether to add to, remove from, or set/replace the
+	 *        existing actions. Possible values can be found in {@link
+	 *        ResourcePermissionConstants}.
 	 */
 	protected void updateResourcePermission(
 			long companyId, String name, int scope, String primKey, long roleId,
@@ -1381,14 +1348,12 @@ public class ResourcePermissionLocalServiceImpl
 	 * com.liferay.portal.model.impl.ResourcePermissionImpl}.
 	 * </p>
 	 *
-	 * @param  companyId the primary key of the company
-	 * @param  name the resource's name, which can be either a class name or a
-	 *         portlet ID
-	 * @param  scope the scope
-	 * @param  primKey the primary key
-	 * @param  ownerId the primary key of the owner
-	 * @throws PortalException if a role with the primary key or a resource
-	 *         action with the name and action ID could not be found
+	 * @param companyId the primary key of the company
+	 * @param name the resource's name, which can be either a class name or a
+	 *        portlet ID
+	 * @param scope the scope
+	 * @param primKey the primary key
+	 * @param ownerId the primary key of the owner
 	 */
 	protected void updateResourcePermission(
 			long companyId, String name, int scope, String primKey,

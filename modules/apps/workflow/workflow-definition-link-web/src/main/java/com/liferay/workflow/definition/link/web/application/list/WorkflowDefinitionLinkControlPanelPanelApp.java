@@ -42,6 +42,7 @@ public class WorkflowDefinitionLinkControlPanelPanelApp extends BasePanelApp {
 			WORKFLOW_DEFINITION_LINK_CONTROL_PANEL;
 	}
 
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + WorkflowDefinitionLinkPortletKeys.WORKFLOW_DEFINITION_LINK_CONTROL_PANEL + ")",
 		unbind = "-"

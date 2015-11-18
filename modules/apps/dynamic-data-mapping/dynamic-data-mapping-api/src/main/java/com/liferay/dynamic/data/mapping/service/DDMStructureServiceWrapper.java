@@ -72,9 +72,6 @@ public class DDMStructureServiceWrapper implements DDMStructureService,
 	UUID, creation date, modification date, guest permissions,
 	and group permissions for the structure.
 	* @return the structure
-	* @throws PortalException if the user did not have permission to add
-	the structure, if the XSD is not well formed, or if a portal
-	exception occurred
 	* @deprecated As of 7.0.0, replaced by {@link #addStructure(long, long,
 	long, String, Map, Map, DDMForm, DDMFormLayout, String, int,
 	ServiceContext)}
@@ -126,10 +123,6 @@ public class DDMStructureServiceWrapper implements DDMStructureService,
 	UUID, creation date, modification date, guest permissions,
 	and group permissions for the structure.
 	* @return the structure
-	* @throws PortalException if a user with the primary key could not be
-	found, if the user did not have permission to add the
-	structure, if the XSD was not well-formed, or if a portal
-	exception occurred
 	* @deprecated As of 7.0.0, replaced by {@link #addStructure(long, long,
 	long, Map, Map, DDMForm, DDMFormLayout, ServiceContext)}
 	*/
@@ -190,10 +183,6 @@ public class DDMStructureServiceWrapper implements DDMStructureService,
 	Can set the UUID, creation date, modification date, guest
 	permissions, and group permissions for the structure.
 	* @return the structure
-	* @throws PortalException if a user with the primary key could not be
-	found, if the user did not have permission to add the
-	structure, if the XSD was not well-formed, or if a portal
-	exception occurred
 	* @deprecated As of 7.0.0, replaced by {@link #addStructure(long, long,
 	String, long, String, Map, Map, DDMForm, DDMFormLayout,
 	String, int, ServiceContext)}
@@ -226,8 +215,6 @@ public class DDMStructureServiceWrapper implements DDMStructureService,
 	UUID, creation date, modification date, guest permissions, and
 	group permissions for the structure.
 	* @return the new structure
-	* @throws PortalException if the user did not have permission to add the
-	structure or if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMStructure copyStructure(
@@ -257,8 +244,6 @@ public class DDMStructureServiceWrapper implements DDMStructureService,
 	* </p>
 	*
 	* @param structureId the primary key of the structure to be deleted
-	* @throws PortalException if the user did not have permission to delete the
-	structure or if a portal exception occurred
 	*/
 	@Override
 	public void deleteStructure(long structureId)
@@ -276,8 +261,6 @@ public class DDMStructureServiceWrapper implements DDMStructureService,
 	* @param structureKey the unique string identifying the structure
 	* @return the matching structure, or <code>null</code> if a matching
 	structure could not be found
-	* @throws PortalException if the user did not have permission to view the
-	structure or if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMStructure fetchStructure(
@@ -315,8 +298,6 @@ public class DDMStructureServiceWrapper implements DDMStructureService,
 	related model
 	* @param structureKey the unique string identifying the structure
 	* @return the matching structure
-	* @throws PortalException if the user did not have permission to view the
-	structure or if a matching structure could not be found
 	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMStructure getStructure(
@@ -346,8 +327,6 @@ public class DDMStructureServiceWrapper implements DDMStructureService,
 	have sharing enabled) and include global scoped sites in the
 	search
 	* @return the matching structure
-	* @throws PortalException if the user did not have permission to view the
-	structure or if a matching structure could not be found
 	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMStructure getStructure(
@@ -363,8 +342,6 @@ public class DDMStructureServiceWrapper implements DDMStructureService,
 	*
 	* @param structureId the primary key of the structure
 	* @return the structure with the ID
-	* @throws PortalException if the user did not have permission to view the
-	structure or if a structure with the ID could not be found
 	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMStructure getStructure(
@@ -407,8 +384,7 @@ public class DDMStructureServiceWrapper implements DDMStructureService,
 	* start</code> instances. <code>start</code> and <code>end</code> are not
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	* result set.
 	* </p>
 	*
@@ -443,8 +419,7 @@ public class DDMStructureServiceWrapper implements DDMStructureService,
 	* start</code> instances. <code>start</code> and <code>end</code> are not
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	* result set.
 	* </p>
 	*
@@ -559,8 +534,6 @@ public class DDMStructureServiceWrapper implements DDMStructureService,
 	* @param serviceContext the service context to be applied. Can set the
 	modification date.
 	* @return the updated structure
-	* @throws PortalException if the user did not have permission to update
-	the structure or if a portal exception occurred
 	* @deprecated As of 7.0.0, replaced by {@link #updateStructure(long, long,
 	long, String, Map, Map, DDMForm, DDMFormLayout,
 	ServiceContext)}
@@ -607,8 +580,6 @@ public class DDMStructureServiceWrapper implements DDMStructureService,
 	* @param serviceContext the service context to be applied. Can set the
 	modification date.
 	* @return the updated structure
-	* @throws PortalException if the user did not have permission to update
-	the structure or if a portal exception occurred
 	* @deprecated As of 7.0.0, replaced by {@link #updateStructure(long, long,
 	Map, Map, DDMForm, DDMFormLayout, ServiceContext)}
 	*/

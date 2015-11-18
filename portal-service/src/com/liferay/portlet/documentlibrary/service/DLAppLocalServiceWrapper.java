@@ -71,8 +71,6 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	type </li> <li> fieldsMap - mapping for fields associated with a
 	custom file entry type </li> </ul>
 	* @return the file entry
-	* @throws PortalException if the parent folder could not be found or if the
-	file entry's information was invalid
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry addFileEntry(
@@ -116,8 +114,6 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	type </li> <li> fieldsMap - mapping for fields associated with a
 	custom file entry type </li> </ul>
 	* @return the file entry
-	* @throws PortalException if the parent folder could not be found or if the
-	file entry's information was invalid
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry addFileEntry(
@@ -163,8 +159,6 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	type </li> <li> fieldsMap - mapping for fields associated with a
 	custom file entry type </li> </ul>
 	* @return the file entry
-	* @throws PortalException if the parent folder could not be found or if the
-	file entry's information was invalid
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry addFileEntry(
@@ -210,8 +204,6 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	asset category IDs, asset tag names, and expando bridge
 	attributes for the file entry.
 	* @return the file shortcut
-	* @throws PortalException if the parent folder or file entry could not be
-	found, or if the file shortcut's information was invalid
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileShortcut addFileShortcut(
@@ -235,8 +227,6 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	specifying whether the folder is a facade for mounting a
 	third-party repository
 	* @return the folder
-	* @throws PortalException if the parent folder could not be found or if the
-	new folder's information was invalid
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.Folder addFolder(
@@ -253,7 +243,6 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	* supported by the Liferay repository.
 	*
 	* @param repositoryId the primary key of the data's repository
-	* @throws PortalException if the repository could not be found
 	*/
 	@Override
 	public void deleteAll(long repositoryId)
@@ -271,7 +260,6 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	* Deletes the file entry.
 	*
 	* @param fileEntryId the primary key of the file entry
-	* @throws PortalException if the file entry could not be found
 	*/
 	@Override
 	public void deleteFileEntry(long fileEntryId)
@@ -306,7 +294,6 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	* repository.
 	*
 	* @param fileShortcut the file shortcut
-	* @throws PortalException if the file shortcut could not be found
 	*/
 	@Override
 	public void deleteFileShortcut(
@@ -320,7 +307,6 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	* repository.
 	*
 	* @param fileShortcutId the primary key of the file shortcut
-	* @throws PortalException if the file shortcut could not be found
 	*/
 	@Override
 	public void deleteFileShortcut(long fileShortcutId)
@@ -333,8 +319,6 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	* only supported by the Liferay repository.
 	*
 	* @param toFileEntryId the primary key of the associated file entry
-	* @throws PortalException if the file shortcut for the file entry could not
-	be found
 	*/
 	@Override
 	public void deleteFileShortcuts(long toFileEntryId)
@@ -346,7 +330,6 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	* Deletes the folder and all of its subfolders and file entries.
 	*
 	* @param folderId the primary key of the folder
-	* @throws PortalException if the folder could not be found
 	*/
 	@Override
 	public void deleteFolder(long folderId)
@@ -359,7 +342,6 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	*
 	* @param fileEntryId the primary key of the file entry
 	* @return the file entry with the primary key
-	* @throws PortalException if the file entry could not be found
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry getFileEntry(
@@ -375,7 +357,6 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	* @param folderId the primary key of the file entry's folder
 	* @param title the file entry's title
 	* @return the file entry with the title in the folder
-	* @throws PortalException if the file entry could not be found
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry getFileEntry(
@@ -390,7 +371,6 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	* @param uuid the file entry's UUID
 	* @param groupId the primary key of the file entry's group
 	* @return the file entry with the UUID and group
-	* @throws PortalException if the file entry could not be found
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry getFileEntryByUuidAndGroupId(
@@ -419,7 +399,6 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	*
 	* @param fileShortcutId the primary key of the file shortcut
 	* @return the file shortcut with the primary key
-	* @throws PortalException if the file shortcut could not be found
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileShortcut getFileShortcut(
@@ -433,7 +412,6 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	*
 	* @param fileVersionId the primary key of the file version
 	* @return the file version with the primary key
-	* @throws PortalException if the file version could not be found
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileVersion getFileVersion(
@@ -447,7 +425,6 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	*
 	* @param folderId the primary key of the folder
 	* @return the folder with the primary key
-	* @throws PortalException if the folder could not be found
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.Folder getFolder(
@@ -463,7 +440,6 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	* @param parentFolderId the primary key of the folder's parent folder
 	* @param name the folder's name
 	* @return the folder with the name in the parent folder
-	* @throws PortalException if the folder could not be found
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.Folder getFolder(
@@ -478,8 +454,6 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	*
 	* @param repositoryId the primary key of the repository
 	* @return the folder used for mounting third-party repositories
-	* @throws PortalException if the repository or mount folder could not be
-	found
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.Folder getMountFolder(
@@ -506,8 +480,6 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	* @param newFolderId the primary key of the new folder
 	* @param serviceContext the service context to be applied
 	* @return the file entry
-	* @throws PortalException if the file entry or the new folder could not be
-	found
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntry(
@@ -573,7 +545,6 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	* @param userId the primary key of the user
 	* @param groupId the primary key of the file entry type's group
 	* @param fileEntryTypeId the primary key of the file entry type
-	* @throws PortalException if the user or group could not be found
 	*/
 	@Override
 	public void subscribeFileEntryType(long userId, long groupId,
@@ -590,7 +561,6 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	* @param userId the primary key of the user
 	* @param groupId the primary key of the folder's group
 	* @param folderId the primary key of the folder
-	* @throws PortalException if the user or group could not be found
 	*/
 	@Override
 	public void subscribeFolder(long userId, long groupId, long folderId)
@@ -605,7 +575,6 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	* @param userId the primary key of the user
 	* @param groupId the primary key of the file entry type's group
 	* @param fileEntryTypeId the primary key of the file entry type
-	* @throws PortalException if the user or group could not be found
 	*/
 	@Override
 	public void unsubscribeFileEntryType(long userId, long groupId,
@@ -622,7 +591,6 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	* @param userId the primary key of the user
 	* @param groupId the primary key of the folder's group
 	* @param folderId the primary key of the folder
-	* @throws PortalException if the user or group could not be found
 	*/
 	@Override
 	public void unsubscribeFolder(long userId, long groupId, long folderId)
@@ -640,7 +608,6 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	* @param assetCategoryIds the primary keys of the new asset categories
 	* @param assetTagNames the new asset tag names
 	* @param assetLinkEntryIds the primary keys of the new asset link entries
-	* @throws PortalException if the file entry or version could not be found
 	*/
 	@Override
 	public void updateAsset(long userId,
@@ -686,7 +653,6 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	type </li> <li> fieldsMap - mapping for fields associated with a
 	custom file entry type </li> </ul>
 	* @return the file entry
-	* @throws PortalException if the file entry could not be found
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry updateFileEntry(
@@ -734,7 +700,6 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	type </li> <li> fieldsMap - mapping for fields associated with a
 	custom file entry type </li> </ul>
 	* @return the file entry
-	* @throws PortalException if the file entry could not be found
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry updateFileEntry(
@@ -783,7 +748,6 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	type </li> <li> fieldsMap - mapping for fields associated with a
 	custom file entry type </li> </ul>
 	* @return the file entry
-	* @throws PortalException if the file entry could not be found
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry updateFileEntry(
@@ -829,8 +793,6 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	asset category IDs, asset tag names, and expando bridge
 	attributes for the file entry.
 	* @return the file shortcut
-	* @throws PortalException if the file shortcut, folder, or file entry could
-	not be found
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileShortcut updateFileShortcut(
@@ -846,10 +808,7 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	* entry. This method is only supported by the Liferay repository.
 	*
 	* @param oldToFileEntryId the primary key of the old file entry pointed to
-	* @param newToFileEntryId the primary key of the new file entry to point
-	to
-	* @throws PortalException if a file entry for any one of the primary keys
-	could not be found
+	* @param newToFileEntryId the primary key of the new file entry to point to
 	*/
 	@Override
 	public void updateFileShortcuts(long oldToFileEntryId, long newToFileEntryId)
@@ -891,8 +850,6 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	<code>fileEntryTypeId</code> (optionally <code>0</code>).</li>
 	</ul>
 	* @return the folder
-	* @throws PortalException if the current or new parent folder could not be
-	found, or if the new parent folder's information was invalid
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.Folder updateFolder(

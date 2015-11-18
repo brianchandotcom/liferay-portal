@@ -108,11 +108,9 @@ public class ExportImportConfigurationLocalServiceUtil {
 	*
 	* @param exportImportConfiguration the export import configuration
 	* @return the export import configuration that was removed
-	* @throws PortalException
 	*/
 	public static com.liferay.portlet.exportimport.model.ExportImportConfiguration deleteExportImportConfiguration(
-		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration) {
 		return getService()
 				   .deleteExportImportConfiguration(exportImportConfiguration);
 	}
@@ -131,8 +129,7 @@ public class ExportImportConfigurationLocalServiceUtil {
 				   .deleteExportImportConfiguration(exportImportConfigurationId);
 	}
 
-	public static void deleteExportImportConfigurations(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static void deleteExportImportConfigurations(long groupId) {
 		getService().deleteExportImportConfigurations(groupId);
 	}
 

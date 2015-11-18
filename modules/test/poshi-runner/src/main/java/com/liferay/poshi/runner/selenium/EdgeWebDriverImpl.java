@@ -15,16 +15,11 @@
 package com.liferay.poshi.runner.selenium;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.edge.EdgeDriver;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class EdgeWebDriverImpl extends BaseWebDriverImpl {
-
-	public EdgeWebDriverImpl(String browserURL) {
-		super(browserURL, new EdgeDriver());
-	}
 
 	public EdgeWebDriverImpl(String browserURL, WebDriver webDriver) {
 		super(browserURL, webDriver);

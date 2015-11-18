@@ -214,11 +214,37 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Tag#addSelectTagMultipleViaBlogsPG">
+		<execute macro="BlogsNavigator#gotoAddEntry" />
+
+		<execute macro="BlogsEntry#addEntryContent">
 			<var name="entryContent" value="Entry Content" />
 			<var name="entryTitle" value="Entry Title" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoSettings" />
+
+		<execute macro="BlogsEntry#addTagList">
 			<var name="tagNameList" value="tag1,tag3" />
 		</execute>
+
+		<execute macro="BlogsEntry#publish" />
+
+		<for list="tag1,tag3" param="tagName">
+			<execute macro="Page#gotoPG">
+				<var name="pageName" value="Page Name" />
+				<var name="siteName" value="Site Name" />
+				<var name="siteURL" value="true" />
+			</execute>
+
+			<var name="key_entryTitle" value="Entry Title" />
+
+			<execute function="AssertClick" locator1="BlogsEntry#TITLE_LINK" value1="Entry Title" />
+
+			<execute macro="BlogsEntry#viewTagPG">
+				<var name="entryTitle" value="Entry Title" />
+				<var name="tagName" value="${tagName}" />
+			</execute>
+		</for>
 	</command>
 
 	<command name="AddTagViaBlogs" priority="5">

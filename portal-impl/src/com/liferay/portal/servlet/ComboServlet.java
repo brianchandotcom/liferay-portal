@@ -141,6 +141,14 @@ public class ComboServlet extends HttpServlet {
 
 			name = HttpUtil.decodePath(name);
 
+			ServletContext servletContext = getServletContext();
+
+			String contextPath = servletContext.getContextPath();
+
+			if (name.startsWith(contextPath)) {
+				name = name.replaceFirst(contextPath, StringPool.BLANK);
+			}
+
 			modulePathsSet.add(name);
 		}
 

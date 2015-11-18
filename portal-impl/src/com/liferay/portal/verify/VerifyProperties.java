@@ -413,10 +413,6 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.asset.publisher.web"
 		},
 		new String[] {
-			"asset.publisher.query.form.configuration",
-			"query.form.configuration", "com.liferay.asset.publisher.web"
-		},
-		new String[] {
 			"asset.publisher.search.with.index", "search.with.index",
 			"com.liferay.asset.publisher.web"
 		},
@@ -1787,6 +1783,7 @@ public class VerifyProperties extends VerifyProcess {
 		"asset.entry.increment.view.counter.enabled",
 		"asset.publisher.asset.entry.query.processors",
 		"asset.publisher.filter.unlistable.entries",
+		"asset.publisher.query.form.configuration",
 		"asset.tag.permissions.enabled", "asset.tag.properties.default",
 		"asset.tag.properties.enabled", "auth.max.failures.limit",
 		"blogs.image.small.max.size", "breadcrumb.display.style.options",

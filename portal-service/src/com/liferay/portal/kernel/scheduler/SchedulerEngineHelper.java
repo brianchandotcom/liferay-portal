@@ -118,8 +118,9 @@ public interface SchedulerEngineHelper {
 	public void pause(String jobName, String groupName, StorageType storageType)
 		throws SchedulerException;
 
-	public String register(
-		MessageListener messageListener, SchedulerEntry schedulerEntry);
+	public void register(
+		MessageListener messageListener, SchedulerEntry schedulerEntry,
+		String destinationName);
 
 	public void resume(String groupName, StorageType storageType)
 		throws SchedulerException;

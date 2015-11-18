@@ -35,6 +35,7 @@ public class ImageItemSelectorCriterionHandler
 	}
 
 	@Activate
+	@Override
 	protected void activate(BundleContext bundleContext) {
 		super.activate(bundleContext);
 	}

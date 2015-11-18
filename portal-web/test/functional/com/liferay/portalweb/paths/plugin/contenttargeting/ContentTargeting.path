@@ -56,7 +56,7 @@
 </tr>
 <tr>
 	<td>CAMPAIGN_TABLE_CHECKBOX</td>
-	<td>//tr[contains(.,'${key_campaignName}')]/td[1]/input</td>
+	<td>//tr[contains(.,'${key_campaignName}')]/td[1]//input</td>
 	<td></td>
 </tr>
 <tr>
@@ -108,7 +108,7 @@
 </tr>
 <tr>
 	<td>USER_SEGMENT_TABLE_CHECKBOX</td>
-	<td>//tr[contains(.,'${key_userSegmentName}')]/td[1]/input</td>
+	<td>//tr[contains(.,'${key_userSegmentName}')]/td[1]//input</td>
 	<td></td>
 </tr>
 <tr>

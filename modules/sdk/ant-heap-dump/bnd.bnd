@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Ant Heap Dump
 Bundle-SymbolicName: com.liferay.ant.heap.dump
-Bundle-Version: 1.0.1
+Bundle-Version: 1.0.2
 Export-Package: com.liferay.ant.heap.dump
 Include-Resource:\
 	classes,\

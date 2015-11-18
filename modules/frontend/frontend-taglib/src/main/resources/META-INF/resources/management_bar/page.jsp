@@ -21,7 +21,7 @@
 		<div class="container-fluid-1280">
 			<div class="management-bar-header">
 				<c:if test="<%= includeCheckBox %>">
-					<label class="checkbox-default">
+					<label class="checkbox">
 						<aui:input cssClass="select-all-checkboxes" inline="<%= true %>" label="" name="<%= RowChecker.ALL_ROW_IDS %>" title="select-all" type="checkbox" />
 					</label>
 				</c:if>
@@ -45,21 +45,23 @@
 		</div>
 	</div>
 
-	<c:if test="<%= Validator.isNotNull(actionButtons) %>">
+	<c:if test="<%= Validator.isNotNull(actionButtons) || includeCheckBox %>">
 		<div class="management-bar management-bar-default management-bar-no-collapse" id="<%= namespace %>actionButtons">
 			<div class="container-fluid-1280">
 				<div class="management-bar-header">
 					<c:if test="<%= includeCheckBox %>">
-						<label class="checkbox-default">
+						<label class="checkbox">
 							<aui:input cssClass="select-all-checkboxes" inline="<%= true %>" label="" name="actionsCheckBox" title="select-all" type="checkbox" />
 						</label>
 					</c:if>
 				</div>
 
 				<div class="management-bar-header-right">
-					<ul class="management-bar-nav nav">
-						<%= actionButtons %>
-					</ul>
+					<c:if test="<%= Validator.isNotNull(actionButtons) %>">
+						<ul class="management-bar-nav nav">
+							<%= actionButtons %>
+						</ul>
+					</c:if>
 				</div>
 
 				<div class="collapse management-bar-collapse">
@@ -76,7 +78,7 @@
 	</c:if>
 </div>
 
-<c:if test="<%= Validator.isNotNull(actionButtons) %>">
+<c:if test="<%= Validator.isNotNull(actionButtons) || includeCheckBox %>">
 	<aui:script use="liferay-management-bar">
 		var managementBar = new Liferay.ManagementBar(
 			{

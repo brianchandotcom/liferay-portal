@@ -14,14 +14,7 @@
 
 package com.liferay.poshi.runner.selenium;
 
-import com.liferay.poshi.runner.util.PropsValues;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-
-import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.WebDriver;
 
 /**
  * @author Brian Wing Shun Chan
@@ -29,36 +22,10 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 public class InternetExplorerRemoteWebDriverImpl
 	extends InternetExplorerWebDriverImpl {
 
-	public InternetExplorerRemoteWebDriverImpl(String browserURL) {
-		super(
-			browserURL, new RemoteWebDriver(_remoteURL, _desiredCapabilities));
-	}
+	public InternetExplorerRemoteWebDriverImpl(
+		String browserURL, WebDriver webDriver) {
 
-	private static final DesiredCapabilities _desiredCapabilities;
-	private static final URL _remoteURL;
-
-	static {
-		_desiredCapabilities = DesiredCapabilities.internetExplorer();
-
-		_desiredCapabilities.setCapability(
-			InternetExplorerDriver.
-				INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,
-			true);
-		_desiredCapabilities.setCapability(
-			"platform", PropsValues.SELENIUM_DESIRED_CAPABILITIES_PLATFORM);
-		_desiredCapabilities.setCapability(
-			"version", PropsValues.SELENIUM_DESIRED_CAPABILITIES_VERSION);
-
-		URL remoteURL = null;
-
-		try {
-			remoteURL = new URL(
-				PropsValues.SELENIUM_REMOTE_DRIVER_HUB + ":4444/wd/hub");
-		}
-		catch (MalformedURLException murle) {
-		}
-
-		_remoteURL = remoteURL;
+		super(browserURL, webDriver);
 	}
 
 }

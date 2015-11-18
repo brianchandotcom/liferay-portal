@@ -302,13 +302,13 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public void copyText(String locator) {
-		_clipBoard = super.getText(locator);
+	public void copyText(String locator) throws Exception {
+		_clipBoard = getElementText(locator);
 	}
 
 	@Override
-	public void copyValue(String locator) {
-		_clipBoard = super.getValue(locator);
+	public void copyValue(String locator) throws Exception {
+		_clipBoard = getElementValue(locator);
 	}
 
 	@Override
@@ -345,6 +345,58 @@ public abstract class BaseWebDriverImpl
 		Calendar calendar = Calendar.getInstance();
 
 		return StringUtil.valueOf(calendar.get(Calendar.YEAR));
+	}
+
+	@Override
+	public String getElementText(String locator) throws Exception {
+		return getElementText(locator, null);
+	}
+
+	public String getElementText(String locator, String timeout)
+		throws Exception {
+
+		if (locator.contains("x:")) {
+			return getHtmlNodeText(locator);
+		}
+
+		WebElement webElement = getWebElement(locator, timeout);
+
+		if (webElement == null) {
+			throw new Exception(
+				"Element is not present at \"" + locator + "\"");
+		}
+
+		if (!webElement.isDisplayed()) {
+			scrollWebElementIntoView(webElement);
+		}
+
+		String text = webElement.getText();
+
+		text = text.trim();
+
+		return text.replace("\n", " ");
+	}
+
+	@Override
+	public String getElementValue(String locator) throws Exception {
+		return getElementValue(locator, null);
+	}
+
+	public String getElementValue(String locator, String timeout)
+		throws Exception {
+
+		WebElement webElement = getWebElement(locator, timeout);
+
+		if (webElement == null) {
+			throw new Exception(
+				"Element is not present at \"" + locator + "\"");
+		}
+
+		if (!webElement.isDisplayed()) {
+			scrollWebElementIntoView(webElement);
+		}
+
+		return webElement.getAttribute("value");
 	}
 
 	@Override
@@ -474,12 +526,12 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public boolean isNotText(String locator, String value) {
+	public boolean isNotText(String locator, String value) throws Exception {
 		return LiferaySeleniumHelper.isNotText(this, locator, value);
 	}
 
 	@Override
-	public boolean isNotValue(String locator, String value) {
+	public boolean isNotValue(String locator, String value) throws Exception {
 		return LiferaySeleniumHelper.isNotValue(this, locator, value);
 	}
 
@@ -509,8 +561,8 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public boolean isText(String locator, String value) {
-		return value.equals(getText(locator, "1"));
+	public boolean isText(String locator, String value) throws Exception {
+		return value.equals(getElementText(locator, "1"));
 	}
 
 	@Override
@@ -519,8 +571,8 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public boolean isValue(String locator, String value) {
-		return value.equals(getValue(locator, "1"));
+	public boolean isValue(String locator, String value) throws Exception {
+		return value.equals(getElementValue(locator, "1"));
 	}
 
 	@Override

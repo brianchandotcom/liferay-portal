@@ -125,6 +125,7 @@
 			},
 
 			PropsValues: {
+				JAVASCRIPT_SINGLE_PAGE_APPLICATION_TIMEOUT: <%= PrefsPropsUtil.getInteger(themeDisplay.getCompanyId(), PropsKeys.JAVASCRIPT_SINGLE_PAGE_APPLICATION_TIMEOUT, PropsValues.JAVASCRIPT_SINGLE_PAGE_APPLICATION_TIMEOUT) %>,
 				NTLM_AUTH_ENABLED: <%= PrefsPropsUtil.getBoolean(themeDisplay.getCompanyId(), PropsKeys.NTLM_AUTH_ENABLED, PropsValues.NTLM_AUTH_ENABLED) %>
 			},
 
@@ -271,6 +272,27 @@
 			},
 			getComboPath: function() {
 				return '<%= PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathContext() + "/combo/", "minifierType=", jsLastModified) %>&';
+			},
+			getDateFormat: function() {
+
+				<%
+				String dateFormatPattern = "%m/%d/%Y";
+
+				DateFormat shortDateFormat = DateFormat.getDateInstance(DateFormat.SHORT, locale);
+
+				SimpleDateFormat shortDateFormatSimpleDateFormat = (SimpleDateFormat)shortDateFormat;
+
+				String shortDateFormatSimpleDateFormatPattern = shortDateFormatSimpleDateFormat.toPattern();
+
+				if (shortDateFormatSimpleDateFormatPattern.indexOf("y") == 0) {
+					dateFormatPattern = "%Y/%m/%d";
+				}
+				else if (shortDateFormatSimpleDateFormatPattern.indexOf("d") == 0) {
+					dateFormatPattern = "%d/%m/%Y";
+				}
+				%>
+
+				return '<%= dateFormatPattern %>';
 			},
 			getEditorCKEditorPath: function() {
 				return '<%= PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR) %>';

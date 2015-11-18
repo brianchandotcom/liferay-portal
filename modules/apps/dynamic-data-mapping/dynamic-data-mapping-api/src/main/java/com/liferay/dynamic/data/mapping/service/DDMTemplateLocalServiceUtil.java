@@ -77,7 +77,6 @@ public class DDMTemplateLocalServiceUtil {
 	UUID, creation date, modification date, guest permissions, and
 	group permissions for the template.
 	* @return the template
-	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplate addTemplate(
 		long userId, long groupId, long classNameId, long classPK,
@@ -125,7 +124,6 @@ public class DDMTemplateLocalServiceUtil {
 	UUID, creation date, modification date, guest permissions, and
 	group permissions for the template.
 	* @return the template
-	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplate addTemplate(
 		long userId, long groupId, long classNameId, long classPK,
@@ -151,7 +149,6 @@ public class DDMTemplateLocalServiceUtil {
 	* @param template the template to add resources to
 	* @param addGroupPermissions whether to add group permissions
 	* @param addGuestPermissions whether to add guest permissions
-	* @throws PortalException if a portal exception occurred
 	*/
 	public static void addTemplateResources(
 		com.liferay.dynamic.data.mapping.model.DDMTemplate template,
@@ -167,7 +164,6 @@ public class DDMTemplateLocalServiceUtil {
 	*
 	* @param template the template to add resources to
 	* @param modelPermissions the model permissions to be added
-	* @throws PortalException if a portal exception occurred
 	*/
 	public static void addTemplateResources(
 		com.liferay.dynamic.data.mapping.model.DDMTemplate template,
@@ -190,7 +186,6 @@ public class DDMTemplateLocalServiceUtil {
 	UUID, creation date, modification date, guest permissions, and
 	group permissions for the template.
 	* @return the new template
-	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplate copyTemplate(
 		long userId, long templateId,
@@ -226,7 +221,6 @@ public class DDMTemplateLocalServiceUtil {
 	creation date, modification date, guest permissions, and group
 	permissions for the new templates.
 	* @return the new templates
-	* @throws PortalException if a portal exception occurred
 	*/
 	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> copyTemplates(
 		long userId, long classNameId, long oldClassPK, long newClassPK,
@@ -286,7 +280,6 @@ public class DDMTemplateLocalServiceUtil {
 	* Deletes the template and its resources.
 	*
 	* @param template the template to be deleted
-	* @throws PortalException if a portal exception occurred
 	*/
 	public static void deleteTemplate(
 		com.liferay.dynamic.data.mapping.model.DDMTemplate template)
@@ -298,7 +291,6 @@ public class DDMTemplateLocalServiceUtil {
 	* Deletes the template and its resources.
 	*
 	* @param templateId the primary key of the template to be deleted
-	* @throws PortalException if a portal exception occurred
 	*/
 	public static void deleteTemplate(long templateId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -309,7 +301,6 @@ public class DDMTemplateLocalServiceUtil {
 	* Deletes all the templates of the group.
 	*
 	* @param groupId the primary key of the group
-	* @throws PortalException if a portal exception occurred
 	*/
 	public static void deleteTemplates(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -452,7 +443,6 @@ public class DDMTemplateLocalServiceUtil {
 	search in the search
 	* @return the matching template, or <code>null</code> if a matching
 	template could not be found
-	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplate fetchTemplate(
 		long groupId, long classNameId, java.lang.String templateKey,
@@ -577,7 +567,6 @@ public class DDMTemplateLocalServiceUtil {
 	related model
 	* @param templateKey the unique string identifying the template
 	* @return the matching template
-	* @throws PortalException if a matching template could not be found
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplate getTemplate(
 		long groupId, long classNameId, java.lang.String templateKey)
@@ -605,7 +594,6 @@ public class DDMTemplateLocalServiceUtil {
 	have sharing enabled) and include global scoped sites in the
 	search in the search
 	* @return the matching template
-	* @throws PortalException if a matching template could not be found
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplate getTemplate(
 		long groupId, long classNameId, java.lang.String templateKey,
@@ -621,7 +609,6 @@ public class DDMTemplateLocalServiceUtil {
 	*
 	* @param templateId the primary key of the template
 	* @return the template with the ID
-	* @throws PortalException if a matching template could not be found
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplate getTemplate(
 		long templateId)
@@ -1224,7 +1211,6 @@ public class DDMTemplateLocalServiceUtil {
 	* @param serviceContext the service context to be applied. Can set the
 	modification date.
 	* @return the updated template
-	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplate updateTemplate(
 		long userId, long templateId, long classPK,
@@ -1265,7 +1251,6 @@ public class DDMTemplateLocalServiceUtil {
 	* @param serviceContext the service context to be applied. Can set the
 	modification date.
 	* @return the updated template
-	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplate updateTemplate(
 		long userId, long templateId, long classPK,

@@ -22,8 +22,8 @@ import java.util.Set;
 /**
  * @author László Csontos
  */
-public class PortletResourceActionsBagImpl extends ResourceActionsBagImpl
-		implements PortletResourceActionsBag {
+public class PortletResourceActionsBagImpl
+	extends ResourceActionsBagImpl implements PortletResourceActionsBag {
 
 	public PortletResourceActionsBagImpl() {
 	}

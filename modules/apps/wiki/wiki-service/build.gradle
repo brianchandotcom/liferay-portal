@@ -1,7 +1,7 @@
 buildService {
-	apiDirName = "../wiki-api/src/main/java"
+	apiDir = "../wiki-api/src/main/java"
 	autoNamespaceTables = false
-	testDirName = "../wiki-test/src/testIntegration/java"
+	testDir = "../wiki-test/src/testIntegration/java"
 }
 
 dependencies {

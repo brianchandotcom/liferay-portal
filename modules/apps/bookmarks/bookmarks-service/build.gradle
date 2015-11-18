@@ -1,7 +1,7 @@
 buildService {
-	apiDirName = "../bookmarks-api/src/main/java"
+	apiDir = "../bookmarks-api/src/main/java"
 	autoNamespaceTables = false
-	testDirName = "../bookmarks-test/src/testIntegration/java"
+	testDir = "../bookmarks-test/src/testIntegration/java"
 }
 
 dependencies {

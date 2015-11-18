@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.plugin.Version;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ArrayUtil_IW;
 import com.liferay.portal.kernel.util.CharPool;
@@ -75,8 +76,15 @@ import java.io.InputStream;
 import java.net.URL;
 
 import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.PathMatcher;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -94,6 +102,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -3505,8 +3514,15 @@ public class ServiceBuilder {
 			if (Validator.isNotNull(createTableSQL)) {
 				_createSQLTables(sqlFile, createTableSQL, entity, true);
 
-				_updateSQLFile(
-					"update-6.2.0-7.0.0.sql", createTableSQL, entity);
+				Path updateSQLFilePath = _getUpdateSQLFilePath();
+
+				if ((updateSQLFilePath != null) &&
+					Files.exists(updateSQLFilePath)) {
+
+					_createSQLTables(
+						updateSQLFilePath.toFile(), createTableSQL, entity,
+						false);
+				}
 			}
 		}
 
@@ -4387,6 +4403,65 @@ public class ServiceBuilder {
 		return transients;
 	}
 
+	private Path _getUpdateSQLFilePath() throws IOException {
+		if (!_osgiModule) {
+			return Paths.get(_sqlDirName, "update-6.2.0-7.0.0.sql");
+		}
+
+		final AtomicReference<Path> atomicReference = new AtomicReference<>();
+
+		FileSystem fileSystem = FileSystems.getDefault();
+
+		final PathMatcher pathMatcher = fileSystem.getPathMatcher(
+			"glob:**/dependencies/update.sql");
+
+		Files.walkFileTree(
+			Paths.get(_resourcesDirName),
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult visitFile(
+						Path path, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					if (!pathMatcher.matches(path)) {
+						return FileVisitResult.CONTINUE;
+					}
+
+					Path updateSQLFilePath = atomicReference.get();
+
+					if (updateSQLFilePath == null) {
+						atomicReference.set(path);
+					}
+					else {
+						Version updateSQLFileVersion = _getUpdateSQLFileVersion(
+							updateSQLFilePath);
+						Version version = _getUpdateSQLFileVersion(path);
+
+						if (updateSQLFileVersion.compareTo(version) < 0) {
+							atomicReference.set(path);
+						}
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+
+		return atomicReference.get();
+	}
+
+	private Version _getUpdateSQLFileVersion(Path path) {
+		path = path.getName(path.getNameCount() - 3);
+
+		String version = path.toString();
+
+		version = version.replace('_', '.');
+		version = version.substring(1);
+
+		return Version.getInstance(version);
+	}
+
 	private boolean _hasHttpMethods(JavaClass javaClass) {
 		JavaMethod[] methods = _getMethods(javaClass);
 
@@ -5130,17 +5205,6 @@ public class ServiceBuilder {
 		}
 
 		entity.setResolved();
-	}
-
-	private void _updateSQLFile(
-			String sqlFileName, String createTableSQL, Entity entity)
-		throws IOException {
-
-		File updateSQLFile = new File(_sqlDirName + "/" + sqlFileName);
-
-		if (updateSQLFile.exists()) {
-			_createSQLTables(updateSQLFile, createTableSQL, entity, false);
-		}
 	}
 
 	private static final int _DEFAULT_COLUMN_MAX_LENGTH = 75;

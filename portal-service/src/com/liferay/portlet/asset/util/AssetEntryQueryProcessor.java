@@ -17,12 +17,27 @@ package com.liferay.portlet.asset.util;
 import com.liferay.portal.model.User;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 
+import java.io.IOException;
+
+import java.util.Locale;
+
 import javax.portlet.PortletPreferences;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Jorge Ferrer
  */
 public interface AssetEntryQueryProcessor {
+
+	public String getKey();
+
+	public String getTitle(Locale locale);
+
+	public void include(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException;
 
 	public void processAssetEntryQuery(
 			User user, PortletPreferences portletPreferences,

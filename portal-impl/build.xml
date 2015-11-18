@@ -957,6 +957,10 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 	<target name="build-wsdds">
 		<antcall target="build-wsdd-portal" />
 		<antcall target="build-wsdd-portlets" />
+
+		<gradle-execute dir="../modules" task="buildWSDD">
+			<arg value="-Dportal.build=true" />
+		</gradle-execute>
 	</target>
 
 	<target name="build-yui-compressor-jar">

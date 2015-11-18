@@ -145,9 +145,9 @@ public class DDLRecordSetServiceUtil {
 	}
 
 	public static com.liferay.dynamic.data.lists.model.DDLRecordSet updateRecordSet(
-		long recordSetId, java.lang.String typeSettings)
+		long recordSetId, java.lang.String settings)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().updateRecordSet(recordSetId, typeSettings);
+		return getService().updateRecordSet(recordSetId, settings);
 	}
 
 	public static DDLRecordSetService getService() {

@@ -306,6 +306,25 @@ AUI.add(
 						return FieldTypes.getAll();
 					},
 
+					_valueFieldTypesModal: function() {
+						var instance = this;
+
+						var fieldTypesModal = new Liferay.DDL.FormBuilderFieldTypesModal(
+							{
+								draggable: false,
+								fieldTypes: instance.get('fieldTypes'),
+								modal: true,
+								portletNamespace: instance.get('portletNamespace'),
+								resizable: false,
+								visible: false
+							}
+						);
+
+						fieldTypesModal.addTarget(this);
+
+						return fieldTypesModal;
+					},
+
 					_valueLayouts: function() {
 						var instance = this;
 
@@ -333,6 +352,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-form-builder', 'aui-form-builder-pages', 'liferay-ddl-form-builder-layout-deserializer', 'liferay-ddl-form-builder-layout-visitor', 'liferay-ddl-form-builder-pages-manager', 'liferay-ddl-form-builder-util', 'liferay-ddm-form-field-types', 'liferay-ddm-form-renderer']
+		requires: ['aui-form-builder', 'aui-form-builder-pages', 'liferay-ddl-form-builder-field-support', 'liferay-ddl-form-builder-field-types-modal', 'liferay-ddl-form-builder-layout-deserializer', 'liferay-ddl-form-builder-layout-visitor', 'liferay-ddl-form-builder-pages-manager', 'liferay-ddl-form-builder-util', 'liferay-ddm-form-field-types', 'liferay-ddm-form-renderer']
 	}
 );

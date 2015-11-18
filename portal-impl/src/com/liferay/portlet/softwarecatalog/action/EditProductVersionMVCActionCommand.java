@@ -55,9 +55,7 @@ public class EditProductVersionMVCActionCommand extends BaseMVCActionCommand {
 			deleteProductVersion(actionRequest);
 		}
 
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		sendRedirect(actionRequest, actionResponse, redirect);
+		sendRedirect(actionRequest, actionResponse);
 	}
 
 	protected void deleteProductVersion(ActionRequest actionRequest)

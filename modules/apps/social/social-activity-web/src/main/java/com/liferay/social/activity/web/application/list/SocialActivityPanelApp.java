@@ -41,6 +41,7 @@ public class SocialActivityPanelApp extends BasePanelApp {
 		return SocialActivityPortletKeys.SOCIAL_ACTIVITY;
 	}
 
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + SocialActivityPortletKeys.SOCIAL_ACTIVITY + ")",
 		unbind = "-"

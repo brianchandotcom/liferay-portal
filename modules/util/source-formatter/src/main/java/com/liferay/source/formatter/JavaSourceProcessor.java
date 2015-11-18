@@ -268,74 +268,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected void checkModulesFile(
-		String fileName, String absolutePath, String packagePath,
-		String content) {
-
-		// LPS-56706 and LPS-57722
-
-		if (fileName.endsWith("Test.java")) {
-			if (absolutePath.contains("/src/testIntegration/java/") ||
-				absolutePath.contains("/test/integration/")) {
-
-				if (content.contains("@RunWith(Arquillian.class)") &&
-					content.contains("import org.powermock.")) {
-
-					processErrorMessage(
-						fileName,
-						"Do not use PowerMock inside Arquillian tests: " +
-							fileName);
-				}
-
-				if (!packagePath.endsWith(".test")) {
-					processErrorMessage(
-						fileName,
-						"Module integration test must be under a test " +
-							"subpackage" + fileName);
-				}
-			}
-			else if ((absolutePath.contains("/test/unit/") ||
-					  absolutePath.contains("/src/test/java/")) &&
-					 packagePath.endsWith(".test")) {
-
-				processErrorMessage(
-					fileName,
-					"Module unit test should not be under a test subpackage" +
-						fileName);
-			}
-		}
-
-		// LPS-57358
-
-		if (content.contains("ProxyFactory.newServiceTrackedInstance(")) {
-			processErrorMessage(
-				fileName,
-				"Do not use ProxyFactory.newServiceTrackedInstance in " +
-					"modules: " + fileName);
-		}
-
-		// LPS-59076
-
-		if (_checkModulesServiceUtil) {
-			if (content.contains("@Component") &&
-				content.contains("ServiceUtil.")) {
-
-				processErrorMessage(
-					fileName,
-					"OSGI Component should not call ServiceUtil: " + fileName);
-			}
-
-			if (!absolutePath.contains("/modules/core/") &&
-				!absolutePath.contains("/test/") &&
-				!absolutePath.contains("/testIntegration/") &&
-				content.contains("import com.liferay.registry.Registry")) {
-
-				processErrorMessage(
-					fileName, "Do not use Registry in modules: " + fileName);
-			}
-		}
-	}
-
 	protected void checkRegexPattern(
 		String regexPattern, String fileName, int lineCount) {
 
@@ -934,17 +866,31 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		if (portalSource && isModulesFile(absolutePath)) {
-			checkModulesFile(fileName, absolutePath, packagePath, newContent);
+			newContent = formatModulesFile(
+				fileName, absolutePath, packagePath, newContent);
 		}
 
 		// LPS-48156
 
 		newContent = checkPrincipalException(newContent);
 
+		// LPS-60473
+
+		if (newContent.contains(".supportsBatchUpdates()") &&
+			!fileName.endsWith("AutoBatchPreparedStatementUtil.java")) {
+
+			processErrorMessage(
+				fileName,
+				"Use AutoBatchPreparedStatementUtil instead of " +
+					"DatabaseMetaData.supportsBatchUpdates: " + fileName);
+		}
+
 		newContent = getCombinedLinesContent(
 			newContent, _combinedLinesPattern1);
 		newContent = getCombinedLinesContent(
 			newContent, _combinedLinesPattern2);
+
+		newContent = formatClassLine(newContent);
 
 		newContent = fixIncorrectEmptyLineBeforeCloseCurlyBrace(
 			newContent, fileName);
@@ -1268,6 +1214,26 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				}
 
 				annotation += line + "\n";
+			}
+		}
+
+		return content;
+	}
+
+	protected String formatClassLine(String content) {
+		Matcher matcher = _classPattern.matcher(content);
+
+		while (matcher.find()) {
+			String match = matcher.group();
+
+			match = match.substring(0, match.length() - 1);
+
+			String formattedClassLine = getFormattedClassLine(
+				matcher.group(1), match);
+
+			if (formattedClassLine != null) {
+				content = StringUtil.replace(
+					content, match, formattedClassLine);
 			}
 		}
 
@@ -2173,6 +2139,186 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return newContent;
 	}
 
+	protected String formatModulesFile(
+		String fileName, String absolutePath, String packagePath,
+		String content) {
+
+		// LPS-56706 and LPS-57722
+
+		if (fileName.endsWith("Test.java")) {
+			if (absolutePath.contains("/src/testIntegration/java/") ||
+				absolutePath.contains("/test/integration/")) {
+
+				if (content.contains("@RunWith(Arquillian.class)") &&
+					content.contains("import org.powermock.")) {
+
+					processErrorMessage(
+						fileName,
+						"Do not use PowerMock inside Arquillian tests: " +
+							fileName);
+				}
+
+				if (!packagePath.endsWith(".test")) {
+					processErrorMessage(
+						fileName,
+						"Module integration test must be under a test " +
+							"subpackage" + fileName);
+				}
+			}
+			else if ((absolutePath.contains("/test/unit/") ||
+					  absolutePath.contains("/src/test/java/")) &&
+					 packagePath.endsWith(".test")) {
+
+				processErrorMessage(
+					fileName,
+					"Module unit test should not be under a test subpackage" +
+						fileName);
+			}
+		}
+
+		// LPS-57358
+
+		if (content.contains("ProxyFactory.newServiceTrackedInstance(")) {
+			processErrorMessage(
+				fileName,
+				"Do not use ProxyFactory.newServiceTrackedInstance in " +
+					"modules: " + fileName);
+		}
+
+		// LPS-59076
+
+		if (content.contains("@Component")) {
+			content = formatOSGIComponents(fileName, absolutePath, content);
+		}
+
+		if (!absolutePath.contains("/modules/core/") &&
+			!absolutePath.contains("/test/") &&
+			!absolutePath.contains("/testIntegration/") &&
+			content.contains("import com.liferay.registry.Registry")) {
+
+			processErrorMessage(
+				fileName, "Do not use Registry in modules: " + fileName);
+		}
+
+		return content;
+	}
+
+	protected String formatOSGIComponents(
+		String fileName, String absolutePath, String content) {
+
+		String moduleServicePackagePath = null;
+
+		if (_checkModulesServiceUtil) {
+			Matcher matcher = _serviceUtilImportPattern.matcher(content);
+
+			while (matcher.find()) {
+				String serviceUtilClassName = matcher.group(2);
+
+				if (moduleServicePackagePath == null) {
+					moduleServicePackagePath = getModuleServicePackagePath(
+						fileName);
+				}
+
+				if (Validator.isNotNull(moduleServicePackagePath)) {
+					String serviceUtilClassPackagePath = matcher.group(1);
+
+					if (serviceUtilClassPackagePath.startsWith(
+							moduleServicePackagePath)) {
+
+						processErrorMessage(
+							fileName,
+							"LPS-59076: Convert OSGi Component to Spring " +
+								"bean: " + fileName);
+
+						continue;
+					}
+				}
+
+				processErrorMessage(
+					fileName,
+					"LPS-59076: Use @Reference instead of calling " +
+						serviceUtilClassName + " directly: " + fileName);
+			}
+		}
+
+		Matcher matcher = _setReferenceMethodPattern.matcher(content);
+
+		while (matcher.find()) {
+			String annotationParameters = matcher.group(2);
+
+			if (!annotationParameters.contains("unbind =")) {
+				String setMethodName = matcher.group(4);
+
+				if (!content.contains("un" + setMethodName + "(")) {
+					if (Validator.isNull(annotationParameters)) {
+						return StringUtil.insert(
+							content, "(unbind = \"-\")", matcher.start(2));
+					}
+
+					if (!annotationParameters.contains(StringPool.NEW_LINE)) {
+						return StringUtil.insert(
+							content, ", unbind = \"-\"", matcher.end(2) - 1);
+					}
+
+					if (!annotationParameters.contains("\n\n")) {
+						String indent = matcher.group(1) + StringPool.TAB;
+
+						int x = content.lastIndexOf("\n", matcher.end(2) - 1);
+
+						return StringUtil.replaceFirst(
+							content, "\n",
+							",\n" + indent + "unbind = \"-\"" + "\n", x - 1);
+					}
+				}
+			}
+
+			if (!_checkModulesServiceUtil) {
+				continue;
+			}
+
+			String methodContent = matcher.group(6);
+
+			Matcher referenceMethodContentMatcher =
+				_setReferenceMethodContentPattern.matcher(methodContent);
+
+			if (!referenceMethodContentMatcher.find()) {
+				continue;
+			}
+
+			if (moduleServicePackagePath == null) {
+				moduleServicePackagePath = getModuleServicePackagePath(
+					fileName);
+			}
+
+			if (Validator.isNotNull(moduleServicePackagePath)) {
+				String typeName = matcher.group(5);
+
+				StringBundler sb = new StringBundler(5);
+
+				sb.append("\nimport ");
+				sb.append(moduleServicePackagePath);
+				sb.append(".*\\.");
+				sb.append(typeName);
+				sb.append(StringPool.SEMICOLON);
+
+				Pattern importPattern = Pattern.compile(sb.toString());
+
+				Matcher importMatcher = importPattern.matcher(content);
+
+				if (importMatcher.find()) {
+					processErrorMessage(
+						fileName,
+						"LPS-59076: Convert OSGi Component to Spring bean: " +
+							fileName);
+
+					break;
+				}
+			}
+		}
+
+		return content;
+	}
+
 	protected String getCombinedLinesContent(String content, Pattern pattern) {
 		Matcher matcher = pattern.matcher(content);
 
@@ -2343,18 +2489,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		int tabDiff = lineTabCount - previousLineTabCount;
 
-		if (previousLine.endsWith(" extends")) {
-			return getCombinedLinesContent(
-				content, fileName, line, trimmedLine, lineLength, lineCount,
-				previousLine, "extends", tabDiff, false, true, 0);
-		}
-
-		if (previousLine.endsWith(" implements")) {
-			return getCombinedLinesContent(
-				content, fileName, line, trimmedLine, lineLength, lineCount,
-				previousLine, "implements ", tabDiff, false, true, 0);
-		}
-
 		if (previousLine.endsWith("= new")) {
 			return getCombinedLinesContent(
 				content, fileName, line, trimmedLine, lineLength, lineCount,
@@ -2414,9 +2548,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					previousLine, null, tabDiff, false, true, 0);
 			}
 
-			if ((trimmedLine.startsWith("extends ") ||
-				 trimmedLine.startsWith("implements ") ||
-				 trimmedLine.startsWith("throws")) &&
+			if (trimmedLine.startsWith("throws") &&
 				(line.endsWith(StringPool.OPEN_CURLY_BRACE) ||
 				 line.endsWith(StringPool.SEMICOLON)) &&
 				(lineTabCount == (previousLineTabCount + 1))) {
@@ -2676,6 +2808,127 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return null;
 	}
 
+	protected String getFormattedClassLine(String indent, String classLine) {
+		while (classLine.contains(StringPool.TAB + StringPool.SPACE)) {
+			classLine = StringUtil.replace(
+				classLine, StringPool.TAB + StringPool.SPACE, StringPool.TAB);
+		}
+
+		String classSingleLine = StringUtil.replace(
+			classLine.substring(1),
+			new String[] {StringPool.TAB, StringPool.NEW_LINE},
+			new String[] {StringPool.BLANK, StringPool.SPACE});
+
+		classSingleLine = indent + classSingleLine;
+
+		List<String> lines = new ArrayList<>();
+
+		outerWhile:
+		while (true) {
+			if (getLineLength(classSingleLine) <= _MAX_LINE_LENGTH) {
+				lines.add(classSingleLine);
+
+				break;
+			}
+
+			String newIndent = indent;
+			String newLine = classSingleLine;
+
+			int x = -1;
+
+			while (true) {
+				int y = newLine.indexOf(" extends ", x + 1);
+
+				if (y == -1) {
+					x = newLine.indexOf(" implements ", x + 1);
+				}
+				else {
+					x = y;
+				}
+
+				if (x == -1) {
+					break;
+				}
+
+				String linePart = newLine.substring(0, x);
+
+				if ((StringUtil.count(linePart, StringPool.GREATER_THAN) ==
+						StringUtil.count(linePart, StringPool.LESS_THAN)) &&
+					(getLineLength(linePart) <= _MAX_LINE_LENGTH)) {
+
+					if (lines.isEmpty()) {
+						newIndent = newIndent + StringPool.TAB;
+					}
+
+					lines.add(linePart);
+
+					newLine = newIndent + newLine.substring(x + 1);
+
+					if (getLineLength(newLine) <= _MAX_LINE_LENGTH) {
+						lines.add(newLine);
+
+						break outerWhile;
+					}
+
+					x = -1;
+				}
+			}
+
+			if (lines.isEmpty()) {
+				return null;
+			}
+
+			x = newLine.length();
+
+			while (true) {
+				x = newLine.lastIndexOf(", ", x - 1);
+
+				if (x == -1) {
+					return null;
+				}
+
+				String linePart = newLine.substring(0, x + 1);
+
+				if ((StringUtil.count(linePart, StringPool.GREATER_THAN) ==
+						StringUtil.count(linePart, StringPool.LESS_THAN)) &&
+					(getLineLength(linePart) <= _MAX_LINE_LENGTH)) {
+
+					lines.add(linePart);
+
+					if (linePart.contains("\textends")) {
+						newIndent = newIndent + "\t\t";
+					}
+					else if (linePart.contains("\timplements")) {
+						newIndent = newIndent + "\t\t   ";
+					}
+
+					newLine = newIndent + newLine.substring(x + 2);
+
+					if (getLineLength(newLine) <= _MAX_LINE_LENGTH) {
+						lines.add(newLine);
+
+						break outerWhile;
+					}
+
+					x = newLine.length();
+				}
+			}
+		}
+
+		String formattedClassLine = null;
+
+		for (String line : lines) {
+			if (formattedClassLine == null) {
+				formattedClassLine = "\n" + line;
+			}
+			else {
+				formattedClassLine = formattedClassLine + "\n" + line;
+			}
+		}
+
+		return formattedClassLine;
+	}
+
 	protected int getIfClauseLineBreakPos(String line) {
 		int x = line.lastIndexOf(" || ", _MAX_LINE_LENGTH - 3);
 		int y = line.lastIndexOf(" && ", _MAX_LINE_LENGTH - 3);
@@ -2852,6 +3105,44 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return x + 1;
 	}
 
+	protected String getModuleServicePackagePath(String fileName) {
+		String serviceDirLocation = fileName;
+
+		while (true) {
+			int pos = serviceDirLocation.lastIndexOf(StringPool.SLASH);
+
+			if (pos == -1) {
+				return StringPool.BLANK;
+			}
+
+			serviceDirLocation = serviceDirLocation.substring(0, pos + 1);
+
+			File file = new File(serviceDirLocation + "service");
+
+			if (file.exists()) {
+				serviceDirLocation = serviceDirLocation + "service";
+
+				break;
+			}
+
+			file = new File(serviceDirLocation + "liferay");
+
+			if (file.exists()) {
+				return StringPool.BLANK;
+			}
+
+			serviceDirLocation = StringUtil.replaceLast(
+				serviceDirLocation, StringPool.SLASH, StringPool.BLANK);
+		}
+
+		serviceDirLocation = StringUtil.replace(
+			serviceDirLocation, StringPool.SLASH, StringPool.PERIOD);
+
+		int pos = serviceDirLocation.lastIndexOf(".com.");
+
+		return serviceDirLocation.substring(pos + 1);
+	}
+
 	protected String getNextLine(String content, int lineCount) {
 		int nextLineStartPos = getLineStartPos(content, lineCount + 1);
 
@@ -3010,40 +3301,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			 trimmedLine.startsWith("protected ") ||
 			 trimmedLine.startsWith("public "))) {
 
-			String firstLine = null;
+			int x = line.indexOf(" throws ");
 
-			int x = 0;
-
-			while (true) {
-				int y = line.indexOf(" extends ", x);
-
-				if (y != -1) {
-					firstLine = line.substring(0, y);
-
-					if (StringUtil.count(firstLine, StringPool.GREATER_THAN) !=
-							StringUtil.count(firstLine, StringPool.LESS_THAN)) {
-
-						x = y + 1;
-
-						continue;
-					}
-				}
-				else {
-					y = line.indexOf(" implements ");
-
-					if (y == -1) {
-						y = line.indexOf(" throws ");
-					}
-
-					if (y == -1) {
-						break;
-					}
-
-					firstLine = line.substring(0, y);
-				}
-
+			if (x != -1) {
+				String firstLine = line.substring(0, x);
 				String secondLine =
-					indent + StringPool.TAB + line.substring(y + 1);
+					indent + StringPool.TAB + line.substring(x + 1);
 
 				return StringUtil.replace(
 					content, "\n" + line + "\n",
@@ -3261,6 +3524,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private List<String> _checkJavaFieldTypesExclusionFiles;
 	private boolean _checkModulesServiceUtil;
 	private boolean _checkUnprocessedExceptions;
+	private final Pattern _classPattern = Pattern.compile(
+		"\n(\t*)(private|protected|public) ((abstract|static) )*" +
+			"(class|enum|interface) ([\\s\\S]*?) \\{\n");
 	private Pattern _combinedLinesPattern1 = Pattern.compile(
 		"\n(\t*).+(=|\\]) (\\{)\n");
 	private Pattern _combinedLinesPattern2 = Pattern.compile(
@@ -3296,6 +3562,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Pattern _redundantCommaPattern = Pattern.compile(",\n\t+\\}");
 	private List<String> _secureRandomExclusionFiles;
 	private List<String> _secureXmlExclusionFiles;
+	private Pattern _serviceUtilImportPattern = Pattern.compile(
+		"\nimport ([A-Za-z1-9\\.]*)\\.([A-Za-z1-9]*ServiceUtil);");
+	private Pattern _setReferenceMethodContentPattern = Pattern.compile(
+		"^\\w+ =\\s+\\w+;$");
+	private Pattern _setReferenceMethodPattern = Pattern.compile(
+		"\n(\t+)@Reference([\\s\\S]*?)\\s+(protected|public) void (set\\w+?)" +
+			"\\(\\s*([ ,<>\\w]+)\\s+\\w+\\) \\{\\s+([\\s\\S]*?)\\s*?\\}");
 	private Pattern _stagedModelTypesPattern = Pattern.compile(
 		"StagedModelType\\(([a-zA-Z.]*(class|getClassName[\\(\\)]*))\\)");
 	private List<String> _staticLogVariableExclusionFiles;

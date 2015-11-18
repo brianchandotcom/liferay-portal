@@ -63,7 +63,7 @@ public class UpdateRecordSetMVCActionCommand
 	}
 
 	@Override
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDLRecordSetService(
 		DDLRecordSetService ddlRecordSetService) {
 
@@ -71,7 +71,7 @@ public class UpdateRecordSetMVCActionCommand
 	}
 
 	@Override
-	@Reference
+	@Reference(unbind = "-")
 	protected void setWorkflowDefinitionLinkLocalService(
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
 

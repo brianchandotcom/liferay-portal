@@ -16,9 +16,12 @@ package com.liferay.service.access.policy.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.configuration.admin.ConfigurationAdmin;
+
 /**
  * @author Mika Koivisto
  */
+@ConfigurationAdmin(category = "platform")
 @Meta.OCD(
 	id = "com.liferay.service.access.policy.configuration.SAPConfiguration",
 	localization = "content/Language"

@@ -1,11 +1,7 @@
-import com.liferay.gradle.plugins.alloy.taglib.BuildTaglibsTask
-
-task buildTaglibs(type: BuildTaglibsTask)
+apply plugin: "com.liferay.alloy.taglib"
 
 buildTaglibs {
-	classpath = configurations.alloyTaglib
 	componentsXmlFiles "liferay-ddm.xml"
-	javaDir = "src/main/java/com/liferay/dynamic/data/mapping/taglib/servlet"
 	javaPackage = "com.liferay.dynamic.data.mapping.taglib.servlet"
 }
 

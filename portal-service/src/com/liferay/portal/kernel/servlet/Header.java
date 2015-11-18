@@ -34,8 +34,8 @@ import javax.servlet.http.HttpServletResponse;
 public class Header implements Externalizable {
 
 	/**
-	 * The empty constructor is required by {@link java.io.Externalizable}. Do
-	 * not use this for any other purpose.
+	 * The empty constructor is required by {@link Externalizable}. Do not use
+	 * this for any other purpose.
 	 */
 	public Header() {
 	}

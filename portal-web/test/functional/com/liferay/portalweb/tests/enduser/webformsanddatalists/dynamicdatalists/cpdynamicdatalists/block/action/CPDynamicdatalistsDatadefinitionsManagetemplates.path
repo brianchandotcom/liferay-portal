@@ -77,7 +77,7 @@
 </tr>
 <tr>
 	<td>TEMPLATE_TABLE_CHECKBOX</td>
-	<td>xpath=(//div[contains(@id,'ddmTemplatesSearchContainer')]//tr[contains(.,'${key_ddlTemplateName}')]/td[1]/input[contains(@name,'rowIds')])[1]</td>
+	<td>xpath=(//div[contains(@id,'ddmTemplatesSearchContainer')]//tr[contains(.,'${key_ddlTemplateName}')]/td[1]//input[contains(@name,'rowIds')])[1]</td>
 	<td></td>
 </tr>
 <tr>

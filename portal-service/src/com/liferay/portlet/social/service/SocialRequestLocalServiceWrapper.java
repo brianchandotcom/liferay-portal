@@ -53,9 +53,6 @@ public class SocialRequestLocalServiceWrapper
 	* @param extraData the extra data regarding the request
 	* @param receiverUserId the primary key of the user receiving the request
 	* @return the social request
-	* @throws PortalException if the users could not be found, if the users
-	were not from the same company, or if either of the users was the
-	default user
 	*/
 	@Override
 	public com.liferay.portlet.social.model.SocialRequest addRequest(
@@ -126,7 +123,6 @@ public class SocialRequestLocalServiceWrapper
 	* database.
 	*
 	* @param requestId the primary key of the social request
-	* @throws PortalException if the social request could not be found
 	*/
 	@Override
 	public void deleteRequest(long requestId)
@@ -603,7 +599,6 @@ public class SocialRequestLocalServiceWrapper
 	* @param status the new status
 	* @param themeDisplay the theme display
 	* @return the updated social request
-	* @throws PortalException if the social request could not be found
 	*/
 	@Override
 	public com.liferay.portlet.social.model.SocialRequest updateRequest(

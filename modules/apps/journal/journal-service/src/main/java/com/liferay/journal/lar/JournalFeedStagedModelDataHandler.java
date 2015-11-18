@@ -309,14 +309,14 @@ public class JournalFeedStagedModelDataHandler
 		}
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMStructureLocalService(
 		DDMStructureLocalService ddmStructureLocalService) {
 
 		_ddmStructureLocalService = ddmStructureLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMTemplateLocalService(
 		DDMTemplateLocalService ddmTemplateLocalService) {
 
@@ -332,7 +332,7 @@ public class JournalFeedStagedModelDataHandler
 			journalFeedExportImportContentProcessor;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setJournalFeedLocalService(
 		JournalFeedLocalService journalFeedLocalService) {
 

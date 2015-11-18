@@ -61,7 +61,6 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 	com.liferay.portlet.documentlibrary.model.DLFileVersion})
 	* @param typeSettingsProperties the type settings properties
 	* @return the trashEntry
-	* @throws PortalException if a user with the primary key could not be found
 	*/
 	@Override
 	public com.liferay.portlet.trash.model.TrashEntry addTrashEntry(
@@ -105,13 +104,10 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 	* @param className the class name of entity
 	* @param classPK the primary key of the entry
 	* @return the trash entry with the entity class name and primary key
-	* @throws PortalException if a trash entry with the primary key could not
-	be found
 	*/
 	@Override
 	public com.liferay.portlet.trash.model.TrashEntry deleteEntry(
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		java.lang.String className, long classPK) {
 		return _trashEntryLocalService.deleteEntry(className, classPK);
 	}
 
@@ -120,12 +116,9 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 	*
 	* @param entryId the primary key of the trash entry
 	* @return the trash entry with the primary key
-	* @throws PortalException if a trash entry with the primary key could not
-	be found
 	*/
 	@Override
-	public com.liferay.portlet.trash.model.TrashEntry deleteEntry(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public com.liferay.portlet.trash.model.TrashEntry deleteEntry(long entryId) {
 		return _trashEntryLocalService.deleteEntry(entryId);
 	}
 
@@ -360,8 +353,6 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 	* @param className the class name of the entity
 	* @param classPK the primary key of the entity
 	* @return the trash entry with the entity class name and primary key
-	* @throws PortalException if a trash entry with the primary key could not
-	be found
 	*/
 	@Override
 	public com.liferay.portlet.trash.model.TrashEntry getEntry(
@@ -375,8 +366,6 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 	*
 	* @param entryId the primary key of the trash entry
 	* @return the trash entry with the primary key
-	* @throws PortalException if a trash entry with the primary key could not
-	be found
 	*/
 	@Override
 	public com.liferay.portlet.trash.model.TrashEntry getEntry(long entryId)

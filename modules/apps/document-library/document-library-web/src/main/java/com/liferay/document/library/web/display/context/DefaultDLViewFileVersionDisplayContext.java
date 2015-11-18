@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.web.display.context;
 
+import com.liferay.document.library.web.configuration.DLConfiguration;
 import com.liferay.document.library.web.display.context.logic.DLPortletInstanceSettingsHelper;
 import com.liferay.document.library.web.display.context.logic.DLVisualizationHelper;
 import com.liferay.document.library.web.display.context.logic.FileEntryDisplayContextHelper;
@@ -29,9 +30,7 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.WebKeys;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.documentlibrary.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
@@ -59,17 +58,60 @@ public class DefaultDLViewFileVersionDisplayContext
 
 	public DefaultDLViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			FileShortcut fileShortcut)
+			FileShortcut fileShortcut, DLConfiguration dlConfiguration)
 		throws PortalException {
 
-		this(request, response, fileShortcut.getFileVersion(), fileShortcut);
+		this(
+			request, response, fileShortcut.getFileVersion(), fileShortcut,
+			dlConfiguration);
 	}
 
 	public DefaultDLViewFileVersionDisplayContext(
 		HttpServletRequest request, HttpServletResponse response,
-		FileVersion fileVersion) {
+		FileVersion fileVersion, DLConfiguration dlConfiguration) {
 
-		this(request, response, fileVersion, null);
+		this(request, response, fileVersion, null, dlConfiguration);
+	}
+
+	@Override
+	public String getCssClassFileMimeType() {
+		String mimeType = _fileVersion.getMimeType();
+
+		if (_containsMimeType(_dlConfiguration.codeFileMimeTypes(), mimeType)) {
+			return "file-icon-color-7";
+		}
+		else if (_containsMimeType(
+					_dlConfiguration.compressedFileMimeTypes(), mimeType)) {
+
+			return "file-icon-color-1";
+		}
+		else if (_containsMimeType(
+					_dlConfiguration.multimediaFileMimeTypes(), mimeType)) {
+
+			return "file-icon-color-3";
+		}
+		else if (_containsMimeType(
+					_dlConfiguration.presentationFileMimeTypes(), mimeType)) {
+
+			return "file-icon-color-4";
+		}
+		else if (_containsMimeType(
+					_dlConfiguration.spreadSheetFileMimeTypes(), mimeType)) {
+
+			return "file-icon-color-2";
+		}
+		else if (_containsMimeType(
+					_dlConfiguration.textFileMimeTypes(), mimeType)) {
+
+			return "file-icon-color-6";
+		}
+		else if (_containsMimeType(
+					_dlConfiguration.vectorialFileMimeTypes(), mimeType)) {
+
+			return "file-icon-color-5";
+		}
+
+		return "file-icon-color-0";
 	}
 
 	@Override
@@ -100,72 +142,11 @@ public class DefaultDLViewFileVersionDisplayContext
 	public Menu getMenu() throws PortalException {
 		Menu menu = new Menu();
 
-		String direction = "left-side";
-
-		if (_dlVisualizationHelper.isShowMinimalActionsButton() &&
-			Validator.equals(
-				_dlVisualizationHelper.getDisplayStyle(), "icon")) {
-
-			direction = "down";
-		}
-
-		menu.setDirection(direction);
-
-		if (!Validator.equals(
-				_dlVisualizationHelper.getDisplayStyle(), "icon")) {
-
-			menu.setShowExpanded(true);
-		}
-
-		boolean extended = true;
-
-		if (_dlVisualizationHelper.isShowMinimalActionsButton() ||
-			!Validator.equals(
-				_dlVisualizationHelper.getDisplayStyle(), "icon")) {
-
-			extended = false;
-		}
-
-		menu.setExtended(extended);
-
-		String icon = null;
-
-		if (_dlVisualizationHelper.isShowMinimalActionsButton()) {
-			icon = StringPool.BLANK;
-		}
-
-		menu.setIcon(icon);
-
+		menu.setDirection("left-side");
+		menu.setMarkupView("lexicon");
 		menu.setMenuItems(_getMenuItems());
-
-		String message = "actions";
-
-		if (_dlVisualizationHelper.isShowMinimalActionsButton()) {
-			message = StringPool.BLANK;
-		}
-
-		menu.setMessage(message);
-
-		if (!Validator.equals(
-				_dlVisualizationHelper.getDisplayStyle(), "icon")) {
-
-			menu.setScroll(true);
-		}
-
-		menu.setShowWhenSingleIcon(
-			_dlVisualizationHelper.isShowWhenSingleIconActionButton());
-
-		if (Validator.equals(
-				_dlVisualizationHelper.getDisplayStyle(), "icon")) {
-
-			menu.setTriggerCssClass("btn btn-default");
-		}
-
-		if (!Validator.equals(
-				_dlVisualizationHelper.getDisplayStyle(), "icon")) {
-
-			menu.setMarkupView("lexicon");
-		}
+		menu.setScroll(false);
+		menu.setShowWhenSingleIcon(true);
 
 		return menu;
 	}
@@ -228,7 +209,8 @@ public class DefaultDLViewFileVersionDisplayContext
 
 	private DefaultDLViewFileVersionDisplayContext(
 		HttpServletRequest request, HttpServletResponse response,
-		FileVersion fileVersion, FileShortcut fileShortcut) {
+		FileVersion fileVersion, FileShortcut fileShortcut,
+		DLConfiguration dlConfiguration) {
 
 		try {
 			_fileVersion = fileVersion;
@@ -255,6 +237,8 @@ public class DefaultDLViewFileVersionDisplayContext
 				_uiItemsBuilder = new UIItemsBuilder(
 					request, response, fileShortcut);
 			}
+
+			_dlConfiguration = dlConfiguration;
 		}
 		catch (PortalException pe) {
 			throw new SystemException(
@@ -262,6 +246,25 @@ public class DefaultDLViewFileVersionDisplayContext
 					fileVersion,
 				pe);
 		}
+	}
+
+	private boolean _containsMimeType(String[] mimeTypes, String mimeType) {
+		for (String curMimeType : mimeTypes) {
+			int pos = curMimeType.indexOf("/");
+
+			if (pos != -1) {
+				if (mimeType.equals(curMimeType)) {
+					return true;
+				}
+			}
+			else {
+				if (mimeType.startsWith(curMimeType)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 	private FileEntry _getFileEntry(FileVersion fileVersion)
@@ -305,6 +308,7 @@ public class DefaultDLViewFileVersionDisplayContext
 	private static final UUID _UUID = UUID.fromString(
 		"85F6C50E-3893-4E32-9D63-208528A503FA");
 
+	private final DLConfiguration _dlConfiguration;
 	private final DLPortletInstanceSettingsHelper
 		_dlPortletInstanceSettingsHelper;
 	private final DLVisualizationHelper _dlVisualizationHelper;

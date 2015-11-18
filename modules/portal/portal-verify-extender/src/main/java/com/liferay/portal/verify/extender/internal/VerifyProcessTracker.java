@@ -234,7 +234,7 @@ public class VerifyProcessTracker {
 		return verifyProcess;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setOutputStreamTracker(
 		OutputStreamContainerFactoryTracker
 			outputStreamContainerFactoryTracker) {
@@ -243,7 +243,7 @@ public class VerifyProcessTracker {
 			outputStreamContainerFactoryTracker;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setReleaseLocalService(
 		ReleaseLocalService releaseLocalService) {
 

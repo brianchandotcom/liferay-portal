@@ -25,12 +25,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.WebKeys;
 
 import java.util.List;
 
@@ -146,6 +146,10 @@ public class ProductMenuDisplayContext {
 
 		Group mySiteGroup = getMySiteGroup();
 
+		if (mySiteGroup == null) {
+			return false;
+		}
+
 		return mySiteGroup.isShowSite(
 			_themeDisplay.getPermissionChecker(), privateLayout);
 	}
@@ -178,7 +182,7 @@ public class ProductMenuDisplayContext {
 
 		if (Validator.isNotNull(portletId)) {
 			groupAdministrationURL = PortalUtil.getControlPanelPortletURL(
-				_portletRequest, group, portletId, 0,
+				_portletRequest, group, portletId, 0, 0,
 				PortletRequest.RENDER_PHASE);
 
 			if (groupAdministrationURL != null) {

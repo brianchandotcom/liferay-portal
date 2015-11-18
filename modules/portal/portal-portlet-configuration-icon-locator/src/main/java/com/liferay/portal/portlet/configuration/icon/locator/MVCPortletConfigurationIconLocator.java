@@ -37,6 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 public class MVCPortletConfigurationIconLocator
 	implements PortletConfigurationIconLocator {
 
+	@Override
 	public List<String> getDefaultViews(String portletId) {
 		List<String> defaultViews = new ArrayList<>();
 

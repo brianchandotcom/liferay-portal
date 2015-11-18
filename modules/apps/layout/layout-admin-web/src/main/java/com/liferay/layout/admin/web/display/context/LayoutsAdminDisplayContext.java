@@ -116,7 +116,7 @@ public class LayoutsAdminDisplayContext {
 		_tabs1 = tabs1;
 
 		_request.setAttribute(
-			com.liferay.portal.util.WebKeys.LAYOUT_DESCRIPTIONS,
+			com.liferay.portal.kernel.util.WebKeys.LAYOUT_DESCRIPTIONS,
 			getLayoutDescriptions());
 	}
 

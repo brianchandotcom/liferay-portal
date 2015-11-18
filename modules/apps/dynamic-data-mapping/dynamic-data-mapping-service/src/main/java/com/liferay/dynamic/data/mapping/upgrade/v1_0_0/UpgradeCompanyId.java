@@ -21,8 +21,11 @@ public class UpgradeCompanyId
 	extends com.liferay.portal.upgrade.util.UpgradeCompanyId {
 
 	@Override
-	protected String[] getTableNames() {
-		return new String[] {"DDMStorageLink", "DDMStructureLink"};
+	protected TableUpdater[] getTableUpdaters() {
+		return new TableUpdater[] {
+			new TableUpdater("DDMStorageLink", "DDMStructure", "structureId"),
+			new TableUpdater("DDMStructureLink", "DDMStructure", "structureId")
+		};
 	}
 
 }

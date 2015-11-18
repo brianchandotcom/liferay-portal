@@ -101,7 +101,6 @@ public interface MVCResourceCommand extends MVCCommand {
 	 * @param  resourceResponse the resource response
 	 * @return <code>true</code> if an error occurs in serving the resource;
 	 *         <code>false</code> otherwise
-	 * @throws PortletException if a portlet exception occurred
 	 */
 	public boolean serveResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)

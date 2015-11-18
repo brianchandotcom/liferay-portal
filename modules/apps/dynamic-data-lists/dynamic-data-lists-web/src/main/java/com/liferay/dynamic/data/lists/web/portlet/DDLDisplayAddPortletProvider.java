@@ -73,7 +73,7 @@ public class DDLDisplayAddPortletProvider
 		return themeDisplay.getPlid();
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setAssetEntryLocalService(
 		AssetEntryLocalService assetEntryLocalService) {
 

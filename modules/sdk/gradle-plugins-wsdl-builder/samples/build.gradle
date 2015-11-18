@@ -12,6 +12,8 @@ buildscript {
 	}
 }
 
+apply plugin: "com.liferay.wsdl.builder"
+
 repositories {
 	mavenLocal()
 
@@ -19,6 +21,3 @@ repositories {
 		url "http://cdn.repository.liferay.com/nexus/content/groups/public"
 	}
 }
-
-apply plugin: "com.liferay.wsdl.builder"
-apply plugin: "java"

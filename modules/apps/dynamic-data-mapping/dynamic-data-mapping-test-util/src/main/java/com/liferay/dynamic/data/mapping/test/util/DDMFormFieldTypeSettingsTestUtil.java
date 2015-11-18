@@ -14,11 +14,11 @@
 
 package com.liferay.dynamic.data.mapping.test.util;
 
+import com.liferay.dynamic.data.mapping.annotations.DDMForm;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormField;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeSettings;
+import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeSettings;
-import com.liferay.dynamic.data.mapping.registry.DefaultDDMFormFieldTypeSettings;
-import com.liferay.dynamic.data.mapping.registry.annotations.DDMForm;
-import com.liferay.dynamic.data.mapping.registry.annotations.DDMFormField;
 
 /**
  * @author Marcellus Tavares

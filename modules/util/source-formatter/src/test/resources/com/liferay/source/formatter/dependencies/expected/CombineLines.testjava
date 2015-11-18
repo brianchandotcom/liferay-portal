@@ -143,4 +143,27 @@ public class CombineLines extends SuperClass {
 		implements SomeOtherClassWithALongNameThatDoesNotFitOnPreviousLine {
 	}
 
+	private class SubClass3
+		extends MediumLongNameClass1 implements MediumLongNameClass2 {
+	}
+
+	private class SubClass4
+		extends MediumLongNameClass1 implements MediumLongNameClass2 {
+	}
+
+	private class SubClass5
+		extends NameWithLongerThanMediumNameClass1
+		implements NameWithLongerThanMediumNameClass2 {
+	}
+
+	private class SubClass6
+		implements SomeOtherClass1, SomeOtherClass2, SomeOtherClass3,
+				   SomeOtherClass4, SomeOtherClass5, SomeOtherClass6 {
+	}
+
+	private class SubClass7
+		implements SomeOtherClass1, SomeOtherClass2, SomeOtherClass3,
+				   SomeOtherClass4, SomeOtherClass5, SomeOtherClass6 {
+	}
+
 }

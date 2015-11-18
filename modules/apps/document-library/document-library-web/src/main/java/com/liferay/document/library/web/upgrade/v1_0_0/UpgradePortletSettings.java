@@ -36,7 +36,7 @@ public class UpgradePortletSettings
 			PortletKeys.PREFS_OWNER_TYPE_GROUP, true);
 
 		upgradeDisplayPortlet(
-			DLPortletKeys.DOCUMENT_LIBRARY_DISPLAY, DLConstants.SERVICE_NAME,
+			DLPortletKeys.DOCUMENT_LIBRARY, DLConstants.SERVICE_NAME,
 			PortletKeys.PREFS_OWNER_TYPE_LAYOUT);
 		upgradeDisplayPortlet(
 			DLPortletKeys.MEDIA_GALLERY_DISPLAY, DLConstants.SERVICE_NAME,

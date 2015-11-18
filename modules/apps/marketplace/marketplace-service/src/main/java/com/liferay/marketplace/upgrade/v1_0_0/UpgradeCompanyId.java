@@ -21,8 +21,10 @@ public class UpgradeCompanyId
 	extends com.liferay.portal.upgrade.util.UpgradeCompanyId {
 
 	@Override
-	protected String[] getTableNames() {
-		return new String[] {"Marketplace_Module"};
+	protected TableUpdater[] getTableUpdaters() {
+		return new TableUpdater[] {
+			new TableUpdater("Marketplace_Module", "Marketplace_App", "appId")
+		};
 	}
 
 }

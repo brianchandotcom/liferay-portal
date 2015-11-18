@@ -48,7 +48,7 @@ public class DLFileEntryPermissionUpdateHandler
 		_dLFileEntryLocalService.updateDLFileEntry(dlFileEntry);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDLFileEntryLocalService(
 		DLFileEntryLocalService dLFileEntryLocalService) {
 

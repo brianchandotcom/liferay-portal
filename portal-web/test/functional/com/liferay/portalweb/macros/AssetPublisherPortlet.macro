@@ -69,29 +69,6 @@
 				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 				<execute function="AssertTextEquals#assertPartialText" locator1="APConfiguration#SOURCE_SCOPE_NAME" value1="${siteName}" />
 			</then>
-			<else>
-				<execute function="AssertClick" locator1="Configuration#SOURCE_SCOPE_SELECT" value1="Select" />
-				<execute function="AssertClick" locator1="MenuItem#OTHER_SITE" value1="Other Site..." />
-				<execute function="SelectFrame" value1="relative=top" />
-
-				<execute function="SelectFrame" locator1="IFrame#SELECT_SITES" />
-
-				<var name="key_siteName" value="${siteNameHidden}" />
-
-				<execute function="AssertElementPresent" locator1="APConfigurationSites#SITES_TABLE_CHOOSE_BUTTON_DISABLED" />
-
-				<execute macro="Page#gotoPG">
-					<var name="defaultURL" value="${defaultURL}" />
-					<var name="nodePort" value="${nodePort}" />
-					<var name="pageName" value="${sitePageName}" />
-					<var name="siteName" value="${siteName}" />
-					<var name="siteURL" value="true" />
-					<var name="soDashboard" value="${soDashboard}" />
-					<var name="soPage" value="${soPage}" />
-				</execute>
-
-				<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
-			</else>
 		</if>
 
 		<if>

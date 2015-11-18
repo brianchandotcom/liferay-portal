@@ -58,7 +58,8 @@ public class PortletInstanceSettingsLocator implements SettingsLocator {
 
 		return
 			_settingsLocatorHelper.getPortletInstancePortletPreferencesSettings(
-				_layout.getCompanyId(), getPlid(), _settingsId,
+				_layout.getCompanyId(), getOwnerId(),
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, getPlid(), _settingsId,
 				groupPortletPreferencesSettings);
 	}
 
@@ -76,6 +77,14 @@ public class PortletInstanceSettingsLocator implements SettingsLocator {
 		catch (PortalException pe) {
 			throw new SettingsException(pe);
 		}
+	}
+
+	protected long getOwnerId() {
+		if (isEmbeddedPortlet()) {
+			return _layout.getGroupId();
+		}
+
+		return PortletKeys.PREFS_OWNER_ID_DEFAULT;
 	}
 
 	protected long getPlid() {

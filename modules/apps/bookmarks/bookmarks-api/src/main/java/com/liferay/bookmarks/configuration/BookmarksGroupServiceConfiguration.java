@@ -16,11 +16,13 @@ package com.liferay.bookmarks.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.configuration.admin.ConfigurationAdmin;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 
 /**
  * @author Adolfo Pérez
  */
+@ConfigurationAdmin(category = "collaboration")
 @Meta.OCD(
 	id = "com.liferay.bookmarks.configuration.BookmarksGroupServiceConfiguration"
 )

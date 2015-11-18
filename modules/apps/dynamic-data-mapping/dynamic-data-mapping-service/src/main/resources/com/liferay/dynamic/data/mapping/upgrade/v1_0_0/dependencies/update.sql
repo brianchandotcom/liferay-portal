@@ -1,3 +1,18 @@
+create table DDMDataProviderInstance (
+	uuid_ VARCHAR(75) null,
+	dataProviderInstanceId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	name STRING null,
+	description TEXT null,
+	definition TEXT null,
+	type_ VARCHAR(75) null
+);
+
 alter table DDMStructure add versionUserId LONG;
 alter table DDMStructure add versionUserName VARCHAR(75) null;
 alter table DDMStructure add version VARCHAR(75) null;
@@ -53,6 +68,7 @@ update DDMTemplate set version = '1.0';
 
 create table DDMTemplateLink (
 	templateLinkId LONG not null primary key,
+	companyId LONG,
 	classNameId LONG,
 	classPK LONG,
 	templateId LONG
@@ -69,7 +85,7 @@ create table DDMTemplateVersion (
 	classPK LONG,
 	templateId LONG,
 	version VARCHAR(75) null,
-	name STRING null,
+	name TEXT null,
 	description TEXT null,
 	language VARCHAR(75) null,
 	script TEXT null,

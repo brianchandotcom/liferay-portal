@@ -34,8 +34,7 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  */
 public class SocialActivityFinderImpl
-	extends SocialActivityFinderBaseImpl
-	implements SocialActivityFinder {
+	extends SocialActivityFinderBaseImpl implements SocialActivityFinder {
 
 	public static final String COUNT_BY_GROUP_ID =
 		SocialActivityFinder.class.getName() + ".countByGroupId";

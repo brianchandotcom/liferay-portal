@@ -41,6 +41,7 @@ public class MyWorkflowTaskPanelApp extends BasePanelApp {
 		return PortletKeys.MY_WORKFLOW_TASK;
 	}
 
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + PortletKeys.MY_WORKFLOW_TASK + ")",
 		unbind = "-"

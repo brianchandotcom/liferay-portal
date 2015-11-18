@@ -39,6 +39,7 @@ public class LiferayIntegrationTestRule extends AggregateTestRule {
 	public LiferayIntegrationTestRule() {
 		super(
 			false, CITimeoutTestRule.INSTANCE, LogAssertionTestRule.INSTANCE,
+			SybaseDumpTransactionLogTestRule.INSTANCE,
 			_clearThreadLocalTestRule, _uniqueStringRandomizerBumperTestRule,
 			new DeleteAfterTestRunTestRule());
 	}

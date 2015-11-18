@@ -302,6 +302,11 @@ public class PortletPermissionImpl implements PortletPermission {
 		if (!actionId.equals(ActionKeys.VIEW) &&
 			(layout instanceof VirtualLayout)) {
 
+			if (actionId.equals(ActionKeys.ADD_TO_PAGE)) {
+				return hasAddToPagePermission(
+					permissionChecker, layout, portletId, actionId);
+			}
+
 			return hasCustomizePermission(
 				permissionChecker, layout, portletId, actionId);
 		}
@@ -595,6 +600,21 @@ public class PortletPermissionImpl implements PortletPermission {
 
 			return false;
 		}
+	}
+
+	protected boolean hasAddToPagePermission(
+			PermissionChecker permissionChecker, Layout layout,
+			String portletId, String actionId)
+		throws PortalException {
+
+		if (LayoutPermissionUtil.contains(
+				permissionChecker, layout, ActionKeys.CUSTOMIZE)) {
+
+			return contains(
+				permissionChecker, portletId, ActionKeys.ADD_TO_PAGE);
+		}
+
+		return false;
 	}
 
 	protected boolean hasConfigurePermission(

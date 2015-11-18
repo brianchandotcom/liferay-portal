@@ -52,9 +52,6 @@ public class CompanyServiceUtil {
 	<code>0</code>)
 	* @param active whether the company is active
 	* @return the company
-	* @throws PortalException if the web domain, virtual host name, or mail
-	domain was invalid or if the user was not a universal
-	administrator
 	*/
 	public static com.liferay.portal.model.Company addCompany(
 		java.lang.String webId, java.lang.String virtualHost,
@@ -73,9 +70,6 @@ public class CompanyServiceUtil {
 	* Deletes the company's logo.
 	*
 	* @param companyId the primary key of the company
-	* @throws PortalException if the company with the primary key could not be
-	found or if the company's logo could not be found or if the user
-	was not an administrator
 	*/
 	public static void deleteLogo(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -87,8 +81,6 @@ public class CompanyServiceUtil {
 	*
 	* @param companyId the primary key of the company
 	* @return Returns the company with the primary key
-	* @throws PortalException if a company with the primary key could not be
-	found
 	*/
 	public static com.liferay.portal.model.Company getCompanyById(
 		long companyId)
@@ -101,7 +93,6 @@ public class CompanyServiceUtil {
 	*
 	* @param logoId the ID of the company's logo
 	* @return Returns the company with the logo
-	* @throws PortalException if the company with the logo could not be found
 	*/
 	public static com.liferay.portal.model.Company getCompanyByLogoId(
 		long logoId) throws com.liferay.portal.kernel.exception.PortalException {
@@ -113,8 +104,6 @@ public class CompanyServiceUtil {
 	*
 	* @param mx the company's mail domain
 	* @return Returns the company with the mail domain
-	* @throws PortalException if the company with the mail domain could not be
-	found
 	*/
 	public static com.liferay.portal.model.Company getCompanyByMx(
 		java.lang.String mx)
@@ -127,9 +116,6 @@ public class CompanyServiceUtil {
 	*
 	* @param virtualHost the company's virtual host name
 	* @return Returns the company with the virtual host name
-	* @throws PortalException if the company with the virtual host name could
-	not be found or if the virtual host was not associated with a
-	company
 	*/
 	public static com.liferay.portal.model.Company getCompanyByVirtualHost(
 		java.lang.String virtualHost)
@@ -142,8 +128,6 @@ public class CompanyServiceUtil {
 	*
 	* @param webId the company's web domain
 	* @return Returns the company with the web domain
-	* @throws PortalException if the company with the web domain could not be
-	found
 	*/
 	public static com.liferay.portal.model.Company getCompanyByWebId(
 		java.lang.String webId)
@@ -169,7 +153,6 @@ public class CompanyServiceUtil {
 	*
 	* @param companyId the primary key of the company
 	* @param keys the company's preferences keys to be remove
-	* @throws PortalException if the user was not an administrator
 	*/
 	public static void removePreferences(long companyId, java.lang.String[] keys)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -201,9 +184,6 @@ public class CompanyServiceUtil {
 	* @param type the company's account type (optionally <code>null</code>)
 	* @param size the company's account size (optionally <code>null</code>)
 	* @return the the company with the primary key
-	* @throws PortalException if a company with the primary key could not be
-	found or if the new information was invalid or if the user was
-	not an administrator
 	*/
 	public static com.liferay.portal.model.Company updateCompany(
 		long companyId, java.lang.String virtualHost, java.lang.String mx,
@@ -251,9 +231,6 @@ public class CompanyServiceUtil {
 	* @param websites the company's websites
 	* @param properties the company's properties
 	* @return the company with the primary key
-	* @throws PortalException the company with the primary key could not be
-	found or if the new information was invalid or if the user was
-	not an administrator
 	*/
 	public static com.liferay.portal.model.Company updateCompany(
 		long companyId, java.lang.String virtualHost, java.lang.String mx,
@@ -303,9 +280,6 @@ public class CompanyServiceUtil {
 	* @param size the company's account size (optionally
 	<code>null</code>)
 	* @return the the company with the primary key
-	* @throws PortalException if a company with the primary key could not
-	be found or if the new information was invalid or if the user
-	was not an administrator
 	* @deprecated As of 7.0.0, replaced by {@link #updateCompany(long, String,
 	String, String, boolean, byte[], String, String, String,
 	String, String, String, String, String, String)}
@@ -358,9 +332,6 @@ public class CompanyServiceUtil {
 	* @param websites the company's websites
 	* @param properties the company's properties
 	* @return the company with the primary key
-	* @throws PortalException the company with the primary key could not be
-	found or if the new information was invalid or if the user
-	was not an administrator
 	* @deprecated As of 7.0.0, replaced by {@link #updateCompany(long, String,
 	String, String, boolean, byte[], String, String, String,
 	String, String, String, String, String, String, String,
@@ -398,9 +369,6 @@ public class CompanyServiceUtil {
 	<code>0</code>)
 	* @param active whether the company is active
 	* @return the company with the primary key
-	* @throws PortalException if a company with the primary key could not be
-	found or if the new information was invalid or if the user was
-	not a universal administrator
 	*/
 	public static com.liferay.portal.model.Company updateCompany(
 		long companyId, java.lang.String virtualHost, java.lang.String mx,
@@ -416,8 +384,6 @@ public class CompanyServiceUtil {
 	* @param companyId the primary key of the company
 	* @param languageId the ID of the company's default user's language
 	* @param timeZoneId the ID of the company's default user's time zone
-	* @throws PortalException if the company's default user could not be found
-	or if the user was not an administrator
 	*/
 	public static void updateDisplay(long companyId,
 		java.lang.String languageId, java.lang.String timeZoneId)
@@ -431,9 +397,6 @@ public class CompanyServiceUtil {
 	* @param companyId the primary key of the company
 	* @param bytes the bytes of the company's logo image
 	* @return the company with the primary key
-	* @throws PortalException if the company's logo ID could not be found or if
-	the logo's image was corrupted or if the user was an
-	administrator
 	*/
 	public static com.liferay.portal.model.Company updateLogo(long companyId,
 		byte[] bytes)
@@ -447,9 +410,6 @@ public class CompanyServiceUtil {
 	* @param companyId the primary key of the company
 	* @param inputStream the input stream of the company's logo image
 	* @return the company with the primary key
-	* @throws PortalException if the company's logo ID could not be found or if
-	the logo's image was corrupted or if the user was an
-	administrator
 	*/
 	public static com.liferay.portal.model.Company updateLogo(long companyId,
 		java.io.InputStream inputStream)
@@ -462,9 +422,7 @@ public class CompanyServiceUtil {
 	* found in portal.properties.
 	*
 	* @param companyId the primary key of the company
-	* @param properties the company's properties. See {@link
-	UnicodeProperties}
-	* @throws PortalException if the user was not an administrator
+	* @param properties the company's properties. See {@link UnicodeProperties}
 	*/
 	public static void updatePreferences(long companyId,
 		com.liferay.portal.kernel.util.UnicodeProperties properties)
@@ -483,13 +441,12 @@ public class CompanyServiceUtil {
 	their passwords
 	* @param strangers whether to allow strangers to create accounts to
 	register themselves in the company
-	* @param strangersWithMx whether to allow strangers to create accounts
-	with email addresses that match the company mail suffix
+	* @param strangersWithMx whether to allow strangers to create accounts with
+	email addresses that match the company mail suffix
 	* @param strangersVerify whether to require strangers who create accounts
 	to be verified via email
 	* @param siteLogo whether to to allow site administrators to use their own
 	logo instead of the enterprise logo
-	* @throws PortalException if the user was not an administrator
 	*/
 	public static void updateSecurity(long companyId,
 		java.lang.String authType, boolean autoLogin, boolean sendPassword,

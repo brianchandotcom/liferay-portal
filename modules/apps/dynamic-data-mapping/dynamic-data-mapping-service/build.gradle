@@ -1,14 +1,16 @@
 buildService {
-	apiDirName = "../dynamic-data-mapping-api/src/main/java"
+	apiDir = "../dynamic-data-mapping-api/src/main/java"
 	autoNamespaceTables = false
-	testDirName = "../dynamic-data-mapping-test/src/testIntegration/java"
+	testDir = "../dynamic-data-mapping-test/src/testIntegration/java"
 }
 
 dependencies {
 	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
+	compile project(":apps:configuration-admin:configuration-admin-api")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-io")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-validator")
+	compile project(":apps:export-import:export-import-api")
 	compile project(":apps:mobile-device-rules:mobile-device-rules-api")
 	compile project(":core:osgi-service-tracker-map")
 	compile project(":portal:portal-upgrade")

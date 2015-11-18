@@ -221,7 +221,7 @@ public class DLImpl implements DL {
 			FileEntry.class.getName(), PortletProvider.Action.MANAGE);
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			portletRequest, portletId, 0, PortletRequest.RENDER_PHASE);
+			portletRequest, portletId, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/document_library/view_file_entry");
@@ -238,7 +238,7 @@ public class DLImpl implements DL {
 			Folder.class.getName(), PortletProvider.Action.MANAGE);
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			portletRequest, portletId, 0, PortletRequest.RENDER_PHASE);
+			portletRequest, portletId, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/document_library/view");
@@ -1136,7 +1136,7 @@ public class DLImpl implements DL {
 			(plid == LayoutConstants.DEFAULT_PLID)) {
 
 			portletURL = PortalUtil.getControlPanelPortletURL(
-				request, portletId, 0, PortletRequest.RENDER_PHASE);
+				request, portletId, PortletRequest.RENDER_PHASE);
 		}
 		else {
 			portletURL = PortletURLFactoryUtil.create(

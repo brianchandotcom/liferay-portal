@@ -56,6 +56,7 @@ public class WorkflowDefinitionLinkPanelApp extends BasePanelApp {
 		return super.hasAccessPermission(permissionChecker, group);
 	}
 
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + WorkflowDefinitionLinkPortletKeys.WORKFLOW_DEFINITION_LINK + ")",
 		unbind = "-"

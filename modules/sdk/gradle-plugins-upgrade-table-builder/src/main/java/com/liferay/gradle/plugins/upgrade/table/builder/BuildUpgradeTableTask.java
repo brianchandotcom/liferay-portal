@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.upgrade.table.builder;
 
+import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.portal.tools.upgrade.table.builder.UpgradeTableBuilderArgs;
 
@@ -22,95 +23,69 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.gradle.api.Project;
-import org.gradle.api.file.FileCollection;
+import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.JavaExec;
-import org.gradle.process.JavaExecSpec;
 
 /**
  * @author Andrea Di Giorgi
  */
 public class BuildUpgradeTableTask extends JavaExec {
 
-	@Override
-	public JavaExecSpec args(Iterable<?> args) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public JavaExec args(Object... args) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public JavaExec classpath(Object... paths) {
-		throw new UnsupportedOperationException();
+	public BuildUpgradeTableTask() {
+		setMain(
+			"com.liferay.portal.tools.upgrade.table.builder." +
+				"UpgradeTableBuilder");
 	}
 
 	@Override
 	public void exec() {
-		super.setArgs(getArgs());
-		super.setClasspath(getClasspath());
-		super.setWorkingDir(getWorkingDir());
+		setArgs(getCompleteArgs());
 
 		super.exec();
 	}
 
-	@Override
-	public List<String> getArgs() {
-		List<String> args = new ArrayList<>();
+	@InputDirectory
+	public File getBaseDir() {
+		return GradleUtil.toFile(getProject(), _baseDir);
+	}
 
-		args.add("upgrade.base.dir=" + getBaseDirName());
+	@InputDirectory
+	public File getUpgradeTableDir() {
+		return GradleUtil.toFile(getProject(), _upgradeTableDir);
+	}
+
+	@Input
+	public boolean isOsgiModule() {
+		return _osgiModule;
+	}
+
+	public void setBaseDir(Object baseDir) {
+		_baseDir = baseDir;
+	}
+
+	public void setOsgiModule(boolean osgiModule) {
+		_osgiModule = osgiModule;
+	}
+
+	public void setUpgradeTableDir(Object upgradeTableDir) {
+		_upgradeTableDir = upgradeTableDir;
+	}
+
+	protected List<String> getCompleteArgs() {
+		List<String> args = new ArrayList<>(getArgs());
+
+		args.add("upgrade.base.dir=" + FileUtil.getAbsolutePath(getBaseDir()));
 		args.add("upgrade.osgi.module=" + isOsgiModule());
-		args.add("upgrade.table.dir=" + getUpgradeTableDirName());
+		args.add(
+			"upgrade.table.dir=" +
+				FileUtil.getAbsolutePath(getUpgradeTableDir()));
 
 		return args;
 	}
 
-	public String getBaseDirName() {
-		return _upgradeTableBuilderArgs.getBaseDirName();
-	}
-
-	@Override
-	public FileCollection getClasspath() {
-		return GradleUtil.getConfiguration(
-			getProject(), UpgradeTableBuilderPlugin.CONFIGURATION_NAME);
-	}
-
-	@Override
-	public String getMain() {
-		return "com.liferay.portal.tools.upgrade.table.builder." +
-			"UpgradeTableBuilder";
-	}
-
-	public String getUpgradeTableDirName() {
-		return _upgradeTableBuilderArgs.getUpgradeTableDirName();
-	}
-
-	@Override
-	public File getWorkingDir() {
-		Project project = getProject();
-
-		return project.getProjectDir();
-	}
-
-	public boolean isOsgiModule() {
-		return _upgradeTableBuilderArgs.isOsgiModule();
-	}
-
-	public void setBaseDirName(String baseDirName) {
-		_upgradeTableBuilderArgs.setBaseDirName(baseDirName);
-	}
-
-	public void setOsgiModule(boolean osgiModule) {
-		_upgradeTableBuilderArgs.setOsgiModule(osgiModule);
-	}
-
-	public void setUpgradeTableDirName(String upgradeTableDirName) {
-		_upgradeTableBuilderArgs.setUpgradeTableDirName(upgradeTableDirName);
-	}
-
-	private final UpgradeTableBuilderArgs _upgradeTableBuilderArgs =
-		new UpgradeTableBuilderArgs();
+	private Object _baseDir = UpgradeTableBuilderArgs.BASE_DIR_NAME;
+	private boolean _osgiModule = UpgradeTableBuilderArgs.OSGI_MODULE;
+	private Object _upgradeTableDir;
 
 }

@@ -2777,7 +2777,7 @@ public class IntrabandProxyUtilTest {
 
 	private interface TestGenerateInterface1
 		extends Comparable<String>, Callable<String>, Runnable,
-		TestEmptyMethodsInterface, TestProxyMethodsInterface {
+				TestEmptyMethodsInterface, TestProxyMethodsInterface {
 	}
 
 	private interface TestGenerateInterface2

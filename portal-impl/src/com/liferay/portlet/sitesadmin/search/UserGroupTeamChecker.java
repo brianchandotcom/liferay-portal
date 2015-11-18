@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.sitesadmin.search;
 
-import com.liferay.portal.kernel.dao.search.RowChecker;
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Team;
@@ -26,7 +26,7 @@ import javax.portlet.RenderResponse;
 /**
  * @author Edward Han
  */
-public class UserGroupTeamChecker extends RowChecker {
+public class UserGroupTeamChecker extends EmptyOnClickRowChecker {
 
 	public UserGroupTeamChecker(RenderResponse renderResponse, Team team) {
 		super(renderResponse);
@@ -36,6 +36,15 @@ public class UserGroupTeamChecker extends RowChecker {
 
 	@Override
 	public boolean isChecked(Object obj) {
+		return hasTeamUserGroup(obj);
+	}
+
+	@Override
+	public boolean isDisabled(Object obj) {
+		return hasTeamUserGroup(obj);
+	}
+
+	protected boolean hasTeamUserGroup(Object obj) {
 		UserGroup userGroup = (UserGroup)obj;
 
 		try {

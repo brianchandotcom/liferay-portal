@@ -18,7 +18,6 @@ admin.default.role.names
 admin.default.user.group.names
 asset.publisher.asset.entry.query.processors
 asset.publisher.display.styles
-asset.publisher.query.form.configuration
 auth.forward.by.last.path
 auth.public.paths
 auto.deploy.listeners

@@ -27,8 +27,8 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
-import com.liferay.portal.util.WebKeys;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,6 +43,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -92,10 +93,6 @@ public class UploadServletRequestImpl
 			ServletFileUpload servletFileUpload = new ServletFileUpload(
 				new LiferayFileItemFactory(getTempDir()));
 
-			servletFileUpload.setSizeMax(
-				PrefsPropsUtil.getLong(
-					PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE));
-
 			liferayServletRequest = new LiferayServletRequest(request);
 
 			List<org.apache.commons.fileupload.FileItem> fileItems =
@@ -103,8 +100,50 @@ public class UploadServletRequestImpl
 
 			liferayServletRequest.setFinishedReadingOriginalStream(true);
 
+			long uploadServletRequestImplMaxSize = PrefsPropsUtil.getLong(
+				PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
+			long uploadServletRequestImplSize = 0;
+
+			int contentLength = request.getContentLength();
+
+			if ((uploadServletRequestImplMaxSize > 0) &&
+				((contentLength == -1) ||
+				 (contentLength > uploadServletRequestImplMaxSize))) {
+
+				fileItems = sort(fileItems);
+			}
+
 			for (org.apache.commons.fileupload.FileItem fileItem : fileItems) {
 				LiferayFileItem liferayFileItem = (LiferayFileItem)fileItem;
+
+				if (uploadServletRequestImplMaxSize > 0) {
+					long itemSize = liferayFileItem.getItemSize();
+
+					if ((uploadServletRequestImplSize + itemSize) >
+							uploadServletRequestImplMaxSize) {
+
+						StringBundler sb = new StringBundler(3);
+
+						sb.append(
+							"Request reached the maximum permitted size of ");
+						sb.append(uploadServletRequestImplMaxSize);
+						sb.append(" bytes");
+
+						UploadException uploadException = new UploadException(
+							sb.toString());
+
+						uploadException.setExceededLiferayFileItemSizeLimit(
+							false);
+						uploadException.setExceededSizeLimit(true);
+
+						request.setAttribute(
+							WebKeys.UPLOAD_EXCEPTION, uploadException);
+
+						continue;
+					}
+
+					uploadServletRequestImplSize += itemSize;
+				}
 
 				if (liferayFileItem.isFormField()) {
 					liferayFileItem.setString(request.getCharacterEncoding());
@@ -542,6 +581,39 @@ public class UploadServletRequestImpl
 		return inputStream;
 	}
 
+	protected List<org.apache.commons.fileupload.FileItem> sort(
+		List<org.apache.commons.fileupload.FileItem> fileItems) {
+
+		Map<String, GroupedFileItems> groupedFileItemsMap = new HashMap<>();
+
+		for (org.apache.commons.fileupload.FileItem fileItem : fileItems) {
+			String fieldName = fileItem.getFieldName();
+
+			GroupedFileItems groupedFileItems = groupedFileItemsMap.get(
+				fieldName);
+
+			if (groupedFileItems == null) {
+				groupedFileItems = new GroupedFileItems(fieldName);
+
+				groupedFileItemsMap.put(fieldName, groupedFileItems);
+			}
+
+			groupedFileItems.addFileItem(fileItem);
+		}
+
+		Set<GroupedFileItems> groupedFileItemsList = new TreeSet<>(
+			groupedFileItemsMap.values());
+
+		List<org.apache.commons.fileupload.FileItem> sortedFileItems =
+			new ArrayList<>();
+
+		for (GroupedFileItems groupedFileItems : groupedFileItemsList) {
+			sortedFileItems.addAll(groupedFileItems.getFileItems());
+		}
+
+		return sortedFileItems;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		UploadServletRequestImpl.class);
 
@@ -550,5 +622,55 @@ public class UploadServletRequestImpl
 	private final Map<String, FileItem[]> _fileParameters;
 	private final LiferayServletRequest _liferayServletRequest;
 	private final Map<String, List<String>> _regularParameters;
+
+	private class GroupedFileItems implements Comparable<GroupedFileItems> {
+
+		public GroupedFileItems(String key) {
+			_key = key;
+		}
+
+		public void addFileItem(
+			org.apache.commons.fileupload.FileItem fileItem) {
+
+			_fileItems.add(fileItem);
+
+			_fileItemsSize += fileItem.getSize();
+		}
+
+		@Override
+		public int compareTo(GroupedFileItems groupedFileItems) {
+			if (groupedFileItems == null) {
+				return 1;
+			}
+
+			if (equals(groupedFileItems)) {
+				return 0;
+			}
+
+			if (_key.equals(groupedFileItems._key)) {
+				return 1;
+			}
+
+			if (getFileItemsSize() >= groupedFileItems.getFileItemsSize()) {
+				return 1;
+			}
+
+			return -1;
+		}
+
+		public List<org.apache.commons.fileupload.FileItem> getFileItems() {
+			return _fileItems;
+		}
+
+		public int getFileItemsSize() {
+			return _fileItemsSize;
+		}
+
+		private final List<org.apache.commons.fileupload.FileItem> _fileItems =
+			new ArrayList<>();
+		private int _fileItemsSize;
+		private final String _key;
+
+	}
 
 }

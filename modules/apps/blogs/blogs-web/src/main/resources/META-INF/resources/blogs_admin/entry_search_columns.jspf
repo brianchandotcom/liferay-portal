@@ -118,6 +118,16 @@
 			property="displayDate"
 		/>
 
+		<%
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(BlogsEntry.class.getName(), entry.getEntryId());
+		%>
+
+		<liferay-ui:search-container-column-text
+			name="views"
+			orderable="<%= false %>"
+			value="<%= String.valueOf(assetEntry.getViewCount()) %>"
+		/>
+
 		<liferay-ui:search-container-column-status
 			name="status"
 		/>

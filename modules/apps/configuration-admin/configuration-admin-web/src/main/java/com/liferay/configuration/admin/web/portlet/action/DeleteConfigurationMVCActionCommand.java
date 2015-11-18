@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.ThemeDisplay;
 
 import java.io.IOException;
 
@@ -54,6 +56,9 @@ public class DeleteConfigurationMVCActionCommand implements MVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortletException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		String pid = ParamUtil.getString(actionRequest, "pid");
 
 		if (_log.isDebugEnabled()) {
@@ -63,7 +68,7 @@ public class DeleteConfigurationMVCActionCommand implements MVCActionCommand {
 		try {
 			ConfigurationHelper configurationHelper = new ConfigurationHelper(
 				bundleContext, configurationAdmin, extendedMetaTypeService,
-				pid);
+				themeDisplay.getLanguageId());
 
 			Configuration configuration = configurationHelper.getConfiguration(
 				pid);

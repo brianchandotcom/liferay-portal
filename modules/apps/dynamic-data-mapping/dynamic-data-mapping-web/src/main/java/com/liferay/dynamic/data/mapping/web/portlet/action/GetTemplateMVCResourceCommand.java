@@ -87,7 +87,7 @@ public class GetTemplateMVCResourceCommand extends BaseMVCResourceCommand {
 			contentType);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMTemplateService(
 		DDMTemplateService ddmTemplateService) {
 

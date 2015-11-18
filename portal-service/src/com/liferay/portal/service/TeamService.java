@@ -48,7 +48,6 @@ public interface TeamService extends BaseService {
 	 */
 
 	/**
-	* @throws PortalException
 	* @deprecated As of 7.0.0, replaced by {@link #addTeam(long, String,
 	String, ServiceContext)}
 	*/

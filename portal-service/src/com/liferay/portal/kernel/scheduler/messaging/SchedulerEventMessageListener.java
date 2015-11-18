@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntry;
  */
 public interface SchedulerEventMessageListener extends MessageListener {
 
-	public String getMessageListenerUUID();
-
 	public SchedulerEntry getSchedulerEntry();
 
 }

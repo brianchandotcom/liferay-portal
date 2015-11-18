@@ -79,7 +79,7 @@ public class PortalExecutorManagerImpl implements PortalExecutorManager {
 		return previousThreadPoolExecutor;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setPortalExecutorFactory(
 		PortalExecutorFactory portalExecutorFactory) {
 

@@ -97,7 +97,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader");
 				Group stagingGroup = layoutsAdminDisplayContext.getStagingGroup();
 				%>
 
-				<c:if test="<%= stagingGroup.isStaged() %>">
+				<c:if test="<%= stagingGroup.isStaged() && (selGroup.getGroupId() == stagingGroup.getGroupId()) %>">
 
 					<%
 					long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
@@ -127,42 +127,51 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader");
 
 					<c:choose>
 						<c:when test="<%= layoutSetBranches.size() > 1 %>">
-							<aui:nav-bar>
-								<aui:nav cssClass="navbar-nav">
-									<aui:nav-item dropdown="<%= true %>" label="<%= HtmlUtil.escape(layoutSetBranch.getName()) %>">
+							<ul class="nav nav-equal-height nav-nested">
+								<li>
+									<div class="nav-equal-height-heading">
+										<span><%= HtmlUtil.escape(LanguageUtil.get(request, layoutSetBranch.getName())) %></span>
 
-										<%
-										for (int i = 0; i < layoutSetBranches.size(); i++) {
-											LayoutSetBranch curLayoutSetBranch = layoutSetBranches.get(i);
+										<span class="nav-equal-height-heading-field">
+											<liferay-ui:icon-menu direction="down" icon="../aui/cog" message="" showArrow="<%= false %>">
 
-											boolean selected = (curLayoutSetBranch.getLayoutSetBranchId() == layoutSetBranch.getLayoutSetBranchId());
-										%>
+												<%
+												Map<String, Object> data = new HashMap<String, Object>();
 
-											<portlet:renderURL var="layoutSetBranchURL">
-												<portlet:param name="mvcPath" value="/view.jsp" />
-												<portlet:param name="redirect" value="<%= String.valueOf(layoutsAdminDisplayContext.getRedirectURL()) %>" />
-												<portlet:param name="groupId" value="<%= String.valueOf(curLayoutSetBranch.getGroupId()) %>" />
-												<portlet:param name="privateLayout" value="<%= String.valueOf(layoutsAdminDisplayContext.isPrivateLayout()) %>" />
-												<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(curLayoutSetBranch.getLayoutSetBranchId()) %>" />
-											</portlet:renderURL>
+												data.put("navigation", Boolean.TRUE.toString());
 
-											<aui:nav-item cssClass='<%= selected ? "disabled" : StringPool.BLANK %>' href="<%= selected ? null : layoutSetBranchURL %>" label="<%= HtmlUtil.escape(curLayoutSetBranch.getName()) %>" />
+												for (int i = 0; i < layoutSetBranches.size(); i++) {
+													LayoutSetBranch curLayoutSetBranch = layoutSetBranches.get(i);
 
-										<%
-										}
-										%>
+													boolean selected = (curLayoutSetBranch.getLayoutSetBranchId() == layoutSetBranch.getLayoutSetBranchId());
 
-									</aui:nav-item>
-								</aui:nav>
-							</aui:nav-bar>
+													PortletURL layoutSetBranchURL = PortalUtil.getControlPanelPortletURL(request, LayoutAdminPortletKeys.GROUP_PAGES, PortletRequest.RENDER_PHASE);
+
+													layoutSetBranchURL.setParameter("mvcPath", "/view.jsp");
+													layoutSetBranchURL.setParameter("redirect", String.valueOf(layoutsAdminDisplayContext.getRedirectURL()));
+													layoutSetBranchURL.setParameter("groupId", String.valueOf(curLayoutSetBranch.getGroupId()));
+													layoutSetBranchURL.setParameter("privateLayout", String.valueOf(layoutsAdminDisplayContext.isPrivateLayout()));
+													layoutSetBranchURL.setParameter("layoutSetBranchId", String.valueOf(curLayoutSetBranch.getLayoutSetBranchId()));
+												%>
+
+													<liferay-ui:icon
+														cssClass='<%= selected ? "disabled" : StringPool.BLANK %>'
+														data="<%= data %>"
+														message="<%= HtmlUtil.escape(curLayoutSetBranch.getName()) %>"
+														url="<%= selected ? null : layoutSetBranchURL.toString() %>"
+													/>
+
+												<%
+												}
+												%>
+
+											</liferay-ui:icon-menu>
+										</span>
+									</div>
+								</li>
+							</ul>
 						</c:when>
 					</c:choose>
-
-					<%
-					request.setAttribute(WebKeys.PRIVATE_LAYOUT, layoutsAdminDisplayContext.isPrivateLayout());
-					%>
-
-					<liferay-staging:menu cssClass="manage-pages-branch-menu" extended="<%= true %>" icon="/common/tool.png" message="" selPlid="<%= layoutsAdminDisplayContext.getSelPlid() %>" showManageBranches="<%= true %>"  />
 				</c:if>
 
 				<%

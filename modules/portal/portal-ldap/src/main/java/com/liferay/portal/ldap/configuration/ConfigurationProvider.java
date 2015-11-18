@@ -24,6 +24,10 @@ import org.osgi.service.cm.Configuration;
  */
 public interface ConfigurationProvider<T> {
 
+	public boolean delete(long companyId);
+
+	public boolean delete(long companyId, long index);
+
 	public T getConfiguration(long companyId);
 
 	public T getConfiguration(long companyId, boolean useDefault);
@@ -50,9 +54,6 @@ public interface ConfigurationProvider<T> {
 
 	public List<Dictionary<String, Object>> getConfigurationsProperties(
 		long companyId);
-
-	public List<Dictionary<String, Object>> getConfigurationsProperties(
-		long companyId, boolean useDefault);
 
 	public Class<T> getMetatype();
 

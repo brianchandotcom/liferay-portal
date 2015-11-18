@@ -267,7 +267,7 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 
 			Liferay.Util.openDDMPortlet(
 				{
-					basePortletURL: '<%= PortalUtil.getControlPanelPortletURL(request, PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.VIEW), 0, PortletRequest.RENDER_PHASE) %>',
+					basePortletURL: '<%= PortalUtil.getControlPanelPortletURL(request, PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.VIEW), PortletRequest.RENDER_PHASE) %>',
 					classNameId: '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
 					classPK: templatePreviewContent.attr('data-structure-key'),
 					dialog: {

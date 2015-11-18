@@ -66,7 +66,6 @@ public class AssetLinkLocalServiceUtil {
 	* @param weight the weight of the relationship, allowing precedence
 	ordering of links
 	* @return the asset link
-	* @throws PortalException if the user could not be found
 	*/
 	public static com.liferay.portlet.asset.model.AssetLink addLink(
 		long userId, long entryId1, long entryId2, int type, int weight)
@@ -122,7 +121,6 @@ public class AssetLinkLocalServiceUtil {
 	* Deletes the asset link.
 	*
 	* @param linkId the primary key of the asset link
-	* @throws PortalException if the asset link could not be found
 	*/
 	public static void deleteLink(long linkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -418,7 +416,6 @@ public class AssetLinkLocalServiceUtil {
 	bidirectional relationship and {@link
 	AssetLinkConstants#TYPE_CHILD} which is a unidirectional
 	relationship. For more information see {@link AssetLinkConstants}
-	* @throws PortalException if the user could not be found
 	*/
 	public static void updateLinks(long userId, long entryId,
 		long[] linkEntryIds, int typeId)

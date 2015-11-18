@@ -5,5 +5,4 @@ Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources
 Web-ContextPath: /frontend-theme-classic-web
-
 -donotcopy: (.*_diffs.*)

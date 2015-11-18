@@ -40,7 +40,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jorge Ferrer
  * @author Peter Fellwock
  */
-
 @Component(
 	property = {
 		"javax.portlet.name=" + PluginsAdminPortletKeys.PLUGINS_ADMIN,

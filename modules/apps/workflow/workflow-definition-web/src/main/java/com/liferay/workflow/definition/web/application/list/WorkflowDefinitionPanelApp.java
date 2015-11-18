@@ -41,6 +41,7 @@ public class WorkflowDefinitionPanelApp extends BasePanelApp {
 		return WorkflowDefinitionPortletKeys.WORKFLOW_DEFINITION;
 	}
 
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + WorkflowDefinitionPortletKeys.WORKFLOW_DEFINITION + ")",
 		unbind = "-"

@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.BaseDDMFormValuesReader;
 import com.liferay.portlet.dynamicdatamapping.DDMFormValues;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 /**
  * @author Adolfo Pérez
@@ -40,15 +38,13 @@ final class JournalArticleDDMFormValuesReader extends BaseDDMFormValuesReader {
 	@Override
 	public DDMFormValues getDDMFormValues() throws PortalException {
 		try {
-			JournalConverter journalConverter = getJournalConverter();
-
 			DDMStructure ddmStructure =
 				DDMStructureLocalServiceUtil.getStructure(
 					PortalUtil.getSiteGroupId(_article.getGroupId()),
 					PortalUtil.getClassNameId(JournalArticle.class),
 					_article.getDDMStructureKey(), true);
 
-			Fields fields = journalConverter.getDDMFields(
+			Fields fields = _journalConverter.getDDMFields(
 				ddmStructure, _article.getContent());
 
 			return DDMBeanTranslatorUtil.translate(
@@ -61,12 +57,10 @@ final class JournalArticleDDMFormValuesReader extends BaseDDMFormValuesReader {
 		}
 	}
 
-	protected JournalConverter getJournalConverter() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		return registry.getService(JournalConverter.class);
+	public void setJournalConverter(JournalConverter journalConverter) {
+		_journalConverter = journalConverter;
 	}
 
 	private final JournalArticle _article;
-
+	private JournalConverter _journalConverter;
 }

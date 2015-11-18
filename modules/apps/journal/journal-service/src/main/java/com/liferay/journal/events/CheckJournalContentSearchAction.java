@@ -78,7 +78,7 @@ public class CheckJournalContentSearchAction extends SimpleAction {
 		}
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setCompanyLocalService(
 		CompanyLocalService companyLocalService) {
 

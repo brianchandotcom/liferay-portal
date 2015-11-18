@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
@@ -90,7 +91,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
@@ -469,8 +469,7 @@ public class StagingImpl implements Staging {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             com.liferay.portlet.exportimport.service.StagingLocalService#disableStaging(
-	 *             Group, ServiceContext)}
+	 *             StagingLocalService#disableStaging(Group, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -483,8 +482,7 @@ public class StagingImpl implements Staging {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             com.liferay.portlet.exportimport.service.StagingLocalService#disableStaging(
-	 *             Group, ServiceContext)}
+	 *             StagingLocalService#disableStaging(Group, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -496,8 +494,8 @@ public class StagingImpl implements Staging {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             com.liferay.portlet.exportimport.service.StagingLocalService#disableStaging(
-	 *             PortletRequest, Group, ServiceContext)}
+	 *             StagingLocalService#disableStaging(PortletRequest, Group,
+	 *             ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -511,8 +509,8 @@ public class StagingImpl implements Staging {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             com.liferay.portlet.exportimport.service.StagingLocalService#disableStaging(
-	 *             PortletRequest, Group, ServiceContext)}
+	 *             StagingLocalService#disableStaging(PortletRequest, Group,
+	 *             ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -527,8 +525,8 @@ public class StagingImpl implements Staging {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             com.liferay.portlet.exportimport.service.StagingLocalService#enableLocalStaging(
-	 *             long, Group, boolean, boolean, ServiceContext)}
+	 *             StagingLocalService#enableLocalStaging(long, Group, boolean,
+	 *             boolean, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -545,9 +543,8 @@ public class StagingImpl implements Staging {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             com.liferay.portlet.exportimport.service.StagingLocalService#enableRemoteStaging(
-	 *             long, Group, boolean, boolean, String, int, String, boolean,
-	 *             long, ServiceContext)}
+	 *             StagingLocalService#enableRemoteStaging(long, Group, boolean,
+	 *             boolean, String, int, String, boolean, long, ServiceContext)}
 	 */
 	@Deprecated
 	@Override

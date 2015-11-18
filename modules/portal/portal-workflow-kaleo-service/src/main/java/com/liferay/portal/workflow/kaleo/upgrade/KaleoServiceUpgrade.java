@@ -31,21 +31,21 @@ public class KaleoServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		String bundleSymbolicName = "com.liferay.portal.workflow.kaleo.service";
-
 		registry.register(
-			bundleSymbolicName, "0.0.1", "1.0.0",
+			"com.liferay.portal.workflow.kaleo.service", "0.0.1", "1.0.0",
 			new UpgradeKaleoTaskInstanceToken());
 
 		registry.register(
-			bundleSymbolicName, "1.0.0", "1.1.0", new UpgradeWorkflowContext());
+			"com.liferay.portal.workflow.kaleo.service", "1.0.0", "1.1.0",
+			new UpgradeWorkflowContext());
 
 		registry.register(
-			bundleSymbolicName, "1.1.0", "1.2.0", new UpgradeKaleoLog(),
-			new UpgradeKaleoNotificationRecipient());
+			"com.liferay.portal.workflow.kaleo.service", "1.1.0", "1.2.0",
+			new UpgradeKaleoLog(), new UpgradeKaleoNotificationRecipient());
 
 		registry.register(
-			bundleSymbolicName, "1.2.0", "1.3.0", new UpgradeKaleoInstance());
+			"com.liferay.portal.workflow.kaleo.service", "1.2.0", "1.3.0",
+			new UpgradeKaleoInstance());
 	}
 
 }

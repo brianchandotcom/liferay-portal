@@ -69,6 +69,7 @@ public class UserSearchFacet extends BaseJSPSearchFacet {
 		return "/facets/view/users.jsp";
 	}
 
+	@Override
 	public String getFacetClassName() {
 		return MultiValueFacet.class.getName();
 	}

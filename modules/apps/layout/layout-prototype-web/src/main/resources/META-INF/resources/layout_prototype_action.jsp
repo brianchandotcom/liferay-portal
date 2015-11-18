@@ -59,7 +59,7 @@ LayoutPrototype layoutPrototype = (LayoutPrototype)row.getObject();
 	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, layoutPrototype.getGroup(), ActionKeys.EXPORT_IMPORT_LAYOUTS) %>">
 
 		<%
-		PortletURL exportURL = PortalUtil.getControlPanelPortletURL(request, PortletKeys.EXPORT_IMPORT, 0, PortletRequest.RENDER_PHASE);
+		PortletURL exportURL = PortalUtil.getControlPanelPortletURL(request, PortletKeys.EXPORT_IMPORT, PortletRequest.RENDER_PHASE);
 
 		exportURL.setParameter("mvcRenderCommandName", "exportLayouts");
 		exportURL.setParameter(Constants.CMD, Constants.EXPORT);
@@ -79,7 +79,7 @@ LayoutPrototype layoutPrototype = (LayoutPrototype)row.getObject();
 		/>
 
 		<%
-		PortletURL importURL = PortalUtil.getControlPanelPortletURL(request, PortletKeys.EXPORT_IMPORT, 0, PortletRequest.RENDER_PHASE);
+		PortletURL importURL = PortalUtil.getControlPanelPortletURL(request, PortletKeys.EXPORT_IMPORT, PortletRequest.RENDER_PHASE);
 
 		importURL.setParameter("mvcRenderCommandName", "importLayouts");
 		importURL.setParameter(Constants.CMD, Constants.IMPORT);

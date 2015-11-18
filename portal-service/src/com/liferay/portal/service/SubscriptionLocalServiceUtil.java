@@ -72,7 +72,6 @@ public class SubscriptionLocalServiceUtil {
 	* @param className the entity's class name
 	* @param classPK the primary key of the entity's instance
 	* @return the subscription
-	* @throws PortalException if a matching user or group could not be found
 	*/
 	public static com.liferay.portal.model.Subscription addSubscription(
 		long userId, long groupId, java.lang.String className, long classPK)
@@ -100,7 +99,6 @@ public class SubscriptionLocalServiceUtil {
 	* @param classPK the primary key of the entity's instance
 	* @param frequency the frequency for notifications
 	* @return the subscription
-	* @throws PortalException if a matching user or group could not be found
 	*/
 	public static com.liferay.portal.model.Subscription addSubscription(
 		long userId, long groupId, java.lang.String className, long classPK,
@@ -164,8 +162,6 @@ public class SubscriptionLocalServiceUtil {
 	* @param userId the primary key of the user
 	* @param className the entity's class name
 	* @param classPK the primary key of the entity's instance
-	* @throws PortalException if a matching user or subscription could not be
-	found
 	*/
 	public static void deleteSubscription(long userId,
 		java.lang.String className, long classPK)
@@ -179,7 +175,6 @@ public class SubscriptionLocalServiceUtil {
 	* @param companyId the primary key of the company
 	* @param className the entity's class name
 	* @param classPK the primary key of the entity's instance
-	* @throws PortalException if a portal exception occurred
 	*/
 	public static void deleteSubscriptions(long companyId,
 		java.lang.String className, long classPK)
@@ -191,7 +186,6 @@ public class SubscriptionLocalServiceUtil {
 	* Deletes all the subscriptions of the user.
 	*
 	* @param userId the primary key of the user
-	* @throws PortalException if a portal exception occurred
 	*/
 	public static void deleteSubscriptions(long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -319,7 +313,6 @@ public class SubscriptionLocalServiceUtil {
 	* @param className the entity's class name
 	* @param classPK the primary key of the entity's instance
 	* @return the subscription of the user to the entity
-	* @throws PortalException if a matching subscription could not be found
 	*/
 	public static com.liferay.portal.model.Subscription getSubscription(
 		long companyId, long userId, java.lang.String className, long classPK)

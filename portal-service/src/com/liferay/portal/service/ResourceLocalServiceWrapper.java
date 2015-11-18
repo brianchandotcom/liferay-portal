@@ -72,8 +72,6 @@ public class ResourceLocalServiceWrapper implements ResourceLocalService,
 	add the model's default group and guest permissions, set whether
 	to derive default group and guest permissions from the model, set
 	group permissions to apply, and set guest permissions to apply.
-	* @throws PortalException if no portal actions could be found associated
-	with the model or if a portal exception occurred
 	*/
 	@Override
 	public void addModelResources(
@@ -97,8 +95,6 @@ public class ResourceLocalServiceWrapper implements ResourceLocalService,
 	<code>0</code> if no instance exists
 	* @param groupPermissions the group permissions to be applied
 	* @param guestPermissions the guest permissions to be applied
-	* @throws PortalException if no portal actions could be found associated
-	with the model or if a portal exception occurred
 	*/
 	@Override
 	public void addModelResources(long companyId, long groupId, long userId,
@@ -123,8 +119,6 @@ public class ResourceLocalServiceWrapper implements ResourceLocalService,
 	an empty string if no instance exists
 	* @param groupPermissions the group permissions to be applied
 	* @param guestPermissions the guest permissions to be applied
-	* @throws PortalException if no portal actions could be found associated
-	with the model or if a portal exception occurred
 	*/
 	@Override
 	public void addModelResources(long companyId, long groupId, long userId,
@@ -163,8 +157,6 @@ public class ResourceLocalServiceWrapper implements ResourceLocalService,
 	resource is a portlet or the resource's class name otherwise
 	* @param portletActions whether to associate portlet actions with the
 	resource
-	* @throws PortalException if no portal actions could be found associated
-	with the resource or if a portal exception occurred
 	*/
 	@Override
 	public void addResources(long companyId, long groupId,
@@ -191,8 +183,6 @@ public class ResourceLocalServiceWrapper implements ResourceLocalService,
 	resource
 	* @param addGroupPermissions whether to add group permissions
 	* @param addGuestPermissions whether to add guest permissions
-	* @throws PortalException if no portal actions could be found associated
-	with the resource or if a portal exception occurred
 	*/
 	@Override
 	public void addResources(long companyId, long groupId, long userId,
@@ -221,8 +211,6 @@ public class ResourceLocalServiceWrapper implements ResourceLocalService,
 	resource
 	* @param addGroupPermissions whether to add group permissions
 	* @param addGuestPermissions whether to add guest permissions
-	* @throws PortalException if no portal actions could be found associated
-	with the resource or if a portal exception occurred
 	*/
 	@Override
 	public void addResources(long companyId, long groupId, long userId,
@@ -239,7 +227,6 @@ public class ResourceLocalServiceWrapper implements ResourceLocalService,
 	* @param auditedModel the model associated with the resource
 	* @param scope the scope of the resource. For more information see {@link
 	ResourceConstants}.
-	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public void deleteResource(
@@ -257,7 +244,6 @@ public class ResourceLocalServiceWrapper implements ResourceLocalService,
 	* @param scope the scope of the resource. For more information see {@link
 	ResourceConstants}.
 	* @param primKey the primary key of the resource instance
-	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public void deleteResource(long companyId, java.lang.String name,
@@ -275,7 +261,6 @@ public class ResourceLocalServiceWrapper implements ResourceLocalService,
 	* @param scope the scope of the resource. For more information see {@link
 	ResourceConstants}.
 	* @param primKey the primary key string of the resource instance
-	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public void deleteResource(long companyId, java.lang.String name,
@@ -326,9 +311,6 @@ public class ResourceLocalServiceWrapper implements ResourceLocalService,
 	* @param roleIds the primary keys of the roles
 	* @return <code>true</code> if the roles have permission to perform the
 	action on the resources;<code>false</code> otherwise
-	* @throws PortalException if any one of the roles with the primary keys
-	could not be found or if a resource action with the action ID
-	could not be found
 	*/
 	@Override
 	public boolean hasUserPermissions(long userId, long resourceId,
@@ -346,7 +328,6 @@ public class ResourceLocalServiceWrapper implements ResourceLocalService,
 	* @param auditedModel the model associated with the resources
 	* @param serviceContext the service context to be applied. Can set group
 	and guest permissions.
-	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public void updateModelResources(
@@ -367,7 +348,6 @@ public class ResourceLocalServiceWrapper implements ResourceLocalService,
 	* @param primKey the primary key string of the resource instance
 	* @param groupPermissions the group permissions to be applied
 	* @param guestPermissions the guest permissions to be applied
-	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public void updateResources(long companyId, long groupId,
@@ -389,7 +369,6 @@ public class ResourceLocalServiceWrapper implements ResourceLocalService,
 	* @param primKey the primary key of the resource instance
 	* @param groupPermissions the group permissions to be applied
 	* @param guestPermissions the guest permissions to be applied
-	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public void updateResources(long companyId, long groupId,
@@ -410,7 +389,6 @@ public class ResourceLocalServiceWrapper implements ResourceLocalService,
 	resource is a portlet or the resource's class name otherwise
 	* @param primKey the primary key of the resource instance
 	* @param modelPermissions the model permissions to be applied
-	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public void updateResources(long companyId, long groupId,
@@ -431,7 +409,6 @@ public class ResourceLocalServiceWrapper implements ResourceLocalService,
 	resource is a portlet or the resource's class name otherwise
 	* @param primKey the primary key string of the resource instance
 	* @param modelPermissions the model permissions to be applied
-	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public void updateResources(long companyId, long groupId,

@@ -687,7 +687,7 @@ public class MediaWikiImporter implements WikiImporter {
 		_userLocalService = userLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setWikiGroupServiceConfiguration(
 		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
 

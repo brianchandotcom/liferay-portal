@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.StagedModel;
@@ -40,7 +39,6 @@ import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 
 import java.util.List;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -175,25 +173,20 @@ public class StagedAssetLinkStagedModelDataHandler
 			return;
 		}
 
-		Map<Long, Long> assetEntry1Ids =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				stagedAssetLink.getEntry1ClassName());
-		Map<Long, Long> assetEntry2Ids =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				stagedAssetLink.getEntry2ClassName());
+		AssetEntry assetEntry1 = _assetEntryLocalService.fetchEntry(
+			portletDataContext.getScopeGroupId(),
+			stagedAssetLink.getEntry1Uuid());
+		AssetEntry assetEntry2 = _assetEntryLocalService.fetchEntry(
+			portletDataContext.getScopeGroupId(),
+			stagedAssetLink.getEntry2Uuid());
 
-		long assetEntry1Id = MapUtil.getLong(
-			assetEntry1Ids, stagedAssetLink.getEntryId1(), -1);
-		long assetEntry2Id = MapUtil.getLong(
-			assetEntry2Ids, stagedAssetLink.getEntryId2(), -1);
-
-		if ((assetEntry1Id <= 0) || (assetEntry2Id <= 0)) {
+		if ((assetEntry1 == null) || (assetEntry2 == null)) {
 			return;
 		}
 
 		_assetLinkLocalService.addLink(
-			userId, assetEntry1Id, assetEntry2Id, stagedAssetLink.getType(),
-			stagedAssetLink.getWeight());
+			userId, assetEntry1.getEntryId(), assetEntry2.getEntryId(),
+			stagedAssetLink.getType(), stagedAssetLink.getWeight());
 	}
 
 	protected StagedAssetLink fetchExistingAssetLink(
@@ -244,11 +237,11 @@ public class StagedAssetLinkStagedModelDataHandler
 
 		DynamicQuery dynamicQuery = _assetLinkLocalService.dynamicQuery();
 
-		Property entryId1IdProperty = PropertyFactoryUtil.forName("entry1Id");
+		Property entryId1IdProperty = PropertyFactoryUtil.forName("entryId1");
 
 		dynamicQuery.add(entryId1IdProperty.eq(assetEntry1DynamicQuery));
 
-		Property entryId2IdProperty = PropertyFactoryUtil.forName("entry2Id");
+		Property entryId2IdProperty = PropertyFactoryUtil.forName("entryId2");
 
 		dynamicQuery.add(entryId2IdProperty.eq(assetEntry2DynamicQuery));
 
@@ -274,7 +267,6 @@ public class StagedAssetLinkStagedModelDataHandler
 
 			assetEntry1DynamicQuery.add(groupIdCriterion);
 			assetEntry2DynamicQuery.add(groupIdCriterion);
-			dynamicQuery.add(groupIdCriterion);
 		}
 
 		return dynamicQuery;
@@ -288,14 +280,14 @@ public class StagedAssetLinkStagedModelDataHandler
 		return uuid.substring(uuid.indexOf(StringPool.POUND) + 1);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setAssetEntryLocalService(
 		AssetEntryLocalService assetEntryLocalService) {
 
 		_assetEntryLocalService = assetEntryLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setAssetLinkLocalService(
 		AssetLinkLocalService assetLinkLocalService) {
 

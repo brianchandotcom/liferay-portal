@@ -49,8 +49,8 @@ if (fileEntryTypeId != -1) {
 }
 %>
 
-<liferay-ui:app-view-display-style
-	displayStyle="<%= displayStyle %>"
-	displayStyles="<%= dlPortletInstanceSettings.getDisplayViews() %>"
-	displayStyleURL="<%= displayStyleURL %>"
+<liferay-frontend:management-bar-display-buttons
+	displayViews="<%= dlPortletInstanceSettings.getDisplayViews() %>"
+	portletURL="<%= displayStyleURL %>"
+	selectedDisplayStyle="<%= displayStyle %>"
 />

@@ -1232,7 +1232,7 @@ public class Validator {
 
 	/**
 	 * Returns <code>true</code> if the string is a valid URL based on the rules
-	 * in {@link java.net.URL}.
+	 * in {@link URL}.
 	 *
 	 * @param  url the string to check
 	 * @return <code>true</code> if the string is a valid URL;

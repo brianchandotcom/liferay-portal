@@ -34,8 +34,8 @@ import org.aopalliance.intercept.MethodInvocation;
 /**
  * @author Michael C. Han
  */
-public class ServiceMonitorAdvice extends ChainableMethodAdvice
-	implements ServiceMonitoringControl {
+public class ServiceMonitorAdvice
+	extends ChainableMethodAdvice implements ServiceMonitoringControl {
 
 	@Override
 	public void addServiceClass(String className) {

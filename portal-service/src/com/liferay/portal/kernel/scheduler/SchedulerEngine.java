@@ -61,6 +61,10 @@ public interface SchedulerEngine {
 	public static final String MESSAGE_LISTENER_CLASS_NAME =
 		"MESSAGE_LISTENER_CLASS_NAME";
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public static final String MESSAGE_LISTENER_UUID = "MESSAGE_LISTENER_UUID";
 
 	public static final String NEXT_FIRE_TIME = "NEXT_FIRE_TIME";

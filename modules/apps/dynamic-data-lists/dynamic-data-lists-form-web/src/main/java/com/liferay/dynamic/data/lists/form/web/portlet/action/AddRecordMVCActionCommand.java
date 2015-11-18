@@ -24,12 +24,20 @@ import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.portal.kernel.captcha.CaptchaTextException;
+import com.liferay.portal.kernel.captcha.CaptchaUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.util.PortalUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -58,7 +66,11 @@ public class AddRecordMVCActionCommand extends BaseMVCActionCommand {
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 		long recordSetId = ParamUtil.getLong(actionRequest, "recordSetId");
 
-		DDMForm ddmForm = getDDMForm(recordSetId);
+		DDLRecordSet recordSet = _ddlRecordSetService.getRecordSet(recordSetId);
+
+		validateCaptcha(actionRequest, recordSet);
+
+		DDMForm ddmForm = getDDMForm(recordSet);
 
 		DDMFormValues ddmFormValues = _ddmFormValuesFactory.create(
 			actionRequest, ddmForm);
@@ -69,33 +81,69 @@ public class AddRecordMVCActionCommand extends BaseMVCActionCommand {
 		_ddlRecordService.addRecord(
 			groupId, recordSetId, DDLRecordConstants.DISPLAY_INDEX_DEFAULT,
 			ddmFormValues, serviceContext);
+
+		String redirectURL = GetterUtil.getString(
+			recordSet.getSettingsProperty("redirectURL", StringPool.BLANK));
+
+		if (SessionErrors.isEmpty(actionRequest) &&
+			Validator.isNotNull(redirectURL)) {
+
+			String portletId = PortalUtil.getPortletId(actionRequest);
+
+			SessionMessages.add(
+				actionRequest, portletId,
+				SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
+
+			actionResponse.sendRedirect(redirectURL);
+		}
 	}
 
-	protected DDMForm getDDMForm(long recordSetId) throws PortalException {
-		DDLRecordSet recordSet = _ddlRecordSetService.getRecordSet(recordSetId);
+	protected DDMForm getDDMForm(DDLRecordSet recordSet)
+		throws PortalException {
 
 		DDMStructure ddmStructure = recordSet.getDDMStructure();
 
 		return ddmStructure.getDDMForm();
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDLRecordService(DDLRecordService ddlRecordService) {
 		_ddlRecordService = ddlRecordService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDLRecordSetService(
 		DDLRecordSetService ddlRecordSetService) {
 
 		_ddlRecordSetService = ddlRecordSetService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMFormValuesFactory(
 		DDMFormValuesFactory ddmFormValuesFactory) {
 
 		_ddmFormValuesFactory = ddmFormValuesFactory;
+	}
+
+	protected void validateCaptcha(
+			ActionRequest actionRequest, DDLRecordSet recordSet)
+		throws Exception {
+
+		boolean requireCaptcha = GetterUtil.getBoolean(
+			recordSet.getSettingsProperty(
+				"requireCaptcha", Boolean.FALSE.toString()));
+
+		if (requireCaptcha) {
+			try {
+				CaptchaUtil.check(actionRequest);
+			}
+			catch (CaptchaTextException cte) {
+				SessionErrors.add(
+					actionRequest, CaptchaTextException.class.getName());
+
+				throw cte;
+			}
+		}
 	}
 
 	private DDLRecordService _ddlRecordService;

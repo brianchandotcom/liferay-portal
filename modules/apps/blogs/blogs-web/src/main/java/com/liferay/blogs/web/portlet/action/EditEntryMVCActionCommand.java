@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
@@ -52,7 +53,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
@@ -323,46 +323,27 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				}
 			}
 		}
-		catch (Exception e) {
-			String mvcPath = "/blogs/edit_entry.jsp";
+		catch (AssetCategoryException | AssetTagException e) {
+			SessionErrors.add(actionRequest, e.getClass(), e);
 
-			if (e instanceof NoSuchEntryException ||
-				e instanceof PrincipalException) {
+			actionResponse.setRenderParameter(
+				"mvcRenderCommandName", "/blogs/edit_entry");
+		}
+		catch (EntryContentException | EntryCoverImageCropException |
+			   EntryDescriptionException | EntryDisplayDateException |
+			   EntrySmallImageNameException | EntrySmallImageScaleException |
+			   EntryTitleException | FileSizeException |
+			   LiferayFileItemException | SanitizerException e) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+			SessionErrors.add(actionRequest, e.getClass());
 
-				mvcPath = "/blogs/error.jsp";
-			}
-			else if (e instanceof EntryContentException ||
-					 e instanceof EntryCoverImageCropException ||
-					 e instanceof EntryDescriptionException ||
-					 e instanceof EntryDisplayDateException ||
-					 e instanceof EntrySmallImageNameException ||
-					 e instanceof EntrySmallImageScaleException ||
-					 e instanceof EntryTitleException ||
-					 e instanceof FileSizeException ||
-					 e instanceof LiferayFileItemException ||
-					 e instanceof SanitizerException) {
+			actionResponse.setRenderParameter(
+				"mvcRenderCommandName", "/blogs/edit_entry");
+		}
+		catch (NoSuchEntryException | PrincipalException e) {
+			SessionErrors.add(actionRequest, e.getClass());
 
-				SessionErrors.add(actionRequest, e.getClass());
-			}
-			else if (e instanceof AssetCategoryException ||
-					 e instanceof AssetTagException) {
-
-				SessionErrors.add(actionRequest, e.getClass(), e);
-			}
-			else {
-				Throwable cause = e.getCause();
-
-				if (cause instanceof SanitizerException) {
-					SessionErrors.add(actionRequest, SanitizerException.class);
-				}
-				else {
-					throw e;
-				}
-			}
-
-			actionResponse.setRenderParameter("mvcPath", mvcPath);
+			actionResponse.setRenderParameter("mvcPath", "/blogs/error.jsp");
 		}
 		catch (Throwable t) {
 			_log.error(t, t);

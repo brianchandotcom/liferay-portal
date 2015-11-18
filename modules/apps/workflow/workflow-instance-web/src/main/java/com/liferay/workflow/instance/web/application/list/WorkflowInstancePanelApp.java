@@ -41,6 +41,7 @@ public class WorkflowInstancePanelApp extends BasePanelApp {
 		return WorkflowInstancePortletKeys.WORKFLOW_INSTANCE;
 	}
 
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + WorkflowInstancePortletKeys.WORKFLOW_INSTANCE + ")",
 		unbind = "-"

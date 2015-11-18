@@ -41,6 +41,7 @@ public class TrashPanelApp extends BasePanelApp {
 		return TrashPortletKeys.TRASH;
 	}
 
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + TrashPortletKeys.TRASH + ")",
 		unbind = "-"

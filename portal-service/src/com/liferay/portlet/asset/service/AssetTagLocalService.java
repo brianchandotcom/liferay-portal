@@ -77,8 +77,6 @@ public interface AssetTagLocalService extends BaseLocalService,
 	* @param name the asset tag's name
 	* @param serviceContext the service context to be applied
 	* @return the asset tag that was added
-	* @throws PortalException if a user with the primary key could not be found
-	or if a portal exception occurred
 	*/
 	public com.liferay.portlet.asset.model.AssetTag addTag(long userId,
 		long groupId, java.lang.String name,
@@ -99,8 +97,6 @@ public interface AssetTagLocalService extends BaseLocalService,
 	* @param names the asset tag names
 	* @return the asset tags matching the group and names and new asset tags
 	matching the names that don't already exist in the group
-	* @throws PortalException if a matching group could not be found or if a
-	portal exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> checkTags(
 		long userId, com.liferay.portal.model.Group group,
@@ -116,8 +112,6 @@ public interface AssetTagLocalService extends BaseLocalService,
 	* @param names the asset tag names
 	* @return the asset tags matching the group and names and new asset tags
 	matching the names that don't already exist in the group
-	* @throws PortalException if a matching group could not be found or if a
-	portal exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> checkTags(
 		long userId, long groupId, java.lang.String[] names)
@@ -140,8 +134,6 @@ public interface AssetTagLocalService extends BaseLocalService,
 	* @param classNameId the class name ID of the entity to which the asset
 	tag had been applied
 	* @return the asset tag
-	* @throws PortalException if an asset tag with the primary key could not be
-	found or if a portal exception occurred
 	*/
 	public com.liferay.portlet.asset.model.AssetTag decrementAssetCount(
 		long tagId, long classNameId) throws PortalException;
@@ -182,7 +174,6 @@ public interface AssetTagLocalService extends BaseLocalService,
 	*
 	* @param groupId the primary key of the group in which to delete all asset
 	tags
-	* @throws PortalException if a portal exception occurred
 	*/
 	public void deleteGroupTags(long groupId) throws PortalException;
 
@@ -198,7 +189,6 @@ public interface AssetTagLocalService extends BaseLocalService,
 	* Deletes the asset tag.
 	*
 	* @param tag the asset tag to be deleted
-	* @throws PortalException if a portal exception occurred
 	*/
 	@com.liferay.portal.kernel.systemevent.SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public void deleteTag(com.liferay.portlet.asset.model.AssetTag tag)
@@ -208,8 +198,6 @@ public interface AssetTagLocalService extends BaseLocalService,
 	* Deletes the asset tag.
 	*
 	* @param tagId the primary key of the asset tag
-	* @throws PortalException if no asset tag could be found with the primary
-	key or if a portal exception occurred
 	*/
 	public void deleteTag(long tagId) throws PortalException;
 
@@ -487,7 +475,6 @@ public interface AssetTagLocalService extends BaseLocalService,
 	* @param groupId the primary key of the group
 	* @param name the name of the asset tag
 	* @return the asset tag with the name in the group
-	* @throws PortalException if a matching asset tag could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.asset.model.AssetTag getTag(long groupId,
@@ -498,8 +485,6 @@ public interface AssetTagLocalService extends BaseLocalService,
 	*
 	* @param tagId the primary key of the asset tag
 	* @return the asset tag with the primary key
-	* @throws PortalException if an asset tag with the primary key could not be
-	found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.asset.model.AssetTag getTag(long tagId)
@@ -632,8 +617,6 @@ public interface AssetTagLocalService extends BaseLocalService,
 	* @param classNameId the class name ID of the entity to which the asset
 	tag is being applied
 	* @return the asset tag
-	* @throws PortalException if a asset tag with the primary key could not be
-	found or if a portal exception occurred
 	*/
 	public com.liferay.portlet.asset.model.AssetTag incrementAssetCount(
 		long tagId, long classNameId) throws PortalException;
@@ -645,7 +628,6 @@ public interface AssetTagLocalService extends BaseLocalService,
 	* @param fromTagId the primary key of the asset tag to be replaced
 	* @param toTagId the primary key of the asset tag to apply to the asset
 	entries of the other asset tag
-	* @throws PortalException if a portal exception occurred
 	*/
 	public void mergeTags(long fromTagId, long toTagId)
 		throws PortalException;

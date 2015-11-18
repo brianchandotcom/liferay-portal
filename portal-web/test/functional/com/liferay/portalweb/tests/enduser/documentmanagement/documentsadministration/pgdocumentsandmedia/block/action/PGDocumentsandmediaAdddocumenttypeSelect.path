@@ -82,7 +82,7 @@
 </tr>
 <tr>
 	<td>DOCUMENTS_TABLE_CHOOSE</td>
-	<td>//tr[contains(.,'${key_documentTitle}')]/td/input[@value='Choose']</td>
+	<td>//tr[contains(.,'${key_documentTitle}')]/td//input[@value='Choose']</td>
 	<td></td>
 </tr>
 </tbody>

@@ -70,6 +70,10 @@ public interface PortletPreferencesFactory {
 	public PortletPreferences getLayoutPortletSetup(
 		Layout layout, String portletId, String defaultPreferences);
 
+	public PortletPreferences getLayoutPortletSetup(
+		long companyId, long ownerId, int ownerType, long plid,
+		String portletId, String defaultPreferences);
+
 	public PortalPreferences getPortalPreferences(HttpServletRequest request);
 
 	public PortalPreferences getPortalPreferences(

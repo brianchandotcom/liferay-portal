@@ -1,6 +1,6 @@
 buildService {
-	apiDirName = "../marketplace-api/src/main/java"
-	testDirName = "../marketplace-test/src/testIntegration/java"
+	apiDir = "../marketplace-api/src/main/java"
+	testDir = "../marketplace-test/src/testIntegration/java"
 }
 
 dependencies {

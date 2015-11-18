@@ -98,7 +98,7 @@
 </tr>
 <tr>
 	<td>ORGANIZATION_TABLE_CHECKBOX</td>
-	<td>//tr[contains(.,'${key_orgName}')]/td[1]/input</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[1]//input</td>
 	<td></td>
 </tr>
 <tr>

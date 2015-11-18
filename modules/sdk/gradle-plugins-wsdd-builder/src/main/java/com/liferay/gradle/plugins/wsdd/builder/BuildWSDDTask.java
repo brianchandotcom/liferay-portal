@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.wsdd.builder;
 
 import com.liferay.gradle.util.FileUtil;
+import com.liferay.gradle.util.GradleUtil;
 import com.liferay.portal.tools.wsdd.builder.WSDDBuilderArgs;
 
 import java.io.File;
@@ -22,44 +23,73 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.gradle.api.Project;
-import org.gradle.api.artifacts.ConfigurationContainer;
-import org.gradle.api.file.FileCollection;
+import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.JavaExec;
-import org.gradle.process.JavaExecSpec;
 
 /**
  * @author Andrea Di Giorgi
  */
 public class BuildWSDDTask extends JavaExec {
 
-	@Override
-	public JavaExecSpec args(Iterable<?> args) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public JavaExec args(Object... args) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public JavaExec classpath(Object... paths) {
-		throw new UnsupportedOperationException();
+	public BuildWSDDTask() {
+		setMain("com.liferay.portal.tools.wsdd.builder.WSDDBuilder");
 	}
 
 	@Override
 	public void exec() {
-		super.setArgs(getArgs());
-		super.setClasspath(getClasspath());
-		super.setWorkingDir(getWorkingDir());
+		setArgs(getCompleteArgs());
 
 		super.exec();
 	}
 
-	@Override
-	public List<String> getArgs() {
-		List<String> args = new ArrayList<>();
+	@Input
+	public String getBuilderClasspath() {
+		return GradleUtil.toString(_builderClasspath);
+	}
+
+	@InputFile
+	public File getInputFile() {
+		return GradleUtil.toFile(getProject(), _inputFile);
+	}
+
+	@Input
+	public File getOutputDir() {
+		return GradleUtil.toFile(getProject(), _outputDir);
+	}
+
+	@Input
+	public File getServerConfigFile() {
+		return GradleUtil.toFile(getProject(), _serverConfigFile);
+	}
+
+	@Input
+	public String getServiceNamespace() {
+		return GradleUtil.toString(_serviceNamespace);
+	}
+
+	public void setBuilderClasspath(Object builderClasspath) {
+		_builderClasspath = builderClasspath;
+	}
+
+	public void setInputFile(Object inputFile) {
+		_inputFile = inputFile;
+	}
+
+	public void setOutputDir(Object outputDir) {
+		_outputDir = outputDir;
+	}
+
+	public void setServerConfigFile(Object serverConfigFile) {
+		_serverConfigFile = serverConfigFile;
+	}
+
+	public void setServiceNamespace(Object serviceNamespace) {
+		_serviceNamespace = serviceNamespace;
+	}
+
+	protected List<String> getCompleteArgs() {
+		List<String> args = new ArrayList<>(getArgs());
 
 		args.add("wsdd.class.path=" + getBuilderClasspath());
 		args.add("wsdd.input.file=" + FileUtil.getAbsolutePath(getInputFile()));
@@ -74,90 +104,10 @@ public class BuildWSDDTask extends JavaExec {
 		return args;
 	}
 
-	public String getBuilderClasspath() {
-		return _wsddBuilderArgs.getClassPath();
-	}
-
-	@Override
-	public FileCollection getClasspath() {
-		Project project = getProject();
-
-		ConfigurationContainer configurationContainer =
-			project.getConfigurations();
-
-		return configurationContainer.getByName(
-			WSDDBuilderPlugin.CONFIGURATION_NAME);
-	}
-
-	public File getInputFile() {
-		Project project = getProject();
-
-		return project.file(_wsddBuilderArgs.getFileName());
-	}
-
-	@Override
-	public String getMain() {
-		return "com.liferay.portal.tools.wsdd.builder.WSDDBuilder";
-	}
-
-	public File getOutputDir() {
-		Project project = getProject();
-
-		return project.file(_wsddBuilderArgs.getOutputPath());
-	}
-
-	public File getServerConfigFile() {
-		Project project = getProject();
-
-		return project.file(_wsddBuilderArgs.getServerConfigFileName());
-	}
-
-	public String getServiceNamespace() {
-		return _wsddBuilderArgs.getServiceNamespace();
-	}
-
-	@Override
-	public File getWorkingDir() {
-		Project project = getProject();
-
-		return project.getProjectDir();
-	}
-
-	@Override
-	public JavaExec setArgs(Iterable<?> applicationArgs) {
-		throw new UnsupportedOperationException();
-	}
-
-	public void setBuilderClasspath(String builderClasspath) {
-		_wsddBuilderArgs.setClassPath(builderClasspath);
-	}
-
-	@Override
-	public JavaExec setClasspath(FileCollection classpath) {
-		throw new UnsupportedOperationException();
-	}
-
-	public void setInputFileName(String inputFileName) {
-		_wsddBuilderArgs.setFileName(inputFileName);
-	}
-
-	public void setOutputDirName(String outputDirName) {
-		_wsddBuilderArgs.setOutputPath(outputDirName);
-	}
-
-	public void setServerConfigFileName(String serverConfigFileName) {
-		_wsddBuilderArgs.setServerConfigFileName(serverConfigFileName);
-	}
-
-	public void setServiceNamespace(String serviceNamespace) {
-		_wsddBuilderArgs.setServiceNamespace(serviceNamespace);
-	}
-
-	@Override
-	public void setWorkingDir(Object dir) {
-		throw new UnsupportedOperationException();
-	}
-
-	private final WSDDBuilderArgs _wsddBuilderArgs = new WSDDBuilderArgs();
+	private Object _builderClasspath;
+	private Object _inputFile;
+	private Object _outputDir;
+	private Object _serverConfigFile = WSDDBuilderArgs.SERVER_CONFIG_FILE_NAME;
+	private Object _serviceNamespace = WSDDBuilderArgs.SERVICE_NAMESPACE;
 
 }

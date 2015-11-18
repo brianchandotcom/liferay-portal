@@ -83,6 +83,12 @@ public class FailureMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 
 	@Override
 	protected String getMessage(String urlString) throws Exception {
+		Project project = getProject();
+
+		return FailureMessageUtil.getFailureMessage(project, urlString);
+	}
+
+	protected Project getProject() {
 		Project project = new Project();
 
 		project.setProperty(
@@ -94,7 +100,7 @@ public class FailureMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 		project.setProperty("portal.repository", "junit-portal-repository");
 		project.setProperty("repository", "junit-repository");
 
-		return FailureMessageUtil.getFailureMessage(project, urlString);
+		return project;
 	}
 
 }

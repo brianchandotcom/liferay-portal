@@ -12,8 +12,9 @@
 	>
 		<@aui["select"]
 			changesContext=true
+			id='${namespace + name}'
 			label=""
-			name='${namespace + name}'
+			name='${name}'
 			onChange='${namespace + "changeLanguage();"}'
 			title="language"
 		>
@@ -31,11 +32,11 @@
 
 	<@aui["script"]>
 		<#list entries as entry>
-			document.${namespace + formName}.${namespace + name}.options[${entry_index}].style.backgroundImage = 'url(${themeDisplay.getPathThemeImages()}/language/${entry.getLanguageId()}.png)';
+			document.${namespace + formName}.${name}.options[${entry_index}].style.backgroundImage = 'url(${themeDisplay.getPathThemeImages()}/language/${entry.getLanguageId()}.png)';
 		</#list>
 
 		function ${namespace}changeLanguage() {
-			var languageId = AUI.$(document.${namespace + formName}.${namespace + name}).val();
+			var languageId = AUI.$(document.${namespace + formName}.${name}).val();
 
 			submitForm(document.${namespace + formName});
 		}

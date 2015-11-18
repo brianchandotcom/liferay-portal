@@ -36,7 +36,7 @@ import java.util.Map;
 @Settings.Config(
 	settingsIds = {
 		DLPortletKeys.DOCUMENT_LIBRARY, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
-		DLPortletKeys.DOCUMENT_LIBRARY_DISPLAY, DLPortletKeys.MEDIA_GALLERY_DISPLAY
+		DLPortletKeys.MEDIA_GALLERY_DISPLAY
 	}
 )
 public class DLPortletInstanceSettings {

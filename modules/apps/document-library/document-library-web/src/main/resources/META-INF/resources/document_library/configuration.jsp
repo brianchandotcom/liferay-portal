@@ -41,7 +41,45 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 			<aui:input name="preferences--entryColumns--" type="hidden" />
 
 			<liferay-ui:panel-container extended="<%= true %>" id="documentLibrarySettingsPanelContainer" persistState="<%= true %>">
-				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="documentLibraryItemsListingPanel" persistState="<%= true %>" title="display-settings">
+				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="documentLibraryDisplay" persistState="<%= true %>" title="display-settings">
+					<aui:input id="showActions" label="show-actions" name="preferences--showActions--" type="checkbox" value="<%= dlPortletInstanceSettings.isShowActions() %>" />
+
+					<aui:input label="show-folder-menu" name="preferences--showFolderMenu--" type="checkbox" value="<%= dlPortletInstanceSettings.isShowFolderMenu() %>" />
+
+					<aui:input label="show-navigation-links" name="preferences--showTabs--" type="checkbox" value="<%= dlPortletInstanceSettings.isShowTabs() %>" />
+
+					<aui:input label="show-search" name="preferences--showFoldersSearch--" type="checkbox" value="<%= dlPortletInstanceSettings.isShowFoldersSearch() %>" />
+
+					<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= dlPortletInstanceSettings.isEnableRelatedAssets() %>" />
+
+					<aui:select label="maximum-entries-to-display" name="preferences--entriesPerPage--">
+
+						<%
+						for (int pageDeltaValue : PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) {
+						%>
+
+							<aui:option label="<%= pageDeltaValue %>" selected="<%= dlPortletInstanceSettings.getEntriesPerPage() == pageDeltaValue %>" />
+
+						<%
+						}
+						%>
+
+					</aui:select>
+
+					<aui:field-wrapper label="display-style-views">
+						<liferay-ui:input-move-boxes
+							leftBoxName="currentDisplayViews"
+							leftList="<%= dlPortletInstanceSettingsHelper.getCurrentDisplayViews() %>"
+							leftReorder="true"
+							leftTitle="current"
+							rightBoxName="availableDisplayViews"
+							rightList="<%= dlPortletInstanceSettingsHelper.getAvailableDisplayViews() %>"
+							rightTitle="available"
+						/>
+					</aui:field-wrapper>
+				</liferay-ui:panel>
+
+				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="documentLibraryItemsListingPanel" persistState="<%= true %>" title="folders-listing">
 					<aui:fieldset>
 						<div class="form-group">
 							<aui:input label="root-folder" name="rootFolderName" type="resource" value="<%= rootFolderName %>" />
@@ -54,36 +92,6 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 
 							<aui:button disabled="<%= rootFolderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
 						</div>
-
-						<aui:input label="show-search" name="preferences--showFoldersSearch--" type="checkbox" value="<%= dlPortletInstanceSettings.isShowFoldersSearch() %>" />
-
-						<aui:select label="maximum-entries-to-display" name="preferences--entriesPerPage--">
-
-							<%
-							for (int pageDeltaValue : PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) {
-							%>
-
-								<aui:option label="<%= pageDeltaValue %>" selected="<%= dlPortletInstanceSettings.getEntriesPerPage() == pageDeltaValue %>" />
-
-							<%
-							}
-							%>
-
-						</aui:select>
-
-						<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= dlPortletInstanceSettings.isEnableRelatedAssets() %>" />
-
-						<aui:field-wrapper label="display-style-views">
-							<liferay-ui:input-move-boxes
-								leftBoxName="currentDisplayViews"
-								leftList="<%= dlPortletInstanceSettingsHelper.getCurrentDisplayViews() %>"
-								leftReorder="true"
-								leftTitle="current"
-								rightBoxName="availableDisplayViews"
-								rightList="<%= dlPortletInstanceSettingsHelper.getAvailableDisplayViews() %>"
-								rightTitle="available"
-							/>
-						</aui:field-wrapper>
 					</aui:fieldset>
 				</liferay-ui:panel>
 
@@ -143,6 +151,24 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 								Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
 							}
 						);
+					}
+				);
+
+				var showActionsInput = $('#<portlet:namespace />showActions');
+
+				showActionsInput.on(
+					'change',
+					function(event) {
+						var currentColumns = $('#<portlet:namespace />currentEntryColumns');
+
+						if (showActionsInput.prop('checked')) {
+							currentColumns.append('<option value="action"><%= UnicodeLanguageUtil.get(request, "action") %></option>');
+						}
+						else {
+							var allColumns = currentColumns.add('#<portlet:namespace />availableEntryColumns');
+
+							allColumns.find('option[value="action"]').remove();
+						}
 					}
 				);
 			</aui:script>

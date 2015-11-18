@@ -46,7 +46,7 @@
 <!--USER_SEGMENT_TABLE_NAME-->
 <tr>
 	<td>USER_SEGMENT_TABLE_CHECKBOX</td>
-	<td>//tr[contains(.,'${key_userSegment}')]//td/input</td>
+	<td>//tr[contains(.,'${key_userSegment}')]//td//input</td>
 	<td></td>
 </tr>
 <tr>

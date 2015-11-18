@@ -17,6 +17,8 @@
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
+<%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %>
+
 <liferay-theme:defineObjects />
 
 <div class="product-menu-tab-icon user-tab">
@@ -28,5 +30,5 @@
 </div>
 
 <div class="product-menu-tab-text">
-	<%= user.getFirstName() %>
+	<%= HtmlUtil.escape(user.getFirstName()) %>
 </div>

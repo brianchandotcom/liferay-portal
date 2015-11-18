@@ -125,12 +125,13 @@ portletURL.setParameter("keywords", keywords);
 	</liferay-ui:search-container>
 
 	<c:if test="<%= createNewPage %>">
-		<portlet:actionURL name="/wiki/edit_page" var="addPageURL">
+		<portlet:renderURL var="addPageURL">
+			<portlet:param name="mvcRenderCommandName" value="/wiki/edit_page" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="nodeId" value="<%= String.valueOf(nodeId) %>" />
 			<portlet:param name="title" value="<%= keywords %>" />
 			<portlet:param name="editTitle" value="1" />
-		</portlet:actionURL>
+		</portlet:renderURL>
 
 		<strong><aui:a cssClass="new-page" href="<%= addPageURL.toString() %>" label="create-a-new-page-on-this-topic" /></strong>
 	</c:if>

@@ -27,7 +27,7 @@
 										try {
 											var itemValue = JSON.parse(selectedItem.value);
 
-											imageSrc = editor.config.toolbar === 'creole' ? itemValue.title : itemValue.url;
+											imageSrc = editor.config.attachmentURLPrefix ? editor.config.attachmentURLPrefix + itemValue.title : itemValue.url;
 										}
 										catch (e) {
 										}
@@ -41,8 +41,6 @@
 											var el = CKEDITOR.dom.element.createFromHtml('<img src="' + imageSrc + '">');
 
 											editor.insertElement(el);
-
-											editor.setData(editor.getData());
 										}
 									}
 								}

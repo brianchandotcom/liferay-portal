@@ -14,7 +14,6 @@
 
 package com.liferay.gradle.plugins;
 
-import com.liferay.gradle.plugins.alloy.taglib.AlloyTaglibPlugin;
 import com.liferay.gradle.plugins.css.builder.BuildCSSTask;
 import com.liferay.gradle.plugins.css.builder.CSSBuilderPlugin;
 import com.liferay.gradle.plugins.extensions.AppServer;
@@ -30,8 +29,6 @@ import com.liferay.gradle.plugins.lang.builder.BuildLangTask;
 import com.liferay.gradle.plugins.lang.builder.LangBuilderPlugin;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.patcher.PatchTask;
-import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
-import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
 import com.liferay.gradle.plugins.soy.SoyPlugin;
 import com.liferay.gradle.plugins.tasks.AppServerTask;
@@ -42,17 +39,12 @@ import com.liferay.gradle.plugins.tasks.StartAppServerTask;
 import com.liferay.gradle.plugins.tasks.StopAppServerTask;
 import com.liferay.gradle.plugins.tld.formatter.TLDFormatterPlugin;
 import com.liferay.gradle.plugins.upgrade.table.builder.BuildUpgradeTableTask;
-import com.liferay.gradle.plugins.upgrade.table.builder.UpgradeTableBuilderPlugin;
 import com.liferay.gradle.plugins.whip.WhipPlugin;
 import com.liferay.gradle.plugins.whip.WhipTaskExtension;
-import com.liferay.gradle.plugins.wsdd.builder.BuildWSDDTask;
-import com.liferay.gradle.plugins.wsdd.builder.WSDDBuilderPlugin;
 import com.liferay.gradle.plugins.wsdl.builder.BuildWSDLTask;
-import com.liferay.gradle.plugins.wsdl.builder.WSDLBuilderPlugin;
 import com.liferay.gradle.plugins.xml.formatter.FormatXMLTask;
 import com.liferay.gradle.plugins.xml.formatter.XMLFormatterPlugin;
 import com.liferay.gradle.plugins.xsd.builder.BuildXSDTask;
-import com.liferay.gradle.plugins.xsd.builder.XSDBuilderPlugin;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.StringUtil;
@@ -110,7 +102,6 @@ import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.plugins.MavenPlugin;
 import org.gradle.api.plugins.MavenPluginConvention;
-import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.Delete;
@@ -171,6 +162,8 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	public void apply(Project project) {
 		addLiferayExtension(project);
 
+		configureTasksBuildCSS(project);
+
 		applyPlugins(project);
 
 		configureConf2ScopeMappings(project);
@@ -186,13 +179,10 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		configureArtifacts(project);
 
-		configureTaskBuildService(project);
-		configureTaskBuildUpgradeTable(project);
-		configureTaskBuildWSDD(project);
-		configureTaskBuildWSDL(project);
-		configureTaskBuildXSD(project);
 		configureTaskConfigJSModules(project);
 		configureTaskTranspileJS(project);
+		configureTasksBuildLang(project);
+		configureTasksBuildUpgradeTable(project);
 		configureTasksTest(project);
 
 		project.afterEvaluate(
@@ -217,10 +207,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		Delete delete = (Delete)GradleUtil.getTask(
 			project, BasePlugin.CLEAN_TASK_NAME);
 
-		boolean cleanDeployed = GradleUtil.getProperty(
-			delete, CLEAN_DEPLOYED_PROPERTY_NAME, true);
-
-		if (!cleanDeployed) {
+		if (!isCleanDeployed(delete)) {
 			return;
 		}
 
@@ -306,22 +293,54 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		return copy;
 	}
 
-	protected FormatXMLTask addTaskFormatWSDL(Project project) {
-		FormatXMLTask formatXMLTask = GradleUtil.addTask(
-			project, FORMAT_WSDL_TASK_NAME, FormatXMLTask.class);
+	protected FormatXMLTask addTaskFormatWSDL(
+		final BuildWSDLTask buildWSDLTask) {
+
+		Project project = buildWSDLTask.getProject();
+
+		TaskContainer taskContainer = project.getTasks();
+
+		FormatXMLTask formatXMLTask = taskContainer.maybeCreate(
+			FORMAT_WSDL_TASK_NAME, FormatXMLTask.class);
 
 		formatXMLTask.setDescription(
 			"Runs Liferay XML Formatter to format WSDL files.");
+		formatXMLTask.setIncludes(Collections.singleton("**/*.wsdl"));
+
+		formatXMLTask.source(
+			new Callable<File>() {
+
+			@Override
+			public File call() throws Exception {
+				return buildWSDLTask.getInputDir();
+			}
+
+		});
 
 		return formatXMLTask;
 	}
 
-	protected FormatXMLTask addTaskFormatXSD(Project project) {
-		FormatXMLTask formatXMLTask = GradleUtil.addTask(
-			project, FORMAT_XSD_TASK_NAME, FormatXMLTask.class);
+	protected FormatXMLTask addTaskFormatXSD(final BuildXSDTask buildXSDTask) {
+		Project project = buildXSDTask.getProject();
+
+		TaskContainer taskContainer = project.getTasks();
+
+		FormatXMLTask formatXMLTask = taskContainer.maybeCreate(
+			FORMAT_XSD_TASK_NAME, FormatXMLTask.class);
 
 		formatXMLTask.setDescription(
 			"Runs Liferay XML Formatter to format XSD files.");
+		formatXMLTask.setIncludes(Collections.singleton("**/*.xsd"));
+
+		formatXMLTask.source(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return buildXSDTask.getInputDir();
+				}
+
+			});
 
 		return formatXMLTask;
 	}
@@ -457,8 +476,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	protected void addTasks(Project project) {
 		addTaskDeploy(project);
-		addTaskFormatWSDL(project);
-		addTaskFormatXSD(project);
 		addTaskInitGradle(project);
 		addTaskJarSources(project);
 		addTaskSetupArquillian(project);
@@ -466,8 +483,31 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		addTaskStartTestableTomcat(project);
 		addTaskStopTestableTomcat(project);
 		addTaskTestIntegration(project);
-		addTaskWar(project);
 		addTaskZipJavadoc(project);
+
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			BuildWSDLTask.class,
+			new Action<BuildWSDLTask>() {
+
+				@Override
+				public void execute(BuildWSDLTask buildWSDLTask) {
+					addTaskFormatWSDL(buildWSDLTask);
+				}
+
+			});
+
+		taskContainer.withType(
+			BuildXSDTask.class,
+			new Action<BuildXSDTask>() {
+
+				@Override
+				public void execute(BuildXSDTask buildXSDTask) {
+					addTaskFormatXSD(buildXSDTask);
+				}
+
+			});
 	}
 
 	protected Task addTaskSetupArquillian(Project project) {
@@ -842,17 +882,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		return test;
 	}
 
-	protected Task addTaskWar(Project project) {
-		Task task = project.task(WarPlugin.WAR_TASK_NAME);
-
-		task.dependsOn(JavaPlugin.JAR_TASK_NAME);
-
-		task.setDescription("Alias for 'jar'.");
-		task.setGroup(BasePlugin.BUILD_GROUP);
-
-		return task;
-	}
-
 	protected Zip addTaskZipJavadoc(Project project) {
 		Zip zip = GradleUtil.addTask(project, ZIP_JAVADOC_TASK_NAME, Zip.class);
 
@@ -890,23 +919,17 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, OptionalBasePlugin.class);
 		GradleUtil.applyPlugin(project, ProvidedBasePlugin.class);
 
-		GradleUtil.applyPlugin(project, AlloyTaglibPlugin.class);
 		GradleUtil.applyPlugin(project, CSSBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, JavadocFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, JSModuleConfigGeneratorPlugin.class);
 		GradleUtil.applyPlugin(project, JspCPlugin.class);
 		GradleUtil.applyPlugin(project, JSTranspilerPlugin.class);
 		GradleUtil.applyPlugin(project, LangBuilderPlugin.class);
-		GradleUtil.applyPlugin(project, ServiceBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, SourceFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, SoyPlugin.class);
 		GradleUtil.applyPlugin(project, TLDFormatterPlugin.class);
-		GradleUtil.applyPlugin(project, UpgradeTableBuilderPlugin.class);
-		GradleUtil.applyPlugin(project, WSDDBuilderPlugin.class);
-		GradleUtil.applyPlugin(project, WSDLBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, WhipPlugin.class);
 		GradleUtil.applyPlugin(project, XMLFormatterPlugin.class);
-		GradleUtil.applyPlugin(project, XSDBuilderPlugin.class);
 	}
 
 	protected void configureArtifacts(Project project) {
@@ -1092,40 +1115,21 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			project, TEST_INTEGRATION_SOURCE_SET_NAME, classesDir, null);
 	}
 
-	protected void configureTaskBuildCSS(
-		Project project, LiferayExtension liferayExtension) {
-
-		BuildCSSTask buildCSSTask = (BuildCSSTask)GradleUtil.getTask(
-			project, CSSBuilderPlugin.BUILD_CSS_TASK_NAME);
-
-		configureTaskBuildCSSDocrootDirName(buildCSSTask);
-		configureTaskBuildCSSSassCompilerClassName(buildCSSTask);
-	}
-
-	protected void configureTaskBuildCSSDocrootDirName(
+	protected void configureTaskBuildCSSGenerateSourceMap(
 		BuildCSSTask buildCSSTask) {
 
-		Project project = buildCSSTask.getProject();
+		String generateSourceMap = GradleUtil.getProperty(
+			buildCSSTask.getProject(), "sass.generate.source.map",
+			(String)null);
 
-		String docrootDirName = buildCSSTask.getDocrootDirName();
-
-		if (Validator.isNotNull(docrootDirName) &&
-			FileUtil.exists(project, docrootDirName)) {
-
-			return;
+		if (Validator.isNotNull(generateSourceMap)) {
+			buildCSSTask.setGenerateSourceMap(
+				Boolean.parseBoolean(generateSourceMap));
 		}
-
-		File resourcesDir = getResourcesDir(project);
-
-		buildCSSTask.setDocrootDirName(project.relativePath(resourcesDir));
 	}
 
 	protected void configureTaskBuildCSSSassCompilerClassName(
 		BuildCSSTask buildCSSTask) {
-
-		if (Validator.isNotNull(buildCSSTask.getSassCompilerClassName())) {
-			return;
-		}
 
 		String sassCompilerClassName = GradleUtil.getProperty(
 			buildCSSTask.getProject(), "sass.compiler.class.name",
@@ -1134,31 +1138,8 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		buildCSSTask.setSassCompilerClassName(sassCompilerClassName);
 	}
 
-	protected void configureTaskBuildLang(Project project) {
-		BuildLangTask buildLangTask = (BuildLangTask)GradleUtil.getTask(
-			project, LangBuilderPlugin.BUILD_LANG_TASK_NAME);
-
-		configureTaskBuildLangLangDirName(buildLangTask);
-		configureTaskBuildLangTranslateClientId(buildLangTask);
-		configureTaskBuildLangTranslateClientSecret(buildLangTask);
-	}
-
-	protected void configureTaskBuildLangLangDirName(
-		BuildLangTask buildLangTask) {
-
-		Project project = buildLangTask.getProject();
-
-		File langDir = new File(getResourcesDir(project), "content");
-
-		buildLangTask.setLangDirName(project.relativePath(langDir));
-	}
-
 	protected void configureTaskBuildLangTranslateClientId(
 		BuildLangTask buildLangTask) {
-
-		if (Validator.isNotNull(buildLangTask.getTranslateClientId())) {
-			return;
-		}
 
 		String translateClientId = GradleUtil.getProperty(
 			buildLangTask.getProject(), "microsoft.translator.client.id",
@@ -1170,10 +1151,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	protected void configureTaskBuildLangTranslateClientSecret(
 		BuildLangTask buildLangTask) {
 
-		if (Validator.isNotNull(buildLangTask.getTranslateClientSecret())) {
-			return;
-		}
-
 		String translateClientSecret = GradleUtil.getProperty(
 			buildLangTask.getProject(), "microsoft.translator.client.secret",
 			(String)null);
@@ -1181,288 +1158,14 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		buildLangTask.setTranslateClientSecret(translateClientSecret);
 	}
 
-	protected void configureTaskBuildService(Project project) {
-		BuildServiceTask buildServiceTask =
-			(BuildServiceTask)GradleUtil.getTask(
-				project, ServiceBuilderPlugin.BUILD_SERVICE_TASK_NAME);
-
-		configureTaskBuildServiceApiDirName(buildServiceTask);
-		configureTaskBuildServiceAutoNamespaceTables(buildServiceTask);
-		configureTaskBuildServiceBeanLocatorUtil(buildServiceTask);
-		configureTaskBuildServiceHbmFileName(buildServiceTask);
-		configureTaskBuildServiceImplDirName(buildServiceTask);
-		configureTaskBuildServiceInputFileName(buildServiceTask);
-		configureTaskBuildServiceModelHintsFileName(buildServiceTask);
-		configureTaskBuildServiceOsgiModule(buildServiceTask);
-		configureTaskBuildServicePluginName(buildServiceTask);
-		configureTaskBuildServicePropsUtil(buildServiceTask);
-		configureTaskBuildServiceResourcesDirName(buildServiceTask);
-		configureTaskBuildServiceSpringFileName(buildServiceTask);
-		configureTaskBuildServiceSpringNamespaces(buildServiceTask);
-		configureTaskBuildServiceSqlDirName(buildServiceTask);
-		configureTaskBuildServiceSqlFileName(buildServiceTask);
-		configureTaskBuildServiceTestDirName(buildServiceTask);
-
-		configureTaskBuildServiceModelHintsConfigs(buildServiceTask);
-	}
-
-	protected void configureTaskBuildServiceApiDirName(
-		BuildServiceTask buildServiceTask) {
-
-		Project project = buildServiceTask.getProject();
-
-		File apiDir = new File(getServiceBaseDir(project), "service");
-
-		buildServiceTask.setApiDirName(project.relativePath(apiDir));
-	}
-
-	protected void configureTaskBuildServiceAutoNamespaceTables(
-		BuildServiceTask buildServiceTask) {
-
-		buildServiceTask.setAutoNamespaceTables(true);
-	}
-
-	protected void configureTaskBuildServiceBeanLocatorUtil(
-		BuildServiceTask buildServiceTask) {
-
-		buildServiceTask.setBeanLocatorUtil(
-			"com.liferay.util.bean.PortletBeanLocatorUtil");
-	}
-
-	protected void configureTaskBuildServiceHbmFileName(
-		BuildServiceTask buildServiceTask) {
-
-		Project project = buildServiceTask.getProject();
-
-		File hbmFile = new File(
-			getResourcesDir(project), "META-INF/portlet-hbm.xml");
-
-		buildServiceTask.setHbmFileName(project.relativePath(hbmFile));
-	}
-
-	protected void configureTaskBuildServiceImplDirName(
-		BuildServiceTask buildServiceTask) {
-
-		Project project = buildServiceTask.getProject();
-
-		File implDir = getJavaDir(project);
-
-		buildServiceTask.setImplDirName(project.relativePath(implDir));
-	}
-
-	protected void configureTaskBuildServiceInputFileName(
-		BuildServiceTask buildServiceTask) {
-
-		Project project = buildServiceTask.getProject();
-
-		File inputFile = new File(getServiceBaseDir(project), "service.xml");
-
-		buildServiceTask.setInputFileName(project.relativePath(inputFile));
-	}
-
-	protected void configureTaskBuildServiceModelHintsConfigs(
-		BuildServiceTask buildServiceTask) {
-
-		String fileName = buildServiceTask.getModelHintsFileName();
-
-		Project project = buildServiceTask.getProject();
-
-		File file = project.file(fileName);
-
-		for (String config : buildServiceTask.getModelHintsConfigs()) {
-			if (config.startsWith("classpath*:")) {
-				continue;
-			}
-
-			File configFile = project.file(config);
-
-			if (configFile.equals(file)) {
-				return;
-			}
-		}
-
-		buildServiceTask.modelHintsConfigs(fileName);
-	}
-
-	protected void configureTaskBuildServiceModelHintsFileName(
-		BuildServiceTask buildServiceTask) {
-
-		Project project = buildServiceTask.getProject();
-
-		File modelHintsFile = new File(
-			getResourcesDir(project), "META-INF/portlet-model-hints.xml");
-
-		buildServiceTask.setModelHintsFileName(
-			project.relativePath(modelHintsFile));
-	}
-
-	protected void configureTaskBuildServiceOsgiModule(
-		BuildServiceTask buildServiceTask) {
-
-		buildServiceTask.setOsgiModule(false);
-	}
-
-	protected void configureTaskBuildServicePluginName(
-		BuildServiceTask buildServiceTask) {
-
-		Project project = buildServiceTask.getProject();
-
-		buildServiceTask.setPluginName(project.getName());
-	}
-
-	protected void configureTaskBuildServicePropsUtil(
-		BuildServiceTask buildServiceTask) {
-
-		buildServiceTask.setPropsUtil("com.liferay.util.service.ServiceProps");
-	}
-
-	protected void configureTaskBuildServiceResourcesDirName(
-		BuildServiceTask buildServiceTask) {
-
-		Project project = buildServiceTask.getProject();
-
-		File resourcesDir = getResourcesDir(project);
-
-		buildServiceTask.setResourcesDirName(
-			project.relativePath(resourcesDir));
-	}
-
-	protected void configureTaskBuildServiceSpringFileName(
-		BuildServiceTask buildServiceTask) {
-
-		Project project = buildServiceTask.getProject();
-
-		File springFile = new File(
-			getResourcesDir(project), "META-INF/portlet-spring.xml");
-
-		buildServiceTask.setSpringFileName(project.relativePath(springFile));
-	}
-
-	protected void configureTaskBuildServiceSpringNamespaces(
-		BuildServiceTask buildServiceTask) {
-
-		buildServiceTask.setSpringNamespaces(new String[] {"beans"});
-	}
-
-	protected void configureTaskBuildServiceSqlDirName(
-		BuildServiceTask buildServiceTask) {
-
-		Project project = buildServiceTask.getProject();
-
-		File sqlDir = new File(getServiceBaseDir(project), "sql");
-
-		buildServiceTask.setSqlDirName(project.relativePath(sqlDir));
-	}
-
-	protected void configureTaskBuildServiceSqlFileName(
-		BuildServiceTask buildServiceTask) {
-
-		buildServiceTask.setSqlFileName("tables.sql");
-	}
-
-	protected void configureTaskBuildServiceTestDirName(
-		BuildServiceTask buildServiceTask) {
-
-		buildServiceTask.setTestDirName("");
-	}
-
-	protected void configureTaskBuildUpgradeTable(Project project) {
-		BuildUpgradeTableTask buildUpgradeTableTask =
-			(BuildUpgradeTableTask)GradleUtil.getTask(
-				project,
-				UpgradeTableBuilderPlugin.BUILD_UPGRADE_TABLE_TASK_NAME);
-
-		configureTaskBuildUpgradeTableBaseDirName(buildUpgradeTableTask);
-		configureTaskBuildUpgradeTableDirName(buildUpgradeTableTask);
-	}
-
-	protected void configureTaskBuildUpgradeTableBaseDirName(
+	protected void configureTaskBuildUpgradeTableDir(
 		BuildUpgradeTableTask buildUpgradeTableTask) {
-
-		Project project = buildUpgradeTableTask.getProject();
-
-		buildUpgradeTableTask.setBaseDirName(
-			FileUtil.getAbsolutePath(project.getProjectDir()));
-	}
-
-	protected void configureTaskBuildUpgradeTableDirName(
-		BuildUpgradeTableTask buildUpgradeTableTask) {
-
-		Project project = buildUpgradeTableTask.getProject();
 
 		File file = GradleUtil.getProperty(
-			project, "upgrade.table.dir", (File)null);
+			buildUpgradeTableTask.getProject(), "upgrade.table.dir",
+			(File)null);
 
-		if (file != null) {
-			buildUpgradeTableTask.setUpgradeTableDirName(
-				FileUtil.getAbsolutePath(file));
-		}
-	}
-
-	protected void configureTaskBuildWSDD(Project project) {
-		BuildWSDDTask buildWSDDTask = (BuildWSDDTask)GradleUtil.getTask(
-			project, WSDDBuilderPlugin.BUILD_WSDD_TASK_NAME);
-
-		configureTaskBuildWSDDOutputDirName(buildWSDDTask);
-	}
-
-	protected void configureTaskBuildWSDDOutputDirName(
-		BuildWSDDTask buildWSDDTask) {
-
-		Project project = buildWSDDTask.getProject();
-
-		File outputDir = getJavaDir(project);
-
-		buildWSDDTask.setOutputDirName(project.relativePath(outputDir));
-	}
-
-	protected void configureTaskBuildWSDL(Project project) {
-		BuildWSDLTask buildWSDLTask = (BuildWSDLTask)GradleUtil.getTask(
-			project, WSDLBuilderPlugin.BUILD_WSDL_TASK_NAME);
-
-		configureTaskBuildWSDLDestinationDir(buildWSDLTask);
-		configureTaskBuildWSDLInputDir(buildWSDLTask);
-	}
-
-	protected void configureTaskBuildWSDLDestinationDir(
-		BuildWSDLTask buildWSDLTask) {
-
-		File destinationDir = buildWSDLTask.getDestinationDir();
-
-		if (!destinationDir.exists()) {
-			buildWSDLTask.setDestinationDir(
-				getLibDir(buildWSDLTask.getProject()));
-		}
-	}
-
-	protected void configureTaskBuildWSDLInputDir(BuildWSDLTask buildWSDLTask) {
-		File inputDir = buildWSDLTask.getInputDir();
-
-		if (!inputDir.exists()) {
-			buildWSDLTask.setInputDir("wsdl");
-		}
-	}
-
-	protected void configureTaskBuildXSD(Project project) {
-		BuildXSDTask buildXSDTask = (BuildXSDTask)GradleUtil.getTask(
-			project, XSDBuilderPlugin.BUILD_XSD_TASK_NAME);
-
-		configureTaskBuildXSDDestinationDir(buildXSDTask);
-		configureTaskBuildXSDInputDir(buildXSDTask);
-	}
-
-	protected void configureTaskBuildXSDDestinationDir(
-		BuildXSDTask buildXSDTask) {
-
-		buildXSDTask.setDestinationDir(getLibDir(buildXSDTask.getProject()));
-	}
-
-	protected void configureTaskBuildXSDInputDir(BuildXSDTask buildXSDTask) {
-		Project project = buildXSDTask.getProject();
-
-		File inputDir = project.file("xsd");
-
-		buildXSDTask.setInputDir(inputDir);
+		buildUpgradeTableTask.setUpgradeTableDir(file);
 	}
 
 	protected void configureTaskClasses(Project project) {
@@ -1617,6 +1320,15 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		copy.into(liferayExtension.getDeployDir());
 	}
 
+	protected void configureTaskDirectDeployAppServerDir(
+		DirectDeployTask directDeployTask, LiferayExtension liferayExtension) {
+
+		if (directDeployTask.getAppServerDir() == null) {
+			directDeployTask.setAppServerDir(
+				liferayExtension.getAppServerDir());
+		}
+	}
+
 	protected void configureTaskDirectDeployAppServerLibGlobalDir(
 		DirectDeployTask directDeployTask, LiferayExtension liferayExtension) {
 
@@ -1657,48 +1369,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		}
 
 		return task.getEnabled();
-	}
-
-	protected void configureTaskFormatWSDL(Project project) {
-		FormatXMLTask formatXMLTask = (FormatXMLTask)GradleUtil.getTask(
-			project, FORMAT_WSDL_TASK_NAME);
-
-		configureTaskFormatWSDLSource(formatXMLTask);
-	}
-
-	protected void configureTaskFormatWSDLSource(FormatXMLTask formatXMLTask) {
-		FileTree fileTree = formatXMLTask.getSource();
-
-		if (!fileTree.isEmpty()) {
-			return;
-		}
-
-		BuildWSDLTask buildWSDLTask = (BuildWSDLTask)GradleUtil.getTask(
-			formatXMLTask.getProject(), WSDLBuilderPlugin.BUILD_WSDL_TASK_NAME);
-
-		formatXMLTask.setSource(buildWSDLTask.getInputDir());
-		formatXMLTask.include("**/*.wsdl");
-	}
-
-	protected void configureTaskFormatXSD(Project project) {
-		FormatXMLTask formatXMLTask = (FormatXMLTask)GradleUtil.getTask(
-			project, FORMAT_XSD_TASK_NAME);
-
-		configureTaskFormatXSDSource(formatXMLTask);
-	}
-
-	protected void configureTaskFormatXSDSource(FormatXMLTask formatXMLTask) {
-		FileTree fileTree = formatXMLTask.getSource();
-
-		if (!fileTree.isEmpty()) {
-			return;
-		}
-
-		BuildXSDTask buildXSDTask = (BuildXSDTask)GradleUtil.getTask(
-			formatXMLTask.getProject(), XSDBuilderPlugin.BUILD_XSD_TASK_NAME);
-
-		formatXMLTask.setSource(buildXSDTask.getInputDir());
-		formatXMLTask.include("**/*.xsd");
 	}
 
 	protected void configureTaskInitGradle(Project project) {
@@ -1883,13 +1553,9 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	protected void configureTasks(
 		Project project, LiferayExtension liferayExtension) {
 
-		configureTaskBuildCSS(project, liferayExtension);
-		configureTaskBuildLang(project);
 		configureTaskClasses(project);
 		configureTaskClean(project);
 		configureTaskDeploy(project, liferayExtension);
-		configureTaskFormatWSDL(project);
-		configureTaskFormatXSD(project);
 		configureTaskInitGradle(project);
 		configureTaskJar(project);
 		configureTaskSetupTestableTomcat(project, liferayExtension);
@@ -1927,6 +1593,55 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			});
 	}
 
+	protected void configureTasksBuildCSS(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			BuildCSSTask.class,
+			new Action<BuildCSSTask>() {
+
+				@Override
+				public void execute(BuildCSSTask buildCSSTask) {
+					configureTaskBuildCSSGenerateSourceMap(buildCSSTask);
+					configureTaskBuildCSSSassCompilerClassName(buildCSSTask);
+				}
+
+			});
+	}
+
+	protected void configureTasksBuildLang(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			BuildLangTask.class,
+			new Action<BuildLangTask>() {
+
+				@Override
+				public void execute(BuildLangTask buildLangTask) {
+					configureTaskBuildLangTranslateClientId(buildLangTask);
+					configureTaskBuildLangTranslateClientSecret(buildLangTask);
+				}
+
+			});
+	}
+
+	protected void configureTasksBuildUpgradeTable(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			BuildUpgradeTableTask.class,
+			new Action<BuildUpgradeTableTask>() {
+
+				@Override
+				public void execute(
+					BuildUpgradeTableTask buildUpgradeTableTask) {
+
+					configureTaskBuildUpgradeTableDir(buildUpgradeTableTask);
+				}
+
+			});
+	}
+
 	protected void configureTasksDirectDeploy(Project project) {
 		TaskContainer taskContainer = project.getTasks();
 
@@ -1939,6 +1654,8 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 					LiferayExtension liferayExtension = GradleUtil.getExtension(
 						directDeployTask.getProject(), LiferayExtension.class);
 
+					configureTaskDirectDeployAppServerDir(
+						directDeployTask, liferayExtension);
 					configureTaskDirectDeployAppServerLibGlobalDir(
 						directDeployTask, liferayExtension);
 					configureTaskDirectDeployAppServerPortalDir(
@@ -2231,13 +1948,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		return sourceFile.getName();
 	}
 
-	protected File getJavaDir(Project project) {
-		SourceSet sourceSet = GradleUtil.getSourceSet(
-			project, SourceSet.MAIN_SOURCE_SET_NAME);
-
-		return getSrcDir(sourceSet.getJava());
-	}
-
 	protected File getLibDir(Project project) {
 		return project.file("lib");
 	}
@@ -2247,10 +1957,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			project, SourceSet.MAIN_SOURCE_SET_NAME);
 
 		return getSrcDir(sourceSet.getResources());
-	}
-
-	protected File getServiceBaseDir(Project project) {
-		return project.getProjectDir();
 	}
 
 	protected File getSrcDir(SourceDirectorySet sourceDirectorySet) {
@@ -2269,6 +1975,11 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	protected boolean isAddTestDefaultDependencies(Project project) {
 		return GradleUtil.getProperty(
 			project, _ADD_TEST_DEFAULT_DEPENDENCIES_PROPERTY_NAME, true);
+	}
+
+	protected boolean isCleanDeployed(Delete delete) {
+		return GradleUtil.getProperty(
+			delete, CLEAN_DEPLOYED_PROPERTY_NAME, true);
 	}
 
 	protected boolean isTestProject(Project project) {

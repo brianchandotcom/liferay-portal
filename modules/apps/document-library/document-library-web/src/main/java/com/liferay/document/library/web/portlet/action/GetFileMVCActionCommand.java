@@ -38,7 +38,6 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
-		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_DISPLAY,
 		"javax.portlet.name=" + DLPortletKeys.MEDIA_GALLERY_DISPLAY,
 		"render.command.name=/document_library/get_file"
 	},
@@ -58,7 +57,7 @@ public class GetFileMVCActionCommand extends BaseMVCActionCommand {
 
 		_getFileActionHelper.processRequest(request, response);
 
-		actionResponse.setRenderParameter("mvcPath", "/html/common/null.jsp");
+		actionResponse.setRenderParameter("mvcPath", "/null.jsp");
 	}
 
 	private final GetFileActionHelper _getFileActionHelper =

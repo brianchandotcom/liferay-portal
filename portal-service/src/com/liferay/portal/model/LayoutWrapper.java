@@ -316,7 +316,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	* the current layout.
 	*
 	* @return the ID of the topmost parent layout of the current layout
-	* @throws PortalException if a matching layout could not be found
 	*/
 	@Override
 	public long getAncestorLayoutId()
@@ -329,7 +328,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	* of the current layout.
 	*
 	* @return the plid of the topmost parent layout of the current layout
-	* @throws PortalException if a matching layout could not be found
 	*/
 	@Override
 	public long getAncestorPlid()
@@ -343,7 +341,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	* parent listed last.
 	*
 	* @return the current layout's list of parent layouts
-	* @throws PortalException if a matching layout could not be found
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Layout> getAncestors()
@@ -374,7 +371,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	* @param permissionChecker the user-specific context to check permissions
 	* @return the list of all child layouts that the user has permission to
 	access
-	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Layout> getChildren(
@@ -391,7 +387,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	* @return the color scheme that is configured for the current layout, or
 	the color scheme  of the layout set that contains the current
 	layout if no color scheme is configured
-	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.ColorScheme getColorScheme()
@@ -450,7 +445,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	*
 	* @return the CSS text for the current layout, or for the layout set if no
 	CSS text is configured in the current layout
-	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public java.lang.String getCssText()
@@ -548,6 +542,17 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	}
 
 	@Override
+	public java.util.List<com.liferay.portal.model.Portlet> getEmbeddedPortlets() {
+		return _layout.getEmbeddedPortlets();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.Portlet> getEmbeddedPortlets(
+		long groupId) {
+		return _layout.getEmbeddedPortlets(groupId);
+	}
+
+	@Override
 	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
 		return _layout.getExpandoBridge();
 	}
@@ -596,8 +601,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	* </p>
 	*
 	* @return the current layout's group
-	* @throws PortalException if a group with the primary key could not be
-	found
 	*/
 	@Override
 	public com.liferay.portal.model.Group getGroup()
@@ -797,7 +800,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	* Returns the current layout's {@link LayoutSet}.
 	*
 	* @return the current layout's layout set
-	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.LayoutSet getLayoutSet()
@@ -938,7 +940,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	*
 	* @return the current layout's parent plid, or <code>0</code> if the
 	current layout is the topmost parent layout
-	* @throws PortalException if a matching layout could not be found
 	*/
 	@Override
 	public long getParentPlid()
@@ -1117,7 +1118,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	*
 	* @return the current layout's theme, or the layout set's theme if no
 	layout theme is configured
-	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Theme getTheme()
@@ -1341,8 +1341,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	* @return <code>true</code> if the given layout ID matches one of the
 	current layout's hierarchical parents; <code>false</code>
 	otherwise
-	* @throws PortalException if any one of the current layout's acestors could
-	not be retrieved
 	*/
 	@Override
 	public boolean hasAncestor(long layoutId)

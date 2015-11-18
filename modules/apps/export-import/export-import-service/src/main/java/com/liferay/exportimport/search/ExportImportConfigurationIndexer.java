@@ -321,7 +321,7 @@ public class ExportImportConfigurationIndexer
 		actionableDynamicQuery.performActions();
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setExportImportConfigurationLocalService(
 		ExportImportConfigurationLocalService
 			exportImportConfigurationLocalService) {

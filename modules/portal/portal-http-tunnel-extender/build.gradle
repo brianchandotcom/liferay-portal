@@ -6,6 +6,7 @@ dependencies {
 	compile group: "org.apache.felix", name: "org.apache.felix.utils", version: "1.6.0"
 	compile group: "org.eclipse.osgi", name: "org.eclipse.osgi.services", version: "3.5.0-SNAPSHOT"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	compile project(":apps:configuration-admin:configuration-admin-api")
 }
 
 liferay {

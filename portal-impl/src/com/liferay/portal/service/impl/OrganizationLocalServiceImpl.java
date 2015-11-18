@@ -100,15 +100,11 @@ public class OrganizationLocalServiceImpl
 	/**
 	 * Adds the organizations to the group.
 	 *
-	 * @param  groupId the primary key of the group
-	 * @param  organizationIds the primary keys of the organizations
-	 * @throws PortalException if a group or organization with the primary key
-	 *         could not be found
+	 * @param groupId the primary key of the group
+	 * @param organizationIds the primary keys of the organizations
 	 */
 	@Override
-	public void addGroupOrganizations(long groupId, long[] organizationIds)
-		throws PortalException {
-
+	public void addGroupOrganizations(long groupId, long[] organizationIds) {
 		groupPersistence.addOrganizations(groupId, organizationIds);
 
 		PermissionCacheUtil.clearCache();
@@ -131,9 +127,6 @@ public class OrganizationLocalServiceImpl
 	 * @param  site whether the organization is to be associated with a main
 	 *         site
 	 * @return the organization
-	 * @throws PortalException if a creator or parent organization with the
-	 *         primary key could not be found or if the organization's
-	 *         information was invalid
 	 */
 	@Override
 	public Organization addOrganization(
@@ -175,9 +168,6 @@ public class OrganizationLocalServiceImpl
 	 *             <code>null</code>). Can set asset category IDs, asset tag
 	 *             names, and expando bridge attributes for the organization.
 	 * @return     the organization
-	 * @throws     PortalException if a creator or parent organization with the
-	 *             primary key could not be found or if the organization's
-	 *             information was invalid
 	 * @deprecated As of 6.2.0, replaced by {@link #addOrganization(long, long,
 	 *             String, String, long, long, int, String, boolean,
 	 *             ServiceContext)}
@@ -220,9 +210,6 @@ public class OrganizationLocalServiceImpl
 	 *         <code>null</code>). Can set asset category IDs, asset tag names,
 	 *         and expando bridge attributes for the organization.
 	 * @return the organization
-	 * @throws PortalException if a creator or parent organization with the
-	 *         primary key could not be found or if the organization's
-	 *         information was invalid
 	 */
 	@Override
 	public Organization addOrganization(
@@ -328,9 +315,8 @@ public class OrganizationLocalServiceImpl
 	 * Adds a resource for each type of permission available on the
 	 * organization.
 	 *
-	 * @param  userId the primary key of the creator/owner of the organization
-	 * @param  organization the organization
-	 * @throws PortalException if a portal exception occurred
+	 * @param userId the primary key of the creator/owner of the organization
+	 * @param organization the organization
 	 */
 	@Override
 	public void addOrganizationResources(long userId, Organization organization)
@@ -361,10 +347,7 @@ public class OrganizationLocalServiceImpl
 	/**
 	 * Deletes the organization's logo.
 	 *
-	 * @param  organizationId the primary key of the organization
-	 * @throws PortalException if an organization or parent organization with
-	 *         the primary key could not be found or if the organization's logo
-	 *         could not be found
+	 * @param organizationId the primary key of the organization
 	 */
 	@Override
 	public void deleteLogo(long organizationId) throws PortalException {
@@ -379,9 +362,6 @@ public class OrganizationLocalServiceImpl
 	 *
 	 * @param  organizationId the primary key of the organization
 	 * @return the deleted organization
-	 * @throws PortalException if an organization with the primary key could not
-	 *         be found, if the organization had a workflow in approved status,
-	 *         or if the organization was a parent organization
 	 */
 	@Override
 	public Organization deleteOrganization(long organizationId)
@@ -399,8 +379,6 @@ public class OrganizationLocalServiceImpl
 	 *
 	 * @param  organization the organization
 	 * @return the deleted organization
-	 * @throws PortalException if the organization had a workflow in approved
-	 *         status or if the organization was a parent organization
 	 */
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
@@ -548,8 +526,6 @@ public class OrganizationLocalServiceImpl
 	 * @param  companyId the primary key of the organization's company
 	 * @param  name the organization's name
 	 * @return the organization with the name
-	 * @throws PortalException if the organization with the name could not be
-	 *         found
 	 */
 	@Override
 	public Organization getOrganization(long companyId, String name)
@@ -674,8 +650,6 @@ public class OrganizationLocalServiceImpl
 	 *
 	 * @param  organizationIds the primary keys of the organizations
 	 * @return the organizations with the primary keys
-	 * @throws PortalException if any one of the organizations could not be
-	 *         found
 	 */
 	@Override
 	public List<Organization> getOrganizations(long[] organizationIds)
@@ -722,8 +696,6 @@ public class OrganizationLocalServiceImpl
 	 *
 	 * @param  organizationId the primary key of the organization
 	 * @return the parent organizations in order by closest ancestor
-	 * @throws PortalException if an organization with the primary key could not
-	 *         be found
 	 */
 	@Override
 	public List<Organization> getParentOrganizations(long organizationId)
@@ -837,8 +809,6 @@ public class OrganizationLocalServiceImpl
 	 * @return the IDs of organizations with which the user is explicitly
 	 *         associated, optionally including the IDs of organizations that
 	 *         the user administers or owns
-	 * @throws PortalException if a user with the primary key could not be found
-	 *         or if a portal exception occurred
 	 */
 	@Override
 	public long[] getUserOrganizationIds(
@@ -890,7 +860,6 @@ public class OrganizationLocalServiceImpl
 	 * @return the organizations with which the user is explicitly associated,
 	 *         optionally including the organizations that the user administers
 	 *         or owns
-	 * @throws PortalException if a user with the primary key could not be found
 	 */
 	@Override
 	public List<Organization> getUserOrganizations(
@@ -989,8 +958,6 @@ public class OrganizationLocalServiceImpl
 	 *         considered in the determination
 	 * @return <code>true</code> if the user has access to the organization;
 	 *         <code>false</code> otherwise
-	 * @throws PortalException if an organization with the primary key could not
-	 *         be found
 	 * @see    com.liferay.portal.service.persistence.OrganizationFinder
 	 */
 	@Override
@@ -1035,9 +1002,7 @@ public class OrganizationLocalServiceImpl
 	 * automatically rebuilt whenever necessary.
 	 * </p>
 	 *
-	 * @param  companyId the primary key of the organization's company
-	 * @throws PortalException if an organization with the primary key could not
-	 *         be found
+	 * @param companyId the primary key of the organization's company
 	 */
 	@Override
 	public void rebuildTree(long companyId) throws PortalException {
@@ -1633,14 +1598,11 @@ public class OrganizationLocalServiceImpl
 	 * Sets the organizations in the group, removing and adding organizations to
 	 * the group as necessary.
 	 *
-	 * @param  groupId the primary key of the group
-	 * @param  organizationIds the primary keys of the organizations
-	 * @throws PortalException if a portal exception occurred
+	 * @param groupId the primary key of the group
+	 * @param organizationIds the primary keys of the organizations
 	 */
 	@Override
-	public void setGroupOrganizations(long groupId, long[] organizationIds)
-		throws PortalException {
-
+	public void setGroupOrganizations(long groupId, long[] organizationIds) {
 		groupPersistence.setOrganizations(groupId, organizationIds);
 
 		PermissionCacheUtil.clearCache();
@@ -1649,14 +1611,11 @@ public class OrganizationLocalServiceImpl
 	/**
 	 * Removes the organizations from the group.
 	 *
-	 * @param  groupId the primary key of the group
-	 * @param  organizationIds the primary keys of the organizations
-	 * @throws PortalException if a portal exception occurred
+	 * @param groupId the primary key of the group
+	 * @param organizationIds the primary keys of the organizations
 	 */
 	@Override
-	public void unsetGroupOrganizations(long groupId, long[] organizationIds)
-		throws PortalException {
-
+	public void unsetGroupOrganizations(long groupId, long[] organizationIds) {
 		groupPersistence.removeOrganizations(groupId, organizationIds);
 
 		PermissionCacheUtil.clearCache();
@@ -1680,11 +1639,10 @@ public class OrganizationLocalServiceImpl
 	 * Updates the organization's asset with the new asset categories and tag
 	 * names, removing and adding asset categories and tag names as necessary.
 	 *
-	 * @param  userId the primary key of the user
-	 * @param  organization the organization
-	 * @param  assetCategoryIds the primary keys of the asset categories
-	 * @param  assetTagNames the asset tag names
-	 * @throws PortalException if a user with the primary key could not be found
+	 * @param userId the primary key of the user
+	 * @param organization the organization
+	 * @param assetCategoryIds the primary keys of the asset categories
+	 * @param assetTagNames the asset tag names
 	 */
 	@Override
 	public void updateAsset(
@@ -1729,9 +1687,6 @@ public class OrganizationLocalServiceImpl
 	 *             names for the organization, and merge expando bridge
 	 *             attributes for the organization.
 	 * @return     the organization
-	 * @throws     PortalException if an organization or parent organization
-	 *             with the primary key could not be found or if the new
-	 *             information was invalid
 	 * @deprecated As of 6.2.0, replaced by {@link #updateOrganization(long,
 	 *             long, long, String, String, long, long, int, String, boolean,
 	 *             byte[], boolean, ServiceContext)}
@@ -1773,9 +1728,6 @@ public class OrganizationLocalServiceImpl
 	 *         names for the organization, and merge expando bridge attributes
 	 *         for the organization.
 	 * @return the organization
-	 * @throws PortalException if an organization or parent organization with
-	 *         the primary key could not be found or if the new information was
-	 *         invalid
 	 */
 	@Override
 	public Organization updateOrganization(
@@ -1948,9 +1900,6 @@ public class OrganizationLocalServiceImpl
 	 *             names for the organization, and merge expando bridge
 	 *             attributes for the organization.
 	 * @return     the organization
-	 * @throws     PortalException if an organization or parent organization
-	 *             with the primary key could not be found or if the new
-	 *             information was invalid
 	 * @deprecated As of 7.0.0, replaced by {@link #updateOrganization(long,
 	 *             long, long, String, String, long, long, int, String, boolean,
 	 *             byte[], boolean, ServiceContext)}

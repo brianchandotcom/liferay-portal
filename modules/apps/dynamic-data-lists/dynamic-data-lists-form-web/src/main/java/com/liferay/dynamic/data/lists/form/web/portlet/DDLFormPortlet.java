@@ -25,13 +25,22 @@ import com.liferay.dynamic.data.mapping.exception.NoSuchStructureLayoutException
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingException;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.portal.PortletPreferencesException;
+import com.liferay.portal.kernel.captcha.CaptchaMaxChallengesException;
+import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
@@ -40,10 +49,13 @@ import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
 
+import java.util.List;
+
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -108,6 +120,14 @@ public class DDLFormPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
+	protected String createCaptchaResourceURL(RenderResponse renderResponse) {
+		ResourceURL resourceURL = renderResponse.createResourceURL();
+
+		resourceURL.setResourceID("captcha");
+
+		return resourceURL.toString();
+	}
+
 	protected DDMFormRenderingContext createDDMFormRenderingContext(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
@@ -126,6 +146,19 @@ public class DDLFormPortlet extends MVCPortlet {
 			renderResponse.getNamespace());
 
 		return ddmFormRenderingContext;
+	}
+
+	protected DDMFormLayoutRow createFullColumnDDMFormLayoutRow(
+		String ddmFormFieldName) {
+
+		DDMFormLayoutRow ddmFormLayoutRow = new DDMFormLayoutRow();
+
+		DDMFormLayoutColumn ddmFormLayoutColumn = new DDMFormLayoutColumn(
+			DDMFormLayoutColumn.FULL, ddmFormFieldName);
+
+		ddmFormLayoutRow.addDDMFormLayoutColumn(ddmFormLayoutColumn);
+
+		return ddmFormLayoutRow;
 	}
 
 	@Override
@@ -155,22 +188,86 @@ public class DDLFormPortlet extends MVCPortlet {
 		}
 	}
 
+	protected DDMForm getDDMForm(
+		RenderResponse renderResponse, DDMStructure ddmStructure,
+		boolean requireCaptcha) {
+
+		DDMForm ddmForm = ddmStructure.getDDMForm();
+
+		if (requireCaptcha) {
+			DDMFormField captchaDDMFormField = new DDMFormField(
+				_DDM_FORM_FIELD_NAME_CAPTCHA, "captcha");
+
+			captchaDDMFormField.setProperty(
+				"url", createCaptchaResourceURL(renderResponse));
+
+			ddmForm.addDDMFormField(captchaDDMFormField);
+		}
+
+		return ddmForm;
+	}
+
 	protected String getDDMFormHTML(
 			RenderRequest renderRequest, RenderResponse renderResponse,
-			DDMStructure ddmStructure)
+			DDLRecordSet recordSet)
 		throws PortalException {
 
 		DDMFormRenderingContext ddmFormRenderingContext =
 			createDDMFormRenderingContext(renderRequest, renderResponse);
 
+		DDMStructure ddmStructure = recordSet.getDDMStructure();
+		boolean requireCaptcha = isCaptchaRequired(recordSet);
+
+		DDMForm ddmForm = getDDMForm(
+			renderResponse, ddmStructure, requireCaptcha);
+
+		DDMFormLayout ddmFormLayout = getDDMFormLayout(
+			ddmStructure, requireCaptcha);
+
 		return _ddmFormRenderer.render(
-			ddmStructure.getDDMForm(), ddmStructure.getDDMFormLayout(),
-			ddmFormRenderingContext);
+			ddmForm, ddmFormLayout, ddmFormRenderingContext);
+	}
+
+	protected DDMFormLayout getDDMFormLayout(
+			DDMStructure ddmStructure, boolean requireCaptcha)
+		throws PortalException {
+
+		DDMFormLayout ddmFormLayout = ddmStructure.getDDMFormLayout();
+
+		if (requireCaptcha) {
+			DDMFormLayoutPage lastDDMFormLayoutPage = getLastDDMFormLayoutPage(
+				ddmFormLayout);
+
+			DDMFormLayoutRow ddmFormLayoutRow =
+				createFullColumnDDMFormLayoutRow(_DDM_FORM_FIELD_NAME_CAPTCHA);
+
+			lastDDMFormLayoutPage.addDDMFormLayoutRow(ddmFormLayoutRow);
+		}
+
+		return ddmFormLayout;
+	}
+
+	protected DDMFormLayoutPage getLastDDMFormLayoutPage(
+		DDMFormLayout ddmFormLayout) {
+
+		List<DDMFormLayoutPage> ddmFormLayoutPages =
+			ddmFormLayout.getDDMFormLayoutPages();
+
+		return ddmFormLayoutPages.get(ddmFormLayoutPages.size() - 1);
+	}
+
+	protected boolean isCaptchaRequired(DDLRecordSet recordSet) {
+		String requireCaptcha = recordSet.getSettingsProperty(
+			"requireCaptcha", Boolean.FALSE.toString());
+
+		return GetterUtil.getBoolean(requireCaptcha);
 	}
 
 	@Override
 	protected boolean isSessionErrorException(Throwable cause) {
 		if (cause instanceof DDMFormRenderingException ||
+			cause instanceof CaptchaTextException ||
+			cause instanceof CaptchaMaxChallengesException ||
 			cause instanceof NoSuchRecordSetException ||
 			cause instanceof NoSuchStructureException ||
 			cause instanceof NoSuchStructureLayoutException ||
@@ -183,14 +280,14 @@ public class DDLFormPortlet extends MVCPortlet {
 		return false;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDLRecordSetService(
 		DDLRecordSetService ddlRecordSetService) {
 
 		_ddlRecordSetService = ddlRecordSetService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMFormRenderer(DDMFormRenderer ddmFormRenderer) {
 		_ddmFormRenderer = ddmFormRenderer;
 	}
@@ -212,11 +309,13 @@ public class DDLFormPortlet extends MVCPortlet {
 			DDLFormWebKeys.DYNAMIC_DATA_LISTS_RECORD_SET, recordSet);
 
 		String ddmFormHTML = getDDMFormHTML(
-			renderRequest, renderResponse, recordSet.getDDMStructure());
+			renderRequest, renderResponse, recordSet);
 
 		renderRequest.setAttribute(
 			DDMWebKeys.DYNAMIC_DATA_MAPPING_FORM_HTML, ddmFormHTML);
 	}
+
+	private static final String _DDM_FORM_FIELD_NAME_CAPTCHA = "_CAPTCHA_";
 
 	private static final Log _log = LogFactoryUtil.getLog(DDLFormPortlet.class);
 

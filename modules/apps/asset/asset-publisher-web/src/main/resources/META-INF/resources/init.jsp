@@ -97,9 +97,11 @@ page import="com.liferay.portlet.asset.model.ClassTypeField" %><%@
 page import="com.liferay.portlet.asset.model.ClassTypeReader" %><%@
 page import="com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil" %><%@
 page import="com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil" %><%@
+page import="com.liferay.portlet.asset.util.AssetEntryQueryProcessor" %><%@
 page import="com.liferay.portlet.asset.util.AssetUtil" %><%@
 page import="com.liferay.portlet.asset.util.comparator.AssetRendererFactoryTypeNameComparator" %><%@
 page import="com.liferay.portlet.documentlibrary.util.DLUtil" %><%@
+page import="com.liferay.taglib.servlet.PipingServletResponse" %><%@
 page import="com.liferay.util.ContentUtil" %>
 
 <%@ page import="java.io.Serializable" %>

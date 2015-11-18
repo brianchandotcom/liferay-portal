@@ -143,6 +143,19 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 
 		_dlAppLocalService.deleteAll(portletDataContext.getScopeGroupId());
 
+		if (portletPreferences == null) {
+			return portletPreferences;
+		}
+
+		portletPreferences.setValue("enable-comment-ratings", StringPool.BLANK);
+		portletPreferences.setValue("fileEntriesPerPage", StringPool.BLANK);
+		portletPreferences.setValue("fileEntryColumns", StringPool.BLANK);
+		portletPreferences.setValue("folderColumns", StringPool.BLANK);
+		portletPreferences.setValue("foldersPerPage", StringPool.BLANK);
+		portletPreferences.setValue("rootFolderId", StringPool.BLANK);
+		portletPreferences.setValue("showFoldersSearch", StringPool.BLANK);
+		portletPreferences.setValue("showSubfolders", StringPool.BLANK);
+
 		return portletPreferences;
 	}
 

@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Gradle Plugins Maven Plugin Builder
 Bundle-SymbolicName: com.liferay.gradle.plugins.maven.plugin.builder
-Bundle-Version: 1.0.3
+Bundle-Version: 1.0.4
 Export-Package: com.liferay.gradle.plugins.maven.plugin.builder
 Include-Resource: classes

@@ -77,5 +77,4 @@ Include-Resource:\
 	META-INF/resources=src/main/resources/META-INF/resources,\
 	META-INF/resources=tmp/META-INF/resources
 Web-ContextPath: /frontend-js-web
-
 -donotcopy: (\.touch|.*_diffs.*)

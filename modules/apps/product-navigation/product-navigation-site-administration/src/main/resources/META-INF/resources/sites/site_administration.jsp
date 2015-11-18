@@ -77,7 +77,7 @@ Group group = themeDisplay.getSiteGroup();
 					String portletId = panelCategoryHelper.getFirstPortletId(PanelCategoryKeys.SITE_ADMINISTRATION, permissionChecker, stagingGroup);
 
 					if (Validator.isNotNull(portletId)) {
-						groupAdministrationURL = PortalUtil.getControlPanelPortletURL(request, stagingGroup, portletId, 0, PortletRequest.RENDER_PHASE);
+						groupAdministrationURL = PortalUtil.getControlPanelPortletURL(request, stagingGroup, portletId, 0, 0, PortletRequest.RENDER_PHASE);
 
 						if (groupAdministrationURL != null) {
 							stagingGroupURL = groupAdministrationURL.toString();
@@ -113,7 +113,7 @@ Group group = themeDisplay.getSiteGroup();
 						String portletId = panelCategoryHelper.getFirstPortletId(PanelCategoryKeys.SITE_ADMINISTRATION, permissionChecker, liveGroup);
 
 						if (Validator.isNotNull(portletId)) {
-							groupAdministrationURL = PortalUtil.getControlPanelPortletURL(request, liveGroup, portletId, 0, PortletRequest.RENDER_PHASE);
+							groupAdministrationURL = PortalUtil.getControlPanelPortletURL(request, liveGroup, portletId, 0, 0, PortletRequest.RENDER_PHASE);
 
 							if (groupAdministrationURL != null) {
 								liveGroupURL = groupAdministrationURL.toString();

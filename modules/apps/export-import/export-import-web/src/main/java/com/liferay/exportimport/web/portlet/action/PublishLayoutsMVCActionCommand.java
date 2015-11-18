@@ -75,8 +75,6 @@ public class PublishLayoutsMVCActionCommand extends BaseMVCActionCommand {
 			return;
 		}
 
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
 		try {
 			if (cmd.equals("copy_from_live")) {
 				StagingUtil.copyFromLive(actionRequest);
@@ -110,7 +108,7 @@ public class PublishLayoutsMVCActionCommand extends BaseMVCActionCommand {
 				StagingUtil.unschedulePublishToRemote(actionRequest);
 			}
 
-			sendRedirect(actionRequest, actionResponse, redirect);
+			sendRedirect(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
 			if (e instanceof PrincipalException) {
@@ -132,6 +130,9 @@ public class PublishLayoutsMVCActionCommand extends BaseMVCActionCommand {
 				else {
 					SessionErrors.add(actionRequest, e.getClass(), e);
 				}
+
+				String redirect = ParamUtil.getString(
+					actionRequest, "redirect");
 
 				redirect = StringUtil.replace(
 					redirect, "tabs2=current-and-previous",

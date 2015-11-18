@@ -125,8 +125,7 @@ public interface BaseModel<T>
 	 * attributes stored in the service context.
 	 *
 	 * @param serviceContext the service context to be applied
-	 * @see   com.liferay.portal.service.ServiceContext#getExpandoBridgeAttributes(
-	 *        )
+	 * @see   ServiceContext#getExpandoBridgeAttributes()
 	 */
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext);
 

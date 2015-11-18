@@ -27,7 +27,8 @@ import javax.servlet.jsp.tagext.BodyContent;
 /**
  * @author Shuyang Zhou
  */
-public class BodyContentWrapper extends BodyContent
+public class BodyContentWrapper
+	extends BodyContent
 	implements com.liferay.portal.kernel.servlet.taglib.BodyContentWrapper {
 
 	public BodyContentWrapper(

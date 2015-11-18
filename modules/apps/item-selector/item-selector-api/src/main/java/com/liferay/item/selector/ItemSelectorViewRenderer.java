@@ -26,6 +26,8 @@ import javax.servlet.jsp.PageContext;
  */
 public interface ItemSelectorViewRenderer {
 
+	public String getItemSelectedEventName();
+
 	public ItemSelectorCriterion getItemSelectorCriterion();
 
 	public ItemSelectorView<ItemSelectorCriterion> getItemSelectorView();

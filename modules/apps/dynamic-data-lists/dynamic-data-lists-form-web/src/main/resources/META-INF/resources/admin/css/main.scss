@@ -5,9 +5,11 @@
 	.aspect-ratio img {
 		top: 0;
 	}
-}
 
-.portlet-forms {
+	.ddl-form-builder-buttons {
+		margin-bottom: 0;
+	}
+
 	.ddl-form-name {
 		font-size: 32px;
 		line-height: 32px;
@@ -23,11 +25,15 @@
 	}
 
 	.form-builder-page-header-title,
-	.lfr-ddm-form-page-title {
-		font-size: 19px;
+	.form-builder-page-header-description,
+	.lfr-ddm-form-page-title,
+	.lfr-ddm-form-page-description {
+		color: #728694;
+		font-weight: 400;
 	}
 
 	.lfr-ddm-form-page-title {
+		font-size: 19px;
 		margin-top: 0;
 	}
 
@@ -40,7 +46,7 @@
 		margin: 0;
 
 		.input-group-container,
-		.radio-default,
+		.radio-options,
 		.input-select-wrapper,
 		.checkbox {
 			margin-bottom: 50px;
@@ -48,7 +54,7 @@
 	}
 }
 
-.portlet-forms, .lfr-ddl-field-settings-modal {
+.lfr-ddl-field-settings-modal, .portlet-forms {
 	@include keyframes(spin) {
 		100% {
 			transform: rotate(359deg);
@@ -66,9 +72,14 @@
 
 	label.radio-inline {
 		margin-right: 125px;
+		padding-top: 11px;
+
+		& + .radio-inline {
+			margin-left: 0;
+		}
 	}
 
-	.validation-message {
+	.help-block {
 		font-size: 14px;
 		position: absolute;
 	}
@@ -97,7 +108,6 @@
 			padding-left: 0;
 
 			.help-block {
-				position: absolute;
 				top: -15px;
 			}
 
@@ -123,14 +133,6 @@
 				margin: 0;
 			}
 		}
-	}
-
-	.form-builder-page-header-title,
-	.form-builder-page-header-description,
-	.lfr-ddm-form-page-title,
-	.lfr-ddm-form-page-description {
-		color: #728694;
-		font-weight: 400;
 	}
 
 	.form-builder-tabview,
@@ -226,7 +228,7 @@
 			}
 		}
 
-		.liferay-ddm-form-field-key-value .validation-message {
+		.liferay-ddm-form-field-key-value .help-block {
 			height: 22px;
 			position: relative;
 		}
@@ -357,6 +359,43 @@
 	}
 }
 
+.lfr-ddl-form-builder-field-types-modal {
+	max-height: 550px;
+	outline: none;
+	width: 500px;
+
+	&.lfr-ddl-form-builder-field-types-modal-hidden {
+		display: none;
+	}
+
+	.modal-body {
+		background-color: #FFF;
+		padding: 25px 35px;
+
+		.field-type {
+			float: none;
+			padding: 20px 0;
+			width: auto;
+
+			.field-type-icon, .field-type-label {
+				color: #879CAC;
+			}
+
+			.field-type-icon {
+				font-size: 24px;
+			}
+
+			.field-type-label {
+				font-family: inherit;
+				font-size: 12px;
+				font-weight: 500;
+				margin-top: 8px;
+				text-transform: capitalize;
+			}
+		}
+	}
+}
+
 .portlet-forms-admin {
 	$side-spacing: 34px;
 
@@ -411,7 +450,7 @@
 
 	.form-builder-field-list-add-container,
 	.form-builder-field + .form-builder-field-list-add-container {
-		margin-top: -36px;
+		margin-top: -34px;
 	}
 
 	.liferay-ddm-form-renderer-wizard-navigation-allowed {
@@ -459,11 +498,11 @@
 		width: auto;
 
 		.form-builder-field-list-container {
-			padding: 26px 0 0 0;
+			padding: 36px 0 0 0;
 		}
 
 		.form-builder-field-list-empty .form-builder-field-list-container {
-			padding-bottom: 26px;
+			padding: 26px 0;
 		}
 
 		.layout-builder-add-row-area {

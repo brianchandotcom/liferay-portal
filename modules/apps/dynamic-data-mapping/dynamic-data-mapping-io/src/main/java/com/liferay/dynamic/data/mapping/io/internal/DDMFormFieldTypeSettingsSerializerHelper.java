@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.io.internal;
 
+import com.liferay.dynamic.data.mapping.annotations.DDMFormField;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -21,8 +22,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFactory;
-import com.liferay.dynamic.data.mapping.registry.annotations.DDMFormField;
+import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -167,8 +167,7 @@ public class DDMFormFieldTypeSettingsSerializerHelper {
 
 	private static final Class<? extends Annotation>
 		_DDM_FORM_FIELD_ANNOTATION =
-			com.liferay.dynamic.data.mapping.registry.annotations.DDMFormField.
-				class;
+			com.liferay.dynamic.data.mapping.annotations.DDMFormField.class;
 
 	private final Class<?> _ddmFormFieldTypeSettings;
 	private final DDMFormJSONSerializer _ddmFormJSONSerializer;

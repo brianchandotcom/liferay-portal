@@ -74,8 +74,6 @@ public interface DDMTemplateService extends BaseService {
 	the UUID, creation date, modification date, guest permissions,
 	and group permissions for the template.
 	* @return the template
-	* @throws PortalException if the user did not have permission to add the
-	template or if a portal exception occurred
 	*/
 	public com.liferay.dynamic.data.mapping.model.DDMTemplate addTemplate(
 		long groupId, long classNameId, long classPK, long resourceClassNameId,
@@ -117,8 +115,6 @@ public interface DDMTemplateService extends BaseService {
 	the UUID, creation date, modification date, guest permissions,
 	and group permissions for the template.
 	* @return the template
-	* @throws PortalException if the user did not have permission to add the
-	template or if a portal exception occurred
 	*/
 	public com.liferay.dynamic.data.mapping.model.DDMTemplate addTemplate(
 		long groupId, long classNameId, long classPK, long resourceClassNameId,
@@ -146,8 +142,6 @@ public interface DDMTemplateService extends BaseService {
 	the UUID, creation date, modification date, guest permissions,
 	and group permissions for the template.
 	* @return the new template
-	* @throws PortalException if the user did not have permission to add the
-	template or if a portal exception occurred
 	*/
 	public com.liferay.dynamic.data.mapping.model.DDMTemplate copyTemplate(
 		long templateId,
@@ -179,8 +173,6 @@ public interface DDMTemplateService extends BaseService {
 	the UUID, creation date, modification date, guest permissions,
 	and group permissions for the template.
 	* @return the new template
-	* @throws PortalException if the user did not have permission to add the
-	template or if a portal exception occurred
 	*/
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> copyTemplates(
 		long classNameId, long oldClassPK, long resourceClassNameId,
@@ -192,8 +184,6 @@ public interface DDMTemplateService extends BaseService {
 	* Deletes the template and its resources.
 	*
 	* @param templateId the primary key of the template to be deleted
-	* @throws PortalException if the user did not have permission to delete the
-	template or if a portal exception occurred
 	*/
 	public void deleteTemplate(long templateId) throws PortalException;
 
@@ -206,8 +196,6 @@ public interface DDMTemplateService extends BaseService {
 	* @param templateKey the unique string identifying the template
 	* @return the matching template, or <code>null</code> if a matching
 	template could not be found
-	* @throws PortalException if the user did not have permission to view the
-	template
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.dynamic.data.mapping.model.DDMTemplate fetchTemplate(
@@ -229,7 +217,6 @@ public interface DDMTemplateService extends BaseService {
 	related model
 	* @param templateKey the unique string identifying the template
 	* @return the matching template
-	* @throws PortalException if a matching template could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.dynamic.data.mapping.model.DDMTemplate getTemplate(
@@ -256,7 +243,6 @@ public interface DDMTemplateService extends BaseService {
 	have sharing enabled) and include global scoped sites in the
 	search
 	* @return the matching template
-	* @throws PortalException if a matching template could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.dynamic.data.mapping.model.DDMTemplate getTemplate(
@@ -268,8 +254,6 @@ public interface DDMTemplateService extends BaseService {
 	*
 	* @param templateId the primary key of the template
 	* @return the template with the ID
-	* @throws PortalException if the user did not have permission to view the
-	template or if a matching template could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.dynamic.data.mapping.model.DDMTemplate getTemplate(
@@ -714,8 +698,6 @@ public interface DDMTemplateService extends BaseService {
 	* @param serviceContext the service context to be applied. Can set the
 	modification date.
 	* @return the updated template
-	* @throws PortalException if the user did not have permission to update the
-	template or if a portal exception occurred
 	*/
 	public com.liferay.dynamic.data.mapping.model.DDMTemplate updateTemplate(
 		long templateId, long classPK,
@@ -750,8 +732,6 @@ public interface DDMTemplateService extends BaseService {
 	* @param serviceContext the service context to be applied. Can set the
 	modification date.
 	* @return the updated template
-	* @throws PortalException if the user did not have permission to update the
-	template or if a portal exception occurred
 	*/
 	public com.liferay.dynamic.data.mapping.model.DDMTemplate updateTemplate(
 		long templateId, long classPK,

@@ -62,7 +62,7 @@ public class DLFolderTrashHandlerTest
 			   WhenIsAssetableBaseModel, WhenIsAssetableParentModel,
 			   WhenIsIndexableBaseModel, WhenIsMoveableFromTrashBaseModel,
 			   WhenIsRestorableBaseModel, WhenIsUpdatableBaseModel,
-	WhenParentModelIsSameType {
+			   WhenParentModelIsSameType {
 
 	@ClassRule
 	@Rule

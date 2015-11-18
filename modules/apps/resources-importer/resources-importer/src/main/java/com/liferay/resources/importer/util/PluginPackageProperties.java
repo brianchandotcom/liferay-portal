@@ -47,6 +47,10 @@ public class PluginPackageProperties {
 
 		String contextPath = servletContext.getRealPath(StringPool.SLASH);
 
+		if (contextPath == null) {
+			contextPath = servletContext.getContextPath();
+		}
+
 		contextPath = StringUtil.replace(
 			contextPath, StringPool.BACK_SLASH, StringPool.SLASH);
 

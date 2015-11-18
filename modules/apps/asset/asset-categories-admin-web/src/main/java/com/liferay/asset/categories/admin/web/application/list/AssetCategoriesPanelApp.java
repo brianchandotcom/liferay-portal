@@ -41,6 +41,7 @@ public class AssetCategoriesPanelApp extends BasePanelApp {
 		return AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN;
 	}
 
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN + ")",
 		unbind = "-"

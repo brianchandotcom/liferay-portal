@@ -41,6 +41,7 @@ public class BookmarksPanelApp extends BasePanelApp {
 		return BookmarksPortletKeys.BOOKMARKS_ADMIN;
 	}
 
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS_ADMIN + ")",
 		unbind = "-"

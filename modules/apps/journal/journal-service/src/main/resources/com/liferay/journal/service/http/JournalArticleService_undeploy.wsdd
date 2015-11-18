@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
 
 <undeployment xmlns="http://xml.apache.org/axis/wsdd/">
-	<service name="Portlet_Journal_JournalArticleService" />
+	<service name="Plugin_Journal_JournalArticleService" />
 </undeployment>

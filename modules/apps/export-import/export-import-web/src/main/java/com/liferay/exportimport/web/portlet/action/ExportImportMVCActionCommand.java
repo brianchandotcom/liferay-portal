@@ -115,8 +115,6 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		try {
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
-
 			if (cmd.equals(Constants.ADD_TEMP)) {
 				_importLayoutsMVCActionCommand.addTempFileEntry(
 					actionRequest,
@@ -139,7 +137,7 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 
 				exportData(actionRequest, portlet);
 
-				sendRedirect(actionRequest, actionResponse, redirect);
+				sendRedirect(actionRequest, actionResponse);
 			}
 			else if (cmd.equals(Constants.IMPORT)) {
 				hideDefaultSuccessMessage(actionRequest);
@@ -155,7 +153,7 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 						SessionMessages.KEY_SUFFIX_CLOSE_REFRESH_PORTLET,
 					portlet.getPortletId());
 
-				sendRedirect(actionRequest, actionResponse, redirect);
+				sendRedirect(actionRequest, actionResponse);
 			}
 		}
 		catch (Exception e) {
@@ -292,14 +290,14 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDLFileEntryLocalService(
 		DLFileEntryLocalService dlFileEntryLocalService) {
 
 		_dlFileEntryLocalService = dlFileEntryLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setExportImportConfigurationLocalService(
 		ExportImportConfigurationLocalService
 			exportImportConfigurationLocalService) {
@@ -308,14 +306,14 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 			exportImportConfigurationLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setExportImportService(
 		ExportImportService exportImportService) {
 
 		_exportImportService = exportImportService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setImportLayoutsMVCActionCommand(
 		ImportLayoutsMVCActionCommand importLayoutsMVCActionCommand) {
 

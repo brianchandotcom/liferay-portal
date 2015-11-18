@@ -361,7 +361,7 @@ public class LDAPUserExporterImpl implements UserExporter {
 		}
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setPortalToLDAPConverter(
 		PortalToLDAPConverter portalToLDAPConverter) {
 

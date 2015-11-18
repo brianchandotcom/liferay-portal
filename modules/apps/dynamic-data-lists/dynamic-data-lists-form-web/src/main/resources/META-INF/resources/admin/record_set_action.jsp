@@ -94,8 +94,7 @@ DDLRecordSet recordSet = (DDLRecordSet)row.getObject();
 			<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon
-			message="delete"
+		<liferay-ui:icon-delete
 			url="<%= deleteURL %>"
 		/>
 	</c:if>

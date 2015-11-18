@@ -69,6 +69,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
@@ -91,7 +92,6 @@ import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
-import com.liferay.portal.util.WebKeys;
 import com.liferay.portal.webserver.WebServerServletTokenUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.util.FiniteUniqueStack;
@@ -109,7 +109,6 @@ import java.util.Map;
 import java.util.Stack;
 import java.util.regex.Pattern;
 
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 import javax.portlet.PortletURL;
@@ -562,22 +561,6 @@ public class JournalUtil {
 				themeDisplay.getLocale(), "the-name-of-the-email-recipient"));
 
 		return definitionTerms;
-	}
-
-	public static String getEmailFromAddress(
-		PortletPreferences preferences, long companyId) {
-
-		return PortalUtil.getEmailFromAddress(
-			preferences, companyId,
-			JournalServiceConfigurationValues.EMAIL_FROM_ADDRESS);
-	}
-
-	public static String getEmailFromName(
-		PortletPreferences preferences, long companyId) {
-
-		return PortalUtil.getEmailFromName(
-			preferences, companyId,
-			JournalServiceConfigurationValues.EMAIL_FROM_NAME);
 	}
 
 	public static String getJournalControlPanelLink(

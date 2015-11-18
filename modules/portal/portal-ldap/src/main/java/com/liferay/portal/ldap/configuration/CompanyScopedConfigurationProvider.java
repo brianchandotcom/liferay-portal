@@ -15,9 +15,13 @@
 package com.liferay.portal.ldap.configuration;
 
 import aQute.bnd.annotation.metatype.Configurable;
+import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.ldap.constants.LDAPConstants;
 
 import java.io.IOException;
@@ -39,6 +43,29 @@ public abstract class CompanyScopedConfigurationProvider
 	<T extends CompanyScopedConfiguration> implements ConfigurationProvider<T> {
 
 	@Override
+	public boolean delete(long companyId) {
+		Configuration configuration = _configurations.get(companyId);
+
+		if (configuration == null) {
+			return false;
+		}
+
+		try {
+			configuration.delete();
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
+
+		return true;
+	}
+
+	@Override
+	public boolean delete(long companyId, long index) {
+		return delete(companyId);
+	}
+
+	@Override
 	public T getConfiguration(long companyId) {
 		return getConfiguration(companyId, true);
 	}
@@ -47,6 +74,10 @@ public abstract class CompanyScopedConfigurationProvider
 	public T getConfiguration(long companyId, boolean useDefault) {
 		Dictionary<String, Object> properties = getConfigurationProperties(
 			companyId, useDefault);
+
+		if (properties == null) {
+			return null;
+		}
 
 		T configurable = Configurable.createConfigurable(
 			getMetatype(), properties);
@@ -78,18 +109,11 @@ public abstract class CompanyScopedConfigurationProvider
 		Configuration configuration = _configurations.get(companyId);
 
 		if (useDefault && (configuration == null)) {
-			configuration = _configurations.get(0L);
-		}
-		else if (!useDefault && (configuration == null)) {
 			return new HashMapDictionary<>();
 		}
 
 		if (configuration == null) {
-			Class<?> clazz = getMetatype();
-
-			throw new IllegalArgumentException(
-				"No instance of " + clazz.getName() + " for company " +
-					companyId);
+			return null;
 		}
 
 		Dictionary<String, Object> properties = configuration.getProperties();
@@ -119,18 +143,26 @@ public abstract class CompanyScopedConfigurationProvider
 	@Override
 	public List<T> getConfigurations(long companyId, boolean useDefault) {
 		List<Dictionary<String, Object>> configurationsProperties =
-			getConfigurationsProperties(companyId, useDefault);
+			getConfigurationsProperties(companyId);
 
 		List<T> configurables = new ArrayList<>(
 			configurationsProperties.size());
 
-		for (Dictionary<String, Object> configurationProperties :
-				configurationsProperties) {
-
+		if (ListUtil.isEmpty(configurationsProperties) && useDefault) {
 			T configurable = Configurable.createConfigurable(
-				getMetatype(), configurationProperties);
+				getMetatype(), new HashMapDictionary<>());
 
 			configurables.add(configurable);
+		}
+		else if (ListUtil.isNotEmpty(configurationsProperties)) {
+			for (Dictionary<String, Object> configurationProperties :
+					configurationsProperties) {
+
+				T configurable = Configurable.createConfigurable(
+					getMetatype(), configurationProperties);
+
+				configurables.add(configurable);
+			}
 		}
 
 		return configurables;
@@ -140,28 +172,10 @@ public abstract class CompanyScopedConfigurationProvider
 	public List<Dictionary<String, Object>> getConfigurationsProperties(
 		long companyId) {
 
-		return getConfigurationsProperties(companyId, true);
-	}
-
-	@Override
-	public List<Dictionary<String, Object>> getConfigurationsProperties(
-		long companyId, boolean useDefault) {
-
 		Configuration configuration = _configurations.get(companyId);
 
-		if (!useDefault && (configuration == null)) {
-			return Collections.emptyList();
-		}
-		else if (configuration == null) {
-			configuration = _configurations.get(0L);
-		}
-
 		if (configuration == null) {
-			Class<?> clazz = getMetatype();
-
-			throw new IllegalArgumentException(
-				"No instance of " + clazz.getName() + " for company " +
-					companyId);
+			return Collections.emptyList();
 		}
 
 		List<Dictionary<String, Object>> configurationsProperties =
@@ -208,20 +222,14 @@ public abstract class CompanyScopedConfigurationProvider
 
 		Configuration configuration = _configurations.get(companyId);
 
-		Configuration defaultConfiguration = _configurations.get(0L);
-
-		if (defaultConfiguration == null) {
-			Class<?> metatype = getMetatype();
-
-			throw new IllegalArgumentException(
-				"No default configuration for " + metatype.getName());
-		}
-
 		try {
 			if (configuration == null) {
+				if (Validator.isNull(factoryPid)) {
+					factoryPid = getMetatypeId();
+				}
+
 				configuration = configurationAdmin.createFactoryConfiguration(
-					defaultConfiguration.getFactoryPid(),
-					defaultConfiguration.getBundleLocation());
+					factoryPid, StringPool.QUESTION);
 			}
 
 			properties.put(LDAPConstants.COMPANY_ID, companyId);
@@ -240,10 +248,29 @@ public abstract class CompanyScopedConfigurationProvider
 		updateProperties(companyId, properties);
 	}
 
+	protected String getMetatypeId() {
+		Class<T> metatype = getMetatype();
+
+		Meta.OCD metaOCD = metatype.getAnnotation(Meta.OCD.class);
+
+		if (metaOCD == null) {
+			return null;
+		}
+
+		String id = metaOCD.id();
+
+		if (id == null) {
+			id = metatype.getName();
+		}
+
+		return id;
+	}
+
 	protected abstract void setConfigurationAdmin(
 		ConfigurationAdmin configurationAdmin);
 
 	protected ConfigurationAdmin configurationAdmin;
+	protected String factoryPid;
 
 	private final Map<Long, Configuration> _configurations = new HashMap<>();
 

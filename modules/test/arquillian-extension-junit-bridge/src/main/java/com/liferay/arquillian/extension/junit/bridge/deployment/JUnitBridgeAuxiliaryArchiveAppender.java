@@ -17,6 +17,7 @@ package com.liferay.arquillian.extension.junit.bridge.deployment;
 import com.liferay.arquillian.extension.junit.bridge.LiferayArquillianJUnitBridgeExtension;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.arquillian.extension.junit.bridge.observer.JUnitBridgeObserver;
+import com.liferay.arquillian.extension.junit.bridge.util.FrameworkMethodComparator;
 import com.liferay.portal.kernel.util.CharPool;
 
 import java.io.File;
@@ -61,7 +62,9 @@ public class JUnitBridgeAuxiliaryArchiveAppender
 			LiferayArquillianJUnitBridgeExtension.class);
 		javaArchive.addAsServiceProviderAndClasses(
 			TestRunner.class, JUnitTestRunner.class);
-		javaArchive.addClasses(Arquillian.class, JUnitBridgeObserver.class);
+		javaArchive.addClasses(
+			Arquillian.class, JUnitBridgeObserver.class,
+			FrameworkMethodComparator.class);
 		javaArchive.addPackages(
 			false, BeforeRules.class.getPackage(),
 			org.jboss.arquillian.junit.Arquillian.class.getPackage());

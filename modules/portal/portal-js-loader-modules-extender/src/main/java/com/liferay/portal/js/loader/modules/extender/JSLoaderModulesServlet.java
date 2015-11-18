@@ -191,7 +191,7 @@ public class JSLoaderModulesServlet extends HttpServlet {
 		_details = details;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setJSLoaderModulesTracker(
 		JSLoaderModulesTracker jsLoaderModulesTracker) {
 

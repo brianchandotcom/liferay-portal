@@ -39,7 +39,6 @@ import java.util.List;
 public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 
 	/**
-	 * @throws     PortalException
 	 * @deprecated As of 7.0.0, replaced by {@link #addTeam(long, long, String,
 	 *             String, ServiceContext)}
 	 */
@@ -271,6 +270,12 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 	@Override
 	public Team getTeam(long groupId, String name) throws PortalException {
 		return teamPersistence.findByG_N(groupId, name);
+	}
+
+	@Override
+	public List<Team> getUserOrUserGroupTeams(long groupId, long userId) {
+		return teamFinder.findByG_U(
+			groupId, userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	@Override

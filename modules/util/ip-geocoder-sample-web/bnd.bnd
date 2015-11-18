@@ -21,7 +21,6 @@ Import-Package:\
 	com.liferay.portlet.exportimport.lar,\
 	*
 Web-ContextPath: /ip-geocoder-sample-web
-
 -donotcopy: (docroot/WEB-INF/src|.*\.jar|.*\.java)
 -wab: docroot
 -wablib:\

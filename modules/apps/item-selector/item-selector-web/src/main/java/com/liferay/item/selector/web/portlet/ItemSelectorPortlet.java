@@ -16,10 +16,13 @@ package com.liferay.item.selector.web.portlet;
 
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorRendering;
-import com.liferay.item.selector.web.upgrade.ItemSelectorWebUpgrade;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Release;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.RequestBackedPortletURLFactoryUtil;
 
 import java.io.IOException;
 
@@ -61,9 +64,13 @@ public class ItemSelectorPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		ItemSelectorRendering itemSelectorRendering =
 			_itemSelector.getItemSelectorRendering(
-				renderRequest, renderResponse);
+				RequestBackedPortletURLFactoryUtil.create(renderRequest),
+				renderRequest.getParameterMap(), themeDisplay);
 
 		LocalizedItemSelectorRendering localizedItemSelectorRendering =
 			new LocalizedItemSelectorRendering(
@@ -74,14 +81,16 @@ public class ItemSelectorPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setItemSelector(ItemSelector itemSelector) {
 		_itemSelector = itemSelector;
 	}
 
-	@Reference(unbind = "-")
-	protected void setItemSelectorWebUpgrade(
-		ItemSelectorWebUpgrade itemSelectorWebUpgrade) {
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.item.selector.web)(release.schema.version=1.0.0))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

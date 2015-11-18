@@ -289,7 +289,7 @@ public class JournalContentImpl implements JournalContent {
 		}
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setJournalArticleLocalService(
 		JournalArticleLocalService journalArticleLocalService) {
 

@@ -41,6 +41,7 @@ public class RolesPanelApp extends BasePanelApp {
 		return RolesAdminPortletKeys.ROLES_ADMIN;
 	}
 
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + RolesAdminPortletKeys.ROLES_ADMIN + ")",
 		unbind = "-"

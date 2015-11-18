@@ -41,6 +41,7 @@ public class WikiPanelApp extends BasePanelApp {
 		return WikiPortletKeys.WIKI_ADMIN;
 	}
 
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN + ")",
 		unbind = "-"

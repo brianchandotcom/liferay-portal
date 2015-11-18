@@ -144,9 +144,9 @@ public class DDLRecordSetServiceWrapper implements DDLRecordSetService,
 
 	@Override
 	public com.liferay.dynamic.data.lists.model.DDLRecordSet updateRecordSet(
-		long recordSetId, java.lang.String typeSettings)
+		long recordSetId, java.lang.String settings)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordSetService.updateRecordSet(recordSetId, typeSettings);
+		return _ddlRecordSetService.updateRecordSet(recordSetId, settings);
 	}
 
 	/**

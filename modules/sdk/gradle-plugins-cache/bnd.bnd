@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Gradle Plugins Cache
 Bundle-SymbolicName: com.liferay.gradle.plugins.cache
-Bundle-Version: 1.0.2
+Bundle-Version: 1.0.3
 Export-Package: com.liferay.gradle.plugins.cache
 Include-Resource: classes

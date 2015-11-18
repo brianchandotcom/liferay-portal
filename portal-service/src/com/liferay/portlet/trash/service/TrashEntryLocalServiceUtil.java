@@ -68,7 +68,6 @@ public class TrashEntryLocalServiceUtil {
 	com.liferay.portlet.documentlibrary.model.DLFileVersion})
 	* @param typeSettingsProperties the type settings properties
 	* @return the trashEntry
-	* @throws PortalException if a user with the primary key could not be found
 	*/
 	public static com.liferay.portlet.trash.model.TrashEntry addTrashEntry(
 		long userId, long groupId, java.lang.String className, long classPK,
@@ -109,12 +108,9 @@ public class TrashEntryLocalServiceUtil {
 	* @param className the class name of entity
 	* @param classPK the primary key of the entry
 	* @return the trash entry with the entity class name and primary key
-	* @throws PortalException if a trash entry with the primary key could not
-	be found
 	*/
 	public static com.liferay.portlet.trash.model.TrashEntry deleteEntry(
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		java.lang.String className, long classPK) {
 		return getService().deleteEntry(className, classPK);
 	}
 
@@ -123,12 +119,9 @@ public class TrashEntryLocalServiceUtil {
 	*
 	* @param entryId the primary key of the trash entry
 	* @return the trash entry with the primary key
-	* @throws PortalException if a trash entry with the primary key could not
-	be found
 	*/
 	public static com.liferay.portlet.trash.model.TrashEntry deleteEntry(
-		long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long entryId) {
 		return getService().deleteEntry(entryId);
 	}
 
@@ -344,8 +337,6 @@ public class TrashEntryLocalServiceUtil {
 	* @param className the class name of the entity
 	* @param classPK the primary key of the entity
 	* @return the trash entry with the entity class name and primary key
-	* @throws PortalException if a trash entry with the primary key could not
-	be found
 	*/
 	public static com.liferay.portlet.trash.model.TrashEntry getEntry(
 		java.lang.String className, long classPK)
@@ -358,8 +349,6 @@ public class TrashEntryLocalServiceUtil {
 	*
 	* @param entryId the primary key of the trash entry
 	* @return the trash entry with the primary key
-	* @throws PortalException if a trash entry with the primary key could not
-	be found
 	*/
 	public static com.liferay.portlet.trash.model.TrashEntry getEntry(
 		long entryId)

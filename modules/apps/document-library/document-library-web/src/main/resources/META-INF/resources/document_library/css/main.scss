@@ -122,17 +122,8 @@
 		}
 	}
 
-	.document-container, .document-entries-pagination {
+	.document-container {
 		clear: both;
-	}
-
-	.document-entries-pagination {
-		margin: 10px 0;
-		text-align: center;
-
-		.pagination-content {
-			margin: 0;
-		}
 	}
 
 	.folder.error:hover {
@@ -201,26 +192,13 @@
 		}
 	}
 
-	.lfr-app-column-view {
-		border-width: 0;
-
-		.lfr-app-column-view-content {
-			background-color: #FAFAFA;
-		}
-	}
-
-	.context-pane .context-pane-content {
-		border-left: 1px solid #7B7B7B;
-		position: relative;
-	}
-
 	.taglib-search-iterator-page-iterator-top, .taglib-search-iterator-page-iterator-bottom, .paginator-container {
 		clear: both;
 		padding: 5px;
 		position: relative;
 	}
 
-	.taglib-search-iterator-page-iterator-top.page-iterator-bottom, .lfr-app-column-view .taglib-search-iterator-page-iterator-bottom {
+	.taglib-search-iterator-page-iterator-top.page-iterator-bottom {
 		bottom: 0;
 		left: 0;
 		position: absolute;

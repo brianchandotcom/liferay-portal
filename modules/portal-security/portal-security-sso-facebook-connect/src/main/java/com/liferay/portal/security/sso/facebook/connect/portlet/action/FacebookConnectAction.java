@@ -217,7 +217,7 @@ public class FacebookConnectAction extends BaseStrutsAction {
 		response.sendRedirect(portletURL.toString());
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setFacebookConnect(FacebookConnect facebookConnect) {
 		_facebookConnect = facebookConnect;
 	}

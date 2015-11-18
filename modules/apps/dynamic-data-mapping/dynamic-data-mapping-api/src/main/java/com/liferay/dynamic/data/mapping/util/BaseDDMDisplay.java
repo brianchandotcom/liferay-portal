@@ -222,7 +222,7 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 			DDMStructure.class.getName(), PortletProvider.Action.VIEW);
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, portletId, 0, PortletRequest.RENDER_PHASE);
+			liferayPortletRequest, portletId, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/view.jsp");
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
@@ -312,7 +312,7 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 			DDMStructure.class.getName(), PortletProvider.Action.VIEW);
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, portletId, 0, PortletRequest.RENDER_PHASE);
+			liferayPortletRequest, portletId, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/view_template.jsp");
 		portletURL.setParameter("classNameId", String.valueOf(classNameId));

@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
@@ -48,6 +49,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -57,7 +59,6 @@ import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
-import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
@@ -116,7 +117,6 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
-		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_DISPLAY,
 		"javax.portlet.name=" + DLPortletKeys.MEDIA_GALLERY_DISPLAY,
 		"mvc.command.name=/document_library/edit_file_entry",
 		"mvc.command.name=/document_library/upload_multiple_file_entries"
@@ -335,12 +335,16 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
 
+		boolean majorVersion = ParamUtil.getBoolean(
+			actionRequest, "majorVersion");
+		String changeLog = ParamUtil.getString(actionRequest, "changeLog");
+
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
 		if (fileEntryId > 0) {
 			_dlAppService.checkInFileEntry(
-				fileEntryId, false, StringPool.BLANK, serviceContext);
+				fileEntryId, majorVersion, changeLog, serviceContext);
 		}
 		else {
 			long[] fileEntryIds = StringUtil.split(
@@ -348,7 +352,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			for (int i = 0; i < fileEntryIds.length; i++) {
 				_dlAppService.checkInFileEntry(
-					fileEntryIds[i], false, StringPool.BLANK, serviceContext);
+					fileEntryIds[i], majorVersion, changeLog, serviceContext);
 			}
 		}
 	}
@@ -515,10 +519,19 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			if (cmd.equals(Constants.ADD_TEMP) ||
 				cmd.equals(Constants.DELETE_TEMP)) {
 
-				actionResponse.setRenderParameter(
-					"mvcPath", "/html/common/null.jsp");
+				actionResponse.setRenderParameter("mvcPath", "/null.jsp");
 			}
 			else if (cmd.equals(Constants.PREVIEW)) {
+				SessionMessages.add(
+					actionRequest,
+					PortalUtil.getPortletId(actionRequest) +
+						SessionMessages.KEY_SUFFIX_FORCE_SEND_REDIRECT);
+
+				hideDefaultSuccessMessage(actionRequest);
+
+				actionResponse.setRenderParameter(
+					"mvcRenderCommandName",
+					"/document_library/edit_file_entry");
 			}
 			else if (!windowState.equals(LiferayWindowState.POP_UP)) {
 			}
@@ -704,13 +717,6 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			"mvcRenderCommandName", "/document_library/edit_file_entry");
 		portletURL.setParameter(Constants.CMD, Constants.UPDATE, false);
 		portletURL.setParameter("redirect", redirect, false);
-
-		String referringPortletResource = ParamUtil.getString(
-			actionRequest, "referringPortletResource");
-
-		portletURL.setParameter(
-			"referringPortletResource", referringPortletResource, false);
-
 		portletURL.setParameter(
 			"groupId", String.valueOf(fileEntry.getGroupId()), false);
 		portletURL.setParameter(
@@ -744,24 +750,9 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				 e instanceof SourceFileNameException ||
 				 e instanceof StorageFieldRequiredException) {
 
-			UploadException uploadException =
-				(UploadException)actionRequest.getAttribute(
-					WebKeys.UPLOAD_EXCEPTION);
-
-			if ((uploadException != null) && !cmd.equals(Constants.ADD_TEMP)) {
-				String uploadExceptionRedirect = ParamUtil.getString(
-					actionRequest, "uploadExceptionRedirect");
-
-				sendRedirect(
-					actionRequest, actionResponse, uploadExceptionRedirect);
-
-				SessionErrors.add(actionRequest, e.getClass());
-
-				return;
-			}
-			else if (!cmd.equals(Constants.ADD_DYNAMIC) &&
-					 !cmd.equals(Constants.ADD_MULTIPLE) &&
-					 !cmd.equals(Constants.ADD_TEMP)) {
+			if (!cmd.equals(Constants.ADD_DYNAMIC) &&
+				!cmd.equals(Constants.ADD_MULTIPLE) &&
+				!cmd.equals(Constants.ADD_TEMP)) {
 
 				if (e instanceof AntivirusScannerException) {
 					SessionErrors.add(actionRequest, e.getClass(), e);

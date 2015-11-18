@@ -59,6 +59,8 @@ public interface ActionableDynamicQuery {
 
 	public void setInterval(int interval);
 
+	public void setParallel(boolean parallel);
+
 	public void setPerformActionMethod(
 		PerformActionMethod<?> performActionMethod);
 

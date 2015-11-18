@@ -932,8 +932,6 @@
 	</command>
 
 	<command name="RestoreDMDocumentFromFolderCP" priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 			<var name="siteScopeName" value="Site Name" />
@@ -1349,11 +1347,9 @@
 			<var name="webContentTitle" value="WC Folder Name" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoEditCP">
+		<execute macro="WebContent#gotoViewSpecificVersionHistoryCP">
 			<var name="webContentTitle" value="Web Content Title Edit Draft" />
 		</execute>
-
-		<execute macro="WebContent#gotoViewSpecificVersionHistoryCP" />
 
 		<execute macro="WebContent#viewSpecificVersionHistoryCP">
 			<var name="webContentStatus" value="Approved" />

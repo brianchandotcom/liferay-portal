@@ -1,0 +1,37 @@
+{namespace ddm}
+
+/**
+ * Prints the DDM form date field.
+ *
+ * @param childElementsHTML
+ * @param displayValue
+ * @param label
+ * @param name
+ * @param required
+ * @param showLabel
+ * @param value
+ * @param visible
+ */
+{template .date}
+	<div class="form-group {$visible ? '' : ' hide'} liferay-ddm-form-field-date" data-fieldname="{$name}">
+		{if $showLabel}
+			<label class="control-label" for="{$name}">
+				{$label}
+
+				{if $required}
+					<b>*</b>
+				{/if}
+			</label>
+		{/if}
+
+		<div class="input-group input-group-container">
+			<input aria-label="{$label}" class="form-control trigger" type="text" value="{$displayValue}" />
+
+			<input name="{$name}" type="hidden" value="{$value}" />
+
+			<span class="input-group-addon"><span class="icon-calendar"></span></span>
+		</div>
+
+		{$childElementsHTML|noAutoescape}
+	</div>
+{/template}

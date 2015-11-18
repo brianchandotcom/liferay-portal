@@ -491,10 +491,9 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 
 	@Override
 	public com.liferay.dynamic.data.lists.model.DDLRecordSet updateRecordSet(
-		long recordSetId, java.lang.String typeSettings)
+		long recordSetId, java.lang.String settings)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordSetLocalService.updateRecordSet(recordSetId,
-			typeSettings);
+		return _ddlRecordSetLocalService.updateRecordSet(recordSetId, settings);
 	}
 
 	/**

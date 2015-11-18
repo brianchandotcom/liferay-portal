@@ -50,7 +50,7 @@ public class DeleteRecordMVCActionCommand
 		_ddlRecordService.deleteRecord(recordId);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDLRecordService(DDLRecordService ddlRecordService) {
 		_ddlRecordService = ddlRecordService;
 	}

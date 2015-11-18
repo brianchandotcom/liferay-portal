@@ -56,7 +56,10 @@ public class JavaScriptPortalWebResources implements PortalWebResources {
 		_bundle = bundleContext.getBundle();
 	}
 
-	@Reference(target = "(osgi.web.symbolicname=com.liferay.frontend.js.web)")
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.frontend.js.web)",
+		unbind = "-"
+	)
 	protected void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
 	}

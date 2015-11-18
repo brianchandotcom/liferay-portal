@@ -63,7 +63,6 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 	* @param className the entity's class name
 	* @param classPK the primary key of the entity's instance
 	* @return the subscription
-	* @throws PortalException if a matching user or group could not be found
 	*/
 	@Override
 	public com.liferay.portal.model.Subscription addSubscription(long userId,
@@ -93,7 +92,6 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 	* @param classPK the primary key of the entity's instance
 	* @param frequency the frequency for notifications
 	* @return the subscription
-	* @throws PortalException if a matching user or group could not be found
 	*/
 	@Override
 	public com.liferay.portal.model.Subscription addSubscription(long userId,
@@ -161,8 +159,6 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 	* @param userId the primary key of the user
 	* @param className the entity's class name
 	* @param classPK the primary key of the entity's instance
-	* @throws PortalException if a matching user or subscription could not be
-	found
 	*/
 	@Override
 	public void deleteSubscription(long userId, java.lang.String className,
@@ -177,7 +173,6 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 	* @param companyId the primary key of the company
 	* @param className the entity's class name
 	* @param classPK the primary key of the entity's instance
-	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public void deleteSubscriptions(long companyId, java.lang.String className,
@@ -191,7 +186,6 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 	* Deletes all the subscriptions of the user.
 	*
 	* @param userId the primary key of the user
-	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public void deleteSubscriptions(long userId)
@@ -333,7 +327,6 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 	* @param className the entity's class name
 	* @param classPK the primary key of the entity's instance
 	* @return the subscription of the user to the entity
-	* @throws PortalException if a matching subscription could not be found
 	*/
 	@Override
 	public com.liferay.portal.model.Subscription getSubscription(

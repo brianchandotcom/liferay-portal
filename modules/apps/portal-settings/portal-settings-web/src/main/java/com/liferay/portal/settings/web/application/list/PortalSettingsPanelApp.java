@@ -41,6 +41,7 @@ public class PortalSettingsPanelApp extends BasePanelApp {
 		return PortalSettingsPortletKeys.PORTAL_SETTINGS;
 	}
 
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + PortalSettingsPortletKeys.PORTAL_SETTINGS + ")",
 		unbind = "-"

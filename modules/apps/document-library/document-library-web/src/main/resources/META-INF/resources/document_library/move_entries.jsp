@@ -19,8 +19,6 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
-
 long newFolderId = ParamUtil.getLong(request, "newFolderId");
 
 String fileShortcutIds = ParamUtil.getString(request, "fileShortcutIds");
@@ -83,13 +81,18 @@ for (FileShortcut curFileShortcut : fileShortcuts) {
 		invalidShortcutEntries.add(curFileShortcut);
 	}
 }
+
+boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
+
+if (portletTitleBasedNavigation) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
+
+	renderResponse.setTitle(LanguageUtil.get(request, "move-files"));
+}
 %>
 
 <div <%= portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
-	<c:if test="<%= Validator.isNull(referringPortletResource) %>">
-		<liferay-util:include page="/document_library/top_links.jsp" servletContext="<%= application %>" />
-	</c:if>
-
 	<portlet:actionURL name="/document_library/move_entry" var="moveFileEntryURL">
 		<portlet:param name="mvcRenderCommandName" value="/document_library/move_entry" />
 	</portlet:actionURL>
@@ -99,10 +102,12 @@ for (FileShortcut curFileShortcut : fileShortcuts) {
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="newFolderId" type="hidden" value="<%= newFolderId %>" />
 
-		<liferay-ui:header
-			backURL="<%= redirect %>"
-			title="move-files"
-		/>
+		<c:if test="<%= !portletTitleBasedNavigation %>">
+			<liferay-ui:header
+				backURL="<%= redirect %>"
+				title="move-files"
+			/>
+		</c:if>
 
 		<liferay-ui:error exception="<%= DuplicateFileEntryException.class %>" message="the-folder-you-selected-already-has-an-entry-with-this-name.-please-select-a-different-folder" />
 		<liferay-ui:error exception="<%= DuplicateFolderNameException.class %>" message="the-folder-you-selected-already-has-an-entry-with-this-name.-please-select-a-different-folder" />

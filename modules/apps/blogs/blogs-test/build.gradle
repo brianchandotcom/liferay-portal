@@ -2,5 +2,5 @@ dependencies {
 	testCompile project(":apps:blogs:blogs-service")
 	testCompile project(":apps:blogs:blogs-web")
 
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.0-SNAPSHOT"
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.0"
 }

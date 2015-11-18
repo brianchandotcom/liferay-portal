@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Gradle Plugins Lang Builder
 Bundle-SymbolicName: com.liferay.gradle.plugins.lang.builder
-Bundle-Version: 1.0.2
+Bundle-Version: 1.0.4
 Export-Package: com.liferay.gradle.plugins.lang.builder
 Include-Resource:\
 	classes,\

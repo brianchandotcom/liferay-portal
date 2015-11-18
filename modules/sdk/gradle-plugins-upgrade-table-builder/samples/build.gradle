@@ -23,5 +23,5 @@ repositories {
 apply plugin: "com.liferay.portal.tools.upgrade.table.builder"
 
 buildUpgradeTable {
-	upgradeTableDirName = "upgrade.table.dir.name"
+	upgradeTableDir = "upgrade.table.dir.name"
 }

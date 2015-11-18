@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Gradle Plugins JS Module Config Generator
 Bundle-SymbolicName: com.liferay.gradle.plugins.js.module.config.generator
-Bundle-Version: 1.0.14
+Bundle-Version: 1.0.15
 Export-Package: com.liferay.gradle.plugins.js.module.config.generator
 Include-Resource: classes

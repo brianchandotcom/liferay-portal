@@ -55,7 +55,7 @@ boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, gr
 	String portletId = panelCategoryHelper.getFirstPortletId(PanelCategoryKeys.SITE_ADMINISTRATION, permissionChecker, group);
 
 	if (Validator.isNotNull(portletId)) {
-		siteAdministrationURL = PortalUtil.getControlPanelPortletURL(request, group, portletId, 0, PortletRequest.RENDER_PHASE);
+		siteAdministrationURL = PortalUtil.getControlPanelPortletURL(request, group, portletId, 0, 0, PortletRequest.RENDER_PHASE);
 	}
 	%>
 

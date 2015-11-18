@@ -27,7 +27,7 @@ public class UpgradePortletId
 		return new String[][] {
 			new String[] {"20", DLPortletKeys.DOCUMENT_LIBRARY},
 			new String[] {"199", DLPortletKeys.DOCUMENT_LIBRARY_ADMIN},
-			new String[] {"110", DLPortletKeys.DOCUMENT_LIBRARY_DISPLAY},
+			new String[] {"110", DLPortletKeys.DOCUMENT_LIBRARY},
 			new String[] {"31", DLPortletKeys.MEDIA_GALLERY_DISPLAY}
 		};
 	}

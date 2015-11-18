@@ -64,7 +64,6 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @param type the activity's type
 	* @param extraData any extra data regarding the activity
 	* @param receiverUserId the primary key of the receiving user
-	* @throws PortalException if the user or group could not be found
 	*/
 	public void addActivity(long userId, long groupId,
 		java.lang.String className, long classPK, int type,
@@ -107,7 +106,6 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @param type the activity's type
 	* @param extraData any extra data regarding the activity
 	* @param receiverUserId the primary key of the receiving user
-	* @throws PortalException if the user or group could not be found
 	*/
 	public void addActivity(long userId, long groupId,
 		java.util.Date createDate, java.lang.String className, long classPK,
@@ -140,7 +138,6 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @param type the activity's type
 	* @param extraData any extra data regarding the activity
 	* @param receiverUserId the primary key of the receiving user
-	* @throws PortalException if the user or group could not be found
 	*/
 	public void addUniqueActivity(long userId, long groupId,
 		java.lang.String className, long classPK, int type,
@@ -164,7 +161,6 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @param type the activity's type
 	* @param extraData any extra data regarding the activity
 	* @param receiverUserId the primary key of the receiving user
-	* @throws PortalException if the user or group could not be found
 	*/
 	public void addUniqueActivity(long userId, long groupId,
 		java.util.Date createDate, java.lang.String className, long classPK,
@@ -184,7 +180,6 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* Removes stored activities for the asset.
 	*
 	* @param assetEntry the asset from which to remove stored activities
-	* @throws PortalException if a portal exception occurred
 	*/
 	public void deleteActivities(
 		com.liferay.portlet.asset.model.AssetEntry assetEntry)
@@ -196,8 +191,6 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	*
 	* @param className the target asset's class name
 	* @param classPK the primary key of the target asset
-	* @throws PortalException if the user's activity counters could not be
-	deleted
 	*/
 	public void deleteActivities(java.lang.String className, long classPK)
 		throws PortalException;
@@ -208,8 +201,6 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* Removes the stored activity and its mirror activity from the database.
 	*
 	* @param activity the activity to be removed
-	* @throws PortalException if the user's activity counters could not be
-	deleted or if a portal exception occurred
 	*/
 	public void deleteActivity(
 		com.liferay.portlet.social.model.SocialActivity activity)
@@ -219,7 +210,6 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* Removes the stored activity from the database.
 	*
 	* @param activityId the primary key of the stored activity
-	* @throws PortalException if the activity could not be found
 	*/
 	public void deleteActivity(long activityId) throws PortalException;
 
@@ -261,8 +251,6 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* </p>
 	*
 	* @param userId the primary key of the user
-	* @throws PortalException if the user's activity counters could not be
-	deleted
 	*/
 	public void deleteUserActivities(long userId) throws PortalException;
 
@@ -490,7 +478,6 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	*
 	* @param activityId the primary key of the activity
 	* @return Returns the activity
-	* @throws PortalException if the activity could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.social.model.SocialActivity getActivity(
@@ -583,7 +570,6 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	*
 	* @param mirrorActivityId the primary key of the mirror activity
 	* @return Returns the mirror activity
-	* @throws PortalException if the mirror activity could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.social.model.SocialActivity getMirrorActivity(

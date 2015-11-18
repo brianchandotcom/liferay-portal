@@ -73,9 +73,7 @@ public class EditProductEntryMVCActionCommand extends BaseMVCActionCommand {
 			deleteProductEntry(actionRequest);
 		}
 
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		sendRedirect(actionRequest, actionResponse, redirect);
+		sendRedirect(actionRequest, actionResponse);
 	}
 
 	protected void deleteProductEntry(ActionRequest actionRequest)

@@ -19,6 +19,7 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib prefix="aui" uri="http://liferay.com/tld/aui" %><%@
+taglib prefix="liferay-item-selector" uri="http://liferay.com/tld/item-selector" %><%@
 taglib prefix="liferay-theme" uri="http://liferay.com/tld/theme" %><%@
 taglib prefix="liferay-ui" uri="http://liferay.com/tld/ui" %>
 

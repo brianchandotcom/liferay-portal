@@ -111,8 +111,6 @@ public class JournalArticleServiceUtil {
 	title, and workflow actions for the web content article. Can also
 	set whether to add the default guest and group permissions.
 	* @return the web content article
-	* @throws PortalException if the user did not have permission to add the
-	web content article or if a portal exception occurred
 	*/
 	public static com.liferay.journal.model.JournalArticle addArticle(
 		long groupId, long folderId, long classNameId, long classPK,
@@ -216,8 +214,6 @@ public class JournalArticleServiceUtil {
 	title, and workflow actions for the web content article. Can also
 	set whether to add the default guest and group permissions.
 	* @return the web content article
-	* @throws PortalException if the user did not have permission to add the
-	web content article or if a portal exception occurred
 	*/
 	public static com.liferay.journal.model.JournalArticle addArticle(
 		long groupId, long folderId, long classNameId, long classPK,
@@ -261,9 +257,6 @@ public class JournalArticleServiceUtil {
 	* @param autoArticleId whether to auto-generate the web content article ID
 	* @param version the web content article's version
 	* @return the new web content article
-	* @throws PortalException if the user did not have permission to add the
-	copy the web content article, if a matching web content article
-	could not be found, or if a portal exception occurred
 	*/
 	public static com.liferay.journal.model.JournalArticle copyArticle(
 		long groupId, java.lang.String oldArticleId,
@@ -285,8 +278,6 @@ public class JournalArticleServiceUtil {
 	* @param serviceContext the service context to be applied. Can set the
 	portlet preferences that include email information to notify
 	recipients of the unapproved web content article's denial.
-	* @throws PortalException if the user did not have permission to delete the
-	web content article or if a portal exception occurred
 	*/
 	public static void deleteArticle(long groupId, java.lang.String articleId,
 		java.lang.String articleURL,
@@ -308,9 +299,6 @@ public class JournalArticleServiceUtil {
 	* @param serviceContext the service context to be applied. Can set the
 	portlet preferences that include email information to notify
 	recipients of the unapproved web content article's denial.
-	* @throws PortalException if the user did not have permission to delete the
-	web content article, if a matching web content article could not
-	be found, or if a portal exception occurred
 	*/
 	public static void deleteArticle(long groupId, java.lang.String articleId,
 		double version, java.lang.String articleURL,
@@ -333,14 +321,11 @@ public class JournalArticleServiceUtil {
 	* @param serviceContext the service context to be applied. Can set the
 	modification date, status date, portlet preferences, and can set
 	whether to add the default command update for the web content
-	article. With respect to social activities, by setting the
-	service context's command to {@link
+	article. With respect to social activities, by setting the service
+	context's command to {@link
 	com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
 	is considered a web content update activity; otherwise it is
 	considered a web content add activity.
-	* @throws PortalException if the user did not have permission to expire the
-	web content article, if a matching web content article could not
-	be found, or if a portal exception occurred
 	*/
 	public static void expireArticle(long groupId, java.lang.String articleId,
 		java.lang.String articleURL,
@@ -367,9 +352,6 @@ public class JournalArticleServiceUtil {
 	is considered a web content update activity; otherwise it is
 	considered a web content add activity.
 	* @return the web content article
-	* @throws PortalException if the user did not have permission to expire the
-	web content article, if a matching web content article could not
-	be found, or if a portal exception occurred
 	*/
 	public static com.liferay.journal.model.JournalArticle expireArticle(
 		long groupId, java.lang.String articleId, double version,
@@ -395,9 +377,6 @@ public class JournalArticleServiceUtil {
 	* @param groupId the primary key of the web content article's group
 	* @param articleId the primary key of the web content article
 	* @return the matching web content article
-	* @throws PortalException if the user did not have permission to view the
-	web content article or if a matching web content article could
-	not be found
 	*/
 	public static com.liferay.journal.model.JournalArticle getArticle(
 		long groupId, java.lang.String articleId)
@@ -413,9 +392,6 @@ public class JournalArticleServiceUtil {
 	* @param articleId the primary key of the web content article
 	* @param version the web content article's version
 	* @return the matching web content article
-	* @throws PortalException if the user did not have permission to view the
-	web content article or if a matching web content article could
-	not be found
 	*/
 	public static com.liferay.journal.model.JournalArticle getArticle(
 		long groupId, java.lang.String articleId, double version)
@@ -438,9 +414,6 @@ public class JournalArticleServiceUtil {
 	primary key of the class associated with the web content article,
 	or <code>0</code> otherwise
 	* @return the matching web content article
-	* @throws PortalException if a matching web content article could not be
-	found or if the user did not have permission to view the web
-	content article
 	*/
 	public static com.liferay.journal.model.JournalArticle getArticle(
 		long groupId, java.lang.String className, long classPK)
@@ -453,9 +426,6 @@ public class JournalArticleServiceUtil {
 	*
 	* @param id the primary key of the web content article
 	* @return the web content article with the ID
-	* @throws PortalException if a matching web content article could not be
-	found or if the user did not have permission to view the web
-	content article
 	*/
 	public static com.liferay.journal.model.JournalArticle getArticle(long id)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -470,8 +440,6 @@ public class JournalArticleServiceUtil {
 	* @param groupId the primary key of the web content article's group
 	* @param urlTitle the web content article's accessible URL title
 	* @return the matching web content article
-	* @throws PortalException if the user did not have permission to view the
-	web content article or if a portal exception occurred
 	*/
 	public static com.liferay.journal.model.JournalArticle getArticleByUrlTitle(
 		long groupId, java.lang.String urlTitle)
@@ -489,9 +457,6 @@ public class JournalArticleServiceUtil {
 	* @param portletRequestModel the portlet request model
 	* @param themeDisplay the theme display
 	* @return the matching web content
-	* @throws PortalException if the user did not have permission to view the
-	web content article, if a matching web content article or DDM
-	template could not be found, or if a portal exception occurred
 	*/
 	public static java.lang.String getArticleContent(long groupId,
 		java.lang.String articleId, java.lang.String languageId,
@@ -512,10 +477,6 @@ public class JournalArticleServiceUtil {
 	* @param languageId the primary key of the language translation to get
 	* @param themeDisplay the theme display
 	* @return the matching web content
-	* @throws PortalException if the user did not have permission to view
-	the web content article, if a matching web content article or
-	DDM template could not be found, or if a portal exception
-	occurred
 	* @deprecated As of 7.0.0, replaced by {@link #getArticleContent(long,
 	String, String, PortletRequestModel, ThemeDisplay)}
 	*/
@@ -540,9 +501,6 @@ public class JournalArticleServiceUtil {
 	* @param portletRequestModel the portlet request model
 	* @param themeDisplay the theme display
 	* @return the matching web content
-	* @throws PortalException if the user did not have permission to view the
-	web content article, if a matching web content article or DDM
-	template could not be found, or if a portal exception occurred
 	*/
 	public static java.lang.String getArticleContent(long groupId,
 		java.lang.String articleId, double version,
@@ -565,10 +523,6 @@ public class JournalArticleServiceUtil {
 	* @param languageId the primary key of the language translation to get
 	* @param themeDisplay the theme display
 	* @return the matching web content
-	* @throws PortalException if the user did not have permission to view
-	the web content article, if a matching web content article or
-	DDM template could not be found, or if a portal exception
-	occurred
 	* @deprecated As of 7.0.0, replaced by {@link #getArticleContent(long,
 	String, double, String, PortletRequestModel, ThemeDisplay)}
 	*/
@@ -830,9 +784,6 @@ public class JournalArticleServiceUtil {
 	* @return the web content article matching the URL title that is currently
 	displayed, or next one to be displayed if no version of the
 	article is currently displayed
-	* @throws PortalException if the user did not have permission to view the
-	web content article or if no approved matching web content
-	articles could be found
 	*/
 	public static com.liferay.journal.model.JournalArticle getDisplayArticleByUrlTitle(
 		long groupId, java.lang.String urlTitle)
@@ -880,9 +831,6 @@ public class JournalArticleServiceUtil {
 	articles
 	* @return the range of matching web content articles ordered by the
 	comparator
-	* @throws PortalException if the root folder could not be found, if the
-	current user did not have permission to view the root folder, or
-	if a portal exception occurred
 	*/
 	public static java.util.List<com.liferay.journal.model.JournalArticle> getGroupArticles(
 		long groupId, long userId, long rootFolderId, int start, int end,
@@ -912,9 +860,6 @@ public class JournalArticleServiceUtil {
 	articles
 	* @return the range of matching web content articles ordered by the
 	comparator
-	* @throws PortalException if the root folder could not be found, if the
-	current user did not have permission to view the root folder, or
-	if a portal exception occurred
 	*/
 	public static java.util.List<com.liferay.journal.model.JournalArticle> getGroupArticles(
 		long groupId, long userId, long rootFolderId, int status,
@@ -955,7 +900,6 @@ public class JournalArticleServiceUtil {
 	articles
 	* @return the range of matching web content articles ordered by the
 	comparator
-	* @throws PortalException if a portal exception occurred
 	*/
 	public static java.util.List<com.liferay.journal.model.JournalArticle> getGroupArticles(
 		long groupId, long userId, long rootFolderId, int status, int start,
@@ -976,9 +920,6 @@ public class JournalArticleServiceUtil {
 	* @param rootFolderId the primary key of the root folder to begin the
 	search
 	* @return the number of matching web content articles
-	* @throws PortalException if the root folder could not be found, if the
-	current user did not have permission to view the root folder, or
-	if a portal exception occurred
 	*/
 	public static int getGroupArticlesCount(long groupId, long userId,
 		long rootFolderId)
@@ -998,7 +939,6 @@ public class JournalArticleServiceUtil {
 	information see {@link WorkflowConstants} for constants starting
 	with the "STATUS_" prefix.
 	* @return the number of matching web content articles
-	* @throws PortalException if a portal exception occurred
 	*/
 	public static int getGroupArticlesCount(long groupId, long userId,
 		long rootFolderId, int status)
@@ -1020,9 +960,6 @@ public class JournalArticleServiceUtil {
 	with the "STATUS_" prefix.
 	* @return the range of matching web content articles ordered by the
 	comparator
-	* @throws PortalException if the root folder could not be found, if the
-	current user did not have permission to view the root folder, or
-	if a portal exception occurred
 	*/
 	public static int getGroupArticlesCount(long groupId, long userId,
 		long rootFolderId, int status, boolean includeOwner)
@@ -1042,9 +979,6 @@ public class JournalArticleServiceUtil {
 	information see {@link WorkflowConstants} for constants starting
 	with the "STATUS_" prefix.
 	* @return the latest matching web content article
-	* @throws PortalException if the user did not have permission to view the
-	web content article or if a matching web content article could
-	not be found
 	*/
 	public static com.liferay.journal.model.JournalArticle getLatestArticle(
 		long groupId, java.lang.String articleId, int status)
@@ -1066,9 +1000,6 @@ public class JournalArticleServiceUtil {
 	primary key of the class associated with the web content article,
 	or <code>0</code> otherwise
 	* @return the latest matching web content article
-	* @throws PortalException if a matching web content article could not be
-	found or if the user did not have permission to view the web
-	content article
 	*/
 	public static com.liferay.journal.model.JournalArticle getLatestArticle(
 		long groupId, java.lang.String className, long classPK)
@@ -1083,9 +1014,6 @@ public class JournalArticleServiceUtil {
 	* @param resourcePrimKey the primary key of the resource instance
 	* @return the latest web content article matching the resource primary key,
 	preferring articles with approved workflow status
-	* @throws PortalException if the user did not have permission to view the
-	web content article or if a matching web content article could
-	not be found
 	*/
 	public static com.liferay.journal.model.JournalArticle getLatestArticle(
 		long resourcePrimKey)
@@ -1110,10 +1038,6 @@ public class JournalArticleServiceUtil {
 	* @param articleId the primary key of the web content article
 	* @param newFolderId the primary key of the web content article's new
 	folder
-	* @throws PortalException if the user did not have permission to update
-	any one of the versions of the web content article or if any
-	one of the versions of the web content article could not be
-	moved to the folder
 	* @deprecated As of 7.0.0, replaced by {@link #moveArticle(long, String,
 	long, ServiceContext)}
 	*/
@@ -1132,18 +1056,14 @@ public class JournalArticleServiceUtil {
 	* @param articleId the primary key of the web content article
 	* @param newFolderId the primary key of the web content article's new
 	folder
-	* @param serviceContext the service context to be applied. Can set the
-	user ID, language ID, portlet preferences, portlet request,
-	portlet response, theme display, and can set whether to add the
-	default command update for the web content article. With respect
-	to social activities, by setting the service context's command to
-	{@link com.liferay.portal.kernel.util.Constants#UPDATE}, the
-	invocation is considered a web content update activity; otherwise
-	it is considered a web content add activity.
-	* @throws PortalException if the user did not have permission to update any
-	one of the versions of the web content article or if any one of
-	the versions of the web content article could not be moved to the
-	folder
+	* @param serviceContext the service context to be applied. Can set the user
+	ID, language ID, portlet preferences, portlet request, portlet
+	response, theme display, and can set whether to add the default
+	command update for the web content article. With respect to social
+	activities, by setting the service context's command to {@link
+	com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
+	is considered a web content update activity; otherwise it is
+	considered a web content add activity.
 	*/
 	public static void moveArticle(long groupId, java.lang.String articleId,
 		long newFolderId,
@@ -1169,10 +1089,6 @@ public class JournalArticleServiceUtil {
 	considered a web content add activity.
 	* @return the updated web content article, which was moved from the Recycle
 	Bin to the folder
-	* @throws PortalException if the user did not have permission to view or
-	update the web content article, if a trashed web content article
-	with the primary key could not be found, or if a portal exception
-	occurred
 	*/
 	public static com.liferay.journal.model.JournalArticle moveArticleFromTrash(
 		long groupId, java.lang.String articleId, long newFolderId,
@@ -1200,9 +1116,6 @@ public class JournalArticleServiceUtil {
 	considered a web content add activity.
 	* @return the updated web content article, which was moved from the Recycle
 	Bin to the folder
-	* @throws PortalException if the user did not have permission to view or
-	update the web content article, if a matching trashed web content
-	article could not be found, or if a portal exception occurred
 	*/
 	public static com.liferay.journal.model.JournalArticle moveArticleFromTrash(
 		long groupId, long resourcePrimKey, long newFolderId,
@@ -1221,8 +1134,6 @@ public class JournalArticleServiceUtil {
 	* @param articleId the primary key of the web content article
 	* @return the moved web content article or <code>null</code> if no matching
 	article was found
-	* @throws PortalException if the user did not have permission to move the
-	article to the Recycle Bin or if a portal exception occurred
 	*/
 	public static com.liferay.journal.model.JournalArticle moveArticleToTrash(
 		long groupId, java.lang.String articleId)
@@ -1236,9 +1147,6 @@ public class JournalArticleServiceUtil {
 	*
 	* @param companyId the primary key of the web content article's company
 	* @param languageId the primary key of the language locale to remove
-	* @throws PortalException if the user did not have permission to update any
-	one of the web content articles or if web content matching the
-	language could not be found for any one of the articles
 	*/
 	public static void removeArticleLocale(long companyId,
 		java.lang.String languageId)
@@ -1255,9 +1163,6 @@ public class JournalArticleServiceUtil {
 	* @param version the web content article's version
 	* @param languageId the primary key of the language locale to remove
 	* @return the updated web content article with the locale removed
-	* @throws PortalException if the user did not have permission to update the
-	web content article or if a matching web content article could
-	not be found
 	*/
 	public static com.liferay.journal.model.JournalArticle removeArticleLocale(
 		long groupId, java.lang.String articleId, double version,
@@ -1272,10 +1177,6 @@ public class JournalArticleServiceUtil {
 	*
 	* @param groupId the primary key of the web content article's group
 	* @param articleId the primary key of the web content article
-	* @throws PortalException if the web content article with the primary key
-	could not be found in the Recycle Bin, if the user did not have
-	permission to restore the article, or if a portal exception
-	occurred
 	*/
 	public static void restoreArticleFromTrash(long groupId,
 		java.lang.String articleId)
@@ -1288,9 +1189,6 @@ public class JournalArticleServiceUtil {
 	* from the Recycle Bin.
 	*
 	* @param resourcePrimKey the primary key of the resource instance
-	* @throws PortalException if a matching web content article could not be
-	found in the Recycle Bin, if the user did not have permission to
-	view or restore the article, or if a portal exception occurred
 	*/
 	public static void restoreArticleFromTrash(long resourcePrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -1551,7 +1449,6 @@ public class JournalArticleServiceUtil {
 	* @param end the upper bound of the range of web content articles to
 	return (not inclusive)
 	* @return the matching web content articles
-	* @throws PortalException if a portal exception occurred
 	*/
 	public static com.liferay.portal.kernel.search.Hits search(long groupId,
 		long creatorUserId, int status, int start, int end)
@@ -1742,7 +1639,6 @@ public class JournalArticleServiceUtil {
 	* @param groupId the primary key of the folder's group
 	* @param userId the primary key of the user to be subscribed
 	* @param ddmStructureId the primary key of the structure to subscribe to
-	* @throws PortalException if a matching user or group could not be found
 	*/
 	public static void subscribeStructure(long groupId, long userId,
 		long ddmStructureId)
@@ -1757,8 +1653,6 @@ public class JournalArticleServiceUtil {
 	* @param groupId the primary key of the folder's group
 	* @param userId the primary key of the user to be subscribed
 	* @param ddmStructureId the primary key of the structure to subscribe to
-	* @throws PortalException if a matching user or subscription could not be
-	found
 	*/
 	public static void unsubscribeStructure(long groupId, long userId,
 		long ddmStructureId)
@@ -1804,10 +1698,6 @@ public class JournalArticleServiceUtil {
 	invocation is considered a web content update activity; otherwise
 	it is considered a web content add activity.
 	* @return the updated web content article
-	* @throws PortalException if the user did not have permission to update the
-	web content article, if a user with the primary key or a matching
-	web content article could not be found, or if a portal exception
-	occurred
 	*/
 	public static com.liferay.journal.model.JournalArticle updateArticle(
 		long groupId, long folderId, java.lang.String articleId,
@@ -1893,10 +1783,6 @@ public class JournalArticleServiceUtil {
 	invocation is considered a web content update activity; otherwise
 	it is considered a web content add activity.
 	* @return the updated web content article
-	* @throws PortalException if the user did not have permission to update the
-	web content article, if a user with the primary key or a matching
-	web content article could not be found, or if a portal exception
-	occurred
 	*/
 	public static com.liferay.journal.model.JournalArticle updateArticle(
 		long groupId, long folderId, java.lang.String articleId,
@@ -1956,9 +1842,6 @@ public class JournalArticleServiceUtil {
 	invocation is considered a web content update activity; otherwise
 	it is considered a web content add activity.
 	* @return the updated web content article
-	* @throws PortalException if a user with the primary key or a matching web
-	content article could not be found, or if a portal exception
-	occurred
 	*/
 	public static com.liferay.journal.model.JournalArticle updateArticle(
 		long userId, long groupId, long folderId, java.lang.String articleId,
@@ -2007,10 +1890,6 @@ public class JournalArticleServiceUtil {
 	* @param serviceContext the service context to be applied. Can set the
 	modification date and URL title for the web content article.
 	* @return the updated web content article
-	* @throws PortalException if the user did not have permission to update the
-	web content article, if a user with the primary key or a matching
-	web content article could not be found, or if a portal exception
-	occurred
 	*/
 	public static com.liferay.journal.model.JournalArticle updateArticleTranslation(
 		long groupId, java.lang.String articleId, double version,
@@ -2035,9 +1914,6 @@ public class JournalArticleServiceUtil {
 	see the content example in the {@link #updateArticle(long, long,
 	String, double, String, ServiceContext)} description.
 	* @return the updated web content article
-	* @throws PortalException if the user did not have permission to update the
-	web content article or if a matching web content article could
-	not be found
 	*/
 	public static com.liferay.journal.model.JournalArticle updateContent(
 		long groupId, java.lang.String articleId, double version,
@@ -2061,9 +1937,6 @@ public class JournalArticleServiceUtil {
 	modification date, portlet preferences, and can set whether to
 	add the default command update for the web content article.
 	* @return the updated web content article
-	* @throws PortalException if the user did not have permission to update the
-	web content article, if a matching web content article could not
-	be found, or if a portal exception occurred
 	*/
 	public static com.liferay.journal.model.JournalArticle updateStatus(
 		long groupId, java.lang.String articleId, double version, int status,

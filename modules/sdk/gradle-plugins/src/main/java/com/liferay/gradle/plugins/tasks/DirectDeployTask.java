@@ -15,7 +15,9 @@
 package com.liferay.gradle.plugins.tasks;
 
 import com.liferay.gradle.util.FileUtil;
+import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.StringUtil;
+import com.liferay.gradle.util.Validator;
 
 import java.io.File;
 
@@ -28,11 +30,25 @@ import java.util.List;
 public class DirectDeployTask extends BasePortalImplToolsTask {
 
 	public File getAppServerDeployDir() {
-		return _appServerDeployDir;
+		return GradleUtil.toFile(project, _appServerDeployDir);
+	}
+
+	public File getAppServerDir() {
+		return GradleUtil.toFile(project, _appServerDir);
 	}
 
 	public String getAppServerType() {
-		return _appServerType;
+		return GradleUtil.toString(_appServerType);
+	}
+
+	public String getArgAppServerType() {
+		String argAppServerType = GradleUtil.toString(_argAppServerType);
+
+		if (Validator.isNull(argAppServerType)) {
+			argAppServerType = getAppServerType();
+		}
+
+		return argAppServerType;
 	}
 
 	@Override
@@ -56,7 +72,7 @@ public class DirectDeployTask extends BasePortalImplToolsTask {
 
 		File webAppFile = getWebAppFile();
 
-		jvmArgs.add("-Ddeployer.app.server.type=" + getAppServerType());
+		jvmArgs.add("-Ddeployer.app.server.type=" + getArgAppServerType());
 		jvmArgs.add(
 			"-Ddeployer.base.dir=" +
 				FileUtil.getAbsolutePath(webAppFile.getParentFile()));
@@ -128,11 +144,11 @@ public class DirectDeployTask extends BasePortalImplToolsTask {
 	}
 
 	public File getWebAppFile() {
-		return _webAppFile;
+		return GradleUtil.toFile(project, _webAppFile);
 	}
 
 	public String getWebAppType() {
-		return _webAppType;
+		return GradleUtil.toString(_webAppType);
 	}
 
 	public boolean isCustomPortletXml() {
@@ -143,12 +159,20 @@ public class DirectDeployTask extends BasePortalImplToolsTask {
 		return _unpackWar;
 	}
 
-	public void setAppServerDeployDir(File appServerDeployDir) {
+	public void setAppServerDeployDir(Object appServerDeployDir) {
 		_appServerDeployDir = appServerDeployDir;
 	}
 
-	public void setAppServerType(String appServerType) {
+	public void setAppServerDir(Object appServerDir) {
+		_appServerDir = appServerDir;
+	}
+
+	public void setAppServerType(Object appServerType) {
 		_appServerType = appServerType;
+	}
+
+	public void setArgAppServerType(Object argAppServerType) {
+		_argAppServerType = argAppServerType;
 	}
 
 	public void setCustomPortletXml(boolean customPortletXml) {
@@ -159,12 +183,26 @@ public class DirectDeployTask extends BasePortalImplToolsTask {
 		_unpackWar = unpackWar;
 	}
 
-	public void setWebAppFile(File webAppFile) {
+	public void setWebAppFile(Object webAppFile) {
 		_webAppFile = webAppFile;
 	}
 
-	public void setWebAppType(String webAppType) {
+	public void setWebAppType(Object webAppType) {
 		_webAppType = webAppType;
+	}
+
+	@Override
+	protected void addDependencies() {
+		super.addDependencies();
+
+		String appServerType = getAppServerType();
+
+		if (appServerType.equals("jonas")) {
+			File dir = new File(getAppServerDir(), "lib/endorsed");
+
+			GradleUtil.addDependency(
+				project, getConfigurationName(), getJarsFileTree(dir));
+		}
 	}
 
 	@Override
@@ -172,11 +210,13 @@ public class DirectDeployTask extends BasePortalImplToolsTask {
 		return "Deployer";
 	}
 
-	private File _appServerDeployDir;
-	private String _appServerType;
+	private Object _appServerDeployDir;
+	private Object _appServerDir;
+	private Object _appServerType;
+	private Object _argAppServerType;
 	private boolean _customPortletXml;
 	private boolean _unpackWar = true;
-	private File _webAppFile;
-	private String _webAppType;
+	private Object _webAppFile;
+	private Object _webAppType;
 
 }

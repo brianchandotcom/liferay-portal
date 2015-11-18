@@ -60,12 +60,12 @@ public class ContactModelListener extends BaseModelListener<Contact> {
 		}
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setUserExporter(UserExporter userExporter) {
 		_userExporter = userExporter;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}

@@ -31,7 +31,7 @@ import com.liferay.registry.ServiceTrackerCustomizer;
  * @author Peter Fellwock
  */
 public class RoleMembershipPolicyFactoryImpl
-		implements RoleMembershipPolicyFactory {
+	implements RoleMembershipPolicyFactory {
 
 	@Override
 	public RoleMembershipPolicy getRoleMembershipPolicy() {

@@ -41,6 +41,7 @@ public class ConfigurationAdminPanelApp extends BasePanelApp {
 		return ConfigurationAdminPortletKeys.CONFIGURATION_ADMIN;
 	}
 
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + ConfigurationAdminPortletKeys.CONFIGURATION_ADMIN + ")",
 		unbind = "-"

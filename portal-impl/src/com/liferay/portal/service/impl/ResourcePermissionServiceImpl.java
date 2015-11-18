@@ -62,19 +62,15 @@ public class ResourcePermissionServiceImpl
 	 * com.liferay.portal.model.impl.ResourcePermissionImpl}.
 	 * </p>
 	 *
-	 * @param  groupId the primary key of the group
-	 * @param  companyId the primary key of the company
-	 * @param  name the resource's name, which can be either a class name or a
-	 *         portlet ID
-	 * @param  scope the scope. This method only supports company, group, and
-	 *         group-template scope.
-	 * @param  primKey the primary key
-	 * @param  roleId the primary key of the role
-	 * @param  actionId the action ID
-	 * @throws PortalException if the user did not have permission to add
-	 *         resource permissions, or if scope was set to individual scope or
-	 *         if a role with the primary key or a resource action with the name
-	 *         and action ID could not be found
+	 * @param groupId the primary key of the group
+	 * @param companyId the primary key of the company
+	 * @param name the resource's name, which can be either a class name or a
+	 *        portlet ID
+	 * @param scope the scope. This method only supports company, group, and
+	 *        group-template scope.
+	 * @param primKey the primary key
+	 * @param roleId the primary key of the role
+	 * @param actionId the action ID
 	 */
 	@Override
 	public void addResourcePermission(
@@ -100,17 +96,14 @@ public class ResourcePermissionServiceImpl
 	 * com.liferay.portal.model.impl.ResourcePermissionImpl}.
 	 * </p>
 	 *
-	 * @param  groupId the primary key of the group
-	 * @param  companyId the primary key of the company
-	 * @param  name the resource's name, which can be either a class name or a
-	 *         portlet ID
-	 * @param  scope the scope
-	 * @param  primKey the primary key
-	 * @param  roleId the primary key of the role
-	 * @param  actionId the action ID
-	 * @throws PortalException if the user did not have permission to remove
-	 *         resource permissions, or if a role with the primary key or a
-	 *         resource action with the name and action ID could not be found
+	 * @param groupId the primary key of the group
+	 * @param companyId the primary key of the company
+	 * @param name the resource's name, which can be either a class name or a
+	 *        portlet ID
+	 * @param scope the scope
+	 * @param primKey the primary key
+	 * @param roleId the primary key of the role
+	 * @param actionId the action ID
 	 */
 	@Override
 	public void removeResourcePermission(
@@ -131,16 +124,13 @@ public class ResourcePermissionServiceImpl
 	 * revoke all individual scope permissions to edit blog posts from site
 	 * members.
 	 *
-	 * @param  groupId the primary key of the group
-	 * @param  companyId the primary key of the company
-	 * @param  name the resource's name, which can be either a class name or a
-	 *         portlet ID
-	 * @param  scope the scope
-	 * @param  roleId the primary key of the role
-	 * @param  actionId the action ID
-	 * @throws PortalException if the user did not have permission to remove
-	 *         resource permissions, or if a role with the primary key or a
-	 *         resource action with the name and action ID could not be found
+	 * @param groupId the primary key of the group
+	 * @param companyId the primary key of the company
+	 * @param name the resource's name, which can be either a class name or a
+	 *        portlet ID
+	 * @param scope the scope
+	 * @param roleId the primary key of the role
+	 * @param actionId the action ID
 	 */
 	@Override
 	public void removeResourcePermissions(
@@ -171,16 +161,13 @@ public class ResourcePermissionServiceImpl
 	 * com.liferay.portal.model.impl.ResourcePermissionImpl}.
 	 * </p>
 	 *
-	 * @param  groupId the primary key of the group
-	 * @param  companyId the primary key of the company
-	 * @param  name the resource's name, which can be either a class name or a
-	 *         portlet ID
-	 * @param  primKey the primary key
-	 * @param  roleId the primary key of the role
-	 * @param  actionIds the action IDs of the actions
-	 * @throws PortalException if the user did not have permission to set
-	 *         resource permissions, or if a role with the primary key or a
-	 *         resource action with the name and action ID could not be found
+	 * @param groupId the primary key of the group
+	 * @param companyId the primary key of the company
+	 * @param name the resource's name, which can be either a class name or a
+	 *        portlet ID
+	 * @param primKey the primary key
+	 * @param roleId the primary key of the role
+	 * @param actionIds the action IDs of the actions
 	 */
 	@Override
 	public void setIndividualResourcePermissions(
@@ -211,15 +198,12 @@ public class ResourcePermissionServiceImpl
 	 * com.liferay.portal.model.impl.ResourcePermissionImpl}.
 	 * </p>
 	 *
-	 * @param  groupId the primary key of the group
-	 * @param  companyId the primary key of the company
-	 * @param  name the resource's name, which can be either a class name or a
-	 *         portlet ID
-	 * @param  primKey the primary key
-	 * @param  roleIdsToActionIds a map of role IDs to action IDs of the actions
-	 * @throws PortalException if the user did not have permission to set
-	 *         resource permissions, or if a role with the primary key or a
-	 *         resource action with the name and action ID could not be found
+	 * @param groupId the primary key of the group
+	 * @param companyId the primary key of the company
+	 * @param name the resource's name, which can be either a class name or a
+	 *        portlet ID
+	 * @param primKey the primary key
+	 * @param roleIdsToActionIds a map of role IDs to action IDs of the actions
 	 */
 	@Override
 	public void setIndividualResourcePermissions(

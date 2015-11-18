@@ -173,6 +173,12 @@ public class ExportImportHelperUtilTest {
 
 		_portletDataContextImport.setImportDataRootElement(rootElement);
 
+		Element missingReferencesElement = rootElement.addElement(
+			"missing-references");
+
+		_portletDataContextImport.setMissingReferencesElement(
+			missingReferencesElement);
+
 		_livePublicLayout = LayoutTestUtil.addLayout(_liveGroup, false);
 
 		_portletDataContextImport.setPlid(_livePublicLayout.getPlid());

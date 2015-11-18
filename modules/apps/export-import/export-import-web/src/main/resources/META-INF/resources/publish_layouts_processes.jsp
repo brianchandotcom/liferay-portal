@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String cmd = ParamUtil.getString(request, Constants.CMD);
+
 String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 
 long groupId = ParamUtil.getLong(request, "groupId");
@@ -29,6 +31,7 @@ boolean quickPublish = ParamUtil.getBoolean(request, "quickPublish");
 PortletURL renderURL = liferayPortletResponse.createRenderURL();
 
 renderURL.setParameter("mvcRenderCommandName", "publishLayouts");
+renderURL.setParameter(Constants.CMD, cmd);
 renderURL.setParameter("tabs2", "current-and-previous");
 renderURL.setParameter("closeRedirect", closeRedirect);
 renderURL.setParameter("groupId", String.valueOf(groupId));

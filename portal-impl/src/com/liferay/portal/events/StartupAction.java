@@ -49,10 +49,10 @@ import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.plugin.PluginPackageIndexer;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.messageboards.util.MBMessageIndexer;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
@@ -112,11 +112,11 @@ public class StartupAction extends SimpleAction {
 		ServiceDependencyManager portalResiliencyServiceDependencyManager =
 			new ServiceDependencyManager();
 
-		portalResiliencyServiceDependencyManager.registerDependencies(
-			MessageBus.class, PortalExecutorManager.class);
-
 		portalResiliencyServiceDependencyManager.addServiceDependencyListener(
 			new PortalResiliencyServiceDependencyLister());
+
+		portalResiliencyServiceDependencyManager.registerDependencies(
+			MessageBus.class, PortalExecutorManager.class);
 
 		// Shutdown hook
 
@@ -133,9 +133,6 @@ public class StartupAction extends SimpleAction {
 		ServiceDependencyManager indexerRegistryServiceDependencyManager =
 			new ServiceDependencyManager();
 
-		indexerRegistryServiceDependencyManager.registerDependencies(
-			IndexerRegistry.class);
-
 		indexerRegistryServiceDependencyManager.addServiceDependencyListener(
 			new ServiceDependencyListener() {
 
@@ -150,6 +147,9 @@ public class StartupAction extends SimpleAction {
 				}
 
 			});
+
+		indexerRegistryServiceDependencyManager.registerDependencies(
+			IndexerRegistry.class);
 
 		// MySQL version
 
@@ -236,10 +236,6 @@ public class StartupAction extends SimpleAction {
 
 						if (!clusterMasterExecutor.isEnabled()) {
 							BackgroundTaskManagerUtil.cleanUpBackgroundTasks();
-						}
-						else {
-							clusterMasterExecutor.
-								notifyMasterTokenTransitionListeners();
 						}
 					}
 

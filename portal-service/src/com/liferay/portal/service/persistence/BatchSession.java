@@ -63,9 +63,8 @@ public interface BatchSession {
 	 * <code>hibernate.jdbc.batch_size</code>.
 	 * </p>
 	 *
-	 * @param  session the session to perform the update on
-	 * @param  model the model instance to update
-	 * @throws ORMException if a database exception occurred
+	 * @param session the session to perform the update on
+	 * @param model the model instance to update
 	 */
 	public void delete(Session session, BaseModel<?> model) throws ORMException;
 
@@ -129,11 +128,9 @@ public interface BatchSession {
 	 * com.liferay.portal.model.User)} for an example.
 	 * </p>
 	 *
-	 * @param  session the session
-	 * @param  model the model instance
-	 * @param  merge whether to merge the model instance with the current
-	 *         session
-	 * @throws ORMException if a database exception occurred
+	 * @param session the session
+	 * @param model the model instance
+	 * @param merge whether to merge the model instance with the current session
 	 */
 	public void update(Session session, BaseModel<?> model, boolean merge)
 		throws ORMException;

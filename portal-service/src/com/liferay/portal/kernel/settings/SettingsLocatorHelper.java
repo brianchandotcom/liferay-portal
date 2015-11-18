@@ -34,6 +34,10 @@ public interface SettingsLocatorHelper {
 	public Settings getPortalPropertiesSettings();
 
 	public Settings getPortletInstancePortletPreferencesSettings(
+		long companyId, long ownerId, int ownerType, long plid,
+		String portletId, Settings parentSettings);
+
+	public Settings getPortletInstancePortletPreferencesSettings(
 		long companyId, long plid, String portletId, Settings parentSettings);
 
 }

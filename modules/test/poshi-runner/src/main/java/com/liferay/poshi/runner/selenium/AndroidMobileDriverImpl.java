@@ -17,14 +17,10 @@ package com.liferay.poshi.runner.selenium;
 import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.StringUtil;
 
-import io.appium.java_client.android.AndroidDriver;
-
 import java.io.IOException;
 
-import java.net.URL;
-
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.DesiredCapabilities;
 
 /**
  * @author Kenji Heigel
@@ -32,8 +28,8 @@ import org.openqa.selenium.remote.DesiredCapabilities;
  */
 public class AndroidMobileDriverImpl extends BaseMobileDriverImpl {
 
-	public AndroidMobileDriverImpl(String browserURL) {
-		super(browserURL, new AndroidDriver(_url, _desiredCapabilities));
+	public AndroidMobileDriverImpl(String browserURL, WebDriver webDriver) {
+		super(browserURL, webDriver);
 	}
 
 	@Override
@@ -155,28 +151,6 @@ public class AndroidMobileDriverImpl extends BaseMobileDriverImpl {
 		catch (IOException ioe) {
 			ioe.printStackTrace();
 		}
-	}
-
-	private static final DesiredCapabilities _desiredCapabilities;
-	private static final URL _url;
-
-	static {
-		_desiredCapabilities = DesiredCapabilities.android();
-
-		_desiredCapabilities.setCapability("browserName", "Browser");
-		_desiredCapabilities.setCapability("deviceName", "deviceName");
-		_desiredCapabilities.setCapability("platformName", "Android");
-		_desiredCapabilities.setCapability("platformVersion", "4.4");
-
-		URL url = null;
-
-		try {
-			url = new URL("http://0.0.0.0:4723/wd/hub/");
-		}
-		catch (Exception e) {
-		}
-
-		_url = url;
 	}
 
 }

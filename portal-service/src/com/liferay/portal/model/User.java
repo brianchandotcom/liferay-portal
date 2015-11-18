@@ -67,7 +67,6 @@ public interface User extends UserModel, PersistedModel {
 	* Returns the user's birth date.
 	*
 	* @return the user's birth date
-	* @throws PortalException if a portal exception occurred
 	*/
 	public java.util.Date getBirthday()
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -76,7 +75,6 @@ public interface User extends UserModel, PersistedModel {
 	* Returns the user's company's mail domain.
 	*
 	* @return the user's company's mail domain
-	* @throws PortalException if a portal exception occurred
 	*/
 	public java.lang.String getCompanyMx()
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -85,7 +83,6 @@ public interface User extends UserModel, PersistedModel {
 	* Returns the user's associated contact.
 	*
 	* @return the user's associated contact
-	* @throws PortalException if a portal exception occurred
 	* @see Contact
 	*/
 	public com.liferay.portal.model.Contact getContact()
@@ -132,7 +129,6 @@ public interface User extends UserModel, PersistedModel {
 	* @param portalURL the portal's URL
 	* @param mainPath the main path
 	* @return the user's display URL
-	* @throws PortalException if a portal exception occurred
 	* @deprecated As of 7.0.0, replaced by {@link #getDisplayURL(ThemeDisplay)}
 	*/
 	@java.lang.Deprecated()
@@ -170,7 +166,7 @@ public interface User extends UserModel, PersistedModel {
 	intranet(versus extranet)  site home page, if no friendly URL
 	is available for the user's profile
 	* @return the user's display URL
-	* @throws PortalException if a portal exception occurred
+	* @throws PortalException
 	* @deprecated As of 7.0.0, replaced by {@link #getDisplayURL(ThemeDisplay)}
 	*/
 	@java.lang.Deprecated()
@@ -201,7 +197,6 @@ public interface User extends UserModel, PersistedModel {
 	*
 	* @param themeDisplay the theme display
 	* @return the user's display URL
-	* @throws PortalException if a portal exception occurred
 	*/
 	public java.lang.String getDisplayURL(
 		com.liferay.portal.theme.ThemeDisplay themeDisplay)
@@ -236,7 +231,7 @@ public interface User extends UserModel, PersistedModel {
 	intranet (versus extranet) site home page, if no friendly URL is
 	available for the user's profile
 	* @return the user's display URL
-	* @throws PortalException if a portal exception occurred
+	* @throws PortalException
 	*/
 	public java.lang.String getDisplayURL(
 		com.liferay.portal.theme.ThemeDisplay themeDisplay,
@@ -255,7 +250,6 @@ public interface User extends UserModel, PersistedModel {
 	*
 	* @return <code>true</code> if the user is female; <code>false</code>
 	otherwise
-	* @throws PortalException if a portal exception occurred
 	*/
 	public boolean getFemale()
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -294,7 +288,6 @@ public interface User extends UserModel, PersistedModel {
 	*
 	* @return <code>true</code> if the user is male; <code>false</code>
 	otherwise
-	* @throws PortalException if a portal exception occurred
 	*/
 	public boolean getMale()
 		throws com.liferay.portal.kernel.exception.PortalException;

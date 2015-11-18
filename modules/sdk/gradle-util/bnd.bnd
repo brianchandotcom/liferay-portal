@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Gradle Utilities
 Bundle-SymbolicName: com.liferay.gradle.util
-Bundle-Version: 1.0.24
+Bundle-Version: 1.0.25
 Export-Package: com.liferay.gradle.util
 Include-Resource: classes

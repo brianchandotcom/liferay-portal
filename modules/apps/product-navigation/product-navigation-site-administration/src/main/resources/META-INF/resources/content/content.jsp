@@ -59,7 +59,7 @@ PanelCategory panelCategory = (PanelCategory)request.getAttribute(ApplicationLis
 
 							data.put("navigation", Boolean.TRUE.toString());
 
-							PortletURL portletURL = PortalUtil.getControlPanelPortletURL(request, curSite, themeDisplay.getPpid(), 0, PortletRequest.RENDER_PHASE);
+							PortletURL portletURL = PortalUtil.getControlPanelPortletURL(request, curSite, themeDisplay.getPpid(), 0, 0, PortletRequest.RENDER_PHASE);
 							%>
 
 							<liferay-ui:icon
@@ -72,7 +72,7 @@ PanelCategory panelCategory = (PanelCategory)request.getAttribute(ApplicationLis
 							for (Layout curScopeLayout : scopeLayouts) {
 								Group scopeGroup = curScopeLayout.getScopeGroup();
 
-								portletURL = PortalUtil.getControlPanelPortletURL(request, scopeGroup, themeDisplay.getPpid(), 0, PortletRequest.RENDER_PHASE);
+								portletURL = PortalUtil.getControlPanelPortletURL(request, scopeGroup, themeDisplay.getPpid(), 0, 0, PortletRequest.RENDER_PHASE);
 							%>
 
 								<liferay-ui:icon

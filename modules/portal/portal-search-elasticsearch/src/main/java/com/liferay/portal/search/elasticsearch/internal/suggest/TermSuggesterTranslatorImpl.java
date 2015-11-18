@@ -29,8 +29,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(immediate = true, service = TermSuggesterTranslator.class)
 public class TermSuggesterTranslatorImpl
-	extends BaseSuggesterTranslatorImpl
-	implements TermSuggesterTranslator {
+	extends BaseSuggesterTranslatorImpl implements TermSuggesterTranslator {
 
 	@Override
 	public SuggestBuilder translate(TermSuggester termSuggester) {

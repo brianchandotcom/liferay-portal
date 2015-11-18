@@ -53,7 +53,6 @@ public class TeamLocalServiceUtil {
 	}
 
 	/**
-	* @throws PortalException
 	* @deprecated As of 7.0.0, replaced by {@link #addTeam(long, long, String,
 	String, ServiceContext)}
 	*/
@@ -445,6 +444,11 @@ public class TeamLocalServiceUtil {
 
 	public static int getUserGroupTeamsCount(long userGroupId) {
 		return getService().getUserGroupTeamsCount(userGroupId);
+	}
+
+	public static java.util.List<com.liferay.portal.model.Team> getUserOrUserGroupTeams(
+		long groupId, long userId) {
+		return getService().getUserOrUserGroupTeams(groupId, userId);
 	}
 
 	/**

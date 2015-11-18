@@ -1,0 +1,46 @@
+Started by remote host 10.0.16.21
+[EnvInject] - Loading node environment variables.
+[EnvInject] - Preparing an environment for the build.
+[EnvInject] - Keeping Jenkins system variables.
+[EnvInject] - Keeping Jenkins build variables.
+[EnvInject] - Injecting as environment variables the properties file path '/mnt/mfs-ssd1-10.0.10/jenkins/test-1-1/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/1552/test-portal-acceptance-pullrequest-batch(master)/modules-integration-oracle/start.properties'
+[EnvInject] - Variables injected successfully.
+[EnvInject] - Injecting as environment variables the properties content 
+MASTER_HOSTNAME=test-1-18
+
+[EnvInject] - Variables injected successfully.
+[EnvInject] - Injecting contributions.
+Building remotely on cloud-10-0-112-200 in workspace /opt/dev/projects/github/liferay-jenkins-ee
+Triggering 8,!master
+Triggering 3,!master
+Triggering 13,!master
+Triggering 0,!master
+Triggering 6,!master
+Triggering 1,!master
+Triggering 12,!master
+Triggering 11,!master
+Triggering 14,!master
+Triggering 10,!master
+Triggering 9,!master
+Triggering 5,!master
+Triggering 7,!master
+Triggering 4,!master
+Triggering 2,!master
+Configuration 8,!master is still in the queue: Waiting for next available executor on !master
+8,!master completed with result SUCCESS
+Configuration 3,!master is still in the queue: ???
+3,!master completed with result SUCCESS
+13,!master completed with result SUCCESS
+0,!master completed with result SUCCESS
+6,!master completed with result SUCCESS
+1,!master completed with result UNSTABLE
+12,!master completed with result SUCCESS
+11,!master completed with result SUCCESS
+14,!master completed with result SUCCESS
+10,!master completed with result SUCCESS
+9,!master completed with result SUCCESS
+5,!master completed with result SUCCESS
+7,!master completed with result SUCCESS
+4,!master completed with result SUCCESS
+2,!master completed with result SUCCESS
+Finished: UNSTABLE

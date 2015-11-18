@@ -105,6 +105,14 @@ public class PortletPreferencesFactoryUtil {
 			layout, portletId, defaultPreferences);
 	}
 
+	public static PortletPreferences getLayoutPortletSetup(
+		long companyId, long ownerId, int ownerType, long plid,
+		String portletId, String defaultPreferences) {
+
+		return getPortletPreferencesFactory().getLayoutPortletSetup(
+			companyId, ownerId, ownerType, plid, portletId, defaultPreferences);
+	}
+
 	public static PortalPreferences getPortalPreferences(
 		HttpServletRequest request) {
 

@@ -19,7 +19,7 @@
 <div class="card-horizontal <%= Validator.isNotNull(cssClass) ? cssClass : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %> >
 	<div class="card-row card-row-padded <%= showCheckbox ? "selectable" : StringPool.BLANK %>">
 		<c:if test="<%= ((rowChecker != null) && (resultRow != null)) || showCheckbox %>">
-			<div class="card-col-field checkbox-default">
+			<div class="card-col-field checkbox">
 				<c:choose>
 					<c:when test="<%= (rowChecker != null) && (resultRow != null) %>">
 						<%= rowChecker.getRowCheckBox(request, rowChecker.isChecked(resultRow.getObject()), rowChecker.isDisabled(resultRow.getObject()), resultRow.getPrimaryKey()) %>

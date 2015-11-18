@@ -19,10 +19,10 @@
 		<java
 			classname="com.liferay.portal.tools.PortalClientBuilder"
 			classpathref="project.classpath"
-			failonerror="true"
 			fork="true"
 			newenvironment="true"
 			outputproperty="build-client.output"
+			resultproperty="build-client.result"
 		>
 			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
 			<arg value="${project.dir}/portal-web/docroot/WEB-INF/server-config.wsdd" />
@@ -34,7 +34,12 @@
 		<echo>${build-client.output}</echo>
 
 		<if>
-			<contains string="${build-client.output}" substring="IOException" />
+			<or>
+				<contains string="${build-client.output}" substring="IOException" />
+				<not>
+					<equals arg1="${build-client.result}" arg2="0" />
+				</not>
+			</or>
 			<then>
 				<fail>Portal Client Builder generated exceptions.</fail>
 			</then>

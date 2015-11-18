@@ -48,6 +48,11 @@ public class BaseDLViewFileVersionDisplayContext
 	}
 
 	@Override
+	public String getCssClassFileMimeType() {
+		return parentDisplayContext.getCssClassFileMimeType();
+	}
+
+	@Override
 	public DDMFormValues getDDMFormValues(DDMStructure ddmStructure)
 		throws PortalException {
 

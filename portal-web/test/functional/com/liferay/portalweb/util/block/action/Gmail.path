@@ -159,12 +159,12 @@
 </tr>
 <tr>
 	<td>GMAIL_HTML_MODE_MAIL_TABLE_CHECKBOX</td>
-	<td>//form[@method='POST']//table[2]/tbody/tr[contains(.,'${key_gmailAssetType}')]/td[1]/input[@type='checkbox']</td>
+	<td>//form[@method='POST']//table[2]/tbody/tr[contains(.,'${key_gmailAssetType}')]/td[1]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>GMAIL_HTML_MODE_MAIL_TABLE_GENERIC</td>
-	<td>//form[@method='POST']//table[2]/tbody/tr/td[1]/input[@type='checkbox']</td>
+	<td>//form[@method='POST']//table[2]/tbody/tr/td[1]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

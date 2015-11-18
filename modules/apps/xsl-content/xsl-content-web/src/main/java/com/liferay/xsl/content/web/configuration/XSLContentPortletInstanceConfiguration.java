@@ -16,11 +16,15 @@ package com.liferay.xsl.content.web.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.configuration.admin.ConfigurationAdmin;
+
 /**
  * @author Juergen Kappler
  */
+@ConfigurationAdmin(category = "web-experience-management")
 @Meta.OCD(
-	id = "com.liferay.xsl.content.web.configuration.XLSContentPortletInstanceConfiguration"
+	id = "com.liferay.xsl.content.web.configuration.XSLContentPortletInstanceConfiguration",
+	name = "XSL Content"
 )
 public interface XSLContentPortletInstanceConfiguration {
 

@@ -22,6 +22,7 @@ import com.liferay.social.networking.constants.SocialNetworkingPortletKeys;
 public class UpgradePortletId
 	extends com.liferay.portal.upgrade.util.UpgradePortletId {
 
+	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
 			{

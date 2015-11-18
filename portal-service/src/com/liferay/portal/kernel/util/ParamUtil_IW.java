@@ -788,6 +788,40 @@ public class ParamUtil_IW {
 		return ParamUtil.getString(serviceContext, param, defaultValue);
 	}
 
+	public java.lang.String[] getStringValues(
+		javax.servlet.http.HttpServletRequest request, java.lang.String param) {
+		return ParamUtil.getStringValues(request, param);
+	}
+
+	public java.lang.String[] getStringValues(
+		javax.servlet.http.HttpServletRequest request, java.lang.String param,
+		java.lang.String[] defaultValue) {
+		return ParamUtil.getStringValues(request, param, defaultValue);
+	}
+
+	public java.lang.String[] getStringValues(
+		javax.portlet.PortletRequest portletRequest, java.lang.String param) {
+		return ParamUtil.getStringValues(portletRequest, param);
+	}
+
+	public java.lang.String[] getStringValues(
+		javax.portlet.PortletRequest portletRequest, java.lang.String param,
+		java.lang.String[] defaultValue) {
+		return ParamUtil.getStringValues(portletRequest, param, defaultValue);
+	}
+
+	public java.lang.String[] getStringValues(
+		com.liferay.portal.service.ServiceContext serviceContext,
+		java.lang.String param) {
+		return ParamUtil.getStringValues(serviceContext, param);
+	}
+
+	public java.lang.String[] getStringValues(
+		com.liferay.portal.service.ServiceContext serviceContext,
+		java.lang.String param, java.lang.String[] defaultValue) {
+		return ParamUtil.getStringValues(serviceContext, param, defaultValue);
+	}
+
 	public void print(javax.servlet.http.HttpServletRequest request) {
 		ParamUtil.print(request);
 	}

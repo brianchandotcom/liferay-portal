@@ -140,26 +140,26 @@ public class GoogleDocsDLDisplayContextFactory
 		return parentDLViewFileVersionDisplayContext;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setDDMStructureLocalService(
 		DDMStructureLocalService ddmStructureLocalService) {
 
 		_ddmStructureLocalService = ddmStructureLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setDLAppService(DLAppService dlAppService) {
 		_dlAppService = dlAppService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setDLFileEntryMetadataLocalService(
 		DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService) {
 
 		_dlFileEntryMetadataLocalService = dlFileEntryMetadataLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setStorageEngine(StorageEngine storageEngine) {
 		_storageEngine = storageEngine;
 	}

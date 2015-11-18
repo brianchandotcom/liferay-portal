@@ -60,9 +60,6 @@ public class SocialRequestLocalServiceUtil {
 	* @param extraData the extra data regarding the request
 	* @param receiverUserId the primary key of the user receiving the request
 	* @return the social request
-	* @throws PortalException if the users could not be found, if the users
-	were not from the same company, or if either of the users was the
-	default user
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest addRequest(
 		long userId, long groupId, java.lang.String className, long classPK,
@@ -128,7 +125,6 @@ public class SocialRequestLocalServiceUtil {
 	* database.
 	*
 	* @param requestId the primary key of the social request
-	* @throws PortalException if the social request could not be found
 	*/
 	public static void deleteRequest(long requestId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -568,7 +564,6 @@ public class SocialRequestLocalServiceUtil {
 	* @param status the new status
 	* @param themeDisplay the theme display
 	* @return the updated social request
-	* @throws PortalException if the social request could not be found
 	*/
 	public static com.liferay.portlet.social.model.SocialRequest updateRequest(
 		long requestId, int status,

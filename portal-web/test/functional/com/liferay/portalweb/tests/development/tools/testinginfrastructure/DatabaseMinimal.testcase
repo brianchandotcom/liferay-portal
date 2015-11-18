@@ -1,8 +1,0 @@
-<definition component-name="portal-tools">
-	<property name="database.bare.enabled" value="true" />
-	<property name="testray.main.component.name" value="Tools" />
-
-	<command name="Smoke" priority="4">
-		<execute macro="User#firstLoginPG" />
-	</command>
-</definition>

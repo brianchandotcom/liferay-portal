@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Gradle Plugins Soy
 Bundle-SymbolicName: com.liferay.gradle.plugins.soy
-Bundle-Version: 1.0.1
+Bundle-Version: 1.0.2
 Export-Package: com.liferay.gradle.plugins.soy
 Include-Resource: classes

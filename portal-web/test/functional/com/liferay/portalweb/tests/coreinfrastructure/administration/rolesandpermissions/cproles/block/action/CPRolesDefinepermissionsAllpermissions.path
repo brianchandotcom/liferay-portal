@@ -854,17 +854,17 @@
 <!--SITE_ADMIN_APPLICATIONS_CATEGORIES_NAVIGATION_APPLICATION_PERMISSIONS-->
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_CATEGORIES_NAVIGATION_APPLICATION_PERMISSIONS_ADD_TO_PAGE_CHECKBOX</td>
-	<td>//tr[contains(.,'Add to Page')]/td/input</td>
+	<td>//tr[contains(.,'Add to Page')]/td//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_CATEGORIES_NAVIGATION_APPLICATION_PERMISSIONS_CONFIGURATION_CHECKBOX</td>
-	<td>//tr[contains(.,'Configuration')]/td/input</td>
+	<td>//tr[contains(.,'Configuration')]/td//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_CATEGORIES_NAVIGATION_APPLICATION_PERMISSIONS_VIEW_CHECKBOX</td>
-	<td>//tr[contains(.,'Permissions')]/td/input</td>
+	<td>//tr[contains(.,'Permissions')]/td//input</td>
 	<td></td>
 </tr>
 <tr>

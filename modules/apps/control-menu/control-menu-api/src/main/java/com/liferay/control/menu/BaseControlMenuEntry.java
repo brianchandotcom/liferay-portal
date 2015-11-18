@@ -25,7 +25,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
  * @author Julio Camarero
  */
 public abstract class BaseControlMenuEntry implements ControlMenuEntry {

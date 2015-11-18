@@ -238,14 +238,20 @@
 	</command>
 
 	<command name="AddKBArticleWithInvalidAttachmentSize" priority="3">
-		<property name="custom.properties" value="com.liferay.portal.upload.UploadServletRequestImpl.max.size=1024" />
+		<execute macro="ProductMenu#gotoControlPanelSystem">
+			<var name="portlet" value="Server Administration" />
+		</execute>
+
+		<execute macro="ServerAdministration#configureFileUploadOverallMaximumFileSize">
+			<var name="maxFileSize" value="1024" />
+		</execute>
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />
 		</execute>
 
 		<execute macro="KBArticle#addCP">
-			<var name="kbArticleAttachment" value="Document_1.mp3" />
+			<var name="kbArticleAttachment" value="Document_1.png" />
 			<var name="kbArticleContent" value="Knowledge Base Article Content" />
 			<var name="kbArticleInvalidAttachmentSize" value="true" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
@@ -302,7 +308,7 @@
 		<execute function="Pause" value1="5000" />
 
 		<execute macro="KBArticle#viewCP">
-			<var name="kbArticleContent" value="Knowledge Base’s Article Content" />
+			<var name="kbArticleContent" value="Knowledge Baseâ€™s Article Content" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 		</execute>
 

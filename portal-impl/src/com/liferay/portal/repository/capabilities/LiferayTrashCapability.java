@@ -273,9 +273,7 @@ public class LiferayTrashCapability
 		}
 	}
 
-	protected void deleteTrashEntry(DLFileEntry dlFileEntry)
-		throws PortalException {
-
+	protected void deleteTrashEntry(DLFileEntry dlFileEntry) {
 		if (!dlFileEntry.isInTrash()) {
 			return;
 		}
@@ -297,7 +295,7 @@ public class LiferayTrashCapability
 		}
 	}
 
-	protected void deleteTrashEntry(DLFolder dlFolder) throws PortalException {
+	protected void deleteTrashEntry(DLFolder dlFolder) {
 		if (!dlFolder.isInTrash()) {
 			return;
 		}
@@ -312,13 +310,11 @@ public class LiferayTrashCapability
 		}
 	}
 
-	protected void deleteTrashEntry(FileEntry fileEntry)
-		throws PortalException {
-
+	protected void deleteTrashEntry(FileEntry fileEntry) {
 		deleteTrashEntry((DLFileEntry)fileEntry.getModel());
 	}
 
-	protected void deleteTrashEntry(Folder folder) throws PortalException {
+	protected void deleteTrashEntry(Folder folder) {
 		deleteTrashEntry((DLFolder)folder.getModel());
 	}
 
@@ -335,7 +331,7 @@ public class LiferayTrashCapability
 			<RepositoryEventType.Delete, FileEntry> {
 
 		@Override
-		public void execute(FileEntry fileEntry) throws PortalException {
+		public void execute(FileEntry fileEntry) {
 			LiferayTrashCapability.this.deleteTrashEntry(fileEntry);
 		}
 
@@ -345,7 +341,7 @@ public class LiferayTrashCapability
 		implements RepositoryEventListener<RepositoryEventType.Delete, Folder> {
 
 		@Override
-		public void execute(Folder folder) throws PortalException {
+		public void execute(Folder folder) {
 			LiferayTrashCapability.this.deleteTrashEntry(folder);
 		}
 

@@ -92,8 +92,6 @@ public class DDMTemplateServiceSoap {
 	the UUID, creation date, modification date, guest permissions,
 	and group permissions for the template.
 	* @return the template
-	* @throws PortalException if the user did not have permission to add the
-	template or if a portal exception occurred
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplateSoap addTemplate(
 		long groupId, long classNameId, long classPK, long resourceClassNameId,
@@ -138,8 +136,6 @@ public class DDMTemplateServiceSoap {
 	the UUID, creation date, modification date, guest permissions,
 	and group permissions for the template.
 	* @return the new template
-	* @throws PortalException if the user did not have permission to add the
-	template or if a portal exception occurred
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplateSoap copyTemplate(
 		long templateId, java.lang.String[] nameMapLanguageIds,
@@ -201,8 +197,6 @@ public class DDMTemplateServiceSoap {
 	the UUID, creation date, modification date, guest permissions,
 	and group permissions for the template.
 	* @return the new template
-	* @throws PortalException if the user did not have permission to add the
-	template or if a portal exception occurred
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplateSoap[] copyTemplates(
 		long classNameId, long oldClassPK, long resourceClassNameId,
@@ -227,8 +221,6 @@ public class DDMTemplateServiceSoap {
 	* Deletes the template and its resources.
 	*
 	* @param templateId the primary key of the template to be deleted
-	* @throws PortalException if the user did not have permission to delete the
-	template or if a portal exception occurred
 	*/
 	public static void deleteTemplate(long templateId)
 		throws RemoteException {
@@ -251,8 +243,6 @@ public class DDMTemplateServiceSoap {
 	* @param templateKey the unique string identifying the template
 	* @return the matching template, or <code>null</code> if a matching
 	template could not be found
-	* @throws PortalException if the user did not have permission to view the
-	template
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplateSoap fetchTemplate(
 		long groupId, long classNameId, java.lang.String templateKey)
@@ -275,8 +265,6 @@ public class DDMTemplateServiceSoap {
 	*
 	* @param templateId the primary key of the template
 	* @return the template with the ID
-	* @throws PortalException if the user did not have permission to view the
-	template or if a matching template could not be found
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplateSoap getTemplate(
 		long templateId) throws RemoteException {
@@ -300,7 +288,6 @@ public class DDMTemplateServiceSoap {
 	related model
 	* @param templateKey the unique string identifying the template
 	* @return the matching template
-	* @throws PortalException if a matching template could not be found
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplateSoap getTemplate(
 		long groupId, long classNameId, java.lang.String templateKey)
@@ -338,7 +325,6 @@ public class DDMTemplateServiceSoap {
 	have sharing enabled) and include global scoped sites in the
 	search
 	* @return the matching template
-	* @throws PortalException if a matching template could not be found
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplateSoap getTemplate(
 		long groupId, long classNameId, java.lang.String templateKey,
@@ -1014,8 +1000,6 @@ public class DDMTemplateServiceSoap {
 	* @param serviceContext the service context to be applied. Can set the
 	modification date.
 	* @return the updated template
-	* @throws PortalException if the user did not have permission to update the
-	template or if a portal exception occurred
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplateSoap updateTemplate(
 		long templateId, long classPK, java.lang.String[] nameMapLanguageIds,

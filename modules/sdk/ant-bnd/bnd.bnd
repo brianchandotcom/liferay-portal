@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Ant BND
 Bundle-SymbolicName: com.liferay.ant.bnd
-Bundle-Version: 2.0.4
+Bundle-Version: 2.0.5
 Export-Package: com.liferay.ant.bnd
 Include-Resource: classes

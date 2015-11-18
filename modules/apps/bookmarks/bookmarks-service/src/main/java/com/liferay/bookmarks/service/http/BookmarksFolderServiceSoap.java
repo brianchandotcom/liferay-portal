@@ -401,8 +401,8 @@ public class BookmarksFolderServiceSoap {
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #updateFolder(long, long,
-	String, String, ServiceContext)} and {@link #mergeFolders(
-	long, long)}
+	String, String, ServiceContext)} and {@link
+	#mergeFolders(long, long)}
 	*/
 	@Deprecated
 	public static com.liferay.bookmarks.model.BookmarksFolderSoap updateFolder(

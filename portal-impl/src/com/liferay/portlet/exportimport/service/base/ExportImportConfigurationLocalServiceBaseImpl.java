@@ -119,13 +119,11 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 	 *
 	 * @param exportImportConfiguration the export import configuration
 	 * @return the export import configuration that was removed
-	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public ExportImportConfiguration deleteExportImportConfiguration(
-		ExportImportConfiguration exportImportConfiguration)
-		throws PortalException {
+		ExportImportConfiguration exportImportConfiguration) {
 		return exportImportConfigurationPersistence.remove(exportImportConfiguration);
 	}
 

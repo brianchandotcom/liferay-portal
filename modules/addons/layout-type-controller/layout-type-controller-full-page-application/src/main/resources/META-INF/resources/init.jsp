@@ -26,12 +26,12 @@ page import="com.liferay.portal.kernel.util.ResourceBundleUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.UnicodeProperties" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
+page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.layoutconfiguration.util.RuntimePageUtil" %><%@
 page import="com.liferay.portal.model.Layout" %><%@
 page import="com.liferay.portal.model.LayoutTemplateConstants" %><%@
 page import="com.liferay.portal.model.Portlet" %><%@
-page import="com.liferay.portal.service.LayoutTemplateLocalServiceUtil" %><%@
-page import="com.liferay.portal.util.WebKeys" %>
+page import="com.liferay.portal.service.LayoutTemplateLocalServiceUtil" %>
 
 <%@ page import="java.util.List" %><%@
 page import="java.util.ResourceBundle" %>

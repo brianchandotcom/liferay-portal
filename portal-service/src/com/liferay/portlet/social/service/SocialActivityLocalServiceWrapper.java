@@ -53,7 +53,6 @@ public class SocialActivityLocalServiceWrapper
 	* @param type the activity's type
 	* @param extraData any extra data regarding the activity
 	* @param receiverUserId the primary key of the receiving user
-	* @throws PortalException if the user or group could not be found
 	*/
 	@Override
 	public void addActivity(long userId, long groupId,
@@ -100,7 +99,6 @@ public class SocialActivityLocalServiceWrapper
 	* @param type the activity's type
 	* @param extraData any extra data regarding the activity
 	* @param receiverUserId the primary key of the receiving user
-	* @throws PortalException if the user or group could not be found
 	*/
 	@Override
 	public void addActivity(long userId, long groupId,
@@ -139,7 +137,6 @@ public class SocialActivityLocalServiceWrapper
 	* @param type the activity's type
 	* @param extraData any extra data regarding the activity
 	* @param receiverUserId the primary key of the receiving user
-	* @throws PortalException if the user or group could not be found
 	*/
 	@Override
 	public void addUniqueActivity(long userId, long groupId,
@@ -167,7 +164,6 @@ public class SocialActivityLocalServiceWrapper
 	* @param type the activity's type
 	* @param extraData any extra data regarding the activity
 	* @param receiverUserId the primary key of the receiving user
-	* @throws PortalException if the user or group could not be found
 	*/
 	@Override
 	public void addUniqueActivity(long userId, long groupId,
@@ -194,7 +190,6 @@ public class SocialActivityLocalServiceWrapper
 	* Removes stored activities for the asset.
 	*
 	* @param assetEntry the asset from which to remove stored activities
-	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public void deleteActivities(
@@ -209,8 +204,6 @@ public class SocialActivityLocalServiceWrapper
 	*
 	* @param className the target asset's class name
 	* @param classPK the primary key of the target asset
-	* @throws PortalException if the user's activity counters could not be
-	deleted
 	*/
 	@Override
 	public void deleteActivities(java.lang.String className, long classPK)
@@ -227,8 +220,6 @@ public class SocialActivityLocalServiceWrapper
 	* Removes the stored activity and its mirror activity from the database.
 	*
 	* @param activity the activity to be removed
-	* @throws PortalException if the user's activity counters could not be
-	deleted or if a portal exception occurred
 	*/
 	@Override
 	public void deleteActivity(
@@ -241,7 +232,6 @@ public class SocialActivityLocalServiceWrapper
 	* Removes the stored activity from the database.
 	*
 	* @param activityId the primary key of the stored activity
-	* @throws PortalException if the activity could not be found
 	*/
 	@Override
 	public void deleteActivity(long activityId)
@@ -294,8 +284,6 @@ public class SocialActivityLocalServiceWrapper
 	* </p>
 	*
 	* @param userId the primary key of the user
-	* @throws PortalException if the user's activity counters could not be
-	deleted
 	*/
 	@Override
 	public void deleteUserActivities(long userId)
@@ -574,7 +562,6 @@ public class SocialActivityLocalServiceWrapper
 	*
 	* @param activityId the primary key of the activity
 	* @return Returns the activity
-	* @throws PortalException if the activity could not be found
 	*/
 	@Override
 	public com.liferay.portlet.social.model.SocialActivity getActivity(
@@ -683,7 +670,6 @@ public class SocialActivityLocalServiceWrapper
 	*
 	* @param mirrorActivityId the primary key of the mirror activity
 	* @return Returns the mirror activity
-	* @throws PortalException if the mirror activity could not be found
 	*/
 	@Override
 	public com.liferay.portlet.social.model.SocialActivity getMirrorActivity(

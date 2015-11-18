@@ -20,9 +20,9 @@ import com.liferay.portal.kernel.deploy.hot.HotDeployException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.LayoutTemplate;
 import com.liferay.portal.service.LayoutTemplateLocalServiceUtil;
-import com.liferay.portal.util.WebKeys;
 
 import java.util.HashMap;
 import java.util.List;

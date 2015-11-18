@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Ant BeanShell
 Bundle-SymbolicName: com.liferay.ant.beanshell
-Bundle-Version: 1.0.3
+Bundle-Version: 1.0.4
 Export-Package: com.liferay.ant.beanshell
 Include-Resource: classes

@@ -67,9 +67,6 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	* @param extraData the extra data regarding the request
 	* @param receiverUserId the primary key of the user receiving the request
 	* @return the social request
-	* @throws PortalException if the users could not be found, if the users
-	were not from the same company, or if either of the users was the
-	default user
 	*/
 	public com.liferay.portlet.social.model.SocialRequest addRequest(
 		long userId, long groupId, java.lang.String className, long classPK,
@@ -123,7 +120,6 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	* database.
 	*
 	* @param requestId the primary key of the social request
-	* @throws PortalException if the social request could not be found
 	*/
 	public void deleteRequest(long requestId) throws PortalException;
 
@@ -510,7 +506,6 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	* @param status the new status
 	* @param themeDisplay the theme display
 	* @return the updated social request
-	* @throws PortalException if the social request could not be found
 	*/
 	public com.liferay.portlet.social.model.SocialRequest updateRequest(
 		long requestId, int status,

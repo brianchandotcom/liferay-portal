@@ -126,9 +126,10 @@
 		<execute function="Click" locator1="UsersAndOrganizations#USER_TABLE_ACTIONS" />
 		<execute function="AssertClick" locator1="MenuItem#MANAGE_PAGES" value1="Manage Pages" />
 
+		<execute function="SelectFrame" locator1="BasePortlet#IFRAME" />
+
 		<execute function="AssertClick" locator1="CPUsersandorganizationsManagepages#NAVIGATION_MY_DASHBOARD" value1="My Dashboard" />
-		<execute function="Click" locator1="CPUsersandorganizationsManagepages#PAGE_TREE_ROOT_ARROW" />
-		<execute function="AssertElementNotPresent" locator1="CPUsersandorganizationsManagepages#PAGE_TREE_PAGE_LINK_1" value1="Test User Group Page 1" />
+		<execute function="AssertTextNotEquals" locator1="CPUsersandorganizationsManagepages#PAGE_TREE_PAGE_LINK_1" value1="Test User Group Page 1" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="User Groups" />
@@ -149,7 +150,7 @@
 		<execute macro="Page#gotoMyDashboard" />
 
 		<execute function="Click" locator1="Home#PAGE_NAVIGATION_BAR" />
-		<execute function="AssertTextEquals" locator1="Home#PAGE_1" value1="Test User Group Page 1" />
+		<execute function="AssertTextEquals" locator1="Home#PAGE_2" value1="Test User Group Page 1" />
 
 		<execute macro="User#logoutUserPG" />
 

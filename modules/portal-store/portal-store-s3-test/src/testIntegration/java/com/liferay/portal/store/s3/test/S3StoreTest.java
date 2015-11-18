@@ -16,6 +16,7 @@ package com.liferay.portal.store.s3.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -25,7 +26,6 @@ import com.liferay.portlet.documentlibrary.store.test.BaseStoreTestCase;
 
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -42,10 +42,10 @@ public class S3StoreTest extends BaseStoreTestCase {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), TransactionalTestRule.INSTANCE);
+			new AssumeTestRule("assume"), new LiferayIntegrationTestRule(),
+			TransactionalTestRule.INSTANCE);
 
-	@BeforeClass
-	public static void setUpClass() {
+	public static void assume() {
 		String dlStoreImpl = PropsUtil.get(PropsKeys.DL_STORE_IMPL);
 
 		String s3StoreClassName = "com.liferay.portal.store.s3.S3Store";
@@ -59,28 +59,27 @@ public class S3StoreTest extends BaseStoreTestCase {
 	@Override
 	@Test
 	public void testUpdateFileWithNewFileName() throws Exception {
-		String fileName = RandomTestUtil.randomString();
-
-		store.updateFile(
-			companyId, repositoryId, fileName, RandomTestUtil.randomString());
-
-		Assert.assertFalse(store.hasFile(companyId, repositoryId, fileName));
+		updateFileShouldNotUpdateFile();
 	}
 
 	@Override
 	@Test
 	public void testUpdateFileWithNewRepositoryId() throws Exception {
+		updateFileShouldNotUpdateFile();
+	}
+
+	@Override
+	protected String getStoreType() {
+		return "com.liferay.portal.store.s3.S3Store";
+	}
+
+	protected void updateFileShouldNotUpdateFile() throws Exception {
 		String fileName = RandomTestUtil.randomString();
 
 		store.updateFile(
 			companyId, repositoryId, fileName, RandomTestUtil.randomString());
 
 		Assert.assertFalse(store.hasFile(companyId, repositoryId, fileName));
-	}
-
-	@Override
-	protected String getStoreType() {
-		return "com.liferay.portal.store.s3.S3Store";
 	}
 
 }

@@ -64,23 +64,23 @@ public class DDLRecordSetImpl extends DDLRecordSetBaseImpl {
 	}
 
 	@Override
-	public UnicodeProperties getTypeSettingsProperties() {
-		if (_typeSettingsProperties == null) {
-			_typeSettingsProperties = new UnicodeProperties(true);
+	public UnicodeProperties getSettingsProperties() {
+		if (_settingsProperties == null) {
+			_settingsProperties = new UnicodeProperties(true);
 
-			_typeSettingsProperties.fastLoad(super.getTypeSettings());
+			_settingsProperties.fastLoad(super.getSettings());
 		}
 
-		return _typeSettingsProperties;
+		return _settingsProperties;
 	}
 
 	@Override
-	public String getTypeSettingsProperty(String key, String defaultValue) {
-		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
+	public String getSettingsProperty(String key, String defaultValue) {
+		UnicodeProperties settingsProperties = getSettingsProperties();
 
-		return typeSettingsProperties.getProperty(key, defaultValue);
+		return settingsProperties.getProperty(key, defaultValue);
 	}
 
-	private UnicodeProperties _typeSettingsProperties;
+	private UnicodeProperties _settingsProperties;
 
 }

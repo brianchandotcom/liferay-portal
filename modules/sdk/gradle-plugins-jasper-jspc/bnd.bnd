@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Gradle Plugins Jasper JSPC
 Bundle-SymbolicName: com.liferay.gradle.plugins.jasper.jspc
-Bundle-Version: 1.0.4
+Bundle-Version: 1.0.5
 Export-Package: com.liferay.gradle.plugins.jasper.jspc
 Include-Resource: classes

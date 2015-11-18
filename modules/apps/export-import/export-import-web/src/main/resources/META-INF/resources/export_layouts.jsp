@@ -255,6 +255,7 @@ if (!cmd.equals(Constants.ADD)) {
 			<div class="process-list" id="<portlet:namespace />exportProcesses">
 				<liferay-util:include page="/export_layouts_processes.jsp" servletContext="<%= application %>">
 					<liferay-util:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
+					<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 				</liferay-util:include>
 			</div>
 		</liferay-ui:section>
@@ -266,6 +267,7 @@ if (!cmd.equals(Constants.ADD)) {
 		<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />
 		<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />
 		<portlet:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
+		<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 		<portlet:param name="showHeader" value="<%= String.valueOf(showHeader) %>" />
 	</liferay-portlet:resourceURL>
 

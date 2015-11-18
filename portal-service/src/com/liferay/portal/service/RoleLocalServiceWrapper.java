@@ -83,9 +83,6 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	<code>null</code>). Can set expando bridge attributes for the
 	role.
 	* @return the role
-	* @throws PortalException if the class name or the role name were invalid,
-	if the role is a duplicate, or if a user with the primary key
-	could not be found
 	*/
 	@Override
 	public com.liferay.portal.model.Role addRole(long userId,
@@ -111,9 +108,6 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	<code>null</code>)
 	* @param type the role's type (optionally <code>0</code>)
 	* @return the role
-	* @throws PortalException if the class name or the role name were
-	invalid, if the role is a duplicate, or if a user with the
-	primary key could not be found
 	* @deprecated As of 6.2.0, replaced by {@link #addRole(long, String, long,
 	String, Map, Map, int, String, ServiceContext)}
 	*/
@@ -145,9 +139,6 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	* @param classPK the primary key of the class for which the role is
 	created (optionally <code>0</code>)
 	* @return the role
-	* @throws PortalException if the class name or the role name were
-	invalid, if the role is a duplicate, or if a user with the
-	primary key could not be found
 	* @deprecated As of 6.2.0, replaced by {@link #addRole(long, String, long,
 	String, Map, Map, int, String, ServiceContext)}
 	*/
@@ -195,9 +186,6 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	/**
 	* Checks to ensure that the system roles map has appropriate default roles
 	* in each company.
-	*
-	* @throws PortalException if the current user did not have permission to
-	set applicable permissions on a role
 	*/
 	@Override
 	public void checkSystemRoles()
@@ -210,8 +198,6 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	* in the company.
 	*
 	* @param companyId the primary key of the company
-	* @throws PortalException if the current user did not have permission to
-	set applicable permissions on a role
 	*/
 	@Override
 	public void checkSystemRoles(long companyId)
@@ -459,8 +445,6 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	*
 	* @param groupId the primary key of the group
 	* @return the default role for the group with the primary key
-	* @throws PortalException if a group with the primary key could not be
-	found, or if a default role could not be found for the group
 	*/
 	@Override
 	public com.liferay.portal.model.Role getDefaultGroupRole(long groupId)
@@ -594,8 +578,6 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	* @param companyId the primary key of the company
 	* @param name the role's name
 	* @return the role with the name
-	* @throws PortalException if a role with the name could not be found in the
-	company
 	*/
 	@Override
 	public com.liferay.portal.model.Role getRole(long companyId,
@@ -662,8 +644,6 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	*
 	* @param roleIds the primary keys of the roles
 	* @return the roles with the primary keys
-	* @throws PortalException if any one of the roles with the primary keys
-	could not be found
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Role> getRoles(
@@ -741,8 +721,6 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	* @param companyId the primary key of the company
 	* @param teamId the primary key of the team
 	* @return the team role in the company
-	* @throws PortalException if a role could not be found in the team and
-	company
 	*/
 	@Override
 	public com.liferay.portal.model.Role getTeamRole(long companyId, long teamId)
@@ -755,9 +733,6 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	*
 	* @param groupId the primary key of the group
 	* @return the team role map for the group
-	* @throws PortalException if a group with the primary key could not be
-	found, if a role could not be found in one of the group's teams,
-	or if a portal exception occurred
 	*/
 	@Override
 	public java.util.Map<com.liferay.portal.model.Team, com.liferay.portal.model.Role> getTeamRoleMap(
@@ -771,9 +746,6 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	*
 	* @param groupId the primary key of the group
 	* @return the team roles in the group
-	* @throws PortalException if a group with the primary key could not be
-	found, if a role could not be found in one of the group's teams,
-	or if a portal exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Role> getTeamRoles(
@@ -789,9 +761,6 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	* @param excludedRoleIds the primary keys of the roles to exclude
 	(optionally <code>null</code>)
 	* @return the team roles in the group, excluding the specified role IDs
-	* @throws PortalException if a group with the primary key could not be
-	found, if a role could not be found in one of the group's teams,
-	or if a portal exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Role> getTeamRoles(
@@ -981,8 +950,6 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	search
 	* @return <code>true</code> if the user is associated with the regular
 	role; <code>false</code> otherwise
-	* @throws PortalException if a default user for the company could not be
-	found
 	*/
 	@Override
 	public boolean hasUserRole(long userId, long companyId,
@@ -1012,9 +979,6 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	search
 	* @return <code>true</code> if the user has any one of the regular roles;
 	<code>false</code> otherwise
-	* @throws PortalException if any one of the roles with the names could not
-	be found in the company or if the default user for the company
-	could not be found
 	*/
 	@Override
 	public boolean hasUserRoles(long userId, long companyId,
@@ -1044,8 +1008,6 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	* @param companyId the primary key of the company
 	* @param name the role's name
 	* @return the role with the name in the company
-	* @throws PortalException if a role with the name could not be found in the
-	company
 	*/
 	@Override
 	public com.liferay.portal.model.Role loadGetRole(long companyId,
@@ -1296,8 +1258,6 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	*
 	* @param userId the primary key of the user
 	* @param roleIds the primary keys of the roles
-	* @throws PortalException if a user with the primary key could not be found
-	or if a role with any one of the primary keys could not be found
 	*/
 	@Override
 	public void unsetUserRoles(long userId, long[] roleIds)
@@ -1331,8 +1291,6 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	<code>null</code>). Can set expando bridge attributes for the
 	role.
 	* @return the role with the primary key
-	* @throws PortalException if a role with the primary could not be found or
-	if the role's name was invalid
 	*/
 	@Override
 	public com.liferay.portal.model.Role updateRole(long roleId,

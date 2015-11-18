@@ -78,7 +78,6 @@ public interface Repository extends DocumentRepository {
 	 *         out
 	 * @return the file entry if the cancel checkout operation was successful;
 	 *         <code>null</code> if the file entry was not checked out
-	 * @throws PortalException if a portal exception occurred
 	 * @see    #checkInFileEntry(long, long, boolean, String, ServiceContext)
 	 * @see    #checkOutFileEntry(long, ServiceContext)
 	 */

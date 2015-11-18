@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.util;
 
 /**
- * @author Mika Koivisto
+ * @author     Mika Koivisto
  * @deprecated As of 7.0.0, replaced with {@link PrefsPropsUtil}
  */
 @Deprecated

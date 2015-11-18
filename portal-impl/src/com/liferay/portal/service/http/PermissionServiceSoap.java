@@ -59,9 +59,6 @@ public class PermissionServiceSoap {
 	* @param groupId the primary key of the group
 	* @param name the service name
 	* @param primKey the primary key of the service
-	* @throws PortalException if the group did not have permission to the
-	service, if a group with the primary key could not be found or if
-	the permission information was invalid
 	*/
 	public static void checkPermission(long groupId, java.lang.String name,
 		long primKey) throws RemoteException {
@@ -81,9 +78,6 @@ public class PermissionServiceSoap {
 	* @param groupId the primary key of the group
 	* @param name the service name
 	* @param primKey the primary key of the service
-	* @throws PortalException if the group did not have permission to the
-	service, if a group with the primary key could not be found or if
-	the permission information was invalid
 	*/
 	public static void checkPermission(long groupId, java.lang.String name,
 		java.lang.String primKey) throws RemoteException {

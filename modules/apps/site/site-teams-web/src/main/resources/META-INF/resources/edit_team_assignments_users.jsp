@@ -28,8 +28,38 @@ Group group = (Group)request.getAttribute("edit_team_assignments.jsp-group");
 
 Team team = (Team)request.getAttribute("edit_team_assignments.jsp-team");
 
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+String orderByCol = ParamUtil.getString(request, "orderByCol", "first-name");
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
 PortletURL portletURL = (PortletURL)request.getAttribute("edit_team_assignments.jsp-portletURL");
+
+RowChecker rowChecker = new UserTeamChecker(renderResponse, team);
 %>
+
+<liferay-frontend:management-bar>
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= portletURL %>"
+		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= orderByCol %>"
+			orderByType="<%= orderByType %>"
+			orderColumns='<%= new String[] {"first-name", "screen-name"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
+</liferay-frontend:management-bar>
 
 <liferay-ui:tabs
 	names="current,available"
@@ -38,7 +68,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_team_assignments.
 />
 
 <liferay-ui:search-container
-	rowChecker="<%= new UserTeamChecker(renderResponse, team) %>"
+	rowChecker="<%= rowChecker %>"
 	searchContainer="<%= new UserSearch(renderRequest, portletURL) %>"
 	var="userSearchContainer"
 >
@@ -91,20 +121,18 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_team_assignments.
 
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.model.User"
+		cssClass="selectable"
 		escapedModel="<%= true %>"
 		keyProperty="userId"
 		modelVar="user2"
 		rowIdProperty="screenName"
 	>
-		<liferay-ui:search-container-column-text
-			name="name"
-			property="fullName"
-		/>
 
-		<liferay-ui:search-container-column-text
-			name="screen-name"
-			property="screenName"
-		/>
+		<%
+		boolean showActions = true;
+		%>
+
+		<%@ include file="/user_columns.jspf" %>
 	</liferay-ui:search-container-row>
 
 	<portlet:actionURL name="editTeamUsers" var="editTeamUsersURL" />
@@ -128,7 +156,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_team_assignments.
 
 		<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
 
-		<liferay-ui:search-iterator />
+		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 	</aui:form>
 </liferay-ui:search-container>
 

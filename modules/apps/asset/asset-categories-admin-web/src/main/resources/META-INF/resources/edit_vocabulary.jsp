@@ -52,31 +52,29 @@ renderResponse.setTitle(((vocabulary == null) ? LanguageUtil.get(request, "add-n
 
 	<aui:model-context bean="<%= vocabulary %>" model="<%= AssetVocabulary.class %>" />
 
-	<aui:fieldset>
-		<div>
-			<div class="add-vocabulary-layer asset-category-layer">
-				<aui:input autoFocus="<%= true %>" label="name" name="title" />
+	<aui:fieldset-group>
+		<aui:fieldset>
+			<aui:input autoFocus="<%= true %>" label="name" name="title" />
 
-				<aui:input name="description" />
+			<aui:input name="description" />
 
-				<%@ include file="/edit_vocabulary_settings.jspf" %>
+			<aui:input helpMessage="multi-valued-help" label="allow-multiple-categories" name="multiValued" type="toggle-switch" value="<%= (vocabulary != null) ? vocabulary.isMultiValued() : true %>" />
+		</aui:fieldset>
 
-				<c:choose>
-					<c:when test="<%= vocabulary == null %>">
-						<aui:field-wrapper cssClass="vocabulary-permissions-actions" label="permissions">
-							<liferay-ui:input-permissions
-								modelName="<%= AssetVocabulary.class.getName() %>"
-							/>
-						</aui:field-wrapper>
-					</c:when>
-				</c:choose>
+		<%@ include file="/edit_vocabulary_settings.jspf" %>
 
-				<aui:button-row>
-					<aui:button cssClass="btn-lg" type="submit" />
+		<c:if test="<%= vocabulary == null %>">
+			<aui:fieldset label="permissions">
+				<liferay-ui:input-permissions
+					modelName="<%= AssetVocabulary.class.getName() %>"
+				/>
+			</aui:fieldset>
+		</c:if>
+	</aui:fieldset-group>
 
-					<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
-				</aui:button-row>
-			</div>
-		</div>
-	</aui:fieldset>
+	<aui:button-row>
+		<aui:button cssClass="btn-lg" type="submit" />
+
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+	</aui:button-row>
 </aui:form>

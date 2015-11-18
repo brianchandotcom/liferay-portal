@@ -146,8 +146,7 @@ public class ExportImportConfigurationLocalServiceImpl
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public ExportImportConfiguration deleteExportImportConfiguration(
-			ExportImportConfiguration exportImportConfiguration)
-		throws PortalException {
+		ExportImportConfiguration exportImportConfiguration) {
 
 		exportImportConfigurationPersistence.remove(exportImportConfiguration);
 
@@ -172,9 +171,7 @@ public class ExportImportConfigurationLocalServiceImpl
 	}
 
 	@Override
-	public void deleteExportImportConfigurations(long groupId)
-		throws PortalException {
-
+	public void deleteExportImportConfigurations(long groupId) {
 		List<ExportImportConfiguration> exportImportConfigurations =
 			exportImportConfigurationPersistence.findByGroupId(groupId);
 

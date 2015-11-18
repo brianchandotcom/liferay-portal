@@ -14,7 +14,7 @@
 
 package com.liferay.portal.struts;
 
-import com.liferay.portal.util.WebKeys;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;

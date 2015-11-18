@@ -170,7 +170,7 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 
 		PortletURL siteAdministrationURL = PortalUtil.getControlPanelPortletURL(
 			actionRequest, layoutSetPrototype.getGroup(),
-			LayoutSetPrototypePortletKeys.SITE_TEMPLATE_SETTINGS, 0,
+			LayoutSetPrototypePortletKeys.SITE_TEMPLATE_SETTINGS, 0, 0,
 			PortletRequest.RENDER_PHASE);
 
 		actionRequest.setAttribute(

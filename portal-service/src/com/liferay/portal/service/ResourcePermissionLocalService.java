@@ -80,9 +80,6 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	* @param primKey the primary key
 	* @param roleId the primary key of the role
 	* @param actionId the action ID
-	* @throws PortalException if scope was set to individual scope or if a role
-	with the primary key or a resource action with the name and
-	action ID could not be found
 	*/
 	@com.liferay.portal.kernel.spring.aop.Retry(acceptor = com.liferay.portal.service.ExceptionRetryAcceptor.class, properties =  {
 		@com.liferay.portal.kernel.spring.aop.Property(name = ExceptionRetryAcceptor.EXCEPTION_NAME, value = "org.springframework.dao.DataIntegrityViolationException")
@@ -180,7 +177,6 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	portlet ID
 	* @param scope the scope
 	* @param primKey the primary key
-	* @throws PortalException if a portal exception occurred
 	*/
 	public void deleteResourcePermissions(long companyId,
 		java.lang.String name, int scope, long primKey)
@@ -206,7 +202,6 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	portlet ID
 	* @param scope the scope
 	* @param primKey the primary key
-	* @throws PortalException if a portal exception occurred
 	*/
 	public void deleteResourcePermissions(long companyId,
 		java.lang.String name, int scope, java.lang.String primKey)
@@ -308,8 +303,6 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	* @param actionIds the action IDs
 	* @return the intersection of action IDs the role has permission at the
 	scope to perform on resources of the type
-	* @throws PortalException if a resouce action could not be found for any
-	one of the actions on the resource
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<java.lang.String> getAvailableResourcePermissionActionIds(
@@ -354,7 +347,6 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	* @param roleId the primary key of the role
 	* @return the resource permission for the role at the scope to perform the
 	actions on resources of the type
-	* @throws PortalException if no matching resources could be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.ResourcePermission getResourcePermission(
@@ -534,8 +526,6 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	* @param actionId the action ID
 	* @return <code>true</code> if the role has permission to perform the
 	action on the resource; <code>false</code> otherwise
-	* @throws PortalException if a role with the primary key or a resource
-	action with the name and action ID could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasResourcePermission(long companyId, java.lang.String name,
@@ -561,9 +551,6 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	* @param actionId the action ID
 	* @return <code>true</code> if any one of the roles has permission to
 	perform the action on the resource; <code>false</code> otherwise
-	* @throws PortalException if any one of the roles with the primary keys
-	could not be found or if a resource action with the name and
-	action ID could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasResourcePermission(long companyId, java.lang.String name,
@@ -586,9 +573,6 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	* @return <code>true</code> if any one of the roles has permission to
 	perform the action on any one of the resources;
 	<code>false</code> otherwise
-	* @throws PortalException if any one of the roles with the primary keys
-	could not be found or if a resource action with the name and
-	action ID could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasResourcePermission(
@@ -623,8 +607,6 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	* @param actionId the action ID
 	* @return <code>true</code> if the role has permission to perform the
 	action on the resource; <code>false</code> otherwise
-	* @throws PortalException if a role with the primary key or a resource
-	action with the name and action ID could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasScopeResourcePermission(long companyId,
@@ -637,7 +619,6 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	*
 	* @param fromRoleId the primary key of the source role
 	* @param toRoleId the primary key of the destination role
-	* @throws PortalException if a role with the primary key could not be found
 	*/
 	public void mergePermissions(long fromRoleId, long toRoleId)
 		throws PortalException;
@@ -650,8 +631,6 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	*
 	* @param resourcePermissionId the primary key of the resource permission
 	* @param toRoleId the primary key of the role
-	* @throws PortalException if a resource permission or role with the primary
-	key could not be found
 	*/
 	public void reassignPermissions(long resourcePermissionId, long toRoleId)
 		throws PortalException;
@@ -674,8 +653,6 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	* @param primKey the primary key
 	* @param roleId the primary key of the role
 	* @param actionId the action ID
-	* @throws PortalException if a role with the primary key or a resource
-	action with the name and action ID could not be found
 	*/
 	public void removeResourcePermission(long companyId, java.lang.String name,
 		int scope, java.lang.String primKey, long roleId,
@@ -693,8 +670,6 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	* @param scope the scope
 	* @param roleId the primary key of the role
 	* @param actionId the action ID
-	* @throws PortalException if a role with the primary key or a resource
-	action with the name and action ID could not be found
 	*/
 	public void removeResourcePermissions(long companyId,
 		java.lang.String name, int scope, long roleId, java.lang.String actionId)
@@ -726,8 +701,6 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	* @param ownerId the primary key of the owner (generally the user that
 	created the resource)
 	* @param actionIds the action IDs of the actions
-	* @throws PortalException if a role with the primary key or a resource
-	action with the name and action ID could not be found
 	*/
 	@com.liferay.portal.kernel.spring.aop.Retry(acceptor = com.liferay.portal.service.ExceptionRetryAcceptor.class, properties =  {
 		@com.liferay.portal.kernel.spring.aop.Property(name = ExceptionRetryAcceptor.EXCEPTION_NAME, value = "org.springframework.dao.DataIntegrityViolationException")
@@ -761,8 +734,6 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	* @param primKey the primary key
 	* @param roleId the primary key of the role
 	* @param actionIds the action IDs of the actions
-	* @throws PortalException if a role with the primary key or a resource
-	action with the name and action ID could not be found
 	*/
 	@com.liferay.portal.kernel.spring.aop.Retry(acceptor = com.liferay.portal.service.ExceptionRetryAcceptor.class, properties =  {
 		@com.liferay.portal.kernel.spring.aop.Property(name = ExceptionRetryAcceptor.EXCEPTION_NAME, value = "org.springframework.dao.DataIntegrityViolationException")
@@ -794,8 +765,6 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	* @param scope the scope
 	* @param primKey the primary key
 	* @param roleIdsToActionIds a map of role IDs to action IDs of the actions
-	* @throws PortalException if a role with the primary key or a resource
-	action with the name and action ID could not be found
 	*/
 	@com.liferay.portal.kernel.spring.aop.Retry(acceptor = com.liferay.portal.service.ExceptionRetryAcceptor.class, properties =  {
 		@com.liferay.portal.kernel.spring.aop.Property(name = ExceptionRetryAcceptor.EXCEPTION_NAME, value = "org.springframework.dao.DataIntegrityViolationException")

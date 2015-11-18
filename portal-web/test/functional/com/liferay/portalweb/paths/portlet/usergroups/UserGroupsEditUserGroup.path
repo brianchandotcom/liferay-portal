@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>PUBLIC_PAGES_OPEN_PAGES</td>
-	<td>//div[contains(@class,'form-group')]//a/span[contains(.,'Open Pages')]</td>
+	<td>//a[contains(@title,'Opens New Window')]/span[contains(.,'Open Pages')]</td>
 	<td></td>
 </tr>
 </tbody>

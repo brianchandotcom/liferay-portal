@@ -21,9 +21,11 @@ public class UpgradeCompanyId
 	extends com.liferay.portal.upgrade.util.UpgradeCompanyId {
 
 	@Override
-	protected String[] getTableNames() {
-		return new String[] {
-			"ShoppingItemField", "ShoppingItemPrice", "ShoppingOrderItem"
+	protected TableUpdater[] getTableUpdaters() {
+		return new TableUpdater[] {
+			new TableUpdater("ShoppingItemField", "ShoppingItem", "itemId"),
+			new TableUpdater("ShoppingItemPrice", "ShoppingItem", "itemId"),
+			new TableUpdater("ShoppingOrderItem", "ShoppingItem", "itemId")
 		};
 	}
 

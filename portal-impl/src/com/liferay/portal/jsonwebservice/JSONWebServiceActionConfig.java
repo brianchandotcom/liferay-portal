@@ -31,7 +31,7 @@ import java.lang.reflect.Method;
  */
 public class JSONWebServiceActionConfig
 	implements Comparable<JSONWebServiceActionConfig>,
-	JSONWebServiceActionMapping {
+			   JSONWebServiceActionMapping {
 
 	public JSONWebServiceActionConfig(
 		String contextName, String contextPath, Class<?> actionClass,

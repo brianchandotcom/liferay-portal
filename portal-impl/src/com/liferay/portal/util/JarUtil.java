@@ -16,6 +16,7 @@ package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -44,7 +45,11 @@ public class JarUtil {
 			URL url, String libPath, String name, URLClassLoader urlClassLoader)
 		throws Exception {
 
-		if (PortalRunMode.isTestMode()) {
+		String protocol = url.getProtocol();
+
+		if (PortalRunMode.isTestMode() &&
+			(protocol.equals(Http.HTTP) || protocol.equals(Http.HTTPS))) {
+
 			try {
 				InetAddress.getAllByName("mirrors");
 

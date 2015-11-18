@@ -27,8 +27,8 @@ import org.osgi.service.component.annotations.Component;
 	property = {"jmx.objectname=" + JMXWhiteboardByDynamicMBean.OBJECT_NAME},
 	service = DynamicMBean.class
 )
-public class JMXWhiteboardByDynamicMBean extends StandardMBean
-	implements JMXWhiteboardByInterfaceMBean {
+public class JMXWhiteboardByDynamicMBean
+	extends StandardMBean implements JMXWhiteboardByInterfaceMBean {
 
 	public static final String OBJECT_NAME =
 		"JMXWhiteboard:name=com.liferay.portal.jmx.bundle.jmxwhiteboard." +

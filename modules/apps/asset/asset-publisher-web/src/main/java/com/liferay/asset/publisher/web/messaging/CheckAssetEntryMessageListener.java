@@ -17,6 +17,8 @@ package com.liferay.asset.publisher.web.messaging;
 import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfigurationValues;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
+import com.liferay.portal.kernel.messaging.Destination;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
@@ -45,7 +47,8 @@ public class CheckAssetEntryMessageListener
 				AssetPublisherWebConfigurationValues.CHECK_INTERVAL,
 				TimeUnit.HOUR));
 
-		_schedulerEngineHelper.register(this, schedulerEntryImpl);
+		_schedulerEngineHelper.register(
+			this, schedulerEntryImpl, DestinationNames.SCHEDULER_DISPATCH);
 	}
 
 	@Deactivate
@@ -56,6 +59,13 @@ public class CheckAssetEntryMessageListener
 	@Override
 	protected void doReceive(Message message) throws Exception {
 		AssetPublisherUtil.checkAssetEntries();
+	}
+
+	@Reference(
+		target = "(destination.name=" + DestinationNames.SCHEDULER_DISPATCH + ")",
+		unbind = "-"
+	)
+	protected void setDestination(Destination destination) {
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

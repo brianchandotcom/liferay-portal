@@ -41,6 +41,7 @@ public class MonitoringPanelApp extends BasePanelApp {
 		return MonitoringPortletKeys.MONITORING;
 	}
 
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + MonitoringPortletKeys.MONITORING + ")",
 		unbind = "-"

@@ -572,6 +572,9 @@
 			<then>
 				<execute function="AssertTextEquals" locator1="DDLRecord#WORKFLOW_STATUS" value1="Pending (${workflowStatus})" />
 			</then>
+			<else>
+				<execute function="AssertTextEquals" locator1="DDLRecord#WORKFLOW_STATUS" value1="Approved" />
+			</else>
 		</if>
 
 		<if>

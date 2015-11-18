@@ -173,6 +173,8 @@ public class WSDDBuilder {
 	private void _writeFile(File file, String content) throws Exception {
 		Path path = file.toPath();
 
+		Files.createDirectories(path.getParent());
+
 		String oldContent = null;
 
 		if (file.exists()) {

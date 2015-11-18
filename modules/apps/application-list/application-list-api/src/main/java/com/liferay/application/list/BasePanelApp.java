@@ -63,7 +63,7 @@ public abstract class BasePanelApp implements PanelApp {
 		throws PortalException {
 
 		return PortalUtil.getControlPanelPortletURL(
-			request, getGroup(request), getPortletId(), 0,
+			request, getGroup(request), getPortletId(), 0, 0,
 			PortletRequest.RENDER_PHASE);
 	}
 

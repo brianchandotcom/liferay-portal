@@ -1,0 +1,60 @@
+Started by remote host 10.0.16.21
+[EnvInject] - Loading node environment variables.
+[EnvInject] - Preparing an environment for the build.
+[EnvInject] - Keeping Jenkins system variables.
+[EnvInject] - Keeping Jenkins build variables.
+[EnvInject] - Injecting as environment variables the properties file path '/mnt/mfs-ssd1-10.0.10/jenkins/test-1-1/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/1603/test-portal-acceptance-pullrequest-batch(master)/functional-tomcat-mysql/0/start.properties'
+[EnvInject] - Variables injected successfully.
+[EnvInject] - Injecting as environment variables the properties content 
+MASTER_HOSTNAME=test-1-17
+
+[EnvInject] - Variables injected successfully.
+[EnvInject] - Injecting contributions.
+Building remotely on cloud-10-0-112-93 in workspace /opt/dev/projects/github/liferay-jenkins-ee
+Triggering CPUsergroups#DeleteUserGroup,!master
+Triggering CPDynamicdatalists#AddListRecordWithHTMLField,!master
+Triggering CPSitememberships#AddSiteTeam,!master
+Triggering PasswordpoliciesUsecase#ViewUserAccountLockout,!master
+Triggering CPSitememberships#RemoveMember,!master
+Triggering PGTags#RemoveTagViaBlogs,!master
+Triggering CPBookmarks#MoveToRecycleBinFolder,!master
+Triggering CPSites#AddSite,!master
+Triggering CPSitetemplates#EditSiteTemplateStatus,!master
+Triggering PGAnnouncements#EditAnnouncementsEntry,!master
+Triggering CPWebcontent#EditWebContent,!master
+Triggering PGCalendar#DeleteCalendarEventRegular,!master
+Triggering CPCategories#EditSubcategory,!master
+Triggering PGBlogs#EditBlogsEntry,!master
+Triggering PGStaging#ActivateStaging,!master
+Triggering CPBookmarks#AddBookmarks,!master
+Triggering CPPagetemplates#AddPageTemplate,!master
+Triggering TestRuntimePortlet#Smoke,!master
+Triggering SitelocalizationUsecase#AvailableSiteLocalesSubsetOfAvailablePortalLocales,!master
+Triggering ApplicationdisplaytemplatesUsecase#ADTBreadcrumb,!master
+Triggering CPUsersandorganizations#DeleteUser,!master
+Triggering CPRoles#DeleteRegularRole,!master
+Triggering PGBookmarks#DeleteFolder,!master
+CPUsergroups#DeleteUserGroup,!master completed with result FAILURE
+CPDynamicdatalists#AddListRecordWithHTMLField,!master completed with result FAILURE
+CPSitememberships#AddSiteTeam,!master completed with result FAILURE
+PasswordpoliciesUsecase#ViewUserAccountLockout,!master completed with result FAILURE
+CPSitememberships#RemoveMember,!master completed with result FAILURE
+PGTags#RemoveTagViaBlogs,!master completed with result FAILURE
+CPBookmarks#MoveToRecycleBinFolder,!master completed with result FAILURE
+CPSites#AddSite,!master completed with result FAILURE
+CPSitetemplates#EditSiteTemplateStatus,!master completed with result FAILURE
+PGAnnouncements#EditAnnouncementsEntry,!master completed with result FAILURE
+CPWebcontent#EditWebContent,!master completed with result FAILURE
+PGCalendar#DeleteCalendarEventRegular,!master completed with result FAILURE
+CPCategories#EditSubcategory,!master completed with result FAILURE
+PGBlogs#EditBlogsEntry,!master completed with result FAILURE
+PGStaging#ActivateStaging,!master completed with result FAILURE
+CPBookmarks#AddBookmarks,!master completed with result FAILURE
+CPPagetemplates#AddPageTemplate,!master completed with result FAILURE
+TestRuntimePortlet#Smoke,!master completed with result FAILURE
+SitelocalizationUsecase#AvailableSiteLocalesSubsetOfAvailablePortalLocales,!master completed with result FAILURE
+ApplicationdisplaytemplatesUsecase#ADTBreadcrumb,!master completed with result FAILURE
+CPUsersandorganizations#DeleteUser,!master completed with result FAILURE
+CPRoles#DeleteRegularRole,!master completed with result FAILURE
+PGBookmarks#DeleteFolder,!master completed with result FAILURE
+Finished: FAILURE

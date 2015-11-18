@@ -51,7 +51,7 @@ public class DDMFormEvaluatorImpl implements DDMFormEvaluator {
 		}
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setExpressionFactory(ExpressionFactory expressionFactory) {
 		_expressionFactory = expressionFactory;
 	}

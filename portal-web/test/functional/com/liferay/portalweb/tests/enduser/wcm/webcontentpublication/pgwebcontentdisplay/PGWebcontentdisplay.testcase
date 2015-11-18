@@ -386,7 +386,7 @@
 		</execute>
 
 		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent ContentWC WebContent ContentWC WebContent Content" />
+			<var name="webContentContent" value="WC WebContent Content WC WebContent Content WC WebContent Content" />
 		</execute>
 
 		<execute macro="WebContentDisplayPortlet#changeTemplate">

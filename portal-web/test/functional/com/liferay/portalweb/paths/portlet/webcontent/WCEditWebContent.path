@@ -101,7 +101,7 @@
 <!--VIEW_HISTORY-->
 <tr>
 	<td>VIEW_HISTORY_VERSION_CHECKBOX</td>
-	<td>//tr[contains(.,'${key_webContentTitle}')]/td/input</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]/td//input</td>
 	<td></td>
 </tr>
 <tr>

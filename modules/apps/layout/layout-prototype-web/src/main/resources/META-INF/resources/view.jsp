@@ -17,12 +17,23 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String navigation = ParamUtil.getString(request, "navigation");
+
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 
 String orderByCol = ParamUtil.getString(request, "orderByCol", "create-date");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
-int totalVar = LayoutPrototypeLocalServiceUtil.searchCount(company.getCompanyId(), null);
+Boolean active = null;
+
+if (navigation.equals("active")) {
+	active = true;
+}
+else if (navigation.equals("inactive")) {
+	active = false;
+}
+
+int totalVar = LayoutPrototypeLocalServiceUtil.searchCount(company.getCompanyId(), active);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 %>
@@ -35,14 +46,14 @@ PortletURL portletURL = renderResponse.createRenderURL();
 	</aui:nav>
 </aui:nav-bar>
 
-<c:if test="<%= totalVar > 0 %>">
+<c:if test='<%= (totalVar > 0) || !navigation.equals("all") %>'>
 	<liferay-frontend:management-bar
 		checkBoxContainerId="layoutPrototypeSearchContainer"
 		includeCheckBox="<%= true %>"
 	>
 		<liferay-frontend:management-bar-filters>
 			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all"} %>'
+				navigationKeys='<%= new String[] {"all", "active", "inactive"} %>'
 				portletURL="<%= renderResponse.createRenderURL() %>"
 			/>
 
@@ -70,7 +81,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 <aui:form cssClass="container-fluid-1280" name="fm">
 	<liferay-ui:search-container
-		emptyResultsMessage="there-are-no-page-templates.-you-can-add-a-page-template-by-clicking-the-plus-button-on-the-right-bottom-corner"
+		emptyResultsMessage="there-are-no-page-templates.-you-can-add-a-page-template-by-clicking-the-plus-button-on-the-bottom-right-corner"
 		headerNames="name"
 		id="layoutPrototype"
 		iteratorURL="<%= portletURL %>"
@@ -94,7 +105,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 		%>
 
 		<liferay-ui:search-container-results
-			results="<%= LayoutPrototypeLocalServiceUtil.search(company.getCompanyId(), null, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
+			results="<%= LayoutPrototypeLocalServiceUtil.search(company.getCompanyId(), active, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
 		/>
 
 		<liferay-ui:search-container-row

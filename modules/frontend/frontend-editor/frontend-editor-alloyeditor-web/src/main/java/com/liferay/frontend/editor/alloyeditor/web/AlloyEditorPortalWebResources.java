@@ -57,7 +57,8 @@ public class AlloyEditorPortalWebResources implements PortalWebResources {
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.frontend.editor.alloyeditor.web)"
+		target = "(osgi.web.symbolicname=com.liferay.frontend.editor.alloyeditor.web)",
+		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;

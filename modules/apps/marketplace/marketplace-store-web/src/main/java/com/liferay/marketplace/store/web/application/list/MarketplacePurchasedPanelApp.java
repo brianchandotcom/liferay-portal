@@ -53,6 +53,7 @@ public class MarketplacePurchasedPanelApp extends BasePanelApp {
 		return permissionChecker.isOmniadmin();
 	}
 
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + MarketplaceStorePortletKeys.MARKETPLACE_PURCHASED + ")",
 		unbind = "-"

@@ -100,8 +100,6 @@ List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderI
 		portletURL="<%= restoreTrashEntriesURL %>"
 	/>
 
-	<liferay-util:include page="/document_library/top_links.jsp" servletContext="<%= application %>" />
-
 	<c:choose>
 		<c:when test="<%= useAssetEntryQuery %>">
 			<liferay-ui:categorization-filter

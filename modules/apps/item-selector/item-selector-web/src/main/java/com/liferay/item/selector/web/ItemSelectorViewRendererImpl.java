@@ -46,6 +46,11 @@ public class ItemSelectorViewRendererImpl implements ItemSelectorViewRenderer {
 	}
 
 	@Override
+	public String getItemSelectedEventName() {
+		return _itemSelectedEventName;
+	}
+
+	@Override
 	public ItemSelectorCriterion getItemSelectorCriterion() {
 		return _itemSelectorCriterion;
 	}

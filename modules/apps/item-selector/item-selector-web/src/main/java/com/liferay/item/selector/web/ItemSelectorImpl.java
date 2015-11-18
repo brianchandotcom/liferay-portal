@@ -29,10 +29,9 @@ import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.RequestBackedPortletURLFactory;
-import com.liferay.portlet.RequestBackedPortletURLFactoryUtil;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -46,8 +45,6 @@ import java.util.concurrent.ConcurrentMap;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
 
@@ -58,6 +55,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 
 /**
  * @author Iván Zaera
+ * @author Roberto Díaz
  */
 @Component(service = ItemSelector.class)
 public class ItemSelectorImpl implements ItemSelector {
@@ -70,19 +68,37 @@ public class ItemSelectorImpl implements ItemSelector {
 	public static final String PARAMETER_SELECTED_TAB = "selectedTab";
 
 	@Override
+	public List<ItemSelectorCriterion> getItemSelectorCriteria(
+		Map<String, String[]> parameters) {
+
+		List<ItemSelectorCriterion> itemSelectorCriteria = new ArrayList<>();
+
+		List<Class<? extends ItemSelectorCriterion>>
+			itemSelectorCriterionClasses = getItemSelectorCriterionClasses(
+				parameters);
+
+		for (int i = 0; i < itemSelectorCriterionClasses.size(); i++) {
+			Class<? extends ItemSelectorCriterion> itemSelectorCriterionClass =
+				itemSelectorCriterionClasses.get(i);
+
+			String prefix = i + "_";
+
+			itemSelectorCriteria.add(
+				getItemSelectorCriterion(
+					parameters, prefix, itemSelectorCriterionClass));
+		}
+
+		return itemSelectorCriteria;
+	}
+
+	@Override
 	public ItemSelectorRendering getItemSelectorRendering(
-		PortletRequest portletRequest, PortletResponse portletResponse) {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
-			RequestBackedPortletURLFactoryUtil.create(portletRequest);
-
-		Map<String, String[]> parameters = portletRequest.getParameterMap();
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory,
+		Map<String, String[]> parameters, ThemeDisplay themeDisplay) {
 
 		String itemSelectedEventName = getValue(
 			parameters, PARAMETER_ITEM_SELECTED_EVENT_NAME);
+		String selectedTab = getValue(parameters, PARAMETER_SELECTED_TAB);
 
 		List<ItemSelectorViewRenderer> itemSelectorViewRenderers =
 			new ArrayList<>();
@@ -117,35 +133,33 @@ public class ItemSelectorImpl implements ItemSelector {
 					continue;
 				}
 
-				PortletURL portletURL = getItemSelectorURL(
-					requestBackedPortletURLFactory, itemSelectedEventName,
-					itemSelectorCriteriaArray);
-
-				String title = itemSelectorView.getTitle(
-					portletRequest.getLocale());
-
-				portletURL.setParameter(PARAMETER_SELECTED_TAB, title);
+				PortletURL portletURL = getPortletURL(
+					requestBackedPortletURLFactory,
+					itemSelectorView.getTitle(themeDisplay.getLocale()),
+					selectedTab, itemSelectedEventName,
+					itemSelectorCriteriaArray, themeDisplay);
 
 				itemSelectorViewRenderers.add(
 					new ItemSelectorViewRendererImpl(
 						itemSelectorView, itemSelectorCriterion, portletURL,
-						itemSelectedEventName, isSearch(portletRequest)));
+						itemSelectedEventName, isSearch(parameters)));
 			}
 		}
 
 		return new ItemSelectorRenderingImpl(
-			itemSelectedEventName, getValue(parameters, PARAMETER_SELECTED_TAB),
-			itemSelectorViewRenderers);
+			itemSelectedEventName, selectedTab, itemSelectorViewRenderers);
 	}
 
 	@Override
 	public PortletURL getItemSelectorURL(
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory,
-		String itemSelectedEventName,
+		Group group, long refererGroupId, String itemSelectedEventName,
 		ItemSelectorCriterion... itemSelectorCriteria) {
 
-		PortletURL portletURL = requestBackedPortletURLFactory.createRenderURL(
-			ItemSelectorPortletKeys.ITEM_SELECTOR);
+		PortletURL portletURL =
+			requestBackedPortletURLFactory.createControlPanelRenderURL(
+				ItemSelectorPortletKeys.ITEM_SELECTOR, group, refererGroupId,
+				0);
 
 		try {
 			portletURL.setPortletMode(PortletMode.VIEW);
@@ -171,27 +185,15 @@ public class ItemSelectorImpl implements ItemSelector {
 		return portletURL;
 	}
 
-	protected List<ItemSelectorCriterion> getItemSelectorCriteria(
-		Map<String, String[]> parameters) {
+	@Override
+	public PortletURL getItemSelectorURL(
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory,
+		String itemSelectedEventName,
+		ItemSelectorCriterion... itemSelectorCriteria) {
 
-		List<ItemSelectorCriterion> itemSelectorCriteria = new ArrayList<>();
-
-		List<Class<? extends ItemSelectorCriterion>>
-			itemSelectorCriterionClasses = getItemSelectorCriterionClasses(
-				parameters);
-
-		for (int i = 0; i<itemSelectorCriterionClasses.size(); i++) {
-			Class<? extends ItemSelectorCriterion> itemSelectorCriterionClass =
-				itemSelectorCriterionClasses.get(i);
-
-			String prefix = i + "_";
-
-			itemSelectorCriteria.add(
-				getItemSelectorCriterion(
-					parameters, prefix, itemSelectorCriterionClass));
-		}
-
-		return itemSelectorCriteria;
+		return getItemSelectorURL(
+			requestBackedPortletURLFactory, null, 0, itemSelectedEventName,
+			itemSelectorCriteria);
 	}
 
 	protected <T extends ItemSelectorCriterion> T getItemSelectorCriterion(
@@ -262,6 +264,37 @@ public class ItemSelectorImpl implements ItemSelector {
 		return parameters;
 	}
 
+	protected PortletURL getPortletURL(
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory,
+		String title, String selectedTab, String itemSelectedEventName,
+		ItemSelectorCriterion[] itemSelectorCriteriaArray,
+		ThemeDisplay themeDisplay) {
+
+		PortletURL portletURL = null;
+
+		if (Validator.isNotNull(selectedTab) && selectedTab.equals(title)) {
+			portletURL = getItemSelectorURL(
+				requestBackedPortletURLFactory, themeDisplay.getScopeGroup(),
+				themeDisplay.getRefererGroupId(), itemSelectedEventName,
+				itemSelectorCriteriaArray);
+		}
+		else {
+			Group group = themeDisplay.getRefererGroup();
+
+			if (group == null) {
+				group = themeDisplay.getScopeGroup();
+			}
+
+			portletURL = getItemSelectorURL(
+				requestBackedPortletURLFactory, group, 0, itemSelectedEventName,
+				itemSelectorCriteriaArray);
+		}
+
+		portletURL.setParameter(PARAMETER_SELECTED_TAB, title);
+
+		return portletURL;
+	}
+
 	protected String getValue(Map<String, String[]> parameters, String name) {
 		String[] values = parameters.get(name);
 
@@ -272,8 +305,8 @@ public class ItemSelectorImpl implements ItemSelector {
 		return values[0];
 	}
 
-	protected boolean isSearch(PortletRequest portletRequest) {
-		String keywords = portletRequest.getParameter("keywords");
+	protected boolean isSearch(Map<String, String[]> parameters) {
+		String keywords = getValue(parameters, "keywords");
 
 		if (Validator.isNotNull(keywords)) {
 			return true;

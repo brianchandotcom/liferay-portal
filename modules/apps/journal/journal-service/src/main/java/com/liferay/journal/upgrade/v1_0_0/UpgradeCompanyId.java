@@ -21,8 +21,11 @@ public class UpgradeCompanyId
 	extends com.liferay.portal.upgrade.util.UpgradeCompanyId {
 
 	@Override
-	protected String[] getTableNames() {
-		return new String[] {"JournalArticleImage", "JournalArticleResource"};
+	protected TableUpdater[] getTableUpdaters() {
+		return new TableUpdater[] {
+			new TableUpdater("JournalArticleImage", "Group_", "groupId"),
+			new TableUpdater("JournalArticleResource", "Group_", "groupId")
+		};
 	}
 
 }

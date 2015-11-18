@@ -43,6 +43,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -55,6 +59,8 @@ import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 
 import junit.framework.TestCase;
+
+import org.apache.tools.ant.DirectoryScanner;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -162,13 +168,7 @@ public class LiferaySeleniumHelper {
 			return;
 		}
 
-		String fileName = PropsValues.TEST_CONSOLE_LOG_FILE_NAME;
-
-		if (!FileUtil.exists(fileName)) {
-			return;
-		}
-
-		String content = FileUtil.read(fileName);
+		String content = getTestConsoleLogFileContent();
 
 		if (content.equals("")) {
 			return;
@@ -193,12 +193,13 @@ public class LiferaySeleniumHelper {
 			String level = eventElement.attributeValue("level");
 
 			if (level.equals("ERROR")) {
-				String fileContent = FileUtil.read(fileName);
+				String timestamp = eventElement.attributeValue("timestamp");
 
-				fileContent = fileContent.replaceFirst(
-					"level=\"ERROR\"", "level=\"ERROR_FOUND\"");
+				if (_errorTimestamps.contains(timestamp)) {
+					continue;
+				}
 
-				FileUtil.write(fileName, fileContent);
+				_errorTimestamps.add(timestamp);
 
 				Element messageElement = eventElement.element("message");
 
@@ -496,7 +497,7 @@ public class LiferaySeleniumHelper {
 		liferaySelenium.assertElementPresent(locator);
 
 		if (liferaySelenium.isPartialText(locator, pattern)) {
-			String text = liferaySelenium.getText(locator);
+			String text = liferaySelenium.getElementText(locator);
 
 			throw new Exception(
 				"\"" + text + "\" contains \"" + pattern + "\" at \"" +
@@ -527,7 +528,7 @@ public class LiferaySeleniumHelper {
 		liferaySelenium.assertElementPresent(locator);
 
 		if (liferaySelenium.isText(locator, pattern)) {
-			String text = liferaySelenium.getText(locator);
+			String text = liferaySelenium.getElementText(locator);
 
 			throw new Exception(
 				"Pattern \"" + pattern + "\" matches \"" + text + "\" at \"" +
@@ -542,7 +543,7 @@ public class LiferaySeleniumHelper {
 		liferaySelenium.assertElementPresent(locator);
 
 		if (liferaySelenium.isValue(locator, pattern)) {
-			String value = liferaySelenium.getValue(locator);
+			String value = liferaySelenium.getElementValue(locator);
 
 			throw new Exception(
 				"Pattern \"" + pattern + "\" matches \"" + value + "\" at \"" +
@@ -581,7 +582,7 @@ public class LiferaySeleniumHelper {
 		liferaySelenium.assertElementPresent(locator);
 
 		if (liferaySelenium.isNotPartialText(locator, pattern)) {
-			String text = liferaySelenium.getText(locator);
+			String text = liferaySelenium.getElementText(locator);
 
 			throw new Exception(
 				"\"" + text + "\" does not contain \"" + pattern + "\" at \"" +
@@ -612,7 +613,7 @@ public class LiferaySeleniumHelper {
 		liferaySelenium.assertElementPresent(locator);
 
 		if (liferaySelenium.isNotText(locator, pattern)) {
-			String text = liferaySelenium.getText(locator);
+			String text = liferaySelenium.getElementText(locator);
 
 			throw new Exception(
 				"Pattern \"" + pattern + "\" does not match \"" + text +
@@ -645,7 +646,7 @@ public class LiferaySeleniumHelper {
 		liferaySelenium.assertElementPresent(locator);
 
 		if (liferaySelenium.isNotValue(locator, pattern)) {
-			String value = liferaySelenium.getValue(locator);
+			String value = liferaySelenium.getElementValue(locator);
 
 			throw new Exception(
 				"Pattern \"" + pattern + "\" does not match \"" + value +
@@ -775,6 +776,40 @@ public class LiferaySeleniumHelper {
 		return filePaths.get(0);
 	}
 
+	public static String getTestConsoleLogFileContent() throws Exception {
+		Map<String, File> consoleLogFiles = new TreeMap<>();
+
+		DirectoryScanner directoryScanner = new DirectoryScanner();
+
+		directoryScanner.setIncludes(
+			new String[] {PropsValues.TEST_CONSOLE_LOG_FILE_NAME}
+		);
+
+		directoryScanner.scan();
+
+		for (String filePath : directoryScanner.getIncludedFiles()) {
+			if (OSDetector.isWindows()) {
+				filePath = filePath.replace("/", "\\");
+			}
+
+			File file = new File(filePath);
+
+			consoleLogFiles.put(Long.toString(file.lastModified()), file);
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		SortedSet<String> keys = new TreeSet<>(consoleLogFiles.keySet());
+
+		for (String key : keys) {
+			File file = consoleLogFiles.get(key);
+
+			sb.append(FileUtil.read(file));
+		}
+
+		return sb.toString();
+	}
+
 	public static boolean isConfirmation(
 		LiferaySelenium liferaySelenium, String pattern) {
 
@@ -784,13 +819,7 @@ public class LiferaySeleniumHelper {
 	}
 
 	public static boolean isConsoleTextPresent(String text) throws Exception {
-		String fileName = PropsValues.TEST_CONSOLE_LOG_FILE_NAME;
-
-		if (!FileUtil.exists(fileName)) {
-			return false;
-		}
-
-		String content = FileUtil.read(fileName);
+		String content = getTestConsoleLogFileContent();
 
 		if (content.equals("")) {
 			return false;
@@ -997,13 +1026,15 @@ public class LiferaySeleniumHelper {
 	}
 
 	public static boolean isNotText(
-		LiferaySelenium liferaySelenium, String locator, String value) {
+			LiferaySelenium liferaySelenium, String locator, String value)
+		throws Exception {
 
 		return !liferaySelenium.isText(locator, value);
 	}
 
 	public static boolean isNotValue(
-		LiferaySelenium liferaySelenium, String locator, String value) {
+			LiferaySelenium liferaySelenium, String locator, String value)
+		throws Exception {
 
 		return !liferaySelenium.isValue(locator, value);
 	}
@@ -1861,6 +1892,7 @@ public class LiferaySeleniumHelper {
 
 	private static final Pattern _aceEditorPattern = Pattern.compile(
 		"\\(|\\$\\{line\\.separator\\}");
+	private static final List<String> _errorTimestamps = new ArrayList<>();
 	private static final List<Exception> _javaScriptExceptions =
 		new ArrayList<>();
 	private static final List<Exception> _liferayExceptions = new ArrayList<>();

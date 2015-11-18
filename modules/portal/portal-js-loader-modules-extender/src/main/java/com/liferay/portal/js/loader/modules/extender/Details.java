@@ -16,9 +16,12 @@ package com.liferay.portal.js.loader.modules.extender;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.configuration.admin.ConfigurationAdmin;
+
 /**
  * @author Raymond Augé
  */
+@ConfigurationAdmin(category = "platform")
 @Meta.OCD(
 	id = "com.liferay.portal.js.loader.modules.extender.LoaderModulesServlet",
 	name = "%JS Loader Modules Servlet Configuration"

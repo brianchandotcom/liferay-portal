@@ -698,6 +698,12 @@ public class AssetPublisherUtil {
 		return assetEntryQuery;
 	}
 
+	public static List<AssetEntryQueryProcessor>
+		getAssetEntryQueryProcessors() {
+
+		return _instance._assetEntryQueryProcessors;
+	}
+
 	public static String[] getAssetTagNames(
 			PortletPreferences portletPreferences)
 		throws Exception {
@@ -1216,7 +1222,7 @@ public class AssetPublisherUtil {
 		throws Exception {
 
 		for (AssetEntryQueryProcessor assetEntryQueryProcessor :
-				_instance._assetEntryQueryProcessors) {
+				getAssetEntryQueryProcessors()) {
 
 			assetEntryQueryProcessor.processAssetEntryQuery(
 				user, portletPreferences, assetEntryQuery);

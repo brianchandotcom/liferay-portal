@@ -94,7 +94,7 @@
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowAssetTitle" value="Blogs Entry 1" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
-			<var name="workflowDefinitionTitle" value="Join Xor" />
+			<var name="workflowDefinitionTask" value="join-xor" />
 			<var name="workflowTask" value="task2" />
 		</execute>
 
@@ -160,7 +160,7 @@
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowAssetTitle" value="Blogs Entry 2" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
-			<var name="workflowDefinitionTitle" value="Join Xor" />
+			<var name="workflowDefinitionTask" value="join-xor" />
 			<var name="workflowTask" value="task2" />
 		</execute>
 
@@ -217,7 +217,7 @@
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowAssetTitle" value="Blogs Entry 3" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
-			<var name="workflowDefinitionTitle" value="Join Xor" />
+			<var name="workflowDefinitionTask" value="join-xor" />
 			<var name="workflowTask" value="task2" />
 		</execute>
 
@@ -238,7 +238,7 @@
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowAssetTitle" value="Blogs Entry 3" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
-			<var name="workflowDefinitionTitle" value="Join Xor" />
+			<var name="workflowDefinitionTask" value="join-xor" />
 			<var name="workflowTask" value="task1" />
 		</execute>
 

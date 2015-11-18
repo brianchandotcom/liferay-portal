@@ -21,10 +21,13 @@ import java.io.File;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.file.FileTree;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.JavaExec;
@@ -62,12 +65,31 @@ public class BuildDeploymentHelperTask extends JavaExec {
 		super.exec();
 	}
 
-	@InputFiles
-	@SkipWhenEmpty
 	public FileCollection getDeploymentFiles() {
 		Project project = getProject();
 
 		return project.files(_deploymentFiles);
+	}
+
+	@InputFiles
+	@SkipWhenEmpty
+	public FileCollection getDeploymentInputFiles() {
+		Project project = getProject();
+
+		List<Object> inputFiles = new ArrayList<>();
+
+		for (File deploymentFile : getDeploymentFiles()) {
+			if (deploymentFile.isDirectory()) {
+				FileTree fileTree = getJarsFileTree(deploymentFile);
+
+				inputFiles.add(fileTree);
+			}
+			else {
+				inputFiles.add(deploymentFile);
+			}
+		}
+
+		return project.files(inputFiles);
 	}
 
 	@Input
@@ -124,6 +146,17 @@ public class BuildDeploymentHelperTask extends JavaExec {
 		sb.setLength(sb.length() - 1);
 
 		return sb.toString();
+	}
+
+	protected FileTree getJarsFileTree(File dir) {
+		Project project = getProject();
+
+		Map<String, Object> args = new HashMap<>();
+
+		args.put("dir", dir);
+		args.put("include", "**/*.jar");
+
+		return project.fileTree(args);
 	}
 
 	private final List<Object> _deploymentFiles = new ArrayList<>();

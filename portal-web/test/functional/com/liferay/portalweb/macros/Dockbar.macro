@@ -11,9 +11,8 @@
 	</command>
 
 	<command name="viewAddTabsWithNoAddPagePermission">
-		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Icon#ADD" value1="Add" />
+		<execute function="Click" locator1="Icon#ADD" />
 
-		<execute function="AssertTextEquals" locator1="NavPill#CONTENT" value1="Content" />
 		<execute function="AssertTextEquals" locator1="NavPill#APPLICATIONS" value1="Applications" />
 		<execute function="AssertElementNotPresent" locator1="NavPill#PAGE" value1="Page" />
 	</command>

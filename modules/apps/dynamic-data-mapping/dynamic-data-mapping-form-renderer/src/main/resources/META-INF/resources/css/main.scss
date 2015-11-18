@@ -25,6 +25,10 @@
 	.lfr-ddm-form-field-container {
 		position: relative;
 
+		&.has-error .liferay-ddm-form-field-date .input-group-addon {
+			border-width: 0 0 2px 0;
+		}
+
 		@include keyframes(spin) {
 			100% {
 				transform: rotate(359deg);
@@ -47,8 +51,8 @@
 			top: 0;
 		}
 
-		.validation-message {
-			position: absolute;
+		.liferay-ddm-form-field-date .input-group-addon {
+			cursor: pointer;
 		}
 	}
 
@@ -73,9 +77,9 @@
 		padding-top: 20px;
 	}
 
-	.validation-message {
+	.help-block {
+		font-size: 14px;
 		margin-top: -45px;
-		position: absolute;
 	}
 }
 

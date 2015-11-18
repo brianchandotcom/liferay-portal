@@ -66,8 +66,6 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 *         the UUID, creation date, modification date, guest permissions,
 	 *         and group permissions for the template.
 	 * @return the template
-	 * @throws PortalException if the user did not have permission to add the
-	 *         template or if a portal exception occurred
 	 */
 	@Override
 	public DDMTemplate addTemplate(
@@ -117,8 +115,6 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 *         the UUID, creation date, modification date, guest permissions,
 	 *         and group permissions for the template.
 	 * @return the template
-	 * @throws PortalException if the user did not have permission to add the
-	 *         template or if a portal exception occurred
 	 */
 	@Override
 	public DDMTemplate addTemplate(
@@ -154,8 +150,6 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 *         the UUID, creation date, modification date, guest permissions,
 	 *         and group permissions for the template.
 	 * @return the new template
-	 * @throws PortalException if the user did not have permission to add the
-	 *         template or if a portal exception occurred
 	 */
 	@Override
 	public DDMTemplate copyTemplate(
@@ -208,8 +202,6 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 *         the UUID, creation date, modification date, guest permissions,
 	 *         and group permissions for the template.
 	 * @return the new template
-	 * @throws PortalException if the user did not have permission to add the
-	 *         template or if a portal exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> copyTemplates(
@@ -229,9 +221,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	/**
 	 * Deletes the template and its resources.
 	 *
-	 * @param  templateId the primary key of the template to be deleted
-	 * @throws PortalException if the user did not have permission to delete the
-	 *         template or if a portal exception occurred
+	 * @param templateId the primary key of the template to be deleted
 	 */
 	@Override
 	public void deleteTemplate(long templateId) throws PortalException {
@@ -250,8 +240,6 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 * @param  templateKey the unique string identifying the template
 	 * @return the matching template, or <code>null</code> if a matching
 	 *         template could not be found
-	 * @throws PortalException if the user did not have permission to view the
-	 *         template
 	 */
 	@Override
 	public DDMTemplate fetchTemplate(
@@ -274,8 +262,6 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 *
 	 * @param  templateId the primary key of the template
 	 * @return the template with the ID
-	 * @throws PortalException if the user did not have permission to view the
-	 *         template or if a matching template could not be found
 	 */
 	@Override
 	public DDMTemplate getTemplate(long templateId) throws PortalException {
@@ -293,7 +279,6 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 *         related model
 	 * @param  templateKey the unique string identifying the template
 	 * @return the matching template
-	 * @throws PortalException if a matching template could not be found
 	 */
 	@Override
 	public DDMTemplate getTemplate(
@@ -329,7 +314,6 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 *         have sharing enabled) and include global scoped sites in the
 	 *         search
 	 * @return the matching template
-	 * @throws PortalException if a matching template could not be found
 	 */
 	@Override
 	public DDMTemplate getTemplate(
@@ -885,8 +869,6 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         modification date.
 	 * @return the updated template
-	 * @throws PortalException if the user did not have permission to update the
-	 *         template or if a portal exception occurred
 	 */
 	@Override
 	public DDMTemplate updateTemplate(
@@ -925,8 +907,6 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         modification date.
 	 * @return the updated template
-	 * @throws PortalException if the user did not have permission to update the
-	 *         template or if a portal exception occurred
 	 */
 	@Override
 	public DDMTemplate updateTemplate(

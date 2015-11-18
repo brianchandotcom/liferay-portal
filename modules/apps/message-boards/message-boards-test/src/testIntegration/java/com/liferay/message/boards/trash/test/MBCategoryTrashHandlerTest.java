@@ -88,6 +88,7 @@ public class MBCategoryTrashHandlerTest
 	}
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 

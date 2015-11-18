@@ -141,8 +141,8 @@ import org.springframework.beans.factory.BeanFactory;
  * @author Raymond Augé
  * @author Zsolt Berentey
  */
-public class PortalSecurityManagerImpl extends EquinoxSecurityManager
-	implements PortalSecurityManager {
+public class PortalSecurityManagerImpl
+	extends EquinoxSecurityManager implements PortalSecurityManager {
 
 	public PortalSecurityManagerImpl()
 		throws IllegalAccessException, NoSuchMethodException,

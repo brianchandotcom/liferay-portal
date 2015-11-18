@@ -89,7 +89,7 @@ public class DDMStructureLinkManagerImpl implements DDMStructureLinkManager {
 		return ddmStructureLinks;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMStructureLinkLocalService(
 		DDMStructureLinkLocalService ddmStructureLinkLocalService) {
 

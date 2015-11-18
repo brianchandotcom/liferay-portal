@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RSS_FEEDS</td>
+	<td>//ul[@class='palette-item-content']//li/span[contains(.,'RSS Feeds')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -73,7 +78,7 @@
 </tr>
 <tr>
 	<td>ADT_TABLE_CHECKBOX_1</td>
-	<td>//div[contains(@id,'ddmTemplatesSearchContainer')]//tr/td[1]/input</td>
+	<td>//div[contains(@id,'ddmTemplatesSearchContainer')]//tr/td[1]//input</td>
 	<td></td>
 </tr>
 <tr>

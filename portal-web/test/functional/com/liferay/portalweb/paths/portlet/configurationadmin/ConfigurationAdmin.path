@@ -20,11 +20,10 @@
 </tr>
 <!--XSL_CONTENT_CONFIGURATION-->
 <tr>
-	<td>XSL_CONTENT_CONFIGURATION_VALID_URL_PREFIXES_FIELD</td>
-	<td>//input[contains(@name,'valid.url.prefixes')]</td>
+	<td>XSL_CONTENT_CONFIGURATION_XML_DOCTYPE_DECLARATION_CHECKBOX</td>
+	<td>//input[contains(@id,'xml.doctype.declaration.allowed')]</td>
 	<td></td>
 </tr>
-
 </tbody>
 </table>
 </body>

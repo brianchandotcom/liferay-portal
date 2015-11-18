@@ -44,9 +44,7 @@ public class DLFolderFindActionHelper extends BaseFindActionHelper {
 	@Override
 	public String[] initPortletIds() {
 		return new String[] {
-			DLPortletKeys.DOCUMENT_LIBRARY,
-			DLPortletKeys.DOCUMENT_LIBRARY_DISPLAY,
-			DLPortletKeys.MEDIA_GALLERY_DISPLAY
+			DLPortletKeys.DOCUMENT_LIBRARY, DLPortletKeys.MEDIA_GALLERY_DISPLAY
 		};
 	}
 
@@ -74,11 +72,7 @@ public class DLFolderFindActionHelper extends BaseFindActionHelper {
 
 		String rootPortletId = PortletConstants.getRootPortletId(portletId);
 
-		if (rootPortletId.equals(DLPortletKeys.DOCUMENT_LIBRARY_DISPLAY)) {
-			portletURL.setParameter(
-				"mvcRenderCommandName", "/document_library_display/view");
-		}
-		else if (rootPortletId.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
+		if (rootPortletId.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 			portletURL.setParameter(
 				"mvcRenderCommandName", "/image_gallery_display/view");
 		}

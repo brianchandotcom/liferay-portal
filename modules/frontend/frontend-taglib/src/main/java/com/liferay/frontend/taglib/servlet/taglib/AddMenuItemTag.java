@@ -54,6 +54,7 @@ public class AddMenuItemTag extends IncludeTag {
 		_url = null;
 	}
 
+	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		List<AddMenuItem> addMenuItems =
 			(List<AddMenuItem>)request.getAttribute(

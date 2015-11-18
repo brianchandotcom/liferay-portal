@@ -105,7 +105,7 @@
 </tr>
 <tr>
 	<td>USER_TABLE_CHECKBOX_1</td>
-	<td>xpath=(//div[contains(@id,'usersSearchContainer')]//tr/td[1]/input[contains(@name,'rowIds')])[1]</td>
+	<td>xpath=(//div[contains(@id,'usersSearchContainer')]//tr/td[1]//input[contains(@name,'rowIds')])[1]</td>
 	<td></td>
 </tr>
 <tr>

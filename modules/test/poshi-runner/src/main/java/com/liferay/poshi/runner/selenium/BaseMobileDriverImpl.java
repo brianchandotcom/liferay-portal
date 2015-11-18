@@ -16,7 +16,8 @@ package com.liferay.poshi.runner.selenium;
 
 import com.liferay.poshi.runner.util.PropsValues;
 
-import io.appium.java_client.MobileDriver;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 /**
  * @author Kenji Heigel
@@ -24,8 +25,8 @@ import io.appium.java_client.MobileDriver;
 public abstract class BaseMobileDriverImpl
 	extends MobileDriverToSeleniumBridge implements LiferaySelenium {
 
-	public BaseMobileDriverImpl(String browserURL, MobileDriver mobileDriver) {
-		super(mobileDriver);
+	public BaseMobileDriverImpl(String browserURL, WebDriver webDriver) {
+		super(webDriver);
 
 		System.setProperty("java.awt.headless", "false");
 	}
@@ -261,12 +262,12 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
-	public void copyText(String locator) {
+	public void copyText(String locator) throws Exception {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void copyValue(String locator) {
+	public void copyValue(String locator) throws Exception {
 		throw new UnsupportedOperationException();
 	}
 
@@ -298,6 +299,54 @@ public abstract class BaseMobileDriverImpl
 	@Override
 	public String getCurrentYear() {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public String getElementText(String locator) throws Exception {
+		return getElementText(locator, null);
+	}
+
+	public String getElementText(String locator, String timeout)
+		throws Exception {
+
+		WebElement webElement = getWebElement(locator, timeout);
+
+		if (webElement == null) {
+			throw new Exception(
+				"Element is not present at \"" + locator + "\"");
+		}
+
+		if (!isInViewport(locator)) {
+			swipeWebElementIntoView(locator);
+		}
+
+		String text = webElement.getText();
+
+		text = text.trim();
+
+		return text.replace("\n", " ");
+	}
+
+	@Override
+	public String getElementValue(String locator) throws Exception {
+		return getElementValue(locator, null);
+	}
+
+	public String getElementValue(String locator, String timeout)
+		throws Exception {
+
+		WebElement webElement = getWebElement(locator, timeout);
+
+		if (webElement == null) {
+			throw new Exception(
+				"Element is not present at \"" + locator + "\"");
+		}
+
+		if (!isInViewport(locator)) {
+			swipeWebElementIntoView(locator);
+		}
+
+		return webElement.getAttribute("value");
 	}
 
 	@Override
@@ -398,12 +447,12 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
-	public boolean isNotText(String locator, String value) {
+	public boolean isNotText(String locator, String value) throws Exception {
 		return LiferaySeleniumHelper.isNotText(this, locator, value);
 	}
 
 	@Override
-	public boolean isNotValue(String locator, String value) {
+	public boolean isNotValue(String locator, String value) throws Exception {
 		return LiferaySeleniumHelper.isNotValue(this, locator, value);
 	}
 
@@ -433,8 +482,8 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
-	public boolean isText(String locator, String value) {
-		return value.equals(getText(locator, "1"));
+	public boolean isText(String locator, String value) throws Exception {
+		return value.equals(getElementText(locator, "1"));
 	}
 
 	@Override
@@ -443,8 +492,8 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
-	public boolean isValue(String locator, String value) {
-		return value.equals(getValue(locator, "1"));
+	public boolean isValue(String locator, String value) throws Exception {
+		return value.equals(getElementValue(locator, "1"));
 	}
 
 	@Override

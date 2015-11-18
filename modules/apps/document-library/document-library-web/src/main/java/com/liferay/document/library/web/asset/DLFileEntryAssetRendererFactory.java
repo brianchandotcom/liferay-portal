@@ -155,7 +155,7 @@ public class DLFileEntryAssetRendererFactory
 		LiferayPortletResponse liferayPortletResponse, long classTypeId) {
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, DLPortletKeys.DOCUMENT_LIBRARY, 0,
+			liferayPortletRequest, DLPortletKeys.DOCUMENT_LIBRARY,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
@@ -188,8 +188,7 @@ public class DLFileEntryAssetRendererFactory
 
 		LiferayPortletURL liferayPortletURL =
 			liferayPortletResponse.createLiferayPortletURL(
-				DLPortletKeys.DOCUMENT_LIBRARY_DISPLAY,
-				PortletRequest.RENDER_PHASE);
+				DLPortletKeys.DOCUMENT_LIBRARY, PortletRequest.RENDER_PHASE);
 
 		try {
 			liferayPortletURL.setWindowState(windowState);

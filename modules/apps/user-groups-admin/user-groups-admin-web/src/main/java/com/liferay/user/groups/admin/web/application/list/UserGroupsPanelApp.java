@@ -41,6 +41,7 @@ public class UserGroupsPanelApp extends BasePanelApp {
 		return UserGroupsAdminPortletKeys.USER_GROUPS_ADMIN;
 	}
 
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + UserGroupsAdminPortletKeys.USER_GROUPS_ADMIN + ")",
 		unbind = "-"

@@ -43,7 +43,7 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 @Sync
 public class DLFolderActivityInterpreterTest
-		extends BaseSocialActivityInterpreterTestCase {
+	extends BaseSocialActivityInterpreterTestCase {
 
 	@ClassRule
 	@Rule

@@ -295,6 +295,8 @@ public interface LiferayPortletURL
 	 */
 	public void setPortletId(String portletId);
 
+	public void setRefererGroupId(long refererGroupId);
+
 	/**
 	 * Sets the referer layout ID.
 	 *

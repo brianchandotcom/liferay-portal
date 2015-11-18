@@ -77,7 +77,7 @@ public class DDMTemplateManagerImpl implements DDMTemplateManager {
 		return new DDMTemplateImpl(ddmTemplate);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMTemplateLocalService(
 		DDMTemplateLocalService ddmTemplateLocalService) {
 

@@ -1,7 +1,7 @@
 dependencies {
 	provided group: "com.liferay.portal", name: "util-java", version: liferay.portalVersion
 
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.0-SNAPSHOT"
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.0"
 	testIntegrationCompile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
 	testIntegrationCompile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	testIntegrationCompile group: "javax.portlet", name: "portlet-api", version: "2.0"

@@ -64,6 +64,8 @@
 		<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= blogsPortletInstanceConfiguration.enableCommentRatings() %>" />
 	</c:if>
 
+	<aui:input name="preferences--enableViewCount--" type="checkbox" value="<%= blogsPortletInstanceConfiguration.enableViewCount() %>" />
+
 	<liferay-ui:social-bookmarks-settings
 		displayPosition="<%= blogsPortletInstanceConfiguration.socialBookmarksDisplayPosition() %>"
 		displayStyle="<%= blogsPortletInstanceConfiguration.socialBookmarksDisplayStyle() %>"

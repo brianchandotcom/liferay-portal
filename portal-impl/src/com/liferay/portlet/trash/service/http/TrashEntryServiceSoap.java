@@ -70,7 +70,6 @@ public class TrashEntryServiceSoap {
 	* permissions.
 	*
 	* @param groupId the primary key of the group
-	* @throws PortalException if a portal exception occurred
 	*/
 	public static void deleteEntries(long groupId) throws RemoteException {
 		try {
@@ -87,9 +86,6 @@ public class TrashEntryServiceSoap {
 	* Deletes the trash entries with the primary keys.
 	*
 	* @param entryIds the primary keys of the trash entries
-	* @throws PortalException if a trash entry with the primary key could not
-	be found or if the user did not have permission to delete any one
-	of the trash entries
 	*/
 	public static void deleteEntries(long[] entryIds) throws RemoteException {
 		try {
@@ -112,9 +108,6 @@ public class TrashEntryServiceSoap {
 	* </p>
 	*
 	* @param entryId the primary key of the trash entry
-	* @throws PortalException if a trash entry with the primary key could not
-	be found or if the user did not have permission to delete the
-	trash entry
 	*/
 	public static void deleteEntry(long entryId) throws RemoteException {
 		try {
@@ -138,9 +131,6 @@ public class TrashEntryServiceSoap {
 	*
 	* @param className the class name of the entity
 	* @param classPK the primary key of the entity
-	* @throws PortalException if a trash entry with the entity class name and
-	primary key could not be found or if the user did not have
-	permission to delete the entry
 	*/
 	public static void deleteEntry(java.lang.String className, long classPK)
 		throws RemoteException {
@@ -159,7 +149,6 @@ public class TrashEntryServiceSoap {
 	*
 	* @param groupId the primary key of the group
 	* @return the matching trash entries
-	* @throws PrincipalException if a principal exception occurred
 	*/
 	public static com.liferay.portlet.trash.model.TrashEntryList getEntries(
 		long groupId) throws RemoteException {
@@ -186,7 +175,6 @@ public class TrashEntryServiceSoap {
 	<code>null</code>)
 	* @return the range of matching trash entries ordered by comparator
 	<code>obc</code>
-	* @throws PrincipalException if a system exception occurred
 	*/
 	public static com.liferay.portlet.trash.model.TrashEntryList getEntries(
 		long groupId, int start, int end,
@@ -248,11 +236,6 @@ public class TrashEntryServiceSoap {
 	* @param destinationContainerModelId the primary key of the new location
 	* @param serviceContext the service context to be applied (optionally
 	<code>null</code>)
-	* @throws PortalException if a matching trash entry could not be found, if
-	the user did not have permission to move the trash entry to the
-	new location, if the user did not have permission to restore the
-	trash entry, if a duplicate trash entry exists at the new
-	location, or if a portal exception occurred
 	*/
 	public static void moveEntry(java.lang.String className, long classPK,
 		long destinationContainerModelId,
@@ -316,10 +299,6 @@ public class TrashEntryServiceSoap {
 	* @param name a new name to give to the trash entry being restored
 	(optionally <code>null</code>)
 	* @return the restored trash entry
-	* @throws PortalException if a matching trash entry could not be found, if
-	the user did not have permission to overwrite an existing trash
-	entry, to rename the trash entry being restored, or to restore
-	the trash entry in general
 	*/
 	public static com.liferay.portlet.trash.model.TrashEntrySoap restoreEntry(
 		long entryId, long overrideClassPK, java.lang.String name)

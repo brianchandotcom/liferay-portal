@@ -424,20 +424,17 @@ public abstract class OrganizationLocalServiceBaseImpl
 	}
 
 	/**
-	 * @throws PortalException
 	 */
 	@Override
-	public void addGroupOrganizations(long groupId, long[] organizationIds)
-		throws PortalException {
+	public void addGroupOrganizations(long groupId, long[] organizationIds) {
 		groupPersistence.addOrganizations(groupId, organizationIds);
 	}
 
 	/**
-	 * @throws PortalException
 	 */
 	@Override
 	public void addGroupOrganizations(long groupId,
-		List<Organization> Organizations) throws PortalException {
+		List<Organization> Organizations) {
 		groupPersistence.addOrganizations(groupId, Organizations);
 	}
 
@@ -534,11 +531,9 @@ public abstract class OrganizationLocalServiceBaseImpl
 	}
 
 	/**
-	 * @throws PortalException
 	 */
 	@Override
-	public void setGroupOrganizations(long groupId, long[] organizationIds)
-		throws PortalException {
+	public void setGroupOrganizations(long groupId, long[] organizationIds) {
 		groupPersistence.setOrganizations(groupId, organizationIds);
 	}
 

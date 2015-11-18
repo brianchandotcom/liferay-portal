@@ -16,9 +16,9 @@ package com.liferay.portal.resiliency.spi.action;
 
 import com.liferay.portal.kernel.portlet.ActionResult;
 import com.liferay.portal.kernel.portlet.PortletContainer;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.List;

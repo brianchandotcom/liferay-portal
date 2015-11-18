@@ -55,8 +55,6 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 	the UUID, creation date, modification date, guest permissions,
 	and group permissions for the template.
 	* @return the template
-	* @throws PortalException if the user did not have permission to add the
-	template or if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMTemplate addTemplate(
@@ -103,8 +101,6 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 	the UUID, creation date, modification date, guest permissions,
 	and group permissions for the template.
 	* @return the template
-	* @throws PortalException if the user did not have permission to add the
-	template or if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMTemplate addTemplate(
@@ -138,8 +134,6 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 	the UUID, creation date, modification date, guest permissions,
 	and group permissions for the template.
 	* @return the new template
-	* @throws PortalException if the user did not have permission to add the
-	template or if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMTemplate copyTemplate(
@@ -178,8 +172,6 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 	the UUID, creation date, modification date, guest permissions,
 	and group permissions for the template.
 	* @return the new template
-	* @throws PortalException if the user did not have permission to add the
-	template or if a portal exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> copyTemplates(
@@ -195,8 +187,6 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 	* Deletes the template and its resources.
 	*
 	* @param templateId the primary key of the template to be deleted
-	* @throws PortalException if the user did not have permission to delete the
-	template or if a portal exception occurred
 	*/
 	@Override
 	public void deleteTemplate(long templateId)
@@ -213,8 +203,6 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 	* @param templateKey the unique string identifying the template
 	* @return the matching template, or <code>null</code> if a matching
 	template could not be found
-	* @throws PortalException if the user did not have permission to view the
-	template
 	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMTemplate fetchTemplate(
@@ -242,7 +230,6 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 	related model
 	* @param templateKey the unique string identifying the template
 	* @return the matching template
-	* @throws PortalException if a matching template could not be found
 	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMTemplate getTemplate(
@@ -271,7 +258,6 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 	have sharing enabled) and include global scoped sites in the
 	search
 	* @return the matching template
-	* @throws PortalException if a matching template could not be found
 	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMTemplate getTemplate(
@@ -287,8 +273,6 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 	*
 	* @param templateId the primary key of the template
 	* @return the template with the ID
-	* @throws PortalException if the user did not have permission to view the
-	template or if a matching template could not be found
 	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMTemplate getTemplate(
@@ -795,8 +779,6 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 	* @param serviceContext the service context to be applied. Can set the
 	modification date.
 	* @return the updated template
-	* @throws PortalException if the user did not have permission to update the
-	template or if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMTemplate updateTemplate(
@@ -836,8 +818,6 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 	* @param serviceContext the service context to be applied. Can set the
 	modification date.
 	* @return the updated template
-	* @throws PortalException if the user did not have permission to update the
-	template or if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMTemplate updateTemplate(

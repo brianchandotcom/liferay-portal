@@ -76,10 +76,6 @@ public class ResourcePermissionServiceUtil {
 	* @param primKey the primary key
 	* @param roleId the primary key of the role
 	* @param actionId the action ID
-	* @throws PortalException if the user did not have permission to add
-	resource permissions, or if scope was set to individual scope or
-	if a role with the primary key or a resource action with the name
-	and action ID could not be found
 	*/
 	public static void addResourcePermission(long groupId, long companyId,
 		java.lang.String name, int scope, java.lang.String primKey,
@@ -118,9 +114,6 @@ public class ResourcePermissionServiceUtil {
 	* @param primKey the primary key
 	* @param roleId the primary key of the role
 	* @param actionId the action ID
-	* @throws PortalException if the user did not have permission to remove
-	resource permissions, or if a role with the primary key or a
-	resource action with the name and action ID could not be found
 	*/
 	public static void removeResourcePermission(long groupId, long companyId,
 		java.lang.String name, int scope, java.lang.String primKey,
@@ -144,9 +137,6 @@ public class ResourcePermissionServiceUtil {
 	* @param scope the scope
 	* @param roleId the primary key of the role
 	* @param actionId the action ID
-	* @throws PortalException if the user did not have permission to remove
-	resource permissions, or if a role with the primary key or a
-	resource action with the name and action ID could not be found
 	*/
 	public static void removeResourcePermissions(long groupId, long companyId,
 		java.lang.String name, int scope, long roleId, java.lang.String actionId)
@@ -179,9 +169,6 @@ public class ResourcePermissionServiceUtil {
 	* @param primKey the primary key
 	* @param roleId the primary key of the role
 	* @param actionIds the action IDs of the actions
-	* @throws PortalException if the user did not have permission to set
-	resource permissions, or if a role with the primary key or a
-	resource action with the name and action ID could not be found
 	*/
 	public static void setIndividualResourcePermissions(long groupId,
 		long companyId, java.lang.String name, java.lang.String primKey,
@@ -214,9 +201,6 @@ public class ResourcePermissionServiceUtil {
 	portlet ID
 	* @param primKey the primary key
 	* @param roleIdsToActionIds a map of role IDs to action IDs of the actions
-	* @throws PortalException if the user did not have permission to set
-	resource permissions, or if a role with the primary key or a
-	resource action with the name and action ID could not be found
 	*/
 	public static void setIndividualResourcePermissions(long groupId,
 		long companyId, java.lang.String name, java.lang.String primKey,

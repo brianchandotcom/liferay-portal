@@ -102,7 +102,6 @@ public class UserGroupLocalServiceWrapper implements UserGroupLocalService,
 	* @param name the user group's name
 	* @param description the user group's description
 	* @return the user group
-	* @throws PortalException if the user group's information was invalid
 	* @deprecated As of 6.2.0, replaced by {@link #addUserGroup(long, long,
 	String, String, ServiceContext)}
 	*/
@@ -133,7 +132,6 @@ public class UserGroupLocalServiceWrapper implements UserGroupLocalService,
 	<code>null</code>). Can set expando bridge attributes for the
 	user group.
 	* @return the user group
-	* @throws PortalException if the user group's information was invalid
 	*/
 	@Override
 	public com.liferay.portal.model.UserGroup addUserGroup(long userId,
@@ -186,8 +184,6 @@ public class UserGroupLocalServiceWrapper implements UserGroupLocalService,
 	*
 	* @param userGroupId the primary key of the user group
 	* @param userId the primary key of the user
-	* @throws PortalException if a user with the primary key could not be
-	found or if a portal exception occurred
 	* @deprecated As of 6.2.0
 	*/
 	@Deprecated
@@ -203,8 +199,6 @@ public class UserGroupLocalServiceWrapper implements UserGroupLocalService,
 	*
 	* @param userGroupId the primary key of the user group
 	* @param userIds the primary keys of the users
-	* @throws PortalException if any one of the users could not be found or
-	if a portal exception occurred
 	* @deprecated As of 6.1.0
 	*/
 	@Deprecated
@@ -219,8 +213,6 @@ public class UserGroupLocalServiceWrapper implements UserGroupLocalService,
 	*
 	* @param userGroupIds the primary keys of the user groups
 	* @param userId the primary key of the user
-	* @throws PortalException if a user with the primary key could not be
-	found or if a portal exception occurred
 	* @deprecated As of 6.1.0
 	*/
 	@Deprecated
@@ -572,7 +564,6 @@ public class UserGroupLocalServiceWrapper implements UserGroupLocalService,
 	* @param companyId the primary key of the user group's company
 	* @param name the user group's name
 	* @return Returns the user group with the name
-	* @throws PortalException if a user group with the name could not be found
 	*/
 	@Override
 	public com.liferay.portal.model.UserGroup getUserGroup(long companyId,
@@ -644,7 +635,6 @@ public class UserGroupLocalServiceWrapper implements UserGroupLocalService,
 	*
 	* @param userGroupIds the primary keys of the user groups
 	* @return the user groups with the primary keys
-	* @throws PortalException if any one of the user groups could not be found
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.UserGroup> getUserGroups(
@@ -995,8 +985,6 @@ public class UserGroupLocalServiceWrapper implements UserGroupLocalService,
 	* @param name the user group's name
 	* @param description the user group's description
 	* @return the user group
-	* @throws PortalException if a user group with the primary key could
-	not be found or if the new information was invalid
 	* @deprecated As of 6.2.0, replaced by {@link #updateUserGroup(long, long,
 	String, String, ServiceContext)}
 	*/
@@ -1020,8 +1008,6 @@ public class UserGroupLocalServiceWrapper implements UserGroupLocalService,
 	<code>null</code>). Can set expando bridge attributes for the
 	user group.
 	* @return the user group
-	* @throws PortalException if a user group with the primary key could not be
-	found or if the new information was invalid
 	*/
 	@Override
 	public com.liferay.portal.model.UserGroup updateUserGroup(long companyId,

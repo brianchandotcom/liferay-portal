@@ -112,7 +112,6 @@ public class DDMTemplateLocalServiceImpl
 	 *         UUID, creation date, modification date, guest permissions, and
 	 *         group permissions for the template.
 	 * @return the template
-	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public DDMTemplate addTemplate(
@@ -159,7 +158,6 @@ public class DDMTemplateLocalServiceImpl
 	 *         UUID, creation date, modification date, guest permissions, and
 	 *         group permissions for the template.
 	 * @return the template
-	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public DDMTemplate addTemplate(
@@ -263,10 +261,9 @@ public class DDMTemplateLocalServiceImpl
 	/**
 	 * Adds the resources to the template.
 	 *
-	 * @param  template the template to add resources to
-	 * @param  addGroupPermissions whether to add group permissions
-	 * @param  addGuestPermissions whether to add guest permissions
-	 * @throws PortalException if a portal exception occurred
+	 * @param template the template to add resources to
+	 * @param addGroupPermissions whether to add group permissions
+	 * @param addGuestPermissions whether to add guest permissions
 	 */
 	@Override
 	public void addTemplateResources(
@@ -287,9 +284,8 @@ public class DDMTemplateLocalServiceImpl
 	/**
 	 * Adds the model resources with the permissions to the template.
 	 *
-	 * @param  template the template to add resources to
-	 * @param  modelPermissions the model permissions to be added
-	 * @throws PortalException if a portal exception occurred
+	 * @param template the template to add resources to
+	 * @param modelPermissions the model permissions to be added
 	 */
 	@Override
 	public void addTemplateResources(
@@ -320,7 +316,6 @@ public class DDMTemplateLocalServiceImpl
 	 *         UUID, creation date, modification date, guest permissions, and
 	 *         group permissions for the template.
 	 * @return the new template
-	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public DDMTemplate copyTemplate(
@@ -365,7 +360,6 @@ public class DDMTemplateLocalServiceImpl
 	 *         creation date, modification date, guest permissions, and group
 	 *         permissions for the new templates.
 	 * @return the new templates
-	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> copyTemplates(
@@ -392,8 +386,7 @@ public class DDMTemplateLocalServiceImpl
 	/**
 	 * Deletes the template and its resources.
 	 *
-	 * @param  template the template to be deleted
-	 * @throws PortalException if a portal exception occurred
+	 * @param template the template to be deleted
 	 */
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
@@ -421,8 +414,7 @@ public class DDMTemplateLocalServiceImpl
 	/**
 	 * Deletes the template and its resources.
 	 *
-	 * @param  templateId the primary key of the template to be deleted
-	 * @throws PortalException if a portal exception occurred
+	 * @param templateId the primary key of the template to be deleted
 	 */
 	@Override
 	public void deleteTemplate(long templateId) throws PortalException {
@@ -435,8 +427,7 @@ public class DDMTemplateLocalServiceImpl
 	/**
 	 * Deletes all the templates of the group.
 	 *
-	 * @param  groupId the primary key of the group
-	 * @throws PortalException if a portal exception occurred
+	 * @param groupId the primary key of the group
 	 */
 	@Override
 	public void deleteTemplates(long groupId) throws PortalException {
@@ -501,7 +492,6 @@ public class DDMTemplateLocalServiceImpl
 	 *         search in the search
 	 * @return the matching template, or <code>null</code> if a matching
 	 *         template could not be found
-	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public DDMTemplate fetchTemplate(
@@ -541,7 +531,6 @@ public class DDMTemplateLocalServiceImpl
 	 *
 	 * @param  templateId the primary key of the template
 	 * @return the template with the ID
-	 * @throws PortalException if a matching template could not be found
 	 */
 	@Override
 	public DDMTemplate getTemplate(long templateId) throws PortalException {
@@ -556,7 +545,6 @@ public class DDMTemplateLocalServiceImpl
 	 *         related model
 	 * @param  templateKey the unique string identifying the template
 	 * @return the matching template
-	 * @throws PortalException if a matching template could not be found
 	 */
 	@Override
 	public DDMTemplate getTemplate(
@@ -589,7 +577,6 @@ public class DDMTemplateLocalServiceImpl
 	 *         have sharing enabled) and include global scoped sites in the
 	 *         search in the search
 	 * @return the matching template
-	 * @throws PortalException if a matching template could not be found
 	 */
 	@Override
 	public DDMTemplate getTemplate(
@@ -1279,7 +1266,6 @@ public class DDMTemplateLocalServiceImpl
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         modification date.
 	 * @return the updated template
-	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public DDMTemplate updateTemplate(
@@ -1379,7 +1365,6 @@ public class DDMTemplateLocalServiceImpl
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         modification date.
 	 * @return the updated template
-	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public DDMTemplate updateTemplate(

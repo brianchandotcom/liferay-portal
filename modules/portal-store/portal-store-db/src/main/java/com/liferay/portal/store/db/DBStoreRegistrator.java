@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true)
 public class DBStoreRegistrator {
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setDBStore(DBStore dbStore) {
 		_dbStore = dbStore;
 	}

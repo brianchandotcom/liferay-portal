@@ -35,8 +35,6 @@ public class UserGroupServiceWrapper implements UserGroupService,
 	*
 	* @param groupId the primary key of the group
 	* @param userGroupIds the primary keys of the user groups
-	* @throws PortalException if the user did not have permission to assign
-	group members
 	*/
 	@Override
 	public void addGroupUserGroups(long groupId, long[] userGroupIds)
@@ -49,8 +47,6 @@ public class UserGroupServiceWrapper implements UserGroupService,
 	*
 	* @param teamId the primary key of the team
 	* @param userGroupIds the primary keys of the user groups
-	* @throws PortalException if the user did not have permission to assign
-	team members
 	*/
 	@Override
 	public void addTeamUserGroups(long teamId, long[] userGroupIds)
@@ -69,8 +65,6 @@ public class UserGroupServiceWrapper implements UserGroupService,
 	* @param name the user group's name
 	* @param description the user group's description
 	* @return the user group
-	* @throws PortalException if the user group's information was invalid
-	or if the user did not have permission to add the user group
 	* @deprecated As of 6.2.0, replaced by {@link #addUserGroup(String, String,
 	ServiceContext)}
 	*/
@@ -96,8 +90,6 @@ public class UserGroupServiceWrapper implements UserGroupService,
 	<code>null</code>). Can set expando bridge attributes for the
 	user group.
 	* @return the user group
-	* @throws PortalException if the user group's information was invalid or if
-	the user did not have permission to add the user group
 	*/
 	@Override
 	public com.liferay.portal.model.UserGroup addUserGroup(
@@ -111,9 +103,6 @@ public class UserGroupServiceWrapper implements UserGroupService,
 	* Deletes the user group.
 	*
 	* @param userGroupId the primary key of the user group
-	* @throws PortalException if a user group with the primary key could not be
-	found, if the user did not have permission to delete the user
-	group, or if the user group had a workflow in approved status
 	*/
 	@Override
 	public void deleteUserGroup(long userGroupId)
@@ -126,8 +115,6 @@ public class UserGroupServiceWrapper implements UserGroupService,
 	*
 	* @param userGroupId the primary key of the user group
 	* @return the user group with the primary key
-	* @throws PortalException if the user did not have permission to view the
-	user group
 	*/
 	@Override
 	public com.liferay.portal.model.UserGroup fetchUserGroup(long userGroupId)
@@ -150,8 +137,6 @@ public class UserGroupServiceWrapper implements UserGroupService,
 	*
 	* @param name the user group's name
 	* @return the user group with the name
-	* @throws PortalException if a user group with the name could not be found
-	or if the user did not have permission to view the user group
 	*/
 	@Override
 	public com.liferay.portal.model.UserGroup getUserGroup(
@@ -165,9 +150,6 @@ public class UserGroupServiceWrapper implements UserGroupService,
 	*
 	* @param userGroupId the primary key of the user group
 	* @return the user group with the primary key
-	* @throws PortalException if a user group with the primary key could not be
-	found or if the user did not have permission to view the user
-	group
 	*/
 	@Override
 	public com.liferay.portal.model.UserGroup getUserGroup(long userGroupId)
@@ -187,8 +169,6 @@ public class UserGroupServiceWrapper implements UserGroupService,
 	*
 	* @param userId the primary key of the user
 	* @return the user groups to which the user belongs
-	* @throws PortalException if the current user did not have permission to
-	view the user or any one of the user group members
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.UserGroup> getUserUserGroups(
@@ -201,8 +181,6 @@ public class UserGroupServiceWrapper implements UserGroupService,
 	*
 	* @param groupId the primary key of the group
 	* @param userGroupIds the primary keys of the user groups
-	* @throws PortalException if the user did not have permission to assign
-	group members
 	*/
 	@Override
 	public void unsetGroupUserGroups(long groupId, long[] userGroupIds)
@@ -215,8 +193,6 @@ public class UserGroupServiceWrapper implements UserGroupService,
 	*
 	* @param teamId the primary key of the team
 	* @param userGroupIds the primary keys of the user groups
-	* @throws PortalException if the user did not have permission to assign
-	team members
 	*/
 	@Override
 	public void unsetTeamUserGroups(long teamId, long[] userGroupIds)
@@ -231,9 +207,6 @@ public class UserGroupServiceWrapper implements UserGroupService,
 	* @param name the user group's name
 	* @param description the the user group's description
 	* @return the user group
-	* @throws PortalException if a user group with the primary key was not
-	found, if the new information was invalid, or if the user did
-	not have permission to update the user group information
 	* @deprecated As of 6.2.0, replaced by {@link #updateUserGroup(long,
 	String, String, ServiceContext)}
 	*/
@@ -255,9 +228,6 @@ public class UserGroupServiceWrapper implements UserGroupService,
 	<code>null</code>). Can set expando bridge attributes for the
 	user group.
 	* @return the user group
-	* @throws PortalException if a user group with the primary key was not
-	found, if the new information was invalid, or if the user did not
-	have permission to update the user group information
 	*/
 	@Override
 	public com.liferay.portal.model.UserGroup updateUserGroup(

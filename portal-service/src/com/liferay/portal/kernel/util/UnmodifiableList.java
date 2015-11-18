@@ -23,15 +23,15 @@ import java.util.ListIterator;
 
 /**
  * <p>
- * This is a read-only wrapper around any <code>java.util.List</code>. Query
- * operations will "read through" to the specified list. Attempts to modify the
- * list directly or via its iterator will result in a
+ * This is a read-only wrapper around any <code>List</code>. Query operations
+ * will "read through" to the specified list. Attempts to modify the list
+ * directly or via its iterator will result in a
  * <code>java.lang.UnsupportedOperationException</code>.
  * </p>
  *
  * @author     Alexander Chow
  * @deprecated As of 7.0.0, replaced by {@link
- *             java.util.Collections#unmodifiableList(java.util.List)}
+ *             java.util.Collections#unmodifiableList(List)}
  */
 @Deprecated
 public class UnmodifiableList<E> implements List<E>, Serializable {

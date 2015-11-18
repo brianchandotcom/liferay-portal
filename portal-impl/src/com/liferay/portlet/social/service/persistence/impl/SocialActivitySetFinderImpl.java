@@ -32,8 +32,7 @@ import java.util.List;
  * @author Jonathan Lee
  */
 public class SocialActivitySetFinderImpl
-	extends SocialActivitySetFinderBaseImpl
-	implements SocialActivitySetFinder {
+	extends SocialActivitySetFinderBaseImpl implements SocialActivitySetFinder {
 
 	public static final String COUNT_BY_RELATION =
 		SocialActivitySetFinder.class.getName() + ".countByRelation";

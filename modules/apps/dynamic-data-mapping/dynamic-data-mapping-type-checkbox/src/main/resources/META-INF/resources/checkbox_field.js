@@ -67,7 +67,7 @@ AUI.add(
 
 						CheckboxField.superclass._renderErrorMessage.apply(instance, arguments);
 
-						container.all('.validation-message').appendTo(container);
+						container.all('.help-block').appendTo(container);
 					},
 
 					_setValue: function(value) {

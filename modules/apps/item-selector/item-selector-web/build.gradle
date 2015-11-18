@@ -4,6 +4,7 @@ dependencies {
 	compile group: "commons-beanutils", name: "commons-beanutils", version: "1.8.2"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compile project(":apps:item-selector:item-selector-api")
+	compile project(":portal:portal-upgrade")
 }
 
 liferay {

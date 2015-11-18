@@ -19,7 +19,7 @@ AUI.add(
 				var instance = this;
 
 				instance._eventHandlers.push(
-					instance.after('fieldsChange', instance._afterFieldsChange)
+					instance.after('fieldsChange', instance._afterNestedFieldsChange)
 				);
 			},
 
@@ -151,7 +151,7 @@ AUI.add(
 				}
 			},
 
-			_afterFieldsChange: function(event) {
+			_afterNestedFieldsChange: function(event) {
 				var instance = this;
 
 				instance.eachField(

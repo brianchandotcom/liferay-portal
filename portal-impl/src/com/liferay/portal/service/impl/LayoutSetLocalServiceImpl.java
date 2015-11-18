@@ -201,7 +201,6 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 	 * @param      privateLayout whether the layout set is private to the group
 	 * @param      layoutSetPrototypeLinkEnabled whether the layout set
 	 *             prototype is link enabled
-	 * @throws     PortalException if a portal exception occurred
 	 * @deprecated As of 6.1.0, replaced by {@link
 	 *             #updateLayoutSetPrototypeLinkEnabled(long, boolean, boolean,
 	 *             String)}
@@ -220,13 +219,12 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 	/**
 	 * Updates the state of the layout set prototype link.
 	 *
-	 * @param  groupId the primary key of the group
-	 * @param  privateLayout whether the layout set is private to the group
-	 * @param  layoutSetPrototypeLinkEnabled whether the layout set prototype is
-	 *         link enabled
-	 * @param  layoutSetPrototypeUuid the uuid of the layout set prototype to
-	 *         link with
-	 * @throws PortalException if a portal exception occurred
+	 * @param groupId the primary key of the group
+	 * @param privateLayout whether the layout set is private to the group
+	 * @param layoutSetPrototypeLinkEnabled whether the layout set prototype is
+	 *        link enabled
+	 * @param layoutSetPrototypeUuid the uuid of the layout set prototype to
+	 *        link with
 	 */
 	@Override
 	public void updateLayoutSetPrototypeLinkEnabled(

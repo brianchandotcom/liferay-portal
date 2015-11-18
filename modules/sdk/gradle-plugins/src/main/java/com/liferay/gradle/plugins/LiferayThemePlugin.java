@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins;
 
+import com.liferay.gradle.plugins.css.builder.BuildCSSTask;
 import com.liferay.gradle.plugins.css.builder.CSSBuilderPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayThemeExtension;
@@ -55,6 +56,13 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 
 	public static final String FRONTEND_THEMES_CONFIGURATION_NAME =
 		"frontendThemesWeb";
+
+	@Override
+	public void apply(Project project) {
+		super.apply(project);
+
+		configureTaskBuildCSS(project);
+	}
 
 	protected Configuration addConfigurationFrontendThemes(
 		final Project project) {
@@ -189,16 +197,17 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 		}
 	}
 
-	@Override
-	protected void configureTaskBuildCSS(
-		Project project, LiferayExtension liferayExtension) {
-
-		super.configureTaskBuildCSS(project, liferayExtension);
-
+	protected void configureTaskBuildCSS(Project project) {
 		Task task = GradleUtil.getTask(
 			project, CSSBuilderPlugin.BUILD_CSS_TASK_NAME);
 
-		task.dependsOn(COMPILE_THEME_TASK_NAME);
+		if (task instanceof BuildCSSTask) {
+			configureTaskBuildCSSDependsOn((BuildCSSTask)task);
+		}
+	}
+
+	protected void configureTaskBuildCSSDependsOn(BuildCSSTask buildCSSTask) {
+		buildCSSTask.dependsOn(COMPILE_THEME_TASK_NAME);
 	}
 
 	protected void configureTaskBuildThumbnails(

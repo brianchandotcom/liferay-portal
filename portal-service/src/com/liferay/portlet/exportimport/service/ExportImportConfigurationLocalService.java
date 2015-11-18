@@ -97,13 +97,11 @@ public interface ExportImportConfigurationLocalService extends BaseLocalService,
 	*
 	* @param exportImportConfiguration the export import configuration
 	* @return the export import configuration that was removed
-	* @throws PortalException
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	@com.liferay.portal.kernel.systemevent.SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public com.liferay.portlet.exportimport.model.ExportImportConfiguration deleteExportImportConfiguration(
-		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration)
-		throws PortalException;
+		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration);
 
 	/**
 	* Deletes the export import configuration with the primary key from the database. Also notifies the appropriate model listeners.
@@ -116,8 +114,7 @@ public interface ExportImportConfigurationLocalService extends BaseLocalService,
 	public com.liferay.portlet.exportimport.model.ExportImportConfiguration deleteExportImportConfiguration(
 		long exportImportConfigurationId) throws PortalException;
 
-	public void deleteExportImportConfigurations(long groupId)
-		throws PortalException;
+	public void deleteExportImportConfigurations(long groupId);
 
 	/**
 	* @throws PortalException

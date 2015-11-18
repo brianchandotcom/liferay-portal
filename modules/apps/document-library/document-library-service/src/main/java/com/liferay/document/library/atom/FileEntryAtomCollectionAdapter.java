@@ -132,8 +132,8 @@ public class FileEntryAtomCollectionAdapter
 		try {
 			return fileEntry.getContentStream();
 		}
-		catch (Exception ex) {
-			throw new AtomException(SC_INTERNAL_SERVER_ERROR, ex);
+		catch (Exception e) {
+			throw new AtomException(SC_INTERNAL_SERVER_ERROR, e);
 		}
 	}
 

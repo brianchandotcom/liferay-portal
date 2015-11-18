@@ -82,8 +82,6 @@ public class ResourceLocalServiceUtil {
 	add the model's default group and guest permissions, set whether
 	to derive default group and guest permissions from the model, set
 	group permissions to apply, and set guest permissions to apply.
-	* @throws PortalException if no portal actions could be found associated
-	with the model or if a portal exception occurred
 	*/
 	public static void addModelResources(
 		com.liferay.portal.model.AuditedModel auditedModel,
@@ -106,8 +104,6 @@ public class ResourceLocalServiceUtil {
 	<code>0</code> if no instance exists
 	* @param groupPermissions the group permissions to be applied
 	* @param guestPermissions the guest permissions to be applied
-	* @throws PortalException if no portal actions could be found associated
-	with the model or if a portal exception occurred
 	*/
 	public static void addModelResources(long companyId, long groupId,
 		long userId, java.lang.String name, long primKey,
@@ -132,8 +128,6 @@ public class ResourceLocalServiceUtil {
 	an empty string if no instance exists
 	* @param groupPermissions the group permissions to be applied
 	* @param guestPermissions the guest permissions to be applied
-	* @throws PortalException if no portal actions could be found associated
-	with the model or if a portal exception occurred
 	*/
 	public static void addModelResources(long companyId, long groupId,
 		long userId, java.lang.String name, java.lang.String primKey,
@@ -172,8 +166,6 @@ public class ResourceLocalServiceUtil {
 	resource is a portlet or the resource's class name otherwise
 	* @param portletActions whether to associate portlet actions with the
 	resource
-	* @throws PortalException if no portal actions could be found associated
-	with the resource or if a portal exception occurred
 	*/
 	public static void addResources(long companyId, long groupId,
 		java.lang.String name, boolean portletActions)
@@ -198,8 +190,6 @@ public class ResourceLocalServiceUtil {
 	resource
 	* @param addGroupPermissions whether to add group permissions
 	* @param addGuestPermissions whether to add guest permissions
-	* @throws PortalException if no portal actions could be found associated
-	with the resource or if a portal exception occurred
 	*/
 	public static void addResources(long companyId, long groupId, long userId,
 		java.lang.String name, java.lang.String primKey,
@@ -228,8 +218,6 @@ public class ResourceLocalServiceUtil {
 	resource
 	* @param addGroupPermissions whether to add group permissions
 	* @param addGuestPermissions whether to add guest permissions
-	* @throws PortalException if no portal actions could be found associated
-	with the resource or if a portal exception occurred
 	*/
 	public static void addResources(long companyId, long groupId, long userId,
 		java.lang.String name, long primKey, boolean portletActions,
@@ -246,7 +234,6 @@ public class ResourceLocalServiceUtil {
 	* @param auditedModel the model associated with the resource
 	* @param scope the scope of the resource. For more information see {@link
 	ResourceConstants}.
-	* @throws PortalException if a portal exception occurred
 	*/
 	public static void deleteResource(
 		com.liferay.portal.model.AuditedModel auditedModel, int scope)
@@ -263,7 +250,6 @@ public class ResourceLocalServiceUtil {
 	* @param scope the scope of the resource. For more information see {@link
 	ResourceConstants}.
 	* @param primKey the primary key of the resource instance
-	* @throws PortalException if a portal exception occurred
 	*/
 	public static void deleteResource(long companyId, java.lang.String name,
 		int scope, long primKey)
@@ -280,7 +266,6 @@ public class ResourceLocalServiceUtil {
 	* @param scope the scope of the resource. For more information see {@link
 	ResourceConstants}.
 	* @param primKey the primary key string of the resource instance
-	* @throws PortalException if a portal exception occurred
 	*/
 	public static void deleteResource(long companyId, java.lang.String name,
 		int scope, java.lang.String primKey)
@@ -329,9 +314,6 @@ public class ResourceLocalServiceUtil {
 	* @param roleIds the primary keys of the roles
 	* @return <code>true</code> if the roles have permission to perform the
 	action on the resources;<code>false</code> otherwise
-	* @throws PortalException if any one of the roles with the primary keys
-	could not be found or if a resource action with the action ID
-	could not be found
 	*/
 	public static boolean hasUserPermissions(long userId, long resourceId,
 		java.util.List<com.liferay.portal.model.Resource> resources,
@@ -349,7 +331,6 @@ public class ResourceLocalServiceUtil {
 	* @param auditedModel the model associated with the resources
 	* @param serviceContext the service context to be applied. Can set group
 	and guest permissions.
-	* @throws PortalException if a portal exception occurred
 	*/
 	public static void updateModelResources(
 		com.liferay.portal.model.AuditedModel auditedModel,
@@ -369,7 +350,6 @@ public class ResourceLocalServiceUtil {
 	* @param primKey the primary key string of the resource instance
 	* @param groupPermissions the group permissions to be applied
 	* @param guestPermissions the guest permissions to be applied
-	* @throws PortalException if a portal exception occurred
 	*/
 	public static void updateResources(long companyId, long groupId,
 		java.lang.String name, java.lang.String primKey,
@@ -391,7 +371,6 @@ public class ResourceLocalServiceUtil {
 	* @param primKey the primary key of the resource instance
 	* @param groupPermissions the group permissions to be applied
 	* @param guestPermissions the guest permissions to be applied
-	* @throws PortalException if a portal exception occurred
 	*/
 	public static void updateResources(long companyId, long groupId,
 		java.lang.String name, long primKey,
@@ -412,7 +391,6 @@ public class ResourceLocalServiceUtil {
 	resource is a portlet or the resource's class name otherwise
 	* @param primKey the primary key of the resource instance
 	* @param modelPermissions the model permissions to be applied
-	* @throws PortalException if a portal exception occurred
 	*/
 	public static void updateResources(long companyId, long groupId,
 		java.lang.String name, long primKey,
@@ -432,7 +410,6 @@ public class ResourceLocalServiceUtil {
 	resource is a portlet or the resource's class name otherwise
 	* @param primKey the primary key string of the resource instance
 	* @param modelPermissions the model permissions to be applied
-	* @throws PortalException if a portal exception occurred
 	*/
 	public static void updateResources(long companyId, long groupId,
 		java.lang.String name, java.lang.String primKey,

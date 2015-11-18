@@ -197,7 +197,7 @@ public class JournalFolderIndexer
 		actionableDynamicQuery.performActions();
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setJournalFolderLocalService(
 		JournalFolderLocalService journalFolderLocalService) {
 

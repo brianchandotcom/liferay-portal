@@ -25,9 +25,6 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.JournalContent;
-import com.liferay.journal.web.configuration.JournalWebConfigurationUtil;
-import com.liferay.journal.web.configuration.JournalWebConfigurationValues;
-import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -99,14 +96,7 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 
 	@Override
 	public String getTemplatesHelpPath(String language) {
-		return JournalWebConfigurationUtil.get(
-			getTemplatesHelpPropertyKey(), new Filter(language));
-	}
-
-	@Override
-	public String getTemplatesHelpPropertyKey() {
-		return JournalWebConfigurationValues.
-			JOURNAL_ARTICLE_TEMPLATE_LANGUAGE_CONTENT;
+		return _templatesHelpPaths.get(language);
 	}
 
 	@Override
@@ -150,13 +140,31 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 		return _templateVariableCodeHandler;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setJournalContent(JournalContent journalContent) {
 		_journalContent = journalContent;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalTemplateHandler.class);
+
+	private static final Map<String, String> _templatesHelpPaths =
+		new HashMap<>();
+
+	static {
+		_templatesHelpPaths.put(
+			"css",
+			"com/liferay/journal/web/portlet/template/dependencies" +
+				"/template.css");
+		_templatesHelpPaths.put(
+			"ftl",
+			"com/liferay/journal/web/portlet/template/dependencies" +
+				"/template.ftl");
+		_templatesHelpPaths.put(
+			"vm",
+			"com/liferay/journal/web/portlet/template/dependencies" +
+				"/template.vm");
+	}
 
 	private JournalContent _journalContent;
 	private final TemplateVariableCodeHandler _templateVariableCodeHandler =

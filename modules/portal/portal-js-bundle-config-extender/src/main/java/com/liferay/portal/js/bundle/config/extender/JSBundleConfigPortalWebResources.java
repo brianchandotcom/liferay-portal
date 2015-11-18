@@ -52,14 +52,14 @@ public class JSBundleConfigPortalWebResources {
 		}
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setBundlerConfigServlet(
 		JSBundleConfigServlet jsLBundleConfigServlet) {
 
 		_jsBundleConfigServlet = jsLBundleConfigServlet;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setJSBundleConfigTracker(
 		JSBundleConfigTracker jsBundleConfigTracker) {
 

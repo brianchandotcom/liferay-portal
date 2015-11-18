@@ -23,18 +23,6 @@ repositories {
 apply plugin: "com.liferay.portal.tools.service.builder"
 
 buildService {
-	apiDirName = "../tmp/api"
-	beanLocatorUtil = "com.liferay.util.bean.PortletBeanLocatorUtil"
-	hbmFileName = "../tmp/src/META-INF/module-hbm.xml"
-	implDirName = "../tmp/src"
-	inputFileName = "service.xml"
-	modelHintsFileName = "../tmp/src/META-INF/portlet-model-hints.xml"
-	osgiModule = true
-	propsUtil = "com.liferay.sampleservicebuilder.util.ServiceProps"
-	resourcesDirName = "../tmp/src"
-	springFileName = "../tmp/src/META-INF/spring/module-spring.xml"
-	springNamespaces = ["beans", "osgi"]
-	sqlDirName = "../tmp/src/META-INF/sql"
-	sqlFileName = "tables.sql"
-	testDirName = "../tmp/test/integration"
+	apiDir = "../tmp/api"
+	testDir = "../tmp/test/integration"
 }

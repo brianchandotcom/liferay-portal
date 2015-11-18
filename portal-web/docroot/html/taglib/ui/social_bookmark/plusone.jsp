@@ -46,7 +46,7 @@ if (displayStyle.equals("vertical")) {
 </liferay-util:html-bottom>
 
 <g:plusone
-	count="<%= !displayStyle.equals("simple") %>"
+	count='<%= !displayStyle.equals("simple") %>'
 	href="<%= url %>"
 	size="<%= plusOneDisplayStyle %>"
 >

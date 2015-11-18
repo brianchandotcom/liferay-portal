@@ -102,6 +102,11 @@ public class CalendarBookingAssetRenderer
 	}
 
 	@Override
+	public int getStatus() {
+		return _calendarBooking.getStatus();
+	}
+
+	@Override
 	public String getSummary(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
@@ -129,7 +134,7 @@ public class CalendarBookingAssetRenderer
 		throws Exception {
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, CalendarPortletKeys.CALENDAR, 0,
+			liferayPortletRequest, CalendarPortletKeys.CALENDAR,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/edit_calendar_booking.jsp");

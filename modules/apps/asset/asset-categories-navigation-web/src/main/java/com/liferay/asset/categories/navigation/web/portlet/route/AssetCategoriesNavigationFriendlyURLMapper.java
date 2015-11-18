@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 	service = FriendlyURLMapper.class
 )
 public class AssetCategoriesNavigationFriendlyURLMapper
-		extends DefaultFriendlyURLMapper {
+	extends DefaultFriendlyURLMapper {
 
 	@Override
 	public String getMapping() {

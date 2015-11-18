@@ -91,7 +91,7 @@ public class StagingPermissionImpl implements StagingPermission {
 		}
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 		_groupLocalService = groupLocalService;
 	}

@@ -12,6 +12,5 @@ Import-Package: \
 Include-Resource:\
 	WEB-INF/classes/=@docroot/WEB-INF/lib/util-java.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class
 Web-ContextPath: /social-office-announcements-web
-
 -donotcopy: (docroot/WEB-INF/src|.*\.jar|.*\.java)
 -wab: docroot

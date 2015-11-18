@@ -40,11 +40,11 @@
 
 		<reference package-path="com.liferay.portal" entity="User" />
 	</entity>
-	<entity name="DDMDataProvider" uuid="true" local-service="true" remote-service="false">
+	<entity name="DDMDataProviderInstance" uuid="true" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="dataProviderId" type="long" primary="true" />
+		<column name="dataProviderInstanceId" type="long" primary="true" />
 
 		<!-- Group instance -->
 
@@ -63,6 +63,7 @@
 		<column name="name" type="String" localized="true" />
 		<column name="description" type="String" localized="true" />
 		<column name="definition" type="String" />
+		<column name="type" type="String" />
 
 		<!-- Finder methods -->
 
@@ -483,6 +484,7 @@
 		<exception>Content</exception>
 		<exception>ContentData</exception>
 		<exception>ContentName</exception>
+		<exception>DataProviderInstanceName</exception>
 		<exception>InvalidStructureVersion</exception>
 		<exception>InvalidTemplateVersion</exception>
 		<exception>RequiredStructure</exception>

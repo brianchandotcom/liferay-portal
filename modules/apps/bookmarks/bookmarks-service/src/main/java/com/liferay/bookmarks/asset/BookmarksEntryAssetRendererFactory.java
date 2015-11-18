@@ -102,7 +102,7 @@ public class BookmarksEntryAssetRendererFactory
 		LiferayPortletResponse liferayPortletResponse, long classTypeId) {
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, BookmarksPortletKeys.BOOKMARKS, 0,
+			liferayPortletRequest, BookmarksPortletKeys.BOOKMARKS,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(

@@ -55,9 +55,7 @@ public class EditFrameworkVersionMVCActionCommand extends BaseMVCActionCommand {
 			deleteFrameworkVersion(actionRequest);
 		}
 
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		sendRedirect(actionRequest, actionResponse, redirect);
+		sendRedirect(actionRequest, actionResponse);
 	}
 
 	protected void deleteFrameworkVersion(ActionRequest actionRequest)

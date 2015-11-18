@@ -3,7 +3,7 @@
 
 <hibernate-mapping default-lazy="false" auto-import="false">
 	<import class="com.liferay.dynamic.data.mapping.model.DDMContent" />
-	<import class="com.liferay.dynamic.data.mapping.model.DDMDataProvider" />
+	<import class="com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance" />
 	<import class="com.liferay.dynamic.data.mapping.model.DDMStorageLink" />
 	<import class="com.liferay.dynamic.data.mapping.model.DDMStructure" />
 	<import class="com.liferay.dynamic.data.mapping.model.DDMStructureLayout" />
@@ -27,8 +27,8 @@
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="data" type="com.liferay.portal.dao.orm.hibernate.StringClobType" column="data_" />
 	</class>
-	<class name="com.liferay.dynamic.data.mapping.model.impl.DDMDataProviderImpl" table="DDMDataProvider">
-		<id name="dataProviderId" type="long">
+	<class name="com.liferay.dynamic.data.mapping.model.impl.DDMDataProviderInstanceImpl" table="DDMDataProviderInstance">
+		<id name="dataProviderInstanceId" type="long">
 			<generator class="assigned" />
 		</id>
 		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
@@ -41,6 +41,7 @@
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property name="definition" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" column="type_" />
 	</class>
 	<class name="com.liferay.dynamic.data.mapping.model.impl.DDMStorageLinkImpl" table="DDMStorageLink">
 		<id name="storageLinkId" type="long">

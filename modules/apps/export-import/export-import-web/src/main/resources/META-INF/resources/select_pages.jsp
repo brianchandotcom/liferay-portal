@@ -55,6 +55,7 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject
 				draggableTree="<%= false %>"
 				groupId="<%= groupId %>"
 				incomplete="<%= false %>"
+				portletURL="<%= renderResponse.createRenderURL() %>"
 				privateLayout="<%= privateLayout %>"
 				rootNodeName="<%= group.getLayoutRootNodeName(privateLayout, locale) %>"
 				selectableTree="<%= true %>"

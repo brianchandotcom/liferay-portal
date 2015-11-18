@@ -316,8 +316,7 @@ public class WikiPageServiceWrapper implements WikiPageService,
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #getPagesRSS(long, String,
-	int, String, double, String, String, String, String,
-	java.util.Locale)}
+	int, String, double, String, String, String, String, Locale)}
 	*/
 	@Deprecated
 	@Override

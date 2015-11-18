@@ -47,7 +47,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "web-content"));
 		<aui:input name="id" type="resource" value="<%= oldArticleId %>" />
 
 		<c:choose>
-			<c:when test="<%= JournalWebConfigurationValues.JOURNAL_ARTICLE_FORCE_AUTOGENERATE_ID %>">
+			<c:when test="<%= journalWebConfiguration.journalFeedForceAutogenerateId() %>">
 				<aui:input name="newId" type="resource" value='<%= LanguageUtil.get(request, "autogenerate-id") %>' />
 
 				<aui:input name="newArticleId" type="hidden" />

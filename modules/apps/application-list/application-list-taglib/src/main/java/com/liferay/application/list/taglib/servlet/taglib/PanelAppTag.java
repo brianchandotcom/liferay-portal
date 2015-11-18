@@ -154,6 +154,16 @@ public class PanelAppTag extends BasePanelTag {
 		request.setAttribute(
 			"liferay-application-list:panel-app:label", _label);
 
+		int notificationsCount = 0;
+
+		if (_panelApp != null) {
+			notificationsCount = _panelApp.getNotificationsCount();
+		}
+
+		request.setAttribute(
+			"liferay-application-list:panel-app:notificationsCount",
+			notificationsCount);
+
 		request.setAttribute(
 			"liferay-application-list:panel-app:panelApp", _panelApp);
 

@@ -74,7 +74,26 @@ public class PanelAppRegistry {
 		PanelCategory parentPanelCategory,
 		final PermissionChecker permissionChecker, final Group group) {
 
-		List<PanelApp> panelApps = getPanelApps(parentPanelCategory);
+		return getPanelApps(
+			parentPanelCategory.getKey(), permissionChecker, group);
+	}
+
+	public List<PanelApp> getPanelApps(String parentPanelCategoryKey) {
+		List<PanelApp> panelApps = _serviceTrackerMap.getService(
+			parentPanelCategoryKey);
+
+		if (panelApps == null) {
+			return Collections.emptyList();
+		}
+
+		return panelApps;
+	}
+
+	public List<PanelApp> getPanelApps(
+		String parentPanelCategoryKey,
+		final PermissionChecker permissionChecker, final Group group) {
+
+		List<PanelApp> panelApps = getPanelApps(parentPanelCategoryKey);
 
 		if (panelApps.isEmpty()) {
 			return panelApps;
@@ -98,17 +117,6 @@ public class PanelAppRegistry {
 				}
 
 			});
-	}
-
-	public List<PanelApp> getPanelApps(String parentPanelCategoryKey) {
-		List<PanelApp> panelApps = _serviceTrackerMap.getService(
-			parentPanelCategoryKey);
-
-		if (panelApps == null) {
-			return Collections.emptyList();
-		}
-
-		return panelApps;
 	}
 
 	@Activate

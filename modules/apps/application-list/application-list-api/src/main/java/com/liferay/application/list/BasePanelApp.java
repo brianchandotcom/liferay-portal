@@ -54,6 +54,11 @@ public abstract class BasePanelApp implements PanelApp {
 				getPortletId());
 	}
 
+	@Override
+	public int getNotificationsCount() {
+		return 0;
+	}
+
 	public Portlet getPortlet() {
 		return _portlet;
 	}

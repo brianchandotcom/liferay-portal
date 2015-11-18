@@ -45,8 +45,8 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.service.UserServiceUtil;
+import com.liferay.portal.service.UserLocalService;
+import com.liferay.portal.service.UserService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
@@ -61,6 +61,7 @@ import javax.portlet.PortletURL;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -122,7 +123,7 @@ public class CreateAnonymousAccountMVCActionCommand
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
-		User user = UserServiceUtil.addUser(
+		User user = _userService.addUser(
 			themeDisplay.getCompanyId(), autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, facebookId, openId,
 			themeDisplay.getLocale(), firstName, null, lastName, prefixId,
@@ -130,7 +131,7 @@ public class CreateAnonymousAccountMVCActionCommand
 			groupIds, organizationIds, roleIds, userGroupIds, sendEmail,
 			serviceContext);
 
-		UserLocalServiceUtil.updateStatus(
+		_userLocalService.updateStatus(
 			user.getUserId(), WorkflowConstants.STATUS_INCOMPLETE,
 			new ServiceContext());
 
@@ -235,7 +236,7 @@ public class CreateAnonymousAccountMVCActionCommand
 			else if (e instanceof
 						UserEmailAddressException.MustNotBeDuplicate) {
 
-				User user = UserLocalServiceUtil.getUserByEmailAddress(
+				User user = _userLocalService.getUserByEmailAddress(
 					themeDisplay.getCompanyId(), emailAddress);
 
 				if (user.getStatus() != WorkflowConstants.STATUS_INCOMPLETE) {
@@ -252,6 +253,16 @@ public class CreateAnonymousAccountMVCActionCommand
 				PortalUtil.sendError(e, actionRequest, actionResponse);
 			}
 		}
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserService(UserService userService) {
+		_userService = userService;
 	}
 
 	protected JSONObject updateIncompleteUser(
@@ -286,7 +297,7 @@ public class CreateAnonymousAccountMVCActionCommand
 		boolean updateUserInformation = false;
 		boolean sendEmail = true;
 
-		User user = UserServiceUtil.updateIncompleteUser(
+		User user = _userService.updateIncompleteUser(
 			themeDisplay.getCompanyId(), autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, facebookId, openId,
 			themeDisplay.getLocale(), firstName, middleName, lastName, prefixId,
@@ -307,5 +318,8 @@ public class CreateAnonymousAccountMVCActionCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CreateAnonymousAccountMVCActionCommand.class);
+
+	private UserLocalService _userLocalService;
+	private UserService _userService;
 
 }

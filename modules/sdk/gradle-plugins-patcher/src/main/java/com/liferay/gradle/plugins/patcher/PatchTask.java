@@ -61,6 +61,7 @@ import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.OutputFiles;
 import org.gradle.api.tasks.SkipWhenEmpty;
 import org.gradle.api.tasks.TaskAction;
+import org.gradle.process.ExecResult;
 import org.gradle.process.ExecSpec;
 import org.gradle.util.GUtil;
 
@@ -249,12 +250,13 @@ public class PatchTask extends DefaultTask {
 			final ByteArrayOutputStream byteArrayOutputStream =
 				new ByteArrayOutputStream();
 
-			project.exec(
+			ExecResult execResult = project.exec(
 				new Action<ExecSpec>() {
 
 					@Override
 					public void execute(ExecSpec execSpec) {
 						execSpec.setExecutable("patch");
+						execSpec.setIgnoreExitValue(true);
 						execSpec.setWorkingDir(temporaryDir);
 
 						execSpec.args("--binary");
@@ -269,6 +271,10 @@ public class PatchTask extends DefaultTask {
 				});
 
 			System.out.println(byteArrayOutputStream.toString());
+
+			execResult.rethrowFailure();
+
+			execResult.assertNormalExitValue();
 		}
 
 		FileTree fileTree = project.fileTree(temporaryDir);

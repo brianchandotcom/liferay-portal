@@ -55,29 +55,6 @@ Group group = GroupLocalServiceUtil.getGroup(groupId);
 			</aui:nav-item>
 		</c:if>
 
-		<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.ASSIGN_USER_ROLES) %>">
-			<aui:nav-item dropdown="<%= true %>" iconCssClass="icon-plus" label="add-site-roles-to" selected='<%= toolbarItem.equals("assign-user-roles") %>'>
-
-				<%
-				PortletURL assignUserRolesURL = PortletProviderUtil.getPortletURL(request, UserGroupRole.class.getName(), PortletProvider.Action.EDIT);
-
-				assignUserRolesURL.setParameter("className", User.class.getName());
-				assignUserRolesURL.setWindowState(LiferayWindowState.POP_UP);
-				%>
-
-				<aui:nav-item href="<%= assignUserRolesURL.toString() %>" iconCssClass="icon-user" label="users" useDialog="<%= true %>" />
-
-				<%
-				PortletURL assignUserGroupRolesURL = PortletProviderUtil.getPortletURL(request, UserGroupRole.class.getName(), PortletProvider.Action.EDIT);
-
-				assignUserGroupRolesURL.setParameter("className", UserGroup.class.getName());
-				assignUserGroupRolesURL.setWindowState(LiferayWindowState.POP_UP);
-				%>
-
-				<aui:nav-item href="<%= assignUserGroupRolesURL.toString() %>" iconCssClass="icon-globe" label="user-groups" useDialog="<%= true %>" />
-			</aui:nav-item>
-		</c:if>
-
 		<c:if test="<%= group.getType() == GroupConstants.TYPE_SITE_RESTRICTED %>">
 			<portlet:renderURL var="viewMembershipRequestsURL">
 				<portlet:param name="mvcPath" value="/view_membership_requests.jsp" />

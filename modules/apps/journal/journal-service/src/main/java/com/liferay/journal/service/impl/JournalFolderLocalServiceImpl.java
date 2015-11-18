@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TreeModelTasksAdapter;
 import com.liferay.portal.kernel.util.TreePathUtil;
@@ -1425,13 +1426,27 @@ public class JournalFolderLocalServiceImpl
 						article.getDDMStructureKey(), true);
 
 				if (ddmStructure == null) {
-					throw new InvalidDDMStructureException();
+					StringBundler sb = new StringBundler(9);
+
+					sb.append("No ddmStructure exists for {groupId=");
+					sb.append(article.getGroupId());
+					sb.append(", classNameId=");
+					sb.append(classNameId);
+					sb.append(", structureKey=");
+					sb.append(article.getDDMStructureKey());
+					sb.append(", includeAncestorStructures=");
+					sb.append(true);
+					sb.append(StringPool.CLOSE_CURLY_BRACE);
+
+					throw new InvalidDDMStructureException(sb.toString());
 				}
 
 				if (!ArrayUtil.contains(
 						ddmStructureIds, ddmStructure.getStructureId())) {
 
-					throw new InvalidDDMStructureException();
+					throw new InvalidDDMStructureException(
+						"Invalid ddmStructureId: " +
+							ddmStructure.getStructureId());
 				}
 			}
 		}

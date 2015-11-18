@@ -625,6 +625,11 @@ public class GroupLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static java.util.List<com.liferay.portal.model.Group> getActiveGroups(
+		long companyId, boolean active) {
+		return getService().getActiveGroups(companyId, active);
+	}
+
 	/**
 	* Returns the company group.
 	*

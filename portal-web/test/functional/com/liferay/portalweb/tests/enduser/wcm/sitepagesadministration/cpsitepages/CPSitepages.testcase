@@ -380,9 +380,9 @@
 			</execute>
 		</for>
 
-		<execute macro="Page#gotoPagesCP" >
-			<var name="portletName" value="Site Pages" />
-			<var name="siteScopeName" value="Site Name" />
+		<execute macro="ProductMenu#gotoSitesPages" >
+			<var name="page" value="Public Pages" />
+			<var name="site" value="Site Name" />
 		</execute>
 
 		<execute macro="SitePage#deleteSitepagesCP">
@@ -394,8 +394,8 @@
 	<command name="EditSitePage" priority="5">
 		<property name="portal.acceptance" value="true" />
 
-		<execute macro="Page#gotoPagesCP" >
-			<var name="portletName" value="Site Pages" />
+		<execute macro="ProductMenu#gotoSitesPages" >
+			<var name="page" value="Public Pages" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
@@ -404,8 +404,8 @@
 			<var name="siteScopeSelected" value="Liferay" />
 		</execute>
 
-		<execute macro="Page#gotoPagesCP" >
-			<var name="portletName" value="Site Pages" />
+		<execute macro="ProductMenu#gotoSitesPages" >
+			<var name="page" value="Public Pages" />
 		</execute>
 
 		<execute macro="SitePage#editCP">
@@ -413,12 +413,8 @@
 			<var name="sitePageNameEdit" value="Site Page Edit" />
 		</execute>
 
-		<execute macro="Page#gotoPagesCP" >
-			<var name="portletName" value="Site Pages" />
-		</execute>
-
-		<execute macro="SitePage#gotoCP">
-			<var name="sitePageName" value="Site Page Edit" />
+		<execute macro="ProductMenu#gotoSitesPages" >
+			<var name="page" value="Public Pages" />
 		</execute>
 
 		<execute macro="SitePage#viewCP">

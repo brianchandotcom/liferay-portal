@@ -87,6 +87,9 @@ public class CheckboxDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 
 		Locale locale = ddmFormFieldRenderingContext.getLocale();
 
+		template.put(
+			"showAsSwitcher", ddmFormField.getProperty("showAsSwitcher"));
+
 		LocalizedValue predefinedValue = ddmFormField.getPredefinedValue();
 
 		String status = getStatus(

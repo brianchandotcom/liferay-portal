@@ -20,6 +20,7 @@ import com.liferay.marketplace.model.Module;
 import com.liferay.marketplace.service.AppLocalService;
 import com.liferay.marketplace.service.ModuleLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -43,13 +44,28 @@ import org.osgi.service.component.annotations.Reference;
 @Component
 public class AppDisplayFactoryUtil {
 
+	public static AppDisplay getAppDisplay(List<Bundle> bundles, long appId) {
+		try {
+			BundlesMap bundlesMap = new BundlesMap(bundles.size());
+
+			bundlesMap.load(bundles);
+
+			App app = _appLocalService.getApp(appId);
+
+			return buildMarketplaceAppDisplay(bundlesMap, app);
+		}
+		catch (PortalException pe) {
+			return null;
+		}
+	}
+
 	public static AppDisplay getAppDisplay(
-		List<Bundle> bundles, String appName) {
+		List<Bundle> bundles, String appTitle) {
 
-		AppDisplay appDisplay = new AppDisplay(appName);
+		AppDisplay appDisplay = new AppDisplay(appTitle);
 
-		if (appName.equals(AppDisplay.APP_NAME_UNCATEGORIZED)) {
-			appName = null;
+		if (appTitle.equals(AppDisplay.APP_NAME_UNCATEGORIZED)) {
+			appTitle = null;
 		}
 
 		for (Bundle bundle : bundles) {
@@ -58,7 +74,9 @@ public class AppDisplayFactoryUtil {
 			String curAppTitle = headers.get(
 				BundleConstants.LIFERAY_RELENG_APP_TITLE);
 
-			if (Validator.isNotNull(appName) && !appName.equals(curAppTitle)) {
+			if (Validator.isNotNull(appTitle) &&
+				!appTitle.equals(curAppTitle)) {
+
 				continue;
 			}
 			else if (curAppTitle != null) {
@@ -88,6 +106,24 @@ public class AppDisplayFactoryUtil {
 		return ListUtil.sort(appDisplays);
 	}
 
+	protected static AppDisplay buildMarketplaceAppDisplay(
+		BundlesMap bundlesMap, App app) {
+
+		AppDisplay appDisplay = new AppDisplay(app.getTitle());
+
+		List<Module> modules = _moduleLocalService.getModules(app.getAppId());
+
+		for (Module module : modules) {
+			Bundle bundle = bundlesMap.removeBundle(module);
+
+			if (bundle != null) {
+				appDisplay.addBundle(bundle);
+			}
+		}
+
+		return appDisplay;
+	}
+
 	protected static List<AppDisplay> buildMarketplaceAppDisplays(
 		BundlesMap bundlesMap, String category) {
 
@@ -104,18 +140,7 @@ public class AppDisplayFactoryUtil {
 		}
 
 		for (App app : apps) {
-			AppDisplay appDisplay = new AppDisplay(app.getTitle());
-
-			List<Module> modules = _moduleLocalService.getModules(
-				app.getAppId());
-
-			for (Module module : modules) {
-				Bundle bundle = bundlesMap.removeBundle(module);
-
-				if (bundle != null) {
-					appDisplay.addBundle(bundle);
-				}
-			}
+			AppDisplay appDisplay = buildMarketplaceAppDisplay(bundlesMap, app);
 
 			appDisplays.add(appDisplay);
 		}

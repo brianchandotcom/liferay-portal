@@ -56,7 +56,7 @@
 			<var name="formName" value="${formNameText}" />
 		</execute>
 
-		<execute macro="Form#save" />
+		<execute macro="Navigator#gotoBack" />
 
 		<execute macro="FormsAdminNavigator#gotoAdd" />
 
@@ -89,7 +89,7 @@
 			<var name="formName" value="${formNameCheckbox}" />
 		</execute>
 
-		<execute macro="Form#save" />
+		<execute macro="Navigator#gotoBack" />
 
 		<execute macro="FormsAdminNavigator#gotoEditFormByName">
 			<var name="formName" value="${formNameText}" />
@@ -99,7 +99,29 @@
 			<var name="formName" value="${formNameText}" />
 		</execute>
 
-		<execute macro="Form#save" />
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoEditFormByName">
+			<var name="formName" value="${formNameCheckbox}" />
+		</execute>
+
+		<execute macro="Form#viewFormName">
+			<var name="formName" value="${formNameCheckbox}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoEditFormByName">
+			<var name="formName" value="${formNameText}" />
+		</execute>
+
+		<execute macro="Form#viewFormName">
+			<var name="formName" value="${formNameText}" />
+		</execute>
 	</command>
 
 	<command name="SubmitForm3x3Layout" priority="4">

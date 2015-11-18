@@ -151,7 +151,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 
 			<liferay-ui:search-container-column-text
 				name="description"
-				value="<%= vocabulary.getDescription(locale) %>"
+				value="<%= HtmlUtil.escape(vocabulary.getDescription(locale)) %>"
 			/>
 
 			<liferay-ui:search-container-column-date

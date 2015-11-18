@@ -17,7 +17,6 @@ package com.liferay.jenkins.results.parser;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLDecoder;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -132,22 +131,6 @@ public class JenkinsPerformanceDataUtil {
 			return toJSONObject().toString(4);
 		}
 
-		protected URL createURL(String urlString) throws Exception {
-			URL url = new URL(urlString);
-
-			return encode(url);
-		}
-
-		protected URL encode(URL url) throws Exception {
-			URI uri = new URI(
-				url.getProtocol(), url.getUserInfo(), url.getHost(),
-				url.getPort(), url.getPath(), url.getQuery(), url.getRef());
-
-			String uriASCIIString = uri.toASCIIString();
-
-			return new URL(uriASCIIString.replace("#", "%23"));
-		}
-
 		protected void setAxis(JSONObject childJSONObject) throws Exception {
 			String urlString = childJSONObject.getString("url");
 
@@ -198,7 +181,7 @@ public class JenkinsPerformanceDataUtil {
 				sb.append(name);
 			}
 
-			URL urlObject = createURL(sb.toString());
+			URL urlObject = JenkinsResultsParserUtil.createURL(sb.toString());
 
 			URI uri = urlObject.toURI();
 

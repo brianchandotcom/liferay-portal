@@ -15,11 +15,9 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
-
 import java.net.URL;
 
 import org.json.JSONObject;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -172,7 +170,7 @@ public class JenkinsResultsParserUtilTest
 		urlString = replaceToken(urlString, "hostName", hostName);
 		urlString = replaceToken(urlString, "jobName", jobName);
 
-		URL url = createURL(urlString);
+		URL url = JenkinsResultsParserUtil.createURL(urlString);
 
 		downloadSample(sampleKey, url);
 	}

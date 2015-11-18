@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.control.menu.web;
+package com.liferay.control.menu.web.control.menu.entry;
 
 import com.liferay.control.menu.BaseJSPControlMenuEntry;
 import com.liferay.control.menu.ControlMenuEntry;
@@ -20,8 +20,6 @@ import com.liferay.control.menu.constants.ControlMenuCategoryKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.LayoutConstants;
-import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
@@ -39,17 +37,17 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"control.menu.category.key=" + ControlMenuCategoryKeys.TOOLS,
+		"control.menu.category.key=" + ControlMenuCategoryKeys.USER,
 		"service.ranking:Integer=100"
 	},
 	service = ControlMenuEntry.class
 )
-public class AddContentControlMenuEntry
+public class PreviewControlMenuEntry
 	extends BaseJSPControlMenuEntry implements ControlMenuEntry {
 
 	@Override
 	public String getJspPath() {
-		return "/entries/add_content.jsp";
+		return "/entries/preview.jsp";
 	}
 
 	@Override
@@ -65,8 +63,7 @@ public class AddContentControlMenuEntry
 			return false;
 		}
 
-		if (!(hasAddLayoutPermission(themeDisplay) ||
-			  hasCustomizePermission(themeDisplay) ||
+		if (!(hasPreviewInDevicePermission(themeDisplay) ||
 			  hasUpdateLayoutPermission(themeDisplay))) {
 
 			return false;
@@ -84,48 +81,12 @@ public class AddContentControlMenuEntry
 		super.setServletContext(servletContext);
 	}
 
-	protected boolean hasAddLayoutPermission(ThemeDisplay themeDisplay)
+	protected boolean hasPreviewInDevicePermission(ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		Layout layout = themeDisplay.getLayout();
-
-		if (layout.getParentLayoutId() ==
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
-
-			return GroupPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(), layout.getGroup(),
-				ActionKeys.ADD_LAYOUT);
-		}
-
-		return LayoutPermissionUtil.contains(
-			themeDisplay.getPermissionChecker(), layout, ActionKeys.ADD_LAYOUT);
-	}
-
-	protected boolean hasCustomizePermission(ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		Layout layout = themeDisplay.getLayout();
-		LayoutTypePortlet layoutTypePortlet =
-			themeDisplay.getLayoutTypePortlet();
-
-		if (!layout.isTypePortlet() || (layoutTypePortlet == null)) {
-			return false;
-		}
-
-		if (!layoutTypePortlet.isCustomizable() ||
-			!layoutTypePortlet.isCustomizedView()) {
-
-			return false;
-		}
-
-		if (LayoutPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(), layout,
-				ActionKeys.CUSTOMIZE)) {
-
-			return true;
-		}
-
-		return false;
+		return GroupPermissionUtil.contains(
+			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroup(),
+			ActionKeys.PREVIEW_IN_DEVICE);
 	}
 
 	protected boolean hasUpdateLayoutPermission(ThemeDisplay themeDisplay)

@@ -15,3 +15,23 @@
 --%>
 
 <%@ include file="/html/taglib/init.jsp" %>
+
+<%
+SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:search:searchContainer");
+
+String markupView = (String)request.getAttribute("liferay-ui:search-iterator:markupView");
+boolean paginate = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:search-iterator:paginate"));
+ResultRowSplitter resultRowSplitter = (ResultRowSplitter)request.getAttribute("liferay-ui:search-iterator:resultRowSplitter");
+String type = (String)request.getAttribute("liferay-ui:search:type");
+
+String id = searchContainer.getId(request, namespace);
+
+List resultRows = searchContainer.getResultRows();
+List<String> headerNames = searchContainer.getHeaderNames();
+List<String> normalizedHeaderNames = searchContainer.getNormalizedHeaderNames();
+String emptyResultsMessage = searchContainer.getEmptyResultsMessage();
+RowChecker rowChecker = searchContainer.getRowChecker();
+RowMover rowMover = searchContainer.getRowMover();
+
+JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
+%>

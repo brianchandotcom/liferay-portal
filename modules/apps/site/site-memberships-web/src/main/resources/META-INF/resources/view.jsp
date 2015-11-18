@@ -87,11 +87,42 @@ request.setAttribute("edit_site_assignments.jsp-portletURL", portletURL);
 		</c:choose>
 
 		<c:if test='<%= tabs1.equals("summary") || tabs2.equals("current") %>'>
-			<liferay-ui:tabs
-				names="summary,users,organizations,user-groups"
-				param="tabs1"
-				portletURL="<%= tabsURL %>"
-			/>
+			<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+				<aui:nav cssClass="navbar-nav">
+
+					<%
+					PortletURL summaryURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+					summaryURL.setParameter("tabs1", "summary");
+					%>
+
+					<aui:nav-item href="<%= summaryURL.toString() %>" label="summary" selected='<%= tabs1.equals("summary") %>' />
+
+					<%
+					PortletURL usersURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+					usersURL.setParameter("tabs1", "users");
+					%>
+
+					<aui:nav-item href="<%= usersURL.toString() %>" label="users" selected='<%= tabs1.equals("users") %>' />
+
+					<%
+					PortletURL organizationsURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+					organizationsURL.setParameter("tabs1", "organizations");
+					%>
+
+					<aui:nav-item href="<%= organizationsURL.toString() %>" label="organizations" selected='<%= tabs1.equals("organizations") %>' />
+
+					<%
+					PortletURL userGroupsURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+					userGroupsURL.setParameter("tabs1", "user-groups");
+					%>
+
+					<aui:nav-item href="<%= userGroupsURL.toString() %>" label="user-groups" selected='<%= tabs1.equals("user-groups") %>' />
+				</aui:nav>
+			</aui:nav-bar>
 		</c:if>
 	</c:when>
 </c:choose>

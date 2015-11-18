@@ -21,8 +21,6 @@ import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.tools.ant.Project;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -49,7 +47,7 @@ public class JenkinsPerformanceTableUtilTest
 	}
 
 	@Test
-	public void testGetHTML() throws Exception {
+	public void testGenerateHTML() throws Exception {
 		assertSamples();
 	}
 
@@ -126,53 +124,19 @@ public class JenkinsPerformanceTableUtilTest
 
 	@Override
 	protected String getMessage(String urlString) throws Exception {
-		String localURL = JenkinsResultsParserUtil.getLocalURL(
-			urlString + "/urls.txt");
-		String urlText = JenkinsResultsParserUtil.toString(localURL);
-		String[] urlArray = urlText.split("\\|");
+		String urlsText = JenkinsResultsParserUtil.toString(
+			JenkinsResultsParserUtil.getLocalURL(urlString + "/urls.txt"));
 
-		for (String url : urlArray) {
-			if (url.length() == 0) {
-				continue;
-			}
+		if (urlsText.length() == 0) {
+			return "";
+		}
 
+		for (String url : urlsText.split("\\|")) {
 			JenkinsPerformanceDataUtil.processPerformanceData(
 				"build", url.trim(), 100);
 		}
 
 		return JenkinsPerformanceTableUtil.generateHTML();
-	}
-
-	protected Project getProject(
-			File samplePropertiesFile, String buildURLString,
-			String topLevelSharedDirName)
-		throws Exception {
-
-		Project project = new Project();
-
-		project.setProperty("branch.name", "junit-branch-name");
-		project.setProperty("build.url", buildURLString);
-		project.setProperty(
-			"github.pull.request.head.branch", "junit-pr-head-branch");
-		project.setProperty(
-			"github.pull.request.head.username", "junit-pr-head-username");
-		project.setProperty("plugins.branch.name", "junit-plugins-branch-name");
-		project.setProperty("plugins.repository", "junit-plugins-repository");
-		project.setProperty("portal.repository", "junit-portal-repository");
-		project.setProperty(
-			"rebase.branch.git.commit", "rebase-branch-git-commit");
-		project.setProperty("repository", "junit-repository");
-		project.setProperty(
-			"top.level.build.name", "junit-top-level-build-name");
-		project.setProperty(
-			"top.level.build.time", "junit-top-level-build-time");
-		project.setProperty(
-			"top.level.result.message", "junit-top-level-result-message");
-		project.setProperty("top.level.shared.dir", topLevelSharedDirName);
-		project.setProperty(
-			"top.level.shared.dir.url", "junit-top-level-shared-dir-url");
-
-		return project;
 	}
 
 	private static final Pattern _progressiveTextPattern = Pattern.compile(

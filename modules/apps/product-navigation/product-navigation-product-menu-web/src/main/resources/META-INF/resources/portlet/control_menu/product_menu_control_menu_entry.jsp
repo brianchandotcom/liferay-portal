@@ -17,6 +17,8 @@
 <%@ include file="/portlet/init.jsp" %>
 
 <%
+String controlMenuPortletId = ControlMenuPortletKeys.CONTROL_MENU;
+String portletId = ProductNavigationProductMenuPortletKeys.PRODUCT_NAVIGATION_PRODUCT_MENU;
 String productMenuState = SessionClicks.get(request, "com.liferay.control.menu.web_productMenuState", "closed");
 %>
 
@@ -25,3 +27,12 @@ String productMenuState = SessionClicks.get(request, "com.liferay.control.menu.w
 		<span class="icon-align-justify icon-monospaced"></span>
 	</a>
 </li>
+
+<aui:script>
+	Liferay.on(
+		'<%= controlMenuPortletId %>:portletRefreshed',
+		function(event) {
+			Liferay.Portlet.refresh('#p_p_id_<%= portletId %>_', {});
+		}
+	);
+</aui:script>

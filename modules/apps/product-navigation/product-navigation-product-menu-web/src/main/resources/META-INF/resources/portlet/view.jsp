@@ -113,6 +113,9 @@
 
 		var sidenavSlider = AUI.$('#sidenavSliderId');
 
+		sidenavSlider.off('closed.lexicon.sidenav');
+		sidenavSlider.off('open.lexicon.sidenav');
+
 		sidenavSlider.on(
 			'closed.lexicon.sidenav',
 			function(event) {

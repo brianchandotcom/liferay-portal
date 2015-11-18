@@ -575,26 +575,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	}
 
 	protected void configureDependencies(Project project) {
-		configureDependenciesProvided(project);
 		configureDependenciesTestCompile(project);
-	}
-
-	protected void configureDependenciesProvided(Project project) {
-		if (!isAddDefaultDependencies(project)) {
-			return;
-		}
-
-		for (String dependencyNotation : DEFAULT_DEPENDENCY_NOTATIONS) {
-			GradleUtil.addDependency(
-				project, ProvidedBasePlugin.getPROVIDED_CONFIGURATION_NAME(),
-				dependencyNotation);
-		}
-
-		for (String dependencyNotation : _DEFAULT_EXT_DEPENDENCY_NOTATIONS) {
-			GradleUtil.addDependency(
-				project, ProvidedBasePlugin.getPROVIDED_CONFIGURATION_NAME(),
-				dependencyNotation);
-		}
 	}
 
 	protected void configureDependenciesTestCompile(Project project) {
@@ -1515,11 +1496,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		return iterator.next();
 	}
 
-	protected boolean isAddDefaultDependencies(Project project) {
-		return GradleUtil.getProperty(
-			project, _ADD_DEFAULT_DEPENDENCIES_PROPERTY_NAME, true);
-	}
-
 	protected boolean isAddTestDefaultDependencies(Project project) {
 		return GradleUtil.getProperty(
 			project, _ADD_TEST_DEFAULT_DEPENDENCIES_PROPERTY_NAME, true);
@@ -1540,31 +1516,8 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		return false;
 	}
 
-	protected static final String[] DEFAULT_DEPENDENCY_NOTATIONS = {
-		"biz.aQute.bnd:biz.aQute.bnd:2.4.1",
-		"com.liferay.portal:portal-service:default",
-		"com.liferay.portal:util-bridges:default",
-		"com.liferay.portal:util-java:default",
-		"com.liferay.portal:util-taglib:default",
-		"commons-logging:commons-logging:1.1.3",
-		"javax.activation:activation:1.1", "javax.annotation:jsr250-api:1.0",
-		"javax.mail:mail:1.4", "javax.servlet.jsp:jsp-api:2.1",
-		"javax.servlet:javax.servlet-api:3.0.1", "log4j:log4j:1.2.17"
-	};
-
-	private static final String _ADD_DEFAULT_DEPENDENCIES_PROPERTY_NAME =
-		"com.liferay.adddefaultdependencies";
-
 	private static final String _ADD_TEST_DEFAULT_DEPENDENCIES_PROPERTY_NAME =
 		"com.liferay.addtestdefaultdependencies";
-
-	private static final String[] _DEFAULT_EXT_DEPENDENCY_NOTATIONS = {
-		"hsqldb:hsqldb:1.8.0.7", "javax.ccpp:ccpp:1.0", "javax.jms:jms:1.1",
-		"javax.portlet:portlet-api:2.0", "mysql:mysql-connector-java:5.1.23",
-		"net.sourceforge.jtds:jtds:1.2.6",
-		"org.eclipse.persistence:javax.persistence:2.0.0",
-		"postgresql:postgresql:9.2-1002.jdbc4"
-	};
 
 	private static final String[] _DEFAULT_TEST_DEPENDENCY_NOTATIONS = {
 		"junit:junit:4.12", "org.mockito:mockito-all:1.9.5",

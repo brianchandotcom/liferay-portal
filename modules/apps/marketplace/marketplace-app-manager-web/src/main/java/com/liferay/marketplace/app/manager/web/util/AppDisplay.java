@@ -47,6 +47,10 @@ public class AppDisplay implements Comparable<AppDisplay> {
 		return _name.compareToIgnoreCase(appDisplay.getName());
 	}
 
+	public List<Bundle> getBundles() {
+		return _bundles;
+	}
+
 	public String getName() {
 		return _name;
 	}

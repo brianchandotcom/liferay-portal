@@ -1264,8 +1264,6 @@ public class JournalPortlet extends MVCPortlet {
 							redirect, namespace + "classPK",
 							JournalArticleAssetRenderer.getClassPK(article));
 					}
-
-					actionResponse.sendRedirect(redirect);
 				}
 			}
 		}

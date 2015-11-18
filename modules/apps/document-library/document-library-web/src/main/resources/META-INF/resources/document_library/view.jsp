@@ -137,9 +137,6 @@ String searchContainerId = "entries";
 				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 				<aui:input name="repositoryId" type="hidden" value="<%= repositoryId %>" />
 				<aui:input name="newFolderId" type="hidden" />
-				<aui:input name="folderIds" type="hidden" />
-				<aui:input name="fileEntryIds" type="hidden" />
-				<aui:input name="fileShortcutIds" type="hidden" />
 
 				<div class="document-container">
 					<c:choose>

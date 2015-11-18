@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Repository;
@@ -59,8 +58,8 @@ public class ActionUtil {
 
 		List<FileEntry> fileEntries = new ArrayList<>();
 
-		long[] fileEntryIds = StringUtil.split(
-			ParamUtil.getString(request, "fileEntryIds"), 0L);
+		long[] fileEntryIds = ParamUtil.getLongValues(
+			request, "rowIdsFileEntry");
 
 		for (long fileEntryId : fileEntryIds) {
 			try {
@@ -168,8 +167,8 @@ public class ActionUtil {
 	public static void getFileShortcuts(HttpServletRequest request)
 		throws Exception {
 
-		long[] fileShortcutIds = StringUtil.split(
-			ParamUtil.getString(request, "fileShortcutIds"), 0L);
+		long[] fileShortcutIds = ParamUtil.getLongValues(
+			request, "rowIdsDLFileShortcut");
 
 		List<FileShortcut> fileShortcuts = new ArrayList<>();
 
@@ -248,8 +247,7 @@ public class ActionUtil {
 	}
 
 	public static void getFolders(HttpServletRequest request) throws Exception {
-		long[] folderIds = StringUtil.split(
-			ParamUtil.getString(request, "folderIds"), 0L);
+		long[] folderIds = ParamUtil.getLongValues(request, "rowIdsFolder");
 
 		List<Folder> folders = new ArrayList<>();
 

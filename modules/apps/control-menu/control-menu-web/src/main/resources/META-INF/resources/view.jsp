@@ -65,9 +65,9 @@ if (layout != null) {
 
 							<li>
 								<liferay-ui:icon
-									iconCssClass='<%= controlMenuEntry.getIconCssClass(request) + " icon-monospaced" %>'
+									iconCssClass='<%= controlMenuEntry.getIconCssClass(request) + " control-menu-icon icon-monospaced" %>'
 									label="<%= false %>"
-									linkCssClass='<%= "control-menu-icon " + controlMenuEntry.getLinkCssClass(request) %>'
+									linkCssClass="<%= controlMenuEntry.getLinkCssClass(request) %>"
 									message="<%= controlMenuEntry.getLabel(locale) %>"
 									url="<%= controlMenuEntry.getURL(request) %>"
 									useDialog="<%= controlMenuEntry.isUseDialog() %>"

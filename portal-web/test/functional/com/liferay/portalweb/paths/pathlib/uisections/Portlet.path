@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ICON_PLUS_SIGN</td>
+	<td>//i[contains(@class,'icon-plus-sign')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TITLE</td>
 	<td>//h2[@id='cpPortletTitle']/span[@class='portlet-title-text'] | //span[contains(@class,'portlet-title-text')]</td>
 	<td></td>

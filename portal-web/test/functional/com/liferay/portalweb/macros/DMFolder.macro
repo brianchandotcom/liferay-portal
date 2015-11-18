@@ -24,7 +24,8 @@
 	</command>
 
 	<command name="addPG">
-		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="Toolbar#ADD" value1="Add" />
+		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+
 		<execute function="AssertClick" locator1="MenuItem#FOLDER" value1="Folder" />
 
 		<execute function="Type" locator1="DocumentsAndMediaEditFolder#NAME_FIELD" value1="${dmFolderName}" />

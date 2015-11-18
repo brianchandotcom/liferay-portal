@@ -223,7 +223,8 @@
 	<command name="viewPGAddMenulist">
 		<var name="key_dmDocumentTypeName" value="${dmDocumentTypeName}" />
 
-		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="Toolbar#ADD" value1="Add" />
+		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+
 		<execute function="AssertTextEquals" locator1="MenuItem#DOCUMENT_TYPE" value1="${dmDocumentTypeName}" />
 	</command>
 </definition>

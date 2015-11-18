@@ -175,7 +175,8 @@
 	<command name="addDocumentTypePG">
 		<var name="key_dmDocumentTypeName" value="${dmDocumentTypeName}" />
 
-		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="Toolbar#ADD" value1="Add" />
+		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+
 		<execute function="AssertClick" locator1="MenuItem#DOCUMENT_TYPE" value1="${dmDocumentTypeName}" />
 
 		<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="${dmDocumentFile}" />
@@ -237,7 +238,7 @@
 	</command>
 
 	<command name="addGoogleDoc">
-		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="Toolbar#ADD" value1="Add" />
+		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
 
 		<execute function="AssertClick" locator1="MenuItem#GOOGLE_DOCS" value1="Google Docs" />
 
@@ -249,7 +250,8 @@
 	</command>
 
 	<command name="addMultiplePG">
-		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="Toolbar#ADD" value1="Add" />
+		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+
 		<execute function="AssertClick" locator1="MenuItem#MULTIPLE_DOCUMENTS" value1="Multiple Documents" />
 
 		<if>
@@ -288,7 +290,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="Toolbar#ADD" value1="Add" />
+		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
 
 		<if>
 			<isset var="dmDocumentTypeName" />
@@ -392,7 +394,8 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="Toolbar#ADD" value1="Add" />
+		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+
 		<execute function="AssertClick" locator1="MenuItem#MULTIPLE_DOCUMENTS" value1="Multiple Documents" />
 
 		<if>
@@ -480,7 +483,8 @@
 	</command>
 
 	<command name="addShortcutPG">
-		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="Toolbar#ADD" value1="Add" />
+		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
+
 		<execute function="AssertClick" locator1="MenuItem#SHORTCUT" value1="Shortcut" />
 
 		<execute function="AssertClick" locator1="SitesSelectSite#SITES_TABLE_CHOOSE_BUTTON" value1="Select" />
@@ -1634,7 +1638,7 @@
 	</command>
 
 	<command name="viewCannotAddRepository">
-		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="Toolbar#ADD" value1="Add" />
+		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
 
 		<execute function="AssertElementNotPresent" locator1="HOME_MENULIST_ADD_REPOSITORY" />
 	</command>

@@ -72,23 +72,7 @@ public class FacetedSearchTest {
 	}
 
 	@Test
-	public void testSearchIgnoresResultsInInactiveSites() throws Exception {
-		addUser(_group1, "Liferay " + RandomTestUtil.randomString());
-		addUser(_group2, "Liferay " + RandomTestUtil.randomString());
-
-		assertSearch("Liferay", 2);
-
-		deactivate(_group1);
-
-		assertSearch("Liferay", 1);
-
-		deactivate(_group2);
-
-		assertSearch("Liferay", 0);
-	}
-
-	@Test
-	public void testSearchPopulatesFacet() throws Exception {
+	public void testSearchByFacet() throws Exception {
 		String tag = "enterprise. open-source for life";
 
 		addUser(_group1, tag);
@@ -123,12 +107,28 @@ public class FacetedSearchTest {
 	}
 
 	@Test
-	public void testSearchReturnsResults() throws Exception {
+	public void testSearchByKeywords() throws Exception {
 		String tag = RandomTestUtil.randomString();
 
 		addUser(_group1, tag);
 
 		assertSearch(tag, 1);
+	}
+
+	@Test
+	public void testSearchByKeywordsIgnoresInactiveSites() throws Exception {
+		addUser(_group1, "Liferay " + RandomTestUtil.randomString());
+		addUser(_group2, "Liferay " + RandomTestUtil.randomString());
+
+		assertSearch("Liferay", 2);
+
+		deactivate(_group1);
+
+		assertSearch("Liferay", 1);
+
+		deactivate(_group2);
+
+		assertSearch("Liferay", 0);
 	}
 
 	protected static void addUser(Group group, String tag) throws Exception {

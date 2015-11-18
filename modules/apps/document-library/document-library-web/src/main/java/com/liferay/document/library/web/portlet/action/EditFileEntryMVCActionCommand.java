@@ -321,8 +321,8 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			_dlAppService.cancelCheckOut(fileEntryId);
 		}
 		else {
-			long[] fileEntryIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "fileEntryIds"), 0L);
+			long[] fileEntryIds = ParamUtil.getLongValues(
+				actionRequest, "rowIdsFileEntry");
 
 			for (int i = 0; i < fileEntryIds.length; i++) {
 				_dlAppService.cancelCheckOut(fileEntryIds[i]);
@@ -347,8 +347,8 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				fileEntryId, majorVersion, changeLog, serviceContext);
 		}
 		else {
-			long[] fileEntryIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "fileEntryIds"), 0L);
+			long[] fileEntryIds = ParamUtil.getLongValues(
+				actionRequest, "rowIdsFileEntry");
 
 			for (int i = 0; i < fileEntryIds.length; i++) {
 				_dlAppService.checkInFileEntry(
@@ -369,8 +369,8 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			_dlAppService.checkOutFileEntry(fileEntryId, serviceContext);
 		}
 		else {
-			long[] fileEntryIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "fileEntryIds"), 0L);
+			long[] fileEntryIds = ParamUtil.getLongValues(
+				actionRequest, "rowIdsFileEntry");
 
 			for (int i = 0; i < fileEntryIds.length; i++) {
 				_dlAppService.checkOutFileEntry(

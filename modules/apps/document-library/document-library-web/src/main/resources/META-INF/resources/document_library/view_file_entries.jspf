@@ -22,8 +22,6 @@
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="fileEntryIds" type="hidden" />
-	<aui:input name="fileShortcutIds" type="hidden" />
 
 	<%
 	EntriesChecker entriesChecker = null;

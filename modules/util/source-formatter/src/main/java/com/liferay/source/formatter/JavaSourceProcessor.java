@@ -2233,7 +2233,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 								"bean: " + fileName);
 					}
 
-					continue;
+					break;
 				}
 			}
 

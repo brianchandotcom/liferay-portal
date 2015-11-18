@@ -25,7 +25,7 @@ Locale userLocale = user.getLocale();
 <c:if test="<%= !locale.equals(user.getLocale()) %>">
 	<button class="close" id="ignoreUserLocaleOptions" type="button">&times;</button>
 
-	<liferay-ui:message arguments="<%= locale.getDisplayName(locale) %>" key="this-page-is-displayed-in-x" />
+	<%= LanguageUtil.format(userLocale, "this-page-is-displayed-in-x", locale.getDisplayName(userLocale)) %>
 
 	<c:if test="<%= LanguageUtil.isAvailableLocale(userLocale) %>">
 
@@ -34,7 +34,7 @@ Locale userLocale = user.getLocale();
 		%>
 
 		<aui:a href="<%= displayPreferredLanguageURLString %>">
-			<liferay-ui:message arguments="<%= userLocale.getDisplayName(locale) %>" key="display-the-page-in-x" />
+			<%= LanguageUtil.format(userLocale, "display-the-page-in-x", userLocale.getDisplayName(userLocale)) %>
 		</aui:a>
 	</c:if>
 
@@ -43,7 +43,7 @@ Locale userLocale = user.getLocale();
 	%>
 
 	<aui:a href="<%= changePreferredLanguageURLString %>">
-		<liferay-ui:message arguments="<%= locale.getDisplayName(locale) %>" key="set-x-as-your-preferred-language" />
+		<%= LanguageUtil.format(userLocale, "set-x-as-your-preferred-language", locale.getDisplayName(userLocale)) %>
 	</aui:a>
 
 	<aui:script use="aui-base,liferay-store">

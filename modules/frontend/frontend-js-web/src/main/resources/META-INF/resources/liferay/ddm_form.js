@@ -463,8 +463,18 @@ AUI.add(
 						var fieldDefinition = instance.getFieldDefinition();
 
 						var labelsMap = fieldDefinition.label;
+						
+						var definition = instance.get('definition');
+						
+						var defaultLocale = '';
+						
+						if(definition){
+							defaultLocale = definition['defaultLanguageId'];
+						}
 
-						instance.setLabel(labelsMap[instance.get('displayLocale')]);
+						var label = labelsMap[instance.get('displayLocale')] || labelsMap[defaultLocale];
+							
+						instance.setLabel(label);
 					},
 
 					syncReadOnlyUI: function() {

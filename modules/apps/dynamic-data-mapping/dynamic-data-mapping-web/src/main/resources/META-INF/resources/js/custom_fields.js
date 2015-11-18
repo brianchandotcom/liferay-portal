@@ -549,10 +549,18 @@ AUI.add(
 			var instance = this;
 
 			var builder = instance.get('builder');
-
+			
 			var localizationMap = instance.get('localizationMap');
 
-			var localeMap = localizationMap[locale];
+			var translationManager = builder.translationManager;
+			
+			var defaultLocale = '';
+			
+			if(translationManager){
+				defaultLocale = translationManager.get('defaultLocale');
+			}
+			
+			var localeMap = localizationMap[locale] || localizationMap[defaultLocale];
 
 			if (isObject(localeMap)) {
 				LOCALIZABLE_FIELD_ATTRS.forEach(

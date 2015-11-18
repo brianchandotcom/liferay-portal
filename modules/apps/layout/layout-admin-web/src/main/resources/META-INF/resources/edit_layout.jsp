@@ -151,7 +151,7 @@ String displayStyle = ParamUtil.getString(request, "displayStyle");
 		<aui:button-row>
 			<aui:button id="enableLayoutButton" name="enableLayout" value='<%= LanguageUtil.format(request, "enable-in-x", HtmlUtil.escape(layoutSetBranchName), false) %>' />
 
-			<portlet:actionURL name="enable" var="enableLayoutURL">
+			<portlet:actionURL name="enableLayout" var="enableLayoutURL">
 				<portlet:param name="mvcPath" value="/view.jsp" />
 				<portlet:param name="redirect" value="<%= redirectURL.toString() %>" />
 				<portlet:param name="incompleteLayoutRevisionId" value="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />

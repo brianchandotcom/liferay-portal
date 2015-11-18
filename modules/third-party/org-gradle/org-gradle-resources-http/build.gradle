@@ -1,5 +1,8 @@
 task jar(type: Jar, overwrite: true)
 
+sourceCompatibility = "1.6"
+targetCompatibility = "1.6"
+
 String gradleVersion = version.substring(0, version.lastIndexOf('.'))
 
 if (gradleVersion != gradle.gradleVersion) {

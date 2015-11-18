@@ -17,6 +17,7 @@ package com.liferay.jenkins.results.parser;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLDecoder;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -246,9 +247,9 @@ public class JenkinsPerformanceDataUtil {
 		if (list.size() < maxSize) {
 			return;
 		}
-		
+
 		List<Result> subList = list.subList(maxSize, list.size());
-		
+
 		subList.clear();
 	}
 

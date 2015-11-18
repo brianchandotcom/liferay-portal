@@ -15,9 +15,11 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
+
 import java.net.URL;
 
 import org.json.JSONObject;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

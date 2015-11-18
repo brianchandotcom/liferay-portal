@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser;
 
 import java.net.URI;
+import java.net.URL;
 import java.net.URLDecoder;
 
 import java.util.ArrayList;
@@ -33,28 +34,42 @@ public class JenkinsPerformanceDataUtil {
 			String buildName, String jenkinsJobURL, int reportSize)
 		throws Exception {
 
-		JSONObject jobJSONObject = JenkinsResultsParserUtil.toJSONObject(
-			JenkinsResultsParserUtil.getLocalURL(
-				jenkinsJobURL + "testReport/api/json"));
+		if (jenkinsJobURL.contains("-source")) {
+			JSONObject sourceJobJSONObject =
+				JenkinsResultsParserUtil.toJSONObject(
+					JenkinsResultsParserUtil.getLocalURL(
+						jenkinsJobURL + "/api/json"));
+			resultsList.add(new Result(buildName, sourceJobJSONObject));
+		}
+		else {
+			JSONObject jobJSONObject = JenkinsResultsParserUtil.toJSONObject(
+				JenkinsResultsParserUtil.getLocalURL(
+					jenkinsJobURL + "/testReport/api/json"));
 
-		if (jobJSONObject != null) {
 			List<Result> resultList = getLongestResults(
 				buildName, jobJSONObject, reportSize);
 
 			resultsList.addAll(resultList);
-
-			Collections.sort(resultsList);
-
-			truncateList(resultsList, reportSize);
 		}
-		else {
-			System.out.println(
-				"JSON data could not be loaded. URL: " + jenkinsJobURL +
-					"testReport/api/json");
-		}
+
+		Collections.sort(resultsList);
+
+		truncateList(resultsList, reportSize);
 	}
 
 	public static class Result implements Comparable<Result> {
+
+		public Result(String buildName, JSONObject sourceJobJSONObject)
+			throws Exception {
+
+			axis = "";
+			batch = buildName;
+			className = "";
+			duration = sourceJobJSONObject.getLong("duration") / 1000L;
+			name = sourceJobJSONObject.getString("fullDisplayName");
+			status = sourceJobJSONObject.getString("result");
+			url = sourceJobJSONObject.getString("url");
+		}
 
 		public Result(
 				String buildName, JSONObject caseJSONObject,
@@ -117,6 +132,22 @@ public class JenkinsPerformanceDataUtil {
 			return toJSONObject().toString(4);
 		}
 
+		protected URL createURL(String urlString) throws Exception {
+			URL url = new URL(urlString);
+
+			return encode(url);
+		}
+
+		protected URL encode(URL url) throws Exception {
+			URI uri = new URI(
+				url.getProtocol(), url.getUserInfo(), url.getHost(),
+				url.getPort(), url.getPath(), url.getQuery(), url.getRef());
+
+			String uriASCIIString = uri.toASCIIString();
+
+			return new URL(uriASCIIString.replace("#", "%23"));
+		}
+
 		protected void setAxis(JSONObject childJSONObject) throws Exception {
 			String urlString = childJSONObject.getString("url");
 
@@ -139,7 +170,8 @@ public class JenkinsPerformanceDataUtil {
 		}
 
 		protected void setUrl(JSONObject childJSONObject) throws Exception {
-			String urlString = childJSONObject.getString("url");
+			String urlString = URLDecoder.decode(
+				childJSONObject.getString("url"), "UTF-8");
 
 			StringBuilder sb = new StringBuilder(urlString);
 
@@ -166,7 +198,9 @@ public class JenkinsPerformanceDataUtil {
 				sb.append(name);
 			}
 
-			URI uri = new URI(sb.toString());
+			URL urlObject = createURL(sb.toString());
+
+			URI uri = urlObject.toURI();
 
 			url = uri.toASCIIString();
 		}

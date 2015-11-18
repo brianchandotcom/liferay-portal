@@ -90,13 +90,18 @@ public class JenkinsPerformanceTableUtil {
 
 		int x = axis.indexOf("=");
 
-		String shortAxis = axis.substring(x + 1);
+		String shortAxis = axis;
+
+		if (x != -1) {
+			shortAxis = axis.substring(x + 1);
+		}
+
+		axisCell.addText(shortAxis);
 
 		int y = batch.indexOf("/");
 
 		String shortBatch = batch.substring(y + 1);
 
-		axisCell.addText(shortAxis);
 		batchCell.addText(shortBatch);
 		classNameCell.addText(className);
 		durationCell.addText(duration);

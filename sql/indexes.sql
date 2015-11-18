@@ -524,6 +524,7 @@ create index IX_E32CC19 on UserNotificationEvent (userId, delivered, actionRequi
 create index IX_C4EFBD45 on UserNotificationEvent (userId, deliveryType, actionRequired, archived);
 create index IX_A87A585C on UserNotificationEvent (userId, deliveryType, archived);
 create index IX_A6F83617 on UserNotificationEvent (userId, deliveryType, delivered, actionRequired);
+create index IX_8FB65EC1 on UserNotificationEvent (userId, type_[$COLUMN_LENGTH:75$], deliveryType, delivered);
 create index IX_A6BAFDFE on UserNotificationEvent (uuid_[$COLUMN_LENGTH:75$], companyId);
 
 create index IX_29BA1CF5 on UserTracker (companyId);

@@ -104,6 +104,12 @@ public class ProductMenuDisplayContext {
 		return getMySiteGroupURL(mySiteGroup, privateLayout);
 	}
 
+	public int getNotificationsCount(PanelCategory panelCategory) {
+		return _panelCategoryHelper.getNotificationsCount(
+			panelCategory.getKey(), _themeDisplay.getPermissionChecker(),
+			_themeDisplay.getScopeGroup(), _themeDisplay.getUser());
+	}
+
 	public String getRootPanelCategoryKey() {
 		if (_rootPanelCategoryKey != null) {
 			return _rootPanelCategoryKey;

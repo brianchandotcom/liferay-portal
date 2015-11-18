@@ -16,6 +16,7 @@ package com.liferay.application.list;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.User;
 
 import java.io.IOException;
 
@@ -28,6 +29,8 @@ import javax.servlet.http.HttpServletResponse;
  * @author Adolfo Pérez
  */
 public interface PanelApp extends PanelEntry {
+
+	public int getNotificationsCount(User user);
 
 	public Portlet getPortlet();
 

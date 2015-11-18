@@ -19,6 +19,7 @@ import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.service.UserNotificationEventLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -48,6 +49,14 @@ public class BlogsPanelApp extends BasePanelApp {
 	)
 	public void setPortlet(Portlet portlet) {
 		super.setPortlet(portlet);
+	}
+
+	@Reference(unbind = "-")
+	public void setUserNotificationEventLocalService(
+		UserNotificationEventLocalService userNotificationEventLocalService) {
+
+		super.setUserNotificationEventLocalService(
+			userNotificationEventLocalService);
 	}
 
 }

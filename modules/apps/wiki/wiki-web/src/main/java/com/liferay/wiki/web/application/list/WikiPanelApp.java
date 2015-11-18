@@ -18,6 +18,7 @@ import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.service.UserNotificationEventLocalService;
 import com.liferay.wiki.constants.WikiPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
@@ -48,6 +49,14 @@ public class WikiPanelApp extends BasePanelApp {
 	)
 	public void setPortlet(Portlet portlet) {
 		super.setPortlet(portlet);
+	}
+
+	@Reference(unbind = "-")
+	public void setUserNotificationEventLocalService(
+		UserNotificationEventLocalService userNotificationEventLocalService) {
+
+		super.setUserNotificationEventLocalService(
+			userNotificationEventLocalService);
 	}
 
 }

@@ -65,7 +65,7 @@ public class JenkinsPerformanceDataUtil {
 			axis = "";
 			batch = buildName;
 			className = "";
-			duration = sourceJobJSONObject.getLong("duration") / 1000L;
+			duration = sourceJobJSONObject.getInt("duration") / 1000;
 			name = sourceJobJSONObject.getString("fullDisplayName");
 			status = sourceJobJSONObject.getString("result");
 			url = sourceJobJSONObject.getString("url");
@@ -164,7 +164,7 @@ public class JenkinsPerformanceDataUtil {
 
 		protected void setCaseInfo(JSONObject caseObject) {
 			className = caseObject.getString("className");
-			duration = caseObject.getLong("duration");
+			duration = caseObject.getInt("duration");
 			name = caseObject.getString("name");
 			status = caseObject.getString("status");
 		}
@@ -208,7 +208,7 @@ public class JenkinsPerformanceDataUtil {
 		protected String axis;
 		protected String batch;
 		protected String className;
-		protected float duration;
+		protected int duration;
 		protected String name;
 		protected String status;
 		protected String url;
@@ -216,7 +216,7 @@ public class JenkinsPerformanceDataUtil {
 	}
 
 	protected static List<Result> getLongestResults(
-			String buildName, JSONObject jobJSONObject, int resultCount)
+			String buildName, JSONObject jobJSONObject, int maxSize)
 		throws Exception {
 
 		JSONArray childReportsJSONArray = jobJSONObject.getJSONArray(
@@ -254,15 +254,19 @@ public class JenkinsPerformanceDataUtil {
 
 		Collections.sort(resultList);
 
-		truncateList(resultList, resultCount);
+		truncateList(resultList, maxSize);
 
 		return resultList;
 	}
 
 	protected static void truncateList(List<Result> list, int maxSize) {
-		while (list.size() > maxSize) {
-			list.remove(list.size() - 1);
+		if (list.size() < maxSize) {
+			return;
 		}
+		
+		List<Result> subList = list.subList(maxSize, list.size());
+		
+		subList.clear();
 	}
 
 	protected static final List<Result> resultsList = new ArrayList<>();

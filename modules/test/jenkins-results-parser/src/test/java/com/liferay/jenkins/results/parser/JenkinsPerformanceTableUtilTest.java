@@ -90,17 +90,15 @@ public class JenkinsPerformanceTableUtilTest
 
 		while (progressiveTextMatcher.find()) {
 			String fileSuffix = null;
-			String urlString = progressiveTextMatcher.group("url");
+			String url = progressiveTextMatcher.group("url");
 			String urlSuffix = null;
 
-			if (urlString.contains("-source")) {
+			if (url.contains("-source")) {
 				fileSuffix = "source-" + jobCount;
-
 				urlSuffix = "/api/json";
 			}
 			else {
 				fileSuffix = Integer.toString(jobCount);
-
 				urlSuffix = "/testReport/api/json";
 			}
 
@@ -108,7 +106,7 @@ public class JenkinsPerformanceTableUtilTest
 				new File(sampleDir, "job-" + fileSuffix + urlSuffix),
 				JenkinsResultsParserUtil.toString(
 					JenkinsResultsParserUtil.getLocalURL(
-						urlString + urlSuffix + "?pretty")));
+						url + urlSuffix + "?pretty")));
 
 			if (sb.length() > 0) {
 				sb.append("|");

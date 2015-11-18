@@ -150,7 +150,7 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 						/>
 					</liferay-ui:search-container-row>
 
-					<liferay-ui:search-iterator paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
+					<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
 				</liferay-ui:search-container>
 			</div>
 

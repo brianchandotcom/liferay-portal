@@ -26,48 +26,50 @@ boolean validate = ParamUtil.getBoolean(request, "validate", true);
 String[] tempFileNames = LayoutServiceUtil.getTempFileNames(groupId, ExportImportHelper.TEMP_FOLDER_NAME);
 %>
 
-<c:if test="<%= showHeader %>">
-	<liferay-ui:header
-		backURL="<%= backURL %>"
-		title='<%= privateLayout ? LanguageUtil.get(request, "import-private-pages") : LanguageUtil.get(request, "import-public-pages") %>'
-	/>
-</c:if>
+<div class="container-fluid-1280">
+	<c:if test="<%= showHeader %>">
+		<liferay-ui:header
+			backURL="<%= backURL %>"
+			title='<%= privateLayout ? LanguageUtil.get(request, "import-private-pages") : LanguageUtil.get(request, "import-public-pages") %>'
+		/>
+	</c:if>
 
-<liferay-ui:tabs
-	names="new-import-process,current-and-previous"
-	param="tabs2"
-	refresh="<%= false %>"
->
-	<liferay-ui:section>
-		<div id="<portlet:namespace />exportImportOptions">
+	<liferay-ui:tabs
+		names="new-import-process,current-and-previous"
+		param="tabs2"
+		refresh="<%= false %>"
+	>
+		<liferay-ui:section>
+			<div id="<portlet:namespace />exportImportOptions">
 
-			<%
-			int incompleteBackgroundTaskCount = BackgroundTaskManagerUtil.getBackgroundTasksCount(groupId, BackgroundTaskExecutorNames.LAYOUT_IMPORT_BACKGROUND_TASK_EXECUTOR, false);
-			%>
+				<%
+				int incompleteBackgroundTaskCount = BackgroundTaskManagerUtil.getBackgroundTasksCount(groupId, BackgroundTaskExecutorNames.LAYOUT_IMPORT_BACKGROUND_TASK_EXECUTOR, false);
+				%>
 
-			<div class="<%= (incompleteBackgroundTaskCount == 0) ? "hide" : "in-progress" %>" id="<portlet:namespace />incompleteProcessMessage">
-				<liferay-util:include page="/incomplete_processes_message.jsp" servletContext="<%= application %>">
-					<liferay-util:param name="incompleteBackgroundTaskCount" value="<%= String.valueOf(incompleteBackgroundTaskCount) %>" />
-				</liferay-util:include>
+				<div class="<%= (incompleteBackgroundTaskCount == 0) ? "hide" : "in-progress" %>" id="<portlet:namespace />incompleteProcessMessage">
+					<liferay-util:include page="/incomplete_processes_message.jsp" servletContext="<%= application %>">
+						<liferay-util:param name="incompleteBackgroundTaskCount" value="<%= String.valueOf(incompleteBackgroundTaskCount) %>" />
+					</liferay-util:include>
+				</div>
+
+				<c:choose>
+					<c:when test="<%= (tempFileNames.length > 0) && !validate %>">
+						<liferay-util:include page="/import_layouts_resources.jsp" servletContext="<%= application %>" />
+					</c:when>
+					<c:otherwise>
+						<liferay-util:include page="/import_layouts_validation.jsp" servletContext="<%= application %>" />
+					</c:otherwise>
+				</c:choose>
 			</div>
+		</liferay-ui:section>
 
-			<c:choose>
-				<c:when test="<%= (tempFileNames.length > 0) && !validate %>">
-					<liferay-util:include page="/import_layouts_resources.jsp" servletContext="<%= application %>" />
-				</c:when>
-				<c:otherwise>
-					<liferay-util:include page="/import_layouts_validation.jsp" servletContext="<%= application %>" />
-				</c:otherwise>
-			</c:choose>
-		</div>
-	</liferay-ui:section>
-
-	<liferay-ui:section>
-		<div class="process-list" id="<portlet:namespace />importProcesses">
-			<liferay-util:include page="/import_layouts_processes.jsp" servletContext="<%= application %>" />
-		</div>
-	</liferay-ui:section>
-</liferay-ui:tabs>
+		<liferay-ui:section>
+			<div class="process-list" id="<portlet:namespace />importProcesses">
+				<liferay-util:include page="/import_layouts_processes.jsp" servletContext="<%= application %>" />
+			</div>
+		</liferay-ui:section>
+	</liferay-ui:tabs>
+</div>
 
 <aui:script use="liferay-export-import">
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="importLayouts" var="importProcessesURL">

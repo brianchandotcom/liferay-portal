@@ -47,6 +47,31 @@ import org.dom4j.io.SAXReader;
  */
 public class PoshiRunnerGetterUtil {
 
+	public static List<Element> getAllChildElements(
+		Element element, String elementName) {
+
+		List<Element> allChildElements = new ArrayList<>();
+
+		List<Element> childElements = element.elements();
+
+		if (childElements.isEmpty()) {
+			return allChildElements;
+		}
+
+		for (Element childElement : childElements) {
+			String childElementName = childElement.getName();
+
+			if (childElementName.equals(elementName)) {
+				allChildElements.add(childElement);
+			}
+
+			allChildElements.addAll(
+				getAllChildElements(childElement, elementName));
+		}
+
+		return allChildElements;
+	}
+
 	public static String getCanonicalPath(String dir) {
 		try {
 			File file = new File(dir);

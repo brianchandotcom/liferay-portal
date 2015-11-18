@@ -1,0 +1,10 @@
+dependencies {
+	compile group: "com.googlecode.jsontoken", name: "jsontoken", version: "1.1"
+	compile group: "com.liferay", name: "com.liferay.service.access.policy.api", version: "1.0.0-SNAPSHOT"
+	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}

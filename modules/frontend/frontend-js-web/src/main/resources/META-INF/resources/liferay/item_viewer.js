@@ -33,6 +33,8 @@ AUI.add(
 
 		var CSS_LOADING_ICON = A.getClassName(CSS_IMAGE_VIEWER_BASE, 'loading', 'icon');
 
+		var CSS_PREVIEW_TIMEOUT_MESSAGE = 'preview-timeout-message';
+
 		var CSS_SIDENAV_CONTAINER = 'sidenav-container';
 
 		var CSS_SIDENAV_MENU_SLIDER = 'sidenav-menu-slider';
@@ -46,6 +48,8 @@ AUI.add(
 		var STR_RENDER_CONTROLS = 'renderControls';
 
 		var STR_RENDER_SIDEBAR = 'renderSidebar';
+
+		var STR_SRC_NODE = 'srcNode';
 
 		var TPL_CLOSE = '<button class="close image-viewer-base-control image-viewer-close lfr-item-viewer-close" type="button"><span class="glyphicon glyphicon-chevron-left ' + CSS_ICON_MONOSPACED + '"></span><span>{0}</span></button>';
 
@@ -77,6 +81,11 @@ AUI.add(
 
 					playing: {
 						value: false
+					},
+
+					previewTimeout: {
+						validator: Lang.isNumber,
+						value: 5000
 					},
 
 					renderControls: {
@@ -123,7 +132,7 @@ AUI.add(
 							'</div>' +
 						'</div>' +
 						'<span class="glyphicon glyphicon-time text-muted ' + CSS_LOADING_ICON + '"></span>' +
-						'<p class="preview-timeout-message text-muted" style="opacity: 0">' + Liferay.Language.get('preview-image-is-taking-longer-than-expected') + '</p>' +
+						'<p class="fade preview-timeout-message text-muted">' + Liferay.Language.get('preview-image-is-taking-longer-than-expected') + '</p>' +
 					'</div>',
 
 					initializer: function() {
@@ -135,6 +144,7 @@ AUI.add(
 						);
 
 						instance._displacedMethodHandles = [
+							instance.after('visibleChange', instance._destroyPreviewTimer, instance),
 							Do.after('_afterBindUI', instance, 'bindUI', instance),
 							Do.after('_afterGetCurrentImage', instance, '_getCurrentImage', instance),
 							Do.after('_afterShow', instance, 'show', instance),
@@ -178,11 +188,10 @@ AUI.add(
 					_afterGetCurrentImage: function(event) {
 						var instance = this;
 
-						if (instance._previewError) {
-							instance._previewError = false;
+						if (instance._showPreviewError) {
 							return new Do.AlterReturn(
-								'alter return to error message',
-								instance.get('srcNode').one('.preview-timeout-message')
+								'Return error message node',
+								instance.get(STR_SRC_NODE).one(STR_DOT + CSS_PREVIEW_TIMEOUT_MESSAGE)
 							);
 						}
 					},
@@ -190,10 +199,12 @@ AUI.add(
 					_afterShow: function() {
 						var instance = this;
 
+						instance._showPreviewError = false;
+
 						instance._timer = A.later(
-							5000,
+							instance.get('previewTimeout'),
 							instance,
-							instance._showNoPreviewMessage
+							instance._showPreviewErrorMessage
 						);
 					},
 
@@ -225,17 +236,6 @@ AUI.add(
 						}
 					},
 
-					cancelPreviewTimer: function() {
-						var instance = this;
-
-						if (instance._timer) {
-							instance._timer.cancel();
-							instance._timer = null;
-
-							instance.get('srcNode').one('.preview-timeout-message').setStyle('opacity', 0);
-						}
-					},
-
 					_bindSidebarEvents: function() {
 						var instance = this;
 
@@ -255,11 +255,20 @@ AUI.add(
 						}
 					},
 
+					_destroyPreviewTimer: function() {
+						var instance = this;
+
+						if (instance._timer) {
+							instance._timer.cancel();
+							instance._timer = null;
+						}
+					},
+
 					_getImageInfoNodes: function() {
 						var instance = this;
 
 						if (!instance._imageInfoNodes) {
-							instance._imageInfoNodes = instance.get('srcNode').all(STR_DOT + CSS_IMAGE_INFO);
+							instance._imageInfoNodes = instance.get(STR_SRC_NODE).all(STR_DOT + CSS_IMAGE_INFO);
 						}
 
 						return instance._imageInfoNodes;
@@ -398,12 +407,13 @@ AUI.add(
 						return links;
 					},
 
-					_showNoPreviewMessage: function() {
+					_showPreviewErrorMessage: function() {
 						var instance = this;
 
-						instance.get('srcNode').one('.' + CSS_LOADING_ICON).hide();
+						instance._showPreviewError = true;
 
-						instance._previewError = true;
+						instance.get(STR_SRC_NODE).one('.' + CSS_LOADING_ICON).hide();
+
 						instance.fire('animate');
 					},
 

@@ -81,6 +81,7 @@ import com.liferay.portal.service.LayoutSetService;
 import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.ThemeLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -658,6 +659,15 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			include("/error.jsp", renderRequest, renderResponse);
 		}
 		else {
+			try {
+				ServiceContext serviceContext =
+					ServiceContextFactory.getInstance(renderRequest);
+
+				ServiceContextThreadLocal.pushServiceContext(serviceContext);
+			}
+			catch (Exception e) {
+			}
+
 			super.doDispatch(renderRequest, renderResponse);
 		}
 	}

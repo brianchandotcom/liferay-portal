@@ -22,7 +22,7 @@
 		%>
 
 		<liferay-ui:search-container-column-text>
-			<liferay-frontend:vertical-card
+			<liferay-frontend:user-vertical-card
 				actionJsp='<%= showActions ? "/edit_team_assignments_users_action.jsp" : StringPool.BLANK %>'
 				actionJspServletContext="<%= application %>"
 				cssClass="entry-display-style"
@@ -30,10 +30,17 @@
 				rowChecker="<%= rowChecker %>"
 				subtitle="<%= user2.getScreenName() %>"
 				title="<%= user2.getFullName() %>"
+				userId="<%= user2.getUserId() %>"
 			/>
 		</liferay-ui:search-container-column-text>
 	</c:when>
 	<c:when test='<%= displayStyle.equals("descriptive") %>'>
+		<liferay-ui:search-container-column-text>
+			<liferay-ui:user-portrait
+				userId="<%= user2.getUserId() %>"
+			/>
+		</liferay-ui:search-container-column-text>
+
 		<liferay-ui:search-container-column-text
 			colspan="<%= 2 %>"
 		>
@@ -51,6 +58,12 @@
 		</c:if>
 	</c:when>
 	<c:otherwise>
+		<liferay-ui:search-container-column-text>
+			<liferay-ui:user-portrait
+				userId="<%= user2.getUserId() %>"
+			/>
+		</liferay-ui:search-container-column-text>
+
 		<liferay-ui:search-container-column-text
 			name="name"
 			property="fullName"

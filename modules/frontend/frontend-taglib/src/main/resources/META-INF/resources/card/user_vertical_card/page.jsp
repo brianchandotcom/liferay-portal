@@ -14,18 +14,23 @@
  */
 --%>
 
-<%@ include file="/card/vertical_card/init.jsp" %>
+<%@ include file="/card/user_vertical_card/init.jsp" %>
 
 <%@ include file="/card/vertical_card/start.jspf" %>
 
-<div class="aspect-ratio <%= backgroundImage ? "aspect-ratio-bg-center aspect-ratio-bg-cover" : "" %>" style="<%= backgroundImage ? "background-image: url('" + imageUrl + "')" : "" %>">
-	<aui:a href="<%= url %>">
-		<img alt="" class="<%= imageCSSClass %><%= backgroundImage ? " sr-only" : "" %>" src="<%= imageUrl %>" />
-	</aui:a>
-
-	<c:if test="<%= Validator.isNotNull(stickerBottom) %>">
-		<%= stickerBottom %>
-	</c:if>
-</div>
+<c:choose>
+	<c:when test="<%= Validator.isNotNull(portraitURL) %>">
+		<div class="aspect-ratio aspect-ratio-bg-center aspect-ratio-bg-cover" style="background-image: url('<%= portraitURL %>')">
+			<aui:a href="<%= url %>">
+				<img alt="" class="sr-only" src="<%= portraitURL %>" />
+			</aui:a>
+		</div>
+	</c:when>
+	<c:otherwise>
+		<div class="aspect-ratio aspect-ratio-bg-center aspect-ratio-bg-cover <%= colorCssClass %>">
+			<span class="icon-xl user-vertical-card-initials"><%= userInitials %></span>
+		</div>
+	</c:otherwise>
+</c:choose>
 
 <%@ include file="/card/vertical_card/end.jspf" %>

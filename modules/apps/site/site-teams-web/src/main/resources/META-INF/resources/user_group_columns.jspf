@@ -30,10 +30,11 @@ int usersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), String
 		%>
 
 		<liferay-ui:search-container-column-text>
-			<liferay-frontend:vertical-card
+			<liferay-frontend:icon-vertical-card
 				actionJsp='<%= showActions ? "/edit_team_assignments_user_groups_action.jsp" : StringPool.BLANK %>'
 				actionJspServletContext="<%= application %>"
 				cssClass="entry-display-style"
+				icon="users"
 				resultRow="<%= row %>"
 				rowChecker="<%= rowChecker %>"
 				subtitle="<%= userGroup.getDescription() %>"
@@ -42,7 +43,7 @@ int usersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), String
 				<liferay-frontend:vertical-card-footer>
 					<liferay-ui:message arguments="<%= usersCount %>" key="x-users" />
 				</liferay-frontend:vertical-card-footer>
-			</liferay-frontend:vertical-card>
+			</liferay-frontend:icon-vertical-card>
 		</liferay-ui:search-container-column-text>
 	</c:when>
 	<c:when test='<%= displayStyle.equals("descriptive") %>'>

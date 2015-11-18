@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,20 +11,25 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/card/vertical_card/init.jsp" %>
+package com.liferay.taglib.util;
 
-<%@ include file="/card/vertical_card/start.jspf" %>
+import com.liferay.portal.model.User;
 
-<div class="aspect-ratio <%= backgroundImage ? "aspect-ratio-bg-center aspect-ratio-bg-cover" : "" %>" style="<%= backgroundImage ? "background-image: url('" + imageUrl + "')" : "" %>">
-	<aui:a href="<%= url %>">
-		<img alt="" class="<%= imageCSSClass %><%= backgroundImage ? " sr-only" : "" %>" src="<%= imageUrl %>" />
-	</aui:a>
+/**
+ * @author Eudaldo Alonso
+ */
+public class LexiconUtil {
 
-	<c:if test="<%= Validator.isNotNull(stickerBottom) %>">
-		<%= stickerBottom %>
-	</c:if>
-</div>
+	public static String getUserColorCssClass(User user) {
+		String colorCssClass = "user-icon-defaul";
 
-<%@ include file="/card/vertical_card/end.jspf" %>
+		if (user != null) {
+			colorCssClass =
+				"user-icon-color-" + (Math.abs(user.getUserId()) % 10);
+		}
+
+		return colorCssClass;
+	}
+
+}

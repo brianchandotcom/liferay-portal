@@ -792,6 +792,11 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		return _user.getGroups();
 	}
 
+	@Override
+	public java.lang.String getInitials() {
+		return _user.getInitials();
+	}
+
 	/**
 	* Returns the job title of this user.
 	*

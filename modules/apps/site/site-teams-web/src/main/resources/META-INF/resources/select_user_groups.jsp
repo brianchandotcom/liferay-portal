@@ -23,7 +23,7 @@ long teamId = ParamUtil.getLong(request, "teamId");
 
 Team team = TeamLocalServiceUtil.fetchTeam(teamId);
 
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+String displayStyle = ParamUtil.getString(request, "displayStyle", "icon");
 String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectUserGroup");
@@ -140,17 +140,17 @@ RowChecker rowChecker = new UserGroupTeamChecker(renderResponse, team);
 				A.Array.removeItem(<portlet:namespace />userGroupIds, target.value);
 			}
 
-			var event = {};
+			var values = {};
 
 			if (<portlet:namespace />userGroupIds.length > 0) {
-				event = {
+				values = {
 					data: {
 						value: <portlet:namespace />userGroupIds.join(',')
 					}
 				};
 			}
 
-			Liferay.Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', event);
+			Liferay.Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', values);
 		}
 	);
 </aui:script>

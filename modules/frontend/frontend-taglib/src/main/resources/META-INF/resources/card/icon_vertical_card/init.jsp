@@ -14,18 +14,12 @@
  */
 --%>
 
-<%@ include file="/card/vertical_card/init.jsp" %>
+<%@ include file="/card/init.jsp" %>
 
-<%@ include file="/card/vertical_card/start.jspf" %>
-
-<div class="aspect-ratio <%= backgroundImage ? "aspect-ratio-bg-center aspect-ratio-bg-cover" : "" %>" style="<%= backgroundImage ? "background-image: url('" + imageUrl + "')" : "" %>">
-	<aui:a href="<%= url %>">
-		<img alt="" class="<%= imageCSSClass %><%= backgroundImage ? " sr-only" : "" %>" src="<%= imageUrl %>" />
-	</aui:a>
-
-	<c:if test="<%= Validator.isNotNull(stickerBottom) %>">
-		<%= stickerBottom %>
-	</c:if>
-</div>
-
-<%@ include file="/card/vertical_card/end.jspf" %>
+<%
+String footer = (String)request.getAttribute("liferay-frontend:card:footer");
+String header = (String)request.getAttribute("liferay-frontend:card:header");
+String icon = GetterUtil.getString(request.getAttribute("liferay-frontend:card:icon"));
+String subtitle = (String)request.getAttribute("liferay-frontend:card:subtitle");
+String title = (String)request.getAttribute("liferay-frontend:card:title");
+%>

@@ -813,7 +813,6 @@
 		<attribute default="" name="test.license.xml.url" />
 		<attribute default="" name="test.plugin.zip.url" />
 		<attribute default="" name="test.portal.bundle.zip.url" />
-		<attribute default="false" name="test.release.bundle" />
 		<attribute default="" name="test.sql.zip.url" />
 		<attribute default="false" name="tomcat.gc.log" />
 		<attribute default="false" name="tsant.gc.log" />
@@ -839,7 +838,11 @@
 
 				<test-set-up>
 					<if>
-						<equals arg1="@{test.release.bundle}" arg2="true" />
+						<and>
+							<matches pattern="http" string="@{test.license.xml.url}" />
+							<matches pattern="http" string="@{test.portal.bundle.zip.url}" />
+							<matches pattern="http" string="@{test.sql.zip.url}" />
+						</and>
 						<then>
 							<propertycopy from="app.server.${app.server.type}.bin.dir" name="test.app.server.bin.dir" />
 
@@ -1043,7 +1046,6 @@
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
 			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
-			test.release.bundle="true"
 			test.sql.zip.url="${test.sql.zip.url}"
 		/>
 	</target>
@@ -1153,7 +1155,6 @@
 			database.type="mysql"
 			test.license.xml.url="${test.license.xml.url}"
 			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
-			test.release.bundle="true"
 			test.sql.zip.url="${test.sql.zip.url}"
 		/>
 	</target>

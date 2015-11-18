@@ -14,19 +14,38 @@
  */
 --%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-<%@ taglib uri="http://liferay.com/tld/application-list" prefix="liferay-application-list" %>
-<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
+<%@ taglib uri="http://liferay.com/tld/application-list" prefix="liferay-application-list" %><%@
+taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.application.list.PanelCategory" %>
-<%@ page import="com.liferay.application.list.constants.ApplicationListWebKeys" %>
+<%@ page import="com.liferay.application.list.PanelCategory" %><%@
+page import="com.liferay.application.list.constants.ApplicationListWebKeys" %><%@
+page import="com.liferay.product.navigation.user.display.context.MyAccountPanelCategoryDisplayContext" %>
+
+<portlet:defineObjects />
 
 <liferay-theme:defineObjects />
-<portlet:defineObjects />
 
 <%
 PanelCategory panelCategory = (PanelCategory)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY);
+
+MyAccountPanelCategoryDisplayContext myAccountPanelCategoryDisplayContext = new MyAccountPanelCategoryDisplayContext(liferayPortletRequest, liferayPortletResponse);
 %>
 
-<liferay-application-list:panel panelCategory="<%= panelCategory %>" />
+<liferay-application-list:panel-category panelCategory="<%= panelCategory %>" showOpen="<%= true %>" />
+
+<c:if test="<%= myAccountPanelCategoryDisplayContext.showMySiteGroup(false) %>">
+	<aui:a cssClass="list-group-heading" href="<%= myAccountPanelCategoryDisplayContext.getMySiteGroupURL(false) %>" label="profile" />
+</c:if>
+
+<c:if test="<%= myAccountPanelCategoryDisplayContext.showMySiteGroup(true) %>">
+	<aui:a cssClass="list-group-heading" href="<%= myAccountPanelCategoryDisplayContext.getMySiteGroupURL(true) %>" label="dashboard" />
+</c:if>
+
+<c:if test="<%= themeDisplay.isShowSignOutIcon() %>">
+	<aui:a cssClass="list-group-heading" href="<%= themeDisplay.getURLSignOut() %>" label="sign-out" />
+</c:if>

@@ -187,8 +187,6 @@ public class MediaWikiImporter implements WikiImporter {
 			String parentTitle = readParentTitle(content);
 			String redirectTitle = readRedirectTitle(content);
 
-			Collection<String> supportedFormats = WikiUtil.getFormats();
-
 			ServiceContext serviceContext = new ServiceContext();
 
 			serviceContext.setAddGroupPermissions(true);
@@ -197,6 +195,8 @@ public class MediaWikiImporter implements WikiImporter {
 				readAssetTagNames(userId, node, content));
 
 			if (Validator.isNull(redirectTitle)) {
+				Collection<String> supportedFormats = WikiUtil.getFormats();
+
 				if (supportedFormats.contains("mediawiki") &&
 					Validator.equals(
 						_wikiGroupServiceConfiguration.defaultFormat(),

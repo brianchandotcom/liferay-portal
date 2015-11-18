@@ -6256,6 +6256,20 @@ if (ppstate.equals("normal")) {
 		</gradle-execute>
 
 		<move file="portal-web/test.case.method.names.properties" tofile="test.case.method.names.properties" />
+
+		<echo></echo>
+		<echo>##</echo>
+		<echo>## test.case.method.names.properties</echo>
+		<echo>##</echo>
+		<echo></echo>
+
+		<var name="file.content" unset="true" />
+
+		<loadfile property="file.content" srcFile="test.case.method.names.properties" />
+
+		<echo>${file.content}</echo>
+
+		<var name="file.content" unset="true" />
 	</target>
 
 	<target name="record-test-class-file-names">

@@ -208,7 +208,9 @@ public class DLFileEntryTypeLocalServiceImpl
 		if (dlFileEntryPersistence.countByFileEntryTypeId(
 				dlFileEntryType.getFileEntryTypeId()) > 0) {
 
-			throw new RequiredFileEntryTypeException();
+			throw new RequiredFileEntryTypeException(
+				"No file entries found for {fileEntryTypeId=" +
+					dlFileEntryType.getFileEntryTypeId() + "}");
 		}
 
 		DDMStructure ddmStructure = DDMStructureManagerUtil.fetchStructure(
@@ -797,7 +799,7 @@ public class DLFileEntryTypeLocalServiceImpl
 		}
 
 		if (ddmStructureIds.length == 0) {
-			throw new NoSuchMetadataSetException();
+			throw new NoSuchMetadataSetException("No ddmStructureIds set");
 		}
 
 		for (long ddmStructureId : ddmStructureIds) {

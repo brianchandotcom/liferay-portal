@@ -163,7 +163,7 @@ public class DLFileEntryLocalServiceImpl
 
 		if (Validator.isNull(title)) {
 			if (Validator.isNull(sourceFileName)) {
-				throw new FileNameException();
+				throw new FileNameException("Title is null");
 			}
 			else {
 				title = sourceFileName;
@@ -862,10 +862,13 @@ public class DLFileEntryLocalServiceImpl
 			long userId, long fileEntryId, String version)
 		throws PortalException {
 
-		if (Validator.isNull(version) ||
-			version.equals(DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
+		if (Validator.isNull(version)) {
+			throw new InvalidFileVersionException("Version is null");
+		}
 
-			throw new InvalidFileVersionException();
+		if (version.equals(DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
+			throw new InvalidFileVersionException(
+				"Cannot delete a private working copy file version");
 		}
 
 		if (!hasFileEntryLock(userId, fileEntryId)) {
@@ -1674,10 +1677,13 @@ public class DLFileEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if (Validator.isNull(version) ||
-			version.equals(DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
+		if (Validator.isNull(version)) {
+			throw new InvalidFileVersionException("Version is null");
+		}
 
-			throw new InvalidFileVersionException();
+		if (version.equals(DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
+			throw new InvalidFileVersionException(
+				"Cannot revert a private working copy file version");
 		}
 
 		DLFileVersion dlFileVersion = dlFileVersionLocalService.getFileVersion(
@@ -2869,7 +2875,8 @@ public class DLFileEntryLocalServiceImpl
 				DLFileEntry.class.getName(), "extension");
 
 			if (extension.length() > maxLength) {
-				throw new FileExtensionException();
+				throw new FileExtensionException(
+					extension + " exceeds max length " + maxLength);
 			}
 		}
 	}

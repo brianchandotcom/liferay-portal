@@ -41,22 +41,12 @@
 	</sql>
 	<sql id="com.liferay.portal.security.permission.InlineSQLHelper.joinResourcePermission">
 		<![CDATA[
-			INNER JOIN
-				(
-					SELECT
-						primKey
-					FROM
-						ResourcePermission
-					WHERE
-						(ResourcePermission.companyId = [$COMPANY_ID$]) AND
-						(ResourcePermission.name = '[$CLASS_NAME$]') AND
-						(ResourcePermission.scope = [$RESOURCE_SCOPE_INDIVIDUAL$]) AND
-						(MOD(ResourcePermission.actionIds, 2) = 1) AND
-						[$ROLE_IDS_OR_OWNER_ID$]
-					GROUP BY
-						primKey
-				)
-			InlineSQLResourcePermission ON
+			INNER JOIN ResourcePermission ON
+				(ResourcePermission.companyId = [$COMPANY_ID$]) AND
+				(ResourcePermission.name = '[$CLASS_NAME$]') AND
+				(ResourcePermission.scope = [$RESOURCE_SCOPE_INDIVIDUAL$]) AND
+				(MOD(ResourcePermission.actionIds, 2) = 1) AND
+				[$ROLE_IDS_OR_OWNER_ID$] AND
 				[$PRIM_KEYS$]
 		]]>
 	</sql>
@@ -193,7 +183,7 @@
 	<sql id="com.liferay.portal.service.persistence.GroupFinder.findByLayouts">
 		<![CDATA[
 			SELECT
-				{Group_.*}
+				Group_.*, Group_.name AS groupName
 			FROM
 				Group_
 			INNER JOIN
@@ -297,7 +287,7 @@
 				Group_
 			WHERE
 				(groupId > ?) AND
-				(companyId = ?) AND
+				(Group_.companyId = ?) AND
 				(parentGroupId = ?)
 			ORDER BY
 				groupId ASC
@@ -688,7 +678,7 @@
 				Organization_
 			WHERE
 				(organizationId > ?) AND
-				(companyId = ?) AND
+				(Organization_.companyId = ?) AND
 				(parentOrganizationId = ?)
 			ORDER BY
 				organizationId ASC
@@ -930,7 +920,7 @@
 				(ResourcePermission.scope = ?) AND
 				(ResourcePermission.primKey = ?) AND
 				(ResourcePermission.roleId = ?) AND
-				(BITAND(CAST_LONG(ResourcePermission.actionIds, ?)) = ?)
+				(BITAND(CAST_LONG(ResourcePermission.actionIds), ?) = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.ResourcePermissionFinder.findByResource">

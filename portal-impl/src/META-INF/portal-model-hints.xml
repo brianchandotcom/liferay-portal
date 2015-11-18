@@ -1212,10 +1212,10 @@
 			<hint name="max-length">4000</hint>
 		</field>
 		<field name="description" type="String" localized="true">
-			<hint-collection name="TEXTAREA" />
+			<hint-collection name="CLOB" />
 		</field>
 		<field name="summary" type="String" localized="true">
-			<hint-collection name="TEXTAREA" />
+			<hint-collection name="CLOB" />
 		</field>
 		<field name="url" type="String">
 			<hint-collection name="URL" />
@@ -1834,7 +1834,7 @@
 			<hint name="max-length">150</hint>
 		</field>
 		<field name="description" type="String" localized="true">
-			<hint-collection name="TEXTAREA" />
+			<hint-collection name="CLOB" />
 			<hint name="display-height">40</hint>
 		</field>
 		<field name="content" type="String">

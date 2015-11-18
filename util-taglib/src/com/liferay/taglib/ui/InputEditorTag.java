@@ -15,6 +15,11 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.editor.EditorUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -143,7 +148,25 @@ public class InputEditorTag extends IncludeTag {
 
 		String editorImpl = EditorUtil.getEditorValue(request, _editorImpl);
 
-		_page = "/html/js/editor/" + editorImpl + ".jsp";
+		String ckEditorVersion = PropsUtil.get(
+			PropsKeys.EDITOR_CKEDITOR_VERSION);
+
+		if (Validator.equals(editorImpl, "ckeditor") &&
+			Validator.equals(ckEditorVersion, "latest")) {
+
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("/html/js/editor/");
+			sb.append(editorImpl);
+			sb.append(StringPool.UNDERLINE);
+			sb.append(ckEditorVersion);
+			sb.append(".jsp");
+
+			_page = sb.toString();
+		}
+		else {
+			_page = "/html/js/editor/" + editorImpl + ".jsp";
+		}
 
 		request.setAttribute(
 			"liferay-ui:input-editor:configParams", _configParams);

@@ -90,7 +90,7 @@ List addresses = AddressServiceUtil.getAddresses(Contact.class.getName(), contac
 					String taglibUpdateBillingAddress = renderResponse.getNamespace() + "updateAddress(this[this.selectedIndex].value, 'billing');";
 					%>
 
-					<aui:select label="" name="addressBilling" onChange="<%= taglibUpdateBillingAddress %>">
+					<aui:select label="" name="addressBilling" onChange="<%= taglibUpdateBillingAddress %>" title="billing-address">
 						<aui:option label='<%= "--" + LanguageUtil.get(pageContext,"my-addresses") + "--" %>' />
 
 						<%
@@ -166,7 +166,7 @@ List addresses = AddressServiceUtil.getAddresses(Contact.class.getName(), contac
 					String taglibUpdateShippingAddress = renderResponse.getNamespace() + "updateAddress(this[this.selectedIndex].value, 'shipping');";
 					%>
 
-					<aui:select label="" name="addressShipping" onChange="<%= taglibUpdateShippingAddress %>">
+					<aui:select label="" name="addressShipping" onChange="<%= taglibUpdateShippingAddress %>" title="shipping-address">
 						<aui:option label='<%= "--" + LanguageUtil.get(pageContext,"my-addresses") + "--" %>' />
 
 						<%

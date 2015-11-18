@@ -151,6 +151,11 @@ public interface PortletPreferencesFactory {
 			Layout layout, String portletId)
 		throws SystemException;
 
+	public PortletPreferences strictFromXML(
+			long companyId, long ownerId, int ownerType, long plid,
+			String portletId, String xml)
+		throws SystemException;
+
 	public String toXML(PortalPreferences portalPreferences);
 
 	public String toXML(PortletPreferences portletPreferences);

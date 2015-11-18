@@ -96,23 +96,21 @@ public class MBeanRegistry {
 		throws InstanceNotFoundException, MBeanRegistrationException {
 
 		synchronized (_objectNameCache) {
-			ObjectName objectName = _objectNameCache.get(objectNameCacheKey);
+			ObjectName objectName = _objectNameCache.remove(objectNameCacheKey);
 
-			if (objectName == null) {
-				try {
+			try {
+				if (objectName == null) {
 					_mBeanServer.unregisterMBean(defaultObjectName);
 				}
-				catch (InstanceNotFoundException infe) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"Unable to unregister " + defaultObjectName, infe);
-					}
+				else {
+					_mBeanServer.unregisterMBean(objectName);
 				}
 			}
-			else {
-				_objectNameCache.remove(objectNameCacheKey);
-
-				_mBeanServer.unregisterMBean(objectName);
+			catch (InstanceNotFoundException infe) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Unable to unregister " + defaultObjectName, infe);
+				}
 			}
 		}
 	}

@@ -608,6 +608,10 @@ public class JournalArticleStagedModelDataHandler
 			serviceContext.setAddGroupPermissions(addGroupPermissions);
 			serviceContext.setAddGuestPermissions(addGuestPermissions);
 
+			if ((expirationDate != null) && expirationDate.before(new Date())) {
+				article.setStatus(WorkflowConstants.STATUS_EXPIRED);
+			}
+
 			if ((article.getStatus() != WorkflowConstants.STATUS_APPROVED) &&
 				(article.getStatus() != WorkflowConstants.STATUS_SCHEDULED)) {
 

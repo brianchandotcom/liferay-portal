@@ -189,6 +189,10 @@ if ((exception != null) && fieldName.equals(focusField)) {
 			if (!ignoreRequestValue) {
 				languageValue = ParamUtil.getString(request, name + StringPool.UNDERLINE + curLanguageId, languageValue);
 			}
+
+			if (curLanguageId.equals(defaultLanguageId) && Validator.isNull(languageValue)) {
+				languageValue = LocalizationUtil.getLocalization(xml, defaultLanguageId, true);
+			}
 		%>
 
 			<aui:input dir="<%= curLanguageDir %>" disabled="<%= disabled %>" id="<%= HtmlUtil.escapeAttribute(id + StringPool.UNDERLINE + curLanguageId) %>" name="<%= HtmlUtil.escapeAttribute(name + StringPool.UNDERLINE + curLanguageId) %>" type="hidden" value="<%= languageValue %>" />

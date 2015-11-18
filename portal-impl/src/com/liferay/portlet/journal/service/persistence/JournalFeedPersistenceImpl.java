@@ -45,6 +45,7 @@ import com.liferay.portlet.journal.NoSuchFeedException;
 import com.liferay.portlet.journal.model.JournalFeed;
 import com.liferay.portlet.journal.model.impl.JournalFeedImpl;
 import com.liferay.portlet.journal.model.impl.JournalFeedModelImpl;
+import com.liferay.portlet.journal.service.persistence.JournalFeedPersistence;
 
 import java.io.Serializable;
 

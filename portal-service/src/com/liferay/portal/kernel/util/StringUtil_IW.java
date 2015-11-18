@@ -554,6 +554,10 @@ public class StringUtil_IW {
 		return StringUtil.startsWithWeight(s1, s2);
 	}
 
+	public java.lang.String strip(java.lang.String s, char[] remove) {
+		return StringUtil.strip(s, remove);
+	}
+
 	public java.lang.String strip(java.lang.String s, char remove) {
 		return StringUtil.strip(s, remove);
 	}

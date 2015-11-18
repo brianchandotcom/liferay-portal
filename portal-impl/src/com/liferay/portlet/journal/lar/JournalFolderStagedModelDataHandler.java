@@ -22,11 +22,14 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
+import com.liferay.portlet.journal.service.persistence.JournalFolderUtil;
 
 import java.util.Map;
 
@@ -117,23 +120,32 @@ public class JournalFolderStagedModelDataHandler
 						folder.getUuid(), groupId);
 
 			if (existingFolder == null) {
+				String name = getFolderName(
+					null, groupId, parentFolderId, folder.getName(), 2);
+
 				serviceContext.setUuid(folder.getUuid());
 
 				importedFolder = JournalFolderLocalServiceUtil.addFolder(
-					userId, groupId, parentFolderId, folder.getName(),
+					userId, groupId, parentFolderId, name,
 					folder.getDescription(), serviceContext);
 			}
 			else {
+				String name = getFolderName(
+					folder.getUuid(), groupId, parentFolderId, folder.getName(),
+					2);
+
 				importedFolder = JournalFolderLocalServiceUtil.updateFolder(
-					userId, existingFolder.getFolderId(), parentFolderId,
-					folder.getName(), folder.getDescription(), false,
-					serviceContext);
+					userId, existingFolder.getFolderId(), parentFolderId, name,
+					folder.getDescription(), false, serviceContext);
 			}
 		}
 		else {
+			String name = getFolderName(
+				null, groupId, parentFolderId, folder.getName(), 2);
+
 			importedFolder = JournalFolderLocalServiceUtil.addFolder(
-				userId, groupId, parentFolderId, folder.getName(),
-				folder.getDescription(), serviceContext);
+				userId, groupId, parentFolderId, name, folder.getDescription(),
+				serviceContext);
 		}
 
 		portletDataContext.importClassedModel(folder, importedFolder);
@@ -160,6 +172,27 @@ public class JournalFolderStagedModelDataHandler
 			trashHandler.restoreTrashEntry(
 				userId, existingFolder.getFolderId());
 		}
+	}
+
+	protected String getFolderName(
+			String uuid, long groupId, long parentFolderId, String name,
+			int count)
+		throws Exception {
+
+		JournalFolder folder = JournalFolderUtil.fetchByG_P_N(
+			groupId, parentFolderId, name);
+
+		if (folder == null) {
+			return name;
+		}
+
+		if (Validator.isNotNull(uuid) && uuid.equals(folder.getUuid())) {
+			return name;
+		}
+
+		name = StringUtil.appendParentheticalSuffix(name, count);
+
+		return getFolderName(uuid, groupId, parentFolderId, name, ++count);
 	}
 
 }

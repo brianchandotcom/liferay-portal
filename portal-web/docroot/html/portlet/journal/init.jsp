@@ -79,6 +79,7 @@ page import="com.liferay.util.RSSUtil" %>
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(liferayPortletRequest);
 
 String[] displayViews = StringUtil.split(PrefsParamUtil.getString(portletPreferences, liferayPortletRequest, "displayViews", StringUtil.merge(PropsValues.JOURNAL_DISPLAY_VIEWS)));
+int numberOfPages = PrefsParamUtil.getInteger(portletPreferences, request, "numberOfPages", PropsValues.SEARCH_CONTAINER_PAGE_ITERATOR_MAX_PAGES);
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

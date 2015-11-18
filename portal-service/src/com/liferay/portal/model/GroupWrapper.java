@@ -795,11 +795,23 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 		return _group.getChildren(site);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	#getChildrenWithLayouts(boolean, int, int, OrderByComparator}
+	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getChildrenWithLayouts(
 		boolean site, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _group.getChildrenWithLayouts(site, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.Group> getChildrenWithLayouts(
+		boolean site, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _group.getChildrenWithLayouts(site, start, end, obc);
 	}
 
 	@Override

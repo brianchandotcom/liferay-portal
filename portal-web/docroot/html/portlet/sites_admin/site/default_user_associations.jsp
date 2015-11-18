@@ -148,15 +148,27 @@ for (long defaultTeamId : defaultTeamIds) {
 />
 
 <aui:script use="liferay-search-container">
+	var Util = Liferay.Util;
+
 	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />siteRolesSearchContainer');
 
-	searchContainer.get('contentBox').delegate(
+	var searchContainerContentBox = searchContainer.get('contentBox');
+
+	searchContainerContentBox.delegate(
 		'click',
 		function(event) {
 			var link = event.currentTarget;
 			var tr = link.ancestor('tr');
 
 			var rowId = link.getAttribute('data-rowId');
+
+			var selectSiteRole = Util.getWindow('<portlet:namespace />selectSiteRole');
+
+			if (selectSiteRole) {
+				var selectButton = selectSiteRole.iframe.node.get('contentWindow.document').one('.selector-button[data-roleid="' + rowId + '"]');
+
+				Util.toggleDisabled(selectButton, false);
+			}
 
 			searchContainer.deleteRow(tr, rowId);
 
@@ -164,12 +176,31 @@ for (long defaultTeamId : defaultTeamIds) {
 		},
 		'.modify-link'
 	);
+
+	Liferay.on(
+		'<portlet:namespace />syncSiteRoles',
+		function(event) {
+			event.selectors.each(
+				function(item, index, collection) {
+					var modifyLink = searchContainerContentBox.one('.modify-link[data-rowid="' + item.attr('data-roleid') + '"]');
+
+					if (!modifyLink) {
+						Util.toggleDisabled(item, false);
+					}
+				}
+			);
+		}
+	);
 </aui:script>
 
 <aui:script use="liferay-search-container">
+	var Util = Liferay.Util;
+
 	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />teamsSearchContainer');
 
-	searchContainer.get('contentBox').delegate(
+	var searchContainerContentBox = searchContainer.get('contentBox');
+
+	searchContainerContentBox.delegate(
 		'click',
 		function(event) {
 			var link = event.currentTarget;
@@ -177,11 +208,34 @@ for (long defaultTeamId : defaultTeamIds) {
 
 			var rowId = link.getAttribute('data-rowId');
 
+			var selectTeam = Util.getWindow('<portlet:namespace />selectTeam');
+
+			if (selectTeam) {
+				var selectButton = selectTeam.iframe.node.get('contentWindow.document').one('.selector-button[data-teamid="' + rowId + '"]');
+
+				Util.toggleDisabled(selectButton, false);
+			}
+
 			searchContainer.deleteRow(tr, rowId);
 
 			<portlet:namespace />deleteTeam(rowId);
 		},
 		'.modify-link'
+	);
+
+	Liferay.on(
+		'<portlet:namespace />enableRemovedTeams',
+		function(event) {
+			event.selectors.each(
+				function(item, index, collection) {
+					var modifyLink = searchContainerContentBox.one('.modify-link[data-rowid="' + item.attr('data-teamid') + '"]');
+
+					if (!modifyLink) {
+						Util.toggleDisabled(item, false);
+					}
+				}
+			);
+		}
 	);
 </aui:script>
 
@@ -199,7 +253,7 @@ for (long defaultTeamId : defaultTeamIds) {
 					dialog: {
 						constrain: true,
 						modal: true,
-						width: 600
+						width: 800
 					},
 					id: '<portlet:namespace />selectSiteRole',
 					title: '<liferay-ui:message arguments="site-role" key="select-x" />',

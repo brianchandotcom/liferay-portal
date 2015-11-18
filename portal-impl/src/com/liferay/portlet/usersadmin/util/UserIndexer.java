@@ -297,14 +297,7 @@ public class UserIndexer extends BaseIndexer {
 
 	@Override
 	protected void doReindex(Object obj) throws Exception {
-		if (obj instanceof List<?>) {
-			List<User> users = (List<User>)obj;
-
-			for (User user : users) {
-				doReindex(user);
-			}
-		}
-		else if (obj instanceof Long) {
+		if (obj instanceof Long) {
 			long userId = (Long)obj;
 
 			User user = UserLocalServiceUtil.getUserById(userId);

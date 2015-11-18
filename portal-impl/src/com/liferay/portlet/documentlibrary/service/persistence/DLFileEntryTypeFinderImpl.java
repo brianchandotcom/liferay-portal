@@ -171,7 +171,8 @@ public class DLFileEntryTypeFinderImpl
 			sql = StringUtil.replace(
 				sql, "[$GROUP_ID$]", getGroupIds(groupIds));
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(name)", StringPool.LIKE, false, names);
+				sql, "lower(DLFileEntryType.name)", StringPool.LIKE, false,
+				names);
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "description", StringPool.LIKE, true, descriptions);
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
@@ -242,7 +243,8 @@ public class DLFileEntryTypeFinderImpl
 			sql = StringUtil.replace(
 				sql, "[$GROUP_ID$]", getGroupIds(groupIds));
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(name)", StringPool.LIKE, false, names);
+				sql, "lower(DLFileEntryType.name)", StringPool.LIKE, false,
+				names);
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "description", StringPool.LIKE, true, descriptions);
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
@@ -252,7 +254,8 @@ public class DLFileEntryTypeFinderImpl
 					orderByComparator.getOrderByFields(), StringPool.COMMA);
 
 				sql = StringUtil.replace(
-					sql, "name ASC", orderByFields.concat(" DESC"));
+					sql, "DLFileEntryType.name ASC",
+					orderByFields.concat(" DESC"));
 			}
 
 			if (includeBasicFileEntryType) {
@@ -294,8 +297,9 @@ public class DLFileEntryTypeFinderImpl
 		StringBundler sb = new StringBundler(6);
 
 		sb.append("(SELECT {DLFileEntryType.*} From DLFileEntryType WHERE ");
-		sb.append("((companyId = 0) AND (groupId = 0) AND (");
-		sb.append("(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) ");
+		sb.append("((DLFileEntryType.companyId = 0) AND (groupId = 0) AND (");
+		sb.append(
+			"(lower(DLFileEntryType.name) LIKE ? [$AND_OR_NULL_CHECK$]) ");
 		sb.append("[$AND_OR_CONNECTOR$] ");
 		sb.append("(description LIKE ? [$AND_OR_NULL_CHECK$]) ");
 		sb.append("))) UNION ALL (");

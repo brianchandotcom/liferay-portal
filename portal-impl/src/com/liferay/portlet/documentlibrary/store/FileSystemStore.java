@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.store;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
@@ -45,8 +46,11 @@ import java.util.concurrent.ConcurrentHashMap;
 public class FileSystemStore extends BaseStore {
 
 	public FileSystemStore() {
-		if (!_rootDir.exists()) {
-			_rootDir.mkdirs();
+		try {
+			FileUtil.mkdirs(_rootDir);
+		}
+		catch (IOException ioe) {
+			ReflectionUtil.throwException(ioe);
 		}
 	}
 
@@ -60,7 +64,12 @@ public class FileSystemStore extends BaseStore {
 			throw new DuplicateDirectoryException(dirNameDir.getPath());
 		}
 
-		dirNameDir.mkdirs();
+		try {
+			FileUtil.mkdirs(dirNameDir);
+		}
+		catch (IOException ioe) {
+			ReflectionUtil.throwException(ioe);
+		}
 	}
 
 	@Override
@@ -430,8 +439,11 @@ public class FileSystemStore extends BaseStore {
 	protected File getCompanyDir(long companyId) {
 		File companyDir = new File(_rootDir + StringPool.SLASH + companyId);
 
-		if (!companyDir.exists()) {
-			companyDir.mkdirs();
+		try {
+			FileUtil.mkdirs(companyDir);
+		}
+		catch (IOException ioe) {
+			ReflectionUtil.throwException(ioe);
 		}
 
 		return companyDir;
@@ -499,8 +511,11 @@ public class FileSystemStore extends BaseStore {
 			repositoryDir = new File(
 				companyDir + StringPool.SLASH + repositoryId);
 
-			if (!repositoryDir.exists()) {
-				repositoryDir.mkdirs();
+			try {
+				FileUtil.mkdirs(repositoryDir);
+			}
+			catch (IOException ioe) {
+				ReflectionUtil.throwException(ioe);
 			}
 
 			_repositoryDirs.put(repositoryDirKey, repositoryDir);

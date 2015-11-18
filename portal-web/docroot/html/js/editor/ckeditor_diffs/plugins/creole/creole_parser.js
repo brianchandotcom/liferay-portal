@@ -222,11 +222,12 @@ Parse.Simple.Creole = function(options) {
             replaceRegex: /(^|\n)[ \t]*[*#]/g, replaceString: '$1' },
 
         table: { tag: 'table', capture: 0,
+			attrs: { 'class': 'cke_show_border' },
             regex: /(^|\n)(\|.*?[ \t]*(\n|$))+/ },
         tr: { tag: 'tr', capture: 2, regex: /(^|\n)(\|.*?)\|?[ \t]*(\n|$)/ },
         th: { tag: 'th', regex: /\|+=([^|]*)/, capture: 1 },
         td: { tag: 'td', capture: 1,
-            regex: '\\|+([^|~\\[{]*((~(.|(?=\\n)|$)|' +
+            regex: '\\|([^|~\\[{]*((~(.|(?=\\n)|$)|' +
                    '(?:\\[\\[' + rx.link + '(\\|' + rx.linkText + ')?\\]\\][^|~\\[{]*)*' +
                    (options && options.strict ? '' : '|' + rx.img) +
                    '|[\\[{])[^|~]*)*)' },
@@ -282,8 +283,7 @@ Parse.Simple.Creole = function(options) {
                 link.href = options && options.linkFormat
                     ? formatLink(r[1].replace(/~(.)/g, '$1'), options.linkFormat)
                     : r[1].replace(/~(.)/g, '$1');
-
-                link.setAttribute('data-cke-saved-href', link.href);
+link.setAttribute('data-cke-saved-href', link.href);
 
                 this.apply(link, r[2], options);
                 

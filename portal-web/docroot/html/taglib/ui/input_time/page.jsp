@@ -48,7 +48,7 @@ String hourParamId = namespace + HtmlUtil.getAUICompatibleId(hourParam);
 String minuteParamId = namespace + HtmlUtil.getAUICompatibleId(minuteParam);
 String nameId = namespace + HtmlUtil.getAUICompatibleId(name);
 
-Calendar calendar = CalendarFactoryUtil.getCalendar(1970, 0, 1, hourOfDayValue, minuteValue);
+Calendar calendar = CalendarFactoryUtil.getCalendar(1970, 0, 1, hourOfDayValue, minuteValue, 0, 0, timeZone);
 
 String simpleDateFormatPattern = _SIMPLE_DATE_FORMAT_PATTERN_ISO;
 
@@ -65,7 +65,7 @@ if (!DateUtil.isFormatAmPm(locale)) {
 	placeholder = _PLACEHOLDER_ISO;
 }
 
-Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPattern, locale);
+Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPattern, locale, timeZone);
 %>
 
 <span class="lfr-input-time <%= cssClass %>" id="<%= randomNamespace %>displayTime">
@@ -74,7 +74,7 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 			<input class="input-small" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= nameId %>" name="<%= namespace + HtmlUtil.escapeAttribute(name) %>" type="time" value="<%= format.format(calendar.getTime()) %>" />
 		</c:when>
 		<c:otherwise>
-			<input class="input-small" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= nameId %>" name="<%= namespace + HtmlUtil.escapeAttribute(name) %>" type="text" placeholder="<%= placeholder %>" value="<%= format.format(calendar.getTime()) %>" />
+			<input class="input-small" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= nameId %>" name="<%= namespace + HtmlUtil.escapeAttribute(name) %>" placeholder="<%= placeholder %>" type="text" value="<%= format.format(calendar.getTime()) %>" />
 		</c:otherwise>
 	</c:choose>
 
@@ -132,7 +132,17 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 
 				var container = instance.get('container');
 
-				return A.Date.parse(container.one('#<%= dateParamId %>').val());
+				var amPm = A.Lang.toInt(container.one('#<%= amPmParamId %>').val());
+				var hours = A.Lang.toInt(container.one('#<%= hourParamId %>').val());
+				var minutes = container.one('#<%= minuteParamId %>').val();
+
+				if (amPm) {
+					hours += 12;
+				}
+
+				var time = A.Date.parse(A.Date.aggregates.T, hours + ':' + minutes + ':0');
+
+				return time;
 			};
 
 			return timePicker;

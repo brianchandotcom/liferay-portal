@@ -14,15 +14,21 @@
 
 package com.liferay.portal.upload;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.memory.DeleteFileFinalizeAction;
 import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.upload.FileItem;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PropsUtil;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import org.apache.commons.fileupload.disk.DiskFileItem;
 
@@ -47,6 +53,17 @@ public class LiferayFileItem extends DiskFileItem implements FileItem {
 		_fileName = fileName;
 		_sizeThreshold = sizeThreshold;
 		_repository = repository;
+	}
+
+	@Override
+	public String getContentType() {
+		try {
+			return MimeTypesUtil.getContentType(
+				getInputStream(), getFileName());
+		}
+		catch (IOException ioe) {
+			return ContentTypes.APPLICATION_OCTET_STREAM;
+		}
 	}
 
 	@Override
@@ -111,7 +128,8 @@ public class LiferayFileItem extends DiskFileItem implements FileItem {
 		try {
 			_encodedString = getString(encode);
 		}
-		catch (Exception e) {
+		catch (UnsupportedEncodingException uee) {
+			_log.error(uee, uee);
 		}
 	}
 
@@ -148,6 +166,8 @@ public class LiferayFileItem extends DiskFileItem implements FileItem {
 
 		return id;
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(LiferayFileItem.class);
 
 	private static int _counter;
 

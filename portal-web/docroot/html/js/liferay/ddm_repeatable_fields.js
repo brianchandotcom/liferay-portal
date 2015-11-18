@@ -220,13 +220,7 @@ AUI.add(
 							function(newFieldHTML) {
 								fieldNode.insert(newFieldHTML, 'after');
 
-								instance.fire(
-									'repeat',
-									{
-										fieldNode: fieldNode.next(),
-										originalFieldNode: fieldNode
-									}
-								);
+								instance._addFieldValidation(fieldNode.next(), fieldNode);
 
 								instance.syncFieldsTreeUI();
 							}
@@ -236,12 +230,7 @@ AUI.add(
 					removeField: function(fieldNode) {
 						var instance = this;
 
-						instance.fire(
-							'remove',
-							{
-								fieldNode: fieldNode
-							}
-						);
+						instance._removeFieldValidation(fieldNode);
 
 						fieldNode.remove();
 
@@ -304,6 +293,30 @@ AUI.add(
 						fieldsDisplayInput.val(fieldsDisplay.join());
 					},
 
+					_addFieldValidation: function(newFieldNode, originalFieldNode) {
+						var instance = this;
+
+						instance.fire(
+							'repeat',
+							{
+								fieldNode: newFieldNode,
+								originalFieldNode: originalFieldNode
+							}
+						);
+
+						var newFieldsList = instance.getFieldsList(null, newFieldNode);
+
+						newFieldsList.each(
+							function(item) {
+								var fieldName = item.getData('fieldName');
+
+								var originalChildFieldNode = instance.getFieldsList(fieldName, originalFieldNode).first();
+
+								instance._addFieldValidation(item, originalChildFieldNode);
+							}
+						);
+					},
+
 					_afterFormRegistered: function(event) {
 						var instance = this;
 
@@ -337,8 +350,26 @@ AUI.add(
 						var fieldNode = event.currentTarget.ancestor('.field-wrapper');
 
 						fieldNode.toggleClass('lfr-ddm-repeatable-active', (event.phase === 'over'));
-					}
+					},
 
+					_removeFieldValidation: function(fieldNode) {
+						var instance = this;
+
+						var newFieldsList = instance.getFieldsList(null, fieldNode);
+
+						newFieldsList.each(
+							function(item) {
+								instance._removeFieldValidation(item);
+							}
+						);
+
+						instance.fire(
+							'remove',
+							{
+								fieldNode: fieldNode
+							}
+						);
+					}
 				}
 			}
 		);

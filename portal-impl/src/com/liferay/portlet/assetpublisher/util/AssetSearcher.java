@@ -162,29 +162,40 @@ public class AssetSearcher extends BaseIndexer {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		long[] allTagIds = _assetEntryQuery.getAllTagIds();
+		long[][] allTagIdsArray = _assetEntryQuery.getAllTagIdsArray();
 
-		if (allTagIds.length == 0) {
+		if (allTagIdsArray.length == 0) {
 			return;
 		}
 
-		long[] filteredAllTagIds = AssetUtil.filterTagIds(
-			permissionChecker, allTagIds);
-
-		if (allTagIds.length != filteredAllTagIds.length) {
-			addImpossibleTerm(contextQuery, Field.ASSET_TAG_IDS);
-
-			return;
-		}
-
-		BooleanQuery tagIdsQuery = BooleanQueryFactoryUtil.create(
+		BooleanQuery tagIdsArrayQuery = BooleanQueryFactoryUtil.create(
 			searchContext);
 
-		for (long tagId : allTagIds) {
-			tagIdsQuery.addRequiredTerm(Field.ASSET_TAG_IDS, tagId);
+		for (long[] allTagIds : allTagIdsArray) {
+			if (allTagIds.length == 0) {
+				continue;
+			}
+
+			long[] filteredAllTagIds = AssetUtil.filterTagIds(
+				permissionChecker, allTagIds);
+
+			if (allTagIds.length != filteredAllTagIds.length) {
+				addImpossibleTerm(contextQuery, Field.ASSET_TAG_IDS);
+
+				return;
+			}
+
+			BooleanQuery tagIdsQuery = BooleanQueryFactoryUtil.create(
+				searchContext);
+
+			for (long tagId : allTagIds) {
+				tagIdsQuery.addTerm(Field.ASSET_TAG_IDS, tagId);
+			}
+
+			tagIdsArrayQuery.add(tagIdsQuery, BooleanClauseOccur.MUST);
 		}
 
-		contextQuery.add(tagIdsQuery, BooleanClauseOccur.MUST);
+		contextQuery.add(tagIdsArrayQuery, BooleanClauseOccur.MUST);
 	}
 
 	protected void addSearchAnyCategories(
@@ -377,20 +388,31 @@ public class AssetSearcher extends BaseIndexer {
 			BooleanQuery contextQuery, SearchContext searchContext)
 		throws Exception {
 
-		long[] notAllTagIds = _assetEntryQuery.getNotAllTagIds();
+		long[][] notAllTagIdsArray = _assetEntryQuery.getNotAllTagIdsArray();
 
-		if (notAllTagIds.length == 0) {
+		if (notAllTagIdsArray.length == 0) {
 			return;
 		}
 
-		BooleanQuery tagIdsQuery = BooleanQueryFactoryUtil.create(
+		BooleanQuery tagIdsArrayQuery = BooleanQueryFactoryUtil.create(
 			searchContext);
 
-		for (long tagId : notAllTagIds) {
-			tagIdsQuery.addRequiredTerm(Field.ASSET_TAG_IDS, tagId);
+		for (long[] notAllTagIds : notAllTagIdsArray) {
+			if (notAllTagIds.length == 0) {
+				continue;
+			}
+
+			BooleanQuery tagIdsQuery = BooleanQueryFactoryUtil.create(
+				searchContext);
+
+			for (long tagId : notAllTagIds) {
+				tagIdsQuery.addTerm(Field.ASSET_TAG_IDS, tagId);
+			}
+
+			tagIdsArrayQuery.add(tagIdsQuery, BooleanClauseOccur.MUST);
 		}
 
-		contextQuery.add(tagIdsQuery, BooleanClauseOccur.MUST_NOT);
+		contextQuery.add(tagIdsArrayQuery, BooleanClauseOccur.MUST_NOT);
 	}
 
 	protected void addSearchNotAnyCategories(

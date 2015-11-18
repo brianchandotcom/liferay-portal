@@ -42,7 +42,7 @@ while (itr.hasNext()) {
 	}
 }
 
-List<WorkflowDefinition> workflowDefinitions = WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(company.getCompanyId(), 0, 100, WorkflowComparatorFactoryUtil.getDefinitionNameComparator(true));
+List<WorkflowDefinition> workflowDefinitions = WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, WorkflowComparatorFactoryUtil.getDefinitionNameComparator(true));
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -95,7 +95,7 @@ portletURL.setParameter("tabs1", "default-configuration");
 			<liferay-ui:search-container-column-text
 				name="workflow"
 			>
-				<aui:select label="" name='<%= "workflowDefinitionName@" + workflowHandler.getClassName() %>'>
+				<aui:select label="" name='<%= "workflowDefinitionName@" + workflowHandler.getClassName() %>' title="workflow-definition">
 
 					<%
 					WorkflowDefinitionLink workflowDefinitionLink = null;

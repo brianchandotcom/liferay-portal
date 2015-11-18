@@ -18,11 +18,11 @@
 	Liferay.provide(
 		window,
 		'<portlet:namespace />openDocument',
-		function(webDavUrl) {
+		function(webDavURL) {
 			var A = AUI();
 
 			Liferay.Util.openDocument(
-				webDavUrl,
+				webDavURL,
 				null,
 				function(exception) {
 					var errorMessage = A.Lang.sub(

@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 
 import java.io.InputStream;
 
@@ -51,6 +51,10 @@ public class InvokerFilterHelper {
 	public void destroy() {
 		for (Map.Entry<String, Filter> entry : _filters.entrySet()) {
 			Filter filter = entry.getValue();
+
+			if (filter == null) {
+				continue;
+			}
 
 			try {
 				filter.destroy();
@@ -141,6 +145,31 @@ public class InvokerFilterHelper {
 
 		for (InvokerFilter invokerFilter : _invokerFilters) {
 			invokerFilter.clearFilterChainsCache();
+		}
+	}
+
+	public void unregisterFilter(String filterName) {
+		Filter filter = _filters.remove(filterName);
+
+		if (filter == null) {
+			return;
+		}
+
+		for (FilterMapping filterMapping : _filterMappings) {
+			if (filterMapping.getFilter() == filter) {
+				unregisterFilterMapping(filterMapping);
+
+				break;
+			}
+		}
+
+		_filterConfigs.remove(filterName);
+
+		try {
+			filter.destroy();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
 		}
 	}
 
@@ -297,7 +326,7 @@ public class InvokerFilterHelper {
 			return;
 		}
 
-		Document document = SAXReaderUtil.read(inputStream, true);
+		Document document = UnsecureSAXReaderUtil.read(inputStream, true);
 
 		Element rootElement = document.getRootElement();
 

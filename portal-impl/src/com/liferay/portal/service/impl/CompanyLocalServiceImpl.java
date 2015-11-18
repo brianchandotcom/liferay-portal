@@ -446,18 +446,18 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		Company company = companyPersistence.findByPrimaryKey(companyId);
 
-		if (Validator.isNull(company.getKey()) &&
-			(company.getKeyObj() == null)) {
-
-			try {
-				company.setKey(Base64.objectToString(Encryptor.generateKey()));
-			}
-			catch (EncryptorException ee) {
-				throw new SystemException(ee);
-			}
-
-			companyPersistence.update(company);
+		if (company.getKeyObj() != null) {
+			return;
 		}
+
+		try {
+			company.setKey(Base64.objectToString(Encryptor.generateKey()));
+		}
+		catch (EncryptorException ee) {
+			throw new SystemException(ee);
+		}
+
+		companyPersistence.update(company);
 	}
 
 	@Override

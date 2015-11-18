@@ -85,7 +85,7 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 		}
 		%>
 
-		<c:if test="<%= controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) || !controlPanelCategory.equals(PortletCategoryKeys.MY) %>">
+		<c:if test="<%= controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) || !(controlPanelCategory.equals(PortletCategoryKeys.MY) && PropsValues.DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP) %>">
 			<div class="brand">
 				<a class="control-panel-back-link" href="<%= backURL %>" title="<liferay-ui:message key="back" />">
 					<i class="control-panel-back-icon icon-chevron-sign-left"></i>
@@ -105,6 +105,11 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 							<span class="site-administration-title">
 								<liferay-ui:message key="site-administration" />
 							</span>
+						</c:when>
+						<c:when test="<%= controlPanelCategory.equals(PortletCategoryKeys.MY) %>">
+							<a href="<%= themeDisplay.getURLMyAccount() %>">
+								<liferay-ui:message key="my-account" />
+							</a>
 						</c:when>
 						<c:otherwise>
 							<a href="<%= themeDisplay.getURLControlPanel() %>">

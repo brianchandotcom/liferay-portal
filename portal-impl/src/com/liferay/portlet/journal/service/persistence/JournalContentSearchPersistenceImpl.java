@@ -41,6 +41,7 @@ import com.liferay.portlet.journal.NoSuchContentSearchException;
 import com.liferay.portlet.journal.model.JournalContentSearch;
 import com.liferay.portlet.journal.model.impl.JournalContentSearchImpl;
 import com.liferay.portlet.journal.model.impl.JournalContentSearchModelImpl;
+import com.liferay.portlet.journal.service.persistence.JournalContentSearchPersistence;
 
 import java.io.Serializable;
 

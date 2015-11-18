@@ -107,8 +107,10 @@
 			display: inline;
 		}
 
-		@include respond-to(phone, tablet) {
-			.lfr-pagination-delta-selector {
+		.lfr-pagination-delta-selector {
+			float: none;
+
+			@include respond-to(phone, tablet) {
 				display: none;
 			}
 		}

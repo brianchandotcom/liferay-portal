@@ -35,6 +35,7 @@ page import="com.liferay.portlet.documentlibrary.FileNameException" %><%@
 page import="com.liferay.portlet.documentlibrary.FileShortcutPermissionException" %><%@
 page import="com.liferay.portlet.documentlibrary.FolderNameException" %><%@
 page import="com.liferay.portlet.documentlibrary.InvalidFileVersionException" %><%@
+page import="com.liferay.portlet.documentlibrary.InvalidFolderException" %><%@
 page import="com.liferay.portlet.documentlibrary.NoSuchDirectoryException" %><%@
 page import="com.liferay.portlet.documentlibrary.NoSuchFileEntryException" %><%@
 page import="com.liferay.portlet.documentlibrary.NoSuchFileException" %><%@
@@ -87,9 +88,9 @@ PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPre
 
 String portletResource = ParamUtil.getString(request, "portletResource");
 
-int entriesPerPage = PrefsParamUtil.getInteger(portletPreferences, request, "entriesPerPage", SearchContainer.DEFAULT_DELTA);
-
 String[] displayViews = StringUtil.split(PrefsParamUtil.getString(portletPreferences, request, "displayViews", StringUtil.merge(PropsValues.DL_DISPLAY_VIEWS)));
+int entriesPerPage = PrefsParamUtil.getInteger(portletPreferences, request, "entriesPerPage", SearchContainer.DEFAULT_DELTA);
+int numberOfPages = PrefsParamUtil.getInteger(portletPreferences, request, "numberOfPages", PropsValues.SEARCH_CONTAINER_PAGE_ITERATOR_MAX_PAGES);
 
 long rootFolderId = PrefsParamUtil.getLong(portletPreferences, request, "rootFolderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
@@ -117,6 +118,7 @@ if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 boolean showActions = PrefsParamUtil.getBoolean(portletPreferences, request, "showActions");
 boolean showAssetMetadata = ParamUtil.getBoolean(request, "showAssetMetadata");
 boolean showAddFolderButton = false;
+boolean showComments = ParamUtil.getBoolean(request, "showComments", true);
 boolean showFolderMenu = PrefsParamUtil.getBoolean(portletPreferences, request, "showFolderMenu");
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 boolean showMinimalActionButtons = ParamUtil.getBoolean(request, "showMinimalActionButtons");

@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
-import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelNameComparator;
+import com.liferay.portlet.documentlibrary.util.comparator.FolderNameComparator;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -141,7 +141,7 @@ public class FolderAtomCollectionAdapter
 
 		return DLAppServiceUtil.getFolders(
 			repositoryId, parentFolderId, atomPager.getStart(),
-			atomPager.getEnd() + 1, new RepositoryModelNameComparator());
+			atomPager.getEnd() + 1, new FolderNameComparator());
 	}
 
 	@Override

@@ -631,6 +631,79 @@ public class ShoppingCategoryUtil {
 	}
 
 	/**
+	* Returns the shopping category where groupId = &#63; and name = &#63; or throws a {@link com.liferay.portlet.shopping.NoSuchCategoryException} if it could not be found.
+	*
+	* @param groupId the group ID
+	* @param name the name
+	* @return the matching shopping category
+	* @throws com.liferay.portlet.shopping.NoSuchCategoryException if a matching shopping category could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.shopping.model.ShoppingCategory findByG_N(
+		long groupId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.shopping.NoSuchCategoryException {
+		return getPersistence().findByG_N(groupId, name);
+	}
+
+	/**
+	* Returns the shopping category where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param groupId the group ID
+	* @param name the name
+	* @return the matching shopping category, or <code>null</code> if a matching shopping category could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.shopping.model.ShoppingCategory fetchByG_N(
+		long groupId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByG_N(groupId, name);
+	}
+
+	/**
+	* Returns the shopping category where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param groupId the group ID
+	* @param name the name
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching shopping category, or <code>null</code> if a matching shopping category could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.shopping.model.ShoppingCategory fetchByG_N(
+		long groupId, java.lang.String name, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByG_N(groupId, name, retrieveFromCache);
+	}
+
+	/**
+	* Removes the shopping category where groupId = &#63; and name = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param name the name
+	* @return the shopping category that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.shopping.model.ShoppingCategory removeByG_N(
+		long groupId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.shopping.NoSuchCategoryException {
+		return getPersistence().removeByG_N(groupId, name);
+	}
+
+	/**
+	* Returns the number of shopping categories where groupId = &#63; and name = &#63;.
+	*
+	* @param groupId the group ID
+	* @param name the name
+	* @return the number of matching shopping categories
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByG_N(long groupId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByG_N(groupId, name);
+	}
+
+	/**
 	* Caches the shopping category in the entity cache if it is enabled.
 	*
 	* @param shoppingCategory the shopping category

@@ -15,14 +15,11 @@
 package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import org.openid4java.consumer.ConsumerException;
 import org.openid4java.consumer.ConsumerManager;
 import org.openid4java.consumer.InMemoryConsumerAssociationStore;
 import org.openid4java.consumer.InMemoryNonceVerifier;
@@ -73,21 +70,15 @@ public class OpenIdUtil {
 	}
 
 	private void _initialize() {
-		try {
-			if (_manager == null) {
-				_manager = new ConsumerManager();
+		if (_manager != null) {
+			return;
+		}
 
-				_manager.setAssociations(
-					new InMemoryConsumerAssociationStore());
-				_manager.setNonceVerifier(new InMemoryNonceVerifier(5000));
-			}
-		}
-		catch (ConsumerException ce) {
-			_log.error(ce.getMessage());
-		}
+		_manager = new ConsumerManager();
+
+		_manager.setAssociations(new InMemoryConsumerAssociationStore());
+		_manager.setNonceVerifier(new InMemoryNonceVerifier(5000));
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(OpenIdUtil.class);
 
 	private static OpenIdUtil _instance = new OpenIdUtil();
 

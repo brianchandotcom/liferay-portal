@@ -316,6 +316,16 @@ public class ParamUtil_IW {
 		return ParamUtil.getDouble(request, param, defaultValue);
 	}
 
+	public double getDouble(javax.servlet.http.HttpServletRequest request,
+		java.lang.String param, double defaultValue, java.util.Locale locale) {
+		return ParamUtil.getDouble(request, param, defaultValue, locale);
+	}
+
+	public double getDouble(javax.servlet.http.HttpServletRequest request,
+		java.lang.String param, java.util.Locale locale) {
+		return ParamUtil.getDouble(request, param, locale);
+	}
+
 	public double getDouble(javax.portlet.PortletRequest portletRequest,
 		java.lang.String param) {
 		return ParamUtil.getDouble(portletRequest, param);
@@ -324,6 +334,16 @@ public class ParamUtil_IW {
 	public double getDouble(javax.portlet.PortletRequest portletRequest,
 		java.lang.String param, double defaultValue) {
 		return ParamUtil.getDouble(portletRequest, param, defaultValue);
+	}
+
+	public double getDouble(javax.portlet.PortletRequest portletRequest,
+		java.lang.String param, double defaultValue, java.util.Locale locale) {
+		return ParamUtil.getDouble(portletRequest, param, defaultValue, locale);
+	}
+
+	public double getDouble(javax.portlet.PortletRequest portletRequest,
+		java.lang.String param, java.util.Locale locale) {
+		return ParamUtil.getDouble(portletRequest, param, locale);
 	}
 
 	public double getDouble(

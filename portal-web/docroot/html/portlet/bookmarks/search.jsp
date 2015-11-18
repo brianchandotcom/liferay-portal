@@ -34,7 +34,7 @@ else {
 
 	folderIds.add(new Long(searchFolderIds));
 
-	BookmarksFolderServiceUtil.getSubfolderIds(folderIds, scopeGroupId, searchFolderIds);
+	BookmarksFolderServiceUtil.getSubfolderIds(folderIds, scopeGroupId, searchFolderIds, true);
 
 	folderIdsArray = StringUtil.split(StringUtil.merge(folderIds), 0L);
 }

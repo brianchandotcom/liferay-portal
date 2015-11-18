@@ -717,6 +717,10 @@ public class ServiceContext implements Cloneable, Serializable {
 		return uuid;
 	}
 
+	public String getUuidWithoutReset() {
+		return _uuid;
+	}
+
 	/**
 	 * Returns the workflow action to take if this service context is being
 	 * passed as a parameter to a method that processes a workflow action.

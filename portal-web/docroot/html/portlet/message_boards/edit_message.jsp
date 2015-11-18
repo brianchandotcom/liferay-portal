@@ -353,7 +353,7 @@ else {
 									/>
 								</span>
 
-								<aui:input cssClass="hide" label="" name='<%= "msgFile" + (i + 1) %>' size="70" type="file" />
+								<aui:input cssClass="hide" label="" name='<%= "msgFile" + (i + 1) %>' size="70" title="message-attachment" type="file" />
 
 								<liferay-ui:icon-delete
 									id='<%= "removeExisting" + (i + 1) %>'
@@ -398,7 +398,7 @@ else {
 				%>
 
 					<div>
-						<aui:input label="" name='<%= "msgFile" + i %>' size="70" type="file" />
+						<aui:input label="" name='<%= "msgFile" + i %>' size="70" title="message-attachment" type="file" />
 					</div>
 
 				<%

@@ -48,6 +48,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -202,6 +203,20 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 			activities, serviceContext);
 
 		return rss.getBytes(StringPool.UTF8);
+	}
+
+	@Override
+	protected boolean isRSSFeedsEnabled(PortletRequest portletRequest)
+		throws Exception {
+
+		if (!super.isRSSFeedsEnabled(portletRequest)) {
+			return false;
+		}
+
+		PortletPreferences portletPreferences = portletRequest.getPreferences();
+
+		return GetterUtil.getBoolean(
+			portletPreferences.getValue("enableRss", null), true);
 	}
 
 }

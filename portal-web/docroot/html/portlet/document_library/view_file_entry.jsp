@@ -82,10 +82,10 @@ else {
 	assetClassPK = fileEntry.getFileEntryId();
 }
 
-String webDavUrl = StringPool.BLANK;
+String webDavURL = StringPool.BLANK;
 
 if (portletDisplay.isWebDAVEnabled()) {
-	webDavUrl = DLUtil.getWebDavURL(themeDisplay, folder, fileEntry);
+	webDavURL = DLUtil.getWebDavURL(themeDisplay, folder, fileEntry);
 }
 
 boolean hasAudio = AudioProcessorUtil.hasAudio(fileVersion);
@@ -417,7 +417,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 					</div>
 				</c:if>
 
-				<c:if test="<%= showAssetMetadata && PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED %>">
+				<c:if test="<%= showAssetMetadata && PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED && showComments %>">
 					<liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-document-library-comments" extended="<%= true %>" persistState="<%= true %>" title="comments">
 						<portlet:actionURL var="discussionURL">
 							<portlet:param name="struts_action" value="/document_library/edit_file_entry_discussion" />
@@ -437,19 +437,19 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 			</div>
 		</aui:col>
 
-		<aui:col cssClass="lfr-asset-column-details context-pane" last="<%= true %>" width="<%= 30 %>">
-			<div class="body-row asset-details">
+		<aui:col cssClass="context-pane lfr-asset-column-details" last="<%= true %>" width="<%= 30 %>">
+			<div class="asset-details body-row">
 				<c:if test="<%= showAssetMetadata %>">
 					<div class="asset-details-content">
 						<h3 class="version <%= fileEntry.isCheckedOut() ? "document-locked" : StringPool.BLANK %>">
 							<liferay-ui:message key="version" /> <%= HtmlUtil.escape(fileVersion.getVersion()) %>
 						</h3>
 
-						<div class="lfr-asset-icon lfr-asset-author">
+						<div class="lfr-asset-author lfr-asset-icon">
 							<liferay-ui:message arguments="<%= HtmlUtil.escape(fileVersion.getStatusByUserName()) %>" key="last-updated-by-x" />
 						</div>
 
-						<div class="lfr-asset-icon lfr-asset-date">
+						<div class="lfr-asset-date lfr-asset-icon">
 							<%= dateFormatDateTime.format(fileVersion.getModifiedDate()) %>
 						</div>
 
@@ -467,11 +467,18 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 						<span class="download-document">
 							<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) %>">
+
+								<%
+								String previewURL = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK);
+
+								String downloadURL = HttpUtil.addParameter(previewURL, "download", true);
+								%>
+
 								<liferay-ui:icon
 									image="download"
 									label="<%= true %>"
 									message='<%= LanguageUtil.get(pageContext, "download") + " (" + TextFormatter.formatStorageSize(fileVersion.getSize(), locale) + ")" %>'
-									url="<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"
+									url="<%= downloadURL %>"
 								/>
 							</c:if>
 						</span>
@@ -508,17 +515,12 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							</c:choose>
 						</span>
 
-						<div class="lfr-asset-field url-file-container hide">
-							<aui:field-wrapper name="url">
-								<liferay-ui:input-resource
-									id="url"
-									url="<%= DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, false, true) %>"
-								/>
-							</aui:field-wrapper>
+						<div class="hide lfr-asset-field url-file-container">
+							<aui:input name="url" type="resource" value="<%= DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, false, true) %>" />
 						</div>
 
 						<c:if test="<%= portletDisplay.isWebDAVEnabled() && fileEntry.isSupportsSocial() %>">
-							<div class="lfr-asset-field webdav-url-file-container hide">
+							<div class="hide lfr-asset-field webdav-url-file-container">
 
 								<%
 								String webDavHelpMessage = null;
@@ -531,12 +533,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 								}
 								%>
 
-								<aui:field-wrapper helpMessage="<%= webDavHelpMessage %>" name="webdavUrl">
-									<liferay-ui:input-resource
-										id="webdavUrl"
-										url="<%= webDavUrl %>"
-									/>
-								</aui:field-wrapper>
+								<aui:input helpMessage="<%= webDavHelpMessage %>" name="webDavURL"  type="resource" value="<%= webDavURL %>" />
 							</div>
 						</c:if>
 					</div>
@@ -867,7 +864,14 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 					label: '<%= UnicodeLanguageUtil.get(pageContext, "download") %>',
 					on: {
 						click: function(event) {
-							location.href = '<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>';
+
+							<%
+							String previewURL = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK);
+
+							String downloadURL = HttpUtil.addParameter(previewURL, "download", true);
+							%>
+
+							location.href = '<%= downloadURL %>';
 						}
 					}
 				}
@@ -992,7 +996,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							Liferay.Util.openWindow(
 								{
 									title: '<%= UnicodeLanguageUtil.get(pageContext, "permissions") %>',
-									uri: '<%= permissionsURL.toString() %>',
+									uri: '<%= permissionsURL.toString() %>'
 								}
 							);
 						}

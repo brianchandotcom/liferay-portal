@@ -14,7 +14,11 @@
 
 package com.liferay.portlet.bookmarks.service.impl;
 
-import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -34,7 +38,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.TreePathUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
@@ -51,9 +54,8 @@ import com.liferay.portlet.bookmarks.EntryURLException;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
-import com.liferay.portlet.bookmarks.model.impl.BookmarksEntryModelImpl;
-import com.liferay.portlet.bookmarks.model.impl.BookmarksFolderModelImpl;
 import com.liferay.portlet.bookmarks.service.base.BookmarksEntryLocalServiceBaseImpl;
+import com.liferay.portlet.bookmarks.service.persistence.BookmarksEntryActionableDynamicQuery;
 import com.liferay.portlet.bookmarks.social.BookmarksActivityKeys;
 import com.liferay.portlet.bookmarks.util.BookmarksUtil;
 import com.liferay.portlet.bookmarks.util.comparator.EntryModifiedDateComparator;
@@ -444,21 +446,10 @@ public class BookmarksEntryLocalServiceImpl
 	}
 
 	@Override
-	public void rebuildTree(long companyId) throws SystemException {
+	public void rebuildTree(long companyId)
+		throws PortalException, SystemException {
+
 		bookmarksFolderLocalService.rebuildTree(companyId);
-
-		Session session = bookmarksEntryPersistence.openSession();
-
-		try {
-			TreePathUtil.rebuildTree(
-				session, companyId, BookmarksEntryModelImpl.TABLE_NAME,
-				BookmarksFolderModelImpl.TABLE_NAME, "folderId", true);
-		}
-		finally {
-			bookmarksEntryPersistence.closeSession(session);
-
-			bookmarksEntryPersistence.clearCache();
-		}
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -511,6 +502,59 @@ public class BookmarksEntryLocalServiceImpl
 		searchContext.setUserId(userId);
 
 		return indexer.search(searchContext);
+	}
+
+	@Override
+	public void setTreePaths(
+			final long folderId, final String treePath, final boolean reindex)
+		throws PortalException, SystemException {
+
+		if (treePath == null) {
+			throw new IllegalArgumentException("Tree path is null");
+		}
+
+		final Indexer indexer = IndexerRegistryUtil.getIndexer(
+				BookmarksEntry.class.getName());
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			new BookmarksEntryActionableDynamicQuery() {
+
+				@Override
+				protected void addCriteria(DynamicQuery dynamicQuery) {
+					Property folderIdProperty = PropertyFactoryUtil.forName(
+						"folderId");
+
+					dynamicQuery.add(folderIdProperty.eq(folderId));
+
+					Property treePathProperty = PropertyFactoryUtil.forName(
+						"treePath");
+
+					dynamicQuery.add(
+						RestrictionsFactoryUtil.or(
+							treePathProperty.isNull(),
+							treePathProperty.ne(treePath)));
+				}
+
+				@Override
+				protected void performAction(Object object)
+					throws PortalException, SystemException {
+
+					BookmarksEntry entry = (BookmarksEntry)object;
+
+					entry.setTreePath(treePath);
+
+					updateBookmarksEntry(entry);
+
+					if (!reindex) {
+						return;
+					}
+
+					indexer.reindex(entry);
+				}
+
+			};
+
+		actionableDynamicQuery.performActions();
 	}
 
 	@Override

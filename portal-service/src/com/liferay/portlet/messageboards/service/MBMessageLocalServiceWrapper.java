@@ -770,12 +770,25 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 	}
 
 	@Override
+	public void moveDiscussionToTrash(java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_mbMessageLocalService.moveDiscussionToTrash(className, classPK);
+	}
+
+	@Override
 	public long moveMessageAttachmentToTrash(long userId, long messageId,
 		java.lang.String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _mbMessageLocalService.moveMessageAttachmentToTrash(userId,
 			messageId, fileName);
+	}
+
+	@Override
+	public void restoreDiscussionFromTrash(java.lang.String className,
+		long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_mbMessageLocalService.restoreDiscussionFromTrash(className, classPK);
 	}
 
 	@Override

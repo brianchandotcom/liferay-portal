@@ -28,7 +28,7 @@ DDLRecord record = (DDLRecord)row.getObject();
 long formDDMTemplateId = GetterUtil.getLong((String)row.getParameter("formDDMTemplateId"));
 
 boolean hasDeletePermission = GetterUtil.getBoolean((String)row.getParameter("hasDeletePermission"));
-boolean hasUpdatePermission = GetterUtil.getBoolean((String)row.getParameter("hasUpdatePermission"));
+boolean hasUpdatePermission = GetterUtil.getBoolean((String)row.getParameter("hasUpdatePermission")) || ((record.getStatus() == WorkflowConstants.STATUS_DRAFT) && (record.getUserId() == themeDisplay.getUserId()));
 
 DDLRecordVersion recordVersion = record.getRecordVersion();
 

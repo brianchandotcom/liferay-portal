@@ -18,27 +18,45 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Role;
 
-import java.io.Serializable;
-
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public interface PermissionCheckerBag extends Serializable {
+public interface PermissionCheckerBag extends UserPermissionCheckerBag {
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             UserPermissionCheckerBag#getGroups()}
+	 */
 	public List<Group> getGroups();
 
 	public long[] getRoleIds();
 
 	public List<Role> getRoles();
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             UserPermissionCheckerBag#getUserGroups()}
+	 */
 	public List<Group> getUserGroups();
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             UserPermissionCheckerBag#getUserOrgGroups()}
+	 */
 	public List<Group> getUserOrgGroups();
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             UserPermissionCheckerBag#getUserOrgs()}
+	 */
 	public List<Organization> getUserOrgs();
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             UserPermissionCheckerBag#getUserUserGroupGroups()}
+	 */
 	public List<Group> getUserUserGroupGroups();
 
 	/**

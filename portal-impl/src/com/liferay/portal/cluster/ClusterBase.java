@@ -15,6 +15,7 @@
 package com.liferay.portal.cluster;
 
 import com.liferay.portal.kernel.cluster.Address;
+import com.liferay.portal.kernel.io.Serializer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -24,8 +25,12 @@ import com.liferay.portal.kernel.util.SocketUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
+import java.io.Serializable;
+
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+
+import java.nio.ByteBuffer;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -76,6 +81,26 @@ public abstract class ClusterBase {
 
 	public boolean isEnabled() {
 		return PropsValues.CLUSTER_LINK_ENABLED;
+	}
+
+	protected void sendJGroupsMessage(
+			JChannel jChannel, org.jgroups.Address destAddress,
+			Serializable serializable)
+		throws Exception {
+
+		Serializer serializer = new Serializer();
+
+		serializer.writeObject(serializable);
+
+		ByteBuffer byteBuffer = serializer.toByteBuffer();
+
+		jChannel.send(
+			destAddress, byteBuffer.array(), byteBuffer.position(),
+			byteBuffer.remaining());
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Send message " + serializable);
+		}
 	}
 
 	protected JChannel createJChannel(

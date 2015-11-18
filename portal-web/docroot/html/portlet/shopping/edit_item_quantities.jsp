@@ -17,12 +17,10 @@
 <%@ include file="/html/portlet/shopping/init.jsp" %>
 
 <%
-String[] fieldsQuantities = StringUtil.split(ParamUtil.getString(request, "fieldsQuantities"));
-
 List<String> names = new ArrayList<String>();
 List<String[]> values = new ArrayList<String[]>();
 
-for (int i = 0; i < 9; i++) {
+for (int i = 0;; i++) {
 	String n = request.getParameter("n" + i);
 	String v = request.getParameter("v" + i);
 
@@ -34,83 +32,110 @@ for (int i = 0; i < 9; i++) {
 	values.add(StringUtil.split(v));
 }
 
+int[] repeats = new int[values.size()];
+
 int rowsCount = 1;
 
-for (String[] vArray : values) {
-	rowsCount = rowsCount * vArray.length;
+for (int i = values.size() - 1; i >= 0; i--) {
+	repeats[i] = rowsCount;
+
+	String[] vArray = values.get(i);
+
+	rowsCount *= vArray.length;
 }
 %>
 
 <aui:form method="post" name="fm">
 	<aui:fieldset>
-		<table border="1" cellpadding="4" cellspacing="0">
-		<tr>
+		<liferay-ui:search-container
+			headerNames="<%= StringUtil.merge(names) %>"
+			iteratorURL="<%= currentURLObj %>"
+			total="<%= rowsCount %>"
+		>
 
-			<%
-			for (String name : names) {
-			%>
+		<liferay-ui:search-container-results
+			results="<%= _getPagePermutations(values, repeats, searchContainer.getStart(), searchContainer.getResultEnd()) %>"
+		/>
 
-				<td>
-					<strong><%= HtmlUtil.escape(name) %></strong>
-				</td>
-
-			<%
-			}
-			%>
-
-			<td>
-				<strong><liferay-ui:message key="quantity" /></strong>
-			</td>
-		</tr>
-
-		<%
-		for (int i = 0; i < rowsCount; i++) {
-		%>
-
-			<tr>
+			<liferay-ui:search-container-row
+				className="String[]"
+				modelVar="rowValues"
+			>
 
 				<%
-				for (int j = 0; j < names.size(); j++) {
-					int numOfRepeats = 1;
-
-					for (int k = j + 1; k < values.size(); k++) {
-						String[] vArray = values.get(k);
-
-						numOfRepeats = numOfRepeats * vArray.length;
-					}
-
-					String[] vArray = values.get(j);
-
-					int arrayPos;
-
-					for (arrayPos = i / numOfRepeats; arrayPos >= vArray.length; arrayPos = arrayPos - vArray.length) {
-					}
+				for (int i = 0; i < rowValues.length; i++) {
 				%>
 
-					<td>
-						<%= HtmlUtil.escape(vArray[arrayPos]) %>
-					</td>
+					<liferay-ui:search-container-column-text
+						name="<%= names.get(i) %>"
+						value="<%= rowValues[i] %>"
+					/>
 
 				<%
 				}
 
-				int fieldsQuantity = 0;
+				request.setAttribute("start", searchContainer.getStart());
+				%>
 
-				if (i < fieldsQuantities.length) {
-					fieldsQuantity = GetterUtil.getInteger(fieldsQuantities[i]);
+				<liferay-ui:search-container-column-jsp
+					name="quantity"
+					path="/html/portlet/shopping/edit_item_quantities_column.jsp"
+				/>
+
+			</liferay-ui:search-container-row>
+
+			<aui:script>
+				var fieldsQuantities = opener.document.<portlet:namespace />fm.<portlet:namespace />fieldsQuantities.value;
+				var itemQuantities = [];
+
+				if (fieldsQuantities) {
+					itemQuantities = fieldsQuantities.split(',');
+				}
+
+				while (itemQuantities.length < <%= searchContainer.getResultEnd() %>) {
+					itemQuantities.push(0);
+				}
+
+				<%
+				for (int i = searchContainer.getStart(); i < searchContainer.getResultEnd(); i++) {
+				%>
+
+					document.<portlet:namespace />fm.<portlet:namespace />fieldsQuantity<%= i %>.value = itemQuantities[<%= i %>];
+
+				<%
 				}
 				%>
 
-				<td>
-					<aui:input label="" name='<%= "fieldsQuantity" + i %>' size="4" type="text" value="<%= fieldsQuantity %>" />
-				</td>
-			</tr>
+				function <portlet:namespace />setItemQuantities() {
 
-		<%
-		}
-		%>
+					<%
+					for (int i = searchContainer.getStart(); i < searchContainer.getResultEnd(); i++) {
+					%>
 
-		</table>
+						itemQuantities.splice(<%= i %>, 1, document.<portlet:namespace />fm.<portlet:namespace />fieldsQuantity<%= i %>.value);
+
+					<%
+					}
+					%>
+
+					opener.document.<portlet:namespace />fm.<portlet:namespace />fieldsQuantities.value = itemQuantities.join(',');
+				}
+
+				function <portlet:namespace />updateItemQuantities() {
+					<portlet:namespace />setItemQuantities();
+
+					self.close();
+				}
+
+				AUI().all('.taglib-page-iterator li a').each(
+					function(node) {
+						node.on('click', <portlet:namespace />setItemQuantities);
+					}
+				);
+			</aui:script>
+
+			<liferay-ui:search-iterator />
+		</liferay-ui:search-container>
 	</aui:fieldset>
 
 	<aui:button-row>
@@ -139,3 +164,23 @@ for (String[] vArray : values) {
 		self.close();
 	}
 </aui:script>
+
+<%!
+private List<String[]> _getPagePermutations(List<String[]> values, int[] repeats, int start, int resultEnd) {
+	List<String[]> rows = new ArrayList<String[]>(resultEnd - start);
+
+	for (int i = start; i < resultEnd; i++) {
+		String[] row = new String[values.size()];
+
+		for (int j = 0; j < row.length; j++) {
+			String[] vArray = values.get(j);
+
+			row[j] = vArray[(i / repeats[j]) % vArray.length];
+		}
+
+		rows.add(row);
+	}
+
+	return rows;
+}
+%>

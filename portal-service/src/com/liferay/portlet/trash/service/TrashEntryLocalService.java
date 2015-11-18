@@ -280,6 +280,9 @@ public interface TrashEntryLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void deleteEntries(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Deletes the trash entry with the primary key.
 	*

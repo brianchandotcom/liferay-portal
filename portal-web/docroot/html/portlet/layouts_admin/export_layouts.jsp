@@ -623,6 +623,30 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 		function(event) {
 			event.preventDefault();
 
+			var A = AUI();
+
+			var allContentRadioChecked = A.one('#<portlet:namespace />allContent').attr('checked');
+
+			if (allContentRadioChecked) {
+				var selectedContents = A.one('#<portlet:namespace />selectContents');
+
+				var checkedNodes = selectedContents.all('input[type=checkbox]');
+
+				checkedNodes.each(
+					function(item, index, collection) {
+						if (!item.attr('checked')) {
+							item.attr('checked', true);
+
+							Liferay.Util.updateCheckboxValue(item);
+						}
+					}
+				);
+
+				var portletDataControlDefault = A.one('#<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>');
+
+				portletDataControlDefault.val(true);
+			}
+
 			submitForm(form, form.attr('action'), false);
 		}
 	);

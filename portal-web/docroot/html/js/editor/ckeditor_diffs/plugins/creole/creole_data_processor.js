@@ -62,10 +62,8 @@
 			return data;
 		},
 
-		toHtml: function(data, fixForBody) {
+		toHtml: function(data, config) {
 			var instance = this;
-
-			var div = document.createElement('div');
 
 			if (!instance._creoleParser) {
 				instance._creoleParser = new CKEDITOR.CreoleParser(
@@ -75,9 +73,22 @@
 				);
 			}
 
-			instance._creoleParser.parse(div, data);
+			if (config) {
+				var fragment = CKEDITOR.htmlParser.fragment.fromHtml(data);
 
-			data = div.innerHTML;
+				var writer = new CKEDITOR.htmlParser.basicWriter();
+
+				fragment.writeHtml(writer);
+
+				data = writer.getHtml();
+			}
+			else {
+				var div = document.createElement('div');
+
+				instance._creoleParser.parse(div, data);
+
+				data = div.innerHTML;
+			}
 
 			return data;
 		},
@@ -298,6 +309,7 @@
 			var instance = this;
 
 			var res = new Array(parseInt(params[1], 10) + 1);
+
 			res = res.join(STR_EQUALS);
 
 			if (instance._isDataAvailable() && !instance._isLastItemNewLine()) {
@@ -336,19 +348,17 @@
 		_handleLink: function(element, listTagsIn, listTagsOut) {
 			var hrefAttribute = element.getAttribute('href');
 
-			if (CKEDITOR.env.ie && (CKEDITOR.env.version < 8)) {
-				var ckeSavedHref = element.getAttribute('data-cke-saved-href');
-
-				if (ckeSavedHref) {
-					hrefAttribute = ckeSavedHref;
-				}
-			}
-
 			if (!REGEX_URL_PREFIX.test(hrefAttribute)) {
 				hrefAttribute = decodeURIComponent(hrefAttribute);
 			}
 
-			listTagsIn.push('[[', hrefAttribute, STR_PIPE);
+			var linkText = element.textContent || element.innerText;
+
+			listTagsIn.push('[[');
+
+			if (linkText !== hrefAttribute) {
+				listTagsIn.push(hrefAttribute, STR_PIPE);
+			}
 
 			listTagsOut.push(']]');
 		},
@@ -540,7 +550,10 @@
 		_pushTagList: function(tagsList) {
 			var instance = this;
 
-			var endResult, i, length, tag;
+			var endResult;
+			var i;
+			var length;
+			var tag;
 
 			endResult = instance._endResult;
 			length = tagsList.length;
@@ -572,20 +585,6 @@
 				attachmentURLPrefix = editor.config.attachmentURLPrefix;
 
 				editor.dataProcessor = new CreoleDataProcessor(editor);
-
-				editor.on(
-					'paste',
-					function(event) {
-						var data = event.data;
-
-						var htmlData = data.dataValue;
-
-						htmlData = editor.dataProcessor.toDataFormat(htmlData);
-
-						data.dataValue = htmlData;
-					},
-					editor.element.$
-				);
 
 				editor.fire('customDataProcessorLoaded');
 			}

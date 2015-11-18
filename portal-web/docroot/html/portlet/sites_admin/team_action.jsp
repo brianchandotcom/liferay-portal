@@ -43,7 +43,7 @@ Team team = (Team)row.getObject();
 
 		int[] roleTypes = {RoleConstants.TYPE_REGULAR, RoleConstants.TYPE_SITE};
 
-		Group group = GroupServiceUtil.getGroup(team.getGroupId());
+		Group group = GroupLocalServiceUtil.getGroup(team.getGroupId());
 
 		if (group.isOrganization()) {
 			roleTypes = ArrayUtil.append(roleTypes, RoleConstants.TYPE_ORGANIZATION);

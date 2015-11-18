@@ -731,7 +731,7 @@ public class DDMTemplateFinderImpl
 			sql = StringUtil.replace(
 				sql, "[$CLASS_PK$]", getClassPKs(classPKs));
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(name)", StringPool.LIKE, false, names);
+				sql, "lower(DDMTemplate.name)", StringPool.LIKE, false, names);
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "description", StringPool.LIKE, false, descriptions);
 			sql = CustomSQLUtil.replaceKeywords(
@@ -872,7 +872,7 @@ public class DDMTemplateFinderImpl
 			sql = StringUtil.replace(
 				sql, "[$CLASS_PK$]", getClassPKs(classPKs));
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(name)", StringPool.LIKE, false, names);
+				sql, "lower(DDMTemplate.name)", StringPool.LIKE, false, names);
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "description", StringPool.LIKE, false, descriptions);
 			sql = CustomSQLUtil.replaceKeywords(

@@ -1167,8 +1167,8 @@ public class PortletURLImpl
 			result = HtmlUtil.escape(result);
 		}
 
-		if (result.length() > _URL_MAXIMUM_LENGTH) {
-			result = shortenURL(result, 2);
+		if (result.length() > Http.URL_MAXIMUM_LENGTH) {
+			result = HttpUtil.shortenURL(result, 2);
 		}
 
 		return result;
@@ -1403,57 +1403,6 @@ public class PortletURLImpl
 			return value;
 		}
 	}
-
-	protected String shortenURL(String url, int count) {
-		if (count == 0) {
-			return null;
-		}
-
-		StringBundler sb = new StringBundler();
-
-		String[] params = url.split(StringPool.AMPERSAND);
-
-		for (int i = 0; i < params.length; i++) {
-			String param = params[i];
-
-			if (param.contains("_backURL=") || param.contains("_redirect=") ||
-				param.contains("_returnToFullPageURL=")) {
-
-				int pos = param.indexOf(StringPool.EQUAL);
-
-				String qName = param.substring(0, pos);
-
-				String redirect = param.substring(pos + 1);
-
-				redirect = HttpUtil.decodeURL(redirect);
-
-				String newURL = shortenURL(redirect, count - 1);
-
-				if (newURL != null) {
-					newURL = HttpUtil.encodeURL(newURL);
-
-					sb.append(qName);
-					sb.append(StringPool.EQUAL);
-					sb.append(newURL);
-
-					if (i < (params.length - 1)) {
-						sb.append(StringPool.AMPERSAND);
-					}
-				}
-			}
-			else {
-				sb.append(param);
-
-				if (i < (params.length - 1)) {
-					sb.append(StringPool.AMPERSAND);
-				}
-			}
-		}
-
-		return sb.toString();
-	}
-
-	private static final long _URL_MAXIMUM_LENGTH = 2083;
 
 	private static Log _log = LogFactoryUtil.getLog(PortletURLImpl.class);
 

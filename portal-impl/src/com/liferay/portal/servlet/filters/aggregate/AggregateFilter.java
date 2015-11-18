@@ -422,7 +422,7 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 				AggregateFilter.class, request, bufferCacheServletResponse,
 				filterChain);
 
-			bufferCacheServletResponse.finishResponse();
+			bufferCacheServletResponse.finishResponse(false);
 
 			content = bufferCacheServletResponse.getString();
 

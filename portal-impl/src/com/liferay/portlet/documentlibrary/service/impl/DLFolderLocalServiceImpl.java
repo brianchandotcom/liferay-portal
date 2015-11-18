@@ -45,6 +45,7 @@ import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
+import com.liferay.portal.model.TreeModel;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.WorkflowDefinitionLink;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
@@ -799,6 +800,14 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(folderId);
+
+		parentFolderId = getParentFolderId(dlFolder, parentFolderId);
+
+		if (dlFolder.getParentFolderId() == parentFolderId) {
+			return dlFolder;
+		}
+
 		boolean hasLock = hasFolderLock(userId, folderId);
 
 		Lock lock = null;
@@ -811,10 +820,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		}
 
 		try {
-			DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(folderId);
-
-			parentFolderId = getParentFolderId(dlFolder, parentFolderId);
-
 			validateFolder(
 				dlFolder.getFolderId(), dlFolder.getGroupId(), parentFolderId,
 				dlFolder.getName());
@@ -827,6 +832,10 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			dlFolderPersistence.update(dlFolder);
 
 			dlAppHelperLocalService.moveFolder(new LiferayFolder(dlFolder));
+
+			rebuildTree(
+				dlFolder.getCompanyId(), folderId, dlFolder.getTreePath(),
+				true);
 
 			return dlFolder;
 		}
@@ -841,9 +850,22 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void rebuildTree(long companyId) throws SystemException {
-		TreePathUtil.rebuildTree(
+	public void rebuildTree(long companyId)
+		throws PortalException, SystemException {
+
+		rebuildTree(
 			companyId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringPool.SLASH, false);
+	}
+
+	@Override
+	public void rebuildTree(
+			long companyId, long parentFolderId, String parentTreePath,
+			final boolean reindex)
+		throws PortalException, SystemException {
+
+		TreePathUtil.rebuildTree(
+			companyId, parentFolderId, parentTreePath,
 			new TreeModelFinder<DLFolder>() {
 
 				@Override
@@ -858,6 +880,34 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 						size, new FolderIdComparator());
 				}
 
+				@Override
+				public void rebuildDependentModelsTreePaths(
+						long parentPrimaryKey, String treePath)
+					throws PortalException, SystemException {
+
+					dlFileEntryLocalService.setTreePaths(
+						parentPrimaryKey, treePath, false);
+					dlFileShortcutLocalService.setTreePaths(
+						parentPrimaryKey, treePath);
+					dlFileVersionLocalService.setTreePaths(
+						parentPrimaryKey, treePath);
+				}
+
+				@Override
+				public void reindexTreeModels(List<TreeModel> treeModels)
+					throws PortalException {
+
+					if (!reindex) {
+						return;
+					}
+
+					Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+						DLFolder.class);
+
+					for (TreeModel treeModel : treeModels) {
+						indexer.reindex(treeModel);
+					}
+				}
 			}
 		);
 	}
@@ -1040,9 +1090,14 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			validateFolder(
 				folderId, dlFolder.getGroupId(), parentFolderId, name);
 
+			long oldParentFolderId = dlFolder.getParentFolderId();
+
+			if (oldParentFolderId != parentFolderId) {
+				dlFolder.setParentFolderId(parentFolderId);
+				dlFolder.setTreePath(dlFolder.buildTreePath());
+			}
+
 			dlFolder.setModifiedDate(serviceContext.getModifiedDate(null));
-			dlFolder.setParentFolderId(parentFolderId);
-			dlFolder.setTreePath(dlFolder.buildTreePath());
 			dlFolder.setName(name);
 			dlFolder.setDescription(description);
 			dlFolder.setExpandoBridgeAttributes(serviceContext);
@@ -1063,6 +1118,12 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 			dlAppHelperLocalService.updateFolder(
 				userId, new LiferayFolder(dlFolder), serviceContext);
+
+			if (oldParentFolderId != parentFolderId) {
+				rebuildTree(
+					dlFolder.getCompanyId(), folderId, dlFolder.getTreePath(),
+					true);
+			}
 
 			return dlFolder;
 		}
@@ -1204,8 +1265,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		if (dlFolder.getFolderId() == parentFolderId) {
 			throw new InvalidFolderException(
-				String.format(
-					"Cannot move folder %s into itself", parentFolderId));
+				InvalidFolderException.CANNOT_MOVE_INTO_ITSELF, parentFolderId);
 		}
 
 		List<Long> subfolderIds = new ArrayList<Long>();
@@ -1215,9 +1275,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		if (subfolderIds.contains(parentFolderId)) {
 			throw new InvalidFolderException(
-				String.format(
-					"Cannot move folder %s into one of its children",
-					parentFolderId));
+				InvalidFolderException.CANNOT_MOVE_INTO_CHILD_FOLDER,
+				parentFolderId);
 		}
 
 		return parentFolderId;

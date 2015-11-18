@@ -534,6 +534,14 @@
 	padding: 0;
 }
 
+/* ---------- CKEditor contents ---------- */
+
+.aui {
+	.cke_editable [class*="span"] {
+		float: none;
+	}
+}
+
 /* ---------- CKEditor menu ---------- */
 
 .aui {
@@ -569,6 +577,24 @@
 				text-decoration: none;
 			}
 		}
+	}
+}
+
+/* ---------- CKEditor source ---------- */
+
+.aui {
+	.cke_source {
+		@include box-sizing(border-box);
+	}
+}
+
+/* ---------- CKEditor table ---------- */
+
+.cke_show_border {
+	width: 500px;
+
+	td {
+		height: 15px;
 	}
 }
 

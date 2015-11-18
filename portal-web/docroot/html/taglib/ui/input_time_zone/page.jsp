@@ -19,7 +19,6 @@
 <%
 boolean autoFocus = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-time-zone:autoFocus"));
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-time-zone:cssClass"));
-boolean daylight = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-time-zone:daylight"));
 boolean disabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-time-zone:disabled"));
 int displayStyle = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:input-time-zone:displayStyle"));
 String name = namespace + request.getAttribute("liferay-ui:input-time-zone:name");
@@ -37,7 +36,7 @@ numberFormat.setMinimumIntegerDigits(2);
 	</c:if>
 
 	<%
-	Set<TimeZone> timeZones = new TreeSet<TimeZone>(new TimeZoneComparator(locale));
+	Set<TimeZone> timeZones = new TreeSet<TimeZone>(new TimeZoneComparator());
 
 	for (String timeZoneId : PropsUtil.getArray(PropsKeys.TIME_ZONES)) {
 		TimeZone curTimeZone = TimeZoneUtil.getTimeZone(timeZoneId);
@@ -48,21 +47,35 @@ numberFormat.setMinimumIntegerDigits(2);
 	for (TimeZone curTimeZone : timeZones) {
 		String offset = StringPool.BLANK;
 
-		int rawOffset = curTimeZone.getRawOffset();
+		boolean inDaylightTime = curTimeZone.inDaylightTime(new Date());
 
-		if (rawOffset > 0) {
-			offset = "+";
+		int totalOffset = curTimeZone.getRawOffset();
+
+		if (inDaylightTime) {
+			totalOffset = totalOffset + curTimeZone.getDSTSavings();
 		}
 
-		if (rawOffset != 0) {
-			String offsetHour = numberFormat.format(rawOffset / Time.HOUR);
-			String offsetMinute = numberFormat.format(Math.abs(rawOffset % Time.HOUR) / Time.MINUTE);
+		if (totalOffset != 0) {
+			String offsetHour = numberFormat.format(totalOffset / Time.HOUR);
+			String offsetMinute = numberFormat.format(Math.abs(totalOffset % Time.HOUR) / Time.MINUTE);
 
-			offset += offsetHour + ":" + offsetMinute;
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(StringPool.SPACE);
+
+			if (totalOffset > 0) {
+				sb.append(StringPool.PLUS);
+			}
+
+			sb.append(offsetHour);
+			sb.append(StringPool.COLON);
+			sb.append(offsetMinute);
+
+			offset = sb.toString();
 		}
 	%>
 
-		<option <%= value.equals(curTimeZone.getID()) ? "selected" : "" %> value="<%= curTimeZone.getID() %>">(UTC <%= offset %>) <%= curTimeZone.getDisplayName(daylight, displayStyle, locale) %></option>
+		<option <%= value.equals(curTimeZone.getID()) ? "selected" : "" %> value="<%= curTimeZone.getID() %>">(UTC<%= offset %>) <%= curTimeZone.getDisplayName(inDaylightTime, displayStyle, locale) %></option>
 
 	<%
 	}

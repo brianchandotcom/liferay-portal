@@ -41,6 +41,7 @@ import com.liferay.portlet.journal.NoSuchArticleImageException;
 import com.liferay.portlet.journal.model.JournalArticleImage;
 import com.liferay.portlet.journal.model.impl.JournalArticleImageImpl;
 import com.liferay.portlet.journal.model.impl.JournalArticleImageModelImpl;
+import com.liferay.portlet.journal.service.persistence.JournalArticleImagePersistence;
 
 import java.io.Serializable;
 

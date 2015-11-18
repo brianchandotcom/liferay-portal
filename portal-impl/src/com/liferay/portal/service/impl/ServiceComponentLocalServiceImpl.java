@@ -30,12 +30,14 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeTableListener;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.ServiceComponent;
 import com.liferay.portal.service.base.ServiceComponentLocalServiceBaseImpl;
@@ -288,7 +290,7 @@ public class ServiceComponentLocalServiceImpl
 			return;
 		}
 
-		Document document = SAXReaderUtil.read(inputStream);
+		Document document = UnsecureSAXReaderUtil.read(inputStream);
 
 		Element rootElement = document.getRootElement();
 
@@ -339,7 +341,7 @@ public class ServiceComponentLocalServiceImpl
 
 				db.runSQLTemplateString(tablesSQL, true, false);
 
-				upgradeModels(classLoader, previousServiceComponent);
+				upgradeModels(classLoader, previousServiceComponent, tablesSQL);
 			}
 
 			if (!sequencesSQL.equals(
@@ -364,21 +366,21 @@ public class ServiceComponentLocalServiceImpl
 		}
 	}
 
-	protected List<String> getModels(ClassLoader classLoader)
+	protected List<String> getModelNames(ClassLoader classLoader)
 		throws DocumentException, IOException {
 
-		List<String> models = new ArrayList<String>();
+		List<String> modelNames = new ArrayList<String>();
 
 		String xml = StringUtil.read(
 			classLoader, "META-INF/portlet-model-hints.xml");
 
-		models.addAll(getModels(xml));
+		modelNames.addAll(getModelNames(xml));
 
 		try {
 			xml = StringUtil.read(
 				classLoader, "META-INF/portlet-model-hints-ext.xml");
 
-			models.addAll(getModels(xml));
+			modelNames.addAll(getModelNames(xml));
 		}
 		catch (Exception e) {
 			if (_log.isInfoEnabled()) {
@@ -388,13 +390,13 @@ public class ServiceComponentLocalServiceImpl
 			}
 		}
 
-		return models;
+		return modelNames;
 	}
 
-	protected List<String> getModels(String xml) throws DocumentException {
-		List<String> models = new ArrayList<String>();
+	protected List<String> getModelNames(String xml) throws DocumentException {
+		List<String> modelNames = new ArrayList<String>();
 
-		Document document = SAXReaderUtil.read(xml);
+		Document document = UnsecureSAXReaderUtil.read(xml);
 
 		Element rootElement = document.getRootElement();
 
@@ -403,10 +405,32 @@ public class ServiceComponentLocalServiceImpl
 		for (Element modelElement : modelElements) {
 			String name = modelElement.attributeValue("name");
 
-			models.add(name);
+			modelNames.add(name);
 		}
 
-		return models;
+		return modelNames;
+	}
+
+	protected List<String> getModifiedTableNames(
+		String previousTablesSQL, String tablesSQL) {
+
+		List<String> modifiedTableNames = new ArrayList<String>();
+
+		List<String> previousTablesSQLParts = ListUtil.toList(
+			StringUtil.split(previousTablesSQL, StringPool.SEMICOLON));
+		List<String> tablesSQLParts = ListUtil.toList(
+			StringUtil.split(tablesSQL, StringPool.SEMICOLON));
+
+		tablesSQLParts.removeAll(previousTablesSQLParts);
+
+		for (String tablesSQLPart : tablesSQLParts) {
+			int x = tablesSQLPart.indexOf("create table ");
+			int y = tablesSQLPart.indexOf(" (");
+
+			modifiedTableNames.add(tablesSQLPart.substring(x + 13, y));
+		}
+
+		return modifiedTableNames;
 	}
 
 	protected UpgradeTableListener getUpgradeTableListener(
@@ -465,39 +489,52 @@ public class ServiceComponentLocalServiceImpl
 	}
 
 	protected void upgradeModels(
-			ClassLoader classLoader, ServiceComponent previousServiceComponent)
+			ClassLoader classLoader, ServiceComponent previousServiceComponent,
+			String tablesSQL)
 		throws Exception {
 
-		List<String> models = getModels(classLoader);
+		List<String> modifiedTableNames = getModifiedTableNames(
+			previousServiceComponent.getTablesSQL(), tablesSQL);
 
-		for (String name : models) {
-			int pos = name.lastIndexOf(".model.");
+		List<String> modelNames = getModelNames(classLoader);
 
-			name =
-				name.substring(0, pos) + ".model.impl." +
-					name.substring(pos + 7) + "ModelImpl";
+		for (String modelName : modelNames) {
+			int pos = modelName.lastIndexOf(".model.");
 
-			Class<?> modelClass = Class.forName(name, true, classLoader);
+			Class<?> modelClass = Class.forName(
+				modelName.substring(0, pos) + ".model.impl." +
+					modelName.substring(pos + 7) + "ModelImpl",
+				true, classLoader);
 
-			Field tableNameField = modelClass.getField("TABLE_NAME");
-			Field tableColumnsField = modelClass.getField("TABLE_COLUMNS");
-			Field tableSQLCreateField = modelClass.getField("TABLE_SQL_CREATE");
 			Field dataSourceField = modelClass.getField("DATA_SOURCE");
 
-			String tableName = (String)tableNameField.get(null);
-			Object[][] tableColumns = (Object[][])tableColumnsField.get(null);
-			String tableSQLCreate = (String)tableSQLCreateField.get(null);
 			String dataSource = (String)dataSourceField.get(null);
 
 			if (!dataSource.equals(Entity.DEFAULT_DATA_SOURCE)) {
 				continue;
 			}
 
+			Field tableNameField = modelClass.getField("TABLE_NAME");
+
+			String tableName = (String)tableNameField.get(null);
+
+			if (!modifiedTableNames.contains(tableName)) {
+				continue;
+			}
+
+			Field tableColumnsField = modelClass.getField("TABLE_COLUMNS");
+
+			Object[][] tableColumns = (Object[][])tableColumnsField.get(null);
+
 			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
 				tableName, tableColumns);
 
 			UpgradeTableListener upgradeTableListener = getUpgradeTableListener(
 				classLoader, modelClass);
+
+			Field tableSQLCreateField = modelClass.getField("TABLE_SQL_CREATE");
+
+			String tableSQLCreate = (String)tableSQLCreateField.get(null);
 
 			upgradeTable.setCreateSQL(tableSQLCreate);
 

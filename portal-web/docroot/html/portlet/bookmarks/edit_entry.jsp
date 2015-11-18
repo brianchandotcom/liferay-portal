@@ -81,61 +81,59 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 	<aui:fieldset>
 		<c:if test="<%= ((entry != null) || (folderId <= 0) || Validator.isNotNull(referringPortletResource)) %>">
-			<aui:field-wrapper label="folder">
+
+			<%
+			String folderName = StringPool.BLANK;
+
+			if (folderId > 0) {
+				BookmarksFolder folder = BookmarksFolderServiceUtil.getFolder(folderId);
+
+				folderId = folder.getFolderId();
+				folderName = folder.getName();
+			}
+			%>
+
+			<div class="control-group">
+				<aui:input label="folder" name="folderName" type="resource" value="<%= folderName %>" />
+
+				<aui:button name="selectFolderButton" value="select" />
+
+				<aui:script use="aui-base">
+					A.one('#<portlet:namespace />selectFolderButton').on(
+						'click',
+						function(event) {
+							Liferay.Util.selectEntity(
+								{
+									dialog: {
+										constrain: true,
+										modal: true,
+										width: 680
+									},
+									id: '<portlet:namespace />selectFolder',
+									title: '<liferay-ui:message arguments="folder" key="select-x" />',
+									uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/bookmarks/select_folder" /></liferay-portlet:renderURL>'
+								},
+								function(event) {
+									var folderData = {
+										idString: 'folderId',
+										idValue: event.folderid,
+										nameString: 'folderName',
+										nameValue: event.name
+									};
+
+									Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
+								}
+							);
+						}
+					);
+				</aui:script>
 
 				<%
-				String folderName = StringPool.BLANK;
-
-				if (folderId > 0) {
-					BookmarksFolder folder = BookmarksFolderServiceUtil.getFolder(folderId);
-
-					folderId = folder.getFolderId();
-					folderName = folder.getName();
-				}
+				String taglibRemoveFolder = "Liferay.Util.removeFolderSelection('folderId', 'folderName', '" + renderResponse.getNamespace() + "');";
 				%>
 
-				<div class="input-append">
-					<liferay-ui:input-resource id="folderName" url="<%= folderName %>" />
-
-					<aui:button name="selectFolderButton" value="select" />
-
-					<aui:script use="aui-base">
-						A.one('#<portlet:namespace />selectFolderButton').on(
-							'click',
-							function(event) {
-								Liferay.Util.selectEntity(
-									{
-										dialog: {
-											constrain: true,
-											modal: true,
-											width: 680
-										},
-										id: '<portlet:namespace />selectFolder',
-										title: '<liferay-ui:message arguments="folder" key="select-x" />',
-										uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/bookmarks/select_folder" /></liferay-portlet:renderURL>'
-									},
-									function(event) {
-										var folderData = {
-											idString: 'folderId',
-											idValue: event.folderid,
-											nameString: 'folderName',
-											nameValue: event.name
-										};
-
-										Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
-									}
-								);
-							}
-						);
-					</aui:script>
-
-					<%
-					String taglibRemoveFolder = "Liferay.Util.removeFolderSelection('folderId', 'folderName', '" + renderResponse.getNamespace() + "');";
-					%>
-
-					<aui:button disabled="<%= (folderId <= 0) %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
-				</div>
-			</aui:field-wrapper>
+				<aui:button disabled="<%= (folderId <= 0) %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+			</div>
 		</c:if>
 
 		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />

@@ -569,6 +569,35 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 		}
 	</#if>
 
+	<#if entity.isTreeModel()>
+		<#assign pkColumn = entity.getPKList()?first>
+
+		<#if entity.hasColumn("parent" + pkColumn.methodName)>
+			@Override
+			@SuppressWarnings("unused")
+			public String buildTreePath() throws PortalException {
+				try {
+					return (String)invokeOnRemoteModel("buildTreePath", new Class<?>[0], new Object[0]);
+				}
+				catch (Exception e) {
+					throw new UnsupportedOperationException(e);
+				}
+			}
+		</#if>
+
+		@Override
+		public void updateTreePath(String treePath) {
+			try {
+				_treePath = treePath;
+
+				invokeOnRemoteModel("updateTreePath", new Class<?>[] {String.class}, new Object[] {treePath});
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	</#if>
+
 	<#if entity.isWorkflowEnabled()>
 		/**
 		 * @deprecated As of 6.1.0, replaced by {@link #isApproved}

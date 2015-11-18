@@ -924,11 +924,24 @@ public class ServicePreAction extends Action {
 
 		String siteAdministrationURL = urlControlPanel;
 
+		Group siteAdministrationDoAsGroup = GroupLocalServiceUtil.getGroup(
+			siteGroupId);
+
+		long siteAdministrationDoAsGroupId =
+			siteAdministrationDoAsGroup.getGroupId();
+
+		if (siteAdministrationDoAsGroup.hasStagingGroup()) {
+			Group stagingGroup = group.getStagingGroup();
+
+			siteAdministrationDoAsGroupId = stagingGroup.getGroupId();
+		}
+
 		siteAdministrationURL = HttpUtil.addParameter(
 			siteAdministrationURL, "controlPanelCategory",
 			PortletCategoryKeys.CURRENT_SITE);
 		siteAdministrationURL = HttpUtil.addParameter(
-			siteAdministrationURL, "doAsGroupId", siteGroupId);
+			siteAdministrationURL, "doAsGroupId",
+			siteAdministrationDoAsGroupId);
 
 		themeDisplay.setURLSiteAdministration(siteAdministrationURL);
 
@@ -1246,7 +1259,7 @@ public class ServicePreAction extends Action {
 			themeDisplay.setShowPageSettingsIcon(false);
 		}
 
-		if (layout.isLayoutPrototypeLinkActive()) {
+		if ((layout != null) && layout.isLayoutPrototypeLinkActive()) {
 			themeDisplay.setShowPageCustomizationIcon(false);
 		}
 

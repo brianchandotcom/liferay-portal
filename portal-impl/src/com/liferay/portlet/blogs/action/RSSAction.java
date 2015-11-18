@@ -15,6 +15,7 @@
 package com.liferay.portlet.blogs.action;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -27,6 +28,9 @@ import com.liferay.portlet.blogs.service.BlogsEntryServiceUtil;
 import com.liferay.util.RSSUtil;
 
 import java.util.Date;
+
+import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -102,6 +106,20 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 		}
 
 		return rss.getBytes(StringPool.UTF8);
+	}
+
+	@Override
+	protected boolean isRSSFeedsEnabled(PortletRequest portletRequest)
+		throws Exception {
+
+		if (!super.isRSSFeedsEnabled(portletRequest)) {
+			return false;
+		}
+
+		PortletPreferences portletPreferences = portletRequest.getPreferences();
+
+		return GetterUtil.getBoolean(
+			portletPreferences.getValue("enableRss", null), true);
 	}
 
 }

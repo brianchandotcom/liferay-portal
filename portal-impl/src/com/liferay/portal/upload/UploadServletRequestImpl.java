@@ -94,6 +94,8 @@ public class UploadServletRequestImpl
 			List<LiferayFileItem> liferayFileItemsList =
 				servletFileUpload.parseRequest(_liferayServletRequest);
 
+			_liferayServletRequest.setFinishedReadingOriginalStream(true);
+
 			for (LiferayFileItem liferayFileItem : liferayFileItemsList) {
 				if (liferayFileItem.isFormField()) {
 					liferayFileItem.setString(request.getCharacterEncoding());
@@ -202,6 +204,8 @@ public class UploadServletRequestImpl
 				}
 			}
 		}
+
+		_liferayServletRequest.cleanUp();
 	}
 
 	@Override
@@ -445,7 +449,6 @@ public class UploadServletRequestImpl
 		}
 
 		parameterNames.addAll(_regularParameters.keySet());
-		parameterNames.addAll(_fileParameters.keySet());
 
 		return Collections.enumeration(parameterNames);
 	}

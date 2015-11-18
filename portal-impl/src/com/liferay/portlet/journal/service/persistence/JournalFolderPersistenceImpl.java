@@ -45,6 +45,7 @@ import com.liferay.portlet.journal.NoSuchFolderException;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.model.impl.JournalFolderImpl;
 import com.liferay.portlet.journal.model.impl.JournalFolderModelImpl;
+import com.liferay.portlet.journal.service.persistence.JournalFolderPersistence;
 
 import java.io.Serializable;
 

@@ -469,17 +469,27 @@ AUI.add(
 
 					var config = InputLocalized._registered[id];
 
+					var languageId = initialLanguageId;
+
 					if (config) {
 						var inputLocalized = Liferay.component(id).render();
 
 						inputLocalized._onDocFocus(event);
 
-						if (initialLanguageId) {
+						if (languageId) {
 							var items = inputLocalized.get(STR_ITEMS);
 
-							inputLocalized.set(STR_SELECTED, AArray.indexOf(items, initialLanguageId));
+							var languageIndex = AArray.indexOf(items, languageId);
 
-							inputLocalized.selectFlag(initialLanguageId);
+							if (languageIndex === -1) {
+								languageId = defaultLanguageId;
+
+								languageIndex = AArray.indexOf(items, languageId);
+							}
+
+							inputLocalized.set(STR_SELECTED, languageIndex);
+
+							inputLocalized.selectFlag(languageId);
 						}
 
 						inputLocalized._onInputValueChange(event, input);

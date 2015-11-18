@@ -22,6 +22,8 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 boolean smallImage = BeanParamUtil.getBoolean(article, request, "smallImage");
 String smallImageURL = BeanParamUtil.getString(article, request, "smallImageURL");
 
+boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_article.jsp-changeStructure"));
+
 String defaultLanguageId = (String)request.getAttribute("edit_article.jsp-defaultLanguageId");
 String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageId");
 %>
@@ -69,15 +71,15 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 
 					<aui:col width="<%= (smallImage && (article != null)) ? 50 : 100 %>">
 						<aui:fieldset>
-							<aui:input cssClass="lfr-journal-small-image-type" inlineField="<%= true %>" label="small-image-url" name="smallImageType" type="radio" />
+							<aui:input cssClass="lfr-journal-small-image-type" ignoreRequestValue="<%= changeStructure %>" inlineField="<%= true %>" label="small-image-url" name="smallImageType" type="radio" />
 
-							<aui:input cssClass="lfr-journal-small-image-value" inlineField="<%= true %>" label="" name="smallImageURL" />
+							<aui:input cssClass="lfr-journal-small-image-value" ignoreRequestValue="<%= changeStructure %>" inlineField="<%= true %>" label="" name="smallImageURL" title="small-image-url" />
 						</aui:fieldset>
 
 						<aui:fieldset>
-							<aui:input cssClass="lfr-journal-small-image-type" inlineField="<%= true %>" label="small-image" name="smallImageType" type="radio" />
+							<aui:input cssClass="lfr-journal-small-image-type" ignoreRequestValue="<%= changeStructure %>" inlineField="<%= true %>" label="small-image" name="smallImageType" type="radio" />
 
-							<aui:input cssClass="lfr-journal-small-image-value" inlineField="<%= true %>" label="" name="smallFile" type="file" />
+							<aui:input cssClass="lfr-journal-small-image-value" ignoreRequestValue="<%= changeStructure %>" inlineField="<%= true %>" label="" name="smallFile" type="file" />
 						</aui:fieldset>
 					</aui:col>
 				</aui:row>
@@ -142,7 +144,14 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 				}
 			);
 
-			selectSmallImageType('<%= (article != null) && Validator.isNotNull(article.getSmallImageURL()) ? 0 : 1 %>');
+			// LPS-51306
+
+			setTimeout(
+				function() {
+					selectSmallImageType('<%= (article != null) && Validator.isNotNull(article.getSmallImageURL()) ? 0 : 1 %>');
+				},
+				0
+			);
 		</aui:script>
 	</c:if>
 </aui:fieldset>

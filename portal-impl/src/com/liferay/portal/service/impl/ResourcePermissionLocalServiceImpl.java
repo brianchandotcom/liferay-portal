@@ -147,8 +147,6 @@ public class ResourcePermissionLocalServiceImpl
 		updateResourcePermission(
 			companyId, name, scope, primKey, roleId, 0, new String[] {actionId},
 			ResourcePermissionConstants.OPERATOR_ADD);
-
-		PermissionCacheUtil.clearCache();
 	}
 
 	/**
@@ -246,6 +244,10 @@ public class ResourcePermissionLocalServiceImpl
 				resourcePermission.setActionIds(resourceActionBitwiseValue);
 
 				session.save(resourcePermission);
+
+				PermissionCacheUtil.clearResourcePermissionCache(
+					resourcePermission.getScope(), resourcePermission.getName(),
+					resourcePermission.getPrimKey());
 			}
 		}
 		catch (Exception e) {
@@ -948,6 +950,8 @@ public class ResourcePermissionLocalServiceImpl
 		if (resourcePermissions.isEmpty()) {
 			roleLocalService.deleteRole(fromRoleId);
 		}
+
+		PermissionCacheUtil.clearCache();
 	}
 
 	/**
@@ -981,8 +985,6 @@ public class ResourcePermissionLocalServiceImpl
 		updateResourcePermission(
 			companyId, name, scope, primKey, roleId, 0, new String[] {actionId},
 			ResourcePermissionConstants.OPERATOR_REMOVE);
-
-		PermissionCacheUtil.clearCache();
 	}
 
 	/**
@@ -1016,8 +1018,6 @@ public class ResourcePermissionLocalServiceImpl
 				0, new String[] {actionId},
 				ResourcePermissionConstants.OPERATOR_REMOVE);
 		}
-
-		PermissionCacheUtil.clearCache();
 	}
 
 	/**
@@ -1225,8 +1225,6 @@ public class ResourcePermissionLocalServiceImpl
 
 		resourcePermissionPersistence.update(resourcePermission);
 
-		PermissionCacheUtil.clearCache();
-
 		SearchEngineUtil.updatePermissionFields(name, primKey);
 	}
 
@@ -1235,9 +1233,12 @@ public class ResourcePermissionLocalServiceImpl
 			long ownerId, Map<Long, String[]> roleIdsToActionIds)
 		throws PortalException, SystemException {
 
-		boolean flushEnabled = PermissionThreadLocal.isFlushEnabled();
+		boolean flushResourcePermissionEnabled =
+			PermissionThreadLocal.isFlushResourcePermissionEnabled(
+				name, primKey);
 
-		PermissionThreadLocal.setIndexEnabled(false);
+		PermissionThreadLocal.setFlushResourcePermissionEnabled(
+			name, primKey, false);
 
 		try {
 			long[] roleIds = ArrayUtil.toLongArray(roleIdsToActionIds.keySet());
@@ -1271,9 +1272,11 @@ public class ResourcePermissionLocalServiceImpl
 			}
 		}
 		finally {
-			PermissionThreadLocal.setIndexEnabled(flushEnabled);
+			PermissionThreadLocal.setFlushResourcePermissionEnabled(
+				name, primKey, flushResourcePermissionEnabled);
 
-			PermissionCacheUtil.clearCache();
+			PermissionCacheUtil.clearResourcePermissionCache(
+				scope, name, primKey);
 
 			SearchEngineUtil.updatePermissionFields(name, primKey);
 		}

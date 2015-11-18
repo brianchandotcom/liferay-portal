@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/journal/init.jsp" %>
 
 <%
-String tabs2 = ParamUtil.getString(request, "tabs2", "email-from");
+String tabs2 = ParamUtil.getString(request, "tabs2", "display-settings");
 
 String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", JournalUtil.getEmailFromName(portletPreferences, company.getCompanyId()));
 String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", JournalUtil.getEmailFromAddress(portletPreferences, company.getCompanyId()));
@@ -83,7 +83,7 @@ String emailBody = PrefsParamUtil.getString(portletPreferences, request, emailBo
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<%
-	String tabs1Names = "email-from,web-content-added-email,web-content-review-email,web-content-updated-email";
+	String tabs1Names = "display-settings,email-from,web-content-added-email,web-content-review-email,web-content-updated-email";
 
 	if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, JournalArticle.class.getName())) {
 		tabs1Names = tabs1Names.concat(",web-content-approval-denied-email,web-content-approval-granted-email,web-content-approval-requested-email");
@@ -112,6 +112,23 @@ String emailBody = PrefsParamUtil.getString(portletPreferences, request, emailBo
 	<liferay-ui:error key="emailArticleUpdatedSubject" message="please-enter-a-valid-subject" />
 
 	<c:choose>
+		<c:when test='<%= tabs2.equals("display-settings") %>'>
+			<aui:fieldset>
+				<aui:select label="maximum-pagination-pages-to-display" name="preferences--numberOfPages--">
+
+					<%
+					for (int searchContainerPageIteratorPageValue : PropsValues.SEARCH_CONTAINER_PAGE_ITERATOR_PAGE_VALUES) {
+					%>
+
+						<aui:option label="<%= searchContainerPageIteratorPageValue %>" selected="<%= numberOfPages == searchContainerPageIteratorPageValue %>" />
+
+					<%
+					}
+					%>
+
+				</aui:select>
+			</aui:fieldset>
+		</c:when>
 		<c:when test='<%= tabs2.equals("email-from") %>'>
 			<aui:fieldset>
 				<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" type="text" value="<%= emailFromName %>" />
@@ -231,7 +248,7 @@ String emailBody = PrefsParamUtil.getString(portletPreferences, request, emailBo
 
 <aui:script>
 	function <portlet:namespace />initEditor() {
-		return "<%= UnicodeFormatter.toString(emailBody) %>";
+		return '<%= UnicodeFormatter.toString(emailBody) %>';
 	}
 
 	function <portlet:namespace />saveConfiguration() {

@@ -60,10 +60,18 @@ public class PatcherUtil {
 		return getPatcher().isConfigured();
 	}
 
+	public static boolean hasInconsistentPatchLevels() {
+		return getPatcher().hasInconsistentPatchLevels();
+	}
+
 	public void setPatcher(Patcher patcher) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_patcher = patcher;
+	}
+
+	public static void verifyPatchLevels() throws PatchInconsistencyException {
+		getPatcher().verifyPatchLevels();
 	}
 
 	private static Patcher _patcher;

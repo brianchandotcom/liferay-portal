@@ -95,6 +95,15 @@ public interface Staging {
 		throws SystemException;
 
 	public void deleteRecentLayoutRevisionId(
+			long userId, long layoutSetBranchId, long plid)
+		throws PortalException, SystemException;
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #deleteRecentLayoutRevisionId(long, long, long)}
+	 */
+	@Deprecated
+	public void deleteRecentLayoutRevisionId(
 			User user, long layoutSetBranchId, long plid)
 		throws SystemException;
 

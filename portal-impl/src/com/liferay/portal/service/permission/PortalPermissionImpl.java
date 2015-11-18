@@ -37,7 +37,7 @@ public class PortalPermissionImpl implements PortalPermission {
 		PermissionChecker permissionChecker, String actionId) {
 
 		return permissionChecker.hasPermission(
-			0, PortletKeys.PORTAL, null, actionId);
+			0, PortletKeys.PORTAL, PortletKeys.PORTAL, actionId);
 	}
 
 }

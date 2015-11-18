@@ -205,7 +205,7 @@ public class VerifyJournal extends VerifyProcess {
 	}
 
 	protected void updateImageElement(Element element, String name, int index)
-		throws PortalException, SystemException {
+		throws SystemException {
 
 		Element dynamicContentElement = element.element("dynamic-content");
 
@@ -213,7 +213,12 @@ public class VerifyJournal extends VerifyProcess {
 			dynamicContentElement.attributeValue("id"));
 
 		JournalArticleImage articleImage =
-			JournalArticleImageLocalServiceUtil.getArticleImage(articleImageId);
+			JournalArticleImageLocalServiceUtil.fetchJournalArticleImage(
+				articleImageId);
+
+		if (articleImage == null) {
+			return;
+		}
 
 		articleImage.setElName(name + StringPool.UNDERLINE + index);
 
@@ -581,7 +586,6 @@ public class VerifyJournal extends VerifyProcess {
 		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
 
 		for (long companyId : companyIds) {
-			JournalArticleLocalServiceUtil.rebuildTree(companyId);
 			JournalFolderLocalServiceUtil.rebuildTree(companyId);
 		}
 	}

@@ -29,10 +29,12 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.asset.DLFolderAssetRenderer;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
@@ -290,6 +292,20 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 
 			dee.setDuplicateEntryId(duplicateDLFolder.getFolderId());
 			dee.setOldName(duplicateDLFolder.getName());
+			dee.setTrashEntryId(trashEntryId);
+
+			throw dee;
+		}
+
+		DLFileEntry duplicateDLFileEntry =
+			DLFileEntryLocalServiceUtil.fetchFileEntry(
+				dlFolder.getGroupId(), containerModelId, originalTitle);
+
+		if (duplicateDLFileEntry != null) {
+			DuplicateEntryException dee = new DuplicateEntryException();
+
+			dee.setDuplicateEntryId(duplicateDLFileEntry.getFileEntryId());
+			dee.setOldName(duplicateDLFileEntry.getTitle());
 			dee.setTrashEntryId(trashEntryId);
 
 			throw dee;

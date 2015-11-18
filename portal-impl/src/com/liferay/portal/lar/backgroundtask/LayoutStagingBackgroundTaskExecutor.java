@@ -16,12 +16,11 @@ package com.liferay.portal.lar.backgroundtask;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.lar.MissingReferences;
-import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.staging.StagingUtil;
-import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -33,8 +32,8 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.StagingLocalServiceUtil;
-import com.liferay.portal.spring.transaction.TransactionAttributeBuilder;
 import com.liferay.portal.spring.transaction.TransactionalCallableUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.Serializable;
@@ -42,8 +41,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.Callable;
-
-import org.springframework.transaction.interceptor.TransactionAttribute;
 
 /**
  * @author Julio Camarero
@@ -75,13 +72,13 @@ public class LayoutStagingBackgroundTaskExecutor
 		MissingReferences missingReferences = null;
 
 		try {
-			Callable<MissingReferences> layoutStagingCallable =
-				new LayoutStagingCallable(
-					backgroundTask, sourceGroupId, targetGroupId,
-					taskContextMap, userId);
+			ExportImportThreadLocal.setLayoutStagingInProcess(true);
 
 			missingReferences = TransactionalCallableUtil.call(
-					_transactionAttribute, layoutStagingCallable);
+				transactionAttribute,
+				new LayoutStagingCallable(
+					backgroundTask, sourceGroupId, targetGroupId,
+					taskContextMap, userId));
 		}
 		catch (Throwable t) {
 			if (_log.isDebugEnabled()) {
@@ -110,6 +107,8 @@ public class LayoutStagingBackgroundTaskExecutor
 			}
 		}
 		finally {
+			ExportImportThreadLocal.setLayoutStagingInProcess(false);
+
 			StagingUtil.unlockGroup(targetGroupId);
 		}
 
@@ -151,13 +150,9 @@ public class LayoutStagingBackgroundTaskExecutor
 	private static Log _log = LogFactoryUtil.getLog(
 		LayoutStagingBackgroundTaskExecutor.class);
 
-	private TransactionAttribute _transactionAttribute =
-		TransactionAttributeBuilder.build(
-			Propagation.REQUIRED, new Class<?>[] {Exception.class});
-
 	private class LayoutStagingCallable implements Callable<MissingReferences> {
 
-		private LayoutStagingCallable(
+		public LayoutStagingCallable(
 			BackgroundTask backgroundTask, long sourceGroupId,
 			long targetGroupId, Map<String, Serializable> taskContextMap,
 			long userId) {
@@ -203,27 +198,24 @@ public class LayoutStagingBackgroundTaskExecutor
 					_userId, _targetGroupId, privateLayout, parameterMap, file);
 
 				initLayoutSetBranches(_userId, _sourceGroupId, _targetGroupId);
-
-				boolean updateLastPublishDate = MapUtil.getBoolean(
-					parameterMap,
-					PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE);
-
-				if (updateLastPublishDate) {
-					Group sourceGroup = GroupLocalServiceUtil.getGroup(
-						_sourceGroupId);
-
-					if (!sourceGroup.hasStagingGroup()) {
-						StagingUtil.updateLastPublishDate(
-							_sourceGroupId, privateLayout, endDate);
-					}
-					else {
-						StagingUtil.updateLastPublishDate(
-							_targetGroupId, privateLayout, endDate);
-					}
-				}
 			}
-			finally {
+			catch (Exception e) {
+				if (PropsValues.STAGING_DELETE_TEMP_LAR_ON_FAILURE) {
+					FileUtil.delete(file);
+				}
+				else if ((file != null) && _log.isErrorEnabled()) {
+					_log.error(
+						"Kept temporary LAR file " + file.getAbsolutePath());
+				}
+
+				throw e;
+			}
+
+			if (PropsValues.STAGING_DELETE_TEMP_LAR_ON_SUCCESS) {
 				FileUtil.delete(file);
+			}
+			else if ((file != null) && _log.isDebugEnabled()) {
+				_log.debug("Kept temporary LAR file " + file.getAbsolutePath());
 			}
 
 			return missingReferences;

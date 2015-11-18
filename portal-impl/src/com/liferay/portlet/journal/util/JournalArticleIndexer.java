@@ -15,9 +15,6 @@
 package com.liferay.portlet.journal.util;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -52,6 +49,7 @@ import com.liferay.portlet.dynamicdatamapping.StructureFieldException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.portlet.dynamicdatamapping.util.DDMIndexer;
 import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -154,7 +152,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 			Validator.isNotNull(ddmStructureFieldValue)) {
 
 			String[] ddmStructureFieldNameParts = StringUtil.split(
-				ddmStructureFieldName, StringPool.SLASH);
+				ddmStructureFieldName, DDMIndexer.DDM_FIELD_SEPARATOR);
 
 			DDMStructure structure = DDMStructureLocalServiceUtil.getStructure(
 				GetterUtil.getLong(ddmStructureFieldNameParts[1]));
@@ -312,89 +310,27 @@ public class JournalArticleIndexer extends BaseIndexer {
 		LinkedHashMap<String, Object> params =
 			(LinkedHashMap<String, Object>)searchContext.getAttribute("params");
 
-		boolean includeScheduledArticles = false;
+		boolean showNonindexable = false;
 
 		if (params != null) {
-			includeScheduledArticles = GetterUtil.getBoolean(
-				params.get("includeScheduledArticles"));
+			showNonindexable = GetterUtil.getBoolean(
+				params.get("showNonindexable"));
 		}
 
-		if (includeScheduledArticles) {
-			BooleanQuery statusQuery = BooleanQueryFactoryUtil.create(
-				searchContext);
+		super.addStatus(contextQuery, searchContext);
 
-			BooleanQuery statusHeadQuery = BooleanQueryFactoryUtil.create(
-				searchContext);
+		boolean head = GetterUtil.getBoolean(
+			searchContext.getAttribute("head"), Boolean.TRUE);
+		boolean relatedClassName = GetterUtil.getBoolean(
+			searchContext.getAttribute("relatedClassName"));
 
-			statusHeadQuery.addRequiredTerm("head", Boolean.TRUE);
-			statusHeadQuery.addRequiredTerm(
-				Field.STATUS, WorkflowConstants.STATUS_APPROVED);
-
-			statusQuery.add(statusHeadQuery, BooleanClauseOccur.SHOULD);
-
-			BooleanQuery statusScheduledHeadQuery =
-				BooleanQueryFactoryUtil.create(searchContext);
-
-			statusScheduledHeadQuery.addRequiredTerm(
-				"scheduledHead", Boolean.TRUE);
-			statusScheduledHeadQuery.addRequiredTerm(
-				Field.STATUS, WorkflowConstants.STATUS_SCHEDULED);
-
-			statusQuery.add(
-				statusScheduledHeadQuery, BooleanClauseOccur.SHOULD);
-
-			contextQuery.add(statusQuery, BooleanClauseOccur.MUST);
-		}
-		else {
-			super.addStatus(contextQuery, searchContext);
-
-			boolean head = GetterUtil.getBoolean(
-				searchContext.getAttribute("head"), Boolean.TRUE);
-			boolean relatedClassName = GetterUtil.getBoolean(
-				searchContext.getAttribute("relatedClassName"));
-
-			if (head && !relatedClassName) {
-				contextQuery.addRequiredTerm("head", Boolean.TRUE);
-			}
-		}
-	}
-
-	protected void addStatusHeads(Document document, JournalArticle article)
-		throws SystemException {
-
-		boolean head = false;
-		boolean scheduledHead = false;
-
-		int[] statuses = new int[] {
-			WorkflowConstants.STATUS_APPROVED, WorkflowConstants.STATUS_IN_TRASH
-		};
-
-		JournalArticle latestArticle =
-			JournalArticleLocalServiceUtil.fetchLatestArticle(
-				article.getResourcePrimKey(), statuses);
-
-		if (latestArticle == null) {
-			statuses = new int[] {WorkflowConstants.STATUS_SCHEDULED};
-
-			latestArticle = JournalArticleLocalServiceUtil.fetchLatestArticle(
-				article.getResourcePrimKey(), statuses);
+		if (head && !relatedClassName && !showNonindexable) {
+			contextQuery.addRequiredTerm("head", Boolean.TRUE);
 		}
 
-		if ((latestArticle != null) && latestArticle.isIndexable() &&
-			(article.getId() == latestArticle.getId())) {
-
-			if (latestArticle.getStatus() ==
-					WorkflowConstants.STATUS_SCHEDULED) {
-
-				scheduledHead = true;
-			}
-			else {
-				head = true;
-			}
+		if (!relatedClassName && showNonindexable) {
+			contextQuery.addRequiredTerm("headListable", Boolean.TRUE);
 		}
-
-		document.addKeyword("head", head);
-		document.addKeyword("scheduledHead", scheduledHead);
 	}
 
 	@Override
@@ -404,7 +340,16 @@ public class JournalArticleIndexer extends BaseIndexer {
 		long classPK = article.getId();
 
 		if (!PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
-			classPK = article.getResourcePrimKey();
+			if (JournalArticleLocalServiceUtil.getArticlesCount(
+					article.getGroupId(), article.getArticleId()) > 0) {
+
+				doReindex(obj);
+
+				return;
+			}
+			else {
+				classPK = article.getResourcePrimKey();
+			}
 		}
 
 		deleteDocument(article.getCompanyId(), classPK);
@@ -426,7 +371,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 		SearchEngineUtil.updateDocument(
 			getSearchEngineId(), article.getCompanyId(),
-			getDocument(latestIndexableArticle));
+			getDocument(latestIndexableArticle), isCommitImmediately());
 	}
 
 	@Override
@@ -499,7 +444,11 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 		addDDMStructureAttributes(document, article);
 
-		addStatusHeads(document, article);
+		boolean head = isHead(article);
+		boolean headListable = isHeadListable(article);
+
+		document.addKeyword("head", head);
+		document.addKeyword("headListable", headListable);
 
 		return document;
 	}
@@ -567,9 +516,8 @@ public class JournalArticleIndexer extends BaseIndexer {
 		return new Summary(snippetLocale, title, content, portletURL);
 	}
 
-	@Override
-	protected void doReindex(Object obj) throws Exception {
-		JournalArticle article = (JournalArticle)obj;
+	public void doReindex(JournalArticle article, boolean allVersions)
+		throws Exception {
 
 		if (PortalUtil.getClassNameId(DDMStructure.class) ==
 				article.getClassNameId()) {
@@ -578,24 +526,26 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 			SearchEngineUtil.deleteDocument(
 				getSearchEngineId(), article.getCompanyId(),
-				document.get(Field.UID));
+				document.get(Field.UID), isCommitImmediately());
 
 			return;
 		}
 
-		if (!PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
-			int status = article.getStatus();
-
-			if ((status != WorkflowConstants.STATUS_APPROVED) &&
-				(status != WorkflowConstants.STATUS_IN_TRASH) &&
-				(status != WorkflowConstants.STATUS_SCHEDULED)) {
-
-				deleteDocument(
-					article.getCompanyId(), article.getResourcePrimKey());
-			}
+		if (allVersions || !PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
+			reindexArticleVersions(article);
 		}
+		else {
+			SearchEngineUtil.updateDocument(
+				getSearchEngineId(), article.getCompanyId(),
+				getDocument(article), isCommitImmediately());
+		}
+	}
 
-		reindexArticleVersions(article);
+	@Override
+	protected void doReindex(Object obj) throws Exception {
+		JournalArticle article = (JournalArticle)obj;
+
+		doReindex(article, true);
 	}
 
 	@Override
@@ -604,9 +554,8 @@ public class JournalArticleIndexer extends BaseIndexer {
 			JournalArticleLocalServiceUtil.fetchJournalArticle(classPK);
 
 		if (article == null) {
-			article =
-				JournalArticleLocalServiceUtil.fetchLatestIndexableArticle(
-					classPK);
+			article = JournalArticleLocalServiceUtil.fetchLatestArticle(
+				classPK);
 		}
 
 		if (article != null) {
@@ -637,11 +586,11 @@ public class JournalArticleIndexer extends BaseIndexer {
 		}
 
 		List<JournalArticle> articles =
-			JournalArticleLocalServiceUtil.getStructureArticles(
-				ddmStructureKeys);
+			JournalArticleLocalServiceUtil.
+				getIndexableArticlesByDDMStructureKey(ddmStructureKeys);
 
 		for (JournalArticle article : articles) {
-			doReindex(article);
+			doReindex(article, false);
 		}
 	}
 
@@ -706,6 +655,27 @@ public class JournalArticleIndexer extends BaseIndexer {
 			ddmStructure, fields, LocaleUtil.fromLanguageId(languageId));
 	}
 
+	protected JournalArticle fetchLatestIndexableArticleVersion(
+			long resourcePrimKey)
+		throws SystemException {
+
+		JournalArticle latestIndexableArticle =
+			JournalArticleLocalServiceUtil.fetchLatestArticle(
+				resourcePrimKey,
+				new int[] {
+					WorkflowConstants.STATUS_APPROVED,
+					WorkflowConstants.STATUS_IN_TRASH
+				});
+
+		if (latestIndexableArticle == null) {
+			latestIndexableArticle =
+				JournalArticleLocalServiceUtil.fetchLatestArticle(
+					resourcePrimKey);
+		}
+
+		return latestIndexableArticle;
+	}
+
 	protected Collection<Document> getArticleVersions(JournalArticle article)
 		throws PortalException, SystemException {
 
@@ -715,15 +685,14 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 		if (PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
 			articles =
-				JournalArticleLocalServiceUtil.
-					getIndexableArticlesByResourcePrimKey(
-						article.getResourcePrimKey());
+				JournalArticleLocalServiceUtil.getArticlesByResourcePrimKey(
+					article.getResourcePrimKey());
 		}
 		else {
 			articles = new ArrayList<JournalArticle>();
 
 			JournalArticle latestIndexableArticle =
-				JournalArticleLocalServiceUtil.fetchLatestIndexableArticle(
+				fetchLatestIndexableArticleVersion(
 					article.getResourcePrimKey());
 
 			if (latestIndexableArticle != null) {
@@ -817,6 +786,48 @@ public class JournalArticleIndexer extends BaseIndexer {
 		return PORTLET_ID;
 	}
 
+	protected boolean isHead(JournalArticle article) throws SystemException {
+		JournalArticle latestArticle =
+			JournalArticleLocalServiceUtil.fetchLatestArticle(
+				article.getResourcePrimKey(),
+				new int[] {
+					WorkflowConstants.STATUS_APPROVED,
+					WorkflowConstants.STATUS_IN_TRASH
+				});
+
+		if ((latestArticle != null) && !latestArticle.isIndexable()) {
+			return false;
+		}
+		else if ((latestArticle != null) &&
+				 (article.getId() == latestArticle.getId())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isHeadListable(JournalArticle article)
+		throws SystemException {
+
+		JournalArticle latestArticle =
+			JournalArticleLocalServiceUtil.fetchLatestArticle(
+				article.getResourcePrimKey(),
+				new int[] {
+					WorkflowConstants.STATUS_APPROVED,
+					WorkflowConstants.STATUS_IN_TRASH,
+					WorkflowConstants.STATUS_SCHEDULED
+				});
+
+		if ((latestArticle != null) &&
+			(article.getId() == latestArticle.getId())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	protected void reindexArticles(long companyId)
 		throws PortalException, SystemException {
 
@@ -824,25 +835,22 @@ public class JournalArticleIndexer extends BaseIndexer {
 			new JournalArticleActionableDynamicQuery() {
 
 			@Override
-			protected void addCriteria(DynamicQuery dynamicQuery) {
-				if (PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
-					return;
-				}
+			protected void performAction(Object object)
+				throws PortalException, SystemException {
 
-				Property statusProperty = PropertyFactoryUtil.forName("status");
-
-				Integer[] statuses = {
-					WorkflowConstants.STATUS_APPROVED,
-					WorkflowConstants.STATUS_IN_TRASH,
-					WorkflowConstants.STATUS_SCHEDULED
-				};
-
-				dynamicQuery.add(statusProperty.in(statuses));
-			}
-
-			@Override
-			protected void performAction(Object object) throws PortalException {
 				JournalArticle article = (JournalArticle)object;
+
+				if (!PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
+					JournalArticle latestIndexableArticle =
+						fetchLatestIndexableArticleVersion(
+							article.getResourcePrimKey());
+
+					if (latestIndexableArticle == null) {
+						return;
+					}
+
+					article = latestIndexableArticle;
+				}
 
 				Document document = getDocument(article);
 

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.json;
 
+import com.liferay.portal.json.transformer.CompanyJSONTransformer;
 import com.liferay.portal.json.transformer.FlexjsonObjectJSONTransformer;
 import com.liferay.portal.json.transformer.JSONArrayJSONTransformer;
 import com.liferay.portal.json.transformer.JSONObjectJSONTransformer;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONSerializable;
 import com.liferay.portal.kernel.repository.model.RepositoryModel;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.model.User;
 
 import flexjson.TransformerUtil;
@@ -89,6 +91,10 @@ public class JSONInit {
 
 	private static void _registerDefaultTransformers(
 		TypeTransformerMap transformersMap) {
+
+		transformersMap.put(
+			Company.class,
+			new TransformerWrapper(new CompanyJSONTransformer()));
 
 		transformersMap.put(
 			InputStream.class, new TransformerWrapper(new NullTransformer()));

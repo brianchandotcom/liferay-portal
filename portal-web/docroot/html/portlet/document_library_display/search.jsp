@@ -195,11 +195,11 @@ int mountFoldersCount = DLAppServiceUtil.getMountFoldersCount(scopeGroupId, DLFo
 						actionJsp='<%= (showActions) ? "/html/portlet/document_library/file_entry_action.jsp" : StringPool.BLANK %>'
 						containerName="<%= DLUtil.getAbsolutePath(renderRequest, fileEntry.getFolderId()) %>"
 						cssClass='<%= MathUtil.isEven(index) ? "search" : "search alt" %>'
-						description="<%= (summary != null) ? HtmlUtil.escape(summary.getContent()) : fileEntry.getDescription() %>"
+						description="<%= (summary != null) ? summary.getContent() : fileEntry.getDescription() %>"
 						mbMessages="<%= searchResult.getMBMessages() %>"
 						queryTerms="<%= hits.getQueryTerms() %>"
 						thumbnailSrc="<%= DLUtil.getThumbnailSrc(fileEntry, null, themeDisplay) %>"
-						title="<%= (summary != null) ? HtmlUtil.escape(summary.getTitle()) : fileEntry.getTitle() %>"
+						title="<%= (summary != null) ? summary.getTitle() : fileEntry.getTitle() %>"
 						url="<%= rowURL %>"
 					/>
 				</c:when>
@@ -227,10 +227,10 @@ int mountFoldersCount = DLAppServiceUtil.getMountFoldersCount(scopeGroupId, DLFo
 						actionJsp='<%= (showActions) ? "/html/portlet/document_library/folder_action.jsp" : StringPool.BLANK %>'
 						containerName="<%= DLUtil.getAbsolutePath(renderRequest, folder.getParentFolderId()) %>"
 						cssClass='<%= MathUtil.isEven(index) ? "search" : "search alt" %>'
-						description="<%= (summary != null) ? HtmlUtil.escape(summary.getContent()) : folder.getDescription() %>"
+						description="<%= (summary != null) ? summary.getContent() : folder.getDescription() %>"
 						queryTerms="<%= hits.getQueryTerms() %>"
 						thumbnailSrc='<%= themeDisplay.getPathThemeImages() + "/file_system/large/" + folderImage + ".png" %>'
-						title="<%= (summary != null) ? HtmlUtil.escape(summary.getTitle()) : folder.getName() %>"
+						title="<%= (summary != null) ? summary.getTitle() : folder.getName() %>"
 						url="<%= rowURL %>"
 					/>
 				</c:when>

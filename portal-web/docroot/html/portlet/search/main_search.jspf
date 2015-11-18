@@ -24,7 +24,7 @@ mainSearchSearchContainer.setEmptyResultsMessage(LanguageUtil.format(pageContext
 searchContext.setAttribute("paginationType", "more");
 searchContext.setEnd(mainSearchSearchContainer.getEnd());
 
-QueryConfig queryConfig = new QueryConfig();
+QueryConfig queryConfig = searchContext.getQueryConfig();
 
 queryConfig.setCollatedSpellCheckResultEnabled(collatedSpellCheckResultEnabled);
 queryConfig.setCollatedSpellCheckResultScoresThreshold(collatedSpellCheckResultDisplayThreshold);

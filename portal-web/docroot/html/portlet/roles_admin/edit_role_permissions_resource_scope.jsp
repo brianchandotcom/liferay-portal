@@ -92,7 +92,7 @@ List groupNames = (List)objArray[8];
 							dialog: {
 								constrain: true,
 								modal: true,
-								width: 600
+								width: 800
 							},
 							id: '<portlet:namespace />selectGroup<%= HtmlUtil.escapeJS(targetId) %>',
 							title: '<liferay-ui:message arguments="site" key="select-x" />',

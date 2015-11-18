@@ -292,84 +292,91 @@ if ((articleDisplay != null) && Validator.isNotNull(articleDisplay.getDDMTemplat
 	ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(articleDisplay.getGroupId(), PortalUtil.getClassNameId(DDMStructure.class), articleDisplay.getDDMTemplateKey(), true);
 }
 
-boolean showEditArticleIcon = (latestArticle != null) && JournalArticlePermission.contains(permissionChecker, latestArticle.getGroupId(), latestArticle.getArticleId(), ActionKeys.UPDATE);
-boolean showEditTemplateIcon = (ddmTemplate != null) && DDMTemplatePermission.contains(permissionChecker, ddmTemplate, PortletKeys.JOURNAL, ActionKeys.UPDATE);
-boolean showSelectArticleIcon = PortletPermissionUtil.contains(permissionChecker, layout, portletDisplay.getId(), ActionKeys.CONFIGURATION);
-boolean showAddArticleIcon = showSelectArticleIcon && JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ARTICLE);
-boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototypeLinkActive() && (showEditArticleIcon || showEditTemplateIcon || showSelectArticleIcon || showAddArticleIcon);
+Group siteGroup = themeDisplay.getSiteGroup();
+
+if (!siteGroup.hasLocalOrRemoteStagingGroup()) {
+	boolean showEditArticleIcon = (latestArticle != null) && JournalArticlePermission.contains(permissionChecker, latestArticle.getGroupId(), latestArticle.getArticleId(), ActionKeys.UPDATE);
+	boolean showEditTemplateIcon = (ddmTemplate != null) && DDMTemplatePermission.contains(permissionChecker, ddmTemplate, PortletKeys.JOURNAL, ActionKeys.UPDATE);
+	boolean showSelectArticleIcon = PortletPermissionUtil.contains(permissionChecker, layout, portletDisplay.getId(), ActionKeys.CONFIGURATION);
+	boolean showAddArticleIcon = showSelectArticleIcon && JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ARTICLE);
+	boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototypeLinkActive() && (showEditArticleIcon || showEditTemplateIcon || showSelectArticleIcon || showAddArticleIcon);
 %>
 
-<c:if test="<%= showIconsActions && !print && hasViewPermission %>">
-	<div class="lfr-meta-actions icons-container">
-		<div class="lfr-icon-actions">
-			<c:if test="<%= showEditArticleIcon %>">
-				<liferay-portlet:renderURL portletName="<%= PortletKeys.JOURNAL %>" var="editURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-					<portlet:param name="struts_action" value="/journal/edit_article" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="groupId" value="<%= String.valueOf(latestArticle.getGroupId()) %>" />
-					<portlet:param name="folderId" value="<%= String.valueOf(latestArticle.getFolderId()) %>" />
-					<portlet:param name="articleId" value="<%= latestArticle.getArticleId() %>" />
-					<portlet:param name="version" value="<%= String.valueOf(latestArticle.getVersion()) %>" />
-				</liferay-portlet:renderURL>
+	<c:if test="<%= showIconsActions && !print && hasViewPermission %>">
+		<div class="lfr-meta-actions icons-container">
+			<div class="lfr-icon-actions">
+				<c:if test="<%= showEditArticleIcon %>">
+					<liferay-portlet:renderURL portletName="<%= PortletKeys.JOURNAL %>" var="editURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+						<portlet:param name="struts_action" value="/journal/edit_article" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="groupId" value="<%= String.valueOf(latestArticle.getGroupId()) %>" />
+						<portlet:param name="folderId" value="<%= String.valueOf(latestArticle.getFolderId()) %>" />
+						<portlet:param name="articleId" value="<%= latestArticle.getArticleId() %>" />
+						<portlet:param name="version" value="<%= String.valueOf(latestArticle.getVersion()) %>" />
+					</liferay-portlet:renderURL>
 
-				<liferay-ui:icon
-					cssClass="lfr-icon-action lfr-icon-action-edit"
-					image="edit"
-					label="<%= true %>"
-					message="edit"
-					url="<%= editURL %>"
-				/>
-			</c:if>
+					<liferay-ui:icon
+						cssClass="lfr-icon-action lfr-icon-action-edit"
+						image="edit"
+						label="<%= true %>"
+						message="edit"
+						url="<%= editURL %>"
+					/>
+				</c:if>
 
-			<c:if test="<%= showEditTemplateIcon %>">
-				<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="editTemplateURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-					<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="refererPortletName" value="<%= PortletKeys.JOURNAL_CONTENT %>" />
-					<portlet:param name="groupId" value="<%= String.valueOf(ddmTemplate.getGroupId()) %>" />
-					<portlet:param name="templateId" value="<%= String.valueOf(ddmTemplate.getTemplateId()) %>" />
-				</liferay-portlet:renderURL>
+				<c:if test="<%= showEditTemplateIcon %>">
+					<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="editTemplateURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+						<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="refererPortletName" value="<%= PortletKeys.JOURNAL_CONTENT %>" />
+						<portlet:param name="groupId" value="<%= String.valueOf(ddmTemplate.getGroupId()) %>" />
+						<portlet:param name="templateId" value="<%= String.valueOf(ddmTemplate.getTemplateId()) %>" />
+					</liferay-portlet:renderURL>
 
-				<liferay-ui:icon
-					cssClass="lfr-icon-action lfr-icon-action-edit-template"
-					image="../file_system/small/xml"
-					label="<%= true %>"
-					message="edit-template"
-					url="<%= editTemplateURL %>"
-				/>
-			</c:if>
+					<liferay-ui:icon
+						cssClass="lfr-icon-action lfr-icon-action-edit-template"
+						image="../file_system/small/xml"
+						label="<%= true %>"
+						message="edit-template"
+						url="<%= editTemplateURL %>"
+					/>
+				</c:if>
 
-			<c:if test="<%= showSelectArticleIcon %>">
-				<liferay-ui:icon
-					cssClass="lfr-icon-action lfr-icon-action-configuration"
-					image="configuration"
-					label="<%= true %>"
-					message="select-web-content"
-					method="get"
-					onClick="<%= portletDisplay.getURLConfigurationJS() %>"
-					url="<%= portletDisplay.getURLConfiguration() %>"
-				/>
-			</c:if>
+				<c:if test="<%= showSelectArticleIcon %>">
+					<liferay-ui:icon
+						cssClass="lfr-icon-action lfr-icon-action-configuration"
+						image="configuration"
+						label="<%= true %>"
+						message="select-web-content"
+						method="get"
+						onClick="<%= portletDisplay.getURLConfigurationJS() %>"
+						url="<%= portletDisplay.getURLConfiguration() %>"
+					/>
+				</c:if>
 
-			<c:if test="<%= showAddArticleIcon %>">
-				<liferay-portlet:renderURL portletName="<%= PortletKeys.JOURNAL %>" var="addArticleURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-					<portlet:param name="struts_action" value="/journal/edit_article" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="portletResource" value="<%= portletDisplay.getId() %>" />
-					<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
-				</liferay-portlet:renderURL>
+				<c:if test="<%= showAddArticleIcon %>">
+					<liferay-portlet:renderURL portletName="<%= PortletKeys.JOURNAL %>" var="addArticleURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+						<portlet:param name="struts_action" value="/journal/edit_article" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="portletResource" value="<%= portletDisplay.getId() %>" />
+						<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+					</liferay-portlet:renderURL>
 
-				<liferay-ui:icon
-					cssClass="lfr-icon-action lfr-icon-action-add"
-					image="add_article"
-					label="<%= true %>"
-					message="add"
-					url="<%= addArticleURL %>"
-				/>
-			</c:if>
+					<liferay-ui:icon
+						cssClass="lfr-icon-action lfr-icon-action-add"
+						image="add_article"
+						label="<%= true %>"
+						message="add"
+						url="<%= addArticleURL %>"
+					/>
+				</c:if>
+			</div>
 		</div>
-	</div>
-</c:if>
+	</c:if>
+
+<%
+}
+%>
 
 <c:if test="<%= (articleDisplay != null) && hasViewPermission %>">
 	<c:if test="<%= enableRelatedAssets %>">

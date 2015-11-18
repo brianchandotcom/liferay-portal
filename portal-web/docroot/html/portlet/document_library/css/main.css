@@ -155,6 +155,10 @@
 	.button-holder.toolbar {
 		display: inline;
 		margin: 0;
+
+		.btn-group .btn {
+			float: left;
+		}
 	}
 
 	.lfr-header-row {
@@ -326,6 +330,26 @@
 	.common-file-metadata-container {
 		padding: 1em;
 
+		.control-group {
+			input, select, textarea {
+				@include box-sizing(border-box);
+
+				width: 100%;
+			}
+
+			input {
+				height: auto;
+			}
+
+			textarea {
+				max-width: 100% !important;
+			}
+		}
+
+		fieldset {
+			overflow: hidden;
+		}
+
 		.field-element {
 			display: block;
 
@@ -348,8 +372,24 @@
 			overflow: hidden;
 		}
 
-		.document-type .lfr-panel-content {
-			min-height: 35px;
+		.document-type {
+			.lfr-panel-content {
+				min-height: 35px;
+			}
+
+			.document-type-selector .btn {
+				display: block;
+			}
+		}
+
+		.document-type-selector, .tagselector {
+			.btn-group {
+				&, .btn {
+					max-width: 100%;
+					overflow: hidden;
+					white-space: normal;
+				}
+			}
 		}
 
 		.document-type-fields {
@@ -359,6 +399,12 @@
 
 		.categorization-panel {
 			clear: left;
+
+			.tagselector {
+				.textboxlist-input-container, .toolbar-content {
+					max-width: 100%;
+				}
+			}
 		}
 	}
 
@@ -641,6 +687,10 @@
 	.portlet-document-library, .portlet-document-library-display {
 		.audio-node {
 			height: 28px;
+		}
+
+		.common-file-metadata-container fieldset {
+			display: table-cell;
 		}
 	}
 }

@@ -148,7 +148,7 @@ AUI.add(
 												}
 											}
 										},
-										height: 390,
+										height: 430,
 										width: 560
 									},
 									id: NAME,
@@ -177,6 +177,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-component', 'aui-io-request', 'aui-parse-content', 'liferay-portlet-url', 'liferay-util-window', 'plugin']
+		requires: ['aui-base', 'aui-component', 'aui-io-request', 'aui-parse-content', 'liferay-form', 'liferay-portlet-url', 'liferay-util-window', 'plugin']
 	}
 );

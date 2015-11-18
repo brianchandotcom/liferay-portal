@@ -14,6 +14,7 @@
 
 package com.liferay.portal.servlet;
 
+import com.liferay.portal.ModulePathSetException;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -110,15 +111,29 @@ public class ComboServlet extends HttpServlet {
 		}
 
 		if (modulePathsSet.size() == 0) {
-			response.sendError(
-				HttpServletResponse.SC_BAD_REQUEST,
-				"Modules paths set is empty");
-
-			return;
+			throw new ModulePathSetException("Modules paths set is empty");
 		}
 
 		String[] modulePaths = modulePathsSet.toArray(
 			new String[modulePathsSet.size()]);
+
+		String firstModulePath = modulePaths[0];
+
+		String extension = FileUtil.getExtension(firstModulePath);
+
+		String minifierType = ParamUtil.getString(request, "minifierType");
+
+		if (Validator.isNull(minifierType)) {
+			minifierType = "js";
+
+			if (StringUtil.equalsIgnoreCase(extension, _CSS_EXTENSION)) {
+				minifierType = "css";
+			}
+		}
+
+		if (!minifierType.equals("css") && !minifierType.equals("js")) {
+			minifierType = "js";
+		}
 
 		String modulePathsString = null;
 
@@ -127,31 +142,19 @@ public class ComboServlet extends HttpServlet {
 		if (!PropsValues.COMBO_CHECK_TIMESTAMP) {
 			modulePathsString = Arrays.toString(modulePaths);
 
+			if (minifierType.equals("css") &&
+				PortalUtil.isRightToLeft(request)) {
+
+				modulePathsString += ".rtl";
+			}
+
 			bytesArray = _bytesArrayPortalCache.get(modulePathsString);
 		}
-
-		String firstModulePath = modulePaths[0];
-
-		String extension = FileUtil.getExtension(firstModulePath);
 
 		if (bytesArray == null) {
 			ServletContext servletContext = getServletContext();
 
 			String rootPath = ServletContextUtil.getRootPath(servletContext);
-
-			String minifierType = ParamUtil.getString(request, "minifierType");
-
-			if (Validator.isNull(minifierType)) {
-				minifierType = "js";
-
-				if (StringUtil.equalsIgnoreCase(extension, _CSS_EXTENSION)) {
-					minifierType = "css";
-				}
-			}
-
-			if (!minifierType.equals("css") && !minifierType.equals("js")) {
-				minifierType = "js";
-			}
 
 			bytesArray = new byte[modulePaths.length][];
 

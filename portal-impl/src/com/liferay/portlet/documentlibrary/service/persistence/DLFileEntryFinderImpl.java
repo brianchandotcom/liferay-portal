@@ -130,6 +130,10 @@ public class DLFileEntryFinderImpl
 			groupId, 0, folderIds, null, queryDefinition, false);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@Deprecated
 	@Override
 	public int countByG_M_R(
 			long groupId, DateRange dateRange, long repositoryId,

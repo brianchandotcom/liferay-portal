@@ -15,11 +15,9 @@
 package com.liferay.portlet.journalcontent.action;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -55,14 +53,9 @@ public class ViewAction extends WebContentAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long articleGroupId = ParamUtil.getLong(
-			renderRequest, "articleGroupId");
-
-		if (articleGroupId <= 0) {
-			articleGroupId = GetterUtil.getLong(
-				portletPreferences.getValue(
-					"groupId", String.valueOf(themeDisplay.getScopeGroupId())));
-		}
+		long articleGroupId = PrefsParamUtil.getLong(
+			portletPreferences, renderRequest, "groupId",
+			themeDisplay.getScopeGroupId());
 
 		String articleId = PrefsParamUtil.getString(
 			portletPreferences, renderRequest, "articleId");
@@ -79,15 +72,9 @@ public class ViewAction extends WebContentAction {
 		JournalArticleDisplay articleDisplay = null;
 
 		if ((articleGroupId > 0) && Validator.isNotNull(articleId)) {
-			article = JournalArticleLocalServiceUtil.fetchLatestArticle(
-				articleGroupId, articleId, WorkflowConstants.STATUS_APPROVED);
-
 			try {
-				if (article == null) {
-					article = JournalArticleLocalServiceUtil.getLatestArticle(
-						articleGroupId, articleId,
-						WorkflowConstants.STATUS_ANY);
-				}
+				article = JournalArticleLocalServiceUtil.getArticle(
+					articleGroupId, articleId);
 
 				double version = article.getVersion();
 

@@ -588,7 +588,7 @@ public class DLAppServiceSoap {
 	}
 
 	/**
-	* Returns a range of all the file entries in the folder.
+	* Returns a name-ordered range of all the file entries in the folder.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end -
@@ -604,7 +604,7 @@ public class DLAppServiceSoap {
 	* @param folderId the primary key of the file entry's folder
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
-	* @return the range of file entries in the folder
+	* @return the name-ordered range of file entries in the folder
 	* @throws PortalException if the folder could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -695,15 +695,15 @@ public class DLAppServiceSoap {
 	}
 
 	/**
-	* Returns a range of all the file entries with the file entry type in the
-	* folder.
+	* Returns a name-ordered range of all the file entries with the file entry
+	* type in the folder.
 	*
 	* @param repositoryId the primary key of the file entry's repository
 	* @param folderId the primary key of the file entry's folder
 	* @param fileEntryTypeId the primary key of the file entry type
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
-	* @return the file entries in the folder
+	* @return the name-ordered range of the file entries in the folder
 	* @throws PortalException if the folder could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -1075,8 +1075,9 @@ public class DLAppServiceSoap {
 	}
 
 	/**
-	* Returns a range of all the immediate subfolders of the parent folder,
-	* optionally including mount folders for third-party repositories.
+	* Returns a name-ordered range of all the immediate subfolders of the
+	* parent folder, optionally including mount folders for third-party
+	* repositories.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end -
@@ -1094,7 +1095,8 @@ public class DLAppServiceSoap {
 	third-party repositories
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
-	* @return the range of immediate subfolders of the parent folder
+	* @return the name-ordered range of immediate subfolders of the parent
+	folder
 	* @throws PortalException if the parent folder could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -1208,7 +1210,8 @@ public class DLAppServiceSoap {
 	}
 
 	/**
-	* Returns a range of all the immediate subfolders of the parent folder.
+	* Returns a name-ordered range of all the immediate subfolders of the
+	* parent folder.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end -
@@ -1224,7 +1227,8 @@ public class DLAppServiceSoap {
 	* @param parentFolderId the primary key of the folder's parent folder
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
-	* @return the range of immediate subfolders of the parent folder
+	* @return the name-ordered range of immediate subfolders of the parent
+	folder
 	* @throws PortalException if the parent folder could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -1744,9 +1748,9 @@ public class DLAppServiceSoap {
 	}
 
 	/**
-	* Returns a range of all the immediate subfolders of the parent folder that
-	* are used for mounting third-party repositories. This method is only
-	* supported by the Liferay repository.
+	* Returns a name-ordered range of all the immediate subfolders of the
+	* parent folder that are used for mounting third-party repositories. This
+	* method is only supported by the Liferay repository.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end -
@@ -1762,8 +1766,8 @@ public class DLAppServiceSoap {
 	* @param parentFolderId the primary key of the parent folder
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
-	* @return the range of immediate subfolders of the parent folder that are
-	used for mounting third-party repositories
+	* @return the name-ordered range of immediate subfolders of the parent
+	folder that are used for mounting third-party repositories
 	* @throws PortalException if the repository or parent folder could not be
 	found
 	* @throws SystemException if a system exception occurred

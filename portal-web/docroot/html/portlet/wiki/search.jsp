@@ -128,11 +128,11 @@ portletURL.setParameter("keywords", keywords);
 				containerName="<%= curNode.getName() %>"
 				containerType='<%= LanguageUtil.get(locale, "wiki-node") %>'
 				cssClass='<%= MathUtil.isEven(index) ? "search" : "search alt" %>'
-				description="<%= (summary != null) ? HtmlUtil.escape(summary.getContent()) : HtmlUtil.escape(wikiPage.getSummary()) %>"
+				description="<%= (summary != null) ? summary.getContent() : wikiPage.getSummary() %>"
 				fileEntryTuples="<%= searchResult.getFileEntryTuples() %>"
 				mbMessages="<%= searchResult.getMBMessages() %>"
 				queryTerms="<%= hits.getQueryTerms() %>"
-				title="<%= (summary != null) ? HtmlUtil.escape(summary.getTitle()) : wikiPage.getTitle() %>"
+				title="<%= (summary != null) ? summary.getTitle() : wikiPage.getTitle() %>"
 				url="<%= rowURL %>"
 			/>
 		</liferay-ui:search-container-row>

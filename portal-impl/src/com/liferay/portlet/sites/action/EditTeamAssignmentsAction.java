@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.sites.action;
 
+import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchTeamException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
@@ -89,7 +90,8 @@ public class EditTeamAssignmentsAction extends PortletAction {
 			ActionUtil.getTeam(renderRequest);
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchTeamException ||
+			if (e instanceof NoSuchGroupException ||
+				e instanceof NoSuchTeamException ||
 				e instanceof PrincipalException) {
 
 				SessionErrors.add(renderRequest, e.getClass());

@@ -112,8 +112,32 @@ portletURL.setParameter("tabs3", tabs3);
 				>
 					<liferay-ui:search-container-column-text
 						name="name"
-						value="<%= user2.getFullName() %>"
-					/>
+					>
+
+						<%= (user2.getFullName()) %>
+
+						<%
+						PasswordPolicyRel passwordPolicyRel = PasswordPolicyRelLocalServiceUtil.fetchPasswordPolicyRel(User.class.getName(), user.getUserId());
+						%>
+
+						<c:if test="<%= (passwordPolicyRel != null) && (passwordPolicyRel.getPasswordPolicyId() != passwordPolicy.getPasswordPolicyId()) %>">
+
+							<%
+							PasswordPolicy curPasswordPolicy = PasswordPolicyLocalServiceUtil.getPasswordPolicy(passwordPolicyRel.getPasswordPolicyId());
+							%>
+
+							<portlet:renderURL var="assignMembersURL">
+								<portlet:param name="struts_action" value="/password_policies_admin/edit_password_policy_assignments" />
+								<portlet:param name="tabs1" value="<%= tabs1 %>" />
+								<portlet:param name="tabs2" value="users" />
+								<portlet:param name="tabs3" value="current" />
+								<portlet:param name="redirect" value="<%= currentURL %>" />
+								<portlet:param name="passwordPolicyId" value="<%= String.valueOf(curPasswordPolicy.getPasswordPolicyId()) %>" />
+							</portlet:renderURL>
+
+							<liferay-ui:icon-help message='<%= LanguageUtil.format(pageContext, "this-user-is-already-assigned-to-password-policy-x", new Object[] {assignMembersURL, curPasswordPolicy.getName()}) %>' />
+						</c:if>
+					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
 						name="screen-name"
@@ -178,6 +202,36 @@ portletURL.setParameter("tabs3", tabs3);
 						orderable="<%= true %>"
 						property="name"
 					/>
+
+					<liferay-ui:search-container-column-text
+						name="name"
+						orderable="<%= true %>"
+					>
+
+						<%= HtmlUtil.escape(organization.getName()) %>
+
+						<%
+						PasswordPolicyRel passwordPolicyRel = PasswordPolicyRelLocalServiceUtil.fetchPasswordPolicyRel(Organization.class.getName(), organization.getOrganizationId());
+						%>
+
+						<c:if test="<%= (passwordPolicyRel != null) && (passwordPolicyRel.getPasswordPolicyId() != passwordPolicy.getPasswordPolicyId()) %>">
+
+							<%
+							PasswordPolicy curPasswordPolicy = PasswordPolicyLocalServiceUtil.getPasswordPolicy(passwordPolicyRel.getPasswordPolicyId());
+							%>
+
+							<portlet:renderURL var="assignMembersURL">
+								<portlet:param name="struts_action" value="/password_policies_admin/edit_password_policy_assignments" />
+								<portlet:param name="tabs1" value="<%= tabs1 %>" />
+								<portlet:param name="tabs2" value="organizations" />
+								<portlet:param name="tabs3" value="current" />
+								<portlet:param name="redirect" value="<%= currentURL %>" />
+								<portlet:param name="passwordPolicyId" value="<%= String.valueOf(curPasswordPolicy.getPasswordPolicyId()) %>" />
+							</portlet:renderURL>
+
+							<liferay-ui:icon-help message='<%= LanguageUtil.format(pageContext, "this-organization-is-already-assigned-to-password-policy-x", new Object[] {assignMembersURL, curPasswordPolicy.getName()}) %>' />
+						</c:if>
+					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
 						buffer="buffer"

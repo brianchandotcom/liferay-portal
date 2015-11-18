@@ -90,6 +90,13 @@ public class EntityCacheImpl
 	}
 
 	@Override
+	public PortalCache<Serializable, Serializable> getPortalCache(
+		Class<?> clazz) {
+
+		return _getPortalCache(clazz.getName(), true);
+	}
+
+	@Override
 	public String getRegistryName() {
 		return CACHE_NAME;
 	}

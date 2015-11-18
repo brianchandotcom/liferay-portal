@@ -314,7 +314,7 @@ public class LayoutTypePortletImpl
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(
 				getCompanyId(), portletId);
 
-			if ((portlet != null) && !portlet.isUndeployedPortlet()) {
+			if (portlet != null) {
 				portlets.add(portlet);
 			}
 		}
@@ -677,13 +677,41 @@ public class LayoutTypePortletImpl
 
 	@Override
 	public boolean isCacheable() throws PortalException, SystemException {
+		List<Portlet> portlets = new ArrayList<Portlet>();
+
 		for (String columnId : getColumns()) {
-			for (Portlet portlet : getAllPortlets(columnId)) {
+			List<Portlet> columnPortlets = getAllPortlets(columnId);
+
+			for (Portlet portlet : columnPortlets) {
 				Portlet rootPortlet = portlet.getRootPortlet();
 
 				if (!rootPortlet.isLayoutCacheable()) {
 					return false;
 				}
+			}
+
+			portlets.addAll(columnPortlets);
+		}
+
+		List<Portlet> staticPortlets = getStaticPortlets(
+			PropsKeys.LAYOUT_STATIC_PORTLETS_ALL);
+
+		for (Portlet portlet : staticPortlets) {
+			Portlet rootPortlet = portlet.getRootPortlet();
+
+			if (!rootPortlet.isLayoutCacheable()) {
+				return false;
+			}
+		}
+
+		List<Portlet> embeddedPortlets = getEmbeddedPortlets(
+			portlets, staticPortlets);
+
+		for (Portlet portlet : embeddedPortlets) {
+			Portlet rootPortlet = portlet.getRootPortlet();
+
+			if (!rootPortlet.isLayoutCacheable()) {
+				return false;
 			}
 		}
 
@@ -1468,36 +1496,33 @@ public class LayoutTypePortletImpl
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(
 				getCompanyId(), portletId);
 
-			if (Validator.isNull(portletId) ||
-				columnPortlets.contains(portlet) ||
+			if ((portlet == null) || columnPortlets.contains(portlet) ||
 				staticPortlets.contains(portlet) || !portlet.isReady() ||
 				portlet.isUndeployedPortlet() || !portlet.isActive()) {
 
 				continue;
 			}
 
-			if (portlet != null) {
-				Portlet embeddedPortlet = portlet;
+			Portlet embeddedPortlet = portlet;
 
-				if (portlet.isInstanceable()) {
+			if (portlet.isInstanceable()) {
 
-					// Instanceable portlets do not need to be cloned because
-					// they are already cloned. See the method getPortletById in
-					// the class PortletLocalServiceImpl and how it references
-					// the method getClonedInstance in the class PortletImpl.
+				// Instanceable portlets do not need to be cloned because they
+				// are already cloned. See the method getPortletById in the
+				// class PortletLocalServiceImpl and how it references the
+				// method getClonedInstance in the class PortletImpl.
 
-				}
-				else {
-					embeddedPortlet = (Portlet)embeddedPortlet.clone();
-				}
-
-				// We set embedded portlets as static on order to avoid adding
-				// the close and/or move icons.
-
-				embeddedPortlet.setStatic(true);
-
-				portlets.add(embeddedPortlet);
 			}
+			else {
+				embeddedPortlet = (Portlet)embeddedPortlet.clone();
+			}
+
+			// We set embedded portlets as static on order to avoid adding the
+			// close and/or move icons.
+
+			embeddedPortlet.setStatic(true);
+
+			portlets.add(embeddedPortlet);
 		}
 
 		_embeddedPortlets = portlets;

@@ -68,6 +68,14 @@ public class CalendarFactoryUtil {
 		return getCalendarFactory().getCalendar(locale);
 	}
 
+	public static Calendar getCalendar(long time) {
+		return getCalendarFactory().getCalendar(time);
+	}
+
+	public static Calendar getCalendar(long time, TimeZone timeZone) {
+		return getCalendarFactory().getCalendar(time, timeZone);
+	}
+
 	public static Calendar getCalendar(TimeZone timeZone) {
 		return getCalendarFactory().getCalendar(timeZone);
 	}
@@ -80,14 +88,6 @@ public class CalendarFactoryUtil {
 		PortalRuntimePermission.checkGetBeanProperty(CalendarFactoryUtil.class);
 
 		return _calendarFactory;
-	}
-
-	public Calendar getCalendar(long time) {
-		return getCalendarFactory().getCalendar(time);
-	}
-
-	public Calendar getCalendar(long time, TimeZone timeZone) {
-		return getCalendarFactory().getCalendar(time, timeZone);
 	}
 
 	public void setCalendarFactory(CalendarFactory calendarFactory) {

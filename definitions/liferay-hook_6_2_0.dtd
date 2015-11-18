@@ -123,6 +123,7 @@ social.activity.sets.bundling.enabled
 social.activity.sets.enabled
 social.activity.sets.selector
 social.bookmark.*
+staging.xstream.class.whitelist
 terms.of.use.required
 theme.css.fast.load
 theme.images.fast.load

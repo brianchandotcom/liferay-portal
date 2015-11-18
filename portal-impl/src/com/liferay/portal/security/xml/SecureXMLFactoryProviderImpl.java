@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -98,11 +98,13 @@ public class SecureXMLFactoryProviderImpl implements SecureXMLFactoryProvider {
 
 	@Override
 	public XMLReader newXMLReader() {
-		XMLReader xmlReader = new StripDoctypeXMLReader(new SAXParser());
+		XMLReader xmlReader = new SAXParser();
 
 		if (!PropsValues.XML_SECURITY_ENABLED) {
 			return xmlReader;
 		}
+
+		xmlReader = new StripDoctypeXMLReader(new SAXParser());
 
 		try {
 			xmlReader.setFeature(_FEATURES_DISALLOW_DOCTYPE_DECL, true);

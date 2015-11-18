@@ -57,6 +57,8 @@ import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureFi
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructurePersistence;
 import com.liferay.portlet.expando.service.persistence.ExpandoRowPersistence;
 import com.liferay.portlet.expando.service.persistence.ExpandoTablePersistence;
+import com.liferay.portlet.messageboards.service.persistence.MBMessageFinder;
+import com.liferay.portlet.messageboards.service.persistence.MBMessagePersistence;
 import com.liferay.portlet.trash.service.persistence.TrashEntryPersistence;
 
 import javax.sql.DataSource;
@@ -1491,6 +1493,81 @@ public abstract class DLFileEntryServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
+	 * Returns the message-boards message local service.
+	 *
+	 * @return the message-boards message local service
+	 */
+	public com.liferay.portlet.messageboards.service.MBMessageLocalService getMBMessageLocalService() {
+		return mbMessageLocalService;
+	}
+
+	/**
+	 * Sets the message-boards message local service.
+	 *
+	 * @param mbMessageLocalService the message-boards message local service
+	 */
+	public void setMBMessageLocalService(
+		com.liferay.portlet.messageboards.service.MBMessageLocalService mbMessageLocalService) {
+		this.mbMessageLocalService = mbMessageLocalService;
+	}
+
+	/**
+	 * Returns the message-boards message remote service.
+	 *
+	 * @return the message-boards message remote service
+	 */
+	public com.liferay.portlet.messageboards.service.MBMessageService getMBMessageService() {
+		return mbMessageService;
+	}
+
+	/**
+	 * Sets the message-boards message remote service.
+	 *
+	 * @param mbMessageService the message-boards message remote service
+	 */
+	public void setMBMessageService(
+		com.liferay.portlet.messageboards.service.MBMessageService mbMessageService) {
+		this.mbMessageService = mbMessageService;
+	}
+
+	/**
+	 * Returns the message-boards message persistence.
+	 *
+	 * @return the message-boards message persistence
+	 */
+	public MBMessagePersistence getMBMessagePersistence() {
+		return mbMessagePersistence;
+	}
+
+	/**
+	 * Sets the message-boards message persistence.
+	 *
+	 * @param mbMessagePersistence the message-boards message persistence
+	 */
+	public void setMBMessagePersistence(
+		MBMessagePersistence mbMessagePersistence) {
+		this.mbMessagePersistence = mbMessagePersistence;
+	}
+
+	/**
+	 * Returns the message-boards message finder.
+	 *
+	 * @return the message-boards message finder
+	 */
+	public MBMessageFinder getMBMessageFinder() {
+		return mbMessageFinder;
+	}
+
+	/**
+	 * Sets the message-boards message finder.
+	 *
+	 * @param mbMessageFinder the message-boards message finder
+	 */
+	public void setMBMessageFinder(MBMessageFinder mbMessageFinder) {
+		this.mbMessageFinder = mbMessageFinder;
+	}
+
+	/**
 	 * Returns the trash entry local service.
 	 *
 	 * @return the trash entry local service
@@ -1750,6 +1827,14 @@ public abstract class DLFileEntryServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.portlet.expando.service.ExpandoTableLocalService expandoTableLocalService;
 	@BeanReference(type = ExpandoTablePersistence.class)
 	protected ExpandoTablePersistence expandoTablePersistence;
+	@BeanReference(type = com.liferay.portlet.messageboards.service.MBMessageLocalService.class)
+	protected com.liferay.portlet.messageboards.service.MBMessageLocalService mbMessageLocalService;
+	@BeanReference(type = com.liferay.portlet.messageboards.service.MBMessageService.class)
+	protected com.liferay.portlet.messageboards.service.MBMessageService mbMessageService;
+	@BeanReference(type = MBMessagePersistence.class)
+	protected MBMessagePersistence mbMessagePersistence;
+	@BeanReference(type = MBMessageFinder.class)
+	protected MBMessageFinder mbMessageFinder;
 	@BeanReference(type = com.liferay.portlet.trash.service.TrashEntryLocalService.class)
 	protected com.liferay.portlet.trash.service.TrashEntryLocalService trashEntryLocalService;
 	@BeanReference(type = com.liferay.portlet.trash.service.TrashEntryService.class)

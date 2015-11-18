@@ -14,10 +14,12 @@
 
 package com.liferay.portal.security.ldap;
 
+import com.liferay.portal.kernel.ldap.LDAPUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.User;
@@ -29,6 +31,7 @@ import com.liferay.portal.util.PrefsPropsUtil;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -257,6 +260,29 @@ public class PortalLDAPExporterImpl implements PortalLDAPExporter {
 			if (binding == null) {
 				binding = addUser(
 					ldapServerId, ldapContext, user, userMappings);
+			}
+			else {
+				Attributes attributes = PortalLDAPUtil.getUserAttributes(
+					ldapServerId, companyId, ldapContext,
+					PortalLDAPUtil.getNameInNamespace(
+						ldapServerId, companyId, binding));
+
+				String modifyTimestamp = LDAPUtil.getAttributeString(
+					attributes, "modifyTimestamp");
+
+				if (Validator.isNotNull(modifyTimestamp)) {
+					Date modifiedDate = LDAPUtil.parseDate(modifyTimestamp);
+
+					if (modifiedDate.equals(user.getModifiedDate())) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(
+								"Skipping user " + user.getEmailAddress() +
+									" because he is already synchronized");
+						}
+
+						return;
+					}
+				}
 			}
 
 			Name name = new CompositeName();

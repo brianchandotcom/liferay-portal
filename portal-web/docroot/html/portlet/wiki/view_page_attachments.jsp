@@ -90,7 +90,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "att
 			<c:if test="<%= TrashUtil.isTrashEnabled(scopeGroupId) && (deletedAttachmentsCount > 0) %>">
 				<portlet:renderURL var="viewTrashAttachmentsURL">
 					<portlet:param name="struts_action" value="/wiki/view_page_attachments" />
-					<portlet:param name="tabs1" value="attachments" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
 					<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
@@ -140,6 +139,7 @@ PortletURL iteratorURL = renderResponse.createRenderURL();
 iteratorURL.setParameter("struts_action", "/wiki/view_page_attachments");
 iteratorURL.setParameter("redirect", currentURL);
 iteratorURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
+iteratorURL.setParameter("title", wikiPage.getTitle());
 iteratorURL.setParameter("viewTrashAttachments", String.valueOf(viewTrashAttachments));
 %>
 
@@ -177,6 +177,8 @@ iteratorURL.setParameter("viewTrashAttachments", String.valueOf(viewTrashAttachm
 		}
 
 		String rowHREF = PortletFileRepositoryUtil.getPortletFileEntryURL(themeDisplay, fileEntry, "status=" + status);
+
+		rowHREF = HttpUtil.addParameter(rowHREF, "download", true);
 		%>
 
 		<liferay-ui:search-container-column-text

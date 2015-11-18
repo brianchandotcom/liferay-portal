@@ -138,6 +138,9 @@ public abstract class BaseActionableDynamicQuery
 	protected void addCriteria(DynamicQuery dynamicQuery) {
 	}
 
+	protected void addOrderCriteria(DynamicQuery dynamicQuery) {
+	}
+
 	protected void addDefaultCriteria(DynamicQuery dynamicQuery) {
 		if (_companyId > 0) {
 			Property property = PropertyFactoryUtil.forName("companyId");
@@ -271,6 +274,8 @@ public abstract class BaseActionableDynamicQuery
 
 		addCriteria(dynamicQuery);
 
+		addOrderCriteria(dynamicQuery);
+
 		List<Object[]> results = (List<Object[]>)executeDynamicQuery(
 			_dynamicQueryMethod, dynamicQuery);
 
@@ -309,6 +314,8 @@ public abstract class BaseActionableDynamicQuery
 		addDefaultCriteria(dynamicQuery);
 
 		addCriteria(dynamicQuery);
+
+		addOrderCriteria(dynamicQuery);
 
 		List<Object> objects = (List<Object>)executeDynamicQuery(
 			_dynamicQueryMethod, dynamicQuery);

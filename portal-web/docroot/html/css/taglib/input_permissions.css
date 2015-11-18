@@ -1,0 +1,54 @@
+@import "mixins";
+
+.permissions-table-container {
+	overflow: auto;
+
+	table {
+		tbody td, thead th {
+			text-align: center;
+			word-break: normal;
+
+			&:first-child {
+				text-align: left;
+			}
+		}
+	}
+}
+
+@include respond-to(phone, tablet) {
+	.permissions-table-container {
+		table {
+			tbody td {
+				&:first-child {
+					text-align: center;
+				}
+			}
+
+			thead th {
+				&, &:first-child {
+					text-align: right;
+				}
+			}
+
+			label.hidden-label {
+				display: block;
+				overflow: hidden;
+				width: 10px;
+			}
+		}
+	}
+
+	.ie9 {
+		.permissions-table-container {
+			table {
+				thead th {
+					text-align: center;
+
+					&:first-child {
+						text-align: left;
+					}
+				}
+			}
+		}
+	}
+}

@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.lar.DefaultConfigurationPortletDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportHelper;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
+import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.MissingReference;
 import com.liferay.portal.kernel.lar.MissingReferences;
@@ -64,6 +65,7 @@ import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.TempFileUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
@@ -74,6 +76,8 @@ import com.liferay.portal.kernel.xml.ElementHandler;
 import com.liferay.portal.kernel.xml.ElementProcessor;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
+import com.liferay.portal.kernel.zip.ZipWriter;
+import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.portal.lar.backgroundtask.StagingIndexingBackgroundTaskExecutor;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -114,7 +118,6 @@ import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetCategoryUtil;
 import com.liferay.portlet.asset.service.persistence.AssetVocabularyUtil;
-import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
@@ -273,12 +276,12 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		else if (range.equals("fromLastPublishDate")) {
 			Date lastPublishDate = null;
 
-			if (Validator.isNotNull(portletId)) {
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+			if (!group.isStagedRemotely() && Validator.isNotNull(portletId)) {
 				Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
 
 				if (layout == null) {
-					Group group = GroupLocalServiceUtil.getGroup(groupId);
-
 					layout = new LayoutImpl();
 
 					layout.setGroupId(group.getGroupId());
@@ -352,7 +355,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			companyId, portletId);
 
-		if (portlet == null) {
+		if ((portlet == null) || portlet.isUndeployedPortlet()) {
 			return null;
 		}
 
@@ -399,6 +402,18 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	@Override
+	public ZipWriter getLayoutSetZipWriter(long groupId) {
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(groupId);
+		sb.append(StringPool.DASH);
+		sb.append(Time.getShortTimestamp());
+		sb.append(".lar");
+
+		return getZipWriter(sb.toString());
+	}
+
+	@Override
 	public ManifestSummary getManifestSummary(
 			long userId, long groupId, Map<String, String[]> parameterMap,
 			File file)
@@ -414,28 +429,34 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				group.getCompanyId(), groupId, parameterMap,
 				getUserIdStrategy(userId, userIdStrategy), zipReader);
 
-		final ManifestSummary manifestSummary = new ManifestSummary();
+		try {
+			final ManifestSummary manifestSummary = new ManifestSummary();
 
-		XMLReader xmlReader = SecureXMLFactoryProviderUtil.newXMLReader();
+			XMLReader xmlReader = SecureXMLFactoryProviderUtil.newXMLReader();
 
-		ElementHandler elementHandler = new ElementHandler(
-			new ManifestSummaryElementProcessor(group, manifestSummary),
-			new String[] {"header", "portlet", "staged-model"});
+			ElementHandler elementHandler = new ElementHandler(
+				new ManifestSummaryElementProcessor(group, manifestSummary),
+				new String[] {"header", "portlet", "staged-model"});
 
-		xmlReader.setContentHandler(elementHandler);
+			xmlReader.setContentHandler(elementHandler);
 
-		InputStream is = portletDataContext.getZipEntryAsInputStream(
-			"/manifest.xml");
+			InputStream is = portletDataContext.getZipEntryAsInputStream(
+				"/manifest.xml");
 
-		if (is == null) {
-			throw new LARFileException("manifest.xml is not in the LAR");
+			if (is == null) {
+				throw new LARFileException("manifest.xml is not in the LAR");
+			}
+
+			String manifestXMLContent = StringUtil.read(is);
+
+			xmlReader.parse(
+				new InputSource(new StringReader(manifestXMLContent)));
+
+			return manifestSummary;
 		}
-
-		String manifestXMLContent = StringUtil.read(is);
-
-		xmlReader.parse(new InputSource(new StringReader(manifestXMLContent)));
-
-		return manifestSummary;
+		finally {
+			zipReader.close();
+		}
 	}
 
 	@Override
@@ -446,7 +467,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		File file = FileUtil.createTempFile("lar");
 		InputStream inputStream = DLFileEntryLocalServiceUtil.getFileAsStream(
-			userId, fileEntry.getFileEntryId(), fileEntry.getVersion(), false);
+			fileEntry.getFileEntryId(), fileEntry.getVersion(), false);
 
 		ManifestSummary manifestSummary = null;
 
@@ -539,6 +560,18 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	@Override
+	public ZipWriter getPortletZipWriter(String portletId) {
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(portletId);
+		sb.append(StringPool.DASH);
+		sb.append(Time.getShortTimestamp());
+		sb.append(".lar");
+
+		return getZipWriter(sb.toString());
+	}
+
+	@Override
 	public String getSelectedLayoutsJSON(
 			long groupId, boolean privateLayout, String selectedNodes)
 		throws SystemException {
@@ -594,7 +627,9 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		String groupElementName = groupElement.getName();
 
-		if (!groupElementName.equals(JournalArticle.class.getSimpleName())) {
+		if (!groupElementName.equals(DDMTemplate.class.getSimpleName()) &&
+			!groupElementName.equals(JournalArticle.class.getSimpleName())) {
+
 			content = StringUtil.replace(
 				content, StringPool.AMPERSAND_ENCODED, StringPool.AMPERSAND);
 		}
@@ -1098,21 +1133,27 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				}
 			}
 
-			String uuid = referenceElement.attributeValue("uuid");
+			Map<Long, Long> dlFileEntryIds =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					DLFileEntry.class);
 
-			long importGroupId = groupId;
+			long fileEntryId = MapUtil.getLong(
+				dlFileEntryIds, classPK, classPK);
 
-			if (groupId == portletDataContext.getSourceCompanyGroupId()) {
-				importGroupId = portletDataContext.getCompanyGroupId();
+			FileEntry importedFileEntry = null;
+
+			try {
+				importedFileEntry = DLAppLocalServiceUtil.getFileEntry(
+					fileEntryId);
 			}
-			else if (groupId == portletDataContext.getSourceGroupId()) {
-				importGroupId = portletDataContext.getGroupId();
-			}
+			catch (PortalException pe) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(pe, pe);
+				}
+				else if (_log.isWarnEnabled()) {
+					_log.warn(pe.getMessage());
+				}
 
-			FileEntry importedFileEntry = FileEntryUtil.fetchByUUID_R(
-				uuid, importGroupId);
-
-			if (importedFileEntry == null) {
 				continue;
 			}
 
@@ -1485,31 +1526,38 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				group.getCompanyId(), groupId, parameterMap,
 				getUserIdStrategy(userId, userIdStrategy), zipReader);
 
-		XMLReader xmlReader = SecureXMLFactoryProviderUtil.newXMLReader();
+		try {
+			XMLReader xmlReader = SecureXMLFactoryProviderUtil.newXMLReader();
 
-		ElementHandler elementHandler = new ElementHandler(
-			new ElementProcessor() {
+			ElementHandler elementHandler = new ElementHandler(
+				new ElementProcessor() {
 
-				@Override
-				public void processElement(Element element) {
-					MissingReference missingReference =
-						validateMissingReference(portletDataContext, element);
+					@Override
+					public void processElement(Element element) {
+						MissingReference missingReference =
+							validateMissingReference(
+								portletDataContext, element);
 
-					if (missingReference != null) {
-						missingReferences.add(missingReference);
+						if (missingReference != null) {
+							missingReferences.add(missingReference);
+						}
 					}
-				}
 
-			},
-			new String[] {"missing-reference"});
+				},
+				new String[] {"missing-reference"});
 
-		xmlReader.setContentHandler(elementHandler);
+			xmlReader.setContentHandler(elementHandler);
 
-		xmlReader.parse(
-			new InputSource(
-				portletDataContext.getZipEntryAsInputStream("/manifest.xml")));
+			xmlReader.parse(
+				new InputSource(
+					portletDataContext.getZipEntryAsInputStream(
+						"/manifest.xml")));
 
-		return missingReferences;
+			return missingReferences;
+		}
+		finally {
+			zipReader.close();
+		}
 	}
 
 	@Override
@@ -1892,6 +1940,20 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		}
 
 		return new CurrentUserIdStrategy(user);
+	}
+
+	protected ZipWriter getZipWriter(String fileName) {
+		if (!ExportImportThreadLocal.isStagingInProcess() ||
+			(PropsValues.STAGING_DELETE_TEMP_LAR_ON_FAILURE &&
+			 PropsValues.STAGING_DELETE_TEMP_LAR_ON_SUCCESS)) {
+
+			return ZipWriterFactoryUtil.getZipWriter();
+		}
+
+		return ZipWriterFactoryUtil.getZipWriter(
+			new File(
+				SystemProperties.get(SystemProperties.TMP_DIR) +
+					StringPool.SLASH + fileName));
 	}
 
 	protected boolean populateLayoutsJSON(

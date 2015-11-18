@@ -235,6 +235,10 @@ public class HttpUtil {
 			}
 		}
 
+		if (parts.isEmpty()) {
+			return StringPool.SLASH;
+		}
+
 		StringBundler sb = new StringBundler(parts.size() * 2 + 2);
 
 		for (String part : parts) {
@@ -365,6 +369,10 @@ public class HttpUtil {
 
 	public static String setParameter(String url, String name, String value) {
 		return getHttp().setParameter(url, name, value);
+	}
+
+	public static String shortenURL(String url, int count) {
+		return getHttp().shortenURL(url, count);
 	}
 
 	public static byte[] URLtoByteArray(Http.Options options)

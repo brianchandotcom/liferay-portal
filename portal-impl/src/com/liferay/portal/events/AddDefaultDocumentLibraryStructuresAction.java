@@ -15,14 +15,16 @@
 package com.liferay.portal.events;
 
 import com.liferay.portal.kernel.events.ActionException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessorUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -66,9 +68,24 @@ public class AddDefaultDocumentLibraryStructuresAction
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #addDLFileEntryType(long,
+	 *             long, String, String, List, ServiceContext)}
+	 */
 	protected void addDLFileEntryType(
 			long userId, long groupId, String dlFileEntryTypeKey,
 			List<String> ddmStructureNames, ServiceContext serviceContext)
+		throws Exception {
+
+		addDLFileEntryType(
+			userId, groupId, dlFileEntryTypeKey, dlFileEntryTypeKey,
+			ddmStructureNames, serviceContext);
+	}
+
+	protected void addDLFileEntryType(
+			long userId, long groupId, String languageKey,
+			String dlFileEntryTypeKey, List<String> ddmStructureNames,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		List<Long> ddmStructureIds = new ArrayList<Long>();
@@ -92,7 +109,7 @@ public class AddDefaultDocumentLibraryStructuresAction
 		Locale locale = PortalUtil.getSiteDefaultLocale(groupId);
 
 		String xsd = getDynamicDDMStructureXSD(
-			"document-library-structures.xml", dlFileEntryTypeKey, locale);
+			"document-library-structures.xml", languageKey, locale);
 
 		serviceContext.setAttribute("xsd", xsd);
 
@@ -101,10 +118,12 @@ public class AddDefaultDocumentLibraryStructuresAction
 				groupId, dlFileEntryTypeKey);
 		}
 		catch (NoSuchFileEntryTypeException nsfete) {
+			Map<Locale, String> localizationMap = getLocalizationMap(
+				languageKey);
+
 			DLFileEntryTypeLocalServiceUtil.addFileEntryType(
-				userId, groupId, dlFileEntryTypeKey,
-				getLocalizationMap(dlFileEntryTypeKey, locale),
-				getLocalizationMap(dlFileEntryTypeKey, locale),
+				userId, groupId, dlFileEntryTypeKey, localizationMap,
+				localizationMap,
 				ArrayUtil.toArray(
 					ddmStructureIds.toArray(new Long[ddmStructureIds.size()])),
 				serviceContext);
@@ -118,37 +137,46 @@ public class AddDefaultDocumentLibraryStructuresAction
 		List<String> ddmStructureNames = new ArrayList<String>();
 
 		addDLFileEntryType(
-			userId, groupId, DLFileEntryTypeConstants.NAME_CONTRACT,
-			ddmStructureNames, serviceContext);
+			userId, groupId, DLFileEntryTypeConstants.NAME_LOCALIZED_CONTRACT,
+			DLFileEntryTypeConstants.NAME_CONTRACT, ddmStructureNames,
+			serviceContext);
 
 		ddmStructureNames.clear();
 
 		ddmStructureNames.add("Marketing Campaign Theme Metadata");
 
 		addDLFileEntryType(
-			userId, groupId, DLFileEntryTypeConstants.NAME_MARKETING_BANNER,
-			ddmStructureNames, serviceContext);
+			userId, groupId,
+			DLFileEntryTypeConstants.NAME_LOCALIZED_MARKETING_BANNER,
+			DLFileEntryTypeConstants.NAME_MARKETING_BANNER, ddmStructureNames,
+			serviceContext);
 
 		ddmStructureNames.clear();
 
 		ddmStructureNames.add("Learning Module Metadata");
 
 		addDLFileEntryType(
-			userId, groupId, DLFileEntryTypeConstants.NAME_ONLINE_TRAINING,
-			ddmStructureNames, serviceContext);
+			userId, groupId,
+			DLFileEntryTypeConstants.NAME_LOCALIZED_ONLINE_TRAINING,
+			DLFileEntryTypeConstants.NAME_ONLINE_TRAINING, ddmStructureNames,
+			serviceContext);
 
 		ddmStructureNames.clear();
 
 		ddmStructureNames.add("Meeting Metadata");
 
 		addDLFileEntryType(
-			userId, groupId, DLFileEntryTypeConstants.NAME_SALES_PRESENTATION,
-			ddmStructureNames, serviceContext);
+			userId, groupId,
+			DLFileEntryTypeConstants.NAME_LOCALIZED_SALES_PRESENTATION,
+			DLFileEntryTypeConstants.NAME_SALES_PRESENTATION, ddmStructureNames,
+			serviceContext);
 
 		if (UpgradeProcessUtil.isCreateIGImageDocumentType()) {
 			addDLFileEntryType(
-				userId, groupId, DLFileEntryTypeConstants.NAME_IG_IMAGE,
-				ddmStructureNames, serviceContext);
+				userId, groupId,
+				DLFileEntryTypeConstants.NAME_LOCALIZED_IG_IMAGE,
+				DLFileEntryTypeConstants.NAME_IG_IMAGE, ddmStructureNames,
+				serviceContext);
 		}
 	}
 
@@ -161,7 +189,7 @@ public class AddDefaultDocumentLibraryStructuresAction
 		String xsd = buildDLRawMetadataXML(
 			RawMetadataProcessorUtil.getFields(), locale);
 
-		Document document = SAXReaderUtil.read(new StringReader(xsd));
+		Document document = UnsecureSAXReaderUtil.read(new StringReader(xsd));
 
 		Element rootElement = document.getRootElement();
 
@@ -298,12 +326,35 @@ public class AddDefaultDocumentLibraryStructuresAction
 			defaultUserId, group.getGroupId(), serviceContext);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getLocalizationMap(String)}
+	 */
 	protected Map<Locale, String> getLocalizationMap(
 		String content, Locale locale) {
 
 		Map<Locale, String> localizationMap = new HashMap<Locale, String>();
 
 		localizationMap.put(locale, content);
+
+		return localizationMap;
+	}
+
+	protected Map<Locale, String> getLocalizationMap(String content) {
+		Map<Locale, String> localizationMap = new HashMap<Locale, String>();
+
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		String defaultValue = LanguageUtil.get(defaultLocale, content);
+
+		for (Locale locale : LanguageUtil.getSupportedLocales()) {
+			String value = LanguageUtil.get(locale, content);
+
+			if (!locale.equals(defaultLocale) && value.equals(defaultValue)) {
+				continue;
+			}
+
+			localizationMap.put(locale, value);
+		}
 
 		return localizationMap;
 	}

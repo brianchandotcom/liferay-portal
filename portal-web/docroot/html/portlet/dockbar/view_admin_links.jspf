@@ -14,7 +14,7 @@
  */
 --%>
 
-<c:if test="<%= (themeDisplay.isShowControlPanelIcon() || themeDisplay.isShowSiteAdministrationIcon()) && (!layout.getGroup().isControlPanel() || (Validator.isNotNull(controlPanelCategory) && controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE))) %>">
+<c:if test="<%= (themeDisplay.isShowControlPanelIcon() || themeDisplay.isShowSiteAdministrationIcon()) && (!layout.getGroup().isControlPanel() || (Validator.isNotNull(controlPanelCategory) && (controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) || (controlPanelCategory.equals(PortletCategoryKeys.MY) && !PropsValues.DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP)))) %>">
 	<aui:nav-item cssClass="admin-links" dropdown="<%= true %>" id="adminLinks" label="admin">
 		<c:if test="<%= themeDisplay.isShowSiteAdministrationIcon() %>">
 			<aui:nav-item anchorId="siteAdministrationLink" href="<%= themeDisplay.getURLSiteAdministration() %>" iconCssClass="icon-cog" label="site-administration">
@@ -33,7 +33,7 @@
 							String url = HttpUtil.setParameter(themeDisplay.getURLSiteAdministration(), "controlPanelCategory", StringUtil.replace(category, PortletCategoryKeys.SITE_ADMINISTRATION, currentSiteCategory));
 						%>
 
-							<aui:nav-item anchorId="siteAdministrationLink" href="<%= url %>" iconCssClass="icon-chevron-right" label='<%= "category." + category %>'/>
+							<aui:nav-item anchorId='<%= "siteAdministrationLink-" + category %>' href="<%= url %>" iconCssClass="icon-chevron-right" label='<%= "category." + category %>' />
 
 						<%
 						}

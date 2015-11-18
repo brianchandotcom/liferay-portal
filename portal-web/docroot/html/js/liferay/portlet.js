@@ -79,7 +79,7 @@
 					{
 						insertBefore: head.get('firstChild').getDOM(),
 						onSuccess: function(event) {
-							if (Liferay.Browser.isIe()) {
+							if (document.createStyleSheet) {
 								A.all('body link').appendTo(head);
 
 								A.all('link.lfr-css-file').each(

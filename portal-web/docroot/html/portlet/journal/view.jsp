@@ -90,6 +90,7 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 			<aui:form action="<%= portletURL.toString() %>" method="get" name="fm">
 				<aui:input name="<%= Constants.CMD %>" type="hidden" />
 				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+				<aui:input name="groupId" type="hidden" value="<%= scopeGroupId %>" />
 				<aui:input name="folderIds" type="hidden" />
 				<aui:input name="articleIds" type="hidden" />
 				<aui:input name="newFolderId" type="hidden" />
@@ -156,8 +157,8 @@ folderStart = GetterUtil.getInteger(request.getAttribute("view_folders.jsp-folde
 			move: {
 				allRowIds: '<%= RowChecker.ALL_ROW_IDS %>',
 				editEntryUrl: '<portlet:actionURL><portlet:param name="struts_action" value="/journal/edit_entry" /></portlet:actionURL>',
-				folderIdRegEx: /&?<portlet:namespace />folderId=([\d]+)/i,
 				folderIdHashRegEx: /#.*&?<portlet:namespace />folderId=([\d]+)/i,
+				folderIdRegEx: /&?<portlet:namespace />folderId=([\d]+)/i,
 				form: {
 					method: 'post',
 					node: A.one(document.<portlet:namespace />fm)
@@ -166,6 +167,7 @@ folderStart = GetterUtil.getInteger(request.getAttribute("view_folders.jsp-folde
 				trashLinkId: '<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "_" + PortletKeys.CONTROL_PANEL_MENU + "_portlet_" + PortletKeys.TRASH : StringPool.BLANK %>',
 				updateable: true
 			},
+			namespace: '<portlet:namespace />',
 			paginator: {
 				entriesTotal: <%= entriesTotal %>,
 				entryEnd: <%= entryEnd %>,
@@ -177,9 +179,10 @@ folderStart = GetterUtil.getInteger(request.getAttribute("view_folders.jsp-folde
 				folderRowsPerPage: <%= folderEnd - folderStart %>,
 				folderRowsPerPageOptions: [<%= StringUtil.merge(PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) %>],
 				folderStart: <%= folderStart %>,
-				foldersTotal: <%= foldersTotal %>
+				foldersTotal: <%= foldersTotal %>,
+				numberOfPages: <%= ParamUtil.getInteger(request, "numberOfPages", numberOfPages) %>,
+				showControls: true
 			},
-			namespace: '<portlet:namespace />',
 			portletId: '<%= portletDisplay.getId() %>',
 			rowIds: '<%= RowChecker.ROW_IDS %>',
 			select: {

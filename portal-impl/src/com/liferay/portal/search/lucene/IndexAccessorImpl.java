@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.search.lucene.dump.DumpIndexDeletionPolicy;
 import com.liferay.portal.search.lucene.dump.IndexCommitSerializationUtil;
@@ -242,37 +243,59 @@ public class IndexAccessorImpl implements IndexAccessor {
 
 		Directory tempDirectory = FSDirectory.open(tempFile);
 
-		IndexCommitSerializationUtil.deserializeIndex(
-			inputStream, tempDirectory);
+		if (OSDetector.isWindows() &&
+			PropsValues.INDEX_DUMP_PROCESS_DOCUMENTS_ENABLED) {
 
-		_deleteDirectory();
+			IndexCommitSerializationUtil.deserializeIndex(
+				inputStream, tempDirectory);
 
-		IndexReader indexReader = IndexReader.open(tempDirectory, false);
+			_deleteDirectory();
 
-		IndexSearcher indexSearcher = new IndexSearcher(indexReader);
+			IndexReader indexReader = IndexReader.open(tempDirectory, false);
 
-		try {
-			TopDocs topDocs = indexSearcher.search(
-				new MatchAllDocsQuery(), indexReader.numDocs());
+			IndexSearcher indexSearcher = new IndexSearcher(indexReader);
 
-			ScoreDoc[] scoreDocs = topDocs.scoreDocs;
+			try {
+				TopDocs topDocs = indexSearcher.search(
+					new MatchAllDocsQuery(), indexReader.numDocs());
 
-			for (ScoreDoc scoreDoc : scoreDocs) {
-				Document document = indexSearcher.doc(scoreDoc.doc);
+				ScoreDoc[] scoreDocs = topDocs.scoreDocs;
 
-				addDocument(document);
+				for (ScoreDoc scoreDoc : scoreDocs) {
+					Document document = indexSearcher.doc(scoreDoc.doc);
+
+					addDocument(document);
+				}
 			}
-		}
-		catch (IllegalArgumentException iae) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(iae.getMessage());
+			catch (IllegalArgumentException iae) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(iae.getMessage());
+				}
 			}
+
+			indexSearcher.close();
+
+			indexReader.flush();
+			indexReader.close();
 		}
+		else {
+			IndexCommitSerializationUtil.deserializeIndex(
+				inputStream, tempDirectory);
 
-		indexSearcher.close();
+			_indexSearcherManager.close();
 
-		indexReader.flush();
-		indexReader.close();
+			_indexWriter.close();
+
+			_deleteDirectory();
+
+			for (String file : tempDirectory.listAll()) {
+				tempDirectory.copy(getLuceneDir(), file, file);
+			}
+
+			_initIndexWriter();
+
+			_indexSearcherManager = new IndexSearcherManager(_indexWriter);
+		}
 
 		tempDirectory.close();
 

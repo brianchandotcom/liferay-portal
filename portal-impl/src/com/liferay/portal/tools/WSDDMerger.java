@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.util.InitUtil;
 
 import java.io.File;
@@ -47,7 +47,7 @@ public class WSDDMerger {
 
 		File sourceFile = new File(source);
 
-		Document document = SAXReaderUtil.read(sourceFile);
+		Document document = UnsecureSAXReaderUtil.read(sourceFile);
 
 		Element rootElement = document.getRootElement();
 
@@ -61,7 +61,7 @@ public class WSDDMerger {
 
 		File destinationFile = new File(destination);
 
-		document = SAXReaderUtil.read(destinationFile);
+		document = UnsecureSAXReaderUtil.read(destinationFile);
 
 		rootElement = document.getRootElement();
 

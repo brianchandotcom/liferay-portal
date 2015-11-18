@@ -64,7 +64,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 					Arrays.sort(classNameIds);
 					%>
 
-					<aui:select label="" name="preferences--anyAssetType--">
+					<aui:select label="" name="preferences--anyAssetType--" title="asset-type">
 						<aui:option label="any" selected="<%= anyAssetType %>" value="<%= true %>" />
 						<aui:option label='<%= LanguageUtil.get(pageContext, "select-more-than-one") + StringPool.TRIPLE_PERIOD %>' selected="<%= !anyAssetType && (classNameIds.length > 1) %>" value="<%= false %>" />
 
@@ -110,13 +110,18 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 					for (AssetRendererFactory assetRendererFactory : AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId())) {
 						Map<Long, String> assetAvailableClassTypes = assetRendererFactory.getClassTypes(_getCurrentAndAncestorSiteGroupIds(groupIds, true), locale);
 
-						if (assetAvailableClassTypes.isEmpty()) {
-							continue;
-						}
-
-						classTypesAssetRendererFactories.add(assetRendererFactory);
-
 						String className = AssetPublisherUtil.getClassName(assetRendererFactory);
+
+						if (assetAvailableClassTypes.isEmpty()) {
+							String portletPreferencesClassTypeIds = portletPreferences.getValue("classTypeIds" + className, StringPool.BLANK);
+
+							if (portletPreferencesClassTypeIds.isEmpty()) {
+								continue;
+							}
+						}
+						else {
+							classTypesAssetRendererFactories.add(assetRendererFactory);
+						}
 
 						Set<Long> assetAvailableClassTypeIdsSet = assetAvailableClassTypes.keySet();
 
@@ -381,7 +386,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 								</c:if>
 							</aui:select>
 
-							<aui:select inlineField="<%= true %>" label="" name="preferences--orderByType1--">
+							<aui:select inlineField="<%= true %>" label="" name="preferences--orderByType1--" title="order-by-type">
 								<aui:option label="ascending" selected='<%= orderByType1.equals("ASC") %>' value="ASC" />
 								<aui:option label="descending" selected='<%= orderByType1.equals("DESC") %>' value="DESC" />
 							</aui:select>
@@ -402,7 +407,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 								</c:if>
 							</aui:select>
 
-							<aui:select inlineField="<%= true %>" label="" name="preferences--orderByType2--">
+							<aui:select inlineField="<%= true %>" label="" name="preferences--orderByType2--" title="order-by-type">
 								<aui:option label="ascending" selected='<%= orderByType2.equals("ASC") %>' value="ASC" />
 								<aui:option label="descending" selected='<%= orderByType2.equals("DESC") %>' value="DESC" />
 							</aui:select>
@@ -737,7 +742,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 					dialog: {
 						constrain: true,
 						modal: true,
-						width: 600
+						width: 800
 					},
 					eventName: '<portlet:namespace />selectDDMStructureField',
 					id: '<portlet:namespace />selectDDMStructure' + event.currentTarget.attr('id'),

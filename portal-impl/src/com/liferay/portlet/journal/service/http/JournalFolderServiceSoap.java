@@ -108,6 +108,20 @@ public class JournalFolderServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.journal.model.JournalFolderSoap fetchFolder(
+		long folderId) throws RemoteException {
+		try {
+			com.liferay.portlet.journal.model.JournalFolder returnValue = JournalFolderServiceUtil.fetchFolder(folderId);
+
+			return com.liferay.portlet.journal.model.JournalFolderSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.journal.model.JournalFolderSoap getFolder(
 		long folderId) throws RemoteException {
 		try {
@@ -263,6 +277,21 @@ public class JournalFolderServiceSoap {
 		}
 	}
 
+	public static int getFoldersAndArticlesCount(long groupId, long userId,
+		long folderId, int status) throws RemoteException {
+		try {
+			int returnValue = JournalFolderServiceUtil.getFoldersAndArticlesCount(groupId,
+					userId, folderId, status);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static int getFoldersCount(long groupId, long parentFolderId)
 		throws RemoteException {
 		try {
@@ -293,11 +322,28 @@ public class JournalFolderServiceSoap {
 		}
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getSubfolderIds(List, long,
+	long, boolean)}
+	*/
 	public static void getSubfolderIds(Long[] folderIds, long groupId,
 		long folderId) throws RemoteException {
 		try {
 			JournalFolderServiceUtil.getSubfolderIds(ListUtil.toList(folderIds),
 				groupId, folderId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void getSubfolderIds(Long[] folderIds, long groupId,
+		long folderId, boolean recurse) throws RemoteException {
+		try {
+			JournalFolderServiceUtil.getSubfolderIds(ListUtil.toList(folderIds),
+				groupId, folderId, recurse);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

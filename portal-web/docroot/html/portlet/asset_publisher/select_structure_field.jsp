@@ -150,7 +150,7 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 
 						Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
 
-						Util.getWindow().hide();
+						Util.getWindow().destroy();
 					}
 				}
 			}

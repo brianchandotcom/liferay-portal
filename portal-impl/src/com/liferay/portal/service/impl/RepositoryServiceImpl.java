@@ -18,6 +18,7 @@ import com.liferay.portal.NoSuchRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.BaseRepository;
+import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -73,7 +74,7 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 				repository.getDlFolderId(), ActionKeys.VIEW);
 		}
 		catch (NoSuchRepositoryException nsre) {
-			throw new RepositoryException(nsre.getMessage());
+			throw new InvalidRepositoryIdException(nsre.getMessage());
 		}
 	}
 

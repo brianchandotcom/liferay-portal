@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.util.xml.XMLFormatter;
 
@@ -45,7 +45,7 @@ public class WebXML23Converter {
 		try {
 			String webXML24 = FileUtil.read(input);
 
-			Document document = SAXReaderUtil.read(webXML24);
+			Document document = UnsecureSAXReaderUtil.read(webXML24);
 
 			Element rootElement = document.getRootElement();
 

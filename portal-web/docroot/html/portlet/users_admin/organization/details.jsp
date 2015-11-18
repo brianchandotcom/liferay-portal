@@ -93,9 +93,7 @@ User selUser = (User)request.getAttribute("user.selUser");
 				</aui:select>
 			</c:when>
 			<c:otherwise>
-				<aui:field-wrapper label="type">
-					<liferay-ui:input-resource url="<%= LanguageUtil.get(pageContext, organization.getType()) %>" />
-				</aui:field-wrapper>
+				<aui:input name="typeLabel" type="resource" value="<%= LanguageUtil.get(pageContext, organization.getType()) %>" />
 
 				<aui:input name="type" type="hidden" value="<%= organization.getType() %>" />
 			</c:otherwise>
@@ -110,9 +108,7 @@ User selUser = (User)request.getAttribute("user.selUser");
 		</div>
 
 		<c:if test="<%= organization != null %>">
-			<aui:field-wrapper label="site-id">
-				<liferay-ui:input-resource url="<%= String.valueOf(groupId) %>" />
-			</aui:field-wrapper>
+			<aui:input name="siteId" type="resource" value="<%= String.valueOf(groupId) %>" />
 		</c:if>
 	</aui:fieldset>
 

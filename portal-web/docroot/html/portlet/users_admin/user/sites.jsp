@@ -36,6 +36,9 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 	/>
 </liferay-util:buffer>
 
+<aui:input name="addGroupIds" type="hidden" />
+<aui:input name="deleteGroupIds" type="hidden" />
+
 <h3><liferay-ui:message key="sites" /></h3>
 
 <liferay-ui:search-container
@@ -112,23 +115,31 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 	</portlet:renderURL>
 
 	<aui:script use="escape,liferay-search-container">
+		var AArray = A.Array;
+		var Util = Liferay.Util;
+
+		var addGroupIds = [];
+		var deleteGroupIds = [];
+
+		var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />groupsSearchContainer');
+
+		var searchContainerContentBox = searchContainer.get('contentBox');
+
 		A.one('#<portlet:namespace />selectSiteLink').on(
 			'click',
 			function(event) {
-				Liferay.Util.selectEntity(
+				Util.selectEntity(
 					{
 						dialog: {
 							constrain: true,
 							modal: true,
-							width: 600
+							width: 800
 						},
 						id: '<portlet:namespace />selectGroup',
 						title: '<liferay-ui:message arguments="site" key="select-x" />',
 						uri: '<%= groupSelectorURL.toString() %>'
 					},
 					function(event) {
-						var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />groupsSearchContainer');
-
 						var rowColumns = [];
 
 						rowColumns.push(A.Escape.html(event.groupdescriptivename));
@@ -136,23 +147,61 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 						rowColumns.push('<a class="modify-link" data-rowId="' + event.groupid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeGroupIcon) %></a>');
 
 						searchContainer.addRow(rowColumns, event.groupid);
+
 						searchContainer.updateDataStore();
+
+						addGroupIds.push(event.groupid);
+
+						AArray.removeItem(deleteGroupIds, event.groupid);
+
+						document.<portlet:namespace />fm.<portlet:namespace />addGroupIds.value = addGroupIds.join(',');
+						document.<portlet:namespace />fm.<portlet:namespace />deleteGroupIds.value = deleteGroupIds.join(',');
 					}
 				);
 			}
 		);
 
-		var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />groupsSearchContainer');
-
-		searchContainer.get('contentBox').delegate(
+		searchContainerContentBox.delegate(
 			'click',
 			function(event) {
 				var link = event.currentTarget;
-				var tr = link.ancestor('tr');
 
-				searchContainer.deleteRow(tr, link.getAttribute('data-rowId'));
+				var tr = link.ancestor('tr');
+				var rowId = link.attr('data-rowId');
+
+				var selectGroup = Util.getWindow('<portlet:namespace />selectGroup');
+
+				if (selectGroup) {
+					var selectButton = selectGroup.iframe.node.get('contentWindow.document').one('.selector-button[data-groupid="' + rowId + '"]');
+
+					Util.toggleDisabled(selectButton, false);
+				}
+
+				searchContainer.deleteRow(tr, rowId);
+
+				AArray.removeItem(addGroupIds, event.rowId);
+
+				deleteGroupIds.push(rowId);
+
+				document.<portlet:namespace />fm.<portlet:namespace />addGroupIds.value = addGroupIds.join(',');
+				document.<portlet:namespace />fm.<portlet:namespace />deleteGroupIds.value = deleteGroupIds.join(',');
 			},
 			'.modify-link'
+		);
+
+		Liferay.on(
+			'<portlet:namespace />enableRemovedSites',
+			function(event) {
+				event.selectors.each(
+					function(item, index, collection) {
+						var groupId = item.attr('data-groupid');
+
+						if (AArray.indexOf(deleteGroupIds, groupId) != -1) {
+							Util.toggleDisabled(item, false);
+						}
+					}
+				);
+			}
 		);
 	</aui:script>
 </c:if>

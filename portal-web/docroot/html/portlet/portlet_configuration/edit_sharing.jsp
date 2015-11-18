@@ -99,7 +99,7 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 
 				<aui:input cssClass="lfr-input-text-container" label="api-key" name="facebookAPIKey" value="<%= HtmlUtil.toInputSafe(facebookAPIKey) %>" />
 
-				<aui:input cssClass="lfr-input-text-container flexible" label="canvas-page-url" name="facebookCanvasPageURL" prefix="http://apps.facebook.com/" suffix="/" value="<%= HtmlUtil.toInputSafe(facebookCanvasPageURL) %>" />
+				<aui:input cssClass="flexible lfr-input-text-container" label="canvas-page-url" name="facebookCanvasPageURL" prefix="http://apps.facebook.com/" suffix="/" value="<%= HtmlUtil.toInputSafe(facebookCanvasPageURL) %>" />
 
 				<c:if test="<%= Validator.isNotNull(facebookCanvasPageURL) %>">
 					<br />
@@ -117,9 +117,7 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 						</c:choose>
 					</div>
 
-					<label><liferay-ui:message key="callback-url" /></label>
-
-					<liferay-ui:input-resource url="<%= callbackURL %>" />
+					<aui:input name="callbackURL" type="resource" value="<%= callbackURL %>" />
 
 					<aui:input label='<%= LanguageUtil.format(pageContext, "allow-users-to-add-x-to-facebook", HtmlUtil.escape(portletDisplay.getTitle())) %>' name="facebookShowAddAppLink" type="checkbox" value="<%= facebookShowAddAppLink %>" />
 				</c:if>
@@ -134,9 +132,7 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 					<liferay-ui:message key="use-the-opensocial-gadget-url-to-create-an-opensocial-gadget" />
 				</div>
 
-				<label><liferay-ui:message key="opensocial-gadget-url" /></label>
-
-				<liferay-ui:input-resource url="<%= PortalUtil.getGoogleGadgetURL(portlet, themeDisplay) %>" />
+				<aui:input name="opensocialGadgetURL" type="resource" value="<%= PortalUtil.getGoogleGadgetURL(portlet, themeDisplay) %>" />
 
 				<aui:input label='<%= LanguageUtil.format(pageContext, "allow-users-to-add-x-to-igoogle", HtmlUtil.escape(portletDisplay.getTitle())) %>' name="iGoogleShowAddAppLink" type="checkbox" value="<%= iGoogleShowAddAppLink %>" />
 			</c:when>
@@ -150,9 +146,7 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 					<liferay-ui:message key="use-the-netvibes-widget-url-to-create-a-netvibes-widget" />
 				</div>
 
-				<label><liferay-ui:message key="netvibes-widget-url" /></label>
-
-				<liferay-ui:input-resource url="<%= PortalUtil.getNetvibesURL(portlet, themeDisplay) %>" />
+				<aui:input name="netvibesWidgetURL" type="resource" value="<%= PortalUtil.getNetvibesURL(portlet, themeDisplay) %>" />
 
 				<aui:input label='<%= LanguageUtil.format(pageContext, "allow-users-to-add-x-to-netvibes-pages", HtmlUtil.escape(portletDisplay.getTitle())) %>' name="netvibesShowAddAppLink" type="checkbox" value="<%= netvibesShowAddAppLink %>" />
 			</c:when>

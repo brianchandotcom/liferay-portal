@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.journal.util;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -56,6 +58,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Marcellus Tavares
@@ -278,6 +282,12 @@ public class JournalConverterImpl implements JournalConverter {
 				addMetadataEntry(
 					metadataElement, "label", HttpUtil.decodeURL(name));
 
+				Attribute indexTypeAttribute = element.attribute("index-type");
+
+				if (indexTypeAttribute != null) {
+					element.remove(indexTypeAttribute);
+				}
+
 				element.addAttribute("name", "option" + StringUtil.randomId());
 				element.addAttribute("type", "option");
 				element.addAttribute("value", HttpUtil.decodeURL(type));
@@ -474,27 +484,20 @@ public class JournalConverterImpl implements JournalConverter {
 
 	protected Serializable getDocumentLibraryValue(String url) {
 		try {
-			int x = url.indexOf("/documents/");
+			FileEntry fileEntry = null;
 
-			if (x == -1) {
+			if (url.contains("/c/document_library/get_file?") ||
+				url.contains("/image/image_gallery?")) {
+
+				fileEntry = getFileEntryByOldDocumentLibraryURL(url);
+			}
+			else if (url.contains("/documents/")) {
+				fileEntry = getFileEntryByDocumentLibraryURL(url);
+			}
+
+			if (fileEntry == null) {
 				return StringPool.BLANK;
 			}
-
-			int y = url.indexOf(StringPool.QUESTION);
-
-			if (y == -1) {
-				y = url.length();
-			}
-
-			url = url.substring(x, y);
-
-			String[] parts = StringUtil.split(url, CharPool.SLASH);
-
-			long groupId = GetterUtil.getLong(parts[2]);
-
-			FileEntry fileEntry =
-				DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
-					parts[5], groupId);
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -530,6 +533,9 @@ public class JournalConverterImpl implements JournalConverter {
 		String dataType = ddmStructure.getFieldDataType(name);
 		String type = ddmStructure.getFieldType(name);
 
+		boolean localizable = GetterUtil.getBoolean(
+			ddmStructure.getFieldProperty(name, "localizable"), true);
+
 		List<Element> dynamicContentElements = dynamicElementElement.elements(
 			"dynamic-content");
 
@@ -537,7 +543,11 @@ public class JournalConverterImpl implements JournalConverter {
 			Locale locale = LocaleUtil.fromLanguageId(defaultLanguageId);
 
 			String languageId = dynamicContentElement.attributeValue(
-				"language-id");
+				"language-id", defaultLanguageId);
+
+			if (!localizable && !languageId.equals(defaultLanguageId)) {
+				continue;
+			}
 
 			if (Validator.isNotNull(languageId)) {
 				locale = LocaleUtil.fromLanguageId(languageId);
@@ -612,6 +622,42 @@ public class JournalConverterImpl implements JournalConverter {
 		return serializable;
 	}
 
+	protected FileEntry getFileEntryByDocumentLibraryURL(String url)
+		throws PortalException, SystemException {
+
+		int x = url.indexOf("/documents/");
+
+		int y = url.indexOf(StringPool.QUESTION);
+
+		if (y == -1) {
+			y = url.length();
+		}
+
+		url = url.substring(x, y);
+
+		String[] parts = StringUtil.split(url, CharPool.SLASH);
+
+		long groupId = GetterUtil.getLong(parts[2]);
+
+		return DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+			parts[5], groupId);
+	}
+
+	protected FileEntry getFileEntryByOldDocumentLibraryURL(String url)
+		throws PortalException, SystemException {
+
+		Matcher matcher = _oldDocumentLibraryURLPattern.matcher(url);
+
+		if (!matcher.find()) {
+			return null;
+		}
+
+		long groupId = GetterUtil.getLong(matcher.group(2));
+
+		return DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+			matcher.group(1), groupId);
+	}
+
 	protected void getJournalMetadataElement(Element metadataElement) {
 		removeAttribute(metadataElement, "locale");
 
@@ -643,53 +689,6 @@ public class JournalConverterImpl implements JournalConverter {
 		}
 
 		element.remove(attribute);
-	}
-
-	protected void updateContentDynamicElement(
-			Element dynamicElementElement, DDMStructure ddmStructure,
-			Field ddmField, DDMFieldsCounter ddmFieldsCounter)
-		throws Exception {
-
-		String fieldName = ddmField.getName();
-
-		String fieldType = ddmStructure.getFieldType(fieldName);
-		String indexType = ddmStructure.getFieldProperty(
-			fieldName, "indexType");
-
-		String type = _ddmTypesToJournalTypes.get(fieldType);
-
-		if (type == null) {
-			type = fieldType;
-		}
-
-		dynamicElementElement.addAttribute("type", type);
-
-		dynamicElementElement.addAttribute("index-type", indexType);
-
-		for (Locale locale : ddmField.getAvailableLocales()) {
-			Element dynamicContentElement = dynamicElementElement.addElement(
-				"dynamic-content");
-
-			dynamicContentElement.addAttribute(
-				"language-id", LocaleUtil.toLanguageId(locale));
-
-			int count = ddmFieldsCounter.get(fieldName);
-
-			Serializable fieldValue = ddmField.getValue(locale, count);
-
-			if (fieldValue instanceof Date) {
-				Date valueDate = (Date)fieldValue;
-
-				fieldValue = valueDate.getTime();
-			}
-
-			String valueString = String.valueOf(fieldValue);
-
-			updateDynamicContentValue(
-				dynamicContentElement, fieldType, valueString.trim());
-		}
-
-		ddmFieldsCounter.incrementKey(fieldName);
 	}
 
 	protected void updateContentDynamicElement(
@@ -735,6 +734,8 @@ public class JournalConverterImpl implements JournalConverter {
 		String fieldType = ddmStructure.getFieldType(fieldName);
 		String indexType = ddmStructure.getFieldProperty(
 			fieldName, "indexType");
+		boolean multiple = GetterUtil.getBoolean(
+			ddmStructure.getFieldProperty(fieldName, "multiple"));
 
 		String type = _ddmTypesToJournalTypes.get(fieldType);
 
@@ -768,10 +769,19 @@ public class JournalConverterImpl implements JournalConverter {
 					fieldValue = valueDate.getTime();
 				}
 
+				if (Validator.isNull(fieldValue)) {
+					Locale defaultLocale = ddmField.getDefaultLocale();
+
+					if (!Validator.equals(locale, defaultLocale)) {
+						fieldValue = ddmField.getValue(defaultLocale, count);
+					}
+				}
+
 				String valueString = String.valueOf(fieldValue);
 
 				updateDynamicContentValue(
-					dynamicContentElement, fieldType, valueString.trim());
+					dynamicContentElement, fieldType, multiple,
+					valueString.trim());
 			}
 		}
 
@@ -872,7 +882,8 @@ public class JournalConverterImpl implements JournalConverter {
 	}
 
 	protected void updateDynamicContentValue(
-			Element dynamicContentElement, String fieldType, String fieldValue)
+			Element dynamicContentElement, String fieldType, boolean multiple,
+			String fieldValue)
 		throws Exception {
 
 		if (DDMImpl.TYPE_CHECKBOX.equals(fieldType)) {
@@ -957,8 +968,8 @@ public class JournalConverterImpl implements JournalConverter {
 
 			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(fieldValue);
 
-			if (jsonArray.length() > 1) {
-				for (int i = 0; i <jsonArray.length(); i++) {
+			if (multiple) {
+				for (int i = 0; i < jsonArray.length(); i++) {
 					Element optionElement = dynamicContentElement.addElement(
 						"option");
 
@@ -1004,5 +1015,7 @@ public class JournalConverterImpl implements JournalConverter {
 	private static Map<String, String> _journalTypesToDDMTypes;
 
 	private Map<String, String> _ddmTypesToJournalTypes;
+	private final Pattern _oldDocumentLibraryURLPattern = Pattern.compile(
+		"uuid=([^&]+)&groupId=([^&]+)");
 
 }

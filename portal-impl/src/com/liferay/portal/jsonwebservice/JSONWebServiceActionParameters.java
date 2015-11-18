@@ -14,6 +14,7 @@
 
 package com.liferay.portal.jsonwebservice;
 
+import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -25,6 +26,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -206,20 +208,27 @@ public class JSONWebServiceActionParameters {
 			uploadServletRequest = (UploadServletRequest)request;
 		}
 
-		Enumeration<String> enu = request.getParameterNames();
+		List<String> parameterNames = Collections.list(
+			request.getParameterNames());
 
-		while (enu.hasMoreElements()) {
-			String name = enu.nextElement();
+		if (uploadServletRequest != null) {
+			Map<String, FileItem[]> multipartParameterMap =
+				uploadServletRequest.getMultipartParameterMap();
 
+			parameterNames.addAll(multipartParameterMap.keySet());
+		}
+
+		for (String parameterName : parameterNames) {
 			Object value = null;
 
 			if ((uploadServletRequest != null) &&
-				(uploadServletRequest.getFileName(name) != null)) {
+				(uploadServletRequest.getFileName(parameterName) != null)) {
 
-				value = uploadServletRequest.getFile(name, true);
+				value = uploadServletRequest.getFile(parameterName, true);
 			}
 			else {
-				String[] parameterValues = request.getParameterValues(name);
+				String[] parameterValues = request.getParameterValues(
+					parameterName);
 
 				if (parameterValues.length == 1) {
 					value = parameterValues[0];
@@ -229,9 +238,9 @@ public class JSONWebServiceActionParameters {
 				}
 			}
 
-			name = CamelCaseUtil.normalizeCamelCase(name);
+			parameterName = CamelCaseUtil.normalizeCamelCase(parameterName);
 
-			_parameters.put(name, value);
+			_parameters.put(parameterName, value);
 		}
 	}
 

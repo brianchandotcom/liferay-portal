@@ -76,7 +76,13 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 			<input class="input-medium" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= nameId %>" name="<%= namespace + HtmlUtil.escapeAttribute(name) %>" type="date" value="<%= format.format(calendar.getTime()) %>" />
 		</c:when>
 		<c:otherwise>
-			<input class="input-medium" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= nameId %>" name="<%= namespace + HtmlUtil.escapeAttribute(name) %>" placeholder="<%= StringUtil.toLowerCase(simpleDateFormatPattern) %>" type="text" value="<%= nullable ? "" : format.format(calendar.getTime()) %>" />
+			<aui:input disabled="<%= disabled %>" id="<%= HtmlUtil.getAUICompatibleId(name) %>" label="" name="<%= name %>" placeholder="<%= StringUtil.toLowerCase(simpleDateFormatPattern) %>" title="" type="text" value="<%= nullable ? StringPool.BLANK : format.format(calendar.getTime()) %>" wrappedField="<%= true %>">
+				<aui:validator errorMessage="please-enter-a-valid-date" name="custom">
+					function(val) {
+						return AUI().use('aui-datatype-date-parse').Parsers.date('<%= mask %>', val);
+					}
+				</aui:validator>
+			</aui:input>
 		</c:otherwise>
 	</c:choose>
 
@@ -91,6 +97,18 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 		function() {
 			var datePicker = new A.DatePicker<%= BrowserSnifferUtil.isMobile(request) ? "Native" : StringPool.BLANK %>(
 				{
+					calendar: {
+
+						<%
+						String calendarOptions = StringPool.BLANK;
+
+						if (firstDayOfWeek != -1) {
+							calendarOptions += String.format("'strings.first_weekday': %d", firstDayOfWeek);
+						}
+						%>
+
+						<%= calendarOptions %>
+					},
 					container: '#<%= randomNamespace %>displayDate',
 					mask: '<%= mask %>',
 					on: {
@@ -107,17 +125,11 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 							container.one('#<%= yearParamId %>').attr('disabled', newVal);
 						},
 						selectionChange: function(event) {
-							var instance = this;
-
-							var container = instance.get('container');
-
-							var date = event.newSelection[0];
-
-							if (date) {
-								container.one('#<%= dayParamId %>').val(date.getDate());
-								container.one('#<%= monthParamId %>').val(date.getMonth());
-								container.one('#<%= yearParamId %>').val(date.getFullYear());
+							if (isNaN(event.newSelection[0])) {
+								event.newSelection[0] = new Date();
 							}
+
+							datePicker.updateValue(event.newSelection[0]);
 						}
 					},
 					popover: {
@@ -134,6 +146,35 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 
 				return new Date(container.one('#<%= yearParamId %>').val(), container.one('#<%= monthParamId %>').val(), container.one('#<%= dayParamId %>').val());
 			};
+
+			datePicker.updateValue = function(date) {
+				var instance = this;
+
+				var container = instance.get('container');
+
+				if (date) {
+					container.one('#<%= dayParamId %>').val(date.getDate());
+					container.one('#<%= monthParamId %>').val(date.getMonth());
+					container.one('#<%= yearParamId %>').val(date.getFullYear());
+				}
+			};
+
+			datePicker.after(
+				'selectionChange',
+				function(event) {
+					var input = A.one('#<%= nameId %>');
+
+					if (input) {
+						var form = input.get('form');
+
+						var formId = form.get('id');
+
+						var formInstance = Liferay.Form.get(formId);
+
+						formInstance.formValidator.validateField('<%= namespace + HtmlUtil.escapeAttribute(name) %>');
+					}
+				}
+			);
 
 			return datePicker;
 		}

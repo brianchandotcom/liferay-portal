@@ -118,6 +118,7 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 
 				AssetEntryQuery assetEntryQuery = new AssetEntryQuery(classNameIds, searchContainer);
 
+				assetEntryQuery.setEnablePermissions(true);
 				assetEntryQuery.setExcludeZeroViewCount(false);
 
 				int total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);

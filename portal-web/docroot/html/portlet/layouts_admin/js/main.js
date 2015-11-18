@@ -540,7 +540,6 @@ AUI.add(
 									dialog: {
 										bodyContent: pagesNode,
 										centered: true,
-										height: 300,
 										modal: true,
 										render: instance.get('form'),
 										toolbars: {
@@ -571,8 +570,7 @@ AUI.add(
 													label: Liferay.Language.get('cancel')
 												}
 											]
-										},
-										width: 400
+										}
 									},
 									title: Liferay.Language.get('pages')
 								}
@@ -601,7 +599,6 @@ AUI.add(
 									dialog: {
 										bodyContent: rangeNode,
 										centered: true,
-										height: 375,
 										modal: true,
 										render: instance.get('form'),
 										toolbars: {
@@ -624,8 +621,7 @@ AUI.add(
 													label: Liferay.Language.get('cancel')
 												}
 											]
-										},
-										width: 400
+										}
 									},
 									title: Liferay.Language.get('date-range')
 								}

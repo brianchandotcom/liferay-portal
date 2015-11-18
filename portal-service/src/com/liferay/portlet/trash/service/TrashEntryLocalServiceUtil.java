@@ -307,6 +307,11 @@ public class TrashEntryLocalServiceUtil {
 		getService().checkEntries();
 	}
 
+	public static void deleteEntries(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteEntries(groupId);
+	}
+
 	/**
 	* Deletes the trash entry with the primary key.
 	*

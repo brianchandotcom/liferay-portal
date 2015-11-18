@@ -63,8 +63,17 @@ public class GZipResponse extends MetaInfoCacheServletResponse {
 		_firefox = BrowserSnifferUtil.isFirefox(request);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #finishResponse(boolean)}}
+	 */
+	@Deprecated
 	@Override
 	public void finishResponse() throws IOException {
+		finishResponse(false);
+	}
+
+	@Override
+	public void finishResponse(boolean reapplyMetaData) throws IOException {
 
 		// Is the response committed?
 
@@ -83,7 +92,7 @@ public class GZipResponse extends MetaInfoCacheServletResponse {
 
 				// Reapply meta data
 
-				super.finishResponse();
+				super.finishResponse(reapplyMetaData);
 			}
 		}
 
@@ -164,6 +173,15 @@ public class GZipResponse extends MetaInfoCacheServletResponse {
 
 	@Override
 	public void setContentLength(int contentLength) {
+	}
+
+	@Override
+	public void setHeader(String name, String value) {
+		if (HttpHeaders.CONTENT_LENGTH.equals(name)) {
+			return;
+		}
+
+		_response.setHeader(name, value);
 	}
 
 	private ServletOutputStream _createGZipServletOutputStream(

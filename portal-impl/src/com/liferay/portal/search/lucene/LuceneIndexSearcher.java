@@ -596,6 +596,10 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 
 		int total = hitDocs.getTotalHits();
 
+		if (total > PropsValues.INDEX_SEARCH_LIMIT) {
+			total = PropsValues.INDEX_SEARCH_LIMIT;
+		}
+
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS)) {
 			start = 0;
 			end = total;
@@ -618,8 +622,7 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 			(org.apache.lucene.search.Query)QueryTranslatorUtil.translate(
 				query);
 
-		int scoredFieldNamesCount = LuceneHelperUtil.countScoredFieldNames(
-			luceneQuery, ArrayUtil.toStringArray(indexedFieldNames.toArray()));
+		int scoredFieldNamesCount = -1;
 
 		Hits hits = new HitsImpl();
 
@@ -629,8 +632,8 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 
 		int subsetTotal = end - start;
 
-		if (subsetTotal > PropsValues.INDEX_SEARCH_LIMIT) {
-			subsetTotal = PropsValues.INDEX_SEARCH_LIMIT;
+		if (subsetTotal > hitDocs.getSize()) {
+			subsetTotal = hitDocs.getSize();
 		}
 
 		List<Document> subsetDocs = new ArrayList<Document>(subsetTotal);
@@ -666,8 +669,18 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 
 			Float subsetScore = hitDocs.getScore(i);
 
-			if (scoredFieldNamesCount > 0) {
-				subsetScore = subsetScore / scoredFieldNamesCount;
+			if (subsetScore > 0) {
+				if (scoredFieldNamesCount == -1) {
+					scoredFieldNamesCount =
+						LuceneHelperUtil.countScoredFieldNames(
+							luceneQuery,
+							ArrayUtil.toStringArray(
+								indexedFieldNames.toArray()));
+				}
+
+				if (scoredFieldNamesCount > 0) {
+					subsetScore = subsetScore / scoredFieldNamesCount;
+				}
 			}
 
 			subsetScores.add(subsetScore);
@@ -759,6 +772,17 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 			}
 			else if (_browseResult != null) {
 				return _browseResult.getNumHits();
+			}
+
+			throw new IllegalStateException();
+		}
+
+		public int getSize() {
+			if (_topFieldDocs != null) {
+				return _topFieldDocs.scoreDocs.length;
+			}
+			else if (_browseHits != null) {
+				return _browseHits.length;
 			}
 
 			throw new IllegalStateException();

@@ -35,10 +35,14 @@ import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.dynamicdatamapping.StructureNameException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMStructureTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMTemplateTestUtil;
+import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolder;
+import com.liferay.portlet.journal.model.JournalFolderConstants;
+import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 
 import java.util.Map;
 
@@ -230,6 +234,34 @@ public class JournalTestUtilTest {
 		Assert.assertNotNull(
 			JournalTestUtil.createLocalizedContent(
 				"This is localized content.", LocaleUtil.getSiteDefault()));
+	}
+
+	@Test
+	public void testDeleteDDMStructure() throws Exception {
+		String content = DDMStructureTestUtil.getSampleStructuredContent();
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			JournalArticle.class.getName());
+
+		Assert.assertNotNull(
+			JournalTestUtil.addArticleWithXMLContent(
+				TestPropsValues.getGroupId(),
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				PortalUtil.getClassNameId(DDMStructure.class),
+				ddmStructure.getStructureId(), content,
+				ddmStructure.getStructureKey(), null,
+				LocaleUtil.getSiteDefault()));
+
+		DDMStructureLocalServiceUtil.deleteDDMStructure(ddmStructure);
+
+		try {
+			Assert.assertNull(
+				JournalArticleLocalServiceUtil.getArticle(
+					ddmStructure.getGroupId(), DDMStructure.class.getName(),
+					ddmStructure.getStructureId()));
+		}
+		catch (NoSuchArticleException nsae) {
+		}
 	}
 
 	@Test

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.model;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -33,7 +32,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.LayoutTypePortletFactoryUtil;
-import com.liferay.portal.util.comparator.LayoutRevisionCreateDateComparator;
 
 import java.io.Serializable;
 
@@ -42,7 +40,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -212,25 +209,9 @@ public class LayoutStagingHandler implements InvocationHandler, Serializable {
 			return layoutRevision;
 		}
 
-		layoutRevision = null;
-
-		List<LayoutRevision> layoutRevisions =
-			LayoutRevisionLocalServiceUtil.getLayoutRevisions(
-				layoutSetBranchId, layout.getPlid(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS,
-				new LayoutRevisionCreateDateComparator(true));
-
-		if (!layoutRevisions.isEmpty()) {
-			layoutRevision = layoutRevisions.get(0);
-
-			for (LayoutRevision curLayoutRevision : layoutRevisions) {
-				if (curLayoutRevision.isHead()) {
-					layoutRevision = curLayoutRevision;
-
-					break;
-				}
-			}
-		}
+		layoutRevision =
+			LayoutRevisionLocalServiceUtil.fetchLatestLayoutRevision(
+				layoutSetBranchId, layout.getPlid());
 
 		if (layoutRevision != null) {
 			StagingUtil.setRecentLayoutRevisionId(

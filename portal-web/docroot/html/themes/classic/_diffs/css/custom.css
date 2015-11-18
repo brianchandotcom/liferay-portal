@@ -175,7 +175,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 				border-top: 1px solid #00AEFF;
 
 				&.nav-account-controls-notice {
-					margin-top: 10px;
 					top: 50px;
 				}
 			}

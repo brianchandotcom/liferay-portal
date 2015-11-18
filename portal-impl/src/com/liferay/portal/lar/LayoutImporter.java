@@ -262,13 +262,15 @@ public class LayoutImporter {
 			Map<String, String[]> parameterMap, File file)
 		throws Exception {
 
+		ZipReader zipReader = null;
+
 		try {
 			ExportImportThreadLocal.setLayoutValidationInProcess(true);
 
 			LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 				groupId, privateLayout);
 
-			ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
+			zipReader = ZipReaderFactoryUtil.getZipReader(file);
 
 			PortletDataContext portletDataContext =
 				PortletDataContextFactoryUtil.createImportPortletDataContext(
@@ -292,6 +294,10 @@ public class LayoutImporter {
 		}
 		finally {
 			ExportImportThreadLocal.setLayoutValidationInProcess(false);
+
+			if (zipReader != null) {
+				zipReader.close();
+			}
 		}
 	}
 

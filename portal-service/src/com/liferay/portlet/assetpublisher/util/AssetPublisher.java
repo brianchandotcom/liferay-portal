@@ -146,6 +146,9 @@ public interface AssetPublisher {
 	public String getScopeId(Group group, long scopeGroupId)
 		throws PortalException, SystemException;
 
+	long getSubscriptionClassPK(long plid, String portletId)
+		throws PortalException, SystemException;
+
 	public boolean isScopeIdSelectable(
 			PermissionChecker permissionChecker, String scopeId,
 			long companyGroupId, Layout layout)

@@ -287,7 +287,8 @@ public class ServerDetector {
 			for (MBeanServer mBeanServer :
 					MBeanServerFactory.findMBeanServer(null)) {
 
-				String defaultDomain = mBeanServer.getDefaultDomain();
+				String defaultDomain = GetterUtil.getString(
+					mBeanServer.getDefaultDomain(), "jboss");
 
 				if (defaultDomain.equals("jboss")) {
 					ObjectName objectName = new ObjectName(

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -36,7 +37,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -302,10 +302,10 @@ public class DDMStructureStagedModelDataHandler
 		else {
 			importedStructure = DDMStructureLocalServiceUtil.addStructure(
 				userId, portletDataContext.getScopeGroupId(), parentStructureId,
-				structure.getClassNameId(), structure.getStructureKey(),
-				structure.getNameMap(), structure.getDescriptionMap(),
-				structure.getXsd(), structure.getStorageType(),
-				structure.getType(), serviceContext);
+				structure.getClassNameId(), null, structure.getNameMap(),
+				structure.getDescriptionMap(), structure.getXsd(),
+				structure.getStorageType(), structure.getType(),
+				serviceContext);
 		}
 
 		portletDataContext.importClassedModel(structure, importedStructure);
@@ -317,9 +317,10 @@ public class DDMStructureStagedModelDataHandler
 	protected boolean isModifiedStructure(
 		DDMStructure existingStructure, DDMStructure structure) {
 
-		Date modifiedDate = structure.getModifiedDate();
+		if (DateUtil.compareTo(
+				structure.getModifiedDate(),
+				existingStructure.getModifiedDate()) > 0) {
 
-		if (modifiedDate.after(existingStructure.getModifiedDate())) {
 			return true;
 		}
 

@@ -141,7 +141,7 @@ public abstract class BasePreferencesImpl implements Serializable {
 	}
 
 	public void reset() {
-		_modifiedPreferences = new ConcurrentHashMap<String, Preference>();
+		_modifiedPreferences = null;
 	}
 
 	public abstract void reset(String key) throws ReadOnlyException;
@@ -304,6 +304,16 @@ public abstract class BasePreferencesImpl implements Serializable {
 		}
 
 		return false;
+	}
+
+	protected void setOriginalPreferences(
+		Map<String, Preference> originalPreferences) {
+
+		_originalPreferences = originalPreferences;
+	}
+
+	protected void setOriginalXML(String originalXML) {
+		_originalXML = originalXML;
 	}
 
 	protected String toXML() {

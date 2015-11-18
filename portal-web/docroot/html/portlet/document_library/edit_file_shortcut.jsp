@@ -95,31 +95,29 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 			<liferay-ui:message key="you-can-create-a-shortcut-to-any-document-that-you-have-read-access-for" />
 		</div>
 
-		<aui:field-wrapper label="site">
+		<%
+		String toGroupName = StringPool.BLANK;
 
-			<%
-			String toGroupName = BeanPropertiesUtil.getString(toGroup, "name");
-			%>
+		if (toGroup != null) {
+			toGroupName = HtmlUtil.escape(toGroup.getDescriptiveName());
+		}
+		%>
 
-			<div class="input-append">
-				<liferay-ui:input-resource id="toGroupName" url="<%= toGroupName %>" />
+		<div class="control-group">
+			<aui:input label="site" name="toGroupName" type="resource" value="<%= toGroupName %>" />
 
-				<aui:button name="selectGroupButton" value="select" />
-			</div>
-		</aui:field-wrapper>
+			<aui:button name="selectGroupButton" value="select" />
+		</div>
 
-		<aui:field-wrapper label="document">
+		<%
+		String toFileEntryTitle = BeanPropertiesUtil.getString(toFileEntry, "title");
+		%>
 
-			<%
-			String toFileEntryTitle = BeanPropertiesUtil.getString(toFileEntry, "title");
-			%>
+		<div class="control-group">
+			<aui:input label="document" name="toFileEntryTitle" type="resource" url="<%= toFileEntryTitle %>" />
 
-			<div class="input-append">
-				<liferay-ui:input-resource id="toFileEntryTitle" url="<%= toFileEntryTitle %>" />
-
-				<aui:button disabled="<%= (toGroup == null) %>" name="selectToFileEntryButton" value="select" />
-			</div>
-		</aui:field-wrapper>
+			<aui:button disabled="<%= (toGroup == null) %>" name="selectToFileEntryButton" value="select" />
+		</div>
 
 		<c:if test="<%= fileShortcut == null %>">
 			<aui:field-wrapper label="permissions">

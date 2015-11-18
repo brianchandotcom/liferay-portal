@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.util;
 
+import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
@@ -123,6 +124,26 @@ public class PropertiesParamUtil {
 	}
 
 	public static double getDouble(
+		Properties properties, HttpServletRequest request, String param,
+		double defaultValue, Locale locale) {
+
+		String propertiesValue = properties.getProperty(param, null);
+
+		double getterUtilValue = GetterUtil.getDouble(
+			propertiesValue, defaultValue);
+
+		return ParamUtil.getDouble(request, param, getterUtilValue, locale);
+	}
+
+	public static double getDouble(
+		Properties properties, HttpServletRequest request, String param,
+		Locale locale) {
+
+		return getDouble(
+			properties, request, param, GetterUtil.DEFAULT_DOUBLE, locale);
+	}
+
+	public static double getDouble(
 		Properties properties, PortletRequest portletRequest, String param) {
 
 		return getDouble(
@@ -139,6 +160,28 @@ public class PropertiesParamUtil {
 			propertiesValue, defaultValue);
 
 		return ParamUtil.get(portletRequest, param, getterUtilValue);
+	}
+
+	public static double getDouble(
+		Properties properties, PortletRequest portletRequest, String param,
+		double defaultValue, Locale locale) {
+
+		String propertiesValue = properties.getProperty(param, null);
+
+		double getterUtilValue = GetterUtil.getDouble(
+			propertiesValue, defaultValue);
+
+		return ParamUtil.getDouble(
+			portletRequest, param, getterUtilValue, locale);
+	}
+
+	public static double getDouble(
+		Properties properties, PortletRequest portletRequest, String param,
+		Locale locale) {
+
+		return getDouble(
+			properties, portletRequest, param, GetterUtil.DEFAULT_DOUBLE,
+			locale);
 	}
 
 	public static double getDouble(
@@ -161,6 +204,26 @@ public class PropertiesParamUtil {
 	}
 
 	public static double getDouble(
+		UnicodeProperties properties, HttpServletRequest request, String param,
+		double defaultValue, Locale locale) {
+
+		String propertiesValue = properties.getProperty(param, null);
+
+		double getterUtilValue = GetterUtil.getDouble(
+			propertiesValue, defaultValue);
+
+		return ParamUtil.getDouble(request, param, getterUtilValue, locale);
+	}
+
+	public static double getDouble(
+		UnicodeProperties properties, HttpServletRequest request, String param,
+		Locale locale) {
+
+		return getDouble(
+			properties, request, param, GetterUtil.DEFAULT_DOUBLE, locale);
+	}
+
+	public static double getDouble(
 		UnicodeProperties properties, PortletRequest portletRequest,
 		String param) {
 
@@ -178,6 +241,28 @@ public class PropertiesParamUtil {
 			propertiesValue, defaultValue);
 
 		return ParamUtil.get(portletRequest, param, getterUtilValue);
+	}
+
+	public static double getDouble(
+		UnicodeProperties properties, PortletRequest portletRequest,
+		String param, double defaultValue, Locale locale) {
+
+		String propertiesValue = properties.getProperty(param, null);
+
+		double getterUtilValue = GetterUtil.getDouble(
+			propertiesValue, defaultValue);
+
+		return ParamUtil.getDouble(
+			portletRequest, param, getterUtilValue, locale);
+	}
+
+	public static double getDouble(
+		UnicodeProperties properties, PortletRequest portletRequest,
+		String param, Locale locale) {
+
+		return getDouble(
+			properties, portletRequest, param, GetterUtil.DEFAULT_DOUBLE,
+			locale);
 	}
 
 	public static int getInteger(

@@ -194,8 +194,11 @@ public class LoginAction extends PortletAction {
 		boolean rememberMe = ParamUtil.getBoolean(actionRequest, "rememberMe");
 
 		if (!themeDisplay.isSignedIn()) {
+			String portletId = PortalUtil.getPortletId(actionRequest);
+
 			PortletPreferences portletPreferences =
-				PortletPreferencesFactoryUtil.getPortletSetup(actionRequest);
+				PortletPreferencesFactoryUtil.getStrictPortletSetup(
+					themeDisplay.getLayout(), portletId);
 
 			String authType = portletPreferences.getValue("authType", null);
 
@@ -263,6 +266,12 @@ public class LoginAction extends PortletAction {
 
 		if (Validator.isNotNull(redirect)) {
 			portletURL.setParameter("redirect", redirect);
+		}
+
+		String login = ParamUtil.getString(actionRequest, "login");
+
+		if (Validator.isNotNull(login)) {
+			portletURL.setParameter("login", login);
 		}
 
 		portletURL.setWindowState(WindowState.MAXIMIZED);

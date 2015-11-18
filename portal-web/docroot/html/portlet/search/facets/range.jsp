@@ -17,10 +17,6 @@
 <%@ include file="/html/portlet/search/facets/init.jsp" %>
 
 <%
-if (termCollectors.isEmpty()) {
-	return;
-}
-
 int frequencyThreshold = dataJSONObject.getInt("frequencyThreshold");
 JSONArray rangesJSONArray = dataJSONObject.getJSONArray("ranges");
 %>

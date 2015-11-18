@@ -17,7 +17,6 @@ package com.liferay.taglib.ui;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.JspWriter;
 
 /**
  * @author Brian Wing Shun Chan
@@ -51,15 +50,6 @@ public class JournalContentSearchTag extends IncludeTag {
 	@Override
 	protected String getStartPage() {
 		return _START_PAGE;
-	}
-
-	@Override
-	protected int processEndTag() throws Exception {
-		JspWriter jspWriter = pageContext.getOut();
-
-		jspWriter.write("</form>");
-
-		return EVAL_PAGE;
 	}
 
 	@Override

@@ -453,6 +453,7 @@ AUI.add(
 							instance._eventDataRequest,
 							{
 								requestParams: requestParams,
+								resetPagination: true,
 								src: Liferay.DL_SEARCH
 							}
 						);

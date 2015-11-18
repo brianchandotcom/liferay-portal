@@ -390,7 +390,7 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 			var selectedTargets = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
 
 			document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "actions";
-			document.<portlet:namespace />fm.<portlet:namespace />redirect.value = "<%= portletURL.toString() %>";
+			document.<portlet:namespace />fm.<portlet:namespace />redirect.value = "<%= HtmlUtil.escapeJS(portletURL.toString()) %>";
 			document.<portlet:namespace />fm.<portlet:namespace />selectedTargets.value = selectedTargets;
 
 			submitForm(document.<portlet:namespace />fm);

@@ -223,7 +223,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			/>
 		</c:if>
 
-		<div class="displayStyle-<%= displayStyle %>">
+		<div class="displayStyle-<%= HtmlUtil.escapeAttribute(displayStyle) %>">
 			<liferay-util:include page='<%= "/html/portlet/message_boards/view_category_" + displayStyle + ".jsp" %>' />
 		</div>
 

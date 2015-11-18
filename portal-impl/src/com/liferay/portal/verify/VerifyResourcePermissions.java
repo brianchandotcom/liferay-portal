@@ -140,10 +140,18 @@ public class VerifyResourcePermissions extends VerifyProcess {
 		}
 
 		if (name.equals(User.class.getName())) {
-			User user = UserLocalServiceUtil.getUserById(ownerId);
+			User user = UserLocalServiceUtil.fetchUserById(ownerId);
 
-			Contact contact = ContactLocalServiceUtil.getContact(
+			if (user == null) {
+				return;
+			}
+
+			Contact contact = ContactLocalServiceUtil.fetchContact(
 				user.getContactId());
+
+			if (contact == null) {
+				return;
+			}
 
 			ownerId = contact.getUserId();
 		}

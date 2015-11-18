@@ -1558,6 +1558,12 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		<#list entity.columnList as column>
+			<#if column.isCollection() && column.isMappingManyToMany()>
+				TableMapperFactory.removeTableMapper("${column.mappingTable}");
+			</#if>
+		</#list>
 	}
 
 	<#list entity.columnList as column>

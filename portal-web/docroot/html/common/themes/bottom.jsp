@@ -86,3 +86,4 @@ StringBundler pageBottomSB = OutputTag.getData(request, WebKeys.PAGE_BOTTOM);
 </c:if>
 
 <liferay-util:include page="/html/common/themes/bottom-ext.jsp" />
+<liferay-util:include page="/html/common/themes/bottom-test.jsp" />

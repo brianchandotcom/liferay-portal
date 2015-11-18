@@ -15,7 +15,7 @@
 --%>
 
 <%
-String tabs1 = ParamUtil.getString(request, "tabs1", "public-pages");
+String tabs1 = ParamUtil.getString(request, "tabs1");
 
 String redirect = ParamUtil.getString(request, "redirect");
 String closeRedirect = ParamUtil.getString(request, "closeRedirect");
@@ -73,7 +73,7 @@ if (stagingGroup != null) {
 long selPlid = ParamUtil.getLong(request, "selPlid", LayoutConstants.DEFAULT_PLID);
 long refererPlid = ParamUtil.getLong(request, "refererPlid", LayoutConstants.DEFAULT_PLID);
 
-boolean privateLayout = tabs1.equals("my-dashboard") || tabs1.equals("private-pages");
+boolean privateLayout = false;
 long layoutId = LayoutConstants.DEFAULT_PARENT_LAYOUT_ID;
 
 UnicodeProperties groupTypeSettings = null;
@@ -87,6 +87,51 @@ else {
 
 UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
 
+Layout refererLayout = null;
+
+try {
+	if (refererPlid != LayoutConstants.DEFAULT_PLID) {
+		refererLayout = LayoutLocalServiceUtil.getLayout(refererPlid);
+	}
+}
+catch (NoSuchLayoutException nsle) {
+}
+
+if (Validator.isNull(tabs1)) {
+	LayoutSet layoutSet = null;
+
+	Layout refLayout = LayoutLocalServiceUtil.fetchLayout(themeDisplay.getRefererPlid());
+
+	if (refLayout != null) {
+		layoutSet = refLayout.getLayoutSet();
+	}
+	else {
+		layoutSet = themeDisplay.getLayoutSet();
+	}
+
+	Group layoutSetGroup = layoutSet.getGroup();
+
+	if (layoutSetGroup.isUser()) {
+		tabs1 = "my-profile";
+	}
+	else {
+		tabs1 = "public-pages";
+	}
+
+	if ((!layoutSetGroup.isControlPanel() || (refererLayout != null)) && layoutSet.isPrivateLayout()) {
+		if (group.isUser()) {
+			tabs1 = "my-dashboard";
+		}
+		else {
+			tabs1 = "private-pages";
+		}
+	}
+}
+
+if (tabs1.equals("my-dashboard") || tabs1.equals("private-pages")) {
+	privateLayout = true;
+}
+
 Layout selLayout = null;
 
 try {
@@ -95,16 +140,6 @@ try {
 
 		privateLayout = selLayout.isPrivateLayout();
 		layoutId = selLayout.getLayoutId();
-	}
-}
-catch (NoSuchLayoutException nsle) {
-}
-
-Layout refererLayout = null;
-
-try {
-	if (refererPlid != LayoutConstants.DEFAULT_PLID) {
-		refererLayout = LayoutLocalServiceUtil.getLayout(refererPlid);
 	}
 }
 catch (NoSuchLayoutException nsle) {
@@ -177,6 +212,10 @@ else {
 	else {
 		pagesName = "public-pages";
 	}
+}
+
+if (!pagesName.equals("pages")) {
+	tabs1 = pagesName;
 }
 
 String rootNodeName = liveGroup.getLayoutRootNodeName(privateLayout, locale);

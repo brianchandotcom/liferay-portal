@@ -115,7 +115,7 @@ public class DynamicResourceServlet extends WebServerServlet {
 		// Send file
 
 		if (isSupportsRangeHeader(contentType)) {
-			sendFileWithRangeHeader(
+			ServletResponseUtil.sendFileWithRangeHeader(
 				request, response, fileName, new FileInputStream(file),
 				file.length(), contentType);
 		}

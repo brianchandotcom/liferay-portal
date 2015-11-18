@@ -786,6 +786,7 @@ create unique index IX_FC46FE16 on ShoppingCart (groupId, userId);
 create index IX_54101CC8 on ShoppingCart (userId);
 
 create index IX_5F615D3E on ShoppingCategory (groupId);
+create index IX_6A84467D on ShoppingCategory (groupId, name);
 create index IX_1E6464F5 on ShoppingCategory (groupId, parentCategoryId);
 
 create unique index IX_DC60CFAE on ShoppingCoupon (code_);
@@ -889,6 +890,7 @@ create index IX_A19C89FF on SystemEvent (groupId, systemEventSetKey);
 create index IX_AE6E9907 on Team (groupId);
 create unique index IX_143DC786 on Team (groupId, name);
 
+create index IX_1E8DFB2E on Ticket (classNameId, classPK, type_);
 create index IX_B2468446 on Ticket (key_);
 
 create unique index IX_B35F73D5 on TrashEntry (classNameId, classPK);

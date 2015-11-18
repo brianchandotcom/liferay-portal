@@ -47,14 +47,6 @@ if (type.equals("assetCategories") || baseType.equals(Date.class.getName())) {
 	showForLabel = false;
 }
 
-if (type.equals("assetTags")) {
-	forLabel += "assetTagNames";
-}
-
-if (checkboxField) {
-	forLabel += "Checkbox";
-}
-
 if ((radioField || checkboxField) && Validator.isNull(inlineLabel)) {
 	inlineLabel = "right";
 }
@@ -71,20 +63,7 @@ if (helpTextCssClass.equals("add-on")) {
 	}
 }
 
-String controlGroupCssClass = "control-group";
-
-if (inlineField) {
-	controlGroupCssClass = controlGroupCssClass.concat(" control-group-inline");
-}
-
-if (Validator.isNotNull(inlineLabel)) {
-	controlGroupCssClass = controlGroupCssClass.concat(" form-inline");
-}
-
-if (Validator.isNotNull(wrapperCssClass)) {
-	controlGroupCssClass = controlGroupCssClass.concat(StringPool.SPACE).concat(wrapperCssClass);
-}
-
+String controlGroupCssClass = AUIUtil.buildControlGroupCss(inlineField, inlineLabel, wrapperCssClass, baseType);
 String baseTypeCssClass = TextFormatter.format(StringUtil.toLowerCase(baseType), TextFormatter.K);
 String fieldCssClass = AUIUtil.buildCss(AUIUtil.FIELD_PREFIX, disabled, first, last, cssClass);
 String labelTag = AUIUtil.buildLabel(baseTypeCssClass, inlineField, showForLabel, forLabel);

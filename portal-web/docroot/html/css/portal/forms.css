@@ -122,6 +122,10 @@
 			font-weight: bold;
 			margin-left: 0;
 		}
+
+		&, .field-wrapper-content {
+			margin-left: 15px;
+		}
 	}
 }
 

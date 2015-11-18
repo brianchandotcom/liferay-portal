@@ -3116,6 +3116,10 @@
 			<value>application_display_template</value>
 		</init-param>
 		<init-param>
+			<name>template-path</name>
+			<value>/html/portlet/dynamic_data_mapping/</value>
+		</init-param>
+		<init-param>
 			<name>view-action</name>
 			<value>/dynamic_data_mapping/view_template</value>
 		</init-param>

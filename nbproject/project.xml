@@ -380,6 +380,7 @@
 				<classpath mode="compile">lib/portal/freshcookies-security.jar</classpath>
 				<classpath mode="compile">lib/portal/gif89.jar</classpath>
 				<classpath mode="compile">lib/portal/groovy.jar</classpath>
+				<classpath mode="compile">lib/portal/guice.jar</classpath>
 				<classpath mode="compile">lib/portal/hessian.jar</classpath>
 				<classpath mode="compile">lib/portal/hibernate3.jar</classpath>
 				<classpath mode="compile">lib/portal/htmlparser.jar</classpath>
@@ -399,8 +400,9 @@
 				<classpath mode="compile">lib/portal/jai_core.jar</classpath>
 				<classpath mode="compile">lib/portal/jakarta-regexp.jar</classpath>
 				<classpath mode="compile">lib/portal/jamwiki-core.jar</classpath>
-				<classpath mode="compile">lib/portal/javassist.jar</classpath>
 				<classpath mode="compile">lib/portal/java-diff.jar</classpath>
+				<classpath mode="compile">lib/portal/javassist.jar</classpath>
+				<classpath mode="compile">lib/portal/javax.inject.jar</classpath>
 				<classpath mode="compile">lib/portal/jaxb-impl.jar</classpath>
 				<classpath mode="compile">lib/portal/jaxen.jar</classpath>
 				<classpath mode="compile">lib/portal/jaxrpc.jar</classpath>

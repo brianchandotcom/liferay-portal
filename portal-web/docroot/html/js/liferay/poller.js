@@ -101,7 +101,9 @@ AUI.add(
 					var portlet = _portlets[portletId];
 
 					if (portlet) {
-						if (chunkData) {
+						var currentPortletId = _portletIdsMap[portletId];
+
+						if (chunkData && currentPortletId) {
 							chunkData.initialRequest = portlet.initialRequest;
 						}
 
@@ -112,7 +114,7 @@ AUI.add(
 							_delayIndex = 0;
 						}
 
-						if (portlet.initialRequest) {
+						if (portlet.initialRequest && currentPortletId) {
 							send = true;
 
 							portlet.initialRequest = false;
@@ -344,7 +346,7 @@ AUI.add(
 			}
 		};
 
-		A.getDoc().on(
+		A.getWin().on(
 			'focus',
 			function(event) {
 				_metaData.startPolling = true;

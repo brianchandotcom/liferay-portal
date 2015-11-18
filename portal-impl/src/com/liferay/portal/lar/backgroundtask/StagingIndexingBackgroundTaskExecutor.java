@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -16,9 +16,11 @@ package com.liferay.portal.lar.backgroundtask;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.log.Log;
@@ -38,7 +40,8 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.portlet.journal.service.persistence.JournalArticleActionableDynamicQuery;
+import com.liferay.portlet.journal.util.JournalArticleIndexer;
 
 import java.io.Serializable;
 
@@ -126,16 +129,61 @@ public class StagingIndexingBackgroundTaskExecutor
 		return BackgroundTaskResult.SUCCESS;
 	}
 
+	protected ActionableDynamicQuery getJournalArticleActionableDynamicQuery(
+			long groupId, final Map<?, ?> journalArticleIds,
+			final String[] ddmStructureKeys)
+		throws Exception {
+
+		ActionableDynamicQuery journalArticleActionableDynamicQuery =
+			new JournalArticleActionableDynamicQuery() {
+
+			@Override
+			protected void addCriteria(DynamicQuery dynamicQuery) {
+				Property structureIdProperty = PropertyFactoryUtil.forName(
+					"structureId");
+
+				dynamicQuery.add(structureIdProperty.in(ddmStructureKeys));
+			}
+
+			@Override
+			protected void performAction(Object object) throws PortalException {
+				JournalArticle article = (JournalArticle)object;
+
+				if (containsValue(
+						journalArticleIds, article.getResourcePrimKey())) {
+
+					return;
+				}
+
+				try {
+					_journalArticleIndexer.doReindex(article, false);
+				}
+				catch (Exception e) {
+					throw new PortalException(e);
+				}
+			}
+
+			private final JournalArticleIndexer _journalArticleIndexer =
+				(JournalArticleIndexer)IndexerRegistryUtil.getIndexer(
+					JournalArticle.class);
+
+		};
+
+		journalArticleActionableDynamicQuery.setGroupId(groupId);
+
+		return journalArticleActionableDynamicQuery;
+	}
+
 	protected void reindexDDMStructures(
 			List<Long> ddmStructureIds,
-			Map<String, Map<?, ?>> newPrimaryKeysMaps, long groupId)
+			final Map<String, Map<?, ?>> newPrimaryKeysMaps, long groupId)
 		throws Exception {
 
 		if ((ddmStructureIds == null) || ddmStructureIds.isEmpty()) {
 			return;
 		}
 
-		String[] ddmStructureKeys = new String[ddmStructureIds.size()];
+		final String[] ddmStructureKeys = new String[ddmStructureIds.size()];
 
 		for (int i = 0; i < ddmStructureIds.size(); i++) {
 			long structureId = ddmStructureIds.get(i);
@@ -146,39 +194,18 @@ public class StagingIndexingBackgroundTaskExecutor
 			ddmStructureKeys[i] = ddmStructure.getStructureKey();
 		}
 
-		DynamicQuery journalArticleDynamicQuery =
-			JournalArticleLocalServiceUtil.dynamicQuery();
+		// Journal
 
-		Property groupIdProperty = PropertyFactoryUtil.forName("groupId");
-
-		journalArticleDynamicQuery.add(groupIdProperty.eq(groupId));
-
-		Property structureIdProperty = PropertyFactoryUtil.forName(
-			"structureId");
-
-		journalArticleDynamicQuery.add(
-			structureIdProperty.in(ddmStructureKeys));
-
-		List<JournalArticle> journalArticles =
-			JournalArticleLocalServiceUtil.dynamicQuery(
-				journalArticleDynamicQuery);
-
-		Map<?, ?> journalArticlePrimaryKeysMap = newPrimaryKeysMaps.get(
+		Map<?, ?> articleIds = (Map<?, ?>)newPrimaryKeysMaps.get(
 			JournalArticle.class.getName());
 
-		Indexer journalArticleIndexer = IndexerRegistryUtil.getIndexer(
-			JournalArticle.class);
+		ActionableDynamicQuery journalArticleActionableDynamicQuery =
+			getJournalArticleActionableDynamicQuery(
+				groupId, articleIds, ddmStructureKeys);
 
-		for (JournalArticle article : journalArticles) {
-			if (containsValue(
-					journalArticlePrimaryKeysMap,
-					article.getResourcePrimKey())) {
+		journalArticleActionableDynamicQuery.performActions();
 
-				continue;
-			}
-
-			journalArticleIndexer.reindex(article);
-		}
+		// Document library
 
 		List<DLFileEntry> dlFileEntries = new ArrayList<DLFileEntry>();
 

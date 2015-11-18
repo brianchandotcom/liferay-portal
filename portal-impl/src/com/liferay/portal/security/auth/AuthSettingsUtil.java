@@ -42,9 +42,9 @@ public class AuthSettingsUtil {
 			return true;
 		}
 
-		String computerAddress = PortalUtil.getComputerAddress();
+		Set<String> computerAddresses = PortalUtil.getComputerAddresses();
 
-		if (computerAddress.equals(remoteAddr) &&
+		if (computerAddresses.contains(remoteAddr) &&
 			hostsAllowed.contains(_SERVER_IP)) {
 
 			return true;

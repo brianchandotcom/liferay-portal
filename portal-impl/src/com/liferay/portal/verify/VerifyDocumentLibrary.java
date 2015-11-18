@@ -28,14 +28,12 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
@@ -51,7 +49,6 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryActionableDynamicQuery;
@@ -204,8 +201,8 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 
 				try {
 					inputStream = DLFileEntryLocalServiceUtil.getFileAsStream(
-						dlFileEntry.getUserId(), dlFileEntry.getFileEntryId(),
-						dlFileEntry.getVersion(), false);
+						dlFileEntry.getFileEntryId(), dlFileEntry.getVersion(),
+						false);
 				}
 				catch (Exception e) {
 					if (_log.isWarnEnabled()) {
@@ -258,7 +255,6 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 
 				try {
 					inputStream = DLFileEntryLocalServiceUtil.getFileAsStream(
-						dlFileVersion.getUserId(),
 						dlFileVersion.getFileEntryId(),
 						dlFileVersion.getVersion(), false);
 				}
@@ -492,47 +488,12 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 	protected void renameDuplicateTitle(DLFileEntry dlFileEntry)
 		throws PortalException, SystemException {
 
-		String title = dlFileEntry.getTitle();
-		String titleExtension = StringPool.BLANK;
-		String titleWithoutExtension = dlFileEntry.getTitle();
+		String uniqueTitle = DLFileEntryLocalServiceUtil.getUniqueTitle(
+			dlFileEntry.getGroupId(), dlFileEntry.getFolderId(),
+			dlFileEntry.getFileEntryId(), dlFileEntry.getTitle(),
+			dlFileEntry.getExtension());
 
-		if (title.endsWith(
-				StringPool.PERIOD.concat(dlFileEntry.getExtension()))) {
-
-			titleExtension = dlFileEntry.getExtension();
-			titleWithoutExtension = FileUtil.stripExtension(title);
-		}
-
-		for (int i = 1;;) {
-			String uniqueTitle =
-				titleWithoutExtension + StringPool.UNDERLINE +
-					String.valueOf(i);
-
-			if (Validator.isNotNull(titleExtension)) {
-				uniqueTitle = uniqueTitle.concat(
-					StringPool.PERIOD.concat(titleExtension));
-			}
-
-			try {
-				DLFileEntryLocalServiceUtil.validateFile(
-					dlFileEntry.getGroupId(), dlFileEntry.getFolderId(),
-					dlFileEntry.getFileEntryId(), uniqueTitle,
-					dlFileEntry.getExtension());
-
-				renameTitle(dlFileEntry, uniqueTitle);
-
-				return;
-			}
-			catch (PortalException pe) {
-				if (!(pe instanceof DuplicateFolderNameException) &&
-					 !(pe instanceof DuplicateFileException)) {
-
-					throw pe;
-				}
-
-				i++;
-			}
-		}
+		renameTitle(dlFileEntry, uniqueTitle);
 	}
 
 	protected void renameTitle(DLFileEntry dlFileEntry, String newTitle)
@@ -625,9 +586,6 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
 
 		for (long companyId : companyIds) {
-			DLFileEntryLocalServiceUtil.rebuildTree(companyId);
-			DLFileShortcutLocalServiceUtil.rebuildTree(companyId);
-			DLFileVersionLocalServiceUtil.rebuildTree(companyId);
 			DLFolderLocalServiceUtil.rebuildTree(companyId);
 		}
 	}

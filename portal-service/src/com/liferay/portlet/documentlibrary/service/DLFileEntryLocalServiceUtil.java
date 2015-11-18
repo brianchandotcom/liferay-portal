@@ -560,6 +560,10 @@ public class DLFileEntryLocalServiceUtil {
 			increment);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getFileAsStream(long,
+	String)}
+	*/
 	public static java.io.InputStream getFileAsStream(long userId,
 		long fileEntryId, java.lang.String version)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -567,6 +571,10 @@ public class DLFileEntryLocalServiceUtil {
 		return getService().getFileAsStream(userId, fileEntryId, version);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getFileAsStream(long,
+	String, boolean)}
+	*/
 	public static java.io.InputStream getFileAsStream(long userId,
 		long fileEntryId, java.lang.String version, boolean incrementCounter)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -576,6 +584,10 @@ public class DLFileEntryLocalServiceUtil {
 			incrementCounter);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getFileAsStream(long,
+	String, boolean, int)}
+	*/
 	public static java.io.InputStream getFileAsStream(long userId,
 		long fileEntryId, java.lang.String version, boolean incrementCounter,
 		int increment)
@@ -584,6 +596,30 @@ public class DLFileEntryLocalServiceUtil {
 		return getService()
 				   .getFileAsStream(userId, fileEntryId, version,
 			incrementCounter, increment);
+	}
+
+	public static java.io.InputStream getFileAsStream(long fileEntryId,
+		java.lang.String version)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getFileAsStream(fileEntryId, version);
+	}
+
+	public static java.io.InputStream getFileAsStream(long fileEntryId,
+		java.lang.String version, boolean incrementCounter)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getFileAsStream(fileEntryId, version, incrementCounter);
+	}
+
+	public static java.io.InputStream getFileAsStream(long fileEntryId,
+		java.lang.String version, boolean incrementCounter, int increment)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getFileAsStream(fileEntryId, version, incrementCounter,
+			increment);
 	}
 
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getFileEntries(
@@ -762,6 +798,15 @@ public class DLFileEntryLocalServiceUtil {
 		return getService().getOrphanedFileEntries();
 	}
 
+	public static java.lang.String getUniqueTitle(long groupId, long folderId,
+		long fileEntryId, java.lang.String title, java.lang.String extension)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getUniqueTitle(groupId, folderId, fileEntryId, title,
+			extension);
+	}
+
 	public static boolean hasExtraSettings()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().hasExtraSettings();
@@ -804,7 +849,8 @@ public class DLFileEntryLocalServiceUtil {
 	}
 
 	public static void rebuildTree(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		getService().rebuildTree(companyId);
 	}
 
@@ -833,6 +879,13 @@ public class DLFileEntryLocalServiceUtil {
 		return getService()
 				   .search(groupId, userId, creatorUserId, folderId, mimeTypes,
 			status, start, end);
+	}
+
+	public static void setTreePaths(long folderId, java.lang.String treePath,
+		boolean reindex)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().setTreePaths(folderId, treePath, reindex);
 	}
 
 	public static void unlockFileEntry(long fileEntryId)

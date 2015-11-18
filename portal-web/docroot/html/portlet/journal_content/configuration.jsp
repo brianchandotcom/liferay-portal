@@ -64,6 +64,22 @@ catch (NoSuchArticleException nsae) {
 
 		<span class="displaying-article-id-holder <%= article == null ? "hide" : StringPool.BLANK %>">
 			<liferay-ui:message key="displaying-content" />: <span class="displaying-article-id"><%= article != null ? article.getTitle(locale) : StringPool.BLANK %></span>
+
+			<%
+			String articleGroupDescriptiveNameWithParentheses = StringPool.BLANK;
+			%>
+
+			<c:if test="<%= (article != null) && (article.getGroupId() != themeDisplay.getScopeGroupId()) %>">
+
+				<%
+				Group articleGroup = GroupLocalServiceUtil.getGroup(article.getGroupId());
+
+				articleGroupDescriptiveNameWithParentheses = StringPool.OPEN_PARENTHESIS + articleGroup.getDescriptiveName(locale) + StringPool.CLOSE_PARENTHESIS;
+				%>
+
+			</c:if>
+
+			<span id="display-article-group"><%= articleGroupDescriptiveNameWithParentheses %></span>
 		</span>
 	</div>
 
@@ -182,7 +198,15 @@ catch (NoSuchArticleException nsae) {
 	searchTerms.setFolderIds(new ArrayList<Long>());
 	searchTerms.setVersion(-1);
 
-	boolean includeScheduledArticles = true;
+	boolean showNonindexable = true;
+
+	String searchGroupDescriptiveName = StringPool.BLANK;
+
+	if (searchTerms.getGroupId() != themeDisplay.getScopeGroupId()) {
+		Group searchGroup = GroupLocalServiceUtil.getGroup(searchTerms.getGroupId());
+
+		searchGroupDescriptiveName = searchGroup.getDescriptiveName(locale);
+	}
 
 	List<JournalArticle> results = null;
 	int total = 0;
@@ -198,12 +222,14 @@ catch (NoSuchArticleException nsae) {
 
 		ResultRow row = new ResultRow(null, HtmlUtil.escapeAttribute(curArticle.getArticleId()) + EditArticleAction.VERSION_SEPARATOR + curArticle.getVersion(), i);
 
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("javascript:");
 		sb.append(renderResponse.getNamespace());
 		sb.append("selectArticle('");
 		sb.append(String.valueOf(curArticle.getGroupId()));
+		sb.append("','");
+		sb.append(HtmlUtil.escapeJS(searchGroupDescriptiveName));
 		sb.append("','");
 		sb.append(HtmlUtil.escapeJS(curArticle.getArticleId()));
 		sb.append("','");
@@ -253,9 +279,7 @@ catch (NoSuchArticleException nsae) {
 	<aui:input name="preferences--ddmTemplateKey--" type="hidden" value="<%= ddmTemplateKey %>" />
 
 	<aui:fieldset>
-		<aui:field-wrapper label="portlet-id">
-			<liferay-ui:input-resource url="<%= portletResource %>" />
-		</aui:field-wrapper>
+		<aui:input name="portletId" type="resource" value="<%= portletResource %>" />
 	</aui:fieldset>
 
 	<aui:fieldset>
@@ -307,7 +331,7 @@ catch (NoSuchArticleException nsae) {
 	Liferay.provide(
 		window,
 		'<portlet:namespace />selectArticle',
-		function(articleGroupId, articleId, articleTitle) {
+		function(articleGroupId, articleGroupDescriptiveName, articleId, articleTitle) {
 			var A = AUI();
 
 			document.<portlet:namespace />fm.<portlet:namespace />groupId.value = articleGroupId;
@@ -321,6 +345,16 @@ catch (NoSuchArticleException nsae) {
 
 			displayArticleId.set('innerHTML', Liferay.Util.escapeHTML(articleTitle) + ' (<%= UnicodeLanguageUtil.get(pageContext, "modified") %>)');
 			displayArticleId.addClass('modified');
+
+			var articleGroupDescriptiveNameWithParentheses = '';
+
+			if (articleGroupDescriptiveName.length) {
+				articleGroupDescriptiveNameWithParentheses = '(' + articleGroupDescriptiveName + ')';
+			}
+
+			var displayArticleGroup = A.one('#display-article-group');
+
+			displayArticleGroup.set('innerHTML', Liferay.Util.escapeHTML(articleGroupDescriptiveNameWithParentheses));
 		},
 		['aui-base']
 	);

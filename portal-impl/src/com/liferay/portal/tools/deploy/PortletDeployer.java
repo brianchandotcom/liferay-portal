@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.model.Plugin;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.Portal;
@@ -168,7 +168,7 @@ public class PortletDeployer extends BaseDeployer {
 
 		StringBundler sb = new StringBundler();
 
-		Document document = SAXReaderUtil.read(portletXML);
+		Document document = UnsecureSAXReaderUtil.read(portletXML);
 
 		Element rootElement = document.getRootElement();
 
@@ -212,7 +212,7 @@ public class PortletDeployer extends BaseDeployer {
 	}
 
 	public void setupAlloy(File srcFile, File portletXML) throws Exception {
-		Document document = SAXReaderUtil.read(portletXML);
+		Document document = UnsecureSAXReaderUtil.read(portletXML);
 
 		Element rootElement = document.getRootElement();
 

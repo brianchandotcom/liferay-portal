@@ -137,7 +137,7 @@ Collection<String> ruleHandlerTypes = RuleGroupProcessorUtil.getRuleHandlerTypes
 			{
 				data: {
 					<portlet:namespace />ruleId: <%= ruleId %>,
-					<portlet:namespace />type: typeNode.val(),
+					<portlet:namespace />type: typeNode.val()
 				},
 				on: {
 					success: function(event, id, obj) {

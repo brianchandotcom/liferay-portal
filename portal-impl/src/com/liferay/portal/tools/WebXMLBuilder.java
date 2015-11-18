@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.servlet.filters.absoluteredirects.AbsoluteRedirectsFilter;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.xml.DocumentImpl;
@@ -54,7 +54,7 @@ public class WebXMLBuilder {
 
 		webXML = HtmlUtil.stripComments(webXML);
 
-		Document document = SAXReaderUtil.read(webXML);
+		Document document = UnsecureSAXReaderUtil.read(webXML);
 
 		Element rootElement = document.getRootElement();
 

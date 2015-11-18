@@ -16,7 +16,9 @@ package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
@@ -27,6 +29,15 @@ import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+
+import java.util.List;
+import java.util.Properties;
 
 /**
  * @author Brian Wing Shun Chan
@@ -58,22 +69,24 @@ public class VerifyProperties extends VerifyProcess {
 
 		// portal.properties
 
+		Properties portalProperties = loadPortalProperties();
+
 		for (String[] keys : _MIGRATED_PORTAL_KEYS) {
 			String oldKey = keys[0];
 			String newKey = keys[1];
 
-			verifyMigratedPortalProperty(oldKey, newKey);
+			verifyMigratedPortalProperty(portalProperties, oldKey, newKey);
 		}
 
 		for (String[] keys : _RENAMED_PORTAL_KEYS) {
 			String oldKey = keys[0];
 			String newKey = keys[1];
 
-			verifyRenamedPortalProperty(oldKey, newKey);
+			verifyRenamedPortalProperty(portalProperties, oldKey, newKey);
 		}
 
 		for (String key : _OBSOLETE_PORTAL_KEYS) {
-			verifyObsoletePortalProperty(key);
+			verifyObsoletePortalProperty(portalProperties, key);
 		}
 
 		// Document library
@@ -83,6 +96,51 @@ public class VerifyProperties extends VerifyProcess {
 		// LDAP
 
 		verifyLDAPProperties();
+	}
+
+	protected InputStream getPropertiesResourceAsStream(String resourceName)
+		throws FileNotFoundException {
+
+		File propertyFile = new File(resourceName);
+
+		if (propertyFile.exists()) {
+			return new FileInputStream(propertyFile);
+		}
+
+		ClassLoader classLoader = VerifyProperties.class.getClassLoader();
+
+		return classLoader.getResourceAsStream(resourceName);
+	}
+
+	protected Properties loadPortalProperties() {
+		Properties properties = new Properties();
+
+		List<String> propertiesResourceNames = ListUtil.fromArray(
+			PropsUtil.getArray("include-and-override"));
+
+		propertiesResourceNames.add(0, "portal.properties");
+
+		for (String propertyResourceName : propertiesResourceNames) {
+			InputStream inputStream = null;
+
+			try {
+				inputStream = getPropertiesResourceAsStream(
+					propertyResourceName);
+
+				if (inputStream != null) {
+					properties.load(inputStream);
+				}
+			}
+			catch (IOException ioe) {
+				_log.error(
+					"Unable to load property " + propertyResourceName, ioe);
+			}
+			finally {
+				StreamUtil.cleanUp(inputStream);
+			}
+		}
+
+		return properties;
 	}
 
 	protected void verifyLDAPProperties() throws Exception {
@@ -115,12 +173,11 @@ public class VerifyProperties extends VerifyProcess {
 		}
 	}
 
-	protected void verifyMigratedPortalProperty(String oldKey, String newKey)
+	protected void verifyMigratedPortalProperty(
+			Properties portalProperties, String oldKey, String newKey)
 		throws Exception {
 
-		String value = PropsUtil.get(oldKey);
-
-		if (value != null) {
+		if (portalProperties.containsKey(oldKey)) {
 			_log.error(
 				"Portal property \"" + oldKey +
 					"\" was migrated to the system property \"" + newKey +
@@ -141,10 +198,11 @@ public class VerifyProperties extends VerifyProcess {
 		}
 	}
 
-	protected void verifyObsoletePortalProperty(String key) throws Exception {
-		String value = PropsUtil.get(key);
+	protected void verifyObsoletePortalProperty(
+			Properties portalProperties, String key)
+		throws Exception {
 
-		if (value != null) {
+		if (portalProperties.containsKey(key)) {
 			_log.error("Portal property \"" + key + "\" is obsolete");
 		}
 	}
@@ -157,12 +215,11 @@ public class VerifyProperties extends VerifyProcess {
 		}
 	}
 
-	protected void verifyRenamedPortalProperty(String oldKey, String newKey)
+	protected void verifyRenamedPortalProperty(
+			Properties portalProperties, String oldKey, String newKey)
 		throws Exception {
 
-		String value = PropsUtil.get(oldKey);
-
-		if (value != null) {
+		if (portalProperties.containsKey(oldKey)) {
 			_log.error(
 				"Portal property \"" + oldKey + "\" was renamed to \"" +
 					newKey + "\"");
@@ -188,8 +245,31 @@ public class VerifyProperties extends VerifyProcess {
 
 	private static final String[][] _MIGRATED_PORTAL_KEYS = new String[][] {
 		new String[] {
+			"cookie.http.only.names.excludes", "cookie.http.only.names.excludes"
+		},
+		new String[] {
 			"finalize.manager.thread.enabled",
 			"com.liferay.portal.kernel.memory.FinalizeManager.thread.enabled"
+		},
+		new String[] {
+			"http.header.secure.x.content.type.options",
+			"http.header.secure.x.content.type.options"
+		},
+		new String[] {
+			"http.header.secure.x.content.type.options.urls.excludes",
+			"http.header.secure.x.content.type.options.urls.excludes"
+		},
+		new String[] {
+			"http.header.secure.x.frame.options",
+			"http.header.secure.x.frame.options"
+		},
+		new String[] {
+			"http.header.secure.x.frame.options.255",
+			"http.header.secure.x.frame.options.255"
+		},
+		new String[] {
+			"http.header.secure.x.xss.protection",
+			"http.header.secure.x.xss.protection"
 		}
 	};
 

@@ -9,7 +9,7 @@
 				MDRRuleGroup
 			WHERE
 				[$GROUP_ID$] AND
-				(lower(name) LIKE ? [$AND_OR_NULL_CHECK$])
+				(lower(MDRRuleGroup.name) LIKE ? [$AND_OR_NULL_CHECK$])
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.mobiledevicerules.service.persistence.MDRRuleGroupFinder.findByG_N">
@@ -20,7 +20,7 @@
 				MDRRuleGroup
 			WHERE
 				[$GROUP_ID$] AND
-				(lower(name) LIKE ? [$AND_OR_NULL_CHECK$])
+				(lower(MDRRuleGroup.name) LIKE ? [$AND_OR_NULL_CHECK$])
 			ORDER BY
 				MDRRuleGroup.name DESC
 		]]>

@@ -70,7 +70,6 @@ import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.portlet.wiki.DuplicatePageException;
 import com.liferay.portlet.wiki.NoSuchPageException;
-import com.liferay.portlet.wiki.NoSuchPageResourceException;
 import com.liferay.portlet.wiki.PageContentException;
 import com.liferay.portlet.wiki.PageTitleException;
 import com.liferay.portlet.wiki.PageVersionException;
@@ -486,7 +485,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 	@Override
 	@SystemEvent(
-		action = SystemEventConstants.ACTION_SKIP,
+		action = SystemEventConstants.ACTION_SKIP, send = false,
 		type = SystemEventConstants.TYPE_DELETE)
 	public void deletePage(WikiPage page)
 		throws PortalException, SystemException {
@@ -523,6 +522,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			}
 		}
 
+		List<WikiPage> versionPages = wikiPagePersistence.findByN_T(
+			page.getNodeId(), page.getTitle());
+
 		wikiPagePersistence.removeByN_T(page.getNodeId(), page.getTitle());
 
 		// References
@@ -537,11 +539,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Resource
 
-		try {
-			wikiPageResourceLocalService.deletePageResource(
+		WikiPageResource pageResource =
+			wikiPageResourceLocalService.fetchPageResource(
 				page.getNodeId(), page.getTitle());
-		}
-		catch (NoSuchPageResourceException nspre) {
+
+		if (pageResource != null) {
+			wikiPageResourceLocalService.deleteWikiPageResource(pageResource);
 		}
 
 		// Attachments
@@ -560,12 +563,18 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Asset
 
-		List<WikiPage> versionPages = wikiPagePersistence.findByN_T(
-			page.getNodeId(), page.getTitle());
+		SystemEventHierarchyEntryThreadLocal.pop(
+			page.getModelClass(), page.getPageId());
 
-		for (WikiPage versionPage : versionPages) {
-			assetEntryLocalService.deleteEntry(
-				WikiPage.class.getName(), versionPage.getPrimaryKey());
+		try {
+			for (WikiPage versionPage : versionPages) {
+				assetEntryLocalService.deleteEntry(
+					WikiPage.class.getName(), versionPage.getPrimaryKey());
+			}
+		}
+		finally {
+			SystemEventHierarchyEntryThreadLocal.push(
+				page.getModelClass(), page.getPageId());
 		}
 
 		assetEntryLocalService.deleteEntry(
@@ -602,16 +611,25 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// All versions
 
-		List<WikiPage> pages = wikiPagePersistence.findByN_T(
-			page.getNodeId(), page.getTitle());
-
-		for (WikiPage curPage : pages) {
+		for (WikiPage versionPage : versionPages) {
 
 			// Workflow
 
 			workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
-				curPage.getCompanyId(), curPage.getGroupId(),
-				WikiPage.class.getName(), curPage.getPageId());
+				versionPage.getCompanyId(), versionPage.getGroupId(),
+				WikiPage.class.getName(), versionPage.getPageId());
+		}
+
+		if (pageResource != null) {
+			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+
+			extraDataJSONObject.put("version", page.getVersion());
+
+			systemEventLocalService.addSystemEvent(
+				0, page.getGroupId(), page.getModelClassName(),
+				page.getPrimaryKey(), pageResource.getUuid(), null,
+				SystemEventConstants.TYPE_DELETE,
+				extraDataJSONObject.toString());
 		}
 	}
 
@@ -657,14 +675,14 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			nodeId, true, StringPool.BLANK);
 
 		for (WikiPage page : pages) {
-			deletePage(page);
+			wikiPageLocalService.deletePage(page);
 		}
 
 		pages = wikiPagePersistence.findByN_H_P(
 			nodeId, false, StringPool.BLANK);
 
 		for (WikiPage page : pages) {
-			deletePage(page);
+			wikiPageLocalService.deletePage(page);
 		}
 	}
 
@@ -1648,6 +1666,18 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		assetEntryLocalService.updateVisible(
 			WikiPage.class.getName(), page.getResourcePrimKey(), false);
 
+		// Attachments
+
+		for (FileEntry fileEntry : page.getAttachmentsFileEntries()) {
+			PortletFileRepositoryUtil.movePortletFileEntryToTrash(
+				userId, fileEntry.getFileEntryId());
+		}
+
+		// Comment
+
+		mbMessageLocalService.moveDiscussionToTrash(
+			WikiPage.class.getName(), page.getResourcePrimKey());
+
 		// Social
 
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
@@ -1786,6 +1816,18 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				restorePageFromTrash(userId, curPage);
 			}
 		}
+
+		// Attachments
+
+		for (FileEntry fileEntry : page.getAttachmentsFileEntries()) {
+			PortletFileRepositoryUtil.restorePortletFileEntryFromTrash(
+				userId, fileEntry.getFileEntryId());
+		}
+
+		// Comment
+
+		mbMessageLocalService.restoreDiscussionFromTrash(
+			WikiPage.class.getName(), page.getResourcePrimKey());
 
 		// Trash
 
@@ -1971,6 +2013,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			newVersion = MathUtil.format(oldVersion + 0.1, 1, 1);
 
 			page = wikiPagePersistence.create(pageId);
+
+			page.setUuid(serviceContext.getUuid());
 		}
 
 		page.setResourcePrimKey(resourcePrimKey);

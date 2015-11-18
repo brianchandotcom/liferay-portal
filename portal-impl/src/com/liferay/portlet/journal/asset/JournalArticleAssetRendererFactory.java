@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -29,14 +28,12 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.permission.DDMStructurePermission;
-import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleResource;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
@@ -70,30 +67,21 @@ public class JournalArticleAssetRendererFactory
 	public AssetRenderer getAssetRenderer(long classPK, int type)
 		throws PortalException, SystemException {
 
-		JournalArticle article = null;
+		JournalArticle article =
+			JournalArticleLocalServiceUtil.fetchJournalArticle(classPK);
 
-		try {
-			article = JournalArticleLocalServiceUtil.getArticle(classPK);
-		}
-		catch (NoSuchArticleException nsae1) {
+		if (article == null) {
 			JournalArticleResource articleResource =
 				JournalArticleResourceLocalServiceUtil.getArticleResource(
 					classPK);
 
-			boolean approvedArticleAvailable = true;
-
 			if (type == TYPE_LATEST_APPROVED) {
-				try {
-					article = JournalArticleLocalServiceUtil.getDisplayArticle(
-						articleResource.getGroupId(),
-						articleResource.getArticleId());
-				}
-				catch (NoSuchArticleException nsae2) {
-					approvedArticleAvailable = false;
-				}
+				article = JournalArticleLocalServiceUtil.fetchDisplayArticle(
+					articleResource.getGroupId(),
+					articleResource.getArticleId());
 			}
 
-			if ((type != TYPE_LATEST_APPROVED) || !approvedArticleAvailable) {
+			if (article == null) {
 				article = JournalArticleLocalServiceUtil.getLatestArticle(
 					articleResource.getGroupId(),
 					articleResource.getArticleId(),
@@ -187,32 +175,8 @@ public class JournalArticleAssetRendererFactory
 
 	@Override
 	public PortletURL getURLAdd(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse)
-		throws PortalException, SystemException {
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		if (!JournalPermission.contains(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), ActionKeys.ADD_ARTICLE)) {
-
-			return null;
-		}
-
-		long classTypeId = GetterUtil.getLong(
-			liferayPortletRequest.getAttribute(
-				WebKeys.ASSET_RENDERER_FACTORY_CLASS_TYPE_ID));
-
-		if ((classTypeId > 0) &&
-			!DDMStructurePermission.contains(
-				themeDisplay.getPermissionChecker(), classTypeId,
-				ActionKeys.VIEW)) {
-
-			return null;
-		}
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL(
 			PortletKeys.JOURNAL);
@@ -241,6 +205,22 @@ public class JournalArticleAssetRendererFactory
 	}
 
 	@Override
+	public boolean hasAddPermission(
+			PermissionChecker permissionChecker, long groupId, long classTypeId)
+		throws Exception {
+
+		if ((classTypeId > 0) &&
+			!DDMStructurePermission.contains(
+				permissionChecker, classTypeId, ActionKeys.VIEW)) {
+
+			return false;
+		}
+
+		return JournalPermission.contains(
+			permissionChecker, groupId, ActionKeys.ADD_ARTICLE);
+	}
+
+	@Override
 	public boolean hasPermission(
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws Exception {
@@ -252,6 +232,19 @@ public class JournalArticleAssetRendererFactory
 	@Override
 	public boolean isLinkable() {
 		return _LINKABLE;
+	}
+
+	@Override
+	public boolean isListable(long classPK) throws SystemException {
+		JournalArticle article =
+			JournalArticleLocalServiceUtil.fetchLatestArticle(
+				classPK, WorkflowConstants.STATUS_APPROVED, true);
+
+		if ((article != null) && article.isIndexable()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

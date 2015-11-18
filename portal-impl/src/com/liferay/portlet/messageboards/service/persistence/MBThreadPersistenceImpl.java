@@ -10514,7 +10514,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 				if ((groupId != mbThread.getGroupId()) ||
 						!ArrayUtil.contains(categoryIds,
 							mbThread.getCategoryId()) ||
-						(status != mbThread.getStatus())) {
+						(status == mbThread.getStatus())) {
 					list = null;
 
 					break;

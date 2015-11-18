@@ -21,13 +21,51 @@
 		color: #009CEB;
 	}
 
-	legend, .portlet-wiki .portlet-body h3, .taglib-header {
+	label, legend, .control-label, .panel .panel-toggle, .portlet-wiki .portlet-body h3, .taglib-header {
 		color: #E3E3E3;
 	}
 
+	.tagselector-content .textboxlistentry-holder, .table-striped tbody tr:nth-child(odd) td, .table-striped tbody tr:nth-child(odd) th {
+		background: #555;
+	}
+
+	.table-hover tbody tr:hover > td, .table-hover tbody tr:hover > th {
+		background-color: #222;
+	}
+
+	.has-error {
+		label, .help-block {
+			color: #D46565;
+		}
+
+		.form-control {
+			border-color: #D46565;
+		}
+	}
+
 	.modal-content {
-		&, legend {
+		&, legend, label, .form-control {
 			color: #555;
+		}
+	}
+
+	.panel, .html-editor, table td {
+		background: #363636;
+	}
+
+	.panel, .html-editor, table td {
+		background: #363636;
+	}
+
+	.table-bordered {
+		border-color: #111;
+
+		> thead, > tbody, > tfoot {
+			> tr {
+				> th, > td {
+					border-color: #111;
+				}
+			}
 		}
 	}
 

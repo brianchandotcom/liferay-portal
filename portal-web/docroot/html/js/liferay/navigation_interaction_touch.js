@@ -65,7 +65,7 @@ AUI.add(
 					var instance = this;
 
 					if (navigation) {
-						A.Event.defineOutside('touchend');
+						A.Event.defineOutside('touchstart');
 
 						navigation.delegate('tap', instance._onTouchClick, '.lfr-nav-child-toggle', instance);
 

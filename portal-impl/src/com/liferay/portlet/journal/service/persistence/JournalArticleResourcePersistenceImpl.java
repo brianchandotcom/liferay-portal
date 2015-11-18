@@ -43,6 +43,7 @@ import com.liferay.portlet.journal.NoSuchArticleResourceException;
 import com.liferay.portlet.journal.model.JournalArticleResource;
 import com.liferay.portlet.journal.model.impl.JournalArticleResourceImpl;
 import com.liferay.portlet.journal.model.impl.JournalArticleResourceModelImpl;
+import com.liferay.portlet.journal.service.persistence.JournalArticleResourcePersistence;
 
 import java.io.Serializable;
 

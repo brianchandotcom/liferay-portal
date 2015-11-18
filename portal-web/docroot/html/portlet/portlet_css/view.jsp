@@ -44,7 +44,7 @@ if (PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED) {
 					<span class="field-row">
 						<aui:input inlineField="<%= true %>" label="" name="custom-title" />
 
-						<aui:select inlineField="<%= true %>" label="" name="lfr-portlet-language">
+						<aui:select inlineField="<%= true %>" label="" name="lfr-portlet-language" title="language">
 
 							<%
 							Locale[] locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
@@ -123,7 +123,7 @@ if (PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED) {
 						<aui:option label="no" value="false" />
 					</aui:select>
 
-					<span class="alert alert-info hide form-hint" id="border-note">
+					<span class="alert alert-info form-hint hide" id="border-note">
 						<liferay-ui:message key="this-change-will-only-be-shown-after-you-refresh-the-page" />
 					</span>
 				</aui:fieldset>
@@ -252,7 +252,7 @@ if (PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED) {
 								<span class="field-row">
 									<aui:input inlineField="<%= true %>" label="top" name="lfr-border-width-top" />
 
-									<aui:select inlineField="<%= true %>" label="" name="lfr-border-width-top-unit">
+									<aui:select inlineField="<%= true %>" label="" name="lfr-border-width-top-unit" title="top-border-unit">
 										<aui:option label="%" />
 										<aui:option label="px" />
 										<aui:option label="em" />
@@ -262,7 +262,7 @@ if (PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED) {
 								<span class="field-row">
 									<aui:input inlineField="<%= true %>" label="right" name="lfr-border-width-right" />
 
-									<aui:select inlineField="<%= true %>" label="" name="lfr-border-width-right-unit">
+									<aui:select inlineField="<%= true %>" label="" name="lfr-border-width-right-unit" title="right-border-unit">
 										<aui:option label="%" />
 										<aui:option label="px" />
 										<aui:option label="em" />
@@ -272,7 +272,7 @@ if (PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED) {
 								<span class="field-row">
 									<aui:input inlineField="<%= true %>" label="bottom" name="lfr-border-width-bottom" />
 
-									<aui:select inlineField="<%= true %>" label="" name="lfr-border-width-bottom-unit">
+									<aui:select inlineField="<%= true %>" label="" name="lfr-border-width-bottom-unit" title="bottom-border-unit">
 										<aui:option label="%" />
 										<aui:option label="px" />
 										<aui:option label="em" />
@@ -282,7 +282,7 @@ if (PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED) {
 								<span class="field-row">
 									<aui:input inlineField="<%= true %>" label="left" name="lfr-border-width-left" />
 
-									<aui:select inlineField="<%= true %>" label="" name="lfr-border-width-left-unit">
+									<aui:select inlineField="<%= true %>" label="" name="lfr-border-width-left-unit" title="left-border-unit">
 										<aui:option label="%" />
 										<aui:option label="px" />
 										<aui:option label="em" />
@@ -361,7 +361,7 @@ if (PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED) {
 					</aui:row>
 				</aui:fieldset>
 
-				<aui:fieldset cssClass="spacing fieldset" id="spacing-styles">
+				<aui:fieldset cssClass="fieldset spacing" id="spacing-styles">
 					<aui:row>
 						<aui:col cssClass="lfr-padding use-for-all-column" width="<%= 50 %>">
 							<aui:fieldset label="padding">
@@ -370,7 +370,7 @@ if (PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED) {
 								<span class="field-row">
 									<aui:input inlineField="<%= true %>" label="top" name="lfr-padding-top" />
 
-									<aui:select inlineField="<%= true %>" label="" name="lfr-padding-top-unit">
+									<aui:select inlineField="<%= true %>" label="" name="lfr-padding-top-unit" title="top-padding-unit">
 										<aui:option label="%" />
 										<aui:option label="px" />
 										<aui:option label="em" />
@@ -380,7 +380,7 @@ if (PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED) {
 								<span class="field-row">
 									<aui:input inlineField="<%= true %>" label="right" name="lfr-padding-right" />
 
-									<aui:select inlineField="<%= true %>" label="" name="lfr-padding-right-unit">
+									<aui:select inlineField="<%= true %>" label="" name="lfr-padding-right-unit" title="right-padding-unit">
 										<aui:option label="%" />
 										<aui:option label="px" />
 										<aui:option label="em" />
@@ -390,7 +390,7 @@ if (PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED) {
 								<span class="field-row">
 									<aui:input inlineField="<%= true %>" label="bottom" name="lfr-padding-bottom" />
 
-									<aui:select inlineField="<%= true %>" label="" name="lfr-padding-bottom-unit">
+									<aui:select inlineField="<%= true %>" label="" name="lfr-padding-bottom-unit" title="bottom-padding-unit">
 										<aui:option label="%" />
 										<aui:option label="px" />
 										<aui:option label="em" />
@@ -400,7 +400,7 @@ if (PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED) {
 								<span class="field-row">
 									<aui:input inlineField="<%= true %>" label="left" name="lfr-padding-left" />
 
-									<aui:select inlineField="<%= true %>" label="" name="lfr-padding-left-unit">
+									<aui:select inlineField="<%= true %>" label="" name="lfr-padding-left-unit" title="left-padding-unit">
 										<aui:option label="%" />
 										<aui:option label="px" />
 										<aui:option label="em" />
@@ -416,7 +416,7 @@ if (PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED) {
 								<span class="field-row">
 									<aui:input inlineField="<%= true %>" label="top" name="lfr-margin-top" />
 
-									<aui:select inlineField="<%= true %>" label="" name="lfr-margin-top-unit">
+									<aui:select inlineField="<%= true %>" label="" name="lfr-margin-top-unit" title="top-margin-unit">
 										<aui:option label="%" />
 										<aui:option label="px" />
 										<aui:option label="em" />
@@ -426,7 +426,7 @@ if (PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED) {
 								<span class="field-row">
 									<aui:input inlineField="<%= true %>" label="right" name="lfr-margin-right" />
 
-									<aui:select inlineField="<%= true %>" label="" name="lfr-margin-right-unit">
+									<aui:select inlineField="<%= true %>" label="" name="lfr-margin-right-unit" title="right-margin-unit">
 										<aui:option label="%" />
 										<aui:option label="px" />
 										<aui:option label="em" />
@@ -436,7 +436,7 @@ if (PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED) {
 								<span class="field-row">
 									<aui:input inlineField="<%= true %>" label="bottom" name="lfr-margin-bottom" />
 
-									<aui:select inlineField="<%= true %>" label="" name="lfr-margin-bottom-unit">
+									<aui:select inlineField="<%= true %>" label="" name="lfr-margin-bottom-unit" title="bottom-margin-unit">
 										<aui:option label="%" />
 										<aui:option label="px" />
 										<aui:option label="em" />
@@ -446,7 +446,7 @@ if (PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED) {
 								<span class="field-row">
 									<aui:input inlineField="<%= true %>" label="left" name="lfr-margin-left" />
 
-									<aui:select inlineField="<%= true %>" label="" name="lfr-margin-left-unit">
+									<aui:select inlineField="<%= true %>" label="" name="lfr-margin-left-unit" title="left-margin-unit">
 										<aui:option label="%" />
 										<aui:option label="px" />
 										<aui:option label="em" />

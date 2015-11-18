@@ -41,6 +41,8 @@ int roleType = ParamUtil.getInteger(request, "roleType", RoleConstants.TYPE_SITE
 Organization organization = null;
 
 if (group.isOrganization()) {
+	roleType = RoleConstants.TYPE_ORGANIZATION;
+
 	organization = OrganizationLocalServiceUtil.getOrganization(group.getClassPK());
 }
 
@@ -88,7 +90,7 @@ request.setAttribute("edit_user_roles.jsp-portletURL", portletURL);
 	backURL="<%= redirect %>"
 	escapeXml="<%= false %>"
 	localizeTitle="<%= false %>"
-	title='<%= LanguageUtil.get(pageContext, "add-site-roles-to") + ": " + LanguageUtil.get(pageContext, "users") %>'
+	title='<%= LanguageUtil.get(pageContext, group.isOrganization() ? "add-organization-roles-to" : "add-site-roles-to") + ": " + LanguageUtil.get(pageContext, "users") %>'
 />
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">

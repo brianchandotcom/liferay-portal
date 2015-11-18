@@ -26,12 +26,14 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TreeModelFinder;
 import com.liferay.portal.kernel.util.TreePathUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
+import com.liferay.portal.model.TreeModel;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -348,10 +350,17 @@ public class BookmarksFolderLocalServiceImpl
 		BookmarksFolder folder = bookmarksFolderPersistence.findByPrimaryKey(
 			folderId);
 
+		if (folder.getParentFolderId() == parentFolderId) {
+			return folder;
+		}
+
 		folder.setParentFolderId(parentFolderId);
 		folder.setTreePath(folder.buildTreePath());
 
 		bookmarksFolderPersistence.update(folder);
+
+		rebuildTree(
+			folder.getCompanyId(), folderId, folder.getTreePath(), true);
 
 		return folder;
 	}
@@ -451,9 +460,22 @@ public class BookmarksFolderLocalServiceImpl
 	}
 
 	@Override
-	public void rebuildTree(long companyId) throws SystemException {
-		TreePathUtil.rebuildTree(
+	public void rebuildTree(long companyId)
+		throws PortalException, SystemException {
+
+		rebuildTree(
 			companyId, BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringPool.SLASH, false);
+	}
+
+	@Override
+	public void rebuildTree(
+			long companyId, long parentFolderId, String parentTreePath,
+			final boolean reindex)
+		throws PortalException, SystemException {
+
+		TreePathUtil.rebuildTree(
+			companyId, parentFolderId, parentTreePath,
 			new TreeModelFinder<BookmarksFolder>() {
 
 				@Override
@@ -468,11 +490,35 @@ public class BookmarksFolderLocalServiceImpl
 						size, new FolderIdComparator());
 				}
 
+				@Override
+				public void rebuildDependentModelsTreePaths(
+						long parentPrimaryKey, String treePath)
+					throws PortalException, SystemException {
+
+					bookmarksEntryLocalService.setTreePaths(
+						parentPrimaryKey, treePath, false);
+				}
+
+				@Override
+				public void reindexTreeModels(List<TreeModel> treeModels)
+					throws PortalException {
+
+					if (!reindex) {
+						return;
+					}
+
+					Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+						BookmarksFolder.class);
+
+					for (TreeModel treeModel : treeModels) {
+						indexer.reindex(treeModel);
+					}
+				}
+
 			}
 		);
 	}
 
-	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public void restoreFolderFromTrash(long userId, long folderId)
 		throws PortalException, SystemException {
@@ -511,6 +557,13 @@ public class BookmarksFolderLocalServiceImpl
 			folder.getFolderId(),
 			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
+
+		// Indexer
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			BookmarksFolder.class);
+
+		indexer.reindex(folder);
 	}
 
 	@Override
@@ -581,9 +634,14 @@ public class BookmarksFolderLocalServiceImpl
 
 		validate(name);
 
+		long oldParentFolderId = folder.getParentFolderId();
+
+		if (oldParentFolderId != parentFolderId) {
+			folder.setParentFolderId(parentFolderId);
+			folder.setTreePath(folder.buildTreePath());
+		}
+
 		folder.setModifiedDate(serviceContext.getModifiedDate(null));
-		folder.setParentFolderId(parentFolderId);
-		folder.setTreePath(folder.buildTreePath());
 		folder.setName(name);
 		folder.setDescription(description);
 		folder.setExpandoBridgeAttributes(serviceContext);
@@ -596,6 +654,11 @@ public class BookmarksFolderLocalServiceImpl
 			userId, folder, serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames(),
 			serviceContext.getAssetLinkEntryIds());
+
+		if (oldParentFolderId != parentFolderId) {
+			rebuildTree(
+				folder.getCompanyId(), folderId, folder.getTreePath(), true);
+		}
 
 		return folder;
 	}
@@ -707,6 +770,7 @@ public class BookmarksFolderLocalServiceImpl
 
 		for (BookmarksEntry entry : entries) {
 			entry.setFolderId(toFolderId);
+			entry.setTreePath(entry.buildTreePath());
 
 			bookmarksEntryPersistence.update(entry);
 

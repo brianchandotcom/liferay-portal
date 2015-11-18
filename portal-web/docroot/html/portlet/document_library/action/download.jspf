@@ -17,10 +17,17 @@
 <c:choose>
 	<c:when test="<%= (fileShortcut == null) %>">
 		<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) %>">
+
+			<%
+			String previewURL = DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, false, true);
+
+			String downloadURL = HttpUtil.addParameter(previewURL, "download", true);
+			%>
+
 			<liferay-ui:icon
 				image="download"
 				message='<%= LanguageUtil.get(pageContext, "download") + " (" + TextFormatter.formatStorageSize(fileEntry.getSize(), locale) + ")" %>'
-				url="<%= DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, false, true) %>"
+				url="<%= downloadURL %>"
 			/>
 		</c:if>
 	</c:when>

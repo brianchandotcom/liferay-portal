@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
 import com.liferay.portal.struts.PortletAction;
@@ -138,6 +140,13 @@ public class ViewAction extends PortletAction {
 
 			MailMessage message = new MailMessage(
 				from, to, subject, body, true);
+
+			Company company = themeDisplay.getCompany();
+
+			message.setMessageId(
+				PortalUtil.getMailId(
+					company.getMx(), InvitationUtil.MESSAGE_POP_PORTLET_PREFIX,
+					PortalUUIDUtil.generate()));
 
 			MailServiceUtil.sendEmail(message);
 		}

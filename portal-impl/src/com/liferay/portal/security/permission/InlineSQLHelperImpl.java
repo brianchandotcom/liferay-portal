@@ -546,7 +546,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		StringBundler sb = new StringBundler();
 
-		sb.append("(((InlineSQLResourcePermission.primKey = CAST_TEXT(");
+		sb.append("(((ResourcePermission.primKey = CAST_TEXT(");
 		sb.append(classPKField);
 		sb.append(")) AND ((");
 

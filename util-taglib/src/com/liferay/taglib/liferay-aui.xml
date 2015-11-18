@@ -1003,6 +1003,12 @@
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<name>localizeLabel</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<defaultValue>true</defaultValue>
+			</attribute>
+			<attribute>
 				<description>Sets whether the navigation item is selected by default. The default value is <![CDATA[<code>false</code>]]>.</description>
 				<name>selected</name>
 				<inputType>boolean</inputType>

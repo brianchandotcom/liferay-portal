@@ -76,7 +76,7 @@ public class SitemapImpl implements Sitemap {
 		document.setXMLEncoding(StringPool.UTF8);
 
 		Element rootElement = document.addElement(
-			"urlset", "http://www.google.com/schemas/sitemap/0.9");
+			"urlset", "http://www.sitemaps.org/schemas/sitemap/0.9");
 
 		rootElement.addAttribute("xmlns:xhtml", "http://www.w3.org/1999/xhtml");
 

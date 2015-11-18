@@ -128,12 +128,12 @@ public class OrganizationPermissionImpl implements OrganizationPermission {
 					OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID)) {
 
 			if (actionId.equals(ActionKeys.ADD_ORGANIZATION) &&
-				permissionChecker.hasPermission(
+				(permissionChecker.hasPermission(
 					groupId, Organization.class.getName(),
 					organization.getOrganizationId(),
 					ActionKeys.MANAGE_SUBORGANIZATIONS) ||
-				PortalPermissionUtil.contains(
-					permissionChecker, ActionKeys.ADD_ORGANIZATION)) {
+				 PortalPermissionUtil.contains(
+					 permissionChecker, ActionKeys.ADD_ORGANIZATION))) {
 
 				return true;
 			}

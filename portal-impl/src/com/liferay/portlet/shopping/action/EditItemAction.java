@@ -201,13 +201,17 @@ public class EditItemAction extends PortletAction {
 			int maxQuantity = ParamUtil.getInteger(
 				uploadPortletRequest, "maxQuantity" + i);
 			double price = ParamUtil.getDouble(
-				uploadPortletRequest, "price" + i);
+				uploadPortletRequest, "price" + i, themeDisplay.getLocale());
+
 			double discount = ParamUtil.getDouble(
-				uploadPortletRequest, "discount" + i) / 100;
+				uploadPortletRequest, "discount" + i, themeDisplay.getLocale());
+
+			discount = discount / 100;
+
 			boolean taxable = ParamUtil.getBoolean(
 				uploadPortletRequest, "taxable" + i);
 			double shipping = ParamUtil.getDouble(
-				uploadPortletRequest, "shipping" + i);
+				uploadPortletRequest, "shipping" + i, themeDisplay.getLocale());
 			boolean useShippingFormula = ParamUtil.getBoolean(
 				uploadPortletRequest, "useShippingFormula" + i);
 			boolean active = ParamUtil.getBoolean(

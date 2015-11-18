@@ -67,6 +67,11 @@ public class MemoryPortalCache<K extends Serializable, V>
 	}
 
 	@Override
+	public List<K> getKeys() {
+		return new ArrayList<K>(_map.keySet());
+	}
+
+	@Override
 	public String getName() {
 		return _name;
 	}

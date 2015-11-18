@@ -16,6 +16,7 @@ package com.liferay.portlet.trash.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -36,6 +37,23 @@ import javax.servlet.http.HttpServletRequest;
 public class TrashUtil {
 
 	public static void addBaseModelBreadcrumbEntries(
+			HttpServletRequest request,
+			LiferayPortletResponse liferayPortletResponse, String className,
+			long classPK, PortletURL containerModelURL)
+		throws PortalException, SystemException {
+
+		getTrash().addBaseModelBreadcrumbEntries(
+			request, liferayPortletResponse, className, classPK,
+			containerModelURL);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #addBaseModelBreadcrumbEntries(HttpServletRequest,
+	 *             LiferayPortletResponse, String, long, PortletURL}
+	 */
+	@Deprecated
+	public static void addBaseModelBreadcrumbEntries(
 			HttpServletRequest request, String className, long classPK,
 			PortletURL containerModelURL)
 		throws PortalException, SystemException {
@@ -44,6 +62,23 @@ public class TrashUtil {
 			request, className, classPK, containerModelURL);
 	}
 
+	public static void addContainerModelBreadcrumbEntries(
+			HttpServletRequest request,
+			LiferayPortletResponse liferayPortletResponse, String className,
+			long classPK, PortletURL containerModelURL)
+		throws PortalException, SystemException {
+
+		getTrash().addContainerModelBreadcrumbEntries(
+			request, liferayPortletResponse, className, classPK,
+			containerModelURL);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #addContainerModelBreadcrumbEntries(HttpServletRequest,
+	 *             LiferayPortletResponse, String, long, PortletURL}
+	 */
+	@Deprecated
 	public static void addContainerModelBreadcrumbEntries(
 			HttpServletRequest request, String className, long classPK,
 			PortletURL containerModelURL)

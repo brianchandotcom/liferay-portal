@@ -47,7 +47,7 @@ ArticleSearchTerms searchTerms = (ArticleSearchTerms)searchContainer.getSearchTe
 searchTerms.setFolderIds(new ArrayList<Long>());
 searchTerms.setVersion(-1);
 
-boolean includeScheduledArticles = false;
+boolean showNonindexable = false;
 
 List<JournalArticle> results = null;
 int total = 0;

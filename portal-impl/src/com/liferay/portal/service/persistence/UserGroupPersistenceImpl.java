@@ -5597,6 +5597,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		TableMapperFactory.removeTableMapper("Groups_UserGroups");
+		TableMapperFactory.removeTableMapper("UserGroups_Teams");
+		TableMapperFactory.removeTableMapper("Users_UserGroups");
 	}
 
 	@BeanReference(type = GroupPersistence.class)

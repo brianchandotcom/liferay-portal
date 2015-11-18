@@ -426,18 +426,18 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 		double discountSubtotal = ShoppingUtil.calculateDiscountSubtotal(items);
 		%>
 
-		<aui:field-wrapper label="subtotal">
 			<c:choose>
 				<c:when test="<%= subtotal == actualSubtotal %>">
-					<liferay-ui:input-resource url="<%= currencyFormat.format(subtotal) %>" />
+					<aui:input name="subtotal" type="resource" value="<%= currencyFormat.format(subtotal) %>" />
 				</c:when>
 				<c:otherwise>
-					<div class="alert alert-success">
-						<strike><%= currencyFormat.format(subtotal) %></strike> <%= currencyFormat.format(actualSubtotal) %>
-					</div>
+					<aui:field-wrapper label="subtotal">
+						<div class="alert alert-success">
+							<strike><%= currencyFormat.format(subtotal) %></strike> <%= currencyFormat.format(actualSubtotal) %>
+						</div>
+					</aui:field-wrapper>
 				</c:otherwise>
 			</c:choose>
-		</aui:field-wrapper>
 
 		<c:if test="<%= subtotal != actualSubtotal %>">
 			<aui:field-wrapper label="you-save">
@@ -449,9 +449,7 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 
 		<c:choose>
 			<c:when test="<%= !shoppingPrefs.useAlternativeShipping() %>">
-				<aui:field-wrapper label="shipping">
-					<liferay-ui:input-resource url="<%= currencyFormat.format(ShoppingUtil.calculateShipping(items)) %>" />
-				</aui:field-wrapper>
+				<aui:input name="shipping" type="resource" value="<%= currencyFormat.format(ShoppingUtil.calculateShipping(items)) %>" />
 			</c:when>
 			<c:otherwise>
 				<aui:select label="shipping" name="alternativeShipping">

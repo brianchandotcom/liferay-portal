@@ -63,7 +63,7 @@ public class TextFormatter {
 
 	public static final int J = 9;
 
-	// formatId --> format-id
+	// formatId --> format-id, formatID --> format-i-d
 
 	public static final int K = 10;
 
@@ -83,7 +83,7 @@ public class TextFormatter {
 
 	public static final int O = 14;
 
-	// formatID --> format-id
+	// FormatID --> format-id
 
 	public static final int P = 15;
 
@@ -401,22 +401,22 @@ public class TextFormatter {
 	}
 
 	private static String _formatP(String s) {
-		StringBuilder sb = new StringBuilder(StringUtil.toLowerCase(s));
+		StringBuilder sb = new StringBuilder(s.length() + s.length() / 2);
 
-		for (int i = 0; i < s.length(); i++) {
-			char c = s.charAt(i);
+		for (int i = 0; i < s.length() - 1; i++) {
+			char c1 = s.charAt(i);
+			char c2 = s.charAt(i + 1);
 
-			if (Character.isUpperCase(c) && (i > 0) && ((i + 1) < s.length())) {
-				int delta = sb.length() - s.length();
-
-				if (Character.isLowerCase(s.charAt(i + 1))) {
-					sb.insert(i + delta, CharPool.DASH);
-				}
-				else if (Character.isLowerCase(s.charAt(i - 1))) {
-					sb.insert(i + delta, CharPool.DASH);
-				}
+			if (Character.isLowerCase(c1) && Character.isUpperCase(c2)) {
+				sb.append(c1);
+				sb.append(CharPool.DASH);
+			}
+			else {
+				sb.append(Character.toLowerCase(c1));
 			}
 		}
+
+		sb.append(Character.toLowerCase(s.charAt(s.length() - 1)));
 
 		return sb.toString();
 	}

@@ -43,11 +43,14 @@ public class SortFactoryImpl implements SortFactory {
 
 	@Override
 	public Sort getSort(
-		Class<?> clazz, int type, String orderByCol, String orderByType) {
+		Class<?> clazz, int type, String orderByCol, boolean inferSortField,
+		String orderByType) {
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(clazz);
+		String sortField = orderByCol;
 
-		String sortField = indexer.getSortField(orderByCol, type);
+		if (inferSortField) {
+			sortField = getSortField(orderByCol, type, clazz);
+		}
 
 		if (Validator.isNull(orderByType)) {
 			orderByType = "asc";
@@ -55,6 +58,13 @@ public class SortFactoryImpl implements SortFactory {
 
 		return new Sort(
 			sortField, type, !StringUtil.equalsIgnoreCase(orderByType, "asc"));
+	}
+
+	@Override
+	public Sort getSort(
+		Class<?> clazz, int type, String orderByCol, String orderByType) {
+
+		return getSort(clazz, type, orderByCol, true, orderByType);
 	}
 
 	@Override
@@ -75,6 +85,12 @@ public class SortFactoryImpl implements SortFactory {
 		}
 
 		return sortsArray;
+	}
+
+	protected String getSortField(String orderByCol, int type, Class<?> clazz) {
+		Indexer indexer = IndexerRegistryUtil.getIndexer(clazz);
+
+		return indexer.getSortField(orderByCol, type);
 	}
 
 	private static final Sort[] _DEFAULT_SORTS = new Sort[] {

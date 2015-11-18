@@ -81,6 +81,12 @@ StringBuilder friendlyURLBase = new StringBuilder();
 		%>
 
 	</liferay-ui:error>
+
+	<c:if test="<%= portletName.equals(PortletKeys.DOCKBAR) %>">
+		<liferay-ui:error exception="<%= LayoutTypeException.class %>">
+			<%@ include file="/html/portlet/layouts_admin/error_layout_type_exception.jspf" %>
+		</liferay-ui:error>
+	</c:if>
 </c:if>
 
 <liferay-ui:error key="resetMergeFailCountAndMerge" message="unable-to-reset-the-failure-counter-and-propagate-the-changes" />

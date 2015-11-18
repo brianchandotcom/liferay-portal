@@ -14,9 +14,22 @@
  */
 --%>
 
+<%@ include file="/html/common/init.jsp" %>
+
 <%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<liferay-util:include page="/html/js/editor/ckeditor.jsp">
+<%
+String ckEditorVersion = PropsUtil.get(PropsKeys.EDITOR_CKEDITOR_VERSION);
+
+if (Validator.equals(ckEditorVersion, "latest")) {
+	ckEditorVersion = StringPool.UNDERLINE + ckEditorVersion;
+}
+else {
+	ckEditorVersion = StringPool.BLANK;
+}
+%>
+
+<liferay-util:include page='<%= "/html/js/editor/ckeditor" + ckEditorVersion + ".jsp" %>'>
 	<liferay-util:param name="ckEditorConfigFileName" value="ckconfig_creole.jsp" />
 	<liferay-util:param name="hideImageResizing" value="<%= Boolean.TRUE.toString() %>" />
 </liferay-util:include>

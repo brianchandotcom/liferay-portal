@@ -85,12 +85,7 @@ if (assetEntryId > 0) {
 						assetPublisherURL.setParameter("urlTitle", assetRenderer.getUrlTitle());
 					}
 
-					if (themeDisplay.isStatePopUp()) {
-						assetPublisherURL.setWindowState(LiferayWindowState.POP_UP);
-					}
-					else {
-						assetPublisherURL.setWindowState(WindowState.MAXIMIZED);
-					}
+					assetPublisherURL.setWindowState(WindowState.MAXIMIZED);
 
 					String viewFullContentURLString = assetPublisherURL.toString();
 
@@ -99,13 +94,23 @@ if (assetEntryId > 0) {
 					String urlViewInContext = assetRenderer.getURLViewInContext((LiferayPortletRequest)portletRequest, (LiferayPortletResponse)portletResponse, viewFullContentURLString);
 
 					urlViewInContext = HttpUtil.setParameter(urlViewInContext, "inheritRedirect", true);
+
+					String method = null;
+					String target = "_self";
+
+					if (themeDisplay.isStatePopUp() || (themeDisplay.isStateMaximized() && PropsValues.DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP && PortletCategoryKeys.MY.equals(themeDisplay.getControlPanelCategory()))) {
+						method = "get";
+						target = "_blank";
+					}
 			%>
 
 					<li class="asset-links-list-item">
 						<liferay-ui:icon
 							label="<%= true %>"
 							message="<%= asseLinktEntryTitle %>"
+							method="<%= method %>"
 							src="<%= assetRenderer.getIconPath(portletRequest) %>"
+							target="<%= target %>"
 							url="<%= urlViewInContext %>"
 						/>
 					</li>

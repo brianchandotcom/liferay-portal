@@ -20,7 +20,7 @@ List subfolderIds = new ArrayList();
 subfolderIds.add(new Long(curFolder.getFolderId()));
 
 if (ArrayUtil.contains(folderColumns, "num-of-entries") || ArrayUtil.contains(folderColumns, "num-of-folders")) {
-	BookmarksFolderServiceUtil.getSubfolderIds(subfolderIds, scopeGroupId, curFolder.getFolderId());
+	BookmarksFolderServiceUtil.getSubfolderIds(subfolderIds, scopeGroupId, curFolder.getFolderId(), true);
 }
 
 int curFoldersCount = subfolderIds.size() - 1;

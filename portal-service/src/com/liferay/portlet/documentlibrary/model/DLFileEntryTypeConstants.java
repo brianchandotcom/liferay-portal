@@ -31,6 +31,19 @@ public class DLFileEntryTypeConstants {
 
 	public static final String NAME_IG_IMAGE = "Image Gallery Image";
 
+	public static final String NAME_LOCALIZED_CONTRACT = "contract";
+
+	public static final String NAME_LOCALIZED_IG_IMAGE = "image-gallery-image";
+
+	public static final String NAME_LOCALIZED_MARKETING_BANNER =
+		"marketing-banner";
+
+	public static final String NAME_LOCALIZED_ONLINE_TRAINING =
+		"online-training";
+
+	public static final String NAME_LOCALIZED_SALES_PRESENTATION =
+		"sales-presentation";
+
 	public static final String NAME_MARKETING_BANNER = "Marketing Banner";
 
 	public static final String NAME_ONLINE_TRAINING = "Online Training";

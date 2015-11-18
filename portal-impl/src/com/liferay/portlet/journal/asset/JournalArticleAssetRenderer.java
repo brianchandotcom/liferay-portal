@@ -241,7 +241,7 @@ public class JournalArticleAssetRenderer
 			WebKeys.PORTLET_ID);
 
 		PortletPreferences portletSetup =
-			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+			PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
 				layout, portletId);
 
 		String linkToLayoutUuid = GetterUtil.getString(

@@ -561,6 +561,16 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 								ddmTemplatePath);
 
 						if (ddmTemplate != null) {
+							String ddmTemplateClassName =
+								ddmTemplateElement.attributeValue("class-name");
+
+							if (Validator.isNotNull(ddmTemplateClassName)) {
+								long classNameId = PortalUtil.getClassNameId(
+									ddmTemplateClassName);
+
+								ddmTemplate.setClassNameId(classNameId);
+							}
+
 							StagedModelDataHandlerUtil.importStagedModel(
 								portletDataContext, ddmTemplate);
 						}

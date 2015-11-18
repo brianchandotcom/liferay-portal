@@ -22,14 +22,12 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
@@ -168,32 +166,8 @@ public class DLFileEntryAssetRendererFactory extends BaseAssetRendererFactory {
 
 	@Override
 	public PortletURL getURLAdd(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse)
-		throws PortalException, SystemException {
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		if (!DLPermission.contains(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), ActionKeys.ADD_DOCUMENT)) {
-
-			return null;
-		}
-
-		long classTypeId = GetterUtil.getLong(
-			liferayPortletRequest.getAttribute(
-				WebKeys.ASSET_RENDERER_FACTORY_CLASS_TYPE_ID));
-
-		if ((classTypeId > 0) &&
-			!DLFileEntryTypePermission.contains(
-				themeDisplay.getPermissionChecker(), classTypeId,
-				ActionKeys.VIEW)) {
-
-			return null;
-		}
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL(
 			PortletKeys.DOCUMENT_LIBRARY);
@@ -226,6 +200,22 @@ public class DLFileEntryAssetRendererFactory extends BaseAssetRendererFactory {
 		}
 
 		return liferayPortletURL;
+	}
+
+	@Override
+	public boolean hasAddPermission(
+			PermissionChecker permissionChecker, long groupId, long classTypeId)
+		throws Exception {
+
+		if ((classTypeId > 0) &&
+			!DLFileEntryTypePermission.contains(
+				permissionChecker, classTypeId, ActionKeys.VIEW)) {
+
+			return false;
+		}
+
+		return DLPermission.contains(
+			permissionChecker, groupId, ActionKeys.ADD_DOCUMENT);
 	}
 
 	@Override

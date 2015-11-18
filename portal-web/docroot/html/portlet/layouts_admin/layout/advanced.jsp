@@ -31,7 +31,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 
 <liferay-ui:error exception="<%= ImageTypeException.class %>" message="please-enter-a-file-with-a-valid-file-type" />
 
-<aui:fieldset>
+<aui:fieldset cssClass="lfr-portrait-editor">
 	<c:if test="<%= !group.isLayoutPrototype() %>">
 
 		<%

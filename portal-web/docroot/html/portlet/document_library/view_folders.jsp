@@ -146,11 +146,35 @@ else {
 						viewURL="<%= viewDocumentsHomeURL.toString() %>"
 					/>
 
-					<c:if test="<%= rootFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>">
-						<liferay-portlet:renderURL varImpl="viewRecentDocumentsURL">
+					<liferay-portlet:renderURL varImpl="viewRecentDocumentsURL">
+						<portlet:param name="struts_action" value="/document_library/view" />
+						<portlet:param name="navigation" value="recent" />
+						<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
+						<portlet:param name="entryStart" value="0" />
+						<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
+						<portlet:param name="folderStart" value="0" />
+						<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
+					</liferay-portlet:renderURL>
+
+					<%
+					dataView = new HashMap<String, Object>();
+
+					dataView.put("navigation", "recent");
+					%>
+
+					<liferay-ui:app-view-navigation-entry
+						dataView="<%= dataView %>"
+						entryTitle='<%= LanguageUtil.get(pageContext, "recent") %>'
+						iconImage="icon-time"
+						selected='<%= navigation.equals("recent") %>'
+						viewURL="<%= viewRecentDocumentsURL.toString() %>"
+					/>
+
+					<c:if test="<%= themeDisplay.isSignedIn() %>">
+						<liferay-portlet:renderURL varImpl="viewMyDocumentsURL">
 							<portlet:param name="struts_action" value="/document_library/view" />
-							<portlet:param name="navigation" value="recent" />
-							<portlet:param name="folderId" value="<%= String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+							<portlet:param name="navigation" value="mine" />
+							<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
 							<portlet:param name="entryStart" value="0" />
 							<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
 							<portlet:param name="folderStart" value="0" />
@@ -160,71 +184,45 @@ else {
 						<%
 						dataView = new HashMap<String, Object>();
 
-						dataView.put("navigation", "recent");
+						dataView.put("navigation", "mine");
 						%>
 
 						<liferay-ui:app-view-navigation-entry
 							dataView="<%= dataView %>"
-							entryTitle='<%= LanguageUtil.get(pageContext, "recent") %>'
-							iconImage="icon-time"
-							selected='<%= navigation.equals("recent") %>'
-							viewURL="<%= viewRecentDocumentsURL.toString() %>"
+							entryTitle='<%= LanguageUtil.get(pageContext, "mine") %>'
+							iconImage="icon-user"
+							selected='<%= navigation.equals("mine") %>'
+							viewURL="<%= viewMyDocumentsURL.toString() %>"
 						/>
+					</c:if>
 
-						<c:if test="<%= themeDisplay.isSignedIn() %>">
-							<liferay-portlet:renderURL varImpl="viewMyDocumentsURL">
-								<portlet:param name="struts_action" value="/document_library/view" />
-								<portlet:param name="navigation" value="mine" />
-								<portlet:param name="folderId" value="<%= String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-								<portlet:param name="entryStart" value="0" />
-								<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
-								<portlet:param name="folderStart" value="0" />
-								<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
-							</liferay-portlet:renderURL>
+					<c:if test="<%= DLFileEntryTypeServiceUtil.getFileEntryTypesCount(PortalUtil.getSiteAndCompanyGroupIds(themeDisplay)) > 0 %>">
+						<liferay-portlet:renderURL varImpl="viewBasicFileEntryTypeURL">
+							<portlet:param name="struts_action" value="/document_library/view" />
+							<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
+							<portlet:param name="browseBy" value="file-entry-type" />
+							<portlet:param name="entryStart" value="0" />
+							<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
+							<portlet:param name="folderStart" value="0" />
+							<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
+						</liferay-portlet:renderURL>
 
-							<%
-							dataView = new HashMap<String, Object>();
+						<%
+						dataView = new HashMap<String, Object>();
 
-							dataView.put("navigation", "mine");
-							%>
+						dataView.put("browse-by", "file-entry-type");
+						dataView.put("view-entries", Boolean.FALSE);
+						dataView.put("view-folders", Boolean.TRUE);
+						%>
 
-							<liferay-ui:app-view-navigation-entry
-								dataView="<%= dataView %>"
-								entryTitle='<%= LanguageUtil.get(pageContext, "mine") %>'
-								iconImage="icon-user"
-								selected='<%= navigation.equals("mine") %>'
-								viewURL="<%= viewMyDocumentsURL.toString() %>"
-							/>
-						</c:if>
-
-						<c:if test="<%= DLFileEntryTypeServiceUtil.getFileEntryTypesCount(PortalUtil.getSiteAndCompanyGroupIds(themeDisplay)) > 0 %>">
-							<liferay-portlet:renderURL varImpl="viewBasicFileEntryTypeURL">
-								<portlet:param name="struts_action" value="/document_library/view" />
-								<portlet:param name="folderId" value="<%= String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-								<portlet:param name="browseBy" value="file-entry-type" />
-								<portlet:param name="entryStart" value="0" />
-								<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
-								<portlet:param name="folderStart" value="0" />
-								<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
-							</liferay-portlet:renderURL>
-
-							<%
-							dataView = new HashMap<String, Object>();
-
-							dataView.put("browse-by", "file-entry-type");
-							dataView.put("view-entries", Boolean.FALSE);
-							dataView.put("view-folders", Boolean.TRUE);
-							%>
-
-							<liferay-ui:app-view-navigation-entry
-								cssClass="folder file-entry-type"
-								dataView="<%= dataView %>"
-								entryTitle='<%= LanguageUtil.get(pageContext, "browse-by-type") %>'
-								iconImage="icon-file"
-								selected='<%= browseBy.equals("file-entry-type") %>'
-								viewURL="<%= viewBasicFileEntryTypeURL.toString() %>"
-							/>
-						</c:if>
+						<liferay-ui:app-view-navigation-entry
+							cssClass="folder file-entry-type"
+							dataView="<%= dataView %>"
+							entryTitle='<%= LanguageUtil.get(pageContext, "browse-by-type") %>'
+							iconImage="icon-file"
+							selected='<%= browseBy.equals("file-entry-type") %>'
+							viewURL="<%= viewBasicFileEntryTypeURL.toString() %>"
+						/>
 					</c:if>
 
 					<%
@@ -333,7 +331,7 @@ else {
 						<c:if test="<%= searchContainer.getStart() == 0 %>">
 							<liferay-portlet:renderURL varImpl="viewBasicFileEntryTypeURL">
 								<portlet:param name="struts_action" value="/document_library/view" />
-								<portlet:param name="folderId" value="<%= String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+								<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
 								<portlet:param name="browseBy" value="file-entry-type" />
 								<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(0) %>" />
 								<portlet:param name="entryStart" value="0" />
@@ -368,7 +366,7 @@ else {
 
 							<liferay-portlet:renderURL varImpl="viewFileEntryTypeURL">
 								<portlet:param name="struts_action" value="/document_library/view" />
-								<portlet:param name="folderId" value="<%= String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+								<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
 								<portlet:param name="browseBy" value="file-entry-type" />
 								<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryType.getFileEntryTypeId()) %>" />
 								<portlet:param name="entryStart" value="0" />

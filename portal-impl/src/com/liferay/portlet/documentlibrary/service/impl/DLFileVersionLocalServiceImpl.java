@@ -14,18 +14,20 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
-import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.TreePathUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
-import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionModelImpl;
-import com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl;
 import com.liferay.portlet.documentlibrary.service.base.DLFileVersionLocalServiceBaseImpl;
+import com.liferay.portlet.documentlibrary.service.persistence.DLFileVersionActionableDynamicQuery;
 import com.liferay.portlet.documentlibrary.util.comparator.FileVersionVersionComparator;
 
 import java.util.Collections;
@@ -133,21 +135,53 @@ public class DLFileVersionLocalServiceImpl
 	}
 
 	@Override
-	public void rebuildTree(long companyId) throws SystemException {
+	public void rebuildTree(long companyId)
+		throws PortalException, SystemException {
+
 		dlFolderLocalService.rebuildTree(companyId);
+	}
 
-		Session session = dlFileVersionPersistence.openSession();
+	@Override
+	public void setTreePaths(final long folderId, final String treePath)
+		throws PortalException, SystemException {
 
-		try {
-			TreePathUtil.rebuildTree(
-				session, companyId, DLFileVersionModelImpl.TABLE_NAME,
-				DLFolderModelImpl.TABLE_NAME, "folderId", true);
+		if (treePath == null) {
+			throw new IllegalArgumentException("Tree path is null");
 		}
-		finally {
-			dlFileVersionPersistence.closeSession(session);
 
-			dlFileVersionPersistence.clearCache();
-		}
+		ActionableDynamicQuery actionableDynamicQuery =
+			new DLFileVersionActionableDynamicQuery() {
+
+			@Override
+			protected void addCriteria(DynamicQuery dynamicQuery) {
+				Property folderIdProperty = PropertyFactoryUtil.forName(
+					"folderId");
+
+				dynamicQuery.add(folderIdProperty.eq(folderId));
+
+				Property treePathProperty = PropertyFactoryUtil.forName(
+					"treePath");
+
+				dynamicQuery.add(
+					RestrictionsFactoryUtil.or(
+						treePathProperty.isNull(),
+						treePathProperty.ne(treePath)));
+			}
+
+			@Override
+			protected void performAction(Object object)
+				throws PortalException, SystemException {
+
+				DLFileVersion version = (DLFileVersion)object;
+
+				version.setTreePath(treePath);
+
+				updateDLFileVersion(version);
+			}
+
+		};
+
+		actionableDynamicQuery.performActions();
 	}
 
 }

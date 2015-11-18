@@ -29,22 +29,21 @@ boolean hasDistributionScope = false;
 	</c:if>
 
 	<%
-	List<Group> groups = GroupLocalServiceUtil.getUserGroups(user.getUserId(), true);
+	List<Group> groups = AnnouncementsUtil.getGroups(themeDisplay);
 	%>
 
 	<c:if test="<%= !groups.isEmpty() %>">
 		<optgroup label="<liferay-ui:message key="sites" />">
 
 			<%
+			hasDistributionScope = true;
+
 			for (Group group : groups) {
-				if ((group.isOrganization() || (group.isRegularSite() && group.isSite())) && GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.MANAGE_ANNOUNCEMENTS)) {
-					hasDistributionScope = true;
 			%>
 
-					<aui:option label="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>" selected="<%= classPK == group.getGroupId() %>" value="<%= PortalUtil.getClassNameId(Group.class) + StringPool.COMMA + group.getGroupId() %>" />
+				<aui:option label="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>" selected="<%= classPK == group.getGroupId() %>" value="<%= PortalUtil.getClassNameId(Group.class) + StringPool.COMMA + group.getGroupId() %>" />
 
 			<%
-				}
 			}
 			%>
 
@@ -52,22 +51,21 @@ boolean hasDistributionScope = false;
 	</c:if>
 
 	<%
-	List<Organization> organizations = OrganizationLocalServiceUtil.getUserOrganizations(user.getUserId());
+	List<Organization> organizations = AnnouncementsUtil.getOrganizations(themeDisplay);
 	%>
 
 	<c:if test="<%= !organizations.isEmpty() %>">
 		<optgroup label="<liferay-ui:message key="organizations" />">
 
 			<%
+			hasDistributionScope = true;
+
 			for (Organization organization : organizations) {
-				if (OrganizationPermissionUtil.contains(permissionChecker, organization.getOrganizationId(), ActionKeys.MANAGE_ANNOUNCEMENTS)) {
-					hasDistributionScope = true;
 			%>
 
-					<aui:option label="<%= HtmlUtil.escape(organization.getName()) %>" selected="<%= classPK == organization.getOrganizationId() %>" value="<%= PortalUtil.getClassNameId(Organization.class) + StringPool.COMMA + organization.getOrganizationId() %>" />
+				<aui:option label="<%= HtmlUtil.escape(organization.getName()) %>" selected="<%= classPK == organization.getOrganizationId() %>" value="<%= PortalUtil.getClassNameId(Organization.class) + StringPool.COMMA + organization.getOrganizationId() %>" />
 
 			<%
-				}
 			}
 			%>
 
@@ -75,30 +73,21 @@ boolean hasDistributionScope = false;
 	</c:if>
 
 	<%
-	List<Role> roles = RoleLocalServiceUtil.getRoles(themeDisplay.getCompanyId());
+	List<Role> roles = AnnouncementsUtil.getRoles(themeDisplay);
 	%>
 
 	<c:if test="<%= !roles.isEmpty() %>">
 		<optgroup label="<liferay-ui:message key="roles" />">
 
 			<%
+			hasDistributionScope = true;
+
 			for (Role role : roles) {
-				if (role.isTeam()) {
-					Team team = TeamLocalServiceUtil.getTeam(role.getClassPK());
-
-					if (!GroupPermissionUtil.contains(permissionChecker, team.getGroupId(), ActionKeys.MANAGE_ANNOUNCEMENTS)) {
-						continue;
-					}
-				}
-
-				if (RolePermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroupId(), role.getRoleId(), ActionKeys.MANAGE_ANNOUNCEMENTS)) {
-					hasDistributionScope = true;
 			%>
 
-					<aui:option label="<%= HtmlUtil.escape(role.getTitle(locale)) %>" selected="<%= classPK == role.getRoleId() %>" value="<%= PortalUtil.getClassNameId(Role.class) + StringPool.COMMA + role.getRoleId() %>" />
+				<aui:option label="<%= HtmlUtil.escape(role.getTitle(locale)) %>" selected="<%= classPK == role.getRoleId() %>" value="<%= PortalUtil.getClassNameId(Role.class) + StringPool.COMMA + role.getRoleId() %>" />
 
 			<%
-				}
 			}
 			%>
 
@@ -106,22 +95,21 @@ boolean hasDistributionScope = false;
 	</c:if>
 
 	<%
-	List<UserGroup> userGroups = UserGroupLocalServiceUtil.getUserGroups(themeDisplay.getCompanyId());
+	List<UserGroup> userGroups = AnnouncementsUtil.getUserGroups(themeDisplay);
 	%>
 
 	<c:if test="<%= !userGroups.isEmpty() %>">
 		<optgroup label="<liferay-ui:message key="user-groups" />">
 
 			<%
+			hasDistributionScope = true;
+
 			for (UserGroup userGroup : userGroups) {
-				if (UserGroupPermissionUtil.contains(permissionChecker, userGroup.getUserGroupId(), ActionKeys.MANAGE_ANNOUNCEMENTS)) {
-					hasDistributionScope = true;
 			%>
 
-					<aui:option label="<%= HtmlUtil.escape(userGroup.getName()) %>" selected="<%= classPK == userGroup.getUserGroupId() %>" value="<%= PortalUtil.getClassNameId(UserGroup.class) + StringPool.COMMA + userGroup.getUserGroupId() %>" />
+				<aui:option label="<%= HtmlUtil.escape(userGroup.getName()) %>" selected="<%= classPK == userGroup.getUserGroupId() %>" value="<%= PortalUtil.getClassNameId(UserGroup.class) + StringPool.COMMA + userGroup.getUserGroupId() %>" />
 
 			<%
-				}
 			}
 			%>
 

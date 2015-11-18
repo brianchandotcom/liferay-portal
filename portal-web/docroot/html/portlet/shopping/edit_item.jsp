@@ -110,42 +110,40 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 
 	<aui:fieldset>
 		<c:if test="<%= item != null %>">
-			<aui:field-wrapper label="category">
 
-				<%
-				String categoryName = "";
+			<%
+			String categoryName = "";
 
-				if (categoryId != ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-					ShoppingCategory category = ShoppingCategoryServiceUtil.getCategory(categoryId);
+			if (categoryId != ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+				ShoppingCategory category = ShoppingCategoryServiceUtil.getCategory(categoryId);
 
-					category = category.toEscapedModel();
+				category = category.toEscapedModel();
 
-					categoryName = category.getName();
-				}
-				%>
+				categoryName = category.getName();
+			}
+			%>
 
-				<portlet:renderURL var="viewCategoryURL">
-					<portlet:param name="struts_action" value="/shopping/view" />
+			<portlet:renderURL var="viewCategoryURL">
+				<portlet:param name="struts_action" value="/shopping/view" />
+				<portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" />
+			</portlet:renderURL>
+
+			<div class="control-group">
+				<aui:input label="category" name="categoryName" type="resource" value="<%= categoryName %>" />
+
+				<portlet:renderURL var="selectCateforyURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+					<portlet:param name="struts_action" value="/shopping/select_category" />
 					<portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" />
 				</portlet:renderURL>
 
-				<div class="input-append">
-					<liferay-ui:input-resource id="categoryName" url="<%= categoryName %>" />
+				<%
+				String taglibOpenCategoryWindow = "var categoryWindow = window.open('" + selectCateforyURL + "', 'category', 'directories=no,height=640,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=680'); void(''); categoryWindow.focus();";
+				%>
 
-					<portlet:renderURL var="selectCateforyURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-						<portlet:param name="struts_action" value="/shopping/select_category" />
-						<portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" />
-					</portlet:renderURL>
+				<aui:button onClick="<%= taglibOpenCategoryWindow %>" value="select" />
 
-					<%
-					String taglibOpenCategoryWindow = "var categoryWindow = window.open('" + selectCateforyURL + "', 'category', 'directories=no,height=640,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=680'); void(''); categoryWindow.focus();";
-					%>
-
-					<aui:button onClick="<%= taglibOpenCategoryWindow %>" value="select" />
-
-					<aui:button onClick='<%= renderResponse.getNamespace() + "removeCategory();" %>' value="remove" />
-				</div>
-			</aui:field-wrapper>
+				<aui:button onClick='<%= renderResponse.getNamespace() + "removeCategory();" %>' value="remove" />
+			</div>
 		</c:if>
 
 		<aui:input bean="<%= item %>" model="<%= ShoppingItem.class %>" name="sku" />
@@ -226,13 +224,13 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 
 				<tr>
 					<td>
-						<aui:input cssClass="lfr-input-text-container" label="name" name='<%= "fieldName" + i %>' style="width: 100px;" type="text" value="<%= fieldName %>" />
+						<aui:input cssClass="lfr-input-text-container" ignoreRequestValue="<%= true %>" label="name" name='<%= "fieldName" + i %>' style="width: 100px;" type="text" value="<%= fieldName %>" />
 					</td>
 					<td>
-						<aui:input cssClass="lfr-input-text-container" label="values" name='<%= "fieldValues" + i %>' style="width: 100px;" type="text" value='<%= StringUtil.merge(fieldValues, ", ") %>' />
+						<aui:input cssClass="lfr-input-text-container" ignoreRequestValue="<%= true %>" label="values" name='<%= "fieldValues" + i %>' style="width: 100px;" type="text" value='<%= StringUtil.merge(fieldValues, ", ") %>' />
 					</td>
 					<td>
-						<aui:input cssClass="lfr-input-text-container" label="description" name='<%= "fieldDescription" + i %>' style="width: 150px;" type="text" value="<%= fieldDescription %>" />
+						<aui:input cssClass="lfr-input-text-container" ignoreRequestValue="<%= true %>" label="description" name='<%= "fieldDescription" + i %>' style="width: 150px;" type="text" value="<%= fieldDescription %>" />
 					</td>
 
 					<c:if test="<%= fieldsCount > 0 %>">
@@ -292,7 +290,7 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 						}
 					}
 
-					double price = ParamUtil.getDouble(request, "price" + curPriceId);
+					double price = ParamUtil.getDouble(request, "price" + curPriceId, locale);
 					String priceParam = request.getParameter("price" + curPriceId);
 					if ((priceParam == null) || priceParam.equals(StringPool.NULL)) {
 						if (itemPrices[curPriceId] != null) {
@@ -300,7 +298,7 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 						}
 					}
 
-					double discount = ParamUtil.getDouble(request, "discount" + curPriceId) / 100;
+					double discount = ParamUtil.getDouble(request, "discount" + curPriceId, locale) / 100;
 					String discountParam = request.getParameter("discount" + curPriceId);
 					if ((discountParam == null) || discountParam.equals(StringPool.NULL)) {
 						if (itemPrices[curPriceId] != null) {
@@ -316,7 +314,7 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 						}
 					}
 
-					double shipping = ParamUtil.getDouble(request, "shipping" + curPriceId);
+					double shipping = ParamUtil.getDouble(request, "shipping" + curPriceId, locale);
 					String shippingParam = request.getParameter("shipping" + curPriceId);
 					if ((shippingParam == null) || shippingParam.equals(StringPool.NULL)) {
 						if (itemPrices[curPriceId] != null) {
@@ -376,19 +374,19 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 							<table class="lfr-table">
 							<tr>
 								<td>
-									<aui:input field="minQuantity" fieldParam='<%= "minQuantity" + i %>' label="min-qty" model="<%= ShoppingItemPrice.class %>" name="minQuantity" value="<%= String.valueOf(minQuantity) %>" />
+									<aui:input field="minQuantity" fieldParam='<%= "minQuantity" + i %>' ignoreRequestValue="<%= true %>" label="min-qty" model="<%= ShoppingItemPrice.class %>" name="minQuantity" value="<%= String.valueOf(minQuantity) %>" />
 								</td>
 								<td>
-									<aui:input field="maxQuantity" fieldParam='<%= "maxQuantity" + i %>' label="max-qty" model="<%= ShoppingItemPrice.class %>" name="maxQuantity" value="<%= String.valueOf(maxQuantity) %>" />
+									<aui:input field="maxQuantity" fieldParam='<%= "maxQuantity" + i %>' ignoreRequestValue="<%= true %>" label="max-qty" model="<%= ShoppingItemPrice.class %>" name="maxQuantity" value="<%= String.valueOf(maxQuantity) %>" />
 								</td>
 								<td>
-									<aui:input field="price" fieldParam='<%= "price" + i %>' format="<%= doubleFormat %>" label="price" model="<%= ShoppingItemPrice.class %>" name="price" value="<%= String.valueOf(price) %>" />
+									<aui:input field="price" fieldParam='<%= "price" + i %>' format="<%= doubleFormat %>" ignoreRequestValue="<%= true %>" label="price" model="<%= ShoppingItemPrice.class %>" name="price" value="<%= String.valueOf(price) %>" />
 								</td>
 								<td>
-									<aui:input field="discount" fieldParam='<%= "discount" + i %>' label="discount" model="<%= ShoppingItemPrice.class %>" name="discount" value="<%= percentFormat.format(discount) %>" />
+									<aui:input field="discount" fieldParam='<%= "discount" + i %>' ignoreRequestValue="<%= true %>" label="discount" model="<%= ShoppingItemPrice.class %>" name="discount" value="<%= String.valueOf(discount * 100) %>" />
 								</td>
 								<td>
-									<aui:input label="taxable" name='<%= "taxable" + i %>' param='<%= "taxable" + i %>' type="checkbox" value="<%= taxable %>" />
+									<aui:input ignoreRequestValue="<%= true %>" label="taxable" name='<%= "taxable" + i %>' param='<%= "taxable" + i %>' type="checkbox" value="<%= taxable %>" />
 								</td>
 							</tr>
 							</table>
@@ -396,16 +394,16 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 							<table class="lfr-table">
 							<tr>
 								<td>
-									<aui:input field="shipping" fieldParam='<%= "shipping" + i %>' format="<%= doubleFormat %>" model="<%= ShoppingItemPrice.class %>" name="shipping" value="<%= String.valueOf(shipping) %>" />
+									<aui:input field="shipping" fieldParam='<%= "shipping" + i %>' format="<%= doubleFormat %>" ignoreRequestValue="<%= true %>" model="<%= ShoppingItemPrice.class %>" name="shipping" value="<%= String.valueOf(shipping) %>" />
 								</td>
 								<td>
-									<aui:input label="use-shipping-formula" name='<%= "useShippingFormula" + i %>' type="checkbox" value="<%= useShippingFormula %>" />
+									<aui:input ignoreRequestValue="<%= true %>" label="use-shipping-formula" name='<%= "useShippingFormula" + i %>' type="checkbox" value="<%= useShippingFormula %>" />
 								</td>
 								<td>
-									<aui:input label="active" name='<%= "active" + i %>' type="checkbox" value="<%= active %>" />
+									<aui:input ignoreRequestValue="<%= true %>" label="active" name='<%= "active" + i %>' type="checkbox" value="<%= active %>" />
 								</td>
 								<td>
-									<aui:input checked="<%= defaultPrice %>" label="default" name="defaultPrice" onClick='<%= "document." + renderResponse.getNamespace() + "fm." + renderResponse.getNamespace() + "active" + i + ".checked = true;" %>' type="radio" value="<% i %>" />
+									<aui:input checked="<%= defaultPrice %>" ignoreRequestValue="<%= true %>" label="default" name="defaultPrice" onClick='<%= "document." + renderResponse.getNamespace() + "fm." + renderResponse.getNamespace() + "active" + i + ".checked = true;" %>' type="radio" value="<% i %>" />
 								</td>
 
 								<c:if test="<%= pricesCount > 1 %>">
@@ -553,7 +551,7 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 	}
 
 	function <portlet:namespace />editItemQuantities() {
-		var itemQuantitiesURL = "<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>" anchor="false"><portlet:param name="struts_action" value="/shopping/edit_item_quantities" /></liferay-portlet:renderURL>&<portlet:namespace />fieldsQuantities=" + document.<portlet:namespace />fm.<portlet:namespace />fieldsQuantities.value;
+		var itemQuantitiesURL = "<liferay-portlet:renderURL anchor="false" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/shopping/edit_item_quantities" /></liferay-portlet:renderURL>";
 
 		<%
 		for (int i = 0; i < fieldsCount; i++) {

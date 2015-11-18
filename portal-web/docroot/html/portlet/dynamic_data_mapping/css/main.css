@@ -66,6 +66,11 @@
 		margin-right: 1em;
 	}
 
+	.lfr-ddm-small-image-view {
+		max-height: 120px;
+		max-width: 120px;
+	}
+
 	.lfr-ddm-types-form-column .column-content-first {
 		margin-right: 10px;
 	}
@@ -167,6 +172,14 @@
 
 		.form-builder-source {
 			position: relative;
+		}
+	}
+}
+
+.ltr .form-builder-rtl-inputs, .rtl .form-builder-ltr-inputs {
+	.portlet-dynamic-data-mapping .form-builder-content, .textcelleditor, .textareacelleditor {
+		input[type="text"], textarea {
+			direction: rtl;
 		}
 	}
 }

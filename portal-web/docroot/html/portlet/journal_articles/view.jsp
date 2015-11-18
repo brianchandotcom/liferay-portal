@@ -79,7 +79,7 @@ double version = ParamUtil.getDouble(request, "version");
 		searchTerms.setVersion(version);
 		searchTerms.setAdvancedSearch(true);
 
-		boolean includeScheduledArticles = false;
+		boolean showNonindexable = false;
 
 		List<JournalArticle> results = null;
 		int total = 0;

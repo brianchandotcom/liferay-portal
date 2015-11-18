@@ -321,10 +321,20 @@ public class GroupFinderImpl
 		}
 	}
 
+	@Deprecated
 	@Override
 	public List<Group> findByLayouts(
 			long companyId, long parentGroupId, boolean site, int start,
 			int end)
+		throws SystemException {
+
+		return findByLayouts(companyId, parentGroupId, site, start, end, null);
+	}
+
+	@Override
+	public List<Group> findByLayouts(
+			long companyId, long parentGroupId, boolean site, int start,
+			int end, OrderByComparator obc)
 		throws SystemException {
 
 		Session session = null;
@@ -333,6 +343,8 @@ public class GroupFinderImpl
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(FIND_BY_LAYOUTS);
+
+			sql = CustomSQLUtil.replaceOrderBy(sql, obc);
 
 			SQLQuery q = session.createSQLQuery(sql);
 

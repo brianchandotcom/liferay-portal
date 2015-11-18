@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 
 import java.io.Serializable;
 
@@ -47,7 +47,7 @@ public class SPIConfiguration implements Serializable {
 	public static SPIConfiguration fromXMLString(String xmlString)
 		throws DocumentException {
 
-		Document document = SAXReaderUtil.read(xmlString);
+		Document document = UnsecureSAXReaderUtil.read(xmlString);
 
 		Element rootElement = document.getRootElement();
 

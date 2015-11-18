@@ -41,6 +41,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.dynamicdatamapping.StructureFieldException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
@@ -188,7 +189,8 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		throws PortalException, SystemException {
 
 		if (!hasField(fieldName)) {
-			throw new StructureFieldException();
+			throw new StructureFieldException(
+				"Unable to find field " + fieldName);
 		}
 
 		Map<String, Map<String, String>> fieldsMap = getFieldsMap(locale, true);
@@ -464,17 +466,20 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 		Map<String, Map<String, String>> fieldsMap = getFieldsMap(true);
 
-		boolean hasField = fieldsMap.containsKey(fieldName);
+		if (fieldsMap.containsKey(fieldName)) {
+			return true;
+		}
 
-		while (!hasField && (getParentStructureId() > 0)) {
+		try {
 			DDMStructure parentStructure =
 				DDMStructureLocalServiceUtil.getStructure(
 					getParentStructureId());
 
-			hasField = parentStructure.hasField(fieldName);
+			return parentStructure.hasField(fieldName);
 		}
-
-		return hasField;
+		catch (NoSuchStructureException nsse) {
+			return false;
+		}
 	}
 
 	@Override

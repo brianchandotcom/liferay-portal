@@ -71,10 +71,13 @@ public class TrashVersionLocalServiceImpl
 			long entryId, String className, long classPK)
 		throws SystemException {
 
-		long classNameId = PortalUtil.getClassNameId(className);
+		List<TrashVersion> trashVersions = getVersions(className, classPK);
 
-		return trashVersionPersistence.fetchByE_C_C(
-			entryId, classNameId, classPK);
+		if (trashVersions.isEmpty()) {
+			return null;
+		}
+
+		return trashVersions.get(0);
 	}
 
 	@Override

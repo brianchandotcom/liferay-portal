@@ -302,17 +302,39 @@ public class JournalTestUtil {
 			String ddmStructureKey, String ddmTemplateKey, Locale defaultLocale)
 		throws Exception {
 
+		return addArticleWithXMLContent(
+			groupId, folderId, classNameId, 0, xml, ddmStructureKey,
+			ddmTemplateKey, defaultLocale);
+	}
+
+	public static JournalArticle addArticleWithXMLContent(
+			long groupId, long folderId, long classNameId, long classPK,
+			String xml, String ddmStructureKey, String ddmTemplateKey,
+			Locale defaultLocale)
+		throws Exception {
+
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			groupId);
 
 		return addArticleWithXMLContent(
-			folderId, classNameId, xml, ddmStructureKey, ddmTemplateKey,
-			defaultLocale, serviceContext);
+			folderId, classNameId, classPK, xml, ddmStructureKey,
+			ddmTemplateKey, defaultLocale, serviceContext);
 	}
 
 	public static JournalArticle addArticleWithXMLContent(
 			long folderId, long classNameId, String xml, String ddmStructureKey,
 			String ddmTemplateKey, Locale defaultLocale,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return addArticleWithXMLContent(
+			folderId, classNameId, 0, xml, ddmStructureKey, ddmTemplateKey,
+			defaultLocale, serviceContext);
+	}
+
+	public static JournalArticle addArticleWithXMLContent(
+			long folderId, long classNameId, long classPK, String xml,
+			String ddmStructureKey, String ddmTemplateKey, Locale defaultLocale,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -322,10 +344,10 @@ public class JournalTestUtil {
 
 		return JournalArticleLocalServiceUtil.addArticle(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			folderId, classNameId, 0, StringPool.BLANK, true, 0, titleMap, null,
-			xml, "general", ddmStructureKey, ddmTemplateKey, null, 1, 1, 1965,
-			0, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false, null,
-			null, null, null, serviceContext);
+			folderId, classNameId, classPK, StringPool.BLANK, true, 0, titleMap,
+			null, xml, "general", ddmStructureKey, ddmTemplateKey, null, 1, 1,
+			1965, 0, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false,
+			null, null, null, null, serviceContext);
 	}
 
 	public static JournalArticle addArticleWithXMLContent(

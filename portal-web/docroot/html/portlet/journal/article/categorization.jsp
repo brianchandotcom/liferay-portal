@@ -28,6 +28,8 @@ if (Validator.isNull(type)) {
 }
 
 String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageId");
+
+boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_article.jsp-changeStructure"));
 %>
 
 <liferay-ui:error-marker key="errorSection" value="categorization" />
@@ -77,9 +79,9 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 	}
 	%>
 
-	<aui:input classPK="<%= classPK %>" name="categories" type="assetCategories" />
+	<aui:input classPK="<%= classPK %>" ignoreRequestValue="<%= changeStructure %>" name="categories" type="assetCategories" />
 
-	<aui:input classPK="<%= classPK %>" name="tags" type="assetTags" />
+	<aui:input classPK="<%= classPK %>" ignoreRequestValue="<%= changeStructure %>" name="tags" type="assetTags" />
 </aui:fieldset>
 
 <aui:script>

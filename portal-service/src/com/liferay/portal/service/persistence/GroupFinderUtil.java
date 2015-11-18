@@ -53,6 +53,15 @@ public class GroupFinderUtil {
 				   .findByLayouts(companyId, parentGroupId, site, start, end);
 	}
 
+	public static java.util.List<com.liferay.portal.model.Group> findByLayouts(
+		long companyId, long parentGroupId, boolean site, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .findByLayouts(companyId, parentGroupId, site, start, end,
+			obc);
+	}
+
 	public static java.util.List<com.liferay.portal.model.Group> findByLiveGroups()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder().findByLiveGroups();

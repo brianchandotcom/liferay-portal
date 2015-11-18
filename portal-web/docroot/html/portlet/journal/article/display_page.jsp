@@ -24,6 +24,12 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 
 String layoutUuid = BeanParamUtil.getString(article, request, "layoutUuid");
 
+boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_article.jsp-changeStructure"));
+
+if (changeStructure && (article != null)) {
+	layoutUuid = article.getLayoutUuid();
+}
+
 Layout selLayout = null;
 
 String layoutBreadcrumb = StringPool.BLANK;
@@ -56,7 +62,7 @@ Group parentGroup = themeDisplay.getSiteGroup();
 <h3><liferay-ui:message key="display-page" /><liferay-ui:icon-help message="default-display-page-help" /></h3>
 
 <div id="<portlet:namespace />pagesContainer">
-	<aui:input id="pagesContainerInput" name="layoutUuid" type="hidden" value="<%= layoutUuid %>" />
+	<aui:input id="pagesContainerInput" ignoreRequestValue="<%= true %>" name="layoutUuid" type="hidden" value="<%= layoutUuid %>" />
 
 	<div class="display-page-item-container hide" id="<portlet:namespace />displayPageItemContainer">
 		<span class="display-page-item">

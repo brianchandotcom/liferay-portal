@@ -52,19 +52,17 @@ String portletNameSpace = PortalUtil.getPortletNamespace(portletResource);
 
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="documentLibraryFoldersListingPanel" persistState="<%= true %>" title="folders-listing">
 			<aui:fieldset>
-				<aui:field-wrapper label="root-folder">
-					<div class="input-append">
-						<liferay-ui:input-resource id="rootFolderName" url="<%= rootFolderName %>" />
+				<div class="control-group">
+					<aui:input label="root-folder" name="rootFolderName" type="resource" value="<%= rootFolderName %>" />
 
-						<aui:button name="openFolderSelectorButton" value="select" />
+					<aui:button name="openFolderSelectorButton" value="select" />
 
-						<%
-						String taglibRemoveFolder = "Liferay.Util.removeFolderSelection('rootFolderId', 'rootFolderName', '" + renderResponse.getNamespace() + "');";
-						%>
+					<%
+					String taglibRemoveFolder = "Liferay.Util.removeFolderSelection('rootFolderId', 'rootFolderName', '" + renderResponse.getNamespace() + "');";
+					%>
 
-						<aui:button disabled="<%= rootFolderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
-					</div>
-				</aui:field-wrapper>
+					<aui:button disabled="<%= rootFolderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+				</div>
 
 				<aui:input name="preferences--showSubfolders--" type="checkbox" value="<%= showSubfolders %>" />
 
@@ -182,7 +180,7 @@ String portletNameSpace = PortalUtil.getPortletNamespace(portletResource);
 					dialog: {
 						constrain: true,
 						modal: true,
-						width: 600
+						width: 800
 					},
 					id: '_<%= HtmlUtil.escapeJS(portletResource) %>_selectFolder',
 					title: '<liferay-ui:message arguments="folder" key="select-x" />',

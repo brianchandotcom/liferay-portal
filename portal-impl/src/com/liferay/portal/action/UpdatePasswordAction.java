@@ -32,7 +32,6 @@ import com.liferay.portal.security.pwd.PwdToolkitUtilThreadLocal;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.TicketLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
@@ -65,11 +64,6 @@ public class UpdatePasswordAction extends Action {
 
 		Ticket ticket = getTicket(request);
 
-		if (!themeDisplay.isSignedIn() && (ticket == null)) {
-			return actionMapping.findForward(
-				ActionConstants.COMMON_REFERER_JSP);
-		}
-
 		String cmd = ParamUtil.getString(request, Constants.CMD);
 
 		if (Validator.isNull(cmd)) {
@@ -85,6 +79,8 @@ public class UpdatePasswordAction extends Action {
 				catch (UserLockoutException ule) {
 					SessionErrors.add(request, ule.getClass());
 				}
+
+				request.setAttribute(WebKeys.TICKET, ticket);
 			}
 
 			return actionMapping.findForward("portal.update_password");
@@ -135,9 +131,11 @@ public class UpdatePasswordAction extends Action {
 		}
 
 		try {
-			Ticket ticket = TicketLocalServiceUtil.getTicket(ticketKey);
+			Ticket ticket = TicketLocalServiceUtil.fetchTicket(ticketKey);
 
-			if (ticket.getType() != TicketConstants.TYPE_PASSWORD) {
+			if ((ticket == null) ||
+				(ticket.getType() != TicketConstants.TYPE_PASSWORD)) {
+
 				return null;
 			}
 

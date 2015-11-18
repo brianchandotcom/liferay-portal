@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.service.ThemeLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -111,7 +111,7 @@ public class ThemeLoader {
 		_servletContext = servletContext;
 
 		try {
-			Document doc = SAXReaderUtil.read(xmls[0], true);
+			Document doc = UnsecureSAXReaderUtil.read(xmls[0], true);
 
 			Element root = doc.getRootElement();
 

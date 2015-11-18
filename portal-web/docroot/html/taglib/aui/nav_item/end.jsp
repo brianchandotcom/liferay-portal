@@ -26,6 +26,10 @@ String bodyContentString = StringPool.BLANK;
 if (bodyContent != null) {
 	bodyContentString = bodyContent.getString();
 }
+
+if (Validator.isNull(title)) {
+	title = HtmlUtil.stripHtml(LanguageUtil.get(pageContext, label));
+}
 %>
 
 <c:if test="<%= !dropdown || Validator.isNotNull(bodyContentString.trim()) %>">
@@ -45,7 +49,7 @@ if (bodyContent != null) {
 					</c:if>
 
 					<span class="nav-item-label">
-						<liferay-ui:message key="<%= label %>" />
+						<liferay-ui:message key="<%= label %>" localizeKey="<%= localizeLabel %>" />
 					</span>
 
 					<c:if test="<%= dropdown %>">
@@ -57,70 +61,19 @@ if (bodyContent != null) {
 		</c:if>
 
 		<c:if test="<%= dropdown %>">
-			<aui:script use="aui-base,event-outside,event-tap,liferay-store">
-				A.Event.defineOutside('touchend');
-
-				var container = A.one('#<%= id %>');
-
-				container.one('a').on(
-					'tap',
-					function(event) {
-						var currentTarget = event.currentTarget;
-
-						event.preventDefault();
-
-						container.toggleClass('open');
-
-						var menuOpen = container.hasClass('open');
-
-						<c:choose>
-							<c:when test="<%= !toggle %>">
-								var handle = Liferay.Data['<%= id %>Handle'];
-
-								if (menuOpen && !handle) {
-									var eventOutside = event._event.type;
-
-									if (eventOutside.toLowerCase().indexOf('pointerup') !== -1) {
-										eventOutside = 'mouseup';
-									}
-
-									eventOutside = eventOutside + 'outside';
-
-									handle = currentTarget.on(
-										eventOutside,
-										function(event) {
-											if (!event.target.ancestor('#<%= id %>')) {
-												Liferay.Data['<%= id %>Handle'] = null;
-
-												handle.detach();
-
-												container.removeClass('open');
-											}
-										}
-									);
-								}
-								else if (handle) {
-									handle.detach();
-
-									handle = null;
-								}
-
-								Liferay.Data['<%= id %>Handle'] = handle;
-							</c:when>
-							<c:otherwise>
-								var data = {};
-
-								data['<%= id %>'] = menuOpen ? 'open' : 'closed';
-
-								Liferay.Store(data);
-							</c:otherwise>
-						</c:choose>
+			<aui:script use="aui-base,event-move,event-outside,liferay-menu-toggle,liferay-store">
+				var toggleMenu = new Liferay.MenuToggle(
+					{
+						content: '#<%= id %>',
+						toggle: <%= toggle %>,
+						toggleTouch: true,
+						trigger: '#<%= id %> a'
 					}
 				);
 			</aui:script>
 
 			<c:if test="<%= wrapDropDownMenu %>">
-				<ul class='dropdown-menu <%= LanguageUtil.get(locale, "lang.dir").equals("rtl") ? "pull-right" : StringPool.BLANK %>'>
+				<ul class="dropdown-menu">
 			</c:if>
 		</c:if>
 

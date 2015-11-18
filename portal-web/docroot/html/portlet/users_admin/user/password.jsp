@@ -75,7 +75,7 @@ else {
 	</c:if>
 
 	<c:if test="<%= upe.getType() == UserPasswordException.PASSWORD_NOT_CHANGEABLE %>">
-		<liferay-ui:message key="your-password-cannot-be-changed" />
+		<liferay-ui:message key="passwords-may-not-be-changed-under-the-current-password-policy" />
 	</c:if>
 
 	<c:if test="<%= upe.getType() == UserPasswordException.PASSWORD_SAME_AS_CURRENT %>">
@@ -106,11 +106,11 @@ else {
 
 <aui:fieldset>
 
-	<!-- LPS-38289 -->
+	<!-- Begin LPS-38289 and LPS-55993 -->
 
-	<input class="hide" />
+	<input class="hide" type="password" />
 
-	<!-- /LPS-38289 -->
+	<!-- End LPS-38289 and LPS-55993 -->
 
 	<c:if test="<%= portletName.equals(PortletKeys.MY_ACCOUNT) %>">
 		<aui:input autocomplete="off" label="current-password" name="password0" size="30" type="password" />

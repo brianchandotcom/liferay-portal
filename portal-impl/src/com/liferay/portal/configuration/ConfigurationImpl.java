@@ -271,13 +271,8 @@ public class ConfigurationImpl
 		Properties componentPropertiesProperties =
 			componentProperties.getProperties();
 
-		for (Map.Entry<Object, Object> entry :
-				componentPropertiesProperties.entrySet()) {
-
-			String key = (String)entry.getKey();
-			String value = (String)entry.getValue();
-
-			properties.setProperty(key, value);
+		for (String key : componentPropertiesProperties.stringPropertyNames()) {
+			properties.setProperty(key, componentProperties.getString(key));
 		}
 
 		return properties;

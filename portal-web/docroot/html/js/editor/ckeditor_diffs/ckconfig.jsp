@@ -26,6 +26,8 @@
 <%@ page import="java.util.Locale" %>
 
 <%
+String colorSchemeCssClass = ParamUtil.getString(request, "colorSchemeCssClass");
+
 String contentsLanguageId = ParamUtil.getString(request, "contentsLanguageId");
 
 Locale contentsLocale = LocaleUtil.fromLanguageId(contentsLanguageId);
@@ -48,7 +50,7 @@ boolean resizable = ParamUtil.getBoolean(request, "resizable");
 response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 %>
 
-;(function() {
+;window['<%= HtmlUtil.escapeJS(name) %>Config'] = function() {
 	var ckEditor = CKEDITOR.instances['<%= HtmlUtil.escapeJS(name) %>'];
 
 	if (!CKEDITOR.stylesSet.get('liferayStyles')) {
@@ -85,7 +87,7 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 
 	config.autoSaveTimeout = 3000;
 
-	config.bodyClass = 'html-editor <%= HtmlUtil.escapeJS(cssClasses) %>';
+	config.bodyClass = 'html-editor <%= HtmlUtil.escapeJS(colorSchemeCssClass) %> <%= HtmlUtil.escapeJS(cssClasses) %>';
 
 	config.closeNoticeTimeout = 8000;
 
@@ -101,11 +103,19 @@ String contentsLanguageDir = LanguageUtil.get(contentsLocale, "lang.dir");
 
 	config.entities = false;
 
-	config.extraPlugins = 'ajaxsave,media,restore,scayt,wsc';
+	config.extraPlugins = 'a11yhelpbtn,media,scayt,wsc';
+
+	<c:if test="<%= inlineEdit %>">
+		config.extraPlugins += ',ajaxsave,restore';
+	</c:if>
 
 	config.height = 265;
 
 	config.language = '<%= languageId.replace("iw_", "he_") %>';
+
+	config.pasteFromWordRemoveFontStyles = false;
+
+	config.pasteFromWordRemoveStyles = false;
 
 	config.resize_enabled = <%= resizable %>;
 
@@ -115,6 +125,8 @@ String contentsLanguageDir = LanguageUtil.get(contentsLocale, "lang.dir");
 
 	config.stylesCombo_stylesSet = 'liferayStyles';
 
+	config.title = false;
+
 	config.toolbar_editInPlace = [
 		['Styles'],
 		['Bold', 'Italic', 'Underline', 'Strike'],
@@ -122,6 +134,7 @@ String contentsLanguageDir = LanguageUtil.get(contentsLocale, "lang.dir");
 		['Undo', 'Redo'],
 		['SpellChecker', 'Scayt'],
 		['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'], ['Source', 'RemoveFormat'],
+		['A11YBtn']
 	];
 
 	config.toolbar_email = [
@@ -132,7 +145,8 @@ String contentsLanguageDir = LanguageUtil.get(contentsLocale, "lang.dir");
 		['Undo', 'Redo', '-', 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'SelectAll', 'RemoveFormat'],
 		['Source'],
 		['Link', 'Unlink'],
-		['Image']
+		['Image'],
+		['A11YBtn']
 	];
 
 	config.toolbar_liferay = [
@@ -142,7 +156,7 @@ String contentsLanguageDir = LanguageUtil.get(contentsLocale, "lang.dir");
 			['AjaxSave', '-', 'Restore'],
 		</c:if>
 
-		['Undo', 'Redo', '-', 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', ],
+		['Undo', 'Redo', '-', 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord'],
 		['Styles', 'FontSize', '-', 'TextColor', 'BGColor'],
 		'/',
 		['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
@@ -156,6 +170,8 @@ String contentsLanguageDir = LanguageUtil.get(contentsLocale, "lang.dir");
 		<c:if test="<%= !inlineEdit %>">
 			,['Source']
 		</c:if>
+
+		,['A11YBtn']
 	];
 
 	config.toolbar_liferayArticle = [
@@ -170,7 +186,8 @@ String contentsLanguageDir = LanguageUtil.get(contentsLocale, "lang.dir");
 		'/',
 		['Source'],
 		['Link', 'Unlink', 'Anchor'],
-		['Image', 'Flash', <c:if test="<%= XugglerUtil.isEnabled() %>">'Audio', 'Video',</c:if> 'Table', '-', 'Smiley', 'SpecialChar', 'LiferayPageBreak']
+		['Image', 'Flash', <c:if test="<%= XugglerUtil.isEnabled() %>">'Audio', 'Video',</c:if> 'Table', '-', 'Smiley', 'SpecialChar', 'LiferayPageBreak'],
+		['A11YBtn']
 	];
 
 	config.toolbar_phone = [
@@ -193,7 +210,7 @@ String contentsLanguageDir = LanguageUtil.get(contentsLocale, "lang.dir");
 		['Styles', 'FontSize']
 	];
 
-	ckEditor.on(
+	CKEDITOR.on(
 		'dialogDefinition',
 		function(event) {
 			var dialogDefinition = event.data.definition;
@@ -220,4 +237,6 @@ String contentsLanguageDir = LanguageUtil.get(contentsLocale, "lang.dir");
 			}
 		}
 	);
-})();
+};
+
+window['<%= HtmlUtil.escapeJS(name) %>Config']();

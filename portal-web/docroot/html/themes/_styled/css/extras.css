@@ -172,12 +172,14 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 	@include border-radius(4px);
 }
 
-.entry-display-style, .lfr-search-combobox, .lfr-upload-container .upload-file, .lfr-upload-container .upload-target, .portlet-document-library .common-file-metadata-container.selected, .portlet-document-library-display .common-file-metadata-container.selected, .portlet-image-gallery-display .image-icon, .select-documents, .select-files {
+.entry-display-style, .lfr-search-combobox, .lfr-upload-container .upload-file, .lfr-upload-container .upload-target, .portlet-asset-tag-admin .merge-tag, .portlet-document-library .common-file-metadata-container.selected, .portlet-document-library-display .common-file-metadata-container.selected, .portlet-image-gallery-display .image-icon, .select-documents, .select-files {
 	@include border-radius(5px);
 }
 
-.portlet-journal .lfr-ddm-container .field-wrapper {
-	@include border-radius(6px);
+.portlet-dynamic-data-list-display, .portlet-dynamic-data-lists, .portlet-journal {
+	.lfr-ddm-container .field-wrapper {
+		@include border-radius(6px);
+	}
 }
 
 .portlet-journal .display-page-item-container .display-page-item, .portlet-journal .display-page-item-container .display-page-item .display-page-item-remove, .taglib-categorization-filter .asset-entry {
@@ -464,4 +466,29 @@ body:first-of-type {
 
 .upload-drop-intent .lfr-upload-container .upload-target {
 	@include experimental(animation, lfr-drop-active 1s ease 0.2s infinite);
+}
+
+.cke_toolbar {
+	&.cke_toolbar__a11yhelpbtn {
+		.cke_toolgroup, .cke_toolgroup:hover {
+			@include box-shadow(initial);
+		}
+
+		.cke_button {
+			&:hover {
+				@include box-shadow(none);
+			}
+
+			.cke_button_label {
+				&:after {
+					@include background-image(linear-gradient(#FFF, #E4E4E4));
+					@include border-radius(2px);
+				}
+
+				&:hover:after {
+					@include background-image(linear-gradient(#F2F2F2, #CCC));
+				}
+			}
+		}
+	}
 }

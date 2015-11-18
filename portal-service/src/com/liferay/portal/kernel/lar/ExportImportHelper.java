@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.StagedModel;
@@ -98,6 +99,8 @@ public interface ExportImportHelper {
 
 	public long[] getLayoutIds(List<Layout> layouts);
 
+	public ZipWriter getLayoutSetZipWriter(long groupId);
+
 	public ManifestSummary getManifestSummary(
 			long userId, long groupId, Map<String, String[]> parameterMap,
 			File file)
@@ -112,6 +115,8 @@ public interface ExportImportHelper {
 			final PortletDataContext portletDataContext,
 			final StagedModelType stagedModelType)
 		throws PortalException, SystemException;
+
+	public ZipWriter getPortletZipWriter(String portletId);
 
 	public String getSelectedLayoutsJSON(
 			long groupId, boolean privateLayout, String selectedNodes)

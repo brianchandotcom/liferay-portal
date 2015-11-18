@@ -19,55 +19,28 @@
 <div class="navbar <%= cssClass %>" id="<%= id %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
 	<div class="navbar-inner">
 		<div class="container">
-			<%= responsiveButtons %>
+			<span id="<%= id %>ResponsiveButton">
+				<%= responsiveButtons %>
+			</span>
 
-			<%= bodyContentString %>
+			<span id="<%= id %>bodyContent">
+				<%= bodyContentString %>
+			</span>
 
-			<aui:script use="aui-base,event-outside">
-				A.one('#<%= id %>').delegate(
-					['click', 'keypress'],
-					function(event) {
-						if ((event.type === 'click') || event.isKeyInSet('ENTER', 'SPACE')) {
-							var STR_OPEN = 'open';
+			<aui:script use="aui-base,event-outside,liferay-menu-toggle">
+				A.all('#<%= id %>ResponsiveButton .btn-navbar').each(
+					function(item, index, collection) {
+						var contentId = item.attr('id');
+						var navId = item.attr('data-navid');
 
-							var btnNavbar = event.currentTarget;
-
-							var navId = btnNavbar.attr('data-navId');
-
-							var navbarCollapse = A.one('#' + navId + 'NavbarCollapse');
-
-							if (navbarCollapse) {
-								var handle = Liferay.Data['<%= id %>Handle'];
-
-								if (navbarCollapse.hasClass(STR_OPEN) && handle) {
-									handle.detach();
-
-									handle = null;
-								}
-								else {
-									handle = navbarCollapse.on(
-										'mousedownoutside',
-										function(event) {
-											if (!btnNavbar.contains(event.target)) {
-												Liferay.Data['<%= id %>Handle'] = null;
-
-												handle.detach();
-
-												btnNavbar.removeClass(STR_OPEN);
-												navbarCollapse.removeClass(STR_OPEN);
-											}
-										}
-									);
-								}
-
-								btnNavbar.toggleClass(STR_OPEN);
-								navbarCollapse.toggleClass(STR_OPEN);
-
-								Liferay.Data['<%= id %>Handle'] = handle;
+						var toggleMenu = new Liferay.MenuToggle(
+							{
+								content: '#' + navId + 'NavbarCollapse, #<%= id %>ResponsiveButton #' + contentId,
+								toggleTouch: true,
+								trigger: '#<%= id %>ResponsiveButton #' + contentId
 							}
-						}
-					},
-					'.btn-navbar'
+						);
+					}
 				);
 			</aui:script>
 		</div>

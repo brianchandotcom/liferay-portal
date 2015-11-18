@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -51,32 +53,11 @@ public class DefaultSearchResultPermissionFilter
 			WorkflowConstants.STATUS_APPROVED);
 
 		for (int i = 0; i < documents.length; i++) {
-			Document document = documents[i];
-
-			String entryClassName = document.get(Field.ENTRY_CLASS_NAME);
-
-			Indexer indexer = IndexerRegistryUtil.getIndexer(entryClassName);
-
-			long entryClassPK = GetterUtil.getLong(
-				document.get(Field.ENTRY_CLASS_PK));
-
-			try {
-				if ((indexer == null) || (indexer.isFilterSearch() &&
-					 indexer.hasPermission(
-						 _permissionChecker, entryClassName, entryClassPK,
-						 ActionKeys.VIEW) &&
-					 indexer.isVisibleRelatedEntry(entryClassPK, status)) ||
-					!indexer.isFilterSearch() ||
-					!indexer.isPermissionAware()) {
-
-					docs.add(document);
-					scores.add(hits.score(i));
-				}
-				else {
-					excludeDocsSize++;
-				}
+			if (_isIncludeDocument(documents[i], status)) {
+				docs.add(documents[i]);
+				scores.add(hits.score(i));
 			}
-			catch (Exception e) {
+			else {
 				excludeDocsSize++;
 			}
 		}
@@ -93,6 +74,64 @@ public class DefaultSearchResultPermissionFilter
 	protected Hits getHits(SearchContext searchContext) throws SearchException {
 		return _baseIndexer.doSearch(searchContext);
 	}
+
+	@Override
+	protected boolean isGroupAdmin(SearchContext searchContext) {
+		if (_permissionChecker.isCompanyAdmin(searchContext.getCompanyId())) {
+			return true;
+		}
+
+		long[] groupIds = searchContext.getGroupIds();
+
+		if (groupIds == null) {
+			return false;
+		}
+
+		for (long groupId : groupIds) {
+			if (!_permissionChecker.isGroupAdmin(groupId)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	private boolean _isIncludeDocument(Document document, int status) {
+		String entryClassName = document.get(Field.ENTRY_CLASS_NAME);
+
+		Indexer indexer = IndexerRegistryUtil.getIndexer(entryClassName);
+
+		if (indexer == null) {
+			return true;
+		}
+
+		if (!indexer.isFilterSearch() || !indexer.isPermissionAware()) {
+			return true;
+		}
+
+		long entryClassPK = GetterUtil.getLong(
+			document.get(Field.ENTRY_CLASS_PK));
+
+		try {
+			if (indexer.hasPermission(
+					_permissionChecker, entryClassName, entryClassPK,
+					ActionKeys.VIEW) &&
+				indexer.isVisibleRelatedEntry(entryClassPK, status)) {
+
+				return true;
+			}
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+		}
+
+		return false;
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		DefaultSearchResultPermissionFilter.class);
 
 	private BaseIndexer _baseIndexer;
 	private PermissionChecker _permissionChecker;

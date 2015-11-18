@@ -53,7 +53,7 @@
 	containerModelURL.setParameter("redirect", redirect);
 	containerModelURL.setParameter("className", trashHandler.getContainerModelClassName());
 
-	TrashUtil.addBaseModelBreadcrumbEntries(request, className, classPK, containerModelURL);
+	TrashUtil.addBaseModelBreadcrumbEntries(request, liferayPortletResponse, className, classPK, containerModelURL);
 	%>
 
 	<liferay-ui:breadcrumb

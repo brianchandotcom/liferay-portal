@@ -100,6 +100,7 @@ _updateOptions(_options, "inlineLabel", inlineLabel);
 _updateOptions(_options, "label", label);
 _updateOptions(_options, "languageId", languageId);
 _updateOptions(_options, "last", last);
+_updateOptions(_options, "localized", localized);
 _updateOptions(_options, "max", max);
 _updateOptions(_options, "model", model);
 _updateOptions(_options, "min", min);

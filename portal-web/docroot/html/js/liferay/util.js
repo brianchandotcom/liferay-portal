@@ -830,9 +830,31 @@
 					Util._submitLocked = true;
 				}
 
-				if (action !== null) {
-					form.attr('action', action);
+				if (action == null) {
+					action = form.attr('action');
 				}
+
+				var x = action.indexOf('?p_auth=');
+
+				if (x < 0) {
+					x = action.indexOf('&p_auth=');
+				}
+
+				if (x >= 0) {
+					var y = action.indexOf('&', x);
+
+					if (y < 0) {
+						y = action.length();
+					}
+
+					var authToken = action.substring(x + 8, y);
+
+					form.append('<input name="p_auth" type="hidden" value="' + authToken + '" />');
+
+					action = action.substring(0, x + 1) + action.substring(y + 1);
+				}
+
+				form.attr('action', action);
 
 				form.submit();
 
@@ -1783,6 +1805,33 @@
 			}
 		},
 		['aui-base', 'liferay-util-window']
+	);
+
+	Liferay.provide(
+		Util,
+		'selectEntityHandler',
+		function(container, selectEventName, disableButton) {
+			var openingLiferay = Util.getOpener().Liferay;
+
+			A.one(container).delegate(
+				'click',
+				function(event) {
+					var currentTarget = event.currentTarget;
+
+					if (disableButton !== false) {
+						currentTarget.attr('disabled', true);
+					}
+
+					var result = Util.getAttributes(currentTarget, 'data-');
+
+					openingLiferay.fire(selectEventName, result);
+
+					Util.getWindow().hide();
+				},
+				'.selector-button'
+			);
+		},
+		['aui-base']
 	);
 
 	Liferay.provide(

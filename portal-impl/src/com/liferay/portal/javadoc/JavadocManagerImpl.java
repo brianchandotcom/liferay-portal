@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.InputStream;
@@ -154,7 +154,7 @@ public class JavadocManagerImpl implements JavadocManager {
 
 			inputStream = url.openStream();
 
-			return SAXReaderUtil.read(inputStream, true);
+			return UnsecureSAXReaderUtil.read(inputStream, true);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

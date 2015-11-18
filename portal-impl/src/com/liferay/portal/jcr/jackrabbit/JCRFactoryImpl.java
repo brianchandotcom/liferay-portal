@@ -100,13 +100,7 @@ public class JCRFactoryImpl implements JCRFactory {
 	@Override
 	public void prepare() throws RepositoryException {
 		try {
-			File repositoryRoot = new File(JCRFactoryImpl.REPOSITORY_ROOT);
-
-			if (repositoryRoot.exists()) {
-				return;
-			}
-
-			repositoryRoot.mkdirs();
+			FileUtil.mkdirs(JCRFactoryImpl.REPOSITORY_ROOT);
 
 			File tempFile = new File(
 				SystemProperties.get(SystemProperties.TMP_DIR) +

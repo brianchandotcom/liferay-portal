@@ -157,51 +157,47 @@ configurationRenderURL.setParameter("portletResource", portletResource);
 							<aui:option label="right" selected='<%= feedImageAlignment.equals("right") %>' />
 						</aui:select>
 
-						<aui:field-wrapper label="header-web-content">
-							<div class="input-append">
+						<div class="control-group">
 
-								<%
-								JournalArticle headerArticle = null;
+							<%
+							JournalArticle headerArticle = null;
 
-								if (Validator.isNotNull(headerArticleId)) {
-									try {
-										headerArticle = JournalArticleLocalServiceUtil.getArticle(headerArticleGroupId, headerArticleId);
-									}
-									catch (NoSuchArticleException nsae) {
-									}
+							if (Validator.isNotNull(headerArticleId)) {
+								try {
+									headerArticle = JournalArticleLocalServiceUtil.getArticle(headerArticleGroupId, headerArticleId);
 								}
-								%>
-
-								<liferay-ui:input-resource url="<%= (headerArticle != null) ? headerArticle.getTitle(locale) : StringPool.BLANK %>" />
-
-								<aui:button name="selectButton" onClick='<%= renderResponse.getNamespace() + "selectionForHeader();" %>' value="select" />
-
-								<aui:button name="removeButton" onClick='<%= renderResponse.getNamespace() + "removeSelectionForHeader();" %>' value="remove" />
-							</div>
-						</aui:field-wrapper>
-
-						<aui:field-wrapper label="footer-web-content">
-							<div class="input-append">
-
-								<%
-								JournalArticle footerArticle = null;
-
-								if (Validator.isNotNull(footerArticleId)) {
-									try {
-										footerArticle = JournalArticleLocalServiceUtil.getArticle(footerArticleGroupId, footerArticleId);
-									}
-									catch (NoSuchArticleException nsae) {
-									}
+								catch (NoSuchArticleException nsae) {
 								}
-								%>
+							}
+							%>
 
-								<liferay-ui:input-resource url="<%= (footerArticle != null) ? footerArticle.getTitle(locale) : StringPool.BLANK %>" />
+							<aui:input name="headerWebContent" type="resource" value="<%= (headerArticle != null) ? headerArticle.getTitle(locale) : StringPool.BLANK %>" />
 
-								<aui:button name="selectButton" onClick='<%= renderResponse.getNamespace() + "selectionForFooter();" %>' value="select" />
+							<aui:button name="selectButton" onClick='<%= renderResponse.getNamespace() + "selectionForHeader();" %>' value="select" />
 
-								<aui:button name="removeButton" onClick='<%= renderResponse.getNamespace() + "removeSelectionForFooter();" %>' value="remove" />
-							</div>
-						</aui:field-wrapper>
+							<aui:button name="removeButton" onClick='<%= renderResponse.getNamespace() + "removeSelectionForHeader();" %>' value="remove" />
+						</div>
+
+						<div class="control-group">
+
+							<%
+							JournalArticle footerArticle = null;
+
+							if (Validator.isNotNull(footerArticleId)) {
+								try {
+									footerArticle = JournalArticleLocalServiceUtil.getArticle(footerArticleGroupId, footerArticleId);
+								}
+								catch (NoSuchArticleException nsae) {
+								}
+							}
+							%>
+
+							<aui:input name="footerWebContent" type="resource" value="<%= (footerArticle != null) ? footerArticle.getTitle(locale) : StringPool.BLANK %>" />
+
+							<aui:button name="selectButton" onClick='<%= renderResponse.getNamespace() + "selectionForFooter();" %>' value="select" />
+
+							<aui:button name="removeButton" onClick='<%= renderResponse.getNamespace() + "removeSelectionForFooter();" %>' value="remove" />
+						</div>
 					</aui:fieldset>
 				</liferay-ui:panel>
 			</liferay-ui:panel-container>
@@ -248,13 +244,13 @@ configurationRenderURL.setParameter("portletResource", portletResource);
 	function <portlet:namespace />removeSelectionForFooter() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'remove-footer-article';
 
-		submitForm(document.<portlet:namespace />fm, '<%= configurationActionURL.toString() %>');
+		submitForm(document.<portlet:namespace />fm, '<%= HtmlUtil.escapeJS(configurationActionURL.toString()) %>');
 	}
 
 	function <portlet:namespace />removeSelectionForHeader() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'remove-header-article';
 
-		submitForm(document.<portlet:namespace />fm, '<%= configurationActionURL.toString() %>');
+		submitForm(document.<portlet:namespace />fm, '<%= HtmlUtil.escapeJS(configurationActionURL.toString()) %>');
 	}
 
 	function <portlet:namespace />selectAsset(articleGroupId, articleId, assetOrder) {
@@ -269,14 +265,14 @@ configurationRenderURL.setParameter("portletResource", portletResource);
 		document.<portlet:namespace />fm.<portlet:namespace />articleId.value = articleId;
 		document.<portlet:namespace />fm.<portlet:namespace />typeSelection.value = '';
 
-		submitForm(document.<portlet:namespace />fm, '<%= configurationActionURL.toString() %>');
+		submitForm(document.<portlet:namespace />fm, '<%= HtmlUtil.escapeJS(configurationActionURL.toString()) %>');
 	}
 
 	function <portlet:namespace />saveSettings() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.UPDATE %>';
 		document.<portlet:namespace />fm.<portlet:namespace />typeSelection.value = '';
 
-		submitForm(document.<portlet:namespace />fm, '<%= configurationActionURL.toString() %>');
+		submitForm(document.<portlet:namespace />fm, '<%= HtmlUtil.escapeJS(configurationActionURL.toString()) %>');
 	}
 
 	function <portlet:namespace />selectionForHeader() {

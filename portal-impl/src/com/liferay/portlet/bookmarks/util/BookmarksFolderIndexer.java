@@ -98,7 +98,7 @@ public class BookmarksFolderIndexer extends BaseIndexer {
 
 		Document document = new DocumentImpl();
 
-		document.addUID(PORTLET_ID, folder.getFolderId(), folder.getName());
+		document.addUID(PORTLET_ID, folder.getFolderId());
 
 		SearchEngineUtil.deleteDocument(
 			getSearchEngineId(), folder.getCompanyId(),

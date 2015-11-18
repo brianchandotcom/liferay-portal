@@ -617,9 +617,13 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			boolean sendEmail, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		boolean indexingEnabled = serviceContext.isIndexingEnabled();
+		boolean indexingEnabled = true;
 
-		serviceContext.setIndexingEnabled(false);
+		if (serviceContext != null) {
+			indexingEnabled = serviceContext.isIndexingEnabled();
+
+			serviceContext.setIndexingEnabled(false);
+		}
 
 		try {
 			User user = addUserWithWorkflow(
@@ -654,7 +658,9 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			return user;
 		}
 		finally {
-			serviceContext.setIndexingEnabled(indexingEnabled);
+			if (serviceContext != null) {
+				serviceContext.setIndexingEnabled(indexingEnabled);
+			}
 		}
 	}
 
@@ -743,6 +749,11 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		}
 
 		return userPersistence.countByCompanyId(companyId);
+	}
+
+	@Override
+	public User getCurrentUser() throws PortalException, SystemException {
+		return getUser();
 	}
 
 	/**

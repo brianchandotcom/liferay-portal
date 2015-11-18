@@ -66,7 +66,7 @@ AUI.add(
 				'</tpl>',
 				'<tpl if="values.warningMessages && (values.warningMessages.length > 0)">',
 					'<li class="alert upload-error" data-fileId="{id}" id="{id}">',
-						'<span class="error-message" title="{[ Liferay.Util.escapeHTML(values.error) ]}">{[ values.error ? this.strings.warningFailureText : this.strings.warningText ]}</span>',
+						'<span class="error-message" title="{[ Liferay.Util.escapeHTML(values.error ? this.strings.warningFailureText : this.strings.warningText) ]}">{[ values.error ? this.strings.warningFailureText : this.strings.warningText ]}</span>',
 						'<ul class="error-list-items">',
 							'<tpl for="warningMessages">',
 								'<li>{[ Liferay.Util.escapeHTML(values.type) ]} <strong>({size})</strong>:',

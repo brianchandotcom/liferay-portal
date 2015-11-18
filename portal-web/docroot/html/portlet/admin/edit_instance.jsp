@@ -57,13 +57,9 @@ catch (Exception e) {
 	<aui:fieldset>
 		<c:choose>
 			<c:when test="<%= selCompany != null %>">
-				<aui:field-wrapper label="id">
-					<liferay-ui:input-resource url="<%= String.valueOf(companyId) %>" />
-				</aui:field-wrapper>
+				<aui:input name="id" type="resource" value="<%= String.valueOf(companyId) %>" />
 
-				<aui:field-wrapper label="web-id">
-					<liferay-ui:input-resource url="<%= selCompany.getWebId() %>" />
-				</aui:field-wrapper>
+				<aui:input name="web-id" type="resource" value="<%= selCompany.getWebId() %>" />
 			</c:when>
 			<c:otherwise>
 				<aui:input name="webId" />

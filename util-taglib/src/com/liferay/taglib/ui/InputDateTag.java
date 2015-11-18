@@ -94,7 +94,7 @@ public class InputDateTag extends IncludeTag {
 		_dayValue = 0;
 		_disabled = false;
 		_disableNamespace = false;
-		_firstDayOfWeek = Calendar.SUNDAY - 1;
+		_firstDayOfWeek = Calendar.SUNDAY - 2;
 		_formName = "fm";
 		_monthAndYearParam = StringPool.BLANK;
 		_monthParam = null;
@@ -147,7 +147,7 @@ public class InputDateTag extends IncludeTag {
 	private int _dayValue;
 	private boolean _disabled;
 	private boolean _disableNamespace;
-	private int _firstDayOfWeek = Calendar.SUNDAY - 1;
+	private int _firstDayOfWeek = Calendar.SUNDAY - 2;
 	private String _formName = "fm";
 	private String _monthAndYearParam = StringPool.BLANK;
 	private String _monthParam;

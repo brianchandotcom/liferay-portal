@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.util.ant.Wsdl2JavaTask;
 
@@ -50,7 +50,7 @@ public class PortalClientBuilder {
 		String fileName, String outputDir, String mappingFile, String url) {
 
 		try {
-			Document document = SAXReaderUtil.read(new File(fileName));
+			Document document = UnsecureSAXReaderUtil.read(new File(fileName));
 
 			Element rootElement = document.getRootElement();
 

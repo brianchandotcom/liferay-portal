@@ -179,9 +179,7 @@ request.setAttribute("record_set_action.jsp-selRecordSet", selRecordSet);
 	<aui:input name="preferences--spreadsheet--" type="hidden" value="<%= spreadsheet %>" />
 
 	<aui:fieldset>
-		<aui:field-wrapper label="portlet-id">
-			<liferay-ui:input-resource url="<%= portletResource %>" />
-		</aui:field-wrapper>
+		<aui:input name="portletId" type="resource" value="<%= portletResource %>" />
 	</aui:fieldset>
 
 	<aui:button-row>

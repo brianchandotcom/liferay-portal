@@ -36,7 +36,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -141,14 +140,7 @@ public class UserGroupIndexer extends BaseIndexer {
 
 	@Override
 	protected void doReindex(Object obj) throws Exception {
-		if (obj instanceof List<?>) {
-			List<UserGroup> userGroups = (List<UserGroup>)obj;
-
-			for (UserGroup userGroup : userGroups) {
-				doReindex(userGroup);
-			}
-		}
-		else if (obj instanceof Long) {
+		if (obj instanceof Long) {
 			long userGroupId = (Long)obj;
 
 			UserGroup userGroup = UserGroupLocalServiceUtil.getUserGroup(

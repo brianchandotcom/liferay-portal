@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.pop.MessageListener;
 import com.liferay.portal.kernel.pop.MessageListenerException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
@@ -37,7 +36,6 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.messageboards.NoSuchMessageException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
@@ -75,13 +73,14 @@ public class MessageListenerImpl implements MessageListener {
 
 			if ((messageIdString == null) ||
 				!messageIdString.startsWith(
-					MBUtil.MESSAGE_POP_PORTLET_PREFIX, getOffset())) {
+					MBUtil.MESSAGE_POP_PORTLET_PREFIX,
+					MBUtil.getMessageIdStringOffset())) {
 
 				return false;
 			}
 
 			Company company = getCompany(messageIdString);
-			long categoryId = getCategoryId(messageIdString);
+			long categoryId = MBUtil.getCategoryId(messageIdString);
 
 			MBCategory category = MBCategoryLocalServiceUtil.getCategory(
 				categoryId);
@@ -141,29 +140,38 @@ public class MessageListenerImpl implements MessageListener {
 				_log.debug("Message id " + messageIdString);
 			}
 
+			long parentMessageId = MBUtil.getMessageId(messageIdString);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Parent message id " + parentMessageId);
+			}
+
+			MBMessage parentMessage = null;
+
+			if (parentMessageId > 0) {
+				parentMessage = MBMessageLocalServiceUtil.fetchMBMessage(
+					parentMessageId);
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Parent message " + parentMessage);
+			}
+
 			long groupId = 0;
-			long categoryId = getCategoryId(messageIdString);
+			long categoryId = MBUtil.getCategoryId(messageIdString);
 
 			MBCategory category = MBCategoryLocalServiceUtil.fetchMBCategory(
 				categoryId);
 
 			if (category == null) {
-				groupId = categoryId;
 				categoryId = MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID;
+
+				if (parentMessage != null) {
+					groupId = parentMessage.getGroupId();
+				}
 			}
 			else {
 				groupId = category.getGroupId();
-
-				if (category.isRoot()) {
-					long messageId = getMessageId(messageIdString);
-
-					MBMessage threadMessage =
-						MBMessageLocalServiceUtil.fetchMBMessage(messageId);
-
-					if (threadMessage != null) {
-						groupId = threadMessage.getGroupId();
-					}
-				}
 			}
 
 			if (_log.isDebugEnabled()) {
@@ -174,32 +182,11 @@ public class MessageListenerImpl implements MessageListener {
 			User user = UserLocalServiceUtil.getUserByEmailAddress(
 				company.getCompanyId(), from);
 
-			long parentMessageId = getParentMessageId(recipient, message);
+			String subject = null;
 
-			if (_log.isDebugEnabled()) {
-				_log.debug("Parent message id " + parentMessageId);
+			if (parentMessage != null) {
+				subject = MBUtil.getSubjectForEmail(parentMessage);
 			}
-
-			MBMessage parentMessage = null;
-
-			try {
-				if (parentMessageId > 0) {
-					parentMessage = MBMessageLocalServiceUtil.getMessage(
-						parentMessageId);
-				}
-			}
-			catch (NoSuchMessageException nsme) {
-
-				// If the parent message does not exist we ignore it and post
-				// the message as a new thread.
-
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Parent message " + parentMessage);
-			}
-
-			String subject = MBUtil.getSubjectForEmail(message);
 
 			MBMailMessage mbMailMessage = new MBMailMessage();
 
@@ -269,12 +256,6 @@ public class MessageListenerImpl implements MessageListener {
 		return MessageListenerImpl.class.getName();
 	}
 
-	protected long getCategoryId(String messageIdString) {
-		String[] parts = getMessageIdStringParts(messageIdString);
-
-		return GetterUtil.getLong(parts[0]);
-	}
-
 	protected Company getCompany(String messageIdString) throws Exception {
 		int pos =
 			messageIdString.indexOf(CharPool.AT) +
@@ -295,12 +276,6 @@ public class MessageListenerImpl implements MessageListener {
 		return CompanyLocalServiceUtil.getCompanyByMx(mx);
 	}
 
-	protected long getMessageId(String messageIdString) {
-		String[] parts = getMessageIdStringParts(messageIdString);
-
-		return GetterUtil.getLong(parts[1]);
-	}
-
 	protected String getMessageIdString(String recipient, Message message)
 		throws Exception {
 
@@ -310,56 +285,6 @@ public class MessageListenerImpl implements MessageListener {
 		else {
 			return MBUtil.getParentMessageIdString(message);
 		}
-	}
-
-	protected String[] getMessageIdStringParts(String messageIdString) {
-		int pos = messageIdString.indexOf(CharPool.AT);
-
-		String target = messageIdString.substring(
-			MBUtil.MESSAGE_POP_PORTLET_PREFIX.length() + getOffset(), pos);
-
-		return StringUtil.split(target, CharPool.PERIOD);
-	}
-
-	protected int getOffset() {
-		if (PropsValues.POP_SERVER_SUBDOMAIN.length() == 0) {
-			return 1;
-		}
-
-		return 0;
-	}
-
-	protected long getParentMessageId(String recipient, Message message)
-		throws Exception {
-
-		if (!StringUtil.startsWith(
-				recipient, MBUtil.MESSAGE_POP_PORTLET_PREFIX)) {
-
-			return MBUtil.getParentMessageId(message);
-		}
-
-		int pos = recipient.indexOf(CharPool.AT);
-
-		if (pos < 0) {
-			return MBUtil.getParentMessageId(message);
-		}
-
-		String target = recipient.substring(
-			MBUtil.MESSAGE_POP_PORTLET_PREFIX.length(), pos);
-
-		String[] parts = StringUtil.split(target, CharPool.PERIOD);
-
-		long parentMessageId = 0;
-
-		if (parts.length == 2) {
-			parentMessageId = GetterUtil.getLong(parts[1]);
-		}
-
-		if (parentMessageId > 0) {
-			return parentMessageId;
-		}
-
-		return MBUtil.getParentMessageId(message);
 	}
 
 	protected boolean isAutoReply(Message message) throws MessagingException {

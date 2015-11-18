@@ -243,6 +243,11 @@ public class DBUpgrader {
 		catch (Exception e) {
 			_updateReleaseState(ReleaseConstants.STATE_VERIFY_FAILURE);
 
+			if (_log.isErrorEnabled()) {
+				_log.error(
+					"Unable to execute verify process: " + e.getMessage(), e);
+			}
+
 			throw e;
 		}
 		finally {

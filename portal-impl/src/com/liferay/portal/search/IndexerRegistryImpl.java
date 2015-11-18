@@ -49,8 +49,8 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 			return indexer;
 		}
 
-		if (_log.isWarnEnabled()) {
-			_log.warn("No indexer found for " + className);
+		if (_log.isInfoEnabled()) {
+			_log.info("No indexer found for " + className);
 		}
 
 		return _dummyIndexer;

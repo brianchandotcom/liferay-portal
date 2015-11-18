@@ -161,6 +161,7 @@
 	<classpathentry kind="lib" path="lib/portal/freshcookies-security.jar"/>
 	<classpathentry kind="lib" path="lib/portal/gif89.jar"/>
 	<classpathentry kind="lib" path="lib/portal/groovy.jar"/>
+	<classpathentry kind="lib" path="lib/portal/guice.jar"/>
 	<classpathentry kind="lib" path="lib/portal/hessian.jar"/>
 	<classpathentry kind="lib" path="lib/portal/hibernate3.jar"/>
 	<classpathentry kind="lib" path="lib/portal/htmlparser.jar"/>
@@ -182,6 +183,7 @@
 	<classpathentry kind="lib" path="lib/portal/jamwiki-core.jar"/>
 	<classpathentry kind="lib" path="lib/portal/java-diff.jar"/>
 	<classpathentry kind="lib" path="lib/portal/javassist.jar"/>
+	<classpathentry kind="lib" path="lib/portal/javax.inject.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jaxb-impl.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jaxen.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jaxrpc.jar"/>

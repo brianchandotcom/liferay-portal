@@ -125,7 +125,7 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 							%>
 
 							<li class="<%= (selectedSite && layout.isPublicLayout()) ? "active" : "public-site" %> <%= itemCssClass %>">
-								<a href="<%= HtmlUtil.escape(portletURL.toString()) %>" onclick="Liferay.Util.forcePost(this); return false;">
+								<a href="<%= HtmlUtil.escape(portletURL.toString()) %>" onclick="Liferay.Util.forcePost(this); return false;" role="menuitem">
 
 									<%
 									String siteName = StringPool.BLANK;
@@ -186,7 +186,7 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 							%>
 
 							<li class="<%= (selectedSite && layout.isPrivateLayout()) ? "active" : "private-site" %> <%= itemCssClass %>">
-								<a href="<%= HtmlUtil.escape(portletURL.toString()) %>" onclick="Liferay.Util.forcePost(this); return false;">
+								<a href="<%= HtmlUtil.escape(portletURL.toString()) %>" onclick="Liferay.Util.forcePost(this); return false;" role="menuitem">
 
 									<%
 									String siteName = StringPool.BLANK;
@@ -331,10 +331,12 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 													onclick="Liferay.Util.forcePost(this); return false;"
 												</c:if>
 
+												role="menuitem"
+
 												><liferay-ui:message key="public-pages" /> <span class="page-count">(<%= mySiteGroup.getPublicLayoutsPageCount() %>)</span></a>
 
 												<c:if test="<%= publicAddPageHREF != null %>">
-													<a class="add-page" href="<%= HtmlUtil.escape(publicAddPageHREF) %>" onclick="Liferay.Util.forcePost(this); return false;"><liferay-ui:message key="manage-pages" /></a>
+													<a class="add-page" href="<%= HtmlUtil.escape(publicAddPageHREF) %>" onclick="Liferay.Util.forcePost(this); return false;" role="menuitem"><liferay-ui:message key="manage-pages" /></a>
 												</c:if>
 											</li>
 										</c:if>
@@ -356,10 +358,12 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 													onclick="Liferay.Util.forcePost(this); return false;"
 												</c:if>
 
+												role="menuitem"
+
 												><liferay-ui:message key="private-pages" /> <span class="page-count">(<%= mySiteGroup.getPrivateLayoutsPageCount() %>)</span></a>
 
 												<c:if test="<%= privateAddPageHREF != null %>">
-													<a class="add-page" href="<%= HtmlUtil.escape(privateAddPageHREF) %>" onclick="Liferay.Util.forcePost(this); return false;"><liferay-ui:message key="manage-pages" /></a>
+													<a class="add-page" href="<%= HtmlUtil.escape(privateAddPageHREF) %>" onclick="Liferay.Util.forcePost(this); return false;" role="menuitem"><liferay-ui:message key="manage-pages" /></a>
 												</c:if>
 											</li>
 										</c:if>

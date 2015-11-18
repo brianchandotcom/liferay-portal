@@ -20,6 +20,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.service.base.DDLRecordServiceBaseImpl;
+import com.liferay.portlet.dynamicdatalists.service.permission.DDLRecordPermission;
 import com.liferay.portlet.dynamicdatalists.service.permission.DDLRecordSetPermission;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
@@ -125,8 +126,8 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 
 		DDLRecord record = ddlRecordLocalService.getDDLRecord(recordId);
 
-		DDLRecordSetPermission.check(
-			getPermissionChecker(), record.getRecordSetId(), ActionKeys.UPDATE);
+		DDLRecordPermission.check(
+			getPermissionChecker(), record, ActionKeys.UPDATE);
 
 		return ddlRecordLocalService.updateRecord(
 			getUserId(), recordId, majorVersion, displayIndex, fields,
@@ -142,8 +143,8 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 
 		DDLRecord record = ddlRecordLocalService.getDDLRecord(recordId);
 
-		DDLRecordSetPermission.check(
-			getPermissionChecker(), record.getRecordSetId(), ActionKeys.UPDATE);
+		DDLRecordPermission.check(
+			getPermissionChecker(), record, ActionKeys.UPDATE);
 
 		return ddlRecordLocalService.updateRecord(
 			getUserId(), recordId, displayIndex, fieldsMap, mergeFields,

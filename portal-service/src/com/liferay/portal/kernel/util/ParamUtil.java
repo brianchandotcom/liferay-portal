@@ -23,6 +23,7 @@ import java.text.DateFormat;
 
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
@@ -392,6 +393,20 @@ public class ParamUtil {
 	}
 
 	public static double getDouble(
+		HttpServletRequest request, String param, double defaultValue,
+		Locale locale) {
+
+		return GetterUtil.get(
+			request.getParameter(param), defaultValue, locale);
+	}
+
+	public static double getDouble(
+		HttpServletRequest request, String param, Locale locale) {
+
+		return GetterUtil.getDouble(request.getParameter(param), locale);
+	}
+
+	public static double getDouble(
 		PortletRequest portletRequest, String param) {
 
 		return GetterUtil.getDouble(portletRequest.getParameter(param));
@@ -401,6 +416,20 @@ public class ParamUtil {
 		PortletRequest portletRequest, String param, double defaultValue) {
 
 		return get(portletRequest, param, defaultValue);
+	}
+
+	public static double getDouble(
+		PortletRequest portletRequest, String param, double defaultValue,
+		Locale locale) {
+
+		return GetterUtil.get(
+			portletRequest.getParameter(param), defaultValue, locale);
+	}
+
+	public static double getDouble(
+		PortletRequest portletRequest, String param, Locale locale) {
+
+		return GetterUtil.getDouble(portletRequest.getParameter(param), locale);
 	}
 
 	public static double getDouble(

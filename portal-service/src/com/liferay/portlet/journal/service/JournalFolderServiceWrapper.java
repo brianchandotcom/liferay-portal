@@ -79,6 +79,14 @@ public class JournalFolderServiceWrapper implements JournalFolderService,
 	}
 
 	@Override
+	public com.liferay.portlet.journal.model.JournalFolder fetchFolder(
+		long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalFolderService.fetchFolder(folderId);
+	}
+
+	@Override
 	public com.liferay.portlet.journal.model.JournalFolder getFolder(
 		long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -150,6 +158,15 @@ public class JournalFolderServiceWrapper implements JournalFolderService,
 	}
 
 	@Override
+	public java.util.List<java.lang.Object> getFoldersAndArticles(
+		long groupId, long userId, long folderId, int status, int start,
+		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalFolderService.getFoldersAndArticles(groupId, userId,
+			folderId, status, start, end, obc);
+	}
+
+	@Override
 	public int getFoldersAndArticlesCount(long groupId,
 		java.util.List<java.lang.Long> folderIds, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -172,6 +189,14 @@ public class JournalFolderServiceWrapper implements JournalFolderService,
 	}
 
 	@Override
+	public int getFoldersAndArticlesCount(long groupId, long userId,
+		long folderId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalFolderService.getFoldersAndArticlesCount(groupId,
+			userId, folderId, status);
+	}
+
+	@Override
 	public int getFoldersCount(long groupId, long parentFolderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _journalFolderService.getFoldersCount(groupId, parentFolderId);
@@ -184,11 +209,23 @@ public class JournalFolderServiceWrapper implements JournalFolderService,
 			status);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getSubfolderIds(List, long,
+	long, boolean)}
+	*/
 	@Override
 	public void getSubfolderIds(java.util.List<java.lang.Long> folderIds,
 		long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_journalFolderService.getSubfolderIds(folderIds, groupId, folderId);
+	}
+
+	@Override
+	public void getSubfolderIds(java.util.List<java.lang.Long> folderIds,
+		long groupId, long folderId, boolean recurse)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_journalFolderService.getSubfolderIds(folderIds, groupId, folderId,
+			recurse);
 	}
 
 	@Override

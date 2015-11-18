@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.CalendarUtil;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -437,16 +436,22 @@ public class AssetEntryFinderImpl
 		}
 
 		if (Validator.isNotNull(entryQuery.getKeywords())) {
-			qPos.add(entryQuery.getKeywords() + CharPool.PERCENT);
-			qPos.add(entryQuery.getKeywords() + CharPool.PERCENT);
+			qPos.add(
+				StringUtil.quote(entryQuery.getKeywords(), StringPool.PERCENT));
+			qPos.add(
+				StringUtil.quote(entryQuery.getKeywords(), StringPool.PERCENT));
 		}
 		else {
 			if (Validator.isNotNull(entryQuery.getTitle())) {
-				qPos.add(entryQuery.getTitle() + CharPool.PERCENT);
+				qPos.add(
+					StringUtil.quote(
+						entryQuery.getTitle(), StringPool.PERCENT));
 			}
 
 			if (Validator.isNotNull(entryQuery.getDescription())) {
-				qPos.add(entryQuery.getDescription() + CharPool.PERCENT);
+				qPos.add(
+					StringUtil.quote(
+						entryQuery.getDescription(), StringPool.PERCENT));
 			}
 		}
 

@@ -260,6 +260,10 @@ public class FinderCacheImpl
 				Serializable result = _primaryKeyToResult(
 					finderPath, sessionFactory, curPrimaryKey);
 
+				if (result == null) {
+					return null;
+				}
+
 				list.add(result);
 			}
 

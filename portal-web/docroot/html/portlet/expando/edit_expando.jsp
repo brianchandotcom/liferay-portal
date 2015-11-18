@@ -76,11 +76,9 @@ portletURL.setParameter("modelResource", modelResource);
 	<aui:fieldset>
 		<c:choose>
 			<c:when test="<%= column != null %>">
-				<aui:field-wrapper helpMessage="custom-field-key-help" label="key">
-					<aui:input name="name" type="hidden" value="<%= column.getName() %>" />
+				<aui:input name="name" type="hidden" value="<%= column.getName() %>" />
 
-					<liferay-ui:input-resource url="<%= column.getName() %>" />
-				</aui:field-wrapper>
+				<aui:input helpMessage="custom-field-key-help" name="key" type="resource" value="<%= column.getName() %>" />
 			</c:when>
 			<c:otherwise>
 				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" helpMessage="custom-field-key-help" label="key" name="name" />
@@ -89,11 +87,9 @@ portletURL.setParameter("modelResource", modelResource);
 
 		<c:choose>
 			<c:when test="<%= column != null %>">
-				<aui:field-wrapper label="type">
-					<aui:input name="type" type="hidden" value="<%= type %>" />
+				<aui:input name="type" type="hidden" value="<%= type %>" />
 
-					<liferay-ui:input-resource url="<%= LanguageUtil.get(pageContext, ExpandoColumnConstants.getTypeLabel(type)) %>" />
-				</aui:field-wrapper>
+				<aui:input name="type" type="resource" value="<%= LanguageUtil.get(pageContext, ExpandoColumnConstants.getTypeLabel(type)) %>" />
 			</c:when>
 			<c:otherwise>
 				<aui:select helpMessage="custom-field-type-help" name="type">

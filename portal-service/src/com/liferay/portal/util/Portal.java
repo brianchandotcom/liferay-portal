@@ -499,7 +499,13 @@ public interface Portal {
 
 	public long[] getCompanyIds();
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getComputerAddresses()}
+	 */
+	@Deprecated
 	public String getComputerAddress();
+
+	public Set<String> getComputerAddresses();
 
 	public String getComputerName();
 
@@ -1296,6 +1302,8 @@ public interface Portal {
 
 	public boolean isReservedParameter(String name);
 
+	public boolean isRightToLeft(HttpServletRequest request);
+
 	public boolean isRSSFeedsEnabled();
 
 	public boolean isSecure(HttpServletRequest request);
@@ -1393,8 +1401,9 @@ public interface Portal {
 	public String transformSQL(String sql);
 
 	public PortletMode updatePortletMode(
-		String portletId, User user, Layout layout, PortletMode portletMode,
-		HttpServletRequest request);
+			String portletId, User user, Layout layout, PortletMode portletMode,
+			HttpServletRequest request)
+		throws PortalException, SystemException;
 
 	public String updateRedirect(
 		String redirect, String oldPath, String newPath);

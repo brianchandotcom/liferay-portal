@@ -192,7 +192,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		RolePermissionUtil.check(
-			getPermissionChecker(), roleId, ActionKeys.UPDATE);
+			getPermissionChecker(), roleId, ActionKeys.ASSIGN_MEMBERS);
 
 		groupLocalService.addRoleGroups(roleId, groupIds);
 	}

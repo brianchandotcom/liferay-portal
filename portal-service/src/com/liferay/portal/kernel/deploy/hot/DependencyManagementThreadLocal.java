@@ -15,6 +15,9 @@
 package com.liferay.portal.kernel.deploy.hot;
 
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 /**
  * @author Miguel Pastor
@@ -30,8 +33,27 @@ public class DependencyManagementThreadLocal {
 		_enabled.set(enabled);
 	}
 
-	private static ThreadLocal<Boolean> _enabled =
-		new AutoResetThreadLocal<Boolean>(
-			DependencyManagementThreadLocal.class + ".enabled", true);
+	private static ThreadLocal<Boolean> _enabled;
+
+	static {
+		if (GetterUtil.getBoolean(
+				PropsUtil.get(
+					PropsKeys.HOT_DEPLOY_DEPENDENCY_MANAGEMENT_ENABLED),
+				true)) {
+
+			_enabled = new AutoResetThreadLocal<Boolean>(
+				DependencyManagementThreadLocal.class + ".enabled", true);
+		}
+		else {
+			_enabled = new ThreadLocal<Boolean>() {
+
+				@Override
+				public Boolean get() {
+					return Boolean.FALSE;
+				}
+
+			};
+		}
+	}
 
 }

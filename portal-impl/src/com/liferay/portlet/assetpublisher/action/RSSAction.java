@@ -310,4 +310,18 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 		return rss.getBytes(StringPool.UTF8);
 	}
 
+	@Override
+	protected boolean isRSSFeedsEnabled(PortletRequest portletRequest)
+		throws Exception {
+
+		if (!super.isRSSFeedsEnabled(portletRequest)) {
+			return false;
+		}
+
+		PortletPreferences portletPreferences = portletRequest.getPreferences();
+
+		return GetterUtil.getBoolean(
+			portletPreferences.getValue("enableRss", null));
+	}
+
 }

@@ -155,11 +155,7 @@ if (selContact != null) {
 			<liferay-ui:error exception="<%= ReservedUserIdException.class %>" message="the-user-id-you-requested-is-reserved" />
 			<liferay-ui:error exception="<%= UserIdException.class %>" message="please-enter-a-valid-user-id" />
 
-			<aui:field-wrapper name="userId">
-				<liferay-ui:input-resource url="<%= String.valueOf(selUser.getUserId()) %>" />
-
-				<aui:input name="userId" type="hidden" value="<%= selUser.getUserId() %>" />
-			</aui:field-wrapper>
+			<aui:input name="userId" type="resource" value="<%= String.valueOf(selUser.getUserId()) %>" />
 		</c:if>
 
 		<c:choose>

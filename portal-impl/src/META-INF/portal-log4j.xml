@@ -414,6 +414,10 @@
 		<priority value="INFO" />
 	</category>
 
+	<category name="com.liferay.portal.patcher.PatcherImpl">
+		<priority value="WARN" />
+	</category>
+
 	<category name="com.liferay.portal.pop">
 		<priority value="ERROR" />
 	</category>

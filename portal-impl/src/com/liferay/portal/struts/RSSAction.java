@@ -23,6 +23,7 @@ import java.io.OutputStream;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletRequest;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -45,7 +46,7 @@ public class RSSAction extends PortletAction {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		if (!PortalUtil.isRSSFeedsEnabled()) {
+		if (!isRSSFeedsEnabled(actionRequest)) {
 			PortalUtil.sendRSSFeedsDisabledError(actionRequest, actionResponse);
 
 			return;
@@ -75,7 +76,7 @@ public class RSSAction extends PortletAction {
 			ResourceResponse resourceResponse)
 		throws Exception {
 
-		if (!PortalUtil.isRSSFeedsEnabled()) {
+		if (!isRSSFeedsEnabled(resourceRequest)) {
 			PortalUtil.sendRSSFeedsDisabledError(
 				resourceRequest, resourceResponse);
 
@@ -102,7 +103,7 @@ public class RSSAction extends PortletAction {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		if (!PortalUtil.isRSSFeedsEnabled()) {
+		if (!isRSSFeedsEnabled(request)) {
 			PortalUtil.sendRSSFeedsDisabledError(request, response);
 
 			return null;
@@ -139,6 +140,18 @@ public class RSSAction extends PortletAction {
 	@Override
 	protected boolean isCheckMethodOnProcessAction() {
 		return _CHECK_METHOD_ON_PROCESS_ACTION;
+	}
+
+	protected boolean isRSSFeedsEnabled(HttpServletRequest request)
+		throws Exception {
+
+		return PortalUtil.isRSSFeedsEnabled();
+	}
+
+	protected boolean isRSSFeedsEnabled(PortletRequest portletRequest)
+		throws Exception {
+
+		return PortalUtil.isRSSFeedsEnabled();
 	}
 
 	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;

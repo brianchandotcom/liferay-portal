@@ -23,11 +23,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
@@ -60,8 +60,7 @@ public class AssetEntryQuery {
 	public static String checkOrderByCol(String orderByCol) {
 		if (ArrayUtil.contains(ORDER_BY_COLUMNS, orderByCol) ||
 			((orderByCol != null) &&
-			 orderByCol.startsWith(
-				DDMIndexer.DDM_FIELD_NAMESPACE + StringPool.FORWARD_SLASH))) {
+			 orderByCol.startsWith(DDMIndexer.DDM_FIELD_PREFIX))) {
 
 			return orderByCol;
 		}
@@ -152,6 +151,10 @@ public class AssetEntryQuery {
 		if (Validator.isNotNull(tagName)) {
 			_allTagIds = AssetTagLocalServiceUtil.getTagIds(
 				themeDisplay.getSiteGroupId(), new String[] {tagName});
+
+			if (_allTagIds.length == 0) {
+				_allTagIds = new long[] {ResourceConstants.PRIMKEY_DNE};
+			}
 
 			_allTagIdsArray = new long[][] {_allTagIds};
 		}

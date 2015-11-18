@@ -319,6 +319,12 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 		_trashEntryLocalService.checkEntries();
 	}
 
+	@Override
+	public void deleteEntries(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_trashEntryLocalService.deleteEntries(groupId);
+	}
+
 	/**
 	* Deletes the trash entry with the primary key.
 	*

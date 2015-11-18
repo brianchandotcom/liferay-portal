@@ -59,7 +59,7 @@ for (int i = 0; i < results.size(); i++) {
 	sb.append("selectDocumentLibrary('");
 	sb.append(DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, false, false));
 	sb.append("', '");
-	sb.append(fileEntry.getUuid());
+	sb.append(HtmlUtil.escapeJS(fileEntry.getUuid()));
 	sb.append("', '");
 	sb.append(fileEntry.getGroupId());
 	sb.append("', '");
@@ -69,6 +69,16 @@ for (int i = 0; i < results.size(); i++) {
 	sb.append("'); Liferay.Util.getWindow().hide();");
 
 	row.addButton("right", SearchEntry.DEFAULT_VALIGN, LanguageUtil.get(pageContext, "choose"), sb.toString());
+
+	// Open in new window
+
+	for (SearchEntry searchEntry : row.getEntries()) {
+		if (searchEntry instanceof TextSearchEntry) {
+			TextSearchEntry textSearchEntry = (TextSearchEntry)searchEntry;
+
+			textSearchEntry.setTarget("_blank");
+		}
+	}
 
 	// Add result row
 

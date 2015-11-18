@@ -28,6 +28,8 @@ import javax.portlet.PortletPreferences;
  */
 public class InvitationUtil {
 
+	public static final String MESSAGE_POP_PORTLET_PREFIX = "invitation";
+
 	public static String getEmailMessageBody(PortletPreferences preferences) {
 		String emailMessageBody = preferences.getValue(
 			"emailMessageBody", StringPool.BLANK);

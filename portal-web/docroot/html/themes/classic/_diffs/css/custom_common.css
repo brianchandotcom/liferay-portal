@@ -131,6 +131,10 @@
 
 	.control-group {
 		margin-bottom: 30px;
+
+		.input-resource-wrapper {
+			margin-bottom: 0;
+		}
 	}
 
 	.lfr-ddm-container, .portlet-staging-bar {
@@ -449,12 +453,18 @@
 	/* ---------- Breadcrumbs ---------- */
 
 	.breadcrumb {
-		@include ellipsis;
-
 		padding: 3px 15px 2px;
 
 		li {
-			display: inline;
+			a {
+				display: inline-block;
+
+				@include ellipsis;
+
+				line-height: normal;
+				max-width: 300px;
+				vertical-align: text-bottom;
+			}
 
 			span.divider {
 				color: #999;
@@ -490,12 +500,7 @@
 
 					&.breadcrumb-truncate {
 						&.only, &.first a, &.last a, &.active, &.current-parent a {
-							display: inline-block;
 							max-width: 65px;
-							overflow: hidden;
-							text-overflow: ellipsis;
-							vertical-align: bottom;
-							white-space: nowrap;
 						}
 
 						&.current-parent:before {
@@ -771,7 +776,7 @@
 					@include user-select(none);
 
 					.accordion-toggle {
-						background: #F2F2F2 url(../images/arrows/13_left.png) no-repeat 100% -20px;
+						background: #F2F2F2 url(../images/arrows/13_right.png) no-repeat 100% -20px;
 					}
 				}
 
@@ -841,6 +846,14 @@
 			font-size: 26px;
 			font-weight: normal;
 			line-height: 26px;
+		}
+	}
+
+	/* ---------- CKEditor ---------- */
+
+	.html-editor.portlet-message-boards {
+		a {
+			font-weight: inherit;
 		}
 	}
 

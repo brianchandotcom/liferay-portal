@@ -79,14 +79,19 @@ if (enableTagBasedNavigation && selectionStyle.equals("manual") && ((assetEntryQ
 }
 
 Group scopeGroup = themeDisplay.getScopeGroup();
+
+boolean hasAddPortletURLs = false;
 %>
 
 <c:if test="<%= showAddContentButton && (scopeGroup != null) && (!scopeGroup.hasStagingGroup() || scopeGroup.isStagingGroup()) && !portletName.equals(PortletKeys.HIGHEST_RATED_ASSETS) && !portletName.equals(PortletKeys.MOST_VIEWED_ASSETS) && !portletName.equals(PortletKeys.RELATED_ASSETS) %>">
 
 	<%
-	addPortletURLs = AssetUtil.getAddPortletURLs(liferayPortletRequest, liferayPortletResponse, classNameIds, classTypeIds, allAssetCategoryIds, allAssetTagNames, null);
-
 	for (long groupId : groupIds) {
+		addPortletURLs = AssetUtil.getAddPortletURLs(liferayPortletRequest, liferayPortletResponse, groupId, classNameIds, classTypeIds, allAssetCategoryIds, allAssetTagNames, null);
+
+		if ((addPortletURLs != null) && !addPortletURLs.isEmpty()) {
+			hasAddPortletURLs = true;
+		}
 	%>
 
 		<div class="lfr-meta-actions add-asset-selector">
@@ -143,10 +148,10 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 <%
 PortletURL portletURL = renderResponse.createRenderURL();
 
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, delta, portletURL, null, null);
+SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, pageDelta, portletURL, null, null);
 
 if (!paginationType.equals("none")) {
-	searchContainer.setDelta(delta);
+	searchContainer.setDelta(pageDelta);
 	searchContainer.setDeltaConfigurable(false);
 }
 %>

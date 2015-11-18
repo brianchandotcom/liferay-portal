@@ -20,7 +20,7 @@
 				ShoppingCoupon
 			WHERE
 				(groupId = ?) AND
-				(companyId = ?) AND
+				(ShoppingCoupon.companyId = ?) AND
 				(
 					(code_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(active_ = ?) [$AND_OR_CONNECTOR$]
@@ -36,7 +36,7 @@
 				ShoppingOrder
 			WHERE
 				(groupId = ?) AND
-				(companyId = ?) AND
+				(ShoppingOrder.companyId = ?) AND
 				(userId = ?) AND
 				(
 					(number_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
@@ -58,7 +58,7 @@
 				ShoppingCoupon
 			WHERE
 				(groupId = ?) AND
-				(companyId = ?) AND
+				(ShoppingCoupon.companyId = ?) AND
 				(
 					(code_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(active_ = ?) [$AND_OR_CONNECTOR$]
@@ -76,7 +76,7 @@
 				ShoppingOrder
 			WHERE
 				(groupId = ?) AND
-				(companyId = ?) AND
+				(ShoppingOrder.companyId = ?) AND
 				(userId = ?) AND
 				(
 					(number_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]

@@ -2,6 +2,15 @@
 	CKEDITOR.plugins.add(
 	'bbcode',
 		{
+			beforeInit: function( editor ) {
+				CKEDITOR.tools.extend(
+					editor.config, {
+						listIndentOnly: true
+					},
+					true
+				);
+			},
+
 			init: function(editor) {
 				var instance = this;
 
@@ -45,6 +54,12 @@
 							}
 
 							preElement[elementAction](editor.document);
+
+							var preBlock = editor.document.getElementsByTag('pre').getItem(0);
+
+							if (preBlock && preBlock.getChildCount() === 0) {
+								preBlock.appendBogus();
+							}
 
 							setTimeout(
 								function() {

@@ -1,3 +1,5 @@
+@import "compass";
+
 img {
 	&.label-icon {
 		border-width: 0;
@@ -21,4 +23,62 @@ td.stretch {
 
 .nobr {
 	white-space: nowrap;
+}
+
+.cke_toolbar {
+	&.cke_toolbar__a11yhelpbtn {
+		float: right;
+
+		.cke_toolgroup, .cke_toolgroup:hover {
+			border-width: 0;
+			margin-bottom: 0;
+			margin-top: 5px;
+		}
+
+		.cke_button {
+			.cke_button_icon {
+				display: none;
+			}
+
+			.cke_button_label {
+				display: inline;
+
+				&:after {
+					border: 1px solid transparent;
+					content: 'Alt+0';
+					margin-left: 5px;
+					padding: 3px;
+				}
+			}
+		}
+	}
+}
+
+.mac {
+	.cke_toolbar.cke_toolbar__a11yhelpbtn .cke_button .cke_button_label:after {
+		content: 'Option+0';
+	}
+}
+
+/* Skin */
+
+.cke_toolbar {
+	&.cke_toolbar__a11yhelpbtn {
+		.cke_toolgroup, .cke_toolgroup:hover {
+			background: transparent;
+		}
+
+		.cke_button {
+			&:hover {
+				background: transparent;
+			}
+
+			.cke_button_label {
+				&:after {
+					border-color: #A6A6A6;
+					font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
+				}
+			}
+		}
+	}
 }

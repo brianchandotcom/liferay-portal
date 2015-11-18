@@ -61,13 +61,11 @@ boolean splitThread = false;
 	%>
 
 	<aui:fieldset>
-		<aui:field-wrapper label="category[message-board]">
-			<div class="input-append">
-				<liferay-ui:input-resource id="categoryName" url='<%= ((categoryId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) && (categoryId != MBCategoryConstants.DISCUSSION_CATEGORY_ID)) ? category.getName() : LanguageUtil.get(pageContext, "message-boards-home") %>' />
+		<div class="control-group">
+			<aui:input label="category[message-board]" name="categoryName" type="resource" value='<%= ((categoryId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) && (categoryId != MBCategoryConstants.DISCUSSION_CATEGORY_ID)) ? category.getName() : LanguageUtil.get(pageContext, "message-boards-home") %>' />
 
-				<aui:button name="selectCategoryButton" value="select" />
-			</div>
-		</aui:field-wrapper>
+			<aui:button name="selectCategoryButton" value="select" />
+		</div>
 
 		<aui:input disabled="<%= thread.isLocked() %>" helpMessage='<%= thread.isLocked() ? LanguageUtil.get(pageContext, "unlock-thread-to-add-an-explanation-post") : StringPool.BLANK %>' label="add-explanation-post" name="addExplanationPost" onClick='<%= renderResponse.getNamespace() + "toggleExplanationPost();" %>' type="checkbox" />
 

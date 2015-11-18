@@ -696,6 +696,11 @@ public class AssetCategoryLocalServiceImpl
 		// Indexer
 
 		assetEntryLocalService.reindex(entries);
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			AssetCategory.class);
+
+		indexer.delete(category);
 	}
 
 	protected long[] getCategoryIds(List<AssetCategory> categories) {

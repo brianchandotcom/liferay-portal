@@ -262,6 +262,14 @@
 		</init-param>
 	</filter>
 	<filter>
+		<filter-name>Secure Friendly URL Servlet Filter</filter-name>
+		<filter-class>com.liferay.portal.servlet.filters.secure.SecureFilter</filter-class>
+		<init-param>
+			<param-name>use_permission_checker</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter>
 		<filter-name>Secure Main Servlet Filter</filter-name>
 		<filter-class>com.liferay.portal.servlet.filters.secure.SecureFilter</filter-class>
 		<init-param>
@@ -366,6 +374,10 @@
 		<filter-class>com.liferay.portal.servlet.filters.unsyncprintwriterpool.UnsyncPrintWriterPoolFilter</filter-class>
 	</filter>
 	<filter>
+		<filter-name>Upload Servlet Request Filter</filter-name>
+		<filter-class>com.liferay.portal.servlet.filters.uploadservletrequest.UploadServletRequestFilter</filter-class>
+	</filter>
+	<filter>
 		<filter-name>URL Rewrite Filter</filter-name>
 		<filter-class>com.liferay.portal.servlet.filters.urlrewrite.UrlRewriteFilter</filter-class>
 		<init-param>
@@ -416,6 +428,10 @@
 			<param-name>portal_property_prefix</param-name>
 			<param-value>xml-rpc.servlet.</param-value>
 		</init-param>
+	</filter>
+	<filter>
+		<filter-name>WebLogic Include Filter</filter-name>
+		<filter-class>com.liferay.portal.servlet.filters.weblogic.WebLogicIncludeFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>Ignore Filter - FTL</filter-name>
@@ -805,26 +821,26 @@
 		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
 	<filter-mapping>
-		<filter-name>Secure Main Servlet Filter</filter-name>
-		<url-pattern>/c/*</url-pattern>
-		<dispatcher>FORWARD</dispatcher>
-		<dispatcher>REQUEST</dispatcher>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>Secure Main Servlet Filter</filter-name>
+		<filter-name>Secure Friendly URL Servlet Filter</filter-name>
 		<url-pattern>/group/*</url-pattern>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
 	<filter-mapping>
-		<filter-name>Secure Main Servlet Filter</filter-name>
+		<filter-name>Secure Friendly URL Servlet Filter</filter-name>
 		<url-pattern>/user/*</url-pattern>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
 	<filter-mapping>
-		<filter-name>Secure Main Servlet Filter</filter-name>
+		<filter-name>Secure Friendly URL Servlet Filter</filter-name>
 		<url-pattern>/web/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>Secure Main Servlet Filter</filter-name>
+		<url-pattern>/c/*</url-pattern>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
@@ -1067,6 +1083,17 @@
 		<url-pattern>/xmlrpc/*</url-pattern>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>WebLogic Include Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>Upload Servlet Request Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
 </web-app>

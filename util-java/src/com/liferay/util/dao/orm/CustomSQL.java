@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -34,7 +35,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
@@ -146,6 +147,37 @@ public class CustomSQL {
 					_STATUS_KEYWORD,
 					tableName.concat(_STATUS_CONDITION_DEFAULT));
 			}
+		}
+
+		if (queryDefinition.getOwnerUserId() > 0) {
+			if (queryDefinition.isIncludeOwner()) {
+				StringBundler sb = new StringBundler(7);
+
+				sb.append(StringPool.OPEN_PARENTHESIS);
+				sb.append(tableName);
+				sb.append(_OWNER_USER_ID_CONDITION_DEFAULT);
+				sb.append(" AND ");
+				sb.append(tableName);
+				sb.append(_STATUS_CONDITION_INVERSE);
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+
+				sql = sql.replace(_OWNER_USER_ID_KEYWORD, sb.toString());
+
+				sql = sql.replace(_OWNER_USER_ID_AND_OR_CONNECTOR, " OR ");
+			}
+			else {
+				sql = sql.replace(
+					_OWNER_USER_ID_KEYWORD,
+					tableName.concat(_OWNER_USER_ID_CONDITION_DEFAULT));
+
+				sql = sql.replace(_OWNER_USER_ID_AND_OR_CONNECTOR, " AND ");
+			}
+		}
+		else {
+			sql = sql.replace(_OWNER_USER_ID_KEYWORD, StringPool.BLANK);
+
+			sql = sql.replace(
+				_OWNER_USER_ID_AND_OR_CONNECTOR, StringPool.BLANK);
 		}
 
 		return sql;
@@ -742,28 +774,33 @@ public class CustomSQL {
 			return;
 		}
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Loading " + source);
+		try {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Loading " + source);
+			}
+
+			Document document = UnsecureSAXReaderUtil.read(is);
+
+			Element rootElement = document.getRootElement();
+
+			for (Element sqlElement : rootElement.elements("sql")) {
+				String file = sqlElement.attributeValue("file");
+
+				if (Validator.isNotNull(file)) {
+					read(classLoader, file);
+				}
+				else {
+					String id = sqlElement.attributeValue("id");
+					String content = transform(sqlElement.getText());
+
+					content = replaceIsNull(content);
+
+					_sqlPool.put(id, content);
+				}
+			}
 		}
-
-		Document document = SAXReaderUtil.read(is);
-
-		Element rootElement = document.getRootElement();
-
-		for (Element sqlElement : rootElement.elements("sql")) {
-			String file = sqlElement.attributeValue("file");
-
-			if (Validator.isNotNull(file)) {
-				read(classLoader, file);
-			}
-			else {
-				String id = sqlElement.attributeValue("id");
-				String content = transform(sqlElement.getText());
-
-				content = replaceIsNull(content);
-
-				_sqlPool.put(id, content);
-			}
+		finally {
+			StreamUtil.cleanUp(is);
 		}
 	}
 
@@ -827,6 +864,13 @@ public class CustomSQL {
 	private static final String _GROUP_BY_CLAUSE = " GROUP BY ";
 
 	private static final String _ORDER_BY_CLAUSE = " ORDER BY ";
+
+	private static final String _OWNER_USER_ID_AND_OR_CONNECTOR =
+		"[$OWNER_USER_ID_AND_OR_CONNECTOR$]";
+
+	private static final String _OWNER_USER_ID_CONDITION_DEFAULT = "userId = ?";
+
+	private static final String _OWNER_USER_ID_KEYWORD = "[$OWNER_USER_ID$]";
 
 	private static final String _STATUS_CONDITION_DEFAULT = "status = ?";
 

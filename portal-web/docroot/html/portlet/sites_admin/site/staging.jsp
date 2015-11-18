@@ -220,7 +220,7 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskLoc
 					boolean staged = GetterUtil.getBoolean(liveGroupTypeSettings.getProperty(StagingUtil.getStagedPortletId(curPortlet.getRootPortletId())), portletDataHandler.isPublishToLiveByDefault());
 				%>
 
-					<aui:input label="<%= PortalUtil.getPortletTitle(curPortlet, application, locale) %>" name="<%= StagingUtil.getStagedPortletId(curPortlet.getRootPortletId()) %>" type="checkbox" value="<%= staged %>" />
+					<aui:input disabled="<%= liveGroup.isStaged() %>" label="<%= PortalUtil.getPortletTitle(curPortlet, application, locale) %>" name="<%= StagingUtil.getStagedPortletId(curPortlet.getRootPortletId()) %>" type="checkbox" value="<%= staged %>" />
 
 				<%
 				}

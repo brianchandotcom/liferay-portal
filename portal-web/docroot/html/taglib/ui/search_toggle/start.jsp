@@ -20,7 +20,7 @@
 	<div class="form-search">
 		<div class="input-append" id="<%= id %>simple">
 			<div class="advanced-search">
-				<input class="search-query span9" id="<%= id + displayTerms.KEYWORDS %>" name="<portlet:namespace /><%= displayTerms.KEYWORDS %>" placeholder="<liferay-ui:message key="keywords" />" type="text" value="<%= HtmlUtil.escapeAttribute(displayTerms.getKeywords()) %>" />
+				<input class="search-query span9" id="<%= id + displayTerms.KEYWORDS %>" name="<portlet:namespace /><%= displayTerms.KEYWORDS %>" placeholder="<liferay-ui:message key="keywords" />" title="keywords" type="text" value="<%= HtmlUtil.escapeAttribute(displayTerms.getKeywords()) %>" />
 
 				<button class="btn" type="submit">
 					<%= LanguageUtil.get(pageContext, buttonLabel, "search") %>
@@ -40,8 +40,8 @@
 			<div id="<%= id %>advancedBodyNode">
 				<liferay-util:buffer var="andOperator">
 					<aui:select cssClass="inline-control" inlineField="<%= true %>" label="" name="<%= displayTerms.AND_OPERATOR %>">
-						<aui:option label="all" selected="<%= displayTerms.isAndOperator() %>" value="1" />
-						<aui:option label="any" selected="<%= !displayTerms.isAndOperator() %>" value="0" />
+						<aui:option label="all" selected="<%= displayTerms.isAndOperator() %>" value="true" />
+						<aui:option label="any" selected="<%= !displayTerms.isAndOperator() %>" value="false" />
 					</aui:select>
 				</liferay-util:buffer>
 

@@ -2115,7 +2115,7 @@
 		<configuration-action-class>com.liferay.portlet.assetpublisher.action.ConfigurationActionImpl</configuration-action-class>
 		<indexer-class>com.liferay.portlet.assetpublisher.util.AssetIndexer</indexer-class>
 		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
-		<friendly-url-mapping>asset_publisher</friendly-url-mapping>
+		<friendly-url-mapping>most_viewed_assets</friendly-url-mapping>
 		<friendly-url-routes>com/liferay/portlet/assetpublisher/asset-publisher-friendly-url-routes.xml</friendly-url-routes>
 		<portlet-data-handler-class>com.liferay.portlet.assetpublisher.lar.AssetPublisherPortletDataHandler</portlet-data-handler-class>
 		<template-handler>com.liferay.portlet.assetpublisher.template.AssetPublisherPortletDisplayTemplateHandler</template-handler>
@@ -2139,7 +2139,7 @@
 		<configuration-action-class>com.liferay.portlet.assetpublisher.action.ConfigurationActionImpl</configuration-action-class>
 		<indexer-class>com.liferay.portlet.assetpublisher.util.AssetIndexer</indexer-class>
 		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
-		<friendly-url-mapping>asset_publisher</friendly-url-mapping>
+		<friendly-url-mapping>highest_rated_assets</friendly-url-mapping>
 		<friendly-url-routes>com/liferay/portlet/assetpublisher/asset-publisher-friendly-url-routes.xml</friendly-url-routes>
 		<portlet-data-handler-class>com.liferay.portlet.assetpublisher.lar.AssetPublisherPortletDataHandler</portlet-data-handler-class>
 		<template-handler>com.liferay.portlet.assetpublisher.template.AssetPublisherPortletDisplayTemplateHandler</template-handler>

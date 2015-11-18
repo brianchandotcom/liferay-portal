@@ -19,7 +19,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.PasswordPolicy;
+import com.liferay.portal.model.PasswordPolicyRel;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.service.PasswordPolicyRelLocalServiceUtil;
 
 import javax.portlet.RenderResponse;
 
@@ -50,6 +52,30 @@ public class OrganizationPasswordPolicyChecker extends RowChecker {
 
 			return false;
 		}
+	}
+
+	@Override
+	public boolean isDisabled(Object obj) {
+		Organization organization = (Organization)obj;
+
+		try {
+			PasswordPolicyRel passwordPolicyRel =
+				PasswordPolicyRelLocalServiceUtil.fetchPasswordPolicyRel(
+					Organization.class.getName(),
+					organization.getOrganizationId());
+
+			if ((passwordPolicyRel != null) &&
+				(passwordPolicyRel.getPasswordPolicyId() !=
+					_passwordPolicy.getPasswordPolicyId())) {
+
+				return true;
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return false;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

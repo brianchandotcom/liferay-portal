@@ -44,12 +44,30 @@ public class JournalArticleFinderUtil {
 		return getFinder().countByG_F(groupId, folderIds, queryDefinition);
 	}
 
+	public static int countByG_F_C(long groupId,
+		java.util.List<java.lang.Long> folderIds, long classNameId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .countByG_F_C(groupId, folderIds, classNameId,
+			queryDefinition);
+	}
+
 	public static int countByG_C_S(long groupId, long classNameId,
 		java.lang.String ddmStructureKey,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
 				   .countByG_C_S(groupId, classNameId, ddmStructureKey,
+			queryDefinition);
+	}
+
+	public static int countByG_C_S(long groupId, long classNameId,
+		java.lang.String[] ddmStructureKeys,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .countByG_C_S(groupId, classNameId, ddmStructureKeys,
 			queryDefinition);
 	}
 
@@ -133,6 +151,15 @@ public class JournalArticleFinderUtil {
 		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder().filterCountByG_F(groupId, folderIds, queryDefinition);
+	}
+
+	public static int filterCountByG_F_C(long groupId,
+		java.util.List<java.lang.Long> folderIds, long classNameId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .filterCountByG_F_C(groupId, folderIds, classNameId,
+			queryDefinition);
 	}
 
 	public static int filterCountByG_C_S(long groupId, long classNameId,
@@ -230,6 +257,16 @@ public class JournalArticleFinderUtil {
 		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder().filterFindByG_F(groupId, folderIds, queryDefinition);
+	}
+
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_F_C(
+		long groupId, java.util.List<java.lang.Long> folderIds,
+		long classNameId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .filterFindByG_F_C(groupId, folderIds, classNameId,
+			queryDefinition);
 	}
 
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_C_S(
@@ -351,12 +388,30 @@ public class JournalArticleFinderUtil {
 		return getFinder().findByG_F(groupId, folderIds, queryDefinition);
 	}
 
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_F_C(
+		long groupId, java.util.List<java.lang.Long> folderIds,
+		long classNameId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .findByG_F_C(groupId, folderIds, classNameId, queryDefinition);
+	}
+
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_C_S(
 		long groupId, long classNameId, java.lang.String ddmStructureKey,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
 				   .findByG_C_S(groupId, classNameId, ddmStructureKey,
+			queryDefinition);
+	}
+
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_C_S(
+		long groupId, long classNameId, java.lang.String[] ddmStructureKeys,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .findByG_C_S(groupId, classNameId, ddmStructureKeys,
 			queryDefinition);
 	}
 

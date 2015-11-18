@@ -21,10 +21,14 @@ import java.util.Properties;
 /**
  * @author Zsolt Balogh
  * @author Brian Wing Shun Chan
+ * @author Zoltán Takács
  */
 public interface Patcher {
 
 	public static final String PATCHER_PROPERTIES = "patcher.properties";
+
+	public static final String PATCHER_SERVICE_PROPERTIES =
+		"patcher-service.properties";
 
 	public static final String PROPERTY_FIXED_ISSUES = "fixed.issues";
 
@@ -46,6 +50,10 @@ public interface Patcher {
 
 	public Properties getProperties();
 
+	public boolean hasInconsistentPatchLevels();
+
 	public boolean isConfigured();
+
+	public void verifyPatchLevels() throws PatchInconsistencyException;
 
 }

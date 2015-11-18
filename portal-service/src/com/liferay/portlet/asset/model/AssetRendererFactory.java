@@ -88,6 +88,10 @@ public interface AssetRendererFactory {
 			WindowState windowState)
 		throws PortalException, SystemException;
 
+	public boolean hasAddPermission(
+			PermissionChecker permissionChecker, long groupId, long classTypeId)
+		throws Exception;
+
 	public boolean hasClassTypeFieldNames(long classTypeId, Locale locale)
 		throws Exception;
 
@@ -101,6 +105,9 @@ public interface AssetRendererFactory {
 	public boolean isCategorizable();
 
 	public boolean isLinkable();
+
+	public boolean isListable(long classPK)
+		throws SystemException;
 
 	public boolean isSelectable();
 

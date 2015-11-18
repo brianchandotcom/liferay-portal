@@ -51,6 +51,8 @@ public class SerialDestination extends BaseAsyncDestination {
 	protected void dispatch(
 		final Set<MessageListener> messageListeners, final Message message) {
 
+		final Thread currentThread = Thread.currentThread();
+
 		ThreadPoolExecutor threadPoolExecutor = getThreadPoolExecutor();
 
 		Runnable runnable = new MessageRunnable(message) {
@@ -71,9 +73,11 @@ public class SerialDestination extends BaseAsyncDestination {
 					}
 				}
 				finally {
-					ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
+					if (Thread.currentThread() != currentThread) {
+						ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
 
-					CentralizedThreadLocal.clearShortLivedThreadLocals();
+						CentralizedThreadLocal.clearShortLivedThreadLocals();
+					}
 				}
 			}
 

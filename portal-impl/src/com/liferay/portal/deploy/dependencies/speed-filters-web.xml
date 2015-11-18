@@ -170,6 +170,14 @@
 		<param-value>com.liferay.portal.servlet.filters.language.LanguageFilter</param-value>
 	</init-param>
 </filter>
+<filter>
+	<filter-name>WebLogic Include Filter</filter-name>
+	<filter-class>com.liferay.portal.kernel.servlet.PortalClassLoaderFilter</filter-class>
+	<init-param>
+		<param-name>filter-class</param-name>
+		<param-value>com.liferay.portal.servlet.filters.weblogic.WebLogicIncludeFilter</param-value>
+	</init-param>
+</filter>
 <filter-mapping>
 	<filter-name>Header Filter</filter-name>
 	<url-pattern>*.css</url-pattern>
@@ -293,4 +301,9 @@
 <filter-mapping>
 	<filter-name>Dynamic CSS Filter - JSP</filter-name>
 	<url-pattern>*.jsp</url-pattern>
+</filter-mapping>
+<filter-mapping>
+	<filter-name>WebLogic Include Filter</filter-name>
+	<url-pattern>/*</url-pattern>
+	<dispatcher>INCLUDE</dispatcher>
 </filter-mapping>

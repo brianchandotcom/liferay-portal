@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 
 import java.io.File;
 
@@ -145,7 +145,7 @@ public class Java2WsddTask {
 	private static String _format(String content) throws Exception {
 		content = HtmlUtil.stripComments(content);
 
-		Document document = SAXReaderUtil.read(content);
+		Document document = UnsecureSAXReaderUtil.read(content);
 
 		Element rootElement = document.getRootElement();
 

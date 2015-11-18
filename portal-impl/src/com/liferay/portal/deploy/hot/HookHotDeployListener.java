@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaUtil;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
+import com.liferay.portal.kernel.deploy.DeployManagerUtil;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployDir;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployListener;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployUtil;
@@ -46,6 +47,7 @@ import com.liferay.portal.kernel.lock.LockListener;
 import com.liferay.portal.kernel.lock.LockListenerRegistryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.log.SanitizerLogWrapper;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
@@ -90,7 +92,7 @@ import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.LayoutConstants;
@@ -273,7 +275,8 @@ public class HookHotDeployListener
 		"sites.form.update.advanced", "sites.form.update.main",
 		"sites.form.update.seo", "social.activity.sets.bundling.enabled",
 		"social.activity.sets.enabled", "social.activity.sets.selector",
-		"social.bookmark.*", "terms.of.use.required", "theme.css.fast.load",
+		"social.bookmark.*", "staging.xstream.class.whitelist",
+		"terms.of.use.required", "theme.css.fast.load",
 		"theme.images.fast.load", "theme.jsp.override.enabled",
 		"theme.loader.new.theme.id.on.import", "theme.portlet.decorate.default",
 		"theme.portlet.sharing.default", "theme.shortcut.icon", "time.zones",
@@ -689,13 +692,26 @@ public class HookHotDeployListener
 			return;
 		}
 
+		if (isRTLHook(hotDeployEvent.getPluginPackage())) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Skipping RTL hook since it is now part of the portal");
+			}
+
+			HotDeployUtil.fireUndeployEvent(
+				new HotDeployEvent(
+					servletContext, hotDeployEvent.getContextClassLoader()));
+
+			return;
+		}
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Registering hook for " + servletContextName);
 		}
 
 		_servletContextNames.add(servletContextName);
 
-		Document document = SAXReaderUtil.read(xml, true);
+		Document document = UnsecureSAXReaderUtil.read(xml, true);
 
 		Element rootElement = document.getRootElement();
 
@@ -707,9 +723,23 @@ public class HookHotDeployListener
 		initLanguageProperties(
 			servletContextName, portletClassLoader, rootElement);
 
-		initCustomJspDir(
-			servletContext, servletContextName, portletClassLoader,
-			hotDeployEvent.getPluginPackage(), rootElement);
+		try {
+			initCustomJspDir(
+				servletContext, servletContextName, portletClassLoader,
+				hotDeployEvent.getPluginPackage(), rootElement);
+		}
+		catch (DuplicateCustomJspException dcje) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(servletContextName + " will be undeployed");
+			}
+
+			HotDeployUtil.fireUndeployEvent(
+				new HotDeployEvent(servletContext, portletClassLoader));
+
+			DeployManagerUtil.undeploy(servletContextName);
+
+			return;
+		}
 
 		initIndexerPostProcessors(
 			servletContextName, portletClassLoader, rootElement);
@@ -1018,6 +1048,16 @@ public class HookHotDeployListener
 		}
 	}
 
+	protected String getPortalJsp(String customJsp, String customJspDir) {
+		if (Validator.isNull(customJsp) || Validator.isNull(customJspDir)) {
+			return null;
+		}
+
+		int pos = customJsp.indexOf(customJspDir);
+
+		return customJsp.substring(pos + customJspDir.length());
+	}
+
 	protected File getPortalJspBackupFile(File portalJspFile) {
 		String fileName = portalJspFile.getName();
 		String filePath = portalJspFile.toString();
@@ -1229,9 +1269,7 @@ public class HookHotDeployListener
 		String portalWebDir = PortalUtil.getPortalWebDir();
 
 		for (String customJsp : customJsps) {
-			int pos = customJsp.indexOf(customJspDir);
-
-			String portalJsp = customJsp.substring(pos + customJspDir.length());
+			String portalJsp = getPortalJsp(customJsp, customJspDir);
 
 			if (customJspGlobal) {
 				File portalJspFile = new File(portalWebDir + portalJsp);
@@ -1296,18 +1334,30 @@ public class HookHotDeployListener
 			customJspDir, customJspGlobal, customJsps);
 
 		if (_log.isDebugEnabled()) {
-			StringBundler sb = new StringBundler(customJsps.size() * 2 + 1);
+			StringBundler sb = new StringBundler(customJsps.size() * 2);
 
 			sb.append("Custom JSP files:\n");
 
-			for (String customJsp : customJsps) {
+			for (int i = 0; i < customJsps.size(); i++) {
+				String customJsp = customJsps.get(0);
+
 				sb.append(customJsp);
-				sb.append(StringPool.NEW_LINE);
+
+				if ((i + 1) < customJsps.size()) {
+					sb.append(StringPool.NEW_LINE);
+				}
 			}
 
-			sb.setIndex(sb.index() - 1);
+			Log log = SanitizerLogWrapper.allowCRLF(_log);
 
-			_log.debug(sb.toString());
+			log.debug(sb.toString());
+		}
+
+		if (PropsValues.HOT_DEPLOY_HOOK_CUSTOM_JSP_VERIFICATION_ENABLED &&
+			customJspGlobal && !_customJspBagsMap.isEmpty() &&
+			!_customJspBagsMap.containsKey(servletContextName)) {
+
+			verifyCustomJsps(servletContextName, customJspBag);
 		}
 
 		_customJspBagsMap.put(servletContextName, customJspBag);
@@ -2463,6 +2513,32 @@ public class HookHotDeployListener
 		}
 	}
 
+	protected boolean isRTLHook(PluginPackage pluginPackage) {
+		String moduleGroupId = pluginPackage.getGroupId();
+
+		if (!moduleGroupId.equals(_RTL_HOOK_MODULE_GROUP_ID)) {
+			return false;
+		}
+
+		// LRDCOM-9735
+
+		List<String> tags = pluginPackage.getTags();
+
+		if (tags.contains(_RTL_HOOK_TAG)) {
+			return true;
+		}
+
+		// LPS-43009
+
+		String name = pluginPackage.getName();
+
+		if (name.startsWith(_RTL_HOOK_NAME)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	protected void resetPortalProperties(
 			String servletContextName, Properties portalProperties,
 			boolean initPhase)
@@ -2786,6 +2862,91 @@ public class HookHotDeployListener
 			release.getReleaseId(), buildNumber, null, true);
 	}
 
+	protected void verifyCustomJsps(
+			String servletContextName, CustomJspBag customJspBag)
+		throws DuplicateCustomJspException {
+
+		Set<String> customJsps = new HashSet<String>();
+
+		for (String customJsp : customJspBag.getCustomJsps()) {
+			String portalJsp = getPortalJsp(
+				customJsp, customJspBag.getCustomJspDir());
+
+			customJsps.add(portalJsp);
+		}
+
+		Map<String, String> conflictingCustomJsps =
+			new HashMap<String, String>();
+
+		for (Map.Entry<String, CustomJspBag> entry :
+				_customJspBagsMap.entrySet()) {
+
+			CustomJspBag currentCustomJspBag = entry.getValue();
+
+			if (!currentCustomJspBag.isCustomJspGlobal()) {
+				continue;
+			}
+
+			String currentServletContextName = entry.getKey();
+
+			List<String> currentCustomJsps =
+				currentCustomJspBag.getCustomJsps();
+
+			for (String currentCustomJsp : currentCustomJsps) {
+				String currentPortalJsp = getPortalJsp(
+					currentCustomJsp, currentCustomJspBag.getCustomJspDir());
+
+				if (customJsps.contains(currentPortalJsp)) {
+					conflictingCustomJsps.put(
+						currentPortalJsp, currentServletContextName);
+				}
+			}
+		}
+
+		if (conflictingCustomJsps.isEmpty()) {
+			return;
+		}
+
+		_log.error(servletContextName + " conflicts with the installed hooks");
+
+		if (_log.isDebugEnabled()) {
+			Log log = SanitizerLogWrapper.allowCRLF(_log);
+
+			StringBundler sb = new StringBundler(
+				conflictingCustomJsps.size() * 4 + 2);
+
+			sb.append("Colliding JSP files in ");
+			sb.append(servletContextName);
+			sb.append(StringPool.NEW_LINE);
+
+			int i = 0;
+
+			for (Map.Entry<String, String> entry :
+					conflictingCustomJsps.entrySet()) {
+
+				sb.append(entry.getKey());
+				sb.append(" with ");
+				sb.append(entry.getValue());
+
+				if ((i + 1) < conflictingCustomJsps.size()) {
+					sb.append(StringPool.NEW_LINE);
+				}
+
+				i++;
+			}
+
+			log.debug(sb.toString());
+		}
+
+		throw new DuplicateCustomJspException();
+	}
+
+	private static final String _RTL_HOOK_MODULE_GROUP_ID = "liferay";
+
+	private static final String _RTL_HOOK_NAME = "RTL";
+
+	private static final String _RTL_HOOK_TAG = "rtl";
+
 	private static final String[] _PROPS_KEYS_EVENTS = {
 		LOGIN_EVENTS_POST, LOGIN_EVENTS_PRE, LOGOUT_EVENTS_POST,
 		LOGOUT_EVENTS_PRE, SERVLET_SERVICE_EVENTS_POST,
@@ -2856,10 +3017,10 @@ public class HookHotDeployListener
 		"session.phishing.protected.attributes", "sites.form.add.advanced",
 		"sites.form.add.main", "sites.form.add.seo",
 		"sites.form.update.advanced", "sites.form.update.main",
-		"sites.form.update.seo", "users.form.add.identification",
-		"users.form.add.main", "users.form.add.miscellaneous",
-		"users.form.my.account.identification", "users.form.my.account.main",
-		"users.form.my.account.miscellaneous",
+		"sites.form.update.seo", "staging.xstream.class.whitelist",
+		"users.form.add.identification", "users.form.add.main",
+		"users.form.add.miscellaneous", "users.form.my.account.identification",
+		"users.form.my.account.main", "users.form.my.account.miscellaneous",
 		"users.form.update.identification", "users.form.update.main",
 		"users.form.update.miscellaneous"
 	};

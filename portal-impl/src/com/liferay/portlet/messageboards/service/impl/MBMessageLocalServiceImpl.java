@@ -351,7 +351,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		// Resources
 
-		if (GetterUtil.getBoolean(
+		if ((parentMessageId !=
+				MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID) &&
+			GetterUtil.getBoolean(
 				serviceContext.getAttribute("propagatePermissions"))) {
 
 			MBUtil.propagatePermissions(
@@ -1333,6 +1335,20 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	@Override
+	public void moveDiscussionToTrash(String className, long classPK)
+		throws SystemException {
+
+		List<MBMessage> messages = getMessages(
+			className, classPK, WorkflowConstants.STATUS_APPROVED);
+
+		for (MBMessage message : messages) {
+			message.setStatus(WorkflowConstants.STATUS_IN_TRASH);
+
+			mbMessageLocalService.updateMBMessage(message);
+		}
+	}
+
+	@Override
 	public long moveMessageAttachmentToTrash(
 			long userId, long messageId, String fileName)
 		throws PortalException, SystemException {
@@ -1348,6 +1364,20 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			userId, fileEntry.getFileEntryId());
 
 		return fileEntry.getFileEntryId();
+	}
+
+	@Override
+	public void restoreDiscussionFromTrash(String className, long classPK)
+		throws SystemException {
+
+		List<MBMessage> messages = getMessages(
+			className, classPK, WorkflowConstants.STATUS_IN_TRASH);
+
+		for (MBMessage message : messages) {
+			message.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+			mbMessageLocalService.updateMBMessage(message);
+		}
 	}
 
 	@Override
@@ -1966,19 +1996,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 
 		PortletPreferences preferences =
-			ServiceContextUtil.getPortletPreferences(serviceContext);
-
-		if (preferences == null) {
-			long ownerId = message.getGroupId();
-			int ownerType = PortletKeys.PREFS_OWNER_TYPE_GROUP;
-			long plid = PortletKeys.PREFS_PLID_SHARED;
-			String portletId = PortletKeys.MESSAGE_BOARDS;
-			String defaultPreferences = null;
-
-			preferences = portletPreferencesLocalService.getPreferences(
-				message.getCompanyId(), ownerId, ownerType, plid, portletId,
-				defaultPreferences);
-		}
+			portletPreferencesLocalService.getPreferences(
+				message.getCompanyId(), message.getGroupId(),
+				PortletKeys.PREFS_OWNER_TYPE_GROUP,
+				PortletKeys.PREFS_PLID_SHARED, PortletKeys.MESSAGE_BOARDS,
+				null);
 
 		if (serviceContext.isCommandAdd() &&
 			MBUtil.getEmailMessageAddedEnabled(preferences)) {
@@ -2104,6 +2126,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				message.getCategoryId(), message.getParentMessageId());
 		}
 
+		String entryURL = getMessageURL(message, serviceContext);
+
 		SubscriptionSender subscriptionSenderPrototype =
 			new MBSubscriptionSender();
 
@@ -2117,8 +2141,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			"[$CATEGORY_NAME$]", categoryName, "[$MAILING_LIST_ADDRESS$]",
 			replyToAddress, "[$MESSAGE_ID$]", message.getMessageId(),
 			"[$MESSAGE_SUBJECT$]", message.getSubject(), "[$MESSAGE_URL$]",
-			getMessageURL(message, serviceContext), "[$MESSAGE_USER_ADDRESS$]",
-			emailAddress, "[$MESSAGE_USER_NAME$]", fullName);
+			entryURL, "[$MESSAGE_USER_ADDRESS$]", emailAddress,
+			"[$MESSAGE_USER_NAME$]", fullName);
 		subscriptionSenderPrototype.setFrom(fromAddress, fromName);
 		subscriptionSenderPrototype.setHtmlFormat(htmlFormat);
 		subscriptionSenderPrototype.setInReplyTo(inReplyTo);
@@ -2131,6 +2155,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subscriptionSenderPrototype.setServiceContext(serviceContext);
 		subscriptionSenderPrototype.setSubject(subject);
 		subscriptionSenderPrototype.setUserId(message.getUserId());
+
+		serviceContext.setAttribute("entryURL", entryURL);
 
 		SubscriptionSender subscriptionSender =
 			(SubscriptionSender)SerializableUtil.clone(

@@ -71,7 +71,9 @@ public class I18nFilter extends BasePortalFilter {
 	public boolean isFilterEnabled(
 		HttpServletRequest request, HttpServletResponse response) {
 
-		if (!isAlreadyFiltered(request) && !isForwardedByI18nServlet(request)) {
+		if (!isAlreadyFiltered(request) && !isForwardedByI18nServlet(request) &&
+			!isWidget(request)) {
+
 			return true;
 		}
 		else {
@@ -173,6 +175,15 @@ public class I18nFilter extends BasePortalFilter {
 		if ((request.getAttribute(WebKeys.I18N_LANGUAGE_ID) != null) ||
 			(request.getAttribute(WebKeys.I18N_PATH) != null)) {
 
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	protected boolean isWidget(HttpServletRequest request) {
+		if (request.getAttribute(WebKeys.WIDGET) != null) {
 			return true;
 		}
 		else {

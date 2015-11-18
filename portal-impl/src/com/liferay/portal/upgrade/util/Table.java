@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.StagnantRowException;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
+import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -74,6 +75,9 @@ public class Table {
 			throw new UpgradeException(
 				"Nulls should never be inserted into the database. " +
 					"Attempted to append column to " + sb.toString() + ".");
+		}
+		else if (value instanceof byte[]) {
+			sb.append(Base64.encode((byte[])value));
 		}
 		else if (value instanceof Clob || value instanceof String) {
 			value = StringUtil.replace(
@@ -353,6 +357,13 @@ public class Table {
 		else if (t == Types.BIT) {
 			value = GetterUtil.getBoolean(rs.getBoolean(name));
 		}
+		else if (t == Types.BLOB) {
+			value = rs.getBytes(name);
+
+			if (value == null) {
+				value = new byte[0];
+			}
+		}
 		else if (t == Types.BOOLEAN) {
 			value = GetterUtil.getBoolean(rs.getBoolean(name));
 		}
@@ -545,6 +556,9 @@ public class Table {
 
 		if (t == Types.BIGINT) {
 			ps.setLong(paramIndex, GetterUtil.getLong(value));
+		}
+		else if (t == Types.BLOB) {
+			ps.setBytes(paramIndex, Base64.decode(value));
 		}
 		else if (t == Types.BOOLEAN) {
 			ps.setBoolean(paramIndex, GetterUtil.getBoolean(value));

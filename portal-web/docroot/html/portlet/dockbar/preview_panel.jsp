@@ -66,7 +66,9 @@
 	var devicePreview = new Liferay.Dockbar.DevicePreview(
 		{
 			devices: {
-				autosize: {},
+				autosize: {
+					skin: 'autosize'
+				},
 				custom: {
 					height: '#<portlet:namespace />height',
 					resizable: true,

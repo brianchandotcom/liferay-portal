@@ -18,6 +18,7 @@ import com.liferay.portal.cache.ehcache.EhcacheStreamBootstrapCacheLoader;
 import com.liferay.portal.jericho.CachedLoggerProvider;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
+import com.liferay.portal.kernel.cluster.ClusterLinkUtil;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.SimpleAction;
@@ -88,7 +89,7 @@ public class StartupAction extends SimpleAction {
 
 		// Installed patches
 
-		if (_log.isInfoEnabled()) {
+		if (_log.isInfoEnabled() && !PatcherUtil.hasInconsistentPatchLevels()) {
 			String installedPatches = StringUtil.merge(
 				PatcherUtil.getInstalledPatches(), StringPool.COMMA_AND_SPACE);
 
@@ -196,6 +197,10 @@ public class StartupAction extends SimpleAction {
 			DoPrivilegedUtil.wrap(messageBus),
 			DoPrivilegedUtil.wrap(messageSender),
 			DoPrivilegedUtil.wrap(synchronousMessageSender));
+
+		// Cluster link
+
+		ClusterLinkUtil.initialize();
 
 		// Cluster executor
 

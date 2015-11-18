@@ -75,9 +75,9 @@ private void _buildCategoryBreadcrumb(HttpServletRequest request, MBCategory cat
 		sb.append(cssClass);
 		sb.append("\">");
 		sb.append("<a href=\"");
-		sb.append(HtmlUtil.escape(portletURL.toString()));
+		sb.append(portletURL.toString());
 		sb.append("\">");
-		sb.append(ancestorCategory.getName());
+		sb.append(HtmlUtil.escape(ancestorCategory.getName()));
 		sb.append("</a>");
 		sb.append("<span class=\"divider\">/</span>");
 		sb.append("</li>");
@@ -91,7 +91,7 @@ private void _buildCategoryBreadcrumb(HttpServletRequest request, MBCategory cat
 	sb.append("<li class=\"active last\">");
 	sb.append("<strong>");
 	sb.append("<a href=\"");
-	sb.append(HtmlUtil.escape(portletURL.toString()));
+	sb.append(portletURL.toString());
 	sb.append("\">");
 	sb.append(category.getName());
 	sb.append("</strong>");

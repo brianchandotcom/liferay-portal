@@ -145,8 +145,8 @@ if (Validator.isNotNull(structureAvailableFields)) {
 		<liferay-ui:panel-container cssClass="lfr-structure-entry-details-container" extended="<%= false %>" id="templateDetailsPanelContainer" persistState="<%= true %>">
 			<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" id="templateDetailsSectionPanel" persistState="<%= true %>" title="details">
 				<c:if test="<%= ddmDisplay.isShowStructureSelector() %>">
-					<aui:field-wrapper helpMessage="structure-help" label="structure">
-						<liferay-ui:input-resource url="<%= (structure != null) ? structure.getName(locale) : StringPool.BLANK %>" />
+					<div class="control-group">
+						<aui:input helpMessage="structure-help" name="structure" type="resource" value="<%= (structure != null) ? structure.getName(locale) : StringPool.BLANK %>" />
 
 						<c:if test="<%= ((template == null) || (template.getClassPK() == 0)) %>">
 							<liferay-ui:icon
@@ -157,7 +157,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 								url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
 							/>
 						</c:if>
-					</aui:field-wrapper>
+					</div>
 				</c:if>
 
 				<c:if test="<%= type.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY) %>">
@@ -191,18 +191,12 @@ if (Validator.isNotNull(structureAvailableFields)) {
 				<aui:input name="description" />
 
 				<c:if test="<%= template != null %>">
-					<aui:field-wrapper helpMessage="template-key-help" label="template-key">
-						<liferay-ui:input-resource url="<%= template.getTemplateKey() %>" />
-					</aui:field-wrapper>
+					<aui:input helpMessage="template-key-help" name="templateKey" type="resource" value="<%= template.getTemplateKey() %>" />
 
-					<aui:field-wrapper label="url">
-						<liferay-ui:input-resource url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathMain() + "/dynamic_data_mapping/get_template?templateId=" + templateId %>' />
-					</aui:field-wrapper>
+					<aui:input name="url" type="resource" value='<%= themeDisplay.getPortalURL() + themeDisplay.getPathMain() + "/dynamic_data_mapping/get_template?templateId=" + templateId %>' />
 
 					<c:if test="<%= Validator.isNotNull(refererWebDAVToken) %>">
-						<aui:field-wrapper label="webdav-url">
-							<liferay-ui:input-resource url="<%= template.getWebDavURL(themeDisplay, refererWebDAVToken) %>" />
-						</aui:field-wrapper>
+						<aui:input name="webDavURL" type="resource" value="<%= template.getWebDavURL(themeDisplay, refererWebDAVToken) %>" />
 					</c:if>
 				</c:if>
 
@@ -231,13 +225,13 @@ if (Validator.isNotNull(structureAvailableFields)) {
 										<aui:fieldset>
 											<aui:input cssClass="lfr-ddm-small-image-type" inlineField="<%= true %>" label="small-image-url" name="type" type="radio" />
 
-											<aui:input cssClass="lfr-ddm-small-image-value" inlineField="<%= true %>" label="" name="smallImageURL" />
+											<aui:input cssClass="lfr-ddm-small-image-value" inlineField="<%= true %>" label="" name="smallImageURL" title="small-image-url" />
 										</aui:fieldset>
 
 										<aui:fieldset>
 											<aui:input cssClass="lfr-ddm-small-image-type" inlineField="<%= true %>" label="small-image" name="type" type="radio" />
 
-											<aui:input cssClass="lfr-ddm-small-image-value" inlineField="<%= true %>"  label="" name="smallImageFile" type="file" />
+											<aui:input cssClass="lfr-ddm-small-image-value" inlineField="<%= true %>" label="" name="smallImageFile" type="file" />
 										</aui:fieldset>
 									</aui:col>
 								</aui:row>

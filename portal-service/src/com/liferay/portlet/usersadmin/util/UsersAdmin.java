@@ -103,10 +103,16 @@ public interface UsersAdmin {
 	public List<EmailAddress> getEmailAddresses(
 		ActionRequest actionRequest, List<EmailAddress> defaultEmailAddresses);
 
+	public long[] getGroupIds(PortletRequest portletRequest)
+		throws PortalException, SystemException;
+
 	public OrderByComparator getGroupOrderByComparator(
 		String orderByCol, String orderByType);
 
 	public Long[] getOrganizationIds(List<Organization> organizations);
+
+	public long[] getOrganizationIds(PortletRequest portletRequest)
+		throws PortalException, SystemException;
 
 	public OrderByComparator getOrganizationOrderByComparator(
 		String orderByCol, String orderByType);
@@ -121,8 +127,14 @@ public interface UsersAdmin {
 	public List<Phone> getPhones(
 		ActionRequest actionRequest, List<Phone> defaultPhones);
 
+	public long[] getRoleIds(PortletRequest portletRequest)
+		throws PortalException, SystemException;
+
 	public OrderByComparator getRoleOrderByComparator(
 		String orderByCol, String orderByType);
+
+	public long[] getUserGroupIds(PortletRequest portletRequest)
+		throws PortalException, SystemException;
 
 	public OrderByComparator getUserGroupOrderByComparator(
 		String orderByCol, String orderByType);

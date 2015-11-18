@@ -63,9 +63,9 @@
 			<entry name="tip"><![CDATA[]]></entry>
 		</meta-data>
 	</dynamic-element>
-	<dynamic-element dataType="string" indexType="text" name="contact" repeatable="true" required="false" showLabel="true" type="text" width="25">
-		<dynamic-element dataType="string" indexType="text" name="phone" repeatable="true" required="false" showLabel="true" type="text" width="25">
-			<dynamic-element dataType="string" indexType="text" name="ext" repeatable="false" required="false" showLabel="true" type="text" width="25">
+	<dynamic-element dataType="string" indexType="text" name="contact" localizable="true" repeatable="true" required="false" showLabel="true" type="text" width="25">
+		<dynamic-element dataType="string" indexType="text" name="phone" localizable="true" repeatable="true" required="false" showLabel="true" type="text" width="25">
+			<dynamic-element dataType="string" indexType="text" name="ext" localizable="true" repeatable="false" required="false" showLabel="true" type="text" width="25">
 				<meta-data locale="en_US">
 					<entry name="label"><![CDATA[Ext]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>

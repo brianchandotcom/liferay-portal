@@ -386,6 +386,13 @@ public class ShoppingCategoryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portlet.shopping.model.ShoppingCategory getCategory(
+		long groupId, java.lang.String categoryName)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _shoppingCategoryLocalService.getCategory(groupId, categoryName);
+	}
+
+	@Override
 	public java.util.List<com.liferay.portlet.shopping.model.ShoppingCategory> getParentCategories(
 		long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException,

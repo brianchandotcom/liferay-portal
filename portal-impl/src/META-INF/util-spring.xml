@@ -79,6 +79,11 @@
 				<entry key="com.liferay.portal.kernel.dao.orm.FinderCache#BaseModel">
 					<bean class="com.liferay.portal.cache.key.HashCodeCacheKeyGenerator" />
 				</entry>
+				<entry key="com.liferay.portlet.PortletPreferencesFactoryImpl">
+					<bean class="com.liferay.portal.cache.key.MessageDigestCacheKeyGenerator">
+						<constructor-arg value="SHA-1" />
+					</bean>
+				</entry>
 				<entry key="com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilter">
 					<bean class="com.liferay.portal.cache.key.SimpleCacheKeyGenerator" />
 				</entry>
@@ -587,14 +592,16 @@
 		<property name="secure" value="true" />
 		<property name="secureXMLFactoryProvider" ref="com.liferay.portal.security.xml.SecureXMLFactoryProvider" />
 	</bean>
-	<bean id="com.liferay.portal.kernel.xml.SAXReaderUtil" class="com.liferay.portal.kernel.xml.SAXReaderUtil">
-		<property name="secureSAXReader">
+	<bean id="com.liferay.portal.kernel.xml.SAXReaderUtil" class="com.liferay.portal.kernel.xml.SAXReaderUtil" depends-on="com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil">
+		<property name="SAXReader">
 			<bean class="com.liferay.portal.xml.SAXReaderImpl">
 				<property name="secure" value="true" />
 				<property name="secureXMLFactoryProvider" ref="com.liferay.portal.security.xml.SecureXMLFactoryProvider" />
 			</bean>
 		</property>
-		<property name="unsecureSAXReader">
+	</bean>
+	<bean id="com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil" class="com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil">
+		<property name="SAXReader">
 			<bean class="com.liferay.portal.xml.SAXReaderImpl">
 				<property name="secure" value="false" />
 				<property name="secureXMLFactoryProvider" ref="com.liferay.portal.security.xml.SecureXMLFactoryProvider" />
@@ -639,8 +646,8 @@
 	<bean id="com.liferay.portal.model.ModelHintsUtil" class="com.liferay.portal.model.ModelHintsUtil">
 		<property name="modelHints">
 			<bean class="com.liferay.portal.model.ModelHintsImpl" depends-on="com.liferay.portal.kernel.xml.SAXReaderUtil">
-				<property name="sAXReader">
-					<bean class="com.liferay.portal.kernel.xml.SAXReaderUtil" factory-method="getUnsecureSAXReader" />
+				<property name="SAXReader">
+					<bean class="com.liferay.portal.kernel.xml.SAXReaderUtil" factory-method="getSAXReader" />
 				</property>
 			</bean>
 		</property>

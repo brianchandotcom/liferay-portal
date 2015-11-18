@@ -35,7 +35,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -85,8 +84,6 @@ public abstract class VerifyProcess extends BaseDBProcess {
 				throwableAwareRunnables)
 		throws Exception {
 
-		List<Throwable> throwables = new ArrayList<Throwable>();
-
 		if (throwableAwareRunnables.size() <
 				PropsValues.VERIFY_PROCESS_CONCURRENCY_THRESHOLD) {
 
@@ -94,10 +91,6 @@ public abstract class VerifyProcess extends BaseDBProcess {
 					throwableAwareRunnables) {
 
 				throwableAwareRunnable.run();
-
-				if (throwableAwareRunnable.hasException()) {
-					throwables.add(throwableAwareRunnable.getThrowable());
-				}
 			}
 		}
 		else {
@@ -115,16 +108,21 @@ public abstract class VerifyProcess extends BaseDBProcess {
 				List<Future<Object>> futures = executorService.invokeAll(jobs);
 
 				for (Future<Object> future : futures) {
-					try {
-						future.get();
-					}
-					catch (ExecutionException ee) {
-						throwables.add(ee.getCause());
-					}
+					future.get();
 				}
 			}
 			finally {
 				executorService.shutdown();
+			}
+		}
+
+		List<Throwable> throwables = new ArrayList<Throwable>();
+
+		for (ThrowableAwareRunnable throwableAwareRunnable :
+				throwableAwareRunnables) {
+
+			if (throwableAwareRunnable.hasException()) {
+				throwables.add(throwableAwareRunnable.getThrowable());
 			}
 		}
 

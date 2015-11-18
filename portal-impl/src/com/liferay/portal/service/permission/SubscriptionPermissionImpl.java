@@ -30,7 +30,11 @@ import com.liferay.portlet.blogs.service.permission.BlogsPermission;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.service.permission.BookmarksEntryPermission;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
+import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
+import com.liferay.portlet.documentlibrary.service.persistence.DLFolderUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.permission.JournalPermission;
 import com.liferay.portlet.messageboards.model.MBCategory;
@@ -119,6 +123,22 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 
 		if (hasPermission != null) {
 			return hasPermission;
+		}
+
+		if (Validator.equals(
+				inferredClassName,
+				"com.liferay.portlet.documentlibrary.model.DLFileEntry")) {
+
+			DLFileEntry dlFileEntry =
+				DLFileEntryLocalServiceUtil.getDLFileEntry(inferredClassPK);
+
+			DLFolder dlFolder = DLFolderUtil.fetchByPrimaryKey(
+				dlFileEntry.getFolderId());
+
+			if (Validator.isNotNull(dlFolder)) {
+				return DLFolderPermission.contains(
+					permissionChecker, dlFolder, ActionKeys.VIEW);
+			}
 		}
 
 		return true;

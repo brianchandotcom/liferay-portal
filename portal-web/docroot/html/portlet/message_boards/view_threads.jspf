@@ -44,6 +44,7 @@
 		if (useAssetEntryQuery) {
 			AssetEntryQuery assetEntryQuery = new AssetEntryQuery(MBMessage.class.getName(), searchContainer);
 
+			assetEntryQuery.setEnablePermissions(true);
 			assetEntryQuery.setExcludeZeroViewCount(false);
 
 			total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);

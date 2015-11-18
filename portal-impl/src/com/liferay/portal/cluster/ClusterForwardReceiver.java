@@ -37,13 +37,18 @@ public class ClusterForwardReceiver extends BaseReceiver {
 	}
 
 	@Override
-	public void receive(Message message) {
+	protected void doReceive(Message message) {
+		Object object = retrievePayload(message);
+
+		if (object == null) {
+			return;
+		}
+
 		if (!_localTransportAddresses.contains(message.getSrc()) ||
 			(message.getDest() != null)) {
 
 			_clusterForwardMessageListener.receive(
-				(com.liferay.portal.kernel.messaging.Message)
-					message.getObject());
+				(com.liferay.portal.kernel.messaging.Message)object);
 		}
 		else {
 			if (_log.isDebugEnabled()) {

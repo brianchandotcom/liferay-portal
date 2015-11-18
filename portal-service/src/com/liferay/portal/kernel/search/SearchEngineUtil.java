@@ -899,11 +899,15 @@ public class SearchEngineUtil {
 	}
 
 	public static void updatePermissionFields(String name, String primKey) {
-		if (isIndexReadOnly() || !PermissionThreadLocal.isFlushEnabled()) {
+		if (isIndexReadOnly()) {
 			return;
 		}
 
-		_searchPermissionChecker.updatePermissionFields(name, primKey);
+		if (PermissionThreadLocal.isFlushResourcePermissionEnabled(
+				name, primKey)) {
+
+			_searchPermissionChecker.updatePermissionFields(name, primKey);
+		}
 	}
 
 	public void setExcludedEntryClassNames(

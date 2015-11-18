@@ -31,7 +31,7 @@ searchContainer.setEmptyResultsMessage("no-web-content-was-found-that-matched-th
 ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)searchContainer.getDisplayTerms();
 %>
 
-<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1" onSubmit="event.preventDefault();">
+<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
 	<liferay-ui:search-toggle
 		autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
 		buttonLabel="search"
@@ -43,7 +43,7 @@ ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)searchContainer.getDispl
 
 			<aui:input name="<%= displayTerms.TITLE %>" size="20" type="text" value="<%= displayTerms.getTitle() %>" />
 
-			<aui:input name="<%= displayTerms.DESCRIPTION %>" size="20" type="text" value="<%= displayTerms.getDescription() %>" />
+			<aui:input label="summary" name="<%= displayTerms.DESCRIPTION %>" size="20" type="text" value="<%= displayTerms.getDescription() %>" />
 
 			<aui:input name="<%= displayTerms.CONTENT %>" size="20" type="text" value="<%= displayTerms.getContent() %>" />
 
@@ -110,6 +110,8 @@ ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)searchContainer.getDispl
 			</c:if>
 
 			<c:if test="<%= portletName.equals(PortletKeys.JOURNAL) %>">
+				<div class="separator"><!-- --></div>
+
 				<aui:select name="<%= displayTerms.STATUS %>">
 					<aui:option value=""></aui:option>
 					<aui:option label="draft" selected='<%= displayTerms.getStatus().equals("draft") %>' />
@@ -121,3 +123,16 @@ ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)searchContainer.getDispl
 		</aui:fieldset>
 	</liferay-ui:search-toggle>
 </aui:form>
+
+<aui:script use="aui-node-base,liferay-form">
+	var form = Liferay.Form.get('<portlet:namespace />fm1');
+
+	if (form) {
+		form.set(
+			'onSubmit',
+			function(event) {
+				event.preventDefault();
+			}
+		);
+	}
+</aui:script>

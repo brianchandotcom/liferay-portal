@@ -27,12 +27,14 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TreeModelFinder;
 import com.liferay.portal.kernel.util.TreePathUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
+import com.liferay.portal.model.TreeModel;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PropsValues;
@@ -355,9 +357,11 @@ public class JournalFolderLocalServiceImpl
 	public int getFoldersAndArticlesCount(long groupId, long folderId)
 		throws SystemException {
 
+		QueryDefinition queryDefinition = new QueryDefinition(
+			WorkflowConstants.STATUS_ANY);
+
 		return journalFolderFinder.countF_A_ByG_F(
-			groupId, folderId,
-			new QueryDefinition(WorkflowConstants.STATUS_ANY));
+			groupId, folderId, queryDefinition);
 	}
 
 	@Override
@@ -365,8 +369,10 @@ public class JournalFolderLocalServiceImpl
 			long groupId, long folderId, int status)
 		throws SystemException {
 
+		QueryDefinition queryDefinition = new QueryDefinition(status, 0, false);
+
 		return journalFolderFinder.countF_A_ByG_F(
-			groupId, folderId, new QueryDefinition(status));
+			groupId, folderId, queryDefinition);
 	}
 
 	@Override
@@ -417,6 +423,10 @@ public class JournalFolderLocalServiceImpl
 
 		parentFolderId = getParentFolderId(folder, parentFolderId);
 
+		if (folder.getParentFolderId() == parentFolderId) {
+			return folder;
+		}
+
 		validateFolder(
 			folder.getFolderId(), folder.getGroupId(), parentFolderId,
 			folder.getName());
@@ -427,6 +437,9 @@ public class JournalFolderLocalServiceImpl
 		folder.setExpandoBridgeAttributes(serviceContext);
 
 		journalFolderPersistence.update(folder);
+
+		rebuildTree(
+			folder.getCompanyId(), folderId, folder.getTreePath(), true);
 
 		return folder;
 	}
@@ -535,9 +548,22 @@ public class JournalFolderLocalServiceImpl
 	}
 
 	@Override
-	public void rebuildTree(long companyId) throws SystemException {
-		TreePathUtil.rebuildTree(
+	public void rebuildTree(long companyId)
+		throws PortalException, SystemException {
+
+		rebuildTree(
 			companyId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringPool.SLASH, false);
+	}
+
+	@Override
+	public void rebuildTree(
+			long companyId, long parentFolderId, String parentTreePath,
+			final boolean reindex)
+		throws PortalException, SystemException {
+
+		TreePathUtil.rebuildTree(
+			companyId, parentFolderId, parentTreePath,
 			new TreeModelFinder<JournalFolder>() {
 
 				@Override
@@ -552,6 +578,30 @@ public class JournalFolderLocalServiceImpl
 						size, new FolderIdComparator());
 				}
 
+				@Override
+				public void rebuildDependentModelsTreePaths(
+						long parentPrimaryKey, String treePath)
+					throws PortalException, SystemException {
+
+					journalArticleLocalService.setTreePaths(
+						parentPrimaryKey, treePath, false);
+			}
+
+				@Override
+				public void reindexTreeModels(List<TreeModel> treeModels)
+					throws PortalException {
+
+					if (!reindex) {
+						return;
+					}
+
+					Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+						JournalFolder.class);
+
+					for (TreeModel treeModel : treeModels) {
+						indexer.reindex(treeModel);
+					}
+				}
 			}
 		);
 	}
@@ -645,9 +695,14 @@ public class JournalFolderLocalServiceImpl
 
 		validateFolder(folderId, folder.getGroupId(), parentFolderId, name);
 
+		long oldParentFolderId = folder.getParentFolderId();
+
+		if (oldParentFolderId != parentFolderId) {
+			folder.setParentFolderId(parentFolderId);
+			folder.setTreePath(folder.buildTreePath());
+		}
+
 		folder.setModifiedDate(serviceContext.getModifiedDate(null));
-		folder.setParentFolderId(parentFolderId);
-		folder.setTreePath(folder.buildTreePath());
 		folder.setName(name);
 		folder.setDescription(description);
 		folder.setExpandoBridgeAttributes(serviceContext);
@@ -660,6 +715,11 @@ public class JournalFolderLocalServiceImpl
 			userId, folder, serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames(),
 			serviceContext.getAssetLinkEntryIds());
+
+		if (oldParentFolderId != parentFolderId) {
+			rebuildTree(
+				folder.getCompanyId(), folderId, folder.getTreePath(), true);
+		}
 
 		return folder;
 	}
@@ -766,6 +826,7 @@ public class JournalFolderLocalServiceImpl
 
 		for (JournalArticle article : articles) {
 			article.setFolderId(toFolderId);
+			article.setTreePath(article.buildTreePath());
 
 			journalArticlePersistence.update(article);
 

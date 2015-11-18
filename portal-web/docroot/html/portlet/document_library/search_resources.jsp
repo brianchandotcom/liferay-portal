@@ -156,6 +156,7 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajax) {
 								'<portlet:namespace />folderId': '<%= String.valueOf(folderId) %>',
 								'<portlet:namespace />viewEntries': <%= Boolean.TRUE.toString() %>
 							},
+							resetPagination: true,
 							src: Liferay.DL_SEARCH_END
 						}
 					);
@@ -261,7 +262,7 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajax) {
 								actionJsp="/html/portlet/document_library/file_entry_action.jsp"
 								containerName="<%= DLUtil.getAbsolutePath(liferayPortletRequest, fileEntry.getFolderId()) %>"
 								cssClass='<%= MathUtil.isEven(i) ? "alt" : StringPool.BLANK %>'
-								description="<%= (summary != null) ? HtmlUtil.escape(summary.getContent()) : fileEntry.getDescription() %>"
+								description="<%= (summary != null) ? summary.getContent() : fileEntry.getDescription() %>"
 								locked="<%= fileEntry.isCheckedOut() %>"
 								mbMessages="<%= searchResult.getMBMessages() %>"
 								queryTerms="<%= hits.getQueryTerms() %>"
@@ -270,7 +271,7 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajax) {
 								showCheckbox="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>"
 								status="<%= latestFileVersion.getStatus() %>"
 								thumbnailSrc="<%= DLUtil.getThumbnailSrc(fileEntry, null, themeDisplay) %>"
-								title="<%= (summary != null) ? HtmlUtil.escape(summary.getTitle()) : fileEntry.getTitle() %>"
+								title="<%= (summary != null) ? summary.getTitle() : fileEntry.getTitle() %>"
 								url="<%= tempRowURL.toString() %>"
 							/>
 						</c:when>
@@ -305,13 +306,13 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajax) {
 								actionJsp="/html/portlet/document_library/folder_action.jsp"
 								containerName="<%= DLUtil.getAbsolutePath(liferayPortletRequest, curFolder.getParentFolderId()) %>"
 								cssClass='<%= MathUtil.isEven(i) ? "alt" : StringPool.BLANK %>'
-								description="<%= (summary != null) ? HtmlUtil.escape(summary.getContent()) : curFolder.getDescription() %>"
+								description="<%= (summary != null) ? summary.getContent() : curFolder.getDescription() %>"
 								queryTerms="<%= hits.getQueryTerms() %>"
 								rowCheckerId="<%= String.valueOf(curFolder.getFolderId()) %>"
 								rowCheckerName="<%= Folder.class.getSimpleName() %>"
 								showCheckbox="<%= DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.DELETE) || DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE) %>"
 								thumbnailSrc='<%= themeDisplay.getPathThemeImages() + "/file_system/large/" + folderImage + ".png" %>'
-								title="<%= (summary != null) ? HtmlUtil.escape(summary.getTitle()) : curFolder.getName() %>"
+								title="<%= (summary != null) ? summary.getTitle() : curFolder.getName() %>"
 								url="<%= tempRowURL.toString() %>"
 							/>
 						</c:when>

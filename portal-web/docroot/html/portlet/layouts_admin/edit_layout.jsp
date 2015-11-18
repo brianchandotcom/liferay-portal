@@ -146,6 +146,7 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 	<aui:input name="selPlid" type="hidden" value="<%= selPlid %>" />
 	<aui:input name="privateLayout" type="hidden" value="<%= privateLayout %>" />
 	<aui:input name="layoutId" type="hidden" value="<%= layoutId %>" />
+	<aui:input name="devices" type="hidden" value='<%= PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED ? "regular,wap" : "regular" %>' />
 	<aui:input name="<%= PortletDataHandlerKeys.SELECTED_LAYOUTS %>" type="hidden" />
 
 	<c:if test="<%= layoutRevision != null && !incomplete %>">
@@ -226,7 +227,7 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 
 				<aui:script use="liferay-util-window">
 					var content;
-					var popup;
+					var popUp;
 
 					var clickHandler = function(event) {
 						var target = event.target;
@@ -240,28 +241,29 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 						if (dataValue === 'add-child-page') {
 							content = A.one('#<portlet:namespace />addLayout');
 
-							if (!popup) {
-								popup = Liferay.Util.Window.getWindow(
+							if (!popUp) {
+								popUp = Liferay.Util.Window.getWindow(
 									{
 										dialog: {
 											bodyContent: content.show(),
 											cssClass: 'lfr-add-dialog',
-											width: 600
+											destroyOnHide: true,
+											width: 800
 										},
 										title: '<%= UnicodeLanguageUtil.get(pageContext, "add-child-page") %>'
 									}
 								);
 							}
 
-							popup.show();
+							popUp.show();
 
-							var cancelButton = popup.get('contentBox').one('#<portlet:namespace />cancelAddOperation');
+							var cancelButton = popUp.get('contentBox').one('#<portlet:namespace />cancelAddOperation');
 
 							if (cancelButton) {
 								cancelButton.on(
 									'click',
 									function(event) {
-										popup.hide();
+										popUp.hide();
 									}
 								);
 							}
@@ -350,8 +352,6 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 		window,
 		'<portlet:namespace />saveLayout',
 		function(action) {
-			var A = AUI();
-
 			action = action || '<%= Constants.UPDATE %>';
 
 			if (action == '<%= Constants.DELETE %>') {

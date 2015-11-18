@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -72,8 +71,10 @@ import java.io.File;
 import java.io.Serializable;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Marcellus Tavares
@@ -88,12 +89,6 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 		String contentType = MimeTypesUtil.getContentType(fileName);
 
 		String title = fileName;
-
-		int index = title.indexOf(CharPool.PERIOD);
-
-		if (index > 0) {
-			title = title.substring(0, index);
-		}
 
 		try {
 			File file = DLStoreUtil.getFile(
@@ -151,6 +146,51 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 		}
 	}
 
+	protected boolean checkDuplicateNames(DDMStructure structure)
+		throws Exception {
+
+		String xml =
+			"<root>" + getFullStructureXML(structure, StringPool.BLANK) +
+				"</root>";
+
+		Document document = SAXReaderUtil.read(xml);
+
+		Set<String> duplicateElementNames =
+			getDuplicateElementNames(
+				document.getRootElement(), new HashSet<String>(),
+				new HashSet<String>());
+
+		if (duplicateElementNames.isEmpty()) {
+			return false;
+		}
+
+		if (!_log.isWarnEnabled()) {
+			return true;
+		}
+
+		StringBundler sb = new StringBundler(
+			duplicateElementNames.size() * 2 + 7);
+
+		sb.append("Structure with class name ID ");
+		sb.append(structure.getClassNameId());
+		sb.append(" and structure key = ");
+		sb.append(structure.getStructureKey());
+		sb.append(" contains more than one element that is identified by the ");
+		sb.append("same name either within itself or within any of its ");
+		sb.append("parent structures. The duplicate element names are: ");
+
+		for (String duplicateElementName : duplicateElementNames) {
+			sb.append(duplicateElementName);
+			sb.append(StringPool.COMMA_AND_SPACE);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		_log.warn(sb.toString());
+
+		return true;
+	}
+
 	protected boolean createDefaultMetadataElement(
 		Element dynamicElementElement, String defaultLanguageId) {
 
@@ -189,11 +229,42 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 		List<DDMStructure> structures =
 			DDMStructureLocalServiceUtil.getStructures();
 
+		boolean duplicateExists = false;
+
+		for (DDMStructure structure : structures) {
+			if (checkDuplicateNames(structure)) {
+				duplicateExists = true;
+			}
+		}
+
+		if (duplicateExists) {
+			throw new VerifyException(
+				"Duplicate element name found in structures");
+		}
+
 		for (DDMStructure structure : structures) {
 			verifyStructure(structure);
-
-			updateFileUploadReferences(structure);
 		}
+	}
+
+	protected Set<String> getDuplicateElementNames(
+		Element element, Set<String> elementNames,
+		Set<String> duplicateElementNames) {
+
+		String elementName = element.attributeValue("name");
+
+		if (!elementNames.add(elementName)) {
+			duplicateElementNames.add(elementName);
+		}
+
+		List<Element> dynamicElements = element.elements("dynamic-element");
+
+		for (Element dynamicElement : dynamicElements) {
+			duplicateElementNames = getDuplicateElementNames(
+				dynamicElement, elementNames, duplicateElementNames);
+		}
+
+		return duplicateElementNames;
 	}
 
 	protected String getFileUploadPath(BaseModel<?> baseModel)
@@ -234,6 +305,30 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 		sb.append(version);
 
 		return sb.toString();
+	}
+
+	protected String getFullStructureXML(DDMStructure structure, String xml)
+		throws Exception {
+
+		if (structure.getParentStructureId() != 0) {
+			DDMStructure parentStructure =
+				DDMStructureLocalServiceUtil.getStructure(
+					structure.getParentStructureId());
+
+			xml = getFullStructureXML(parentStructure, xml);
+		}
+
+		Document document = SAXReaderUtil.read(structure.getXsd());
+
+		Element rootElement = document.getRootElement();
+
+		List<Element> dynamicElements = rootElement.elements("dynamic-element");
+
+		for (Element dynamicElement : dynamicElements) {
+			xml += dynamicElement.asXML();
+		}
+
+		return xml;
 	}
 
 	protected String getJSON(FileEntry fileEntry) {
@@ -389,8 +484,6 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 			updateFileUploadReferences(structureLink);
 		}
 
-		updateStructure(structure, updateXSD(structure.getXsd()));
-
 		List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.getTemplates(
 			structure.getGroupId(), _ddmStructureClassNameId,
 			structure.getStructureId(),
@@ -516,6 +609,10 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 	}
 
 	protected void verifyStructure(DDMStructure structure) throws Exception {
+		updateFileUploadReferences(structure);
+
+		updateStructure(structure, updateXSD(structure.getXsd()));
+
 		boolean modified = false;
 
 		String defaultLanguageId = structure.getDefaultLanguageId();
@@ -528,8 +625,6 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 
 		for (Node node : nodes) {
 			Element dynamicElementElement = (Element)node;
-
-			updateStructure(structure, updateXSD(structure.getXsd()));
 
 			if (createDefaultMetadataElement(
 					dynamicElementElement, defaultLanguageId)) {

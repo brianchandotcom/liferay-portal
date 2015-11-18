@@ -79,11 +79,13 @@ AUI.add(
 
 					var modal = instance._getWindow(config);
 
-					instance._setWindowDefaultSizeIfNeeded(modal);
-
 					instance._bindDOMWinResizeIfNeeded();
 
 					modal.render();
+
+					instance._setWindowDefaultSizeIfNeeded(modal);
+
+					modal.align();
 
 					return modal;
 				},

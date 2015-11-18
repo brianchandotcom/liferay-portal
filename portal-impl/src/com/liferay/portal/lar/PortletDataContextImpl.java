@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ExportImportClassedModelUtil;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
+import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataContextListener;
@@ -63,6 +64,7 @@ import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Lock;
+import com.liferay.portal.model.OrgLabor;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletModel;
 import com.liferay.portal.model.ResourceConstants;
@@ -84,9 +86,11 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.TeamLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
+import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetLinkLocalServiceUtil;
@@ -94,9 +98,14 @@ import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.blogs.model.impl.BlogsEntryImpl;
 import com.liferay.portlet.bookmarks.model.impl.BookmarksEntryImpl;
 import com.liferay.portlet.bookmarks.model.impl.BookmarksFolderImpl;
+import com.liferay.portlet.documentlibrary.lar.xstream.FileEntryConverter;
+import com.liferay.portlet.documentlibrary.lar.xstream.FileVersionConverter;
+import com.liferay.portlet.documentlibrary.lar.xstream.FolderConverter;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileShortcutImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFolderImpl;
+import com.liferay.portlet.dynamicdatamapping.storage.Field;
+import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoColumn;
 import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
@@ -123,10 +132,15 @@ import com.liferay.portlet.wiki.model.impl.WikiNodeImpl;
 import com.liferay.portlet.wiki.model.impl.WikiPageImpl;
 
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.security.NoTypePermission;
+import com.thoughtworks.xstream.security.PrimitiveTypePermission;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+
+import java.sql.Time;
+import java.sql.Timestamp;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -134,6 +148,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -1880,6 +1895,25 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	@Override
+	public boolean isInitialPublication() {
+		Group group = null;
+
+		try {
+			group = GroupLocalServiceUtil.getGroup(getGroupId());
+		}
+		catch (Exception e) {
+		}
+
+		if (ExportImportThreadLocal.isStagingInProcess() && (group != null) &&
+			group.hasStagingGroup()) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isMissingReference(Element referenceElement) {
 		Attribute missingAttribute = referenceElement.attribute("missing");
 
@@ -2621,6 +2655,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	protected void initXStream() {
 		_xStream = new XStream();
 
+		// Aliases
+
 		_xStream.alias("BlogsEntry", BlogsEntryImpl.class);
 		_xStream.alias("BookmarksFolder", BookmarksFolderImpl.class);
 		_xStream.alias("BookmarksEntry", BookmarksEntryImpl.class);
@@ -2641,7 +2677,57 @@ public class PortletDataContextImpl implements PortletDataContext {
 		_xStream.alias("WikiNode", WikiNodeImpl.class);
 		_xStream.alias("WikiPage", WikiPageImpl.class);
 
+		// Omit fields
+
 		_xStream.omitField(HashMap.class, "cache_bitmask");
+
+		// Register converters
+
+		_xStream.registerConverter(
+			new FolderConverter(), XStream.PRIORITY_VERY_HIGH);
+		_xStream.registerConverter(
+			new FileEntryConverter(), XStream.PRIORITY_VERY_HIGH);
+		_xStream.registerConverter(
+			new FileVersionConverter(), XStream.PRIORITY_VERY_HIGH);
+
+		if (!PropsValues.STAGING_XSTREAM_SECURITY_ENABLED) {
+			return;
+		}
+
+		// Permissions
+
+		// Wipe all of them
+
+		_xStream.addPermission(NoTypePermission.NONE);
+
+		// Add permissions
+
+		_xStream.addPermission(PrimitiveTypePermission.PRIMITIVES);
+
+		List<String> allowedTypes = new ArrayList<String>();
+
+		allowedTypes.addAll(
+			ListUtil.toList(_XSTREAM_DEFAULT_ALLOWED_CLASS_NAMES));
+		allowedTypes.addAll(
+			ListUtil.toList(PropsValues.STAGING_XSTREAM_CLASS_WHITELIST));
+
+		_xStream.allowTypes(allowedTypes.toArray(new String[0]));
+
+		_xStream.allowTypeHierarchy(AssetLink.class);
+		_xStream.allowTypeHierarchy(AssetTag.class);
+		_xStream.allowTypeHierarchy(List.class);
+		_xStream.allowTypeHierarchy(Lock.class);
+		_xStream.allowTypeHierarchy(Map.class);
+		_xStream.allowTypeHierarchy(OrgLabor.class);
+		_xStream.allowTypeHierarchy(RatingsEntry.class);
+		_xStream.allowTypeHierarchy(StagedModel.class);
+
+		_xStream.allowTypesByWildcard(
+			new String[] {
+				"com.liferay.portal.model.*", "com.liferay.portal.model.impl.*",
+				"com.thoughtworks.xstream.mapper.DynamicProxyMapper*"
+			}
+		);
 	}
 
 	protected boolean isResourceMain(ClassedModel classedModel) {
@@ -2653,6 +2739,14 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		return true;
 	}
+
+	private static final String[] _XSTREAM_DEFAULT_ALLOWED_CLASS_NAMES =
+		new String[] {
+			byte[].class.getName(), Date.class.getName(), Field.class.getName(),
+			Fields.class.getName(), InputStream.class.getName(),
+			Locale.class.getName(), String.class.getName(),
+			Time.class.getName(), Timestamp.class.getName()
+		};
 
 	private static Log _log = LogFactoryUtil.getLog(
 		PortletDataContextImpl.class);

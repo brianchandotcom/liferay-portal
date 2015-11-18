@@ -26,7 +26,7 @@ CouponDisplayTerms displayTerms = (CouponDisplayTerms)searchContainer.getDisplay
 	<aui:col width="<%= 33 %>">
 		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="<%= displayTerms.CODE %>" size="20" type="text" value="<%= displayTerms.getCode() %>" />
 
-		<aui:select label="" name="<%= displayTerms.AND_OPERATOR %>">
+		<aui:select label="" name="<%= displayTerms.AND_OPERATOR %>" title="and-or-operator">
 			<aui:option label="and" selected="<%= displayTerms.isAndOperator() %>" value="1" />
 			<aui:option label="or" selected="<%= !displayTerms.isAndOperator() %>" value="0" />
 		</aui:select>

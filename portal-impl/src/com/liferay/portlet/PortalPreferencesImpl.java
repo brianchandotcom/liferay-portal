@@ -14,19 +14,30 @@
 
 package com.liferay.portlet;
 
+import com.liferay.portal.kernel.dao.orm.LockMode;
+import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.transaction.TransactionAttribute;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.PortalPreferencesLocalServiceUtil;
+import com.liferay.portal.service.persistence.PortalPreferencesPersistence;
+import com.liferay.portal.service.persistence.PortalPreferencesUtil;
 
 import java.io.IOException;
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.ConcurrentModificationException;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 import javax.portlet.ReadOnlyException;
 
@@ -37,6 +48,18 @@ import javax.portlet.ReadOnlyException;
 public class PortalPreferencesImpl
 	extends BasePreferencesImpl
 	implements Cloneable, PortalPreferences, Serializable {
+
+	public static final TransactionAttribute TRANSACTION_ATTRIBUTE;
+
+	static {
+		TransactionAttribute.Builder builder =
+			new TransactionAttribute.Builder();
+
+		builder.setRollbackForClasses(
+			PortalException.class, SystemException.class);
+
+		TRANSACTION_ATTRIBUTE = builder.build();
+	}
 
 	public PortalPreferencesImpl() {
 		this(0, 0, null, Collections.<String, Preference>emptyMap(), false);
@@ -55,7 +78,8 @@ public class PortalPreferencesImpl
 	public PortalPreferencesImpl clone() {
 		return new PortalPreferencesImpl(
 			getOwnerId(), getOwnerType(), getOriginalXML(),
-			getOriginalPreferences(), isSignedIn());
+			new HashMap<String, Preference>(
+				getOriginalPreferences()), isSignedIn());
 	}
 
 	@Override
@@ -128,21 +152,40 @@ public class PortalPreferencesImpl
 	}
 
 	@Override
-	public void reset(String key) throws ReadOnlyException {
+	public void reset(final String key) throws ReadOnlyException {
 		if (isReadOnly(key)) {
 			throw new ReadOnlyException(key);
 		}
 
-		Map<String, Preference> modifiedPreferences = getModifiedPreferences();
+		try {
+			validateStore(
+				new Callable<Void>() {
 
-		modifiedPreferences.remove(key);
+					@Override
+					public Void call() {
+						Map<String, Preference> modifiedPreferences =
+							getModifiedPreferences();
+
+						modifiedPreferences.remove(key);
+
+						return null;
+					}
+
+				}, key);
+		}
+		catch (ConcurrentModificationException cme) {
+			throw cme;
+		}
+		catch (Throwable t) {
+			_log.error(t, t);
+		}
 	}
 
 	@Override
 	public void resetValues(String namespace) {
-		try {
-			Map<String, Preference> preferences = getPreferences();
+		Map<String, Preference> preferences = getPreferences();
 
+		try {
 			for (Map.Entry<String, Preference> entry : preferences.entrySet()) {
 				String key = entry.getKey();
 
@@ -150,8 +193,9 @@ public class PortalPreferencesImpl
 					reset(key);
 				}
 			}
-
-			store();
+		}
+		catch (ConcurrentModificationException cme) {
+			throw cme;
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -169,52 +213,173 @@ public class PortalPreferencesImpl
 	}
 
 	@Override
-	public void setValue(String namespace, String key, String value) {
+	public void setValue(
+		final String namespace, final String key, final String value) {
+
 		if (Validator.isNull(key) || key.equals(_RANDOM_KEY)) {
 			return;
 		}
 
-		key = _encodeKey(namespace, key);
-
 		try {
-			if (value != null) {
-				super.setValue(key, value);
-			}
-			else {
-				reset(key);
-			}
+			Callable<Void> callable = new Callable<Void>() {
+
+				@Override
+				public Void call() throws ReadOnlyException {
+					String encodedKey = _encodeKey(namespace, key);
+
+					if (value == null) {
+						reset(encodedKey);
+					}
+					else {
+						PortalPreferencesImpl.super.setValue(encodedKey, value);
+					}
+
+					return null;
+				}
+
+			};
 
 			if (_signedIn) {
-				store();
+				validateStore(callable, _encodeKey(namespace, key));
+			}
+			else {
+				callable.call();
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (ConcurrentModificationException cme) {
+			throw cme;
+		}
+		catch (Throwable t) {
+			_log.error(t, t);
 		}
 	}
 
 	@Override
-	public void setValues(String namespace, String key, String[] values) {
+	public void setValues(
+		final String namespace, final String key, final String[] values) {
+
 		if (Validator.isNull(key) || key.equals(_RANDOM_KEY)) {
 			return;
 		}
 
-		key = _encodeKey(namespace, key);
-
 		try {
-			if (values != null) {
-				super.setValues(key, values);
-			}
-			else {
-				reset(key);
-			}
+			Callable<Void> callable = new Callable<Void>() {
+
+				@Override
+				public Void call() throws ReadOnlyException {
+					String encodedKey = _encodeKey(namespace, key);
+
+					if (values == null) {
+						reset(encodedKey);
+					}
+					else {
+						PortalPreferencesImpl.super.setValues(
+							encodedKey, values);
+					}
+
+					return null;
+				}
+
+			};
 
 			if (_signedIn) {
-				store();
+				validateStore(callable, _encodeKey(namespace, key));
+			}
+			else {
+				callable.call();
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (ConcurrentModificationException cme) {
+			throw cme;
+		}
+		catch (Throwable t) {
+			_log.error(t, t);
+		}
+	}
+
+	private Callable<Boolean> _createValidateCallable(
+		final String[] originalValues, final String key) {
+
+		return new Callable<Boolean>() {
+
+			@Override
+			public Boolean call() throws Exception {
+				com.liferay.portal.model.PortalPreferences
+					preferences = PortalPreferencesUtil.fetchByO_O(
+						getOwnerId(), getOwnerType(), false);
+
+				PortalPreferencesPersistence portalPreferencesPersistence =
+					PortalPreferencesUtil.getPersistence();
+
+				Session session =
+					portalPreferencesPersistence.getCurrentSession();
+
+				session.evict(preferences);
+
+				preferences = (com.liferay.portal.model.PortalPreferences)
+					session.get(
+						com.liferay.portal.model.impl.
+							PortalPreferencesImpl.class,
+						preferences.getPrimaryKey(), LockMode.UPGRADE);
+
+				PortalPreferencesImpl portalPreferencesImpl =
+					(PortalPreferencesImpl)
+						PortletPreferencesFactoryUtil.fromXML(
+							getOwnerId(), getOwnerType(),
+							preferences.getPreferences());
+
+				String originalXML = getOriginalXML();
+
+				if (originalXML.equals(preferences.getPreferences())) {
+					store();
+
+					return true;
+				}
+
+				if (!Arrays.equals(
+						originalValues,
+						portalPreferencesImpl.getValues(key, (String[])null))) {
+
+					return false;
+				}
+
+				reset();
+
+				setOriginalPreferences(
+					portalPreferencesImpl.getOriginalPreferences());
+
+				setOriginalXML(preferences.getPreferences());
+
+				return null;
+			}
+
+		};
+	}
+
+	protected void validateStore(final Callable<?> callable, final String key)
+		throws Throwable {
+
+		while (true) {
+			String[] originalValues = super.getValues(key, null);
+
+			callable.call();
+
+			Boolean result = TransactionInvokerUtil.invoke(
+				TRANSACTION_ATTRIBUTE,
+				_createValidateCallable(originalValues, key));
+
+			if (result == null) {
+				continue;
+			}
+
+			if (!result) {
+				PortalPreferencesWrapperCacheUtil.remove(
+					getOwnerId(), getOwnerType());
+
+				throw new ConcurrentModificationException();
+			}
+
+			break;
 		}
 	}
 

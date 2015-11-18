@@ -207,7 +207,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		}
 		%>
 
-		location.href = Liferay.Util.addParams('<portlet:namespace />status=' + status.value, '<%= showUsersURL.toString() %>');
+		location.href = Liferay.Util.addParams('<portlet:namespace />status=' + status.value, '<%= HtmlUtil.escapeJS(showUsersURL.toString()) %>');
 	}
 
 	Liferay.provide(

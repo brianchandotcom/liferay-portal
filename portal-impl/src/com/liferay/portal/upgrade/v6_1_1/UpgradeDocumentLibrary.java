@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * @author Sergio González
@@ -121,27 +122,46 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 				uniqueTitle += periodAndExtension;
 
-				ps = con.prepareStatement(
-					"update DLFileEntry set title = ? where fileEntryId = ?");
-
-				ps.setString(1, uniqueTitle);
-				ps.setLong(2, fileEntryId);
-
-				ps.executeUpdate();
-
-				ps = con.prepareStatement(
-					"update DLFileVersion set title = ? where fileEntryId = " +
-						"? and version = ?");
-
-				ps.setString(1, uniqueTitle);
-				ps.setLong(2, fileEntryId);
-				ps.setString(3, version);
-
-				ps.executeUpdate();
+				updateFileEntry(fileEntryId, version, uniqueTitle);
 			}
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected void updateFileEntry(
+			long fileEntryId, String version, String newTitle)
+		throws SQLException {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"update DLFileEntry set title = ? where fileEntryId = ?");
+
+			ps.setString(1, newTitle);
+			ps.setLong(2, fileEntryId);
+
+			ps.executeUpdate();
+
+			DataAccess.cleanUp(ps);
+
+			ps = con.prepareStatement(
+				"update DLFileVersion set title = ? where fileEntryId = " +
+					"? and version = ?");
+
+			ps.setString(1, newTitle);
+			ps.setLong(2, fileEntryId);
+			ps.setString(3, version);
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
 		}
 	}
 

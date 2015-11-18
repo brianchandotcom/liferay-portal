@@ -20,13 +20,13 @@ import java.util.Map;
 
 /**
  * @author Tomas Polesovsky
+ * @author Shuyang Zhou
  */
 public class StrictPortletPreferencesImpl
 	extends PortletPreferencesImpl
 	implements Cloneable, Serializable {
 
 	public StrictPortletPreferencesImpl() {
-		super();
 	}
 
 	public StrictPortletPreferencesImpl(
@@ -34,36 +34,13 @@ public class StrictPortletPreferencesImpl
 		String portletId, String xml, Map<String, Preference> preferences) {
 
 		super(companyId, ownerId, ownerType, plid, portletId, xml, preferences);
-
-		_companyId = companyId;
-	}
-
-	public StrictPortletPreferencesImpl(
-		String xml, Map<String, Preference > preferences) {
-
-		super(xml, preferences);
 	}
 
 	@Override
 	public Object clone() {
 		return new StrictPortletPreferencesImpl(
-			_companyId, getOwnerId(), getOwnerType(), getPlid(), getPortletId(),
+			companyId, getOwnerId(), getOwnerType(), getPlid(), getPortletId(),
 			getOriginalXML(), getOriginalPreferences());
 	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof StrictPortletPreferencesImpl)) {
-			return false;
-		}
-
-		return super.equals(obj);
-	}
-
-	private long _companyId;
 
 }

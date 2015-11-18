@@ -21,6 +21,8 @@ String currentURL = PortalUtil.getCurrentURL(request);
 
 String referer = ParamUtil.getString(request, WebKeys.REFERER, currentURL);
 
+Ticket ticket = (Ticket)request.getAttribute(WebKeys.TICKET);
+
 String ticketKey = ParamUtil.getString(request, "ticketKey");
 
 if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") && Validator.isNotNull(ticketKey)) {
@@ -31,6 +33,22 @@ PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 %>
 
 <c:choose>
+	<c:when test="<%= !themeDisplay.isSignedIn() && (ticket == null) %>">
+		<div class="alert alert-warning">
+			<liferay-ui:message key="your-password-reset-link-is-no-longer-valid" />
+
+			<%
+			PortletURL portletURL = new PortletURLImpl(request, PortletKeys.LOGIN, plid, PortletRequest.RENDER_PHASE);
+
+			portletURL.setParameter("struts_action", "/login/forgot_password");
+			portletURL.setWindowState(WindowState.MAXIMIZED);
+			%>
+
+			<div>
+				<aui:a href="<%= portletURL.toString() %>" label="request-a-new-password-reset-link"></aui:a>
+			</div>
+		</div>
+	</c:when>
 	<c:when test="<%= SessionErrors.contains(request, UserLockoutException.class.getName()) %>">
 		<div class="alert alert-error">
 			<liferay-ui:message key="this-account-has-been-locked" />
@@ -73,7 +91,7 @@ PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 					</c:if>
 
 					<c:if test="<%= upe.getType() == UserPasswordException.PASSWORD_NOT_CHANGEABLE %>">
-						<liferay-ui:message key="your-password-cannot-be-changed" />
+						<liferay-ui:message key="passwords-may-not-be-changed-under-the-current-password-policy" />
 					</c:if>
 
 					<c:if test="<%= upe.getType() == UserPasswordException.PASSWORD_SAME_AS_CURRENT %>">

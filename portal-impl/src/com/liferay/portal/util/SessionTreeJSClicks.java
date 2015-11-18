@@ -25,6 +25,7 @@ import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -60,43 +61,86 @@ public class SessionTreeJSClicks {
 	public static void closeNode(
 		HttpServletRequest request, String treeId, String nodeId) {
 
-		try {
-			String openNodesString = get(request, treeId);
+		while (true) {
+			try {
+				PortalPreferences portalPreferences =
+					PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
-			openNodesString = StringUtil.remove(openNodesString, nodeId);
+				String openNodesString = portalPreferences.getValue(
+					SessionTreeJSClicks.class.getName(), treeId);
 
-			put(request, treeId, openNodesString);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
+				openNodesString = StringUtil.remove(openNodesString, nodeId);
+
+				portalPreferences.setValue(
+					SessionTreeJSClicks.class.getName(), treeId,
+					openNodesString);
+
+				return;
+			}
+			catch (ConcurrentModificationException cme) {
+				continue;
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+
+				return;
+			}
 		}
 	}
 
 	public static void closeNodes(HttpServletRequest request, String treeId) {
-		try {
-			String openNodesString = StringPool.BLANK;
+		while (true) {
+			try {
+				PortalPreferences portalPreferences =
+					PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
-			put(request, treeId, openNodesString);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
+				portalPreferences.setValue(
+					SessionTreeJSClicks.class.getName(), treeId,
+					StringPool.BLANK);
+
+				return;
+			}
+			catch (ConcurrentModificationException cme) {
+				continue;
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+
+				return;
+			}
 		}
 	}
 
 	public static void closeNodes(
 		HttpServletRequest request, String treeId, String[] nodeIds) {
 
-		try {
-			String openNodesString = get(request, treeId);
+		while (true) {
+			try {
+				PortalPreferences portalPreferences =
+					PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
-			for (String nodeId : nodeIds) {
-				openNodesString = StringUtil.remove(openNodesString, nodeId);
+				String openNodesString = portalPreferences.getValue(
+					SessionTreeJSClicks.class.getName(), treeId);
+
+				for (String nodeId : nodeIds) {
+					openNodesString = StringUtil.remove(
+						openNodesString, nodeId);
+				}
+
+				portalPreferences.setValue(
+					SessionTreeJSClicks.class.getName(), treeId,
+					openNodesString);
+
+				return;
 			}
+			catch (ConcurrentModificationException cme) {
+				continue;
+			}
+			catch (Exception e) {
+				_log.error(e, e);
 
-			put(request, treeId, openNodesString);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
+				return;
+			}
 		}
 	}
 
@@ -104,7 +148,11 @@ public class SessionTreeJSClicks {
 		HttpServletRequest request, String treeId) {
 
 		try {
-			return get(request, treeId);
+			PortalPreferences portalPreferences =
+				PortletPreferencesFactoryUtil.getPortalPreferences(request);
+
+			return portalPreferences.getValue(
+				SessionTreeJSClicks.class.getName(), treeId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -138,47 +186,62 @@ public class SessionTreeJSClicks {
 	public static void openNode(
 		HttpServletRequest request, String treeId, String nodeId) {
 
-		try {
-			String openNodesString = get(request, treeId);
+		while (true) {
+			try {
+				PortalPreferences portalPreferences =
+					PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
-			openNodesString = StringUtil.add(openNodesString, nodeId);
+				String openNodesString = portalPreferences.getValue(
+					SessionTreeJSClicks.class.getName(), treeId);
 
-			put(request, treeId, openNodesString);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
+				openNodesString = StringUtil.add(openNodesString, nodeId);
+
+				portalPreferences.setValue(
+					SessionTreeJSClicks.class.getName(), treeId,
+					openNodesString);
+
+				return;
+			}
+			catch (ConcurrentModificationException cme) {
+				continue;
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+
+				return;
+			}
 		}
 	}
 
 	public static void openNodes(
 		HttpServletRequest request, String treeId, String[] nodeIds) {
 
-		try {
-			String openNodesString = get(request, treeId);
+		while (true) {
+			try {
+				PortalPreferences portalPreferences =
+					PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
-			for (String nodeId : nodeIds) {
-				openNodesString = StringUtil.add(openNodesString, nodeId);
+				String openNodesString = portalPreferences.getValue(
+					SessionTreeJSClicks.class.getName(), treeId);
+
+				for (String nodeId : nodeIds) {
+					openNodesString = StringUtil.add(openNodesString, nodeId);
+				}
+
+				portalPreferences.setValue(
+					SessionTreeJSClicks.class.getName(), treeId,
+					openNodesString);
+
+				return;
 			}
+			catch (ConcurrentModificationException cme) {
+				continue;
+			}
+			catch (Exception e) {
+				_log.error(e, e);
 
-			put(request, treeId, openNodesString);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-	}
-
-	protected static String get(HttpServletRequest request, String key) {
-		try {
-			PortalPreferences preferences =
-				PortletPreferencesFactoryUtil.getPortalPreferences(request);
-
-			return preferences.getValue(
-				SessionTreeJSClicks.class.getName(), key);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			return null;
+				return;
+			}
 		}
 	}
 
@@ -200,21 +263,6 @@ public class SessionTreeJSClicks {
 		}
 
 		return layoutIds;
-	}
-
-	protected static void put(
-		HttpServletRequest request, String key, String value) {
-
-		try {
-			PortalPreferences preferences =
-				PortletPreferencesFactoryUtil.getPortalPreferences(request);
-
-			preferences.setValue(
-				SessionTreeJSClicks.class.getName(), key, value);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(SessionTreeJSClicks.class);

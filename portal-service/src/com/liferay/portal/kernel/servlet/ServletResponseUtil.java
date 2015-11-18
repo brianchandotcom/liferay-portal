@@ -259,6 +259,56 @@ public class ServletResponseUtil {
 		sendFile(null, response, fileName, inputStream, contentType);
 	}
 
+	public static void sendFileWithRangeHeader(
+			HttpServletRequest request, HttpServletResponse response,
+			String fileName, InputStream inputStream, long contentLength,
+			String contentType)
+		throws IOException {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Accepting ranges for the file " + fileName);
+		}
+
+		response.setHeader(
+			HttpHeaders.ACCEPT_RANGES, HttpHeaders.ACCEPT_RANGES_BYTES_VALUE);
+
+		List<Range> ranges = null;
+
+		try {
+			ranges = getRanges(request, response, contentLength);
+		}
+		catch (IOException ioe) {
+			if (_log.isErrorEnabled()) {
+				_log.error(ioe);
+			}
+
+			response.setHeader(
+				HttpHeaders.CONTENT_RANGE, "bytes */" + contentLength);
+
+			response.sendError(
+				HttpServletResponse.SC_REQUESTED_RANGE_NOT_SATISFIABLE);
+
+			return;
+		}
+
+		if ((ranges == null) || ranges.isEmpty()) {
+			sendFile(
+				request, response, fileName, inputStream, contentLength,
+				contentType);
+		}
+		else {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Request has range header " +
+						request.getHeader(HttpHeaders.RANGE));
+			}
+
+			write(
+				request, response, fileName, ranges, inputStream, contentLength,
+				contentType);
+		}
+	}
+
 	public static void write(
 			HttpServletRequest request, HttpServletResponse response,
 			String fileName, List<Range> ranges, InputStream inputStream,
@@ -344,7 +394,7 @@ public class ServletResponseUtil {
 							range.getContentRange());
 					servletOutputStream.println();
 
-					copyRange(
+					inputStream = copyRange(
 						inputStream, outputStream, range.getStart(),
 						range.getLength());
 				}
@@ -444,13 +494,13 @@ public class ServletResponseUtil {
 			// LEP-3122
 
 			if (!response.isCommitted()) {
-				int contentLength = 0;
+				long contentLength = 0;
 
 				for (byte[] bytes : bytesArray) {
 					contentLength += bytes.length;
 				}
 
-				response.setContentLength(contentLength);
+				setContentLength(response, contentLength);
 
 				response.flushBuffer();
 
@@ -488,8 +538,9 @@ public class ServletResponseUtil {
 		}
 		else {
 			write(
-				response, byteBuffer.array(), byteBuffer.position(),
-				byteBuffer.limit());
+				response, byteBuffer.array(),
+				byteBuffer.arrayOffset() + byteBuffer.position(),
+				byteBuffer.arrayOffset() + byteBuffer.limit());
 		}
 	}
 
@@ -528,9 +579,9 @@ public class ServletResponseUtil {
 			FileChannel fileChannel = fileInputStream.getChannel();
 
 			try {
-				int contentLength = (int)fileChannel.size();
+				long contentLength = fileChannel.size();
 
-				response.setContentLength(contentLength);
+				setContentLength(response, contentLength);
 
 				response.flushBuffer();
 
@@ -564,7 +615,7 @@ public class ServletResponseUtil {
 			}
 
 			if (contentLength > 0) {
-				response.setContentLength((int)contentLength);
+				setContentLength(response, contentLength);
 			}
 
 			response.flushBuffer();
@@ -593,7 +644,7 @@ public class ServletResponseUtil {
 		}
 	}
 
-	protected static void copyRange(
+	protected static InputStream copyRange(
 			InputStream inputStream, OutputStream outputStream, long start,
 			long length)
 		throws IOException {
@@ -605,23 +656,43 @@ public class ServletResponseUtil {
 
 			fileChannel.transferTo(
 				start, length, Channels.newChannel(outputStream));
+
+			return fileInputStream;
 		}
 		else if (inputStream instanceof ByteArrayInputStream) {
 			ByteArrayInputStream byteArrayInputStream =
 				(ByteArrayInputStream)inputStream;
 
+			byteArrayInputStream.reset();
 			byteArrayInputStream.skip(start);
 
 			StreamUtil.transfer(byteArrayInputStream, outputStream, length);
+
+			return byteArrayInputStream;
 		}
-		else {
+		else if (inputStream instanceof RandomAccessInputStream) {
 			RandomAccessInputStream randomAccessInputStream =
-				new RandomAccessInputStream(inputStream);
+				(RandomAccessInputStream)inputStream;
 
 			randomAccessInputStream.seek(start);
 
-			StreamUtil.transfer(randomAccessInputStream, outputStream, length);
+			StreamUtil.transfer(
+				randomAccessInputStream, outputStream, StreamUtil.BUFFER_SIZE,
+				false, length);
+
+			return randomAccessInputStream;
 		}
+
+		return copyRange(
+			new RandomAccessInputStream(inputStream), outputStream, start,
+			length);
+	}
+
+	protected static void setContentLength(
+		HttpServletResponse response, long contentLength) {
+
+		response.setHeader(
+			HttpHeaders.CONTENT_LENGTH, String.valueOf(contentLength));
 	}
 
 	protected static void setHeaders(

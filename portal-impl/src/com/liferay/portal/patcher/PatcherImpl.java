@@ -16,8 +16,10 @@ package com.liferay.portal.patcher;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.patcher.PatchInconsistencyException;
 import com.liferay.portal.kernel.patcher.Patcher;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -28,11 +30,13 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.Arrays;
 import java.util.Properties;
 
 /**
  * @author Zsolt Balogh
  * @author Brian Wing Shun Chan
+ * @author Zoltán Takács
  */
 @DoPrivileged
 public class PatcherImpl implements Patcher {
@@ -82,12 +86,7 @@ public class PatcherImpl implements Patcher {
 			return _installedPatchNames;
 		}
 
-		Properties properties = getProperties();
-
-		_installedPatchNames = StringUtil.split(
-			properties.getProperty(PROPERTY_INSTALLED_PATCHES));
-
-		return _installedPatchNames;
+		return _getInstalledPatches(null);
 	}
 
 	@Override
@@ -135,18 +134,98 @@ public class PatcherImpl implements Patcher {
 			return _properties;
 		}
 
+		return _getProperties(PATCHER_PROPERTIES);
+	}
+
+	@Override
+	public boolean isConfigured() {
+		return _configured;
+	}
+
+	@Override
+	public boolean hasInconsistentPatchLevels() {
+		return _inconsistentPatchLevels;
+	}
+
+	@Override
+	public void verifyPatchLevels() throws PatchInconsistencyException {
+		Properties portalImplJARProperties = _getProperties(PATCHER_PROPERTIES);
+
+		String[] portalImplJARPatches = _getInstalledPatches(
+			portalImplJARProperties);
+
+		Arrays.sort(portalImplJARPatches);
+
+		Properties portalServiceJARProperties = _getProperties(
+			PATCHER_SERVICE_PROPERTIES);
+
+		String[] serviceJARPatches = _getInstalledPatches(
+			portalServiceJARProperties);
+
+		Arrays.sort(serviceJARPatches);
+
+		if (!Arrays.equals(portalImplJARPatches, serviceJARPatches)) {
+			_log.error("Inconsistent patch level detected");
+
+			if (_log.isWarnEnabled()) {
+				if (ArrayUtil.isEmpty(portalImplJARPatches)) {
+					_log.warn(
+						"There are no patches installed on portal-impl.jar");
+				}
+				else {
+					_log.warn(
+						"Patch level on portal-impl.jar: " +
+							Arrays.toString(portalImplJARPatches));
+				}
+
+				if (ArrayUtil.isEmpty(serviceJARPatches)) {
+					_log.warn(
+						"There are no patches installed on portal-service.jar");
+				}
+				else {
+					_log.warn(
+						"Patch level on portal-service.jar: " +
+							Arrays.toString(serviceJARPatches));
+				}
+			}
+
+			_inconsistentPatchLevels = true;
+
+			throw new PatchInconsistencyException();
+		}
+	}
+
+	private String[] _getInstalledPatches(Properties properties) {
+		if (properties == null) {
+			properties = getProperties();
+		}
+
+		_installedPatchNames = StringUtil.split(
+			properties.getProperty(PROPERTY_INSTALLED_PATCHES));
+
+		return _installedPatchNames;
+	}
+
+	private Properties _getProperties(String fileName) {
+		if (Validator.isNull(fileName)) {
+			fileName = PATCHER_PROPERTIES;
+		}
+
 		Properties properties = new Properties();
 
 		Class<?> clazz = getClass();
 
+		if (Validator.equals(fileName, PATCHER_SERVICE_PROPERTIES)) {
+			clazz = clazz.getInterfaces()[0];
+		}
+
 		ClassLoader classLoader = clazz.getClassLoader();
 
-		InputStream inputStream = classLoader.getResourceAsStream(
-			PATCHER_PROPERTIES);
+		InputStream inputStream = classLoader.getResourceAsStream(fileName);
 
 		if (inputStream == null) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to load " + PATCHER_PROPERTIES);
+				_log.debug("Unable to load " + fileName);
 			}
 		}
 		else {
@@ -168,15 +247,11 @@ public class PatcherImpl implements Patcher {
 		return _properties;
 	}
 
-	@Override
-	public boolean isConfigured() {
-		return _configured;
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(PatcherImpl.class);
 
 	private static boolean _configured;
 	private static String[] _fixedIssueKeys;
+	private static boolean _inconsistentPatchLevels;
 	private static String[] _installedPatchNames;
 	private static File _patchDirectory;
 	private static String[] _patchLevels;

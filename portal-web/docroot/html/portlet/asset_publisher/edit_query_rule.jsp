@@ -44,12 +44,12 @@ if (queryLogicIndex >= 0) {
 %>
 
 <div class="field-row form-inline query-row">
-	<aui:select inlineField="<%= true %>" label="" name='<%= "queryContains" + index %>'>
+	<aui:select inlineField="<%= true %>" label="" name='<%= "queryContains" + index %>' title="query-contains">
 		<aui:option label="contains" selected="<%= queryContains %>" value="true" />
 		<aui:option label="does-not-contain" selected="<%= !queryContains %>" value="false" />
 	</aui:select>
 
-	<aui:select inlineField="<%= true %>" label="" name='<%= "queryAndOperator" + index %>'>
+	<aui:select inlineField="<%= true %>" label="" name='<%= "queryAndOperator" + index %>' title="and-operator">
 		<aui:option label="all" selected="<%= queryAndOperator %>" value="true" />
 		<aui:option label="any" selected="<%= !queryAndOperator %>" value="false" />
 	</aui:select>
@@ -67,7 +67,7 @@ if (queryLogicIndex >= 0) {
 		/>
 	</div>
 
-	<div class="field categories-selector <%= Validator.equals(queryName, "assetCategories") ? StringPool.BLANK : "hide" %>">
+	<div class="categories-selector field <%= Validator.equals(queryName, "assetCategories") ? StringPool.BLANK : "hide" %>">
 		<liferay-ui:asset-categories-selector
 			curCategoryIds='<%= Validator.equals(queryName, "assetCategories") ? queryValues : null %>'
 			groupIds="<%= categorizableGroupIds %>"

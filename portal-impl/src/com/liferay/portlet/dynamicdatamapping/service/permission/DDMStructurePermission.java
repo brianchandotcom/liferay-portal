@@ -101,7 +101,7 @@ public class DDMStructurePermission {
 		throws PortalException, SystemException {
 
 		DDMStructure structure = DDMStructureLocalServiceUtil.getStructure(
-			groupId, classNameId, structureKey);
+			groupId, classNameId, structureKey, true);
 
 		return contains(permissionChecker, structure, actionId);
 	}

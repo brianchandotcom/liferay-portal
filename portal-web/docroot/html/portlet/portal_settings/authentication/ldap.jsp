@@ -158,7 +158,7 @@ if (ldapAuthEnabled && (ldapServerIds.length <= 0) && Validator.isNull(PrefsProp
 						<%= ldapServerId %>
 					</td>
 					<td class="table-cell">
-						<%= ldapServerName %>
+						<%= HtmlUtil.escape(ldapServerName) %>
 					</td>
 					<td align="right" class="table-cell">
 						<div class="control">

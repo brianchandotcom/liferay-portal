@@ -101,80 +101,72 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 		<aui:row>
 			<aui:col width="<%= 60 %>">
 				<div class="lfr-asset-assigned">
-					<aui:field-wrapper label="assigned-to">
-						<c:choose>
-							<c:when test="<%= workflowTask.isAssignedToSingleUser() %>">
-								<liferay-ui:input-resource url="<%= PortalUtil.getUserName(workflowTask.getAssigneeUserId(), StringPool.BLANK) %>" />
-							</c:when>
-							<c:otherwise>
-								<liferay-ui:input-resource url='<%= LanguageUtil.get(pageContext, "nobody") %>' />
-							</c:otherwise>
-						</c:choose>
+					<c:choose>
+						<c:when test="<%= workflowTask.isAssignedToSingleUser() %>">
+							<aui:input name="assignedTo" type="resource" value="<%= PortalUtil.getUserName(workflowTask.getAssigneeUserId(), StringPool.BLANK) %>" />
+						</c:when>
+						<c:otherwise>
+							<aui:input name="assignedTo" type="resource" value='<%= LanguageUtil.get(pageContext, "nobody") %>' />
+						</c:otherwise>
+					</c:choose>
 
-						<c:if test="<%= !workflowTask.isAssignedToSingleUser() %>">
-							<%= StringPool.DASH %>
+					<c:if test="<%= !workflowTask.isAssignedToSingleUser() %>">
+						<%= StringPool.DASH %>
 
-							<portlet:actionURL var="assignToMeURL">
-								<portlet:param name="struts_action" value="/workflow_tasks/edit_workflow_task" />
-								<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ASSIGN %>" />
-								<portlet:param name="redirect" value="<%= currentURL %>" />
-								<portlet:param name="workflowTaskId" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
-								<portlet:param name="assigneeUserId" value="<%= String.valueOf(user.getUserId()) %>" />
-							</portlet:actionURL>
+						<portlet:actionURL var="assignToMeURL">
+							<portlet:param name="struts_action" value="/workflow_tasks/edit_workflow_task" />
+							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ASSIGN %>" />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
+							<portlet:param name="workflowTaskId" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
+							<portlet:param name="assigneeUserId" value="<%= String.valueOf(user.getUserId()) %>" />
+						</portlet:actionURL>
 
-							<span class="workflow-task task-assign-to-me-link"><aui:a href="<%= assignToMeURL %>" id='<%= randomId + "taskAssignToMeLink" %>' label="assign-to-me" /></span>
-						</c:if>
+						<span class="task-assign-to-me-link workflow-task"><aui:a href="<%= assignToMeURL %>" id='<%= randomId + "taskAssignToMeLink" %>' label="assign-to-me" /></span>
+					</c:if>
 
-						&nbsp;
+					&nbsp;
 
-						<%
-						long[] pooledActorsIds = WorkflowTaskManagerUtil.getPooledActorsIds(company.getCompanyId(), workflowTask.getWorkflowTaskId());
-						%>
+					<%
+					long[] pooledActorsIds = WorkflowTaskManagerUtil.getPooledActorsIds(company.getCompanyId(), workflowTask.getWorkflowTaskId());
+					%>
 
-						<c:if test="<%= _hasOtherAssignees(pooledActorsIds, workflowTask, user) %>">
-							<%= StringPool.DASH %>
+					<c:if test="<%= _hasOtherAssignees(pooledActorsIds, workflowTask, user) %>">
+						<%= StringPool.DASH %>
 
-							<portlet:actionURL var="assignURL">
-								<portlet:param name="struts_action" value="/workflow_tasks/edit_workflow_task" />
-								<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ASSIGN %>" />
-								<portlet:param name="redirect" value="<%= currentURL %>" />
-								<portlet:param name="workflowTaskId" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
-							</portlet:actionURL>
+						<portlet:actionURL var="assignURL">
+							<portlet:param name="struts_action" value="/workflow_tasks/edit_workflow_task" />
+							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ASSIGN %>" />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
+							<portlet:param name="workflowTaskId" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
+						</portlet:actionURL>
 
-							<span class="workflow-task task-assign-link"><aui:a href="<%= assignURL %>" id='<%= randomId + "taskAssignLink" %>' label="assign-to-..." /></span>
-						</c:if>
-					</aui:field-wrapper>
+						<span class="task-assign-link workflow-task"><aui:a href="<%= assignURL %>" id='<%= randomId + "taskAssignLink" %>' label="assign-to-..." /></span>
+					</c:if>
 				</div>
 
 				<div class="lfr-asset-status">
-					<aui:field-wrapper label="state">
-						<liferay-ui:input-resource url="<%= LanguageUtil.get(pageContext, HtmlUtil.escape(WorkflowInstanceLinkLocalServiceUtil.getState(companyId, groupId, className, classPK))) %>" />
-					</aui:field-wrapper>
+					<aui:input name="state" type="resource" value="<%= LanguageUtil.get(pageContext, HtmlUtil.escape(WorkflowInstanceLinkLocalServiceUtil.getState(companyId, groupId, className, classPK))) %>" />
 				</div>
 			</aui:col>
 
 			<aui:col>
 				<div class="lfr-asset-date">
-					<aui:field-wrapper label="create-date">
-						<liferay-ui:input-resource url="<%= dateFormatDateTime.format(workflowTask.getCreateDate()) %>" />
-					</aui:field-wrapper>
+					<aui:input name="createDate" type="resource" value="<%= dateFormatDateTime.format(workflowTask.getCreateDate()) %>" />
 				</div>
 
 				<div class="lfr-asset-due-date">
-					<aui:field-wrapper label="due-date">
-						<liferay-ui:input-resource url='<%= (workflowTask.getDueDate() == null) ? LanguageUtil.get(pageContext, "never") : dateFormatDateTime.format(workflowTask.getDueDate()) %>' />
+					<aui:input name="dueDate" type="resource" value='<%= (workflowTask.getDueDate() == null) ? LanguageUtil.get(pageContext, "never") : dateFormatDateTime.format(workflowTask.getDueDate()) %>' />
 
-						<c:if test="<%= !workflowTask.isCompleted() %>">
-							<portlet:actionURL var="updateDueDateURL">
-								<portlet:param name="struts_action" value="/workflow_tasks/edit_workflow_task" />
-								<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
-								<portlet:param name="redirect" value="<%= currentURL %>" />
-								<portlet:param name="workflowTaskId" value="<%= StringUtil.valueOf(workflowTask.getWorkflowTaskId()) %>" />
-							</portlet:actionURL>
+					<c:if test="<%= !workflowTask.isCompleted() %>">
+						<portlet:actionURL var="updateDueDateURL">
+							<portlet:param name="struts_action" value="/workflow_tasks/edit_workflow_task" />
+							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
+							<portlet:param name="workflowTaskId" value="<%= StringUtil.valueOf(workflowTask.getWorkflowTaskId()) %>" />
+						</portlet:actionURL>
 
-							<%= StringPool.DASH %> (<span class="workflow-task task-due-date-link"><aui:a href="<%= updateDueDateURL %>" id='<%= randomId + "taskDueDateLink" %>' label="change" />)
-						</c:if>
-					</aui:field-wrapper>
+						<%= StringPool.DASH %> (<span class="task-due-date-link workflow-task"><aui:a href="<%= updateDueDateURL %>" id='<%= randomId + "taskDueDateLink" %>' label="change" />)
+					</c:if>
 				</div>
 			</aui:col>
 		</aui:row>
@@ -204,8 +196,8 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 
 								String editPortletURLString = editPortletURL.toString();
 
-								editPortletURLString = HttpUtil.addParameter(editPortletURLString, "doAsGroupId", assetRenderer.getGroupId());
-								editPortletURLString = HttpUtil.addParameter(editPortletURLString, "refererPlid", plid);
+								editPortletURLString = HttpUtil.setParameter(editPortletURLString, "doAsGroupId", assetRenderer.getGroupId());
+								editPortletURLString = HttpUtil.setParameter(editPortletURLString, "refererPlid", plid);
 								%>
 
 								<c:choose>

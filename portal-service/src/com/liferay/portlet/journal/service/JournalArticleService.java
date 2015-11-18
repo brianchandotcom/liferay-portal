@@ -383,6 +383,12 @@ public interface JournalArticleService extends BaseService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.journal.model.JournalArticle fetchArticle(
+		long groupId, java.lang.String articleId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Returns the web content article with the ID.
 	*
@@ -783,6 +789,62 @@ public interface JournalArticleService extends BaseService {
 		java.util.List<java.lang.Long> folderIds)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Returns an ordered range of all the web content articles matching the
+	* group, user, the root folder or any of its subfolders.
+	*
+	* @param groupId the primary key of the web content article's group
+	* @param userId the primary key of the user (optionally <code>0</code>)
+	* @param rootFolderId the primary key of the root folder to begin the
+	search
+	* @param status the web content article's workflow status. For more
+	information see {@link WorkflowConstants} for constants starting
+	with the "STATUS_" prefix.
+	* @param start the lower bound of the range of web content articles to
+	return
+	* @param end the upper bound of the range of web content articles to
+	return (not inclusive)
+	* @param orderByComparator the comparator to order the web content
+	articles
+	* @return the range of matching web content articles ordered by the
+	comparator
+	* @throws PortalException if the root folder could not be found, if the
+	current user did not have permission to view the root folder, or
+	if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> getGroupArticles(
+		long groupId, long userId, long rootFolderId, int status,
+		boolean includeOwner, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the web content articles matching the
+	* group, user, the root folder or any of its subfolders.
+	*
+	* @param groupId the primary key of the web content article's group
+	* @param userId the primary key of the user (optionally <code>0</code>)
+	* @param rootFolderId the primary key of the root folder to begin the
+	search
+	* @param status the web content article's workflow status. For more
+	information see {@link WorkflowConstants} for constants starting
+	with the "STATUS_" prefix.
+	* @param start the lower bound of the range of web content articles to
+	return
+	* @param end the upper bound of the range of web content articles to
+	return (not inclusive)
+	* @param orderByComparator the comparator to order the web content
+	articles
+	* @return the range of matching web content articles ordered by the
+	comparator
+	* @throws PortalException if the root folder could not be found, if the
+	current user did not have permission to view the root folder, or
+	if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> getGroupArticles(
 		long groupId, long userId, long rootFolderId, int status, int start,
@@ -794,6 +856,16 @@ public interface JournalArticleService extends BaseService {
 	/**
 	* Returns an ordered range of all the web content articles matching the
 	* group, user, the root folder or any of its subfolders.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
 	*
 	* @param groupId the primary key of the web content article's group
 	* @param userId the primary key of the user (optionally <code>0</code>)
@@ -842,6 +914,30 @@ public interface JournalArticleService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupArticlesCount(long groupId, long userId,
 		long rootFolderId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of web content articles matching the group, user,
+	* the root folder or any of its subfolders.
+	*
+	* @param groupId the primary key of the web content article's group
+	* @param userId the primary key of the user (optionally <code>0</code>)
+	* @param rootFolderId the primary key of the root folder to begin the
+	search
+	* @param status the web content article's workflow status. For more
+	information see {@link WorkflowConstants} for constants starting
+	with the "STATUS_" prefix.
+	* @return the range of matching web content articles ordered by the
+	comparator
+	* @throws PortalException if the root folder could not be found, if the
+	current user did not have permission to view the root folder, or
+	if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getGroupArticlesCount(long groupId, long userId,
+		long rootFolderId, int status, boolean includeOwner)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

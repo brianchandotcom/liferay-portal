@@ -376,8 +376,16 @@ public class PortalUtil {
 		return getPortal().getCompanyIds();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getComputerAddresses()}
+	 */
+	@Deprecated
 	public static String getComputerAddress() {
 		return getPortal().getComputerAddress();
+	}
+
+	public static Set<String> getComputerAddresses() {
+		return getPortal().getComputerAddresses();
 	}
 
 	public static String getComputerName() {
@@ -1818,6 +1826,10 @@ public class PortalUtil {
 		return getPortal().isReservedParameter(name);
 	}
 
+	public static boolean isRightToLeft(HttpServletRequest request) {
+		return getPortal().isRightToLeft(request);
+	}
+
 	public static boolean isRSSFeedsEnabled() {
 		return getPortal().isRSSFeedsEnabled();
 	}
@@ -1984,8 +1996,9 @@ public class PortalUtil {
 	}
 
 	public static PortletMode updatePortletMode(
-		String portletId, User user, Layout layout, PortletMode portletMode,
-		HttpServletRequest request) {
+			String portletId, User user, Layout layout, PortletMode portletMode,
+			HttpServletRequest request)
+		throws PortalException, SystemException {
 
 		return getPortal().updatePortletMode(
 			portletId, user, layout, portletMode, request);

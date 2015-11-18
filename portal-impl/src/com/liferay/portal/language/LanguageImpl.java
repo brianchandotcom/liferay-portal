@@ -14,6 +14,10 @@
 
 package com.liferay.portal.language;
 
+import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheMapSynchronizeUtil;
+import com.liferay.portal.kernel.cache.PortalCacheMapSynchronizeUtil.Synchronizer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.Language;
@@ -37,6 +41,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -48,6 +53,8 @@ import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletConfigFactoryUtil;
+
+import java.io.Serializable;
 
 import java.text.MessageFormat;
 
@@ -75,7 +82,7 @@ import javax.servlet.jsp.PageContext;
  * @author Eduardo Lundgren
  */
 @DoPrivileged
-public class LanguageImpl implements Language {
+public class LanguageImpl implements Language, Serializable {
 
 	@Override
 	public String format(
@@ -529,6 +536,11 @@ public class LanguageImpl implements Language {
 	}
 
 	@Override
+	public Locale getLocale(long groupId, String languageCode) {
+		return _getInstance()._getLocale(groupId, languageCode);
+	}
+
+	@Override
 	public Locale getLocale(String languageCode) {
 		return _getInstance()._getLocale(languageCode);
 	}
@@ -721,7 +733,9 @@ public class LanguageImpl implements Language {
 		}
 
 		return GetterUtil.getBoolean(
-			group.getTypeSettingsProperty("inheritLocales"), true);
+			group.getTypeSettingsProperty(
+				GroupConstants.TYPE_SETTINGS_KEY_INHERIT_LOCALES),
+			true);
 	}
 
 	@Override
@@ -920,6 +934,19 @@ public class LanguageImpl implements Language {
 		return StringPool.UTF8;
 	}
 
+	private Locale _getLocale(long groupId, String languageCode) {
+		Map<String, Locale> localesMap = _groupLanguageCodeLocalesMap.get(
+			groupId);
+
+		if (localesMap == null) {
+			_initGroupLocales(groupId);
+
+			localesMap = _groupLanguageCodeLocalesMap.get(groupId);
+		}
+
+		return localesMap.get(languageCode);
+	}
+
 	private Locale _getLocale(String languageCode) {
 		return _localesMap.get(languageCode);
 	}
@@ -994,26 +1021,48 @@ public class LanguageImpl implements Language {
 			localesSet.add(locale);
 		}
 
+		_groupLanguageCodeLocalesMap.put(groupId, localesMap);
 		_groupLocalesMap.put(groupId, locales);
 		_groupLocalesSet.put(groupId, localesSet);
 	}
 
 	private void _resetAvailableGroupLocales(long groupId) {
+		_groupLanguageCodeLocalesMap.remove(groupId);
 		_groupLocalesMap.remove(groupId);
 		_groupLocalesSet.remove(groupId);
 	}
 
 	private void _resetAvailableLocales(long companyId) {
-		_instances.remove(companyId);
+		_portalCache.remove(companyId);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(LanguageImpl.class);
 
 	private static Map<Long, LanguageImpl> _instances =
 		new ConcurrentHashMap<Long, LanguageImpl>();
+	private static PortalCache<Long, Serializable> _portalCache =
+		MultiVMPoolUtil.getCache(LanguageImpl.class.getName());
+
+	static {
+		PortalCacheMapSynchronizeUtil.<Long, Serializable>synchronize(
+			_portalCache, _instances,
+			new Synchronizer<Long, Serializable>() {
+
+				@Override
+				public void onSynchronize(
+					Map<? extends Long, ? extends Serializable> map, Long key,
+					Serializable value) {
+
+					_instances.remove(key);
+				}
+
+			});
+	}
 
 	private Map<String, String> _charEncodings;
 	private Set<String> _duplicateLanguageCodes;
+	private final Map<Long, Map<String, Locale>> _groupLanguageCodeLocalesMap =
+		new HashMap<Long, Map<String, Locale>>();
 	private Map<Long, Locale[]> _groupLocalesMap =
 		new HashMap<Long, Locale[]>();
 	private Map<Long, Set<Locale>> _groupLocalesSet =

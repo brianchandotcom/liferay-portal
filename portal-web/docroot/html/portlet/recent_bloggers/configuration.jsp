@@ -43,16 +43,12 @@ if (organizationId > 0) {
 			<aui:option label="scope" selected='<%= selectionMethod.equals("scope") %>' />
 		</aui:select>
 
-		<div id="<portlet:namespace />UsersSelectionOptions">
-			<aui:field-wrapper label="organization">
-				<div class="input-append">
-					<liferay-ui:input-resource id="organizationName" url="<%= HtmlUtil.escape(organizationName) %>" />
+		<div class="control-group" id="<portlet:namespace />UsersSelectionOptions">
+			<aui:input label="organization" name="organizationName" type="resource" value="<%= organizationName %>" />
 
-					<aui:button name="selectOrganizationButton" value="select" />
+			<aui:button name="selectOrganizationButton" value="select" />
 
-					<aui:button disabled="<%= organizationId <= 0 %>" name="removeOrganizationButton" onClick='<%= renderResponse.getNamespace() + "removeOrganization();" %>' value="remove" />
-				</div>
-			</aui:field-wrapper>
+			<aui:button disabled="<%= organizationId <= 0 %>" name="removeOrganizationButton" onClick='<%= renderResponse.getNamespace() + "removeOrganization();" %>' value="remove" />
 		</div>
 
 		<aui:select name="preferences--displayStyle--">

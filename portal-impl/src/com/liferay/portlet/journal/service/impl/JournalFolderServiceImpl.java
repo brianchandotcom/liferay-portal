@@ -74,6 +74,20 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 	}
 
 	@Override
+	public JournalFolder fetchFolder(long folderId)
+		throws PortalException, SystemException {
+
+		JournalFolder folder = journalFolderLocalService.fetchFolder(folderId);
+
+		if (folder != null) {
+			JournalFolderPermission.check(
+				getPermissionChecker(), folder, ActionKeys.VIEW);
+		}
+
+		return folder;
+	}
+
+	@Override
 	public JournalFolder getFolder(long folderId)
 		throws PortalException, SystemException {
 
@@ -146,11 +160,8 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			OrderByComparator obc)
 		throws SystemException {
 
-		QueryDefinition queryDefinition = new QueryDefinition(
-			status, start, end, obc);
-
-		return journalFolderFinder.filterFindF_A_ByG_F(
-			groupId, folderId, queryDefinition);
+		return getFoldersAndArticles(
+			groupId, 0, folderId, status, start, end, obc);
 	}
 
 	@Override
@@ -161,6 +172,19 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 
 		return getFoldersAndArticles(
 			groupId, folderId, WorkflowConstants.STATUS_ANY, start, end, obc);
+	}
+
+	@Override
+	public List<Object> getFoldersAndArticles(
+			long groupId, long userId, long folderId, int status, int start,
+			int end, OrderByComparator obc)
+		throws SystemException {
+
+		QueryDefinition queryDefinition = new QueryDefinition(
+			status, userId, true, start, end, obc);
+
+		return journalFolderFinder.filterFindF_A_ByG_F(
+			groupId, folderId, queryDefinition);
 	}
 
 	@Override
@@ -203,8 +227,19 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			long groupId, long folderId, int status)
 		throws SystemException {
 
+		return getFoldersAndArticlesCount(groupId, 0, folderId, status);
+	}
+
+	@Override
+	public int getFoldersAndArticlesCount(
+			long groupId, long userId, long folderId, int status)
+		throws SystemException {
+
+		QueryDefinition queryDefinition = new QueryDefinition(
+			status, userId, true);
+
 		return journalFolderFinder.filterCountF_A_ByG_F(
-			groupId, folderId, new QueryDefinition(status));
+			groupId, folderId, queryDefinition);
 	}
 
 	@Override
@@ -229,9 +264,22 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getSubfolderIds(List, long,
+	 *             long, boolean)}
+	 */
+	@Deprecated
 	@Override
 	public void getSubfolderIds(
 			List<Long> folderIds, long groupId, long folderId)
+		throws SystemException {
+
+		getSubfolderIds(folderIds, groupId, folderId, true);
+	}
+
+	@Override
+	public void getSubfolderIds(
+			List<Long> folderIds, long groupId, long folderId, boolean recurse)
 		throws SystemException {
 
 		List<JournalFolder> folders =
@@ -241,8 +289,11 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 		for (JournalFolder folder : folders) {
 			folderIds.add(folder.getFolderId());
 
-			getSubfolderIds(
-				folderIds, folder.getGroupId(), folder.getFolderId());
+			if (recurse) {
+				getSubfolderIds(
+					folderIds, folder.getGroupId(), folder.getFolderId(),
+					recurse);
+			}
 		}
 	}
 
@@ -253,7 +304,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 
 		List<Long> folderIds = new ArrayList<Long>();
 
-		getSubfolderIds(folderIds, groupId, folderId);
+		getSubfolderIds(folderIds, groupId, folderId, recurse);
 
 		return folderIds;
 	}

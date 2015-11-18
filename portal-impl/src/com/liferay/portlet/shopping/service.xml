@@ -81,6 +81,10 @@
 			<finder-column name="groupId" />
 			<finder-column name="parentCategoryId" />
 		</finder>
+		<finder name="G_N" return-type="ShoppingCategory">
+			<finder-column name="groupId" />
+			<finder-column name="name" />
+		</finder>
 	</entity>
 	<entity name="ShoppingCoupon" local-service="true" remote-service="true">
 

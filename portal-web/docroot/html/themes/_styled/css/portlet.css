@@ -1,3 +1,6 @@
+@import "aui/variables";
+@import "aui_variables";
+@import "aui/mixins";
 @import "compass";
 
 /* ---------- Portlet wrapper and icons ---------- */
@@ -644,6 +647,62 @@ body.portlet {
 }
 
 /* ---------- Miscellaneous component styles ---------- */
+
+.lfr-ddm-container {
+	.control-group {
+		&.error {
+			@include formFieldState();
+		}
+
+		&.info {
+			@include formFieldState();
+		}
+
+		&.success {
+			@include formFieldState();
+		}
+
+		&.warning {
+			@include formFieldState();
+		}
+
+		&.error > {
+			@include formFieldState($errorText, $errorText, $errorBackground);
+		}
+
+		&.info > {
+			@include formFieldState($infoText, $infoText, $infoBackground);
+		}
+
+		&.success > {
+			@include formFieldState($successText, $successText, $successBackground);
+		}
+
+		&.warning > {
+			@include formFieldState($warningText, $warningText, $warningBackground);
+		}
+	}
+}
+
+/* ---------- Dynamic data list display/Journal portlet ---------- */
+
+.portlet-dynamic-data-list-display, .portlet-dynamic-data-lists, .portlet-journal .journal-article-container {
+	.lfr-ddm-container .field-wrapper {
+		&[data-repeatable="true"], .field-wrapper {
+			border: 1px solid #D0D0D0;
+			border-left-width: 10px;
+			padding: 7px 10px 10px;
+
+			&[data-repeatable="true"]:nth-of-type(even) {
+				background-color: #F5F5F5;
+			}
+
+			&, .field-wrapper {
+				margin: 15px 0 0;
+			}
+		}
+	}
+}
 
 /* ---------- Add content dialog ---------- */
 

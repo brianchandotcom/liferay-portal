@@ -21,8 +21,7 @@ import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
@@ -81,6 +80,22 @@ public class FolderStagedModelDataHandler
 	@Override
 	public String getDisplayName(Folder folder) {
 		return folder.getName();
+	}
+
+	@Override
+	public void restoreStagedModel(
+			PortletDataContext portletDataContext, Folder stagedModel)
+		throws PortletDataException {
+
+		try {
+			doRestoreStagedModel(portletDataContext, stagedModel);
+		}
+		catch (PortletDataException pde) {
+			throw pde;
+		}
+		catch (Exception e) {
+			throw new PortletDataException(e);
+		}
 	}
 
 	@Override
@@ -320,10 +335,14 @@ public class FolderStagedModelDataHandler
 		Folder folder = FolderUtil.fetchByR_P_N(groupId, parentFolderId, name);
 
 		if (folder == null) {
-			return name;
-		}
+			FileEntry fileEntry = FileEntryUtil.fetchByR_F_T(
+				groupId, parentFolderId, name);
 
-		if (Validator.isNotNull(uuid) && uuid.equals(folder.getUuid())) {
+			if (fileEntry == null) {
+				return name;
+			}
+		}
+		else if (Validator.isNotNull(uuid) && uuid.equals(folder.getUuid())) {
 			return name;
 		}
 
@@ -424,30 +443,18 @@ public class FolderStagedModelDataHandler
 			throw pde;
 		}
 
-		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
-			DLFolder.class.getName());
+		if (folder instanceof LiferayFolder) {
+			LiferayFolder liferayFolder = (LiferayFolder)folder;
 
-		if (trashHandler != null) {
-			try {
-				if (trashHandler.isInTrash(folder.getFolderId()) ||
-					trashHandler.isInTrashContainer(folder.getFolderId())) {
+			DLFolder dlFolder = (DLFolder)liferayFolder.getModel();
 
-					throw new PortletDataException(
-						PortletDataException.STATUS_IN_TRASH);
-				}
-			}
-			catch (PortletDataException pde) {
+			if (dlFolder.isInTrash() || dlFolder.isInTrashContainer()) {
+				PortletDataException pde = new PortletDataException(
+					PortletDataException.STATUS_IN_TRASH);
+
+				pde.setStagedModel(folder);
+
 				throw pde;
-			}
-			catch (Exception e) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
-				}
-				else if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to check trash status for folder " +
-							folder.getFolderId());
-				}
 			}
 		}
 	}
@@ -467,8 +474,5 @@ public class FolderStagedModelDataHandler
 
 		return true;
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(
-		FolderStagedModelDataHandler.class);
 
 }

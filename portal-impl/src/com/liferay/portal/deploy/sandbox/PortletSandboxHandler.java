@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Namespace;
 import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 
 import java.io.File;
 
@@ -104,7 +105,7 @@ public class PortletSandboxHandler extends BaseSandboxHandler {
 
 		String content = FileUtil.read(file);
 
-		Document document = SAXReaderUtil.read(content);
+		Document document = UnsecureSAXReaderUtil.read(content);
 
 		Element rootElement = document.getRootElement();
 
@@ -124,7 +125,7 @@ public class PortletSandboxHandler extends BaseSandboxHandler {
 
 		String content = FileUtil.read(file);
 
-		Document document = SAXReaderUtil.read(content);
+		Document document = UnsecureSAXReaderUtil.read(content);
 
 		Element rootElement = document.getRootElement();
 

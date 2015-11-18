@@ -52,6 +52,14 @@ DDLRecordVersion latestRecordVersion = record.getLatestRecordVersion();
 <aui:fieldset>
 
 	<%
+	long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
+	long classPK = ddmStructure.getPrimaryKey();
+
+	if (formDDMTemplateId > 0) {
+		classNameId = PortalUtil.getClassNameId(DDMTemplate.class);
+		classPK = formDDMTemplateId;
+	}
+
 	Fields fields = null;
 
 	if (recordVersion != null) {
@@ -60,8 +68,8 @@ DDLRecordVersion latestRecordVersion = record.getLatestRecordVersion();
 	%>
 
 	<liferay-ddm:html
-		classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
-		classPK="<%= ddmStructure.getPrimaryKey() %>"
+		classNameId="<%= classNameId %>"
+		classPK="<%= classPK %>"
 		fields="<%= fields %>"
 		readOnly="<%= true %>"
 		requestedLocale="<%= locale %>"

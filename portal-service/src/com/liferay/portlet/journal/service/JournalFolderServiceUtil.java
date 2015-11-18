@@ -82,6 +82,13 @@ public class JournalFolderServiceUtil {
 		getService().deleteFolder(folderId, includeTrashedEntries);
 	}
 
+	public static com.liferay.portlet.journal.model.JournalFolder fetchFolder(
+		long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchFolder(folderId);
+	}
+
 	public static com.liferay.portlet.journal.model.JournalFolder getFolder(
 		long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -144,6 +151,15 @@ public class JournalFolderServiceUtil {
 				   .getFoldersAndArticles(groupId, folderId, start, end, obc);
 	}
 
+	public static java.util.List<java.lang.Object> getFoldersAndArticles(
+		long groupId, long userId, long folderId, int status, int start,
+		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getFoldersAndArticles(groupId, userId, folderId, status,
+			start, end, obc);
+	}
+
 	public static int getFoldersAndArticlesCount(long groupId,
 		java.util.List<java.lang.Long> folderIds, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -161,6 +177,13 @@ public class JournalFolderServiceUtil {
 		return getService().getFoldersAndArticlesCount(groupId, folderId, status);
 	}
 
+	public static int getFoldersAndArticlesCount(long groupId, long userId,
+		long folderId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getFoldersAndArticlesCount(groupId, userId, folderId, status);
+	}
+
 	public static int getFoldersCount(long groupId, long parentFolderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getFoldersCount(groupId, parentFolderId);
@@ -171,10 +194,21 @@ public class JournalFolderServiceUtil {
 		return getService().getFoldersCount(groupId, parentFolderId, status);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getSubfolderIds(List, long,
+	long, boolean)}
+	*/
 	public static void getSubfolderIds(
 		java.util.List<java.lang.Long> folderIds, long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().getSubfolderIds(folderIds, groupId, folderId);
+	}
+
+	public static void getSubfolderIds(
+		java.util.List<java.lang.Long> folderIds, long groupId, long folderId,
+		boolean recurse)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().getSubfolderIds(folderIds, groupId, folderId, recurse);
 	}
 
 	public static java.util.List<java.lang.Long> getSubfolderIds(long groupId,

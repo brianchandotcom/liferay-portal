@@ -39,6 +39,17 @@
 			}
 		}
 
+		.btn-group > .btn + .btn,
+		.btn-toolbar > .btn + .btn,
+		.btn-toolbar > .btn-group + .btn,
+		.btn-toolbar > .btn + .btn-group,
+		.modal-footer .btn + .btn,
+		.modal-footer .btn-group .btn + .btn {
+			@include respond-to(phone) {
+				margin-left: 0;
+			}
+		}
+
 		.form-search .input-append .btn {
 			display: inline-block;
 			padding: 5px 19px 6px;

@@ -68,9 +68,11 @@ public class MessageTag extends TagSupport {
 				}
 			}
 
-			JspWriter jspWriter = pageContext.getOut();
+			if (value != null) {
+				JspWriter jspWriter = pageContext.getOut();
 
-			jspWriter.write(value);
+				jspWriter.write(value);
+			}
 
 			return EVAL_PAGE;
 		}

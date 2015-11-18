@@ -15,19 +15,17 @@
 package com.liferay.portlet.documentlibrary.lar;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
-import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
-import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
@@ -43,7 +41,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
@@ -59,7 +56,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryExportActionableDynamicQuery;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryTypeExportActionableDynamicQuery;
@@ -421,8 +417,6 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 
 			@Override
 			protected void addCriteria(DynamicQuery dynamicQuery) {
-				super.addCriteria(dynamicQuery);
-
 				DynamicQuery fileVersionDynamicQuery =
 					DynamicQueryFactoryUtil.forClass(
 						DLFileVersion.class, "dlFileVersion",
@@ -449,6 +443,23 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 					statusProperty.in(
 						stagedModelDataHandler.getExportableStatuses()));
 
+				Criterion modifiedDateCriterion =
+						portletDataContext.getDateRangeCriteria("modifiedDate");
+				Criterion statusDateCriterion =
+						portletDataContext.getDateRangeCriteria("statusDate");
+
+				if ((modifiedDateCriterion != null) &&
+					(statusDateCriterion != null)) {
+
+					Disjunction disjunction =
+						RestrictionsFactoryUtil.disjunction();
+
+					disjunction.add(modifiedDateCriterion);
+					disjunction.add(statusDateCriterion);
+
+					fileVersionDynamicQuery.add(disjunction);
+				}
+
 				Property fileEntryIdProperty = PropertyFactoryUtil.forName(
 					"fileEntryId");
 
@@ -474,42 +485,11 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 
 				DLFileEntry dlFileEntry = (DLFileEntry)object;
 
-				if (dlFileEntry.isInTrash()) {
-					return;
-				}
-
 				FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
 					dlFileEntry.getFileEntryId());
 
 				StagedModelDataHandlerUtil.exportStagedModel(
 					portletDataContext, fileEntry);
-			}
-
-			@Override
-			public long performCount() throws PortalException, SystemException {
-				ManifestSummary manifestSummary =
-					portletDataContext.getManifestSummary();
-
-				long modelAdditionCount =
-					DLFileEntryLocalServiceUtil.getFileEntriesCount(
-						portletDataContext.getScopeGroupId(),
-						portletDataContext.getDateRange(),
-						portletDataContext.getScopeGroupId(),
-						new QueryDefinition(WorkflowConstants.STATUS_APPROVED));
-
-				StagedModelType stagedModelType = getStagedModelType();
-
-				manifestSummary.addModelAdditionCount(
-					stagedModelType.toString(), modelAdditionCount);
-
-				long modelDeletionCount =
-					ExportImportHelperUtil.getModelDeletionCount(
-						portletDataContext, stagedModelType);
-
-				manifestSummary.addModelDeletionCount(
-					stagedModelType.toString(), modelDeletionCount);
-
-				return modelAdditionCount;
 			}
 
 		};

@@ -80,6 +80,7 @@ import com.liferay.portlet.sites.util.SitesUtil;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -141,6 +142,28 @@ public class LayoutStagedModelDataHandler
 		}
 
 		return portletIds;
+	}
+
+	protected void deleteMissingLayoutFriendlyURLs(
+			PortletDataContext portletDataContext, Layout layout)
+		throws SystemException {
+
+		Map<Long, Long> layoutFriendlyURLIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				LayoutFriendlyURL.class);
+
+		List<LayoutFriendlyURL> layoutFriendlyURLs =
+			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(
+				layout.getPlid());
+
+		for (LayoutFriendlyURL layoutFriendlyURL : layoutFriendlyURLs) {
+			if (!layoutFriendlyURLIds.containsValue(
+					layoutFriendlyURL.getLayoutFriendlyURLId())) {
+
+				LayoutFriendlyURLLocalServiceUtil.deleteLayoutFriendlyURL(
+					layoutFriendlyURL);
+			}
+		}
 	}
 
 	@Override
@@ -447,6 +470,11 @@ public class LayoutStagedModelDataHandler
 		}
 
 		importedLayout.setCompanyId(portletDataContext.getCompanyId());
+
+		if (layout.getLayoutPrototypeUuid() != null) {
+			importedLayout.setModifiedDate(new Date());
+		}
+
 		importedLayout.setParentLayoutId(parentLayoutId);
 		importedLayout.setName(layout.getName());
 		importedLayout.setTitle(layout.getTitle());
@@ -533,7 +561,7 @@ public class LayoutStagedModelDataHandler
 
 		layoutPlids.put(layout.getPlid(), importedLayout.getPlid());
 
-		importLayoutFriendlyURLs(portletDataContext, layout);
+		importLayoutFriendlyURLs(portletDataContext, layout, importedLayout);
 
 		portletDataContext.importClassedModel(layout, importedLayout);
 	}
@@ -820,7 +848,8 @@ public class LayoutStagedModelDataHandler
 	}
 
 	protected void importLayoutFriendlyURLs(
-			PortletDataContext portletDataContext, Layout layout)
+			PortletDataContext portletDataContext, Layout layout,
+			Layout importedLayout)
 		throws Exception {
 
 		List<Element> layoutFriendlyURLElements =
@@ -838,6 +867,8 @@ public class LayoutStagedModelDataHandler
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, layoutFriendlyURL);
 		}
+
+		deleteMissingLayoutFriendlyURLs(portletDataContext, importedLayout);
 	}
 
 	protected void importLayoutIconImage(

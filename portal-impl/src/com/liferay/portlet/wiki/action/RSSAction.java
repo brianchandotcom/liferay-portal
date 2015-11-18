@@ -15,10 +15,12 @@
 package com.liferay.portlet.wiki.action;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
@@ -29,6 +31,8 @@ import com.liferay.portlet.wiki.util.WikiUtil;
 import com.liferay.util.RSSUtil;
 
 import java.util.Locale;
+
+import javax.portlet.PortletPreferences;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -90,6 +94,30 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 		}
 
 		return rss.getBytes(StringPool.UTF8);
+	}
+
+	protected boolean isRSSFeedsEnabled(HttpServletRequest request)
+		throws Exception {
+
+		if (!super.isRSSFeedsEnabled(request)) {
+			return false;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletPreferences portletPreferences =
+			PortletPreferencesLocalServiceUtil.getPreferences(
+				themeDisplay.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid(),
+				PortletKeys.WIKI, null);
+
+		if (portletPreferences != null) {
+			return GetterUtil.getBoolean(
+				portletPreferences.getValue("enableRss", null), true);
+		}
+
+		return true;
 	}
 
 }

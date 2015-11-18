@@ -47,6 +47,7 @@ if (!selectableTree) {
 	var GET_LAYOUTS_URL = themeDisplay.getPathMain() + '/layouts_admin/get_layouts';
 
 	var LAYOUT_URL = '<%= portletURL + StringPool.AMPERSAND + portletDisplay.getNamespace() + "selPlid={selPlid}" + StringPool.AMPERSAND + portletDisplay.getNamespace() + "historyKey={historyKey}" %>';
+
 	var STR_CHILDREN = 'children';
 
 	var TREE_CSS_CLASSES = {
@@ -87,6 +88,9 @@ if (!selectableTree) {
 		PREFIX_LAYOUT_ID: '_layoutId_',
 		PREFIX_PLID: '_plid_',
 
+		localCheckedNodes: [],
+		localUncheckedNodes: [],
+
 		afterRenderTree: function(event) {
 			var rootNode = event.target.item(0);
 
@@ -106,6 +110,23 @@ if (!selectableTree) {
 			TreeUtil.restoreSelectedNode(rootNode);
 
 			rootNode.eachChildren(TreeUtil.restoreSelectedNode);
+		},
+
+		checkNodeState: function(node) {
+			var plid = TreeUtil.extractPlid(node);
+
+			var checked;
+
+			if (AArray.indexOf(TreeUtil.localCheckedNodes, plid) > -1) {
+				checked = true;
+			}
+			else if (AArray.indexOf(TreeUtil.localUncheckedNodes, plid) > -1) {
+				checked = false;
+			}
+
+			if (!Lang.isUndefined(checked)) {
+				TreeUtil.updateCheckedNodes(node, checked, true);
+			}
 		},
 
 		createLabel: function(data) {
@@ -229,7 +250,7 @@ if (!selectableTree) {
 
 											TreeUtil.updateSessionTreeCheckedState('<%= HtmlUtil.escape(treeId) %>SelectedNode', plid, newVal);
 
-											TreeUtil.updateCheckedNodes(target, newVal);
+											TreeUtil.updateCheckedNodes(target, newVal, true);
 										}
 									},
 								</c:if>
@@ -243,7 +264,7 @@ if (!selectableTree) {
 
 									<c:if test="<%= selectableTree %>">
 										if (target.get('checked')) {
-											TreeUtil.updateCheckedNodes(target, true);
+											TreeUtil.updateCheckedNodes(target, true, false);
 										}
 
 										TreeUtil.restoreCheckedNode(target);
@@ -251,9 +272,15 @@ if (!selectableTree) {
 								},
 
 								expandedChange: function(event) {
-									var layoutId = TreeUtil.extractLayoutId(event.target);
+									var target = event.target;
+
+									var layoutId = TreeUtil.extractLayoutId(target);
 
 									TreeUtil.updateSessionTreeOpenedState('<%= HtmlUtil.escape(treeId) %>', layoutId, event.newVal);
+
+									<c:if test="<%= selectableTree %>">
+										TreeUtil.checkNodeState(target);
+									</c:if>
 								}
 							},
 						</c:if>
@@ -314,6 +341,10 @@ if (!selectableTree) {
 
 										<c:if test="<%= saveState %>">
 											TreeUtil.updatePagination(instance);
+
+											<c:if test="<%= selectableTree %>">
+												TreeUtil.checkNodeState(instance);
+											</c:if>
 										</c:if>
 									}
 								}
@@ -546,7 +577,7 @@ if (!selectableTree) {
 
 						map[layoutId] = Math.ceil(children.length / paginationLimit) * paginationLimit;
 					}
-				}
+				};
 
 				TreeUtil.invokeSessionClick(
 					{
@@ -560,7 +591,7 @@ if (!selectableTree) {
 						catch (e) {
 						}
 
-						updatePaginationMap(paginationMap, node)
+						updatePaginationMap(paginationMap, node);
 
 						node.eachParent(
 							function(parent) {
@@ -577,20 +608,51 @@ if (!selectableTree) {
 				);
 			},
 
-			updateCheckedNodes: function(node, state) {
+			updateCheckedNodes: function(node, state, recursive) {
 				var plid = TreeUtil.extractPlid(node);
 
 				var checkedNodes = TreeUtil.CHECKED_NODES;
+				var localCheckedNodes = TreeUtil.localCheckedNodes;
+				var localUncheckedNodes = TreeUtil.localUncheckedNodes;
 
-				var index = AArray.indexOf(checkedNodes, plid);
+				var checkedIndex = AArray.indexOf(checkedNodes, plid);
+				var localCheckedIndex = AArray.indexOf(localCheckedNodes, plid);
+				var localUncheckedIndex = AArray.indexOf(localUncheckedNodes, plid);
 
 				if (state) {
-					if (index == -1) {
+					if (checkedIndex === -1) {
 						checkedNodes.push(plid);
 					}
+
+					if ((localCheckedIndex == -1) && recursive) {
+						localCheckedNodes.push(plid);
+					}
+
+					if (localUncheckedIndex > -1) {
+						AArray.remove(localUncheckedNodes, localUncheckedIndex);
+					}
 				}
-				else if (index > -1) {
-					AArray.remove(checkedNodes, index);
+				else if (checkedIndex > -1) {
+					AArray.remove(checkedNodes, checkedIndex);
+
+					localUncheckedNodes.push(plid);
+
+					if (localCheckedIndex > -1) {
+						AArray.remove(localCheckedNodes, localCheckedIndex);
+					}
+				}
+
+				node.set('checked', state);
+
+				var children = node.get(STR_CHILDREN);
+
+				if (children.length && recursive) {
+					A.each(
+						children,
+						function(child) {
+							TreeUtil.updateCheckedNodes(child, state, true);
+						}
+					);
 				}
 			},
 
@@ -666,7 +728,7 @@ if (!selectableTree) {
 
 							TreeUtil.updateSessionTreeCheckedState('<%= HtmlUtil.escape(treeId) %>SelectedNode', <%= LayoutConstants.DEFAULT_PLID %>, newVal);
 
-							TreeUtil.updateCheckedNodes(event.target, newVal);
+							TreeUtil.updateCheckedNodes(event.target, newVal, true);
 						},
 					</c:if>
 
@@ -768,6 +830,10 @@ if (!selectableTree) {
 
 							<c:if test="<%= saveState %>">
 								TreeUtil.updatePagination(instance);
+
+								<c:if test="<%= selectableTree %>">
+									TreeUtil.checkNodeState(instance);
+								</c:if>
 							</c:if>
 						}
 					}
@@ -775,6 +841,11 @@ if (!selectableTree) {
 				formatter: TreeUtil.formatJSONResults,
 				url: GET_LAYOUTS_URL
 			},
+
+			<c:if test="<%= draggableTree %>">
+				lazyLoad: false,
+			</c:if>
+
 			on: {
 				<c:if test="<%= saveState && selectableTree %>">
 					append: function(event) {

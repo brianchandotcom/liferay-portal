@@ -273,6 +273,17 @@ public class WikiPageServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portlet.wiki.model.WikiPage> getPages(
+		long groupId, long nodeId, boolean head, long userId,
+		boolean includeOwner, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getPages(groupId, nodeId, head, userId, includeOwner,
+			status, start, end, obc);
+	}
+
+	public static java.util.List<com.liferay.portlet.wiki.model.WikiPage> getPages(
 		long groupId, long userId, long nodeId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -283,6 +294,15 @@ public class WikiPageServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getPagesCount(groupId, nodeId, head);
+	}
+
+	public static int getPagesCount(long groupId, long nodeId, boolean head,
+		long userId, boolean includeOwner, int status)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getPagesCount(groupId, nodeId, head, userId, includeOwner,
+			status);
 	}
 
 	public static int getPagesCount(long groupId, long userId, long nodeId,

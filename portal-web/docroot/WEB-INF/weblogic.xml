@@ -5,6 +5,10 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/ejb-jar_3_0.xsd http://xmlns.oracle.com/weblogic/weblogic-web-app http://xmlns.oracle.com/weblogic/weblogic-web-app/1.2/weblogic-web-app.xsd"
 >
+	<security-role-assignment>
+		<role-name>users</role-name>
+		<principal-name>users</principal-name>
+	</security-role-assignment>
 	<jsp-descriptor>
 		<keepgenerated>true</keepgenerated>
 		<page-check-seconds>60</page-check-seconds>

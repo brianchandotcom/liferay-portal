@@ -5,12 +5,16 @@
 
 	<property name="war.file" value="${ant.project.name}" />
 
+	<property name="ckeditor.deploy.dir" value="ckeditor" />
 	<property name="ckeditor.file" value="ckeditor_4.0.3_liferay.zip" />
+	<property name="ckeditor.file.latest" value="ckeditor_4.5.3_liferay.zip" />
 	<property name="fckeditor.file" value="FCKeditor_2.6.3.zip" />
 	<property name="scayt.file" value="scayt_4.0.3.zip" />
+	<property name="scayt.file.latest" value="scayt_4.5.3.zip" />
 	<property name="tinymce.file" value="tinymce_3.5.6.zip" />
 	<property name="vaadin.file" value="vaadin-6.8.12-liferay.zip" />
 	<property name="wsc.file" value="wsc_4.0.3.zip" />
+	<property name="wsc.file.latest" value="wsc_4.5.3.zip" />
 
 	<path id="jspc.common.classpath">
 		<pathelement path="docroot/WEB-INF/classes" />
@@ -185,7 +189,15 @@
 
 		<property name="alloy.bootstrap.deploy" value="docroot/html/themes/_unstyled/css/aui" />
 
-		<property name="alloy.bootstrap.file" value="alloy-bootstrap-${alloy.bootstrap.version}.zip" />
+		<path id="alloy.bootstrap.zip.path">
+			<fileset dir="third-party">
+				<include name="alloy-bootstrap-${alloy.bootstrap.version}*.zip" />
+			</fileset>
+		</path>
+
+		<property name="alloy.bootstrap.zip.path" refid="alloy.bootstrap.zip.path" />
+
+		<basename file="${alloy.bootstrap.zip.path}" property="alloy.bootstrap.file" />
 
 		<property name="alloy.bootstrap.tmp.dir" value="docroot/html/ALLOY_BOOTSTRAP_ZIP" />
 
@@ -260,20 +272,33 @@
 	</target>
 
 	<target name="build-ckeditor">
+		<antcall target="build-ckeditor-common" />
+		<antcall target="build-ckeditor-latest" />
+	</target>
+
+	<target name="build-ckeditor-common">
 		<if>
 			<not>
 				<uptodate
 					srcfile="third-party/${ckeditor.file}"
-					targetfile="docroot/html/js/editor/ckeditor"
+					targetfile="docroot/html/js/editor/${ckeditor.deploy.dir}"
 				/>
 			</not>
 			<then>
-				<delete dir="docroot/html/js/editor/ckeditor" />
+				<delete dir="docroot/html/js/editor/${ckeditor.deploy.dir}" />
 
-				<unzip src="third-party/${ckeditor.file}" dest="docroot/html/js/editor" />
+				<mkdir dir="docroot/html/js/editor/ckeditor_temp" />
 
-				<copy todir="docroot/html/js/editor/ckeditor" overwrite="true" preservelastmodified="true">
-					<fileset dir="docroot/html/js/editor/ckeditor_diffs" />
+				<unzip src="third-party/${ckeditor.file}" dest="docroot/html/js/editor/ckeditor_temp/" />
+
+				<copy todir="docroot/html/js/editor/${ckeditor.deploy.dir}">
+					<fileset dir="docroot/html/js/editor/ckeditor_temp/ckeditor" />
+				</copy>
+
+				<delete dir="docroot/html/js/editor/ckeditor_temp" />
+
+				<copy todir="docroot/html/js/editor/${ckeditor.deploy.dir}" overwrite="true" preservelastmodified="true">
+					<fileset dir="docroot/html/js/editor/${ckeditor.deploy.dir}_diffs" />
 				</copy>
 
 				<antcall target="build-ckeditor-plugins-scayt" />
@@ -281,11 +306,74 @@
 				<antcall target="build-ckeditor-plugins-wsc" />
 			</then>
 			<else>
-				<copy todir="docroot/html/js/editor/ckeditor" preservelastmodified="true">
-					<fileset dir="docroot/html/js/editor/ckeditor_diffs" />
+				<copy todir="docroot/html/js/editor/${ckeditor.deploy.dir}" preservelastmodified="true">
+					<fileset dir="docroot/html/js/editor/${ckeditor.deploy.dir}_diffs" />
 				</copy>
 			</else>
 		</if>
+
+		<antcall target="build-fckeditor" />
+	</target>
+
+	<target name="build-ckeditor-filemanager">
+		<mkdir dir="docroot/html/js/editor/${ckeditor.deploy.dir}/editor/filemanager/browser/liferay" />
+
+		<copy todir="docroot/html/js/editor/${ckeditor.deploy.dir}/editor/filemanager/browser/liferay">
+			<fileset dir="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay" />
+		</copy>
+
+		<replace file="docroot/html/js/editor/${ckeditor.deploy.dir}/editor/filemanager/browser/liferay/browser.html">
+			<replacefilter token="FCKeditor" value="CKeditor" />
+		</replace>
+
+		<replace file="docroot/html/js/editor/${ckeditor.deploy.dir}/editor/filemanager/browser/liferay/browser.html">
+			<replacetoken><![CDATA[<meta http-equiv="Content-Type" content="text/html; charset=utf-8">]]></replacetoken>
+			<replacevalue>
+				<![CDATA[
+					<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+					<meta content="IE=EmulateIE9" http-equiv="X-UA-Compatible">
+				]]>
+			</replacevalue>
+		</replace>
+
+		<replace file="docroot/html/js/editor/${ckeditor.deploy.dir}/editor/filemanager/browser/liferay/frmresourceslist.html">
+			<replacetoken><![CDATA[function OpenFile( fileUrl )]]></replacetoken>
+			<replacevalue><![CDATA[function OpenFile( fileUrl, errorMessage )]]></replacevalue>
+		</replace>
+
+		<replace file="docroot/html/js/editor/${ckeditor.deploy.dir}/editor/filemanager/browser/liferay/frmresourceslist.html">
+			<replacetoken><![CDATA[window.top.opener.SetUrl( encodeURI( fileUrl ).replace( '#', '%23' ) ) ;]]></replacetoken>
+			<replacevalue>
+				<![CDATA[
+					if (!errorMessage) {
+						var match = window.top.location.search.match(/(?:[\?&]|&amp;)CKEditorFuncNum=([^&]+)/i);
+
+						var funcNum = (match && match.length) ? match[1] : '';
+
+						window.top.opener.CKEDITOR.tools.callFunction(funcNum, fileUrl);
+					}
+					else {
+						alert(errorMessage);
+					}
+				]]>
+			</replacevalue>
+		</replace>
+
+		<replace file="docroot/html/js/editor/${ckeditor.deploy.dir}/editor/filemanager/browser/liferay/frmresourceslist.html">
+			<replacetoken><![CDATA[var sCurrentFolderPath	= oFolderNode.attributes.getNamedItem('path').value ;]]></replacetoken>
+			<replacevalue><![CDATA[var sCurrentFolderPath	= oFolderNode.attributes.getNamedItem('path').value.replace( /"/g, '') ;]]></replacevalue>
+		</replace>
+	</target>
+
+	<target name="build-ckeditor-latest">
+		<script classpathref="project.classpath" language="beanshell">
+			project.setProperty("ckeditor.file", project.getProperty("ckeditor.file.latest"));
+			project.setProperty("scayt.file", project.getProperty("scayt.file.latest"));
+			project.setProperty("wsc.file", project.getProperty("wsc.file.latest"));
+			project.setProperty("ckeditor.deploy.dir", "ckeditor_latest");
+		</script>
+
+		<antcall target="build-ckeditor-common" />
 	</target>
 
 	<target name="build-ckeditor-plugins-bbcode">
@@ -295,14 +383,33 @@
 				files="bbcode_utils.js,lexer.js,parser.js,converter.js"
 			/>
 		</concat>
+
+		<concat destfile="docroot/html/js/editor/ckeditor_latest_diffs/plugins/bbcode/bbcode_parser.js">
+			<filelist
+				dir="docroot/html/js/editor/ckeditor_latest_diffs/plugins/bbcode"
+				files="bbcode_utils.js,lexer.js,parser.js,converter.js"
+			/>
+		</concat>
 	</target>
 
 	<target name="build-ckeditor-plugins-creole">
-		<get
+		<mirrors-get
 			dest="docroot/html/js/editor/ckeditor_diffs/plugins/creole/creole_parser.js"
 			src="http://www.ivan.fomichev.name/2008/04/javascript-creole-10-wiki-markup-parser.html"
 		/>
 
+		<copy
+			file="docroot/html/js/editor/ckeditor_diffs/plugins/creole/creole_parser.js"
+			overwrite="true"
+			preservelastmodified="true"
+			tofile="docroot/html/js/editor/ckeditor_latest_diffs/plugins/creole/creole_parser.js"
+		/>
+
+		<antcall target="build-ckeditor-plugins-creole-default" />
+		<antcall target="build-ckeditor-plugins-creole-latest" />
+	</target>
+
+	<target name="build-ckeditor-plugins-creole-default">
 		<loadfile property="creole_parser.content" srcfile="docroot/html/js/editor/ckeditor_diffs/plugins/creole/creole_parser.js" />
 
 		<script classpathref="project.classpath" language="beanshell">
@@ -375,6 +482,14 @@
 
 				creoleParserContent = creoleParserContent.replace("'\\\\[\\\\[' + rx.link + '(\\\\|' + rx.linkText + ')?\\\\]\\\\]' +", "'(?:\\\\[\\\\[' + rx.link + '(\\\\|' + rx.linkText + ')?\\\\]\\\\][^|~\\\\[{]*)*' +");
 
+				// Fix parsing empty columns in tables
+
+				creoleParserContent = creoleParserContent.replace("regex: '\\\\|+([^|~\\\\[{]*((~(.|(?=\\\\n)|$)|' +", "regex: '\\\\|([^|~\\\\[{]*((~(.|(?=\\\\n)|$)|' +");
+
+				// Add cke_show_border class to table start tag to keep CKEditor's formatting
+
+				creoleParserContent = creoleParserContent.replace("table: { tag: 'table', capture: 0,", "table: { tag: 'table', capture: 0,\n\t\t\tattrs: { 'class': 'cke_show_border' },");
+
 				// Register Creole parser
 
 				creoleParserContent = creoleParserContent.replace("= Parse.Simple.Creole;", "= Parse.Simple.Creole;\n\nCKEDITOR.CreoleParser = Parse.Simple.Creole;");
@@ -386,6 +501,100 @@
 		</script>
 
 		<echo file="docroot/html/js/editor/ckeditor_diffs/plugins/creole/creole_parser.js">${creole_parser.content}</echo>
+	</target>
+
+	<target name="build-ckeditor-plugins-creole-latest">
+		<loadfile property="creole_parser.content" srcfile="docroot/html/js/editor/ckeditor_latest_diffs/plugins/creole/creole_parser.js" />
+
+		<script classpathref="project.classpath" language="beanshell">
+			<![CDATA[
+				import org.apache.commons.lang.StringEscapeUtils;
+
+				// Read content
+
+				String creoleParserContent = project.getProperty("creole_parser.content");
+
+				// Get source
+
+				int x = creoleParserContent.indexOf("<pre id=\"parser\"");
+
+				x  = creoleParserContent.indexOf(">", x) + 1;
+
+				int y = creoleParserContent.indexOf("</pre>", x);
+
+				creoleParserContent = creoleParserContent.substring(x, y);
+
+				// Unescape
+
+				creoleParserContent = StringEscapeUtils.unescapeHtml(creoleParserContent);
+
+				// Wrap with function
+
+				x = creoleParserContent.indexOf("if (!Parse) {");
+
+				creoleParserContent = creoleParserContent.substring(0, x) + "(function() {\n" + creoleParserContent.substring(x) + "\n})();";
+
+				// Fix for loop
+
+				creoleParserContent = creoleParserContent.replace("for (i in this.options) {", "for (var i in this.options) {");
+
+				// Add data-cke-saved-href attribute to named links
+
+				creoleParserContent = creoleParserContent.replace(": r[1].replace(/~(.)/g, '$1');", ": r[1].replace(/~(.)/g, '$1');\nlink.setAttribute('data-cke-saved-href', link.href);\n");
+
+				// Fix image
+
+				x = creoleParserContent.indexOf("regex: rx.img,");
+				x = creoleParserContent.indexOf("{", x) + 1;
+
+				y = creoleParserContent.indexOf("r[1];", x) + 5;
+
+				StringBuilder sb = new StringBuilder();
+
+				sb.append("\n\t\t\t\tvar imagePath = r[1];\n");
+				sb.append("\t\t\t\tvar imagePathPrefix = options ? options.imagePrefix : '';\n\n");
+				sb.append("\t\t\t\tif (imagePathPrefix) {\n");
+				sb.append("\t\t\t\t\tif (!(/^https?:\\/\\//gi.test(imagePath))) {\n");
+				sb.append("\t\t\t\t\t\timagePath = imagePathPrefix + imagePath;\n");
+				sb.append("\t\t\t\t\t}\n");
+				sb.append("\t\t\t\t}\n\n");
+				sb.append("\t\t\t\tvar img = document.createElement('img');\n");
+				sb.append("\t\t\t\timg.src = imagePath;");
+
+				creoleParserContent = creoleParserContent.substring(0, x) + sb.toString() + creoleParserContent.substring(y);
+
+				// Add support for whitespace in headings
+
+				creoleParserContent = creoleParserContent.replace("'(^|\\\\n)[ \\\\t]*={' + i + '}[ \\\\t]'", "'(^|\\\\n)[ \\\\t]*={' + i + '}[ \\\\t]*'");
+				creoleParserContent = creoleParserContent.replace("'([^~]*?(~(.|(?=\\\\n)|$))*)[ \\\\t]*=*\\\\s*(\\\\n|$)'", "'([^\\\\n=][^~]*?(~(.|(?=\\\\n)|$))*)[ \\\\t]*=*\\\\s*(\\\\n|$)'");
+
+				// Fix handling mixed list items
+
+				creoleParserContent = creoleParserContent.replace("regex: /[ \\t]*([*#]).+(\\n[ \\t]*[^*#\\s].*)*(\\n[ \\t]*\\1[*#].+)*/,", "regex: /[ \\t]*([*#]).+(\\n[ \\t]*[^*#\\s].*)*(\\n[ \\t]*[*#]{2}.+)*/,");
+
+				// Add support for multiple links in table cells
+
+				creoleParserContent = creoleParserContent.replace("'\\\\[\\\\[' + rx.link + '(\\\\|' + rx.linkText + ')?\\\\]\\\\]' +", "'(?:\\\\[\\\\[' + rx.link + '(\\\\|' + rx.linkText + ')?\\\\]\\\\][^|~\\\\[{]*)*' +");
+
+				// Fix parsing empty columns in tables
+
+				creoleParserContent = creoleParserContent.replace("regex: '\\\\|+([^|~\\\\[{]*((~(.|(?=\\\\n)|$)|' +", "regex: '\\\\|([^|~\\\\[{]*((~(.|(?=\\\\n)|$)|' +");
+
+				// Add cke_show_border class to table start tag to keep CKEditor's formatting
+
+				creoleParserContent = creoleParserContent.replace("table: { tag: 'table', capture: 0,", "table: { tag: 'table', capture: 0,\n\t\t\tattrs: { 'class': 'cke_show_border' },");
+
+				// Register Creole parser
+
+				creoleParserContent = creoleParserContent.replace("= Parse.Simple.Creole;", "= Parse.Simple.Creole;\n\nCKEDITOR.CreoleParser = Parse.Simple.Creole;");
+
+				// Set content
+
+				project.setProperty("creole_parser.content", creoleParserContent);
+			]]>
+		</script>
+
+		<echo file="docroot/html/js/editor/ckeditor_latest_diffs/plugins/creole/creole_parser.js">${creole_parser.content}</echo>
 	</target>
 
 	<target name="build-ckeditor-plugins-scayt">
@@ -402,7 +611,7 @@
 		</if>
 
 		<unzip
-			dest="docroot/html/js/editor/ckeditor/plugins"
+			dest="docroot/html/js/editor/${ckeditor.deploy.dir}/plugins"
 			src="third-party/${scayt.file}"
 		/>
 	</target>
@@ -421,18 +630,27 @@
 		</if>
 
 		<unzip
-			dest="docroot/html/js/editor/ckeditor/plugins"
+			dest="docroot/html/js/editor/${ckeditor.deploy.dir}/plugins"
 			src="third-party/${wsc.file}"
 		/>
 	</target>
 
 	<target name="build-css">
+		<property name="sass.tmp.dir" value="${basedir}/sass_tmp_dir" />
+
+		<mkdir dir="${sass.tmp.dir}" />
+
 		<java
 			classname="com.liferay.portal.tools.SassToCssBuilder"
 			classpathref="project.classpath"
+			failonerror="true"
 			fork="true"
 			newenvironment="true"
+			outputproperty="build-css.output"
 		>
+			<jvmarg value="-Xmx1024m" />
+			<jvmarg value="-Djava.io.tmpdir=${sass.tmp.dir}" />
+			<jvmarg value="-Djava.util.logging.config.file=${project.dir}/portal-impl/src/com/liferay/portal/tools/dependencies/portal-tools-logging.properties" />
 			<jvmarg value="-Dliferay.lib.portal.dir=${basedir}/../lib/portal" />
 			<arg value="sass.dir.0=/html/css" />
 			<arg value="sass.dir.1=/html/portlet" />
@@ -440,6 +658,17 @@
 			<arg value="sass.docroot.dir=${basedir}/docroot" />
 			<arg value="sass.portal.common.dir=${basedir}/docroot/html/css/common" />
 		</java>
+
+		<delete dir="${sass.tmp.dir}" />
+
+		<echo>${build-css.output}</echo>
+
+		<if>
+			<contains string="${build-css.output}" substring="Error" />
+			<then>
+				<fail>Sass to CSS Builder generated exceptions.</fail>
+			</then>
+		</if>
 	</target>
 
 	<target name="build-dtd">
@@ -612,7 +841,12 @@
 
 				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmfolders.html">
 					<replacetoken><![CDATA[oListManager.AddItem( sFolderName, sCurrentFolderPath + sFolderName + '/' ) ;]]></replacetoken>
-					<replacevalue><![CDATA[oListManager.AddItem( sFolderName, sCurrentFolderPath.replace( /'/g, '\\\'') + sFolderName + '/' ) ;]]></replacevalue>
+					<replacevalue><![CDATA[oListManager.AddItem( escapeHTML( sFolderName ), sCurrentFolderPath.replace( /'/g, '\\\'') + sFolderName + '/' ) ;]]></replacevalue>
+				</replace>
+
+				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmfolders.html">
+					<replacetoken><![CDATA[window.parent.frames['frmActualFolder'].SetCurrentFolder( oConnector.ResourceType, folderPath ) ;]]></replacetoken>
+					<replacevalue><![CDATA[window.parent.frames['frmActualFolder'].SetCurrentFolder( oConnector.ResourceType, escapeHTML( folderPath ) ) ;]]></replacevalue>
 				</replace>
 
 				<!-- frmresourceslist.html -->
@@ -642,6 +876,11 @@
 					replace="\1var sFileDesc = oNode.attributes.getNamedItem('desc').value ;\2\1var sFileErrorMessageNamedItem = oNode.attributes.getNamedItem('errorMessage');\2\1var sFileErrorMessage = null;\2\1 if (sFileErrorMessageNamedItem) {sFileErrorMessage = sFileErrorMessageNamedItem.value;}\2\1var sFileUrl = oNode.attributes.getNamedItem('url').value ;\2\2\1oHtml.Append( oListManager.GetFileRowHtml( sFileName, sFileUrl, sFileSize, sFileErrorMessage ) ) ;"
 					flags="s"
 				/>
+
+				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmresourceslist.html">
+					<replacetoken><![CDATA[oHtml.Append( oListManager.GetFolderRowHtml( sFolderName, sCurrentFolderPath + sFolderName + "/" ) ) ;]]></replacetoken>
+					<replacevalue><![CDATA[oHtml.Append( oListManager.GetFolderRowHtml( escapeHTML( sFolderName ), sCurrentFolderPath + sFolderName + "/" ) ) ;]]></replacevalue>
+				</replace>
 
 				<!-- frmresourcetype.html -->
 
@@ -760,64 +999,48 @@
 					<replacevalue><![CDATA[<html xmlns="http://www.w3.org/1999/xhtml">]]></replacevalue>
 				</replace>
 
+				<!-- common.js -->
+
+				<echo file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/js/common.js" append="true">
+					<![CDATA[
+					var escapeHTML = (function() {
+						var	tagsToReplace = {
+							'&': '&amp;',
+							'<': '&lt;',
+							'>': '&gt;',
+							'"': '&#034;',
+							'\'': '&#039;',
+							'/': '&#047;',
+							'`': '&#096;'
+						};
+
+						var replaceTag = function(tag) {
+							return tagsToReplace[tag] || tag;
+						};
+
+						var regexp = /[&<>"'/`]/g;
+
+						return function(str) {
+							return str.replace(regexp, replaceTag);
+						};
+					})();
+					]]>
+				</echo>
+
 				<!-- EOL -->
 
 				<fixcrlf includes="**/*.html" srcdir="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay" eol="unix" />
 
 				<!-- CKEditor -->
 
-				<mkdir dir="docroot/html/js/editor/ckeditor/editor/filemanager/browser/liferay" />
-
-				<copy todir="docroot/html/js/editor/ckeditor/editor/filemanager/browser/liferay">
-					<fileset dir="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay" />
-				</copy>
-
-				<replace file="docroot/html/js/editor/ckeditor/editor/filemanager/browser/liferay/browser.html">
-					<replacefilter token="FCKeditor" value="CKeditor" />
-				</replace>
-
-				<replace file="docroot/html/js/editor/ckeditor/editor/filemanager/browser/liferay/browser.html">
-					<replacetoken><![CDATA[<meta http-equiv="Content-Type" content="text/html; charset=utf-8">]]></replacetoken>
-					<replacevalue>
-						<![CDATA[
-							<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-							<meta content="IE=EmulateIE9" http-equiv="X-UA-Compatible">
-						]]>
-					</replacevalue>
-				</replace>
-
-				<replace file="docroot/html/js/editor/ckeditor/editor/filemanager/browser/liferay/frmresourceslist.html">
-					<replacetoken><![CDATA[function OpenFile( fileUrl )]]></replacetoken>
-					<replacevalue><![CDATA[function OpenFile( fileUrl, errorMessage )]]></replacevalue>
-				</replace>
-
-				<replace file="docroot/html/js/editor/ckeditor/editor/filemanager/browser/liferay/frmresourceslist.html">
-					<replacetoken><![CDATA[window.top.opener.SetUrl( encodeURI( fileUrl ).replace( '#', '%23' ) ) ;]]></replacetoken>
-					<replacevalue>
-						<![CDATA[
-							if (!errorMessage) {
-								var match = window.top.location.search.match(/(?:[\?&]|&amp;)CKEditorFuncNum=([^&]+)/i);
-
-								var funcNum = (match && match.length) ? match[1] : '';
-
-								window.top.opener.CKEDITOR.tools.callFunction(funcNum, fileUrl);
-							}
-							else {
-								alert(errorMessage);
-							}
-						]]>
-					</replacevalue>
-				</replace>
-
-				<replace file="docroot/html/js/editor/ckeditor/editor/filemanager/browser/liferay/frmresourceslist.html">
-					<replacetoken><![CDATA[var sCurrentFolderPath	= oFolderNode.attributes.getNamedItem('path').value ;]]></replacetoken>
-					<replacevalue><![CDATA[var sCurrentFolderPath	= oFolderNode.attributes.getNamedItem('path').value.replace( /"/g, '') ;]]></replacevalue>
-				</replace>
+				<antcall target="build-ckeditor-filemanager" />
 			</then>
 			<else>
 				<copy todir="docroot/html/js/editor/fckeditor">
 					<fileset dir="docroot/html/js/editor/fckeditor_diffs" />
 				</copy>
+
+				<antcall target="build-ckeditor-filemanager" />
 			</else>
 		</if>
 	</target>
@@ -1114,6 +1337,7 @@
 		<delete dir="docroot/dtd" />
 		<delete dir="docroot/html/js/aui" />
 		<delete dir="docroot/html/js/editor/ckeditor" />
+		<delete dir="docroot/html/js/editor/ckeditor_latest" />
 		<delete dir="docroot/html/js/editor/fckeditor" />
 		<delete dir="docroot/html/js/editor/tinymce" />
 		<delete dir="docroot/html/portal/aui" />
@@ -1125,14 +1349,18 @@
 		<delete dir="test-classes" />
 		<delete dir="test-results" />
 
+		<antcall target="clean-css" />
+
+		<antcall target="clean-themes" />
+	</target>
+
+	<target name="clean-css">
 		<delete includeemptydirs="true">
 			<fileset dir="docroot/html/css" includes="**/.sass-cache/**,**/.sass_cache_*.css,**/_sass_cache_*.css" />
 			<fileset dir="docroot/html/portlet" includes="**/.sass-cache/**,**/.sass_cache_*.css,**/_sass_cache_*.css" />
 			<fileset dir="docroot/html/themes" includes="**/.sass-cache/**,**/.sass_cache_*.css,**/_sass_cache_*.css" />
 			<fileset dir="docroot/WEB-INF/tld" includes="liferay*.tld" />
 		</delete>
-
-		<antcall target="clean-themes" />
 	</target>
 
 	<target name="clean-themes">
@@ -1389,7 +1617,6 @@ Please set the property "jdk.6.home" in build.properties.
 		<antcall target="build-alloy" />
 		<antcall target="build-ckeditor" />
 		<antcall target="build-dtd" />
-		<antcall target="build-fckeditor" />
 		<antcall target="build-tinymce" />
 		<antcall target="build-vaadin" />
 
@@ -1497,7 +1724,6 @@ Please set the property "jdk.6.home" in build.properties.
 		<antcall target="build-alloy" />
 		<antcall target="build-ckeditor" />
 		<antcall target="build-dtd" />
-		<antcall target="build-fckeditor" />
 		<antcall target="build-tinymce" />
 		<antcall target="build-vaadin" />
 

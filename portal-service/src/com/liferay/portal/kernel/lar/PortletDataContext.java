@@ -546,6 +546,8 @@ public interface PortletDataContext extends Serializable {
 
 	public boolean isDataStrategyMirrorWithOverwriting();
 
+	public boolean isInitialPublication();
+
 	public boolean isMissingReference(Element referenceElement);
 
 	public boolean isModelCounted(String className, long classPK);

@@ -619,7 +619,7 @@ public class LiferayRepository
 		throws PortalException, SystemException {
 
 		dlFolderService.getSubfolderIds(
-			folderIds, getGroupId(), toFolderId(folderId));
+			folderIds, getGroupId(), toFolderId(folderId), true);
 	}
 
 	@Override

@@ -19,6 +19,12 @@
 <%
 String randomId = StringPool.BLANK;
 
+String redirect = ParamUtil.getString(request, "redirect");
+
+if (Validator.isNull(redirect)) {
+	redirect = currentURL;
+}
+
 String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
@@ -54,7 +60,7 @@ long[] pooledActorsIds = WorkflowTaskManagerUtil.getPooledActorsIds(company.getC
 			<portlet:actionURL var="editURL">
 				<portlet:param name="struts_action" value="/workflow_tasks/edit_workflow_task" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SAVE %>" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="redirect" value="<%= redirect %>" />
 				<portlet:param name="closeRedirect" value="<%= closeRedirect %>" />
 				<portlet:param name="workflowTaskId" value="<%= StringUtil.valueOf(workflowTask.getWorkflowTaskId()) %>" />
 				<portlet:param name="assigneeUserId" value="<%= StringUtil.valueOf(workflowTask.getAssigneeUserId()) %>" />

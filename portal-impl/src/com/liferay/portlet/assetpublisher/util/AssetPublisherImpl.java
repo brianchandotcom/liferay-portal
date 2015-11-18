@@ -623,6 +623,8 @@ public class AssetPublisherImpl implements AssetPublisher {
 			}
 		}
 
+		allAssetCategoryIds = _filterAssetCategoryIds(allAssetCategoryIds);
+
 		assetEntryQuery.setAllCategoryIds(allAssetCategoryIds);
 
 		for (String assetTagName : allAssetTagNames) {
@@ -1032,6 +1034,18 @@ public class AssetPublisherImpl implements AssetPublisher {
 	}
 
 	@Override
+	public long getSubscriptionClassPK(long plid, String portletId)
+		throws PortalException, SystemException {
+
+		com.liferay.portal.model.PortletPreferences portletPreferencesModel =
+			PortletPreferencesLocalServiceUtil.getPortletPreferences(
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portletId);
+
+		return portletPreferencesModel.getPortletPreferencesId();
+	}
+
+	@Override
 	public boolean isScopeIdSelectable(
 			PermissionChecker permissionChecker, String scopeId,
 			long companyGroupId, Layout layout)
@@ -1087,7 +1101,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 		return SubscriptionLocalServiceUtil.isSubscribed(
 			companyId, userId,
 			com.liferay.portal.model.PortletPreferences.class.getName(),
-			_getPortletPreferencesId(plid, portletId));
+			getSubscriptionClassPK(plid, portletId));
 	}
 
 	@Override
@@ -1132,7 +1146,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 
 		subscriptionSender.addPersistedSubscribers(
 			com.liferay.portal.model.PortletPreferences.class.getName(),
-			_getPortletPreferencesId(plid, portletId));
+			getSubscriptionClassPK(plid, portletId));
 
 		subscriptionSender.flushNotificationsAsync();
 	}
@@ -1222,7 +1236,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 		SubscriptionLocalServiceUtil.addSubscription(
 			permissionChecker.getUserId(), groupId,
 			com.liferay.portal.model.PortletPreferences.class.getName(),
-			_getPortletPreferencesId(plid, portletId));
+			getSubscriptionClassPK(plid, portletId));
 	}
 
 	@Override
@@ -1243,7 +1257,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 		SubscriptionLocalServiceUtil.deleteSubscription(
 			permissionChecker.getUserId(),
 			com.liferay.portal.model.PortletPreferences.class.getName(),
-			_getPortletPreferencesId(plid, portletId));
+			getSubscriptionClassPK(plid, portletId));
 	}
 
 	private void _checkAssetEntries(
@@ -1251,8 +1265,12 @@ public class AssetPublisherImpl implements AssetPublisher {
 			portletPreferencesModel)
 		throws PortalException, SystemException {
 
-		Layout layout = LayoutLocalServiceUtil.getLayout(
+		Layout layout = LayoutLocalServiceUtil.fetchLayout(
 			portletPreferencesModel.getPlid());
+
+		if (layout == null) {
+			return;
+		}
 
 		PortletPreferences portletPreferences =
 			PortletPreferencesFactoryUtil.fromXML(
@@ -1327,6 +1345,28 @@ public class AssetPublisherImpl implements AssetPublisher {
 		return filteredAssetEntries;
 	}
 
+	private static long[] _filterAssetCategoryIds(long[] assetCategoryIds)
+		throws SystemException {
+
+		List<Long> assetCategoryIdsList = new ArrayList<Long>();
+
+		for (long assetCategoryId : assetCategoryIds) {
+			AssetCategory category =
+				AssetCategoryLocalServiceUtil.fetchAssetCategory(
+					assetCategoryId);
+
+			if (category == null) {
+				continue;
+			}
+
+			assetCategoryIdsList.add(assetCategoryId);
+		}
+
+		return ArrayUtil.toArray(
+			assetCategoryIdsList.toArray(
+				new Long[assetCategoryIdsList.size()]));
+	}
+
 	private List<AssetEntry> _filterAssetTagNamesAssetEntries(
 			List<AssetEntry> assetEntries, String[] assetTagNames)
 		throws Exception {
@@ -1381,17 +1421,6 @@ public class AssetPublisherImpl implements AssetPublisher {
 		}
 
 		return xml;
-	}
-
-	private long _getPortletPreferencesId(long plid, String portletId)
-		throws PortalException, SystemException {
-
-		com.liferay.portal.model.PortletPreferences portletPreferencesModel =
-			PortletPreferencesLocalServiceUtil.getPortletPreferences(
-				PortletKeys.PREFS_OWNER_ID_DEFAULT,
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portletId);
-
-		return portletPreferencesModel.getPortletPreferencesId();
 	}
 
 	private Map<String, Long> _getRecentFolderIds(

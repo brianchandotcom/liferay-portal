@@ -581,10 +581,17 @@ public interface MBMessageLocalService extends BaseLocalService,
 		java.lang.String className, long classPK, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public void moveDiscussionToTrash(java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public long moveMessageAttachmentToTrash(long userId, long messageId,
 		java.lang.String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	public void restoreDiscussionFromTrash(java.lang.String className,
+		long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public void restoreMessageAttachmentFromTrash(long userId, long messageId,
 		java.lang.String deletedFileName)

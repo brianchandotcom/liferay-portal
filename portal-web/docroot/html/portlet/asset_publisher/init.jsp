@@ -135,19 +135,21 @@ if (assetCategoryId > 0) {
 		allAssetCategoryIds = ArrayUtil.append(allAssetCategoryIds, assetCategoryId);
 	}
 
-	AssetCategory assetCategory = AssetCategoryLocalServiceUtil.getCategory(assetCategoryId);
+	AssetCategory assetCategory = AssetCategoryLocalServiceUtil.fetchCategory(assetCategoryId);
 
-	assetCategory = assetCategory.toEscapedModel();
+	if (assetCategory != null) {
+		assetCategory = assetCategory.toEscapedModel();
 
-	assetCategoryTitle = assetCategory.getTitle(locale);
+		assetCategoryTitle = assetCategory.getTitle(locale);
 
-	AssetVocabulary assetVocabulary = AssetVocabularyLocalServiceUtil.getAssetVocabulary(assetCategory.getVocabularyId());
+		AssetVocabulary assetVocabulary = AssetVocabularyLocalServiceUtil.getAssetVocabulary(assetCategory.getVocabularyId());
 
-	assetVocabulary = assetVocabulary.toEscapedModel();
+		assetVocabulary = assetVocabulary.toEscapedModel();
 
-	assetVocabularyTitle = assetVocabulary.getTitle(locale);
+		assetVocabularyTitle = assetVocabulary.getTitle(locale);
 
-	PortalUtil.setPageKeywords(assetCategoryTitle, request);
+		PortalUtil.setPageKeywords(assetCategoryTitle, request);
+	}
 }
 
 String assetTagName = ParamUtil.getString(request, "tag");
@@ -156,6 +158,10 @@ if (Validator.isNotNull(assetTagName)) {
 	allAssetTagNames = new String[] {assetTagName};
 
 	long[] assetTagIds = AssetTagLocalServiceUtil.getTagIds(siteGroupIds, allAssetTagNames);
+
+	if (assetTagIds.length == 0) {
+		assetTagIds = new long[] {ResourceConstants.PRIMKEY_DNE};
+	}
 
 	assetEntryQuery.setAnyTagIds(assetTagIds);
 
@@ -193,10 +199,10 @@ String orderByType1 = GetterUtil.getString(portletPreferences.getValue("orderByT
 String orderByType2 = GetterUtil.getString(portletPreferences.getValue("orderByType2", "ASC"));
 boolean excludeZeroViewCount = GetterUtil.getBoolean(portletPreferences.getValue("excludeZeroViewCount", null));
 
-int delta = GetterUtil.getInteger(portletPreferences.getValue("delta", null), SearchContainer.DEFAULT_DELTA);
+int pageDelta = GetterUtil.getInteger(portletPreferences.getValue("pageDelta", portletPreferences.getValue("delta", null)), SearchContainer.DEFAULT_DELTA);
 
 if (portletName.equals(PortletKeys.RECENT_CONTENT)) {
-	delta = PropsValues.RECENT_CONTENT_MAX_DISPLAY_ITEMS;
+	pageDelta = PropsValues.RECENT_CONTENT_MAX_DISPLAY_ITEMS;
 }
 
 String paginationType = GetterUtil.getString(portletPreferences.getValue("paginationType", "none"));
@@ -206,15 +212,9 @@ assetEntryQuery.setPaginationType(paginationType);
 boolean showAvailableLocales = GetterUtil.getBoolean(portletPreferences.getValue("showAvailableLocales", null));
 boolean showMetadataDescriptions = GetterUtil.getBoolean(portletPreferences.getValue("showMetadataDescriptions", null), true);
 
-boolean defaultAssetPublisher = false;
+String defaultAssetPublisherPortletId = AssetUtil.getDefaultAssetPublisherId(layout);
 
-UnicodeProperties typeSettingsProperties = layout.getTypeSettingsProperties();
-
-String defaultAssetPublisherPortletId = typeSettingsProperties.getProperty(LayoutTypePortletConstants.DEFAULT_ASSET_PUBLISHER_PORTLET_ID, StringPool.BLANK);
-
-if (defaultAssetPublisherPortletId.equals(portletDisplay.getId()) || (Validator.isNotNull(defaultAssetPublisherPortletId) && defaultAssetPublisherPortletId.equals(portletResource))) {
-	defaultAssetPublisher = true;
-}
+boolean defaultAssetPublisher = AssetUtil.isDefaultAssetPublisher(defaultAssetPublisherPortletId, portletDisplay.getId(), portletResource);
 
 boolean enablePermissions = _isEnablePermissions(portletName, portletPreferences);
 
@@ -225,6 +225,7 @@ boolean enableRatings = GetterUtil.getBoolean(portletPreferences.getValue("enabl
 boolean enableComments = GetterUtil.getBoolean(portletPreferences.getValue("enableComments", null));
 boolean enableCommentRatings = GetterUtil.getBoolean(portletPreferences.getValue("enableCommentRatings", null));
 boolean enableTagBasedNavigation = GetterUtil.getBoolean(portletPreferences.getValue("enableTagBasedNavigation", null));
+boolean enableViewCountIncrement = GetterUtil.getBoolean(portletPreferences.getValue("enableViewCountIncrement", null), true);
 
 String[] conversions = DocumentConversionUtil.getConversions("html");
 String[] extensions = portletPreferences.getValues("extensions", new String[0]);

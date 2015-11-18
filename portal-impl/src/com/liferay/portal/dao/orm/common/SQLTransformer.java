@@ -31,6 +31,7 @@ import java.util.regex.Pattern;
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
+ * @author Sampsa Sohlman
  */
 public class SQLTransformer {
 
@@ -209,6 +210,9 @@ public class SQLTransformer {
 		}
 		else if (_vendorHypersonic) {
 			return matcher.replaceAll("CONVERT($1, SQL_VARCHAR)");
+		}
+		else if (_vendorMySQL) {
+			return matcher.replaceAll("CAST($1 AS CHAR)");
 		}
 		else if (_vendorOracle) {
 			return matcher.replaceAll("CAST($1 AS VARCHAR(4000))");

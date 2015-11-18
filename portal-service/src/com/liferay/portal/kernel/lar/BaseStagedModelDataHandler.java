@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
@@ -158,9 +159,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			PortletDataHandlerStatusMessageSenderUtil.sendStatusMessage(
 				"stagedModel", stagedModel, manifestSummary);
 
-			if (stagedModel instanceof TrashedModel) {
-				restoreStagedModel(portletDataContext, stagedModel);
-			}
+			restoreStagedModel(portletDataContext, stagedModel);
 
 			doImportStagedModel(portletDataContext, stagedModel);
 
@@ -181,8 +180,8 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		ManifestSummary manifestSummary =
 			portletDataContext.getManifestSummary();
 
-		int hibernateCacheFlushFrequency =
-			STAGING_HIBERNATE_CACHE_FLUSH_FREQUENCY;
+		int hibernateCacheFlushFrequency = GetterUtil.getInteger(
+			PropsUtil.get(PropsKeys.STAGING_HIBERNATE_CACHE_FLUSH_FREQUENCY));
 
 		if ((manifestSummary.getModelAdditionCount() %
 				hibernateCacheFlushFrequency) != 0) {
@@ -203,7 +202,9 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		throws PortletDataException {
 
 		try {
-			doRestoreStagedModel(portletDataContext, stagedModel);
+			if (stagedModel instanceof TrashedModel) {
+				doRestoreStagedModel(portletDataContext, stagedModel);
+			}
 		}
 		catch (PortletDataException pde) {
 			throw pde;
@@ -269,7 +270,9 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException {
 
-		if (stagedModel instanceof WorkflowedModel) {
+		if (!portletDataContext.isInitialPublication() &&
+			(stagedModel instanceof WorkflowedModel)) {
+
 			WorkflowedModel workflowedModel = (WorkflowedModel)stagedModel;
 
 			if (!ArrayUtil.contains(

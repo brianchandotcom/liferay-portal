@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.util;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.ImageBag;
+import com.liferay.portal.kernel.image.ImageTool;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.log.Log;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
@@ -332,13 +334,22 @@ public class ImageProcessorImpl
 			return type;
 		}
 
-		String extension = fileVersion.getExtension();
+		String mimeType = fileVersion.getMimeType();
 
-		if (extension.equals("jpeg")) {
-			type = "jpg";
+		if (mimeType.equals(ContentTypes.IMAGE_BMP)) {
+			type = ImageTool.TYPE_BMP;
+		}
+		else if (mimeType.equals(ContentTypes.IMAGE_GIF)) {
+			type = ImageTool.TYPE_GIF;
+		}
+		else if (mimeType.equals(ContentTypes.IMAGE_JPEG)) {
+			type = ImageTool.TYPE_JPEG;
+		}
+		else if (mimeType.equals(ContentTypes.IMAGE_PNG)) {
+			type = ImageTool.TYPE_PNG;
 		}
 		else if (!_previewGenerationRequired(fileVersion)) {
-			type = extension;
+			type = fileVersion.getExtension();
 		}
 
 		return type;
@@ -366,9 +377,9 @@ public class ImageProcessorImpl
 	}
 
 	private boolean _previewGenerationRequired(FileVersion fileVersion) {
-		String type = fileVersion.getExtension();
+		String mimeType = fileVersion.getMimeType();
 
-		if (type.equals("tiff") || type.equals("tif")) {
+		if (mimeType.contains("tiff") || mimeType.contains("tif")) {
 			return true;
 		}
 		else {

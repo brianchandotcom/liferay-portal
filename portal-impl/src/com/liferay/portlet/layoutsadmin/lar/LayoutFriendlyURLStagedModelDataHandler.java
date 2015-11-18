@@ -91,42 +91,27 @@ public class LayoutFriendlyURLStagedModelDataHandler
 
 		LayoutFriendlyURL importedLayoutFriendlyURL = null;
 
-		if (portletDataContext.isDataStrategyMirror()) {
-			LayoutFriendlyURL existingLayoutFriendlyURL =
-				getExistingLayoutFriendlyURL(
-					portletDataContext, layoutFriendlyURL, plid);
+		LayoutFriendlyURL existingLayoutFriendlyURL =
+			getExistingLayoutFriendlyURL(
+				portletDataContext, layoutFriendlyURL, plid);
 
-			layoutFriendlyURL = getUniqueLayoutFriendlyURL(
-				portletDataContext, layoutFriendlyURL,
-				existingLayoutFriendlyURL);
+		layoutFriendlyURL = getUniqueLayoutFriendlyURL(
+			portletDataContext, layoutFriendlyURL, existingLayoutFriendlyURL);
 
-			if (existingLayoutFriendlyURL == null) {
-				serviceContext.setUuid(layoutFriendlyURL.getUuid());
-
-				importedLayoutFriendlyURL =
-					LayoutFriendlyURLLocalServiceUtil.addLayoutFriendlyURL(
-						userId, portletDataContext.getCompanyId(),
-						portletDataContext.getScopeGroupId(), plid,
-						portletDataContext.isPrivateLayout(),
-						layoutFriendlyURL.getFriendlyURL(),
-						layoutFriendlyURL.getLanguageId(), serviceContext);
-			}
-			else {
-				importedLayoutFriendlyURL =
-					LayoutFriendlyURLLocalServiceUtil.updateLayoutFriendlyURL(
-						userId, portletDataContext.getCompanyId(),
-						portletDataContext.getScopeGroupId(), plid,
-						portletDataContext.isPrivateLayout(),
-						layoutFriendlyURL.getFriendlyURL(),
-						layoutFriendlyURL.getLanguageId(), serviceContext);
-			}
-		}
-		else {
-			layoutFriendlyURL = getUniqueLayoutFriendlyURL(
-				portletDataContext, layoutFriendlyURL, null);
+		if (existingLayoutFriendlyURL == null) {
+			serviceContext.setUuid(layoutFriendlyURL.getUuid());
 
 			importedLayoutFriendlyURL =
 				LayoutFriendlyURLLocalServiceUtil.addLayoutFriendlyURL(
+					userId, portletDataContext.getCompanyId(),
+					portletDataContext.getScopeGroupId(), plid,
+					portletDataContext.isPrivateLayout(),
+					layoutFriendlyURL.getFriendlyURL(),
+					layoutFriendlyURL.getLanguageId(), serviceContext);
+		}
+		else {
+			importedLayoutFriendlyURL =
+				LayoutFriendlyURLLocalServiceUtil.updateLayoutFriendlyURL(
 					userId, portletDataContext.getCompanyId(),
 					portletDataContext.getScopeGroupId(), plid,
 					portletDataContext.isPrivateLayout(),

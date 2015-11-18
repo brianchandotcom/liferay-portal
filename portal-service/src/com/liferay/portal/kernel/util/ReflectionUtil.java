@@ -253,6 +253,22 @@ public class ReflectionUtil {
 		return newEnumElement(enumClass, null, name, ordinal, (Object[])null);
 	}
 
+	public static <T> T throwException(Throwable throwable) {
+		return ReflectionUtil.<T, RuntimeException>_doThrowException(throwable);
+	}
+
+	public static Field unfinalField(Field field) throws Exception {
+		int modifiers = field.getModifiers();
+
+		if ((modifiers & Modifier.FINAL) == Modifier.FINAL) {
+			Field modifiersField = getDeclaredField(Field.class, "modifiers");
+
+			modifiersField.setInt(field, modifiers & ~Modifier.FINAL);
+		}
+
+		return field;
+	}
+
 	protected static Method getBridgeMethod(
 			boolean publicMethod, Class<?> clazz, String name,
 			Class<?> ... parameterTypes)
@@ -309,6 +325,14 @@ public class ReflectionUtil {
 		throw new NoSuchMethodException(
 			"No bridge method on " + clazz + " with name " + name +
 				" and parameter types " + Arrays.toString(parameterTypes));
+	}
+
+	@SuppressWarnings("unchecked")
+	private static <T, E extends Throwable> T _doThrowException(
+			Throwable throwable)
+		throws E {
+
+		throw (E)throwable;
 	}
 
 	private static void _getInterfaces(

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.staging.StagingUtil;
+import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.BackgroundTask;
@@ -75,7 +76,10 @@ public class LayoutExportBackgroundTaskExecutor
 			parameterMap, PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE);
 
 		if (updateLastPublishDate) {
-			StagingUtil.updateLastPublishDate(groupId, privateLayout, endDate);
+			DateRange dateRange = new DateRange(startDate, endDate);
+
+			StagingUtil.updateLastPublishDate(
+				groupId, privateLayout, dateRange, endDate);
 		}
 
 		return BackgroundTaskResult.SUCCESS;

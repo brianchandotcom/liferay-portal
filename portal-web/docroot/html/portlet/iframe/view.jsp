@@ -29,7 +29,7 @@ if (Validator.isNotNull(iframeVariables)) {
 	if (iframeSrc.contains(StringPool.QUESTION)) {
 		iframeSrc = iframeSrc.concat(StringPool.AMPERSAND).concat(StringUtil.merge(iframeVariables, StringPool.AMPERSAND));
 	}
-	else {
+	else if ((iframeVariables != null) && !iframeVariables.isEmpty()) {
 		iframeSrc = iframeSrc.concat(StringPool.QUESTION).concat(StringUtil.merge(iframeVariables, StringPool.AMPERSAND));
 	}
 }
@@ -57,123 +57,127 @@ if (windowState.equals(WindowState.MAXIMIZED)) {
 	</c:when>
 	<c:otherwise>
 		<div>
-			<iframe alt="<%= HtmlUtil.escapeAttribute(alt) %>" border="<%= HtmlUtil.escapeAttribute(border) %>" bordercolor="<%= HtmlUtil.escapeAttribute(bordercolor) %>" frameborder="<%= HtmlUtil.escapeAttribute(frameborder) %>" height="<%= HtmlUtil.escapeAttribute(iframeHeight) %>" hspace="<%= HtmlUtil.escapeAttribute(hspace) %>" id="<portlet:namespace />iframe" longdesc="<%= HtmlUtil.escapeAttribute(longdesc) %>" name="<portlet:namespace />iframe" onload="<portlet:namespace />monitorIframe();" scrolling="<%= HtmlUtil.escapeAttribute(scrolling) %>" src="<%= HtmlUtil.escapeHREF(iframeSrc) %>" title="<%= HtmlUtil.escapeAttribute(title) %>" vspace="<%= HtmlUtil.escapeAttribute(vspace) %>" width="<%= HtmlUtil.escapeAttribute(width) %>">
+			<iframe alt="<%= HtmlUtil.escapeAttribute(alt) %>" border="<%= HtmlUtil.escapeAttribute(border) %>" bordercolor="<%= HtmlUtil.escapeAttribute(bordercolor) %>" frameborder="<%= HtmlUtil.escapeAttribute(frameborder) %>" height="<%= HtmlUtil.escapeAttribute(iframeHeight) %>" hspace="<%= HtmlUtil.escapeAttribute(hspace) %>" id="<portlet:namespace />iframe" longdesc="<%= HtmlUtil.escapeAttribute(longdesc) %>" name="<portlet:namespace />iframe" onload="<%= PropsValues.IFRAME_DYNAMIC_URL_ENABLED ? renderResponse.getNamespace() + "monitorIframe();" : "" %>" scrolling="<%= HtmlUtil.escapeAttribute(scrolling) %>" src="<%= HtmlUtil.escapeHREF(iframeSrc) %>" title="<%= HtmlUtil.escapeAttribute(title) %>" vspace="<%= HtmlUtil.escapeAttribute(vspace) %>" width="<%= HtmlUtil.escapeAttribute(width) %>">
 				<%= LanguageUtil.format(pageContext, "your-browser-does-not-support-inline-frames-or-is-currently-configured-not-to-display-inline-frames.-content-can-be-viewed-at-actual-source-page-x", HtmlUtil.escape(iframeSrc)) %>
 			</iframe>
 		</div>
 	</c:otherwise>
 </c:choose>
 
-<aui:script>
-	function <portlet:namespace />monitorIframe() {
-		var url = null;
+<c:if test="<%= PropsValues.IFRAME_DYNAMIC_URL_ENABLED %>">
+	<aui:script>
+		function <portlet:namespace />monitorIframe() {
+			var url = null;
 
-		try {
-			var iframe = document.getElementById('<portlet:namespace />iframe');
+			try {
+				var iframe = document.getElementById('<portlet:namespace />iframe');
 
-			url = iframe.contentWindow.document.location.href;
-		}
-		catch (e) {
+				url = iframe.contentWindow.document.location.href;
+			}
+			catch (e) {
+				return true;
+			}
+
+			var baseSrc = '<%= HtmlUtil.escapeJS(baseSrc) %>';
+			var iframeSrc = '<%= HtmlUtil.escapeJS(iframeSrc) %>';
+
+			if ((url == iframeSrc) || (url == (iframeSrc + '/'))) {
+			}
+			else if (Liferay.Util.startsWith(url, baseSrc)) {
+				url = url.substring(baseSrc.length);
+
+				<portlet:namespace />updateHash(url);
+			}
+			else {
+				<portlet:namespace />updateHash(url);
+			}
+
 			return true;
 		}
 
-		var baseSrc = '<%= HtmlUtil.escapeJS(baseSrc) %>';
-		var iframeSrc = '<%= HtmlUtil.escapeJS(iframeSrc) %>';
+		Liferay.provide(
+			window,
+			'<portlet:namespace />init',
+			function() {
+				var A = AUI();
 
-		if ((url == iframeSrc) || (url == (iframeSrc + '/'))) {
-		}
-		else if (Liferay.Util.startsWith(url, baseSrc)) {
-			url = url.substring(baseSrc.length);
+				var hash = document.location.hash.replace('#', '');
 
-			<portlet:namespace />updateHash(url);
-		}
-		else {
-			<portlet:namespace />updateHash(url);
-		}
+				// LPS-33951
 
-		return true;
-	}
-
-	Liferay.provide(
-		window,
-		'<portlet:namespace />init',
-		function() {
-			var A = AUI();
-
-			var hash = document.location.hash.replace('#', '');
-
-			// LPS-33951
-
-			if (!A.UA.gecko) {
-				hash = A.QueryString.unescape(hash);
-			}
-
-			var hashObj = A.QueryString.parse(hash);
-
-			hash = hashObj['<portlet:namespace />'];
-
-			if (hash) {
-				var src = '';
-
-				if (!(/^https?\:\/\//.test(hash))) {
-					src = '<%= HtmlUtil.escapeJS(baseSrc) %>';
+				if (!A.UA.gecko) {
+					hash = A.QueryString.unescape(hash);
 				}
 
-				src += hash;
+				var hashObj = A.QueryString.parse(hash);
 
-				var iframe = A.one('#<portlet:namespace />iframe');
+				hash = hashObj['<portlet:namespace />'];
 
-				if (iframe) {
-					iframe.attr('src', src);
+				if (hash) {
+					var src = '';
+
+					var baseSrc = '<%= HtmlUtil.escapeJS(baseSrc) %>';
+
+					if (!(/^https?\:\/\//.test(hash)) || !A.Lang.String.startsWith(hash, baseSrc)) {
+						src = '<%= HtmlUtil.escapeJS(baseSrc) %>';
+					}
+
+					src += hash;
+
+					var iframe = A.one('#<portlet:namespace />iframe');
+
+					if (iframe) {
+						iframe.attr('src', src);
+					}
 				}
-			}
-		},
-		['aui-base', 'querystring']
-	);
+			},
+			['aui-base', 'querystring']
+		);
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />updateHash',
-		function(url) {
-			var A = AUI();
+		Liferay.provide(
+			window,
+			'<portlet:namespace />updateHash',
+			function(url) {
+				var A = AUI();
 
-			var hash = document.location.hash.replace('#', '');
+				var hash = document.location.hash.replace('#', '');
 
-			var hashObj = A.QueryString.parse(hash);
+				var hashObj = A.QueryString.parse(hash);
 
-			hashObj['<portlet:namespace />'] = url;
+				hashObj['<portlet:namespace />'] = url;
 
-			var maximize = A.one('#p_p_id<portlet:namespace /> .portlet-maximize-icon a');
+				var maximize = A.one('#p_p_id<portlet:namespace /> .portlet-maximize-icon a');
 
-			hash = A.QueryString.stringify(hashObj);
+				hash = A.QueryString.stringify(hashObj);
 
-			if (maximize) {
-				var href = maximize.attr('href');
+				if (maximize) {
+					var href = maximize.attr('href');
 
-				href = href.split('#')[0];
+					href = href.split('#')[0];
 
-				maximize.attr('href', href + '#' + hash);
-			}
+					maximize.attr('href', href + '#' + hash);
+				}
 
-			var restore = A.one('#p_p_id<portlet:namespace /> a.portlet-icon-back');
+				var restore = A.one('#p_p_id<portlet:namespace /> a.portlet-icon-back');
 
-			if (restore) {
-				var href = restore.attr('href');
+				if (restore) {
+					var href = restore.attr('href');
 
-				href = href.split('#')[0];
+					href = href.split('#')[0];
 
-				restore.attr('href', href + '#' + hash);
-			}
+					restore.attr('href', href + '#' + hash);
+				}
 
-			// LPS-33951
+				// LPS-33951
 
-			location.hash = A.QueryString.escape(hash);
-		},
-		['aui-base', 'querystring']
-	);
+				location.hash = A.QueryString.escape(hash);
+			},
+			['aui-base', 'querystring']
+		);
 
-	<portlet:namespace />init();
-</aui:script>
+		<portlet:namespace />init();
+	</aui:script>
+</c:if>
 
 <aui:script use="aui-autosize-iframe">
 	var iframe = A.one('#<portlet:namespace />iframe');

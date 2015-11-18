@@ -15,9 +15,9 @@ AUI.add(
 
 		var SELECTOR_DOCKBAR_ITEM = '.dockbar-item';
 
-		var SELECTOR_DOCKBAR_ITEM_FIRST_LINK = '.dockbar-item > a';
+		var SELECTOR_DOCKBAR_ITEM_FIRST_LINK = '.dockbar-item > a[role=menuitem]';
 
-		var SELECTOR_DOCKBAR_ITEM_LINK = '.dockbar-item a';
+		var SELECTOR_DOCKBAR_ITEM_LINK = '.dockbar-item a[role=menuitem]';
 
 		var DockbarKeyboardInteraction = A.Component.create(
 			{

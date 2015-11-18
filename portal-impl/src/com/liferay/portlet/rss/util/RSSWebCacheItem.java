@@ -107,10 +107,8 @@ public class RSSWebCacheItem implements WebCacheItem {
 
 	@Override
 	public long getRefreshTime() {
-		return _REFRESH_TIME;
+		return Time.MINUTE * PropsValues.RSS_FEED_REFRESH_TIME;
 	}
-
-	private static final long _REFRESH_TIME = Time.MINUTE * 20;
 
 	private String _url;
 

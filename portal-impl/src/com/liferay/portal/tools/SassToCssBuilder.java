@@ -29,6 +29,7 @@ import com.liferay.portal.model.ModelHintsConstants;
 import com.liferay.portal.scripting.ruby.RubyExecutor;
 import com.liferay.portal.servlet.filters.aggregate.AggregateFilter;
 import com.liferay.portal.servlet.filters.aggregate.FileAggregateContext;
+import com.liferay.portal.servlet.filters.dynamiccss.RTLCSSUtil;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.PortalImpl;
@@ -52,16 +53,47 @@ import org.apache.tools.ant.DirectoryScanner;
 public class SassToCssBuilder {
 
 	public static File getCacheFile(String fileName) {
-		fileName = StringUtil.replace(
+		return getCacheFile(fileName, StringPool.BLANK);
+	}
+
+	public static File getCacheFile(String fileName, String suffix) {
+		return new File(getCacheFileName(fileName, suffix));
+	}
+
+	public static String getCacheFileName(String fileName, String suffix) {
+		String cacheFileName = StringUtil.replace(
 			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
 
-		int pos = fileName.lastIndexOf(StringPool.SLASH);
+		int x = cacheFileName.lastIndexOf(StringPool.SLASH);
 
-		String cacheFileName =
-			fileName.substring(0, pos + 1) + ".sass-cache/" +
-				fileName.substring(pos + 1);
+		int y = cacheFileName.lastIndexOf(StringPool.PERIOD);
 
-		return new File(cacheFileName);
+		if (y == -1) {
+			y = cacheFileName.length();
+		}
+
+		return cacheFileName.substring(0, x + 1) + ".sass-cache/" +
+			cacheFileName.substring(x + 1, y) + suffix +
+				cacheFileName.substring(y);
+	}
+
+	public static String getContent(String docrootDirName, String fileName)
+		throws Exception {
+
+		File file = new File(docrootDirName.concat(fileName));
+
+		String content = FileUtil.read(file);
+
+		content = AggregateFilter.aggregateCss(
+			new FileAggregateContext(docrootDirName, fileName), content);
+
+		return parseStaticTokens(content);
+	}
+
+	public static String getRtlCustomFileName(String fileName) {
+		int pos = fileName.lastIndexOf(StringPool.PERIOD);
+
+		return fileName.substring(0, pos) + "_rtl" + fileName.substring(pos);
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -123,7 +155,8 @@ public class SassToCssBuilder {
 
 		_rubyScript = StringUtil.read(
 			classLoader,
-			"com/liferay/portal/servlet/filters/dynamiccss/main.rb");
+			"com/liferay/portal/servlet/filters/dynamiccss" +
+				"/dependencies/main.rb");
 
 		_tempDir = SystemProperties.get(SystemProperties.TMP_DIR);
 
@@ -140,17 +173,52 @@ public class SassToCssBuilder {
 		}
 	}
 
-	private String _getContent(String docrootDirName, String fileName)
+	private void _cacheSass(
+			String docrootDirName, String portalCommonDirName, String fileName)
 		throws Exception {
+
+		if (fileName.contains("_rtl") || RTLCSSUtil.isExcludedPath(fileName)) {
+			return;
+		}
+
+		File cacheFile = getCacheFile(docrootDirName.concat(fileName));
+
+		String parsedContent = _parseSassFile(
+			docrootDirName, portalCommonDirName, fileName);
+
+		FileUtil.write(cacheFile, parsedContent);
 
 		File file = new File(docrootDirName.concat(fileName));
 
-		String content = FileUtil.read(file);
+		long lastModified = file.lastModified();
 
-		content = AggregateFilter.aggregateCss(
-			new FileAggregateContext(docrootDirName, fileName), content);
+		cacheFile.setLastModified(lastModified);
 
-		return parseStaticTokens(content);
+		// Generate RTL cache
+
+		File rtlCacheFile = getCacheFile(
+			docrootDirName.concat(fileName), "_rtl");
+
+		String rtlCss = RTLCSSUtil.getRtlCss(fileName, parsedContent);
+
+		// Append custom CSS for RTL
+
+		String rtlCustomFileName = getRtlCustomFileName(fileName);
+
+		File rtlCustomFile = new File(docrootDirName, rtlCustomFileName);
+
+		if (rtlCustomFile.exists()) {
+			lastModified = rtlCustomFile.lastModified();
+
+			String rtlCustomCss = _parseSassFile(
+				docrootDirName, portalCommonDirName, rtlCustomFileName);
+
+			rtlCss += rtlCustomCss;
+		}
+
+		FileUtil.write(rtlCacheFile, rtlCss);
+
+		rtlCacheFile.setLastModified(lastModified);
 	}
 
 	private String _getCssThemePath(String fileName) {
@@ -177,6 +245,8 @@ public class SassToCssBuilder {
 		portalUtil.setPortal(new PortalImpl());
 
 		PropsUtil.setProps(new PropsImpl());
+
+		RTLCSSUtil.init();
 	}
 
 	private boolean _isModified(String dirName, String[] fileNames)
@@ -244,7 +314,7 @@ public class SassToCssBuilder {
 			try {
 				long start = System.currentTimeMillis();
 
-				_parseSassFile(docrootDirName, portalCommonDirName, fileName);
+				_cacheSass(docrootDirName, portalCommonDirName, fileName);
 
 				long end = System.currentTimeMillis();
 
@@ -260,19 +330,16 @@ public class SassToCssBuilder {
 		}
 	}
 
-	private void _parseSassFile(
+	private String _parseSassFile(
 			String docrootDirName, String portalCommonDirName, String fileName)
 		throws Exception {
 
 		String filePath = docrootDirName.concat(fileName);
 
-		File file = new File(filePath);
-		File cacheFile = getCacheFile(filePath);
-
 		Map<String, Object> inputObjects = new HashMap<String, Object>();
 
 		inputObjects.put("commonSassPath", portalCommonDirName);
-		inputObjects.put("content", _getContent(docrootDirName, fileName));
+		inputObjects.put("content", getContent(docrootDirName, fileName));
 		inputObjects.put("cssRealPath", filePath);
 		inputObjects.put("cssThemePath", _getCssThemePath(filePath));
 		inputObjects.put("sassCachePath", _tempDir);
@@ -289,11 +356,7 @@ public class SassToCssBuilder {
 
 		unsyncPrintWriter.flush();
 
-		String parsedContent = unsyncByteArrayOutputStream.toString();
-
-		FileUtil.write(cacheFile, parsedContent);
-
-		cacheFile.setLastModified(file.lastModified());
+		return unsyncByteArrayOutputStream.toString();
 	}
 
 	private RubyExecutor _rubyExecutor;

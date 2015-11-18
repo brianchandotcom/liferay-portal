@@ -10281,7 +10281,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 				if ((groupId != bookmarksEntry.getGroupId()) ||
 						!ArrayUtil.contains(folderIds,
 							bookmarksEntry.getFolderId()) ||
-						(status != bookmarksEntry.getStatus())) {
+						(status == bookmarksEntry.getStatus())) {
 					list = null;
 
 					break;

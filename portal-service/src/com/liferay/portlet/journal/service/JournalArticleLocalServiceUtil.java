@@ -800,6 +800,13 @@ public class JournalArticleLocalServiceUtil {
 		getService().deleteArticles(groupId, folderId, includeTrashedEntries);
 	}
 
+	public static void deleteArticles(long groupId, java.lang.String className,
+		long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteArticles(groupId, className, classPK);
+	}
+
 	/**
 	* Deletes the layout's association with the web content articles for the
 	* group.
@@ -883,9 +890,50 @@ public class JournalArticleLocalServiceUtil {
 	}
 
 	public static com.liferay.portlet.journal.model.JournalArticle fetchArticle(
+		long groupId, java.lang.String articleId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchArticle(groupId, articleId);
+	}
+
+	/**
+	* Returns the web content article matching the group, article ID, and
+	* version.
+	*
+	* @param groupId the primary key of the web content article's group
+	* @param articleId the primary key of the web content article
+	* @param version the web content article's version
+	* @return the web content article matching the group, article ID, and
+	version, or <code>null</code> if no web content article could be
+	found
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticle fetchArticle(
 		long groupId, java.lang.String articleId, double version)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().fetchArticle(groupId, articleId, version);
+	}
+
+	public static com.liferay.portlet.journal.model.JournalArticle fetchArticleByUrlTitle(
+		long groupId, java.lang.String urlTitle)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchArticleByUrlTitle(groupId, urlTitle);
+	}
+
+	public static com.liferay.portlet.journal.model.JournalArticle fetchDisplayArticle(
+		long groupId, java.lang.String articleId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchDisplayArticle(groupId, articleId);
+	}
+
+	public static com.liferay.portlet.journal.model.JournalArticle fetchLatestArticle(
+		long resourcePrimKey)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchLatestArticle(resourcePrimKey);
+	}
+
+	public static com.liferay.portlet.journal.model.JournalArticle fetchLatestArticle(
+		long resourcePrimKey, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchLatestArticle(resourcePrimKey, status);
 	}
 
 	public static com.liferay.portlet.journal.model.JournalArticle fetchLatestArticle(
@@ -907,6 +955,22 @@ public class JournalArticleLocalServiceUtil {
 		return getService().fetchLatestArticle(groupId, articleId, status);
 	}
 
+	public static com.liferay.portlet.journal.model.JournalArticle fetchLatestArticleByUrlTitle(
+		long groupId, java.lang.String urlTitle, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .fetchLatestArticleByUrlTitle(groupId, urlTitle, status);
+	}
+
+	/**
+	* Returns the latest indexable web content article matching the resource
+	* primary key.
+	*
+	* @param resourcePrimKey the primary key of the resource instance
+	* @return the latest indexable web content article matching the resource
+	primary key, or <code>null</code> if no matching web content
+	article could be found
+	*/
 	public static com.liferay.portlet.journal.model.JournalArticle fetchLatestIndexableArticle(
 		long resourcePrimKey)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -1619,6 +1683,11 @@ public class JournalArticleLocalServiceUtil {
 		return getService().getArticlesCount(groupId, folderId, status);
 	}
 
+	public static int getArticlesCount(long groupId, java.lang.String articleId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getArticlesCount(groupId, articleId);
+	}
+
 	/**
 	* Returns an ordered range of all the web content articles matching the
 	* company, version, and workflow status.
@@ -1768,6 +1837,13 @@ public class JournalArticleLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getDisplayArticleByUrlTitle(groupId, urlTitle);
+	}
+
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getIndexableArticlesByDDMStructureKey(
+		java.lang.String[] ddmStructureKeys)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getIndexableArticlesByDDMStructureKey(ddmStructureKeys);
 	}
 
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getIndexableArticlesByResourcePrimKey(
@@ -2298,7 +2374,8 @@ public class JournalArticleLocalServiceUtil {
 	}
 
 	public static void rebuildTree(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		getService().rebuildTree(companyId);
 	}
 
@@ -2945,6 +3022,13 @@ public class JournalArticleLocalServiceUtil {
 			articleId, version, title, description, content, type,
 			ddmStructureKeys, ddmTemplateKeys, displayDateGT, displayDateLT,
 			status, reviewDate, andOperator);
+	}
+
+	public static void setTreePaths(long folderId, java.lang.String treePath,
+		boolean reindex)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().setTreePaths(folderId, treePath, reindex);
 	}
 
 	/**

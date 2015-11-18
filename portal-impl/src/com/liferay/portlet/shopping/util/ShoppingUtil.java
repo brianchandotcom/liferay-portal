@@ -180,16 +180,28 @@ public class ShoppingUtil {
 			return discount;
 		}
 
-		String[] categoryIds = StringUtil.split(coupon.getLimitCategories());
+		String[] categoryNames = StringUtil.split(coupon.getLimitCategories());
+
+		Set<Long> categoryIds = new HashSet<Long>();
+
+		for (String categoryName : categoryNames) {
+			ShoppingCategory category =
+				ShoppingCategoryLocalServiceUtil.getCategory(
+					coupon.getGroupId(), categoryName);
+
+			List<Long> subcategoryIds = new ArrayList<Long>();
+
+			ShoppingCategoryLocalServiceUtil.getSubcategoryIds(
+				subcategoryIds, category.getGroupId(),
+				category.getCategoryId());
+
+			categoryIds.add(category.getCategoryId());
+			categoryIds.addAll(subcategoryIds);
+		}
+
 		String[] skus = StringUtil.split(coupon.getLimitSkus());
 
-		if ((categoryIds.length > 0) || (skus.length > 0)) {
-			Set<String> categoryIdsSet = new HashSet<String>();
-
-			for (String categoryId : categoryIds) {
-				categoryIdsSet.add(categoryId);
-			}
-
+		if ((categoryIds.size() > 0) || (skus.length > 0)) {
 			Set<String> skusSet = new HashSet<String>();
 
 			for (String sku : skus) {
@@ -207,9 +219,8 @@ public class ShoppingUtil {
 
 				ShoppingItem item = cartItem.getItem();
 
-				if (((categoryIdsSet.size() > 0) &&
-					 categoryIdsSet.contains(
-						 String.valueOf(item.getCategoryId()))) ||
+				if (((categoryIds.size() > 0) &&
+					 categoryIds.contains(item.getCategoryId())) ||
 					((skusSet.size() > 0) && skusSet.contains(item.getSku()))) {
 
 					newItems.put(cartItem, count);

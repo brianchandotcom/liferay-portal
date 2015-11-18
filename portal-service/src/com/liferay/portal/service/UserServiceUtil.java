@@ -532,6 +532,12 @@ public class UserServiceUtil {
 		return getService().getCompanyUsersCount(companyId);
 	}
 
+	public static com.liferay.portal.model.User getCurrentUser()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getCurrentUser();
+	}
+
 	/**
 	* Returns the primary keys of all the users belonging to the group.
 	*

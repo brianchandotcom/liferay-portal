@@ -302,7 +302,7 @@ public class DDMStructureFinderImpl
 				sql, "classNameId", StringPool.EQUAL, false,
 				classNameIdsString);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(name)", StringPool.LIKE, false, names);
+				sql, "lower(DDMStructure.name)", StringPool.LIKE, false, names);
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "description", StringPool.LIKE, false, descriptions);
 			sql = CustomSQLUtil.replaceKeywords(
@@ -386,7 +386,7 @@ public class DDMStructureFinderImpl
 				sql, "classNameId", StringPool.EQUAL, false,
 				classNameIdsString);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(name)", StringPool.LIKE, false, names);
+				sql, "lower(DDMStructure.name)", StringPool.LIKE, false, names);
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "description", StringPool.LIKE, false, descriptions);
 			sql = CustomSQLUtil.replaceKeywords(

@@ -106,15 +106,34 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 						<c:otherwise>
 							<c:choose>
 								<c:when test="<%= messagesCount == 1 %>">
-									<liferay-ui:message key="no-comments-yet" /> <a href="<%= taglibPostReplyURL %>"><liferay-ui:message key="be-the-first" /></a>
+									<c:choose>
+										<c:when test="<%= themeDisplay.isSignedIn() || !_isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
+											<liferay-ui:message key="no-comments-yet" /> <a href="<%= taglibPostReplyURL %>"><liferay-ui:message key="be-the-first" /></a>
+										</c:when>
+										<c:otherwise>
+											<liferay-ui:message key="no-comments-yet" /> <a href="<%= themeDisplay.getURLSignIn() %>"><liferay-ui:message key="please-sign-in-to-comment" /></a>
+										</c:otherwise>
+									</c:choose>
 								</c:when>
 								<c:otherwise>
-									<liferay-ui:icon
-										image="reply"
-										label="<%= true %>"
-										message="add-comment"
-										url="<%= taglibPostReplyURL %>"
-									/>
+									<c:choose>
+										<c:when test="<%= themeDisplay.isSignedIn() || !_isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
+											<liferay-ui:icon
+												image="reply"
+												label="<%= true %>"
+												message="add-comment"
+												url="<%= taglibPostReplyURL %>"
+											/>
+										</c:when>
+										<c:otherwise>
+											<liferay-ui:icon
+												image="reply"
+												label="<%= true %>"
+												message="please-sign-in-to-comment"
+												url="<%= themeDisplay.getURLSignIn() %>"
+											/>
+										</c:otherwise>
+									</c:choose>
 								</c:otherwise>
 							</c:choose>
 						</c:otherwise>
@@ -187,7 +206,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 				<a name="<%= randomNamespace %>messages_top"></a>
 
 				<c:if test="<%= treeWalker != null %>">
-				<table class="tree-walker table table-bordered table-hover table-striped">
+				<table class="table table-bordered table-hover table-striped tree-walker">
 					<thead class="table-columns">
 					<tr>
 						<th class="table-header" colspan="2">
@@ -348,12 +367,24 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 														String taglibPostReplyURL = "javascript:" + randomNamespace + "showForm('" + randomNamespace + "postReplyForm" + i + "', '" + namespace + randomNamespace + "postReplyBody" + i + "'); " + randomNamespace + "hideForm('" + randomNamespace + "editForm" + i + "', '" + namespace + randomNamespace + "editReplyBody" + i + "', '" + HtmlUtil.escapeJS(message.getBody()) + "');";
 														%>
 
-														<liferay-ui:icon
-															image="reply"
-															label="<%= true %>"
-															message="post-reply"
-															url="<%= taglibPostReplyURL %>"
-														/>
+														<c:choose>
+															<c:when test="<%= themeDisplay.isSignedIn() || !_isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
+																<liferay-ui:icon
+																	image="reply"
+																	label="<%= true %>"
+																	message="post-reply"
+																	url="<%= taglibPostReplyURL %>"
+																/>
+															</c:when>
+															<c:otherwise>
+																<liferay-ui:icon
+																	image="reply"
+																	label="<%= true %>"
+																	message="please-sign-in-to-reply"
+																	url="<%= themeDisplay.getURLSignIn() %>"
+																/>
+															</c:otherwise>
+														</c:choose>
 													</li>
 												</c:if>
 
@@ -415,7 +446,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 										userName="<%= HtmlUtil.escape(PortalUtil.getUserName(user.getUserId(), StringPool.BLANK)) %>"
 									/>
 
-									<aui:input id='<%= randomNamespace + "postReplyBody" + i %>' label="" name='<%= "postReplyBody" + i %>' style='<%= "height: " + ModelHintsConstants.TEXTAREA_DISPLAY_HEIGHT + "px;" %>' type="textarea" wrap="soft" />
+									<aui:input id='<%= randomNamespace + "postReplyBody" + i %>' label="" name='<%= "postReplyBody" + i %>' style='<%= "height: " + ModelHintsConstants.TEXTAREA_DISPLAY_HEIGHT + "px;" %>' title="reply-body" type="textarea" wrap="soft" />
 
 									<aui:button-row>
 										<aui:button cssClass="btn-comment" id='<%= namespace + randomNamespace + "postReplyButton" + i %>' onClick='<%= randomNamespace + "postReply(" + i + ");" %>' value='<%= themeDisplay.isSignedIn() ? "reply" : "reply-as" %>' />
@@ -430,7 +461,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 								<c:if test="<%= !hideControls && MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, message.getMessageId(), message.getUserId(), ActionKeys.UPDATE_DISCUSSION) %>">
 									<div class="lfr-discussion-form lfr-discussion-form-edit span12" id="<%= randomNamespace %>editForm<%= i %>" style='<%= "display: none; max-width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>'>
-										<aui:input id='<%= randomNamespace + "editReplyBody" + i %>' label="" name='<%= "editReplyBody" + i %>' style='<%= "height: " + ModelHintsConstants.TEXTAREA_DISPLAY_HEIGHT + "px;" %>' type="textarea" value="<%= message.getBody() %>" wrap="soft" />
+										<aui:input id='<%= randomNamespace + "editReplyBody" + i %>' label="" name='<%= "editReplyBody" + i %>' style='<%= "height: " + ModelHintsConstants.TEXTAREA_DISPLAY_HEIGHT + "px;" %>' title="reply-body" type="textarea" value="<%= message.getBody() %>" wrap="soft" />
 
 										<%
 										boolean pending = message.isPending();
@@ -848,5 +879,13 @@ private RatingsStats getRatingsStats(List<RatingsStats> ratingsStatsList, long c
 	}
 
 	return RatingsStatsUtil.create(0);
+}
+
+private boolean _isLoginRedirectRequired(long companyId) throws SystemException {
+	if (PrefsPropsUtil.getBoolean(companyId, PropsKeys.CAS_AUTH_ENABLED, PropsValues.CAS_AUTH_ENABLED) || PrefsPropsUtil.getBoolean(companyId, PropsKeys.LOGIN_DIALOG_DISABLED, PropsValues.LOGIN_DIALOG_DISABLED) || PrefsPropsUtil.getBoolean(companyId, PropsKeys.NTLM_AUTH_ENABLED, PropsValues.NTLM_AUTH_ENABLED) || PrefsPropsUtil.getBoolean(companyId, PropsKeys.OPEN_SSO_AUTH_ENABLED, PropsValues.OPEN_SSO_AUTH_ENABLED)) {
+		return true;
+	}
+
+	return false;
 }
 %>

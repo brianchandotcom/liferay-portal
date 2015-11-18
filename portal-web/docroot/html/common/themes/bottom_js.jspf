@@ -108,7 +108,7 @@ if (layout != null) {
 				</c:choose>
 
 				disabledDropContainerClass: 'portlet-dropzone-disabled',
-				dragNodes: '.portlet-boundary',
+				dragNodes: '.portlet-boundary:not(.portlet-static)',
 				dropContainer: '.portlet-dropzone',
 				emptyColumnClass: 'empty',
 				invalid: '.portlet-static',

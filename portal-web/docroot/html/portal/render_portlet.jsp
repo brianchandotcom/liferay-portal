@@ -883,23 +883,21 @@ Boolean renderPortletBoundary = GetterUtil.getBoolean(request.getAttribute(WebKe
 					templatePath = StrutsUtil.TEXT_HTML_DIR + definition.getPath();
 				}
 
-				String portletContent = "/portal/portlet_error.jsp";
+				request.setAttribute(WebKeys.PORTLET_CONTENT_JSP, "/portal/portlet_error.jsp");
 		%>
 
-				<liferay-util:include page="<%= templatePath %>">
-					<liferay-util:param name="portlet_content" value="<%= portletContent %>" />
-				</liferay-util:include>
+				<liferay-util:include page="<%= templatePath %>" />
 
 		<%
 			}
 			else {
 				if (useDefaultTemplate || !portlet.isActive()) {
 					renderRequestImpl.setAttribute(WebKeys.PORTLET_CONTENT, bufferCacheServletResponse.getString());
+
+					request.setAttribute(WebKeys.PORTLET_CONTENT_JSP, StringPool.BLANK);
 		%>
 
-					<liferay-util:include page='<%= StrutsUtil.TEXT_HTML_DIR + "/common/themes/portlet.jsp" %>'>
-						<liferay-util:param name="portlet_content" value="<%= StringPool.BLANK %>" />
-					</liferay-util:include>
+					<liferay-util:include page='<%= StrutsUtil.TEXT_HTML_DIR + "/common/themes/portlet.jsp" %>' />
 
 		<%
 				}
@@ -911,26 +909,26 @@ Boolean renderPortletBoundary = GetterUtil.getBoolean(request.getAttribute(WebKe
 		else {
 			renderRequestImpl.setAttribute(WebKeys.PORTLET_CONTENT, bufferCacheServletResponse.getString());
 
-			String portletContent = StringPool.BLANK;
+			String portletContentJSP = StringPool.BLANK;
 
 			if (!portlet.isReady()) {
-				portletContent = "/portal/portlet_not_ready.jsp";
+				portletContentJSP = "/portal/portlet_not_ready.jsp";
 			}
 
 			if (portletException) {
-				portletContent = "/portal/portlet_error.jsp";
+				portletContentJSP = "/portal/portlet_error.jsp";
 			}
 
 			if (addNotAjaxablePortlet) {
-				portletContent = "/portal/portlet_not_ajaxable.jsp";
+				portletContentJSP = "/portal/portlet_not_ajaxable.jsp";
 			}
+
+			request.setAttribute(WebKeys.PORTLET_CONTENT_JSP, portletContentJSP);
 		%>
 
 			<c:choose>
 				<c:when test="<%= useDefaultTemplate || portletException || addNotAjaxablePortlet %>">
-					<liferay-util:include page='<%= StrutsUtil.TEXT_HTML_DIR + "/common/themes/portlet.jsp" %>'>
-						<liferay-util:param name="portlet_content" value="<%= portletContent %>" />
-					</liferay-util:include>
+					<liferay-util:include page='<%= StrutsUtil.TEXT_HTML_DIR + "/common/themes/portlet.jsp" %>' />
 				</c:when>
 				<c:otherwise>
 					<%= renderRequestImpl.getAttribute(WebKeys.PORTLET_CONTENT) %>

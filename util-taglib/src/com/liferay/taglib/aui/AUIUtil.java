@@ -50,6 +50,37 @@ public class AUIUtil {
 	 */
 	public static final String LABEL_FIELD_PREFIX = "field-label";
 
+	public static String buildControlGroupCss(
+		boolean inlineField, String inlineLabel, String wrapperCssClass,
+		String baseType) {
+
+		StringBundler sb = new StringBundler(9);
+
+		sb.append("control-group");
+
+		if (inlineField) {
+			sb.append(" control-group-inline");
+		}
+
+		if (Validator.isNotNull(inlineLabel)) {
+			sb.append(" form-inline");
+		}
+
+		if (Validator.isNotNull(wrapperCssClass)) {
+			sb.append(StringPool.SPACE);
+			sb.append(wrapperCssClass);
+		}
+
+		if (Validator.isNotNull(baseType)) {
+			sb.append(StringPool.SPACE);
+			sb.append("input-");
+			sb.append(baseType);
+			sb.append("-wrapper");
+		}
+
+		return sb.toString();
+	}
+
 	public static String buildCss(
 		String prefix, boolean disabled, boolean first, boolean last,
 		String cssClass) {

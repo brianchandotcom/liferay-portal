@@ -36,7 +36,7 @@ boolean workflowEnabled = WorkflowEngineManagerUtil.isDeployed() && (WorkflowHan
 List<WorkflowDefinition> workflowDefinitions = null;
 
 if (workflowEnabled) {
-	workflowDefinitions = WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(company.getCompanyId(), 0, 100, null);
+	workflowDefinitions = WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 }
 %>
 
@@ -91,9 +91,7 @@ if (workflowEnabled) {
 			%>
 
 			<c:if test="<%= folder != null %>">
-				<aui:field-wrapper label="parent-folder">
-					<liferay-ui:input-resource url="<%= parentFolderName %>" />
-				</aui:field-wrapper>
+				<aui:input name="parentFolder" type="resource" value="<%= parentFolderName %>" />
 			</c:if>
 
 			<aui:input name="name" />
@@ -200,7 +198,7 @@ if (workflowEnabled) {
 
 								<c:if test="<%= workflowEnabled %>">
 									<liferay-ui:search-container-column-text name="workflow">
-										<aui:select label="" name='<%= "workflowDefinition" + dlFileEntryType.getFileEntryTypeId() %>'>
+										<aui:select label="" name='<%= "workflowDefinition" + dlFileEntryType.getFileEntryTypeId() %>' title="workflow-definition">
 
 											<aui:option label="no-workflow" value="" />
 
@@ -284,7 +282,7 @@ if (workflowEnabled) {
 
 <liferay-util:buffer var="workflowDefinitionsBuffer">
 	<c:if test="<%= workflowEnabled %>">
-		<aui:select label="" name="LIFERAY_WORKFLOW_DEFINITION_FILE_ENTRY_TYPE">
+		<aui:select label="" name="LIFERAY_WORKFLOW_DEFINITION_FILE_ENTRY_TYPE" title="workflow-definition">
 			<aui:option label="no-workflow" value="" />
 
 			<%

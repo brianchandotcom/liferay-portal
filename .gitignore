@@ -143,6 +143,7 @@ cobertura.ser
 /portal-web/docroot/html/js/aui
 
 /portal-web/docroot/html/js/editor/ckeditor
+/portal-web/docroot/html/js/editor/ckeditor_latest
 /portal-web/docroot/html/js/editor/codepress
 /portal-web/docroot/html/js/editor/fckeditor
 /portal-web/docroot/html/js/editor/tiny_mce

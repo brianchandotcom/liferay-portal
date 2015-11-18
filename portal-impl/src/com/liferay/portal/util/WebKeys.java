@@ -43,8 +43,6 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String ASSET_VOCABULARY = "ASSET_VOCABULARY";
 
-	public static final String BASIC_AUTH_ENABLED = "BASIC_AUTH_ENABLED";
-
 	public static final String BLOGS_CATEGORY = "BLOGS_CATEGORY";
 
 	public static final String BLOGS_ENTRY = "BLOGS_ENTRY";
@@ -144,6 +142,8 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 	public static final String GROUP = "GROUP";
 
 	public static final String HTTPS_INITIAL = "HTTPS_INITIAL";
+
+	public static final String I18N_LANGUAGE_CODE = "I18N_LANGUAGE_CODE";
 
 	public static final String I18N_LANGUAGE_ID = "I18N_LANGUAGE_ID";
 
@@ -342,9 +342,9 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String PORTLET_CONTENT = "PORTLET_CONTENT";
 
-	public static final String PORTLET_PARALLEL_RENDER = "PORTLET_PARALLEL_RENDER";
+	public static final String PORTLET_CONTENT_JSP = "PORTLET_CONTENT_JSP";
 
-	public static final String PORTLET_RENDER_PARAMETERS = "PORTLET_RENDER_PARAMETERS_";
+	public static final String PORTLET_PARALLEL_RENDER = "PORTLET_PARALLEL_RENDER";
 
 	public static final String PORTLET_STRUTS_ACTION = "PORTLET_STRUTS_ACTION";
 
@@ -359,7 +359,7 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String PORTLET_STRUTS_PROCESSOR = "PORTLET_STRUTS_PROCESSOR";
 
-	public static final String PREVIOUS_LAYOUT = "PREVIOUS_LAYOUT";
+	public static final String PREVIOUS_LAYOUT_PLID = "PREVIOUS_LAYOUT_PLID";
 
 	public static final String PUBLIC_RENDER_PARAMETER_CONFIGURATIONS = "PUBLIC_RENDER_PARAMETER_CONFIGURATIONS";
 
@@ -434,6 +434,8 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 	public static final String TASK_LIST = "TASK_LIST";
 
 	public static final String TEAM = "TEAM";
+
+	public static final String TICKET = "TICKET";
 
 	public static final String TITLE = "TITLE";
 

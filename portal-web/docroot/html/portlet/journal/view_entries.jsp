@@ -145,19 +145,19 @@ int total = 0;
 	<c:when test='<%= displayTerms.getNavigation().equals("mine") || displayTerms.isNavigationRecent() %>'>
 
 		<%
-		long userId = 0;
+		boolean includeOwner = true;
 
 		if (displayTerms.getNavigation().equals("mine")) {
-			userId = themeDisplay.getUserId();
+			includeOwner = false;
 
 			status = WorkflowConstants.STATUS_ANY;
 		}
 
-		total = JournalArticleServiceUtil.getGroupArticlesCount(scopeGroupId, userId, folderId, status);
+		total = JournalArticleServiceUtil.getGroupArticlesCount(scopeGroupId, themeDisplay.getUserId(), folderId, status, includeOwner);
 
 		searchContainer.setTotal(total);
 
-		results = JournalArticleServiceUtil.getGroupArticles(scopeGroupId, userId, folderId, status, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+		results = JournalArticleServiceUtil.getGroupArticles(scopeGroupId, themeDisplay.getUserId(), folderId, status, includeOwner, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 		%>
 
 	</c:when>
@@ -186,11 +186,11 @@ int total = 0;
 	<c:otherwise>
 
 		<%
-		total = JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, folderId, status);
+		total = JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, themeDisplay.getUserId(), folderId, status);
 
 		searchContainer.setTotal(total);
 
-		results = JournalFolderServiceUtil.getFoldersAndArticles(scopeGroupId, folderId, status, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+		results = JournalFolderServiceUtil.getFoldersAndArticles(scopeGroupId, themeDisplay.getUserId(), folderId, status, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 		%>
 
 	</c:otherwise>
@@ -243,7 +243,7 @@ for (int i = 0; i < results.size(); i++) {
 					tempRowURL.setParameter("folderId", String.valueOf(curArticle.getFolderId()));
 					tempRowURL.setParameter("articleId", curArticle.getArticleId());
 
-					tempRowURL.setParameter("status", String.valueOf(status));
+					tempRowURL.setParameter("status", String.valueOf(curArticle.getStatus()));
 
 					request.setAttribute("view_entries.jsp-article", curArticle);
 
@@ -271,14 +271,13 @@ for (int i = 0; i < results.size(); i++) {
 						rowURL.setParameter("folderId", String.valueOf(curArticle.getFolderId()));
 						rowURL.setParameter("articleId", curArticle.getArticleId());
 
-						rowURL.setParameter("status", String.valueOf(status));
+						rowURL.setParameter("status", String.valueOf(curArticle.getStatus()));
 						%>
 
 						<liferay-ui:icon
-							cssClass="entry-display-style selectable"
 							image="../file_system/small/html"
 							label="<%= true %>"
-							message="<%= curArticle.getTitle(locale) %>"
+							message="<%= HtmlUtil.escape(curArticle.getTitle(locale)) %>"
 							method="get"
 							url="<%= rowURL.toString() %>"
 						/>
@@ -334,7 +333,7 @@ for (int i = 0; i < results.size(); i++) {
 
 					ResultRow row = new ResultRow(curArticle, curArticle.getArticleId(), i);
 
-					row.setClassName("entry-display-style");
+					row.setClassName("entry-display-style selectable");
 
 					Map<String, Object> data = new HashMap<String, Object>();
 
@@ -428,7 +427,7 @@ for (int i = 0; i < results.size(); i++) {
 
 					ResultRow row = new ResultRow(curFolder, curFolder.getPrimaryKey(), i);
 
-					row.setClassName("entry-display-style");
+					row.setClassName("entry-display-style selectable");
 
 					Map<String, Object> data = new HashMap<String, Object>();
 

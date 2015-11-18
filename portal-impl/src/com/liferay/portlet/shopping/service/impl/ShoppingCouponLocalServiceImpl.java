@@ -290,7 +290,16 @@ public class ShoppingCouponLocalServiceImpl
 
 		// Category IDs
 
-		long[] categoryIds = StringUtil.split(limitCategories, 0L);
+		List<Long> categoryIds = new ArrayList<Long>();
+
+		String[] categoryNames = StringUtil.split(limitCategories);
+
+		for (String categoryName : categoryNames) {
+			ShoppingCategory category = shoppingCategoryPersistence.fetchByG_N(
+				groupId, categoryName);
+
+			categoryIds.add(category.getCategoryId());
+		}
 
 		List<Long> invalidCategoryIds = new ArrayList<Long>();
 

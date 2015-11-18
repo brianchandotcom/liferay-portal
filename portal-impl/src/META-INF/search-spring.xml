@@ -173,7 +173,7 @@
 		</constructor-arg>
 		<constructor-arg>
 			<util:map map-class="java.util.LinkedHashMap">
-				<entry key="articleId" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
+				<entry key="articleId" value-ref="com.liferay.portal.search.lucene.UpperCaseKeywordAnalyzer" />
 				<entry key="assetCategoryTitles?(_.+)?" value-ref="com.liferay.portal.search.lucene.LikeKeywordAnalyzer" />
 				<entry key="assetTagNames" value-ref="com.liferay.portal.search.lucene.LikeKeywordAnalyzer" />
 				<entry key="ddm/.*" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
@@ -245,6 +245,7 @@
 		</constructor-arg>
 	</bean>
 	<bean id="com.liferay.portal.search.lucene.LikeKeywordAnalyzer" class="com.liferay.portal.search.lucene.LikeKeywordAnalyzer" />
+	<bean id="com.liferay.portal.search.lucene.UpperCaseKeywordAnalyzer" class="com.liferay.portal.search.lucene.UpperCaseKeywordAnalyzer" />
 	<bean id="org.apache.lucene.analysis.KeywordAnalyzer" class="org.apache.lucene.analysis.KeywordAnalyzer" />
 	<bean id="org.apache.lucene.analysis.WhitespaceAnalyzer" class="org.apache.lucene.analysis.WhitespaceAnalyzer" />
 	<bean id="org.apache.lucene.analysis.ar.ArabicAnalyzer" class="org.apache.lucene.analysis.ar.ArabicAnalyzer">

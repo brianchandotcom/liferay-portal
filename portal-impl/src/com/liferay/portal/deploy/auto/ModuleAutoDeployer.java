@@ -37,9 +37,7 @@ public class ModuleAutoDeployer extends BaseDeployer {
 
 		String destDir = PropsValues.MODULE_FRAMEWORK_AUTO_DEPLOY_DIRS[0];
 
-		if (!FileUtil.exists(destDir)) {
-			FileUtil.mkdirs(destDir);
-		}
+		FileUtil.mkdirs(destDir);
 
 		try {
 			FileUtils.copyFileToDirectory(

@@ -291,14 +291,9 @@ public class JSONWebServiceActionsManagerImpl
 
 	@Override
 	public int registerServletContext(ServletContext servletContext) {
-		String contextPath = ContextPathUtil.getContextPath(servletContext);
+		String contextPath = servletContext.getServletContextName();
 
 		int count = registerServletContext(contextPath);
-
-		if (count < 0) {
-			count = registerServletContext(
-				servletContext.getServletContextName());
-		}
 
 		return count;
 	}
@@ -316,8 +311,8 @@ public class JSONWebServiceActionsManagerImpl
 		else {
 			String contextName = contextPath;
 
-			if (contextName.startsWith(StringPool.SLASH)) {
-				contextName = contextName.substring(1);
+			if (!contextPath.startsWith(StringPool.SLASH)) {
+				contextPath = StringPool.SLASH.concat(contextPath);
 			}
 
 			beanLocator = PortletBeanLocatorUtil.getBeanLocator(contextName);

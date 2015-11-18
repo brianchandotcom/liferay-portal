@@ -46,7 +46,9 @@ String title = assetRenderer.getTitle(LocaleUtil.fromLanguageId(languageId));
 boolean show = ((Boolean)request.getAttribute("view.jsp-show")).booleanValue();
 boolean print = ((Boolean)request.getAttribute("view.jsp-print")).booleanValue();
 
-request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
+if (defaultAssetPublisher || Validator.isNull(defaultAssetPublisherPortletId) || !PortletPermissionUtil.contains(permissionChecker, layout, defaultAssetPublisherPortletId, ActionKeys.VIEW)) {
+	request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
+}
 
 request.setAttribute("view.jsp-fullContentRedirect", currentURL);
 request.setAttribute("view.jsp-showIconLabel", true);
@@ -106,7 +108,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 
 	// Dynamically created asset entries are never persisted so incrementing the view counter breaks
 
-	if (!assetEntry.isNew() && assetEntry.isVisible()) {
+	if (enableViewCountIncrement && !assetEntry.isNew() && assetEntry.isVisible()) {
 		AssetEntry incrementAssetEntry = null;
 
 		if (assetEntryQuery.isEnablePermissions()) {
@@ -118,12 +120,6 @@ request.setAttribute("view.jsp-showIconLabel", true);
 
 		if (incrementAssetEntry != null) {
 			assetEntry = incrementAssetEntry;
-		}
-	}
-
-	if (showContextLink) {
-		if (PortalUtil.getPlidFromPortletId(assetRenderer.getGroupId(), assetRendererFactory.getPortletId()) == 0) {
-			showContextLink = false;
 		}
 	}
 
@@ -140,10 +136,6 @@ request.setAttribute("view.jsp-showIconLabel", true);
 
 		viewFullContentURL.setParameter("urlTitle", assetRenderer.getUrlTitle());
 	}
-
-	String viewFullContentURLString = viewFullContentURL.toString();
-
-	viewFullContentURLString = HttpUtil.setParameter(viewFullContentURLString, "redirect", currentURL);
 	%>
 
 	<div class="asset-content" id="<portlet:namespace /><%= assetEntry.getEntryId() %>">
@@ -165,6 +157,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 		%>
 
 		<liferay-util:include page="<%= path %>" portletId="<%= assetRendererFactory.getPortletId() %>">
+			<liferay-util:param name="showComments" value="<%= Boolean.FALSE.toString() %>" />
 			<liferay-util:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />
 		</liferay-util:include>
 
@@ -209,9 +202,17 @@ request.setAttribute("view.jsp-showIconLabel", true);
 			</div>
 		</c:if>
 
+		<%
+		if (showContextLink) {
+			if (PortalUtil.getPlidFromPortletId(assetRenderer.getGroupId(), assetRendererFactory.getPortletId()) == 0) {
+				showContextLink = false;
+			}
+		}
+		%>
+
 		<c:if test="<%= showContextLink && !print && assetEntry.isVisible() %>">
 			<div class="asset-more">
-				<a href="<%= assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, viewFullContentURLString) %>"><liferay-ui:message key="<%= assetRenderer.getViewInContextMessage() %>" /> &raquo;</a>
+				<a href="<%= assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, HttpUtil.setParameter(viewFullContentURL.toString(), "redirect", currentURL)) %>"><liferay-ui:message key="<%= assetRenderer.getViewInContextMessage() %>" /> &raquo;</a>
 			</div>
 		</c:if>
 

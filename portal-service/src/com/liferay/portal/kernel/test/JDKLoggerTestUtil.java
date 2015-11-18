@@ -19,11 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.log.LogWrapper;
 
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.logging.Handler;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 /**
@@ -31,7 +27,7 @@ import java.util.logging.Logger;
  */
 public class JDKLoggerTestUtil {
 
-	public static List<LogRecord> configureJDKLogger(String name, Level level) {
+	public static CaptureHandler configureJDKLogger(String name, Level level) {
 		LogWrapper logWrapper = (LogWrapper)LogFactoryUtil.getLog(name);
 
 		Log log = logWrapper.getWrappedLog();
@@ -45,45 +41,11 @@ public class JDKLoggerTestUtil {
 
 		Logger logger = jdk14LogImpl.getWrappedLogger();
 
-		for (Handler handler : logger.getHandlers()) {
-			logger.removeHandler(handler);
-		}
-
-		logger.setLevel(level);
-		logger.setUseParentHandlers(false);
-
-		CaptureHandler captureHandler = new CaptureHandler();
+		CaptureHandler captureHandler = new CaptureHandler(logger, level);
 
 		logger.addHandler(captureHandler);
 
-		return captureHandler._logRecords;
-	}
-
-	private static class CaptureHandler extends Handler {
-
-		@Override
-		public void close() throws SecurityException {
-			_logRecords.clear();
-		}
-
-		@Override
-		public void flush() {
-			_logRecords.clear();
-		}
-
-		@Override
-		public boolean isLoggable(LogRecord logRecord) {
-			return false;
-		}
-
-		@Override
-		public void publish(LogRecord logRecord) {
-			_logRecords.add(logRecord);
-		}
-
-		private List<LogRecord> _logRecords =
-			new CopyOnWriteArrayList<LogRecord>();
-
+		return captureHandler;
 	}
 
 	static {

@@ -65,8 +65,8 @@ boolean mergeWithParentFolderDisabled = ParamUtil.getBoolean(request, "mergeWith
 				}
 				%>
 
-				<div class="input-append">
-					<liferay-ui:input-resource id="parentFolderName" url="<%= parentFolderName %>" />
+				<div class="control-group">
+					<aui:input name="parentFolderName" type="resource" value="<%= parentFolderName %>" />
 
 					<portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 						<portlet:param name="struts_action" value="/journal/select_folder" />

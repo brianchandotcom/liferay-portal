@@ -46,7 +46,7 @@ int delta = ParamUtil.getInteger(request, "delta", deltaDefault);
 				<aui:button cssClass='<%= displayStyle.equals("list") ? "active" : StringPool.BLANK %>' data-style="list" icon="icon-list" />
 			</div>
 
-			<aui:select cssClass="input-mini" inlineField="<%= true %>" label="" name="numItems">
+			<aui:select cssClass="input-mini" inlineField="<%= true %>" label="" name="numItems" title="number-of-items-to-display">
 
 				<%
 				for (int curDelta : PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) {

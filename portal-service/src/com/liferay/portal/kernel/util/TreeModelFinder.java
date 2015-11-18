@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.TreeModel;
 
@@ -27,5 +28,12 @@ public interface TreeModelFinder<T extends TreeModel> {
 	public List<T> findTreeModels(
 			long previousId, long companyId, long parentPrimaryKey, int size)
 		throws SystemException;
+
+	public void rebuildDependentModelsTreePaths(
+			long parentPrimaryKey, String treePath)
+		throws PortalException, SystemException;
+
+	public void reindexTreeModels(List<TreeModel> treeModels)
+		throws PortalException;
 
 }

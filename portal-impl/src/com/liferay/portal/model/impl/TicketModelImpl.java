@@ -85,8 +85,11 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portal.model.Ticket"),
 			true);
-	public static long KEY_COLUMN_BITMASK = 1L;
-	public static long TICKETID_COLUMN_BITMASK = 2L;
+	public static long CLASSNAMEID_COLUMN_BITMASK = 1L;
+	public static long CLASSPK_COLUMN_BITMASK = 2L;
+	public static long KEY_COLUMN_BITMASK = 4L;
+	public static long TYPE_COLUMN_BITMASK = 8L;
+	public static long TICKETID_COLUMN_BITMASK = 16L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.Ticket"));
 
@@ -256,7 +259,19 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 
 	@Override
 	public void setClassNameId(long classNameId) {
+		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
+
+		if (!_setOriginalClassNameId) {
+			_setOriginalClassNameId = true;
+
+			_originalClassNameId = _classNameId;
+		}
+
 		_classNameId = classNameId;
+	}
+
+	public long getOriginalClassNameId() {
+		return _originalClassNameId;
 	}
 
 	@Override
@@ -266,7 +281,19 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 
 	@Override
 	public void setClassPK(long classPK) {
+		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
+
+		if (!_setOriginalClassPK) {
+			_setOriginalClassPK = true;
+
+			_originalClassPK = _classPK;
+		}
+
 		_classPK = classPK;
+	}
+
+	public long getOriginalClassPK() {
+		return _originalClassPK;
 	}
 
 	@Override
@@ -301,7 +328,19 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 
 	@Override
 	public void setType(int type) {
+		_columnBitmask |= TYPE_COLUMN_BITMASK;
+
+		if (!_setOriginalType) {
+			_setOriginalType = true;
+
+			_originalType = _type;
+		}
+
 		_type = type;
+	}
+
+	public int getOriginalType() {
+		return _originalType;
 	}
 
 	@Override
@@ -427,7 +466,19 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 	public void resetOriginalValues() {
 		TicketModelImpl ticketModelImpl = this;
 
+		ticketModelImpl._originalClassNameId = ticketModelImpl._classNameId;
+
+		ticketModelImpl._setOriginalClassNameId = false;
+
+		ticketModelImpl._originalClassPK = ticketModelImpl._classPK;
+
+		ticketModelImpl._setOriginalClassPK = false;
+
 		ticketModelImpl._originalKey = ticketModelImpl._key;
+
+		ticketModelImpl._originalType = ticketModelImpl._type;
+
+		ticketModelImpl._setOriginalType = false;
 
 		ticketModelImpl._columnBitmask = 0;
 	}
@@ -566,10 +617,16 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 	private long _companyId;
 	private Date _createDate;
 	private long _classNameId;
+	private long _originalClassNameId;
+	private boolean _setOriginalClassNameId;
 	private long _classPK;
+	private long _originalClassPK;
+	private boolean _setOriginalClassPK;
 	private String _key;
 	private String _originalKey;
 	private int _type;
+	private int _originalType;
+	private boolean _setOriginalType;
 	private String _extraInfo;
 	private Date _expirationDate;
 	private long _columnBitmask;

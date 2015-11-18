@@ -201,8 +201,10 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
 			long remoteGroupId = GetterUtil.getLong(
 				typeSettingsProperties.getProperty("remoteGroupId"));
+			boolean forceDisable = GetterUtil.getBoolean(
+				serviceContext.getAttribute("forceDisable"));
 
-			disableRemoteStaging(remoteURL, remoteGroupId);
+			disableRemoteStaging(remoteURL, remoteGroupId, forceDisable);
 		}
 
 		typeSettingsProperties.remove("branchingPrivate");
@@ -256,23 +258,6 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			disableStaging(liveGroup, serviceContext);
 		}
 
-		UnicodeProperties typeSettingsProperties =
-			liveGroup.getTypeSettingsProperties();
-
-		typeSettingsProperties.setProperty(
-			"branchingPrivate", String.valueOf(branchingPrivate));
-		typeSettingsProperties.setProperty(
-			"branchingPublic", String.valueOf(branchingPublic));
-		typeSettingsProperties.setProperty("staged", Boolean.TRUE.toString());
-		typeSettingsProperties.setProperty(
-			"stagedRemotely", String.valueOf(false));
-
-		setCommonStagingOptions(
-			liveGroup, typeSettingsProperties, serviceContext);
-
-		groupLocalService.updateGroup(
-			liveGroup.getGroupId(), typeSettingsProperties.toString());
-
 		if (!liveGroup.hasStagingGroup()) {
 			serviceContext.setAttribute("staging", String.valueOf(true));
 
@@ -300,6 +285,23 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		checkDefaultLayoutSetBranches(
 			userId, liveGroup, branchingPublic, branchingPrivate, false,
 			serviceContext);
+
+		UnicodeProperties typeSettingsProperties =
+			liveGroup.getTypeSettingsProperties();
+
+		typeSettingsProperties.setProperty(
+			"branchingPrivate", String.valueOf(branchingPrivate));
+		typeSettingsProperties.setProperty(
+			"branchingPublic", String.valueOf(branchingPublic));
+		typeSettingsProperties.setProperty("staged", Boolean.TRUE.toString());
+		typeSettingsProperties.setProperty(
+			"stagedRemotely", String.valueOf(false));
+
+		setCommonStagingOptions(
+			liveGroup, typeSettingsProperties, serviceContext);
+
+		groupLocalService.updateGroup(
+			liveGroup.getGroupId(), typeSettingsProperties.toString());
 	}
 
 	@Override
@@ -338,7 +340,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			if (!remoteURL.equals(oldRemoteURL) ||
 				(remoteGroupId != oldRemoteGroupId)) {
 
-				disableRemoteStaging(oldRemoteURL, oldRemoteGroupId);
+				disableRemoteStaging(oldRemoteURL, oldRemoteGroupId, false);
 
 				stagedRemotely = false;
 			}
@@ -347,6 +349,10 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		if (!stagedRemotely) {
 			enableRemoteStaging(remoteURL, remoteGroupId);
 		}
+
+		checkDefaultLayoutSetBranches(
+			userId, liveGroup, branchingPublic, branchingPrivate, true,
+			serviceContext);
 
 		typeSettingsProperties.setProperty(
 			"branchingPrivate", String.valueOf(branchingPrivate));
@@ -372,10 +378,6 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			liveGroup.getGroupId(), typeSettingsProperties.toString());
 
 		updateStagedPortlets(remoteURL, remoteGroupId, typeSettingsProperties);
-
-		checkDefaultLayoutSetBranches(
-			userId, liveGroup, branchingPublic, branchingPrivate, true,
-			serviceContext);
 	}
 
 	@Override
@@ -386,6 +388,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
 		try {
 			ExportImportThreadLocal.setLayoutImportInProcess(true);
+			ExportImportThreadLocal.setLayoutStagingInProcess(true);
 
 			Folder folder = PortletFileRepositoryUtil.getPortletFolder(
 				stagingRequestId);
@@ -399,6 +402,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		}
 		finally {
 			ExportImportThreadLocal.setLayoutImportInProcess(false);
+			ExportImportThreadLocal.setLayoutStagingInProcess(false);
 		}
 	}
 
@@ -525,10 +529,11 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			stagingGroup.getTypeSettingsProperties();
 
 		stagingTypeSettingsProperties.setProperty(
+			GroupConstants.TYPE_SETTINGS_KEY_INHERIT_LOCALES,
+			Boolean.FALSE.toString());
+		stagingTypeSettingsProperties.setProperty(
 			PropsKeys.LOCALES,
 			liveTypeSettingsProperties.getProperty(PropsKeys.LOCALES));
-		stagingTypeSettingsProperties.setProperty(
-			"inheritLocales", Boolean.FALSE.toString());
 		stagingTypeSettingsProperties.setProperty(
 			"languageId",
 			liveTypeSettingsProperties.getProperty(
@@ -617,6 +622,13 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 	protected void disableRemoteStaging(String remoteURL, long remoteGroupId)
 		throws PortalException {
 
+		disableRemoteStaging(remoteURL, remoteGroupId, false);
+	}
+
+	protected void disableRemoteStaging(
+			String remoteURL, long remoteGroupId, boolean forceDisable)
+		throws PortalException {
+
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
@@ -648,12 +660,18 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			throw rae;
 		}
 		catch (SystemException se) {
-			RemoteExportException ree = new RemoteExportException(
-				RemoteExportException.BAD_CONNECTION);
+			if (!forceDisable) {
+				RemoteExportException ree = new RemoteExportException(
+					RemoteExportException.BAD_CONNECTION);
 
-			ree.setURL(remoteURL);
+				ree.setURL(remoteURL);
 
-			throw ree;
+				throw ree;
+			}
+
+			if (_log.isWarnEnabled()) {
+				_log.warn("Forcibly disable remote staging");
+			}
 		}
 	}
 

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -129,12 +130,25 @@ public class GroupImpl extends GroupBaseImpl {
 			getCompanyId(), getGroupId(), site);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getChildrenWithLayouts(boolean, int, int, OrderByComparator}
+	 */
+	@Deprecated
 	@Override
 	public List<Group> getChildrenWithLayouts(boolean site, int start, int end)
 		throws SystemException {
 
+		return getChildrenWithLayouts(site, start, end, null);
+	}
+
+	@Override
+	public List<Group> getChildrenWithLayouts(
+			boolean site, int start, int end, OrderByComparator obc)
+		throws SystemException {
+
 		return GroupLocalServiceUtil.getLayoutsGroups(
-			getCompanyId(), getGroupId(), site, start, end);
+			getCompanyId(), getGroupId(), site, start, end, obc);
 	}
 
 	@Override

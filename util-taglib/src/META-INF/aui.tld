@@ -2043,6 +2043,12 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
+			<name>localizeLabel</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<description><![CDATA[Sets whether the navigation item is selected by default. The default value is <code>false</code>.]]></description>
 			<name>selected</name>
 			<required>false</required>

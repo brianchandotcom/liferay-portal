@@ -929,7 +929,6 @@ AUI.add(
 				instance._viewFileEntryURL = config.viewFileEntryURL;
 
 				instance._invalidFileSizeText = Liferay.Language.get('please-enter-a-file-with-a-valid-file-size-no-larger-than-x');
-				instance._invalidFileType = Liferay.Language.get('please-enter-a-file-with-a-valid-file-type');
 				instance._zeroByteFileText = Liferay.Language.get('the-file-contains-no-data-and-cannot-be-uploaded.-please-use-the-classic-uploader');
 			},
 
@@ -1257,13 +1256,9 @@ AUI.add(
 						var errorMessage;
 
 						var size = item.get('size') || 0;
-						var type = item.get('type') || '';
 
 						if ((maxFileSize !== 0) && (size > maxFileSize)) {
 							errorMessage = invalidSizeText;
-						}
-						else if (!type) {
-							errorMessage = instance._invalidFileType;
 						}
 						else if (size === 0) {
 							errorMessage = instance._zeroByteFileText;

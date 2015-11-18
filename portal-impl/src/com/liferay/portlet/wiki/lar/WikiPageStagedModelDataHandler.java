@@ -26,13 +26,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.wiki.NoSuchPageException;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
@@ -139,6 +139,8 @@ public class WikiPageStagedModelDataHandler
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			page);
 
+		serviceContext.setUuid(page.getUuid());
+
 		Map<Long, Long> nodeIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				WikiNode.class);
@@ -148,22 +150,16 @@ public class WikiPageStagedModelDataHandler
 
 		WikiPage importedPage = null;
 
-		WikiPage existingPage =
-			WikiPageLocalServiceUtil.fetchWikiPageByUuidAndGroupId(
-				page.getUuid(), portletDataContext.getScopeGroupId());
+		WikiPage existingPage = null;
 
-		if (existingPage == null) {
-			try {
-				existingPage = WikiPageLocalServiceUtil.getPage(
-					nodeId, page.getTitle());
-			}
-			catch (NoSuchPageException nspe) {
-			}
+		try {
+			existingPage = WikiPageLocalServiceUtil.getPage(
+				nodeId, page.getTitle());
+		}
+		catch (NoSuchPageException nspe) {
 		}
 
 		if (existingPage == null) {
-			serviceContext.setUuid(page.getUuid());
-
 			importedPage = WikiPageLocalServiceUtil.addPage(
 				userId, nodeId, page.getTitle(), page.getVersion(),
 				page.getContent(), page.getSummary(), page.isMinorEdit(),
@@ -171,16 +167,31 @@ public class WikiPageStagedModelDataHandler
 				page.getRedirectTitle(), serviceContext);
 		}
 		else {
-			importedPage = WikiPageLocalServiceUtil.updatePage(
-				userId, nodeId, existingPage.getTitle(), 0, page.getContent(),
-				page.getSummary(), page.isMinorEdit(), page.getFormat(),
-				page.getParentTitle(), page.getRedirectTitle(), serviceContext);
+			existingPage =
+				WikiPageLocalServiceUtil.fetchWikiPageByUuidAndGroupId(
+					page.getUuid(), portletDataContext.getScopeGroupId());
+
+			if (existingPage == null) {
+				existingPage = WikiPageLocalServiceUtil.fetchPage(
+					nodeId, page.getTitle(), page.getVersion());
+			}
+
+			if (existingPage == null) {
+				importedPage = WikiPageLocalServiceUtil.updatePage(
+					userId, nodeId, page.getTitle(), 0.0, page.getContent(),
+					page.getSummary(), page.isMinorEdit(), page.getFormat(),
+					page.getParentTitle(), page.getRedirectTitle(),
+					serviceContext);
+			}
+			else {
+				importedPage = existingPage;
+			}
 		}
 
 		if (page.isHead()) {
 			List<Element> attachmentElements =
 				portletDataContext.getReferenceDataElements(
-					pageElement, FileEntry.class,
+					pageElement, DLFileEntry.class,
 					PortletDataContext.REFERENCE_TYPE_WEAK);
 
 			for (Element attachmentElement : attachmentElements) {
@@ -190,7 +201,6 @@ public class WikiPageStagedModelDataHandler
 					(FileEntry)portletDataContext.getZipEntryAsObject(path);
 
 				InputStream inputStream = null;
-				String mimeType = null;
 
 				try {
 					String binPath = attachmentElement.attributeValue(
@@ -222,13 +232,10 @@ public class WikiPageStagedModelDataHandler
 						continue;
 					}
 
-					mimeType = MimeTypesUtil.getContentType(
-						inputStream, fileEntry.getTitle());
-
 					WikiPageLocalServiceUtil.addPageAttachment(
 						userId, importedPage.getNodeId(),
 						importedPage.getTitle(), fileEntry.getTitle(),
-						inputStream, mimeType);
+						inputStream, null);
 				}
 				finally {
 					StreamUtil.cleanUp(inputStream);
@@ -237,6 +244,12 @@ public class WikiPageStagedModelDataHandler
 		}
 
 		portletDataContext.importClassedModel(page, importedPage);
+
+		Map<Long, Long> pageIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				WikiPage.class + ".pageId");
+
+		pageIds.put(page.getPageId(), importedPage.getPageId());
 	}
 
 	@Override

@@ -33,6 +33,7 @@ import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.FolderNameException;
+import com.liferay.portlet.documentlibrary.InvalidFolderException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -111,6 +112,9 @@ public class EditFolderAction extends PortletAction {
 					 e instanceof FolderNameException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
+			}
+			else if (e instanceof InvalidFolderException) {
+				SessionErrors.add(actionRequest, e.getClass(), e);
 			}
 			else {
 				throw e;

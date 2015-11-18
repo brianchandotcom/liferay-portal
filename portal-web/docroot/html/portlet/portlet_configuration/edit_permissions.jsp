@@ -137,6 +137,7 @@ definePermissionsURL.setParameter("struts_action", "/roles_admin/edit_role_permi
 definePermissionsURL.setParameter(Constants.CMD, Constants.VIEW);
 definePermissionsURL.setPortletMode(PortletMode.VIEW);
 definePermissionsURL.setRefererPlid(plid);
+definePermissionsURL.setWindowState(LiferayWindowState.POP_UP);
 %>
 
 <div class="edit-permissions">
@@ -371,44 +372,47 @@ definePermissionsURL.setRefererPlid(plid);
 					>
 
 						<%
+						String actionSeparator = Validator.isNotNull(preselectedMsg) ? ActionUtil.PRESELECTED : ActionUtil.ACTION;
+
+						if (checked && disabled) {
+							buffer.append("<input ");
+
+							buffer.append("name=\"");
+							buffer.append(renderResponse.getNamespace());
+							buffer.append(role.getRoleId());
+							buffer.append(actionSeparator);
+							buffer.append(action);
+							buffer.append("\" ");
+
+							buffer.append("type=\"hidden\" ");
+
+							buffer.append("value=\"true\" />");
+						}
+
 						buffer.append("<input ");
 
 						if (checked) {
 							buffer.append("checked ");
 						}
 
-						if (Validator.isNotNull(preselectedMsg)) {
-							buffer.append("class=\"lfr-checkbox-preselected\" ");
-						}
-
 						if (disabled) {
 							buffer.append("disabled ");
 						}
 
+						if (Validator.isNotNull(preselectedMsg)) {
+							buffer.append("class=\"lfr-checkbox-preselected\" ");
+						}
+
 						buffer.append("id=\"");
 						buffer.append(FriendlyURLNormalizerUtil.normalize(role.getName()));
-
-						if (Validator.isNotNull(preselectedMsg)) {
-							buffer.append(ActionUtil.PRESELECTED);
-						}
-						else {
-							buffer.append(ActionUtil.ACTION);
-						}
-
+						buffer.append(actionSeparator);
 						buffer.append(action);
 						buffer.append("\" ");
 
 						buffer.append("name=\"");
 						buffer.append(renderResponse.getNamespace());
 						buffer.append(role.getRoleId());
-
-						if (Validator.isNotNull(preselectedMsg)) {
-							buffer.append(ActionUtil.PRESELECTED);
-						}
-						else {
-							buffer.append(ActionUtil.ACTION);
-						}
-
+						buffer.append(actionSeparator);
 						buffer.append(action);
 						buffer.append("\" ");
 

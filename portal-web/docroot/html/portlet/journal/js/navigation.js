@@ -402,6 +402,7 @@ AUI.add(
 							instance._eventDataRequest,
 							{
 								requestParams: requestParams,
+								resetPagination: true,
 								src: Liferay.JOURNAL_SEARCH
 							}
 						);

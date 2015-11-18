@@ -9,6 +9,10 @@
 			-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 		}
 
+		.dialog-iframe-popup {
+			padding: 0;
+		}
+
 		#heading {
 			bottom: 100%;
 			margin-top: -2em;
@@ -63,7 +67,7 @@
 
 				.btn-navbar {
 					background: transparent;
-					border: none;
+					border-width: 0;
 					float: left;
 					font-size: 24px;
 					padding: 12px 15px;
@@ -88,9 +92,9 @@
 				.nav-add-controls {
 					background: transparent;
 					border-top-width: 0;
+					padding: 0 5px;
 					position: static;
 					z-index: 350;
-					padding: 0 5px;
 
 					> li {
 						float: none;
@@ -113,7 +117,7 @@
 							white-space: nowrap;
 
 							&:hover {
-								background: #F3f3f3;
+								background: #F3F3F3;
 							}
 
 							[class^="icon-"], [class^="icon-"], [class*=" icon-"] {
@@ -176,7 +180,7 @@
 
 								&.open {
 									> .dropdown-toggle {
-										color: #FFFFFF;
+										color: #FFF;
 									}
 								}
 							}

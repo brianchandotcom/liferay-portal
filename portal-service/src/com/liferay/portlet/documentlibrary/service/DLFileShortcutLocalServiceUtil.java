@@ -446,8 +446,15 @@ public class DLFileShortcutLocalServiceUtil {
 	}
 
 	public static void rebuildTree(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		getService().rebuildTree(companyId);
+	}
+
+	public static void setTreePaths(long folderId, java.lang.String treePath)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().setTreePaths(folderId, treePath);
 	}
 
 	public static void updateAsset(long userId,

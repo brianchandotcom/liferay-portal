@@ -276,7 +276,7 @@ public class RubyExecutor extends BaseScriptingExecutor {
 
 			FileUtil.deltree(rubyDir);
 
-			rubyDir.mkdirs();
+			FileUtil.mkdirs(rubyDir);
 
 			ZipUtil.unzip(rubyGemsJarFile, rubyDir);
 

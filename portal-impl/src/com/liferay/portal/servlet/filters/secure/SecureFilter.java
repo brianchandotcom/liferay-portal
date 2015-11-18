@@ -96,8 +96,6 @@ public class SecureFilter extends BasePortalFilter {
 
 		HttpSession session = request.getSession();
 
-		session.setAttribute(WebKeys.BASIC_AUTH_ENABLED, Boolean.TRUE);
-
 		long userId = GetterUtil.getLong(
 			(String)session.getAttribute(_AUTHENTICATED_USER));
 
@@ -192,17 +190,28 @@ public class SecureFilter extends BasePortalFilter {
 
 		User user = (User)session.getAttribute(WebKeys.USER);
 
+		initThreadLocals(user);
+
+		PrincipalThreadLocal.setPassword(PortalUtil.getUserPassword(request));
+	}
+
+	protected void initThreadLocals(User user) throws Exception {
 		CompanyThreadLocal.setCompanyId(user.getCompanyId());
 
 		PrincipalThreadLocal.setName(user.getUserId());
-		PrincipalThreadLocal.setPassword(PortalUtil.getUserPassword(request));
 
 		if (!_usePermissionChecker) {
 			return;
 		}
 
 		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(user);
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (permissionChecker != null) {
+			return;
+		}
+
+		permissionChecker = PermissionCheckerFactoryUtil.create(user);
 
 		PermissionThreadLocal.setPermissionChecker(permissionChecker);
 	}
@@ -276,7 +285,13 @@ public class SecureFilter extends BasePortalFilter {
 
 			User user = PortalUtil.getUser(request);
 
-			if ((user != null) && !user.isDefaultUser()) {
+			if (user == null) {
+				user = PortalUtil.initUser(request);
+			}
+
+			initThreadLocals(user);
+
+			if (!user.isDefaultUser()) {
 				request = setCredentials(
 					request, request.getSession(), user.getUserId(), null);
 			}

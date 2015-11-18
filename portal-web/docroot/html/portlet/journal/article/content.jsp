@@ -79,15 +79,22 @@ String content = ParamUtil.getString(request, "articleContent");
 
 boolean preselectCurrentLayout = false;
 
+boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_article.jsp-changeStructure"));
+
 if (article != null) {
 	if (Validator.isNull(content)) {
 		content = article.getContent();
 
+		Map<String, String> tokens = new HashMap<String, String>();
+
+		tokens.put("article_group_id", String.valueOf(groupId));
+		tokens.put("structure_id", structureId);
+
 		if (Validator.isNotNull(toLanguageId)) {
-			content = JournalArticleImpl.getContentByLocale(content, Validator.isNotNull(structureId), toLanguageId);
+			content = JournalArticleImpl.getContentByLocale(content, toLanguageId, tokens);
 		}
 		else {
-			content = JournalArticleImpl.getContentByLocale(content, Validator.isNotNull(structureId), defaultLanguageId);
+			content = JournalArticleImpl.getContentByLocale(content, defaultLanguageId, tokens);
 		}
 	}
 }
@@ -198,7 +205,7 @@ if (Validator.isNotNull(content)) {
 
 			<c:if test="<%= Validator.isNull(toLanguageId) %>">
 				<div class="article-structure-template-toolbar journal-metadata">
-					<span class="alert alert-block structure-message hide" id="<portlet:namespace />structureMessage">
+					<span class="alert alert-block hide structure-message" id="<portlet:namespace />structureMessage">
 						<liferay-ui:message key="this-structure-has-not-been-saved" />
 
 						<liferay-ui:message arguments='<%= new Object[] {"journal-save-structure-trigger", "#"} %>' key="click-here-to-save-it-now" />
@@ -296,7 +303,7 @@ if (Validator.isNotNull(content)) {
 
 								<a href="javascript:;" id="<portlet:namespace />changeLanguageId"><liferay-ui:message key="change" /></a>
 
-								<aui:select cssClass="hide" id="defaultLocale" inlineField="<%= true %>" label="" name="defaultLanguageId">
+								<aui:select cssClass="hide" id="defaultLocale" inlineField="<%= true %>" label="" name="defaultLanguageId" title="default-language">
 
 									<%
 									Locale[] locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
@@ -390,7 +397,7 @@ if (Validator.isNotNull(content)) {
 											String editTranslationURL = HttpUtil.addParameter(editArticleRenderPopUpURL.toString(), renderResponse.getNamespace() + "toLanguageId", translations[i]);
 										%>
 
-										<a class="lfr-token journal-article-translation-<%= translations[i] %>" href="javascript:;" onClick="Liferay.Util.openWindow({cache: false, id: '<portlet:namespace /><%= translations[i] %>', title: '<%= UnicodeLanguageUtil.get(pageContext, "web-content-translation") %>', uri: '<%= editTranslationURL %>'});">
+										<a class="journal-article-translation-<%= translations[i] %> lfr-token" href="javascript:;" onClick="Liferay.Util.openWindow({cache: false, id: '<portlet:namespace /><%= translations[i] %>', title: '<%= UnicodeLanguageUtil.get(pageContext, "web-content-translation") %>', uri: '<%= editTranslationURL %>'});">
 											<img alt="" src='<%= themeDisplay.getPathThemeImages() + "/language/" + translations[i] + ".png" %>' />
 
 											<%= LocaleUtil.fromLanguageId(translations[i]).getDisplayName(locale) %>
@@ -409,7 +416,7 @@ if (Validator.isNotNull(content)) {
 		</div>
 
 		<div class="journal-article-general-fields">
-			<aui:input autoFocus="<%= (((article != null) && !article.isNew()) && !PropsValues.JOURNAL_ARTICLE_FORCE_AUTOGENERATE_ID && windowState.equals(WindowState.MAXIMIZED)) %>" defaultLanguageId="<%= Validator.isNotNull(toLanguageId) ? toLanguageId : defaultLanguageId %>" languageId="<%= Validator.isNotNull(toLanguageId) ? toLanguageId : defaultLanguageId %>" name="title">
+			<aui:input autoFocus="<%= (((article != null) && !article.isNew()) && !PropsValues.JOURNAL_ARTICLE_FORCE_AUTOGENERATE_ID && windowState.equals(WindowState.MAXIMIZED)) %>" defaultLanguageId="<%= Validator.isNotNull(toLanguageId) ? toLanguageId : defaultLanguageId %>" ignoreRequestValue="<%= changeStructure %>" languageId="<%= Validator.isNotNull(toLanguageId) ? toLanguageId : defaultLanguageId %>" name="title">
 				<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
 					<aui:validator name="required" />
 				</c:if>
@@ -496,6 +503,25 @@ if (Validator.isNotNull(content)) {
 	</c:if>
 </div>
 
+<aui:script use="aui-base">
+	var field = A.one('#<portlet:namespace />articleContent');
+
+	if (field) {
+		var form = field.get('form');
+
+		if (form) {
+			var handler = Liferay.on(
+				'submitForm',
+				function(event) {
+					if (event.form.compareTo(form)) {
+						field.val(window['<portlet:namespace />articleContent'].getHTML());
+					}
+				}
+			);
+		}
+	}
+</aui:script>
+
 <aui:script>
 	function <portlet:namespace />initEditor() {
 		return "<%= UnicodeFormatter.toString(content) %>";
@@ -548,7 +574,7 @@ if (Validator.isNotNull(content)) {
 				availableTranslationsLinks.show();
 				translationsMessage.show();
 
-				var TPL_TRANSLATION = '<a class="lfr-token journal-article-translation-{newLanguageId}" href="javascript:;"><img alt="" src="<%= themeDisplay.getPathThemeImages() %>/language/{newLanguageId}.png" />{newLanguage}</a>';
+				var TPL_TRANSLATION = '<a class="journal-article-translation-{newLanguageId} lfr-token" href="javascript:;"><img alt="" src="<%= themeDisplay.getPathThemeImages() %>/language/{newLanguageId}.png" />{newLanguage}</a>';
 
 				var translationLinkTpl = A.Lang.sub(
 					TPL_TRANSLATION,
@@ -609,6 +635,7 @@ if (Validator.isNotNull(content)) {
 					document.<portlet:namespace />fm1.<portlet:namespace />ddmStructureId.value = event.ddmstructureid;
 					document.<portlet:namespace />fm1.<portlet:namespace />structureId.value = event.ddmstructurekey;
 					document.<portlet:namespace />fm1.<portlet:namespace />templateId.value = "";
+					document.<portlet:namespace />fm1.<portlet:namespace />changeStructure.value = true;
 
 					submitForm(document.<portlet:namespace />fm1, null, false, false);
 				}

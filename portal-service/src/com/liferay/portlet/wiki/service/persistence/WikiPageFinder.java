@@ -29,12 +29,20 @@ public interface WikiPageFinder {
 		java.sql.Timestamp createDate, boolean before)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public int countByG_N_H_S(long groupId, long nodeId, boolean head,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public int filterCountByCreateDate(long groupId, long nodeId,
 		java.util.Date createDate, boolean before)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public int filterCountByCreateDate(long groupId, long nodeId,
 		java.sql.Timestamp createDate, boolean before)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public int filterCountByG_N_H_S(long groupId, long nodeId, boolean head,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> filterFindByCreateDate(
@@ -45,6 +53,11 @@ public interface WikiPageFinder {
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> filterFindByCreateDate(
 		long groupId, long nodeId, java.sql.Timestamp createDate,
 		boolean before, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> filterFindByG_N_H_S(
+		long groupId, long nodeId, boolean head,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portlet.wiki.model.WikiPage findByResourcePrimKey(
@@ -63,5 +76,10 @@ public interface WikiPageFinder {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByNoAssets()
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByG_N_H_S(
+		long groupId, long nodeId, boolean head,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException;
 }

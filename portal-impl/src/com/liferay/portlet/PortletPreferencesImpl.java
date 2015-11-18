@@ -53,7 +53,7 @@ public class PortletPreferencesImpl
 
 		super(ownerId, ownerType, xml, preferences);
 
-		_companyId = companyId;
+		this.companyId = companyId;
 		_plid = plid;
 		_portletId = portletId;
 	}
@@ -67,7 +67,7 @@ public class PortletPreferencesImpl
 	@Override
 	public Object clone() {
 		return new PortletPreferencesImpl(
-			_companyId, getOwnerId(), getOwnerType(), _plid, _portletId,
+			companyId, getOwnerId(), getOwnerType(), _plid, _portletId,
 			getOriginalXML(), getOriginalPreferences());
 	}
 
@@ -83,7 +83,7 @@ public class PortletPreferencesImpl
 
 		PortletPreferencesImpl portletPreferences = (PortletPreferencesImpl)obj;
 
-		if ((_companyId == portletPreferences._companyId) &&
+		if ((companyId == portletPreferences.companyId) &&
 			(getOwnerId() == portletPreferences.getOwnerId()) &&
 			(getOwnerType() == portletPreferences.getOwnerType()) &&
 			(getPlid() == portletPreferences.getPlid()) &&
@@ -103,7 +103,7 @@ public class PortletPreferencesImpl
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, _companyId);
+		int hashCode = HashUtil.hash(0, companyId);
 
 		hashCode = HashUtil.hash(hashCode, getOwnerId());
 		hashCode = HashUtil.hash(hashCode, getOwnerType());
@@ -124,7 +124,7 @@ public class PortletPreferencesImpl
 			try {
 				_defaultPreferences =
 					PortletPreferencesLocalServiceUtil.getDefaultPreferences(
-						_companyId, _portletId);
+						companyId, _portletId);
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
@@ -162,7 +162,7 @@ public class PortletPreferencesImpl
 
 		try {
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(
-				_companyId, _portletId);
+				companyId, _portletId);
 
 			PreferencesValidator preferencesValidator =
 				PortalUtil.getPreferencesValidator(portlet);
@@ -183,10 +183,11 @@ public class PortletPreferencesImpl
 		return _portletId;
 	}
 
+	protected long companyId;
+
 	private static Log _log = LogFactoryUtil.getLog(
 		PortletPreferencesImpl.class);
 
-	private long _companyId;
 	private PortletPreferences _defaultPreferences;
 	private long _plid;
 	private String _portletId;

@@ -398,11 +398,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	@Override
 	public void reindex(List<AssetEntry> entries) throws PortalException {
 		for (AssetEntry entry : entries) {
-			String className = PortalUtil.getClassName(entry.getClassNameId());
-
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(className);
-
-			indexer.reindex(className, entry.getClassPK());
+			reindex(entry);
 		}
 	}
 
@@ -672,61 +668,64 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 		// Synchronize
 
-		if (!sync) {
-			return entry;
+		if (sync) {
+			if (className.equals(BlogsEntry.class.getName())) {
+				BlogsEntry blogsEntry = blogsEntryPersistence.findByPrimaryKey(
+					classPK);
+
+				blogsEntry.setTitle(title);
+
+				blogsEntryPersistence.update(blogsEntry);
+			}
+			else if (className.equals(BookmarksEntry.class.getName())) {
+				BookmarksEntry bookmarksEntry =
+					bookmarksEntryPersistence.findByPrimaryKey(classPK);
+
+				bookmarksEntry.setName(title);
+				bookmarksEntry.setDescription(description);
+				bookmarksEntry.setUrl(url);
+
+				bookmarksEntryPersistence.update(bookmarksEntry);
+			}
+			else if (className.equals(DLFileEntry.class.getName())) {
+				DLFileEntry dlFileEntry =
+					dlFileEntryPersistence.findByPrimaryKey(classPK);
+
+				dlFileEntry.setTitle(title);
+				dlFileEntry.setDescription(description);
+
+				dlFileEntryPersistence.update(dlFileEntry);
+			}
+			else if (className.equals(JournalArticle.class.getName())) {
+				JournalArticle journalArticle =
+					journalArticlePersistence.findByPrimaryKey(classPK);
+
+				journalArticle.setTitle(title);
+				journalArticle.setDescription(description);
+
+				journalArticlePersistence.update(journalArticle);
+			}
+			else if (className.equals(MBMessage.class.getName())) {
+				MBMessage mbMessage = mbMessagePersistence.findByPrimaryKey(
+					classPK);
+
+				mbMessage.setSubject(title);
+
+				mbMessagePersistence.update(mbMessage);
+			}
+			else if (className.equals(WikiPage.class.getName())) {
+				WikiPage wikiPage = wikiPagePersistence.findByPrimaryKey(
+					classPK);
+
+				wikiPage.setTitle(title);
+
+				wikiPagePersistence.update(wikiPage);
+			}
 		}
 
-		if (className.equals(BlogsEntry.class.getName())) {
-			BlogsEntry blogsEntry = blogsEntryPersistence.findByPrimaryKey(
-				classPK);
+		// Indexer
 
-			blogsEntry.setTitle(title);
-
-			blogsEntryPersistence.update(blogsEntry);
-		}
-		else if (className.equals(BookmarksEntry.class.getName())) {
-			BookmarksEntry bookmarksEntry =
-				bookmarksEntryPersistence.findByPrimaryKey(classPK);
-
-			bookmarksEntry.setName(title);
-			bookmarksEntry.setDescription(description);
-			bookmarksEntry.setUrl(url);
-
-			bookmarksEntryPersistence.update(bookmarksEntry);
-		}
-		else if (className.equals(DLFileEntry.class.getName())) {
-			DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
-				classPK);
-
-			dlFileEntry.setTitle(title);
-			dlFileEntry.setDescription(description);
-
-			dlFileEntryPersistence.update(dlFileEntry);
-		}
-		else if (className.equals(JournalArticle.class.getName())) {
-			JournalArticle journalArticle =
-				journalArticlePersistence.findByPrimaryKey(classPK);
-
-			journalArticle.setTitle(title);
-			journalArticle.setDescription(description);
-
-			journalArticlePersistence.update(journalArticle);
-		}
-		else if (className.equals(MBMessage.class.getName())) {
-			MBMessage mbMessage = mbMessagePersistence.findByPrimaryKey(
-				classPK);
-
-			mbMessage.setSubject(title);
-
-			mbMessagePersistence.update(mbMessage);
-		}
-		else if (className.equals(WikiPage.class.getName())) {
-			WikiPage wikiPage = wikiPagePersistence.findByPrimaryKey(classPK);
-
-			wikiPage.setTitle(title);
-
-			wikiPagePersistence.update(wikiPage);
-		}
+		reindex(entry);
 
 		return entry;
 	}
@@ -820,11 +819,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 		entry.setPublishDate(publishDate);
 
-		updateVisible(entry, visible);
-
-		assetEntryPersistence.update(entry);
-
-		return entry;
+		return updateVisible(entry, visible);
 	}
 
 	@Override
@@ -841,11 +836,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		entry.setExpirationDate(expirationDate);
 		entry.setPublishDate(publishDate);
 
-		updateVisible(entry, visible);
-
-		assetEntryPersistence.update(entry);
-
-		return entry;
+		return updateVisible(entry, visible);
 	}
 
 	@Override
@@ -858,11 +849,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		AssetEntry entry = assetEntryPersistence.findByC_C(
 			classNameId, classPK);
 
-		updateVisible(entry, visible);
-
-		assetEntryPersistence.update(entry);
-
-		return entry;
+		return updateVisible(entry, visible);
 	}
 
 	@Override
@@ -981,12 +968,24 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		return null;
 	}
 
-	protected void updateVisible(AssetEntry entry, boolean visible)
+	protected void reindex(AssetEntry entry) throws PortalException {
+		String className = PortalUtil.getClassName(entry.getClassNameId());
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(className);
+
+		indexer.reindex(className, entry.getClassPK());
+	}
+
+	protected AssetEntry updateVisible(AssetEntry entry, boolean visible)
 		throws PortalException, SystemException {
 
 		if (visible == entry.isVisible()) {
-			return;
+			return assetEntryPersistence.update(entry);
 		}
+
+		entry.setVisible(visible);
+
+		assetEntryPersistence.update(entry);
 
 		List<AssetTag> tags = assetEntryPersistence.getAssetTags(
 			entry.getEntryId());
@@ -1010,7 +1009,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 				entry.getClassNameId(), entry.getClassPK());
 		}
 
-		entry.setVisible(visible);
+		return entry;
 	}
 
 }

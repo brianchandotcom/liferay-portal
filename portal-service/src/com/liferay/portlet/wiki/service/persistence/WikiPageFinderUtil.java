@@ -36,6 +36,12 @@ public class WikiPageFinderUtil {
 		return getFinder().countByCreateDate(groupId, nodeId, createDate, before);
 	}
 
+	public static int countByG_N_H_S(long groupId, long nodeId, boolean head,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().countByG_N_H_S(groupId, nodeId, head, queryDefinition);
+	}
+
 	public static int filterCountByCreateDate(long groupId, long nodeId,
 		java.util.Date createDate, boolean before)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -48,6 +54,14 @@ public class WikiPageFinderUtil {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
 				   .filterCountByCreateDate(groupId, nodeId, createDate, before);
+	}
+
+	public static int filterCountByG_N_H_S(long groupId, long nodeId,
+		boolean head,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .filterCountByG_N_H_S(groupId, nodeId, head, queryDefinition);
 	}
 
 	public static java.util.List<com.liferay.portlet.wiki.model.WikiPage> filterFindByCreateDate(
@@ -66,6 +80,14 @@ public class WikiPageFinderUtil {
 		return getFinder()
 				   .filterFindByCreateDate(groupId, nodeId, createDate, before,
 			start, end);
+	}
+
+	public static java.util.List<com.liferay.portlet.wiki.model.WikiPage> filterFindByG_N_H_S(
+		long groupId, long nodeId, boolean head,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .filterFindByG_N_H_S(groupId, nodeId, head, queryDefinition);
 	}
 
 	public static com.liferay.portlet.wiki.model.WikiPage findByResourcePrimKey(
@@ -96,6 +118,13 @@ public class WikiPageFinderUtil {
 	public static java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByNoAssets()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder().findByNoAssets();
+	}
+
+	public static java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByG_N_H_S(
+		long groupId, long nodeId, boolean head,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().findByG_N_H_S(groupId, nodeId, head, queryDefinition);
 	}
 
 	public static WikiPageFinder getFinder() {

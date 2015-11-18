@@ -474,13 +474,13 @@ public class PDFProcessorImpl
 
 		if (PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH != 0) {
 			arguments.add(
-				"-dDEVICEWIDTH" +
+				"-dDEVICEWIDTH=" +
 					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH);
 		}
 
 		if (PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT != 0) {
 			arguments.add(
-				"-dDEVICEHEIGHT" +
+				"-dDEVICEHEIGHT=" +
 					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT);
 		}
 
@@ -490,7 +490,13 @@ public class PDFProcessorImpl
 
 		String processIdentity = String.valueOf(fileVersion.getFileVersionId());
 
-		futures.put(processIdentity, future);
+		while (!future.isCancelled()) {
+			if (future.isDone()) {
+				futures.put(processIdentity, future);
+
+				break;
+			}
+		}
 
 		future.get();
 

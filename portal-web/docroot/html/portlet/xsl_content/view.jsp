@@ -21,8 +21,8 @@ try {
 	String variablePropertyKey = StringPool.BLANK;
 	String variablePropertyValue = StringPool.BLANK;
 
-	xmlUrl = StringUtil.replace(xmlUrl,"@portal_url@", themeDisplay.getPortalURL());
-	xslUrl = StringUtil.replace(xslUrl,"@portal_url@", themeDisplay.getPortalURL());
+	xmlUrl = XSLContentUtil.replaceUrlTokens(themeDisplay, xmlUrl);
+	xslUrl = XSLContentUtil.replaceUrlTokens(themeDisplay, xslUrl);
 
 	int bracketBegin = xmlUrl.indexOf("[");
 	int bracketEnd = -1;

@@ -91,6 +91,11 @@ public class IntrabandPortalCache
 	}
 
 	@Override
+	public List<K> getKeys() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public V get(K key) {
 		Serializer serializer = _createSerializer(PortalCacheActionType.GET);
 

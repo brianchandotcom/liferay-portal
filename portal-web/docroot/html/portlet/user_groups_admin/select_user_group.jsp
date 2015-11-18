@@ -97,9 +97,19 @@ portletURL.setParameter("eventName", eventName);
 
 					data.put("usergroupid", userGroup.getUserGroupId());
 					data.put("usergroupname", userGroup.getName());
+
+					boolean disabled = false;
+
+					for (UserGroup curUserGroup : selUser.getUserGroups()) {
+						if (curUserGroup.getUserGroupId() == userGroup.getUserGroupId()) {
+							disabled = true;
+
+							break;
+						}
+					}
 					%>
 
-					<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
+					<aui:button cssClass="selector-button" data="<%= data %>" disabled="<%= disabled %>" value="choose" />
 				</c:if>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
@@ -111,15 +121,14 @@ portletURL.setParameter("eventName", eventName);
 <aui:script use="aui-base">
 	var Util = Liferay.Util;
 
-	A.one('#<portlet:namespace />selectUserGroupFm').delegate(
-		'click',
-		function(event) {
-			var result = Util.getAttributes(event.currentTarget, 'data-');
+	var openingLiferay = Util.getOpener().Liferay;
 
-			Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
-
-			Util.getWindow().hide();
-		},
-		'.selector-button'
+	openingLiferay.fire(
+		'<portlet:namespace />enableRemovedUserGroups',
+		{
+			selectors: A.all('.selector-button:disabled')
+		}
 	);
+
+	Util.selectEntityHandler('#<portlet:namespace />selectUserGroupFm', '<%= HtmlUtil.escapeJS(eventName) %>');
 </aui:script>

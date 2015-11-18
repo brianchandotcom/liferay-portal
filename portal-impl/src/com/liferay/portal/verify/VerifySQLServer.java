@@ -231,6 +231,7 @@ public class VerifySQLServer extends VerifyProcess {
 
 		convertColumnToNvarcharMax("AssetEntry", "description");
 		convertColumnToNvarcharMax("AssetEntry", "summary");
+		convertColumnToNvarcharMax("ExpandoColumn", "defaultData");
 		convertColumnToNvarcharMax("ExpandoValue", "data_");
 		convertColumnToNvarcharMax("JournalArticle", "description");
 	}

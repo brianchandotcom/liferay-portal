@@ -435,7 +435,16 @@ public abstract class BaseIndexer implements Indexer {
 				return;
 			}
 
-			doReindex(obj);
+			if (obj instanceof List<?>) {
+				List<?> list = (List<?>)obj;
+
+				for (Object element : list) {
+					doReindex(element);
+				}
+			}
+			else {
+				doReindex(obj);
+			}
 		}
 		catch (SearchException se) {
 			throw se;

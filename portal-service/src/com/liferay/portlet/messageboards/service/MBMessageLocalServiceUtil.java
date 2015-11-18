@@ -713,12 +713,24 @@ public class MBMessageLocalServiceUtil {
 			status);
 	}
 
+	public static void moveDiscussionToTrash(java.lang.String className,
+		long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().moveDiscussionToTrash(className, classPK);
+	}
+
 	public static long moveMessageAttachmentToTrash(long userId,
 		long messageId, java.lang.String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .moveMessageAttachmentToTrash(userId, messageId, fileName);
+	}
+
+	public static void restoreDiscussionFromTrash(java.lang.String className,
+		long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().restoreDiscussionFromTrash(className, classPK);
 	}
 
 	public static void restoreMessageAttachmentFromTrash(long userId,

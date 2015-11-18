@@ -537,6 +537,7 @@
 		<reference package-path="com.liferay.portlet.social" entity="SocialActivitySetting" />
 		<reference package-path="com.liferay.portlet.softwarecatalog" entity="SCFrameworkVersion" />
 		<reference package-path="com.liferay.portlet.softwarecatalog" entity="SCProductEntry" />
+		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
 		<reference package-path="com.liferay.portlet.wiki" entity="WikiNode" />
 	</entity>
 	<entity name="Image" local-service="true" remote-service="true">
@@ -2223,6 +2224,11 @@
 		<finder name="Key" return-type="Ticket">
 			<finder-column name="key" />
 		</finder>
+		<finder name="C_C_T" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="type" />
+		</finder>
 	</entity>
 	<entity name="User" uuid="true" local-service="true" remote-service="true">
 
@@ -2858,6 +2864,7 @@
 		<exception>LayoutType</exception>
 		<exception>MembershipRequestComments</exception>
 		<exception>MissingReference</exception>
+		<exception>ModulePathSet</exception>
 		<exception>OldServiceComponent</exception>
 		<exception>OrganizationId</exception>
 		<exception>OrganizationName</exception>

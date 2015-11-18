@@ -96,19 +96,17 @@ String emailBody = PrefsParamUtil.getString(portletPreferences, request, emailBo
 			<liferay-ui:panel-container extended="<%= true %>" id="documentLibrarySettingsPanelContainer" persistState="<%= true %>">
 				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="documentLibraryItemsListingPanel" persistState="<%= true %>" title="display-settings">
 					<aui:fieldset>
-						<aui:field-wrapper label="root-folder">
-							<div class="input-append">
-								<liferay-ui:input-resource id="rootFolderName" url="<%= rootFolderName %>" />
+						<div class="control-group">
+							<aui:input label="root-folder" name="rootFolderName" type="resource" value="<%= rootFolderName %>" />
 
-								<aui:button name="selectFolderButton" value="select" />
+							<aui:button name="selectFolderButton" value="select" />
 
-								<%
-								String taglibRemoveFolder = "Liferay.Util.removeFolderSelection('rootFolderId', 'rootFolderName', '" + renderResponse.getNamespace() + "');";
-								%>
+							<%
+							String taglibRemoveFolder = "Liferay.Util.removeFolderSelection('rootFolderId', 'rootFolderName', '" + renderResponse.getNamespace() + "');";
+							%>
 
-								<aui:button disabled="<%= rootFolderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
-							</div>
-						</aui:field-wrapper>
+							<aui:button disabled="<%= rootFolderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+						</div>
 
 						<aui:input label="show-search" name="preferences--showFoldersSearch--" type="checkbox" value="<%= showFoldersSearch %>" />
 
@@ -119,6 +117,20 @@ String emailBody = PrefsParamUtil.getString(portletPreferences, request, emailBo
 							%>
 
 								<aui:option label="<%= pageDeltaValue %>" selected="<%= entriesPerPage == pageDeltaValue %>" />
+
+							<%
+							}
+							%>
+
+						</aui:select>
+
+						<aui:select label="maximum-pagination-pages-to-display" name="preferences--numberOfPages--">
+
+							<%
+							for (int searchContainerPageIteratorPageValue : PropsValues.SEARCH_CONTAINER_PAGE_ITERATOR_PAGE_VALUES) {
+							%>
+
+								<aui:option label="<%= searchContainerPageIteratorPageValue %>" selected="<%= numberOfPages == searchContainerPageIteratorPageValue %>" />
 
 							<%
 							}
@@ -233,7 +245,7 @@ String emailBody = PrefsParamUtil.getString(portletPreferences, request, emailBo
 								dialog: {
 									constrain: true,
 									modal: true,
-									width: 600
+									width: 800
 								},
 								id: '_<%= HtmlUtil.escapeJS(portletResource) %>_selectFolder',
 								title: '<liferay-ui:message arguments="folder" key="select-x" />',
@@ -464,7 +476,7 @@ String emailBody = PrefsParamUtil.getString(portletPreferences, request, emailBo
 
 <aui:script>
 	function <portlet:namespace />initEditor() {
-		return "<%= UnicodeFormatter.toString(emailBody) %>";
+		return '<%= UnicodeFormatter.toString(emailBody) %>';
 	}
 
 	function <portlet:namespace />updateLanguage() {

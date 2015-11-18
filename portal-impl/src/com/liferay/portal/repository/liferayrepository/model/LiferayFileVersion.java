@@ -17,11 +17,14 @@ package com.liferay.portal.repository.liferayrepository.model;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.StagedModelType;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
@@ -113,7 +116,19 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 	public InputStream getContentStream(boolean incrementCounter)
 		throws PortalException, SystemException {
 
-		return _dlFileVersion.getContentStream(incrementCounter);
+		InputStream inputStream = _dlFileVersion.getContentStream(
+			incrementCounter);
+
+		try {
+			DLAppHelperLocalServiceUtil.getFileAsStream(
+				PrincipalThreadLocal.getUserId(), getFileEntry(),
+				incrementCounter);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return inputStream;
 	}
 
 	@Override
@@ -388,6 +403,8 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 			return this;
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(LiferayFileVersion.class);
 
 	private DLFileVersion _dlFileVersion;
 	private boolean _escapedModel;

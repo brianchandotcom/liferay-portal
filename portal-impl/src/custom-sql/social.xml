@@ -13,7 +13,7 @@
 			WHERE
 				(groupId = ?) AND
 				(classNameId = ?) AND
-				(name IN ([$NAME$])) AND
+				(SocialActivityCounter.name IN ([$NAME$])) AND
 				(startPeriod + ? >= ?) AND
 				(endPeriod = -1) AND
 				(User_.defaultUser != [$TRUE$]) AND
@@ -29,13 +29,13 @@
 				SocialActivityCounter
 			WHERE
 				(groupId = ?) AND
-				(name = ?) AND
+				(SocialActivityCounter.name = ?) AND
 				(startPeriod >= ?) AND
 				(startPeriod <= ?) AND
 				(startPeriod + ? <= ? + 1) AND
 				(active_ = [$TRUE$])
 			GROUP BY
-				name, startPeriod, endPeriod
+				SocialActivityCounter.name, startPeriod, endPeriod
 			ORDER BY
 				startPeriod
 		]]>
@@ -48,13 +48,13 @@
 				SocialActivityCounter
 			WHERE
 				(groupId = ?) AND
-				(name = ?) AND
+				(SocialActivityCounter.name = ?) AND
 				(startPeriod >= ?) AND
 				(startPeriod <= ?) AND
 				(startPeriod + ? <= ? + 1) AND
 				(active_ = [$TRUE$])
 			GROUP BY
-				classNameId, name
+				classNameId, SocialActivityCounter.name
 			ORDER BY
 				currentValue DESC
 		]]>
@@ -69,7 +69,7 @@
 				(groupId = ?) AND
 				(classNameId = ?) AND
 				(classPK IN ([$CLASS_PK$])) AND
-				(name IN ([$NAME$])) AND
+				(SocialActivityCounter.name IN ([$NAME$])) AND
 				(endPeriod = -1) AND
 				(active_ = [$TRUE$])
 			ORDER BY
@@ -88,7 +88,7 @@
 			WHERE
 				(groupId = ?) AND
 				(classNameId = ?) AND
-				(name IN ([$NAME$])) AND
+				(SocialActivityCounter.name IN ([$NAME$])) AND
 				(startPeriod >= ?) AND
 				(endPeriod = -1) AND
 				(User_.defaultUser != [$TRUE$]) AND

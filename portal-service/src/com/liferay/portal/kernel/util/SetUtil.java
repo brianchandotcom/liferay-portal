@@ -21,6 +21,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -164,7 +165,7 @@ public class SetUtil {
 			return (Set)c;
 		}
 
-		if ((c == null) || (c.size() == 0)) {
+		if ((c == null) || c.isEmpty()) {
 			return new HashSet<E>();
 		}
 
@@ -213,7 +214,7 @@ public class SetUtil {
 	}
 
 	public static <E> Set<E> fromList(List<E> array) {
-		if ((array == null) || (array.size() == 0)) {
+		if ((array == null) || array.isEmpty()) {
 			return new HashSet<E>();
 		}
 
@@ -222,6 +223,73 @@ public class SetUtil {
 
 	public static Set<String> fromString(String s) {
 		return fromArray(StringUtil.splitLines(s));
+	}
+
+	public static <T> Set<T> intersect(
+		Collection<T> collection1, Collection<T> collection2) {
+
+		if (collection1.isEmpty() || collection2.isEmpty()) {
+			return Collections.emptySet();
+		}
+
+		Set<T> set1 = _toSet(collection1);
+		Set<T> set2 = _toSet(collection2);
+
+		if (set1.size() > set2.size()) {
+			set2.retainAll(set1);
+
+			return set2;
+		}
+
+		set1.retainAll(set2);
+
+		return set1;
+	}
+
+	public static Set<Long> intersect(long[] array1, long[] array2) {
+		return intersect(fromArray(array1), fromArray(array2));
+	}
+
+	public static <T> Set<T> symmetricDifference(
+		Collection<T> collection1, Collection<T> collection2) {
+
+		if (collection1.isEmpty()) {
+			return _toSet(collection2);
+		}
+
+		if (collection2.isEmpty()) {
+			return _toSet(collection1);
+		}
+
+		Set<T> set1 = _toSet(collection1);
+		Set<T> set2 = _toSet(collection2);
+
+		Set<T> intersection = intersect(set1, set2);
+
+		if (set1.size() > set2.size()) {
+			set1.addAll(set2);
+		}
+		else {
+			set2.addAll(set1);
+
+			set1 = set2;
+		}
+
+		set1.removeAll(intersection);
+
+		return set1;
+	}
+
+	public static Set<Long> symmetricDifference(long[] array1, long[] array2) {
+		return symmetricDifference(fromArray(array1), fromArray(array2));
+	}
+
+	private static <T> Set<T> _toSet(Collection<T> collection) {
+		if (collection instanceof Set) {
+			return (Set<T>)collection;
+		}
+
+		return new HashSet<T>(collection);
 	}
 
 }

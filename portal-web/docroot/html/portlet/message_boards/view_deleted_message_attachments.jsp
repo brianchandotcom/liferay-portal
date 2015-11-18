@@ -80,6 +80,8 @@ iteratorURL.setParameter("messageId", String.valueOf(messageId));
 
 		<%
 		String rowHREF = PortletFileRepositoryUtil.getPortletFileEntryURL(themeDisplay, fileEntry, "status=" + WorkflowConstants.STATUS_IN_TRASH);
+
+		rowHREF = HttpUtil.addParameter(rowHREF, "download", true);
 		%>
 
 		<liferay-ui:search-container-column-text

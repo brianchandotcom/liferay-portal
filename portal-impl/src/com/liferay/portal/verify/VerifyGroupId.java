@@ -167,13 +167,13 @@ public class VerifyGroupId extends VerifyProcess {
 		extends ThrowableAwareRunnable {
 
 		private VerifiableGroupedModelRunnable(
-			String relatedPKColumnName, String relatedModelName,
-			String pkColumnName, String modelName) {
+			String modelName, String pkColumnName, String relatedModelName,
+			String relatedPKColumnName) {
 
-			_relatedPKColumnName = relatedPKColumnName;
-			_relatedModelName = relatedModelName;
-			_pkColumnName = pkColumnName;
 			_modelName = modelName;
+			_pkColumnName = pkColumnName;
+			_relatedModelName = relatedModelName;
+			_relatedPKColumnName = relatedPKColumnName;
 		}
 
 		@Override

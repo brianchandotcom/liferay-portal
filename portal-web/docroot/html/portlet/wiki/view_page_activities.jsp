@@ -67,7 +67,11 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 		>
 
 			<%
-			User socialActivityUser = UserLocalServiceUtil.getUserById(socialActivity.getUserId());
+			User socialActivityUser = UserLocalServiceUtil.fetchUserById(socialActivity.getUserId());
+
+			if (socialActivityUser == null) {
+				socialActivityUser = UserLocalServiceUtil.getDefaultUser(socialActivity.getCompanyId());
+			}
 
 			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject(socialActivity.getExtraData());
 
@@ -98,7 +102,14 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 						<liferay-util:buffer var="attachmentTitle">
 							<c:choose>
 								<c:when test="<%= fileVersion != null %>">
-									<aui:a href="<%= PortletFileRepositoryUtil.getPortletFileEntryURL(themeDisplay, fileEntry, StringPool.BLANK) %>"><%= title %></aui:a>
+
+									<%
+									String portletFileEntryURL = PortletFileRepositoryUtil.getPortletFileEntryURL(themeDisplay, fileEntry, StringPool.BLANK);
+
+									String downloadPortletFileEntryURL = HttpUtil.addParameter(portletFileEntryURL, "download", true);
+									%>
+
+									<aui:a href="<%= downloadPortletFileEntryURL %>"><%= title %></aui:a>
 								</c:when>
 								<c:otherwise>
 									<%= title %>

@@ -23,7 +23,6 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
@@ -77,17 +76,6 @@ public class BookmarksEntryAssetRendererFactory
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		if (!BookmarksPermission.contains(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), ActionKeys.ADD_ENTRY)) {
-
-			return null;
-		}
-
 		PortletURL portletURL = liferayPortletResponse.createRenderURL(
 			PortletKeys.BOOKMARKS);
 
@@ -117,6 +105,15 @@ public class BookmarksEntryAssetRendererFactory
 		}
 
 		return liferayPortletURL;
+	}
+
+	@Override
+	public boolean hasAddPermission(
+			PermissionChecker permissionChecker, long groupId, long classTypeId)
+		throws Exception {
+
+		return BookmarksPermission.contains(
+			permissionChecker, groupId, ActionKeys.ADD_ENTRY);
 	}
 
 	@Override

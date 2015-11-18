@@ -80,14 +80,14 @@
 
 			var token;
 
-			while((token = lexer.getNextToken())) {
+			while ((token = lexer.getNextToken())) {
 				instance._handleData(token, data);
 
 				if (token[1]) {
 					instance._handleTagStart(token);
 
 					if (token[1].toLowerCase() == STR_TAG_CODE) {
-						while((token = lexer.getNextToken()) && token[3] != STR_TAG_CODE);
+						while ((token = lexer.getNextToken()) && token[3] != STR_TAG_CODE);
 
 						instance._handleData(token, data);
 

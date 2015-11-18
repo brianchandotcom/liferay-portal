@@ -20,11 +20,11 @@ AUI.add(
 						validator: isString
 					},
 
-					overrideMessage:{
-						validator:isString
+					overrideMessage: {
+						validator: isString
 					},
 
-					renameMessage:{
+					renameMessage: {
 						validator: isString
 					},
 
@@ -71,10 +71,9 @@ AUI.add(
 
 						var responseData = event.currentTarget.get(RESPONSE_DATA);
 
-						if (responseData.success) {
-							submitForm(instance._hrefFm, uri);
-						}
-						else {
+						var responseDataSuccess = responseData.success;
+
+						if (responseDataSuccess === false) {
 							var data = instance.ns(
 								{
 									duplicateEntryId: responseData.duplicateEntryId,
@@ -86,6 +85,9 @@ AUI.add(
 							);
 
 							instance._showPopup(data, instance.get('duplicateEntryURL'));
+						}
+						else {
+							submitForm(instance._hrefFm, uri);
 						}
 					},
 
@@ -100,12 +102,12 @@ AUI.add(
 
 						var responseData = event.currentTarget.get(RESPONSE_DATA);
 
-						if (responseData.success) {
+						if (responseData.success === true) {
 							submitForm(form);
 						}
-						else {
-							var newName = instance.byId('newName');
+						else if (responseData.success === false) {
 							var messageContainer = instance.byId('messageContainer');
+							var newName = instance.byId('newName');
 
 							messageContainer.html(Lang.sub(Liferay.Language.get('an-entry-with-name-x-already-exists'), [newName.val()]));
 						}
@@ -178,8 +180,8 @@ AUI.add(
 							closeButton.on('click', instance._popup.hide, instance._popup);
 						}
 
-						var rename = instance.byId('rename');
 						var newName = instance.byId('newName');
+						var rename = instance.byId('rename');
 
 						rename.on('click', Liferay.Util.focusFormField, Liferay.Util, newName);
 
@@ -198,7 +200,7 @@ AUI.add(
 						var override = instance.byId('override');
 						var trashEntryId = instance.byId('trashEntryId');
 
-						if (override.attr('checked') || (!override.attr('checked') && !newName.val())) {
+						if (override.attr('checked') || !override.attr('checked') && !newName.val()) {
 							submitForm(form);
 						}
 						else {
@@ -212,8 +214,8 @@ AUI.add(
 									arguments: form,
 									data: instance.ns(
 										{
-											trashEntryId: trashEntryId.val(),
-											newName: newName.val()
+											newName: newName.val(),
+											trashEntryId: trashEntryId.val()
 										}
 									),
 									dataType: 'json'

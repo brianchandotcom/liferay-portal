@@ -277,6 +277,23 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 		return ddmStructure;
 	}
 
+	@Override
+	public DDMStructure fetchStructure(
+			long groupId, long classNameId, String structureKey,
+			boolean includeAncestorStructures)
+		throws PortalException, SystemException {
+
+		DDMStructure ddmStructure = ddmStructureLocalService.fetchStructure(
+			groupId, classNameId, structureKey, includeAncestorStructures);
+
+		if (ddmStructure != null) {
+			DDMStructurePermission.check(
+				getPermissionChecker(), ddmStructure, ActionKeys.VIEW);
+		}
+
+		return ddmStructure;
+	}
+
 	/**
 	 * Returns the structure with the ID.
 	 *

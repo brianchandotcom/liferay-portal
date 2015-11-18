@@ -932,12 +932,12 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 				isNew = true;
 			}
 
-			String modifiedDate = LDAPUtil.getAttributeString(
+			String modifyTimestamp = LDAPUtil.getAttributeString(
 				attributes, "modifyTimestamp");
 
 			user = updateUser(
 				companyId, ldapUser, user, userMappings, contactMappings,
-				password, modifiedDate, isNew);
+				password, modifyTimestamp, isNew);
 
 			updateExpandoAttributes(
 				user, ldapUser, userExpandoMappings, contactExpandoMappings);
@@ -1178,10 +1178,10 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 	protected User updateUser(
 			long companyId, LDAPUser ldapUser, User user,
 			Properties userMappings, Properties contactMappings,
-			String password, String modifiedDate, boolean isNew)
+			String password, String modifyTimestamp, boolean isNew)
 		throws Exception {
 
-		Date ldapUserModifiedDate = null;
+		Date modifiedDate = null;
 
 		boolean passwordReset = ldapUser.isPasswordReset();
 
@@ -1193,10 +1193,10 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 		}
 
 		try {
-			if (Validator.isNotNull(modifiedDate)) {
-				ldapUserModifiedDate = LDAPUtil.parseDate(modifiedDate);
+			if (Validator.isNotNull(modifyTimestamp)) {
+				modifiedDate = LDAPUtil.parseDate(modifyTimestamp);
 
-				if (ldapUserModifiedDate.equals(user.getModifiedDate())) {
+				if (modifiedDate.equals(user.getModifiedDate())) {
 					if (ldapUser.isAutoPassword()) {
 						if (_log.isDebugEnabled()) {
 							_log.debug(
@@ -1234,7 +1234,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 		catch (ParseException pe) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Unable to parse LDAP modify timestamp " + modifiedDate,
+					"Unable to parse LDAP modify timestamp " + modifyTimestamp,
 					pe);
 			}
 		}
@@ -1255,24 +1255,24 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			ldapUser.setScreenName(user.getScreenName());
 		}
 
-		Calendar birthdayCal = CalendarFactoryUtil.getCalendar();
+		if (ldapUser.isUpdatePassword()) {
+			UserLocalServiceUtil.updatePassword(
+				user.getUserId(), password, password, passwordReset, true);
+		}
 
 		Contact ldapContact = ldapUser.getContact();
+
+		updateLDAPUser(
+			ldapUser.getUser(), ldapContact, user, userMappings,
+			contactMappings);
+
+		Calendar birthdayCal = CalendarFactoryUtil.getCalendar();
 
 		birthdayCal.setTime(ldapContact.getBirthday());
 
 		int birthdayMonth = birthdayCal.get(Calendar.MONTH);
 		int birthdayDay = birthdayCal.get(Calendar.DAY_OF_MONTH);
 		int birthdayYear = birthdayCal.get(Calendar.YEAR);
-
-		if (ldapUser.isUpdatePassword()) {
-			UserLocalServiceUtil.updatePassword(
-				user.getUserId(), password, password, passwordReset, true);
-		}
-
-		updateLDAPUser(
-			ldapUser.getUser(), ldapContact, user, userMappings,
-			contactMappings);
 
 		user = UserLocalServiceUtil.updateUser(
 			user.getUserId(), password, StringPool.BLANK, StringPool.BLANK,
@@ -1293,9 +1293,9 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			ldapUser.getRoleIds(), ldapUser.getUserGroupRoles(),
 			ldapUser.getUserGroupIds(), ldapUser.getServiceContext());
 
-		if (ldapUserModifiedDate != null) {
+		if (modifiedDate != null) {
 			user = UserLocalServiceUtil.updateModifiedDate(
-				user.getUserId(), ldapUserModifiedDate);
+				user.getUserId(), modifiedDate);
 		}
 
 		if (ldapUser.isUpdatePortrait()) {
@@ -1317,9 +1317,9 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 	}
 
 	private static final String[] _CONTACT_PROPERTY_NAMES = {
-		"aimSn", "employeeNumber", "facebookSn", "icqSn", "jabberSn", "male",
-		"msnSn", "mySpaceSn","prefixId", "skypeSn", "smsSn", "suffixId",
-		"twitterSn", "ymSn"
+		"aimSn", "birthday", "employeeNumber", "facebookSn", "icqSn",
+		"jabberSn", "male", "msnSn", "mySpaceSn","prefixId", "skypeSn", "smsSn",
+		"suffixId", "twitterSn", "ymSn"
 	};
 
 	private static final String _IMPORT_BY_GROUP = "group";

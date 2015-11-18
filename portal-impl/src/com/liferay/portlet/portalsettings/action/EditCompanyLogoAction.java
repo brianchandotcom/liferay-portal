@@ -18,6 +18,7 @@ import com.liferay.portal.ImageTypeException;
 import com.liferay.portal.NoSuchRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.flash.FlashMagicBytesUtil;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -30,9 +31,11 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
@@ -50,6 +53,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 
+import java.io.File;
 import java.io.InputStream;
 
 import javax.portlet.ActionRequest;
@@ -142,8 +146,16 @@ public class EditCompanyLogoAction extends PortletAction {
 				FileEntry tempFileEntry = getTempImageFileEntry(
 					resourceRequest);
 
+				FlashMagicBytesUtil.Result flashMagicBytesUtilResult =
+					FlashMagicBytesUtil.check(tempFileEntry.getContentStream());
+
+				if (flashMagicBytesUtilResult.isFlash()) {
+					return;
+				}
+
 				serveTempImageFile(
-					resourceResponse, tempFileEntry.getContentStream());
+					resourceResponse,
+					flashMagicBytesUtilResult.getInputStream());
 			}
 		}
 		catch (NoSuchFileEntryException nsfee) {
@@ -164,6 +176,18 @@ public class EditCompanyLogoAction extends PortletAction {
 
 		String contentType = uploadPortletRequest.getContentType("fileName");
 
+		String fileName = uploadPortletRequest.getFileName("fileName");
+
+		File file = uploadPortletRequest.getFile("fileName");
+
+		String mimeType = MimeTypesUtil.getContentType(file, fileName);
+
+		if (!StringUtil.equalsIgnoreCase(
+				ContentTypes.APPLICATION_OCTET_STREAM, mimeType)) {
+
+			contentType = mimeType;
+		}
+
 		if (!MimeTypesUtil.isWebImage(contentType)) {
 			throw new ImageTypeException();
 		}
@@ -176,19 +200,10 @@ public class EditCompanyLogoAction extends PortletAction {
 		catch (Exception e) {
 		}
 
-		InputStream inputStream = null;
-
-		try {
-			inputStream = uploadPortletRequest.getFileAsStream("fileName");
-
-			TempFileUtil.addTempFile(
-				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-				getTempImageFileName(portletRequest), getTempImageFolderName(),
-				inputStream, contentType);
-		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
-		}
+		TempFileUtil.addTempFile(
+			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+			getTempImageFileName(portletRequest), getTempImageFolderName(),
+			file, contentType);
 	}
 
 	protected RenderedImage getCroppedRenderedImage(

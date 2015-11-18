@@ -30,13 +30,9 @@ import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.PortletPreferencesIds;
 import com.liferay.portal.service.base.PortletPreferencesLocalServiceBaseImpl;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
-import com.liferay.portlet.Preference;
-import com.liferay.portlet.StrictPortletPreferencesImpl;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
 
@@ -309,8 +305,7 @@ public class PortletPreferencesLocalServiceImpl
 		throws SystemException {
 
 		return getPreferences(
-			companyId, ownerId, ownerType, plid, portletId, null,
-			!PropsValues.TCK_URL);
+			companyId, ownerId, ownerType, plid, portletId, null, true);
 	}
 
 	@Override
@@ -383,9 +378,16 @@ public class PortletPreferencesLocalServiceImpl
 				(Validator.isNull(defaultPreferences) ||
 				 ((portlet != null) && portlet.isUndeployedPortlet()))) {
 
-				return new StrictPortletPreferencesImpl(
-					companyId, ownerId, ownerType, plid, portletId, null,
-					Collections.<String, Preference>emptyMap());
+				if (portlet == null) {
+					defaultPreferences = PortletConstants.DEFAULT_PREFERENCES;
+				}
+				else {
+					defaultPreferences = portlet.getDefaultPreferences();
+				}
+
+				return PortletPreferencesFactoryUtil.strictFromXML(
+					companyId, ownerId, ownerType, plid, portletId,
+					defaultPreferences);
 			}
 
 			portletPreferences =

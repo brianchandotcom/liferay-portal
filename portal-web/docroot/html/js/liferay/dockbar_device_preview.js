@@ -4,6 +4,7 @@ AUI.add(
 		var AObject = A.Object;
 		var Dockbar = Liferay.Dockbar;
 		var Lang = A.Lang;
+		var Util = Liferay.Util;
 
 		var BODY = A.getBody();
 
@@ -206,10 +207,132 @@ AUI.add(
 						};
 					},
 
+					_onDeviceClick: function(event) {
+						var instance = this;
+
+						var currentTarget = event.currentTarget;
+
+						var deviceList = instance.get(STR_DEVICES);
+
+						var deviceId = currentTarget.getData(STR_DEVICE);
+
+						var device = deviceList[deviceId];
+
+						instance._selectedDevice = device;
+
+						if (device) {
+							if (currentTarget.hasClass(CSS_SELECTED) && device.rotation) {
+								currentTarget.toggleClass(STR_ROTATED);
+							}
+
+							currentTarget.radioClass(CSS_SELECTED);
+
+							instance._openDeviceDialog(device, currentTarget.hasClass(STR_ROTATED));
+						}
+					},
+
+					_onDialogVisibleChange: function(event) {
+						var instance = this;
+
+						if (!event.newVal) {
+							instance._closePanel();
+						}
+
+						event.preventDefault();
+					},
+
+					_onResize: function(event) {
+						var instance = this;
+
+						var height = instance._setHeight(event);
+						var width = instance._setWidth(event);
+
+						instance._updateSizeInputFields(height, width);
+
+						var info = Lang.sub(
+							TPL_DEVICE_SIZE_INFO,
+							{
+								height: height,
+								width: width
+							}
+						);
+
+						instance._sizeStatusContent.html(info);
+					},
+
+					_onResizeEnd: function(event) {
+						var instance = this;
+
+						var height = instance._setHeight(event);
+						var width = instance._setWidth(event);
+
+						instance._updateSizeInputFields(height, width);
+
+						instance._sizeStatus.hide();
+					},
+
+					_onResizeStart: function(event) {
+						var instance = this;
+
+						var sizeStatus = instance._sizeStatus;
+
+						var sizeStatusContent = instance._sizeStatusContent;
+
+						var dialog = Util.getWindow(instance._dialogId);
+
+						if (!sizeStatus) {
+							sizeStatus = A.Node.create(TPL_DEVICE_SIZE_STATUS);
+
+							dialog.get(STR_BOUNDING_BOX).append(sizeStatus);
+
+							sizeStatusContent = sizeStatus.one('.lfr-device-size-status-content');
+
+							instance._sizeStatus = sizeStatus;
+
+							instance._sizeStatusContent = sizeStatusContent;
+						}
+
+						sizeStatus.attr('className', 'lfr-device-size-status');
+
+						sizeStatus.addClass(dialog.resize.get('activeHandle'));
+
+						var deviceSizeInfo = Lang.sub(
+							TPL_DEVICE_SIZE_INFO,
+							{
+								height: dialog.get('height'),
+								width: dialog.get('width')
+							}
+						);
+
+						sizeStatusContent.html(deviceSizeInfo);
+
+						sizeStatus.show();
+					},
+
+					_onSizeInput: function(event) {
+						var instance = this;
+
+						var inputHeight = instance.get(STR_INPUT_HEIGHT).val();
+						var inputWidth = instance.get(STR_INPUT_WIDTH).val();
+
+						var height = Lang.toInt(inputHeight);
+						var width = Lang.toInt(inputWidth);
+
+						instance._openDeviceDialog(
+							{
+								height: height,
+								resizable: true,
+								width: width
+							}
+						);
+
+						instance._resizeIframe(height, width);
+					},
+
 					_openDeviceDialog: function(device, rotation) {
 						var instance = this;
 
-						var dialog = Liferay.Util.getWindow(instance._dialogId);
+						var dialog = Util.getWindow(instance._dialogId);
 
 						var dialogAttrs = instance._normalizeDialogAttrs(device, rotation);
 
@@ -228,7 +351,7 @@ AUI.add(
 								width: dialogAttrs.size.width
 							};
 
-							Liferay.Util.openWindow(
+							Util.openWindow(
 								{
 									cache: false,
 									dialog: A.merge(DIALOG_DEFAULTS, dialogConfig),
@@ -303,47 +426,33 @@ AUI.add(
 						instance._selectedDevice = device;
 					},
 
-					_onDeviceClick: function(event) {
+					_resizeIframe: function(height, width) {
 						var instance = this;
 
-						var deviceList = instance.get(STR_DEVICES);
+						var dialog = Util.getWindow(instance._dialogId);
 
-						var deviceItem = event.currentTarget;
-
-						var deviceId = deviceItem.getData(STR_DEVICE);
-
-						var device = deviceList[deviceId];
-
-						instance._selectedDevice = device;
-
-						if (device) {
-							if (deviceItem.hasClass(CSS_SELECTED) && device.rotation) {
-								deviceItem.toggleClass(STR_ROTATED);
+						dialog.iframe.node.setStyles(
+							{
+								height: height,
+								width: width
 							}
-
-							deviceItem.radioClass(CSS_SELECTED);
-
-							instance._openDeviceDialog(device, deviceItem.hasClass(STR_ROTATED));
-						}
+						);
 					},
 
-					_onDialogVisibleChange: function(event) {
+					_setHeight: function(event) {
 						var instance = this;
 
-						if (!event.newVal) {
-							instance._closePanel();
-						}
-
-						event.preventDefault();
+						return event.info.offsetHeight - event.target.totalHSurrounding;
 					},
 
-					_onResize: function(event) {
+					_setWidth: function(event) {
 						var instance = this;
 
-						var eventInfo = event.info;
+						return event.info.offsetWidth - event.target.totalVSurrounding;
+					},
 
-						var offsetHeight = eventInfo.offsetHeight;
-						var offsetWidth = eventInfo.offsetWidth;
+					_updateSizeInputFields: function(offsetHeight, offsetWidth) {
+						var instance = this;
 
 						var inputHeight = instance.get(STR_INPUT_HEIGHT);
 
@@ -357,71 +466,7 @@ AUI.add(
 							inputWidth.val(offsetWidth);
 						}
 
-						var info = Lang.sub(
-							TPL_DEVICE_SIZE_INFO,
-							{
-								height: offsetHeight,
-								width: offsetWidth
-							}
-						);
-
-						instance._sizeStatusContent.html(info);
-					},
-
-					_onResizeEnd: function(event) {
-						var instance = this;
-
-						instance._sizeStatus.hide();
-					},
-
-					_onResizeStart: function(event) {
-						var instance = this;
-
-						var sizeStatus = instance._sizeStatus;
-
-						var sizeStatusContent = instance._sizeStatusContent;
-
-						var dialog = Liferay.Util.getWindow(instance._dialogId);
-
-						if (!sizeStatus) {
-							sizeStatus = A.Node.create(TPL_DEVICE_SIZE_STATUS);
-
-							dialog.get(STR_BOUNDING_BOX).append(sizeStatus);
-
-							sizeStatusContent = sizeStatus.one('.lfr-device-size-status-content');
-
-							instance._sizeStatus = sizeStatus;
-
-							instance._sizeStatusContent = sizeStatusContent;
-						}
-
-						sizeStatus.attr('className', 'lfr-device-size-status');
-
-						sizeStatus.addClass(dialog.resize.get('activeHandle'));
-
-						var deviceSizeInfo = Lang.sub(
-							TPL_DEVICE_SIZE_INFO,
-							{
-								height: dialog.get('height'),
-								width: dialog.get('width')
-							}
-						);
-
-						sizeStatusContent.html(deviceSizeInfo);
-
-						sizeStatus.show();
-					},
-
-					_onSizeInput: function(event) {
-						var instance = this;
-
-						instance._openDeviceDialog(
-							{
-								height: Lang.toInt(instance.get(STR_INPUT_HEIGHT).val()),
-								resizable: true,
-								width: Lang.toInt(instance.get(STR_INPUT_WIDTH).val())
-							}
-						);
+						instance._resizeIframe(offsetHeight, offsetWidth);
 					}
 				}
 			}

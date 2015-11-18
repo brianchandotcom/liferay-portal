@@ -17,6 +17,7 @@ package com.liferay.portal.json;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.json.JSONIncludesManager;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -39,6 +40,8 @@ public class JSONIncludesManagerImpl implements JSONIncludesManager {
 			return excludes;
 		}
 
+		Class<?> originalType = type;
+
 		List<String> list = new ArrayList<String>();
 
 		while (type != null) {
@@ -58,7 +61,7 @@ public class JSONIncludesManagerImpl implements JSONIncludesManager {
 
 		excludes = _listToArray(list);
 
-		_excludesMap.put(type, excludes);
+		_excludesMap.put(originalType, excludes);
 
 		return excludes;
 	}
@@ -71,6 +74,8 @@ public class JSONIncludesManagerImpl implements JSONIncludesManager {
 			return includes;
 		}
 
+		Class<?> originalType = type;
+
 		List<String> list = new ArrayList<String>();
 
 		while (type != null) {
@@ -81,7 +86,7 @@ public class JSONIncludesManagerImpl implements JSONIncludesManager {
 
 		includes = _listToArray(list);
 
-		_includesMap.put(type, includes);
+		_includesMap.put(originalType, includes);
 
 		return includes;
 	}
@@ -107,14 +112,18 @@ public class JSONIncludesManagerImpl implements JSONIncludesManager {
 			return null;
 		}
 
-		if ((propertyName.length() > 2) &&
-			Character.isUpperCase(propertyName.charAt(1))) {
+		if (propertyName.length() < 2 ) {
+			return StringUtil.toLowerCase(propertyName);
+		}
+		else if (Character.isUpperCase(propertyName.charAt(0)) &&
+				 Character.isUpperCase(propertyName.charAt(1)) ) {
 
 			return propertyName;
 		}
-
-		return Character.toLowerCase(propertyName.charAt(0)) +
-			propertyName.substring(1);
+		else {
+			return Character.toLowerCase(propertyName.charAt(0)) +
+				propertyName.substring(1);
+		}
 	}
 
 	private String[] _listToArray(List<String> list) {

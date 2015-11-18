@@ -16,13 +16,12 @@ package com.liferay.portlet.xslcontent.action;
 
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
-
-import java.net.MalformedURLException;
-import java.net.URL;
+import com.liferay.portal.util.PropsUtil;
+import com.liferay.portlet.xslcontent.util.XSLContentUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -31,6 +30,7 @@ import javax.portlet.PortletConfig;
 /**
  * @author Brian Wing Shun Chan
  * @author Hugo Huijser
+ * @author Samuel Kong
  */
 public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
@@ -45,18 +45,25 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}
 
-	protected boolean hasAllowedProtocol(String xmlURL) {
-		try {
-			URL url = new URL(xmlURL);
+	protected String[] getValidUrlPrefixes(ThemeDisplay themeDisplay) {
+		String validUrlPrefixes = PropsUtil.get(
+			PropsKeys.XSL_CONTENT_VALID_URL_PREFIXES);
 
-			String protocol = url.getProtocol();
+		validUrlPrefixes = XSLContentUtil.replaceUrlTokens(
+			themeDisplay, validUrlPrefixes);
 
-			if (ArrayUtil.contains(_PROTOCOLS, protocol)) {
+		return StringUtil.split(validUrlPrefixes);
+	}
+
+	protected boolean hasValidUrlPrefix(String[] validUrlPrefixes, String url) {
+		if (validUrlPrefixes.length == 0) {
+			return true;
+		}
+
+		for (String validUrlPrefix : validUrlPrefixes) {
+			if (StringUtil.startsWith(url, validUrlPrefix)) {
 				return true;
 			}
-		}
-		catch (MalformedURLException murle) {
-			return false;
 		}
 
 		return false;
@@ -66,25 +73,23 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		String[] validUrlPrefixes = getValidUrlPrefixes(themeDisplay);
+
 		String xmlUrl = getParameter(actionRequest, "xmlUrl");
 
-		xmlUrl = StringUtil.replace(
-			xmlUrl, "@portal_url@", themeDisplay.getPortalURL());
+		xmlUrl = XSLContentUtil.replaceUrlTokens(themeDisplay, xmlUrl);
 
-		if (!hasAllowedProtocol(xmlUrl)) {
+		if (!hasValidUrlPrefix(validUrlPrefixes, xmlUrl)) {
 			SessionErrors.add(actionRequest, "xmlUrl");
 		}
 
 		String xslUrl = getParameter(actionRequest, "xslUrl");
 
-		xslUrl = StringUtil.replace(
-			xslUrl, "@portal_url@", themeDisplay.getPortalURL());
+		xslUrl = XSLContentUtil.replaceUrlTokens(themeDisplay, xslUrl);
 
-		if (!hasAllowedProtocol(xslUrl)) {
+		if (!hasValidUrlPrefix(validUrlPrefixes, xslUrl)) {
 			SessionErrors.add(actionRequest, "xslUrl");
 		}
 	}
-
-	private static final String[] _PROTOCOLS = {"http", "https"};
 
 }

@@ -95,12 +95,21 @@ public class MBMessageStagedModelDataHandler
 			portletDataContext, message, message.getCategory(),
 			PortletDataContext.REFERENCE_TYPE_PARENT);
 
-		Element messageElement = portletDataContext.getExportDataElement(
-			message);
+		if (!message.isRoot()) {
+			MBMessage parentMessage = MBMessageLocalServiceUtil.getMessage(
+				message.getParentMessageId());
+
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, message, parentMessage,
+				PortletDataContext.REFERENCE_TYPE_PARENT);
+		}
 
 		message.setPriority(message.getPriority());
 
 		MBThread thread = message.getThread();
+
+		Element messageElement = portletDataContext.getExportDataElement(
+			message);
 
 		messageElement.addAttribute(
 			"question", String.valueOf(thread.isQuestion()));
@@ -135,6 +144,12 @@ public class MBMessageStagedModelDataHandler
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext, MBMessage message)
 		throws Exception {
+
+		if (!message.isRoot()) {
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
+				portletDataContext, message, MBMessage.class,
+				message.getParentMessageId());
+		}
 
 		long userId = portletDataContext.getUserId(message.getUserUuid());
 

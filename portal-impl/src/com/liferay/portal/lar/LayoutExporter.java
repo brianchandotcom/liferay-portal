@@ -31,8 +31,11 @@ import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.staging.LayoutStagingUtil;
+import com.liferay.portal.kernel.staging.StagingUtil;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -46,7 +49,6 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
-import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.model.Layout;
@@ -90,6 +92,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 import org.apache.commons.lang.time.StopWatch;
 
@@ -410,7 +413,8 @@ public class LayoutExporter {
 
 		LayoutCache layoutCache = new LayoutCache();
 
-		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+		ZipWriter zipWriter = ExportImportHelperUtil.getLayoutSetZipWriter(
+			groupId);
 
 		PortletDataContext portletDataContext =
 			PortletDataContextFactoryUtil.createExportPortletDataContext(
@@ -550,7 +554,9 @@ public class LayoutExporter {
 		for (Portlet portlet : getDataSiteLevelPortlets(companyId)) {
 			String portletId = portlet.getRootPortletId();
 
-			if (!group.isStagedPortlet(portletId)) {
+			if (ExportImportThreadLocal.isStagingInProcess() &&
+				!group.isStagedPortlet(portletId)) {
+
 				continue;
 			}
 
@@ -727,6 +733,16 @@ public class LayoutExporter {
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Exporting layouts takes " + stopWatch.getTime() + " ms");
+		}
+
+		boolean updateLastPublishDate = MapUtil.getBoolean(
+			portletDataContext.getParameterMap(),
+			PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE);
+
+		if (updateLastPublishDate) {
+			TransactionCommitCallbackRegistryUtil.registerCallback(
+				new UpdateLayoutSetLastPublishDateCallable(
+					portletDataContext.getDateRange(), groupId, privateLayout));
 		}
 
 		portletDataContext.addZipEntry(
@@ -906,5 +922,53 @@ public class LayoutExporter {
 	private PermissionExporter _permissionExporter = new PermissionExporter();
 	private PortletExporter _portletExporter = new PortletExporter();
 	private ThemeExporter _themeExporter = new ThemeExporter();
+
+	private class UpdateLayoutSetLastPublishDateCallable
+		implements Callable<Void> {
+
+		public UpdateLayoutSetLastPublishDateCallable(
+			DateRange dateRange, long groupId, boolean privateLayout) {
+
+			_dateRange = dateRange;
+			_groupId = groupId;
+			_privateLayout = privateLayout;
+		}
+
+		@Override
+		public Void call() throws Exception {
+			Group group = GroupLocalServiceUtil.getGroup(_groupId);
+
+			if (group.isStagedRemotely()) {
+				return null;
+			}
+
+			Date endDate = null;
+
+			if (_dateRange != null) {
+				endDate = _dateRange.getEndDate();
+			}
+
+			if (ExportImportThreadLocal.isStagingInProcess() &&
+				group.hasStagingGroup()) {
+
+				Group stagingGroup = group.getStagingGroup();
+
+				StagingUtil.updateLastPublishDate(
+					stagingGroup.getGroupId(), _privateLayout, _dateRange,
+					endDate);
+			}
+			else {
+				StagingUtil.updateLastPublishDate(
+					_groupId, _privateLayout, _dateRange, endDate);
+			}
+
+			return null;
+		}
+
+		private final DateRange _dateRange;
+		private final long _groupId;
+		private final boolean _privateLayout;
+
+	}
 
 }

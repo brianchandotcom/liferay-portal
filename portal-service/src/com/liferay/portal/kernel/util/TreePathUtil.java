@@ -17,10 +17,12 @@ package com.liferay.portal.kernel.util;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.TreeModel;
 
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
@@ -30,10 +32,32 @@ import java.util.List;
  */
 public class TreePathUtil {
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #rebuildTree(long, long,
+	 *             String, TreeModelFinder<?>)}
+	 */
+	@Deprecated
 	public static void rebuildTree(
 			long companyId, long defaultParentPrimaryKey,
 			TreeModelFinder<?> treeModelFinder)
 		throws SystemException {
+
+		try {
+			TreePathUtil.rebuildTree(
+				companyId, defaultParentPrimaryKey, StringPool.SLASH,
+				treeModelFinder);
+		}
+		catch (PortalException e) {
+			throw new SystemException(e);
+		}
+	}
+
+	public static void rebuildTree(
+			long companyId, long parentPrimaryKey, String parentTreePath,
+			TreeModelFinder<?> treeModelFinder)
+		throws PortalException, SystemException {
+
+		List<TreeModel> modifiedTreeModels = new ArrayList<TreeModel>();
 
 		int size = GetterUtil.getInteger(
 			PropsUtil.get(
@@ -41,19 +65,27 @@ public class TreePathUtil {
 
 		Deque<Object[]> traces = new LinkedList<Object[]>();
 
-		traces.push(
-			new Object[] {defaultParentPrimaryKey, StringPool.SLASH, 0L});
+		traces.push(new Object[] {parentPrimaryKey, parentTreePath, 0L});
 
 		Object[] trace = null;
 
 		while ((trace = traces.poll()) != null) {
-			Long parentPrimaryKey = (Long)trace[0];
-			String parentPath = (String)trace[1];
+			Long curParentPrimaryKey = (Long)trace[0];
+			String curParentTreePath = (String)trace[1];
 			Long previousPrimaryKey = (Long)trace[2];
+
+			if (curParentTreePath.equals(StringPool.SLASH)) {
+				treeModelFinder.rebuildDependentModelsTreePaths(
+					curParentPrimaryKey, "/0/");
+			}
+			else {
+				treeModelFinder.rebuildDependentModelsTreePaths(
+					curParentPrimaryKey, curParentTreePath);
+			}
 
 			List<? extends TreeModel> treeModels =
 				treeModelFinder.findTreeModels(
-					previousPrimaryKey, companyId, parentPrimaryKey, size);
+					previousPrimaryKey, companyId, curParentPrimaryKey, size);
 
 			if (treeModels.isEmpty()) {
 				continue;
@@ -68,7 +100,7 @@ public class TreePathUtil {
 			}
 
 			for (TreeModel treeModel : treeModels) {
-				String treePath = parentPath.concat(
+				String treePath = curParentTreePath.concat(
 					String.valueOf(treeModel.getPrimaryKeyObj())).concat(
 						StringPool.SLASH);
 
@@ -76,10 +108,18 @@ public class TreePathUtil {
 
 				traces.push(
 					new Object[] {treeModel.getPrimaryKeyObj(), treePath, 0L});
+
+				modifiedTreeModels.add(treeModel);
 			}
 		}
+
+		treeModelFinder.reindexTreeModels(modifiedTreeModels);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static void rebuildTree(
 		Session session, long companyId, String tableName,
 		String parentTableName, String parentPrimaryKeyColumnName,
@@ -93,6 +133,10 @@ public class TreePathUtil {
 			parentPrimaryKeyColumnName, statusColumn, true);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected static void rebuildTree(
 		Session session, long companyId, String tableName,
 		String parentTableName, String parentPrimaryKeyColumnName,

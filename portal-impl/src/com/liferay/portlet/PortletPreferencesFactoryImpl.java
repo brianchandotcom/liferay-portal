@@ -16,9 +16,13 @@ package com.liferay.portlet;
 
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
+import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
+import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletMode;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -47,6 +51,7 @@ import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portal.xml.StAXReaderUtil;
 import com.liferay.portlet.portletconfiguration.util.ConfigurationPortletRequest;
@@ -61,10 +66,8 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PreferencesValidator;
 import javax.portlet.filter.PortletRequestWrapper;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -147,15 +150,10 @@ public class PortletPreferencesFactoryImpl
 			long ownerId, int ownerType, String xml)
 		throws SystemException {
 
-		try {
-			Map<String, Preference> preferencesMap = toPreferencesMap(xml);
+		Map<String, Preference> preferencesMap = toPreferencesMap(xml);
 
-			return new PortalPreferencesImpl(
-				ownerId, ownerType, xml, preferencesMap, false);
-		}
-		catch (SystemException se) {
-			throw se;
-		}
+		return new PortalPreferencesImpl(
+			ownerId, ownerType, xml, preferencesMap, false);
 	}
 
 	@Override
@@ -164,16 +162,11 @@ public class PortletPreferencesFactoryImpl
 			String portletId, String xml)
 		throws SystemException {
 
-		try {
-			Map<String, Preference> preferencesMap = toPreferencesMap(xml);
+		Map<String, Preference> preferencesMap = toPreferencesMap(xml);
 
-			return new PortletPreferencesImpl(
-				companyId, ownerId, ownerType, plid, portletId, xml,
-				preferencesMap);
-		}
-		catch (SystemException se) {
-			throw se;
-		}
+		return new PortletPreferencesImpl(
+			companyId, ownerId, ownerType, plid, portletId, xml,
+			preferencesMap);
 	}
 
 	/**
@@ -626,6 +619,19 @@ public class PortletPreferencesFactoryImpl
 	}
 
 	@Override
+	public StrictPortletPreferencesImpl strictFromXML(
+			long companyId, long ownerId, int ownerType, long plid,
+			String portletId, String xml)
+		throws SystemException {
+
+		Map<String, Preference> preferencesMap = toPreferencesMap(xml);
+
+		return new StrictPortletPreferencesImpl(
+			companyId, ownerId, ownerType, plid, portletId, xml,
+			preferencesMap);
+	}
+
+	@Override
 	public String toXML(PortalPreferences portalPreferences) {
 		PortalPreferencesImpl portalPreferencesImpl =
 			(PortalPreferencesImpl)portalPreferences;
@@ -767,8 +773,10 @@ public class PortletPreferencesFactoryImpl
 			return Collections.emptyMap();
 		}
 
+		String cacheKey = _encodeCacheKey(xml);
+
 		Map<String, Preference> preferencesMap = _preferencesMapPortalCache.get(
-			xml);
+			cacheKey);
 
 		if (preferencesMap != null) {
 			return preferencesMap;
@@ -812,6 +820,9 @@ public class PortletPreferencesFactoryImpl
 					xmlEventReader.close();
 				}
 				catch (XMLStreamException xse) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(xse, xse);
+					}
 				}
 			}
 		}
@@ -820,11 +831,31 @@ public class PortletPreferencesFactoryImpl
 			preferencesMap = Collections.emptyMap();
 		}
 
-		_preferencesMapPortalCache.put(xml, preferencesMap);
+		_preferencesMapPortalCache.put(cacheKey, preferencesMap);
 
 		return preferencesMap;
 	}
 
+	private String _encodeCacheKey(String xml) {
+		if (xml.length() <=
+				PropsValues.PORTLET_PREFERENCES_CACHE_KEY_THRESHOLD_SIZE) {
+
+			return xml;
+		}
+
+		CacheKeyGenerator cacheKeyGenerator =
+			CacheKeyGeneratorUtil.getCacheKeyGenerator(
+				PortletPreferencesFactoryImpl.class.getName());
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Cache key generator " + cacheKeyGenerator.getClass());
+		}
+
+		return String.valueOf(cacheKeyGenerator.getCacheKey(xml));
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		PortletPreferencesFactoryImpl.class);
 	private PortalCache<String, Map<String, Preference>>
 		_preferencesMapPortalCache = SingleVMPoolUtil.getCache(
 			PortletPreferencesFactoryImpl.class.getName());

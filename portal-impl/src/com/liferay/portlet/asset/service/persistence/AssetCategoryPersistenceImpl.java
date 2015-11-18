@@ -8572,7 +8572,9 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		if ((list != null) && !list.isEmpty()) {
 			for (AssetCategory assetCategory : list) {
 				if ((groupId != assetCategory.getGroupId()) ||
-						!Validator.equals(name, assetCategory.getName()) ||
+						!StringUtil.wildcardMatches(assetCategory.getName(),
+							name, CharPool.UNDERLINE, CharPool.PERCENT,
+							CharPool.BACK_SLASH, false) ||
 						!ArrayUtil.contains(vocabularyIds,
 							assetCategory.getVocabularyId())) {
 					list = null;
@@ -12065,6 +12067,8 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		TableMapperFactory.removeTableMapper("AssetEntries_AssetCategories");
 	}
 
 	@BeanReference(type = AssetEntryPersistence.class)

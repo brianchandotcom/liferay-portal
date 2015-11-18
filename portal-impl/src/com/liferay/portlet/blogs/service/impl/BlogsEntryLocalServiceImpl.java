@@ -1203,6 +1203,11 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			// Trash
 
 			if (oldStatus == WorkflowConstants.STATUS_IN_TRASH) {
+				if (PropsValues.BLOGS_ENTRY_COMMENTS_ENABLED) {
+					mbMessageLocalService.restoreDiscussionFromTrash(
+						BlogsEntry.class.getName(), entryId);
+				}
+
 				trashEntryLocalService.deleteEntry(
 					BlogsEntry.class.getName(), entryId);
 			}
@@ -1257,12 +1262,22 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			// Trash
 
 			if (status == WorkflowConstants.STATUS_IN_TRASH) {
+				if (PropsValues.BLOGS_ENTRY_COMMENTS_ENABLED) {
+					mbMessageLocalService.moveDiscussionToTrash(
+						BlogsEntry.class.getName(), entryId);
+				}
+
 				trashEntryLocalService.addTrashEntry(
 					userId, entry.getGroupId(), BlogsEntry.class.getName(),
 					entry.getEntryId(), entry.getUuid(), null, oldStatus, null,
 					null);
 			}
 			else if (oldStatus == WorkflowConstants.STATUS_IN_TRASH) {
+				if (PropsValues.BLOGS_ENTRY_COMMENTS_ENABLED) {
+					mbMessageLocalService.restoreDiscussionFromTrash(
+						BlogsEntry.class.getName(), entryId);
+				}
+
 				trashEntryLocalService.deleteEntry(
 					BlogsEntry.class.getName(), entryId);
 			}

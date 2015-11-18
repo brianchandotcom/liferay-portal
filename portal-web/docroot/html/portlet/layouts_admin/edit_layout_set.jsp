@@ -229,7 +229,7 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 						dialog: {
 							bodyContent: content.show(),
 							cssClass: 'lfr-add-dialog',
-							width: 600
+							width: 800
 						},
 						title: '<%= UnicodeLanguageUtil.get(pageContext, "add-page") %>'
 					}

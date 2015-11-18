@@ -16,6 +16,15 @@
 		return testTouch(A) && A.UA.mobile;
 	};
 
+	var filterConfig = null;
+
+	if (!COMBINE) {
+		filterConfig = {
+			replaceStr: '.js' + LiferayAUI.getStaticResourceURLParams(),
+			searchExp: '\\.js$'
+		};
+	}
+
 	window.YUI_config = {
 		base: PATH_JAVASCRIPT + '/aui/',
 		combine: COMBINE,
@@ -36,6 +45,7 @@
 			liferay: {
 				base: PATH_JAVASCRIPT + '/liferay/',
 				combine: COMBINE,
+				filter: filterConfig,
 				modules: {
 					'liferay-ajax-session': {
 						condition: {
@@ -317,7 +327,6 @@
 						]
 					},
 					'liferay-history-html5': {
-						path: 'history_html5.js',
 						condition: {
 							name: 'liferay-history-html5',
 							test: function(A) {
@@ -332,9 +341,10 @@
 							},
 							trigger: 'liferay-history'
 						},
+						path: 'history_html5.js',
 						requires: [
-							'liferay-history',
 							'history-html5',
+							'liferay-history',
 							'querystring-stringify-simple'
 						]
 					},
@@ -467,6 +477,15 @@
 							'aui-node'
 						]
 					},
+					'liferay-menu-toggle': {
+						path: 'menu_toggle.js',
+						requires: [
+							'aui-node',
+							'event-move',
+							'event-outside',
+							'liferay-store'
+						]
+					},
 					'liferay-message': {
 						path: 'message.js',
 						requires: [
@@ -581,6 +600,15 @@
 							'aui-rating'
 						]
 					},
+					'liferay-resize-rtl': {
+						path: 'resize_rtl.js',
+						condition: {
+							test: function(A) {
+								return document.documentElement.dir === 'rtl';
+							},
+							trigger: 'resize-base'
+						}
+					},
 					'liferay-restore-entry': {
 						path: 'restore_entry.js',
 						requires: [
@@ -621,6 +649,7 @@
 							'aui-component',
 							'aui-io-request',
 							'aui-parse-content',
+							'liferay-form',
 							'liferay-portlet-url',
 							'liferay-util-window',
 							'plugin'

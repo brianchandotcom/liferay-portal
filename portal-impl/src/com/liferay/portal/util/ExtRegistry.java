@@ -16,7 +16,7 @@ package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -147,7 +147,7 @@ public class ExtRegistry {
 
 		Set<String> fileNames = new TreeSet<String>();
 
-		Document document = SAXReaderUtil.read(
+		Document document = UnsecureSAXReaderUtil.read(
 			servletContext.getResourceAsStream(resourcePath));
 
 		Element rootElement = document.getRootElement();

@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.Validator_IW;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.model.CacheField;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
@@ -630,7 +631,7 @@ public class ServiceBuilder {
 
 			String content = getContent(fileName);
 
-			Document document = SAXReaderUtil.read(content, true);
+			Document document = UnsecureSAXReaderUtil.read(content, true);
 
 			Element rootElement = document.getRootElement();
 
@@ -1731,7 +1732,7 @@ public class ServiceBuilder {
 
 		String content = FileUtil.read(new File(fileName));
 
-		Document document = SAXReaderUtil.read(content);
+		Document document = UnsecureSAXReaderUtil.read(content);
 
 		Element rootElement = document.getRootElement();
 
@@ -2754,7 +2755,7 @@ public class ServiceBuilder {
 	private void _createRemotingXml() throws Exception {
 		StringBundler sb = new StringBundler();
 
-		Document document = SAXReaderUtil.read(new File(_springFileName));
+		Document document = UnsecureSAXReaderUtil.read(new File(_springFileName));
 
 		Element rootElement = document.getRootElement();
 

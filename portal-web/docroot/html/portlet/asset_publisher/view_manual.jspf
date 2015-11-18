@@ -30,7 +30,7 @@ request.setAttribute("view.jsp-results", assetEntries);
 	<c:when test="<%= portletDisplayDDMTemplateId > 0 %>">
 		<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, portletDisplayDDMTemplateId, assetEntries, contextObjects) %>
 	</c:when>
-	<c:otherwise>
+	<c:when test="<%= !assetEntries.isEmpty() %>">
 
 		<%
 		for (int assetEntryIndex = 0; assetEntryIndex < assetEntries.size(); assetEntryIndex++) {
@@ -69,5 +69,24 @@ request.setAttribute("view.jsp-results", assetEntries);
 		}
 		%>
 
+	</c:when>
+	<c:otherwise>
+
+		<%
+		if (!showPortletWithNoResults && !hasAddPortletURLs && !((assetCategoryId > 0) || Validator.isNotNull(assetTagName))) {
+			renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
+		}
+		%>
+
+		<div class="alert alert-info">
+			<c:choose>
+				<c:when test="<%= !portletName.equals(PortletKeys.RELATED_ASSETS) %>">
+					<liferay-ui:message key="there-are-no-results" />
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:message key="there-are-no-related-assets" />
+				</c:otherwise>
+			</c:choose>
+		</div>
 	</c:otherwise>
 </c:choose>

@@ -177,11 +177,8 @@ public class LayoutRevisionLocalServiceImpl
 			}
 		}
 
-		User user = userPersistence.findByPrimaryKey(
-			layoutRevision.getUserId());
-
 		StagingUtil.deleteRecentLayoutRevisionId(
-			user, layoutRevision.getLayoutSetBranchId(),
+			layoutRevision.getUserId(), layoutRevision.getLayoutSetBranchId(),
 			layoutRevision.getPlid());
 
 		if (layoutRevision.isPending()) {
@@ -253,6 +250,16 @@ public class LayoutRevisionLocalServiceImpl
 		catch (NoSuchLayoutRevisionException nslre) {
 			return null;
 		}
+	}
+
+	@Override
+	public LayoutRevision fetchLatestLayoutRevision(
+			long layoutSetBranchId, long plid)
+		throws SystemException {
+
+		return layoutRevisionPersistence.fetchByL_P_First(
+			layoutSetBranchId, plid,
+			new LayoutRevisionCreateDateComparator(false));
 	}
 
 	@Override

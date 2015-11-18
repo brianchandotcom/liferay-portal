@@ -47,6 +47,7 @@ import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.impl.JournalArticleImpl;
 import com.liferay.portlet.journal.model.impl.JournalArticleModelImpl;
+import com.liferay.portlet.journal.service.persistence.JournalArticlePersistence;
 
 import java.io.Serializable;
 

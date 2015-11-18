@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
@@ -52,8 +51,7 @@ public class DLFileVersionImpl extends DLFileVersionBaseImpl {
 		throws PortalException, SystemException {
 
 		return DLFileEntryLocalServiceUtil.getFileAsStream(
-			PrincipalThreadLocal.getUserId(), getFileEntryId(), getVersion(),
-			incrementCounter);
+			getFileEntryId(), getVersion(), incrementCounter);
 	}
 
 	@Override

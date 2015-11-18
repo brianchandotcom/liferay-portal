@@ -119,9 +119,7 @@ else {
 			%>
 
 			<c:if test="<%= category != null %>">
-				<aui:field-wrapper label="parent-category[message-board]">
-					<liferay-ui:input-resource id="parentCategoryName" url="<%= parentCategoryName %>" />
-				</aui:field-wrapper>
+				<aui:input label="parent-category[message-board]" name="parentCategoryName" type="resource" value="<%= parentCategoryName %>" />
 			</c:if>
 		</c:if>
 

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WeakValueConcurrentHashMap;
@@ -54,7 +55,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -96,16 +96,6 @@ public class ClusterExecutorImpl
 
 		if (PropsValues.LIVE_USERS_ENABLED) {
 			addClusterEventListener(new LiveUsersClusterEventListenerImpl());
-		}
-
-		_secure = StringUtil.equalsIgnoreCase(
-			Http.HTTPS, PropsValues.WEB_SERVER_PROTOCOL);
-
-		if (Validator.isNotNull(PropsValues.PORTAL_INSTANCE_HTTPS_PORT)) {
-			_port = PropsValues.PORTAL_INSTANCE_HTTPS_PORT;
-		}
-		else {
-			_port = PropsValues.PORTAL_INSTANCE_HTTP_PORT;
 		}
 
 		super.afterPropertiesSet();
@@ -159,7 +149,7 @@ public class ClusterExecutorImpl
 
 		if (clusterRequest.isMulticast()) {
 			try {
-				_controlJChannel.send(null, clusterRequest);
+				sendJGroupsMessage(_controlJChannel, null, clusterRequest);
 			}
 			catch (Exception e) {
 				throw new SystemException(
@@ -172,7 +162,8 @@ public class ClusterExecutorImpl
 					(org.jgroups.Address)address.getRealAddress();
 
 				try {
-					_controlJChannel.send(jGroupsAddress, clusterRequest);
+					sendJGroupsMessage(
+						_controlJChannel, jGroupsAddress, clusterRequest);
 				}
 				catch (Exception e) {
 					throw new SystemException(
@@ -322,29 +313,19 @@ public class ClusterExecutorImpl
 
 	@Override
 	public void portalPortProtocolConfigured(int port, Boolean secure) {
-		if (!isEnabled()) {
+		if (!isEnabled() || (port <= 0) || (secure == null)) {
 			return;
 		}
 
-		if (Validator.isNotNull(secure)) {
-			String portalProtocol = _localClusterNode.getPortalProtocol();
-
-			if (((secure && portalProtocol.equals(Http.HTTPS)) ||
-				 (!secure && portalProtocol.equals(Http.HTTP))) &&
-				(_localClusterNode.getPort() == _port)) {
-
-				return;
-			}
-
-			if (secure) {
-				_localClusterNode.setPortalProtocol(Http.HTTPS);
-			}
-			else {
-				_localClusterNode.setPortalProtocol(Http.HTTP);
-			}
-		}
-		else if (_localClusterNode.getPort() == _port) {
+		if (Validator.isNotNull(_localClusterNode.getPortalProtocol())) {
 			return;
+		}
+
+		if (secure) {
+			_localClusterNode.setPortalProtocol(Http.HTTPS);
+		}
+		else {
+			_localClusterNode.setPortalProtocol(Http.HTTP);
 		}
 
 		try {
@@ -355,7 +336,7 @@ public class ClusterExecutorImpl
 			ClusterRequest clusterRequest = ClusterRequest.createClusterRequest(
 				ClusterMessageType.UPDATE, _localClusterNode);
 
-			_controlJChannel.send(null, clusterRequest);
+			sendJGroupsMessage(_controlJChannel, null, clusterRequest);
 		}
 		catch (Exception e) {
 			_log.error("Unable to determine configure node port", e);
@@ -436,17 +417,29 @@ public class ClusterExecutorImpl
 
 	@Override
 	protected void initChannels() throws Exception {
-		Properties controlProperties = PropsUtil.getProperties(
-			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL, false);
+		String channelName = PropsUtil.get(
+			PropsKeys.CLUSTER_LINK_CHANNEL_NAME_CONTROL);
 
-		String controlProperty = controlProperties.getProperty(
+		if (Validator.isNull(channelName)) {
+			throw new IllegalStateException(
+				"Set \"" + PropsKeys.CLUSTER_LINK_CHANNEL_NAME_CONTROL +
+					"\"");
+		}
+
+		String controlProperty = PropsUtil.get(
 			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL);
+
+		if (Validator.isNull(controlProperty)) {
+			throw new IllegalStateException(
+				"Set \"" + PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL +
+					"\"");
+		}
 
 		ClusterRequestReceiver clusterRequestReceiver =
 			new ClusterRequestReceiver(this);
 
 		_controlJChannel = createJChannel(
-			controlProperty, clusterRequestReceiver, _DEFAULT_CLUSTER_NAME);
+			controlProperty, clusterRequestReceiver, channelName);
 	}
 
 	protected void initLocalClusterNode() throws Exception {
@@ -459,18 +452,43 @@ public class ClusterExecutorImpl
 		ClusterNode localClusterNode = new ClusterNode(
 			PortalUUIDUtil.generate(), inetAddress);
 
-		int port = _port;
+		if (StringUtil.equalsIgnoreCase(
+				Http.HTTPS, PropsValues.PORTAL_INSTANCE_PROTOCOL) &&
+			(PropsValues.PORTAL_INSTANCE_HTTPS_PORT > 0)) {
 
-		if (port <= 0) {
-			port = PortalUtil.getPortalPort(_secure);
+			localClusterNode.setPortalProtocol(Http.HTTPS);
+			localClusterNode.setPort(PropsValues.PORTAL_INSTANCE_HTTPS_PORT);
+		}
+		else if (StringUtil.equalsIgnoreCase(
+					Http.HTTP, PropsValues.PORTAL_INSTANCE_PROTOCOL) &&
+				 (PropsValues.PORTAL_INSTANCE_HTTP_PORT > 0)) {
+
+			localClusterNode.setPortalProtocol(Http.HTTP);
+			localClusterNode.setPort(PropsValues.PORTAL_INSTANCE_HTTP_PORT);
+		}
+		else {
+			if (_log.isWarnEnabled()) {
+				StringBundler sb = new StringBundler(8);
+
+				sb.append("Unable to configure node protocol and port. ");
+				sb.append("This configuration will be inferred dynamically ");
+				sb.append("from the first request but static configuration ");
+				sb.append("is recomended to avoid comunications problems ");
+				sb.append("between nodes. Please set the right values for ");
+				sb.append("\"portal.instance.protocol\" and ");
+				sb.append("\"portal.instance.http.port\" or ");
+				sb.append("\"portal.instance.https.port\".");
+
+				_log.warn(sb.toString());
+			}
 		}
 
-		localClusterNode.setPort(port);
-
-		localClusterNode.setPortalProtocol(
-			PropsValues.PORTAL_INSTANCE_PROTOCOL);
-
 		_localClusterNode = localClusterNode;
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Initialized cluster node: " + localClusterNode.toString());
+		}
 	}
 
 	protected boolean isShortcutLocalMethod() {
@@ -590,15 +608,12 @@ public class ClusterExecutorImpl
 			ClusterMessageType.NOTIFY, _localClusterNode);
 
 		try {
-			_controlJChannel.send(null, clusterRequest);
+			sendJGroupsMessage(_controlJChannel, null, clusterRequest);
 		}
 		catch (Exception e) {
 			_log.error("Unable to send notify message", e);
 		}
 	}
-
-	private static final String _DEFAULT_CLUSTER_NAME =
-		"LIFERAY-CONTROL-CHANNEL";
 
 	private static Log _log = LogFactoryUtil.getLog(ClusterExecutorImpl.class);
 
@@ -614,8 +629,6 @@ public class ClusterExecutorImpl
 		new ConcurrentHashMap<Address, ClusterNode>();
 	private Address _localAddress;
 	private ClusterNode _localClusterNode;
-	private int _port;
-	private boolean _secure;
 	private boolean _shortcutLocalMethod;
 
 	private class ClusterResponseCallbackJob implements Runnable {

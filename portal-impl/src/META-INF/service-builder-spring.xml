@@ -21,14 +21,16 @@
 		<property name="secure" value="true" />
 		<property name="secureXMLFactoryProvider" ref="com.liferay.portal.security.xml.SecureXMLFactoryProvider" />
 	</bean>
-	<bean id="com.liferay.portal.kernel.xml.SAXReaderUtil" class="com.liferay.portal.kernel.xml.SAXReaderUtil">
-		<property name="secureSAXReader">
+	<bean id="com.liferay.portal.kernel.xml.SAXReaderUtil" class="com.liferay.portal.kernel.xml.SAXReaderUtil" depends-on="com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil">
+		<property name="SAXReader">
 			<bean class="com.liferay.portal.xml.SAXReaderImpl">
 				<property name="secure" value="true" />
 				<property name="secureXMLFactoryProvider" ref="com.liferay.portal.security.xml.SecureXMLFactoryProvider" />
 			</bean>
 		</property>
-		<property name="unsecureSAXReader">
+	</bean>
+	<bean id="com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil" class="com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil">
+		<property name="SAXReader">
 			<bean class="com.liferay.portal.xml.SAXReaderImpl">
 				<property name="secure" value="false" />
 				<property name="secureXMLFactoryProvider" ref="com.liferay.portal.security.xml.SecureXMLFactoryProvider" />
@@ -38,8 +40,8 @@
 	<bean id="com.liferay.portal.model.ModelHintsUtil" class="com.liferay.portal.model.ModelHintsUtil">
 		<property name="modelHints">
 			<bean class="com.liferay.portal.model.ModelHintsImpl" depends-on="com.liferay.portal.kernel.xml.SAXReaderUtil">
-				<property name="sAXReader">
-					<bean class="com.liferay.portal.kernel.xml.SAXReaderUtil" factory-method="getSecureSAXReader" />
+				<property name="SAXReader">
+					<bean class="com.liferay.portal.kernel.xml.SAXReaderUtil" factory-method="getSAXReader" />
 				</property>
 			</bean>
 		</property>

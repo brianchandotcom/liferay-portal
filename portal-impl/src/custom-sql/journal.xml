@@ -29,7 +29,7 @@
 			WHERE
 				(groupId = ?) AND
 				(classNameId = ?) AND
-				(structureId = ?) AND
+				([$DDM_STRUCTURE_KEY$]) AND
 				([$STATUS$])
 		]]>
 	</sql>
@@ -47,9 +47,8 @@
 			WHERE
 				(JournalArticle.groupId = ?) AND
 				(JournalArticle.classNameId = ?) AND
-				(JournalArticle.userId = ?) AND
 				([$FOLDER_ID$]) AND
-				[$STATUS$] AND
+				([$OWNER_USER_ID$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] [$STATUS$]) AND
 				(tempJournalArticle.id_ IS NULL)
 		]]>
 	</sql>
@@ -158,7 +157,7 @@
 			WHERE
 				(JournalArticle.groupId = ?) AND
 				(JournalArticle.classNameId = ?) AND
-				(JournalArticle.structureId = ?) AND
+				([$DDM_STRUCTURE_KEY$]) AND
 				([$STATUS$]) AND
 				(tempJournalArticle.id_ IS NULL)
 			ORDER BY
@@ -179,9 +178,8 @@
 			WHERE
 				(JournalArticle.groupId = ?) AND
 				(JournalArticle.classNameId = ?) AND
-				(JournalArticle.userId = ?) AND
 				([$FOLDER_ID$]) AND
-				([$STATUS$]) AND
+				([$OWNER_USER_ID$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] [$STATUS$]) AND
 				(tempJournalArticle.id_ IS NULL)
 			ORDER BY
 				JournalArticle.id_ ASC
@@ -227,11 +225,11 @@
 			FROM
 				JournalFeed
 			WHERE
-				(companyId = ?) AND
+				(JournalFeed.companyId = ?) AND
 				(groupId = ?) AND
 				(
 					(feedId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(lower(JournalFeed.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(lower(description) LIKE ? [$AND_OR_NULL_CHECK$])
 				)
 		]]>
@@ -243,18 +241,18 @@
 			FROM
 				JournalFeed
 			WHERE
-				(companyId = ?) AND
+				(JournalFeed.companyId = ?) AND
 				(groupId = ?) AND
 				(
 					(feedId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(lower(JournalFeed.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(lower(description) LIKE ? [$AND_OR_NULL_CHECK$])
 				)
 			ORDER BY
 				feedId ASC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.journal.service.persistence.JournalFolderFinder.countA_ByG_F">
+	<sql id="com.liferay.portlet.journal.service.persistence.JournalFolderFinder.countA_ByG_U_F">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT JournalArticle.articleId) AS COUNT_VALUE
@@ -263,7 +261,7 @@
 			WHERE
 				(JournalArticle.groupId = ?) AND
 				(JournalArticle.classNameId = 0) AND
-				([$STATUS$])
+				([$OWNER_USER_ID$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] ([$STATUS$]))
 				[$ARTICLE_FOLDER_ID$]
 		]]>
 	</sql>
@@ -279,7 +277,7 @@
 				[$FOLDER_PARENT_FOLDER_ID$]
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.journal.service.persistence.JournalFolderFinder.findA_ByG_F">
+	<sql id="com.liferay.portlet.journal.service.persistence.JournalFolderFinder.findA_ByG_U_F">
 		<![CDATA[
 			SELECT
 				DISTINCT JournalArticle.folderId AS modelFolderId, JournalArticle.articleId as articleId, JournalArticle.version AS version, 0 AS modelFolder, JournalArticle.displayDate as displayDate, JournalArticle.modifiedDate as modifiedDate
@@ -292,7 +290,7 @@
 					WHERE
 						(JournalArticle.groupId = ?) AND
 						(JournalArticle.classNameId = 0) AND
-						([$STATUS$])
+						([$OWNER_USER_ID$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] ([$STATUS$]))
 						[$ARTICLE_FOLDER_ID$]
 					GROUP BY
 						JournalArticle.folderId, JournalArticle.articleId

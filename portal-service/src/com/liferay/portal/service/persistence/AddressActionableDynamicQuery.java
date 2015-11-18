@@ -14,7 +14,7 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.service.AddressLocalServiceUtil;
@@ -26,7 +26,7 @@ import com.liferay.portal.service.AddressLocalServiceUtil;
  */
 @Deprecated
 public abstract class AddressActionableDynamicQuery
-	extends BaseActionableDynamicQuery {
+	extends DefaultActionableDynamicQuery {
 	public AddressActionableDynamicQuery() {
 		setBaseLocalService(AddressLocalServiceUtil.getService());
 		setClass(Address.class);

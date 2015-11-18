@@ -14,7 +14,7 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -26,7 +26,7 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
  */
 @Deprecated
 public abstract class GroupActionableDynamicQuery
-	extends BaseActionableDynamicQuery {
+	extends DefaultActionableDynamicQuery {
 	public GroupActionableDynamicQuery() {
 		setBaseLocalService(GroupLocalServiceUtil.getService());
 		setClass(Group.class);

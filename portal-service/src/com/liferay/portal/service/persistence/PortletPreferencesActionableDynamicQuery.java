@@ -14,7 +14,7 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
@@ -26,7 +26,7 @@ import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
  */
 @Deprecated
 public abstract class PortletPreferencesActionableDynamicQuery
-	extends BaseActionableDynamicQuery {
+	extends DefaultActionableDynamicQuery {
 	public PortletPreferencesActionableDynamicQuery() {
 		setBaseLocalService(PortletPreferencesLocalServiceUtil.getService());
 		setClass(PortletPreferences.class);

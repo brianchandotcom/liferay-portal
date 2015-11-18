@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.social.service.persistence;
 
-import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import com.liferay.portlet.social.model.SocialActivitySetting;
@@ -27,7 +27,7 @@ import com.liferay.portlet.social.service.SocialActivitySettingLocalServiceUtil;
  */
 @Deprecated
 public abstract class SocialActivitySettingActionableDynamicQuery
-	extends BaseActionableDynamicQuery {
+	extends DefaultActionableDynamicQuery {
 	public SocialActivitySettingActionableDynamicQuery() {
 		setBaseLocalService(SocialActivitySettingLocalServiceUtil.getService());
 		setClass(SocialActivitySetting.class);

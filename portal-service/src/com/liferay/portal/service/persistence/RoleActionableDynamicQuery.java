@@ -14,7 +14,7 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.service.RoleLocalServiceUtil;
@@ -26,7 +26,7 @@ import com.liferay.portal.service.RoleLocalServiceUtil;
  */
 @Deprecated
 public abstract class RoleActionableDynamicQuery
-	extends BaseActionableDynamicQuery {
+	extends DefaultActionableDynamicQuery {
 	public RoleActionableDynamicQuery() {
 		setBaseLocalService(RoleLocalServiceUtil.getService());
 		setClass(Role.class);

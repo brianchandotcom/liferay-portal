@@ -15,19 +15,32 @@
 package com.liferay.marketplace.app.manager.web.util;
 
 import com.liferay.marketplace.app.manager.web.constants.BundleConstants;
+import com.liferay.marketplace.model.App;
+import com.liferay.marketplace.model.Module;
+import com.liferay.marketplace.service.AppLocalService;
+import com.liferay.marketplace.service.ModuleLocalService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.osgi.framework.Bundle;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ryan Park
  */
+@Component
 public class AppDisplayFactoryUtil {
 
 	public static AppDisplay getAppDisplay(
@@ -42,13 +55,13 @@ public class AppDisplayFactoryUtil {
 		for (Bundle bundle : bundles) {
 			Dictionary<String, String> headers = bundle.getHeaders();
 
-			String curAppName = headers.get(
-				BundleConstants.LIFERAY_RELENG_APP_NAME);
+			String curAppTitle = headers.get(
+				BundleConstants.LIFERAY_RELENG_APP_TITLE);
 
-			if (Validator.isNotNull(appName) && !appName.equals(curAppName)) {
+			if (Validator.isNotNull(appName) && !appName.equals(curAppTitle)) {
 				continue;
 			}
-			else if (curAppName != null) {
+			else if (curAppTitle != null) {
 				continue;
 			}
 
@@ -61,37 +74,85 @@ public class AppDisplayFactoryUtil {
 	public static List<AppDisplay> getAppDisplays(
 		List<Bundle> bundles, String category, int state) {
 
+		BundlesMap bundlesMap = new BundlesMap(bundles.size());
+
+		bundlesMap.load(bundles);
+
+		List<AppDisplay> appDisplays = new ArrayList<>();
+
+		appDisplays.addAll(buildMarketplaceAppDisplays(bundlesMap, category));
+		appDisplays.addAll(buildPortalAppDisplays(bundlesMap, category));
+
+		filterAppDisplays(appDisplays, state);
+
+		return ListUtil.sort(appDisplays);
+	}
+
+	protected static List<AppDisplay> buildMarketplaceAppDisplays(
+		BundlesMap bundlesMap, String category) {
+
+		List<AppDisplay> appDisplays = new ArrayList<>();
+
+		List<App> apps = null;
+
+		if (Validator.isNotNull(category)) {
+			apps = _appLocalService.getApps(category);
+		}
+		else {
+			apps = _appLocalService.getApps(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		}
+
+		for (App app : apps) {
+			AppDisplay appDisplay = new AppDisplay(app.getTitle());
+
+			List<Module> modules = _moduleLocalService.getModules(
+				app.getAppId());
+
+			for (Module module : modules) {
+				Bundle bundle = bundlesMap.removeBundle(module);
+
+				if (bundle != null) {
+					appDisplay.addBundle(bundle);
+				}
+			}
+
+			appDisplays.add(appDisplay);
+		}
+
+		return appDisplays;
+	}
+
+	protected static List<AppDisplay> buildPortalAppDisplays(
+		BundlesMap bundlesMap, String category) {
+
+		Collection<Bundle> bundles = bundlesMap.values();
+
 		Map<String, AppDisplay> appDisplaysMap = new HashMap<>();
 
 		for (Bundle bundle : bundles) {
 			Dictionary<String, String> headers = bundle.getHeaders();
 
-			if (Validator.isNotNull(category)) {
-				String curCategory = headers.get(
-					BundleConstants.LIFERAY_RELENG_CATEGORY);
+			String appTitle = headers.get(
+				BundleConstants.LIFERAY_RELENG_APP_TITLE);
 
-				if (!category.equals(curCategory)) {
-					continue;
-				}
+			if (appTitle == null) {
+				appTitle = AppDisplay.APP_NAME_UNCATEGORIZED;
 			}
 
-			if ((state > 0) && (state != bundle.getState())) {
+			String[] categories = StringUtil.split(
+				headers.get(BundleConstants.LIFERAY_RELENG_CATEGORY));
+
+			if (!ArrayUtil.contains(categories, category)) {
 				continue;
 			}
 
-			String appName = headers.get(
-				BundleConstants.LIFERAY_RELENG_APP_NAME);
-
-			if (appName == null) {
-				appName = AppDisplay.APP_NAME_UNCATEGORIZED;
-			}
-
-			AppDisplay appDisplay = appDisplaysMap.get(appName);
+			AppDisplay appDisplay = appDisplaysMap.get(appTitle);
 
 			if (appDisplay == null) {
-				appDisplay = new AppDisplay(appName);
+				appDisplay = new AppDisplay(appTitle);
 
-				appDisplaysMap.put(appName, appDisplay);
+				appDisplaysMap.put(appTitle, appDisplay);
 			}
 
 			appDisplay.addBundle(bundle);
@@ -99,5 +160,34 @@ public class AppDisplayFactoryUtil {
 
 		return ListUtil.fromMapValues(appDisplaysMap);
 	}
+
+	protected static void filterAppDisplays(
+		List<AppDisplay> appDisplays, int state) {
+
+		Iterator<AppDisplay> itr = appDisplays.iterator();
+
+		while (itr.hasNext()) {
+			AppDisplay appDisplay = itr.next();
+
+			if (appDisplay.getState() != state) {
+				itr.remove();
+			}
+		}
+	}
+
+	@Reference
+	protected void setAppLocalService(AppLocalService appLocalService) {
+		_appLocalService = appLocalService;
+	}
+
+	@Reference
+	protected void setModuleLocalService(
+		ModuleLocalService moduleLocalService) {
+
+		_moduleLocalService = moduleLocalService;
+	}
+
+	private static AppLocalService _appLocalService;
+	private static ModuleLocalService _moduleLocalService;
 
 }

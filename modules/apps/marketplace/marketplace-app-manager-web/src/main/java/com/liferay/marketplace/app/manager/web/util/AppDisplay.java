@@ -51,6 +51,24 @@ public class AppDisplay implements Comparable<AppDisplay> {
 		return _name;
 	}
 
+	public int getState() {
+		if (_bundles.isEmpty()) {
+			return Bundle.UNINSTALLED;
+		}
+
+		int state = Bundle.ACTIVE;
+
+		for (Bundle bundle : _bundles) {
+			int bundleState = bundle.getState();
+
+			if (state > bundleState) {
+				state = bundleState;
+			}
+		}
+
+		return state;
+	}
+
 	private final List<Bundle> _bundles = new ArrayList<>();
 	private final String _name;
 

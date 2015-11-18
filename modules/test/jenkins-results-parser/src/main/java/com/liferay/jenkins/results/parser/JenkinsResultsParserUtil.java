@@ -19,10 +19,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
 import java.net.URI;
 import java.net.URL;
+
 import java.nio.file.Files;
 import java.nio.file.Paths;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -284,13 +287,13 @@ public class JenkinsResultsParserUtil {
 			}
 		}
 	}
-	
+
 	protected static URL createURL(String urlString) throws Exception {
 		URL url = new URL(urlString);
 
 		return encode(url);
 	}
-	
+
 	protected static URL encode(URL url) throws Exception {
 		URI uri = new URI(
 			url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(),
@@ -299,7 +302,7 @@ public class JenkinsResultsParserUtil {
 		String uriASCIIString = uri.toASCIIString();
 
 		return new URL(uriASCIIString.replace("#", "%23"));
-	}	
+	}
 
 	private static final Pattern _localURLPattern1 = Pattern.compile(
 		"https://test.liferay.com/([0-9]+)/");

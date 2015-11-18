@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.osgi.service.tracker.map.internal;
+package com.liferay.osgi.service.tracker.collections.map.internal;
 
-import com.liferay.osgi.service.tracker.map.ServiceReferenceServiceTuple;
-import com.liferay.osgi.service.tracker.map.ServiceTrackerBucket;
-import com.liferay.osgi.service.tracker.map.ServiceTrackerBucketFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceServiceTuple;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerBucket;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerBucketFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;

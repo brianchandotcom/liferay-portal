@@ -12,13 +12,25 @@
  * details.
  */
 
-package com.liferay.osgi.service.tracker.map;
+package com.liferay.osgi.service.tracker.collections.map.internal;
 
 /**
- * @author Carlos Sierra Andrés
+ * @author Raymond Augé
  */
-public interface ServiceTrackerBucketFactory<SR, TS, R> {
+public class TrackedOne {
 
-	public ServiceTrackerBucket<SR, TS, R> create();
+	public TrackedOne() {
+		_key = null;
+	}
+
+	public TrackedOne(String key) {
+		_key = key;
+	}
+
+	public String getKey() {
+		return _key;
+	}
+
+	private final String _key;
 
 }

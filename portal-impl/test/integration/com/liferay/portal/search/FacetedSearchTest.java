@@ -72,7 +72,7 @@ public class FacetedSearchTest {
 	}
 
 	@Test
-	public void testAHappyDay() throws Exception {
+	public void testSearchReturnsResults() throws Exception {
 		String tag = RandomTestUtil.randomString();
 
 		addUser(_group1, tag);
@@ -81,7 +81,7 @@ public class FacetedSearchTest {
 	}
 
 	@Test
-	public void testAssetTagNamesFacet() throws Exception {
+	public void testSearchPopulatesFacet() throws Exception {
 		String tag = "enterprise. open-source for life";
 
 		addUser(_group1, tag);
@@ -116,7 +116,7 @@ public class FacetedSearchTest {
 	}
 
 	@Test
-	public void testInactiveGroups() throws Exception {
+	public void testSearchIgnoresResultsInInactiveSites() throws Exception {
 		addUser(_group1, "Liferay " + RandomTestUtil.randomString());
 		addUser(_group2, "Liferay " + RandomTestUtil.randomString());
 

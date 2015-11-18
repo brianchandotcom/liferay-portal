@@ -573,8 +573,8 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 									fileEntry.getFileEntryId());
 							}
 
-							sendRedirect(
-								actionRequest, actionResponse, redirect);
+							actionRequest.setAttribute(
+								WebKeys.REDIRECT, redirect);
 						}
 					}
 				}

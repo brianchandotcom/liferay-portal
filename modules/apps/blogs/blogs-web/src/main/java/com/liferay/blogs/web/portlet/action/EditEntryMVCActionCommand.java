@@ -318,7 +318,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 								entry.getEntryId());
 						}
 
-						sendRedirect(actionRequest, actionResponse, redirect);
+						actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 					}
 				}
 			}

@@ -153,7 +153,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 							entry.getEntryId());
 					}
 
-					actionResponse.sendRedirect(redirect);
+					actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 				}
 			}
 		}

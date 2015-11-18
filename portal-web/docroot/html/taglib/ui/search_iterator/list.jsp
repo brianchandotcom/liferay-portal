@@ -14,24 +14,13 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
+<%@ include file="/html/taglib/ui/search_iterator/init.jsp" %>
 
 <%
-SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:search:searchContainer");
-
-boolean paginate = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:search-iterator:paginate"));
-String type = (String)request.getAttribute("liferay-ui:search:type");
-
-String id = searchContainer.getId(request, namespace);
-
 int end = searchContainer.getEnd();
 int total = searchContainer.getTotal();
-List resultRows = searchContainer.getResultRows();
-List<String> headerNames = searchContainer.getHeaderNames();
-List<String> normalizedHeaderNames = searchContainer.getNormalizedHeaderNames();
+
 Map orderableHeaders = searchContainer.getOrderableHeaders();
-String emptyResultsMessage = searchContainer.getEmptyResultsMessage();
-RowChecker rowChecker = searchContainer.getRowChecker();
 
 if (end > total) {
 	end = total;
@@ -54,8 +43,6 @@ if (iteratorURL != null) {
 	url = HttpUtil.removeParameter(url, namespace + searchContainer.getOrderByColParam());
 	url = HttpUtil.removeParameter(url, namespace + searchContainer.getOrderByTypeParam());
 }
-
-JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 %>
 
 <c:if test="<%= emptyResultsMessage != null %>">

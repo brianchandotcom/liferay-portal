@@ -305,7 +305,7 @@ if (showSource) {
 				data = alloyEditor.getHTML();
 			}
 			else {
-				getInitialContent();
+				data = getInitialContent();
 			}
 
 			return data;

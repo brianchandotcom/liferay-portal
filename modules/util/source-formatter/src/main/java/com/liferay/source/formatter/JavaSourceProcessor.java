@@ -962,6 +962,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_secureXmlExclusionFiles = getPropertyList("secure.xml.excludes.files");
 		_staticLogVariableExclusionFiles = getPropertyList(
 			"static.log.excludes.files");
+		_temporaryLPS59076ExclusionFiles = getPropertyList(
+			"temporary.lps59076.excludes.files");
 		_testAnnotationsExclusionFiles = getPropertyList(
 			"test.annotations.excludes.files");
 		_upgradeServiceUtilExclusionFiles = getPropertyList(
@@ -2208,31 +2210,35 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		String moduleServicePackagePath = null;
 
-		if (_checkModulesServiceUtil) {
-			Matcher matcher = _serviceUtilImportPattern.matcher(content);
+		Matcher matcher = _serviceUtilImportPattern.matcher(content);
 
-			while (matcher.find()) {
-				String serviceUtilClassName = matcher.group(2);
+		while (matcher.find()) {
+			String serviceUtilClassName = matcher.group(2);
 
-				if (moduleServicePackagePath == null) {
-					moduleServicePackagePath = getModuleServicePackagePath(
-						fileName);
-				}
+			if (moduleServicePackagePath == null) {
+				moduleServicePackagePath = getModuleServicePackagePath(
+					fileName);
+			}
 
-				if (Validator.isNotNull(moduleServicePackagePath)) {
-					String serviceUtilClassPackagePath = matcher.group(1);
+			if (Validator.isNotNull(moduleServicePackagePath)) {
+				String serviceUtilClassPackagePath = matcher.group(1);
 
-					if (serviceUtilClassPackagePath.startsWith(
-							moduleServicePackagePath)) {
+				if (serviceUtilClassPackagePath.startsWith(
+						moduleServicePackagePath)) {
 
+					if (_checkModulesServiceUtil) {
 						processErrorMessage(
 							fileName,
 							"LPS-59076: Convert OSGi Component to Spring " +
 								"bean: " + fileName);
-
-						continue;
 					}
+
+					continue;
 				}
+			}
+
+			if (!isExcludedFile(
+					_temporaryLPS59076ExclusionFiles, absolutePath)) {
 
 				processErrorMessage(
 					fileName,
@@ -2241,7 +2247,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		Matcher matcher = _setReferenceMethodPattern.matcher(content);
+		matcher = _setReferenceMethodPattern.matcher(content);
 
 		while (matcher.find()) {
 			String annotationParameters = matcher.group(2);
@@ -3572,6 +3578,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Pattern _stagedModelTypesPattern = Pattern.compile(
 		"StagedModelType\\(([a-zA-Z.]*(class|getClassName[\\(\\)]*))\\)");
 	private List<String> _staticLogVariableExclusionFiles;
+	private List<String> _temporaryLPS59076ExclusionFiles;
 	private List<String> _testAnnotationsExclusionFiles;
 	private Pattern _throwsSystemExceptionPattern = Pattern.compile(
 		"(\n\t+.*)throws(.*) SystemException(.*)( \\{|;\n)");

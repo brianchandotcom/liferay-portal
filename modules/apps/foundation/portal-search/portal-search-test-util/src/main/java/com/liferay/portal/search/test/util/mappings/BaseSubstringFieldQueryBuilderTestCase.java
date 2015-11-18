@@ -74,7 +74,6 @@ public abstract class BaseSubstringFieldQueryBuilderTestCase
 		assertSearch("\"tag1\"", 1);
 
 		assertSearchNoHits("name-tag");
-		assertSearchNoHits("tag(142857)");
 		assertSearchNoHits("tag2");
 
 		assertSearchNoHits("\"NA G\"");
@@ -163,6 +162,32 @@ public abstract class BaseSubstringFieldQueryBuilderTestCase
 		assertSearchNoHits("Tagname2");
 		assertSearchNoHits("Tagname5");
 		assertSearchNoHits("Tagname9");
+	}
+
+	protected void testParentheses() throws Exception {
+		addDocument("401 k");
+		addDocument("401(k)");
+
+		assertSearch("(", 1);
+		assertSearch("(k", 1);
+		assertSearch("(k)", 1);
+		assertSearch(")", 1);
+
+		assertSearch("1", 2);
+		assertSearch("1(", 1);
+		assertSearch("1(k", 1);
+		assertSearch("1(k)", 1);
+		assertSearch("4", 2);
+		assertSearch("401 k", 2);
+		assertSearch("401", 2);
+		assertSearch("401(k)", 1);
+		assertSearch("k", 2);
+		assertSearch("k)", 1);
+
+		assertSearchNoHits("()");
+
+		assertSearchNoHits("1k");
+		assertSearchNoHits("401k");
 	}
 
 	protected void testPhrases() throws Exception {

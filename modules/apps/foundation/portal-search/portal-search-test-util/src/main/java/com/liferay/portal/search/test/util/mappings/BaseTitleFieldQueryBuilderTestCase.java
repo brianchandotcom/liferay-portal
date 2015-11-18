@@ -48,12 +48,29 @@ public abstract class BaseTitleFieldQueryBuilderTestCase
 		addDocument("Tag Name");
 		addDocument("TAG1");
 
-		assertSearch("end", 1);
-		assertSearch("na-meta-g", 1);
-		assertSearch("name", 2);
-		assertSearch("tag", 3);
+		assertSearch("end", Arrays.asList("name tag end"));
+		assertSearch("g", Arrays.asList("NA-META-G"));
+		assertSearch("META G", Arrays.asList("NA-META-G"));
+		assertSearch("meta", Arrays.asList("NA-META-G"));
+		assertSearch("META-G", Arrays.asList("NA-META-G"));
+		assertSearch("nA mEtA g", Arrays.asList("NA-META-G"));
+		assertSearch("NA-META-G", Arrays.asList("NA-META-G"));
+		assertSearch("na-meta-g", Arrays.asList("NA-META-G"));
+		assertSearch("name tag", Arrays.asList("name tag end", "Tag Name"));
+		assertSearch("name", Arrays.asList("Tag Name", "name tag end"));
+		assertSearch("NaMe*", Arrays.asList("Tag Name", "name tag end"));
+		assertSearch("name-tag", Arrays.asList("name tag end", "Tag Name"));
+		assertSearch("tag 1", Arrays.asList("Tag Name", "name tag end"));
+		assertSearch("tag name", Arrays.asList("Tag Name", "name tag end"));
+		assertSearch("tag", Arrays.asList("Tag Name", "name tag end", "TAG1"));
+		assertSearch("tag(142857)", Arrays.asList("Tag Name", "name tag end"));
+		assertSearch("tag1", Arrays.asList("TAG1"));
 
-		assertSearch("\"NAME\"", 2);
+		assertSearchNoHits("1");
+		assertSearchNoHits("ame");
+		assertSearchNoHits("METAG");
+		assertSearchNoHits("nameTAG");
+		assertSearchNoHits("tag2");
 	}
 
 	protected void testExactMatchBoost() throws Exception {
@@ -213,8 +230,11 @@ public abstract class BaseTitleFieldQueryBuilderTestCase
 
 		assertSearch("\"me*\"", 1);
 		assertSearch("\"meta\"", 1);
+		assertSearch("\"na, meta, g\"", 1);
 		assertSearch("\"namet*\"", 1);
 		assertSearch("\"Ta*\"", 2);
+		assertSearch("\"Tag (Name)\"", 1);
+		assertSearch("\"tag1\"", 1);
 		assertSearch("\"tag\"", 1);
 
 		assertSearch("\"*me*\"", 1);
@@ -223,8 +243,10 @@ public abstract class BaseTitleFieldQueryBuilderTestCase
 		assertSearch("\"*Ta*\"", 2);
 
 		assertSearchNoHits("\"met\"");
+		assertSearchNoHits("\"NA G\"");
 		assertSearchNoHits("\"Namet\"");
 		assertSearchNoHits("\"Ta\"");
+		assertSearchNoHits("\"tag 1\"");
 
 		assertSearchNoHits("\"*me\"");
 		assertSearchNoHits("\"*namet\"");

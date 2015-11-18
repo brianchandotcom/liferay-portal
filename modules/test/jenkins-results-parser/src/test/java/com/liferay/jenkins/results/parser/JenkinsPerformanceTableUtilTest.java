@@ -23,28 +23,33 @@ import java.util.regex.Pattern;
 
 import org.apache.tools.ant.Project;
 
-import org.json.JSONObject;
-
 import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author Peter Yoo
  */
-public class JenkinsPerformanceTableUtilTest extends BaseJenkinsResultsParserTestCase {
+public class JenkinsPerformanceTableUtilTest
+	extends BaseJenkinsResultsParserTestCase {
 
 	@Before
 	public void setUp() throws Exception {
 		downloadSample(
-			"generic-1", "1609", "test-portal-acceptance-pullrequest(master)",
-			"test-1-1");
+			"master-success-1", "1682",
+			"test-portal-acceptance-pullrequest(master)", "test-1-1");
 		downloadSample(
-			"rebase-1", "58", "test-portal-acceptance-pullrequest(ee-6.2.x)",
-			"test-1-19");
+			"master-failure-1", "1697",
+			"test-portal-acceptance-pullrequest(master)", "test-1-1");
+		downloadSample(
+			"6.2.x-success-1", "317",
+			"test-portal-acceptance-pullrequest(ee-6.2.x)", "test-1-1");
+		downloadSample(
+			"6.2.x-failure-1", "313",
+			"test-portal-acceptance-pullrequest(ee-6.2.x)", "test-1-1");
 	}
 
 	@Test
-	public void testGetFailedJobsMessage() throws Exception {
+	public void testGetHTML() throws Exception {
 		assertSamples();
 	}
 
@@ -52,9 +57,6 @@ public class JenkinsPerformanceTableUtilTest extends BaseJenkinsResultsParserTes
 	protected void downloadSample(File sampleDir, URL url) throws Exception {
 		downloadSampleJobMessages(
 			url.toString() + "/logText/progressiveText", sampleDir);
-
-		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-			JenkinsResultsParserUtil.getLocalURL(url.toString() + "/api/json"));
 	}
 
 	protected void downloadSample(
@@ -78,11 +80,7 @@ public class JenkinsPerformanceTableUtilTest extends BaseJenkinsResultsParserTes
 			String progressiveTextURL, File sampleDir)
 		throws Exception {
 
-		gitHubJobMessageUtilTest.dependenciesDir = sampleDir;
-
 		int jobCount = 0;
-		int passCount = 0;
-		StringBuilder reportFilesSB = new StringBuilder();
 
 		String content = JenkinsResultsParserUtil.toString(
 			JenkinsResultsParserUtil.getLocalURL(progressiveTextURL));
@@ -90,57 +88,59 @@ public class JenkinsPerformanceTableUtilTest extends BaseJenkinsResultsParserTes
 		Matcher progressiveTextMatcher = _progressiveTextPattern.matcher(
 			content);
 
+		StringBuilder sb = new StringBuilder();
+
 		while (progressiveTextMatcher.find()) {
+			String fileSuffix = null;
 			String urlString = progressiveTextMatcher.group("url");
+			String urlSuffix = null;
 
-			Matcher jobNameMatcher = _jobNamePattern.matcher(urlString);
+			if (urlString.contains("-source")) {
+				fileSuffix = "source-" + jobCount;
 
-			jobNameMatcher.find();
+				urlSuffix = "/api/json";
+			}
+			else {
+				fileSuffix = Integer.toString(jobCount);
 
-			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-				JenkinsResultsParserUtil.getLocalURL(urlString + "/api/json"));
-
-			Project project = getProject(null, urlString, sampleDir.getPath());
-
-			GitHubJobMessageUtil.getGitHubJobMessage(project);
-
-			File reportFile = new File(sampleDir, jobCount + "-report.html");
+				urlSuffix = "/testReport/api/json";
+			}
 
 			write(
-				reportFile,
-				"<h5 job-result=\\\"" + jsonObject.getString("result") +
-					"\\\"><a href=\"" + urlString + "\">" +
-						jobNameMatcher.group("jobName") + "</a></h5>" +
-				project.getProperty("report.html.content"));
+				new File(sampleDir, "job-" + fileSuffix + urlSuffix),
+				JenkinsResultsParserUtil.toString(
+					JenkinsResultsParserUtil.getLocalURL(
+						urlString + urlSuffix + "?pretty")));
 
-			if (reportFilesSB.length() > 0) {
-				reportFilesSB.append(" ");
+			if (sb.length() > 0) {
+				sb.append("|");
 			}
 
-			reportFilesSB.append(reportFile.getPath());
-
-			String result = jsonObject.getString("result");
-
-			if (result.equals("SUCCESS")) {
-				passCount++;
-			}
+			sb.append(toURLString(new File(sampleDir, "job-" + fileSuffix)));
 
 			jobCount++;
 		}
+
+		write(new File(sampleDir, "urls.txt"), sb.toString());
 	}
 
 	@Override
 	protected String getMessage(String urlString) throws Exception {
-		String localURLString = JenkinsResultsParserUtil.getLocalURL(urlString);
+		String localURL = JenkinsResultsParserUtil.getLocalURL(
+			urlString + "/urls.txt");
+		String urlText = JenkinsResultsParserUtil.toString(localURL);
+		String[] urlArray = urlText.split("\\|");
 
-		File sampleDir = new File(localURLString.substring("file:".length()));
+		for (String url : urlArray) {
+			if (url.length() == 0) {
+				continue;
+			}
 
-		Project project = getProject(
-			new File(sampleDir, "sample.properties"), "", sampleDir.getPath());
+			JenkinsPerformanceDataUtil.processPerformanceData(
+				"build", url.trim(), 100);
+		}
 
-		GitHubMessageUtil.getGitHubMessage(project);
-
-		return project.getProperty("github.post.comment.body");
+		return JenkinsPerformanceTableUtil.generateHTML();
 	}
 
 	protected Project getProject(
@@ -175,12 +175,6 @@ public class JenkinsPerformanceTableUtilTest extends BaseJenkinsResultsParserTes
 		return project;
 	}
 
-	protected GitHubJobMessageUtilTest gitHubJobMessageUtilTest =
-		new GitHubJobMessageUtilTest();
-
-	private static final Pattern _jobNamePattern = Pattern.compile(
-		".+://(?<hostName>[^.]+).liferay.com/job/(?<jobName>[^/]+).*/" +
-			"(?<buildNumber>\\d+)/");
 	private static final Pattern _progressiveTextPattern = Pattern.compile(
 		"\\[echo\\] \\'.*\\' completed at (?<url>.+)\\.");
 

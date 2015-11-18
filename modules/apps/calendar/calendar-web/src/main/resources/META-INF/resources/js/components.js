@@ -1039,7 +1039,7 @@
 						parts.push('on-x');
 
 						var weekdays = recurrence.weekdays.map(
-							function (item) {
+							function(item) {
 								return instance.WEEKDAY_LABELS[item];
 							}
 						);

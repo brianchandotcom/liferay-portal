@@ -28,6 +28,7 @@ deployDistribution {
 	baseName = "gradle"
 	classifier = "bin"
 	destinationDir = rootProject.file("../tools")
+	exclude "gradle-${gradleVersion}/lib/plugins/gradle-dependency-management-${gradleVersion}.jar"
 	exclude "gradle-${gradleVersion}/lib/plugins/gradle-resources-http-${gradleVersion}.jar"
 
 	from {
@@ -35,6 +36,7 @@ deployDistribution {
 	}
 
 	into("gradle-${gradleVersion}/lib/plugins") {
+		from tasks.getByPath(":third-party:org-gradle:org-gradle-dependency-management:jar")
 		from tasks.getByPath(":third-party:org-gradle:org-gradle-resources-http:jar")
 	}
 

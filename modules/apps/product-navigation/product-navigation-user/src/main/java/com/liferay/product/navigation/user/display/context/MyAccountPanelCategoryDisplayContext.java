@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -76,6 +77,32 @@ public class MyAccountPanelCategoryDisplayContext {
 		Group mySiteGroup = getMySiteGroup();
 
 		return getMySiteGroupURL(mySiteGroup, privateLayout);
+	}
+
+	public boolean isMySiteGroupActive(boolean privateLayout)
+		throws PortalException {
+
+		Group mySiteGroup = getMySiteGroup();
+
+		Group scopeGroup = _themeDisplay.getScopeGroup();
+
+		if (mySiteGroup.getGroupId() != scopeGroup.getGroupId()) {
+			return false;
+		}
+
+		Layout layout = _themeDisplay.getLayout();
+
+		if (layout.isTypeControlPanel()) {
+			return false;
+		}
+
+		if ((privateLayout && !layout.isPrivateLayout()) ||
+			(!privateLayout && layout.isPrivateLayout())) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	public boolean showMySiteGroup(boolean privateLayout)

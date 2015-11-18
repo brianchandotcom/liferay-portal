@@ -39,8 +39,8 @@
 				<execute function="AssertTextEquals" locator1="Message#INFO" value1="No users were found." />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="SiteTeamsAssignMembers#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-				<execute function="Check" locator1="SiteTeamsAssignMembers#USER_TABLE_CHECKBOX" />
+				<execute function="AssertTextEquals" locator1="SiteTeamsAssignMembers#USER_CARD_SCREEN_NAME" value1="${userScreenName}" />
+				<execute function="Check" locator1="SiteTeamsAssignMembers#USER_CARD_CHECKBOX" />
 
 				<execute function="SelectFrameTop" />
 
@@ -48,7 +48,7 @@
 
 				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
-				<execute function="AssertElementPresent" locator1="SiteTeamsAssignMembers#USER_TABLE_NAME" />
+				<execute function="AssertElementPresent" locator1="SiteTeamsAssignMembers#USER_CARD_NAME" />
 			</else>
 		</if>
 	</command>

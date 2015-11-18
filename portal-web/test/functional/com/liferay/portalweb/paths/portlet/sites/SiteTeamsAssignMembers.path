@@ -33,6 +33,22 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--USER_CARD-->
+<tr>
+	<td>USER_CARD_CHECKBOX</td>
+	<td>//div[contains(.,'${key_userScreenName}') and contains(@class,'checkbox')]//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_CARD_NAME</td>
+	<td>//div[contains(.,'${key_userScreenName}') and contains(@class,'details')]//div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_CARD_SCREEN_NAME</td>
+	<td>//div[contains(.,'${key_userScreenName}') and contains(@class,'details')]/div</td>
+	<td></td>
+</tr>
 <!--USER_TABLE-->
 <tr>
 	<td>USER_TABLE_CHECKBOX</td>

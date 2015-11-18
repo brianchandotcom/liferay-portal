@@ -14,14 +14,19 @@
 
 package com.liferay.portal.configuration.cluster;
 
+import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
+import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+
+import java.util.Dictionary;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -36,9 +41,15 @@ public class ConfigurationClusterConfigurator {
 				DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
 				DestinationNames.CONFIGURATION);
 
+		Destination destination = _destinationFactory.createDestination(
+			destinationConfiguration);
+
+		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
+
+		dictionary.put("destination.name", destination.getName());
+
 		_serviceRegistration = bundleContext.registerService(
-			DestinationConfiguration.class, destinationConfiguration,
-			new HashMapDictionary<String, Object>());
+			Destination.class, destination, dictionary);
 	}
 
 	@Deactivate
@@ -50,6 +61,14 @@ public class ConfigurationClusterConfigurator {
 		_serviceRegistration = null;
 	}
 
-	private ServiceRegistration<DestinationConfiguration> _serviceRegistration;
+	@Reference(unbind = "-")
+	protected void setDestinationFactory(
+		DestinationFactory destinationFactory) {
+
+		_destinationFactory = destinationFactory;
+	}
+
+	private DestinationFactory _destinationFactory;
+	private ServiceRegistration<Destination> _serviceRegistration;
 
 }

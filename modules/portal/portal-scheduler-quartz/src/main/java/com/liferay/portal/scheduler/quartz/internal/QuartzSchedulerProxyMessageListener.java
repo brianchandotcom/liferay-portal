@@ -14,7 +14,6 @@
 
 package com.liferay.portal.scheduler.quartz.internal;
 
-import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.proxy.ProxyMessageListener;
@@ -23,36 +22,27 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
- * @author Michael C. Han
+ * @author Tina Tian
  */
-@Component(immediate = true, service = QuartzSchedulerEngineConfigurator.class)
-public class QuartzSchedulerEngineConfigurator {
+@Component(
+	immediate = true,
+	property = {"destination.name=" + DestinationNames.SCHEDULER_ENGINE},
+	service = ProxyMessageListener.class
+)
+public class QuartzSchedulerProxyMessageListener extends ProxyMessageListener {
+
+	@Override
+	@Reference(unbind = "-")
+	public void setMessageBus(MessageBus messageBus) {
+		_messageBus = messageBus;
+	}
 
 	@Activate
 	protected void activate() {
-		_proxyMessageListener.setManager(_schedulerEngine);
-		_proxyMessageListener.setMessageBus(_messageBus);
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		service = Destination.class,
-		target = "(destination.name=" + DestinationNames.SCHEDULER_ENGINE + ")"
-	)
-	protected void setDestination(Destination destination) {
-		destination.register(_proxyMessageListener);
-	}
-
-	@Reference(unbind = "-")
-	protected void setMessageBus(MessageBus messageBus) {
-		_messageBus = messageBus;
+		setManager(_schedulerEngine);
+		setMessageBus(_messageBus);
 	}
 
 	@Reference(service = QuartzSchedulerEngine.class, unbind = "-")
@@ -60,13 +50,7 @@ public class QuartzSchedulerEngineConfigurator {
 		_schedulerEngine = schedulerEngine;
 	}
 
-	protected void unsetDestination(Destination destination) {
-		destination.unregister(_proxyMessageListener);
-	}
-
 	private MessageBus _messageBus;
-	private final ProxyMessageListener _proxyMessageListener =
-		new ProxyMessageListener();
 	private SchedulerEngine _schedulerEngine;
 
 }

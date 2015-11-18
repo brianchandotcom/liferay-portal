@@ -14,8 +14,12 @@
 
 package com.liferay.portal.ldap.internal.messaging;
 
+import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
+import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+
+import java.util.Dictionary;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -23,6 +27,7 @@ import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -31,9 +36,7 @@ import org.osgi.service.component.annotations.Deactivate;
 public class MessagingConfigurator {
 
 	@Activate
-	protected void activate(ComponentContext componentContext)
-		throws Exception {
-
+	protected void activate(ComponentContext componentContext) {
 		BundleContext bundleContext = componentContext.getBundleContext();
 
 		DestinationConfiguration destinationConfiguration =
@@ -41,9 +44,15 @@ public class MessagingConfigurator {
 				DestinationConfiguration.DESTINATION_TYPE_SERIAL,
 				DestinationNames.SCHEDULED_USER_LDAP_IMPORT);
 
+		Destination destination = _destinationFactory.createDestination(
+			destinationConfiguration);
+
+		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
+
+		dictionary.put("destination.name", destination.getName());
+
 		_serviceRegistration = bundleContext.registerService(
-			DestinationConfiguration.class, destinationConfiguration,
-			new HashMapDictionary<String, Object>());
+			Destination.class, destination, dictionary);
 	}
 
 	@Deactivate
@@ -55,6 +64,14 @@ public class MessagingConfigurator {
 		_serviceRegistration = null;
 	}
 
-	private ServiceRegistration<DestinationConfiguration> _serviceRegistration;
+	@Reference(unbind = "-")
+	protected void setDestinationFactory(
+		DestinationFactory destinationFactory) {
+
+		_destinationFactory = destinationFactory;
+	}
+
+	private DestinationFactory _destinationFactory;
+	private ServiceRegistration<Destination> _serviceRegistration;
 
 }

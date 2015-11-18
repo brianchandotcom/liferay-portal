@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationEventListener;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
+import com.liferay.portal.kernel.messaging.DestinationFactoryUtil;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusEventListener;
 import com.liferay.portal.kernel.messaging.MessageListener;
@@ -137,10 +138,6 @@ public abstract class AbstractMessagingConfigurator
 		}
 
 		_destinationConfigurations.clear();
-
-		if (_destinationConfigurationServiceRegistrar != null) {
-			_destinationConfigurationServiceRegistrar.destroy();
-		}
 
 		_destinations.clear();
 
@@ -297,8 +294,6 @@ public abstract class AbstractMessagingConfigurator
 
 		registerMessageBusEventListeners();
 
-		registerDestinationConfigurations();
-
 		registerDestinations();
 
 		registerDestinationEventListeners();
@@ -313,45 +308,6 @@ public abstract class AbstractMessagingConfigurator
 
 			MessagingConfiguratorRegistry.registerMessagingConfigurator(
 				servletContextName, this);
-		}
-	}
-
-	protected void registerDestinationConfigurations() {
-		if (_destinationConfigurations.isEmpty()) {
-			return;
-		}
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		_destinationConfigurationServiceRegistrar =
-			registry.getServiceRegistrar(DestinationConfiguration.class);
-
-		for (DestinationConfiguration destinationConfiguration :
-				_destinationConfigurations) {
-
-			try {
-				PortalMessageBusPermission.checkListen(
-					destinationConfiguration.getDestinationName());
-			}
-			catch (SecurityException se) {
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Rejecting destination " +
-							destinationConfiguration.getDestinationName());
-				}
-
-				continue;
-			}
-
-			Map<String, Object> properties = new HashMap<>();
-
-			properties.put(
-				"destination.name",
-				destinationConfiguration.getDestinationName());
-
-			_destinationConfigurationServiceRegistrar.registerService(
-				DestinationConfiguration.class, destinationConfiguration,
-				properties);
 		}
 	}
 
@@ -407,6 +363,28 @@ public abstract class AbstractMessagingConfigurator
 	}
 
 	protected void registerDestinations() {
+		for (DestinationConfiguration destinationConfiguration :
+				_destinationConfigurations) {
+
+			try {
+				PortalMessageBusPermission.checkListen(
+					destinationConfiguration.getDestinationName());
+			}
+			catch (SecurityException se) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Rejecting destination " +
+							destinationConfiguration.getDestinationName());
+				}
+
+				continue;
+			}
+
+			_destinations.add(
+				DestinationFactoryUtil.createDestination(
+					destinationConfiguration));
+		}
+
 		if (_destinations.isEmpty()) {
 			return;
 		}
@@ -462,8 +440,6 @@ public abstract class AbstractMessagingConfigurator
 
 	private final Set<DestinationConfiguration> _destinationConfigurations =
 		new HashSet<>();
-	private ServiceRegistrar<DestinationConfiguration>
-		_destinationConfigurationServiceRegistrar;
 	private final Map<String, List<DestinationEventListener>>
 		_destinationEventListeners = new HashMap<>();
 	private ServiceRegistrar<DestinationEventListener>

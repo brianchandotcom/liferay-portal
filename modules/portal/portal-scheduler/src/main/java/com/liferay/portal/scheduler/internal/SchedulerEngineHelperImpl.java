@@ -852,6 +852,12 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		_schedulerEngine = schedulerEngine;
 	}
 
+	@Reference(unbind = "-")
+	protected void setSchedulerProxyMessagingConfigurator(
+		SchedulerProxyMessagingConfigurator
+			schedulerProxyMessagingConfigurator) {
+	}
+
 	protected void unsetAuditRouter(AuditRouter auditRouter) {
 		_auditRouter = null;
 	}

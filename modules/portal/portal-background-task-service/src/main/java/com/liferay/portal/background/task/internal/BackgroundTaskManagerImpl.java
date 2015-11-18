@@ -18,7 +18,9 @@ import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
+import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -33,6 +35,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Dictionary;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -450,35 +453,40 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		registerDestinationConfiguration(
+		registerDestination(
 			bundleContext, DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
 			DestinationNames.BACKGROUND_TASK);
-		registerDestinationConfiguration(
+		registerDestination(
 			bundleContext, DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
 			DestinationNames.BACKGROUND_TASK_STATUS);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		for (ServiceRegistration<DestinationConfiguration> serviceRegistration :
+		for (ServiceRegistration<Destination> serviceRegistration :
 				_serviceRegistrations) {
 
 			serviceRegistration.unregister();
 		}
 	}
 
-	protected ServiceRegistration<DestinationConfiguration>
-		registerDestinationConfiguration(
-			BundleContext bundleContext, String destinationType,
-			String destinationName) {
+	protected ServiceRegistration<Destination> registerDestination(
+		BundleContext bundleContext, String destinationType,
+		String destinationName) {
 
 		DestinationConfiguration destinationConfiguration =
 			new DestinationConfiguration(destinationType, destinationName);
 
-		ServiceRegistration<DestinationConfiguration> serviceRegistration =
+		Destination destination = _destinationFactory.createDestination(
+			destinationConfiguration);
+
+		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
+
+		dictionary.put("destination.name", destination.getName());
+
+		ServiceRegistration<Destination> serviceRegistration =
 			bundleContext.registerService(
-				DestinationConfiguration.class, destinationConfiguration,
-				new HashMapDictionary<String, Object>());
+				Destination.class, destination, dictionary);
 
 		_serviceRegistrations.add(serviceRegistration);
 
@@ -490,6 +498,13 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 		BackgroundTaskLocalService backgroundTaskLocalService) {
 
 		_backgroundTaskLocalService = backgroundTaskLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDestinationFactory(
+		DestinationFactory destinationFactory) {
+
+		_destinationFactory = destinationFactory;
 	}
 
 	protected List<BackgroundTask> translate(
@@ -537,7 +552,8 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 	}
 
 	private BackgroundTaskLocalService _backgroundTaskLocalService;
-	private final Set<ServiceRegistration<DestinationConfiguration>>
-		_serviceRegistrations = new HashSet<>();
+	private DestinationFactory _destinationFactory;
+	private final Set<ServiceRegistration<Destination>> _serviceRegistrations =
+		new HashSet<>();
 
 }

@@ -157,11 +157,11 @@ public class CalendarIndexer extends BaseIndexer<Calendar> {
 	}
 
 	protected void reindexCalendars(long companyId) throws PortalException {
-		final IndexableActionableDynamicQuery actionableDynamicQuery =
+		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_calendarLocalService.getIndexableActionableDynamicQuery();
 
-		actionableDynamicQuery.setCompanyId(companyId);
-		actionableDynamicQuery.setPerformActionMethod(
+		indexableActionableDynamicQuery.setCompanyId(companyId);
+		indexableActionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod<Calendar>() {
 
 			@Override
@@ -169,7 +169,7 @@ public class CalendarIndexer extends BaseIndexer<Calendar> {
 				try {
 					Document document = getDocument(calendar);
 
-					actionableDynamicQuery.addDocument(document);
+					indexableActionableDynamicQuery.addDocument(document);
 				}
 				catch (PortalException pe) {
 					if (_log.isWarnEnabled()) {
@@ -183,9 +183,9 @@ public class CalendarIndexer extends BaseIndexer<Calendar> {
 
 		});
 
-		actionableDynamicQuery.setSearchEngineId(getSearchEngineId());
+		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 
-		actionableDynamicQuery.performActions();
+		indexableActionableDynamicQuery.performActions();
 	}
 
 	@Reference(unbind = "-")

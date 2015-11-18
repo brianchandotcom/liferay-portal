@@ -225,11 +225,11 @@ public class AssetCategoryIndexer extends BaseIndexer<AssetCategory> {
 	protected void reindexCategories(final long companyId)
 		throws PortalException {
 
-		final IndexableActionableDynamicQuery actionableDynamicQuery =
+		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			AssetCategoryLocalServiceUtil.getIndexableActionableDynamicQuery();
 
-		actionableDynamicQuery.setCompanyId(companyId);
-		actionableDynamicQuery.setPerformActionMethod(
+		indexableActionableDynamicQuery.setCompanyId(companyId);
+		indexableActionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod<AssetCategory>() {
 
 				@Override
@@ -239,7 +239,8 @@ public class AssetCategoryIndexer extends BaseIndexer<AssetCategory> {
 						Document document = getDocument(category);
 
 						if (document != null) {
-							actionableDynamicQuery.addDocument(document);
+							indexableActionableDynamicQuery.addDocument(
+								document);
 						}
 					}
 					catch (PortalException pe) {
@@ -253,9 +254,9 @@ public class AssetCategoryIndexer extends BaseIndexer<AssetCategory> {
 				}
 
 			});
-		actionableDynamicQuery.setSearchEngineId(getSearchEngineId());
+		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 
-		actionableDynamicQuery.performActions();
+		indexableActionableDynamicQuery.performActions();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

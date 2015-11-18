@@ -169,12 +169,12 @@ public class AssetVocabularyIndexer extends BaseIndexer<AssetVocabulary> {
 	protected void reindexVocabularies(final long companyId)
 		throws PortalException {
 
-		final IndexableActionableDynamicQuery actionableDynamicQuery =
+		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			AssetVocabularyLocalServiceUtil.
 				getIndexableActionableDynamicQuery();
 
-		actionableDynamicQuery.setCompanyId(companyId);
-		actionableDynamicQuery.setPerformActionMethod(
+		indexableActionableDynamicQuery.setCompanyId(companyId);
+		indexableActionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod<AssetVocabulary>() {
 
 				@Override
@@ -183,7 +183,8 @@ public class AssetVocabularyIndexer extends BaseIndexer<AssetVocabulary> {
 						Document document = getDocument(assetVocabulary);
 
 						if (document != null) {
-							actionableDynamicQuery.addDocument(document);
+							indexableActionableDynamicQuery.addDocument(
+								document);
 						}
 					}
 					catch (PortalException pe) {
@@ -197,9 +198,9 @@ public class AssetVocabularyIndexer extends BaseIndexer<AssetVocabulary> {
 				}
 
 			});
-		actionableDynamicQuery.setSearchEngineId(getSearchEngineId());
+		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 
-		actionableDynamicQuery.performActions();
+		indexableActionableDynamicQuery.performActions();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

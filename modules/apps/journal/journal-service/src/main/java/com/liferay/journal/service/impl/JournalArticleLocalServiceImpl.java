@@ -4730,10 +4730,10 @@ public class JournalArticleLocalServiceImpl
 			throw new IllegalArgumentException("Tree path is null");
 		}
 
-		final IndexableActionableDynamicQuery actionableDynamicQuery =
+		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			getIndexableActionableDynamicQuery();
 
-		actionableDynamicQuery.setAddCriteriaMethod(
+		indexableActionableDynamicQuery.setAddCriteriaMethod(
 			new ActionableDynamicQuery.AddCriteriaMethod() {
 
 				@Override
@@ -4757,7 +4757,7 @@ public class JournalArticleLocalServiceImpl
 		final Indexer<JournalArticle> indexer = IndexerRegistryUtil.getIndexer(
 			JournalArticle.class.getName());
 
-		actionableDynamicQuery.setPerformActionMethod(
+		indexableActionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod<JournalArticle>() {
 
 				@Override
@@ -4775,12 +4775,12 @@ public class JournalArticleLocalServiceImpl
 					com.liferay.portal.kernel.search.Document document =
 						indexer.getDocument(article);
 
-					actionableDynamicQuery.addDocument(document);
+					indexableActionableDynamicQuery.addDocument(document);
 				}
 
 			});
 
-		actionableDynamicQuery.performActions();
+		indexableActionableDynamicQuery.performActions();
 	}
 
 	/**

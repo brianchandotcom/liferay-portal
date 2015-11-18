@@ -811,6 +811,7 @@
 		<attribute name="database.type" />
 		<attribute default="${database.@{database.type}.version}" name="database.version" />
 		<attribute default="" name="test.license.xml.url" />
+		<attribute default="" name="test.plugin.zip.url" />
 		<attribute default="" name="test.portal.bundle.zip.url" />
 		<attribute default="false" name="test.release.bundle" />
 		<attribute default="false" name="tomcat.gc.log" />
@@ -856,6 +857,18 @@
 						<else>
 							<ant antfile="build-dist.xml" target="build-dist-${app.server.type}" />
 						</else>
+					</if>
+
+					<if>
+						<matches pattern="http" string="@{test.plugin.zip.url}" />
+						<then>
+							<mkdir dir="${liferay.home}/deploy" />
+
+							<mirrors-get
+								dest="${liferay.home}/deploy"
+								src="@{test.plugin.zip.url}"
+							/>
+						</then>
 					</if>
 
 					<antcall target="record-test-generated-properties" />
@@ -1023,6 +1036,7 @@
 			app.server.type="tomcat"
 			database.type="mysql"
 			test.license.xml.url="${test.license.xml.url}"
+			test.plugin.zip.url="${test.plugin.zip.url}"
 			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
 			test.release.bundle="true"
 		/>

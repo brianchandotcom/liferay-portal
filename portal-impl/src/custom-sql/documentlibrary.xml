@@ -319,7 +319,7 @@
 				DLFolder
 			WHERE
 				(DLFolder.groupId = ?) AND
-				(DLFolder.mountPoint = ?) AND
+				[$MOUNT_POINT$]
 				(DLFolder.hidden_ = [$FALSE$]) AND
 				([$STATUS$]) AND
 				[$FOLDER_PARENT_FOLDER_ID$]

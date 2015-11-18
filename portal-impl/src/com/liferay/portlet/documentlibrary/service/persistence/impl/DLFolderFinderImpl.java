@@ -235,7 +235,10 @@ public class DLFolderFinderImpl
 
 			sql = sb.toString();
 
-			sql = updateSQL(sql, folderId, includeMountFolders);
+			sql = updateSQL(sql, folderId);
+
+			sql = StringUtil.replace(
+				sql, "[$MOUNT_POINT$]", getMountPoints(includeMountFolders));
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -753,9 +756,15 @@ public class DLFolderFinderImpl
 		return sb.toString();
 	}
 
-	protected String updateSQL(
-		String sql, long folderId, boolean includeMountFolders) {
+	protected String getMountPoints(boolean includeMountFolders) {
+		if (includeMountFolders) {
+			return StringPool.BLANK;
+		}
 
+		return "(DLFolder.mountPoint = ?) AND";
+	}
+
+	protected String updateSQL(String sql, long folderId) {
 		sql = StringUtil.replace(
 			sql,
 			new String[] {
@@ -768,11 +777,6 @@ public class DLFolderFinderImpl
 				getFolderId(folderId, DLFileVersionImpl.TABLE_NAME),
 				getFolderId(folderId, DLFolderImpl.TABLE_NAME)
 			});
-
-		if (includeMountFolders) {
-			sql = StringUtil.replace(
-				sql, "(DLFolder.mountPoint = ?) AND", StringPool.BLANK);
-		}
 
 		return sql;
 	}

@@ -24,9 +24,7 @@ buildDir = new File(rootDir.parentFile, "build")
 gradle.beforeProject {
 	Project project ->
 
-	File buildGradleFile = project.file("build.gradle")
-
-	if (buildGradleFile.exists() && project.parent) {
+	if (FileUtil.exists(project, "bnd.bnd") && FileUtil.exists(project, "build.gradle") && project.parent) {
 		project.apply from: rootProject.file("build-module.gradle")
 	}
 }

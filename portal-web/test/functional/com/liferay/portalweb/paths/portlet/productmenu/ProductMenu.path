@@ -40,17 +40,17 @@
 </tr>
 <tr>
 	<td>PRIVATE_PAGES</td>
-	<td>//div[contains(@id,'privateLayoutsTreeOutput')]//span/a[contains(.,'Private Pages')]</td>
+	<td>//div[contains(@id,'privateLayoutsTreeOutput')]//span[contains(.,'Private Pages')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PUBLIC_PAGES</td>
-	<td>//div[contains(@id,'publicLayoutsTreeOutput')]//span/a[contains(.,'Public Pages')]</td>
+	<td>//div[contains(@id,'publicLayoutsTreeOutput')]//span[contains(.,'Public Pages')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGES</td>
-	<td>//div[@class='list-group-item']//span/a[contains(.,'${key_page}')]</td>
+	<td>//div[@class='list-group-item']//span[contains(.,'${key_page}')]</td>
 	<td></td>
 </tr>
 <tr>

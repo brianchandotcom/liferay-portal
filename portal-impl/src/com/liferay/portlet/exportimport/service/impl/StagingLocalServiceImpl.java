@@ -845,7 +845,9 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		Group liveGroup, UnicodeProperties typeSettingsProperties,
 		ServiceContext serviceContext) {
 
-		if (liveGroup.hasRemoteStagingGroup()) {
+		if (liveGroup.hasLocalOrRemoteStagingGroup() ||
+			liveGroup.isStaged()) {
+
 			return;
 		}
 

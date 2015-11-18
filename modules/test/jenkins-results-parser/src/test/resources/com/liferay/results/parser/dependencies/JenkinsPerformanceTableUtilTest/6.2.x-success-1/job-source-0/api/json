@@ -1,0 +1,77 @@
+{
+  "actions" : [
+    {
+      "parameters" : [
+        {
+          "name" : "JENKINS_GITHUB_BRANCH_NAME",
+          "value" : "LRQA-19204"
+        },
+        {
+          "name" : "JENKINS_GITHUB_BRANCH_USERNAME",
+          "value" : "pyoo47"
+        },
+        {
+          "name" : "JENKINS_GITHUB_PULL_REQUEST_NUMBER",
+          "value" : ""
+        },
+        {
+          "name" : "JENKINS_GITHUB_PULL_REQUEST_USERNAME",
+          "value" : ""
+        },
+        {
+          "name" : "JOB_VARIANT",
+          "value" : ""
+        },
+        {
+          "name" : "TOP_LEVEL_SHARED_DIR",
+          "value" : "/mnt/mfs-ssd1-10.0.10/jenkins/test-1-1/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(ee-6.2.x)/builds/317"
+        }
+      ]
+    },
+    {
+      "causes" : [
+        {
+          "shortDescription" : "Started by remote host 10.0.16.16"
+        }
+      ]
+    },
+    null,
+    {
+      
+    },
+    {
+      
+    },
+    {
+      
+    },
+    {
+      
+    }
+  ],
+  "artifacts" : [
+    
+  ],
+  "building" : false,
+  "description" : "<strong>michaelhashimoto</strong> - <a href=\"https://github.com/michaelhashimoto/liferay-portal-ee/pull/1693\">PR#1693</a> - <a href=\"https://test-1-1.liferay.com//userContent/jobs/test-portal-acceptance-pullrequest(ee-6.2.x)/builds/317/jenkins-report.html\">Jenkins Report</a>",
+  "duration" : 126677,
+  "estimatedDuration" : 192205,
+  "executor" : null,
+  "fullDisplayName" : "test-portal-acceptance-pullrequest-source(ee-6.2.x) #90",
+  "id" : "2015-11-17_16-37-43",
+  "keepLog" : false,
+  "number" : 90,
+  "result" : "SUCCESS",
+  "timestamp" : 1447807063000,
+  "url" : "https://test-1-12.liferay.com/job/test-portal-acceptance-pullrequest-source%28ee-6.2.x%29/90/",
+  "builtOn" : "cloud-10-0-110-64",
+  "changeSet" : {
+    "items" : [
+      
+    ],
+    "kind" : null
+  },
+  "culprits" : [
+    
+  ]
+}

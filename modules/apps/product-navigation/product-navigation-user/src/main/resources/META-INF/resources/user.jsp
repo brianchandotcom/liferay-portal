@@ -21,7 +21,7 @@ PanelCategoryHelper panelCategoryHelper = (PanelCategoryHelper)request.getAttrib
 
 UserPanelCategory userPanelCategory = (UserPanelCategory)request.getAttribute(ApplicationListWebKeys.PANEL_APP);
 
-int notificationsCount = panelCategoryHelper.getNotificationsCount(userPanelCategory.getKey(), permissionChecker, themeDisplay.getScopeGroup(), themeDisplay.getUser());
+int notificationsCount = panelCategoryHelper.getNotificationsCount(userPanelCategory.getKey(), permissionChecker, themeDisplay.getScopeGroup(), user);
 %>
 
 <div class="product-menu-tab-icon user-tab">

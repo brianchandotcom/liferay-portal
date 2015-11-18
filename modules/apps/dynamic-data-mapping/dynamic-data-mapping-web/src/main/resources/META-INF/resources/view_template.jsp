@@ -56,11 +56,11 @@ TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.ge
 
 <liferay-ui:error exception="<%= RequiredTemplateException.MustNotDeleteTemplateReferencedByTemplateLinks.class %>" message="the-template-cannot-be-deleted-because-it-is-required-by-one-or-more-template-links" />
 
-<portlet:actionURL name="deleteTemplate" var="deleteTemplateURL">
+<portlet:renderURL var="viewTemplateURL">
 	<portlet:param name="mvcPath" value="/view_template.jsp" />
-</portlet:actionURL>
+</portlet:renderURL>
 
-<aui:form action="<%= deleteTemplateURL.toString() %>" method="post" name="fm">
+<aui:form action="<%= viewTemplateURL.toString() %>" method="post" name="fm">
 	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
 	<aui:input name="groupId" type="hidden" value="<%= String.valueOf(groupId) %>" />
 	<aui:input name="classNameId" type="hidden" value="<%= String.valueOf(classNameId) %>" />

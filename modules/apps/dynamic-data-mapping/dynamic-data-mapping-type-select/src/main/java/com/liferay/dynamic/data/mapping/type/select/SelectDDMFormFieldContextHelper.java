@@ -19,11 +19,10 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -92,14 +91,9 @@ public class SelectDDMFormFieldContextHelper {
 			return ArrayUtil.toStringArray(jsonArray);
 		}
 		catch (JSONException jsone) {
-			_log.error("Unable to parse JSON array", jsone);
-
-			return GetterUtil.DEFAULT_STRING_VALUES;
+			return StringUtil.split(value);
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SelectDDMFormFieldContextHelper.class);
 
 	private final DDMFormFieldOptions _ddmFormFieldOptions;
 	private final Locale _locale;

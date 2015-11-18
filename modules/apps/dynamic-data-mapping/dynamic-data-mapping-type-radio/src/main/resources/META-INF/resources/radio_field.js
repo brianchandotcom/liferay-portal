@@ -28,13 +28,7 @@ AUI.add(
 					getContextValue: function() {
 						var instance = this;
 
-						var value = instance.getLocalizedValue(instance.get('value'));
-
-						var predefinedValue = instance.get('predefinedValue');
-
-						if (!value && predefinedValue) {
-							value = instance.getLocalizedValue(predefinedValue);
-						}
+						var value = RadioField.superclass.getContextValue.apply(instance, arguments);
 
 						if (!Lang.isArray(value)) {
 							try {

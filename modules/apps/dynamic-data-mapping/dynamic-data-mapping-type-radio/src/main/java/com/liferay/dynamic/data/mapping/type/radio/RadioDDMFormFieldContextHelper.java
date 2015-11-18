@@ -19,9 +19,8 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -85,14 +84,15 @@ public class RadioDDMFormFieldContextHelper {
 			return jsonArray.getString(0);
 		}
 		catch (JSONException jsone) {
-			_log.error("Unable to parse JSON array", jsone);
+			String[] values = StringUtil.split(value);
+
+			if (values.length > 0) {
+				return values[0];
+			}
 
 			return StringPool.BLANK;
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		RadioDDMFormFieldContextHelper.class);
 
 	private final DDMFormFieldOptions _ddmFormFieldOptions;
 	private final Locale _locale;

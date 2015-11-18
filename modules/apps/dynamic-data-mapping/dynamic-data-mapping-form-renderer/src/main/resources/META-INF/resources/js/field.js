@@ -180,6 +180,20 @@ AUI.add(
 						).join('');
 					},
 
+					getContextValue: function() {
+						var instance = this;
+
+						var value = instance.getLocalizedValue(instance.get('value'));
+
+						var predefinedValue = instance.get('predefinedValue');
+
+						if (!value && predefinedValue) {
+							value = instance.getLocalizedValue(predefinedValue);
+						}
+
+						return value;
+					},
+
 					getInputNode: function() {
 						var instance = this;
 
@@ -278,12 +292,6 @@ AUI.add(
 							}
 						);
 
-						var value = instance.get('value');
-
-						if (instance.get('localizable') && Lang.isObject(value)) {
-							value = value[instance.get('locale')];
-						}
-
 						return A.merge(
 							context,
 							{
@@ -291,7 +299,7 @@ AUI.add(
 								label: instance.getLabel(),
 								name: instance.getQualifiedName(),
 								readOnly: instance.get('readOnly'),
-								value: value || '',
+								value: instance.getContextValue() || '',
 								visible: instance.get('visible')
 							}
 						);
@@ -456,12 +464,12 @@ AUI.add(
 
 						if (instance.get('localizable')) {
 							value = instance.get('predefinedValue');
-							
-							if(!Lang.isObject(value)){
+
+							if (!Lang.isObject(value)) {
 								value = {};
+
 								value[instance.get('locale')] = '';
 							}
-							
 						}
 
 						return value;

@@ -1381,6 +1381,14 @@
 		<execute function="AssertElementPresent" locator1="PGBlogsEntry#ENTRY_CONTENT" value1="${entryContent}" />
 	</command>
 
+	<command name="viewEntryAsWorkflowAsset">
+		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${entryTitle}" />
+
+		<var name="key_entryContent" value="${entryContent}" />
+
+		<execute function="AssertTextEquals" locator1="BlogsEntry#CONTENT" value1="${entryContent}" />
+	</command>
+
 	<command name="viewEntryAuthorCP">
 		<var name="entryAuthorFullName" value="${entryAuthorFullName}" />
 		<var name="key_entryTitle" value="${entryTitle}" />

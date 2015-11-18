@@ -59,8 +59,6 @@ String searchContainerId = "articles";
 				<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" />
 				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 				<aui:input name="groupId" type="hidden" value="<%= scopeGroupId %>" />
-				<aui:input name="folderIds" type="hidden" />
-				<aui:input name="articleIds" type="hidden" />
 				<aui:input name="newFolderId" type="hidden" />
 
 				<div class="journal-container" id="<portlet:namespace />entriesContainer">

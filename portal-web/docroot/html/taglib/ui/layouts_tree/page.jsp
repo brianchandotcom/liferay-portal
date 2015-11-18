@@ -32,7 +32,7 @@ String rootLinkTemplate = (String)request.getAttribute("liferay-ui:layouts-tree:
 String rootNodeName = (String)request.getAttribute("liferay-ui:layouts-tree:rootNodeName");
 boolean saveState = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:layouts-tree:saveState"));
 boolean selectableTree = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:layouts-tree:selectableTree"));
-long selPlid = GetterUtil.getLong((String)request.getAttribute("liferay-ui:layouts-tree:selPlid"));
+Long selPlid = (Long)request.getAttribute("liferay-ui:layouts-tree:selPlid");
 String treeId = (String)request.getAttribute("liferay-ui:layouts-tree:treeId");
 %>
 
@@ -99,7 +99,7 @@ String treeId = (String)request.getAttribute("liferay-ui:layouts-tree:treeId");
 			layoutURL: '<%= StringUtil.replace(portletURL.toString(), HttpUtil.encodePath("{selPlid}"), "{selPlid}") %>',
 
 			<c:if test="<%= Validator.isNotNull(linkTemplate) %>">
-				linkTemplate: '<%= linkTemplate %>',
+				linkTemplate: '<%= HtmlUtil.escapeJS(linkTemplate) %>',
 			</c:if>
 
 			<c:if test="<%= draggableTree %>">
@@ -107,6 +107,16 @@ String treeId = (String)request.getAttribute("liferay-ui:layouts-tree:treeId");
 			</c:if>
 
 			maxChildren: <%= PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN %>,
+			on: {
+				'*:select': function(event) {
+					Liferay.fire(
+						'<%= namespace + treeId %>:selectedNode',
+						{
+							selectedNode: event.target
+						}
+					);
+				}
+			},
 			plugins: plugins,
 			root: {
 				defaultParentLayoutId: <%= LayoutConstants.DEFAULT_PARENT_LAYOUT_ID %>,
@@ -115,12 +125,17 @@ String treeId = (String)request.getAttribute("liferay-ui:layouts-tree:treeId");
 				label: '<%= HtmlUtil.escapeJS(rootNodeName) %>',
 
 				<c:if test="<%= Validator.isNotNull(rootLinkTemplate) %>">
-					linkTemplate: '<%= rootLinkTemplate %>',
+					linkTemplate: '<%= HtmlUtil.escapeJS(rootLinkTemplate) %>',
 				</c:if>
 
 				privateLayout: <%= privateLayout %>
-			},
-			selPlid: '<%= selPlid %>'
+			}
+
+			<c:if test="<%= selPlid != null %>">
+				,
+				selPlid: '<%= selPlid %>'
+			</c:if>
+
 		}
 	).render();
 </aui:script>

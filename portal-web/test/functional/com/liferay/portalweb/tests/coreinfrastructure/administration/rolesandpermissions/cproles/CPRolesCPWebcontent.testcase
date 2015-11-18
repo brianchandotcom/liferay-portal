@@ -23,16 +23,15 @@
 
 	<command name="AddFolderSiteRole" priority="4">
 		<execute macro="Permissions#setUpSiteRoleLoginUserCP">
+			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Web Content Page" />
 			<var name="portletName" value="Web Content" />
 			<var name="roleName" value="Roles Siterole Name" />
 			<var name="roleType" value="Site" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePagePrivacy" value="Public" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userFirstName" value="userfn" />
 			<var name="userLastName" value="userln" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
 			<var name="userScreenName" value="usersn" />
@@ -99,16 +98,15 @@
 
 	<command name="AddStructureSiteRole" priority="4">
 		<execute macro="Permissions#setUpSiteRoleLoginUserCP">
+			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Web Content Page" />
 			<var name="portletName" value="Web Content" />
 			<var name="roleName" value="Roles Siterole Name" />
 			<var name="roleType" value="Site" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePagePrivacy" value="Public" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userFirstName" value="userfn" />
 			<var name="userLastName" value="userln" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
 			<var name="userScreenName" value="usersn" />
@@ -187,16 +185,15 @@
 
 	<command name="AddTemplateSiteRole" priority="4">
 		<execute macro="Permissions#setUpSiteRoleLoginUserCP">
+			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Web Content Page" />
 			<var name="portletName" value="Web Content" />
 			<var name="roleName" value="Roles Siterole Name" />
 			<var name="roleType" value="Site" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePagePrivacy" value="Public" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userFirstName" value="userfn" />
 			<var name="userLastName" value="userln" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
 			<var name="userScreenName" value="usersn" />
@@ -265,16 +262,15 @@
 
 	<command name="AddWebContentSiteRole" priority="4">
 		<execute macro="Permissions#setUpSiteRoleLoginUserCP">
+			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Web Content Page" />
 			<var name="portletName" value="Web Content" />
 			<var name="roleName" value="Roles Siterole Name" />
 			<var name="roleType" value="Site" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePagePrivacy" value="Public" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userFirstName" value="userfn" />
 			<var name="userLastName" value="userln" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
 			<var name="userScreenName" value="usersn" />
@@ -400,12 +396,12 @@
 
 	<command name="ViewWebContentPortletSiteRole" priority="4">
 		<execute macro="Permissions#setUpSiteRoleLoginUserCP">
+			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Web Content Page" />
 			<var name="portletName" value="Web Content" />
 			<var name="roleName" value="Roles Siterole Name" />
 			<var name="roleType" value="Site" />
 			<var name="siteName" value="Site Name" />
-			<var name="sitePagePrivacy" value="Public" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userFirstName" value="userfn" />
 			<var name="userLastName" value="userln" />

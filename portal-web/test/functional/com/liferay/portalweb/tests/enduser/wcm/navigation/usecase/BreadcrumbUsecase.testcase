@@ -26,9 +26,9 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
+			<var name="page" value="Public Pages" />
 			<var name="siteName" value="Site Name" />
 			<var name="sitePageName" value="Parent Page Name" />
-			<var name="sitePagePrivacy" value="Public" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
@@ -37,10 +37,10 @@
 		</execute>
 
 		<execute macro="SitePage#addChildCP">
+			<var name="page" value="Public Pages" />
 			<var name="siteChildPageName" value="Child Page Name" />
 			<var name="siteName" value="Site Name" />
 			<var name="sitePageName" value="Parent Page Name" />
-			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#gotoChildPagePG">
@@ -154,9 +154,9 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
+			<var name="page" value="Public Pages" />
 			<var name="siteName" value="Site Name" />
 			<var name="sitePageName" value="Site Page Name" />
-			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Navigator#gotoSpecificURLPage">

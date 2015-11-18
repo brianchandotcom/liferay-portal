@@ -12,6 +12,14 @@
 		</if>
 	</command>
 
+	<command name="gotoAddPage">
+		<var name="key_page" value="${page}" />
+
+		<execute function="AssertClick" locator1="ProductMenu#PAGES" value1="${page}" />
+
+		<execute macro="ProductMenuHelper#openProductMenu" />
+	</command>
+
 	<command name="gotoControlPanel">
 		<execute macro="ProductMenuHelper#openProductMenu" />
 

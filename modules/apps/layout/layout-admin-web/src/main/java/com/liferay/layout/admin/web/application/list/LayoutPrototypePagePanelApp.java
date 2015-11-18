@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Eudaldo Alonso
+ * @author Julio Camarero
  */
 @Component(
 	immediate = true,
@@ -36,21 +36,20 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = PanelApp.class
 )
-public class GroupPagesPanelApp extends BaseJSPPanelApp {
+public class LayoutPrototypePagePanelApp extends BaseJSPPanelApp {
 
 	@Override
 	public String getJspPath() {
-		return "/panel/app/layouts_tree.jsp";
+		return "/panel/app/layout_prototype.jsp";
 	}
 
 	@Override
 	public String getPortletId() {
-		return LayoutAdminPortletKeys.GROUP_PAGES;
+		return LayoutAdminPortletKeys.LAYOUT_PROTOTYPE_PAGE;
 	}
 
-	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES + ")",
+		target = "(javax.portlet.name=" + LayoutAdminPortletKeys.LAYOUT_PROTOTYPE_PAGE + ")",
 		unbind = "-"
 	)
 	public void setPortlet(Portlet portlet) {

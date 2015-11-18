@@ -1,5 +1,7 @@
 <definition>
 	<command name="activateStagingCP">
+		<execute macro="ProductMenuHelper#openProductMenu" />
+
 		<var name="key_siteName" value="${siteName}" />
 
 		<execute function="AssertTextEquals" locator1="ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME" value1="${siteName}" />

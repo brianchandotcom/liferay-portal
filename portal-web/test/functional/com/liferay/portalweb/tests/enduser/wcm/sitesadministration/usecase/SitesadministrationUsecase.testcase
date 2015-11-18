@@ -207,9 +207,9 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
+			<var name="page" value="Public Pages" />
 			<var name="siteName" value="Site A" />
 			<var name="sitePageName" value="Test Page A" />
-			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -239,9 +239,9 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
+			<var name="page" value="Public Pages" />
 			<var name="siteName" value="Site B" />
 			<var name="sitePageName" value="Test Page B" />
-			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -511,8 +511,8 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
+			<var name="page" value="Private Pages" />
 			<var name="sitePageName" value="Private Page" />
-			<var name="sitePagePrivacy" value="Private" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
@@ -621,8 +621,8 @@
 		</execute>
 
 		<execute macro="SitePage#addCP">
+			<var name="page" value="Public Pages" />
 			<var name="sitePageName" value="Site Page Name" />
-			<var name="sitePagePrivacy" value="Public" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
@@ -747,8 +747,8 @@
 		</execute>
 
 		<execute macro="UserGroup#addPageCP">
+			<var name="page" value="Public Pages" />
 			<var name="sitePageName" value="site Page Name" />
-			<var name="sitePagePrivacy" value="Public" />
 			<var name="userGroupName" value="User Group Name" />
 		</execute>
 
@@ -961,8 +961,8 @@
 
 		<for list="Home,Arenas" param="publicPageName" >
 			<execute macro="SitePage#addCP">
+				<var name="page" value="Public Pages" />
 				<var name="sitePageName" value="${publicPageName}" />
-				<var name="sitePagePrivacy" value="Public" />
 				<var name="siteScopeSelected" value="true" />
 			</execute>
 		</for>
@@ -974,8 +974,8 @@
 		<for list="Arena Baltika,Zenit Arena,Kazan Arena" param="childPageName" >
 			<execute macro="SitePage#addChildCP">
 				<var name="childSitepageName" value="true" />
+				<var name="page" value="Public Pages" />
 				<var name="siteChildPageName" value="${childPageName}" />
-				<var name="sitePagePrivacy" value="Public" />
 				<var name="siteScopeSelected" value="true" />
 			</execute>
 		</for>
@@ -986,8 +986,8 @@
 
 		<for list="Accomodations,Maps" param="privatePageName" >
 			<execute macro="SitePage#addCP">
+				<var name="page" value="Private Pages" />
 				<var name="sitePageName" value="${privatePageName}" />
-				<var name="sitePagePrivacy" value="Private" />
 				<var name="siteScopeSelected" value="true" />
 			</execute>
 		</for>

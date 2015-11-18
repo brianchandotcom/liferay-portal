@@ -46,7 +46,7 @@ if (vocabulary != null) {
 }
 %>
 
-<aui:fieldset id="extraFields" label="associated-asset-types">
+<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id="extraFields" label="associated-asset-types">
 
 	<%
 	List<String> indexes = new ArrayList<String>();

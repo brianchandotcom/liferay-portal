@@ -59,15 +59,7 @@
 						tabs1Names = ArrayUtil.append(tabs1Names, "applications");
 					}
 
-					if (hasLayoutAddPermission) {
-						tabs1Names = ArrayUtil.append(tabs1Names, "page");
-					}
-
 					String selectedTab = GetterUtil.getString(SessionClicks.get(request, "com.liferay.control.menu.web_addPanelTab", "content"));
-
-					if (stateMaximized) {
-						selectedTab = "page";
-					}
 					%>
 
 					<h1><liferay-ui:message key="add" /></h1>
@@ -87,32 +79,6 @@
 						<c:if test="<%= hasAddApplicationsPermission %>">
 							<liferay-ui:section>
 								<liferay-util:include page="/add_application.jsp" servletContext="<%= application %>" />
-							</liferay-ui:section>
-						</c:if>
-
-						<c:if test="<%= hasLayoutAddPermission && themeDisplay.isShowSiteAdministrationIcon() %>">
-
-							<%
-							long selPlid = ParamUtil.getLong(request, "selPlid", LayoutConstants.DEFAULT_PLID);
-							%>
-
-							<liferay-ui:section>
-
-								<%
-								PortletURL newPageURL = PortletProviderUtil.getPortletURL(request, groupDisplayContextHelper.getLiveGroup(), Layout.class.getName(), PortletProvider.Action.EDIT);
-
-								newPageURL.setParameter("tabs1", layout.isPrivateLayout() ? "private-pages" : "public-pages");
-								newPageURL.setParameter("groupId", String.valueOf(groupDisplayContextHelper.getLiveGroupId()));
-								newPageURL.setParameter("selPlid", String.valueOf(selPlid));
-								newPageURL.setParameter("treeId", "layoutsTree");
-								newPageURL.setParameter("viewLayout", Boolean.TRUE.toString());
-
-								String newPageURLString = HttpUtil.setParameter(newPageURL.toString(), "refererPlid", String.valueOf(selPlid));
-								%>
-
-								<aui:button-row>
-									<aui:button href="<%= newPageURLString %>"  primary="<%= true %>" value="new-page" />
-								</aui:button-row>
 							</liferay-ui:section>
 						</c:if>
 					</liferay-ui:tabs>

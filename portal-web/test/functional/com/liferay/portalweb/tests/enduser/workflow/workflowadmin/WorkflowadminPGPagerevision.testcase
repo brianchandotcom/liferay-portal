@@ -1,9 +1,9 @@
 <definition component-name="portal-workflow">
 	<property name="testray.main.component.name" value="Workflow" />
 
+	<var name="page" value="Public Pages" />
 	<var name="siteName" value="Site Name" />
 	<var name="sitePageName" value="Site Page Name" />
-	<var name="sitePagePrivacy" value="Public" />
 	<var name="workflowAssetType" value="Page Revision" />
 
 	<set-up>

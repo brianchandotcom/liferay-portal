@@ -2286,10 +2286,10 @@
 		</execute>
 
 		<execute macro="SitePage#addChildCP">
+			<var name="page" value="Public Pages" />
 			<var name="siteChildPageName" value="Knowledge Base Display Page" />
 			<var name="siteName" value="Liferay" />
 			<var name="sitePageName" value="Welcome" />
-			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">

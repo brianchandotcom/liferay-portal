@@ -16,10 +16,11 @@ package com.liferay.item.selector.taglib.servlet.taglib;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UploadableFileReturnType;
-import com.liferay.item.selector.taglib.ItemSelectorBrowserReturnTypeUtil;
+import com.liferay.item.selector.taglib.ItemSelectorRepositoryEntryBrowserReturnTypeUtil;
 import com.liferay.item.selector.taglib.servlet.ServletContextUtil;
 import com.liferay.item.selector.web.constants.ItemSelectorPortletKeys;
-import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.repository.model.RepositoryEntry;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -28,6 +29,7 @@ import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.taglib.util.IncludeTag;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -38,7 +40,7 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Roberto Díaz
  */
-public class BrowserTag extends IncludeTag {
+public class RepositoryEntryBrowserTag extends IncludeTag {
 
 	public static final String[] DISPLAY_STYLES =
 		new String[] {"icon", "descriptive", "list"};
@@ -51,6 +53,10 @@ public class BrowserTag extends IncludeTag {
 
 	public void setDisplayStyle(String displayStyle) {
 		_displayStyle = displayStyle;
+	}
+
+	public void setEmptyResultsMessage(String emptyResultsMessage) {
+		_emptyResultsMessage = emptyResultsMessage;
 	}
 
 	public void setItemSelectedEventName(String itemSelectedEventName) {
@@ -68,8 +74,12 @@ public class BrowserTag extends IncludeTag {
 		_portletURL = portletURL;
 	}
 
-	public void setSearchContainer(SearchContainer<?> searchContainer) {
-		_searchContainer = searchContainer;
+	public void setRepositoryEntries(List<RepositoryEntry> repositoryEntries) {
+		_repositoryEntries = repositoryEntries;
+	}
+
+	public void setRepositoryEntriesCount(int repositoryEntriesCount) {
+		_repositoryEntriesCount = repositoryEntriesCount;
 	}
 
 	public void setShowBreadcrumb(boolean showBreadcrumb) {
@@ -93,10 +103,12 @@ public class BrowserTag extends IncludeTag {
 		super.cleanUp();
 
 		_desiredItemSelectorReturnTypes = null;
+		_emptyResultsMessage = null;
 		_displayStyle = null;
 		_itemSelectedEventName = null;
 		_portletURL = null;
-		_searchContainer = null;
+		_repositoryEntries = new ArrayList<>();
+		_repositoryEntriesCount = 0;
 		_showBreadcrumb = false;
 		_showDragAndDropZone = true;
 		_tabName = null;
@@ -130,7 +142,7 @@ public class BrowserTag extends IncludeTag {
 
 	protected ItemSelectorReturnType getDraggableFileReturnType() {
 		ItemSelectorReturnType firstDraggableFileReturnType =
-			ItemSelectorBrowserReturnTypeUtil.
+			ItemSelectorRepositoryEntryBrowserReturnTypeUtil.
 				getFirstAvailableDraggableFileReturnType(
 					_desiredItemSelectorReturnTypes);
 
@@ -147,7 +159,7 @@ public class BrowserTag extends IncludeTag {
 
 	@Override
 	protected String getPage() {
-		return "/browser/page.jsp";
+		return "/repository_entry_browser/page.jsp";
 	}
 
 	protected String getSafeDisplayStyle(String displayStyle) {
@@ -161,37 +173,65 @@ public class BrowserTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-item-selector:browser:displayStyle", getDisplayStyle());
+			"liferay-item-selector:repository-entry-browser:displayStyle",
+			getDisplayStyle());
 		request.setAttribute(
-			"liferay-item-selector:browser:draggableFileReturnType",
+			"liferay-item-selector:repository-entry-browser:" +
+				"emptyResultsMessage",
+			getEmptyResultsMessage(request));
+		request.setAttribute(
+			"liferay-item-selector:repository-entry-browser:" +
+				"draggableFileReturnType",
 			getDraggableFileReturnType());
 		request.setAttribute(
-			"liferay-item-selector:browser:existingFileEntryReturnType",
-			ItemSelectorBrowserReturnTypeUtil.
+			"liferay-item-selector:repository-entry-browser:" +
+				"existingFileEntryReturnType",
+			ItemSelectorRepositoryEntryBrowserReturnTypeUtil.
 				getFirstAvailableExistingFileEntryReturnType(
 					_desiredItemSelectorReturnTypes));
 		request.setAttribute(
-			"liferay-item-selector:browser:itemSelectedEventName",
+			"liferay-item-selector:repository-entry-browser:" +
+				"itemSelectedEventName",
 			_itemSelectedEventName);
 		request.setAttribute(
-			"liferay-item-selector:browser:portletURL", _portletURL);
+			"liferay-item-selector:repository-entry-browser:portletURL",
+			_portletURL);
 		request.setAttribute(
-			"liferay-item-selector:browser:searchContainer", _searchContainer);
+			"liferay-item-selector:repository-entry-browser:repositoryEntries",
+			_repositoryEntries);
 		request.setAttribute(
-			"liferay-item-selector:browser:showBreadcrumb", _showBreadcrumb);
+			"liferay-item-selector:repository-entry-browser:" +
+				"repositoryEntriesCount",
+			_repositoryEntriesCount);
 		request.setAttribute(
-			"liferay-item-selector:browser:showDragAndDropZone",
+			"liferay-item-selector:repository-entry-browser:showBreadcrumb",
+			_showBreadcrumb);
+		request.setAttribute(
+			"liferay-item-selector:repository-entry-browser:" +
+				"showDragAndDropZone",
 			_showDragAndDropZone);
-		request.setAttribute("liferay-item-selector:browser:tabName", _tabName);
 		request.setAttribute(
-			"liferay-item-selector:browser:uploadURL", _uploadURL);
+			"liferay-item-selector:repository-entry-browser:tabName", _tabName);
+		request.setAttribute(
+			"liferay-item-selector:repository-entry-browser:uploadURL",
+			_uploadURL);
+	}
+
+	private String getEmptyResultsMessage(HttpServletRequest request) {
+		if (Validator.isNotNull(_emptyResultsMessage)) {
+			return _emptyResultsMessage;
+		}
+
+		return LanguageUtil.get(request, "no-results-were-found");
 	}
 
 	private List<ItemSelectorReturnType> _desiredItemSelectorReturnTypes;
 	private String _displayStyle;
+	private String _emptyResultsMessage;
 	private String _itemSelectedEventName;
 	private PortletURL _portletURL;
-	private SearchContainer<?> _searchContainer;
+	private List<RepositoryEntry> _repositoryEntries = new ArrayList<>();
+	private int _repositoryEntriesCount = 0;
 	private boolean _showBreadcrumb;
 	private boolean _showDragAndDropZone = true;
 	private String _tabName;

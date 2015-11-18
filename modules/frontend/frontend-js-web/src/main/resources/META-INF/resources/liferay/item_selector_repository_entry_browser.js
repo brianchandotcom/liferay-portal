@@ -1,5 +1,5 @@
 AUI.add(
-	'liferay-item-selector-browser',
+	'liferay-item-selector-repository-entry-browser',
 	function(A) {
 		var AArray = A.Array;
 		var Lang = A.Lang;
@@ -22,7 +22,7 @@ AUI.add(
 
 		var UPLOAD_ITEM_LINK_TPL = '<a data-returnType="{returnType}" data-value="{value}" href="{preview}" title="{title}"></a>';
 
-		var ItemSelectorBrowser = A.Component.create(
+		var ItemSelectorRepositoryEntryBrowser = A.Component.create(
 			{
 				ATTRS: {
 					closeCaption: {
@@ -43,7 +43,7 @@ AUI.add(
 
 				EXTENDS: A.Base,
 
-				NAME: 'itemselectorbrowser',
+				NAME: 'itemselectorrepositoryentrybrowser',
 
 				prototype: {
 					initializer: function() {
@@ -317,7 +317,7 @@ AUI.add(
 			}
 		);
 
-		Liferay.ItemSelectorBrowser = ItemSelectorBrowser;
+		Liferay.ItemSelectorRepositoryEntryBrowser = ItemSelectorRepositoryEntryBrowser;
 	},
 	'',
 	{

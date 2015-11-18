@@ -120,11 +120,11 @@ public class DDMContentLocalServiceImpl extends DDMContentLocalServiceBaseImpl {
 
 	protected void validate(String name, String data) throws PortalException {
 		if (Validator.isNull(name)) {
-			throw new ContentNameException();
+			throw new ContentNameException("Name is null");
 		}
 
 		if (Validator.isNull(data)) {
-			throw new ContentException();
+			throw new ContentException("Data is null");
 		}
 	}
 

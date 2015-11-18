@@ -130,7 +130,8 @@ public class AddTemplateMVCActionCommand extends DDMBaseMVCActionCommand {
 			!(contentType.equals(ContentTypes.APPLICATION_XSLT_XML) ||
 			contentType.startsWith(ContentTypes.TEXT))) {
 
-			throw new TemplateScriptException();
+			throw new TemplateScriptException(
+				"Invalid contentType " + contentType);
 		}
 
 		return fileScriptContent;

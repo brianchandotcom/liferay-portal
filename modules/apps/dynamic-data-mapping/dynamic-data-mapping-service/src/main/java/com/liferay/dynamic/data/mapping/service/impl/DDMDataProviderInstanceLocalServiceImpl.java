@@ -167,7 +167,7 @@ public class DDMDataProviderInstanceLocalServiceImpl
 		String name = nameMap.get(LocaleUtil.getSiteDefault());
 
 		if (Validator.isNull(name)) {
-			throw new DataProviderInstanceNameException();
+			throw new DataProviderInstanceNameException("Name is null");
 		}
 
 		ddmFormValuesValidator.validate(ddmFormValues);

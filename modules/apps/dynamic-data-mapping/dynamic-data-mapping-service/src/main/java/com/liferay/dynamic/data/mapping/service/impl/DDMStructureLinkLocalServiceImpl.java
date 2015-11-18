@@ -19,6 +19,8 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 import com.liferay.dynamic.data.mapping.service.base.DDMStructureLinkLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -154,7 +156,15 @@ public class DDMStructureLinkLocalServiceImpl
 			ddmStructureLinkPersistence.findByC_C(classNameId, classPK);
 
 		if (structureLinks.isEmpty()) {
-			throw new NoSuchStructureLinkException();
+			StringBundler sb = new StringBundler();
+
+			sb.append("No DDMStructureLink found for {classNameId=");
+			sb.append(classNameId);
+			sb.append(", classPK=");
+			sb.append(classPK);
+			sb.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new NoSuchStructureLinkException(sb.toString());
 		}
 
 		return structureLinks.get(0);

@@ -250,7 +250,7 @@ public class ListServiceTrackerMapTest {
 	public void testGetServiceWithCustomComparatorReturningZero()
 		throws InvalidSyntaxException {
 
-		_serviceTrackerMap = ServiceTrackerMapFactory.multiValueMap(
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			_bundleContext, TrackedOne.class, null,
 			new PropertyServiceReferenceMapper<String, TrackedOne>("target"),
 			new Comparator<ServiceReference<TrackedOne>>() {
@@ -265,8 +265,6 @@ public class ListServiceTrackerMapTest {
 
 			}
 		);
-
-		_serviceTrackerMap.open();
 
 		registerService(new TrackedOne());
 		registerService(new TrackedOne());
@@ -461,8 +459,6 @@ public class ListServiceTrackerMapTest {
 		ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
 			createServiceTrackerMap(serviceTrackerMapListener);
 
-		serviceTrackerMap.open();
-
 		ServiceRegistration<TrackedOne> serviceRegistration = null;
 
 		try {
@@ -488,7 +484,7 @@ public class ListServiceTrackerMapTest {
 		BundleContextWrapper bundleContextWrapper = wrapContext();
 
 		ServiceTrackerMap<TrackedOne, List<TrackedOne>> serviceTrackerMap =
-			ServiceTrackerMapFactory.multiValueMap(
+			ServiceTrackerMapFactory.openMultiValueMap(
 				bundleContextWrapper, TrackedOne.class, null,
 				new ServiceReferenceMapper<TrackedOne, TrackedOne>() {
 
@@ -499,8 +495,6 @@ public class ListServiceTrackerMapTest {
 					}
 
 				});
-
-		serviceTrackerMap.open();
 
 		ServiceRegistration<TrackedOne> serviceRegistration1 = registerService(
 			new TrackedOne());
@@ -527,16 +521,12 @@ public class ListServiceTrackerMapTest {
 		createServiceTrackerMap(BundleContext bundleContext) {
 
 		try {
-			_serviceTrackerMap = ServiceTrackerMapFactory.multiValueMap(
+			return ServiceTrackerMapFactory.openMultiValueMap(
 				bundleContext, TrackedOne.class, "target");
 		}
 		catch (InvalidSyntaxException ise) {
 			throw new RuntimeException(ise);
 		}
-
-		_serviceTrackerMap.open();
-
-		return _serviceTrackerMap;
 	}
 
 	protected ServiceTrackerMap<String, List<TrackedOne>>
@@ -545,7 +535,7 @@ public class ListServiceTrackerMapTest {
 			Comparator<ServiceReference<TrackedOne>> comparator) {
 
 		try {
-			_serviceTrackerMap = ServiceTrackerMapFactory.multiValueMap(
+			return ServiceTrackerMapFactory.openMultiValueMap(
 				bundleContext, TrackedOne.class, null,
 				new PropertyServiceReferenceMapper<String, TrackedOne>(
 					"target"),
@@ -554,10 +544,6 @@ public class ListServiceTrackerMapTest {
 		catch (InvalidSyntaxException ise) {
 			throw new RuntimeException(ise);
 		}
-
-		_serviceTrackerMap.open();
-
-		return _serviceTrackerMap;
 	}
 
 	protected ServiceTrackerMap<String, List<TrackedOne>>
@@ -567,8 +553,7 @@ public class ListServiceTrackerMapTest {
 			List<TrackedOne>> serviceTrackerMapListener)
 		throws InvalidSyntaxException {
 
-		ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
-			ServiceTrackerMapFactory.multiValueMap(
+		return ServiceTrackerMapFactory.openMultiValueMap(
 				_bundleContext, TrackedOne.class, null,
 				new PropertyServiceReferenceMapper<String, TrackedOne>(
 					"target"),
@@ -576,10 +561,6 @@ public class ListServiceTrackerMapTest {
 				new PropertyServiceReferenceComparator<TrackedOne>(
 					"service.ranking"),
 				serviceTrackerMapListener);
-
-		serviceTrackerMap.open();
-
-		return serviceTrackerMap;
 	}
 
 	protected ServiceRegistration<TrackedOne> registerService(

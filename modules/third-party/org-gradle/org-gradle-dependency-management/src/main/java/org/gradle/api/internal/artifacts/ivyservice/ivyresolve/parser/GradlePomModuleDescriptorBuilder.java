@@ -1,3 +1,4 @@
+/* @generated */
 /*
  * Copyright 2011 the original author or authors.
  *
@@ -183,7 +184,7 @@ public class GradlePomModuleDescriptorBuilder {
             }
         }
 
-        this.mrid = ModuleRevisionId.newInstance(group, module, effectiveVersion);
+        this.mrid = IvyUtil.createModuleRevisionId(group, module, effectiveVersion);
         ivyModuleDescriptor.setModuleRevisionId(mrid);
 
         if (effectiveVersion != null && effectiveVersion.endsWith("SNAPSHOT")) {

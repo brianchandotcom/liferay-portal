@@ -139,7 +139,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		configureConf2ScopeMappings(project);
 		configureConfigurations(project);
-		configureDependencies(project);
 		configureProperties(project);
 		configureSourceSets(project);
 
@@ -572,22 +571,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			project.getConfigurations();
 
 		configurationContainer.all(action);
-	}
-
-	protected void configureDependencies(Project project) {
-		configureDependenciesTestCompile(project);
-	}
-
-	protected void configureDependenciesTestCompile(Project project) {
-		if (!isAddTestDefaultDependencies(project)) {
-			return;
-		}
-
-		for (String dependencyNotation : _DEFAULT_TEST_DEPENDENCY_NOTATIONS) {
-			GradleUtil.addDependency(
-				project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME,
-				dependencyNotation);
-		}
 	}
 
 	protected void configureProperties(Project project) {
@@ -1496,11 +1479,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		return iterator.next();
 	}
 
-	protected boolean isAddTestDefaultDependencies(Project project) {
-		return GradleUtil.getProperty(
-			project, _ADD_TEST_DEFAULT_DEPENDENCIES_PROPERTY_NAME, true);
-	}
-
 	protected boolean isCleanDeployed(Delete delete) {
 		return GradleUtil.getProperty(
 			delete, CLEAN_DEPLOYED_PROPERTY_NAME, true);
@@ -1515,20 +1493,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		return false;
 	}
-
-	private static final String _ADD_TEST_DEFAULT_DEPENDENCIES_PROPERTY_NAME =
-		"com.liferay.addtestdefaultdependencies";
-
-	private static final String[] _DEFAULT_TEST_DEPENDENCY_NOTATIONS = {
-		"junit:junit:4.12", "org.mockito:mockito-all:1.9.5",
-		"org.powermock:powermock-api-mockito:1.6.1",
-		"org.powermock:powermock-api-support:1.6.1",
-		"org.powermock:powermock-core:1.6.1",
-		"org.powermock:powermock-module-junit4:1.6.1",
-		"org.powermock:powermock-module-junit4-common:1.6.1",
-		"org.powermock:powermock-reflect:1.6.1",
-		"org.springframework:spring-test:3.2.10.RELEASE"
-	};
 
 	private static final Logger _logger = Logging.getLogger(
 		LiferayJavaPlugin.class);

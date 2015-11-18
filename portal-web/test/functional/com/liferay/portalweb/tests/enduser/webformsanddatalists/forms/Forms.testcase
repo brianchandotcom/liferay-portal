@@ -48,7 +48,7 @@
 
 		<execute macro="Form#save" />
 
-		<execute macro="FormsAdmin#selectFormByName">
+		<execute macro="FormsAdminNavigator#gotoEditFormByName">
 			<var name="formName" value="${formNameText}" />
 		</execute>
 
@@ -81,7 +81,7 @@
 
 		<execute macro="Form#save" />
 
-		<execute macro="FormsAdmin#selectFormByName">
+		<execute macro="FormsAdminNavigator#gotoEditFormByName">
 			<var name="formName" value="${formNameCheckbox}" />
 		</execute>
 
@@ -91,7 +91,7 @@
 
 		<execute macro="Form#save" />
 
-		<execute macro="FormsAdmin#selectFormByName">
+		<execute macro="FormsAdminNavigator#gotoEditFormByName">
 			<var name="formName" value="${formNameText}" />
 		</execute>
 

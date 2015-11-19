@@ -43,7 +43,6 @@ public class FormatJavadocTask extends JavaExec {
 		setArgs(getCompleteArgs());
 
 		super.setClasspath(getClasspath());
-		super.setWorkingDir(getWorkingDir());
 
 		super.exec();
 	}
@@ -84,13 +83,6 @@ public class FormatJavadocTask extends JavaExec {
 
 	public String getOutputFilePrefix() {
 		return _javadocFormatterArgs.getOutputFilePrefix();
-	}
-
-	@Override
-	public File getWorkingDir() {
-		Project project = getProject();
-
-		return project.getProjectDir();
 	}
 
 	public boolean isInitializeMissingJavadocs() {
@@ -138,11 +130,6 @@ public class FormatJavadocTask extends JavaExec {
 
 	public void setUpdateJavadocs(boolean updateJavadocs) {
 		_javadocFormatterArgs.setUpdateJavadocs(updateJavadocs);
-	}
-
-	@Override
-	public void setWorkingDir(Object dir) {
-		throw new UnsupportedOperationException();
 	}
 
 	protected List<String> getCompleteArgs() {

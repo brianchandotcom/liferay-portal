@@ -162,8 +162,7 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 					 !fileName.endsWith(".lpkg") &&
 					 !fileName.endsWith(".war")) {
 
-				SessionErrors.add(
-					actionRequest, FileExtensionException.class.getName());
+				throw new FileExtensionException();
 			}
 			else {
 				String deployDir = PrefsPropsUtil.getString(

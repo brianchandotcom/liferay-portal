@@ -70,7 +70,7 @@ String searchContainerId = "structures";
 			orderByCol="<%= orderByCol %>"
 			orderByComparator="<%= orderByComparator %>"
 			orderByType="<%= orderByType %>"
-			rowChecker="<%= new RowChecker(renderResponse) %>"
+			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
 			searchContainer="<%= new StructureSearch(renderRequest, portletURL) %>"
 		>
 

@@ -60,6 +60,7 @@ page import="com.liferay.portal.kernel.settings.GroupServiceSettingsLocator" %><
 page import="com.liferay.portal.kernel.settings.ParameterMapSettingsLocator" %><%@
 page import="com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator" %><%@
 page import="com.liferay.portal.kernel.upload.LiferayFileItemException" %><%@
+page import="com.liferay.portal.kernel.upload.RequestContentLengthException" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@

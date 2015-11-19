@@ -225,6 +225,10 @@ if (portletTitleBasedNavigation) {
 			<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(fileMaxSize, locale) %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
 		</liferay-ui:error>
 
+		<liferay-ui:error exception="<%= RequestContentLengthException.class %>">
+			<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(dlEditFileEntryDisplayContext.getMaximumUploadRequestContentLength(), locale) %>" key="form-data-is-larger-than-x-and-could-not-be-processed" translateArguments="<%= false %>" />
+		</liferay-ui:error>
+
 		<liferay-ui:asset-categories-error />
 
 		<liferay-ui:asset-tags-error />

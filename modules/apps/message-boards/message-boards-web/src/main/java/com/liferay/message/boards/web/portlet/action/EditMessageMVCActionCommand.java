@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
+import com.liferay.portal.kernel.upload.RequestContentLengthException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
@@ -113,11 +114,17 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 					WebKeys.UPLOAD_EXCEPTION);
 
 			if (uploadException != null) {
-				if (uploadException.isExceededLiferayFileItemSizeLimit()) {
+				if (uploadException.isExceededFileSizeLimit()) {
+					throw new FileSizeException(uploadException.getCause());
+				}
+				else if (uploadException.isExceededLiferayFileItemSizeLimit()) {
 					throw new LiferayFileItemException();
 				}
-				else if (uploadException.isExceededSizeLimit()) {
-					throw new FileSizeException(uploadException.getCause());
+				else if (uploadException.isExceededRequestContentLengthLimit(
+							)) {
+
+					throw new RequestContentLengthException(
+						uploadException.getCause());
 				}
 
 				throw new PortalException(uploadException.getCause());
@@ -176,7 +183,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 			   FileNameException | FileSizeException |
 			   LiferayFileItemException | LockedThreadException |
 			   MessageBodyException | MessageSubjectException |
-			   SanitizerException e) {
+			   RequestContentLengthException | SanitizerException e) {
 
 			if (e instanceof AntivirusScannerException) {
 				SessionErrors.add(actionRequest, e.getClass(), e);

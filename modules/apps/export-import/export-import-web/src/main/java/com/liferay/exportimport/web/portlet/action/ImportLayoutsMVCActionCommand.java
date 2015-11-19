@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.upload.RequestContentLengthException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
@@ -122,9 +123,15 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 
 			}
 			else if ((uploadException != null) &&
-					 uploadException.isExceededSizeLimit()) {
+					 uploadException.isExceededFileSizeLimit()) {
 
 				throw new FileSizeException(uploadException.getCause());
+			}
+			else if ((uploadException != null) &&
+					 uploadException.isExceededRequestContentLengthLimit()) {
+
+				throw new RequestContentLengthException(
+					uploadException.getCause());
 			}
 			else {
 				throw e;
@@ -142,7 +149,9 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 			WebKeys.UPLOAD_EXCEPTION);
 
 		if (uploadException != null) {
-			if (uploadException.isExceededSizeLimit()) {
+			if (uploadException.isExceededFileSizeLimit() ||
+				uploadException.isExceededRequestContentLengthLimit()) {
+
 				throw new LARFileSizeException(uploadException.getCause());
 			}
 

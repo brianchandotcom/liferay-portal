@@ -89,13 +89,21 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 			<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(LiferayFileItem.THRESHOLD_SIZE, locale) %>" key="please-enter-valid-content-with-valid-content-size-no-larger-than-x" translateArguments="<%= false %>" />
 		</liferay-ui:error>
 
+		<%
+		long maxRequestContentLength = PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
+		%>
+
+		<liferay-ui:error exception="<%= RequestContentLengthException.class %>">
+			<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(maxRequestContentLength, locale) %>" key="form-data-is-larger-than-x-and-could-not-be-processed" translateArguments="<%= false %>" />
+		</liferay-ui:error>
+
 		<liferay-ui:error exception="<%= FileSizeException.class %>">
 
 			<%
 			long fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
 
 			if (fileMaxSize == 0) {
-				fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
+				fileMaxSize = maxRequestContentLength;
 			}
 			%>
 

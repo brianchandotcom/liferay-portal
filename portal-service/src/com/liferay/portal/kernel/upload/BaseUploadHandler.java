@@ -60,30 +60,38 @@ public abstract class BaseUploadHandler implements UploadHandler {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		checkPermission(
-			themeDisplay.getScopeGroupId(), getFolderId(uploadPortletRequest),
-			themeDisplay.getPermissionChecker());
-
-		UploadException uploadException =
-			(UploadException)portletRequest.getAttribute(
-				WebKeys.UPLOAD_EXCEPTION);
-
-		if (uploadException != null) {
-			if (uploadException.isExceededLiferayFileItemSizeLimit()) {
-				throw new LiferayFileItemException();
-			}
-			else if (uploadException.isExceededSizeLimit()) {
-				throw new FileSizeException(uploadException.getCause());
-			}
-
-			throw new PortalException(uploadException.getCause());
-		}
-
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		String randomId = ParamUtil.getString(uploadPortletRequest, "randomId");
-
 		try {
+			checkPermission(
+				themeDisplay.getScopeGroupId(),
+				getFolderId(uploadPortletRequest),
+				themeDisplay.getPermissionChecker());
+
+			UploadException uploadException =
+				(UploadException)portletRequest.getAttribute(
+					WebKeys.UPLOAD_EXCEPTION);
+
+			if (uploadException != null) {
+				if (uploadException.isExceededFileSizeLimit()) {
+					throw new FileSizeException(uploadException.getCause());
+				}
+				else if (uploadException.isExceededLiferayFileItemSizeLimit()) {
+					throw new LiferayFileItemException();
+				}
+				else if (uploadException.
+						isExceededRequestContentLengthLimit()) {
+
+					throw new RequestContentLengthException(
+							uploadException.getCause());
+				}
+
+				throw new PortalException(uploadException.getCause());
+			}
+
+			String randomId = ParamUtil.getString(
+				uploadPortletRequest, "randomId");
+
 			JSONObject imageJSONObject = getImageJSONObject(portletRequest);
 
 			jsonObject.put("success", Boolean.TRUE);
@@ -240,7 +248,9 @@ public abstract class BaseUploadHandler implements UploadHandler {
 		jsonObject.put("success", Boolean.FALSE);
 
 		if (pe instanceof AntivirusScannerException ||
-			pe instanceof FileNameException) {
+			pe instanceof FileNameException ||
+			pe instanceof FileSizeException ||
+			pe instanceof RequestContentLengthException) {
 
 			String errorMessage = StringPool.BLANK;
 			int errorType = 0;
@@ -258,6 +268,14 @@ public abstract class BaseUploadHandler implements UploadHandler {
 			}
 			else if (pe instanceof FileNameException) {
 				errorType = ServletResponseConstants.SC_FILE_NAME_EXCEPTION;
+			}
+			else if (pe instanceof FileSizeException) {
+				errorType = ServletResponseConstants.SC_FILE_SIZE_EXCEPTION;
+			}
+			else if (pe instanceof RequestContentLengthException) {
+				errorType =
+					ServletResponseConstants.
+						SC_UPLOAD_REQUEST_CONTENT_LENGTH_EXCEPTION;
 			}
 
 			JSONObject errorJSONObject = JSONFactoryUtil.createJSONObject();

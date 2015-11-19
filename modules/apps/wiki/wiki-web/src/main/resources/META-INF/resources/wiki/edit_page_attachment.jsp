@@ -55,14 +55,22 @@ WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 
 	<liferay-ui:error exception="<%= FileNameException.class %>" message="please-enter-a-file-with-a-valid-file-name" />
 
+	<%
+	long maxRequestContentLength = PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
+	%>
+
+	<liferay-ui:error exception="<%= RequestContentLengthException.class %>">
+		<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(maxRequestContentLength, locale) %>" key="form-data-is-larger-than-x-and-could-not-be-processed" translateArguments="<%= false %>" />
+	</liferay-ui:error>
+
 	<liferay-ui:error exception="<%= FileSizeException.class %>">
 
 		<%
-		long fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
+			long fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
 
-		if (fileMaxSize == 0) {
-			fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
-		}
+			if (fileMaxSize == 0) {
+				fileMaxSize = maxRequestContentLength;
+			}
 		%>
 
 		<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(fileMaxSize, locale) %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />

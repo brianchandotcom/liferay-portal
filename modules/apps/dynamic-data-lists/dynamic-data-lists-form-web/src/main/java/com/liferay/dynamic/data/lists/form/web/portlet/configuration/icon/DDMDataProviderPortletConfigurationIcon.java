@@ -14,7 +14,16 @@
 
 package com.liferay.dynamic.data.lists.form.web.portlet.configuration.icon;
 
+import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portlet.PortletURLFactoryUtil;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
+import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -35,7 +44,21 @@ public class DDMDataProviderPortletConfigurationIcon
 
 	@Override
 	public String getURL() {
-		return "javascript:;";
+		String portletId = PortletProviderUtil.getPortletId(
+			DDMDataProviderInstance.class.getName(),
+			PortletProvider.Action.EDIT);
+
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			request, portletId, themeDisplay.getPlid(),
+			PortletRequest.RENDER_PHASE);
+
+		try {
+			portletURL.setWindowState(LiferayWindowState.POP_UP);
+		}
+		catch (WindowStateException wse) {
+		}
+
+		return portletURL.toString();
 	}
 
 	@Override
@@ -46,6 +69,11 @@ public class DDMDataProviderPortletConfigurationIcon
 	@Override
 	public boolean isToolTip() {
 		return false;
+	}
+
+	@Override
+	public boolean isUseDialog() {
+		return true;
 	}
 
 }

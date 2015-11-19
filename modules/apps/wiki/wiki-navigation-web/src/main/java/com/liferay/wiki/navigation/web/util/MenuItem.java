@@ -220,7 +220,7 @@ public class MenuItem implements Serializable {
 		return menuItems;
 	}
 
-	private static Pattern _pattern = Pattern.compile(
+	private static final Pattern _pattern = Pattern.compile(
 		"((==\\s((.)*)\\s==)*(\\Q[[\\E((.)*)\\Q]]\\E)*)*");
 
 	private List<MenuItem> _children;

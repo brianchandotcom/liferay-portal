@@ -237,3 +237,102 @@
 		}
 	}
 }
+
+.product-menu {
+	li.tree-node .tree-node-content {
+		overflow: visible;
+		width: 100%;
+	}
+
+	.layout-tree-edit {
+		position: absolute;
+		right: -15px;
+	}
+
+	.lfr-tree {
+		li {
+			margin-bottom: 0;
+		}
+
+		li.tree-node .tree-node-content .tree-label {
+			display: inline-block;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			width: 100%;
+		}
+
+		.icon-file {
+			display: none;
+		}
+	}
+
+	.tree-container {
+		border-left: $product-menu-tree-border-width $product-menu-tree-border-style $product-menu-tree-border;
+		margin-left: 10px;
+
+		.tree-container {
+			margin-left: 20px;
+		}
+
+		.tree-node-selected {
+			box-shadow: -$product-menu-tree-border-width 0 0 0 $product-menu-tree-active-border;
+			color: $product-menu-tree-active-color;
+		}
+	}
+
+	.tree-hitarea {
+		background-color: $product-menu-tree-hitarea-bg;
+		border-radius: 3px;
+		display: inline-block;
+		line-height: 14px;
+		margin-left: -11px;
+		margin-top: -8px;
+		position: absolute;
+		text-align: center;
+		top: 50%;
+		width: 14px;
+	}
+
+	.tree-label {
+		line-height: normal;
+	}
+
+	.tree-node [class^="icon-"] {
+		margin-right: 0;
+	}
+
+	.tree-node-content {
+		color: $product-menu-tree-color;
+		padding-bottom: 10px;
+		padding-left: 3px;
+		padding-right: 25px;
+		padding-top: 11px;
+		position: relative;
+
+		.tree-hitarea {
+			color: $product-menu-tree-hitarea-color;
+			padding-right: 0;
+		}
+
+		.tree-label {
+			margin-left: 12px;
+		}
+	}
+
+	.tree-node-selected .tree-hitarea {
+		background-color: $product-menu-tree-active-hitarea-bg;
+	}
+
+	.tree-pages .tree-node-selected .tree-label a {
+		color: $product-menu-tree-active-color;
+		cursor: pointer;
+	}
+
+	.tree-root-container {
+		margin-left: 0;
+	}
+
+	.tree-view {
+		overflow: visible;
+	}
+}

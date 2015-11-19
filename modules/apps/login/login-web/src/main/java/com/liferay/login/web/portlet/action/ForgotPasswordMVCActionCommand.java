@@ -38,7 +38,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
@@ -49,6 +49,7 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletSession;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -184,7 +185,7 @@ public class ForgotPasswordMVCActionCommand extends BaseMVCActionCommand {
 		User user = null;
 
 		if (Validator.isNotNull(sessionEmailAddress)) {
-			user = UserLocalServiceUtil.getUserByEmailAddress(
+			user = _userLocalService.getUserByEmailAddress(
 				themeDisplay.getCompanyId(), sessionEmailAddress);
 		}
 		else {
@@ -195,15 +196,15 @@ public class ForgotPasswordMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, "emailAddress");
 
 			if (Validator.isNotNull(emailAddress)) {
-				user = UserLocalServiceUtil.getUserByEmailAddress(
+				user = _userLocalService.getUserByEmailAddress(
 					themeDisplay.getCompanyId(), emailAddress);
 			}
 			else if (Validator.isNotNull(screenName)) {
-				user = UserLocalServiceUtil.getUserByScreenName(
+				user = _userLocalService.getUserByScreenName(
 					themeDisplay.getCompanyId(), screenName);
 			}
 			else if (userId > 0) {
-				user = UserLocalServiceUtil.getUserById(userId);
+				user = _userLocalService.getUserById(userId);
 			}
 			else {
 				throw new NoSuchUserException("User does not exist");
@@ -214,7 +215,7 @@ public class ForgotPasswordMVCActionCommand extends BaseMVCActionCommand {
 			throw new UserActiveException("Inactive user " + user.getUuid());
 		}
 
-		UserLocalServiceUtil.checkLockout(user);
+		_userLocalService.checkLockout(user);
 
 		return user;
 	}
@@ -274,5 +275,12 @@ public class ForgotPasswordMVCActionCommand extends BaseMVCActionCommand {
 
 		sendRedirect(actionRequest, actionResponse, null);
 	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	private UserLocalService _userLocalService;
 
 }

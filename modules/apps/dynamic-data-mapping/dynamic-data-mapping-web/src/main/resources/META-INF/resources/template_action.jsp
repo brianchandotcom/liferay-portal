@@ -20,6 +20,10 @@
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 DDMTemplate template = (DDMTemplate)row.getObject();
+
+long classNameId = ParamUtil.getLong(request, "classNameId");
+long classPK = ParamUtil.getLong(request, "classPK");
+long resourceClassNameId = ParamUtil.getLong(request, "resourceClassNameId");
 %>
 
 <liferay-ui:icon-menu direction="down" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showExpanded="<%= false %>" showWhenSingleIcon="<%= false %>">
@@ -79,6 +83,10 @@ DDMTemplate template = (DDMTemplate)row.getObject();
 
 	<c:if test="<%= DDMTemplatePermission.contains(permissionChecker, scopeGroupId, template, refererPortletName, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="deleteTemplate" var="deleteURL">
+			<portlet:param name="mvcPath" value="/view_template.jsp" />
+			<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
+			<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+			<portlet:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="templateId" value="<%= String.valueOf(template.getTemplateId()) %>" />
 		</portlet:actionURL>

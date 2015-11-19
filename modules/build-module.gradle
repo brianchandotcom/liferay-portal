@@ -4,6 +4,10 @@ import com.liferay.gradle.util.copy.StripPathSegmentsAction
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 buildscript {
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.23"
+	}
+
 	repositories {
 		if (!Boolean.getBoolean("maven.local.ignore")) {
 			mavenLocal()
@@ -12,10 +16,6 @@ buildscript {
 		maven {
 			url System.properties["repository.url"] ?: "http://cdn.repository.liferay.com/nexus/content/groups/public"
 		}
-	}
-
-	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.23"
 	}
 }
 

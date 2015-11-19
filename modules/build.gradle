@@ -1,6 +1,13 @@
 import com.liferay.gradle.util.FileUtil
 
 buildscript {
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins", version: "1.0.38"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.alloy.taglib", version: "1.0.1"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.cache", version: "1.0.1"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.maven.plugin.builder", version: "1.0.2"
+	}
+
 	repositories {
 		if (!Boolean.getBoolean("maven.local.ignore")) {
 			mavenLocal()
@@ -9,13 +16,6 @@ buildscript {
 		maven {
 			url System.properties["repository.url"] ?: "http://cdn.repository.liferay.com/nexus/content/groups/public"
 		}
-	}
-
-	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins", version: "1.0.38"
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.alloy.taglib", version: "1.0.1"
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.cache", version: "1.0.1"
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.maven.plugin.builder", version: "1.0.2"
 	}
 }
 

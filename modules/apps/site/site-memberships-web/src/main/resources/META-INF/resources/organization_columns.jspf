@@ -57,7 +57,7 @@
 	value="<%= UsersAdmin.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization) %>"
 />
 
-<c:if test='<%= tabs1.equals("summary") || tabs2.equals("current") %>'>
+<c:if test="<%= !selectOrganizations %>">
 	<liferay-ui:search-container-column-jsp
 		cssClass="list-group-item-field"
 		path="/organization_action.jsp"

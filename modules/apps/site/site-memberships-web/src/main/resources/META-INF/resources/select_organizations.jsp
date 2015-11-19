@@ -17,9 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = (String)request.getAttribute("edit_site_assignments.jsp-tabs1");
-String tabs2 = (String)request.getAttribute("edit_site_assignments.jsp-tabs2");
-
 int cur = (Integer)request.getAttribute("edit_site_assignments.jsp-cur");
 
 Group group = (Group)request.getAttribute("edit_site_assignments.jsp-group");
@@ -30,30 +27,18 @@ PortletURL viewOrganizationsURL = renderResponse.createRenderURL();
 
 viewOrganizationsURL.setParameter("mvcPath", "/view.jsp");
 viewOrganizationsURL.setParameter("tabs1", "organizations");
-viewOrganizationsURL.setParameter("tabs2", tabs2);
+viewOrganizationsURL.setParameter("tabs2", "available");
 viewOrganizationsURL.setParameter("redirect", currentURL);
 viewOrganizationsURL.setParameter("groupId", String.valueOf(group.getGroupId()));
 
-OrganizationGroupChecker organizationGroupChecker = null;
-
-if (!tabs1.equals("summary") && !tabs2.equals("current")) {
-	organizationGroupChecker = new OrganizationGroupChecker(renderResponse, group);
-}
-
-String emptyResultsMessage = OrganizationSearch.EMPTY_RESULTS_MESSAGE;
-
-if (tabs2.equals("current")) {
-	emptyResultsMessage ="no-organization-was-found-that-is-a-member-of-this-site";
-}
+OrganizationGroupChecker organizationGroupChecker = new OrganizationGroupChecker(renderResponse, group);
 
 SearchContainer searchContainer = new OrganizationSearch(renderRequest, viewOrganizationsURL);
-
-searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 %>
 
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="tabs1" type="hidden" value="organizations" />
-	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
+	<aui:input name="tabs2" type="hidden" value="available" />
 	<aui:input name="assignmentsRedirect" type="hidden" />
 	<aui:input name="groupId" type="hidden" value="<%= String.valueOf(group.getGroupId()) %>" />
 	<aui:input name="addOrganizationIds" type="hidden" />
@@ -71,11 +56,6 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 		long parentOrganizationId = OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
 
 		LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
-
-		if (tabs1.equals("summary") || tabs2.equals("current")) {
-			organizationParams.put("groupOrganization", Long.valueOf(group.getGroupId()));
-			organizationParams.put("organizationsGroups", Long.valueOf(group.getGroupId()));
-		}
 		%>
 
 		<liferay-ui:search-container-results>
@@ -99,60 +79,28 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 			modelVar="organization"
 		>
 
+			<%
+			boolean selectOrganizations = true;
+			%>
+
 			<%@ include file="/organization_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
-		<liferay-util:buffer var="formButton">
-			<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>">
-				<c:choose>
-					<c:when test='<%= tabs2.equals("current") %>'>
+		<liferay-ui:search-iterator markupView="lexicon" />
 
-						<%
-						viewOrganizationsURL.setParameter("tabs2", "available");
-						%>
+		<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>">
 
-						<liferay-frontend:add-menu>
-							<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "assign-organizations") %>' url="<%= viewOrganizationsURL.toString() %>" />
-						</liferay-frontend:add-menu>
+			<%
+			portletURL.setParameter("tabs2", "current");
+			portletURL.setParameter("cur", String.valueOf(cur));
 
-						<%
-						viewOrganizationsURL.setParameter("tabs2", "current");
-						%>
+			String taglibOnClick = renderResponse.getNamespace() + "updateGroupOrganizations('" + portletURL.toString() + "');";
+			%>
 
-					</c:when>
-					<c:otherwise>
-
-						<%
-						portletURL.setParameter("tabs2", "current");
-						portletURL.setParameter("cur", String.valueOf(cur));
-
-						String taglibOnClick = renderResponse.getNamespace() + "updateGroupOrganizations('" + portletURL.toString() + "');";
-						%>
-
-						<aui:button-row>
-							<aui:button onClick="<%= taglibOnClick %>" primary="<%= true %>" value="save" />
-						</aui:button-row>
-					</c:otherwise>
-				</c:choose>
-			</c:if>
-		</liferay-util:buffer>
-
-		<c:choose>
-			<c:when test='<%= tabs1.equals("summary") && (total > 0) %>'>
-				<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" persistState="<%= true %>" title='<%= LanguageUtil.format(request, (total > 1) ? "x-organizations" : "x-organization", total, false) %>'>
-					<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
-
-					<c:if test="<%= total > searchContainer.getDelta() %>">
-						<a href="<%= viewOrganizationsURL %>"><liferay-ui:message key="view-more" /> &raquo;</a>
-					</c:if>
-				</liferay-ui:panel>
-			</c:when>
-			<c:when test='<%= !tabs1.equals("summary") %>'>
-				<liferay-ui:search-iterator markupView="lexicon" />
-
-				<%= formButton %>
-			</c:when>
-		</c:choose>
+			<aui:button-row>
+				<aui:button onClick="<%= taglibOnClick %>" primary="<%= true %>" value="save" />
+			</aui:button-row>
+		</c:if>
 	</liferay-ui:search-container>
 </aui:form>
 

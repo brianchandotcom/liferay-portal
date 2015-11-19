@@ -120,56 +120,8 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 			keyProperty="organizationId"
 			modelVar="organization"
 		>
-			<liferay-ui:search-container-row-parameter
-				name="group"
-				value="<%= group %>"
-			/>
 
-			<liferay-ui:search-container-column-text
-				name="name"
-				orderable="<%= true %>"
-			>
-
-				<%= organization.getName() %>
-
-				<c:if test="<%= group.getOrganizationId() == organization.getOrganizationId() %>">
-					<liferay-ui:icon-help message='<%= LanguageUtil.format(request, "this-site-belongs-to-x-which-is-an-organization-of-type-x", new String[] {organization.getName(), LanguageUtil.get(request, organization.getType())}, false) + StringPool.SPACE + LanguageUtil.format(request, "all-users-of-x-are-automatically-members-of-the-site", organization.getName(), false) %>' />
-				</c:if>
-			</liferay-ui:search-container-column-text>
-
-			<liferay-ui:search-container-column-text
-				name="parent-organization"
-				value="<%= HtmlUtil.escape(organization.getParentOrganizationName()) %>"
-			/>
-
-			<liferay-ui:search-container-column-text
-				name="type"
-				orderable="<%= true %>"
-				value="<%= LanguageUtil.get(request, organization.getType()) %>"
-			/>
-
-			<liferay-ui:search-container-column-text
-				name="city"
-				value="<%= HtmlUtil.escape(organization.getAddress().getCity()) %>"
-			/>
-
-			<liferay-ui:search-container-column-text
-				name="region"
-				value="<%= UsersAdmin.ORGANIZATION_REGION_NAME_ACCESSOR.get(organization) %>"
-			/>
-
-			<liferay-ui:search-container-column-text
-				name="country"
-				value="<%= UsersAdmin.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization) %>"
-			/>
-
-			<c:if test='<%= tabs1.equals("summary") || tabs2.equals("current") %>'>
-				<liferay-ui:search-container-column-jsp
-					align="right"
-					cssClass="entry-action"
-					path="/organization_action.jsp"
-				/>
-			</c:if>
+			<%@ include file="/organization_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
 		<liferay-util:buffer var="formButton">

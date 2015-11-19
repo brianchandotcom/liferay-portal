@@ -133,6 +133,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-app-view-move', 'liferay-portlet-base']
+		requires: ['liferay-portlet-base']
 	}
 );

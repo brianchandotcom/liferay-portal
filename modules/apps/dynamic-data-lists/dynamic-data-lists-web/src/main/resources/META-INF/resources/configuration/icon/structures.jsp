@@ -36,6 +36,7 @@
 				Portlet portlet = PortletLocalServiceUtil.getPortletById(portletDisplay.getId());
 				%>
 
+				showAncestorScopes: true,
 				refererPortletName: '<%= portlet.getPortletName() %>',
 				refererWebDAVToken: '<%= WebDAVUtil.getStorageToken(portlet) %>',
 				title: '<%= UnicodeLanguageUtil.get(request, "data-definitions") %>'

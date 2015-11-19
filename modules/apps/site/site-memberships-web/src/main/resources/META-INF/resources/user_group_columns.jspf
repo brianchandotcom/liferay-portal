@@ -14,36 +14,110 @@
  */
 --%>
 
+<%
+LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
+
+userParams.put("usersUserGroups", Long.valueOf(userGroup.getUserGroupId()));
+
+int usersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), StringPool.BLANK, WorkflowConstants.STATUS_ANY, userParams);
+
+List<UserGroupGroupRole> userGroupGroupRoles = UserGroupGroupRoleLocalServiceUtil.getUserGroupGroupRoles(userGroup.getUserGroupId(), group.getGroupId());
+
+String userGroupGroupRolesString = ListUtil.toString(userGroupGroupRoles, UsersAdmin.USER_GROUP_GROUP_ROLE_TITLE_ACCESSOR, StringPool.COMMA_AND_SPACE);
+%>
+
 <liferay-ui:search-container-row-parameter
 	name="group"
 	value="<%= group %>"
 />
 
-<liferay-ui:search-container-column-text
-	name="name"
-	orderable="<%= true %>"
-	property="name"
-/>
+<c:choose>
+	<c:when test='<%= displayStyle.equals("icon") %>'>
 
-<liferay-ui:search-container-column-text
-	name="description"
-	orderable="<%= true %>"
-	property="description"
-/>
+		<%
+		row.setCssClass("col-md-2 col-sm-4 col-xs-6 selectable");
+		%>
 
-<c:if test="<%= !selectUserGroup %>">
+		<liferay-ui:search-container-column-text>
+			<liferay-frontend:icon-vertical-card
+				actionJsp='<%= !selectUserGroup ? "/user_group_action.jsp" : StringPool.BLANK %>'
+				actionJspServletContext="<%= application %>"
+				cssClass="entry-display-style"
+				icon="users"
+				resultRow="<%= row %>"
+				subtitle="<%= userGroup.getDescription() %>"
+				title="<%= userGroup.getName() %>"
+			>
+				<liferay-frontend:vertical-card-footer>
+					<liferay-ui:message arguments="<%= usersCount %>" key="x-users" />
 
-	<%
-	List<UserGroupGroupRole> userGroupGroupRoles = UserGroupGroupRoleLocalServiceUtil.getUserGroupGroupRoles(userGroup.getUserGroupId(), group.getGroupId());
-	%>
+					<c:if test="<%= !selectUserGroup %>">
+						<c:choose>
+							<c:when test="<%= Validator.isNotNull(userGroupGroupRolesString) %>">
+								<%= userGroupGroupRolesString %>
+							</c:when>
+							<c:otherwise>
+								&nbsp;
+							</c:otherwise>
+						</c:choose>
+					</c:if>
+				</liferay-frontend:vertical-card-footer>
+			</liferay-frontend:icon-vertical-card>
+		</liferay-ui:search-container-column-text>
+	</c:when>
+	<c:when test='<%= displayStyle.equals("descriptive") %>'>
+		<liferay-ui:search-container-column-icon
+			icon="users"
+			toggleRowChecker="<%= true %>"
+		/>
 
-	<liferay-ui:search-container-column-text
-		name="site-roles"
-		value="<%= ListUtil.toString(userGroupGroupRoles, UsersAdmin.USER_GROUP_GROUP_ROLE_TITLE_ACCESSOR, StringPool.COMMA_AND_SPACE) %>"
-	/>
+		<liferay-ui:search-container-column-text
+			colspan="<%= 2 %>"
+		>
+			<h5><%= userGroup.getName() %></h5>
 
-	<liferay-ui:search-container-column-jsp
-		cssClass="list-group-item-field"
-		path="/user_group_action.jsp"
-	/>
-</c:if>
+			<h6 class="text-default">
+				<span><%= userGroup.getDescription() %></span>
+			</h6>
+
+			<h6 class="text-default">
+				<span><liferay-ui:message arguments="<%= usersCount %>" key="x-users" /></span>
+			</h6>
+		</liferay-ui:search-container-column-text>
+
+		<c:if test="<%= !selectUserGroup %>">
+			<h6>
+				<%= userGroupGroupRolesString %>
+			</h6>
+
+			<liferay-ui:search-container-column-jsp
+				path="/user_group_action.jsp"
+			/>
+		</c:if>
+	</c:when>
+	<c:otherwise>
+		<liferay-ui:search-container-column-text
+			name="name"
+			orderable="<%= true %>"
+			property="name"
+		/>
+
+		<liferay-ui:search-container-column-text
+			name="description"
+			orderable="<%= true %>"
+			property="description"
+		/>
+
+		<c:if test="<%= !selectUserGroup %>">
+			<liferay-ui:search-container-column-text
+				name="site-roles"
+				value="<%= userGroupGroupRolesString %>"
+			/>
+
+			<liferay-ui:search-container-column-jsp
+				cssClass="list-group-item-field"
+				path="/user_group_action.jsp"
+			/>
+		</c:if>
+	</c:otherwise>
+</c:choose>

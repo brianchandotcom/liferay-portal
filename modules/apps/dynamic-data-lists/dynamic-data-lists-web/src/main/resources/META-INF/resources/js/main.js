@@ -572,16 +572,25 @@ AUI.add(
 					return emptyRows;
 				},
 
-				findStructureFieldByAttribute: function(structure, attributeName, attributeValue) {
+				findStructureFieldByAttribute: function(fieldsArray, attributeName, attributeValue) {
+					var instance = this;
+
 					var found = null;
 
-					structure.some(
-						function(item, index) {
-							found = item;
+					for (var index = 0; index < fieldsArray.length && !found; index++) {
+						var field = fieldsArray[index];
 
-							return found[attributeName] === attributeValue;
+						if (field[attributeName] === attributeValue) {
+							found = field;
+							break;
 						}
-					);
+
+						var nestedFieldsArray = field.fields;
+
+						if (nestedFieldsArray) {
+							found = instance.findStructureFieldByAttribute(nestedFieldsArray, attributeName, attributeValue);
+						}
+					}
 
 					return found;
 				},

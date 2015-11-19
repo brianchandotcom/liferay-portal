@@ -2204,9 +2204,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		// LPS-60186
 
-		if (fileName.endsWith("Configuration.java") &&
-			!fileName.endsWith("OverriddenConfiguration.java") &&
-			absolutePath.contains("/modules/apps/") &&
+		if (!absolutePath.contains("/test/") &&
+			content.contains("@Meta.OCD") &&
 			!content.contains("@ConfigurationAdmin")) {
 
 			processErrorMessage(

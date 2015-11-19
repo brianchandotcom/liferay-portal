@@ -148,6 +148,8 @@
 
 		<execute macro="WikiEntry#confirmHTML" />
 
+		<execute function="Click#clickAt" locator1="Wiki#RICH_TEXT_EDITOR" />
+
 		<execute function="Click" locator1="AlloyEditor#CONTENT_EDITOR_SWITCH_ACE_EDITOR" />
 
 		<execute function="Type#typeAceEditor" locator1="TextArea#ACE_EDITOR" value1="${welcomeToLiferay}" />

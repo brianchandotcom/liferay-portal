@@ -35,7 +35,7 @@ AUI.add(
 				instance.insert(0, field);
 			},
 
-			eachField: function(fn) {
+			eachField: function(fn, flat) {
 				var instance = this;
 
 				var queue = new A.Queue();
@@ -57,7 +57,9 @@ AUI.add(
 						break;
 					}
 
-					field.get('fields').forEach(addSiblingsToQueue);
+					if (!flat) {
+						field.get('fields').forEach(addSiblingsToQueue);
+					}
 				}
 			},
 
@@ -103,6 +105,21 @@ AUI.add(
 				);
 
 				return field;
+			},
+
+			getImmediateFields: function() {
+				var instance = this;
+
+				var fields = [];
+
+				instance.eachField(
+					function(field) {
+						fields.push(field);
+					},
+					true
+				);
+
+				return fields;
 			},
 
 			getRoot: function() {

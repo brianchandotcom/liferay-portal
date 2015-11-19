@@ -51,155 +51,117 @@ UserGroupSearch userGroupSearch = new UserGroupSearch(renderRequest, viewUserGro
 userGroupSearch.setEmptyResultsMessage(emptyResultsMessage);
 %>
 
-<aui:input name="tabs1" type="hidden" value="user-groups" />
-<aui:input name="addUserGroupIds" type="hidden" />
-<aui:input name="removeUserGroupIds" type="hidden" />
+<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "submit();" %>'>
+	<aui:input name="tabs1" type="hidden" value="user-groups" />
+	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
+	<aui:input name="assignmentsRedirect" type="hidden" />
+	<aui:input name="groupId" type="hidden" value="<%= String.valueOf(group.getGroupId()) %>" />
+	<aui:input name="addUserGroupIds" type="hidden" />
+	<aui:input name="removeUserGroupIds" type="hidden" />
 
-<liferay-ui:search-container
-	rowChecker="<%= userGroupGroupChecker %>"
-	searchContainer="<%= userGroupSearch %>"
->
-	<c:if test='<%= !tabs1.equals("summary") %>'>
-		<liferay-ui:user-group-search-form />
-
-		<div class="separator"><!-- --></div>
-	</c:if>
-
-	<%
-	UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)searchContainer.getSearchTerms();
-
-	LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
-
-	if (tabs1.equals("summary") || tabs2.equals("current")) {
-		userGroupParams.put("userGroupsGroups", Long.valueOf(group.getGroupId()));
-	}
-	%>
-
-	<liferay-ui:search-container-results>
+	<liferay-ui:search-container
+		rowChecker="<%= userGroupGroupChecker %>"
+		searchContainer="<%= userGroupSearch %>"
+	>
 
 		<%
-		if (searchTerms.isAdvancedSearch()) {
-			total = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getName(), searchTerms.getDescription(), userGroupParams, searchTerms.isAndOperator());
+		UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)searchContainer.getSearchTerms();
 
-			searchContainer.setTotal(total);
+		LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
 
-			results = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getName(), searchTerms.getDescription(), userGroupParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+		if (tabs1.equals("summary") || tabs2.equals("current")) {
+			userGroupParams.put("userGroupsGroups", Long.valueOf(group.getGroupId()));
 		}
-		else {
+		%>
+
+		<liferay-ui:search-container-results>
+
+			<%
 			total = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams);
 
 			searchContainer.setTotal(total);
 
 			results = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-		}
 
-		searchContainer.setResults(results);
-		%>
-
-	</liferay-ui:search-container-results>
-
-	<liferay-ui:search-container-row
-		className="com.liferay.portal.model.UserGroup"
-		escapedModel="<%= true %>"
-		keyProperty="userGroupId"
-		modelVar="userGroup"
-	>
-		<liferay-ui:search-container-row-parameter
-			name="group"
-			value="<%= group %>"
-		/>
-
-		<liferay-ui:search-container-column-text
-			name="name"
-			orderable="<%= true %>"
-			property="name"
-		/>
-
-		<liferay-ui:search-container-column-text
-			name="description"
-			orderable="<%= true %>"
-			property="description"
-		/>
-
-		<c:if test='<%= tabs1.equals("summary") || tabs2.equals("current") %>'>
-
-			<%
-			List<UserGroupGroupRole> userGroupGroupRoles = UserGroupGroupRoleLocalServiceUtil.getUserGroupGroupRoles(userGroup.getUserGroupId(), group.getGroupId());
+			searchContainer.setResults(results);
 			%>
 
-			<liferay-ui:search-container-column-text
-				name="site-roles"
-				value="<%= ListUtil.toString(userGroupGroupRoles, UsersAdmin.USER_GROUP_GROUP_ROLE_TITLE_ACCESSOR, StringPool.COMMA_AND_SPACE) %>"
-			/>
+		</liferay-ui:search-container-results>
 
-			<liferay-ui:search-container-column-jsp
-				align="right"
-				cssClass="entry-action"
-				path="/user_group_action.jsp"
-			/>
-		</c:if>
-	</liferay-ui:search-container-row>
+		<liferay-ui:search-container-row
+			className="com.liferay.portal.model.UserGroup"
+			escapedModel="<%= true %>"
+			keyProperty="userGroupId"
+			modelVar="userGroup"
+		>
 
-	<liferay-util:buffer var="formButton">
-		<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>">
-			<c:choose>
-				<c:when test='<%= tabs2.equals("current") %>'>
+			<%@ include file="/user_group_columns.jspf" %>
+		</liferay-ui:search-container-row>
 
-					<%
-					viewUserGroupsURL.setParameter("tabs2", "available");
-					%>
+		<liferay-util:buffer var="formButton">
+			<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>">
+				<c:choose>
+					<c:when test='<%= tabs2.equals("current") %>'>
 
-					<liferay-ui:icon
-						iconCssClass="icon-globe"
-						label="<%= true %>"
-						message="assign-user-groups"
-						url="<%= viewUserGroupsURL.toString() %>"
-					/>
+						<%
+						viewUserGroupsURL.setParameter("tabs2", "available");
+						%>
 
-					<%
-					viewUserGroupsURL.setParameter("tabs2", "current");
-					%>
+						<liferay-frontend:add-menu>
+							<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "assign-user-groups") %>' url="<%= viewUserGroupsURL.toString() %>" />
+						</liferay-frontend:add-menu>
 
-				</c:when>
-				<c:otherwise>
+						<%
+						viewUserGroupsURL.setParameter("tabs2", "current");
+						%>
 
-					<%
-					portletURL.setParameter("tabs2", "current");
-					portletURL.setParameter("cur", String.valueOf(cur));
+					</c:when>
+					<c:otherwise>
 
-					String taglibOnClick = renderResponse.getNamespace() + "updateGroupUserGroups('" + portletURL.toString() + "');";
-					%>
+						<%
+						portletURL.setParameter("tabs2", "current");
+						portletURL.setParameter("cur", String.valueOf(cur));
 
-					<aui:button-row>
-						<aui:button onClick="<%= taglibOnClick %>" primary="<%= true %>" value="save" />
-					</aui:button-row>
-				</c:otherwise>
-			</c:choose>
-		</c:if>
-	</liferay-util:buffer>
+						String taglibOnClick = renderResponse.getNamespace() + "updateGroupUserGroups('" + portletURL.toString() + "');";
+						%>
 
-	<c:choose>
-		<c:when test='<%= tabs1.equals("summary") && (total > 0) %>'>
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" persistState="<%= true %>" title='<%= LanguageUtil.format(request, (total > 1) ? "x-user-groups" : "x-user-group", total, false) %>'>
-				<span class="form-search">
-					<liferay-ui:input-search name='<%= DisplayTerms.KEYWORDS + "_user_groups" %>' />
-				</span>
-
-				<liferay-ui:search-iterator paginate="<%= false %>" />
-
-				<c:if test="<%= total > userGroupSearch.getDelta() %>">
-					<a href="<%= viewUserGroupsURL %>"><liferay-ui:message key="view-more" /> &raquo;</a>
-				</c:if>
-			</liferay-ui:panel>
-		</c:when>
-		<c:when test='<%= !tabs1.equals("summary") %>'>
-			<c:if test="<%= PropsValues.SEARCH_CONTAINER_SHOW_PAGINATION_TOP && (results.size() > PropsValues.SEARCH_CONTAINER_SHOW_PAGINATION_TOP_DELTA) %>">
-				<%= formButton %>
+						<aui:button-row>
+							<aui:button onClick="<%= taglibOnClick %>" primary="<%= true %>" value="save" />
+						</aui:button-row>
+					</c:otherwise>
+				</c:choose>
 			</c:if>
+		</liferay-util:buffer>
 
-			<liferay-ui:search-iterator />
+		<c:choose>
+			<c:when test='<%= tabs1.equals("summary") && (total > 0) %>'>
+				<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" persistState="<%= true %>" title='<%= LanguageUtil.format(request, (total > 1) ? "x-user-groups" : "x-user-group", total, false) %>'>
+					<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
 
-			<%= formButton %>
-		</c:when>
-	</c:choose>
-</liferay-ui:search-container>
+					<c:if test="<%= total > userGroupSearch.getDelta() %>">
+						<a href="<%= viewUserGroupsURL %>"><liferay-ui:message key="view-more" /> &raquo;</a>
+					</c:if>
+				</liferay-ui:panel>
+			</c:when>
+			<c:when test='<%= !tabs1.equals("summary") %>'>
+				<liferay-ui:search-iterator markupView="lexicon" />
+
+				<%= formButton %>
+			</c:when>
+		</c:choose>
+	</liferay-ui:search-container>
+</aui:form>
+
+<aui:script>
+	function <portlet:namespace />updateGroupUserGroups(assignmentsRedirect) {
+		var Util = Liferay.Util;
+
+		var form = AUI.$(document.<portlet:namespace />fm);
+
+		form.fm('assignmentsRedirect').val(assignmentsRedirect);
+		form.fm('addUserGroupIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+		form.fm('removeUserGroupIds').val(Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
+
+		submitForm(form, '<portlet:actionURL name="editGroupUserGroups" />');
+	}
+</aui:script>

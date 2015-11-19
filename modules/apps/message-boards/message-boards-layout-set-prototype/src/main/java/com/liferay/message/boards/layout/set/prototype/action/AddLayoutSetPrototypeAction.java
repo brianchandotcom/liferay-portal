@@ -16,6 +16,7 @@ package com.liferay.message.boards.layout.set.prototype.action;
 
 import com.liferay.layout.set.prototype.web.constants.LayoutSetPrototypePortletKeys;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
+import com.liferay.polls.constants.PollsPortletKeys;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -34,6 +35,8 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.social.user.statistics.web.constants.SocialUserStatisticsPortletKeys;
 
 import java.util.List;
+
+import javax.servlet.Servlet;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -90,6 +93,9 @@ public class AddLayoutSetPrototypeAction {
 		DefaultLayoutPrototypesUtil.addPortletId(layout, portletId, "column-1");
 
 		DefaultLayoutPrototypesUtil.addPortletId(
+			layout, PollsPortletKeys.POLLS_DISPLAY, "column-2");
+
+		DefaultLayoutPrototypesUtil.addPortletId(
 			layout, SocialUserStatisticsPortletKeys.SOCIAL_USER_STATISTICS,
 			"column-2");
 
@@ -140,6 +146,13 @@ public class AddLayoutSetPrototypeAction {
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
+
+	@Reference(
+		target = "(&(objectClass=javax.servlet.Servlet)(osgi.http.whiteboard.servlet.name=59 Servlet))",
+		unbind = "-"
+		)
+	protected void setPollsServlet(Servlet servlet) {
 	}
 
 	@Reference(

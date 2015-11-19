@@ -2,6 +2,7 @@ dependencies {
 	compile project(":apps:layout:layout-set-prototype-web")
 	compile project(":apps:message-boards:message-boards-web")
 	compile project(":apps:social:social-user-statistics-web")
+	compile project(":apps:polls:polls-web")
 }
 
 liferay {

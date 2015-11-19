@@ -1728,7 +1728,9 @@ public class DDMStructureLocalServiceImpl
 		String name = nameMap.get(contentDefaultLocale);
 
 		if (Validator.isNull(name)) {
-			throw new StructureNameException("Name is null");
+			throw new StructureNameException(
+				"Name is null for locale " +
+					contentDefaultLocale.getDisplayName());
 		}
 
 		if (!LanguageUtil.isAvailableLocale(contentDefaultLocale)) {

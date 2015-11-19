@@ -168,32 +168,40 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 			}
 		}
 		else {
-			try {
-				String url = ParamUtil.getString(uploadPortletRequest, "url");
-
-				URL urlObj = new URL(url);
-
-				String host = urlObj.getHost();
-
-				if (host.endsWith("sf.net") ||
-					host.endsWith("sourceforge.net")) {
-
-					doInstallSourceForgeApp(
-						urlObj.getPath(), uploadPortletRequest, actionRequest);
-				}
-				else {
-					doInstallRemoteApp(
-						url, uploadPortletRequest, actionRequest, true);
-				}
-			}
-			catch (MalformedURLException murle) {
-				SessionErrors.add(actionRequest, "invalidUrl", murle);
-			}
+			installRemoteApp(actionRequest, actionResponse);
 		}
 
 		String redirect = ParamUtil.getString(uploadPortletRequest, "redirect");
 
 		actionResponse.sendRedirect(redirect);
+	}
+
+	public void installRemoteApp(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		UploadPortletRequest uploadPortletRequest =
+			PortalUtil.getUploadPortletRequest(actionRequest);
+
+		try {
+			String url = ParamUtil.getString(uploadPortletRequest, "url");
+
+			URL urlObj = new URL(url);
+
+			String host = urlObj.getHost();
+
+			if (host.endsWith("sf.net") || host.endsWith("sourceforge.net")) {
+				doInstallSourceForgeApp(
+					urlObj.getPath(), uploadPortletRequest, actionRequest);
+			}
+			else {
+				doInstallRemoteApp(
+					url, uploadPortletRequest, actionRequest, true);
+			}
+		}
+		catch (MalformedURLException murle) {
+			SessionErrors.add(actionRequest, "invalidUrl", murle);
+		}
 	}
 
 	public void uninstallApp(

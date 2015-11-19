@@ -552,6 +552,12 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 		return _group.getLiveParentTypeSettingsProperty(key);
 	}
 
+	@Override
+	public java.lang.String getLogo(
+		com.liferay.portal.theme.ThemeDisplay themeDisplay, boolean useDefault) {
+		return _group.getLogo(themeDisplay, useDefault);
+	}
+
 	/**
 	* Returns the manual membership of this group.
 	*

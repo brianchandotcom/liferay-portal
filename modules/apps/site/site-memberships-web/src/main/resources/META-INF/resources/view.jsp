@@ -161,8 +161,11 @@ request.setAttribute("edit_site_assignments.jsp-portletURL", portletURL);
 	</c:when>
 	<c:when test='<%= tabs1.equals("user-groups") %>'>
 		<c:choose>
-			<c:when test="<%= userGroupId == 0 %>">
+			<c:when test='<%= (userGroupId == 0) && tabs2.equals("current") %>'>
 				<liferay-util:include page="/user_groups.jsp" servletContext="<%= application %>" />
+			</c:when>
+			<c:when test='<%= (userGroupId == 0) && tabs2.equals("available") %>'>
+				<liferay-util:include page="/select_user_groups.jsp" servletContext="<%= application %>" />
 			</c:when>
 			<c:otherwise>
 				<liferay-util:include page="/user_groups_roles.jsp" servletContext="<%= application %>" />

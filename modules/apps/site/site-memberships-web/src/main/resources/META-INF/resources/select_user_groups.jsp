@@ -17,9 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = (String)request.getAttribute("edit_site_assignments.jsp-tabs1");
-String tabs2 = (String)request.getAttribute("edit_site_assignments.jsp-tabs2");
-
 int cur = (Integer)request.getAttribute("edit_site_assignments.jsp-cur");
 
 Group group = (Group)request.getAttribute("edit_site_assignments.jsp-group");
@@ -30,30 +27,18 @@ PortletURL viewUserGroupsURL = renderResponse.createRenderURL();
 
 viewUserGroupsURL.setParameter("mvcPath", "/view.jsp");
 viewUserGroupsURL.setParameter("tabs1", "user-groups");
-viewUserGroupsURL.setParameter("tabs2", tabs2);
+viewUserGroupsURL.setParameter("tabs2", "available");
 viewUserGroupsURL.setParameter("redirect", currentURL);
 viewUserGroupsURL.setParameter("groupId", String.valueOf(group.getGroupId()));
 
-UserGroupGroupChecker userGroupGroupChecker = null;
-
-if (!tabs1.equals("summary") && !tabs2.equals("current")) {
-	userGroupGroupChecker = new UserGroupGroupChecker(renderResponse, group);
-}
-
-String emptyResultsMessage = UserGroupSearch.EMPTY_RESULTS_MESSAGE;
-
-if (tabs2.equals("current")) {
-	emptyResultsMessage ="no-user-group-was-found-that-is-a-member-of-this-site";
-}
+UserGroupGroupChecker userGroupGroupChecker = new UserGroupGroupChecker(renderResponse, group);
 
 UserGroupSearch userGroupSearch = new UserGroupSearch(renderRequest, viewUserGroupsURL);
-
-userGroupSearch.setEmptyResultsMessage(emptyResultsMessage);
 %>
 
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="tabs1" type="hidden" value="user-groups" />
-	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
+	<aui:input name="tabs2" type="hidden" value="available" />
 	<aui:input name="assignmentsRedirect" type="hidden" />
 	<aui:input name="groupId" type="hidden" value="<%= String.valueOf(group.getGroupId()) %>" />
 	<aui:input name="addUserGroupIds" type="hidden" />
@@ -68,10 +53,6 @@ userGroupSearch.setEmptyResultsMessage(emptyResultsMessage);
 		UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)searchContainer.getSearchTerms();
 
 		LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
-
-		if (tabs1.equals("summary") || tabs2.equals("current")) {
-			userGroupParams.put("userGroupsGroups", Long.valueOf(group.getGroupId()));
-		}
 		%>
 
 		<liferay-ui:search-container-results>
@@ -95,60 +76,28 @@ userGroupSearch.setEmptyResultsMessage(emptyResultsMessage);
 			modelVar="userGroup"
 		>
 
+			<%
+			boolean selectUserGroup = true;
+			%>
+
 			<%@ include file="/user_group_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
-		<liferay-util:buffer var="formButton">
-			<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>">
-				<c:choose>
-					<c:when test='<%= tabs2.equals("current") %>'>
+		<liferay-ui:search-iterator markupView="lexicon" />
 
-						<%
-						viewUserGroupsURL.setParameter("tabs2", "available");
-						%>
+		<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>">
 
-						<liferay-frontend:add-menu>
-							<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "assign-user-groups") %>' url="<%= viewUserGroupsURL.toString() %>" />
-						</liferay-frontend:add-menu>
+			<%
+			portletURL.setParameter("tabs2", "current");
+			portletURL.setParameter("cur", String.valueOf(cur));
 
-						<%
-						viewUserGroupsURL.setParameter("tabs2", "current");
-						%>
+			String taglibOnClick = renderResponse.getNamespace() + "updateGroupUserGroups('" + portletURL.toString() + "');";
+			%>
 
-					</c:when>
-					<c:otherwise>
-
-						<%
-						portletURL.setParameter("tabs2", "current");
-						portletURL.setParameter("cur", String.valueOf(cur));
-
-						String taglibOnClick = renderResponse.getNamespace() + "updateGroupUserGroups('" + portletURL.toString() + "');";
-						%>
-
-						<aui:button-row>
-							<aui:button onClick="<%= taglibOnClick %>" primary="<%= true %>" value="save" />
-						</aui:button-row>
-					</c:otherwise>
-				</c:choose>
-			</c:if>
-		</liferay-util:buffer>
-
-		<c:choose>
-			<c:when test='<%= tabs1.equals("summary") && (total > 0) %>'>
-				<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" persistState="<%= true %>" title='<%= LanguageUtil.format(request, (total > 1) ? "x-user-groups" : "x-user-group", total, false) %>'>
-					<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
-
-					<c:if test="<%= total > userGroupSearch.getDelta() %>">
-						<a href="<%= viewUserGroupsURL %>"><liferay-ui:message key="view-more" /> &raquo;</a>
-					</c:if>
-				</liferay-ui:panel>
-			</c:when>
-			<c:when test='<%= !tabs1.equals("summary") %>'>
-				<liferay-ui:search-iterator markupView="lexicon" />
-
-				<%= formButton %>
-			</c:when>
-		</c:choose>
+			<aui:button-row>
+				<aui:button onClick="<%= taglibOnClick %>" primary="<%= true %>" value="save" />
+			</aui:button-row>
+		</c:if>
 	</liferay-ui:search-container>
 </aui:form>
 

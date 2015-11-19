@@ -31,7 +31,7 @@
 	property="description"
 />
 
-<c:if test='<%= tabs2.equals("current") %>'>
+<c:if test="<%= !selectUserGroup %>">
 
 	<%
 	List<UserGroupGroupRole> userGroupGroupRoles = UserGroupGroupRoleLocalServiceUtil.getUserGroupGroupRoles(userGroup.getUserGroupId(), group.getGroupId());

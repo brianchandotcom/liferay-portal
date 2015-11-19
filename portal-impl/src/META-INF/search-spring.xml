@@ -9,6 +9,18 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd"
 >
 
+	<bean id="com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSenderUtil" class="com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSenderUtil">
+		<property name="reindexStatusMessageSender">
+			<bean class="com.liferay.portal.search.background.task.ReindexStatusMessageSenderImpl">
+				<property name="backgroundTaskStatusMessageSender">
+					<bean class="com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageSenderImpl">
+						<property name="destinationName" value="liferay/background_task_status" />
+					</bean>
+				</property>
+			</bean>
+		</property>
+	</bean>
+
 	<!-- Advice -->
 
 	<bean class="com.liferay.portal.spring.aop.DynamicProxyCreator$Register">

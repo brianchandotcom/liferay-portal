@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String displayStyle = ParamUtil.getString(request, "displayStyle", "descriptive");
+
 String tabs1 = (String)request.getAttribute("edit_site_assignments.jsp-tabs1");
 String tabs2 = (String)request.getAttribute("edit_site_assignments.jsp-tabs2");
 
@@ -58,6 +60,14 @@ renderResponse.setTitle(LanguageUtil.get(request, "edit-site-roles-for-user-grou
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 		/>
 	</liferay-frontend:management-bar-filters>
+
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"list"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
 </liferay-frontend:management-bar>
 
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" name="fm">

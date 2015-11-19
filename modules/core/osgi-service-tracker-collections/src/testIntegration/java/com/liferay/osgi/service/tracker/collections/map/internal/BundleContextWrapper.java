@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.osgi.service.tracker.map.internal;
+package com.liferay.osgi.service.tracker.collections.map.internal;
 
 import java.io.File;
 import java.io.InputStream;

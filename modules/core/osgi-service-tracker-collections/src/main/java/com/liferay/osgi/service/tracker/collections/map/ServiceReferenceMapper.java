@@ -12,37 +12,21 @@
  * details.
  */
 
-package com.liferay.osgi.service.tracker.map;
+package com.liferay.osgi.service.tracker.collections.map;
 
-import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
 /**
  * @author Carlos Sierra Andrés
  */
-public final class ServiceReferenceMapperFactory {
+public interface ServiceReferenceMapper<K, S> {
 
-	public static <K, S> ServiceReferenceMapper<K, S> create(
-		final BundleContext bundleContext,
-		final ServiceMapper<K, S> serviceMapper) {
+	public void map(ServiceReference<S> serviceReference, Emitter<K> emitter);
 
-		return new ServiceReferenceMapper<K, S>() {
+	public interface Emitter<K> {
 
-			@Override
-			public void map(
-				ServiceReference<S> serviceReference, Emitter<K> emitter) {
+		public void emit(K key);
 
-				S service = bundleContext.getService(serviceReference);
-
-				try {
-					serviceMapper.map(service, emitter);
-				}
-				finally {
-					bundleContext.ungetService(serviceReference);
-				}
-			}
-
-		};
 	}
 
 }

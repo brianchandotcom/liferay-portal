@@ -12,15 +12,13 @@
  * details.
  */
 
-package com.liferay.osgi.service.tracker.map;
-
-import com.liferay.osgi.service.tracker.map.ServiceReferenceMapper.Emitter;
+package com.liferay.osgi.service.tracker.collections.map;
 
 /**
  * @author Carlos Sierra Andrés
  */
 public interface ServiceMapper<K, S> {
 
-	public void map(S service, Emitter<K> emitter);
+	public void map(S service, ServiceReferenceMapper.Emitter<K> emitter);
 
 }

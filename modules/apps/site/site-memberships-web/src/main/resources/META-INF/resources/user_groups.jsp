@@ -72,7 +72,7 @@ userGroupSearch.setEmptyResultsMessage(emptyResultsMessage);
 		searchContainer="<%= userGroupSearch %>"
 	>
 		<c:if test='<%= !tabs1.equals("summary") %>'>
-			<liferay-ui:user-group-search-form />
+			<liferay-ui:input-search />
 
 			<div class="separator"><!-- --></div>
 		</c:if>
@@ -90,20 +90,11 @@ userGroupSearch.setEmptyResultsMessage(emptyResultsMessage);
 		<liferay-ui:search-container-results>
 
 			<%
-			if (searchTerms.isAdvancedSearch()) {
-				total = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getName(), searchTerms.getDescription(), userGroupParams, searchTerms.isAndOperator());
+			total = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams);
 
-				searchContainer.setTotal(total);
+			searchContainer.setTotal(total);
 
-				results = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getName(), searchTerms.getDescription(), userGroupParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-			}
-			else {
-				total = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams);
-
-				searchContainer.setTotal(total);
-
-				results = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-			}
+			results = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 
 			searchContainer.setResults(results);
 			%>

@@ -18,6 +18,7 @@ import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.iframe.web.configuration.IFrameConfiguration;
 import com.liferay.iframe.web.configuration.IFramePortletInstanceConfiguration;
+import com.liferay.iframe.web.constants.IFramePortletKeys;
 import com.liferay.iframe.web.constants.IFrameWebKeys;
 import com.liferay.iframe.web.display.context.IFrameDisplayContext;
 import com.liferay.iframe.web.util.IFrameUtil;
@@ -65,6 +66,7 @@ import org.osgi.service.component.annotations.Modified;
 		"javax.portlet.display-name=IFrame", "javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + IFramePortletKeys.IFRAME,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user"
 	},

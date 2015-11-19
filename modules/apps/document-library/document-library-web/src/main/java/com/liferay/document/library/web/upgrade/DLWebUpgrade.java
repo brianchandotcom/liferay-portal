@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sergio González
  */
-@Component(immediate = true)
+@Component(immediate = true, service = DLWebUpgrade.class)
 public class DLWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override

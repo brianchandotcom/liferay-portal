@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Raymond Augé
  */
-@Component(immediate = true)
+@Component(immediate = true, service = XSLContentWebUpgrade.class)
 public class XSLContentWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override

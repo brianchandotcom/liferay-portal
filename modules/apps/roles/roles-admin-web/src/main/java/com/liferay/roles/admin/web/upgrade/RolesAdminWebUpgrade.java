@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Drew Brokke
  */
-@Component(immediate = true)
+@Component(immediate = true, service = RolesAdminWebUpgrade.class)
 public class RolesAdminWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override

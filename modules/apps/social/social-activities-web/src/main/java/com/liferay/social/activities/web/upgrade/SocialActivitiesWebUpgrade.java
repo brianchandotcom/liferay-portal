@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  * @author Peter Fellwock
  */
-@Component(immediate = true)
+@Component(immediate = true, service = SocialActivitiesWebUpgrade.class)
 public class SocialActivitiesWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override

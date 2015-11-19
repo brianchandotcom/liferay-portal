@@ -248,11 +248,6 @@ public class DLFolderFinderImpl
 			if (!includeMountFolders) {
 				qPos.add(false);
 			}
-			else {
-				qPos.add(false);
-				qPos.add(true);
-				qPos.add(true);
-			}
 
 			qPos.add(queryDefinition.getStatus());
 			qPos.add(folderId);
@@ -474,11 +469,6 @@ public class DLFolderFinderImpl
 
 			if (!includeMountFolders) {
 				qPos.add(false);
-			}
-			else {
-				qPos.add(false);
-				qPos.add(true);
-				qPos.add(true);
 			}
 
 			qPos.add(queryDefinition.getStatus());
@@ -781,9 +771,7 @@ public class DLFolderFinderImpl
 
 		if (includeMountFolders) {
 			sql = StringUtil.replace(
-				sql, "(DLFolder.hidden_ = ?) AND",
-				"((DLFolder.hidden_ = ?) OR ((DLFolder.mountPoint = ?) AND " +
-					"(DLFolder.hidden_ = ?))) AND");
+				sql, "(DLFolder.mountPoint = ?) AND", StringPool.BLANK);
 		}
 
 		return sql;

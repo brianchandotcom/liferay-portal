@@ -21,6 +21,7 @@ String tabs1 = (String)request.getAttribute("edit_site_assignments.jsp-tabs1");
 
 Group group = (Group)request.getAttribute("edit_site_assignments.jsp-group");
 
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 String orderByCol = ParamUtil.getString(request, "orderByCol", "first-name");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
@@ -40,6 +41,14 @@ searchContainer.setEmptyResultsMessage("no-user-was-found-that-is-a-direct-membe
 %>
 
 <liferay-frontend:management-bar>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
+			portletURL="<%= PortletURLUtil.clone(viewUsersURL, renderResponse) %>"
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
+
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
@@ -119,7 +128,7 @@ searchContainer.setEmptyResultsMessage("no-user-was-found-that-is-a-direct-membe
 				</liferay-ui:panel>
 			</c:when>
 			<c:when test='<%= !tabs1.equals("summary") %>'>
-				<liferay-ui:search-iterator markupView="lexicon" />
+				<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 
 				<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>">
 

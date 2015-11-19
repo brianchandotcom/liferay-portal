@@ -19,10 +19,7 @@
 	value="<%= group %>"
 />
 
-<liferay-ui:search-container-column-text
-	name="name"
->
-
+<liferay-util:buffer var="name">
 	<%= user2.getFullName() %>
 
 	<%
@@ -55,33 +52,102 @@
 			</c:otherwise>
 		</c:choose>
 	</c:if>
-</liferay-ui:search-container-column-text>
+</liferay-util:buffer>
 
-<liferay-ui:search-container-column-text
-	name="screen-name"
-	orderable="<%= true %>"
-	property="screenName"
-/>
+<%
+List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(user2.getUserId(), group.getGroupId());
 
-<c:if test="<%= !selectUsers %>">
+List<Team> teams = TeamLocalServiceUtil.getUserOrUserGroupTeams(group.getGroupId(), user2.getUserId());
 
-	<%
-	List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(user2.getUserId(), group.getGroupId());
+List<String> names = ListUtil.toList(userGroupRoles, UsersAdmin.USER_GROUP_ROLE_TITLE_ACCESSOR);
 
-	List<Team> teams = TeamLocalServiceUtil.getUserOrUserGroupTeams(group.getGroupId(), user2.getUserId());
+names.addAll(ListUtil.toList(teams, Team.NAME_ACCESSOR));
+%>
 
-	List<String> names = ListUtil.toList(userGroupRoles, UsersAdmin.USER_GROUP_ROLE_TITLE_ACCESSOR);
+<c:choose>
+	<c:when test='<%= displayStyle.equals("icon") %>'>
 
-	names.addAll(ListUtil.toList(teams, Team.NAME_ACCESSOR));
-	%>
+		<%
+		row.setCssClass("col-md-2 col-sm-4 col-xs-6 selectable");
+		%>
 
-	<liferay-ui:search-container-column-text
-		name="site-roles-and-teams"
-		value="<%= StringUtil.merge(names, StringPool.COMMA_AND_SPACE) %>"
-	/>
+		<liferay-ui:search-container-column-text>
+			<liferay-frontend:user-vertical-card
+				actionJsp='<%= !selectUsers ? "/user_action.jsp" : StringPool.BLANK %>'
+				actionJspServletContext="<%= application %>"
+				cssClass="entry-display-style"
+				resultRow="<%= row %>"
+				subtitle="<%= user2.getScreenName() %>"
+				title="<%= name %>"
+				userId="<%= user2.getUserId() %>"
+			>
+				<c:if test="<%= !selectUsers %>">
+					<liferay-frontend:vertical-card-footer>
+						<c:choose>
+							<c:when test="<%= !ListUtil.isEmpty(names) %>">
+								<%= StringUtil.merge(names, StringPool.COMMA_AND_SPACE) %>
+							</c:when>
+							<c:otherwise>
+								&nbsp;
+							</c:otherwise>
+						</c:choose>
+					</liferay-frontend:vertical-card-footer>
+				</c:if>
+			</liferay-frontend:user-vertical-card>
+		</liferay-ui:search-container-column-text>
+	</c:when>
+	<c:when test='<%= displayStyle.equals("descriptive") %>'>
+		<liferay-ui:search-container-column-text>
+			<liferay-ui:user-portrait
+				cssClass="user-icon-lg"
+				userId="<%= user2.getUserId() %>"
+			/>
+		</liferay-ui:search-container-column-text>
 
-	<liferay-ui:search-container-column-jsp
-		cssClass="list-group-item-field"
-		path="/user_action.jsp"
-	/>
-</c:if>
+		<liferay-ui:search-container-column-text
+			colspan="<%= 2 %>"
+			>
+			<h5><%= name %></h5>
+
+			<h6 class="text-default">
+				<span><%= user2.getScreenName() %></span>
+			</h6>
+
+			<c:if test="<%= !selectUsers %>">
+				<h6>
+					<%= StringUtil.merge(names, StringPool.COMMA_AND_SPACE) %>
+				</h6>
+			</c:if>
+		</liferay-ui:search-container-column-text>
+
+		<c:if test="<%= !selectUsers %>">
+			<liferay-ui:search-container-column-jsp
+				path="/user_action.jsp"
+			/>
+		</c:if>
+	</c:when>
+	<c:otherwise>
+		<liferay-ui:search-container-column-text
+			name="name"
+			value="<%= name %>"
+		/>
+
+		<liferay-ui:search-container-column-text
+			name="screen-name"
+			orderable="<%= true %>"
+			property="screenName"
+		/>
+
+		<c:if test="<%= !selectUsers %>">
+			<liferay-ui:search-container-column-text
+				name="site-roles-and-teams"
+				value="<%= StringUtil.merge(names, StringPool.COMMA_AND_SPACE) %>"
+			/>
+
+			<liferay-ui:search-container-column-jsp
+				cssClass="list-group-item-field"
+				path="/user_action.jsp"
+			/>
+		</c:if>
+	</c:otherwise>
+</c:choose>

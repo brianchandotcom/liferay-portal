@@ -24,7 +24,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 Group group = (Group)row.getParameter("group");
 %>
 
-<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
+<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.ASSIGN_USER_ROLES) %>">
 		<portlet:renderURL var="assignURL">
 			<portlet:param name="mvcPath" value="/view.jsp" />

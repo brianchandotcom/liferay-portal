@@ -59,7 +59,7 @@ SearchContainer searchContainer = new OrganizationSearch(renderRequest, viewOrga
 searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 %>
 
-<aui:form action="<%= portletURL.toString() %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "submit();" %>'>
+<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "submit();" %>'>
 	<aui:input name="tabs1" type="hidden" value="organizations" />
 	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 	<aui:input name="assignmentsRedirect" type="hidden" />
@@ -157,7 +157,7 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 						<liferay-ui:input-search name='<%= DisplayTerms.KEYWORDS + "_organizations" %>' />
 					</span>
 
-					<liferay-ui:search-iterator paginate="<%= false %>" />
+					<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
 
 					<c:if test="<%= total > searchContainer.getDelta() %>">
 						<a href="<%= viewOrganizationsURL %>"><liferay-ui:message key="view-more" /> &raquo;</a>
@@ -165,11 +165,7 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 				</liferay-ui:panel>
 			</c:when>
 			<c:when test='<%= !tabs1.equals("summary") %>'>
-				<c:if test="<%= PropsValues.SEARCH_CONTAINER_SHOW_PAGINATION_TOP && (results.size() > PropsValues.SEARCH_CONTAINER_SHOW_PAGINATION_TOP_DELTA) %>">
-					<%= formButton %>
-				</c:if>
-
-				<liferay-ui:search-iterator />
+				<liferay-ui:search-iterator markupView="lexicon" />
 
 				<%= formButton %>
 			</c:when>

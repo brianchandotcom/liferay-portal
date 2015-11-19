@@ -59,8 +59,7 @@
 
 <c:if test='<%= tabs1.equals("summary") || tabs2.equals("current") %>'>
 	<liferay-ui:search-container-column-jsp
-		align="right"
-		cssClass="entry-action"
+		cssClass="list-group-item-field"
 		path="/organization_action.jsp"
 	/>
 </c:if>

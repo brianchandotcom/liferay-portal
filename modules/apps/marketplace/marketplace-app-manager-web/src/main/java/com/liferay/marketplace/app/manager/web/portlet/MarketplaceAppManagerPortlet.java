@@ -20,6 +20,7 @@ import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.marketplace.app.manager.web.constants.MarketplaceAppManagerPortletKeys;
 import com.liferay.marketplace.bundle.BundleManagerUtil;
+import com.liferay.marketplace.exception.FileExtensionException;
 import com.liferay.marketplace.service.AppService;
 import com.liferay.portal.kernel.deploy.DeployManagerUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -156,6 +157,13 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 			if (ArrayUtil.isEmpty(bytes)) {
 				SessionErrors.add(
 					actionRequest, UploadException.class.getName());
+			}
+			else if (!fileName.endsWith(".jar") &&
+					 !fileName.endsWith(".lpkg") &&
+					 !fileName.endsWith(".war")) {
+
+				SessionErrors.add(
+					actionRequest, FileExtensionException.class.getName());
 			}
 			else {
 				String deployDir = PrefsPropsUtil.getString(

@@ -190,6 +190,7 @@ public abstract class UpgradeProcess
 			}
 		}
 		catch (Exception e) {
+			_log.error(e, e);
 		}
 		finally {
 			DataAccess.cleanUp(null, ps, rs);
@@ -217,6 +218,7 @@ public abstract class UpgradeProcess
 			}
 		}
 		catch (Exception e) {
+			_log.error(e, e);
 		}
 		finally {
 			DataAccess.cleanUp(null, ps, rs);

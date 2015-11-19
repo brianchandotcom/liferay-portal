@@ -97,6 +97,21 @@
 		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${entryContent}" />
 	</command>
 
+	<command name="addContentWithInlineImage">
+		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${entryContent}" />
+
+		<execute function="Click" locator1="AlloyEditor#CONTENT_FIELD" />
+
+		<execute function="Click" locator1="AlloyEditor#CONTENT_ADD_BUTTON" />
+
+		<execute function="Click" locator1="AlloyEditor#CONTENT_ADD_MENUBAR_IMAGE" />
+
+		<execute macro="ItemSelector#uploadFile">
+			<var name="navTab" value="${navTab}" />
+			<var name="uploadFileName" value="${uploadFileName}" />
+		</execute>
+	</command>
+
 	<command name="addCoverImage">
 		<execute function="AssertClick" locator1="BlogsEntry#ENTRY_COVER_IMAGE_SELECT_FILE" value1="Select File" />
 	</command>
@@ -1380,7 +1395,26 @@
 			</then>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="BlogsEntry#CONTENT" value1="${entryContent}" />
+		<if>
+			<isset var="entryContent" />
+			<then>
+				<execute function="AssertTextEquals" locator1="BlogsEntry#CONTENT" value1="${entryContent}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="entryContentBold" />
+			<then>
+				<execute function="AssertTextEquals#assertPartialText" locator1="BlogsEntry#CONTENT_HTML_BOLD" value1="${entryContentBold}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="entryContentItalics" />
+			<then>
+				<execute function="AssertTextEquals#assertPartialText" locator1="BlogsEntry#CONTENT_HTML_ITALICS" value1="${entryContentItalics}" />
+			</then>
+		</if>
 	</command>
 
 	<command name="viewEntryAsGuestViaBlogsAggregatorPG">
@@ -1445,6 +1479,12 @@
 		</if>
 
 		<execute function="AssertTextEquals" locator1="BlogsEntry#CONTENT" value1="${entryContent}" />
+	</command>
+
+	<command name="viewInlineImage">
+		<var name="key_uploadFileName" value="${uploadFileName}" />
+
+		<execute function="AssertVisible" locator1="BlogsEntry#CONTENT_INLINE_IMAGE" value1="${uploadFileName}" />
 	</command>
 
 	<command name="viewNoAddPermissions">

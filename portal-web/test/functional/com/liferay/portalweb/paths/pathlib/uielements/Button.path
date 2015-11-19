@@ -289,6 +289,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EDITOR_SWITCH</td>
+	<td>//button[contains(@id,'EditorSwitch')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EXPIRE</td>
 	<td>//button[contains(.,'Expire')]</td>
 	<td></td>

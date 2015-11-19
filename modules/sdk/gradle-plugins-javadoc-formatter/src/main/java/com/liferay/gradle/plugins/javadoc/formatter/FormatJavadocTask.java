@@ -27,22 +27,11 @@ import org.gradle.api.Project;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.tasks.JavaExec;
-import org.gradle.process.JavaExecSpec;
 
 /**
  * @author Andrea Di Giorgi
  */
 public class FormatJavadocTask extends JavaExec {
-
-	@Override
-	public JavaExecSpec args(Iterable<?> args) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public JavaExec args(Object... args) {
-		throw new UnsupportedOperationException();
-	}
 
 	@Override
 	public JavaExec classpath(Object... paths) {
@@ -51,29 +40,12 @@ public class FormatJavadocTask extends JavaExec {
 
 	@Override
 	public void exec() {
-		super.setArgs(getArgs());
+		setArgs(getCompleteArgs());
+
 		super.setClasspath(getClasspath());
 		super.setWorkingDir(getWorkingDir());
 
 		super.exec();
-	}
-
-	@Override
-	public List<String> getArgs() {
-		List<String> args = new ArrayList<>();
-
-		args.add("javadoc.author=" + getAuthor());
-		args.add("javadoc.init=" + isInitializeMissingJavadocs());
-		args.add(
-			"javadoc.input.dir=" + FileUtil.getAbsolutePath(getInputDir()));
-		args.add("javadoc.limit=" + StringUtil.merge(getLimits(), ","));
-		args.add(
-			"javadoc.lowest.supported.java.version=" +
-				getLowestSupportedJavaVersion());
-		args.add("javadoc.output.file.prefix=" + getOutputFilePrefix());
-		args.add("javadoc.update=" + isUpdateJavadocs());
-
-		return args;
 	}
 
 	public String getAuthor() {
@@ -129,11 +101,6 @@ public class FormatJavadocTask extends JavaExec {
 		return _javadocFormatterArgs.isUpdateJavadocs();
 	}
 
-	@Override
-	public JavaExec setArgs(Iterable<?> applicationArgs) {
-		throw new UnsupportedOperationException();
-	}
-
 	public void setAuthor(String author) {
 		_javadocFormatterArgs.setAuthor(author);
 	}
@@ -176,6 +143,23 @@ public class FormatJavadocTask extends JavaExec {
 	@Override
 	public void setWorkingDir(Object dir) {
 		throw new UnsupportedOperationException();
+	}
+
+	protected List<String> getCompleteArgs() {
+		List<String> args = new ArrayList<>(getArgs());
+
+		args.add("javadoc.author=" + getAuthor());
+		args.add("javadoc.init=" + isInitializeMissingJavadocs());
+		args.add(
+			"javadoc.input.dir=" + FileUtil.getAbsolutePath(getInputDir()));
+		args.add("javadoc.limit=" + StringUtil.merge(getLimits(), ","));
+		args.add(
+			"javadoc.lowest.supported.java.version=" +
+				getLowestSupportedJavaVersion());
+		args.add("javadoc.output.file.prefix=" + getOutputFilePrefix());
+		args.add("javadoc.update=" + isUpdateJavadocs());
+
+		return args;
 	}
 
 	private final JavadocFormatterArgs _javadocFormatterArgs =

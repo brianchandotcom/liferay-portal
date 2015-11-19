@@ -26,12 +26,12 @@
 <!--FORMS_TABLE-->
 <tr>
 	<td>FORMS_TABLE_NAME</td>
-	<td>xpath=(//div[contains(@id,'searchContainer')]//tr[contains(.,'${key_formName}')]/td/a)[1]</td>
+	<td>//div[contains(@id,'searchContainer')]//h5[contains(.,'${key_formName}')]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FORMS_TABLE_DESCRIPTION</td>
-	<td>xpath=(//div[contains(@id,'searchContainer')]//tr[contains(.,'${key_formName}')]/td/a)[2]</td>
+	<td>//div[contains(@id,'searchContainer')]//h6[contains(.,'${key_formName}')]/a</td>
 	<td></td>
 </tr>
 <tr>

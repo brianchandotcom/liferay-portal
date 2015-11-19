@@ -315,7 +315,7 @@
 			<var name="siteScopeName" value="${siteScopeName}" />
 		</execute>
 
-		<var name="key_listEntry" value="${teamName}" />
+		<var name="key_assetEntry" value="${teamName}" />
 
 		<execute function="Click" locator1="Icon#DESCRIPTIVE_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
@@ -349,7 +349,7 @@
 	</command>
 
 	<command name="gotoWCArticle">
-		<var name="key_descriptiveEntry" value="${webContentTitle}" />
+		<var name="key_assetEntry" value="${webContentTitle}" />
 
 		<execute function="Click" locator1="Icon#DESCRIPTIVE_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />

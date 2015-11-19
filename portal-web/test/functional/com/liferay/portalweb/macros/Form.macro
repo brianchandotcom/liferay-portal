@@ -68,4 +68,8 @@
 		<execute function="AssertTextEquals" locator1="Message#ERROR_REQUEST_FAILED_TO_COMPLETE" value1="Your request failed to complete." />
 		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please enter a valid form name." />
 	</command>
+
+	<command name="viewFormName">
+		<execute function="AssertTextEquals" locator1="Form#NAME_FIELD" value1="${formName}" />
+	</command>
 </definition>

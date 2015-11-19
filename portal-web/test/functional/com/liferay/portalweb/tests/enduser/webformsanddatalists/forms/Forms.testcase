@@ -121,6 +121,117 @@
 		</execute>
 	</command>
 
+	<command name="SearchFormRecordMultipleEntries" priority="4">
+		<description message="This is a use case for LPS-59336." />
+
+		<var name="fieldValueList" value="testEntry1,exampleText,sampleAnswer" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoAdd" />
+
+		<execute macro="Form#editName">
+			<var name="formName" value="Test Form" />
+		</execute>
+
+		<execute macro="Form#editDescription">
+			<var name="formDescription" value="Test Form Description" />
+		</execute>
+
+		<execute macro="Form#gotoAddFirstField">
+			<var name="fieldType" value="Text" />
+		</execute>
+
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="label" />
+			<var name="fieldValue" value="Text Field" />
+		</execute>
+
+		<execute macro="FormFields#viewFormName">
+			<var name="fieldName" value="TextField" />
+		</execute>
+
+		<execute macro="FormFields#save" />
+
+		<execute macro="Form#save" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Form Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageName" value="Form Page" />
+			<var name="portletName" value="Form" />
+		</execute>
+
+		<execute macro="FormPortletNavigator#gotoSelectForm" />
+
+		<execute macro="FormPortletConfiguration#selectForm">
+			<var name="formName" value="Test Form" />
+		</execute>
+
+		<execute macro="FormPortletConfiguration#save" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Form Page" />
+		</execute>
+
+		<for list="${fieldValueList}" param="fieldValue">
+			<execute macro="FormFields#editText">
+				<var name="fieldName" value="TextField" />
+				<var name="fieldValue" value="${fieldValue}" />
+			</execute>
+
+			<execute macro="FormPortlet#submit" />
+		</for>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoViewEntries">
+			<var name="formName" value="Test Form" />
+		</execute>
+
+		<execute macro="FormsAdmin#viewFormEntry">
+			<var name="fieldLabel" value="Text Field" />
+			<var name="fieldValue" value="testEntry1" />
+		</execute>
+
+		<for list="${fieldValueList}" param="fieldValue">
+			<execute macro="FormsAdmin#searchFormEntry">
+				<var name="searchTerm" value="${fieldValue}" />
+			</execute>
+
+			<execute macro="FormsAdmin#viewFormEntry">
+				<var name="fieldLabel" value="Text Field" />
+				<var name="fieldValue" value="${fieldValue}" />
+			</execute>
+
+			<for list="${fieldValueList}" param="fieldValueNotVisible">
+				<if>
+					<not>
+						<equals arg1="${fieldValueNotVisible}" arg2="${fieldValue}" />
+					</not>
+					<then>
+						<execute macro="FormsAdmin#viewEntryNotPresent">
+							<var name="fieldLabel" value="Text Field" />
+							<var name="fieldValue" value="${fieldValueNotVisible}" />
+						</execute>
+					</then>
+				</if>
+			</for>
+		</for>
+
+		<execute macro="FormsAdmin#searchFormEntry">
+			<var name="searchTerm" value="otherEntry" />
+		</execute>
+
+		<execute macro="FormsAdmin#viewNoFormEntries" />
+	</command>
+
 	<command name="SubmitForm3x3Layout" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Forms" />

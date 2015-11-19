@@ -883,22 +883,8 @@ public class PoshiRunnerContext {
 						propertyNames[i], propertyValues[i]));
 			}
 
-			int maxGroupSize = PropsValues.TEST_BATCH_MAX_GROUP_SIZE;
-			double totalTestCount = classCommandNames.size();
-
-			double totalGroupCount = Math.ceil(totalTestCount / maxGroupSize);
-
-			double groupSize = Math.ceil(totalTestCount / totalGroupCount);
-
-			Map<Integer, List<String>> classCommandNameGroups = new HashMap<>();
-			int classCommandNameIndex = 0;
-
-			for (List<String> partition : Lists.partition(
-				classCommandNames, (int)groupSize)) {
-
-				classCommandNameGroups.put(classCommandNameIndex, partition);
-				classCommandNameIndex++;
-			}
+			Map<Integer, List<String>> classCommandNameGroups =
+				_getClassCommandNameGroups(classCommandNames);
 
 			for (int i = 0; i < classCommandNameGroups.size(); i++) {
 				sb.append("RUN_TEST_CASE_METHOD_GROUP_");

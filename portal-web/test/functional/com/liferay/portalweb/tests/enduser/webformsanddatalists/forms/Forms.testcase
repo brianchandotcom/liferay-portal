@@ -195,6 +195,11 @@
 			<var name="formName" value="Test Form" />
 		</execute>
 
+		<execute macro="FormsAdmin#viewFormEntry">
+			<var name="fieldLabel" value="Text Field" />
+			<var name="fieldValue" value="testEntry1" />
+		</execute>
+
 		<for list="${fieldValueList}" param="fieldValue">
 			<execute macro="FormsAdmin#searchFormEntry">
 				<var name="searchTerm" value="${fieldValue}" />

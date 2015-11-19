@@ -17,9 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = (String)request.getAttribute("edit_site_assignments.jsp-tabs1");
-String tabs2 = (String)request.getAttribute("edit_site_assignments.jsp-tabs2");
-
 int cur = (Integer)request.getAttribute("edit_site_assignments.jsp-cur");
 
 Group group = (Group)request.getAttribute("edit_site_assignments.jsp-group");
@@ -30,30 +27,18 @@ PortletURL viewUsersURL = renderResponse.createRenderURL();
 
 viewUsersURL.setParameter("mvcPath", "/view.jsp");
 viewUsersURL.setParameter("tabs1", "users");
-viewUsersURL.setParameter("tabs2", tabs2);
+viewUsersURL.setParameter("tabs2", "available");
 viewUsersURL.setParameter("redirect", currentURL);
 viewUsersURL.setParameter("groupId", String.valueOf(group.getGroupId()));
 
-SiteMembershipChecker siteMembershipChecker = null;
-
-if (!tabs1.equals("summary") && !tabs2.equals("current")) {
-	siteMembershipChecker = new SiteMembershipChecker(renderResponse, group);
-}
-
-String emptyResultsMessage = UserSearch.EMPTY_RESULTS_MESSAGE;
-
-if (tabs2.equals("current")) {
-	emptyResultsMessage ="no-user-was-found-that-is-a-direct-member-of-this-site";
-}
+SiteMembershipChecker siteMembershipChecker = new SiteMembershipChecker(renderResponse, group);
 
 SearchContainer searchContainer = new UserSearch(renderRequest, viewUsersURL);
-
-searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 %>
 
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="tabs1" type="hidden" value="users" />
-	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
+	<aui:input name="tabs2" type="hidden" value="available" />
 	<aui:input name="assignmentsRedirect" type="hidden" />
 	<aui:input name="groupId" type="hidden" value="<%= String.valueOf(group.getGroupId()) %>" />
 	<aui:input name="addUserIds" type="hidden" />
@@ -72,11 +57,7 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 
 		LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
-		if (tabs1.equals("summary") || tabs2.equals("current")) {
-			userParams.put("inherit", Boolean.TRUE);
-			userParams.put("usersGroups", Long.valueOf(group.getGroupId()));
-		}
-		else if (group.isLimitedToParentSiteMembers()) {
+		if (group.isLimitedToParentSiteMembers()) {
 			userParams.put("inherit", Boolean.TRUE);
 			userParams.put("usersGroups", Long.valueOf(group.getParentGroupId()));
 		}
@@ -104,61 +85,28 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 			rowIdProperty="screenName"
 		>
 
+			<%
+			boolean selectUsers = true;
+			%>
+
 			<%@ include file="/user_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
-		<liferay-util:buffer var="formButton">
-			<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>">
-				<c:choose>
-					<c:when test='<%= tabs2.equals("current") %>'>
+		<liferay-ui:search-iterator markupView="lexicon" />
 
-						<%
-						viewUsersURL.setParameter("tabs2", "available");
-						viewUsersURL.setParameter("redirect", currentURL);
-						%>
+		<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>">
 
-						<liferay-frontend:add-menu>
-							<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "assign-users") %>' url="<%= viewUsersURL.toString() %>" />
-						</liferay-frontend:add-menu>
+			<%
+			portletURL.setParameter("tabs2", "current");
+			portletURL.setParameter("cur", String.valueOf(cur));
 
-						<%
-						viewUsersURL.setParameter("tabs2", "current");
-						%>
+			String taglibOnClick = renderResponse.getNamespace() + "updateGroupUsers('" + portletURL.toString() + "');";
+			%>
 
-					</c:when>
-					<c:otherwise>
-
-						<%
-						portletURL.setParameter("tabs2", "current");
-						portletURL.setParameter("cur", String.valueOf(cur));
-
-						String taglibOnClick = renderResponse.getNamespace() + "updateGroupUsers('" + portletURL.toString() + "');";
-						%>
-
-						<aui:button-row>
-							<aui:button onClick="<%= taglibOnClick %>" primary="<%= true %>" value="save" />
-						</aui:button-row>
-					</c:otherwise>
-				</c:choose>
-			</c:if>
-		</liferay-util:buffer>
-
-		<c:choose>
-			<c:when test='<%= tabs1.equals("summary") && (total > 0) %>'>
-				<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" persistState="<%= true %>" title='<%= LanguageUtil.format(request, (total > 1) ? "x-users" : "x-user", total, false) %>'>
-					<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
-
-					<c:if test="<%= total > searchContainer.getDelta() %>">
-						<a href="<%= HtmlUtil.escapeAttribute(viewUsersURL.toString()) %>"><liferay-ui:message key="view-more" /> &raquo;</a>
-					</c:if>
-				</liferay-ui:panel>
-			</c:when>
-			<c:when test='<%= !tabs1.equals("summary") %>'>
-				<liferay-ui:search-iterator markupView="lexicon" />
-
-				<%= formButton %>
-			</c:when>
-		</c:choose>
+			<aui:button-row>
+				<aui:button onClick="<%= taglibOnClick %>" primary="<%= true %>" value="save" />
+			</aui:button-row>
+		</c:if>
 	</liferay-ui:search-container>
 </aui:form>
 

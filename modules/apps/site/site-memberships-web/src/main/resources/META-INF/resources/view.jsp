@@ -138,8 +138,11 @@ request.setAttribute("edit_site_assignments.jsp-portletURL", portletURL);
 	</c:when>
 	<c:when test='<%= tabs1.equals("users") %>'>
 		<c:choose>
-			<c:when test="<%= selUser == null %>">
+			<c:when test='<%= (selUser == null) && tabs2.equals("current") %>'>
 				<liferay-util:include page="/users.jsp" servletContext="<%= application %>" />
+			</c:when>
+			<c:when test='<%= (selUser == null) && tabs2.equals("available") %>'>
+				<liferay-util:include page="/select_users.jsp" servletContext="<%= application %>" />
 			</c:when>
 			<c:otherwise>
 				<liferay-util:include page="/users_roles.jsp" servletContext="<%= application %>" />

@@ -63,7 +63,7 @@
 	property="screenName"
 />
 
-<c:if test='<%= tabs1.equals("summary") || tabs2.equals("current") %>'>
+<c:if test="<%= !selectUsers %>">
 
 	<%
 	List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(user2.getUserId(), group.getGroupId());

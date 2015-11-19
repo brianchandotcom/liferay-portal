@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.portlet.flags.service.http;
+package com.liferay.flags.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
-import com.liferay.portlet.flags.service.FlagsEntryServiceUtil;
+import com.liferay.flags.service.FlagsEntryServiceUtil;
 
 import java.rmi.RemoteException;
 

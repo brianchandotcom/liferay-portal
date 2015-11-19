@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portlet.flags.service.impl;
+package com.liferay.flags.service.impl;
 
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.flags.messaging.FlagsRequest;
-import com.liferay.portlet.flags.service.base.FlagsEntryServiceBaseImpl;
+import com.liferay.flags.messaging.FlagsRequest;
+import com.liferay.flags.service.base.FlagsEntryServiceBaseImpl;
 
 /**
  * @author Julio Camarero

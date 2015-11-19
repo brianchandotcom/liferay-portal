@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.flags.service.http;
+package com.liferay.flags.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.security.auth.HttpPrincipal;
 import com.liferay.portal.service.http.TunnelUtil;
 
-import com.liferay.portlet.flags.service.FlagsEntryServiceUtil;
+import com.liferay.flags.service.FlagsEntryServiceUtil;
 
 /**
  * Provides the HTTP utility for the

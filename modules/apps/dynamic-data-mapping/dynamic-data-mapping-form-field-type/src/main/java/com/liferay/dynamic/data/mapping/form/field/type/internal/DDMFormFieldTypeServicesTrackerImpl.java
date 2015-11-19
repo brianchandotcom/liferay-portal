@@ -129,7 +129,7 @@ public class DDMFormFieldTypeServicesTrackerImpl
 		_ddmFormFieldRendererServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, DDMFormFieldRenderer.class,
-			"ddm.form.field.type.name");
+				"ddm.form.field.type.name");
 
 		_ddmFormFieldTypeServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(

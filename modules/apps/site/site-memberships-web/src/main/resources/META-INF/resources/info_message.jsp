@@ -20,7 +20,7 @@
 Group group = (Group)request.getAttribute("edit_site_assignments.jsp-group");
 %>
 
-<div class="site-membership-type">
+<div class="alert alert-info container-fluid-1280 site-membership-type">
 	<liferay-ui:icon
 		iconCssClass="icon-signin"
 		label="<%= true %>"
@@ -38,16 +38,18 @@ Group group = (Group)request.getAttribute("edit_site_assignments.jsp-group");
 		<c:if test="<%= pendingRequests > 0 %>">
 			<br />
 
-			<portlet:renderURL var="viewMembershipRequestsURL">
+			<portlet:renderURL var="viewMembershipRequestsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 				<portlet:param name="mvcPath" value="/view_membership_requests.jsp" />
 				<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 			</portlet:renderURL>
 
 			<liferay-ui:icon
+				cssClass="alert-link"
 				iconCssClass="icon-tasks"
 				label="<%= true %>"
 				message='<%= LanguageUtil.format(request, "there-are-x-membership-requests-pending", String.valueOf(pendingRequests), false) %>'
 				url="<%= viewMembershipRequestsURL %>"
+				useDialog="<%= true %>"
 			/>
 		</c:if>
 	</c:if>

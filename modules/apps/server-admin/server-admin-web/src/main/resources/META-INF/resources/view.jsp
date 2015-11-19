@@ -72,7 +72,7 @@
 					form: document.<portlet:namespace />fm,
 					namespace: '<portlet:namespace />',
 					redirectUrl: '<%= redirectURL %>',
-					submitButtonSelector: '.save-server-button', 
+					submitButton: '.save-server-button',
 					url: '<%= editServerURL %>'
 				}
 			);

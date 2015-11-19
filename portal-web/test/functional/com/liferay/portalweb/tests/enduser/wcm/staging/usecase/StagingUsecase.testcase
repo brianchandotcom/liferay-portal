@@ -3130,6 +3130,8 @@
 			<var name="site" value="Site Name" />
 		</execute>
 
+		<execute macro="Staging#gotoPublishToLive" />
+
 		<execute macro="Staging#configurePublishToLive">
 			<var name="checkPageName" value="Page 2" />
 		</execute>

@@ -17,6 +17,7 @@ package com.liferay.wiki.navigation.web.upgrade;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.wiki.navigation.web.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.wiki.navigation.web.upgrade.v1_0_0.UpgradePortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
@@ -36,7 +37,7 @@ public class WikiNavigationWebUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"com.liferay.wiki.navigation.web", "0.0.1", "1.0.0",
-			new UpgradePortletPreferences());
+			new UpgradePortletPreferences(), new UpgradePortletId());
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

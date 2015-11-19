@@ -27,29 +27,31 @@ ConfigurationModel factoryConfigurationModel = (ConfigurationModel)request.getAt
 	<liferay-ui:header backURL="<%= String.valueOf(renderResponse.createRenderURL()) %>" title="<%= factoryConfigurationModel.getName() %>" />
 </c:if>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
+<c:if test="<%= Validator.isNotNull(configurationCategories) %>">
+	<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+		<aui:nav cssClass="navbar-nav">
 
-		<%
-		for (String curConfigurationCategory : configurationCategories) {
-		%>
+			<%
+			for (String curConfigurationCategory : configurationCategories) {
+			%>
 
-			<portlet:renderURL var="configurationCategoryURL">
-				<portlet:param name="configurationCategory" value="<%= curConfigurationCategory %>" />
-			</portlet:renderURL>
+				<portlet:renderURL var="configurationCategoryURL">
+					<portlet:param name="configurationCategory" value="<%= curConfigurationCategory %>" />
+				</portlet:renderURL>
 
-			<aui:nav-item
-				cssClass='<%= curConfigurationCategory.equals(configurationCategory) ? "active" : "" %>'
-				href="<%= configurationCategoryURL %>"
-				label="<%= curConfigurationCategory %>"
-			/>
+				<aui:nav-item
+					cssClass='<%= curConfigurationCategory.equals(configurationCategory) ? "active" : "" %>'
+					href="<%= configurationCategoryURL %>"
+					label="<%= curConfigurationCategory %>"
+				/>
 
-		<%
-		}
-		%>
+			<%
+			}
+			%>
 
-	</aui:nav>
-</aui:nav-bar>
+		</aui:nav>
+	</aui:nav-bar>
+</c:if>
 
 <div class="container-fluid-1280">
 	<liferay-ui:search-container

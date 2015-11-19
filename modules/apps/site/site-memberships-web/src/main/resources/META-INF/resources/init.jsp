@@ -30,7 +30,6 @@ page import="com.liferay.portal.GroupKeyException" %><%@
 page import="com.liferay.portal.MembershipRequestCommentsException" %><%@
 page import="com.liferay.portal.RequiredGroupException" %><%@
 page import="com.liferay.portal.kernel.dao.orm.QueryUtil" %><%@
-page import="com.liferay.portal.kernel.dao.search.DisplayTerms" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@

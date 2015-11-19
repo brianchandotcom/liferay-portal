@@ -22,14 +22,6 @@ String tabs2 = (String)request.getAttribute("edit_site_assignments.jsp-tabs2");
 
 int cur = (Integer)request.getAttribute("edit_site_assignments.jsp-cur");
 
-String redirect = ParamUtil.getString(request, "redirect");
-
-if (Validator.isNull(redirect)) {
-	PortletURL portletURL = renderResponse.createRenderURL();
-
-	redirect = portletURL.toString();
-}
-
 Group group = (Group)request.getAttribute("edit_site_assignments.jsp-group");
 
 PortletURL portletURL = (PortletURL)request.getAttribute("edit_site_assignments.jsp-portletURL");
@@ -72,11 +64,6 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 		searchContainer="<%= searchContainer %>"
 		var="organizationSearchContainer"
 	>
-		<c:if test='<%= !tabs1.equals("summary") %>'>
-			<liferay-ui:input-search />
-
-			<div class="separator"><!-- --></div>
-		</c:if>
 
 		<%
 		OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)organizationSearchContainer.getSearchTerms();
@@ -153,10 +140,6 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 		<c:choose>
 			<c:when test='<%= tabs1.equals("summary") && (total > 0) %>'>
 				<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" persistState="<%= true %>" title='<%= LanguageUtil.format(request, (total > 1) ? "x-organizations" : "x-organization", total, false) %>'>
-					<span class="form-search">
-						<liferay-ui:input-search name='<%= DisplayTerms.KEYWORDS + "_organizations" %>' />
-					</span>
-
 					<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
 
 					<c:if test="<%= total > searchContainer.getDelta() %>">
@@ -174,20 +157,6 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 </aui:form>
 
 <aui:script>
-	function <portlet:namespace />submit() {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		var keywords = form.fm('<%= DisplayTerms.KEYWORDS %>_organizations').val();
-
-		var url = '<portlet:renderURL><portlet:param name="tabs1" value="organizations" /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" /></portlet:renderURL>';
-
-		if (keywords) {
-			form.fm('<%= DisplayTerms.KEYWORDS %>').val(keywords);
-		}
-
-		submitForm(form, url);
-	}
-
 	function <portlet:namespace />updateGroupOrganizations(assignmentsRedirect) {
 		var Util = Liferay.Util;
 

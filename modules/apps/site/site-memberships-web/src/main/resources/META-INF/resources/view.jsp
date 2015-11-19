@@ -114,6 +114,12 @@ request.setAttribute("edit_site_assignments.jsp-portletURL", portletURL);
 
 				<aui:nav-item href="<%= userGroupsURL.toString() %>" label="user-groups" selected='<%= tabs1.equals("user-groups") %>' />
 			</aui:nav>
+
+			<aui:nav-bar-search>
+				<aui:form action="<%= portletURL.toString() %>" name="searchFm">
+					<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
+				</aui:form>
+			</aui:nav-bar-search>
 		</aui:nav-bar>
 	</c:if>
 </c:if>

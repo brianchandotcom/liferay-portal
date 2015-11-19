@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.LockManagerUtil;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
@@ -49,7 +51,15 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 	@Override
 	public void deleteThread(long threadId) throws PortalException {
 		if (LockManagerUtil.isLocked(MBThread.class.getName(), threadId)) {
-			throw new LockedThreadException();
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("Thread is locked for {className=");
+			sb.append(MBThread.class.getName());
+			sb.append(", threadId=");
+			sb.append(threadId);
+			sb.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new LockedThreadException(sb.toString());
 		}
 
 		List<MBMessage> messages = mbMessagePersistence.findByThreadId(
@@ -295,7 +305,15 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 		throws PortalException {
 
 		if (LockManagerUtil.isLocked(MBThread.class.getName(), threadId)) {
-			throw new LockedThreadException();
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("Thread is locked for {className=");
+			sb.append(MBThread.class.getName());
+			sb.append(", threadId=");
+			sb.append(threadId);
+			sb.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new LockedThreadException(sb.toString());
 		}
 
 		MBThread thread = mbThreadLocalService.getThread(threadId);
@@ -329,7 +347,15 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 	@Override
 	public MBThread moveThreadToTrash(long threadId) throws PortalException {
 		if (LockManagerUtil.isLocked(MBThread.class.getName(), threadId)) {
-			throw new LockedThreadException();
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("Thread is locked for {className=");
+			sb.append(MBThread.class.getName());
+			sb.append(", threadId=");
+			sb.append(threadId);
+			sb.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new LockedThreadException(sb.toString());
 		}
 
 		List<MBMessage> messages = mbMessagePersistence.findByThreadId(

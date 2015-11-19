@@ -17,6 +17,8 @@ package com.liferay.message.boards.lar;
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Layout;
@@ -148,7 +150,15 @@ public class MBDiscussionStagedModelDataHandler
 						rootMessage.getThreadId());
 			}
 			else {
-				throw new NoSuchDiscussionException();
+				StringBundler sb = new StringBundler(5);
+
+				sb.append("No discussion exists for {className=");
+				sb.append(discussion.getClassName());
+				sb.append(", classPK=");
+				sb.append(newClassPK);
+				sb.append(StringPool.CLOSE_CURLY_BRACE);
+
+				throw new NoSuchDiscussionException(sb.toString());
 			}
 		}
 

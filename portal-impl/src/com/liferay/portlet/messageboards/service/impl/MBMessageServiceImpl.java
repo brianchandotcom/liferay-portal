@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -219,7 +220,15 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		if (LockManagerUtil.isLocked(
 				MBThread.class.getName(), parentMessage.getThreadId())) {
 
-			throw new LockedThreadException();
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("Thread is locked for {className=");
+			sb.append(MBThread.class.getName());
+			sb.append(", threadId=");
+			sb.append(parentMessage.getThreadId());
+			sb.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new LockedThreadException(sb.toString());
 		}
 
 		if (!MBCategoryPermission.contains(
@@ -254,7 +263,15 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		if (LockManagerUtil.isLocked(
 				MBThread.class.getName(), message.getThreadId())) {
 
-			throw new LockedThreadException();
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("Thread is locked for {className=");
+			sb.append(MBThread.class.getName());
+			sb.append(", threadId=");
+			sb.append(message.getThreadId());
+			sb.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new LockedThreadException(sb.toString());
 		}
 
 		MBCategoryPermission.contains(
@@ -762,7 +779,15 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		if (LockManagerUtil.isLocked(
 				MBThread.class.getName(), message.getThreadId())) {
 
-			throw new LockedThreadException();
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("Thread is locked for {className=");
+			sb.append(MBThread.class.getName());
+			sb.append(", threadId=");
+			sb.append(message.getThreadId());
+			sb.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new LockedThreadException(sb.toString());
 		}
 
 		if (!MBCategoryPermission.contains(

@@ -38,7 +38,7 @@ public class MBSubscriptionSender
 
 	public void addMailingListSubscriber(long groupId, long categoryId) {
 		if (_calledAddMailingListSubscriber) {
-			throw new IllegalStateException();
+			throw new IllegalStateException("Method may only be called once");
 		}
 
 		_calledAddMailingListSubscriber = true;

@@ -1,23 +1,38 @@
 AUI.add(
 	'liferay-admin',
 	function(A) {
-		var AObject = A.Object;
 		var Lang = A.Lang;
 		var Poller = Liferay.Poller;
 
+		var CSS_ALERT = 'alert';
+
 		var STR_CLICK = 'click';
 
-		var STR_PORTLET_MSG_ERROR = 'alert alert-danger';
+		var STR_FORM = 'form';
 
-		var STR_PORTLET_MSG_SUCCESS = 'alert alert-success';
+		var STR_URL = 'url';
 
 		var WIN = A.config.win;
+
+		var CSS_ALERT_DANGER = CSS_ALERT + ' alert-danger';
+
+		var CSS_ALERT_SUCCESS = CSS_ALERT + ' alert-success';
 
 		var Admin = A.Component.create(
 			{
 				ATTRS: {
 					form: {
 						setter: A.one,
+						value: null
+					},
+
+					redirectUrl: {
+						validator: Lang.isString,
+						value: null
+					},
+
+					submitButton: {
+						validator: Lang.isString,
 						value: null
 					},
 
@@ -38,20 +53,26 @@ AUI.add(
 
 						instance._errorCount = 0;
 
-						var eventHandles = [];
+						instance._eventHandles = [];
+
+						var submitButton = instance.one(instance.get('submitButton'));
+
+						if (submitButton) {
+							instance._eventHandles.push(
+								submitButton.on(STR_CLICK, instance._submitForm, instance)
+							);
+						}
 
 						var installXugglerButton = instance.one('#installXugglerButton');
 
 						if (installXugglerButton) {
-							eventHandles.push(
+							instance._eventHandles.push(
 								installXugglerButton.on(STR_CLICK, instance._installXuggler, instance)
 							);
 
 							instance._installXugglerButton = installXugglerButton;
 
 							instance._xugglerProgressInfo = instance.one('#xugglerProgressInfo');
-
-							instance._eventHandles = eventHandles;
 						}
 					},
 
@@ -63,19 +84,33 @@ AUI.add(
 						Poller.removeListener(instance.ID);
 					},
 
-					_installXuggler: function() {
+					_addInputsFromData: function(node) {
 						var instance = this;
 
-						var xugglerProgressInfo = instance._xugglerProgressInfo;
+						var form = instance.get(STR_FORM);
+
+						var data = node.getData();
+
+						for (var key in data) {
+							if (data.hasOwnProperty(key)) {
+								var namespaceKey = instance.ns(key);
+
+								form.append('<input id="' + namespaceKey + '" name="' + namespaceKey + '" type="hidden" value="' + data[key] + '" />');
+							}
+						}
+					},
+
+					_installXuggler: function(event) {
+						var instance = this;
 
 						Liferay.Util.toggleDisabled(instance._installXugglerButton, true);
 
-						var form = instance.get('form');
+						var form = instance.get(STR_FORM);
 
-						form.get(instance.ns('cmd')).val('installXuggler');
+						instance._addInputsFromData(event.currentTarget);
 
 						var ioRequest = A.io.request(
-							instance.get('url'),
+							instance.get(STR_URL),
 							{
 								autoLoad: false,
 								dataType: 'JSON',
@@ -103,12 +138,12 @@ AUI.add(
 
 						var xugglerProgressInfo = instance._xugglerProgressInfo;
 
-						var cssClass = STR_PORTLET_MSG_ERROR;
+						var cssClass = CSS_ALERT_DANGER;
 
 						var message = '';
 
 						if (responseData.success) {
-							cssClass = STR_PORTLET_MSG_SUCCESS;
+							cssClass = CSS_ALERT_SUCCESS;
 
 							message = Liferay.Language.get('xuggler-has-been-installed-you-need-to-reboot-your-server-to-apply-changes');
 						}
@@ -119,6 +154,25 @@ AUI.add(
 						xugglerProgressInfo.html(message);
 
 						xugglerProgressInfo.addClass(cssClass);
+					},
+
+					_submitForm: function(event) {
+						var instance = this;
+
+						var form = instance.get(STR_FORM);
+
+						var redirect = instance.one('#redirect', form);
+
+						if (redirect) {
+							redirect.val(instance.get('redirectURL'));
+						}
+
+						instance._addInputsFromData(event.currentTarget);
+
+						submitForm(
+							form,
+							instance.get(STR_URL)
+						);
 					}
 				}
 			}

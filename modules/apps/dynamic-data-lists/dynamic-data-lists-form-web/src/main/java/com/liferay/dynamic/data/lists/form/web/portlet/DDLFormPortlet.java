@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
 import com.liferay.dynamic.data.mapping.constants.DDMWebKeys;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureLayoutException;
+import com.liferay.dynamic.data.mapping.exception.StorageFieldValueException;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingException;
@@ -272,7 +273,8 @@ public class DDLFormPortlet extends MVCPortlet {
 			cause instanceof NoSuchStructureException ||
 			cause instanceof NoSuchStructureLayoutException ||
 			cause instanceof PortletPreferencesException ||
-			cause instanceof PrincipalException) {
+			cause instanceof PrincipalException ||
+			cause instanceof StorageFieldValueException) {
 
 			return true;
 		}

@@ -261,6 +261,29 @@ public class PoshiRunnerContext {
 		_componentClassCommandNames.put(componentName, classCommandNames);
 	}
 
+	private static Map<Integer, List<String>> _getClassCommandNameGroups(
+		List<String> classCommandNames) {
+
+		int maxGroupSize = PropsValues.TEST_BATCH_MAX_GROUP_SIZE;
+		double totalTestCount = classCommandNames.size();
+
+		double totalGroupCount = Math.ceil(totalTestCount / maxGroupSize);
+
+		double groupSize = Math.ceil(totalTestCount / totalGroupCount);
+
+		Map<Integer, List<String>> classCommandNameGroups = new HashMap<>();
+		int classCommandNameIndex = 0;
+
+		for (List<String> partition : Lists.partition(
+			classCommandNames, (int)groupSize)) {
+
+			classCommandNameGroups.put(classCommandNameIndex, partition);
+			classCommandNameIndex++;
+		}
+
+		return classCommandNameGroups;
+	}
+
 	private static List<String> _getCommandReturns(Element commandElement) {
 		String returns = commandElement.attributeValue("returns");
 

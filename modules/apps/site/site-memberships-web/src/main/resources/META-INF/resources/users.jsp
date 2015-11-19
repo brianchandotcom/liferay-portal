@@ -41,6 +41,11 @@ searchContainer.setEmptyResultsMessage("no-user-was-found-that-is-a-direct-membe
 
 <liferay-frontend:management-bar>
 	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= PortletURLUtil.clone(viewUsersURL, renderResponse) %>"
+		/>
+
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= orderByCol %>"
 			orderByType="<%= orderByType %>"

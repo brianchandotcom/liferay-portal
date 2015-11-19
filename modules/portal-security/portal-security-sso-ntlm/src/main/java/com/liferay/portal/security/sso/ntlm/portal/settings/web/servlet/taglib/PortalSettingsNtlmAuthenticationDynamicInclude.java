@@ -19,14 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.security.common.servlet.taglib.BaseAuthenticationDynamicInclude;
 
-
-import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -41,13 +34,6 @@ import org.osgi.service.component.annotations.Reference;
 public class PortalSettingsNtlmAuthenticationDynamicInclude
 	extends BaseAuthenticationDynamicInclude {
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.security.sso.ntlm)"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
 	protected String getJspPath() {
 		return "/com.liferay.portal.settings.web/ntlm.jsp";
 	}
@@ -56,7 +42,15 @@ public class PortalSettingsNtlmAuthenticationDynamicInclude
 		return _log;
 	}
 
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.portal.security.sso.ntlm)",
+		unbind = "-"
+	)
+	protected void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
-			PortalSettingsNtlmAuthenticationDynamicInclude.class);
+		PortalSettingsNtlmAuthenticationDynamicInclude.class);
 
 }

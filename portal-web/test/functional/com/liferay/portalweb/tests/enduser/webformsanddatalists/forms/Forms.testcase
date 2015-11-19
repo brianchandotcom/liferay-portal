@@ -124,6 +124,8 @@
 	<command name="SearchFormRecordMultipleEntries" priority="4">
 		<description message="This is a use case for LPS-59336." />
 
+		<var name="fieldValueList" value="testEntry1,exampleText,sampleAnswer" />
+
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Forms" />
 		</execute>
@@ -176,7 +178,7 @@
 			<var name="pageName" value="Form Page" />
 		</execute>
 
-		<for list="testEntry1,exampleText,sampleAnswer" param="fieldValue">
+		<for list="${fieldValueList}" param="fieldValue">
 			<execute macro="FormFields#editText">
 				<var name="fieldName" value="TextField" />
 				<var name="fieldValue" value="${fieldValue}" />
@@ -193,7 +195,7 @@
 			<var name="formName" value="Test Form" />
 		</execute>
 
-		<for list="testEntry1,exampleText,sampleAnswer" param="fieldValue">
+		<for list="${fieldValueList}" param="fieldValue">
 			<execute macro="FormsAdmin#searchFormEntry">
 				<var name="searchTerm" value="${fieldValue}" />
 			</execute>
@@ -203,7 +205,7 @@
 				<var name="fieldValue" value="${fieldValue}" />
 			</execute>
 
-			<for list="testEntry1,exampleText,sampleAnswer" param="fieldValueNotVisible">
+			<for list="${fieldValueList}" param="fieldValueNotVisible">
 				<if>
 					<not>
 						<equals arg1="${fieldValueNotVisible}" arg2="${fieldValue}" />

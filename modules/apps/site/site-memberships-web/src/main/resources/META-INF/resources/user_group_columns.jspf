@@ -1,0 +1,50 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<liferay-ui:search-container-row-parameter
+	name="group"
+	value="<%= group %>"
+/>
+
+<liferay-ui:search-container-column-text
+	name="name"
+	orderable="<%= true %>"
+	property="name"
+/>
+
+<liferay-ui:search-container-column-text
+	name="description"
+	orderable="<%= true %>"
+	property="description"
+/>
+
+<c:if test='<%= tabs2.equals("current") %>'>
+
+	<%
+	List<UserGroupGroupRole> userGroupGroupRoles = UserGroupGroupRoleLocalServiceUtil.getUserGroupGroupRoles(userGroup.getUserGroupId(), group.getGroupId());
+	%>
+
+	<liferay-ui:search-container-column-text
+		name="site-roles"
+		value="<%= ListUtil.toString(userGroupGroupRoles, UsersAdmin.USER_GROUP_GROUP_ROLE_TITLE_ACCESSOR, StringPool.COMMA_AND_SPACE) %>"
+	/>
+
+	<liferay-ui:search-container-column-jsp
+		align="right"
+		cssClass="entry-action"
+		path="/user_group_action.jsp"
+	/>
+</c:if>

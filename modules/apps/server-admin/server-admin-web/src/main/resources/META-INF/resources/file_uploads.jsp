@@ -19,7 +19,7 @@
 <aui:fieldset label="configure-the-file-upload-settings">
 	<liferay-ui:panel-container extended="<%= true %>" id="adminGeneralUploadPanelContainer" persistState="<%= true %>">
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="adminGeneralUploadPanel" persistState="<%= true %>" title="general">
-			<aui:input cssClass="lfr-input-text-container" label="overall-maximum-file-size" name="uploadServletRequestImplMaxSize" type="text" value="<%= PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE) %>" />
+			<aui:input cssClass="lfr-input-text-container" label="overall-maximum-multipart-form-data-content-length" name="uploadServletRequestImplMaxSize" type="text" value="<%= PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE) %>" />
 
 			<aui:input cssClass="lfr-input-text-container" label="temporary-storage-directory" name="uploadServletRequestImplTempDir" type="text" value="<%= PrefsPropsUtil.getString(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_TEMP_DIR, StringPool.BLANK) %>" />
 		</liferay-ui:panel>

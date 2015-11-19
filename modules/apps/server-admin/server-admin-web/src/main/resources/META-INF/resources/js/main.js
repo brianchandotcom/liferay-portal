@@ -103,8 +103,6 @@ AUI.add(
 					_installXuggler: function(event) {
 						var instance = this;
 
-						var xugglerProgressInfo = instance._xugglerProgressInfo;
-
 						Liferay.Util.toggleDisabled(instance._installXugglerButton, true);
 
 						var form = instance.get(STR_FORM);

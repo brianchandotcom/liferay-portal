@@ -43,8 +43,7 @@
 	/>
 
 	<liferay-ui:search-container-column-jsp
-		align="right"
-		cssClass="entry-action"
+		cssClass="list-group-item-field"
 		path="/user_group_action.jsp"
 	/>
 </c:if>

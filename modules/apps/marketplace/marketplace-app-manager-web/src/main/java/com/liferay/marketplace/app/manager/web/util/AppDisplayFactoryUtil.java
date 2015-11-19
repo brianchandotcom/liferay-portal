@@ -30,9 +30,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.osgi.framework.Bundle;
 import org.osgi.service.component.annotations.Component;
@@ -114,7 +116,7 @@ public class AppDisplayFactoryUtil {
 		List<Module> modules = _moduleLocalService.getModules(app.getAppId());
 
 		for (Module module : modules) {
-			Bundle bundle = bundlesMap.removeBundle(module);
+			Bundle bundle = bundlesMap.get(module);
 
 			if (bundle != null) {
 				appDisplay.addBundle(bundle);
@@ -139,11 +141,19 @@ public class AppDisplayFactoryUtil {
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 		}
 
+		Set<Bundle> removeBundles = new HashSet<>();
+
 		for (App app : apps) {
 			AppDisplay appDisplay = createMarketplaceAppDisplay(
 				bundlesMap, app);
 
+			removeBundles.addAll(appDisplay.getBundles());
+
 			appDisplays.add(appDisplay);
+		}
+
+		for (Bundle bundle : removeBundles) {
+			bundlesMap.removeBundle(bundle);
 		}
 
 		return appDisplays;

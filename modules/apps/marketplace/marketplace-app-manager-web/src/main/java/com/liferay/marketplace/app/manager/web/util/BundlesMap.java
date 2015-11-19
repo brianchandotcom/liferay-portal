@@ -40,6 +40,14 @@ public class BundlesMap extends HashMap<String, Bundle> {
 		super(initialCapacity);
 	}
 
+	public Bundle getBundle(Bundle bundle) {
+		return get(getKey(bundle));
+	}
+
+	public Bundle getBundle(Module module) {
+		return get(getKey(module));
+	}
+
 	public void load(List<Bundle> bundles) {
 		for (Bundle bundle : bundles) {
 			put(getKey(bundle), bundle);

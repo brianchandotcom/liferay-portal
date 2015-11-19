@@ -82,10 +82,7 @@ public class DefaultLayoutSetPrototypesUtil {
 			layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
 			serviceContext);
 
-		layoutSet = layoutSetPrototype.getLayoutSet();
-		layoutSet.setLayoutSetPrototypeUuid(layoutSetPrototype.getUuid());
-
-		return layoutSet;
+		return layoutSetPrototype.getLayoutSet();
 	}
 
 }

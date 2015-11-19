@@ -17,7 +17,6 @@ package com.liferay.message.boards.layout.set.prototype.action;
 import com.liferay.layout.set.prototype.web.constants.LayoutSetPrototypePortletKeys;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.polls.constants.PollsPortletKeys;
-import com.liferay.portal.NoSuchResourceActionException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -28,7 +27,6 @@ import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.CompanyLocalService;
-import com.liferay.portal.service.LayoutSetLocalService;
 import com.liferay.portal.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.DefaultLayoutPrototypesUtil;
@@ -94,29 +92,17 @@ public class AddLayoutSetPrototypeAction {
 
 		DefaultLayoutPrototypesUtil.addPortletId(layout, portletId, "column-1");
 
-		try {
-			DefaultLayoutPrototypesUtil.addPortletId(
-				layout, PollsPortletKeys.POLLS_DISPLAY, "column-2");
+		DefaultLayoutPrototypesUtil.addPortletId(
+			layout, PollsPortletKeys.POLLS_DISPLAY, "column-2");
 
-			DefaultLayoutPrototypesUtil.addPortletId(
-				layout, SocialUserStatisticsPortletKeys.SOCIAL_USER_STATISTICS,
-				"column-2");
+		DefaultLayoutPrototypesUtil.addPortletId(
+			layout, SocialUserStatisticsPortletKeys.SOCIAL_USER_STATISTICS,
+			"column-2");
 
-			// Wiki layout
+		// Wiki layout
 
-			DefaultLayoutPrototypesUtil.addLayout(
-				layoutSet, "wiki", "/wiki", "2_columns_iii");
-		}
-		catch (NoSuchResourceActionException e) {
-			LayoutSetPrototype layoutSetPrototype =
-				_layoutSetPrototypeLocalService.
-				getLayoutSetPrototypeByUuidAndCompanyId(
-					layoutSet.getLayoutSetPrototypeUuid(), companyId);
-
-			_layoutSetLocalService.deleteLayoutSet(layoutSet);
-			_layoutSetPrototypeLocalService.deleteLayoutSetPrototype(
-				layoutSetPrototype);
-		}
+		DefaultLayoutPrototypesUtil.addLayout(
+			layoutSet, "wiki", "/wiki", "2_columns_iii");
 	}
 
 	protected void doRun(long companyId) throws Exception {
@@ -125,6 +111,7 @@ public class AddLayoutSetPrototypeAction {
 		List<LayoutSetPrototype> layoutSetPrototypes =
 			_layoutSetPrototypeLocalService.search(
 				companyId, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
 		addPublicSite(companyId, defaultUserId, layoutSetPrototypes);
 	}
 
@@ -133,13 +120,6 @@ public class AddLayoutSetPrototypeAction {
 		CompanyLocalService companyLocalService) {
 
 		_companyLocalService = companyLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutSetLocalService(
-		LayoutSetLocalService layoutSetLocalService) {
-
-		_layoutSetLocalService = layoutSetLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -169,9 +149,9 @@ public class AddLayoutSetPrototypeAction {
 	}
 
 	@Reference(
-			target = "(&(objectClass=javax.servlet.Servlet)(osgi.http.whiteboard.servlet.name=59 Servlet))",
-			unbind = "-"
-			)
+		target = "(&(objectClass=javax.servlet.Servlet)(osgi.http.whiteboard.servlet.name=59 Servlet))",
+		unbind = "-"
+		)
 	protected void setPollsServlet(Servlet servlet) {
 	}
 
@@ -188,7 +168,6 @@ public class AddLayoutSetPrototypeAction {
 	}
 
 	private CompanyLocalService _companyLocalService;
-	private LayoutSetLocalService _layoutSetLocalService;
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
 	private UserLocalService _userLocalService;
 

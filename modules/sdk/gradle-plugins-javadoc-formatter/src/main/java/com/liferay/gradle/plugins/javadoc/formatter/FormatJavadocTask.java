@@ -33,6 +33,10 @@ import org.gradle.api.tasks.JavaExec;
  */
 public class FormatJavadocTask extends JavaExec {
 
+	public FormatJavadocTask() {
+		setMain("com.liferay.javadoc.formatter.JavadocFormatter");
+	}
+
 	@Override
 	public JavaExec classpath(Object... paths) {
 		throw new UnsupportedOperationException();
@@ -74,11 +78,6 @@ public class FormatJavadocTask extends JavaExec {
 
 	public double getLowestSupportedJavaVersion() {
 		return _javadocFormatterArgs.getLowestSupportedJavaVersion();
-	}
-
-	@Override
-	public String getMain() {
-		return "com.liferay.javadoc.formatter.JavadocFormatter";
 	}
 
 	public String getOutputFilePrefix() {

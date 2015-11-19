@@ -50,6 +50,14 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
+ * Participates in every unauthenticated HTTP request to Liferay Portal.
+ * 
+ * <p>
+ * If this class finds an authentication token in the HTTP request and
+ * successfully identifies a Liferay Portal user using it, then this user is
+ * logged in without any further challenge.
+ * </p>
+ * 
  * @author Michael C. Han
  */
 @Component(

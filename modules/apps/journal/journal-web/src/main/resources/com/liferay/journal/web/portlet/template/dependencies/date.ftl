@@ -1,18 +1,18 @@
 <#include "init.ftl">
 
 <#if language == "ftl">
-${r"<#assign"} ${name}_Data = getterUtil.getLong(${variableName})>
+${r"<#assign"} ${name}_Data = getterUtil.getString(${variableName})>
 
-${r"<#if"} (${name}_Data > 0)>
-	${r"<#assign"} ${name}_DateObj = dateUtil.newDate(${name}_Data)>
+${r"<#if"} (validator.isNotNull(${name}_Data))>
+	${r"<#assign"} ${name}_DateObj = dateUtil.parseDate("yyyy-MM-dd", ${name}_Data, locale)>
 
 	${r"${"}dateUtil.getDate(${name}_DateObj, "dd MMM yyyy - HH:mm:ss", locale)}
 ${r"</#if>"}
 <#else>
-#set ($${name}_Data = $getterUtil.getLong($${variableName}))
+#set ($${name}_Data = $getterUtil.getString($${variableName}))
 
-#if ($${name}_Data > 0)
-	#set ($${name}_DateObj = $dateUtil.newDate($${name}_Data))
+#if ($validator.isNotNull($${name}_Data))
+	#set ($${name}_DateObj = $dateUtil.parseDate("yyyy-MM-dd",$${name}_Data, $locale))
 
 	$dateUtil.getDate($${name}_DateObj, "dd MMM yyyy - HH:mm:ss", $locale)
 #end

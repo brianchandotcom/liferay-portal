@@ -52,7 +52,6 @@ import com.liferay.util.xml.XMLUtil;
 
 import java.io.Serializable;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -692,12 +691,6 @@ public class JournalConverterImpl implements JournalConverter {
 					"language-id", LocaleUtil.toLanguageId(locale));
 
 				Serializable fieldValue = ddmField.getValue(locale, count);
-
-				if (fieldValue instanceof Date) {
-					Date valueDate = (Date)fieldValue;
-
-					fieldValue = valueDate.getTime();
-				}
 
 				String valueString = String.valueOf(fieldValue);
 

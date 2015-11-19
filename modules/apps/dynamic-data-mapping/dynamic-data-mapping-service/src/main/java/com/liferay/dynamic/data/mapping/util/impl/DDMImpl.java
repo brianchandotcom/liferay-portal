@@ -244,13 +244,9 @@ public class DDMImpl implements DDM {
 			ThemeDisplay themeDisplay, Serializable fieldValue, String type)
 		throws Exception {
 
-		if (fieldValue instanceof Date) {
-			Date valueDate = (Date)fieldValue;
-
-			DateFormat dateFormat = DateFormatFactoryUtil.getDate(
-				themeDisplay.getLocale());
-
-			fieldValue = dateFormat.format(valueDate);
+		if (type.equals(DDMImpl.TYPE_DDM_DATE)) {
+			fieldValue = DateUtil.formatDate(
+				"yyyy-MM-dd", fieldValue.toString(), themeDisplay.getLocale());
 		}
 		else if (type.equals(DDMImpl.TYPE_CHECKBOX)) {
 			Boolean valueBoolean = (Boolean)fieldValue;

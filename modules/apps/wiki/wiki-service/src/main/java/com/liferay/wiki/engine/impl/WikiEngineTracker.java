@@ -57,7 +57,7 @@ public class WikiEngineTracker {
 
 		_bundleContext = bundleContext;
 
-		_serviceTrackerMap = ServiceTrackerMapFactory.multiValueMap(
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, WikiEngine.class, null,
 			new ServiceReferenceMapper<String, WikiEngine>() {
 
@@ -77,8 +77,6 @@ public class WikiEngineTracker {
 					}
 				}
 			});
-
-		_serviceTrackerMap.open();
 	}
 
 	@Deactivate

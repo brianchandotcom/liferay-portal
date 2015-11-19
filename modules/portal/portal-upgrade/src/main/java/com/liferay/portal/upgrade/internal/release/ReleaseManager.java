@@ -72,27 +72,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class ReleaseManager {
 
 	public void execute(String bundleSymbolicName) {
-		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
-			_serviceTrackerMap.getService(bundleSymbolicName));
-
-		String schemaVersionString = getSchemaVersionString(bundleSymbolicName);
-
-		List<List<UpgradeInfo>> upgradeInfosList =
-			releaseGraphManager.getUpgradeInfosList(schemaVersionString);
-
-		int size = upgradeInfosList.size();
-
-		if (size > 1) {
-			throw new IllegalStateException(
-				"There are " + size + " possible end nodes for " +
-					schemaVersionString);
-		}
-
-		if (size == 0) {
-			return;
-		}
-
-		executeUpgradeInfos(bundleSymbolicName, upgradeInfosList.get(0));
+		doExecute(bundleSymbolicName, _serviceTrackerMap);
 	}
 
 	public void execute(String bundleSymbolicName, String toVersionString) {
@@ -155,7 +135,7 @@ public class ReleaseManager {
 				new UpgradeInfoServiceTrackerMapListener();
 		}
 
-		_serviceTrackerMap = ServiceTrackerMapFactory.multiValueMap(
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, UpgradeStep.class,
 			"(&(upgrade.bundle.symbolic.name=*)(|(upgrade.db.type=any)" +
 				"(upgrade.db.type=" + db.getType() + ")))",
@@ -166,13 +146,38 @@ public class ReleaseManager {
 				new PropertyServiceReferenceComparator<UpgradeStep>(
 					"upgrade.from.schema.version")),
 			serviceTrackerMapListener);
-
-		_serviceTrackerMap.open();
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		_serviceTrackerMap.close();
+	}
+
+	protected void doExecute(
+		String bundleSymbolicName,
+		ServiceTrackerMap<String, List<UpgradeInfo>> serviceTrackerMap) {
+
+		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
+			serviceTrackerMap.getService(bundleSymbolicName));
+
+		String schemaVersionString = getSchemaVersionString(bundleSymbolicName);
+
+		List<List<UpgradeInfo>> upgradeInfosList =
+			releaseGraphManager.getUpgradeInfosList(schemaVersionString);
+
+		int size = upgradeInfosList.size();
+
+		if (size > 1) {
+			throw new IllegalStateException(
+				"There are " + size + " possible end nodes for " +
+					schemaVersionString);
+		}
+
+		if (size == 0) {
+			return;
+		}
+
+		executeUpgradeInfos(bundleSymbolicName, upgradeInfosList.get(0));
 	}
 
 	protected void executeUpgradeInfos(
@@ -248,7 +253,7 @@ public class ReleaseManager {
 			final String key, UpgradeInfo upgradeInfo,
 			List<UpgradeInfo> upgradeInfos) {
 
-			execute(key);
+			doExecute(key, serviceTrackerMap);
 		}
 
 	}

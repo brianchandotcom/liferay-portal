@@ -115,13 +115,11 @@ public class PanelAppRegistry {
 	protected void activate(BundleContext bundleContext)
 		throws InvalidSyntaxException {
 
-		_serviceTrackerMap = ServiceTrackerMapFactory.multiValueMap(
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, PanelApp.class, "(panel.category.key=*)",
 			new PanelCategoryServiceReferenceMapper(),
 			new ServiceRankingPropertyServiceReferenceComparator(),
 			new PanelAppsServiceTrackerMapListener());
-
-		_serviceTrackerMap.open();
 	}
 
 	@Deactivate

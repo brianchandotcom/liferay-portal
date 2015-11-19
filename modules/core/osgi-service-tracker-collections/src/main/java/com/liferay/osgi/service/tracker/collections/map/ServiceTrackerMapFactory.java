@@ -132,6 +132,220 @@ public class ServiceTrackerMapFactory {
 			new MultiValueServiceTrackerBucketFactory<SR, S>(), null);
 	}
 
+	public static <S> ServiceTrackerMap<String, List<S>> openMultiValueMap(
+			BundleContext bundleContext, Class<S> clazz, String propertyKey)
+		throws InvalidSyntaxException {
+
+		ServiceTrackerMap<String, List<S>> serviceTrackerMap = multiValueMap(
+			bundleContext, clazz, propertyKey);
+
+		serviceTrackerMap.open();
+
+		return serviceTrackerMap;
+	}
+
+	public static <K, S> ServiceTrackerMap<K, List<S>> openMultiValueMap(
+			BundleContext bundleContext, Class<S> clazz, String filterString,
+			ServiceReferenceMapper<K, ? super S> serviceReferenceMapper)
+		throws InvalidSyntaxException {
+
+		ServiceTrackerMap<K, List<S>> serviceTrackerMap = multiValueMap(
+			bundleContext, clazz, filterString, serviceReferenceMapper);
+
+		serviceTrackerMap.open();
+
+		return serviceTrackerMap;
+	}
+
+	public static <K, S> ServiceTrackerMap<K, List<S>> openMultiValueMap(
+			BundleContext bundleContext, Class<S> clazz, String filterString,
+			ServiceReferenceMapper<K, ? super S> serviceReferenceMapper,
+			Comparator<ServiceReference<S>> comparator)
+		throws InvalidSyntaxException {
+
+		ServiceTrackerMap<K, List<S>> serviceTrackerMap = multiValueMap(
+			bundleContext, clazz, filterString, serviceReferenceMapper,
+			comparator);
+
+		serviceTrackerMap.open();
+
+		return serviceTrackerMap;
+	}
+
+	public static <K, S> ServiceTrackerMap<K, List<S>> openMultiValueMap(
+			BundleContext bundleContext, Class<S> clazz, String filterString,
+			ServiceReferenceMapper<K, ? super S> serviceReferenceMapper,
+			Comparator<ServiceReference<S>> comparator,
+			ServiceTrackerMapListener<K, S, List<S>> serviceTrackerMapListener)
+		throws InvalidSyntaxException {
+
+		ServiceTrackerMap<K, List<S>> serviceTrackerMap = multiValueMap(
+			bundleContext, clazz, filterString, serviceReferenceMapper,
+			comparator, serviceTrackerMapListener);
+
+		serviceTrackerMap.open();
+
+		return serviceTrackerMap;
+	}
+
+	public static <K, SR, S> ServiceTrackerMap<K, List<S>> openMultiValueMap(
+			BundleContext bundleContext, Class<SR> clazz, String filterString,
+			ServiceReferenceMapper<K, ? super SR> serviceReferenceMapper,
+			ServiceTrackerCustomizer<SR, S> serviceTrackerCustomizer)
+		throws InvalidSyntaxException {
+
+		ServiceTrackerMap<K, List<S>> serviceTrackerMap = multiValueMap(
+			bundleContext, clazz, filterString, serviceReferenceMapper,
+			serviceTrackerCustomizer);
+
+		serviceTrackerMap.open();
+
+		return serviceTrackerMap;
+	}
+
+	public static <K, SR, S> ServiceTrackerMap<K, List<S>> openMultiValueMap(
+			BundleContext bundleContext, Class<SR> clazz, String filterString,
+			ServiceReferenceMapper<K, ? super SR> serviceReferenceMapper,
+			ServiceTrackerCustomizer<SR, S> serviceTrackerCustomizer,
+			Comparator<ServiceReference<SR>> comparator)
+		throws InvalidSyntaxException {
+
+		ServiceTrackerMap<K, List<S>> serviceTrackerMap = multiValueMap(
+			bundleContext, clazz, filterString, serviceReferenceMapper,
+			serviceTrackerCustomizer, comparator);
+
+		serviceTrackerMap.open();
+
+		return serviceTrackerMap;
+	}
+
+	public static <K, SR, S> ServiceTrackerMap<K, List<S>> openMultiValueMap(
+			BundleContext bundleContext, Class<SR> clazz, String filterString,
+			ServiceReferenceMapper<K, ? super SR> serviceReferenceMapper,
+			ServiceTrackerCustomizer<SR, S> serviceTrackerCustomizer,
+			Comparator<ServiceReference<SR>> comparator,
+			ServiceTrackerMapListener<K, S, List<S>> serviceTrackerMapListener)
+		throws InvalidSyntaxException {
+
+		ServiceTrackerMap<K, List<S>> serviceTrackerMap = multiValueMap(
+			bundleContext, clazz, filterString, serviceReferenceMapper,
+			serviceTrackerCustomizer, comparator, serviceTrackerMapListener);
+
+		serviceTrackerMap.open();
+
+		return serviceTrackerMap;
+	}
+
+	public static <SR, S> ServiceTrackerMap<String, List<S>> openMultiValueMap(
+			BundleContext bundleContext, Class<SR> clazz, String propertyKey,
+			ServiceTrackerCustomizer<SR, S> serviceTrackerCustomizer)
+		throws InvalidSyntaxException {
+
+		ServiceTrackerMap<String, List<S>> serviceTrackerMap = multiValueMap(
+			bundleContext, clazz, propertyKey, serviceTrackerCustomizer);
+
+		serviceTrackerMap.open();
+
+		return serviceTrackerMap;
+	}
+
+	public static <S> ServiceTrackerMap<String, S> openSingleValueMap(
+			BundleContext bundleContext, Class<S> clazz, String propertyKey)
+		throws InvalidSyntaxException {
+
+		ServiceTrackerMap<String, S> serviceTrackerMap = singleValueMap(
+			bundleContext, clazz, propertyKey);
+
+		serviceTrackerMap.open();
+
+		return serviceTrackerMap;
+	}
+
+	public static <K, S> ServiceTrackerMap<K, S> openSingleValueMap(
+			BundleContext bundleContext, Class<S> clazz, String filterString,
+			ServiceReferenceMapper<K, ? super S> serviceReferenceMapper)
+		throws InvalidSyntaxException {
+
+		ServiceTrackerMap<K, S> serviceTrackerMap = singleValueMap(
+			bundleContext, clazz, filterString, serviceReferenceMapper);
+
+		serviceTrackerMap.open();
+
+		return serviceTrackerMap;
+	}
+
+	public static <K, S> ServiceTrackerMap<K, S> openSingleValueMap(
+			BundleContext bundleContext, Class<S> clazz, String filterString,
+			ServiceReferenceMapper<K, ? super S> serviceReferenceMapper,
+			Comparator<ServiceReference<S>> comparator)
+		throws InvalidSyntaxException {
+
+		ServiceTrackerMap<K, S> serviceTrackerMap = singleValueMap(
+			bundleContext, clazz, filterString, serviceReferenceMapper,
+			comparator);
+
+		serviceTrackerMap.open();
+
+		return serviceTrackerMap;
+	}
+
+	public static <S> ServiceTrackerMap<String, S> openSingleValueMap(
+			BundleContext bundleContext, Class<S> clazz, String propertyKey,
+			ServiceTrackerMapListener<String, S, S> serviceTrackerMapListener)
+		throws InvalidSyntaxException {
+
+		ServiceTrackerMap<String, S> serviceTrackerMap = singleValueMap(
+			bundleContext, clazz, propertyKey, serviceTrackerMapListener);
+
+		serviceTrackerMap.open();
+
+		return serviceTrackerMap;
+	}
+
+	public static <K, SR, S> ServiceTrackerMap<K, S> openSingleValueMap(
+			BundleContext bundleContext, Class<SR> clazz, String filterString,
+			ServiceReferenceMapper<K, ? super SR> serviceReferenceMapper,
+			ServiceTrackerCustomizer<SR, S> serviceTrackerCustomizer)
+		throws InvalidSyntaxException {
+
+		ServiceTrackerMap<K, S> serviceTrackerMap = singleValueMap(
+			bundleContext, clazz, filterString, serviceReferenceMapper,
+			serviceTrackerCustomizer);
+
+		serviceTrackerMap.open();
+
+		return serviceTrackerMap;
+	}
+
+	public static <K, SR, S> ServiceTrackerMap<K, S> openSingleValueMap(
+			BundleContext bundleContext, Class<SR> clazz, String filterString,
+			ServiceReferenceMapper<K, ? super SR> serviceReferenceMapper,
+			ServiceTrackerCustomizer<SR, S> serviceTrackerCustomizer,
+			Comparator<ServiceReference<SR>> comparator)
+		throws InvalidSyntaxException {
+
+		ServiceTrackerMap<K, S> serviceTrackerMap = singleValueMap(
+			bundleContext, clazz, filterString, serviceReferenceMapper,
+			serviceTrackerCustomizer, comparator);
+
+		serviceTrackerMap.open();
+
+		return serviceTrackerMap;
+	}
+
+	public static <SR, S> ServiceTrackerMap<String, S> openSingleValueMap(
+			BundleContext bundleContext, Class<SR> clazz, String propertyKey,
+			ServiceTrackerCustomizer<SR, S> serviceTrackerCustomizer)
+		throws InvalidSyntaxException {
+
+		ServiceTrackerMap<String, S> serviceTrackerMap = singleValueMap(
+			bundleContext, clazz, propertyKey, serviceTrackerCustomizer);
+
+		serviceTrackerMap.open();
+
+		return serviceTrackerMap;
+	}
+
 	public static <S> ServiceTrackerMap<String, S> singleValueMap(
 			BundleContext bundleContext, Class<S> clazz, String propertyKey)
 		throws InvalidSyntaxException {

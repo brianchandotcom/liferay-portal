@@ -146,7 +146,7 @@ public class ObjectServiceTrackerMapTest {
 		final AtomicInteger atomicInteger = new AtomicInteger(0);
 
 		ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
-			ServiceTrackerMapFactory.singleValueMap(
+			ServiceTrackerMapFactory.openSingleValueMap(
 				_bundleContext, TrackedOne.class, "(target=*)",
 				new ServiceReferenceMapper<String, TrackedOne>() {
 
@@ -186,8 +186,6 @@ public class ObjectServiceTrackerMapTest {
 					}
 
 				});
-
-		serviceTrackerMap.open();
 
 		TrackedOne trackedOne = new TrackedOne("1");
 
@@ -234,7 +232,7 @@ public class ObjectServiceTrackerMapTest {
 				new PropertyServiceReferenceMapper<>("target");
 
 		ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
-			ServiceTrackerMapFactory.singleValueMap(
+			ServiceTrackerMapFactory.openSingleValueMap(
 				_bundleContext, TrackedOne.class, "(target=*)",
 				propertyServiceReferenceMapper,
 				new Comparator<ServiceReference<TrackedOne>>() {
@@ -248,8 +246,6 @@ public class ObjectServiceTrackerMapTest {
 					}
 
 				});
-
-		serviceTrackerMap.open();
 
 		TrackedOne trackedOne1 = new TrackedOne();
 
@@ -282,7 +278,7 @@ public class ObjectServiceTrackerMapTest {
 
 		ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
 
-			ServiceTrackerMapFactory.singleValueMap(
+			ServiceTrackerMapFactory.openSingleValueMap(
 				_bundleContext, TrackedOne.class, "(&(other=*)(target=*))",
 				new ServiceReferenceMapper<String, TrackedOne>() {
 
@@ -297,8 +293,6 @@ public class ObjectServiceTrackerMapTest {
 					}
 
 				});
-
-		serviceTrackerMap.open();
 
 		Dictionary<String, String> properties = new Hashtable<>();
 
@@ -377,7 +371,7 @@ public class ObjectServiceTrackerMapTest {
 		throws InvalidSyntaxException {
 
 		ServiceTrackerMap<String, TrackedTwo> serviceTrackerMap =
-			ServiceTrackerMapFactory.singleValueMap(
+			ServiceTrackerMapFactory.openSingleValueMap(
 				_bundleContext, TrackedOne.class, "target",
 				new ServiceTrackerCustomizer<TrackedOne, TrackedTwo>() {
 
@@ -407,8 +401,6 @@ public class ObjectServiceTrackerMapTest {
 
 				});
 
-		serviceTrackerMap.open();
-
 		TrackedOne trackedOne1 = new TrackedOne();
 
 		registerService(trackedOne1, "one");
@@ -433,7 +425,7 @@ public class ObjectServiceTrackerMapTest {
 		throws InvalidSyntaxException {
 
 		ServiceTrackerMap<String, TrackedTwo> serviceTrackerMap =
-			ServiceTrackerMapFactory.singleValueMap(
+			ServiceTrackerMapFactory.openSingleValueMap(
 				_bundleContext, TrackedOne.class, ("(target=*)"),
 				new ServiceReferenceMapper<String, TrackedOne>() {
 
@@ -481,8 +473,6 @@ public class ObjectServiceTrackerMapTest {
 
 				});
 
-		serviceTrackerMap.open();
-
 		TrackedOne trackedOne1 = new TrackedOne("1");
 
 		registerService(trackedOne1, "one");
@@ -507,7 +497,7 @@ public class ObjectServiceTrackerMapTest {
 		throws InvalidSyntaxException {
 
 		ServiceTrackerMap<String, TrackedTwo> serviceTrackerMap =
-			ServiceTrackerMapFactory.singleValueMap(
+			ServiceTrackerMapFactory.openSingleValueMap(
 				_bundleContext, TrackedOne.class, "target",
 				new ServiceTrackerCustomizer<TrackedOne, TrackedTwo>() {
 
@@ -531,8 +521,6 @@ public class ObjectServiceTrackerMapTest {
 					}
 
 				});
-
-		serviceTrackerMap.open();
 
 		TrackedOne trackedOne = new TrackedOne("1");
 
@@ -596,12 +584,10 @@ public class ObjectServiceTrackerMapTest {
 		throws InvalidSyntaxException {
 
 		ServiceTrackerMap<String, ServiceWrapper<TrackedOne>>
-			serviceTrackerMap = ServiceTrackerMapFactory.singleValueMap(
+			serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 				_bundleContext, TrackedOne.class, "target",
 				ServiceTrackerCustomizerFactory.<TrackedOne>serviceWrapper(
 					_bundleContext));
-
-		serviceTrackerMap.open();
 
 		try {
 			Dictionary<String, Object> properties = new Hashtable<>();
@@ -644,7 +630,7 @@ public class ObjectServiceTrackerMapTest {
 		BundleContextWrapper wrappedBundleContext = wrapContext();
 
 		ServiceTrackerMap<TrackedOne, TrackedOne> serviceTrackerMap =
-			ServiceTrackerMapFactory.singleValueMap(
+			ServiceTrackerMapFactory.openSingleValueMap(
 				wrappedBundleContext, TrackedOne.class, null,
 				new ServiceReferenceMapper<TrackedOne, TrackedOne>() {
 
@@ -655,8 +641,6 @@ public class ObjectServiceTrackerMapTest {
 					}
 
 				});
-
-		serviceTrackerMap.open();
 
 		ServiceRegistration<TrackedOne> serviceRegistration1 = registerService(
 			new TrackedOne());
@@ -686,16 +670,12 @@ public class ObjectServiceTrackerMapTest {
 		BundleContext bundleContext) {
 
 		try {
-			_serviceTrackerMap = ServiceTrackerMapFactory.singleValueMap(
+			return ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, TrackedOne.class, "target");
 		}
 		catch (InvalidSyntaxException ise) {
 			throw new RuntimeException(ise);
 		}
-
-		_serviceTrackerMap.open();
-
-		return _serviceTrackerMap;
 	}
 
 	protected ServiceRegistration<TrackedOne> registerService(

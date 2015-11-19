@@ -81,24 +81,20 @@ public class DDMPermissionSupportTracker {
 		throws InvalidSyntaxException {
 
 		_ddmStructurePermissionSupportServiceTrackerMap =
-			ServiceTrackerMapFactory.singleValueMap(
+			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, DDMStructurePermissionSupport.class,
 				"model.class.name",
 				ServiceTrackerCustomizerFactory.
 					<DDMStructurePermissionSupport>serviceWrapper(
 						bundleContext));
 
-		_ddmStructurePermissionSupportServiceTrackerMap.open();
-
 		_ddmTemplatePermissionSupportServiceTrackerMap =
-			ServiceTrackerMapFactory.singleValueMap(
+			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, DDMTemplatePermissionSupport.class,
 				"model.class.name",
 					ServiceTrackerCustomizerFactory.
 						<DDMTemplatePermissionSupport>serviceWrapper(
 							bundleContext));
-
-		_ddmTemplatePermissionSupportServiceTrackerMap.open();
 	}
 
 	@Deactivate

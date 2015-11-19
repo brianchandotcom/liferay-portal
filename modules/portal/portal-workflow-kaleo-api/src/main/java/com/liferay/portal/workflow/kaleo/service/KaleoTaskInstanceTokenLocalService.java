@@ -202,6 +202,9 @@ public interface KaleoTaskInstanceTokenLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCompanyKaleoTaskInstanceTokensCount(long companyId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
 	/**
 	* Returns the kaleo task instance token with the primary key.
 	*

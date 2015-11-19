@@ -213,6 +213,11 @@ public class LayoutBranchLocalServiceWrapper implements LayoutBranchLocalService
 		return _layoutBranchLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _layoutBranchLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the layout branch with the primary key.
 	*

@@ -240,6 +240,11 @@ public class MBThreadFlagLocalServiceWrapper implements MBThreadFlagLocalService
 		return _mbThreadFlagLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _mbThreadFlagLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the message boards thread flag with the primary key.
 	*

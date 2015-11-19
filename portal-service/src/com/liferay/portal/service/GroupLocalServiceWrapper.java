@@ -931,6 +931,11 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 		return _groupLocalService.getGroupsCount(companyId, parentGroupId, site);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _groupLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the group associated with the layout.
 	*

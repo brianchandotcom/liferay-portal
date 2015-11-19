@@ -211,6 +211,11 @@ public class KaleoActionLocalServiceWrapper implements KaleoActionLocalService,
 		return _kaleoActionLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _kaleoActionLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the kaleo action with the primary key.
 	*

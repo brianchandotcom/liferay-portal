@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.util;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -573,10 +574,10 @@ public class DLFileEntryIndexer
 			long companyId, final long groupId, final long dataRepositoryId)
 		throws PortalException {
 
-		final ActionableDynamicQuery actionableDynamicQuery =
-			DLFileEntryLocalServiceUtil.getActionableDynamicQuery();
+		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+			DLFileEntryLocalServiceUtil.getIndexableActionableDynamicQuery();
 
-		actionableDynamicQuery.setAddCriteriaMethod(
+		indexableActionableDynamicQuery.setAddCriteriaMethod(
 			new ActionableDynamicQuery.AddCriteriaMethod() {
 
 				@Override
@@ -590,9 +591,9 @@ public class DLFileEntryIndexer
 				}
 
 			});
-		actionableDynamicQuery.setCompanyId(companyId);
-		actionableDynamicQuery.setGroupId(groupId);
-		actionableDynamicQuery.setPerformActionMethod(
+		indexableActionableDynamicQuery.setCompanyId(companyId);
+		indexableActionableDynamicQuery.setGroupId(groupId);
+		indexableActionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod<DLFileEntry>() {
 
 				@Override
@@ -601,7 +602,8 @@ public class DLFileEntryIndexer
 						Document document = getDocument(dlFileEntry);
 
 						if (document != null) {
-							actionableDynamicQuery.addDocument(document);
+							indexableActionableDynamicQuery.addDocument(
+								document);
 						}
 					}
 					catch (PortalException pe) {
@@ -615,9 +617,9 @@ public class DLFileEntryIndexer
 				}
 
 			});
-		actionableDynamicQuery.setSearchEngineId(getSearchEngineId());
+		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 
-		actionableDynamicQuery.performActions();
+		indexableActionableDynamicQuery.performActions();
 	}
 
 	protected void reindexFolders(final long companyId) throws PortalException {

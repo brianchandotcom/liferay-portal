@@ -3,7 +3,7 @@ package ${packagePath}.service.persistence;
 import ${packagePath}.model.${entity.name};
 import ${packagePath}.service.${entity.name}LocalServiceUtil;
 
-import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 /**
@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
  */
 @Deprecated
 public abstract class ${entity.name}ActionableDynamicQuery
-	extends BaseActionableDynamicQuery {
+	extends DefaultActionableDynamicQuery {
 
 	public ${entity.name}ActionableDynamicQuery() {
 		setBaseLocalService(${entity.name}LocalServiceUtil.getService());

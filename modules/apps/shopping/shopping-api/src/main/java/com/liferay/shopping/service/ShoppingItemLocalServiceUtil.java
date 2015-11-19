@@ -259,6 +259,10 @@ public class ShoppingItemLocalServiceUtil {
 		return getService().getFeaturedItems(groupId, categoryId, numOfItems);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
 	public static com.liferay.shopping.model.ShoppingItem getItem(
 		long companyId, java.lang.String sku)
 		throws com.liferay.portal.kernel.exception.PortalException {

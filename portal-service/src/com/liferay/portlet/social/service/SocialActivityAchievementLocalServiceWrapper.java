@@ -241,6 +241,11 @@ public class SocialActivityAchievementLocalServiceWrapper
 		return _socialActivityAchievementLocalService.getGroupFirstAchievementsCount(groupId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _socialActivityAchievementLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

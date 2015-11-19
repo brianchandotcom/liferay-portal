@@ -300,6 +300,11 @@ public class BlogsStatsUserLocalServiceWrapper
 			groupId, start, end);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _blogsStatsUserLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

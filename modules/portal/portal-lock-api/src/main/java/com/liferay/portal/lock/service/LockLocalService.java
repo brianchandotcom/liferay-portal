@@ -180,6 +180,9 @@ public interface LockLocalService extends BaseLocalService,
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.lock.model.Lock getLock(
 		java.lang.String className, java.lang.String key)
 		throws PortalException;

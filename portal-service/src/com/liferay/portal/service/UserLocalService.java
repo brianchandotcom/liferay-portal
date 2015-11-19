@@ -944,6 +944,9 @@ public interface UserLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.User> getInheritedRoleUsers(
 		long roleId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> obc)

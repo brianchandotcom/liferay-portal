@@ -1157,6 +1157,10 @@ public class UserLocalServiceUtil {
 		return getService().getGroupUsersCount(groupId, status);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
 	public static java.util.List<com.liferay.portal.model.User> getInheritedRoleUsers(
 		long roleId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.User> obc)

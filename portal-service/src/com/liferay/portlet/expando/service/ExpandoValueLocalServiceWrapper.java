@@ -1301,6 +1301,11 @@ public class ExpandoValueLocalServiceWrapper implements ExpandoValueLocalService
 		return _expandoValueLocalService.getExpandoValuesCount();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _expandoValueLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

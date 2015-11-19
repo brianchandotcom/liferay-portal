@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -236,6 +237,19 @@ public abstract class ExpandoRowLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("rowId");
 
 		return actionableDynamicQuery;
+	}
+
+	@Override
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
+
+		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portlet.expando.service.ExpandoRowLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setClass(ExpandoRow.class);
+		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
+
+		indexableActionableDynamicQuery.setPrimaryKeyPropertyName("rowId");
+
+		return indexableActionableDynamicQuery;
 	}
 
 	protected void initActionableDynamicQuery(

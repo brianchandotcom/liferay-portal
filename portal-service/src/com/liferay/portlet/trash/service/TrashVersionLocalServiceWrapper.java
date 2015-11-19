@@ -221,6 +221,11 @@ public class TrashVersionLocalServiceWrapper implements TrashVersionLocalService
 		return _trashVersionLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _trashVersionLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

@@ -187,6 +187,9 @@ public interface ResourceBlockPermissionLocalService extends BaseLocalService,
 		long[] roleIds, java.lang.String name, long primKey,
 		java.util.List<java.lang.String> actionIds) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
 	/**
 	* Returns the OSGi service identifier.
 	*

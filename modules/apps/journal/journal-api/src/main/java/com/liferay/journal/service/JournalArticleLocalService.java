@@ -1516,6 +1516,9 @@ public interface JournalArticleLocalService extends BaseLocalService,
 		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.journal.model.JournalArticle> getIndexableArticlesByDDMStructureKey(
 		java.lang.String[] ddmStructureKeys);
 

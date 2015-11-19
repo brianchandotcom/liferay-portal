@@ -221,6 +221,10 @@ public class LayoutSetBranchLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
 	public static com.liferay.portal.model.LayoutSetBranch getLayoutSetBranch(
 		long groupId, boolean privateLayout, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {

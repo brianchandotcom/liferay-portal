@@ -702,6 +702,11 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _blogsEntryLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	@Override
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getNoAssetEntries() {
 		return _blogsEntryLocalService.getNoAssetEntries();
 	}

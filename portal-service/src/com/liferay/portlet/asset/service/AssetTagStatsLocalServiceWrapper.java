@@ -287,6 +287,11 @@ public class AssetTagStatsLocalServiceWrapper
 		return _assetTagStatsLocalService.getAssetTagStatsesCount();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _assetTagStatsLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

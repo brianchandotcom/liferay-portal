@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -280,6 +281,20 @@ public abstract class OrganizationLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("organizationId");
 
 		return actionableDynamicQuery;
+	}
+
+	@Override
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
+
+		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.OrganizationLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setClass(Organization.class);
+		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
+
+		indexableActionableDynamicQuery.setPrimaryKeyPropertyName(
+			"organizationId");
+
+		return indexableActionableDynamicQuery;
 	}
 
 	protected void initActionableDynamicQuery(

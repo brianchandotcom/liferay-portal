@@ -270,6 +270,11 @@ public class SCLicenseLocalServiceWrapper implements SCLicenseLocalService,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _scLicenseLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	@Override
 	public com.liferay.portlet.softwarecatalog.model.SCLicense getLicense(
 		long licenseId)
 		throws com.liferay.portal.kernel.exception.PortalException {

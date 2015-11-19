@@ -14,7 +14,7 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.model.UserTrackerPath;
 import com.liferay.portal.service.UserTrackerPathLocalServiceUtil;
@@ -26,7 +26,7 @@ import com.liferay.portal.service.UserTrackerPathLocalServiceUtil;
  */
 @Deprecated
 public abstract class UserTrackerPathActionableDynamicQuery
-	extends BaseActionableDynamicQuery {
+	extends DefaultActionableDynamicQuery {
 	public UserTrackerPathActionableDynamicQuery() {
 		setBaseLocalService(UserTrackerPathLocalServiceUtil.getService());
 		setClass(UserTrackerPath.class);

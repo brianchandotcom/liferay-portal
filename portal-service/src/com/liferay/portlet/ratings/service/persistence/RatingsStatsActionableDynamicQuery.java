@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.ratings.service.persistence;
 
-import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import com.liferay.portlet.ratings.model.RatingsStats;
@@ -27,7 +27,7 @@ import com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil;
  */
 @Deprecated
 public abstract class RatingsStatsActionableDynamicQuery
-	extends BaseActionableDynamicQuery {
+	extends DefaultActionableDynamicQuery {
 	public RatingsStatsActionableDynamicQuery() {
 		setBaseLocalService(RatingsStatsLocalServiceUtil.getService());
 		setClass(RatingsStats.class);

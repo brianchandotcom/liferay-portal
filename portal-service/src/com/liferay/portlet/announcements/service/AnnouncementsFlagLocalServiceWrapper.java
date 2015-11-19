@@ -260,6 +260,11 @@ public class AnnouncementsFlagLocalServiceWrapper
 		return _announcementsFlagLocalService.getFlag(userId, entryId, value);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _announcementsFlagLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

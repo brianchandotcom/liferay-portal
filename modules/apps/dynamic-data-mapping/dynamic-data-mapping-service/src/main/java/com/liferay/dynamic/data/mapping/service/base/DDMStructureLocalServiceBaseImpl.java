@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -264,6 +265,19 @@ public abstract class DDMStructureLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("structureId");
 
 		return actionableDynamicQuery;
+	}
+
+	@Override
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
+
+		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setClass(DDMStructure.class);
+		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
+
+		indexableActionableDynamicQuery.setPrimaryKeyPropertyName("structureId");
+
+		return indexableActionableDynamicQuery;
 	}
 
 	protected void initActionableDynamicQuery(

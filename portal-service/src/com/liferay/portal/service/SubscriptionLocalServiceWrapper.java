@@ -302,6 +302,11 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 		return _subscriptionLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _subscriptionLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

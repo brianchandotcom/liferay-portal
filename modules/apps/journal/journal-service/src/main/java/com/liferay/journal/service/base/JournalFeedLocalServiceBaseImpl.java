@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -255,6 +256,19 @@ public abstract class JournalFeedLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("id");
 
 		return actionableDynamicQuery;
+	}
+
+	@Override
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
+
+		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.journal.service.JournalFeedLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setClass(JournalFeed.class);
+		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
+
+		indexableActionableDynamicQuery.setPrimaryKeyPropertyName("id");
+
+		return indexableActionableDynamicQuery;
 	}
 
 	protected void initActionableDynamicQuery(

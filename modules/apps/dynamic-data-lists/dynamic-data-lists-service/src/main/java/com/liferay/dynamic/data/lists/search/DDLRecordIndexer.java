@@ -29,6 +29,7 @@ import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -276,10 +277,10 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 	}
 
 	protected void reindexRecords(long companyId) throws Exception {
-		final ActionableDynamicQuery actionableDynamicQuery =
-			_ddlRecordLocalService.getActionableDynamicQuery();
+		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+			_ddlRecordLocalService.getIndexableActionableDynamicQuery();
 
-		actionableDynamicQuery.setAddCriteriaMethod(
+		indexableActionableDynamicQuery.setAddCriteriaMethod(
 			new ActionableDynamicQuery.AddCriteriaMethod() {
 
 				@Override
@@ -321,9 +322,10 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 						recordSetProperty.in(recordSetDynamicQuery));
 				}
 		});
-		actionableDynamicQuery.setCommitImmediately(isCommitImmediately());
-		actionableDynamicQuery.setCompanyId(companyId);
-		actionableDynamicQuery.setPerformActionMethod(
+		indexableActionableDynamicQuery.setCommitImmediately(
+			isCommitImmediately());
+		indexableActionableDynamicQuery.setCompanyId(companyId);
+		indexableActionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod<DDLRecord>() {
 
 				@Override
@@ -334,7 +336,8 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 						Document document = getDocument(record);
 
 						if (document != null) {
-							actionableDynamicQuery.addDocument(document);
+							indexableActionableDynamicQuery.addDocument(
+								document);
 						}
 					}
 					catch (PortalException pe) {
@@ -348,9 +351,9 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 				}
 
 		});
-		actionableDynamicQuery.setSearchEngineId(getSearchEngineId());
+		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 
-		actionableDynamicQuery.performActions();
+		indexableActionableDynamicQuery.performActions();
 	}
 
 	@Reference(unbind = "-")

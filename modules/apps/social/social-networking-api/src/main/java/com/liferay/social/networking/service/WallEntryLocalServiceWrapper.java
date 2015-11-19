@@ -205,6 +205,11 @@ public class WallEntryLocalServiceWrapper implements WallEntryLocalService,
 		return _wallEntryLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _wallEntryLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

@@ -200,6 +200,11 @@ public class KaleoTimerLocalServiceWrapper implements KaleoTimerLocalService,
 		return _kaleoTimerLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _kaleoTimerLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the kaleo timer with the primary key.
 	*

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.service.persistence;
 
-import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.model.VirtualHost;
 import com.liferay.portal.service.VirtualHostLocalServiceUtil;
@@ -26,7 +26,7 @@ import com.liferay.portal.service.VirtualHostLocalServiceUtil;
  */
 @Deprecated
 public abstract class VirtualHostActionableDynamicQuery
-	extends BaseActionableDynamicQuery {
+	extends DefaultActionableDynamicQuery {
 	public VirtualHostActionableDynamicQuery() {
 		setBaseLocalService(VirtualHostLocalServiceUtil.getService());
 		setClass(VirtualHost.class);

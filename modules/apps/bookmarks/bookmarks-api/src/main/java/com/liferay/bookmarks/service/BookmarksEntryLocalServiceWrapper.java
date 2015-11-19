@@ -414,6 +414,11 @@ public class BookmarksEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _bookmarksEntryLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	@Override
 	public java.util.List<com.liferay.bookmarks.model.BookmarksEntry> getNoAssetEntries() {
 		return _bookmarksEntryLocalService.getNoAssetEntries();
 	}

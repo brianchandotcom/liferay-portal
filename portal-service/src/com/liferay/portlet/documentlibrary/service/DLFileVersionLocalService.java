@@ -279,6 +279,9 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 	public int getFileVersionsCount(long fileEntryId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLFileVersion getLatestFileVersion(
 		long fileEntryId, boolean excludeWorkingCopy) throws PortalException;
 

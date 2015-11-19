@@ -318,6 +318,9 @@ public interface DLFileShortcutLocalService extends BaseLocalService,
 	public int getFileShortcutsCount(long groupId, long folderId,
 		boolean active, int status);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
 	/**
 	* Returns the OSGi service identifier.
 	*

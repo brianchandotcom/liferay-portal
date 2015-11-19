@@ -240,6 +240,11 @@ public class BrowserTrackerLocalServiceWrapper
 		return _browserTrackerLocalService.getBrowserTrackersCount();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _browserTrackerLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

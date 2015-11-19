@@ -198,6 +198,10 @@ public class ShoppingCartLocalServiceUtil {
 		return getService().getCart(userId, groupId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
 	public static java.util.Map<com.liferay.shopping.model.ShoppingCartItem, java.lang.Integer> getItems(
 		long groupId, java.lang.String itemIds) {
 		return getService().getItems(groupId, itemIds);

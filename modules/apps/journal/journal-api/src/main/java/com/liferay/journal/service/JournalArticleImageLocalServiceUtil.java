@@ -255,6 +255,10 @@ public class JournalArticleImageLocalServiceUtil {
 		return getService().getArticleImagesCount(groupId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the journal article image with the primary key.
 	*

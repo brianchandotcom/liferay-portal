@@ -200,6 +200,10 @@ public class KaleoNodeLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
 	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoNode> getKaleoDefinitionKaleoNodes(
 		long kaleoDefinitionId) {
 		return getService().getKaleoDefinitionKaleoNodes(kaleoDefinitionId);

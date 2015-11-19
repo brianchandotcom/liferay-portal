@@ -478,6 +478,10 @@ public class AssetEntryLocalServiceUtil {
 		return getService().getGroupEntries(groupId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
 	public static com.liferay.portlet.asset.model.AssetEntry getNextEntry(
 		long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {

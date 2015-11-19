@@ -338,6 +338,11 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 		return _teamLocalService.getGroupTeams(groupId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _teamLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

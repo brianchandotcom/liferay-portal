@@ -19,6 +19,7 @@ import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -203,10 +204,10 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 	protected void reindexCalendarBookings(long companyId)
 		throws PortalException {
 
-		final ActionableDynamicQuery actionableDynamicQuery =
-			_calendarBookingLocalService.getActionableDynamicQuery();
+		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+			_calendarBookingLocalService.getIndexableActionableDynamicQuery();
 
-		actionableDynamicQuery.setAddCriteriaMethod(
+		indexableActionableDynamicQuery.setAddCriteriaMethod(
 			new ActionableDynamicQuery.AddCriteriaMethod() {
 
 				@Override
@@ -223,9 +224,10 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 				}
 
 			});
-		actionableDynamicQuery.setCommitImmediately(isCommitImmediately());
-		actionableDynamicQuery.setCompanyId(companyId);
-		actionableDynamicQuery.setPerformActionMethod(
+		indexableActionableDynamicQuery.setCommitImmediately(
+			isCommitImmediately());
+		indexableActionableDynamicQuery.setCompanyId(companyId);
+		indexableActionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod<CalendarBooking>() {
 
 				@Override
@@ -233,7 +235,7 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 					try {
 						Document document = getDocument(calendarBooking);
 
-						actionableDynamicQuery.addDocument(document);
+						indexableActionableDynamicQuery.addDocument(document);
 					}
 					catch (PortalException pe) {
 						if (_log.isWarnEnabled()) {
@@ -246,9 +248,9 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 				}
 
 			});
-		actionableDynamicQuery.setSearchEngineId(getSearchEngineId());
+		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 
-		actionableDynamicQuery.performActions();
+		indexableActionableDynamicQuery.performActions();
 	}
 
 	@Reference(unbind = "-")

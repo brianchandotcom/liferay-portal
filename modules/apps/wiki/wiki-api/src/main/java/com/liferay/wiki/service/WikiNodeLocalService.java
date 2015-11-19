@@ -236,6 +236,9 @@ public interface WikiNodeLocalService extends BaseLocalService,
 		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.wiki.model.WikiNode getNode(long groupId,
 		java.lang.String nodeName) throws PortalException;
 

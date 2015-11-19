@@ -328,6 +328,11 @@ public class AssetLinkLocalServiceWrapper implements AssetLinkLocalService,
 		return _assetLinkLocalService.getExportActionbleDynamicQuery(portletDataContext);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _assetLinkLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns all the asset links whose first or second entry ID is the given
 	* entry ID.

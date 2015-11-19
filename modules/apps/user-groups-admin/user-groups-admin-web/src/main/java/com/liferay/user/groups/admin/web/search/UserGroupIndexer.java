@@ -15,6 +15,7 @@
 package com.liferay.user.groups.admin.web.search;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -156,11 +157,11 @@ public class UserGroupIndexer extends BaseIndexer<UserGroup> {
 	}
 
 	protected void reindexUserGroups(long companyId) throws PortalException {
-		final ActionableDynamicQuery actionableDynamicQuery =
-			_userGroupLocalService.getActionableDynamicQuery();
+		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+			_userGroupLocalService.getIndexableActionableDynamicQuery();
 
-		actionableDynamicQuery.setCompanyId(companyId);
-		actionableDynamicQuery.setPerformActionMethod(
+		indexableActionableDynamicQuery.setCompanyId(companyId);
+		indexableActionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod<UserGroup>() {
 
 				@Override
@@ -168,7 +169,7 @@ public class UserGroupIndexer extends BaseIndexer<UserGroup> {
 					try {
 						Document document = getDocument(userGroup);
 
-						actionableDynamicQuery.addDocument(document);
+						indexableActionableDynamicQuery.addDocument(document);
 					}
 					catch (PortalException pe) {
 						if (_log.isWarnEnabled()) {
@@ -181,9 +182,9 @@ public class UserGroupIndexer extends BaseIndexer<UserGroup> {
 				}
 
 			});
-		actionableDynamicQuery.setSearchEngineId(getSearchEngineId());
+		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 
-		actionableDynamicQuery.performActions();
+		indexableActionableDynamicQuery.performActions();
 	}
 
 	@Reference(unbind = "-")

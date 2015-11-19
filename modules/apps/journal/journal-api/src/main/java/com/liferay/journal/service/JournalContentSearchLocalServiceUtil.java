@@ -235,6 +235,10 @@ public class JournalContentSearchLocalServiceUtil {
 		return getService().getArticleContentSearches(groupId, articleId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the journal content search with the primary key.
 	*

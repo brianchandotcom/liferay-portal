@@ -316,6 +316,11 @@ public class JournalFeedLocalServiceWrapper implements JournalFeedLocalService,
 		return _journalFeedLocalService.getFeedsCount(groupId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _journalFeedLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the journal feed with the primary key.
 	*

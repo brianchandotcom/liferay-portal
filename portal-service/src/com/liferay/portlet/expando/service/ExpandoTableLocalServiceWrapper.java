@@ -351,6 +351,11 @@ public class ExpandoTableLocalServiceWrapper implements ExpandoTableLocalService
 		return _expandoTableLocalService.getExpandoTablesCount();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _expandoTableLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

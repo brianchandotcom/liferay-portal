@@ -235,6 +235,9 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 	public java.util.List<java.lang.String> getGroupScopePermissions(
 		com.liferay.portal.model.ResourceBlock resourceBlock, long roleId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
 	/**
 	* Returns the OSGi service identifier.
 	*

@@ -281,6 +281,11 @@ public class LayoutRevisionLocalServiceWrapper
 			parentLayoutRevision, plid);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _layoutRevisionLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the layout revision with the primary key.
 	*

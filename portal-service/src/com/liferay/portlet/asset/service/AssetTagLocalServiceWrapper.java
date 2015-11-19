@@ -560,6 +560,11 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 		return _assetTagLocalService.getGroupsTags(groupIds);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _assetTagLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

@@ -519,6 +519,11 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	}
 
 	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _organizationLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	@Override
 	public java.util.List<com.liferay.portal.model.Organization> getNoAssetOrganizations() {
 		return _organizationLocalService.getNoAssetOrganizations();
 	}

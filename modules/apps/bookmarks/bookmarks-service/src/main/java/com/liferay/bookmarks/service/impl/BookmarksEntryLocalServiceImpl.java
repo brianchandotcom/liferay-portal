@@ -29,6 +29,7 @@ import com.liferay.bookmarks.social.BookmarksActivityKeys;
 import com.liferay.bookmarks.util.comparator.EntryModifiedDateComparator;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
@@ -507,10 +508,10 @@ public class BookmarksEntryLocalServiceImpl
 			throw new IllegalArgumentException("Tree path is null");
 		}
 
-		final ActionableDynamicQuery actionableDynamicQuery =
-			getActionableDynamicQuery();
+		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+			getIndexableActionableDynamicQuery();
 
-		actionableDynamicQuery.setAddCriteriaMethod(
+		indexableActionableDynamicQuery.setAddCriteriaMethod(
 			new ActionableDynamicQuery.AddCriteriaMethod() {
 
 				@Override
@@ -534,7 +535,7 @@ public class BookmarksEntryLocalServiceImpl
 		final Indexer<BookmarksEntry> indexer = IndexerRegistryUtil.getIndexer(
 			BookmarksEntry.class);
 
-		actionableDynamicQuery.setPerformActionMethod(
+		indexableActionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod<BookmarksEntry>() {
 
 				@Override
@@ -551,12 +552,12 @@ public class BookmarksEntryLocalServiceImpl
 
 					Document document = indexer.getDocument(entry);
 
-					actionableDynamicQuery.addDocument(document);
+					indexableActionableDynamicQuery.addDocument(document);
 				}
 
 			});
 
-		actionableDynamicQuery.performActions();
+		indexableActionableDynamicQuery.performActions();
 	}
 
 	@Override

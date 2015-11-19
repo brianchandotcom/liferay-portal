@@ -476,6 +476,11 @@ public class CalEventLocalServiceWrapper implements CalEventLocalService,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _calEventLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	@Override
 	public java.util.List<com.liferay.portlet.calendar.model.CalEvent> getNoAssetEvents() {
 		return _calEventLocalService.getNoAssetEvents();
 	}

@@ -452,6 +452,10 @@ public class DLFileEntryTypeLocalServiceUtil {
 				   .getFolderFileEntryTypes(groupIds, folderId, inherited);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

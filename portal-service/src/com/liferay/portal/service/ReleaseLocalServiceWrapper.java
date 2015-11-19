@@ -211,6 +211,11 @@ public class ReleaseLocalServiceWrapper implements ReleaseLocalService,
 		return _releaseLocalService.getBuildNumberOrCreate();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _releaseLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

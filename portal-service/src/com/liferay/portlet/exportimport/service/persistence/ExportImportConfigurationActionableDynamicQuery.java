@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.exportimport.service.persistence;
 
-import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
@@ -27,7 +27,7 @@ import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalSe
  */
 @Deprecated
 public abstract class ExportImportConfigurationActionableDynamicQuery
-	extends BaseActionableDynamicQuery {
+	extends DefaultActionableDynamicQuery {
 	public ExportImportConfigurationActionableDynamicQuery() {
 		setBaseLocalService(ExportImportConfigurationLocalServiceUtil.getService());
 		setClass(ExportImportConfiguration.class);

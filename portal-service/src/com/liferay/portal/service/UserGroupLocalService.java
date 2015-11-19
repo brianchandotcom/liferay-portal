@@ -363,6 +363,9 @@ public interface UserGroupLocalService extends BaseLocalService,
 	public java.util.List<com.liferay.portal.model.UserGroup> getGroupUserUserGroups(
 		long groupId, long userId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
 	/**
 	* Returns the OSGi service identifier.
 	*

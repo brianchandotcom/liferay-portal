@@ -1134,11 +1134,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns all the active or inactive groups in the company.
+	 * Returns all the active or inactive groups associated with the company.
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  active whether the group is active
-	 * @return groups associated with the company, based on the active parameter
+	 * @return the active or inactive groups associated with the company
 	 */
 	@Override
 	public List<Group> getActiveGroups(long companyId, boolean active) {

@@ -24,8 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.gradle.api.Project;
-import org.gradle.api.artifacts.ConfigurationContainer;
-import org.gradle.api.file.FileCollection;
 import org.gradle.api.tasks.JavaExec;
 
 /**
@@ -38,32 +36,14 @@ public class FormatJavadocTask extends JavaExec {
 	}
 
 	@Override
-	public JavaExec classpath(Object... paths) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public void exec() {
 		setArgs(getCompleteArgs());
-
-		super.setClasspath(getClasspath());
 
 		super.exec();
 	}
 
 	public String getAuthor() {
 		return _javadocFormatterArgs.getAuthor();
-	}
-
-	@Override
-	public FileCollection getClasspath() {
-		Project project = getProject();
-
-		ConfigurationContainer configurationContainer =
-			project.getConfigurations();
-
-		return configurationContainer.getByName(
-			JavadocFormatterPlugin.CONFIGURATION_NAME);
 	}
 
 	public File getInputDir() {
@@ -94,11 +74,6 @@ public class FormatJavadocTask extends JavaExec {
 
 	public void setAuthor(String author) {
 		_javadocFormatterArgs.setAuthor(author);
-	}
-
-	@Override
-	public JavaExec setClasspath(FileCollection classpath) {
-		throw new UnsupportedOperationException();
 	}
 
 	public void setInitializeMissingJavadocs(

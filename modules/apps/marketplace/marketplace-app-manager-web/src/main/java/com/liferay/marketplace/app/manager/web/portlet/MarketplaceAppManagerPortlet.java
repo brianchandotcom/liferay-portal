@@ -167,33 +167,29 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 				SessionMessages.add(actionRequest, "pluginUploaded");
 			}
 		}
-		else {
-			try {
-				String url = ParamUtil.getString(uploadPortletRequest, "url");
+	}
 
-				URL urlObj = new URL(url);
+	public void installRemoteApp(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
 
-				String host = urlObj.getHost();
+		try {
+			String url = ParamUtil.getString(actionRequest, "url");
 
-				if (host.endsWith("sf.net") ||
-					host.endsWith("sourceforge.net")) {
+			URL urlObj = new URL(url);
 
-					doInstallSourceForgeApp(
-						urlObj.getPath(), uploadPortletRequest, actionRequest);
-				}
-				else {
-					doInstallRemoteApp(
-						url, uploadPortletRequest, actionRequest, true);
-				}
+			String host = urlObj.getHost();
+
+			if (host.endsWith("sf.net") || host.endsWith("sourceforge.net")) {
+				doInstallSourceForgeApp(urlObj.getPath(), actionRequest);
 			}
-			catch (MalformedURLException murle) {
-				SessionErrors.add(actionRequest, "invalidUrl", murle);
+			else {
+				doInstallRemoteApp(url, actionRequest, true);
 			}
 		}
-
-		String redirect = ParamUtil.getString(uploadPortletRequest, "redirect");
-
-		actionResponse.sendRedirect(redirect);
+		catch (MalformedURLException murle) {
+			SessionErrors.add(actionRequest, "invalidURL", murle);
+		}
 	}
 
 	public void uninstallApp(
@@ -356,14 +352,13 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 	}
 
 	protected int doInstallRemoteApp(
-			String url, UploadPortletRequest uploadPortletRequest,
-			ActionRequest actionRequest, boolean failOnError)
+			String url, ActionRequest actionRequest, boolean failOnError)
 		throws Exception {
 
 		int responseCode = HttpServletResponse.SC_OK;
 
 		String deploymentContext = ParamUtil.getString(
-			uploadPortletRequest, "deploymentContext");
+			actionRequest, "deploymentContext");
 
 		try {
 			String fileName = null;
@@ -427,8 +422,7 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 	}
 
 	protected void doInstallSourceForgeApp(
-			String path, UploadPortletRequest uploadPortletRequest,
-			ActionRequest actionRequest)
+			String path, ActionRequest actionRequest)
 		throws Exception {
 
 		String[] sourceForgeMirrors = PropsUtil.getArray(
@@ -445,7 +439,7 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 				}
 
 				int responseCode = doInstallRemoteApp(
-					url, uploadPortletRequest, actionRequest, failOnError);
+					url, actionRequest, failOnError);
 
 				if (responseCode == HttpServletResponse.SC_OK) {
 					return;

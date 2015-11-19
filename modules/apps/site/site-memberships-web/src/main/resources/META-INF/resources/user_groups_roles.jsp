@@ -39,6 +39,18 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(LanguageUtil.get(request, "edit-site-roles-for-user-group") + ": " + HtmlUtil.escape(userGroup.getName()));
 %>
 
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item label="site-roles" selected="<%= true %>" />
+	</aui:nav>
+
+	<aui:nav-bar-search>
+		<aui:form action="<%= portletURL.toString() %>" name="searchFm">
+			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
+		</aui:form>
+	</aui:nav-bar-search>
+</aui:nav-bar>
+
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" name="fm">
 	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
 	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
@@ -69,8 +81,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "edit-site-roles-for-user-grou
 		rowChecker="<%= new UserGroupGroupRoleRoleChecker(renderResponse, userGroup, group) %>"
 		searchContainer="<%= new RoleSearch(renderRequest, portletURL) %>"
 	>
-		<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" cssClass="col-xs-12 form-search" placeholder="keywords" />
-
 		<liferay-ui:search-container-results>
 
 			<%

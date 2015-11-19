@@ -32,22 +32,12 @@ public class JavadocFormatterPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		addJavadocFormatterConfiguration(project);
+		addConfigurationJavadocFormatter(project);
 
-		addFormatJavadocTask(project);
+		addTaskFormatJavadoc(project);
 	}
 
-	protected FormatJavadocTask addFormatJavadocTask(Project project) {
-		FormatJavadocTask formatJavadocTask = GradleUtil.addTask(
-			project, FORMAT_JAVADOC_TASK_NAME, FormatJavadocTask.class);
-
-		formatJavadocTask.setDescription(
-			"Runs Liferay Javadoc Formatter to format files.");
-
-		return formatJavadocTask;
-	}
-
-	protected Configuration addJavadocFormatterConfiguration(
+	protected Configuration addConfigurationJavadocFormatter(
 		final Project project) {
 
 		Configuration configuration = GradleUtil.addConfiguration(
@@ -63,7 +53,7 @@ public class JavadocFormatterPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Configuration configuration) {
-					addJavadocFormatterDependencies(project);
+					addDependenciesJavadocFormatter(project);
 				}
 
 			});
@@ -71,10 +61,20 @@ public class JavadocFormatterPlugin implements Plugin<Project> {
 		return configuration;
 	}
 
-	protected void addJavadocFormatterDependencies(Project project) {
+	protected void addDependenciesJavadocFormatter(Project project) {
 		GradleUtil.addDependency(
 			project, CONFIGURATION_NAME, "com.liferay",
 			"com.liferay.javadoc.formatter", "latest.release");
+	}
+
+	protected FormatJavadocTask addTaskFormatJavadoc(Project project) {
+		FormatJavadocTask formatJavadocTask = GradleUtil.addTask(
+			project, FORMAT_JAVADOC_TASK_NAME, FormatJavadocTask.class);
+
+		formatJavadocTask.setDescription(
+			"Runs Liferay Javadoc Formatter to format files.");
+
+		return formatJavadocTask;
 	}
 
 }

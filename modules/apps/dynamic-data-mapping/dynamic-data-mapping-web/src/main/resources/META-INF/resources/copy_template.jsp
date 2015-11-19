@@ -17,11 +17,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String closeRedirect = ParamUtil.getString(request, "closeRedirect");
-
 DDMTemplate template = (DDMTemplate)request.getAttribute(DDMWebKeys.DYNAMIC_DATA_MAPPING_TEMPLATE);
 
 long templateId = BeanParamUtil.getLong(template, request, "templateId");
+long classNameId = BeanParamUtil.getLong(template, request, "classNameId");
+long classPK = BeanParamUtil.getLong(template, request, "classPK");
+long resourceClassNameId = BeanParamUtil.getLong(template, request, "resourceClassNameId");
 
 DDMTemplateVersion templateVersion = template.getTemplateVersion();
 %>
@@ -30,9 +31,16 @@ DDMTemplateVersion templateVersion = template.getTemplateVersion();
 	<portlet:param name="mvcPath" value="/copy_template.jsp" />
 </portlet:actionURL>
 
+<portlet:renderURL var="closeRedirectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="mvcPath" value="/view_template.jsp" />
+	<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
+	<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+	<portlet:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
+</portlet:renderURL>
+
 <aui:form action="<%= copyTemplateURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
+	<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirectURL %>" />
 	<aui:input name="templateId" type="hidden" value="<%= String.valueOf(templateId) %>" />
 	<aui:input name="status" type="hidden" value="<%= templateVersion.getStatus() %>" />
 	<aui:input name="saveAndContinue" type="hidden" value="<%= true %>" />

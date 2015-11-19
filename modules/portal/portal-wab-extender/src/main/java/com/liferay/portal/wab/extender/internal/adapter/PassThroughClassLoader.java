@@ -22,6 +22,10 @@ import java.net.URL;
 import java.util.Enumeration;
 
 /**
+ * Alters the logic in the <code>isRequestFromVM</code> method of Equinox's
+ * <code>BundleLoader</code> class. All of the methods in this class must be
+ * implemented even though they just invoke the parent class.
+ * 
  * @author Carlos Sierra Andrés
  */
 public class PassThroughClassLoader extends ClassLoader {

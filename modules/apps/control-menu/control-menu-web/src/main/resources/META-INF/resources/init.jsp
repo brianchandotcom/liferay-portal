@@ -28,7 +28,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.control.menu.ControlMenuEntry" %><%@
 page import="com.liferay.control.menu.constants.ControlMenuWebKeys" %><%@
 page import="com.liferay.control.menu.util.ControlMenuEntryRegistry" %><%@
-page import="com.liferay.control.menu.web.InformationMessagesControlMenuEntry" %><%@
+page import="com.liferay.control.menu.web.control.menu.entry.InformationMessagesControlMenuEntry" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@

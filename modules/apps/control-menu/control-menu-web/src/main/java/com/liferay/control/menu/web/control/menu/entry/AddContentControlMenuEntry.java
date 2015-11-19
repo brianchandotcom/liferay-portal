@@ -12,28 +12,26 @@
  * details.
  */
 
-package com.liferay.control.menu.web;
+package com.liferay.control.menu.web.control.menu.entry;
 
-import com.liferay.control.menu.BaseControlMenuEntry;
+import com.liferay.control.menu.BaseJSPControlMenuEntry;
 import com.liferay.control.menu.ControlMenuEntry;
 import com.liferay.control.menu.constants.ControlMenuCategoryKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
-import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.SessionClicks;
 
-import java.util.Locale;
-
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Julio Camarero
@@ -42,45 +40,16 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"control.menu.category.key=" + ControlMenuCategoryKeys.TOOLS,
-		"service.ranking:Integer=500"
+		"service.ranking:Integer=100"
 	},
 	service = ControlMenuEntry.class
 )
-public class ToggleControlsControlMenuEntry
-	extends BaseControlMenuEntry implements ControlMenuEntry {
+public class AddContentControlMenuEntry
+	extends BaseJSPControlMenuEntry implements ControlMenuEntry {
 
 	@Override
-	public String getIconCssClass(HttpServletRequest request) {
-		String stateCss = null;
-
-		String toggleControls = GetterUtil.getString(
-			SessionClicks.get(
-				request, "com.liferay.frontend.js.web_toggleControls",
-				"visible"));
-
-		if (toggleControls.equals("visible")) {
-			stateCss = "icon-eye-open";
-		}
-		else {
-			stateCss = "icon-eye-close";
-		}
-
-		return "controls-state-icon " + stateCss;
-	}
-
-	@Override
-	public String getLabel(Locale locale) {
-		return "edit-controls";
-	}
-
-	@Override
-	public String getLinkCssClass(HttpServletRequest request) {
-		return "toggle-controls";
-	}
-
-	@Override
-	public String getURL(HttpServletRequest request) {
-		return "javascript:;";
+	public String getJspPath() {
+		return "/entries/add_content.jsp";
 	}
 
 	@Override
@@ -96,20 +65,40 @@ public class ToggleControlsControlMenuEntry
 			return false;
 		}
 
-		Group group = layout.getGroup();
-
-		if (group.hasStagingGroup() && !group.isStagingGroup()) {
-			return false;
-		}
-
-		if (!(hasUpdateLayoutPermission(themeDisplay) ||
+		if (!(hasAddLayoutPermission(themeDisplay) ||
 			  hasCustomizePermission(themeDisplay) ||
-			  hasPortletConfigurationPermission(themeDisplay))) {
+			  hasUpdateLayoutPermission(themeDisplay))) {
 
 			return false;
 		}
 
 		return super.hasAccessPermission(request);
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.control.menu.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
+
+	protected boolean hasAddLayoutPermission(ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		Layout layout = themeDisplay.getLayout();
+
+		if (layout.getParentLayoutId() ==
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
+
+			return GroupPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(), layout.getGroup(),
+				ActionKeys.ADD_LAYOUT);
+		}
+
+		return LayoutPermissionUtil.contains(
+			themeDisplay.getPermissionChecker(), layout, ActionKeys.ADD_LAYOUT);
 	}
 
 	protected boolean hasCustomizePermission(ThemeDisplay themeDisplay)
@@ -137,15 +126,6 @@ public class ToggleControlsControlMenuEntry
 		}
 
 		return false;
-	}
-
-	protected boolean hasPortletConfigurationPermission(
-			ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		return PortletPermissionUtil.hasConfigurationPermission(
-			themeDisplay.getPermissionChecker(), themeDisplay.getSiteGroupId(),
-			themeDisplay.getLayout(), ActionKeys.CONFIGURATION);
 	}
 
 	protected boolean hasUpdateLayoutPermission(ThemeDisplay themeDisplay)

@@ -116,40 +116,8 @@ userGroupSearch.setEmptyResultsMessage(emptyResultsMessage);
 			keyProperty="userGroupId"
 			modelVar="userGroup"
 		>
-			<liferay-ui:search-container-row-parameter
-				name="group"
-				value="<%= group %>"
-			/>
 
-			<liferay-ui:search-container-column-text
-				name="name"
-				orderable="<%= true %>"
-				property="name"
-			/>
-
-			<liferay-ui:search-container-column-text
-				name="description"
-				orderable="<%= true %>"
-				property="description"
-			/>
-
-			<c:if test='<%= tabs2.equals("current") %>'>
-
-				<%
-				List<UserGroupGroupRole> userGroupGroupRoles = UserGroupGroupRoleLocalServiceUtil.getUserGroupGroupRoles(userGroup.getUserGroupId(), group.getGroupId());
-				%>
-
-				<liferay-ui:search-container-column-text
-					name="site-roles"
-					value="<%= ListUtil.toString(userGroupGroupRoles, UsersAdmin.USER_GROUP_GROUP_ROLE_TITLE_ACCESSOR, StringPool.COMMA_AND_SPACE) %>"
-				/>
-
-				<liferay-ui:search-container-column-jsp
-					align="right"
-					cssClass="entry-action"
-					path="/user_group_action.jsp"
-				/>
-			</c:if>
+			<%@ include file="/user_group_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
 		<liferay-util:buffer var="formButton">

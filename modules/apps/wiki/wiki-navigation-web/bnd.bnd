@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Wiki Navigation Web
+Bundle-SymbolicName: com.liferay.wiki.navigation.web
+Bundle-Version: 1.0.0
+Web-ContextPath: /wiki-navigation-web

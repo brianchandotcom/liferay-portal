@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>EDIT_COG</td>
-	<td>//a[contains(@class,'control-menu') and i[contains(@class,'icon-cog')]]</td>
+	<td>//i[contains(@class,'control-menu') and contains(@class,'icon-cog')]</td>
 	<td></td>
 </tr>
 <tr>

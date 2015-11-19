@@ -104,7 +104,7 @@ String searchContainerId = "templates";
 			orderByCol="<%= orderByCol %>"
 			orderByComparator="<%= orderByComparator %>"
 			orderByType="<%= orderByType %>"
-			rowChecker="<%= new RowChecker(renderResponse) %>"
+			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
 			searchContainer="<%= templateSearch %>"
 		>
 

@@ -17,7 +17,6 @@
 						'liferay-journal-navigation': {
 							path: 'navigation.js',
 							requires: [
-								'liferay-app-view-move',
 								'liferay-portlet-base'
 							]
 						},

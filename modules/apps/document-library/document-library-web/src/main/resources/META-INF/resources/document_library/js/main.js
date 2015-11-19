@@ -166,7 +166,6 @@ AUI.add(
 							Liferay.DocumentLibraryUpload,
 							{
 								appViewEntryTemplates: config.appViewEntryTemplates,
-								appViewMove: instance._appViewMove,
 								columnNames: config.columnNames,
 								dimensions: config.folders.dimensions,
 								displayStyle: config.displayStyle,
@@ -222,6 +221,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['document-library-upload', 'liferay-app-view-move', 'liferay-message', 'liferay-portlet-base']
+		requires: ['document-library-upload', 'liferay-message', 'liferay-portlet-base']
 	}
 );

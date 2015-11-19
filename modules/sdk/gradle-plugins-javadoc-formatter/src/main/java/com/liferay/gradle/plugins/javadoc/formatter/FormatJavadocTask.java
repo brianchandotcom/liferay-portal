@@ -14,17 +14,19 @@
 
 package com.liferay.gradle.plugins.javadoc.formatter;
 
-import com.liferay.gradle.util.FileUtil;
-import com.liferay.gradle.util.StringUtil;
+import com.liferay.gradle.util.GradleUtil;
 import com.liferay.javadoc.formatter.JavadocFormatterArgs;
 
-import java.io.File;
-
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
-import org.gradle.api.Project;
+import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.JavaExec;
+import org.gradle.util.CollectionUtils;
+import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -42,68 +44,78 @@ public class FormatJavadocTask extends JavaExec {
 		super.exec();
 	}
 
+	@Input
 	public String getAuthor() {
-		return _javadocFormatterArgs.getAuthor();
+		return GradleUtil.toString(_author);
 	}
 
-	public File getInputDir() {
-		Project project = getProject();
-
-		return project.file(_javadocFormatterArgs.getInputDirName());
+	@Input
+	public List<String> getLimits() {
+		return GradleUtil.toStringList(_limits);
 	}
 
-	public String[] getLimits() {
-		return _javadocFormatterArgs.getLimits();
-	}
-
+	@Input
 	public double getLowestSupportedJavaVersion() {
-		return _javadocFormatterArgs.getLowestSupportedJavaVersion();
+		return _lowestSupportedJavaVersion;
 	}
 
+	@Input
 	public String getOutputFilePrefix() {
-		return _javadocFormatterArgs.getOutputFilePrefix();
+		return GradleUtil.toString(_outputFilePrefix);
 	}
 
+	@Input
 	public boolean isInitializeMissingJavadocs() {
-		return _javadocFormatterArgs.isInitializeMissingJavadocs();
+		return _initializeMissingJavadocs;
 	}
 
+	@Input
 	public boolean isUpdateJavadocs() {
-		return _javadocFormatterArgs.isUpdateJavadocs();
+		return _updateJavadocs;
 	}
 
-	public void setAuthor(String author) {
-		_javadocFormatterArgs.setAuthor(author);
+	public FormatJavadocTask limits(Iterable<Object> limits) {
+		GUtil.addToCollection(_limits, limits);
+
+		return this;
+	}
+
+	public FormatJavadocTask limits(Object ... limits) {
+		return limits(Arrays.asList(limits));
+	}
+
+	public void setAuthor(Object author) {
+		_author = author;
 	}
 
 	public void setInitializeMissingJavadocs(
 		boolean initializeMissingJavadocs) {
 
-		_javadocFormatterArgs.setInitializeMissingJavadocs(
-			initializeMissingJavadocs);
+		_initializeMissingJavadocs = initializeMissingJavadocs;
 	}
 
-	public void setInputDirName(String inputDirName) {
-		_javadocFormatterArgs.setInputDirName(inputDirName);
+	public void setLimits(Iterable<Object> limits) {
+		_limits.clear();
+
+		limits(limits);
 	}
 
-	public void setLimits(String[] limits) {
-		_javadocFormatterArgs.setLimits(limits);
+	public void setLimits(Object ... limits) {
+		setLimits(Arrays.asList(limits));
 	}
 
 	public void setLowestSupportedJavaVersion(
 		double lowestSupportedJavaVersion) {
 
-		_javadocFormatterArgs.setLowestSupportedJavaVersion(
-			lowestSupportedJavaVersion);
+		_lowestSupportedJavaVersion = lowestSupportedJavaVersion;
 	}
 
-	public void setOutputFilePrefix(String outputFilePrefix) {
-		_javadocFormatterArgs.setOutputFilePrefix(outputFilePrefix);
+	public void setOutputFilePrefix(Object outputFilePrefix) {
+		_outputFilePrefix = outputFilePrefix;
 	}
 
 	public void setUpdateJavadocs(boolean updateJavadocs) {
-		_javadocFormatterArgs.setUpdateJavadocs(updateJavadocs);
+		_updateJavadocs = updateJavadocs;
 	}
 
 	protected List<String> getCompleteArgs() {
@@ -111,9 +123,8 @@ public class FormatJavadocTask extends JavaExec {
 
 		args.add("javadoc.author=" + getAuthor());
 		args.add("javadoc.init=" + isInitializeMissingJavadocs());
-		args.add(
-			"javadoc.input.dir=" + FileUtil.getAbsolutePath(getInputDir()));
-		args.add("javadoc.limit=" + StringUtil.merge(getLimits(), ","));
+		args.add("javadoc.input.dir=./");
+		args.add("javadoc.limit=" + CollectionUtils.join(",", getLimits()));
 		args.add(
 			"javadoc.lowest.supported.java.version=" +
 				getLowestSupportedJavaVersion());
@@ -123,7 +134,12 @@ public class FormatJavadocTask extends JavaExec {
 		return args;
 	}
 
-	private final JavadocFormatterArgs _javadocFormatterArgs =
-		new JavadocFormatterArgs();
+	private Object _author = JavadocFormatterArgs.AUTHOR;
+	private boolean _initializeMissingJavadocs;
+	private final Set<Object> _limits = new LinkedHashSet<>();
+	private double _lowestSupportedJavaVersion =
+		JavadocFormatterArgs.LOWEST_SUPPORTED_JAVA_VERSION;
+	private Object _outputFilePrefix = JavadocFormatterArgs.OUTPUT_FILE_PREFIX;
+	private boolean _updateJavadocs;
 
 }

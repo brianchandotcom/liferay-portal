@@ -456,6 +456,19 @@ public class DDMStructureLocalServiceImpl
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public void deleteStructure(DDMStructure structure) throws PortalException {
 		if (!GroupThreadLocal.isDeleteInProcess()) {
+			String classNameDDLRecordSet =
+				"com.liferay.dynamic.data.lists.model.DDLRecordSet";
+
+			if (structure.getClassName().equals(classNameDDLRecordSet)) {
+				if (ddmStructureLinkPersistence.countByStructureId(
+						structure.getStructureId()) > 0) {
+
+				throw new RequiredStructureException.
+					MustNotDeleteStructureReferencedByStructureLinks(
+						structure.getStructureId());
+				}
+			}
+
 			if (ddmStructurePersistence.countByParentStructureId(
 					structure.getStructureId()) > 0) {
 

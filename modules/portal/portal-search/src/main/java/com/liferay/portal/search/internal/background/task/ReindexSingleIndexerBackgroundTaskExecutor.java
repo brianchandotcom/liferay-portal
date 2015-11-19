@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.background.task.ReindexBackgroundTaskConstants;
+import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSenderUtil;
 
 /**
  * @author Andrew Betts
@@ -43,6 +45,10 @@ public class ReindexSingleIndexerBackgroundTaskExecutor
 		}
 
 		for (long companyId : companyIds) {
+			ReindexStatusMessageSenderUtil.sendStatusMessage(
+				ReindexBackgroundTaskConstants.SINGLE_START, companyId,
+				companyIds);
+
 			try {
 				SearchEngineUtil.deleteEntityDocuments(
 					indexer.getSearchEngineId(), companyId, className, true);
@@ -52,6 +58,10 @@ public class ReindexSingleIndexerBackgroundTaskExecutor
 			catch (Exception e) {
 				_log.error(e, e);
 			}
+
+			ReindexStatusMessageSenderUtil.sendStatusMessage(
+				ReindexBackgroundTaskConstants.SINGLE_END, companyId,
+				companyIds);
 		}
 	}
 

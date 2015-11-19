@@ -135,7 +135,7 @@ CKEDITOR.dialog.add(
 									{
 										action: 'Browse',
 										target: 'info:poster',
-										url: editor.config.filebrowserBrowseUrl + '&Type=Video'
+										url: editor.config.filebrowserVideoBrowseUrl
 									},
 									hidden: 'true',
 									id: 'browse',
@@ -145,7 +145,7 @@ CKEDITOR.dialog.add(
 								}
 							],
 							type: 'hbox',
-							widths: [ '', '100px']
+							widths: ['', '100px']
 						},
 						{
 							children: [
@@ -169,7 +169,7 @@ CKEDITOR.dialog.add(
 								}
 							],
 							type: 'hbox',
-							widths: [ '50%', '50%']
+							widths: ['50%', '50%']
 						}
 					],
 					id: 'info'
@@ -178,16 +178,16 @@ CKEDITOR.dialog.add(
 
 			title: Liferay.Language.get('video-properties'),
 
-			onShow: function() {
-				var instance = this;
-
-				editor.plugins.media.onShowCallback(instance, editor, 'video');
-			},
-
 			onOk: function() {
 				var instance = this;
 
 				editor.plugins.media.onOkCallback(instance, editor, 'video');
+			},
+
+			onShow: function() {
+				var instance = this;
+
+				editor.plugins.media.onShowCallback(instance, editor, 'video');
 			}
 		};
 	}

@@ -16,10 +16,10 @@ package com.liferay.flags.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.flags.service.FlagsEntryServiceUtil;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-
-import com.liferay.flags.service.FlagsEntryServiceUtil;
 
 import java.rmi.RemoteException;
 

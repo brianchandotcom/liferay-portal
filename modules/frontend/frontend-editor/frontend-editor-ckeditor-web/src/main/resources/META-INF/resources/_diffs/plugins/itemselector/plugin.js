@@ -23,6 +23,9 @@
 			init: function(editor) {
 				var instance = this;
 
+				instance._audioTPL = new CKEDITOR.template(TPL_AUDIO_SCRIPT);
+				instance._videoTPL = new CKEDITOR.template(TPL_VIDEO_SCRIPT);
+
 				editor.addCommand(
 					'audioselector',
 					{
@@ -91,7 +94,8 @@
 									itemSelectorDialog.open();
 								}
 							);
-						}					}
+						}
+					}
 				);
 
 				if (editor.ui.addButton) {
@@ -134,7 +138,6 @@
 							instance._bindBrowseButton(editor, dialogDefinition, 'info', 'audioselector', 'url');
 						}
 						else if (dialogName === 'image') {
-
 							instance._bindBrowseButton(editor, dialogDefinition, 'info', 'imageselector', 'txtUrl');
 							instance._bindBrowseButton(editor, dialogDefinition, 'Link', 'imageselector', 'txtUrl');
 						}
@@ -171,6 +174,102 @@
 						};
 					}
 				}
+			},
+
+			_commitAudioValue: function(value, node, extraStyles) {
+				var instance = this;
+
+				node.setAttribute('data-document-url', value);
+
+				var audioUrl = Liferay.Util.addParams('audioPreview=1&type=mp3', value);
+
+				node.setAttribute('data-audio-url', audioUrl);
+
+				var audioOggUrl = Liferay.Util.addParams('audioPreview=1&type=ogg', value);
+
+				node.setAttribute('data-audio-ogg-url', audioOggUrl);
+
+				return instance._audioTPL.output(
+					{
+						oggUrl: audioOggUrl,
+						url: audioUrl
+					}
+				);
+			},
+
+			_commitMediaValue: function(value, editor, type) {
+				var instance = this;
+
+				var mediaPlugin = editor.plugins.media;
+
+				if (mediaPlugin) {
+					mediaPlugin.onOkCallback(
+						{
+							commitContent: instance._getCommitMediaValueFn(value, editor, type)
+						},
+						editor,
+						type
+					);
+				}
+			},
+
+			_commitVideoValue: function(value, node, extraStyles) {
+				var instance = this;
+
+				node.setAttribute('data-document-url', value);
+
+				var videoUrl = Liferay.Util.addParams('videoPreview=1&type=mp4', value);
+
+				node.setAttribute('data-video-url', videoUrl);
+
+				var videoOgvUrl = Liferay.Util.addParams('videoPreview=1&type=ogv', value);
+
+				node.setAttribute('data-video-ogv-url', videoOgvUrl);
+
+				var videoHeight = defaultVideoHeight;
+
+				node.setAttribute('data-height', videoHeight);
+
+				var videoWidth = defaultVideoWidth;
+
+				node.setAttribute('data-width', videoWidth);
+
+				extraStyles.backgroundImage = 'url(' + value + ')';
+				extraStyles.height = videoHeight + 'px';
+				extraStyles.width = videoWidth + 'px';
+
+				return instance._videoTPL.output(
+					{
+						height: videoHeight,
+						ogvUrl: videoOgvUrl,
+						poster: Liferay.Util.addParams('videoThumbnail=1', value),
+						url: videoUrl,
+						width: videoWidth
+					}
+				);
+			},
+
+			_getCommitMediaValueFn: function(value, editor, type) {
+				var instance = this;
+
+				var commitValueFn = function(node, extraStyles) {
+					var mediaScript;
+
+					if (type === 'audio') {
+						mediaScript = instance._commitAudioValue(value, node, extraStyles);
+					}
+					else if (type === 'video') {
+						mediaScript = instance._commitVideoValue(value, node, extraStyles);
+					}
+
+					var mediaPlugin = editor.plugins.media;
+
+					if (mediaPlugin) {
+						mediaPlugin.applyMediaScript(node, type, mediaScript);
+					}
+				};
+
+				return commitValueFn;
 			},
 
 			_getItemSelectorDialog: function(editor, url, callback) {
@@ -223,16 +322,6 @@
 				return itemSrc;
 			},
 
-			_onOkCallback: function(editor, type, commitValueFn) {
-				editor.plugins.media.onOkCallback(
-					{
-						commitContent: commitValueFn
-					},
-					editor,
-					type
-				);
-			},
-
 			_onSelectedAudioChange: function(editor, callback, event) {
 				var instance = this;
 
@@ -246,40 +335,7 @@
 							callback(audioSrc);
 						}
 						else {
-							var commitValueFn = function(audioNode) {
-								var value = audioSrc;
-
-								var scriptNode = audioNode.getChild(1);
-
-								var scriptTPL = null;
-								var textScript = null;
-
-								var audioOggUrl = audioNode.getAttribute('data-audio-ogg-url');
-								var audioUrl = audioNode.getAttribute('data-audio-url');
-
-								audioNode.setAttribute('data-document-url', value);
-
-								audioUrl = Liferay.Util.addParams('audioPreview=1&type=mp3', value);
-
-								audioNode.setAttribute('data-audio-url', audioUrl);
-
-								audioOggUrl = Liferay.Util.addParams('audioPreview=1&type=ogg', value);
-
-								audioNode.setAttribute('data-audio-ogg-url', audioOggUrl);
-
-								scriptTPL = new CKEDITOR.template(TPL_AUDIO_SCRIPT);
-
-								textScript = scriptTPL.output(
-									{
-										oggUrl: audioOggUrl,
-										url: audioUrl
-									}
-								);
-
-								editor.plugins.media.applyMediaScript(audioNode, 'audio', textScript);
-							};
-
-							instance._onOkCallback(editor, 'audio', commitValueFn);
+							instance._commitMediaValue(audioSrc, editor, 'audio');
 						}
 					}
 				}
@@ -321,53 +377,7 @@
 							callback(videoSrc);
 						}
 						else {
-							var commitValueFn = function(videoNode, extraStyles) {
-								var value = videoSrc;
-
-								var scriptTPL = null;
-								var textScript = null;
-
-								var videoHeight = defaultVideoHeight;
-								var videoWidth = defaultVideoWidth;
-
-								var videoOgvUrl = Liferay.Util.addParams('videoPreview=1&type=ogv', value);
-								var videoUrl = videoNode.getAttribute('data-video-url');
-
-								videoNode.setAttribute('data-document-url', value);
-
-								videoUrl = Liferay.Util.addParams('videoPreview=1&type=mp4', value);
-
-								videoNode.setAttribute('data-video-url', videoUrl);
-
-								videoOgvUrl = Liferay.Util.addParams('videoPreview=1&type=ogv', value);
-
-								videoNode.setAttribute('data-video-ogv-url', videoOgvUrl);
-
-								videoNode.setAttribute('data-height', videoHeight);
-								videoNode.setAttribute('data-width', videoWidth);
-
-								extraStyles.backgroundImage = 'url(' + value + ')';
-								extraStyles.height = videoHeight + 'px';
-								extraStyles.width = videoWidth + 'px';
-
-								value = Liferay.Util.addParams('videoThumbnail=1', value);
-
-								scriptTPL = new CKEDITOR.template(TPL_VIDEO_SCRIPT);
-
-								textScript = scriptTPL.output(
-									{
-										height: videoHeight,
-										ogvUrl: videoOgvUrl,
-										poster: value,
-										url: videoUrl,
-										width: videoWidth
-									}
-								);
-
-								editor.plugins.media.applyMediaScript(videoNode, 'video', textScript);
-							};
-
-							instance._onOkCallback(editor, 'video', commitValueFn);
+							instance._commitMediaValue(videoSrc, editor, 'video');
 						}
 					}
 				}

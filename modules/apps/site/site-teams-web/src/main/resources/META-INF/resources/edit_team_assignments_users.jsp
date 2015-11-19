@@ -49,8 +49,8 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 
 <c:if test="<%= usersCount > 0 %>">
 	<liferay-frontend:management-bar
-		checkBoxContainerId="usersSearchContainer"
 		includeCheckBox="<%= true %>"
+		searchContainerId="users"
 	>
 		<liferay-frontend:management-bar-filters>
 			<liferay-frontend:management-bar-navigation

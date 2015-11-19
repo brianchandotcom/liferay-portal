@@ -53,7 +53,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "edit-site-roles-for-user-grou
 	</aui:nav-bar-search>
 </aui:nav-bar>
 
-<liferay-frontend:management-bar>
+<liferay-frontend:management-bar
+	checkBoxContainerId="userGroupGroupRoleRoleSearchContainer"
+	includeCheckBox="<%= true %>"
+>
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
@@ -97,6 +100,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "edit-site-roles-for-user-grou
 	</aui:button-row>
 
 	<liferay-ui:search-container
+		id="userGroupGroupRoleRole"
 		rowChecker="<%= new UserGroupGroupRoleRoleChecker(renderResponse, userGroup, group) %>"
 		searchContainer="<%= new RoleSearch(renderRequest, portletURL) %>"
 	>

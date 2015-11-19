@@ -40,8 +40,8 @@ import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeService;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -354,7 +354,7 @@ public class DLPortletToolbarContributor implements PortletToolbarContributor {
 		if ((folder == null) || folder.isSupportsMetadata()) {
 			try {
 				fileEntryTypes =
-					DLFileEntryTypeServiceUtil.getFolderFileEntryTypes(
+					_dlFileEntryTypeService.getFolderFileEntryTypes(
 						PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId),
 						folderId, inherited);
 			}
@@ -432,6 +432,18 @@ public class DLPortletToolbarContributor implements PortletToolbarContributor {
 		_baseModelPermissionChecker = baseModelPermissionChecker;
 	}
 
+	@Reference(unbind = "-")
+	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
+		_dlAppLocalService = dlAppLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDLFileEntryTypeService(
+		DLFileEntryTypeService dlFileEntryTypeService) {
+
+		_dlFileEntryTypeService = dlFileEntryTypeService;
+	}
+
 	private Folder _getFolder(
 		ThemeDisplay themeDisplay, PortletRequest portletRequest) {
 
@@ -460,7 +472,7 @@ public class DLPortletToolbarContributor implements PortletToolbarContributor {
 			(folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
 
 			try {
-				folder = DLAppLocalServiceUtil.getFolder(folderId);
+				folder = _dlAppLocalService.getFolder(folderId);
 			}
 			catch (NoSuchFolderException nsfe) {
 				folder = null;
@@ -573,5 +585,7 @@ public class DLPortletToolbarContributor implements PortletToolbarContributor {
 		DLPortletToolbarContributor.class);
 
 	private BaseModelPermissionChecker _baseModelPermissionChecker;
+	private DLAppLocalService _dlAppLocalService;
+	private DLFileEntryTypeService _dlFileEntryTypeService;
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.flags.service;
+package com.liferay.flags.service;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseService;
@@ -31,12 +32,14 @@ import com.liferay.portal.service.BaseService;
  *
  * @author Brian Wing Shun Chan
  * @see FlagsEntryServiceUtil
- * @see com.liferay.portlet.flags.service.base.FlagsEntryServiceBaseImpl
- * @see com.liferay.portlet.flags.service.impl.FlagsEntryServiceImpl
+ * @see com.liferay.flags.service.base.FlagsEntryServiceBaseImpl
+ * @see com.liferay.flags.service.impl.FlagsEntryServiceImpl
  * @generated
  */
 @AccessControlled
 @JSONWebService
+@OSGiBeanProperties(property =  {
+	"json.web.service.context.name=flags", "json.web.service.context.path=FlagsEntry"}, service = FlagsEntryService.class)
 @ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
@@ -44,7 +47,7 @@ public interface FlagsEntryService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link FlagsEntryServiceUtil} to access the flags entry remote service. Add custom service methods to {@link com.liferay.portlet.flags.service.impl.FlagsEntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link FlagsEntryServiceUtil} to access the flags entry remote service. Add custom service methods to {@link com.liferay.flags.service.impl.FlagsEntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public void addEntry(java.lang.String className, long classPK,
 		java.lang.String reporterEmailAddress, long reportedUserId,

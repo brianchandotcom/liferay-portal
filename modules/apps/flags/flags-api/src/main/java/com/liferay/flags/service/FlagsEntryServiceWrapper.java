@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.flags.service;
+package com.liferay.flags.service;
 
 import aQute.bnd.annotation.ProviderType;
 

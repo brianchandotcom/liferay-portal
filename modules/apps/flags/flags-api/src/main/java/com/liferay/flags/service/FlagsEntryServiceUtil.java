@@ -12,16 +12,18 @@
  * details.
  */
 
-package com.liferay.portlet.flags.service;
+package com.liferay.flags.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the remote service utility for FlagsEntry. This utility wraps
- * {@link com.liferay.portlet.flags.service.impl.FlagsEntryServiceImpl} and is the
+ * {@link com.liferay.flags.service.impl.FlagsEntryServiceImpl} and is the
  * primary access point for service operations in application layer code running
  * on a remote server. Methods of this service are expected to have security
  * checks based on the propagated JAAS credentials because this service can be
@@ -29,8 +31,8 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  *
  * @author Brian Wing Shun Chan
  * @see FlagsEntryService
- * @see com.liferay.portlet.flags.service.base.FlagsEntryServiceBaseImpl
- * @see com.liferay.portlet.flags.service.impl.FlagsEntryServiceImpl
+ * @see com.liferay.flags.service.base.FlagsEntryServiceBaseImpl
+ * @see com.liferay.flags.service.impl.FlagsEntryServiceImpl
  * @generated
  */
 @ProviderType
@@ -38,7 +40,7 @@ public class FlagsEntryServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.flags.service.impl.FlagsEntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to {@link com.liferay.flags.service.impl.FlagsEntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static void addEntry(java.lang.String className, long classPK,
 		java.lang.String reporterEmailAddress, long reportedUserId,
@@ -60,14 +62,7 @@ public class FlagsEntryServiceUtil {
 	}
 
 	public static FlagsEntryService getService() {
-		if (_service == null) {
-			_service = (FlagsEntryService)PortalBeanLocatorUtil.locate(FlagsEntryService.class.getName());
-
-			ReferenceRegistry.registerReference(FlagsEntryServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -77,5 +72,14 @@ public class FlagsEntryServiceUtil {
 	public void setService(FlagsEntryService service) {
 	}
 
-	private static FlagsEntryService _service;
+	private static ServiceTracker<FlagsEntryService, FlagsEntryService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(FlagsEntryServiceUtil.class);
+
+		_serviceTracker = new ServiceTracker<FlagsEntryService, FlagsEntryService>(bundle.getBundleContext(),
+				FlagsEntryService.class, null);
+
+		_serviceTracker.open();
+	}
 }

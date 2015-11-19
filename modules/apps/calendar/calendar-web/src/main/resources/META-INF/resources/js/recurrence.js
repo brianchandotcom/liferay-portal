@@ -412,7 +412,7 @@ AUI.add(
 						if (currentTarget === instance.get('lastPositionCheckbox')) {
 							var positionInput = instance.get('positionInput');
 
-							positionInput.set('value', instance._calculatePosition());
+							positionInput.val(instance._calculatePosition());
 						}
 
 						var disableLimitCountInput = (limitType === LIMIT_UNLIMITED) || (limitType === LIMIT_DATE);
@@ -447,11 +447,11 @@ AUI.add(
 
 						var startTimeDayOfWeekInput = instance.get('startTimeDayOfWeekInput');
 
-						startTimeDayOfWeekInput.set('value', dayOfWeek);
+						startTimeDayOfWeekInput.val(dayOfWeek);
 
 						daysOfWeekCheckboxes.each(
 							function(item) {
-								if (item.get('value') == dayOfWeek) {
+								if (item.val() == dayOfWeek) {
 									item.set('checked', true);
 									item.set('disabled', true);
 								}
@@ -465,9 +465,9 @@ AUI.add(
 							}
 						);
 
-						dayOfWeekInput.set('value', dayOfWeek);
+						dayOfWeekInput.val(dayOfWeek);
 
-						positionInput.set('value', instance._calculatePosition());
+						positionInput.val(instance._calculatePosition());
 
 						if (repeatOnDayOfWeekRadioButton.get('checked')) {
 							instance._toggleView('positionalDayOfWeekOptions', instance._canChooseLastDayOfWeek());

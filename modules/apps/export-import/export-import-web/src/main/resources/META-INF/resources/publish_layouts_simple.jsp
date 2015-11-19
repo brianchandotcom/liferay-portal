@@ -122,7 +122,7 @@ GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHel
 
 								UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
 
-								if (((exportModelCount != 0) || (modelDeletionCount != 0)) && GetterUtil.getBoolean(liveGroupTypeSettings.getProperty(StagingUtil.getStagedPortletId(portlet.getRootPortletId())), portletDataHandler.isPublishToLiveByDefault())) {
+								if (((exportModelCount > 0) || (modelDeletionCount > 0)) && GetterUtil.getBoolean(liveGroupTypeSettings.getProperty(StagingUtil.getStagedPortletId(portlet.getRootPortletId())), portletDataHandler.isPublishToLiveByDefault())) {
 						%>
 
 									<liferay-util:buffer var="badgeHTML">

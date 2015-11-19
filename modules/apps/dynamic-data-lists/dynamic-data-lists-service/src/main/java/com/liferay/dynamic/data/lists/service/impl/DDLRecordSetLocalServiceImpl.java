@@ -418,10 +418,13 @@ public class DDLRecordSetLocalServiceImpl
 	protected void validateName(Map<Locale, String> nameMap)
 		throws PortalException {
 
-		String name = nameMap.get(LocaleUtil.getSiteDefault());
+		Locale locale = LocaleUtil.getSiteDefault();
+
+		String name = nameMap.get(locale);
 
 		if (Validator.isNull(name)) {
-			throw new RecordSetNameException("Name is null");
+			throw new RecordSetNameException(
+				"Name is null for locale " + locale.getDisplayName());
 		}
 	}
 

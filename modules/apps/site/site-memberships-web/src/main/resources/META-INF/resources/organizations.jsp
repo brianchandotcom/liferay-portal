@@ -21,6 +21,9 @@ String tabs1 = (String)request.getAttribute("edit_site_assignments.jsp-tabs1");
 
 Group group = (Group)request.getAttribute("edit_site_assignments.jsp-group");
 
+String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
 PortletURL portletURL = (PortletURL)request.getAttribute("edit_site_assignments.jsp-portletURL");
 
 PortletURL viewOrganizationsURL = renderResponse.createRenderURL();
@@ -31,10 +34,21 @@ viewOrganizationsURL.setParameter("tabs2", "current");
 viewOrganizationsURL.setParameter("redirect", currentURL);
 viewOrganizationsURL.setParameter("groupId", String.valueOf(group.getGroupId()));
 
-SearchContainer searchContainer = new OrganizationSearch(renderRequest, viewOrganizationsURL);
+SearchContainer searchContainer = new OrganizationSearch(renderRequest, PortletURLUtil.clone(viewOrganizationsURL, renderResponse));
 
 searchContainer.setEmptyResultsMessage("no-organization-was-found-that-is-a-member-of-this-site");
 %>
+
+<liferay-frontend:management-bar>
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= orderByCol %>"
+			orderByType="<%= orderByType %>"
+			orderColumns='<%= new String[] {"name", "type"} %>'
+			portletURL="<%= PortletURLUtil.clone(viewOrganizationsURL, renderResponse) %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+</liferay-frontend:management-bar>
 
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="tabs1" type="hidden" value="organizations" />

@@ -1,4 +1,7 @@
 Bundle-Name: Liferay Wiki Navigation Web
 Bundle-SymbolicName: com.liferay.wiki.navigation.web
 Bundle-Version: 1.0.0
+Include-Resource:\
+	classes,\
+	META-INF/resources=src/main/resources/META-INF/resources
 Web-ContextPath: /wiki-navigation-web

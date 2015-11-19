@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Miguel Pastor
  */
-@Component(immediate = true, service = DDMWebUpgrade.class)
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class DDMWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override

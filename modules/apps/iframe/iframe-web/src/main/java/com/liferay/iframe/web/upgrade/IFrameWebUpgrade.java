@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  * @author Peter Fellwock
  */
-@Component(immediate = true, service = IFrameWebUpgrade.class)
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class IFrameWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override

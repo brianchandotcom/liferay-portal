@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = JournalContentWebUpgrade.class)
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class JournalContentWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override

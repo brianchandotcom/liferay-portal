@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true, service = DDLDisplayWebUpgrade.class)
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class DDLDisplayWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override

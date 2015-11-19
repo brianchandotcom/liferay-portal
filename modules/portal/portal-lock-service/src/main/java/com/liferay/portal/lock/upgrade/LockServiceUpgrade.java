@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Miguel Pastor
  */
-@Component(immediate = true, service = LockServiceUpgrade.class)
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class LockServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override

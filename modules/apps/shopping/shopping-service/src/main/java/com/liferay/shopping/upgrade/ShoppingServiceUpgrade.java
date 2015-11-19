@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Peter Fellwock
  * @author Manuel de la Peña
  */
-@Component(immediate = true, service = ShoppingServiceUpgrade.class)
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class ShoppingServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override

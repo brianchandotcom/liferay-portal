@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = AssetTagsNavigationWebUpgrade.class)
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class AssetTagsNavigationWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override

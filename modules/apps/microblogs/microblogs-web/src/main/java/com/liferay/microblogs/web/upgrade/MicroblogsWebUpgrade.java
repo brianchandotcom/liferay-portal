@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  * @author Manuel de la Peña
  */
-@Component(immediate = true, service = MicroblogsWebUpgrade.class)
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class MicroblogsWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override

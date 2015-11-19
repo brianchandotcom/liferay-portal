@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Philip Jones
  */
-@Component(immediate = true, service = PortalSettingWebUpgrade.class)
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class PortalSettingWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override

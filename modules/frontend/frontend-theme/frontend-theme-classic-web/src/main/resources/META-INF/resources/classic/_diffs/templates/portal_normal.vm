@@ -64,7 +64,7 @@ $theme.include($body_top_include)
 	</section>
 
 	<footer class="container-fluid-1280" id="footer" role="contentinfo">
-		<div class="row-fluid">
+		<div class="row">
 			#language ("powered-by") <a href="http://www.liferay.com" rel="external">Liferay</a>
 		</div>
 	</footer>

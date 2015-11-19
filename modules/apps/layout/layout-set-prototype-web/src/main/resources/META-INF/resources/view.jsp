@@ -47,8 +47,8 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 <c:if test='<%= (layoutSetPrototypesCount > 0) || !navigation.equals("all") %>'>
 	<liferay-frontend:management-bar
-		checkBoxContainerId="layoutSetPrototypeSearchContainer"
 		includeCheckBox="<%= true %>"
+		searchContainerId="layoutSetPrototype"
 	>
 		<liferay-frontend:management-bar-filters>
 			<liferay-frontend:management-bar-navigation

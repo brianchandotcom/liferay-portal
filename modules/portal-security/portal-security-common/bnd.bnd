@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Portal Security Common
+Bundle-SymbolicName: com.liferay.portal.security.common
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.security.common.action,\
+	com.liferay.portal.security.common.servlet.taglib
+Include-Resource:\
+	classes

@@ -6,4 +6,8 @@ Import-Package:\
 	*
 Include-Resource:\
 	classes,\
+	META-INF/resources=src/main/resources/META-INF/resources,\
+	@lib/com.liferay.portal.language.jar,\
+	@lib/com.liferay.portal.security.common.jar,\
 	@lib/jcifs.jar
+Web-ContextPath: /portal-security-sso-ntlm

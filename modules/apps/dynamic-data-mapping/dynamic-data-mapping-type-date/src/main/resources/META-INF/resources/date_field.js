@@ -49,7 +49,7 @@ AUI.add(
 					formatDate: function(isoDate) {
 						var instance = this;
 
-						var formattedDate = '';
+						var formattedDate;
 
 						if (isoDate) {
 							formattedDate = A.Date.format(
@@ -60,7 +60,7 @@ AUI.add(
 							);
 						}
 
-						return formattedDate ? formattedDate : '';
+						return formattedDate || '';
 					},
 
 					getISODate: function(date) {

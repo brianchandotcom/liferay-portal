@@ -159,10 +159,6 @@ AUI.add(
 						value: {}
 					},
 
-					appViewMove: {
-						value: {}
-					},
-
 					columnNames: {
 						setter: function(val) {
 							var instance = this;
@@ -352,14 +348,6 @@ AUI.add(
 							},
 							500
 						);
-
-						var appViewMove = instance.get('appViewMove');
-
-						if (appViewMove.get('updateable')) {
-							var dd = appViewMove._ddHandler.dd;
-
-							dd.addInvalid(STR_DOT + CSS_UPLOAD_ERROR);
-						}
 
 						var onDragOverHandle = docElement.on(
 							'dragover',
@@ -1344,6 +1332,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-component', 'aui-data-set-deprecated', 'aui-overlay-manager-deprecated', 'aui-overlay-mask-deprecated', 'aui-parse-content', 'aui-progressbar', 'aui-template-deprecated', 'aui-tooltip', 'liferay-app-view-move', 'liferay-app-view-select', 'liferay-search-container', 'liferay-storage-formatter', 'querystring-parse-simple', 'uploader']
+		requires: ['aui-component', 'aui-data-set-deprecated', 'aui-overlay-manager-deprecated', 'aui-overlay-mask-deprecated', 'aui-parse-content', 'aui-progressbar', 'aui-template-deprecated', 'aui-tooltip', 'liferay-search-container', 'liferay-storage-formatter', 'querystring-parse-simple', 'uploader']
 	}
 );

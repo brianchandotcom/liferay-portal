@@ -39,9 +39,9 @@ page import="com.liferay.wiki.model.WikiPage" %><%@
 page import="com.liferay.wiki.service.WikiNodeLocalServiceUtil" %><%@
 page import="com.liferay.wiki.service.WikiNodeServiceUtil" %><%@
 page import="com.liferay.wiki.service.WikiPageServiceUtil" %><%@
-page import="com.liferay.wikinavigation.service.permission.WikiPagePermission" %><%@
-page import="com.liferay.wikinavigation.util.MenuItem" %><%@
-page import="com.liferay.wikinavigation.util.WikiNavigationConstants" %>
+page import="com.liferay.wiki.service.permission.WikiPagePermissionChecker" %><%@
+page import="com.liferay.wiki.navigation.web.util.MenuItem" %><%@
+page import="com.liferay.wiki.navigation.web.util.WikiNavigationConstants" %>
 
 <%@ page import="java.util.List" %>
 

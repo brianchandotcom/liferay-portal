@@ -608,7 +608,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 
 	private static final String _DEFAULT_DN = "cn";
 
-	private static final String _OBJECT_CLASS = "objectclass";
+	private static final String _OBJECT_CLASS = "objectClass";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultPortalToLDAPConverter.class);

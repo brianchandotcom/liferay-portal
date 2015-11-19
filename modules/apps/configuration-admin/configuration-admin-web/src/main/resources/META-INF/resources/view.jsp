@@ -27,7 +27,7 @@ ConfigurationModel factoryConfigurationModel = (ConfigurationModel)request.getAt
 	<liferay-ui:header backURL="<%= String.valueOf(renderResponse.createRenderURL()) %>" title="<%= factoryConfigurationModel.getName() %>" />
 </c:if>
 
-<c:if test="<%= Validator.isNotNull(configurationCategories) %>">
+<c:if test="<%= ListUtil.isNotEmpty(configurationCategories) %>">
 	<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 		<aui:nav cssClass="navbar-nav">
 

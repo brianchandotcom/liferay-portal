@@ -64,7 +64,7 @@ import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.UserLocalService;
@@ -308,7 +308,7 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		try {
-			Layout layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
+			Layout layout = _layoutLocalService.getFriendlyURLLayout(
 				themeDisplay.getScopeGroupId(), false,
 				PropsValues.COMPANY_SECURITY_STRANGERS_URL);
 
@@ -375,6 +375,13 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		actionResponse.sendRedirect(redirect);
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -511,6 +518,7 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 
 	private static final boolean _AUTO_SCREEN_NAME = false;
 
+	private LayoutLocalService _layoutLocalService;
 	private UserLocalService _userLocalService;
 	private UserService _userService;
 

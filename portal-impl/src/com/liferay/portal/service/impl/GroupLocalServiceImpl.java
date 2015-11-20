@@ -447,6 +447,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 *             <code>null</code>). Can set asset category IDs and asset tag
 	 *             names for the group, and whether the group is for staging.
 	 * @return     the group
+	 * @throws     PortalException if a portal exception occured
 	 * @deprecated As of 7.0.0, replaced by {@link #addGroup(long, long, String,
 	 *             long, long, Map, Map, int, boolean, int, String, boolean,
 	 *             boolean, ServiceContext)}
@@ -487,6 +488,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 *             <code>null</code>). Can set asset category IDs and asset tag
 	 *             names for the group, and whether the group is for staging.
 	 * @return     the group
+	 * @throws     PortalException if a portal exception occurred
 	 * @deprecated As of 6.2.0, replaced by {@link #addGroup(long, long, String,
 	 *             long, long, Map, Map, int, boolean, int, String, boolean,
 	 *             boolean, ServiceContext)}
@@ -527,6 +529,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 *             <code>null</code>). Can set asset category IDs and asset tag
 	 *             names for the group, and whether the group is for staging.
 	 * @return     the group
+	 * @throws     PortalException if a portal exception occurred
 	 * @deprecated As of 6.2.0, replaced by {@link #addGroup(long, long, String,
 	 *             long, long, Map, Map, int, boolean, int, String, boolean,
 	 *             boolean, ServiceContext)}
@@ -565,6 +568,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 *             <code>null</code>). Can set asset category IDs and asset tag
 	 *             names for the group, and whether the group is for staging.
 	 * @return     the group
+	 * @throws     PortalException if a portal exception occurred
 	 * @deprecated As of 6.2.0, replaced by {@link #addGroup(long, long, String,
 	 *             long, long, Map, Map, int, boolean, int, String, boolean,
 	 *             boolean, ServiceContext)}
@@ -615,7 +619,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * Adds a company group if it does not exist. This method is typically used
 	 * when a virtual host is added.
 	 *
-	 * @param companyId the primary key of the company
+	 * @param  companyId the primary key of the company
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -643,7 +648,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * very first startup. Also takes care of creating the Control Panel groups
 	 * and layouts.
 	 *
-	 * @param companyId the primary key of the company
+	 * @param  companyId the primary key of the company
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -738,6 +744,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 *
 	 * @param  group the group
 	 * @return the deleted group
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Group deleteGroup(Group group) throws PortalException {
@@ -995,6 +1002,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 *
 	 * @param  groupId the primary key of the group
 	 * @return the deleted group
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Group deleteGroup(long groupId) throws PortalException {
@@ -1120,6 +1128,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @param  companyId the primary key of the company
 	 * @return the default user's personal site group, or <code>null</code> if a
 	 *         matching group could not be found
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Group fetchUserPersonalSiteGroup(long companyId)
@@ -1151,6 +1160,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @return the group associated with the company
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Group getCompanyGroup(long companyId) throws PortalException {
@@ -1199,6 +1209,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @param  companyId the primary key of the company
 	 * @param  friendlyURL the group's friendlyURL
 	 * @return the group with the friendly URL
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Group getFriendlyURLGroup(long companyId, String friendlyURL)
@@ -1226,6 +1237,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 *
 	 * @param  groupId the primary key of the group
 	 * @return the group with the primary key
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	@ThreadLocalCachable
@@ -1239,6 +1251,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @param  companyId the primary key of the company
 	 * @param  groupKey the group key
 	 * @return the group with the group key
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	@Skip
@@ -1357,6 +1370,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 *
 	 * @param  groupIds the primary keys of the groups
 	 * @return the groups with the primary keys
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public List<Group> getGroups(long[] groupIds) throws PortalException {
@@ -1416,6 +1430,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @param  companyId the primary key of the company
 	 * @param  plid the primary key of the layout
 	 * @return the group associated with the layout
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Group getLayoutGroup(long companyId, long plid)
@@ -1432,6 +1447,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @param  companyId the primary key of the company
 	 * @param  layoutPrototypeId the primary key of the layout prototype
 	 * @return the group associated with the layout prototype
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Group getLayoutPrototypeGroup(long companyId, long layoutPrototypeId)
@@ -1450,6 +1466,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @param  companyId the primary key of the company
 	 * @param  layoutSetPrototypeId the primary key of the layout set prototype
 	 * @return the group associated with the layout set prototype
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Group getLayoutSetPrototypeGroup(
@@ -1603,6 +1620,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @param  companyId the primary key of the company
 	 * @param  organizationId the primary key of the organization
 	 * @return the group associated with the organization
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Group getOrganizationGroup(long companyId, long organizationId)
@@ -1669,6 +1687,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @param  groupId the primary key of the group
 	 * @return the group followed by all its parent groups ordered by closest
 	 *         ancestor
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public List<Group> getParentGroups(long groupId) throws PortalException {
@@ -1686,6 +1705,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 *
 	 * @param  liveGroupId the primary key of the live group
 	 * @return the staging group
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Group getStagingGroup(long liveGroupId) throws PortalException {
@@ -1698,6 +1718,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @param  companyId the primary key of the company
 	 * @param  userId the primary key of the user
 	 * @return the group directly associated with the user
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Group getUserGroup(long companyId, long userId)
@@ -1715,6 +1736,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @param  companyId the primary key of the company
 	 * @param  userGroupId the primary key of the user group
 	 * @return the group associated with the user group
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Group getUserGroupGroup(long companyId, long userGroupId)
@@ -1736,6 +1758,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @param  inherit whether to include the user's inherited organization
 	 *         groups and user groups
 	 * @return the user's groups and immediate organization groups
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public List<Group> getUserGroups(long userId, boolean inherit)
@@ -1768,6 +1791,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 *         inclusive)
 	 * @return the range of the user's groups and immediate organization groups
 	 *         ordered by name
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public List<Group> getUserGroups(
@@ -1794,6 +1818,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 *
 	 * @param  userGroups the user groups
 	 * @return the groups associated with the user groups
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public List<Group> getUserGroupsGroups(List<UserGroup> userGroups)
@@ -1855,6 +1880,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 *         inclusive)
 	 * @return the range of groups associated with the user's organization
 	 *         groups
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public List<Group> getUserOrganizationsGroups(
@@ -1886,6 +1912,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @return the default user's personal site group
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Group getUserPersonalSiteGroup(long companyId)
@@ -2021,6 +2048,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @param  companyId the primary key of the company
 	 * @param  groupKey the group key
 	 * @return the group with the group key and associated company
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Group loadGetGroup(long companyId, String groupKey)
@@ -2038,7 +2066,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * automatically rebuilt whenever necessary.
 	 * </p>
 	 *
-	 * @param companyId the primary key of the group's company
+	 * @param  companyId the primary key of the group's company
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public void rebuildTree(long companyId) throws PortalException {
@@ -3143,11 +3172,12 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	/**
 	 * Updates the group's asset replacing categories and tag names.
 	 *
-	 * @param userId the primary key of the user
-	 * @param group the group
-	 * @param assetCategoryIds the primary keys of the asset categories
-	 *        (optionally <code>null</code>)
-	 * @param assetTagNames the asset tag names (optionally <code>null</code>)
+	 * @param  userId the primary key of the user
+	 * @param  group the group
+	 * @param  assetCategoryIds the primary keys of the asset categories
+	 *         (optionally <code>null</code>)
+	 * @param  assetTagNames the asset tag names (optionally <code>null</code>)
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public void updateAsset(
@@ -3177,6 +3207,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @param  friendlyURL the group's new friendlyURL (optionally
 	 *         <code>null</code>)
 	 * @return the group
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Group updateFriendlyURL(long groupId, String friendlyURL)
@@ -3326,11 +3357,14 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 *             more information see {@link GroupConstants}.
 	 * @param      friendlyURL the group's new friendlyURL (optionally
 	 *             <code>null</code>)
+	 * @param      inheritContent whether to inherit content from the parent
+	 *             group
 	 * @param      active whether the group is active
 	 * @param      serviceContext the service context to be applied (optionally
 	 *             <code>null</code>). Can set asset category IDs and asset tag
 	 *             names for the group.
 	 * @return     the group
+	 * @throws     PortalException if a portal exception occurred
 	 * @deprecated As of 7.0.0, replaced by {@link #updateGroup(long, long, Map,
 	 *             Map, int, boolean, int, String, boolean, boolean,
 	 *             ServiceContext)}
@@ -3358,6 +3392,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @param  typeSettings the group's new type settings (optionally
 	 *         <code>null</code>)
 	 * @return the group
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Group updateGroup(long groupId, String typeSettings)
@@ -3402,6 +3437,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @param  groupId the primary key of the group
 	 * @param  site whether the group is to be associated with a main site
 	 * @return the group
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Group updateSite(long groupId, boolean site) throws PortalException {

@@ -85,6 +85,10 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class MediaWikiImporter implements WikiImporter {
 
+	public static final String FORMAT_MEDIAWIKI = "mediawiki";
+
+	public static final String FORMAT_CREOLE = "creole";
+
 	public static final String SHARED_IMAGES_CONTENT = "See attachments";
 
 	public static final String SHARED_IMAGES_TITLE = "SharedImages";
@@ -193,7 +197,7 @@ public class MediaWikiImporter implements WikiImporter {
 			serviceContext.setAssetTagNames(
 				readAssetTagNames(userId, node, content));
 
-			String format = "mediawiki";
+			String format = FORMAT_MEDIAWIKI;
 
 			Collection<String> supportedFormats = WikiUtil.getFormats();
 
@@ -202,12 +206,12 @@ public class MediaWikiImporter implements WikiImporter {
 					StringPool.DOUBLE_OPEN_BRACKET + redirectTitle +
 						StringPool.DOUBLE_CLOSE_BRACKET;
 
-				format = "creole";
+				format = FORMAT_CREOLE;
 			}
-			else if (supportedFormats.contains("mediawiki") &&
+			else if (supportedFormats.contains(FORMAT_MEDIAWIKI) &&
 					 Validator.equals(
 						_wikiGroupServiceConfiguration.defaultFormat(),
-						"mediawiki")) {
+						 FORMAT_MEDIAWIKI)) {
 
 				content = content.replaceAll(
 					_imagesPattern.pattern(),
@@ -219,7 +223,7 @@ public class MediaWikiImporter implements WikiImporter {
 
 				content = _translator.translate(content);
 
-				format = "creole";
+				format = FORMAT_CREOLE;
 			}
 
 			WikiPage page = null;

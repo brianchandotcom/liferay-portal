@@ -211,30 +211,20 @@
 		<execute function="AssertTextEquals#assertText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
-	<command name="configureDocumentsAndMediaWorkflow">
-		<execute function="Click" locator1="DocumentsAndMedia#FILTER_HOME_ACTIONS" />
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+	<command name="configureWorkflow">
+		<execute function="Select" locator1="WorkflowConfiguration#${workflowResourceKey}" value1="${workflowDefinition}" />
 
-		<execute function="Select" locator1="AssetWorkflow#ALL_STRUCTURES_WORKFLOW_SELECT" value1="${workflowDefinition}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
-	<command name="configureWebContentWorkflow">
+	<command name="configureWorkflowViaFolderInfo">
 		<execute function="Click" locator1="Icon#INFO" />
 		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="Select" locator1="AssetWorkflow#ALL_STRUCTURES_WORKFLOW_SELECT" value1="${workflowDefinition}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-	</command>
-
-	<command name="configureWorkflow">
-		<execute function="Select" locator1="WorkflowConfiguration#${workflowResourceKey}" value1="${workflowDefinition}" />
-
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
@@ -479,7 +469,7 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="Workflow#configureWebContentWorkflow">
+		<execute macro="Workflow#configureWorkflowViaFolderInfo">
 			<var name="workflowDefinition" value="No Workflow" />
 		</execute>
 	</command>

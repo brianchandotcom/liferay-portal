@@ -25,7 +25,7 @@
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
-		<execute macro="Workflow#configureWebContentWorkflow">
+		<execute macro="Workflow#configureWorkflowViaFolderInfo">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 		</execute>
 
@@ -72,7 +72,7 @@
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
-		<execute macro="Workflow#configureWebContentWorkflow">
+		<execute macro="Workflow#configureWorkflowViaFolderInfo">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 		</execute>
 
@@ -119,7 +119,7 @@
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
-		<execute macro="Workflow#configureWebContentWorkflow">
+		<execute macro="Workflow#configureWorkflowViaFolderInfo">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 		</execute>
 
@@ -156,7 +156,7 @@
 	</command>
 
 	<command name="ApproveInWebContentFolderNoWorkflowWithHomeFolderSingleApproverWorkflowCP" priority="3">
-		<execute macro="Workflow#configureWebContentWorkflow">
+		<execute macro="Workflow#configureWorkflowViaFolderInfo">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 		</execute>
 
@@ -287,7 +287,7 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="Workflow#configureWebContentWorkflow">
+		<execute macro="Workflow#configureWorkflowViaFolderInfo">
 			<var name="workflowDefinition" value="No Workflow" />
 		</execute>
 
@@ -435,7 +435,7 @@
 	</command>
 
 	<command name="ApproveInWebContentFolderSingleApproverWorkflowWithNoHomeFolderWorkflowCP" priority="4">
-		<execute macro="Workflow#configureWebContentWorkflow">
+		<execute macro="Workflow#configureWorkflowViaFolderInfo">
 			<var name="workflowDefinition" value="No Workflow" />
 		</execute>
 
@@ -539,7 +539,7 @@
 	</command>
 
 	<command name="ApproveInWebContentFolderWithParentFolderSingleApproverWorkflowCP" priority="4">
-		<execute macro="Workflow#configureWebContentWorkflow">
+		<execute macro="Workflow#configureWorkflowViaFolderInfo">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 		</execute>
 
@@ -679,7 +679,7 @@
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
-		<execute macro="Workflow#configureWebContentWorkflow">
+		<execute macro="Workflow#configureWorkflowViaFolderInfo">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 		</execute>
 
@@ -739,7 +739,7 @@
 	</command>
 
 	<command name="RejectInWebContentFolderNoWorkflowWithHomeFolderSingleApproverWorkflowCP" priority="3">
-		<execute macro="Workflow#configureWebContentWorkflow">
+		<execute macro="Workflow#configureWorkflowViaFolderInfo">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 		</execute>
 
@@ -881,7 +881,7 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="Workflow#configureWebContentWorkflow">
+		<execute macro="Workflow#configureWorkflowViaFolderInfo">
 			<var name="workflowDefinition" value="No Workflow" />
 		</execute>
 
@@ -1030,7 +1030,7 @@
 	</command>
 
 	<command name="RejectInWebContentFolderSingleApproverWorkflowWithNoHomeFolderWorkflowCP" priority="3">
-		<execute macro="Workflow#configureWebContentWorkflow">
+		<execute macro="Workflow#configureWorkflowViaFolderInfo">
 			<var name="workflowDefinition" value="No Workflow" />
 		</execute>
 
@@ -1145,7 +1145,7 @@
 	</command>
 
 	<command name="RejectInWebContentFolderWithParentFolderSingleApproverWorkflowCP" priority="3">
-		<execute macro="Workflow#configureWebContentWorkflow">
+		<execute macro="Workflow#configureWorkflowViaFolderInfo">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 		</execute>
 
@@ -1307,7 +1307,7 @@
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
-		<execute macro="Workflow#configureWebContentWorkflow">
+		<execute macro="Workflow#configureWorkflowViaFolderInfo">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 		</execute>
 

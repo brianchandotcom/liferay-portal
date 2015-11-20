@@ -2896,3 +2896,26 @@ completes a move action.
 The removed JavaScript modules contained too much logic and were quite difficult to reason about. It
 was also difficult to add this to an existing app. With this change, every app using a search
 container can make use of this in an easier way.
+
+---------------------------------------
+
+### Removed the mergeLayoutTags preference from Asset Publisher Portlet
+- **Date:** 2015-Nov-20
+- **JIRA Ticket:** LPS-60677
+
+#### What changed?
+
+The mergeLayoutTags preference has been removed from Asset Publisher.
+
+#### Who is affected?
+
+This affects any asset publisher portlet that used this preference.
+
+#### How should I update my code?
+
+There is no need to change anything, since this functionality is no used.
+
+#### Why was this change made?
+
+This change was made as a part of the ongoing strategies to cleanup unused
+functionalities in the portal

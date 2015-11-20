@@ -15,7 +15,8 @@
 package com.liferay.dynamic.data.mapping.data.provider.web.display.context;
 
 import com.liferay.dynamic.data.mapping.constants.DDMActionKeys;
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderSettings;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
 import com.liferay.dynamic.data.mapping.data.provider.web.display.context.util.DDMDataProviderRequestHelper;
 import com.liferay.dynamic.data.mapping.data.provider.web.search.DDMDataProviderSearchTerms;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
@@ -23,12 +24,12 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService;
 import com.liferay.dynamic.data.mapping.service.permission.DDMDataProviderInstancePermission;
 import com.liferay.dynamic.data.mapping.service.permission.DDMPermission;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
+import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -38,7 +39,6 @@ import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.PortalUtil;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.portlet.PortletURL;
@@ -53,21 +53,18 @@ public class DDMDataProviderDisplayContext {
 	public DDMDataProviderDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse,
 		DDMDataProviderInstanceService ddmDataProviderInstanceService,
-		DDMDataProviderInstanceLocalService ddmDataProviderInstanceLocalService,
+		DDMDataProviderTracker ddmDataProviderTracker,
 		DDMFormRenderer ddmFormRenderer,
 		DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer,
-		UserLocalService userLocalService,
-		Map<String, DDMDataProviderSettings> ddmDataProvidersMap) {
+		UserLocalService userLocalService) {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_ddmDataProviderInstanceService = ddmDataProviderInstanceService;
-		_ddmDataProviderInstanceLocalService =
-			ddmDataProviderInstanceLocalService;
+		_ddmDataProviderTracker = ddmDataProviderTracker;
 		_ddmFormRenderer = ddmFormRenderer;
 		_ddmFormValuesJSONDeserializer = ddmFormValuesJSONDeserializer;
 		_userLocalService = userLocalService;
-		_ddmDataProvidersMap = ddmDataProvidersMap;
 
 		_ddmDataProviderRequestHelper = new DDMDataProviderRequestHelper(
 			renderRequest);
@@ -84,20 +81,23 @@ public class DDMDataProviderDisplayContext {
 			_renderRequest, "dataProviderInstanceId");
 
 		_ddmDataProviderInstance =
-			_ddmDataProviderInstanceLocalService.fetchDDMDataProviderInstance(
+			_ddmDataProviderInstanceService.fetchDataProviderInstance(
 				dataProviderInstanceId);
 
 		return _ddmDataProviderInstance;
 	}
 
-	public String getDataProviderInstanceDefinition() throws PortalException {
-		String dataProviderType = ParamUtil.getString(
-			_renderRequest, "dataProviderType");
+	public String getDataProviderInstanceDDMFormHTML() throws PortalException {
+		DDMDataProviderInstance dataProviderInstance =
+			getDataProviderInstance();
 
-		DDMDataProviderSettings ddmDataProviderSettings =
-			_ddmDataProvidersMap.get(dataProviderType);
+		String type = BeanParamUtil.getString(
+			dataProviderInstance, _renderRequest, "type");
 
-		Class<?> clazz = ddmDataProviderSettings.getSettings();
+		DDMDataProvider ddmDataProvider =
+			_ddmDataProviderTracker.getDDMDataProvider(type);
+
+		Class<?> clazz = ddmDataProvider.getSettings();
 
 		DDMForm ddmForm = DDMFormFactory.create(clazz);
 
@@ -115,8 +115,8 @@ public class DDMDataProviderDisplayContext {
 		return _ddmFormRenderer.render(ddmForm, ddmFormRenderingContext);
 	}
 
-	public Set<String> getDataProviderTypes() {
-		return _ddmDataProvidersMap.keySet();
+	public Set<String> getDDMDataProviderTypes() {
+		return _ddmDataProviderTracker.getDDMDataProviderTypes();
 	}
 
 	public PortletURL getPortletURL() {
@@ -235,12 +235,10 @@ public class DDMDataProviderDisplayContext {
 	}
 
 	private DDMDataProviderInstance _ddmDataProviderInstance;
-	private final DDMDataProviderInstanceLocalService
-		_ddmDataProviderInstanceLocalService;
 	private final DDMDataProviderInstanceService
 		_ddmDataProviderInstanceService;
 	private final DDMDataProviderRequestHelper _ddmDataProviderRequestHelper;
-	private final Map<String, DDMDataProviderSettings> _ddmDataProvidersMap;
+	private final DDMDataProviderTracker _ddmDataProviderTracker;
 	private final DDMFormRenderer _ddmFormRenderer;
 	private final DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
 	private final RenderRequest _renderRequest;

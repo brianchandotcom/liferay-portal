@@ -14,7 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.data.provider.web.portlet.action;
 
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderSettings;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
 import com.liferay.dynamic.data.mapping.data.provider.web.constants.DDMDataProviderPortletKeys;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
@@ -34,16 +35,12 @@ import com.liferay.portal.theme.ThemeDisplay;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Leonardo Barros
@@ -62,13 +59,12 @@ public class AddDataProviderMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortalException {
 
-		String dataProviderType = ParamUtil.getString(
-			actionRequest, "dataProviderType");
+		String type = ParamUtil.getString(actionRequest, "type");
 
-		DDMDataProviderSettings ddmDataProviderSettings =
-			_ddmDataProvidersMap.get(dataProviderType);
+		DDMDataProvider ddmDataProvider =
+			_ddmDataProviderTracker.getDDMDataProvider(type);
 
-		Class<?> clazz = ddmDataProviderSettings.getSettings();
+		Class<?> clazz = ddmDataProvider.getSettings();
 
 		DDMForm ddmForm = DDMFormFactory.create(clazz);
 
@@ -86,14 +82,10 @@ public class AddDataProviderMVCActionCommand extends BaseMVCActionCommand {
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 
 		String name = ParamUtil.getString(actionRequest, "name");
-
 		String description = ParamUtil.getString(actionRequest, "description");
-
-		String dataProviderType = ParamUtil.getString(
-			actionRequest, "dataProviderType");
-
 		DDMFormValues ddmFormValues = getDDMFormValues(
 			actionRequest, actionResponse);
+		String type = ParamUtil.getString(actionRequest, "type");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMDataProviderInstance.class.getName(), actionRequest);
@@ -101,7 +93,7 @@ public class AddDataProviderMVCActionCommand extends BaseMVCActionCommand {
 		_ddmDataProviderInstanceService.addDataProviderInstance(
 			groupId, getLocalizedMap(themeDisplay.getLocale(), name),
 			getLocalizedMap(themeDisplay.getLocale(), description),
-			ddmFormValues, dataProviderType, serviceContext);
+			ddmFormValues, type, serviceContext);
 	}
 
 	protected DDMDataProviderInstanceService
@@ -118,21 +110,6 @@ public class AddDataProviderMVCActionCommand extends BaseMVCActionCommand {
 		return localizedMap;
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "unregisterDDMDataProviderSettings"
-	)
-	protected synchronized void registerDDMDataProviderSettings(
-		DDMDataProviderSettings ddmDataProviderSettings,
-		Map<String, Object> properties) {
-
-		Object value = properties.get("ddm.data.provider.name");
-
-		_ddmDataProvidersMap.put(value.toString(), ddmDataProviderSettings);
-	}
-
 	@Reference(unbind = "-")
 	protected void setDDMDataProviderInstanceService(
 		DDMDataProviderInstanceService ddmDataProviderInstanceService) {
@@ -140,25 +117,22 @@ public class AddDataProviderMVCActionCommand extends BaseMVCActionCommand {
 		_ddmDataProviderInstanceService = ddmDataProviderInstanceService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
+	protected void setDDMDataProviderTracker(
+		DDMDataProviderTracker ddmDataProviderTracker) {
+
+		_ddmDataProviderTracker = ddmDataProviderTracker;
+	}
+
+	@Reference(unbind = "-")
 	protected void setDDMFormValuesFactory(
 		DDMFormValuesFactory ddmFormValuesFactory) {
 
 		_ddmFormValuesFactory = ddmFormValuesFactory;
 	}
 
-	protected synchronized void unregisterDDMDataProviderSettings(
-		DDMDataProviderSettings ddmDataProviderSettings,
-		Map<String, Object> properties) {
-
-		Object value = properties.get("ddm.data.provider.name");
-
-		_ddmDataProvidersMap.remove(value);
-	}
-
 	private DDMDataProviderInstanceService _ddmDataProviderInstanceService;
-	private final Map<String, DDMDataProviderSettings> _ddmDataProvidersMap =
-		new ConcurrentHashMap<>();
+	private DDMDataProviderTracker _ddmDataProviderTracker;
 	private DDMFormValuesFactory _ddmFormValuesFactory;
 
 }

@@ -14,21 +14,17 @@
 
 package com.liferay.dynamic.data.mapping.data.provider.web.portlet;
 
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderSettings;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
 import com.liferay.dynamic.data.mapping.data.provider.web.constants.DDMDataProviderPortletKeys;
 import com.liferay.dynamic.data.mapping.data.provider.web.display.context.DDMDataProviderDisplayContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
-import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.service.UserLocalService;
 
 import java.io.IOException;
-
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -37,9 +33,6 @@ import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Leonardo Barros
@@ -77,9 +70,8 @@ public class DDMDataProviderPortlet extends MVCPortlet {
 		DDMDataProviderDisplayContext ddmDataProviderDisplayContext =
 			new DDMDataProviderDisplayContext(
 				renderRequest, renderResponse, _ddmDataProviderInstanceService,
-				_ddmDataProviderInstanceLocalService, _ddmFormRenderer,
-				_ddmFormValuesJSONDeserializer, _userLocalService,
-				_ddmDataProvidersMap);
+				_ddmDataProviderTracker, _ddmFormRenderer,
+				_ddmFormValuesJSONDeserializer, _userLocalService);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, ddmDataProviderDisplayContext);
@@ -87,35 +79,18 @@ public class DDMDataProviderPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "unregisterDDMDataProviderSettings"
-	)
-	protected synchronized void registerDDMDataProviderSettings(
-		DDMDataProviderSettings ddmDataProviderSettings,
-		Map<String, Object> properties) {
-
-		Object value = properties.get("ddm.data.provider.name");
-
-		_ddmDataProvidersMap.put(value.toString(), ddmDataProviderSettings);
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMDataProviderInstanceLocalService(
-		DDMDataProviderInstanceLocalService
-			ddmDataProviderInstanceLocalService) {
-
-		_ddmDataProviderInstanceLocalService =
-			ddmDataProviderInstanceLocalService;
-	}
-
 	@Reference(unbind = "-")
 	protected void setDDMDataProviderInstanceService(
 		DDMDataProviderInstanceService ddmDataProviderInstanceService) {
 
 		_ddmDataProviderInstanceService = ddmDataProviderInstanceService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMDataProviderTracker(
+		DDMDataProviderTracker ddmDataProviderTracker) {
+
+		_ddmDataProviderTracker = ddmDataProviderTracker;
 	}
 
 	@Reference(unbind = "-")
@@ -135,20 +110,8 @@ public class DDMDataProviderPortlet extends MVCPortlet {
 		_userLocalService = userLocalService;
 	}
 
-	protected synchronized void unregisterDDMDataProviderSettings(
-		DDMDataProviderSettings ddmDataProviderSettings,
-		Map<String, Object> properties) {
-
-		Object value = properties.get("ddm.data.provider.name");
-
-		_ddmDataProvidersMap.remove(value);
-	}
-
-	private DDMDataProviderInstanceLocalService
-		_ddmDataProviderInstanceLocalService;
 	private DDMDataProviderInstanceService _ddmDataProviderInstanceService;
-	private final Map<String, DDMDataProviderSettings> _ddmDataProvidersMap =
-		new ConcurrentHashMap<>();
+	private DDMDataProviderTracker _ddmDataProviderTracker;
 	private DDMFormRenderer _ddmFormRenderer;
 	private DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
 	private UserLocalService _userLocalService;

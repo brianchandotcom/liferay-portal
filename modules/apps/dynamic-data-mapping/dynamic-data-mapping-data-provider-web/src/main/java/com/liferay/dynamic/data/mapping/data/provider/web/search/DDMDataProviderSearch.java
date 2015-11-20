@@ -34,9 +34,9 @@ public class DDMDataProviderSearch
 	public static List<String> headerNames = new ArrayList<>();
 
 	static {
-		headerNames.add("modified-date");
 		headerNames.add("name");
 		headerNames.add("userName");
+		headerNames.add("modified-date");
 	}
 
 	public DDMDataProviderSearch(

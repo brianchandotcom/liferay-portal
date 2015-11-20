@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String mvcPath = ParamUtil.getString(request, "mvcPath", "/view_record_set.jsp");
+
 String redirect = ParamUtil.getString(request, "redirect", portletDisplay.getURLBack());
 
 long formDDMTemplateId = ParamUtil.getLong(request, "formDDMTemplateId");
@@ -40,7 +42,7 @@ if (editable || ddlDisplayContext.isAdminPortlet()) {
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcPath", "/view_record_set.jsp");
+portletURL.setParameter("mvcPath", mvcPath);
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()));
 
@@ -101,7 +103,7 @@ recordSearchContainer.setOrderByType(orderByType);
 
 	<aui:nav-bar-search searchContainer="<%= recordSearchContainer %>">
 		<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="searchURL">
-			<portlet:param name="mvcPath" value="/view_record_set.jsp" />
+			<portlet:param name="mvcPath" value="<%= mvcPath %>" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
 		</portlet:renderURL>

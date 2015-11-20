@@ -154,6 +154,11 @@ public class MediaWikiImporter implements WikiImporter {
 			_wikiGroupServiceConfiguration.pageTitlesRemoveRegexp());
 	}
 
+	protected String getCreoleRedirectContent(String redirectTitle) {
+		return StringPool.DOUBLE_OPEN_BRACKET + redirectTitle +
+			StringPool.DOUBLE_CLOSE_BRACKET;
+	}
+
 	protected long getUserId(
 		long userId, WikiNode node, String author,
 		Map<String, String> usersMap) {
@@ -202,9 +207,7 @@ public class MediaWikiImporter implements WikiImporter {
 			Collection<String> supportedFormats = WikiUtil.getFormats();
 
 			if (Validator.isNotNull(redirectTitle)) {
-				content =
-					StringPool.DOUBLE_OPEN_BRACKET + redirectTitle +
-						StringPool.DOUBLE_CLOSE_BRACKET;
+				content = getCreoleRedirectContent(redirectTitle);
 
 				format = FORMAT_CREOLE;
 			}
@@ -213,14 +216,10 @@ public class MediaWikiImporter implements WikiImporter {
 						 _wikiGroupServiceConfiguration.defaultFormat(),
 						 FORMAT_MEDIAWIKI)) {
 
-				content = content.replaceAll(
-					_imagesPattern.pattern(),
-					"$1$2" + SHARED_IMAGES_TITLE + StringPool.SLASH + "$3$4");
+				content = translateMediaWikiImagePaths(content);
 			}
 			else {
-				_translator.setStrictImportMode(strictImportMode);
-
-				content = _translator.translate(content);
+				content = translateMediaWikiToCreole(content, strictImportMode);
 
 				format = FORMAT_CREOLE;
 			}
@@ -723,6 +722,20 @@ public class MediaWikiImporter implements WikiImporter {
 		WikiPageLocalService wikiPageLocalService) {
 
 		_wikiPageLocalService = wikiPageLocalService;
+	}
+
+	protected String translateMediaWikiImagePaths(String content) {
+		return content.replaceAll(
+			_imagesPattern.pattern(),
+			"$1$2" + SHARED_IMAGES_TITLE + StringPool.SLASH + "$3$4");
+	}
+
+	protected String translateMediaWikiToCreole(
+		String content, boolean strictImportMode) {
+
+		_translator.setStrictImportMode(strictImportMode);
+
+		return _translator.translate(content);
 	}
 
 	private static final String _WORK_IN_PROGRESS = "{{Work in progress}}";

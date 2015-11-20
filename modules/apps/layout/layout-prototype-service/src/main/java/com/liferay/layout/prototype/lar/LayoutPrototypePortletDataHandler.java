@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.prototype.web.lar;
+package com.liferay.layout.prototype.lar;
 
 import com.liferay.layout.prototype.web.constants.LayoutPrototypePortletKeys;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;

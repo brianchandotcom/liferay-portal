@@ -874,6 +874,23 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		newContent = checkPrincipalException(newContent);
 
+		// LPS-59828
+
+		if (fileName.endsWith("Upgrade.java") &&
+			newContent.contains("implements UpgradeStepRegistrator")) {
+
+			matcher = _componentAnnotationPattern.matcher(newContent);
+
+			if (matcher.find()) {
+				String componentAnnotation = matcher.group();
+
+				if (!componentAnnotation.contains("service =")) {
+					processErrorMessage(
+						fileName, "Missing service in @Component " + fileName);
+				}
+			}
+		}
+
 		// LPS-60473
 
 		if (newContent.contains(".supportsBatchUpdates()") &&
@@ -3579,6 +3596,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"\n(\t*).+(=|\\]) (\\{)\n");
 	private Pattern _combinedLinesPattern2 = Pattern.compile(
 		"\n(\t*)@.+(\\()\n");
+	private Pattern _componentAnnotationPattern = Pattern.compile(
+		"@Component(\n|\\([\\s\\S]*?\\)\n)");
 	private List<String> _diamondOperatorExclusionFiles;
 	private List<String> _diamondOperatorExclusionPaths;
 	private Pattern _diamondOperatorPattern = Pattern.compile(

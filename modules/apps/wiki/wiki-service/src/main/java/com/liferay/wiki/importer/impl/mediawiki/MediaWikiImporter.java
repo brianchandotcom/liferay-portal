@@ -85,9 +85,9 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class MediaWikiImporter implements WikiImporter {
 
-	public static final String FORMAT_MEDIAWIKI = "mediawiki";
-
 	public static final String FORMAT_CREOLE = "creole";
+
+	public static final String FORMAT_MEDIAWIKI = "mediawiki";
 
 	public static final String SHARED_IMAGES_CONTENT = "See attachments";
 
@@ -210,13 +210,12 @@ public class MediaWikiImporter implements WikiImporter {
 			}
 			else if (supportedFormats.contains(FORMAT_MEDIAWIKI) &&
 					 Validator.equals(
-						_wikiGroupServiceConfiguration.defaultFormat(),
+						 _wikiGroupServiceConfiguration.defaultFormat(),
 						 FORMAT_MEDIAWIKI)) {
 
 				content = content.replaceAll(
 					_imagesPattern.pattern(),
-					"$1$2" + SHARED_IMAGES_TITLE + StringPool.SLASH +
-						"$3$4");
+					"$1$2" + SHARED_IMAGES_TITLE + StringPool.SLASH + "$3$4");
 			}
 			else {
 				_translator.setStrictImportMode(strictImportMode);
@@ -294,7 +293,7 @@ public class MediaWikiImporter implements WikiImporter {
 
 			try {
 				if (_wikiPageLocalService.getPagesCount(
-					node.getNodeId(), frontPageTitle, true) > 0) {
+						node.getNodeId(), frontPageTitle, true) > 0) {
 
 					ServiceContext serviceContext = new ServiceContext();
 
@@ -345,7 +344,7 @@ public class MediaWikiImporter implements WikiImporter {
 	}
 
 	protected void processImages(
-		long userId, WikiNode node, InputStream imagesInputStream)
+			long userId, WikiNode node, InputStream imagesInputStream)
 		throws Exception {
 
 		if (imagesInputStream == null) {
@@ -543,8 +542,8 @@ public class MediaWikiImporter implements WikiImporter {
 	}
 
 	protected void processSpecialPages(
-		long userId, WikiNode node, Element rootElement,
-		List<String> specialNamespaces)
+			long userId, WikiNode node, Element rootElement,
+			List<String> specialNamespaces)
 		throws PortalException {
 
 		ProgressTracker progressTracker =
@@ -579,7 +578,7 @@ public class MediaWikiImporter implements WikiImporter {
 	}
 
 	protected String[] readAssetTagNames(
-		long userId, WikiNode node, String content)
+			long userId, WikiNode node, String content)
 		throws PortalException {
 
 		Matcher matcher = _categoriesPattern.matcher(content);
@@ -744,12 +743,13 @@ public class MediaWikiImporter implements WikiImporter {
 	private static final Set<String> _specialMediaWikiDirs = SetUtil.fromArray(
 		new String[] {"archive", "temp", "thumb"});
 
-	private AssetTagLocalService _assetTagLocalService;
+	private volatile AssetTagLocalService _assetTagLocalService;
 	private final MediaWikiToCreoleTranslator _translator =
 		new MediaWikiToCreoleTranslator();
-	private UserLocalService _userLocalService;
-	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
-	private WikiPageLocalService _wikiPageLocalService;
+	private volatile UserLocalService _userLocalService;
+	private volatile WikiGroupServiceConfiguration
+		_wikiGroupServiceConfiguration;
+	private volatile WikiPageLocalService _wikiPageLocalService;
 	private Pattern _wikiPageTitlesRemovePattern;
 
 }

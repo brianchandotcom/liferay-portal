@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.navigation.web.upgrade.v1_0_0;
+package com.liferay.wiki.navigation.web.upgrade.v1_0_1;
 
 import com.liferay.wiki.navigation.web.constants.WikiNavigationPortletKeys;
 

@@ -17,8 +17,8 @@ package com.liferay.wiki.navigation.web.upgrade;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.wiki.navigation.web.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.wiki.navigation.web.upgrade.v1_0_0.UpgradePortletPreferences;
+import com.liferay.wiki.navigation.web.upgrade.v1_0_1.UpgradePortletId;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

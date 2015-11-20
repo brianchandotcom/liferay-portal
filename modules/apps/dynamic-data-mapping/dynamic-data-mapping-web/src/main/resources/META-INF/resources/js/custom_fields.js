@@ -552,7 +552,15 @@ AUI.add(
 
 			var localizationMap = instance.get('localizationMap');
 
-			var localeMap = localizationMap[locale];
+			var translationManager = builder.translationManager;
+
+			var defaultLocale = themeDisplay.getDefaultLanguageId();
+
+			if (translationManager) {
+				defaultLocale = translationManager.get('defaultLocale');
+			}
+
+			var localeMap = localizationMap[locale] || localizationMap[defaultLocale];
 
 			if (isObject(localeMap)) {
 				LOCALIZABLE_FIELD_ATTRS.forEach(

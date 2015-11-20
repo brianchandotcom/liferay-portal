@@ -279,27 +279,23 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				(UploadException)actionRequest.getAttribute(
 					WebKeys.UPLOAD_EXCEPTION);
 
-			if ((uploadException != null) &&
-				(uploadException.getCause() instanceof
-					FileUploadBase.IOFileUploadException)) {
+			if (uploadException != null) {
+				Throwable cause = uploadException.getCause();
 
-				// Cancelled a temporary upload
+				if (cause instanceof FileUploadBase.IOFileUploadException) {
+					// Cancelled a temporary upload
+				}
 
-			}
-			else if ((uploadException != null) &&
-					 uploadException.isExceededFileSizeLimit()) {
+				if (uploadException.isExceededFileSizeLimit()) {
+					throw new FileSizeException(cause);
+				}
 
-				throw new FileSizeException(uploadException.getCause());
+				if (uploadException.isExceededRequestContentLengthLimit()) {
+					throw new RequestContentLengthException(cause);
+				}
 			}
-			else if ((uploadException != null) &&
-					 uploadException.isExceededRequestContentLengthLimit()) {
 
-				throw new RequestContentLengthException(
-					uploadException.getCause());
-			}
-			else {
-				throw e;
-			}
+			throw e;
 		}
 		finally {
 			StreamUtil.cleanUp(inputStream);
@@ -457,21 +453,21 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 					WebKeys.UPLOAD_EXCEPTION);
 
 			if (uploadException != null) {
+				Throwable cause = uploadException.getCause();
+
 				if (uploadException.isExceededFileSizeLimit()) {
-					throw new FileSizeException(uploadException.getCause());
-				}
-				else if (uploadException.isExceededLiferayFileItemSizeLimit()) {
-					throw new LiferayFileItemException(
-						uploadException.getCause());
-				}
-				else if (uploadException.
-							isExceededRequestContentLengthLimit()) {
-
-					throw new RequestContentLengthException(
-						uploadException.getCause());
+					throw new FileSizeException(cause);
 				}
 
-				throw new PortalException(uploadException.getCause());
+				if (uploadException.isExceededLiferayFileItemSizeLimit()) {
+					throw new LiferayFileItemException(cause);
+				}
+
+				if (uploadException.isExceededRequestContentLengthLimit()) {
+					throw new RequestContentLengthException(cause);
+				}
+
+				throw new PortalException(cause);
 			}
 			else if (cmd.equals(Constants.ADD) ||
 					 cmd.equals(Constants.ADD_DYNAMIC) ||
@@ -1038,15 +1034,14 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 					WebKeys.UPLOAD_EXCEPTION);
 
 			if (uploadException != null) {
-				if (uploadException.isExceededLiferayFileItemSizeLimit()) {
-					throw new LiferayFileItemException(
-						uploadException.getCause());
-				}
-				else if (uploadException.
-							isExceededRequestContentLengthLimit()) {
+				Throwable cause = uploadException.getCause();
 
-					throw new RequestContentLengthException(
-						uploadException.getCause());
+				if (uploadException.isExceededLiferayFileItemSizeLimit()) {
+					throw new LiferayFileItemException(cause);
+				}
+
+				if (uploadException.isExceededRequestContentLengthLimit()) {
+					throw new RequestContentLengthException(cause);
 				}
 			}
 

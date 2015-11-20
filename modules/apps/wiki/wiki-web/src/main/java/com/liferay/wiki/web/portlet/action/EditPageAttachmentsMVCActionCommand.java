@@ -373,16 +373,17 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 					WebKeys.UPLOAD_EXCEPTION);
 
 			if (uploadException != null) {
+				Throwable cause = uploadException.getCause();
+
 				if (uploadException.isExceededFileSizeLimit()) {
-					throw new FileSizeException(uploadException.getCause());
+					throw new FileSizeException(cause);
 				}
 
 				if (uploadException.isExceededRequestContentLengthLimit()) {
-					throw new RequestContentLengthException(
-						uploadException.getCause());
+					throw new RequestContentLengthException(cause);
 				}
 
-				throw new PortalException(uploadException.getCause());
+				throw new PortalException(cause);
 			}
 			else if (cmd.equals(Constants.ADD)) {
 				addAttachment(actionRequest);

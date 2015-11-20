@@ -575,16 +575,19 @@ public class JournalPortlet extends MVCPortlet {
 				WebKeys.UPLOAD_EXCEPTION);
 
 		if (uploadException != null) {
+			Throwable cause = uploadException.getCause();
+
 			if (uploadException.isExceededLiferayFileItemSizeLimit()) {
-				throw new LiferayFileItemException();
-			}
-			else if (uploadException.isExceededFileSizeLimit() ||
-					 uploadException.isExceededRequestContentLengthLimit()) {
-
-				throw new ArticleContentSizeException();
+				throw new LiferayFileItemException(cause);
 			}
 
-			throw new PortalException(uploadException.getCause());
+			if (uploadException.isExceededFileSizeLimit() ||
+				uploadException.isExceededRequestContentLengthLimit()) {
+
+				throw new ArticleContentSizeException(cause);
+			}
+
+			throw new PortalException(cause);
 		}
 
 		UploadPortletRequest uploadPortletRequest =

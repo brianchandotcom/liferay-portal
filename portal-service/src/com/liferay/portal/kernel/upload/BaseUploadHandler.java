@@ -73,20 +73,21 @@ public abstract class BaseUploadHandler implements UploadHandler {
 					WebKeys.UPLOAD_EXCEPTION);
 
 			if (uploadException != null) {
+				Throwable cause = uploadException.getCause();
+
 				if (uploadException.isExceededFileSizeLimit()) {
-					throw new FileSizeException(uploadException.getCause());
+					throw new FileSizeException(cause);
 				}
-				else if (uploadException.isExceededLiferayFileItemSizeLimit()) {
+
+				if (uploadException.isExceededLiferayFileItemSizeLimit()) {
 					throw new LiferayFileItemException();
 				}
-				else if (uploadException.
-						isExceededRequestContentLengthLimit()) {
 
-					throw new RequestContentLengthException(
-							uploadException.getCause());
+				if (uploadException.isExceededRequestContentLengthLimit()) {
+					throw new RequestContentLengthException(cause);
 				}
 
-				throw new PortalException(uploadException.getCause());
+				throw new PortalException(cause);
 			}
 
 			String randomId = ParamUtil.getString(

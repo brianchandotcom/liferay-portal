@@ -115,27 +115,23 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 				(UploadException)actionRequest.getAttribute(
 					WebKeys.UPLOAD_EXCEPTION);
 
-			if ((uploadException != null) &&
-				(uploadException.getCause() instanceof
-					FileUploadBase.IOFileUploadException)) {
+			if (uploadException != null) {
+				Throwable cause = uploadException.getCause();
 
-				// Cancelled a temporary upload
+				if (cause instanceof FileUploadBase.IOFileUploadException) {
+					// Cancelled a temporary upload
+				}
 
-			}
-			else if ((uploadException != null) &&
-					 uploadException.isExceededFileSizeLimit()) {
+				if (uploadException.isExceededFileSizeLimit()) {
+					throw new FileSizeException(cause);
+				}
 
-				throw new FileSizeException(uploadException.getCause());
+				if (uploadException.isExceededRequestContentLengthLimit()) {
+					throw new RequestContentLengthException(cause);
+				}
 			}
-			else if ((uploadException != null) &&
-					 uploadException.isExceededRequestContentLengthLimit()) {
 
-				throw new RequestContentLengthException(
-					uploadException.getCause());
-			}
-			else {
-				throw e;
-			}
+			throw e;
 		}
 		finally {
 			StreamUtil.cleanUp(inputStream);
@@ -149,13 +145,15 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 			WebKeys.UPLOAD_EXCEPTION);
 
 		if (uploadException != null) {
+			Throwable cause = uploadException.getCause();
+
 			if (uploadException.isExceededFileSizeLimit() ||
 				uploadException.isExceededRequestContentLengthLimit()) {
 
-				throw new LARFileSizeException(uploadException.getCause());
+				throw new LARFileSizeException(cause);
 			}
 
-			throw new PortalException(uploadException.getCause());
+			throw new PortalException(cause);
 		}
 	}
 

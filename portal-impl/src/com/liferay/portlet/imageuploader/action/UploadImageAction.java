@@ -98,17 +98,17 @@ public class UploadImageAction extends PortletAction {
 					WebKeys.UPLOAD_EXCEPTION);
 
 			if (uploadException != null) {
+				Throwable cause = uploadException.getCause();
+
 				if (uploadException.isExceededFileSizeLimit()) {
-					throw new FileSizeException(uploadException.getCause());
-				}
-				else if (uploadException.
-							isExceededRequestContentLengthLimit()) {
-
-					throw new RequestContentLengthException(
-						uploadException.getCause());
+					throw new FileSizeException(cause);
 				}
 
-				throw new PortalException(uploadException.getCause());
+				if (uploadException.isExceededRequestContentLengthLimit()) {
+					throw new RequestContentLengthException(cause);
+				}
+
+				throw new PortalException(cause);
 			}
 			else if (cmd.equals(Constants.ADD_TEMP)) {
 				FileEntry tempImageFileEntry = addTempImageFileEntry(

@@ -14,6 +14,10 @@ AUI.add(
 
 		var STR_ITEM_SELECTED = '_onItemSelected';
 
+		var STR_ITEM_UPLOAD_ERROR = '_onItemUploadError';
+
+		var STATUS_CODE = Liferay.STATUS_CODE;
+
 		var STR_LINKS = 'links';
 
 		var STR_SELECTED_ITEM = 'selectedItem';
@@ -110,7 +114,7 @@ AUI.add(
 							uploadItemViewer.after(STR_VISIBLE_CHANGE, instance._afterVisibleChange, instance),
 							itemSelectorUploader.after('itemUploadCancel', instance._onItemUploadCancel, instance),
 							itemSelectorUploader.after('itemUploadComplete', instance._onItemUploadComplete, instance),
-							itemSelectorUploader.after('itemUploadError', instance._onItemUploadError, instance),
+							itemSelectorUploader.after('itemUploadError', A.bind(STR_ITEM_UPLOAD_ERROR, instance)),
 							rootNode.on(STR_DRAG_OVER, instance._ddEventHandler, instance),
 							rootNode.on(STR_DRAG_LEAVE, instance._ddEventHandler, instance),
 							rootNode.on(STR_DROP, instance._ddEventHandler, instance)
@@ -156,13 +160,35 @@ AUI.add(
 						}
 					},
 
-					_getUploadErrorMessage: function() {
+					_getUploadErrorMessage: function(event) {
 						var instance = this;
 
 						var notice = instance._notice;
 
 						if (!notice) {
+							var error = event.error;
+
+							var errorType = error.errorType;
+
 							var message = Liferay.Language.get('an-unexpected-error-occurred-while-uploading-your-file');
+
+							if (errorType === STATUS_CODE.SC_FILE_ANTIVIRUS_EXCEPTION) {
+								message = error.message;
+							}
+							else if (errorType === STATUS_CODE.SC_FILE_EXTENSION_EXCEPTION) {
+								message = Lang.sub(Liferay.Language.get('please-enter-a-file-with-a-valid-extension-x'), [instance.get('validExtensions')]);
+							}
+							else if (errorType === STATUS_CODE.SC_FILE_NAME_EXCEPTION) {
+								message = Liferay.Language.get('please-enter-a-file-with-a-valid-file-name');
+							}
+							else if (errorType === STATUS_CODE.SC_FILE_SIZE_EXCEPTION || errorType === STATUS_CODE.SC_UPLOAD_REQUEST_CONTENT_LENGTH_EXCEPTION) {
+								message = Lang.sub(Liferay.Language.get('please-enter-a-file-with-a-valid-file-size-no-larger-than-x'), [instance.formatStorage(instance.get('maxFileSize'))]);
+							}
+							else if (errorType === STATUS_CODE.SC_UPLOAD_REQUEST_CONTENT_LENGTH_EXCEPTION) {
+								var maxUploadRequestContentLength = Liferay.PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE;
+
+								message = Lang.sub(Liferay.Language.get('form-data-is-larger-than-x-and-could-not-be-processed'), [instance.formatStorage(maxUploadRequestContentLength)]);
+							}
 
 							notice = new Liferay.Notice(
 								{
@@ -251,7 +277,7 @@ AUI.add(
 						instance._onItemSelected(uploadItemViewer);
 					},
 
-					_onItemUploadError: function() {
+					_onItemUploadError: function(event) {
 						var instance = this;
 
 						var uploadItemViewer = instance._uploadItemViewer;
@@ -260,7 +286,7 @@ AUI.add(
 							uploadItemViewer.hide();
 						}
 
-						instance._getUploadErrorMessage().show();
+						instance._getUploadErrorMessage(event).show();
 					},
 
 					_previewFile: function(file) {

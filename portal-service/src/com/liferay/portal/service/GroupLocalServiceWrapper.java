@@ -62,6 +62,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	<code>null</code>). Can set asset category IDs and asset tag
 	names for the group, and whether the group is for staging.
 	* @return the group
+	* @throws PortalException if a portal exception occurred
 	* @deprecated As of 6.2.0, replaced by {@link #addGroup(long, long, String,
 	long, long, Map, Map, int, boolean, int, String, boolean,
 	boolean, ServiceContext)}
@@ -97,6 +98,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	<code>null</code>). Can set asset category IDs and asset tag
 	names for the group, and whether the group is for staging.
 	* @return the group
+	* @throws PortalException if a portal exception occurred
 	* @deprecated As of 6.2.0, replaced by {@link #addGroup(long, long, String,
 	long, long, Map, Map, int, boolean, int, String, boolean,
 	boolean, ServiceContext)}
@@ -138,6 +140,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	<code>null</code>). Can set asset category IDs and asset tag
 	names for the group, and whether the group is for staging.
 	* @return the group
+	* @throws PortalException if a portal exception occured
 	* @deprecated As of 7.0.0, replaced by {@link #addGroup(long, long, String,
 	long, long, Map, Map, int, boolean, int, String, boolean,
 	boolean, ServiceContext)}
@@ -207,6 +210,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	<code>null</code>). Can set asset category IDs and asset tag
 	names for the group, and whether the group is for staging.
 	* @return the group
+	* @throws PortalException if a portal exception occurred
 	* @deprecated As of 6.2.0, replaced by {@link #addGroup(long, long, String,
 	long, long, Map, Map, int, boolean, int, String, boolean,
 	boolean, ServiceContext)}
@@ -315,6 +319,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	* when a virtual host is added.
 	*
 	* @param companyId the primary key of the company
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public void checkCompanyGroup(long companyId)
@@ -328,6 +333,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	* and layouts.
 	*
 	* @param companyId the primary key of the company
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public void checkSystemGroups(long companyId)
@@ -658,6 +664,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	* @param companyId the primary key of the company
 	* @return the default user's personal site group, or <code>null</code> if a
 	matching group could not be found
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Group fetchUserPersonalSiteGroup(
@@ -671,6 +678,14 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 		return _groupLocalService.getActionableDynamicQuery();
 	}
 
+	/**
+	* Returns all the active or inactive groups associated with the company.
+	*
+	* @param companyId the primary key of the company
+	* @param active whether to return only active groups, or only inactive
+	groups
+	* @return the active or inactive groups associated with the company
+	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getActiveGroups(
 		long companyId, boolean active) {
@@ -682,6 +697,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	*
 	* @param companyId the primary key of the company
 	* @return the group associated with the company
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Group getCompanyGroup(long companyId)
@@ -730,6 +746,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	* @param companyId the primary key of the company
 	* @param friendlyURL the group's friendlyURL
 	* @return the group with the friendly URL
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Group getFriendlyURLGroup(long companyId,
@@ -744,6 +761,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	* @param companyId the primary key of the company
 	* @param groupKey the group key
 	* @return the group with the group key
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Group getGroup(long companyId,
@@ -866,6 +884,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	*
 	* @param groupIds the primary keys of the groups
 	* @return the groups with the primary keys
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getGroups(
@@ -942,6 +961,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	* @param companyId the primary key of the company
 	* @param plid the primary key of the layout
 	* @return the group associated with the layout
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Group getLayoutGroup(long companyId,
@@ -955,6 +975,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	* @param companyId the primary key of the company
 	* @param layoutPrototypeId the primary key of the layout prototype
 	* @return the group associated with the layout prototype
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Group getLayoutPrototypeGroup(
@@ -970,6 +991,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	* @param companyId the primary key of the company
 	* @param layoutSetPrototypeId the primary key of the layout set prototype
 	* @return the group associated with the layout set prototype
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Group getLayoutSetPrototypeGroup(
@@ -1124,6 +1146,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	* @param companyId the primary key of the company
 	* @param organizationId the primary key of the organization
 	* @return the group associated with the organization
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Group getOrganizationGroup(long companyId,
@@ -1200,6 +1223,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	* @param groupId the primary key of the group
 	* @return the group followed by all its parent groups ordered by closest
 	ancestor
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getParentGroups(
@@ -1256,6 +1280,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	*
 	* @param liveGroupId the primary key of the live group
 	* @return the staging group
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Group getStagingGroup(long liveGroupId)
@@ -1269,6 +1294,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	* @param companyId the primary key of the company
 	* @param userId the primary key of the user
 	* @return the group directly associated with the user
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Group getUserGroup(long companyId,
@@ -1283,6 +1309,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	* @param companyId the primary key of the company
 	* @param userGroupId the primary key of the user group
 	* @return the group associated with the user group
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Group getUserGroupGroup(long companyId,
@@ -1342,6 +1369,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	* @param inherit whether to include the user's inherited organization
 	groups and user groups
 	* @return the user's groups and immediate organization groups
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getUserGroups(
@@ -1373,6 +1401,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	inclusive)
 	* @return the range of the user's groups and immediate organization groups
 	ordered by name
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getUserGroups(
@@ -1409,6 +1438,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	*
 	* @param userGroups the user groups
 	* @return the groups associated with the user groups
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getUserGroupsGroups(
@@ -1450,6 +1480,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	inclusive)
 	* @return the range of groups associated with the user's organization
 	groups
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getUserOrganizationsGroups(
@@ -1463,6 +1494,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	*
 	* @param companyId the primary key of the company
 	* @return the default user's personal site group
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Group getUserPersonalSiteGroup(
@@ -1586,6 +1618,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	* @param companyId the primary key of the company
 	* @param groupKey the group key
 	* @return the group with the group key and associated company
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Group loadGetGroup(long companyId,
@@ -1604,6 +1637,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	* </p>
 	*
 	* @param companyId the primary key of the group's company
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public void rebuildTree(long companyId)
@@ -2611,6 +2645,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	* @param assetCategoryIds the primary keys of the asset categories
 	(optionally <code>null</code>)
 	* @param assetTagNames the asset tag names (optionally <code>null</code>)
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public void updateAsset(long userId, com.liferay.portal.model.Group group,
@@ -2627,6 +2662,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	* @param friendlyURL the group's new friendlyURL (optionally
 	<code>null</code>)
 	* @return the group
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Group updateFriendlyURL(long groupId,
@@ -2663,11 +2699,14 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	more information see {@link GroupConstants}.
 	* @param friendlyURL the group's new friendlyURL (optionally
 	<code>null</code>)
+	* @param inheritContent whether to inherit content from the parent
+	group
 	* @param active whether the group is active
 	* @param serviceContext the service context to be applied (optionally
 	<code>null</code>). Can set asset category IDs and asset tag
 	names for the group.
 	* @return the group
+	* @throws PortalException if a portal exception occurred
 	* @deprecated As of 7.0.0, replaced by {@link #updateGroup(long, long, Map,
 	Map, int, boolean, int, String, boolean, boolean,
 	ServiceContext)}
@@ -2707,6 +2746,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	* @param typeSettings the group's new type settings (optionally
 	<code>null</code>)
 	* @return the group
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Group updateGroup(long groupId,
@@ -2721,6 +2761,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	* @param groupId the primary key of the group
 	* @param site whether the group is to be associated with a main site
 	* @return the group
+	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Group updateSite(long groupId, boolean site)

@@ -19,6 +19,8 @@ import com.liferay.portal.cluster.ClusterChannel;
 import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.cluster.Address;
+import com.liferay.portal.kernel.cluster.ClusterEvent;
+import com.liferay.portal.kernel.cluster.ClusterEventType;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
@@ -63,6 +65,18 @@ public class ClusterRequestReceiver extends BaseClusterReceiver {
 		if (!removedAddresses.isEmpty()) {
 			_clusterExecutorImpl.memberRemoved(removedAddresses);
 		}
+	}
+
+	@Override
+	protected void doCoordinatorUpdated(
+		Address oldCoordinator, Address newCoordinator) {
+
+		if (oldCoordinator.equals(newCoordinator)) {
+			return;
+		}
+
+		_clusterExecutorImpl.fireClusterEvent(
+			new ClusterEvent(ClusterEventType.COORDINATOR_UPDATE));
 	}
 
 	@Override

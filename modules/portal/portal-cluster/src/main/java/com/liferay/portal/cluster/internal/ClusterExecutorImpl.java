@@ -415,8 +415,32 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 		return _executorService;
 	}
 
-	protected FutureClusterResponses getFutureClusterResponses(String uuid) {
-		return _futureClusterResponses.get(uuid);
+	protected void handleReceivedClusterNodeResponse(
+		ClusterNodeResponse clusterNodeResponse) {
+
+		String uuid = clusterNodeResponse.getUuid();
+
+		FutureClusterResponses futureClusterResponses =
+			_futureClusterResponses.get(uuid);
+
+		if (futureClusterResponses == null) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Unable to find response container for " + uuid);
+			}
+
+			return;
+		}
+
+		if (!futureClusterResponses.addClusterNodeResponse(
+				clusterNodeResponse) &&
+			_log.isWarnEnabled()) {
+
+			ClusterNode clusterNode = clusterNodeResponse.getClusterNode();
+
+			_log.warn(
+				"Unexpected cluster node ID " + clusterNode.getClusterNodeId() +
+					" for response container with UUID " + uuid);
+		}
 	}
 
 	protected Serializable handleReceivedClusterRequest(

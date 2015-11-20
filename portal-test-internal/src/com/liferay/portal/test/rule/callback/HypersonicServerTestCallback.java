@@ -16,6 +16,7 @@ package com.liferay.portal.test.rule.callback;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.test.rule.callback.BaseTestCallback;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -61,6 +62,8 @@ public class HypersonicServerTestCallback
 		}
 
 		server.stop();
+
+		FileUtil.deltree(_HSQL_COPY);
 	}
 
 	@Override
@@ -109,15 +112,17 @@ public class HypersonicServerTestCallback
 
 		hsqlHomeDir.mkdirs();
 
+		FileUtil.copyDirectory(_HSQL_HOME, _HSQL_COPY);
+
 		server.setErrWriter(
 			new UnsyncPrintWriter(
-				new File(hsqlHomeDir, _databaseName + ".err.log")));
+				new File(_HSQL_COPY, _databaseName + ".err.log")));
 		server.setLogWriter(
 			new UnsyncPrintWriter(
-				new File(hsqlHomeDir, _databaseName + ".std.log")));
+				new File(_HSQL_COPY, _databaseName + ".std.log")));
 
 		server.setDatabaseName(0, _databaseName);
-		server.setDatabasePath(0, _HSQL_HOME + _databaseName);
+		server.setDatabasePath(0, _HSQL_COPY + _databaseName);
 
 		server.start();
 
@@ -128,6 +133,9 @@ public class HypersonicServerTestCallback
 
 		return server;
 	}
+
+	private static final String _HSQL_COPY =
+		PropsValues.LIFERAY_HOME + "/data/hypersonicCopy/";
 
 	private static final String _HSQL_HOME =
 		PropsValues.LIFERAY_HOME + "/data/hypersonic/";

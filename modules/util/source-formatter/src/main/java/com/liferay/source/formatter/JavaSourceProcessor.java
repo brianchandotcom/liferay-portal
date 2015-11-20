@@ -2289,10 +2289,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				}
 			}
 
-			if (!_checkModulesServiceUtil) {
-				continue;
-			}
-
 			String methodContent = matcher.group(6);
 
 			Matcher referenceMethodContentMatcher =
@@ -2302,15 +2298,41 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				continue;
 			}
 
+			String typeName = matcher.group(5);
+			String variableName = referenceMethodContentMatcher.group(1);
+
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("private ");
+			sb.append(typeName);
+			sb.append("\\s+");
+			sb.append(variableName);
+			sb.append(StringPool.SEMICOLON);
+
+			Pattern privateVarPattern = Pattern.compile(sb.toString());
+
+			Matcher privateVarMatcher = privateVarPattern.matcher(content);
+
+			if (privateVarMatcher.find()) {
+				String match = privateVarMatcher.group();
+
+				String replacement = StringUtil.replace(
+					match, "private ", "private volatile ");
+
+				return StringUtil.replace(content, match, replacement);
+			}
+
+			if (!_checkModulesServiceUtil) {
+				continue;
+			}
+
 			if (moduleServicePackagePath == null) {
 				moduleServicePackagePath = getModuleServicePackagePath(
 					fileName);
 			}
 
 			if (Validator.isNotNull(moduleServicePackagePath)) {
-				String typeName = matcher.group(5);
-
-				StringBundler sb = new StringBundler(5);
+				sb = new StringBundler(5);
 
 				sb.append("\nimport ");
 				sb.append(moduleServicePackagePath);
@@ -3582,7 +3604,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Pattern _serviceUtilImportPattern = Pattern.compile(
 		"\nimport ([A-Za-z1-9\\.]*)\\.([A-Za-z1-9]*ServiceUtil);");
 	private Pattern _setReferenceMethodContentPattern = Pattern.compile(
-		"^\\w+ =\\s+\\w+;$");
+		"^(\\w+) =\\s+\\w+;$");
 	private Pattern _setReferenceMethodPattern = Pattern.compile(
 		"\n(\t+)@Reference([\\s\\S]*?)\\s+(protected|public) void (set\\w+?)" +
 			"\\(\\s*([ ,<>\\w]+)\\s+\\w+\\) \\{\\s+([\\s\\S]*?)\\s*?\\}");

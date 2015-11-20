@@ -50,7 +50,7 @@ public class DDMRESTDataProviderTest {
 
 		DDMDataProvider[] ddmDataProviders = registry.getServices(
 			"com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider",
-			"(ddm.data.provider.name=rest)");
+			"(ddm.data.provider.type=rest)");
 
 		_ddmDataProvider = ddmDataProviders[0];
 	}

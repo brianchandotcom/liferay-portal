@@ -193,7 +193,7 @@ public class MediaWikiImporter implements WikiImporter {
 			serviceContext.setAssetTagNames(
 				readAssetTagNames(userId, node, content));
 
-			String format = "creole";
+			String format = "mediawiki";
 
 			Collection<String> supportedFormats = WikiUtil.getFormats();
 
@@ -201,6 +201,8 @@ public class MediaWikiImporter implements WikiImporter {
 				content =
 					StringPool.DOUBLE_OPEN_BRACKET + redirectTitle +
 						StringPool.DOUBLE_CLOSE_BRACKET;
+
+				format = "creole";
 			}
 			else if (supportedFormats.contains("mediawiki") &&
 					 Validator.equals(
@@ -211,13 +213,13 @@ public class MediaWikiImporter implements WikiImporter {
 					_imagesPattern.pattern(),
 					"$1$2" + SHARED_IMAGES_TITLE + StringPool.SLASH +
 						"$3$4");
-
-				format = "mediawiki";
 			}
 			else {
 				_translator.setStrictImportMode(strictImportMode);
 
 				content = _translator.translate(content);
+
+				format = "creole";
 			}
 
 			WikiPage page = null;

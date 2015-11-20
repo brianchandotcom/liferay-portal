@@ -118,7 +118,7 @@ recordSearchContainer.setOrderByType(orderByType);
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
 
-<div class="container-fluid-1280" id="<portlet:namespace />formContainer">
+<div class="container-fluid-1280 view-records-container" id="<portlet:namespace />formContainer">
 	<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 		<liferay-ui:search-container
 			searchContainer="<%= recordSearchContainer %>"

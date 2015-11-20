@@ -1134,9 +1134,7 @@
 			<var name="ddlListRecordName" value="Text" />
 		</execute>
 
-		<execute macro="Navigator#closeSpecificWindow">
-			<var name="windowTitle" value="Data Definition Page Page Name - Liferay" />
-		</execute>
+		<execute macro="Navigator#closeWindow" />
 
 		<execute macro="Navigator#selectSpecificWindow">
 			<var name="windowTitle" value="Users and Organizations - Liferay" />

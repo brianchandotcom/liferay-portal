@@ -128,7 +128,8 @@ public class ElasticsearchEngineConfigurator
 		_searchEngines.remove(searchEngineId);
 	}
 
-	private volatile ElasticsearchConnectionManager _elasticsearchConnectionManager;
+	private volatile ElasticsearchConnectionManager
+		_elasticsearchConnectionManager;
 	private volatile IndexSearcher _indexSearcher;
 	private volatile IndexWriter _indexWriter;
 	private final Map<String, SearchEngine> _searchEngines =

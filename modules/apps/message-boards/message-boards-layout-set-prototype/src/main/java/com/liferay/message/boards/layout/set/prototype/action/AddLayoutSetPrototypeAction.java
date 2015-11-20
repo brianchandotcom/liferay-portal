@@ -168,7 +168,8 @@ public class AddLayoutSetPrototypeAction {
 	}
 
 	private volatile CompanyLocalService _companyLocalService;
-	private volatile LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
+	private volatile LayoutSetPrototypeLocalService
+		_layoutSetPrototypeLocalService;
 	private volatile UserLocalService _userLocalService;
 
 }

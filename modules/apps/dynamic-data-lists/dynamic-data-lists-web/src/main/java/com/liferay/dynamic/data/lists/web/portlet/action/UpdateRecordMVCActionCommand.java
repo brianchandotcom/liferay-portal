@@ -115,6 +115,7 @@ public class UpdateRecordMVCActionCommand extends BaseMVCActionCommand {
 
 	private volatile DDLRecordService _ddlRecordService;
 	private volatile DDLRecordSetService _ddlRecordSetService;
-	private volatile DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
+	private volatile DDMFormValuesJSONDeserializer
+		_ddmFormValuesJSONDeserializer;
 
 }

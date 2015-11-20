@@ -292,7 +292,8 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 
 	private volatile DDM _ddm;
 	private volatile DDMFormEvaluator _ddmFormEvaluator;
-	private volatile DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+	private volatile DDMFormFieldTypeServicesTracker
+		_ddmFormFieldTypeServicesTracker;
 	private volatile JSONFactory _jsonFactory;
 	private TemplateResource _templateResource;
 

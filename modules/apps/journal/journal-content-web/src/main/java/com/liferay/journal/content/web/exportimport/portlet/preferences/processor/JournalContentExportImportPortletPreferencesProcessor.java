@@ -307,7 +307,8 @@ public class JournalContentExportImportPortletPreferencesProcessor
 
 	private volatile DDMTemplateLocalService _ddmTemplateLocalService;
 	private volatile JournalArticleLocalService _journalArticleLocalService;
-	private volatile JournalContentSearchLocalService _journalContentSearchLocalService;
+	private volatile JournalContentSearchLocalService
+		_journalContentSearchLocalService;
 	private volatile LayoutLocalService _layoutLocalService;
 	private volatile ReferencedStagedModelImporterCapability
 		_referencedStagedModelImporterCapability;

@@ -140,6 +140,7 @@ public class BookmarksEntryStagedModelDataHandler
 		_stagedModelRepository = stagedModelRepository;
 	}
 
-	private volatile StagedModelRepository<BookmarksEntry> _stagedModelRepository;
+	private volatile StagedModelRepository<BookmarksEntry>
+		_stagedModelRepository;
 
 }

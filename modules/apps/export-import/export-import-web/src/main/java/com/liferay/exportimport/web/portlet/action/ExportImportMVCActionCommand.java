@@ -405,6 +405,7 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 	private volatile ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
 	private volatile ExportImportService _exportImportService;
-	private volatile ImportLayoutsMVCActionCommand _importLayoutsMVCActionCommand;
+	private volatile ImportLayoutsMVCActionCommand
+		_importLayoutsMVCActionCommand;
 
 }

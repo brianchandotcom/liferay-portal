@@ -280,11 +280,14 @@ public class SolrFilterTranslator
 	}
 
 	private volatile BooleanFilterTranslator _booleanQueryTranslator;
-	private volatile DateRangeTermFilterTranslator _dateRangeTermFilterTranslator;
+	private volatile DateRangeTermFilterTranslator
+		_dateRangeTermFilterTranslator;
 	private volatile ExistsFilterTranslator _existsFilterTranslator;
-	private volatile GeoBoundingBoxFilterTranslator _geoBoundingBoxFilterTranslator;
+	private volatile GeoBoundingBoxFilterTranslator
+		_geoBoundingBoxFilterTranslator;
 	private volatile GeoDistanceFilterTranslator _geoDistanceFilterTranslator;
-	private volatile GeoDistanceRangeFilterTranslator _geoDistanceRangeFilterTranslator;
+	private volatile GeoDistanceRangeFilterTranslator
+		_geoDistanceRangeFilterTranslator;
 	private volatile GeoPolygonFilterTranslator _geoPolygonFilterTranslator;
 	private volatile MissingFilterTranslator _missingFilterTranslator;
 	private volatile PrefixFilterTranslator _prefixFilterTranslator;

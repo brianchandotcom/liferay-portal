@@ -60,6 +60,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 	}
 
 	private volatile JournalArticleLocalService _journalArticleLocalService;
-	private volatile JournalContentSearchLocalService _journalContentSearchLocalService;
+	private volatile JournalContentSearchLocalService
+		_journalContentSearchLocalService;
 
 }

@@ -716,7 +716,8 @@ public class JournalRSSUtil {
 	private volatile ImageLocalService _imageLocalService;
 	private volatile JournalArticleLocalService _journalArticleLocalService;
 	private volatile JournalContent _journalContent;
-	private volatile JournalContentSearchLocalService _journalContentSearchLocalService;
+	private volatile JournalContentSearchLocalService
+		_journalContentSearchLocalService;
 	private volatile JournalFeedLocalService _journalFeedLocalService;
 	private volatile LayoutLocalService _layoutLocalService;
 

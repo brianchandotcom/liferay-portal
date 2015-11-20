@@ -465,7 +465,8 @@ public class DDLImpl implements DDL {
 	private volatile DDLRecordService _ddlRecordService;
 	private volatile DDLRecordSetLocalService _ddlRecordSetLocalService;
 	private volatile DDM _ddm;
-	private volatile DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
+	private volatile DDMFormValuesToFieldsConverter
+		_ddmFormValuesToFieldsConverter;
 	private volatile DLAppLocalService _dlAppLocalService;
 	private volatile IndexerRegistry _indexerRegistry;
 	private volatile LayoutService _layoutService;

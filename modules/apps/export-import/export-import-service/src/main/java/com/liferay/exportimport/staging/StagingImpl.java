@@ -2691,6 +2691,7 @@ public class StagingImpl implements Staging {
 	private volatile LayoutService _layoutService;
 	private volatile StagingLocalService _stagingLocalService;
 	private volatile UserLocalService _userLocalService;
-	private volatile WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
+	private volatile WorkflowInstanceLinkLocalService
+		_workflowInstanceLinkLocalService;
 
 }

@@ -297,10 +297,12 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BackgroundTaskMessageListener.class);
 
-	private volatile BackgroundTaskExecutorRegistry _backgroundTaskExecutorRegistry;
+	private volatile BackgroundTaskExecutorRegistry
+		_backgroundTaskExecutorRegistry;
 	private volatile BackgroundTaskManager _backgroundTaskManager;
 	private volatile BackgroundTaskStatusRegistry _backgroundTaskStatusRegistry;
-	private volatile BackgroundTaskThreadLocalManager _backgroundTaskThreadLocalManager;
+	private volatile BackgroundTaskThreadLocalManager
+		_backgroundTaskThreadLocalManager;
 	private volatile MessageBus _messageBus;
 
 }

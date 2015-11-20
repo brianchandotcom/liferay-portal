@@ -721,7 +721,8 @@ public class MediaWikiImporter implements WikiImporter {
 	private final MediaWikiToCreoleTranslator _translator =
 		new MediaWikiToCreoleTranslator();
 	private volatile UserLocalService _userLocalService;
-	private volatile WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
+	private volatile WikiGroupServiceConfiguration
+		_wikiGroupServiceConfiguration;
 	private volatile WikiPageLocalService _wikiPageLocalService;
 	private Pattern _wikiPageTitlesRemovePattern;
 

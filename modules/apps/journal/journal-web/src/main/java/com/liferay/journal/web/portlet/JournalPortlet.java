@@ -1436,7 +1436,8 @@ public class JournalPortlet extends MVCPortlet {
 	private volatile ItemSelector _itemSelector;
 	private volatile JournalArticleService _journalArticleService;
 	private volatile JournalContent _journalContent;
-	private volatile JournalContentSearchLocalService _journalContentSearchLocalService;
+	private volatile JournalContentSearchLocalService
+		_journalContentSearchLocalService;
 	private volatile JournalConverter _journalConverter;
 	private volatile JournalFeedService _journalFeedService;
 	private volatile JournalFolderService _journalFolderService;

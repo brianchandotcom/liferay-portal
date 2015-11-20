@@ -316,7 +316,8 @@ public class JournalContentPortletLayoutListener
 	private volatile DDMTemplateLocalService _ddmTemplateLocalService;
 	private volatile GroupLocalService _groupLocalService;
 	private volatile JournalArticleLocalService _journalArticleLocalService;
-	private volatile JournalContentSearchLocalService _journalContentSearchLocalService;
+	private volatile JournalContentSearchLocalService
+		_journalContentSearchLocalService;
 	private volatile LayoutLocalService _layoutLocalService;
 	private volatile PortletLocalService _portletLocalService;
 

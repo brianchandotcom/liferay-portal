@@ -147,7 +147,8 @@ public class DDLCSVExporter extends BaseDDLExporter {
 
 	private volatile DDLRecordLocalService _ddlRecordLocalService;
 	private volatile DDLRecordSetService _ddlRecordSetService;
-	private volatile DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
+	private volatile DDMFormValuesToFieldsConverter
+		_ddmFormValuesToFieldsConverter;
 	private volatile StorageEngine _storageEngine;
 
 }

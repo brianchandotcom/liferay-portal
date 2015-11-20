@@ -263,6 +263,7 @@ public class MDRActionStagedModelDataHandler
 
 	private volatile LayoutLocalService _layoutLocalService;
 	private volatile MDRActionLocalService _mdrActionLocalService;
-	private volatile MDRRuleGroupInstanceLocalService _mdrRuleGroupInstanceLocalService;
+	private volatile MDRRuleGroupInstanceLocalService
+		_mdrRuleGroupInstanceLocalService;
 
 }

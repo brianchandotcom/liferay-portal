@@ -73,6 +73,7 @@ public class WikiWebComponentProvider {
 	private static WikiWebComponentProvider _wikiWebComponentProvider;
 
 	private volatile WikiDisplayContextProvider _wikiDisplayContextProvider;
-	private volatile WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
+	private volatile WikiGroupServiceConfiguration
+		_wikiGroupServiceConfiguration;
 
 }

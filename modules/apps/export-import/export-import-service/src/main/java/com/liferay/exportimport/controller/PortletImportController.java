@@ -1479,7 +1479,8 @@ public class PortletImportController implements ImportController {
 		PermissionImporter.getInstance();
 	private volatile PortletItemLocalService _portletItemLocalService;
 	private volatile PortletLocalService _portletLocalService;
-	private volatile PortletPreferencesLocalService _portletPreferencesLocalService;
+	private volatile PortletPreferencesLocalService
+		_portletPreferencesLocalService;
 	private volatile UserLocalService _userLocalService;
 
 }

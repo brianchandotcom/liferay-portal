@@ -191,7 +191,8 @@ public class ElasticsearchUpdateDocumentCommandImpl
 		ElasticsearchUpdateDocumentCommandImpl.class);
 
 	private volatile ElasticsearchConfiguration _elasticsearchConfiguration;
-	private volatile ElasticsearchConnectionManager _elasticsearchConnectionManager;
+	private volatile ElasticsearchConnectionManager
+		_elasticsearchConnectionManager;
 	private volatile ElasticsearchDocumentFactory _elasticsearchDocumentFactory;
 
 }

@@ -138,7 +138,8 @@ public class DDMFormEvaluatorServlet extends HttpServlet {
 
 	private volatile DDMFormEvaluator _ddmFormEvaluator;
 	private volatile DDMFormJSONDeserializer _ddmFormJSONDeserializer;
-	private volatile DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
+	private volatile DDMFormValuesJSONDeserializer
+		_ddmFormValuesJSONDeserializer;
 	private volatile JSONFactory _jsonFactory;
 
 }

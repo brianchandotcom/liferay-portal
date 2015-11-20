@@ -1379,7 +1379,8 @@ public class LayoutStagedModelDataHandler
 	private volatile CounterLocalService _counterLocalService;
 	private volatile GroupLocalService _groupLocalService;
 	private volatile ImageLocalService _imageLocalService;
-	private volatile LayoutFriendlyURLLocalService _layoutFriendlyURLLocalService;
+	private volatile LayoutFriendlyURLLocalService
+		_layoutFriendlyURLLocalService;
 	private volatile LayoutLocalService _layoutLocalService;
 	private volatile LayoutLocalServiceHelper _layoutLocalServiceHelper;
 	private volatile LayoutPrototypeLocalService _layoutPrototypeLocalService;

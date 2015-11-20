@@ -1461,7 +1461,8 @@ public class LayoutImportController implements ImportController {
 	private volatile LayoutLocalService _layoutLocalService;
 	private volatile LayoutPrototypeLocalService _layoutPrototypeLocalService;
 	private volatile LayoutSetLocalService _layoutSetLocalService;
-	private volatile LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
+	private volatile LayoutSetPrototypeLocalService
+		_layoutSetPrototypeLocalService;
 	private final PermissionImporter _permissionImporter =
 		PermissionImporter.getInstance();
 	private volatile PortletImportController _portletImportController;

@@ -181,7 +181,8 @@ public class DefaultRuleGroupProcessorImpl implements RuleGroupProcessor {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultRuleGroupProcessorImpl.class);
 
-	private volatile MDRRuleGroupInstanceLocalService _mdrRuleGroupInstanceLocalService;
+	private volatile MDRRuleGroupInstanceLocalService
+		_mdrRuleGroupInstanceLocalService;
 	private volatile MDRRuleGroupLocalService _mdrRuleGroupLocalService;
 	private final Map<String, RuleHandler> _ruleHandlers = new HashMap<>();
 

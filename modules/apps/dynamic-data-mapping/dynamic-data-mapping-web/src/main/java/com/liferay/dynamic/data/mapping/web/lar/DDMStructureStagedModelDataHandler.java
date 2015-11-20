@@ -511,8 +511,10 @@ public class DDMStructureStagedModelDataHandler
 		DDMStructureStagedModelDataHandler.class);
 
 	private volatile DDMFormJSONDeserializer _ddmFormJSONDeserializer;
-	private volatile DDMFormLayoutJSONDeserializer _ddmFormLayoutJSONDeserializer;
-	private volatile DDMStructureLayoutLocalService _ddmStructureLayoutLocalService;
+	private volatile DDMFormLayoutJSONDeserializer
+		_ddmFormLayoutJSONDeserializer;
+	private volatile DDMStructureLayoutLocalService
+		_ddmStructureLayoutLocalService;
 	private volatile DDMStructureLocalService _ddmStructureLocalService;
 	private volatile UserLocalService _userLocalService;
 

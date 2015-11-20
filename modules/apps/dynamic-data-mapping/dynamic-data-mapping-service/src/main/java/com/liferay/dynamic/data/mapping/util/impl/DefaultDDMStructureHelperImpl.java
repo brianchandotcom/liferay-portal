@@ -286,7 +286,8 @@ public class DefaultDDMStructureHelperImpl
 
 	private volatile DDM _ddm;
 	private volatile DDMFormJSONDeserializer _ddmFormJSONDeserializer;
-	private volatile DDMFormLayoutJSONDeserializer _ddmFormLayoutJSONDeserializer;
+	private volatile DDMFormLayoutJSONDeserializer
+		_ddmFormLayoutJSONDeserializer;
 	private volatile DDMFormXSDDeserializer _ddmFormXSDDeserializer;
 	private volatile DDMStructureLocalService _ddmStructureLocalService;
 	private volatile DDMTemplateLocalService _ddmTemplateLocalService;

@@ -180,7 +180,8 @@ public class UpdateRecordSetMVCActionCommand
 
 	private volatile DDLRecordSetService _ddlRecordSetService;
 	private volatile DDMFormJSONDeserializer _ddmFormJSONDeserializer;
-	private volatile DDMFormLayoutJSONDeserializer _ddmFormLayoutJSONDeserializer;
+	private volatile DDMFormLayoutJSONDeserializer
+		_ddmFormLayoutJSONDeserializer;
 	private volatile DDMStructureService _ddmStructureService;
 
 }

@@ -251,7 +251,8 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	private volatile MDRActionLocalService _mdrActionLocalService;
-	private volatile MDRRuleGroupInstanceLocalService _mdrRuleGroupInstanceLocalService;
+	private volatile MDRRuleGroupInstanceLocalService
+		_mdrRuleGroupInstanceLocalService;
 	private volatile MDRRuleGroupLocalService _mdrRuleGroupLocalService;
 	private volatile MDRRuleLocalService _mdrRuleLocalService;
 

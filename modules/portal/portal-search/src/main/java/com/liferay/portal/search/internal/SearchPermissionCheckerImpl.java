@@ -517,7 +517,8 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 	private volatile IndexerRegistry _indexerRegistry;
 	private volatile Portal _portal;
 	private volatile ResourceBlockLocalService _resourceBlockLocalService;
-	private volatile ResourcePermissionLocalService _resourcePermissionLocalService;
+	private volatile ResourcePermissionLocalService
+		_resourcePermissionLocalService;
 	private volatile RoleLocalService _roleLocalService;
 	private volatile UserGroupRoleLocalService _userGroupRoleLocalService;
 	private volatile UserLocalService _userLocalService;

@@ -113,7 +113,8 @@ public class GoogleDocsIGDisplayContextFactory
 
 	private volatile DDMStructureLocalService _ddmStructureLocalService;
 	private volatile DLAppService _dlAppService;
-	private volatile DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
+	private volatile DLFileEntryMetadataLocalService
+		_dlFileEntryMetadataLocalService;
 	private volatile StorageEngine _storageEngine;
 
 }

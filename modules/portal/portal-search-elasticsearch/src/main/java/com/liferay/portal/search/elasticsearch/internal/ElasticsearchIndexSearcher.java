@@ -754,7 +754,8 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		ElasticsearchIndexSearcher.class);
 
 	private volatile ElasticsearchConfiguration _elasticsearchConfiguration;
-	private volatile ElasticsearchConnectionManager _elasticsearchConnectionManager;
+	private volatile ElasticsearchConnectionManager
+		_elasticsearchConnectionManager;
 	private volatile FacetProcessor<SearchRequestBuilder> _facetProcessor;
 	private volatile FilterTranslator<FilterBuilder> _filterTranslator;
 	private volatile GroupByTranslator _groupByTranslator;

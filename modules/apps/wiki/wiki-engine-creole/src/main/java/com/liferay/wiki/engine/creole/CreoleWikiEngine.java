@@ -187,7 +187,8 @@ public class CreoleWikiEngine extends BaseInputEditorWikiEngine {
 		CreoleWikiEngine.class);
 
 	private volatile ServletContext _servletContext;
-	private volatile WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
+	private volatile WikiGroupServiceConfiguration
+		_wikiGroupServiceConfiguration;
 	private volatile WikiPageLocalService _wikiPageLocalService;
 
 }

@@ -717,7 +717,8 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 	private volatile CounterLocalService _counterLocalService;
 	private volatile DLAppHelperLocalService _dlAppHelperLocalService;
 	private volatile DLFileEntryLocalService _dlFileEntryLocalService;
-	private volatile DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
+	private volatile DLFileEntryMetadataLocalService
+		_dlFileEntryMetadataLocalService;
 	private volatile DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 	private volatile DLFileVersionLocalService _dlFileVersionLocalService;
 	private volatile DLFolderLocalService _dlFolderLocalService;

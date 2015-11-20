@@ -99,7 +99,8 @@ public class ElasticsearchSuggesterTranslator
 	}
 
 	private volatile AggregateSuggesterTranslator _aggregateSuggesteTranslator;
-	private volatile CompletionSuggesterTranslator _completionSuggesterTranslator;
+	private volatile CompletionSuggesterTranslator
+		_completionSuggesterTranslator;
 	private volatile PhraseSuggesterTranslator _phraseSuggesterTranslator;
 	private volatile TermSuggesterTranslator _termSuggesterTranslator;
 

@@ -240,7 +240,8 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ElasticsearchIndexWriter.class);
 
-	private volatile ElasticsearchConnectionManager _elasticsearchConnectionManager;
+	private volatile ElasticsearchConnectionManager
+		_elasticsearchConnectionManager;
 	private volatile ElasticsearchUpdateDocumentCommand
 		_elasticsearchUpdateDocumentCommand;
 	private SearchHitsProcessor _searchHitsProcessor;

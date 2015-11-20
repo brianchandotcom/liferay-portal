@@ -587,7 +587,8 @@ public class OrganizationStagedModelDataHandler
 	private volatile OrganizationLocalService _organizationLocalService;
 	private volatile OrgLaborLocalService _orgLaborLocalService;
 	private volatile PasswordPolicyLocalService _passwordPolicyLocalService;
-	private volatile PasswordPolicyRelLocalService _passwordPolicyRelLocalService;
+	private volatile PasswordPolicyRelLocalService
+		_passwordPolicyRelLocalService;
 	private volatile PhoneLocalService _phoneLocalService;
 	private volatile WebsiteLocalService _websiteLocalService;
 

@@ -855,7 +855,8 @@ public class LayoutExportController implements ExportController {
 	private volatile LayoutRevisionLocalService _layoutRevisionLocalService;
 	private volatile LayoutSetBranchLocalService _layoutSetBranchLocalService;
 	private volatile LayoutSetLocalService _layoutSetLocalService;
-	private volatile LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
+	private volatile LayoutSetPrototypeLocalService
+		_layoutSetPrototypeLocalService;
 	private final PermissionExporter _permissionExporter =
 		PermissionExporter.getInstance();
 	private volatile PortletExportController _portletExportController;

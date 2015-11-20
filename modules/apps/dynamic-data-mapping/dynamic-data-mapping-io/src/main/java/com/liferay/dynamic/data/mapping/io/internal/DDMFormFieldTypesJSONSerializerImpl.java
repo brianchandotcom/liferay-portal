@@ -141,7 +141,8 @@ public class DDMFormFieldTypesJSONSerializerImpl
 		return jsonObject;
 	}
 
-	private volatile DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+	private volatile DDMFormFieldTypeServicesTracker
+		_ddmFormFieldTypeServicesTracker;
 	private volatile DDMFormJSONSerializer _ddmFormJSONSerializer;
 	private volatile DDMFormLayoutJSONSerializer _ddmFormLayoutJSONSerializer;
 	private volatile JSONFactory _jsonFactory;

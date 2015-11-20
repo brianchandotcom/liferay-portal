@@ -984,7 +984,8 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 	private volatile GroupLocalService _groupLocalService;
 	private volatile LayoutLocalService _layoutLocalService;
 	private volatile PortletLocalService _portletLocalService;
-	private volatile PortletPreferencesLocalService _portletPreferencesLocalService;
+	private volatile PortletPreferencesLocalService
+		_portletPreferencesLocalService;
 	private final ThreadLocal<PortletRequest> _portletRequestThreadLocal =
 		new AutoResetThreadLocal<>("_portletRequestThreadLocal");
 	private volatile ResourceBlockLocalService _resourceBlockLocalService;

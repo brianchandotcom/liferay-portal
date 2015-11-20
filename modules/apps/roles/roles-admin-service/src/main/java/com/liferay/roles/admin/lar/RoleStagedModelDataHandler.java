@@ -410,7 +410,8 @@ public class RoleStagedModelDataHandler
 	private final PermissionConversionFilter _permissionConversionFilter =
 		new ImportExportPermissionConversionFilter();
 	private volatile ResourceBlockLocalService _resourceBlockLocalService;
-	private volatile ResourcePermissionLocalService _resourcePermissionLocalService;
+	private volatile ResourcePermissionLocalService
+		_resourcePermissionLocalService;
 	private volatile ResourcePermissionService _resourcePermissionService;
 	private volatile ResourceTypePermissionLocalService
 		_resourceTypePermissionLocalService;

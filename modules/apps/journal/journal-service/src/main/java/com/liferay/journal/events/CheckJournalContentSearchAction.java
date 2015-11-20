@@ -101,6 +101,7 @@ public class CheckJournalContentSearchAction extends SimpleAction {
 		CheckJournalContentSearchAction.class);
 
 	private volatile CompanyLocalService _companyLocalService;
-	private volatile JournalContentSearchLocalService _journalContentSearchLocalService;
+	private volatile JournalContentSearchLocalService
+		_journalContentSearchLocalService;
 
 }

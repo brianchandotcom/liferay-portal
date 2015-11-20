@@ -62,6 +62,7 @@ public class WikiServiceComponentProvider {
 
 	private static WikiServiceComponentProvider _wikiServiceComponentProvider;
 
-	private volatile WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
+	private volatile WikiGroupServiceConfiguration
+		_wikiGroupServiceConfiguration;
 
 }

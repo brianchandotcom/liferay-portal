@@ -927,11 +927,13 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 
 	private volatile AssetEntryLocalService _assetEntryLocalService;
 	private volatile DLAppLocalService _dlAppLocalService;
-	private volatile JournalArticleImageLocalService _journalArticleImageLocalService;
+	private volatile JournalArticleImageLocalService
+		_journalArticleImageLocalService;
 	private volatile JournalArticleLocalService _journalArticleLocalService;
 	private volatile JournalArticleResourceLocalService
 		_journalArticleResourceLocalService;
-	private volatile JournalContentSearchLocalService _journalContentSearchLocalService;
+	private volatile JournalContentSearchLocalService
+		_journalContentSearchLocalService;
 	private volatile JournalFolderLocalService _journalFolderLocalService;
 	private volatile ResourceLocalService _resourceLocalService;
 

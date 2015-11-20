@@ -191,7 +191,8 @@ public class HtmlEngine extends BaseInputEditorWikiEngine {
 
 	private String _friendlyURLMapping;
 	private Router _router;
-	private volatile WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
+	private volatile WikiGroupServiceConfiguration
+		_wikiGroupServiceConfiguration;
 	private volatile WikiNodeLocalService _wikiNodeLocalService;
 
 }

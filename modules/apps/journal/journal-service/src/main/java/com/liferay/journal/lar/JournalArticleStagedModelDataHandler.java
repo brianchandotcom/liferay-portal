@@ -958,7 +958,8 @@ public class JournalArticleStagedModelDataHandler
 	private volatile ImageLocalService _imageLocalService;
 	private volatile JournalArticleExportImportContentProcessor
 		_journalArticleExportImportContentProcessor;
-	private volatile JournalArticleImageLocalService _journalArticleImageLocalService;
+	private volatile JournalArticleImageLocalService
+		_journalArticleImageLocalService;
 	private volatile JournalArticleLocalService _journalArticleLocalService;
 	private volatile JournalArticleResourceLocalService
 		_journalArticleResourceLocalService;

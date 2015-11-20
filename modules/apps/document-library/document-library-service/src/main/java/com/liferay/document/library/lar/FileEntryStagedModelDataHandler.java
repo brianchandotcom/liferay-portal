@@ -801,7 +801,8 @@ public class FileEntryStagedModelDataHandler
 	private volatile DLAppLocalService _dlAppLocalService;
 	private volatile DLAppService _dlAppService;
 	private volatile DLFileEntryLocalService _dlFileEntryLocalService;
-	private volatile DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
+	private volatile DLFileEntryMetadataLocalService
+		_dlFileEntryMetadataLocalService;
 	private volatile DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 	private volatile DLFileVersionLocalService _dlFileVersionLocalService;
 	private volatile RepositoryLocalService _repositoryLocalService;

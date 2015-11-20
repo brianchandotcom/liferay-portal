@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * Defines the public interface for authentication token location
- * implementations
+ * implementations.
  *
  * <p>
  * Custom <code>TokenRetriever</code> classes can override these default

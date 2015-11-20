@@ -1038,7 +1038,13 @@
 					else if (recurrence.frequency == instance.FREQUENCY.WEEKLY && recurrence.weekdays.length > 0) {
 						parts.push('on-x');
 
-						params.push(recurrence.weekdays.join(', '));
+						var weekdays = recurrence.weekdays.map(
+							function(item) {
+								return instance.WEEKDAY_LABELS[item];
+							}
+						);
+
+						params.push(weekdays.join(', '));
 					}
 
 					if (recurrence.count && recurrence.endValue === 'after') {

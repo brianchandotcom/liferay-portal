@@ -90,6 +90,14 @@ public class DDMDataProviderInstanceLocalServiceImpl
 	}
 
 	@Override
+	public DDMDataProviderInstance fetchDataProviderInstance(
+		long dataProviderInstanceId) {
+
+		return ddmDataProviderInstancePersistence.fetchByPrimaryKey(
+			dataProviderInstanceId);
+	}
+
+	@Override
 	public DDMDataProviderInstance getDataProviderInstance(
 			long dataProviderInstanceId)
 		throws PortalException {

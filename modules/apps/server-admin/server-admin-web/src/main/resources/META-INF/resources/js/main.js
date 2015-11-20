@@ -94,7 +94,7 @@ AUI.add(
 							{
 								form: form.getDOM(),
 								loadingMask: {
-									'strings.loading': Liferay.Language.get('xuggler-library-is-installed')
+									'strings.loading': Liferay.Language.get('xuggler-library-is-installing')
 								},
 								selector: '#adminXugglerPanelContent',
 								where: 'outer'

@@ -17,7 +17,6 @@ package com.liferay.dynamic.data.mapping.data.provider.rest;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContext;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderException;
-import com.liferay.dynamic.data.mapping.data.provider.rest.DDMRESTDataProviderSettings.RESTSettings;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -36,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true, property = "ddm.data.provider.name=rest")
+@Component(immediate = true, property = "ddm.data.provider.type=rest")
 public class DDMRESTDataProvider implements DDMDataProvider {
 
 	@Override
@@ -52,12 +51,18 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		}
 	}
 
+	@Override
+	public Class<?> getSettings() {
+		return DDMRESTDataProviderSettings.class;
+	}
+
 	protected List<KeyValuePair> doGetData(
 			DDMDataProviderContext ddmDataProviderContext)
 		throws PortalException {
 
-		RESTSettings restSettings = ddmDataProviderContext.getSettings(
-			RESTSettings.class);
+		DDMRESTDataProviderSettings restSettings =
+			ddmDataProviderContext.getSettingsInstance(
+				DDMRESTDataProviderSettings.class);
 
 		HttpRequest httpRequest = HttpRequest.get(restSettings.url());
 

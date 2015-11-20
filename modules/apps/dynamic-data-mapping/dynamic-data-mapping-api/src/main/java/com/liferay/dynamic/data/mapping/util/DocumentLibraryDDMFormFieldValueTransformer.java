@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
@@ -63,9 +64,12 @@ public class DocumentLibraryDDMFormFieldValueTransformer
 	protected FileEntry addFileEntry(FileEntry tempFileEntry)
 		throws PortalException {
 
-		String fileName = DLUtil.getFileName(
-			tempFileEntry.getGroupId(), tempFileEntry.getFolderId(),
+		String originalTempFileName = TempFileEntryUtil.getOriginalTempFileName(
 			tempFileEntry.getFileName());
+
+		String fileName = DLUtil.getUniqueFileName(
+			tempFileEntry.getGroupId(), tempFileEntry.getFolderId(),
+			originalTempFileName);
 
 		return DLAppServiceUtil.addFileEntry(
 			tempFileEntry.getGroupId(), 0, fileName,

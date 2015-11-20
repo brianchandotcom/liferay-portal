@@ -49,6 +49,8 @@ import java.util.UUID;
  */
 public class TempFileEntryUtil {
 
+	public static final String TEMP_RANDOM_SUFFIX = "--tempRandomSuffix--";
+
 	public static FileEntry addTempFileEntry(
 			long groupId, long userId, String folderName, String fileName,
 			File file, String mimeType)
@@ -109,6 +111,24 @@ public class TempFileEntryUtil {
 			new TemporaryFileEntriesScope(_UUID, userId, folderName), fileName);
 	}
 
+	public static String getOriginalTempFileName(String tempFileName)
+		throws PortalException {
+
+		String extension = FileUtil.getExtension(tempFileName);
+
+		int pos = tempFileName.lastIndexOf(TEMP_RANDOM_SUFFIX);
+
+		if (pos != -1) {
+			tempFileName = tempFileName.substring(0, pos);
+
+			if (Validator.isNotNull(extension)) {
+				tempFileName = tempFileName + StringPool.PERIOD + extension;
+			}
+		}
+
+		return tempFileName;
+	}
+
 	public static FileEntry getTempFileEntry(
 			long groupId, long userId, String folderName, String fileName)
 		throws PortalException {
@@ -118,6 +138,23 @@ public class TempFileEntryUtil {
 
 		return temporaryFileEntriesCapability.getTemporaryFileEntry(
 			new TemporaryFileEntriesScope(_UUID, userId, folderName), fileName);
+	}
+
+	public static String getTempFileName(String originalFileName) {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(FileUtil.stripExtension(originalFileName));
+		sb.append(TEMP_RANDOM_SUFFIX);
+		sb.append(StringUtil.randomString());
+
+		String extension = FileUtil.getExtension(originalFileName);
+
+		if (Validator.isNotNull(extension)) {
+			sb.append(StringPool.PERIOD);
+			sb.append(extension);
+		}
+
+		return sb.toString();
 	}
 
 	public static String[] getTempFileNames(

@@ -283,6 +283,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		Folder folder = page.addAttachmentsFolder();
 
+		fileName = PortletFileRepositoryUtil.getUniqueFileName(
+			page.getGroupId(), folder.getFolderId(), fileName);
+
 		FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
 			page.getGroupId(), userId, WikiPage.class.getName(),
 			page.getResourcePrimKey(), WikiPortletKeys.WIKI,
@@ -315,6 +318,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		WikiPage page = getPage(nodeId, title);
 
 		Folder folder = page.addAttachmentsFolder();
+
+		fileName = PortletFileRepositoryUtil.getUniqueFileName(
+			page.getGroupId(), folder.getFolderId(), fileName);
 
 		FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
 			page.getGroupId(), userId, WikiPage.class.getName(),

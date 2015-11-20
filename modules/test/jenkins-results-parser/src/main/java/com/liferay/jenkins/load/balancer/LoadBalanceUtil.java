@@ -93,6 +93,7 @@ public class LoadBalanceUtil {
 
 			executor.shutdown();
 
+			List<Integer> badIndicies = new ArrayList<>(taskList.size());
 			List<Integer> maxIndicies = new ArrayList<>(taskList.size());
 			int max = 0;
 
@@ -101,6 +102,11 @@ public class LoadBalanceUtil {
 
 				try {
 					Integer result = task.get();
+					
+					if (result == -1) {
+						badIndicies.add(i);
+						continue;
+					}
 
 					if (result > max) {
 						max = result;
@@ -118,17 +124,28 @@ public class LoadBalanceUtil {
 					throw new RuntimeException(ie);
 				}
 			}
-
-			int x = -1;
-
-			if (maxIndicies.size() > 0) {
-				x = maxIndicies.get(getRandomValue(0, maxIndicies.size() - 1));
-			}
-			else {
-				x = getRandomValue(0, maxHostNames);
+			
+			if (badIndicies.size() == maxHostNames) {
+				throw new IllegalStateException(
+					"SEVERE: All hosts failed to respond.");
 			}
 
-			return hostNameList.get(x);
+			while (true) {
+				int x = -1;
+	
+				if (maxIndicies.size() > 0) {
+					x = maxIndicies.get(getRandomValue(0, maxIndicies.size() - 1));
+				}
+				else {
+					x = getRandomValue(0, maxHostNames - 1);
+				}
+				
+				if (badIndicies.contains(x)) {
+					continue;
+				}
+	
+				return hostNameList.get(x);
+			}
 		}
 		finally {
 			JenkinsResultsParserUtil.write(file, "");
@@ -263,8 +280,16 @@ public class LoadBalanceUtil {
 
 		@Override
 		public Integer call() throws Exception {
-			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-				_url, false);
+			JSONObject jsonObject = null;
+			
+			try {
+				jsonObject = JenkinsResultsParserUtil.toJSONObject(_url, false);
+			} catch (Exception e) {
+				System.out.println(
+					"WARNING : Exception occurred while attempting to read: " +
+						_url);
+				return -1;
+			}
 
 			JSONArray jsonArray = jsonObject.getJSONArray("computer");
 

@@ -222,7 +222,7 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 
 		_master = master;
 
-		if (_enabled && notify) {
+		if (notify) {
 			notifyMasterTokenTransitionListeners(master);
 		}
 

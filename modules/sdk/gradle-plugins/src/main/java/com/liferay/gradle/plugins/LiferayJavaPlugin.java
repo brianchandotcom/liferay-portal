@@ -60,6 +60,7 @@ import java.nio.charset.StandardCharsets;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -150,6 +151,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureArtifacts(project);
 		configureTestIntegrationTomcat(project, liferayExtension);
 
+		configureTaskClean(project);
 		configureTaskConfigJSModules(project);
 		configureTaskSetupTestableTomcat(project, liferayExtension);
 		configureTaskStartTestableTomcat(project, liferayExtension);
@@ -705,35 +707,47 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	}
 
 	protected void configureTaskClean(Project project) {
-		Task cleanTask = GradleUtil.getTask(
-			project, BasePlugin.CLEAN_TASK_NAME);
+		Task task = GradleUtil.getTask(project, BasePlugin.CLEAN_TASK_NAME);
 
-		configureTaskCleanDependsOn(cleanTask);
+		if (task instanceof Delete) {
+			configureTaskCleanDependsOn((Delete)task);
+		}
 	}
 
-	protected void configureTaskCleanDependsOn(Task cleanTask) {
-		Project project = cleanTask.getProject();
+	protected void configureTaskCleanDependsOn(Delete delete) {
+		Closure<Set<String>> closure = new Closure<Set<String>>(null) {
 
-		for (Task task : project.getTasks()) {
-			boolean autoClean = GradleUtil.getProperty(
-				task, AUTO_CLEAN_PROPERTY_NAME, true);
+			@SuppressWarnings("unused")
+			public Set<String> doCall(Delete delete) {
+				Set<String> cleanTaskNames = new HashSet<>();
 
-			if (!autoClean) {
-				continue;
+				Project project = delete.getProject();
+
+				for (Task task : project.getTasks()) {
+					boolean autoClean = GradleUtil.getProperty(
+						task, AUTO_CLEAN_PROPERTY_NAME, true);
+
+					if (!autoClean) {
+						continue;
+					}
+
+					TaskOutputs taskOutputs = task.getOutputs();
+
+					if (!taskOutputs.getHasOutput()) {
+						continue;
+					}
+
+					cleanTaskNames.add(
+						BasePlugin.CLEAN_TASK_NAME +
+							StringUtil.capitalize(task.getName()));
+				}
+
+				return cleanTaskNames;
 			}
 
-			TaskOutputs taskOutputs = task.getOutputs();
+		};
 
-			if (!taskOutputs.getHasOutput()) {
-				continue;
-			}
-
-			String taskName =
-				BasePlugin.CLEAN_TASK_NAME +
-					StringUtil.capitalize(task.getName());
-
-			cleanTask.dependsOn(taskName);
-		}
+		delete.dependsOn(closure);
 	}
 
 	protected void configureTaskConfigJSModules(Project project) {
@@ -1065,7 +1079,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		Project project, LiferayExtension liferayExtension) {
 
 		configureTaskClasses(project);
-		configureTaskClean(project);
 		configureTaskDeploy(project, liferayExtension);
 		configureTaskInitGradle(project);
 		configureTaskJar(project);

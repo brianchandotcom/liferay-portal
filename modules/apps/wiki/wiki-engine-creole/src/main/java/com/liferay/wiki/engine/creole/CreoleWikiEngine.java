@@ -186,8 +186,8 @@ public class CreoleWikiEngine extends BaseInputEditorWikiEngine {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CreoleWikiEngine.class);
 
-	private ServletContext _servletContext;
-	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
-	private WikiPageLocalService _wikiPageLocalService;
+	private volatile ServletContext _servletContext;
+	private volatile WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
+	private volatile WikiPageLocalService _wikiPageLocalService;
 
 }

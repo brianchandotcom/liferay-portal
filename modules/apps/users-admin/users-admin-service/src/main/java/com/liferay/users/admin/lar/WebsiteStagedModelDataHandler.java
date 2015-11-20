@@ -137,7 +137,7 @@ public class WebsiteStagedModelDataHandler
 		_websiteLocalService = websiteLocalService;
 	}
 
-	private GroupLocalService _groupLocalService;
-	private WebsiteLocalService _websiteLocalService;
+	private volatile GroupLocalService _groupLocalService;
+	private volatile WebsiteLocalService _websiteLocalService;
 
 }

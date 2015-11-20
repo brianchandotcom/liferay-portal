@@ -197,6 +197,6 @@ public class UserGroupIndexer extends BaseIndexer<UserGroup> {
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserGroupIndexer.class);
 
-	private UserGroupLocalService _userGroupLocalService;
+	private volatile UserGroupLocalService _userGroupLocalService;
 
 }

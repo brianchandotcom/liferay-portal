@@ -276,8 +276,8 @@ public class BookmarksEntryIndexer extends BaseIndexer<BookmarksEntry> {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BookmarksEntryIndexer.class);
 
-	private BookmarksEntryLocalService _bookmarksEntryLocalService;
-	private BookmarksFolderLocalService _bookmarksFolderLocalService;
-	private GroupLocalService _groupLocalService;
+	private volatile BookmarksEntryLocalService _bookmarksEntryLocalService;
+	private volatile BookmarksFolderLocalService _bookmarksFolderLocalService;
+	private volatile GroupLocalService _groupLocalService;
 
 }

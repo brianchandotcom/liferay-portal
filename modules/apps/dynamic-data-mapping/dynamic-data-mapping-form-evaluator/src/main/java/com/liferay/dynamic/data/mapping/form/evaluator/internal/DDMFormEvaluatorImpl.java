@@ -56,6 +56,6 @@ public class DDMFormEvaluatorImpl implements DDMFormEvaluator {
 		_expressionFactory = expressionFactory;
 	}
 
-	private ExpressionFactory _expressionFactory;
+	private volatile ExpressionFactory _expressionFactory;
 
 }

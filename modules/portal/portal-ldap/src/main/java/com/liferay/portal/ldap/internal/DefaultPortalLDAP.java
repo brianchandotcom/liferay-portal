@@ -1082,10 +1082,10 @@ public class DefaultPortalLDAP implements PortalLDAP {
 		DefaultPortalLDAP.class);
 
 	private String _companySecurityAuthType;
-	private ConfigurationProvider<LDAPServerConfiguration>
+	private volatile ConfigurationProvider<LDAPServerConfiguration>
 		_ldapServerConfigurationProvider;
-	private LDAPSettings _ldapSettings;
-	private ConfigurationProvider<SystemLDAPConfiguration>
+	private volatile LDAPSettings _ldapSettings;
+	private volatile ConfigurationProvider<SystemLDAPConfiguration>
 		_systemLDAPConfigurationProvider;
 
 }

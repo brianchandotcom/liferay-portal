@@ -334,6 +334,6 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private DLAppService _dlAppService;
+	private volatile DLAppService _dlAppService;
 
 }

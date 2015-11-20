@@ -183,8 +183,8 @@ public class DDLDisplayExportImportPortletPreferencesProcessor
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDLDisplayExportImportPortletPreferencesProcessor.class);
 
-	private DDLRecordSetLocalService _ddlRecordSetLocalService;
-	private ReferencedStagedModelImporterCapability
+	private volatile DDLRecordSetLocalService _ddlRecordSetLocalService;
+	private volatile ReferencedStagedModelImporterCapability
 		_referencedStagedModelImporterCapability;
 
 }

@@ -108,8 +108,8 @@ public class DLFileEntrySearchResultContributor
 		_summaryFactory = summaryFactory;
 	}
 
-	private ClassNameLocalService _classNameLocalService;
-	private DLAppLocalService _dlAppLocalService;
-	private SummaryFactory _summaryFactory;
+	private volatile ClassNameLocalService _classNameLocalService;
+	private volatile DLAppLocalService _dlAppLocalService;
+	private volatile SummaryFactory _summaryFactory;
 
 }

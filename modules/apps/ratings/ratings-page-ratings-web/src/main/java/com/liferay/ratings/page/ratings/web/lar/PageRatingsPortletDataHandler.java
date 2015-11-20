@@ -133,7 +133,7 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 		_ratingsEntryLocalService = ratingsEntryLocalService;
 	}
 
-	private RatingsEntryLocalService _ratingsEntryLocalService;
+	private volatile RatingsEntryLocalService _ratingsEntryLocalService;
 
 	private class ImportRatingsCallable implements Callable<Void> {
 

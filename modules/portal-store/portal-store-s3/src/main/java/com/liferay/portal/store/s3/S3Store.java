@@ -679,8 +679,8 @@ public class S3Store extends BaseStore {
 	private AmazonS3 _amazonS3;
 	private AWSCredentialsProvider _awsCredentialsProvider;
 	private String _bucketName;
-	private S3FileCache _s3FileCache;
-	private S3KeyTransformer _s3KeyTransformer;
+	private volatile S3FileCache _s3FileCache;
+	private volatile S3KeyTransformer _s3KeyTransformer;
 	private StorageClass _storageClass;
 
 }

@@ -131,7 +131,7 @@ public class PhoneStagedModelDataHandler
 		_phoneLocalService = phoneLocalService;
 	}
 
-	private GroupLocalService _groupLocalService;
-	private PhoneLocalService _phoneLocalService;
+	private volatile GroupLocalService _groupLocalService;
+	private volatile PhoneLocalService _phoneLocalService;
 
 }

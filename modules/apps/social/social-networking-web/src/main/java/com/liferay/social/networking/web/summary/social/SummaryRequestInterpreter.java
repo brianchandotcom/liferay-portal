@@ -68,8 +68,8 @@ public class SummaryRequestInterpreter
 		_userLocalService = userLocalService;
 	}
 
-	private SocialActivityLocalService _socialActivityLocalService;
-	private SocialRelationLocalService _socialRelationLocalService;
-	private UserLocalService _userLocalService;
+	private volatile SocialActivityLocalService _socialActivityLocalService;
+	private volatile SocialRelationLocalService _socialRelationLocalService;
+	private volatile UserLocalService _userLocalService;
 
 }

@@ -84,6 +84,6 @@ public class UserGroupModelListener extends BaseModelListener<UserGroup> {
 		_userExporter.exportUser(userId, userGroupId, userOperation);
 	}
 
-	private UserExporter _userExporter;
+	private volatile UserExporter _userExporter;
 
 }

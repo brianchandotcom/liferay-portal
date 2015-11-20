@@ -257,8 +257,8 @@ public class EditExportConfigurationMVCActionCommand
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditExportConfigurationMVCActionCommand.class);
 
-	private ExportImportConfigurationService _exportImportConfigurationService;
-	private ExportImportService _exportImportService;
-	private TrashEntryService _trashEntryService;
+	private volatile ExportImportConfigurationService _exportImportConfigurationService;
+	private volatile ExportImportService _exportImportService;
+	private volatile TrashEntryService _trashEntryService;
 
 }

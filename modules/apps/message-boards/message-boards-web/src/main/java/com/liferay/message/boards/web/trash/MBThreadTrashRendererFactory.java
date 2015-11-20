@@ -61,7 +61,7 @@ public class MBThreadTrashRendererFactory implements TrashRendererFactory {
 		_mbThreadLocalService = mbThreadLocalService;
 	}
 
-	private MBThreadLocalService _mbThreadLocalService;
-	private ServletContext _servletContext;
+	private volatile MBThreadLocalService _mbThreadLocalService;
+	private volatile ServletContext _servletContext;
 
 }

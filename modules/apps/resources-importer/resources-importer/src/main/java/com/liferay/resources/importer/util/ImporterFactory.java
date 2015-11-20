@@ -186,7 +186,7 @@ public class ImporterFactory {
 		_journalConverter = journalConverter;
 	}
 
-	private GroupLocalService _groupLocalService;
-	private JournalConverter _journalConverter;
+	private volatile GroupLocalService _groupLocalService;
+	private volatile JournalConverter _journalConverter;
 
 }

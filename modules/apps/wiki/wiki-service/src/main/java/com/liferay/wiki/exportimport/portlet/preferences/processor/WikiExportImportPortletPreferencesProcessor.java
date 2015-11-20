@@ -136,12 +136,12 @@ public class WikiExportImportPortletPreferencesProcessor
 		_wikiNodeLocalService = wikiNodeLocalService;
 	}
 
-	private PortletDisplayTemplateExportCapability
+	private volatile PortletDisplayTemplateExportCapability
 		_portletDisplayTemplateExportCapability;
-	private PortletDisplayTemplateImportCapability
+	private volatile PortletDisplayTemplateImportCapability
 		_portletDisplayTemplateImportCapability;
-	private ReferencedStagedModelImporterCapability
+	private volatile ReferencedStagedModelImporterCapability
 		_referencedStagedModelImporterCapability;
-	private WikiNodeLocalService _wikiNodeLocalService;
+	private volatile WikiNodeLocalService _wikiNodeLocalService;
 
 }

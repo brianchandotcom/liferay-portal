@@ -134,7 +134,7 @@ public class RatingsEntryStagedModelDataHandler
 		_ratingsEntryLocalService = ratingsEntryLocalService;
 	}
 
-	private GroupLocalService _groupLocalService;
-	private RatingsEntryLocalService _ratingsEntryLocalService;
+	private volatile GroupLocalService _groupLocalService;
+	private volatile RatingsEntryLocalService _ratingsEntryLocalService;
 
 }

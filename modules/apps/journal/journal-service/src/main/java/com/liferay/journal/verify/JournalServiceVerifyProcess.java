@@ -925,14 +925,14 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 	private static final Pattern _friendlyURLPattern = Pattern.compile(
 		"[^a-z0-9_-]");
 
-	private AssetEntryLocalService _assetEntryLocalService;
-	private DLAppLocalService _dlAppLocalService;
-	private JournalArticleImageLocalService _journalArticleImageLocalService;
-	private JournalArticleLocalService _journalArticleLocalService;
-	private JournalArticleResourceLocalService
+	private volatile AssetEntryLocalService _assetEntryLocalService;
+	private volatile DLAppLocalService _dlAppLocalService;
+	private volatile JournalArticleImageLocalService _journalArticleImageLocalService;
+	private volatile JournalArticleLocalService _journalArticleLocalService;
+	private volatile JournalArticleResourceLocalService
 		_journalArticleResourceLocalService;
-	private JournalContentSearchLocalService _journalContentSearchLocalService;
-	private JournalFolderLocalService _journalFolderLocalService;
-	private ResourceLocalService _resourceLocalService;
+	private volatile JournalContentSearchLocalService _journalContentSearchLocalService;
+	private volatile JournalFolderLocalService _journalFolderLocalService;
+	private volatile ResourceLocalService _resourceLocalService;
 
 }

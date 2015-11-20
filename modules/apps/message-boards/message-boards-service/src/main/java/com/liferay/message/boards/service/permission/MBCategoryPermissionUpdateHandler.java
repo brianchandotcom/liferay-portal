@@ -57,6 +57,6 @@ public class MBCategoryPermissionUpdateHandler
 		_mbCategoryLocalService = mbCategoryLocalService;
 	}
 
-	private MBCategoryLocalService _mbCategoryLocalService;
+	private volatile MBCategoryLocalService _mbCategoryLocalService;
 
 }

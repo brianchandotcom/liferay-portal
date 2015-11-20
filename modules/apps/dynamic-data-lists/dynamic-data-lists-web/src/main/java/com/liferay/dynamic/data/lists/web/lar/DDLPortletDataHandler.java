@@ -373,8 +373,8 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	private DDLRecordLocalService _ddlRecordLocalService;
-	private DDLRecordSetLocalService _ddlRecordSetLocalService;
-	private DDMStructureLocalService _ddmStructureLocalService;
+	private volatile DDLRecordLocalService _ddlRecordLocalService;
+	private volatile DDLRecordSetLocalService _ddlRecordSetLocalService;
+	private volatile DDMStructureLocalService _ddmStructureLocalService;
 
 }

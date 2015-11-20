@@ -151,6 +151,6 @@ public class EditRepositoryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private RepositoryService _repositoryService;
+	private volatile RepositoryService _repositoryService;
 
 }

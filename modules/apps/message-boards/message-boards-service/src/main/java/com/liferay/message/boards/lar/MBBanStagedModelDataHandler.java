@@ -143,7 +143,7 @@ public class MBBanStagedModelDataHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBBanStagedModelDataHandler.class);
 
-	private MBBanLocalService _mbBanLocalService;
-	private UserLocalService _userLocalService;
+	private volatile MBBanLocalService _mbBanLocalService;
+	private volatile UserLocalService _userLocalService;
 
 }

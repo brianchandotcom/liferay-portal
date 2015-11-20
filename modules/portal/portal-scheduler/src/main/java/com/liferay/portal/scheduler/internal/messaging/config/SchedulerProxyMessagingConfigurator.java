@@ -66,6 +66,6 @@ public class SchedulerProxyMessagingConfigurator {
 		destination.unregister(_proxyMessageListener);
 	}
 
-	private ProxyMessageListener _proxyMessageListener;
+	private volatile ProxyMessageListener _proxyMessageListener;
 
 }

@@ -709,13 +709,13 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SolrIndexSearcher.class);
 
-	private FacetProcessor<SolrQuery> _facetProcessor;
-	private FilterTranslator<String> _filterTranslator;
-	private GroupByTranslator _groupByTranslator;
+	private volatile FacetProcessor<SolrQuery> _facetProcessor;
+	private volatile FilterTranslator<String> _filterTranslator;
+	private volatile GroupByTranslator _groupByTranslator;
 	private boolean _logExceptionsOnly;
-	private QueryTranslator<String> _queryTranslator;
-	private SolrClientManager _solrClientManager;
+	private volatile QueryTranslator<String> _queryTranslator;
+	private volatile SolrClientManager _solrClientManager;
 	private volatile SolrConfiguration _solrConfiguration;
-	private StatsTranslator _statsTranslator;
+	private volatile StatsTranslator _statsTranslator;
 
 }

@@ -261,8 +261,8 @@ public class NestedPortletsPortlet extends MVCPortlet {
 	private static final Pattern _processColumnPattern = Pattern.compile(
 		"(processColumn[(]\")(.*?)(\"(?:, *\"(?:.*?)\")?[)])", Pattern.DOTALL);
 
-	private LayoutLocalService _layoutLocalService;
-	private LayoutTemplateLocalService _layoutTemplateLocalService;
+	private volatile LayoutLocalService _layoutLocalService;
+	private volatile LayoutTemplateLocalService _layoutTemplateLocalService;
 	private volatile NestedPortletsConfiguration _nestedPortletsConfiguration;
 
 }

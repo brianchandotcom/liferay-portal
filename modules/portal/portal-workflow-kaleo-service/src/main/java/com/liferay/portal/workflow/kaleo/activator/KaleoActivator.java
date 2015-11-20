@@ -49,6 +49,6 @@ public class KaleoActivator {
 		_portalKaleoManager = portalKaleoManager;
 	}
 
-	private PortalKaleoManager _portalKaleoManager;
+	private volatile PortalKaleoManager _portalKaleoManager;
 
 }

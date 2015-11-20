@@ -193,6 +193,6 @@ public class DDLRecordSetStagedModelDataHandler
 		_ddlRecordSetLocalService = ddlRecordSetLocalService;
 	}
 
-	private DDLRecordSetLocalService _ddlRecordSetLocalService;
+	private volatile DDLRecordSetLocalService _ddlRecordSetLocalService;
 
 }

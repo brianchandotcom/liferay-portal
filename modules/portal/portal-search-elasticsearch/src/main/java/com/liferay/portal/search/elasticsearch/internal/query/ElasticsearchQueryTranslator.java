@@ -215,17 +215,17 @@ public class ElasticsearchQueryTranslator
 		_wildcardQueryTranslator = wildcardQueryTranslator;
 	}
 
-	private BooleanQueryTranslator _booleanQueryTranslator;
-	private DisMaxQueryTranslator _disMaxQueryTranslator;
-	private FuzzyQueryTranslator _fuzzyQueryTranslator;
-	private MatchAllQueryTranslator _matchAllQueryTranslator;
-	private MatchQueryTranslator _matchQueryTranslator;
-	private MoreLikeThisQueryTranslator _moreLikeThisQueryTranslator;
-	private MultiMatchQueryTranslator _multiMatchQueryTranslator;
-	private NestedQueryTranslator _nestedQueryTranslator;
-	private StringQueryTranslator _stringQueryTranslator;
-	private TermQueryTranslator _termQueryTranslator;
-	private TermRangeQueryTranslator _termRangeQueryTranslator;
-	private WildcardQueryTranslator _wildcardQueryTranslator;
+	private volatile BooleanQueryTranslator _booleanQueryTranslator;
+	private volatile DisMaxQueryTranslator _disMaxQueryTranslator;
+	private volatile FuzzyQueryTranslator _fuzzyQueryTranslator;
+	private volatile MatchAllQueryTranslator _matchAllQueryTranslator;
+	private volatile MatchQueryTranslator _matchQueryTranslator;
+	private volatile MoreLikeThisQueryTranslator _moreLikeThisQueryTranslator;
+	private volatile MultiMatchQueryTranslator _multiMatchQueryTranslator;
+	private volatile NestedQueryTranslator _nestedQueryTranslator;
+	private volatile StringQueryTranslator _stringQueryTranslator;
+	private volatile TermQueryTranslator _termQueryTranslator;
+	private volatile TermRangeQueryTranslator _termRangeQueryTranslator;
+	private volatile WildcardQueryTranslator _wildcardQueryTranslator;
 
 }

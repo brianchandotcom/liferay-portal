@@ -150,7 +150,7 @@ public class SSLSocketFactoryBuilderImpl implements SSLSocketFactoryBuilder {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SSLSocketFactoryBuilderImpl.class);
 
-	private KeyStoreLoader _keyStoreLoader;
+	private volatile KeyStoreLoader _keyStoreLoader;
 	private char[] _keyStorePassword;
 	private String _keyStorePath;
 	private String _keyStoreType = KeyStore.getDefaultType();

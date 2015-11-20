@@ -139,6 +139,6 @@ public class CommentAssetRendererFactory
 
 	private static final boolean _SELECTABLE = false;
 
-	private ServletContext _servletContext;
+	private volatile ServletContext _servletContext;
 
 }

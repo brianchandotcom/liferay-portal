@@ -138,7 +138,7 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 	private BundleContext _bundleContext;
 	private DependencyManager _dependencyManager;
 	private Logger _logger;
-	private ServiceConfigurator _serviceConfigurator;
+	private volatile ServiceConfigurator _serviceConfigurator;
 
 	private class ModuleApplicationContextExtension implements Extension {
 

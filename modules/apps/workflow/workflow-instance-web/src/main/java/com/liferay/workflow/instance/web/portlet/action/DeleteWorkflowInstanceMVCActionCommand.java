@@ -166,6 +166,6 @@ public class DeleteWorkflowInstanceMVCActionCommand
 			WorkflowConstants.CONTEXT_USER_ID, String.valueOf(validUserId));
 	}
 
-	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
+	private volatile WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
 
 }

@@ -49,6 +49,6 @@ public class DLFileShortcutTrashRendererFactory
 		_dlFileShortcutLocalService = dlFileShortcutLocalService;
 	}
 
-	private DLFileShortcutLocalService _dlFileShortcutLocalService;
+	private volatile DLFileShortcutLocalService _dlFileShortcutLocalService;
 
 }

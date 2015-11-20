@@ -66,7 +66,7 @@ public class DLWebComponentProvider {
 
 	private static DLWebComponentProvider _dlWebComponentProvider;
 
-	private DLDisplayContextProvider _dlDisplayContextProvider;
-	private IGDisplayContextProvider _igDisplayContextProvider;
+	private volatile DLDisplayContextProvider _dlDisplayContextProvider;
+	private volatile IGDisplayContextProvider _igDisplayContextProvider;
 
 }

@@ -55,6 +55,6 @@ public class AssetTagPermissionUpdateHandler
 		_assetTagLocalService = assetTagLocalService;
 	}
 
-	private AssetTagLocalService _assetTagLocalService;
+	private volatile AssetTagLocalService _assetTagLocalService;
 
 }

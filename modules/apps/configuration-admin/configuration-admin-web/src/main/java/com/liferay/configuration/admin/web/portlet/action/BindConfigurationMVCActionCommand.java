@@ -219,9 +219,9 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 		BindConfigurationMVCActionCommand.class);
 
 	private BundleContext _bundleContext;
-	private ConfigurationAdmin _configurationAdmin;
-	private DDMFormValuesFactory _ddmFormValuesFactory;
-	private ExtendedMetaTypeService _extendedMetaTypeService;
-	private JSONFactory _jsonFactory;
+	private volatile ConfigurationAdmin _configurationAdmin;
+	private volatile DDMFormValuesFactory _ddmFormValuesFactory;
+	private volatile ExtendedMetaTypeService _extendedMetaTypeService;
+	private volatile JSONFactory _jsonFactory;
 
 }

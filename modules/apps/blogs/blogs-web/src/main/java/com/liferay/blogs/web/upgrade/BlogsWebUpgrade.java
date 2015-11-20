@@ -59,7 +59,7 @@ public class BlogsWebUpgrade implements UpgradeStepRegistrator {
 		_settingsFactory = settingsFactory;
 	}
 
-	private PortletPreferencesLocalService _portletPreferencesLocalService;
-	private SettingsFactory _settingsFactory;
+	private volatile PortletPreferencesLocalService _portletPreferencesLocalService;
+	private volatile SettingsFactory _settingsFactory;
 
 }

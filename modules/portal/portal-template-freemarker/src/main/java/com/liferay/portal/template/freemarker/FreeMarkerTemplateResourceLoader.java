@@ -103,7 +103,7 @@ public class FreeMarkerTemplateResourceLoader
 	private static volatile FreeMarkerEngineConfiguration
 		_freemarkerEngineConfiguration;
 
-	private MultiVMPool _multiVMPool;
-	private SingleVMPool _singleVMPool;
+	private volatile MultiVMPool _multiVMPool;
+	private volatile SingleVMPool _singleVMPool;
 
 }

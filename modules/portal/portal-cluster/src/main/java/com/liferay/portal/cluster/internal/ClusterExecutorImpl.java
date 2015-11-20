@@ -613,7 +613,7 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 		ClusterExecutorImpl.class);
 
 	private ClusterChannel _clusterChannel;
-	private ClusterChannelFactory _clusterChannelFactory;
+	private volatile ClusterChannelFactory _clusterChannelFactory;
 	private final CopyOnWriteArrayList<ClusterEventListener>
 		_clusterEventListeners = new CopyOnWriteArrayList<>();
 	private final Map<String, ClusterNodeStatus> _clusterNodeStatuses =
@@ -625,8 +625,8 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 		new ConcurrentReferenceValueHashMap<>(
 			FinalizeManager.WEAK_REFERENCE_FACTORY);
 	private ClusterNodeStatus _localClusterNodeStatus;
-	private PortalExecutorManager _portalExecutorManager;
-	private Props _props;
+	private volatile PortalExecutorManager _portalExecutorManager;
+	private volatile Props _props;
 	private ServiceRegistration<PortalInetSocketAddressEventListener>
 		_serviceRegistration;
 

@@ -100,6 +100,6 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalServiceUpgrade.class);
 
-	private SettingsFactory _settingsFactory;
+	private volatile SettingsFactory _settingsFactory;
 
 }

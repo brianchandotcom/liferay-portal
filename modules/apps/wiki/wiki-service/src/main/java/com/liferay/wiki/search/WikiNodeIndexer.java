@@ -193,6 +193,6 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiNodeIndexer.class);
 
-	private WikiNodeLocalService _wikiNodeLocalService;
+	private volatile WikiNodeLocalService _wikiNodeLocalService;
 
 }

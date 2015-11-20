@@ -464,6 +464,6 @@ public class DBStore extends BaseStore {
 
 	private static final Log _log = LogFactoryUtil.getLog(DBStore.class);
 
-	private DLContentLocalService _dlContentLocalService;
+	private volatile DLContentLocalService _dlContentLocalService;
 
 }

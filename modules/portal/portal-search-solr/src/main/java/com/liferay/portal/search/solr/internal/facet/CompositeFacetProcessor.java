@@ -86,7 +86,7 @@ public class CompositeFacetProcessor implements FacetProcessor<SolrQuery> {
 		_facetProcessors.remove(className);
 	}
 
-	private FacetProcessor<SolrQuery> _defaultFacetProcessor;
+	private volatile FacetProcessor<SolrQuery> _defaultFacetProcessor;
 	private final Map<String, FacetProcessor<SolrQuery>> _facetProcessors =
 		new HashMap<>();
 

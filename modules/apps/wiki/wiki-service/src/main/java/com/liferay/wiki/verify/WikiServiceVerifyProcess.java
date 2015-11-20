@@ -149,7 +149,7 @@ public class WikiServiceVerifyProcess extends VerifyProcess {
 
 	private final VerifyResourcePermissions _verifyResourcePermissions =
 		new VerifyResourcePermissions();
-	private WikiPageLocalService _wikiPageLocalService;
-	private WikiPageResourceLocalService _wikiPageResourceLocalService;
+	private volatile WikiPageLocalService _wikiPageLocalService;
+	private volatile WikiPageResourceLocalService _wikiPageResourceLocalService;
 
 }

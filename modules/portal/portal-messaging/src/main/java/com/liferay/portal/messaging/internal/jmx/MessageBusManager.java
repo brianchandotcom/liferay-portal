@@ -157,7 +157,7 @@ public class MessageBusManager
 	private BundleContext _bundleContext;
 	private final Map<String, ServiceRegistration<DynamicMBean>>
 		_mbeanServiceRegistrations = new ConcurrentHashMap<>();
-	private MessageBus _messageBus;
+	private volatile MessageBus _messageBus;
 	private final Set<Destination> _queuedDestinations =
 		new ConcurrentHashSet<>();
 

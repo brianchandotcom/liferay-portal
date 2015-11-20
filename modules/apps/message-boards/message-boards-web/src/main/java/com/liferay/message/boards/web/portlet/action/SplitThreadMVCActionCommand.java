@@ -167,8 +167,8 @@ public class SplitThreadMVCActionCommand extends BaseMVCActionCommand {
 		actionResponse.sendRedirect(portletURL.toString());
 	}
 
-	private MBMessageLocalService _mbMessageLocalService;
-	private MBMessageService _mbMessageService;
-	private MBThreadService _mbThreadService;
+	private volatile MBMessageLocalService _mbMessageLocalService;
+	private volatile MBMessageService _mbMessageService;
+	private volatile MBThreadService _mbThreadService;
 
 }

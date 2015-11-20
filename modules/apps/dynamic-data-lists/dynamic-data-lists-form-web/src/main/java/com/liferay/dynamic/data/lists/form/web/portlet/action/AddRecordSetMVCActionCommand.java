@@ -187,9 +187,9 @@ public class AddRecordSetMVCActionCommand
 		_ddmStructureService = ddmStructureService;
 	}
 
-	private DDLRecordSetService _ddlRecordSetService;
-	private DDMFormJSONDeserializer _ddmFormJSONDeserializer;
-	private DDMFormLayoutJSONDeserializer _ddmFormLayoutJSONDeserializer;
-	private DDMStructureService _ddmStructureService;
+	private volatile DDLRecordSetService _ddlRecordSetService;
+	private volatile DDMFormJSONDeserializer _ddmFormJSONDeserializer;
+	private volatile DDMFormLayoutJSONDeserializer _ddmFormLayoutJSONDeserializer;
+	private volatile DDMStructureService _ddmStructureService;
 
 }

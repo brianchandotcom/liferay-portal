@@ -126,9 +126,9 @@ public class AddDefaultDDLStructuresAction extends SimpleAction {
 		_userLocalService = userLocalService;
 	}
 
-	private CompanyLocalService _companyLocalService;
-	private DefaultDDMStructureHelper _defaultDDMStructureHelper;
-	private GroupLocalService _groupLocalService;
-	private UserLocalService _userLocalService;
+	private volatile CompanyLocalService _companyLocalService;
+	private volatile DefaultDDMStructureHelper _defaultDDMStructureHelper;
+	private volatile GroupLocalService _groupLocalService;
+	private volatile UserLocalService _userLocalService;
 
 }

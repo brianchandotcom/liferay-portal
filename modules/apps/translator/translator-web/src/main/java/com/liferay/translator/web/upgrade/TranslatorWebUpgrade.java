@@ -67,6 +67,6 @@ public class TranslatorWebUpgrade {
 			false);
 	}
 
-	private ReleaseLocalService _releaseLocalService;
+	private volatile ReleaseLocalService _releaseLocalService;
 
 }

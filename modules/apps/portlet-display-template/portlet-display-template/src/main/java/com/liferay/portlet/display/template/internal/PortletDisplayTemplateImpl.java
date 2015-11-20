@@ -526,8 +526,8 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletDisplayTemplateImpl.class);
 
-	private DDMTemplateLocalService _ddmTemplateLocalService;
-	private GroupLocalService _groupLocalService;
+	private volatile DDMTemplateLocalService _ddmTemplateLocalService;
+	private volatile GroupLocalService _groupLocalService;
 
 	private static class TransformerHolder {
 

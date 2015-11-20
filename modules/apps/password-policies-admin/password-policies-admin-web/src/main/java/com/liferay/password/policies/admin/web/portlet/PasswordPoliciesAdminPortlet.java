@@ -252,8 +252,8 @@ public class PasswordPoliciesAdminPortlet extends MVCPortlet {
 		_userService = userService;
 	}
 
-	private OrganizationService _organizationService;
-	private PasswordPolicyService _passwordPolicyService;
-	private UserService _userService;
+	private volatile OrganizationService _organizationService;
+	private volatile PasswordPolicyService _passwordPolicyService;
+	private volatile UserService _userService;
 
 }

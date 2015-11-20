@@ -153,6 +153,6 @@ public class LayoutPrototypePortletDataHandler extends BasePortletDataHandler {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
+	private volatile LayoutPrototypeLocalService _layoutPrototypeLocalService;
 
 }

@@ -177,7 +177,7 @@ public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 	}
 
-	private DDMStructureLocalService _ddmStructureLocalService;
-	private DDMTemplateLocalService _ddmTemplateLocalService;
+	private volatile DDMStructureLocalService _ddmStructureLocalService;
+	private volatile DDMTemplateLocalService _ddmTemplateLocalService;
 
 }

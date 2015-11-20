@@ -277,7 +277,7 @@ public class SAPPortlet extends MVCPortlet {
 		_sapEntryService = sapEntryService;
 	}
 
-	private JSONWebServiceActionsManager _jsonWebServiceActionsManager;
-	private SAPEntryService _sapEntryService;
+	private volatile JSONWebServiceActionsManager _jsonWebServiceActionsManager;
+	private volatile SAPEntryService _sapEntryService;
 
 }

@@ -151,9 +151,9 @@ public class DDLXMLExporter extends BaseDDLExporter {
 		_storageEngine = storageEngine;
 	}
 
-	private DDLRecordLocalService _ddlRecordLocalService;
-	private DDLRecordSetService _ddlRecordSetService;
-	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
-	private StorageEngine _storageEngine;
+	private volatile DDLRecordLocalService _ddlRecordLocalService;
+	private volatile DDLRecordSetService _ddlRecordSetService;
+	private volatile DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
+	private volatile StorageEngine _storageEngine;
 
 }

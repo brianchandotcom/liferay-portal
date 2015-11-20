@@ -113,6 +113,6 @@ public class SitesPanelCategory extends BaseJSPPanelCategory {
 		_panelCategoryRegistry = null;
 	}
 
-	private PanelCategoryRegistry _panelCategoryRegistry;
+	private volatile PanelCategoryRegistry _panelCategoryRegistry;
 
 }

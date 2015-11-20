@@ -304,13 +304,13 @@ public class JournalArticleAssetRendererFactory
 		_journalConverter = journalConverter;
 	}
 
-	private DDMStructureLocalService _ddmStructureLocalService;
-	private JournalArticleLocalService _journalArticleLocalService;
-	private JournalArticleResourceLocalService
+	private volatile DDMStructureLocalService _ddmStructureLocalService;
+	private volatile JournalArticleLocalService _journalArticleLocalService;
+	private volatile JournalArticleResourceLocalService
 		_journalArticleResourceLocalService;
-	private JournalArticleService _journalArticleService;
-	private JournalContent _journalContent;
-	private JournalConverter _journalConverter;
-	private ServletContext _servletContext;
+	private volatile JournalArticleService _journalArticleService;
+	private volatile JournalContent _journalContent;
+	private volatile JournalConverter _journalConverter;
+	private volatile ServletContext _servletContext;
 
 }

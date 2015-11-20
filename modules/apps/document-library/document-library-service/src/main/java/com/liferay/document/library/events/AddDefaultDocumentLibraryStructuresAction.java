@@ -442,14 +442,14 @@ public class AddDefaultDocumentLibraryStructuresAction extends SimpleAction {
 		_userLocalService = userLocalService;
 	}
 
-	private CompanyLocalService _companyLocalService;
-	private DDM _ddm;
-	private DDMBeanTranslator _ddmBeanTranslator;
-	private DDMFormXSDDeserializer _ddmFormXSDDeserializer;
-	private DDMStructureLocalService _ddmStructureLocalService;
-	private DefaultDDMStructureHelper _defaultDDMStructureHelper;
-	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
-	private GroupLocalService _groupLocalService;
-	private UserLocalService _userLocalService;
+	private volatile CompanyLocalService _companyLocalService;
+	private volatile DDM _ddm;
+	private volatile DDMBeanTranslator _ddmBeanTranslator;
+	private volatile DDMFormXSDDeserializer _ddmFormXSDDeserializer;
+	private volatile DDMStructureLocalService _ddmStructureLocalService;
+	private volatile DefaultDDMStructureHelper _defaultDDMStructureHelper;
+	private volatile DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+	private volatile GroupLocalService _groupLocalService;
+	private volatile UserLocalService _userLocalService;
 
 }

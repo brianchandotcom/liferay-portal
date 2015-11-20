@@ -236,11 +236,11 @@ public class ReleaseManager {
 
 	private static Logger _logger;
 
-	private OutputStreamContainerFactoryTracker
+	private volatile OutputStreamContainerFactoryTracker
 		_outputStreamContainerFactoryTracker;
-	private ReleaseLocalService _releaseLocalService;
+	private volatile ReleaseLocalService _releaseLocalService;
 	private ReleaseManagerConfiguration _releaseManagerConfiguration;
-	private ReleasePublisher _releasePublisher;
+	private volatile ReleasePublisher _releasePublisher;
 	private ServiceTrackerMap<String, List<UpgradeInfo>> _serviceTrackerMap;
 
 	private class UpgradeInfoServiceTrackerMapListener

@@ -370,12 +370,12 @@ public class SummaryPortlet extends MVCPortlet {
 		WallEntryLocalService wallEntryLocalService) {
 	}
 
-	private ExpandoValueLocalService _expandoValueLocalService;
-	private GroupLocalService _groupLocalService;
-	private OrganizationLocalService _organizationLocalService;
-	private RoleLocalService _roleLocalService;
-	private SocialRelationLocalService _socialRelationLocalService;
-	private SocialRequestLocalService _socialRequestLocalService;
-	private UserLocalService _userLocalService;
+	private volatile ExpandoValueLocalService _expandoValueLocalService;
+	private volatile GroupLocalService _groupLocalService;
+	private volatile OrganizationLocalService _organizationLocalService;
+	private volatile RoleLocalService _roleLocalService;
+	private volatile SocialRelationLocalService _socialRelationLocalService;
+	private volatile SocialRequestLocalService _socialRequestLocalService;
+	private volatile UserLocalService _userLocalService;
 
 }

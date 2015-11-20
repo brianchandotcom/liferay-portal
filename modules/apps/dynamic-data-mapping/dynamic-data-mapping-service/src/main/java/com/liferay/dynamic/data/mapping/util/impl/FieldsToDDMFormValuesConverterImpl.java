@@ -304,6 +304,6 @@ public class FieldsToDDMFormValuesConverterImpl
 		}
 	}
 
-	private DDM _ddm;
+	private volatile DDM _ddm;
 
 }

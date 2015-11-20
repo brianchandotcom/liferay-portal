@@ -95,6 +95,6 @@ public class BookmarksAdminConfigurationAction
 		}
 	}
 
-	private BookmarksFolderLocalService _bookmarksFolderLocalService;
+	private volatile BookmarksFolderLocalService _bookmarksFolderLocalService;
 
 }

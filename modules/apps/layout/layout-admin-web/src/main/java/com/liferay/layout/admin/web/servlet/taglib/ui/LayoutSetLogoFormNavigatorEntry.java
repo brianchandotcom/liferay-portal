@@ -85,6 +85,6 @@ public class LayoutSetLogoFormNavigatorEntry
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutSetLogoFormNavigatorEntry.class);
 
-	private CompanyLocalService _companyLocalService;
+	private volatile CompanyLocalService _companyLocalService;
 
 }

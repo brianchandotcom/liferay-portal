@@ -712,12 +712,12 @@ public class JournalRSSUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(JournalRSSUtil.class);
 
-	private DLAppLocalService _dlAppLocalService;
-	private ImageLocalService _imageLocalService;
-	private JournalArticleLocalService _journalArticleLocalService;
-	private JournalContent _journalContent;
-	private JournalContentSearchLocalService _journalContentSearchLocalService;
-	private JournalFeedLocalService _journalFeedLocalService;
-	private LayoutLocalService _layoutLocalService;
+	private volatile DLAppLocalService _dlAppLocalService;
+	private volatile ImageLocalService _imageLocalService;
+	private volatile JournalArticleLocalService _journalArticleLocalService;
+	private volatile JournalContent _journalContent;
+	private volatile JournalContentSearchLocalService _journalContentSearchLocalService;
+	private volatile JournalFeedLocalService _journalFeedLocalService;
+	private volatile LayoutLocalService _layoutLocalService;
 
 }

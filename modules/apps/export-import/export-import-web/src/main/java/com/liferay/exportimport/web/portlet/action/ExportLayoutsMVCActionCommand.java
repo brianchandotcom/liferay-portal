@@ -179,9 +179,9 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExportLayoutsMVCActionCommand.class);
 
-	private ExportImportConfigurationLocalService
+	private volatile ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
-	private ExportImportService _exportImportService;
-	private LayoutLocalService _layoutLocalService;
+	private volatile ExportImportService _exportImportService;
+	private volatile LayoutLocalService _layoutLocalService;
 
 }

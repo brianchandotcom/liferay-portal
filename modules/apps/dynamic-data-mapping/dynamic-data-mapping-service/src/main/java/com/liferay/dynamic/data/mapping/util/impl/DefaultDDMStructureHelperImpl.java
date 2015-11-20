@@ -284,12 +284,12 @@ public class DefaultDDMStructureHelperImpl
 		_ddmXML = ddmXML;
 	}
 
-	private DDM _ddm;
-	private DDMFormJSONDeserializer _ddmFormJSONDeserializer;
-	private DDMFormLayoutJSONDeserializer _ddmFormLayoutJSONDeserializer;
-	private DDMFormXSDDeserializer _ddmFormXSDDeserializer;
-	private DDMStructureLocalService _ddmStructureLocalService;
-	private DDMTemplateLocalService _ddmTemplateLocalService;
-	private DDMXML _ddmXML;
+	private volatile DDM _ddm;
+	private volatile DDMFormJSONDeserializer _ddmFormJSONDeserializer;
+	private volatile DDMFormLayoutJSONDeserializer _ddmFormLayoutJSONDeserializer;
+	private volatile DDMFormXSDDeserializer _ddmFormXSDDeserializer;
+	private volatile DDMStructureLocalService _ddmStructureLocalService;
+	private volatile DDMTemplateLocalService _ddmTemplateLocalService;
+	private volatile DDMXML _ddmXML;
 
 }

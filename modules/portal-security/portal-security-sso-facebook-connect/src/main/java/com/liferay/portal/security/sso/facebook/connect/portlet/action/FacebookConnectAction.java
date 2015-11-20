@@ -400,8 +400,8 @@ public class FacebookConnectAction extends BaseStrutsAction {
 			userGroupRoles, userGroupIds, serviceContext);
 	}
 
-	private FacebookConnect _facebookConnect;
+	private volatile FacebookConnect _facebookConnect;
 	private final Map<String, String> _forwards = new HashMap<>();
-	private UserLocalService _userLocalService;
+	private volatile UserLocalService _userLocalService;
 
 }

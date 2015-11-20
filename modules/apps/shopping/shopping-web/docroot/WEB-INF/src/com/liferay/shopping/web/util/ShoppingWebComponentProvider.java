@@ -64,7 +64,7 @@ public class ShoppingWebComponentProvider {
 
 	private static ShoppingWebComponentProvider _shoppingWebComponentProvider;
 
-	private ShoppingGroupServiceConfiguration
+	private volatile ShoppingGroupServiceConfiguration
 		_shoppingGroupServiceConfiguration;
 
 }

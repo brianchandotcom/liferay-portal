@@ -518,8 +518,8 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 
 	private static final boolean _AUTO_SCREEN_NAME = false;
 
-	private LayoutLocalService _layoutLocalService;
-	private UserLocalService _userLocalService;
-	private UserService _userService;
+	private volatile LayoutLocalService _layoutLocalService;
+	private volatile UserLocalService _userLocalService;
+	private volatile UserService _userService;
 
 }

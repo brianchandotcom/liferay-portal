@@ -129,7 +129,7 @@ public class SolrUpdateDocumentCommandImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		SolrUpdateDocumentCommandImpl.class);
 
-	private SolrClientManager _solrClientManager;
-	private SolrDocumentFactory _solrDocumentFactory;
+	private volatile SolrClientManager _solrClientManager;
+	private volatile SolrDocumentFactory _solrDocumentFactory;
 
 }

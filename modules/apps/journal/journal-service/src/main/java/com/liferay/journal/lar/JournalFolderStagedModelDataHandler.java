@@ -303,7 +303,7 @@ public class JournalFolderStagedModelDataHandler
 		_journalFolderLocalService = journalFolderLocalService;
 	}
 
-	private DDMStructureLocalService _ddmStructureLocalService;
-	private JournalFolderLocalService _journalFolderLocalService;
+	private volatile DDMStructureLocalService _ddmStructureLocalService;
+	private volatile JournalFolderLocalService _journalFolderLocalService;
 
 }

@@ -127,7 +127,7 @@ public class BookmarksServiceVerifyProcess extends VerifyProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BookmarksServiceVerifyProcess.class);
 
-	private BookmarksEntryLocalService _bookmarksEntryLocalService;
-	private BookmarksFolderLocalService _bookmarksFolderLocalService;
+	private volatile BookmarksEntryLocalService _bookmarksEntryLocalService;
+	private volatile BookmarksFolderLocalService _bookmarksFolderLocalService;
 
 }

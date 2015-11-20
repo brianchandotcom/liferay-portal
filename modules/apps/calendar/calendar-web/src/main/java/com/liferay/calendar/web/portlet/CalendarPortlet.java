@@ -1252,14 +1252,14 @@ public class CalendarPortlet extends MVCPortlet {
 		_userLocalService = userLocalService;
 	}
 
-	private CalendarBookingLocalService _calendarBookingLocalService;
-	private CalendarBookingService _calendarBookingService;
-	private CalendarLocalService _calendarLocalService;
-	private CalendarNotificationTemplateService
+	private volatile CalendarBookingLocalService _calendarBookingLocalService;
+	private volatile CalendarBookingService _calendarBookingService;
+	private volatile CalendarLocalService _calendarLocalService;
+	private volatile CalendarNotificationTemplateService
 		_calendarNotificationTemplateService;
-	private CalendarResourceService _calendarResourceService;
-	private CalendarService _calendarService;
-	private GroupLocalService _groupLocalService;
-	private UserLocalService _userLocalService;
+	private volatile CalendarResourceService _calendarResourceService;
+	private volatile CalendarService _calendarService;
+	private volatile GroupLocalService _groupLocalService;
+	private volatile UserLocalService _userLocalService;
 
 }

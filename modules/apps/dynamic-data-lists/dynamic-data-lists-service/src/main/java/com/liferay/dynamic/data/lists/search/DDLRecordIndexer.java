@@ -395,10 +395,10 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDLRecordIndexer.class);
 
-	private DDLRecordLocalService _ddlRecordLocalService;
-	private DDLRecordSetLocalService _ddlRecordSetLocalService;
-	private DDLRecordVersionLocalService _ddlRecordVersionLocalService;
-	private DDMIndexer _ddmIndexer;
-	private StorageEngine _storageEngine;
+	private volatile DDLRecordLocalService _ddlRecordLocalService;
+	private volatile DDLRecordSetLocalService _ddlRecordSetLocalService;
+	private volatile DDLRecordVersionLocalService _ddlRecordVersionLocalService;
+	private volatile DDMIndexer _ddmIndexer;
+	private volatile StorageEngine _storageEngine;
 
 }

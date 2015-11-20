@@ -109,7 +109,7 @@ public class FindPageAction extends FindStrutsAction {
 		_wikiPageResourceLocalService = wikiPageResourceLocalService;
 	}
 
-	private WikiNodeLocalService _wikiNodeLocalService;
-	private WikiPageResourceLocalService _wikiPageResourceLocalService;
+	private volatile WikiNodeLocalService _wikiNodeLocalService;
+	private volatile WikiPageResourceLocalService _wikiPageResourceLocalService;
 
 }

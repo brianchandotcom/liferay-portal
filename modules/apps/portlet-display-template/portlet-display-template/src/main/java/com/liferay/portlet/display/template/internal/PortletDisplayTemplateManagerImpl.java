@@ -96,7 +96,7 @@ public class PortletDisplayTemplateManagerImpl
 		_portletDisplayTemplate = portletDisplayTemplate;
 	}
 
-	private DDMTemplateManager _ddmTemplateManager;
-	private PortletDisplayTemplate _portletDisplayTemplate;
+	private volatile DDMTemplateManager _ddmTemplateManager;
+	private volatile PortletDisplayTemplate _portletDisplayTemplate;
 
 }

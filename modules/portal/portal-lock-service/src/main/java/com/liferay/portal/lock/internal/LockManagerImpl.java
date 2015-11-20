@@ -245,6 +245,6 @@ public class LockManagerImpl implements LockManager {
 		return portalException;
 	}
 
-	private LockLocalService _lockLocalService;
+	private volatile LockLocalService _lockLocalService;
 
 }

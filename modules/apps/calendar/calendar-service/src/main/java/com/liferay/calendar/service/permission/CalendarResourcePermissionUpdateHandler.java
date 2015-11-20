@@ -56,6 +56,6 @@ public class CalendarResourcePermissionUpdateHandler
 		_calendarResourceLocalService = calendarResourceLocalService;
 	}
 
-	private CalendarResourceLocalService _calendarResourceLocalService;
+	private volatile CalendarResourceLocalService _calendarResourceLocalService;
 
 }

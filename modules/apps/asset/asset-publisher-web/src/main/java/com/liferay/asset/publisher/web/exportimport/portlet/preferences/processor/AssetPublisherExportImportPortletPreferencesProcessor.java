@@ -814,19 +814,19 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetPublisherExportImportPortletPreferencesProcessor.class);
 
-	private AssetCategoryLocalService _assetCategoryLocalService;
-	private AssetPublisherPortletDisplayTemplateExportCapability
+	private volatile AssetCategoryLocalService _assetCategoryLocalService;
+	private volatile AssetPublisherPortletDisplayTemplateExportCapability
 		_assetPublisherPortletDisplayTemplateExportCapability;
-	private AssetPublisherPortletDisplayTemplateImportCapability
+	private volatile AssetPublisherPortletDisplayTemplateImportCapability
 		_assetPublisherPortletDisplayTemplateImportCapability;
-	private AssetVocabularyLocalService _assetVocabularyLocalService;
-	private CompanyLocalService _companyLocalService;
-	private DDMStructureLocalService _ddmStructureLocalService;
-	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
-	private LayoutLocalService _layoutLocalService;
-	private OrganizationLocalService _organizationLocalService;
-	private PortletLocalService _portletLocalService;
-	private ReferencedStagedModelImporterCapability
+	private volatile AssetVocabularyLocalService _assetVocabularyLocalService;
+	private volatile CompanyLocalService _companyLocalService;
+	private volatile DDMStructureLocalService _ddmStructureLocalService;
+	private volatile DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+	private volatile LayoutLocalService _layoutLocalService;
+	private volatile OrganizationLocalService _organizationLocalService;
+	private volatile PortletLocalService _portletLocalService;
+	private volatile ReferencedStagedModelImporterCapability
 		_referencedStagedModelImporterCapability;
 
 }

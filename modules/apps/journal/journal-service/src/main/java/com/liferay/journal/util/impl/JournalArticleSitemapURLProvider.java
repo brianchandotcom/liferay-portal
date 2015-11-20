@@ -136,7 +136,7 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 		_layoutSetLocalService = layoutSetLocalService;
 	}
 
-	private JournalArticleService _journalArticleService;
-	private LayoutSetLocalService _layoutSetLocalService;
+	private volatile JournalArticleService _journalArticleService;
+	private volatile LayoutSetLocalService _layoutSetLocalService;
 
 }

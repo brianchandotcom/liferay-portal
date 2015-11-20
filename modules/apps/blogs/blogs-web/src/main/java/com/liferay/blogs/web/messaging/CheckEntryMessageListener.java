@@ -102,7 +102,7 @@ public class CheckEntryMessageListener
 	}
 
 	private volatile BlogsConfiguration _blogsConfiguration;
-	private BlogsEntryLocalService _blogsEntryLocalService;
-	private SchedulerEngineHelper _schedulerEngineHelper;
+	private volatile BlogsEntryLocalService _blogsEntryLocalService;
+	private volatile SchedulerEngineHelper _schedulerEngineHelper;
 
 }

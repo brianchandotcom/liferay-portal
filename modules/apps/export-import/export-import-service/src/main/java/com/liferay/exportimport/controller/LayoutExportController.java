@@ -847,20 +847,20 @@ public class LayoutExportController implements ExportController {
 
 	private final DeletionSystemEventExporter _deletionSystemEventExporter =
 		DeletionSystemEventExporter.getInstance();
-	private ExportImportLifecycleManager _exportImportLifecycleManager;
-	private GroupLocalService _groupLocalService;
-	private ImageLocalService _imageLocalService;
-	private LayoutLocalService _layoutLocalService;
-	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
-	private LayoutRevisionLocalService _layoutRevisionLocalService;
-	private LayoutSetBranchLocalService _layoutSetBranchLocalService;
-	private LayoutSetLocalService _layoutSetLocalService;
-	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
+	private volatile ExportImportLifecycleManager _exportImportLifecycleManager;
+	private volatile GroupLocalService _groupLocalService;
+	private volatile ImageLocalService _imageLocalService;
+	private volatile LayoutLocalService _layoutLocalService;
+	private volatile LayoutPrototypeLocalService _layoutPrototypeLocalService;
+	private volatile LayoutRevisionLocalService _layoutRevisionLocalService;
+	private volatile LayoutSetBranchLocalService _layoutSetBranchLocalService;
+	private volatile LayoutSetLocalService _layoutSetLocalService;
+	private volatile LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
 	private final PermissionExporter _permissionExporter =
 		PermissionExporter.getInstance();
-	private PortletExportController _portletExportController;
+	private volatile PortletExportController _portletExportController;
 	private final ThemeExporter _themeExporter = ThemeExporter.getInstance();
-	private UserLocalService _userLocalService;
+	private volatile UserLocalService _userLocalService;
 
 	private class UpdateLayoutSetLastPublishDateCallable
 		implements Callable<Void> {

@@ -285,8 +285,8 @@ public class EditNodeMVCActionCommand extends BaseMVCActionCommand {
 		wikiPortletInstanceOverriddenConfiguration.store();
 	}
 
-	private TrashEntryService _trashEntryService;
-	private WikiNodeLocalService _wikiNodeLocalService;
-	private WikiNodeService _wikiNodeService;
+	private volatile TrashEntryService _trashEntryService;
+	private volatile WikiNodeLocalService _wikiNodeLocalService;
+	private volatile WikiNodeService _wikiNodeService;
 
 }

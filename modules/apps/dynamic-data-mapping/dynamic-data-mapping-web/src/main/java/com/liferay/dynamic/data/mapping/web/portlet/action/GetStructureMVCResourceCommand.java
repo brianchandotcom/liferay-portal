@@ -75,6 +75,6 @@ public class GetStructureMVCResourceCommand extends BaseMVCResourceCommand {
 		_ddmStructureService = ddmStructureService;
 	}
 
-	private DDMStructureService _ddmStructureService;
+	private volatile DDMStructureService _ddmStructureService;
 
 }

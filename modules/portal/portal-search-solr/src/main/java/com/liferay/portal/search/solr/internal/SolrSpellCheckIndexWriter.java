@@ -174,7 +174,7 @@ public class SolrSpellCheckIndexWriter
 	private static final Log _log = LogFactoryUtil.getLog(
 		SolrSpellCheckIndexWriter.class);
 
-	private SolrClientManager _solrClientManager;
-	private SolrUpdateDocumentCommand _solrUpdateDocumentCommand;
+	private volatile SolrClientManager _solrClientManager;
+	private volatile SolrUpdateDocumentCommand _solrUpdateDocumentCommand;
 
 }

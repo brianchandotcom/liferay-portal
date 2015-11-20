@@ -55,6 +55,6 @@ public class DeleteRecordMVCActionCommand extends BaseMVCActionCommand {
 		_ddlRecordService = ddlRecordService;
 	}
 
-	private DDLRecordService _ddlRecordService;
+	private volatile DDLRecordService _ddlRecordService;
 
 }

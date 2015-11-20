@@ -117,6 +117,6 @@ public class DeleteThreadMVCActionCommand extends BaseMVCActionCommand {
 		_mbThreadService = mbThreadService;
 	}
 
-	private MBThreadService _mbThreadService;
+	private volatile MBThreadService _mbThreadService;
 
 }

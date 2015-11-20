@@ -152,6 +152,6 @@ public class RememberMeAutoLogin extends BaseAutoLogin {
 	private static final Log _log = LogFactoryUtil.getLog(
 		RememberMeAutoLogin.class);
 
-	private UserLocalService _userLocalService;
+	private volatile UserLocalService _userLocalService;
 
 }

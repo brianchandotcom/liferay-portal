@@ -158,8 +158,8 @@ public class WikiPageAssetRendererFactory
 		_wikiPageResourceLocalService = wikiPageResourceLocalService;
 	}
 
-	private ServletContext _servletContext;
-	private WikiPageLocalService _wikiPageLocalService;
-	private WikiPageResourceLocalService _wikiPageResourceLocalService;
+	private volatile ServletContext _servletContext;
+	private volatile WikiPageLocalService _wikiPageLocalService;
+	private volatile WikiPageResourceLocalService _wikiPageResourceLocalService;
 
 }

@@ -364,7 +364,7 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ElasticsearchSearchEngine.class);
 
-	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
-	private IndexFactory _indexFactory;
+	private volatile ElasticsearchConnectionManager _elasticsearchConnectionManager;
+	private volatile IndexFactory _indexFactory;
 
 }

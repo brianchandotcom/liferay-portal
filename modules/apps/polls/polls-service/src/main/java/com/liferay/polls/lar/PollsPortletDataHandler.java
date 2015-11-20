@@ -232,8 +232,8 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 		_pollsVoteLocalService = pollsVoteLocalService;
 	}
 
-	private PollsChoiceLocalService _pollsChoiceLocalService;
-	private PollsQuestionLocalService _pollsQuestionLocalService;
-	private PollsVoteLocalService _pollsVoteLocalService;
+	private volatile PollsChoiceLocalService _pollsChoiceLocalService;
+	private volatile PollsQuestionLocalService _pollsQuestionLocalService;
+	private volatile PollsVoteLocalService _pollsVoteLocalService;
 
 }

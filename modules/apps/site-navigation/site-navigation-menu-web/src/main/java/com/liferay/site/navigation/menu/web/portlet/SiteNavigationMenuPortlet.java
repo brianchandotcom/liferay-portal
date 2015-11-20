@@ -103,7 +103,7 @@ public class SiteNavigationMenuPortlet extends MVCPortlet {
 		_portletDisplayTemplate = portletDisplayTemplate;
 	}
 
-	private PortletDisplayTemplate _portletDisplayTemplate;
+	private volatile PortletDisplayTemplate _portletDisplayTemplate;
 	private volatile SiteNavigationMenuWebConfiguration
 		_siteNavigationMenuWebConfiguration;
 

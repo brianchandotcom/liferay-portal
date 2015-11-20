@@ -151,6 +151,6 @@ public class AssetTagsPortletDataHandler extends BasePortletDataHandler {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	private AssetTagLocalService _assetTagLocalService;
+	private volatile AssetTagLocalService _assetTagLocalService;
 
 }

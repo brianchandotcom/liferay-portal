@@ -66,6 +66,6 @@ public class JournalCacheExportImportLifecycleListener
 		_journalContent = journalContent;
 	}
 
-	private JournalContent _journalContent;
+	private volatile JournalContent _journalContent;
 
 }

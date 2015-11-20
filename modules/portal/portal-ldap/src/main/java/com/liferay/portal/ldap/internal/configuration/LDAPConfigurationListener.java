@@ -133,7 +133,7 @@ public class LDAPConfigurationListener implements ConfigurationListener {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LDAPConfigurationListener.class);
 
-	private ConfigurationAdmin _configurationAdmin;
+	private volatile ConfigurationAdmin _configurationAdmin;
 	private final Map<String, ConfigurationProvider<?>>
 		_configurationProviders = new HashMap<>();
 

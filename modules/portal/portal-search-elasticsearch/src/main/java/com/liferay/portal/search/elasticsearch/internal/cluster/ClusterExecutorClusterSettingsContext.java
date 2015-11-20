@@ -69,6 +69,6 @@ public class ClusterExecutorClusterSettingsContext
 		_clusterExecutor = clusterExecutor;
 	}
 
-	private ClusterExecutor _clusterExecutor;
+	private volatile ClusterExecutor _clusterExecutor;
 
 }

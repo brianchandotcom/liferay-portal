@@ -747,7 +747,7 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 	private static final String _TEMP_FOLDER_NAME =
 		EditPageAttachmentsMVCActionCommand.class.getName();
 
-	private TrashEntryService _trashEntryService;
-	private WikiPageService _wikiPageService;
+	private volatile TrashEntryService _trashEntryService;
+	private volatile WikiPageService _wikiPageService;
 
 }

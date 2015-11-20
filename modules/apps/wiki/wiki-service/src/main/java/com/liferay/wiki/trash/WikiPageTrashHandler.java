@@ -475,8 +475,8 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 		_wikiPageService = wikiPageService;
 	}
 
-	private WikiPageLocalService _wikiPageLocalService;
-	private WikiPageResourceLocalService _wikiPageResourceLocalService;
-	private WikiPageService _wikiPageService;
+	private volatile WikiPageLocalService _wikiPageLocalService;
+	private volatile WikiPageResourceLocalService _wikiPageResourceLocalService;
+	private volatile WikiPageService _wikiPageService;
 
 }

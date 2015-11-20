@@ -56,6 +56,6 @@ public class BookmarksEntryPermissionUpdateHandler
 		_bookmarksEntryLocalService = bookmarksEntryLocalService;
 	}
 
-	private BookmarksEntryLocalService _bookmarksEntryLocalService;
+	private volatile BookmarksEntryLocalService _bookmarksEntryLocalService;
 
 }

@@ -1509,24 +1509,24 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LDAPUserImporterImpl.class);
 
-	private AttributesTransformer _attributesTransformer;
+	private volatile AttributesTransformer _attributesTransformer;
 	private boolean _authPipelineEnableLiferayCheck;
-	private CompanyLocalService _companyLocalService;
+	private volatile CompanyLocalService _companyLocalService;
 	private String _companySecurityAuthType;
-	private ExpandoValueLocalService _expandoValueLocalService;
-	private GroupLocalService _groupLocalService;
+	private volatile ExpandoValueLocalService _expandoValueLocalService;
+	private volatile GroupLocalService _groupLocalService;
 	private long _lastImportTime;
-	private ConfigurationProvider<LDAPImportConfiguration>
+	private volatile ConfigurationProvider<LDAPImportConfiguration>
 		_ldapImportConfigurationProvider;
-	private ConfigurationProvider<LDAPServerConfiguration>
+	private volatile ConfigurationProvider<LDAPServerConfiguration>
 		_ldapServerConfigurationProvider;
-	private LDAPSettings _ldapSettings;
-	private LDAPToPortalConverter _ldapToPortalConverter;
-	private LockManager _lockManager;
+	private volatile LDAPSettings _ldapSettings;
+	private volatile LDAPToPortalConverter _ldapToPortalConverter;
+	private volatile LockManager _lockManager;
 	private PortalCache<String, Long> _portalCache;
-	private PortalLDAP _portalLDAP;
-	private RoleLocalService _roleLocalService;
-	private UserGroupLocalService _userGroupLocalService;
-	private UserLocalService _userLocalService;
+	private volatile PortalLDAP _portalLDAP;
+	private volatile RoleLocalService _roleLocalService;
+	private volatile UserGroupLocalService _userGroupLocalService;
+	private volatile UserLocalService _userLocalService;
 
 }

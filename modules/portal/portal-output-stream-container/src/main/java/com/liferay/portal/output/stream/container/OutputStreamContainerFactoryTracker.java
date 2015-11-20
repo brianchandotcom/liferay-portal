@@ -86,6 +86,6 @@ public class OutputStreamContainerFactoryTracker {
 
 	private ServiceTrackerMap<String, OutputStreamContainerFactory>
 		_outputStreamContainerFactories;
-	private OutputStreamContainerFactory _outputStreamContainerFactory;
+	private volatile OutputStreamContainerFactory _outputStreamContainerFactory;
 
 }

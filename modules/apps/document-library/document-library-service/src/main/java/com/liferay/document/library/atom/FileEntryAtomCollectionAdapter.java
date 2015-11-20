@@ -324,6 +324,6 @@ public class FileEntryAtomCollectionAdapter
 
 	protected static final String COLLECTION_NAME = "files";
 
-	private DLAppService _dlAppService;
+	private volatile DLAppService _dlAppService;
 
 }

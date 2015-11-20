@@ -70,7 +70,7 @@ public class DeleteRecordSetMVCActionCommand
 		_ddmStructureService = ddmStructureService;
 	}
 
-	private DDLRecordSetService _ddlRecordSetService;
-	private DDMStructureService _ddmStructureService;
+	private volatile DDLRecordSetService _ddlRecordSetService;
+	private volatile DDMStructureService _ddmStructureService;
 
 }

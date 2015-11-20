@@ -88,6 +88,6 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		_jsonFactory = jsonFactory;
 	}
 
-	private JSONFactory _jsonFactory;
+	private volatile JSONFactory _jsonFactory;
 
 }

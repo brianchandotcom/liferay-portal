@@ -191,7 +191,7 @@ public class AssetTagsAdminPortlet extends MVCPortlet {
 		_assetTagService = assetTagService;
 	}
 
-	private AssetTagLocalService _assetTagLocalService;
-	private AssetTagService _assetTagService;
+	private volatile AssetTagLocalService _assetTagLocalService;
+	private volatile AssetTagService _assetTagService;
 
 }

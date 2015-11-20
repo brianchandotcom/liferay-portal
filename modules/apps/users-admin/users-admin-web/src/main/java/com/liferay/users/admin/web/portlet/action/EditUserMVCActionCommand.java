@@ -784,11 +784,11 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		return new Object[] {user, oldScreenName, updateLanguageId};
 	}
 
-	private AnnouncementsDeliveryLocalService
+	private volatile AnnouncementsDeliveryLocalService
 		_announcementsDeliveryLocalService;
-	private DLAppLocalService _dlAppLocalService;
-	private ListTypeLocalService _listTypeLocalService;
-	private UserLocalService _userLocalService;
-	private UserService _userService;
+	private volatile DLAppLocalService _dlAppLocalService;
+	private volatile ListTypeLocalService _listTypeLocalService;
+	private volatile UserLocalService _userLocalService;
+	private volatile UserService _userService;
 
 }

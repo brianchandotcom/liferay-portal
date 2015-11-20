@@ -123,6 +123,6 @@ public class BookmarksFolderStagedModelDataHandler
 		_stagedModelRepository = stagedModelRepository;
 	}
 
-	private StagedModelRepository<BookmarksFolder> _stagedModelRepository;
+	private volatile StagedModelRepository<BookmarksFolder> _stagedModelRepository;
 
 }

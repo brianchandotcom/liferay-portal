@@ -93,6 +93,6 @@ public class UnicastSettingsContributor extends BaseSettingsContributor {
 		return hosts;
 	}
 
-	private ClusterSettingsContext _clusterSettingsContext;
+	private volatile ClusterSettingsContext _clusterSettingsContext;
 
 }

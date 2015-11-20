@@ -152,8 +152,8 @@ public class WallActivityInterpreter extends BaseSocialActivityInterpreter {
 
 	private static final String[] _CLASS_NAMES = {WallEntry.class.getName()};
 
-	private SocialRelationLocalService _socialRelationLocalService;
-	private UserLocalService _userLocalService;
-	private WallEntryLocalService _wallEntryLocalService;
+	private volatile SocialRelationLocalService _socialRelationLocalService;
+	private volatile UserLocalService _userLocalService;
+	private volatile WallEntryLocalService _wallEntryLocalService;
 
 }

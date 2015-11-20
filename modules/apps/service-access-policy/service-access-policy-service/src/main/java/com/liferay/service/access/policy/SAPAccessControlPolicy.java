@@ -335,6 +335,6 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 	}
 
 	private volatile ConfigurationFactory _configurationFactory;
-	private SAPEntryLocalService _sapEntryLocalService;
+	private volatile SAPEntryLocalService _sapEntryLocalService;
 
 }

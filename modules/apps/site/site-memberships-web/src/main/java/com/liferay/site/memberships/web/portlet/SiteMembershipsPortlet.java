@@ -374,12 +374,12 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 		_userService = userService;
 	}
 
-	private MembershipRequestService _membershipRequestService;
-	private OrganizationService _organizationService;
-	private UserGroupGroupRoleService _userGroupGroupRoleService;
-	private UserGroupRoleService _userGroupRoleService;
-	private UserGroupService _userGroupService;
-	private UserLocalService _userLocalService;
-	private UserService _userService;
+	private volatile MembershipRequestService _membershipRequestService;
+	private volatile OrganizationService _organizationService;
+	private volatile UserGroupGroupRoleService _userGroupGroupRoleService;
+	private volatile UserGroupRoleService _userGroupRoleService;
+	private volatile UserGroupService _userGroupService;
+	private volatile UserLocalService _userLocalService;
+	private volatile UserService _userService;
 
 }

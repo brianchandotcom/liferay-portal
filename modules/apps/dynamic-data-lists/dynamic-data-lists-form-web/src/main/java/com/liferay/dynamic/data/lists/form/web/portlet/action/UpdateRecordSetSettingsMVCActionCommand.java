@@ -111,8 +111,8 @@ public class UpdateRecordSetSettingsMVCActionCommand
 			workflowDefinition);
 	}
 
-	private DDLRecordSetService _ddlRecordSetService;
-	private WorkflowDefinitionLinkLocalService
+	private volatile DDLRecordSetService _ddlRecordSetService;
+	private volatile WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService;
 
 }

@@ -162,6 +162,6 @@ public class PollsVoteStagedModelDataHandler
 		_pollsVoteLocalService = pollsVoteLocalService;
 	}
 
-	private PollsVoteLocalService _pollsVoteLocalService;
+	private volatile PollsVoteLocalService _pollsVoteLocalService;
 
 }

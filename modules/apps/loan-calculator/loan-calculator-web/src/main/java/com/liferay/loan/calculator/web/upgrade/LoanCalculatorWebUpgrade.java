@@ -68,6 +68,6 @@ public class LoanCalculatorWebUpgrade {
 			false);
 	}
 
-	private ReleaseLocalService _releaseLocalService;
+	private volatile ReleaseLocalService _releaseLocalService;
 
 }

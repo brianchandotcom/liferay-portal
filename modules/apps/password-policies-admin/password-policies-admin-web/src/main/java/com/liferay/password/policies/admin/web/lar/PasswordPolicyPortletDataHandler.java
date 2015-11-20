@@ -182,6 +182,6 @@ public class PasswordPolicyPortletDataHandler extends BasePortletDataHandler {
 	protected static final String RESOURCE_NAME =
 		"com.liferay.portlet.passwordpoliciesadmin";
 
-	private PasswordPolicyLocalService _passwordPolicyLocalService;
+	private volatile PasswordPolicyLocalService _passwordPolicyLocalService;
 
 }

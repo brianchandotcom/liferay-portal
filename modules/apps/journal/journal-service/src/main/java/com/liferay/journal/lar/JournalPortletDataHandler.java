@@ -567,11 +567,11 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	private DDMStructureLocalService _ddmStructureLocalService;
-	private DDMTemplateLocalService _ddmTemplateLocalService;
-	private JournalArticleLocalService _journalArticleLocalService;
-	private JournalContent _journalContent;
-	private JournalFeedLocalService _journalFeedLocalService;
-	private JournalFolderLocalService _journalFolderLocalService;
+	private volatile DDMStructureLocalService _ddmStructureLocalService;
+	private volatile DDMTemplateLocalService _ddmTemplateLocalService;
+	private volatile JournalArticleLocalService _journalArticleLocalService;
+	private volatile JournalContent _journalContent;
+	private volatile JournalFeedLocalService _journalFeedLocalService;
+	private volatile JournalFolderLocalService _journalFolderLocalService;
 
 }

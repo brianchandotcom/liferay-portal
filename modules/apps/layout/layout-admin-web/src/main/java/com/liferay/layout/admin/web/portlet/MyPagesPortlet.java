@@ -213,6 +213,6 @@ public class MyPagesPortlet extends LayoutAdminPortlet {
 		this.themeLocalService = themeLocalService;
 	}
 
-	private RoleLocalService _roleLocalService;
+	private volatile RoleLocalService _roleLocalService;
 
 }

@@ -697,20 +697,20 @@ public class LDAPAuth implements Authenticator {
 			new AutoResetThreadLocal<Map<String, LDAPAuthResult>>(
 				LDAPAuth.class + "._failedLDAPAuthResultCache",
 				new HashMap<String, LDAPAuthResult>());
-	private ConfigurationProvider<LDAPAuthConfiguration>
+	private volatile ConfigurationProvider<LDAPAuthConfiguration>
 		_ldapAuthConfigurationProvider;
-	private ConfigurationProvider<LDAPImportConfiguration>
+	private volatile ConfigurationProvider<LDAPImportConfiguration>
 		_ldapImportConfigurationProvider;
-	private ConfigurationProvider<LDAPServerConfiguration>
+	private volatile ConfigurationProvider<LDAPServerConfiguration>
 		_ldapServerConfigurationProvider;
-	private LDAPSettings _ldapSettings;
-	private LDAPUserImporter _ldapUserImporter;
-	private Omniadmin _omniadmin;
-	private PasswordEncryptor _passwordEncryptor;
-	private PortalLDAP _portalLDAP;
-	private Props _props;
-	private ConfigurationProvider<SystemLDAPConfiguration>
+	private volatile LDAPSettings _ldapSettings;
+	private volatile LDAPUserImporter _ldapUserImporter;
+	private volatile Omniadmin _omniadmin;
+	private volatile PasswordEncryptor _passwordEncryptor;
+	private volatile PortalLDAP _portalLDAP;
+	private volatile Props _props;
+	private volatile ConfigurationProvider<SystemLDAPConfiguration>
 		_systemLDAPConfigurationProvider;
-	private UserLocalService _userLocalService;
+	private volatile UserLocalService _userLocalService;
 
 }

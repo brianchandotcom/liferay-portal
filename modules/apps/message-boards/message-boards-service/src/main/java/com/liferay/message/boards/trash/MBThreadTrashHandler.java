@@ -317,8 +317,8 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 		_trashRendererFactory = trashRendererFactory;
 	}
 
-	private MBCategoryLocalService _mbCategoryLocalService;
-	private MBThreadLocalService _mbThreadLocalService;
-	private TrashRendererFactory _trashRendererFactory;
+	private volatile MBCategoryLocalService _mbCategoryLocalService;
+	private volatile MBThreadLocalService _mbThreadLocalService;
+	private volatile TrashRendererFactory _trashRendererFactory;
 
 }

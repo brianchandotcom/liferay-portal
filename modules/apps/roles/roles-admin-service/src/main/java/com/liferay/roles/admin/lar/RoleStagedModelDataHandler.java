@@ -406,14 +406,14 @@ public class RoleStagedModelDataHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		RoleStagedModelDataHandler.class);
 
-	private GroupLocalService _groupLocalService;
+	private volatile GroupLocalService _groupLocalService;
 	private final PermissionConversionFilter _permissionConversionFilter =
 		new ImportExportPermissionConversionFilter();
-	private ResourceBlockLocalService _resourceBlockLocalService;
-	private ResourcePermissionLocalService _resourcePermissionLocalService;
-	private ResourcePermissionService _resourcePermissionService;
-	private ResourceTypePermissionLocalService
+	private volatile ResourceBlockLocalService _resourceBlockLocalService;
+	private volatile ResourcePermissionLocalService _resourcePermissionLocalService;
+	private volatile ResourcePermissionService _resourcePermissionService;
+	private volatile ResourceTypePermissionLocalService
 		_resourceTypePermissionLocalService;
-	private RoleLocalService _roleLocalService;
+	private volatile RoleLocalService _roleLocalService;
 
 }

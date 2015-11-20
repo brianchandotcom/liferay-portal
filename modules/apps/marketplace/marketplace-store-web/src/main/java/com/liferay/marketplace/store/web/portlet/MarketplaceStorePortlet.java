@@ -407,7 +407,7 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 		super.setOAuthManager(oAuthManager);
 	}
 
-	private AppLocalService _appLocalService;
-	private AppService _appService;
+	private volatile AppLocalService _appLocalService;
+	private volatile AppService _appService;
 
 }

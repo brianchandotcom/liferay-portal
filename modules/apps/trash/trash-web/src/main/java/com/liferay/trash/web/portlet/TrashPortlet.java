@@ -274,6 +274,6 @@ public class TrashPortlet extends MVCPortlet {
 		_trashEntryService = trashEntryService;
 	}
 
-	private TrashEntryService _trashEntryService;
+	private volatile TrashEntryService _trashEntryService;
 
 }

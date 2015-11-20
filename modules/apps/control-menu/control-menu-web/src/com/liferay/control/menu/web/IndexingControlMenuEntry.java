@@ -86,6 +86,6 @@ public class IndexingControlMenuEntry
 		_backgroundTaskManager = backgroundTaskManager;
 	}
 
-	private BackgroundTaskManager _backgroundTaskManager;
+	private volatile BackgroundTaskManager _backgroundTaskManager;
 
 }

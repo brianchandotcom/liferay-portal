@@ -100,7 +100,7 @@ public class CheckJournalContentSearchAction extends SimpleAction {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CheckJournalContentSearchAction.class);
 
-	private CompanyLocalService _companyLocalService;
-	private JournalContentSearchLocalService _journalContentSearchLocalService;
+	private volatile CompanyLocalService _companyLocalService;
+	private volatile JournalContentSearchLocalService _journalContentSearchLocalService;
 
 }

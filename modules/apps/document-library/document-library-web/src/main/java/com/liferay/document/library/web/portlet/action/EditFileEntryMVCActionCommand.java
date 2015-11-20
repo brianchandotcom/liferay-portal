@@ -1050,7 +1050,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private DLAppService _dlAppService;
-	private TrashEntryService _trashEntryService;
+	private volatile DLAppService _dlAppService;
+	private volatile TrashEntryService _trashEntryService;
 
 }

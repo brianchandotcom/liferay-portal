@@ -210,8 +210,8 @@ public class SiteTeamsPortlet extends MVCPortlet {
 		_userService = userService;
 	}
 
-	private TeamService _teamService;
-	private UserGroupService _userGroupService;
-	private UserService _userService;
+	private volatile TeamService _teamService;
+	private volatile UserGroupService _userGroupService;
+	private volatile UserService _userService;
 
 }

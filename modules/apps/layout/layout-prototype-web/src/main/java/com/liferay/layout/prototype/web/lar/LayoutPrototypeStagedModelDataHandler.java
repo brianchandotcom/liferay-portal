@@ -248,8 +248,8 @@ public class LayoutPrototypeStagedModelDataHandler
 		_layoutPrototypeLocalService = layoutPrototypeLocalService;
 	}
 
-	private GroupLocalService _groupLocalService;
-	private LayoutLocalService _layoutLocalService;
-	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
+	private volatile GroupLocalService _groupLocalService;
+	private volatile LayoutLocalService _layoutLocalService;
+	private volatile LayoutPrototypeLocalService _layoutPrototypeLocalService;
 
 }

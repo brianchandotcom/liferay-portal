@@ -160,6 +160,6 @@ public class RepositoryEntryStagedModelDataHandler
 		_repositoryEntryLocalService = repositoryEntryLocalService;
 	}
 
-	private RepositoryEntryLocalService _repositoryEntryLocalService;
+	private volatile RepositoryEntryLocalService _repositoryEntryLocalService;
 
 }

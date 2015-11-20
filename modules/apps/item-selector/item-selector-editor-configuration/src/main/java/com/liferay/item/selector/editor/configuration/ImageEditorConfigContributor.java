@@ -79,6 +79,6 @@ public class ImageEditorConfigContributor extends BaseEditorConfigContributor {
 		return _itemSelector;
 	}
 
-	private ItemSelector _itemSelector;
+	private volatile ItemSelector _itemSelector;
 
 }

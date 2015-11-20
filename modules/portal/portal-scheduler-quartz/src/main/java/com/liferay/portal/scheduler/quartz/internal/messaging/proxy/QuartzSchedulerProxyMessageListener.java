@@ -51,7 +51,7 @@ public class QuartzSchedulerProxyMessageListener extends ProxyMessageListener {
 		_schedulerEngine = schedulerEngine;
 	}
 
-	private MessageBus _messageBus;
-	private SchedulerEngine _schedulerEngine;
+	private volatile MessageBus _messageBus;
+	private volatile SchedulerEngine _schedulerEngine;
 
 }

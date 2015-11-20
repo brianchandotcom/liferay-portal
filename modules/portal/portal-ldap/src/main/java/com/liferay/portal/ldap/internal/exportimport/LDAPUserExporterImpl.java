@@ -449,12 +449,12 @@ public class LDAPUserExporterImpl implements UserExporter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LDAPUserExporterImpl.class);
 
-	private ConfigurationProvider<LDAPAuthConfiguration>
+	private volatile ConfigurationProvider<LDAPAuthConfiguration>
 		_ldapAuthConfigurationProvider;
-	private LDAPSettings _ldapSettings;
-	private PortalLDAP _portalLDAP;
-	private PortalToLDAPConverter _portalToLDAPConverter;
-	private UserGroupLocalService _userGroupLocalService;
-	private UserLocalService _userLocalService;
+	private volatile LDAPSettings _ldapSettings;
+	private volatile PortalLDAP _portalLDAP;
+	private volatile PortalToLDAPConverter _portalToLDAPConverter;
+	private volatile UserGroupLocalService _userGroupLocalService;
+	private volatile UserLocalService _userLocalService;
 
 }

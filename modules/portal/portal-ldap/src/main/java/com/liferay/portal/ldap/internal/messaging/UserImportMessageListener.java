@@ -127,10 +127,10 @@ public class UserImportMessageListener
 	protected void setTriggerFactory(TriggerFactory triggerFactory) {
 	}
 
-	private CompanyLocalService _companyLocalService;
-	private ConfigurationProvider<LDAPImportConfiguration>
+	private volatile CompanyLocalService _companyLocalService;
+	private volatile ConfigurationProvider<LDAPImportConfiguration>
 		_ldapImportConfigurationProvider;
-	private LDAPUserImporter _ldapUserImporter;
-	private SchedulerEngineHelper _schedulerEngineHelper;
+	private volatile LDAPUserImporter _ldapUserImporter;
+	private volatile SchedulerEngineHelper _schedulerEngineHelper;
 
 }

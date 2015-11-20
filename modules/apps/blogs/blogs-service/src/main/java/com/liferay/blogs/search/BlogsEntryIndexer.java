@@ -216,6 +216,6 @@ public class BlogsEntryIndexer extends BaseIndexer<BlogsEntry> {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BlogsEntryIndexer.class);
 
-	private BlogsEntryLocalService _blogsEntryLocalService;
+	private volatile BlogsEntryLocalService _blogsEntryLocalService;
 
 }

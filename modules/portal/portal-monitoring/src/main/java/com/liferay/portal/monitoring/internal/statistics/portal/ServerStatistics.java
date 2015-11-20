@@ -169,7 +169,7 @@ public class ServerStatistics
 		_companyLocalService = companyLocalService;
 	}
 
-	private CompanyLocalService _companyLocalService;
+	private volatile CompanyLocalService _companyLocalService;
 	private final Map<Long, CompanyStatistics> _companyStatisticsByCompanyId =
 		new TreeMap<>();
 	private final Map<String, CompanyStatistics> _companyStatisticsByWebId =

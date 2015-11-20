@@ -194,6 +194,6 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 
 	private InetAddress _bindInetAddress;
 	private NetworkInterface _bindNetworkInterface;
-	private Props _props;
+	private volatile Props _props;
 
 }

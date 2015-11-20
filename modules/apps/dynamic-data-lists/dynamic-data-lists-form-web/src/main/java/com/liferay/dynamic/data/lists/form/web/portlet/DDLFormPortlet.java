@@ -319,7 +319,7 @@ public class DDLFormPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(DDLFormPortlet.class);
 
-	private DDLRecordSetService _ddlRecordSetService;
-	private DDMFormRenderer _ddmFormRenderer;
+	private volatile DDLRecordSetService _ddlRecordSetService;
+	private volatile DDMFormRenderer _ddmFormRenderer;
 
 }

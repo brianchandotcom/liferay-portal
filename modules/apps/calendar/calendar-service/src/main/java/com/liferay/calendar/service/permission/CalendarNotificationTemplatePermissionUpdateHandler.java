@@ -61,7 +61,7 @@ public class CalendarNotificationTemplatePermissionUpdateHandler
 			calendarNotificationTemplateLocalService;
 	}
 
-	private CalendarNotificationTemplateLocalService
+	private volatile CalendarNotificationTemplateLocalService
 		_calendarNotificationTemplateLocalService;
 
 }

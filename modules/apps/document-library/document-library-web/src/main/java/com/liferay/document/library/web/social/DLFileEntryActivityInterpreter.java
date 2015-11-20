@@ -179,6 +179,6 @@ public class DLFileEntryActivityInterpreter
 
 	private static final String[] _CLASS_NAMES = {DLFileEntry.class.getName()};
 
-	private DLAppLocalService _dlAppLocalService;
+	private volatile DLAppLocalService _dlAppLocalService;
 
 }

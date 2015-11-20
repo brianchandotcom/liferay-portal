@@ -190,7 +190,7 @@ public class PasswordPolicyStagedModelDataHandler
 		_passwordPolicyLocalService = passwordPolicyLocalService;
 	}
 
-	private GroupLocalService _groupLocalService;
-	private PasswordPolicyLocalService _passwordPolicyLocalService;
+	private volatile GroupLocalService _groupLocalService;
+	private volatile PasswordPolicyLocalService _passwordPolicyLocalService;
 
 }

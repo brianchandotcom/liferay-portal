@@ -101,8 +101,8 @@ public class SyncPolicies {
 		_userLocalService = userLocalService;
 	}
 
-	private CompanyLocalService _companyLocalService;
-	private SAPEntryLocalService _sapEntryLocalService;
-	private UserLocalService _userLocalService;
+	private volatile CompanyLocalService _companyLocalService;
+	private volatile SAPEntryLocalService _sapEntryLocalService;
+	private volatile UserLocalService _userLocalService;
 
 }

@@ -149,10 +149,10 @@ public class ElasticsearchCluster {
 
 	}
 
-	private ClusterExecutor _clusterExecutor;
-	private ClusterMasterExecutor _clusterMasterExecutor;
-	private CompanyLocalService _companyLocalService;
-	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
+	private volatile ClusterExecutor _clusterExecutor;
+	private volatile ClusterMasterExecutor _clusterMasterExecutor;
+	private volatile CompanyLocalService _companyLocalService;
+	private volatile ElasticsearchConnectionManager _elasticsearchConnectionManager;
 	private ReplicasClusterListener _replicasClusterListener;
 
 }

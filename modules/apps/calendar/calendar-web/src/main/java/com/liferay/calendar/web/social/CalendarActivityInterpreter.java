@@ -138,6 +138,6 @@ public class CalendarActivityInterpreter extends BaseSocialActivityInterpreter {
 	private static final String[] _CLASS_NAMES =
 		{CalendarBooking.class.getName()};
 
-	private CalendarBookingLocalService _calendarBookingLocalService;
+	private volatile CalendarBookingLocalService _calendarBookingLocalService;
 
 }

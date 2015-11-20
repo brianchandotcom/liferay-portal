@@ -138,7 +138,7 @@ public class EmailAddressStagedModelDataHandler
 		_groupLocalService = groupLocalService;
 	}
 
-	private EmailAddressLocalService _emailAddressLocalService;
-	private GroupLocalService _groupLocalService;
+	private volatile EmailAddressLocalService _emailAddressLocalService;
+	private volatile GroupLocalService _groupLocalService;
 
 }

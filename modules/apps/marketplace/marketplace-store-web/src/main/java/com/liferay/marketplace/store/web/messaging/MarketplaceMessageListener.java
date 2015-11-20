@@ -117,7 +117,7 @@ public class MarketplaceMessageListener extends BaseMessageListener {
 		_moduleLocalService = moduleLocalService;
 	}
 
-	private AppLocalService _appLocalService;
-	private ModuleLocalService _moduleLocalService;
+	private volatile AppLocalService _appLocalService;
+	private volatile ModuleLocalService _moduleLocalService;
 
 }

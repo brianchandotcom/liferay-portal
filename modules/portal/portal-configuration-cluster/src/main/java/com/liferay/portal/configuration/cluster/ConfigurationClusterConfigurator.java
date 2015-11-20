@@ -68,7 +68,7 @@ public class ConfigurationClusterConfigurator {
 		_destinationFactory = destinationFactory;
 	}
 
-	private DestinationFactory _destinationFactory;
+	private volatile DestinationFactory _destinationFactory;
 	private ServiceRegistration<Destination> _serviceRegistration;
 
 }

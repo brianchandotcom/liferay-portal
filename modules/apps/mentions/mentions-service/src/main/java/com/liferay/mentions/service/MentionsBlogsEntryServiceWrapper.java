@@ -122,8 +122,8 @@ public class MentionsBlogsEntryServiceWrapper
 		_mentionsNotifier = mentionsNotifier;
 	}
 
-	private BlogsEntryLocalService _blogsEntryLocalService;
+	private volatile BlogsEntryLocalService _blogsEntryLocalService;
 	private volatile ConfigurationFactory _configurationFactory;
-	private MentionsNotifier _mentionsNotifier;
+	private volatile MentionsNotifier _mentionsNotifier;
 
 }

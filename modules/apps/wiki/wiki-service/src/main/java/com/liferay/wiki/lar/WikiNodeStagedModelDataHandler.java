@@ -217,6 +217,6 @@ public class WikiNodeStagedModelDataHandler
 		_wikiNodeLocalService = wikiNodeLocalService;
 	}
 
-	private WikiNodeLocalService _wikiNodeLocalService;
+	private volatile WikiNodeLocalService _wikiNodeLocalService;
 
 }

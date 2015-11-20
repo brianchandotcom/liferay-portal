@@ -48,6 +48,6 @@ public class GroupModelListener extends BaseModelListener<Group> {
 		_wallEntryLocalService = wallEntryLocalService;
 	}
 
-	private WallEntryLocalService _wallEntryLocalService;
+	private volatile WallEntryLocalService _wallEntryLocalService;
 
 }

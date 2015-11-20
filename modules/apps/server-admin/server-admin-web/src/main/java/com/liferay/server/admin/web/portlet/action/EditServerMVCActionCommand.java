@@ -941,7 +941,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditServerMVCActionCommand.class);
 
-	private MailService _mailService;
-	private ServiceComponentLocalService _serviceComponentLocalService;
+	private volatile MailService _mailService;
+	private volatile ServiceComponentLocalService _serviceComponentLocalService;
 
 }

@@ -248,12 +248,12 @@ public class AssetCategoriesNavigationPortletPreferencesProcessor
 		return portletPreferences;
 	}
 
-	private AssetVocabularyLocalService _assetVocabularyLocalService;
-	private CompanyLocalService _companyLocalService;
-	private PortletDisplayTemplateExportCapability
+	private volatile AssetVocabularyLocalService _assetVocabularyLocalService;
+	private volatile CompanyLocalService _companyLocalService;
+	private volatile PortletDisplayTemplateExportCapability
 		_portletDisplayTemplateExportCapability;
-	private PortletDisplayTemplateImportCapability
+	private volatile PortletDisplayTemplateImportCapability
 		_portletDisplayTemplateImportCapability;
-	private PortletLocalService _portletLocalService;
+	private volatile PortletLocalService _portletLocalService;
 
 }

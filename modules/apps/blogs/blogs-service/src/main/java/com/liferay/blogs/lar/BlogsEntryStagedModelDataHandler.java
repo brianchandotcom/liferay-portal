@@ -431,9 +431,9 @@ public class BlogsEntryStagedModelDataHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		BlogsEntryStagedModelDataHandler.class);
 
-	private BlogsEntryExportImportContentProcessor
+	private volatile BlogsEntryExportImportContentProcessor
 		_blogsEntryExportImportContentProcessor;
-	private BlogsEntryLocalService _blogsEntryLocalService;
-	private ImageLocalService _imageLocalService;
+	private volatile BlogsEntryLocalService _blogsEntryLocalService;
+	private volatile ImageLocalService _imageLocalService;
 
 }

@@ -141,8 +141,8 @@ public class EditOrganizationAssignmentsMVCActionCommand
 		_userService.unsetOrganizationUsers(organizationId, removeUserIds);
 	}
 
-	private OrganizationLocalService _organizationLocalService;
-	private UserGroupService _userGroupService;
-	private UserService _userService;
+	private volatile OrganizationLocalService _organizationLocalService;
+	private volatile UserGroupService _userGroupService;
+	private volatile UserService _userService;
 
 }

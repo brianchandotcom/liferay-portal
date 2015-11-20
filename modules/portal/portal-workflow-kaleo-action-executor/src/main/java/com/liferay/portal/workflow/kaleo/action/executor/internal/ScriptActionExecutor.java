@@ -97,6 +97,6 @@ public class ScriptActionExecutor implements ActionExecutor {
 	}
 
 	private final Set<String> _outputObjects = new HashSet<>();
-	private Scripting _scripting;
+	private volatile Scripting _scripting;
 
 }

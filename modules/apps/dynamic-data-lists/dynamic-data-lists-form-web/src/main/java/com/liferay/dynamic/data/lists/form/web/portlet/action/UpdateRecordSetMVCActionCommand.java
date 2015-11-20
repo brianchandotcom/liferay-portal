@@ -178,9 +178,9 @@ public class UpdateRecordSetMVCActionCommand
 			DDLRecordSetConstants.MIN_DISPLAY_ROWS_DEFAULT, serviceContext);
 	}
 
-	private DDLRecordSetService _ddlRecordSetService;
-	private DDMFormJSONDeserializer _ddmFormJSONDeserializer;
-	private DDMFormLayoutJSONDeserializer _ddmFormLayoutJSONDeserializer;
-	private DDMStructureService _ddmStructureService;
+	private volatile DDLRecordSetService _ddlRecordSetService;
+	private volatile DDMFormJSONDeserializer _ddmFormJSONDeserializer;
+	private volatile DDMFormLayoutJSONDeserializer _ddmFormLayoutJSONDeserializer;
+	private volatile DDMStructureService _ddmStructureService;
 
 }

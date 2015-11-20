@@ -1240,10 +1240,10 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLWebDAVStorageImpl.class);
 
-	private AssetCategoryLocalService _assetCategoryLocalService;
-	private AssetEntryLocalService _assetEntryLocalService;
-	private AssetLinkLocalService _assetLinkLocalService;
-	private AssetTagLocalService _assetTagLocalService;
-	private DLAppService _dlAppService;
+	private volatile AssetCategoryLocalService _assetCategoryLocalService;
+	private volatile AssetEntryLocalService _assetEntryLocalService;
+	private volatile AssetLinkLocalService _assetLinkLocalService;
+	private volatile AssetTagLocalService _assetTagLocalService;
+	private volatile DLAppService _dlAppService;
 
 }

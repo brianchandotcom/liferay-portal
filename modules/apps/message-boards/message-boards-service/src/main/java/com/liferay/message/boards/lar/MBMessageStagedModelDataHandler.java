@@ -537,9 +537,9 @@ public class MBMessageStagedModelDataHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBMessageStagedModelDataHandler.class);
 
-	private MBDiscussionLocalService _mbDiscussionLocalService;
-	private MBMessageLocalService _mbMessageLocalService;
-	private MBThreadLocalService _mbThreadLocalService;
-	private RatingsEntryLocalService _ratingsEntryLocalService;
+	private volatile MBDiscussionLocalService _mbDiscussionLocalService;
+	private volatile MBMessageLocalService _mbMessageLocalService;
+	private volatile MBThreadLocalService _mbThreadLocalService;
+	private volatile RatingsEntryLocalService _ratingsEntryLocalService;
 
 }

@@ -137,6 +137,6 @@ public class SearchResultManagerImpl implements SearchResultManager {
 
 			});
 
-	private SummaryFactory _summaryFactory;
+	private volatile SummaryFactory _summaryFactory;
 
 }

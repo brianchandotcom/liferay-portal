@@ -75,6 +75,6 @@ public class SiteNavigationBreadcrumbPortlet extends MVCPortlet {
 		_portletDisplayTemplate = portletDisplayTemplate;
 	}
 
-	private PortletDisplayTemplate _portletDisplayTemplate;
+	private volatile PortletDisplayTemplate _portletDisplayTemplate;
 
 }

@@ -90,6 +90,6 @@ public class CalendarBookingTrashHandler extends BaseTrashHandler {
 		_calendarBookingLocalService = calendarBookingLocalService;
 	}
 
-	private CalendarBookingLocalService _calendarBookingLocalService;
+	private volatile CalendarBookingLocalService _calendarBookingLocalService;
 
 }

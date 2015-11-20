@@ -292,6 +292,6 @@ public class SyncAuthVerifier implements AuthVerifier {
 	private static JsonTokenParser _jsonTokenParser;
 	private static Signer _signer;
 
-	private UserLocalService _userLocalService;
+	private volatile UserLocalService _userLocalService;
 
 }

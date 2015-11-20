@@ -261,6 +261,6 @@ public class ServerSummaryStatistics implements SummaryStatistics {
 		_serverStatistics = serverStatistics;
 	}
 
-	private ServerStatistics _serverStatistics;
+	private volatile ServerStatistics _serverStatistics;
 
 }

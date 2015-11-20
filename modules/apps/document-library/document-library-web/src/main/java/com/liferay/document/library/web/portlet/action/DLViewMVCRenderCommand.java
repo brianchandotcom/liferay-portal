@@ -63,6 +63,6 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 		_dlPortletToolbarContributor = dlPortletToolbarContributor;
 	}
 
-	private DLPortletToolbarContributor _dlPortletToolbarContributor;
+	private volatile DLPortletToolbarContributor _dlPortletToolbarContributor;
 
 }

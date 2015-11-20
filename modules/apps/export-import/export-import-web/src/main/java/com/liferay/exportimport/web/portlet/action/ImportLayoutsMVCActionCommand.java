@@ -444,10 +444,10 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ImportLayoutsMVCActionCommand.class);
 
-	private DLFileEntryLocalService _dlFileEntryLocalService;
-	private ExportImportConfigurationLocalService
+	private volatile DLFileEntryLocalService _dlFileEntryLocalService;
+	private volatile ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
-	private ExportImportService _exportImportService;
-	private LayoutService _layoutService;
+	private volatile ExportImportService _exportImportService;
+	private volatile LayoutService _layoutService;
 
 }

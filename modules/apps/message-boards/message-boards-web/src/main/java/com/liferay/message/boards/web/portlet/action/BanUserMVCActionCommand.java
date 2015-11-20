@@ -91,6 +91,6 @@ public class BanUserMVCActionCommand extends BaseMVCActionCommand {
 		_mbBanService.deleteBan(banUserId, serviceContext);
 	}
 
-	private MBBanService _mbBanService;
+	private volatile MBBanService _mbBanService;
 
 }

@@ -187,7 +187,7 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 		"(?:\\s|^|\\]|>)(@([^(?:@|>|\\[|\\s|,|.|<)]+))",
 		Pattern.CASE_INSENSITIVE);
 
-	private MentionsUserFinder _mentionsUserFinder;
-	private UserLocalService _userLocalService;
+	private volatile MentionsUserFinder _mentionsUserFinder;
+	private volatile UserLocalService _userLocalService;
 
 }

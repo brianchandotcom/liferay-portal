@@ -118,9 +118,9 @@ public class MBMessageSocialActivityManager
 		_socialActivityLocalService = socialActivityLocalService;
 	}
 
-	private ClassNameLocalService _classNameLocalService;
-	private MBDiscussionLocalService _mbDiscussionLocalService;
-	private MBMessageLocalService _mbMessageLocalService;
-	private SocialActivityLocalService _socialActivityLocalService;
+	private volatile ClassNameLocalService _classNameLocalService;
+	private volatile MBDiscussionLocalService _mbDiscussionLocalService;
+	private volatile MBMessageLocalService _mbMessageLocalService;
+	private volatile SocialActivityLocalService _socialActivityLocalService;
 
 }

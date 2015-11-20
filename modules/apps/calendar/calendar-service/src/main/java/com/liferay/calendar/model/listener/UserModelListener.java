@@ -66,6 +66,6 @@ public class UserModelListener extends BaseModelListener<User> {
 		_calendarResourceLocalService = calendarResourceLocalService;
 	}
 
-	private CalendarResourceLocalService _calendarResourceLocalService;
+	private volatile CalendarResourceLocalService _calendarResourceLocalService;
 
 }

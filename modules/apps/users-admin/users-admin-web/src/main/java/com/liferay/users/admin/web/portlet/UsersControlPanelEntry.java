@@ -109,7 +109,7 @@ public class UsersControlPanelEntry extends BaseControlPanelEntry {
 		_userGroupRoleLocalService = userGroupRoleLocalService;
 	}
 
-	private OrganizationLocalService _organizationLocalService;
-	private UserGroupRoleLocalService _userGroupRoleLocalService;
+	private volatile OrganizationLocalService _organizationLocalService;
+	private volatile UserGroupRoleLocalService _userGroupRoleLocalService;
 
 }

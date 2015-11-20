@@ -336,14 +336,14 @@ public class ClusterLinkImpl implements ClusterLink {
 		ClusterLinkImpl.class);
 
 	private int _channelCount;
-	private ClusterChannelFactory _clusterChannelFactory;
+	private volatile ClusterChannelFactory _clusterChannelFactory;
 	private List<ClusterChannel> _clusterChannels;
 	private List<ClusterReceiver> _clusterReceivers;
 	private boolean _enabled;
 	private ExecutorService _executorService;
 	private List<Address> _localAddresses;
-	private MessageBus _messageBus;
-	private PortalExecutorManager _portalExecutorManager;
-	private Props _props;
+	private volatile MessageBus _messageBus;
+	private volatile PortalExecutorManager _portalExecutorManager;
+	private volatile Props _props;
 
 }

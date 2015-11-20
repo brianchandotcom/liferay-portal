@@ -65,6 +65,6 @@ public class JournalServiceComponentProvider {
 	private static JournalServiceComponentProvider
 		_journalServiceComponentProvider;
 
-	private JournalGroupServiceConfiguration _journalGroupServiceConfiguration;
+	private volatile JournalGroupServiceConfiguration _journalGroupServiceConfiguration;
 
 }

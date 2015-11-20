@@ -290,10 +290,10 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		_jsonFactory = jsonFactory;
 	}
 
-	private DDM _ddm;
-	private DDMFormEvaluator _ddmFormEvaluator;
-	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
-	private JSONFactory _jsonFactory;
+	private volatile DDM _ddm;
+	private volatile DDMFormEvaluator _ddmFormEvaluator;
+	private volatile DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+	private volatile JSONFactory _jsonFactory;
 	private TemplateResource _templateResource;
 
 }

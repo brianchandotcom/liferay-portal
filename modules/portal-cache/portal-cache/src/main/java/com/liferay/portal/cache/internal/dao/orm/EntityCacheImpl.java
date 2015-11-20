@@ -439,10 +439,10 @@ public class EntityCacheImpl
 
 	private ThreadLocal<LRUMap> _localCache;
 	private boolean _localCacheAvailable;
-	private MultiVMPool _multiVMPool;
+	private volatile MultiVMPool _multiVMPool;
 	private final ConcurrentMap<String, PortalCache<Serializable, Serializable>>
 		_portalCaches = new ConcurrentHashMap<>();
-	private Props _props;
+	private volatile Props _props;
 	private boolean _valueObjectEntityBlockingCacheEnabled;
 	private boolean _valueObjectEntityCacheEnabled;
 	private boolean _valueObjectMVCCEntityCacheEnabled;

@@ -372,7 +372,7 @@ public class LDAPServerConfigurationProviderImpl
 		_configurationAdmin = configurationAdmin;
 	}
 
-	private ConfigurationAdmin _configurationAdmin;
+	private volatile ConfigurationAdmin _configurationAdmin;
 	private final Map<Long, Map<Long, Configuration>>
 		_configurations = new ConcurrentHashMap<>();
 

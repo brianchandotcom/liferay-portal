@@ -320,8 +320,8 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 		new ConcurrentHashMap<>();
 	private final ConcurrentMap<Class<?>, ConfigurationBeanManagedService>
 		_configurationBeanManagedServices = new ConcurrentHashMap<>();
-	private GroupLocalService _groupLocalService;
-	private PortalPreferencesLocalService _portalPreferencesLocalService;
-	private PortletPreferencesLocalService _portletPreferencesLocalService;
+	private volatile GroupLocalService _groupLocalService;
+	private volatile PortalPreferencesLocalService _portalPreferencesLocalService;
+	private volatile PortletPreferencesLocalService _portletPreferencesLocalService;
 
 }

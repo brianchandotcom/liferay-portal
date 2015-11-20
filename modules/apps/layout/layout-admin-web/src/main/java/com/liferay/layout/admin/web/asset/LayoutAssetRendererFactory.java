@@ -139,9 +139,9 @@ public class LayoutAssetRendererFactory
 		_userLocalService = userLocalService;
 	}
 
-	private AssetEntryLocalService _assetEntryLocalService;
-	private LayoutLocalService _layoutLocalService;
-	private ServletContext _servletContext;
-	private UserLocalService _userLocalService;
+	private volatile AssetEntryLocalService _assetEntryLocalService;
+	private volatile LayoutLocalService _layoutLocalService;
+	private volatile ServletContext _servletContext;
+	private volatile UserLocalService _userLocalService;
 
 }

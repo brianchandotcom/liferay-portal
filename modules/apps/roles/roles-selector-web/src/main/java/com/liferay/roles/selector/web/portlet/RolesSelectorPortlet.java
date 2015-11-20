@@ -99,7 +99,7 @@ public class RolesSelectorPortlet extends MVCPortlet {
 		_userGroupRoleService = userGroupRoleService;
 	}
 
-	private UserGroupGroupRoleService _userGroupGroupRoleService;
-	private UserGroupRoleService _userGroupRoleService;
+	private volatile UserGroupGroupRoleService _userGroupGroupRoleService;
+	private volatile UserGroupRoleService _userGroupRoleService;
 
 }

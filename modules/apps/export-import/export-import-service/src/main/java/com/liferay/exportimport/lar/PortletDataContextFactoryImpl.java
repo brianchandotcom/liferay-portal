@@ -301,6 +301,6 @@ public class PortletDataContextFactoryImpl
 		}
 	}
 
-	private GroupLocalService _groupLocalService;
+	private volatile GroupLocalService _groupLocalService;
 
 }

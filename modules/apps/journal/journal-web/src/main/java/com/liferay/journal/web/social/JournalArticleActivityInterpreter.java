@@ -153,6 +153,6 @@ public class JournalArticleActivityInterpreter
 	private static final String[] _CLASS_NAMES =
 		{JournalArticle.class.getName()};
 
-	private JournalArticleLocalService _journalArticleLocalService;
+	private volatile JournalArticleLocalService _journalArticleLocalService;
 
 }

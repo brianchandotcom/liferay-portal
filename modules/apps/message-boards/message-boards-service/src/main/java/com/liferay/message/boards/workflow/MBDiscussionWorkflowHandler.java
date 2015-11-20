@@ -65,6 +65,6 @@ public class MBDiscussionWorkflowHandler extends MBMessageWorkflowHandler {
 		_mbMessageLocalService = mbMessageLocalService;
 	}
 
-	private MBMessageLocalService _mbMessageLocalService;
+	private volatile MBMessageLocalService _mbMessageLocalService;
 
 }

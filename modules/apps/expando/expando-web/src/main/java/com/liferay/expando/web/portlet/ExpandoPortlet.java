@@ -379,6 +379,6 @@ public class ExpandoPortlet extends MVCPortlet {
 		expandoBridge.setAttributeProperties(name, properties);
 	}
 
-	private ExpandoColumnService _expandoColumnService;
+	private volatile ExpandoColumnService _expandoColumnService;
 
 }

@@ -150,8 +150,8 @@ public class ExportImportConfigurationTrashHandler extends BaseTrashHandler {
 
 	protected ServletContext servletContext;
 
-	private ExportImportConfigurationLocalService
+	private volatile ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
-	private GroupLocalService _groupLocalService;
+	private volatile GroupLocalService _groupLocalService;
 
 }

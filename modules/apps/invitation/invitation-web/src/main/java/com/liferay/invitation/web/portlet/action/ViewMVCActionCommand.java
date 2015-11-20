@@ -184,6 +184,6 @@ public class ViewMVCActionCommand extends BaseMVCActionCommand {
 		_mailService = mailService;
 	}
 
-	private MailService _mailService;
+	private volatile MailService _mailService;
 
 }

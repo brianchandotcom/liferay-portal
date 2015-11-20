@@ -213,7 +213,7 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private BookmarksFolderService _bookmarksFolderService;
-	private TrashEntryService _trashEntryService;
+	private volatile BookmarksFolderService _bookmarksFolderService;
+	private volatile TrashEntryService _trashEntryService;
 
 }

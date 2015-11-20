@@ -321,7 +321,7 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 		_assetVocabularyService = assetVocabularyService;
 	}
 
-	private AssetCategoryService _assetCategoryService;
-	private AssetVocabularyService _assetVocabularyService;
+	private volatile AssetCategoryService _assetCategoryService;
+	private volatile AssetVocabularyService _assetVocabularyService;
 
 }

@@ -145,6 +145,6 @@ public class CommentUserNotificationHandler
 		_mbDiscussionLocalService = mbDiscussionLocalService;
 	}
 
-	private MBDiscussionLocalService _mbDiscussionLocalService;
+	private volatile MBDiscussionLocalService _mbDiscussionLocalService;
 
 }

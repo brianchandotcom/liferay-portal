@@ -188,9 +188,9 @@ public class DefaultSingleDestinationMessageSenderFactory
 	private final Map<String, DefaultSingleDestinationSynchronousMessageSender>
 		_defaultSingleDestinationSynchronousMessageSenders =
 			new ConcurrentHashMap<>();
-	private EntityCache _entityCache;
-	private FinderCache _finderCache;
-	private MessageBus _messageBus;
+	private volatile EntityCache _entityCache;
+	private volatile FinderCache _finderCache;
+	private volatile MessageBus _messageBus;
 	private final Map<SynchronousMessageSender.Mode, SynchronousMessageSender>
 		_synchronousMessageSenders = new HashMap<>();
 

@@ -502,11 +502,11 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 
 	private static final String _DEPLOY_TO_PREFIX = "DEPLOY_TO__";
 
-	private AppService _appService;
-	private PanelAppRegistry _panelAppRegistry;
-	private PanelCategoryRegistry _panelCategoryRegistry;
-	private PluginSettingLocalService _pluginSettingLocalService;
-	private PluginSettingService _pluginSettingService;
-	private PortletService _portletService;
+	private volatile AppService _appService;
+	private volatile PanelAppRegistry _panelAppRegistry;
+	private volatile PanelCategoryRegistry _panelCategoryRegistry;
+	private volatile PluginSettingLocalService _pluginSettingLocalService;
+	private volatile PluginSettingService _pluginSettingService;
+	private volatile PortletService _portletService;
 
 }

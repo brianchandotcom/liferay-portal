@@ -99,7 +99,7 @@ public class AddStructureMVCActionCommand extends DDMBaseMVCActionCommand {
 		_ddmStructureService = ddmStructureService;
 	}
 
-	private DDM _ddm;
-	private DDMStructureService _ddmStructureService;
+	private volatile DDM _ddm;
+	private volatile DDMStructureService _ddmStructureService;
 
 }

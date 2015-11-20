@@ -66,8 +66,8 @@ public class JSBundleConfigPortalWebResources {
 		_jsBundleConfigTracker = jsBundleConfigTracker;
 	}
 
-	private JSBundleConfigServlet _jsBundleConfigServlet;
-	private JSBundleConfigTracker _jsBundleConfigTracker;
+	private volatile JSBundleConfigServlet _jsBundleConfigServlet;
+	private volatile JSBundleConfigTracker _jsBundleConfigTracker;
 	private ServiceRegistration<?> _serviceRegistration;
 
 	private class InternalPortalWebResources

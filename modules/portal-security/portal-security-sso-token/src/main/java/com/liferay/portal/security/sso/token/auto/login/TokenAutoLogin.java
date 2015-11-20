@@ -204,6 +204,6 @@ public class TokenAutoLogin extends BaseAutoLogin {
 	private volatile ConfigurationFactory _configurationFactory;
 	private final Map<TokenLocation, TokenRetriever> _tokenRetrievers =
 		new ConcurrentHashMap<>();
-	private UserLocalService _userLocalService;
+	private volatile UserLocalService _userLocalService;
 
 }

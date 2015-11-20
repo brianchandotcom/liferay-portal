@@ -146,7 +146,7 @@ public class MembersActivityInterpreter extends BaseSocialActivityInterpreter {
 
 	private static final String[] _CLASS_NAMES = {Organization.class.getName()};
 
-	private OrganizationLocalService _organizationLocalService;
-	private UserLocalService _userLocalService;
+	private volatile OrganizationLocalService _organizationLocalService;
+	private volatile UserLocalService _userLocalService;
 
 }

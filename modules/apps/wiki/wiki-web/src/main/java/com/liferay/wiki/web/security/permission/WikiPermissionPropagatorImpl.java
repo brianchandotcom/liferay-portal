@@ -77,6 +77,6 @@ public class WikiPermissionPropagatorImpl extends BasePermissionPropagator {
 		_wikiPageLocalService = wikiPageLocalService;
 	}
 
-	private WikiPageLocalService _wikiPageLocalService;
+	private volatile WikiPageLocalService _wikiPageLocalService;
 
 }

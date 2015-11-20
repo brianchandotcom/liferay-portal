@@ -191,10 +191,10 @@ public class DLFileEntryWorkflowHandler
 
 	private static final boolean _VISIBLE = false;
 
-	private DLFileEntryLocalService _dlFileEntryLocalService;
-	private DLFileVersionLocalService _dlFileVersionLocalService;
-	private DLFolderLocalService _dlFolderLocalService;
-	private WorkflowDefinitionLinkLocalService
+	private volatile DLFileEntryLocalService _dlFileEntryLocalService;
+	private volatile DLFileVersionLocalService _dlFileVersionLocalService;
+	private volatile DLFolderLocalService _dlFolderLocalService;
+	private volatile WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService;
 
 }

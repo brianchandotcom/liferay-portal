@@ -704,7 +704,7 @@
 		<var name="key_userScreenName" value="${userScreenName}" />
 
 		<execute function="Type" locator1="TextInput#SEARCH" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 
 		<if>
 			<isset var="userMiddleName" />

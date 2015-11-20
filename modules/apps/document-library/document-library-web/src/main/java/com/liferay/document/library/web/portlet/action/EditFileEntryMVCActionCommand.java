@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lock.DuplicateLockException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -436,7 +438,9 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 						cmd.equals(cmd.equals(Constants.ADD_TEMP))) {
 
 					if (cause instanceof FileUploadBase.IOFileUploadException) {
-						// Cancelled a temporary upload
+						if (_log.isErrorEnabled()) {
+							_log.error("Temporary upload was cancelled");
+						}
 					}
 				}
 
@@ -1017,6 +1021,9 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			StreamUtil.cleanUp(inputStream);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditFileEntryMVCActionCommand.class);
 
 	private volatile DLAppService _dlAppService;
 	private volatile TrashEntryService _trashEntryService;

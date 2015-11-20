@@ -2525,7 +2525,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		throws PortalException {
 
 		if (Validator.isNull(subject) && Validator.isNull(body)) {
-			throw new MessageSubjectException("Subject and body is null");
+			throw new MessageSubjectException("Subject and body are null");
 		}
 	}
 

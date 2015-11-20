@@ -16,16 +16,10 @@ package com.liferay.portal.security.sso.facebook.connect.servlet.taglib;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
-import com.liferay.portal.security.common.servlet.taglib.BaseAuthenticationDynamicInclude;
 
-import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,14 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = DynamicInclude.class
 )
 public class PortalSettingsFacebookConnectAuthenticationDynamicInclude
-	extends BaseAuthenticationDynamicInclude {
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.security.sso.facebook.connect)"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
+	extends BaseJSPDynamicInclude {
 
 	protected String getJspPath() {
 		return "/com.liferay.portal.settings.web/facebook.jsp";
@@ -55,7 +42,15 @@ public class PortalSettingsFacebookConnectAuthenticationDynamicInclude
 	protected Log getLog() {
 		return _log;
 	}
-	
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.portal.security.sso.facebook.connect)",
+		unbind = "-"
+	)
+	protected void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalSettingsFacebookConnectAuthenticationDynamicInclude.class);
 

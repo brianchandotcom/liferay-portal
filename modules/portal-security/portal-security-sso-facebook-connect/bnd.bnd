@@ -5,5 +5,5 @@ Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources,\
 	@lib/com.liferay.portal.language.jar,\
-	@lib/com.liferay.portal.security.common.jar
+	@lib/com.liferay.portal.settings.api.jar
 Web-ContextPath: /portal-security-sso-facebook-connect

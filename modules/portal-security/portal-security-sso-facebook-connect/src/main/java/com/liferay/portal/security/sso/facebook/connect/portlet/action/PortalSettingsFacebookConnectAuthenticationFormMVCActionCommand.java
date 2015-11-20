@@ -18,9 +18,9 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.common.action.BaseAuthenticationFormMVCActionCommand;
 import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectConstants;
 import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
+import com.liferay.portal.settings.api.portlet.action.BasePortalSettingsFormMVCActionCommand;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Component;
 	service = MVCActionCommand.class
 )
 public class PortalSettingsFacebookConnectAuthenticationFormMVCActionCommand
-	extends BaseAuthenticationFormMVCActionCommand {
+	extends BasePortalSettingsFormMVCActionCommand {
 
 	@Override
 	protected void doValidateForm(

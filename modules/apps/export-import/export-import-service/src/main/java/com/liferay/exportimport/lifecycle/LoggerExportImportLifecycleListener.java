@@ -63,6 +63,7 @@ public class LoggerExportImportLifecycleListener
 
 		sb.append(StringPool.OPEN_CURLY_BRACE);
 		sb.append("class: ");
+		sb.append(ExportImportClassedModelUtil.getClassName(stagedModel));
 
 		if (stagedModel instanceof StagedGroupedModel) {
 			StagedGroupedModel stagedGroupedModel =
@@ -72,7 +73,6 @@ public class LoggerExportImportLifecycleListener
 			sb.append(stagedGroupedModel.getGroupId());
 		}
 
-		sb.append(ExportImportClassedModelUtil.getClassName(stagedModel));
 		sb.append(", uuid: ");
 		sb.append(stagedModel.getUuid());
 		sb.append(StringPool.CLOSE_CURLY_BRACE);

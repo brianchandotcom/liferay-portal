@@ -1137,7 +1137,7 @@
 		<execute macro="Navigator#closeWindow" />
 
 		<execute macro="Navigator#selectSpecificWindow">
-			<var name="windowTitle" value="Users and Organizations - Liferay" />
+			<var name="windowTitle" value="Users and Organizations - Control Panel - Liferay" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">

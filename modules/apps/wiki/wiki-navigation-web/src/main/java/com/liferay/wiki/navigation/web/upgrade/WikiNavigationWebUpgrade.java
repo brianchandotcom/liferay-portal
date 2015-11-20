@@ -15,7 +15,6 @@
 package com.liferay.wiki.navigation.web.upgrade;
 
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.wiki.navigation.web.upgrade.v1_0_0.UpgradePortletPreferences;
 import com.liferay.wiki.navigation.web.upgrade.v1_0_1.UpgradePortletId;
@@ -31,10 +30,6 @@ public class WikiNavigationWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register(
-			"com.liferay.wiki.navigation.web", "0.0.0", "1.0.0",
-			new DummyUpgradeStep());
-
 		registry.register(
 			"com.liferay.wiki.navigation.web", "0.0.1", "1.0.0",
 			new UpgradePortletPreferences(), new UpgradePortletId());

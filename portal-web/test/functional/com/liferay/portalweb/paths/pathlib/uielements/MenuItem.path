@@ -464,6 +464,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PLATFORM</td>
+	<td>//a[@role='menuitem' and contains(.,'Platform')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PREVIEW</td>
 	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Preview')]</td>
 	<td></td>

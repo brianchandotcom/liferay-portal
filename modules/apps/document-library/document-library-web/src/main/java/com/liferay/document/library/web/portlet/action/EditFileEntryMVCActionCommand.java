@@ -435,7 +435,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				Throwable cause = uploadException.getCause();
 
 				if (Validator.isNotNull(cmd) &&
-						cmd.equals(cmd.equals(Constants.ADD_TEMP))) {
+					cmd.equals(cmd.equals(Constants.ADD_TEMP))) {
 
 					if (cause instanceof FileUploadBase.IOFileUploadException) {
 						if (_log.isErrorEnabled()) {

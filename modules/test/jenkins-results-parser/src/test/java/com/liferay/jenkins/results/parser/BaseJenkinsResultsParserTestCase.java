@@ -171,7 +171,7 @@ public abstract class BaseJenkinsResultsParserTestCase {
 		return urlString.replace(System.getProperty("user.dir"), "${user.dir}");
 	}
 
- 	protected void writeExpectedMessage(File sampleDir) throws Exception {
+	protected void writeExpectedMessage(File sampleDir) throws Exception {
 		File expectedMessageFile = new File(sampleDir, "expected_message.html");
 		String expectedMessage = getMessage(toURLString(sampleDir));
 

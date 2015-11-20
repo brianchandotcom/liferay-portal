@@ -87,7 +87,8 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 @Component(
 	configurationPid = "com.liferay.portal.cluster.configuration.ClusterExecutorConfiguration",
-	immediate = true, service = ClusterExecutor.class
+	immediate = true,
+	service = {ClusterExecutor.class, ClusterExecutorImpl.class}
 )
 public class ClusterExecutorImpl implements ClusterExecutor {
 
@@ -344,6 +345,22 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 
 	protected ClusterChannel getClusterChannel() {
 		return _clusterChannel;
+	}
+
+	protected ClusterNode getClusterNode(Address address) {
+		for (ClusterNodeStatus clusterNodeStatus :
+				_clusterNodeStatuses.values()) {
+
+			if (address.equals(clusterNodeStatus.getAddress())) {
+				return clusterNodeStatus.getClusterNode();
+			}
+		}
+
+		if (_log.isErrorEnabled()) {
+			_log.error("Unable to find cluster node with address " + address);
+		}
+
+		return null;
 	}
 
 	protected InetSocketAddress getConfiguredPortalInetSocketAddress(

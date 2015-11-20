@@ -63,14 +63,19 @@ public class BaseCKEditorConfigContributor extends BaseEditorConfigContributor {
 		String contentsLanguageId = getContentsLanguageId(
 			inputEditorTaglibAttributes);
 
-		jsonObject.put(
-			"contentsLanguage", contentsLanguageId.replace("iw_", "he_"));
+		contentsLanguageId = contentsLanguageId.replace("iw", "he");
+		contentsLanguageId = contentsLanguageId.replace("_", "-");
+
+		jsonObject.put("contentsLanguage", contentsLanguageId);
 
 		jsonObject.put("height", 265);
 
 		String languageId = getLanguageId(themeDisplay);
 
-		jsonObject.put("language", languageId.replace("iw_", "he_"));
+		languageId = languageId.replace("iw", "he");
+		languageId = languageId.replace("_", "-");
+
+		jsonObject.put("language", languageId);
 
 		boolean resizable = GetterUtil.getBoolean(
 			(String)inputEditorTaglibAttributes.get(

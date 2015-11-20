@@ -8,7 +8,7 @@ Import-Package:\
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources,\
-	WEB-INF=src/WEB-INF,\
+	WEB-INF=src/main/resources/WEB-INF,\
 	@lib/javax.servlet.jsp.jstl.jar!/META-INF/*.tld,\
 	@../../../../util-bridges/util-bridges.jar!/com/liferay/util/bridges/freemarker/FreeMarkerPortlet.class,\
 	@../../../../util-taglib/util-taglib.jar!/META-INF/*.tld

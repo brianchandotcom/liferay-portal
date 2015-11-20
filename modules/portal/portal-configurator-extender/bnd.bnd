@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Portal Configurator Extender
+Bundle-SymbolicName: com.liferay.portal.configurator.extender
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.configurator.extender
+Include-Resource:\
+	classes,\
+	@lib/org.apache.felix.utils.jar!/org/apache/felix/utils/extender/*,\
+	@lib/org.apache.felix.utils.jar!/org/apache/felix/utils/log/*

@@ -17,15 +17,18 @@ package com.liferay.portal.soap.extender.test.activator.handler;
 import com.liferay.portal.soap.extender.test.activator.configuration.ConfigurationAdminBundleActivator;
 import com.liferay.portal.soap.extender.test.handler.SampleHandler;
 import com.liferay.portal.soap.extender.test.service.GreeterImpl;
+import com.liferay.portal.soap.extender.test.util.WaiterUtil;
 
 import java.util.List;
 
 import javax.xml.ws.Binding;
 import javax.xml.ws.Endpoint;
 import javax.xml.ws.handler.Handler;
+import javax.xml.ws.spi.Provider;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 
 /**
  * @author Carlos Sierra Andrés
@@ -38,6 +41,13 @@ public class JaxWsApiBundleActivator implements BundleActivator {
 			new ConfigurationAdminBundleActivator();
 
 		_configurationAdminBundleActivator.start(bundleContext);
+
+		String filterString =
+			"(&(objectClass=" + Provider.class.getName() + ")" +
+				"("+ HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH +
+					"=/soap-test))";
+
+		WaiterUtil.waitForFilter(bundleContext, filterString, 10_000);
 
 		try {
 			_endpoint = Endpoint.publish("/greeterApi", new GreeterImpl());

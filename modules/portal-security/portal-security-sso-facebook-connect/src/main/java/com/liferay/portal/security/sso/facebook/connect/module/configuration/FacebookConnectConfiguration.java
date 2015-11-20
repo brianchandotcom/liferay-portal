@@ -27,10 +27,10 @@ import com.liferay.configuration.admin.ConfigurationAdmin;
 )
 public interface FacebookConnectConfiguration {
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(required = false)
 	public String appId();
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(required = false)
 	public String appSecret();
 
 	@Meta.AD(deflt = "false", required = false)

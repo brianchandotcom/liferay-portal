@@ -29,6 +29,7 @@ import com.liferay.gradle.plugins.lang.builder.LangBuilderPlugin;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.patcher.PatchTask;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
+import com.liferay.gradle.plugins.soy.BuildSoyTask;
 import com.liferay.gradle.plugins.soy.SoyPlugin;
 import com.liferay.gradle.plugins.tasks.DirectDeployTask;
 import com.liferay.gradle.plugins.tasks.InitGradleTask;
@@ -105,6 +106,7 @@ import org.gradle.api.tasks.bundling.Jar;
 import org.gradle.api.tasks.bundling.Zip;
 import org.gradle.api.tasks.javadoc.Javadoc;
 import org.gradle.api.tasks.testing.Test;
+import org.gradle.plugins.ide.eclipse.EclipsePlugin;
 
 import org.zeroturnaround.exec.ProcessExecutor;
 import org.zeroturnaround.exec.ProcessResult;
@@ -217,8 +219,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
 
 		copy.from(jar);
-
-		GradleUtil.setProperty(copy, AUTO_CLEAN_PROPERTY_NAME, false);
 
 		return copy;
 	}
@@ -724,6 +724,19 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 				Project project = delete.getProject();
 
 				for (Task task : project.getTasks()) {
+					String taskName = task.getName();
+
+					if (taskName.equals(DEPLOY_TASK_NAME) ||
+						taskName.equals(
+							EclipsePlugin.getECLIPSE_CP_TASK_NAME()) ||
+						taskName.equals(
+							EclipsePlugin.getECLIPSE_PROJECT_TASK_NAME()) ||
+						taskName.equals("ideaModule") ||
+						(task instanceof BuildSoyTask)) {
+
+						continue;
+					}
+
 					boolean autoClean = GradleUtil.getProperty(
 						task, AUTO_CLEAN_PROPERTY_NAME, true);
 
@@ -739,7 +752,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 					cleanTaskNames.add(
 						BasePlugin.CLEAN_TASK_NAME +
-							StringUtil.capitalize(task.getName()));
+							StringUtil.capitalize(taskName));
 				}
 
 				return cleanTaskNames;

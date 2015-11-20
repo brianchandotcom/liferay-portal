@@ -107,5 +107,5 @@ liferay {
 	deployDir = project.properties["auto.deploy.dir"] ?: "${->liferay.appServerParentDir}/deploy"
 	jmxRemotePort = project.properties["jmx.remote.port"] ?: 8099
 	liferayHome = project.properties["liferay.home"] ?: "${->liferay.appServerParentDir}"
-	portalVersion = "7.0.0-SNAPSHOT"
+	portalVersion = project.properties["liferay.portal.version"] ?: "7.0.0-SNAPSHOT"
 }

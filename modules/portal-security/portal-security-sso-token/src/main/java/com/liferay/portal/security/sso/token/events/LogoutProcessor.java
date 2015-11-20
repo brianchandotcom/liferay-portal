@@ -21,22 +21,24 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Defines the public interface for logout behavior.
- * 
+ *
  * <p>
  * Custom <code>LogoutProcessor</code> classes can override these default
  * implementations:
  * </p>
- * 
+ *
  * <ul>
  * <li>
- * {@link com.liferay.portal.security.sso.token.internal.events.CookieLogoutProcessor}
+ * {@link
+ * com.liferay.portal.security.sso.token.internal.events.CookieLogoutProcessor}
  * </li>
  * <li>
- * {@link com.liferay.portal.security.sso.token.internal.events.RedirectLogoutProcessor
-}
+ * {@link
+ * com.liferay.portal.security.sso.token.internal.events.RedirectLogoutProcessor
+ * }
  * </li>
  * </ul>
- * 
+ *
  * @author Michael C. Han
  */
 public interface LogoutProcessor {

@@ -43,28 +43,30 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * Participates in the user logout process.
- * 
+ *
  * <p>
  * <code>TokenLogoutAction</code> carries out two tasks:
  * </p>
- * 
+ *
  * <ol>
  * <li>
  * If authentication cookies are configured, all named cookies are deleted by
  * the <code>@Component</code> defined in the class
- * {@link com.liferay.portal.security.sso.token.internal.events.CookieLogoutProcessor}
+ * {@link
+ * com.liferay.portal.security.sso.token.internal.events.CookieLogoutProcessor}
  * (which implements
- * {@link com.liferay.portal.security.sso.token.events.LogoutProcessor})
+ * {@link LogoutProcessor})
  * </li>
  * <li>
  * If a logout redirect URL is set, then an HTTP redirect response to the
  * specified URL is issued by the <code>@Component</code> defined in the class
- * {@link com.liferay.portal.security.sso.token.internal.events.RedirectLogoutProcessor}
+ * {@link
+ * com.liferay.portal.security.sso.token.internal.events.RedirectLogoutProcessor}
  * (which implements
  * {@link com.liferay.portal.security.sso.token.auto.events.LogoutProcessor})
  * </li>
  * </ol>
- * 
+ *
  * @author Michael C. Han
  */
 @Component(

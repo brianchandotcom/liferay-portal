@@ -56,8 +56,6 @@ public class LoadBalanceUtil {
 			hostNamePrefix = matcher.group("hostNamePrefix");
 		}
 
-		System.out.println("hostNamePrefix: " + hostNamePrefix);
-
 		int maxHostNames = calculateMaxHostNames(project, hostNamePrefix);
 
 		File file = new File(
@@ -100,28 +98,20 @@ public class LoadBalanceUtil {
 			for (int i = 0; i < taskList.size(); i++) {
 				FutureTask<Integer> task = taskList.get(i);
 
-				try {
-					Integer result = task.get();
+				Integer result = task.get();
 
-					if (result == -1) {
-						badIndicies.add(i);
-						continue;
-					}
-
-					if (result > max) {
-						max = result;
-						maxIndicies.clear();
-					}
-
-					if (result >= max) {
-						maxIndicies.add(i);
-					}
+				if (result == -1) {
+					badIndicies.add(i);
+					continue;
 				}
-				catch (ExecutionException ee) {
-					throw new RuntimeException(ee);
+
+				if (result > max) {
+					max = result;
+					maxIndicies.clear();
 				}
-				catch (InterruptedException ie) {
-					throw new RuntimeException(ie);
+
+				if (result >= max) {
+					maxIndicies.add(i);
 				}
 			}
 

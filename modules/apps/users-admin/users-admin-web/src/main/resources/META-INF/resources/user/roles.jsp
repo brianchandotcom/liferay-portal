@@ -28,6 +28,10 @@ List<UserGroupGroupRole> inheritedSiteRoles = (List<UserGroupGroupRole>)request.
 List<Group> roleGroups = (List<Group>)request.getAttribute("user.roleGroups");
 
 currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles");
+
+String regularRoleSyncEntitiesEventName = liferayPortletResponse.getNamespace() + "syncRegularRoles";
+String siteRoleSyncEntitiesEventName = liferayPortletResponse.getNamespace() + "syncSiteRoles";
+String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespace() + "syncOrganizationRoles";
 %>
 
 <liferay-ui:error-marker key="errorSection" value="roles" />
@@ -123,6 +127,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 
 						selectRegularRoleURL.setParameter("p_u_i_d", (selUser == null) ? "0" : String.valueOf(selUser.getUserId()));
 						selectRegularRoleURL.setParameter("eventName", regularRoleEventName);
+						selectRegularRoleURL.setParameter("syncEntitiesEventName", regularRoleSyncEntitiesEventName);
 						selectRegularRoleURL.setWindowState(LiferayWindowState.POP_UP);
 						%>
 
@@ -281,7 +286,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 			);
 
 			Liferay.on(
-				'<portlet:namespace />syncOrganizationRoles',
+				'<%= organizationRoleSyncEntitiesEventName %>',
 				function(event) {
 					event.selectors.each(
 						function(item, index, collection) {
@@ -335,11 +340,12 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 						<%
 						PortletURL selectOrganizationRoleURL = PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.BROWSE);
 
+						selectOrganizationRoleURL.setParameter("p_u_i_d", (selUser == null) ? "0" : String.valueOf(selUser.getUserId()));
 						selectOrganizationRoleURL.setParameter("eventName", organizationRoleEventName);
 						selectOrganizationRoleURL.setParameter("organizationIds", StringUtil.merge(organizationIds));
-						selectOrganizationRoleURL.setParameter("p_u_i_d", (selUser == null) ? "0" : String.valueOf(selUser.getUserId()));
 						selectOrganizationRoleURL.setParameter("roleType", String.valueOf(RoleConstants.TYPE_ORGANIZATION));
 						selectOrganizationRoleURL.setParameter("step", "1");
+						selectOrganizationRoleURL.setParameter("syncEntitiesEventName", organizationRoleSyncEntitiesEventName);
 						selectOrganizationRoleURL.setWindowState(LiferayWindowState.POP_UP);
 						%>
 
@@ -461,7 +467,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 				);
 
 				Liferay.on(
-					'<portlet:namespace />syncSiteRoles',
+					'<%= siteRoleSyncEntitiesEventName %>',
 					function(event) {
 						event.selectors.each(
 							function(item, index, collection) {
@@ -501,10 +507,11 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 								<%
 								PortletURL selectSiteRoleURL = PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.BROWSE);
 
-								selectSiteRoleURL.setParameter("eventName", siteRoleEventName);
 								selectSiteRoleURL.setParameter("p_u_i_d", (selUser == null) ? "0" : String.valueOf(selUser.getUserId()));
+								selectSiteRoleURL.setParameter("eventName", siteRoleEventName);
 								selectSiteRoleURL.setParameter("roleType", String.valueOf(RoleConstants.TYPE_SITE));
 								selectSiteRoleURL.setParameter("step", "1");
+								selectSiteRoleURL.setParameter("syncEntitiesEventName", siteRoleSyncEntitiesEventName);
 								selectSiteRoleURL.setWindowState(LiferayWindowState.POP_UP);
 								%>
 
@@ -698,7 +705,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 		);
 
 		Liferay.on(
-			'<portlet:namespace />enableRemovedRegularRoles',
+			'<%= regularRoleSyncEntitiesEventName %>',
 			function(event) {
 				event.selectors.each(
 					function(item, index, collection) {

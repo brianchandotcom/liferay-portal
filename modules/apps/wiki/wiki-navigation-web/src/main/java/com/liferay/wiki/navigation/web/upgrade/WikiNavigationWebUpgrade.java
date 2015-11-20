@@ -32,7 +32,11 @@ public class WikiNavigationWebUpgrade implements UpgradeStepRegistrator {
 	public void register(Registry registry) {
 		registry.register(
 			"com.liferay.wiki.navigation.web", "0.0.1", "1.0.0",
-			new UpgradePortletPreferences(), new UpgradePortletId());
+			new UpgradePortletPreferences());
+
+		registry.register(
+			"com.liferay.wiki.navigation.web", "1.0.0", "1.0.1",
+			new UpgradePortletId());
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

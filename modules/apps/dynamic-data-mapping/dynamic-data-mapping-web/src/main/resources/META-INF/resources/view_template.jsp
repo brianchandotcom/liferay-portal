@@ -53,7 +53,7 @@ TemplateSearch templateSearch = new TemplateSearch(renderRequest, portletURL);
 
 TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.getSearchTerms();
 
-String searchContainerId = "templates";
+String searchContainerId = "ddmTemplates";
 %>
 
 <liferay-ui:error exception="<%= RequiredTemplateException.MustNotDeleteTemplateReferencedByTemplateLinks.class %>" message="the-template-cannot-be-deleted-because-it-is-required-by-one-or-more-template-links" />

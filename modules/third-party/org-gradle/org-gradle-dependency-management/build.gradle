@@ -1,0 +1,41 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+import com.liferay.gradle.util.FileUtil
+
+apply plugin: "com.liferay.patcher"
+
+task patch(type: PatchTask)
+
+sourceCompatibility = "1.6"
+targetCompatibility = "1.6"
+
+String gradleVersion = version.substring(0, version.lastIndexOf('.'))
+
+if (gradleVersion != gradle.gradleVersion) {
+	throw new GradleException("Unable to use Gradle " + gradle.gradleVersion + ", " + gradleVersion + " is required")
+}
+
+dependencies {
+	compile gradleApi()
+}
+
+jar {
+	baseName = "gradle-dependency-management"
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	fileNames "**/org/gradle/api/internal/artifacts/ivyservice/ivyresolve/parser/GradlePomModuleDescriptorBuilder.java"
+
+	originalLibFile = configurations.compile.find {
+		it.name.startsWith "gradle-dependency-management-"
+	}
+
+	originalLibSrcDirName = "gradle-${gradleVersion}/subprojects/dependency-management/src/main/java"
+
+	originalLibSrcFile = {
+		FileUtil.get(project, "https://services.gradle.org/distributions/gradle-${gradleVersion}-src.zip")
+	}
+}

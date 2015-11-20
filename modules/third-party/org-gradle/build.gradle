@@ -1,0 +1,44 @@
+import com.liferay.gradle.util.FileUtil
+
+task deployDistribution(type: Zip)
+
+version = subprojects.inject(null) {
+	String version, Project project ->
+
+	Properties properties = new Properties()
+
+	File bndBndFile = project.file("bnd.bnd")
+
+	bndBndFile.withInputStream {
+		properties.load it
+	}
+
+	String projectVersion = properties["Bundle-Version"]
+
+	if (version && (projectVersion != version)) {
+		throw new GradleException("Bundle-Version values do not match")
+	}
+
+	return projectVersion
+}
+
+String gradleVersion = version.substring(0, version.lastIndexOf('.'))
+
+deployDistribution {
+	baseName = "gradle"
+	classifier = "bin"
+	destinationDir = rootProject.file("../tools")
+	exclude "gradle-${gradleVersion}/lib/plugins/gradle-dependency-management-${gradleVersion}.jar"
+	exclude "gradle-${gradleVersion}/lib/plugins/gradle-resources-http-${gradleVersion}.jar"
+
+	from {
+		zipTree(FileUtil.get(project, "https://services.gradle.org/distributions/gradle-${gradleVersion}-bin.zip"))
+	}
+
+	into("gradle-${gradleVersion}/lib/plugins") {
+		from tasks.getByPath(":third-party:org-gradle:org-gradle-dependency-management:jar")
+		from tasks.getByPath(":third-party:org-gradle:org-gradle-resources-http:jar")
+	}
+
+	version = project.version
+}

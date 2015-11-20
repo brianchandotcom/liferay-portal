@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.prototype.web.constants;
+package com.liferay.layout.prototype.constants;
 
 /**
  * @author Eudaldo Alonso

@@ -49,7 +49,7 @@ AUI.add(
 					formatDate: function(isoDate) {
 						var instance = this;
 
-						var formattedDate = '';
+						var formattedDate;
 
 						if (isoDate) {
 							formattedDate = A.Date.format(
@@ -60,7 +60,7 @@ AUI.add(
 							);
 						}
 
-						return formattedDate;
+						return formattedDate || '';
 					},
 
 					getISODate: function(date) {
@@ -109,13 +109,8 @@ AUI.add(
 						if (datePicker.get('activeInput') === triggerNode) {
 							var date = event.newSelection;
 
-							if (isArray(date)) {
-								if (date.length > 0) {
-									date = date[0];
-								}
-								else {
-									date = new Date();
-								}
+							if (isArray(date) && date.length) {
+								date = date[0];
 							}
 
 							instance.setValue(instance.getISODate(date));

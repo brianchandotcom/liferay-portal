@@ -104,6 +104,15 @@ public class DDMFormFieldTypeSettingsSerializerHelper {
 			List<DDMFormFieldSetting> ddmFormFieldSettings =
 				ddmFormFieldSettingsMap.get(setting.getCategory());
 
+			for (DDMFormFieldSetting ddmFormFieldSetting :
+					ddmFormFieldSettings) {
+
+				if (ddmFormFieldSetting.getName().equals(setting.getName())) {
+					ddmFormFieldSettings.remove(ddmFormFieldSetting);
+					break;
+				}
+			}
+
 			ddmFormFieldSettings.add(setting);
 		}
 	}

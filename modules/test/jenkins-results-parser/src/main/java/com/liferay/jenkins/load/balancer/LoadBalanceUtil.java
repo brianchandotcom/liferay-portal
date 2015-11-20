@@ -24,7 +24,6 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
@@ -40,20 +39,54 @@ import org.json.JSONObject;
  * @author Peter Yoo
  */
 public class LoadBalanceUtil {
-
-	public static String getMostAvailableMasterURL(Project project)
-		throws Exception {
-
-		String baseInvocationUrl = project.getProperty("base.invocation.url");
-		String hostNamePrefix = null;
-
+	
+	protected static String getHostNamePrefix(String baseInvocationUrl) {
 		Matcher matcher = _urlPattern.matcher(baseInvocationUrl);
 
 		if (!matcher.find()) {
 			return baseInvocationUrl;
 		}
-		else {
-			hostNamePrefix = matcher.group("hostNamePrefix");
+		
+		return matcher.group("hostNamePrefix");
+	}
+	
+	protected static void startParallelTasks(
+		List<String> hostNameList, String hostNamePrefix, int maxHostNames,
+		Project project, List<FutureTask<Integer>> taskList)
+			throws Exception {
+		
+		ExecutorService executor = Executors.newFixedThreadPool(maxHostNames);
+
+		for (int i = 1; i <= maxHostNames; i++) {
+			String hostName = hostNamePrefix + "-" + i;
+
+			hostNameList.add(hostName);
+
+			IdleSlaveCounterCallable callable =
+				new IdleSlaveCounterCallable(
+					project.getProperty(
+						"jenkins.local.url[" + hostName + "]") +
+							"/computer/api/json");
+
+			FutureTask<Integer> futureTask = new FutureTask<>(callable);
+
+			executor.execute(futureTask);
+
+			taskList.add(futureTask);
+		}
+
+		executor.shutdown();
+	}
+
+	public static String getMostAvailableMasterURL(Project project)
+		throws Exception {
+
+		String baseInvocationUrl = project.getProperty("base.invocation.url");
+
+		String hostNamePrefix = getHostNamePrefix(baseInvocationUrl);
+
+		if (hostNamePrefix.equals(baseInvocationUrl)) {
+			return baseInvocationUrl;
 		}
 
 		int maxHostNames = calculateMaxHostNames(project, hostNamePrefix);
@@ -65,35 +98,17 @@ public class LoadBalanceUtil {
 		waitForTurn(file, maxHostNames);
 
 		JenkinsResultsParserUtil.write(file, _HOSTNAME);
-
+		
 		try {
-			ExecutorService executor = Executors.newFixedThreadPool(20);
 			List<String> hostNameList = new ArrayList<>(maxHostNames);
 			List<FutureTask<Integer>> taskList = new ArrayList<>(maxHostNames);
-
-			for (int i = 1; i <= maxHostNames; i++) {
-				String hostName = hostNamePrefix + "-" + i;
-
-				hostNameList.add(hostName);
-
-				IdleSlaveCounterCallable callable =
-					new IdleSlaveCounterCallable(
-						project.getProperty(
-							"jenkins.local.url[" + hostName + "]") +
-								"/computer/api/json");
-
-				FutureTask<Integer> futureTask = new FutureTask<>(callable);
-
-				executor.execute(futureTask);
-
-				taskList.add(futureTask);
-			}
-
-			executor.shutdown();
+			
+			startParallelTasks(
+				hostNameList, hostNamePrefix, maxHostNames, project, taskList);
 
 			List<Integer> badIndicies = new ArrayList<>(taskList.size());
-			List<Integer> maxIndicies = new ArrayList<>(taskList.size());
-			int max = 0;
+			List<Integer> maxIndicies = new ArrayList<>(taskList.size());			
+			int maxResult = 0;
 
 			for (int i = 0; i < taskList.size(); i++) {
 				FutureTask<Integer> task = taskList.get(i);
@@ -105,12 +120,12 @@ public class LoadBalanceUtil {
 					continue;
 				}
 
-				if (result > max) {
-					max = result;
+				if (result > maxResult) {
+					maxResult = result;
 					maxIndicies.clear();
 				}
 
-				if (result >= max) {
+				if (result >= maxResult) {
 					maxIndicies.add(i);
 				}
 			}
@@ -120,23 +135,23 @@ public class LoadBalanceUtil {
 					"SEVERE: All hosts failed to respond.");
 			}
 
-			while (true) {
-				int x = -1;
+			int x = -1;
 
-				if (maxIndicies.size() > 0) {
-					x = maxIndicies.get(
-						getRandomValue(0, maxIndicies.size() - 1));
-				}
-				else {
-					x = getRandomValue(0, maxHostNames - 1);
-				}
-
-				if (badIndicies.contains(x)) {
-					continue;
-				}
-
-				return hostNameList.get(x);
+			if (maxIndicies.size() > 0) {
+				x = maxIndicies.get(
+					getRandomValue(0, maxIndicies.size() - 1));
 			}
+			else {
+				while (true) {
+					x = getRandomValue(0, maxHostNames - 1);
+					if (badIndicies.contains(x)) {
+						continue;
+					}
+					break;
+				}
+			}
+
+			return hostNameList.get(x);
 		}
 		finally {
 			JenkinsResultsParserUtil.write(file, "");
@@ -155,7 +170,7 @@ public class LoadBalanceUtil {
 		}
 	}
 
-	private static int calculateMaxHostNames(
+	protected static int calculateMaxHostNames(
 		Project project, String hostNamePrefix) {
 
 		int i = 1;
@@ -202,7 +217,7 @@ public class LoadBalanceUtil {
 		return project;
 	}
 
-	private static int getRandomValue(int start, int end) {
+	protected static int getRandomValue(int start, int end) {
 		int size = Math.abs(end - start);
 
 		double randomDouble = Math.random();
@@ -210,7 +225,7 @@ public class LoadBalanceUtil {
 		return start + (int)Math.round(size * randomDouble);
 	}
 
-	private static void waitForTurn(File file, int maxHostNames)
+	protected static void waitForTurn(File file, int maxHostNames)
 		throws Exception {
 
 		boolean bypass = false;
@@ -243,13 +258,13 @@ public class LoadBalanceUtil {
 		}
 	}
 
-	private static final String _HOSTNAME;
+	protected static final String _HOSTNAME;
 
 	private static final long _MAX_AGE = 30 * 1000;
 
 	private static final long _MIN_RUN_INTERVAL = 15 * 1000;
 
-	private static final Pattern _urlPattern = Pattern.compile(
+	protected static final Pattern _urlPattern = Pattern.compile(
 		"http://(?<hostNamePrefix>[\\S&&[^-]]+-\\d+).liferay.com");
 
 	static {
@@ -267,7 +282,7 @@ public class LoadBalanceUtil {
 		_HOSTNAME = hostName;
 	}
 
-	private static class IdleSlaveCounterCallable implements Callable<Integer> {
+	protected static class IdleSlaveCounterCallable implements Callable<Integer> {
 
 		@Override
 		public Integer call() throws Exception {
@@ -297,11 +312,11 @@ public class LoadBalanceUtil {
 			return idle;
 		}
 
-		private IdleSlaveCounterCallable(String url) {
+		protected IdleSlaveCounterCallable(String url) {
 			_url = url;
 		}
 
-		private final String _url;
+		protected final String _url;
 
 	}
 

@@ -18,15 +18,8 @@
 
 <portlet:actionURL name="installLocalApp" var="installLocalAppURL" />
 
-<%
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcPath", "/install_local_app.jsp");
-%>
-
 <aui:form action="<%= installLocalAppURL %>" cssClass="install-apps" enctype="multipart/form-data" method="post" name="fm1">
 	<aui:input name="mvcPath" type="hidden" value="/install_local_app.jsp" />
-	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 
 	<c:if test="<%= CompanyLocalServiceUtil.getCompaniesCount(false) > 1 %>">
 		<div class="alert alert-info">

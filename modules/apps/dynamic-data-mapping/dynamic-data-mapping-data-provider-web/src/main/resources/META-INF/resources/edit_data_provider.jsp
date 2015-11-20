@@ -19,19 +19,18 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-String dataProviderType = ParamUtil.getString(request, "dataProviderType");
-
 DDMDataProviderInstance ddmDataProviderInstance = ddmDataProviderDisplayContext.getDataProviderInstance();
 
 long dataProviderInstanceId = BeanParamUtil.getLong(ddmDataProviderInstance, request, "dataProviderInstanceId");
 long groupId = BeanParamUtil.getLong(ddmDataProviderInstance, request, "groupId", scopeGroupId);
 String name = BeanParamUtil.getString(ddmDataProviderInstance, request, "name");
 String description = BeanParamUtil.getString(ddmDataProviderInstance, request, "description");
+String type = BeanParamUtil.getString(ddmDataProviderInstance, request, "type");
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle((ddmDataProviderInstance == null) ? LanguageUtil.get(request, dataProviderType) : ddmDataProviderInstance.getName(locale));
+renderResponse.setTitle((ddmDataProviderInstance == null) ? LanguageUtil.get(request, type) : ddmDataProviderInstance.getName(locale));
 %>
 
 <portlet:actionURL name="addDataProvider" var="addDataProviderURL">
@@ -46,7 +45,7 @@ renderResponse.setTitle((ddmDataProviderInstance == null) ? LanguageUtil.get(req
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="groupId" type="hidden" value="<%= String.valueOf(groupId) %>" />
 	<aui:input name="dataProviderInstanceId" type="hidden" value="<%= String.valueOf(dataProviderInstanceId) %>" />
-	<aui:input name="dataProviderType" type="hidden" value="<%= dataProviderType %>" />
+	<aui:input name="type" type="hidden" value="<%= type %>" />
 	<aui:input name="languageId" type="hidden" value="<%= String.valueOf(themeDisplay.getLanguageId()) %>" />
 
 	<aui:model-context bean="<%= ddmDataProviderInstance %>" model="<%= DDMDataProviderInstance.class %>" />
@@ -59,7 +58,7 @@ renderResponse.setTitle((ddmDataProviderInstance == null) ? LanguageUtil.get(req
 		</aui:fieldset>
 
 		<aui:fieldset>
-			<%= ddmDataProviderDisplayContext.getDataProviderInstanceDefinition() %>
+			<%= ddmDataProviderDisplayContext.getDataProviderInstanceDDMFormHTML() %>
 		</aui:fieldset>
 	</div>
 

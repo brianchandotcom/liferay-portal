@@ -23,21 +23,18 @@ DDMDataProviderInstance ddmDataProviderInstance = (DDMDataProviderInstance)row.g
 %>
 
 <liferay-ui:icon-menu direction="down" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showExpanded="<%= false %>" showWhenSingleIcon="<%= false %>">
-
 	<c:if test="<%= ddmDataProviderDisplayContext.isShowEditDataProviderIcon(ddmDataProviderInstance) %>">
 
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcPath" value="/edit_data_provider.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="dataProviderInstanceId" value="<%= String.valueOf(ddmDataProviderInstance.getDataProviderInstanceId()) %>" />
-			<portlet:param name="dataProviderType" value="<%= ddmDataProviderInstance.getType() %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon
 			message="edit"
 			url="<%= editURL %>"
 		/>
-
 	</c:if>
 
 	<c:if test="<%= ddmDataProviderDisplayContext.isShowPermissionsIcon(ddmDataProviderInstance) %>">
@@ -67,5 +64,4 @@ DDMDataProviderInstance ddmDataProviderInstance = (DDMDataProviderInstance)row.g
 			url="<%= deleteURL %>"
 		/>
 	</c:if>
-
 </liferay-ui:icon-menu>

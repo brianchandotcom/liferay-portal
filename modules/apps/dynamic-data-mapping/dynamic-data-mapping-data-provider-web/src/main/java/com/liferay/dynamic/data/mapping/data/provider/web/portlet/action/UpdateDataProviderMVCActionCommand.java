@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.data.provider.web.portlet.action;
 
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderSettings;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
 import com.liferay.dynamic.data.mapping.data.provider.web.constants.DDMDataProviderPortletKeys;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
@@ -27,16 +27,11 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 
-import java.util.Map;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Leonardo Barros
@@ -64,9 +59,7 @@ public class UpdateDataProviderMVCActionCommand
 			actionRequest, "dataProviderInstanceId");
 
 		String name = ParamUtil.getString(actionRequest, "name");
-
 		String description = ParamUtil.getString(actionRequest, "description");
-
 		DDMFormValues ddmFormValues = getDDMFormValues(
 			actionRequest, actionResponse);
 
@@ -80,21 +73,6 @@ public class UpdateDataProviderMVCActionCommand
 	}
 
 	@Override
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "unregisterDDMDataProviderSettings"
-	)
-	protected synchronized void registerDDMDataProviderSettings(
-		DDMDataProviderSettings ddmDataProviderSettings,
-		Map<String, Object> properties) {
-
-		super.registerDDMDataProviderSettings(
-			ddmDataProviderSettings, properties);
-	}
-
-	@Override
 	@Reference(unbind = "-")
 	protected void setDDMDataProviderInstanceService(
 		DDMDataProviderInstanceService ddmDataProviderInstanceService) {
@@ -102,8 +80,15 @@ public class UpdateDataProviderMVCActionCommand
 		super.setDDMDataProviderInstanceService(ddmDataProviderInstanceService);
 	}
 
+	@Reference(unbind = "-")
+	protected void setDDMDataProviderTracker(
+		DDMDataProviderTracker ddmDataProviderTracker) {
+
+		super.setDDMDataProviderTracker(ddmDataProviderTracker);
+	}
+
 	@Override
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDDMFormValuesFactory(
 		DDMFormValuesFactory ddmFormValuesFactory) {
 

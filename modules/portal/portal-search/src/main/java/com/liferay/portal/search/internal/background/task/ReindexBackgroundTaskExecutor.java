@@ -31,6 +31,8 @@ public abstract class ReindexBackgroundTaskExecutor
 	extends BaseBackgroundTaskExecutor {
 
 	public ReindexBackgroundTaskExecutor() {
+		setBackgroundTaskStatusMessageTranslator(
+			new ReindexBackgroundTaskStatusMessageTranslator());
 		setIsolationLevel(BackgroundTaskConstants.ISOLATION_LEVEL_COMPANY);
 	}
 

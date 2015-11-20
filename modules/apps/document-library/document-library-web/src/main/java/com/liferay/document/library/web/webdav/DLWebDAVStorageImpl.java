@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -367,7 +368,15 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				if ((folder.getParentFolderId() != parentFolderId) ||
 					(webDAVRequest.getGroupId() != folder.getRepositoryId())) {
 
-					throw new NoSuchFolderException();
+					StringBundler sb = new StringBundler(5);
+
+					sb.append("No folder for {parendFolderId=");
+					sb.append(parentFolderId);
+					sb.append(", repositoryId=");
+					sb.append(webDAVRequest.getGroupId());
+					sb.append(StringPool.CLOSE_CURLY_BRACE);
+
+					throw new NoSuchFolderException(sb.toString());
 				}
 
 				return toResource(webDAVRequest, folder, false);
@@ -987,7 +996,16 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				if (!hasLock(fileEntry, lockUuid) &&
 					(fileEntry.getLock() != null)) {
 
-					throw new LockException();
+					StringBundler sb = new StringBundler(6);
+
+					sb.append("Inconsistent file lock state for ");
+					sb.append("{fileEntryPrimaryKey=");
+					sb.append(fileEntry.getPrimaryKey());
+					sb.append(", lockUuid=");
+					sb.append(lockUuid);
+					sb.append(StringPool.CLOSE_CURLY_BRACE);
+
+					throw new LockException(sb.toString());
 				}
 
 				_dlAppService.deleteFileEntryByTitle(

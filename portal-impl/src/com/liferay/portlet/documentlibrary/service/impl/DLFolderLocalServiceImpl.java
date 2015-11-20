@@ -1119,7 +1119,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 					RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW) &&
 			fileEntryTypeIds.isEmpty()) {
 
-			throw new RequiredFileEntryTypeException();
+			throw new RequiredFileEntryTypeException("No fileEntryTypeIds set");
 		}
 
 		boolean hasLock = hasFolderLock(userId, folderId);

@@ -148,7 +148,7 @@ public class CMISRepository extends BaseCmisRepository {
 
 		if (Validator.isNull(title)) {
 			if (size == 0) {
-				throw new FileNameException();
+				throw new FileNameException("Title is null");
 			}
 			else {
 				title = sourceFileName;

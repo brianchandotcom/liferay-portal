@@ -418,6 +418,14 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 	protected void handleReceivedClusterNodeResponse(
 		ClusterNodeResponse clusterNodeResponse) {
 
+		Serializable payload = clusterNodeResponse.getPayload();
+
+		if (payload instanceof ClusterNodeStatus) {
+			_memberJoined((ClusterNodeStatus)payload);
+
+			return;
+		}
+
 		String uuid = clusterNodeResponse.getUuid();
 
 		FutureClusterResponses futureClusterResponses =
@@ -449,12 +457,11 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 		Serializable payload = clusterRequest.getPayload();
 
 		if (payload instanceof ClusterNodeStatus) {
-			if (_memberJoined((ClusterNodeStatus)payload)) {
-				return ClusterRequest.createMulticastRequest(
-					_localClusterNodeStatus, true);
-			}
+			_memberJoined((ClusterNodeStatus)payload);
 
-			return null;
+			return ClusterNodeResponse.createResultClusterNodeResponse(
+				_localClusterNodeStatus.getClusterNode(),
+				clusterRequest.getUuid(), _localClusterNodeStatus);
 		}
 
 		ClusterNodeResponse clusterNodeResponse = executeClusterRequest(

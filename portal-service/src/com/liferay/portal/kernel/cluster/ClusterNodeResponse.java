@@ -38,7 +38,8 @@ public class ClusterNodeResponse implements Serializable {
 				new ClusterException("Return value is not serializable"));
 		}
 
-		return new ClusterNodeResponse(clusterNode, uuid, result, null);
+		return new ClusterNodeResponse(
+			clusterNode, uuid, (Serializable)result, null);
 	}
 
 	public ClusterNode getClusterNode() {
@@ -47,6 +48,14 @@ public class ClusterNodeResponse implements Serializable {
 
 	public Exception getException() {
 		return _exception;
+	}
+
+	public Serializable getPayload() {
+		if (_exception != null) {
+			return _exception;
+		}
+
+		return _result;
 	}
 
 	public Object getResult() throws Exception {
@@ -94,7 +103,7 @@ public class ClusterNodeResponse implements Serializable {
 	}
 
 	private ClusterNodeResponse(
-		ClusterNode clusterNode, String uuid, Object result,
+		ClusterNode clusterNode, String uuid, Serializable result,
 		Exception exception) {
 
 		if (clusterNode == null) {
@@ -109,7 +118,7 @@ public class ClusterNodeResponse implements Serializable {
 
 	private final ClusterNode _clusterNode;
 	private final Exception _exception;
-	private final Object _result;
+	private final Serializable _result;
 	private final String _uuid;
 
 }

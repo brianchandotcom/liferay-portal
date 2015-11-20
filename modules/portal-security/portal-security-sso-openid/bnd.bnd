@@ -12,6 +12,8 @@ Import-Package:\
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources,\
+	@lib/com.liferay.portal.language.jar,\
+	@lib/com.liferay.portal.security.common.jar,\
 	@lib/guice.jar,\
 	@lib/httpclient.jar,\
 	@lib/httpcore.jar,\

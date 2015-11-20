@@ -6,6 +6,9 @@ dependencies {
 	compile group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	compile group: "javax.servlet.jsp", name: "jsp-api", version: "2.1"
 	compile project(":apps:configuration-admin:configuration-admin-api")
+	compile project(":apps:portal-settings:portal-settings-web")
+	compile project(":portal:portal-language")
+	compile project(":portal-security:portal-security-common")
 
 	provided group: "org.eclipse.birt.runtime.3_7_1", name: "org.apache.xml.resolver", transitive: false, version: "1.2.0"
 	provided group: "org.openid4java", name: "openid4java", version: "0.9.8"

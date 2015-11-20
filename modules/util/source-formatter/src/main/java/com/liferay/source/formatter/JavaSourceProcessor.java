@@ -3402,6 +3402,21 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						"\n" + firstLine + "\n" + secondLine + "\n");
 				}
 			}
+			else {
+				x = line.lastIndexOf(StringPool.SPACE);
+
+				if (x != -1) {
+					String firstLine = line.substring(0, x);
+					String secondLine =
+						indent + StringPool.TAB + line.substring(x + 1);
+
+					if (getLineLength(secondLine) <= _MAX_LINE_LENGTH) {
+						return StringUtil.replace(
+							content, "\n" + line + "\n",
+							"\n" + firstLine + "\n" + secondLine + "\n");
+					}
+				}
+			}
 		}
 
 		if (line.contains(StringPool.TAB + "for (") && line.endsWith(" {")) {

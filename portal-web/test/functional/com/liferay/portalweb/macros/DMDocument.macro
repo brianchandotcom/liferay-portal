@@ -1223,9 +1223,9 @@
 		<execute function="MouseOver" locator1="DocumentsAndMedia#ICON_DOCUMENT" />
 		<execute function="AssertElementPresent" locator1="DocumentsAndMedia#ICON_DOCUMENT_CHECKBOX" />
 		<execute function="Click" locator1="DocumentsAndMedia#ICON_DOCUMENT_CHECKBOX" />
-		<execute function="AssertElementPresent" locator1="DocumentsAndMedia#TOOLBAR_ACTIONS" />
-		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="DocumentsAndMedia#TOOLBAR_ACTIONS" value1="Actions" />
-		<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+
+		<execute function="Click" locator1="Icon#DELETE" />
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="The ${assetType} ${dmDocumentTitle} was moved to the Recycle Bin. Undo" />
 
 		<if>

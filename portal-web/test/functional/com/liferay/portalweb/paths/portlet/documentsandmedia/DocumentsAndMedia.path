@@ -76,7 +76,7 @@
 </tr>
 <tr>
 	<td>ICON_DOCUMENT_CHECKBOX</td>
-	<td>//div[contains(.,'${key_dmDocumentTitle}') and a[@data-folder='false']]//input</td>
+	<td>//li[contains(@data-title,'${key_dmDocumentTitle}')]//input</td>
 	<td></td>
 </tr>
 <tr>

@@ -117,7 +117,7 @@ AUI.add(
 
 						instance._addInputsFromData(data);
 
-						if (!!cmd && cmd === 'installXuggler') {
+						if (cmd === 'installXuggler') {
 							var cmdNode = instance.one('#cmd');
 
 							instance._installXuggler();

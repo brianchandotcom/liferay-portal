@@ -83,7 +83,9 @@ AUI.add(
 
 				var container = instance.get('container');
 
-				container.append(TPL_REPEATABLE_TOOLBAR);
+				if (!instance.get('readOnly')) {
+					container.append(TPL_REPEATABLE_TOOLBAR);
+				}
 			},
 
 			repeat: function() {

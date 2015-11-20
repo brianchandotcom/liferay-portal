@@ -43,7 +43,9 @@ AUI.add(
 							datePicker.on('activeInputChange', A.bind('_onActiveInputChange', instance))
 						);
 
-						instance.bindContainerEvent('click', instance._onClickCalendar, '.input-group-addon');
+						if (!instance.get('readOnly')) {
+							instance.bindContainerEvent('click', instance._onClickCalendar, '.input-group-addon');
+						}
 					},
 
 					formatDate: function(isoDate) {

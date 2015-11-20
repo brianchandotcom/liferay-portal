@@ -7,11 +7,11 @@
 
 	<command name="PortalPropertiesDatabaseValue" priority="3">
 		<execute macro="ProductMenu#gotoControlPanelSystem">
-			<var name="portlet" value="Server Administration" />
+			<var name="portlet" value="System Settings" />
 		</execute>
 
-		<execute macro="ServerAdministration#searchPortalPropertiesCP">
-			<var name="propertyName" value="ldap.auth.enabled" />
+		<execute macro="SystemSettings#viewPlatformSettingCP">
+			<var name="configurationName" value="LDAPAuth configuration" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -21,12 +21,12 @@
 		<execute macro="PortalSettings#enableLDAPCP" />
 
 		<execute macro="ProductMenu#gotoControlPanelSystem">
-			<var name="portlet" value="Server Administration" />
+			<var name="portlet" value="System Settings" />
 		</execute>
 
-		<execute macro="ServerAdministration#searchPortalPropertiesCP">
-			<var name="propertyName" value="ldap.auth.enabled" />
-			<var name="propertyOveridden" value="true" />
+		<execute macro="SystemSettings#viewPlatformSettingCP">
+			<var name="configurationName" value="LDAPAuth configuration" />
+			<var name="status" value="Active" />
 		</execute>
 
 		<execute macro="Page#gotoCP">

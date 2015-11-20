@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.DuplicateLockException;
 import com.liferay.portal.kernel.lock.Lock;
-import com.liferay.portal.kernel.lock.LockManagerUtil;
+import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -37,6 +37,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserGroupGroupRoleLocalServiceUtil;
 import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
@@ -114,7 +115,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 		Lock lock = null;
 
 		try {
-			lock = LockManagerUtil.lock(
+			lock = lockManager.lock(
 				userId, WorkflowTask.class.getName(), workflowTaskInstanceId,
 				String.valueOf(userId), false, 1000);
 		}
@@ -169,7 +170,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			throw new WorkflowException("Unable to complete task", e);
 		}
 		finally {
-			LockManagerUtil.unlock(lock.getClassName(), lock.getKey());
+			lockManager.unlock(lock.getClassName(), lock.getKey());
 		}
 	}
 
@@ -861,6 +862,9 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 
 		return workflowTasks;
 	}
+
+	@ServiceReference(type = LockManager.class)
+	protected LockManager lockManager;
 
 	private KaleoSignaler _kaleoSignaler;
 	private TaskAssignmentSelector _taskAssignmentSelector;

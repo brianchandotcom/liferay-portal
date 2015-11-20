@@ -111,7 +111,7 @@ public class JournalArticleAssetRendererFactory
 		}
 
 		JournalArticleAssetRenderer journalArticleAssetRenderer =
-			getJournalArticleAssetRenderer(article);
+			_getJournalArticleAssetRenderer(article);
 
 		journalArticleAssetRenderer.setAssetRendererType(type);
 		journalArticleAssetRenderer.setServletContext(_servletContext);
@@ -128,7 +128,7 @@ public class JournalArticleAssetRendererFactory
 			_journalArticleService.getDisplayArticleByUrlTitle(
 				groupId, urlTitle);
 
-		return getJournalArticleAssetRenderer(article);
+		return _getJournalArticleAssetRenderer(article);
 	}
 
 	@Override
@@ -302,7 +302,7 @@ public class JournalArticleAssetRendererFactory
 		_journalConverter = journalConverter;
 	}
 
-	private JournalArticleAssetRenderer getJournalArticleAssetRenderer(
+	private JournalArticleAssetRenderer _getJournalArticleAssetRenderer(
 		JournalArticle article) {
 
 		JournalArticleAssetRenderer journalArticleAssetRenderer =

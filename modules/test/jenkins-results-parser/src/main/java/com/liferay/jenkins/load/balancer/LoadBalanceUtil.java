@@ -102,7 +102,7 @@ public class LoadBalanceUtil {
 
 				try {
 					Integer result = task.get();
-					
+
 					if (result == -1) {
 						badIndicies.add(i);
 						continue;
@@ -124,7 +124,7 @@ public class LoadBalanceUtil {
 					throw new RuntimeException(ie);
 				}
 			}
-			
+
 			if (badIndicies.size() == maxHostNames) {
 				throw new IllegalStateException(
 					"SEVERE: All hosts failed to respond.");
@@ -132,18 +132,19 @@ public class LoadBalanceUtil {
 
 			while (true) {
 				int x = -1;
-	
+
 				if (maxIndicies.size() > 0) {
-					x = maxIndicies.get(getRandomValue(0, maxIndicies.size() - 1));
+					x = maxIndicies.get(
+						getRandomValue(0, maxIndicies.size() - 1));
 				}
 				else {
 					x = getRandomValue(0, maxHostNames - 1);
 				}
-				
+
 				if (badIndicies.contains(x)) {
 					continue;
 				}
-	
+
 				return hostNameList.get(x);
 			}
 		}
@@ -281,7 +282,7 @@ public class LoadBalanceUtil {
 		@Override
 		public Integer call() throws Exception {
 			JSONObject jsonObject = null;
-			
+
 			try {
 				jsonObject = JenkinsResultsParserUtil.toJSONObject(_url, false);
 			} catch (Exception e) {

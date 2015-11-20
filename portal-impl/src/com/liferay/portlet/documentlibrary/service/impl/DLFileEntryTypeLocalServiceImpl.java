@@ -209,7 +209,7 @@ public class DLFileEntryTypeLocalServiceImpl
 				dlFileEntryType.getFileEntryTypeId()) > 0) {
 
 			throw new RequiredFileEntryTypeException(
-				"No file entries found for {fileEntryTypeId=" +
+				"There are file entries of file entry type {fileEntryTypeId=" +
 					dlFileEntryType.getFileEntryTypeId() + "}");
 		}
 

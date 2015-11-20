@@ -1130,6 +1130,43 @@
 		</run-batch-test>
 	</target>
 
+	<target name="oracle-service-start">
+		<exec executable="service" failonerror="true">
+			<arg line="oracledb start" />
+		</exec>
+
+		<retry retrycount="5">
+			<sequential>
+				<local name="output.content" />
+				<local name="return.code" />
+
+				<exec executable="${oracle.lsnrctl.executable}" outputproperty="output.content">
+					<arg value="services" />
+				</exec>
+
+				<echo>Output content:
+${output.content}</echo>
+
+				<if>
+					<or>
+						<contains string="${output.content}" substring="The listener supports no services" />
+					</or>
+					<then>
+						<sleep minutes="1" />
+
+						<fail message="Output content: ${output.content}" />
+					</then>
+				</if>
+			</sequential>
+		</retry>
+	</target>
+
+	<target name="oracle-service-stop">
+		<exec executable="service">
+			<arg line="oracledb stop" />
+		</exec>
+	</target>
+
 	<target name="plugins-compile">
 		<property name="testray.main.component.name" value="Plugins" />
 		<property name="testray.testcase.priority" value="4" />

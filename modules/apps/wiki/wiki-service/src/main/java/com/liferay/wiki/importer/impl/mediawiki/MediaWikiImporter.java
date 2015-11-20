@@ -183,7 +183,6 @@ public class MediaWikiImporter implements WikiImporter {
 		try {
 			long authorUserId = getUserId(userId, node, author, usersMap);
 
-			String format = "creole";
 			String parentTitle = readParentTitle(content);
 			String redirectTitle = readRedirectTitle(content);
 
@@ -194,31 +193,31 @@ public class MediaWikiImporter implements WikiImporter {
 			serviceContext.setAssetTagNames(
 				readAssetTagNames(userId, node, content));
 
-			if (Validator.isNull(redirectTitle)) {
-				Collection<String> supportedFormats = WikiUtil.getFormats();
+			String format = "creole";
 
-				if (supportedFormats.contains("mediawiki") &&
-					Validator.equals(
-						_wikiGroupServiceConfiguration.defaultFormat(),
-						"mediawiki")) {
+			Collection<String> supportedFormats = WikiUtil.getFormats();
 
-					format = "mediawiki";
-
-					content = content.replaceAll(
-						_imagesPattern.pattern(),
-						"$1$2" + SHARED_IMAGES_TITLE + StringPool.SLASH +
-						"$3$4");
-				}
-				else {
-					_translator.setStrictImportMode(strictImportMode);
-
-					content = _translator.translate(content);
-				}
-			}
-			else {
+			if (Validator.isNotNull(redirectTitle)) {
 				content =
 					StringPool.DOUBLE_OPEN_BRACKET + redirectTitle +
 						StringPool.DOUBLE_CLOSE_BRACKET;
+			}
+			else if (supportedFormats.contains("mediawiki") &&
+					 Validator.equals(
+						_wikiGroupServiceConfiguration.defaultFormat(),
+						"mediawiki")) {
+
+				content = content.replaceAll(
+					_imagesPattern.pattern(),
+					"$1$2" + SHARED_IMAGES_TITLE + StringPool.SLASH +
+						"$3$4");
+
+				format = "mediawiki";
+			}
+			else {
+				_translator.setStrictImportMode(strictImportMode);
+
+				content = _translator.translate(content);
 			}
 
 			WikiPage page = null;
@@ -289,7 +288,7 @@ public class MediaWikiImporter implements WikiImporter {
 
 			try {
 				if (_wikiPageLocalService.getPagesCount(
-						node.getNodeId(), frontPageTitle, true) > 0) {
+					node.getNodeId(), frontPageTitle, true) > 0) {
 
 					ServiceContext serviceContext = new ServiceContext();
 
@@ -340,7 +339,7 @@ public class MediaWikiImporter implements WikiImporter {
 	}
 
 	protected void processImages(
-			long userId, WikiNode node, InputStream imagesInputStream)
+		long userId, WikiNode node, InputStream imagesInputStream)
 		throws Exception {
 
 		if (imagesInputStream == null) {
@@ -437,7 +436,7 @@ public class MediaWikiImporter implements WikiImporter {
 		}
 		finally {
 			for (ObjectValuePair<String, InputStream> inputStreamOVP :
-					inputStreamOVPs) {
+				inputStreamOVPs) {
 
 				InputStream inputStream = inputStreamOVP.getValue();
 
@@ -538,8 +537,8 @@ public class MediaWikiImporter implements WikiImporter {
 	}
 
 	protected void processSpecialPages(
-			long userId, WikiNode node, Element rootElement,
-			List<String> specialNamespaces)
+		long userId, WikiNode node, Element rootElement,
+		List<String> specialNamespaces)
 		throws PortalException {
 
 		ProgressTracker progressTracker =
@@ -574,7 +573,7 @@ public class MediaWikiImporter implements WikiImporter {
 	}
 
 	protected String[] readAssetTagNames(
-			long userId, WikiNode node, String content)
+		long userId, WikiNode node, String content)
 		throws PortalException {
 
 		Matcher matcher = _categoriesPattern.matcher(content);
@@ -739,13 +738,12 @@ public class MediaWikiImporter implements WikiImporter {
 	private static final Set<String> _specialMediaWikiDirs = SetUtil.fromArray(
 		new String[] {"archive", "temp", "thumb"});
 
-	private volatile AssetTagLocalService _assetTagLocalService;
+	private AssetTagLocalService _assetTagLocalService;
 	private final MediaWikiToCreoleTranslator _translator =
 		new MediaWikiToCreoleTranslator();
-	private volatile UserLocalService _userLocalService;
-	private volatile WikiGroupServiceConfiguration
-		_wikiGroupServiceConfiguration;
-	private volatile WikiPageLocalService _wikiPageLocalService;
+	private UserLocalService _userLocalService;
+	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
+	private WikiPageLocalService _wikiPageLocalService;
 	private Pattern _wikiPageTitlesRemovePattern;
 
 }

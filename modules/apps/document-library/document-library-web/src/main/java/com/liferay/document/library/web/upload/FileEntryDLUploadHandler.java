@@ -150,7 +150,8 @@ public class FileEntryDLUploadHandler extends BaseUploadHandler {
 		long maxSize = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
 
 		if ((maxSize > 0) && (size > maxSize)) {
-			throw new FileSizeException(size + " exceeds " + maxSize);
+			throw new FileSizeException(
+				size + " exceeds its maximum permitted size of " + maxSize);
 		}
 	}
 

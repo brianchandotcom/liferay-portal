@@ -2876,7 +2876,7 @@ public class DLFileEntryLocalServiceImpl
 
 			if (extension.length() > maxLength) {
 				throw new FileExtensionException(
-					extension + " exceeds max length " + maxLength);
+					extension + " exceeds max length of " + maxLength);
 			}
 		}
 	}

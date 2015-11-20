@@ -19,10 +19,34 @@ import com.liferay.portal.kernel.cluster.Address;
 /**
  * @author Tina Tian
  */
-public class TestAddress implements Address {
+public class TestAddress implements Address, Comparable<TestAddress> {
 
 	public TestAddress(String address) {
 		_address = address;
+	}
+
+	@Override
+	public int compareTo(TestAddress testAddress) {
+		return _address.compareTo(testAddress._address);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof TestAddress)) {
+			return false;
+		}
+
+		TestAddress testAddress = (TestAddress)obj;
+
+		if (_address.equals(testAddress._address)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -33,6 +57,11 @@ public class TestAddress implements Address {
 	@Override
 	public Object getRealAddress() {
 		return _address;
+	}
+
+	@Override
+	public int hashCode() {
+		return _address.hashCode();
 	}
 
 	private final String _address;

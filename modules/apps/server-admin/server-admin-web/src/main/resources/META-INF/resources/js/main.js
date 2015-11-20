@@ -87,40 +87,17 @@ AUI.add(
 					_installXuggler: function(event) {
 						var instance = this;
 
-						Liferay.Util.toggleDisabled(instance._installXugglerButton, true);
-
 						var form = instance.get(STR_FORM);
 
-						instance._addInputsFromData(event.currentTarget);
-
-						var loadingMask = new A.LoadingMask(
-							{
-								'strings.loading': Liferay.Language.get('xuggler-library-is-installed'),
-								target: A.one('#adminXugglerPanel')
-							}
-						);
-
-						loadingMask.show();
-
-						A.io.request(
+						A.one('#adminXugglerPanelContent').load(
 							instance.get(STR_URL),
 							{
-								after: {
-									complete: function() {
-										loadingMask.hide();
-									},
-									success: function(event, id, obj) {
-										var responseData = this.get('responseData');
-
-										var adminXugglerPanel = AUI.$(responseData).find('#adminXugglerPanel');
-
-										var adminXugglerPanelHTML = adminXugglerPanel.html();
-
-										AUI.$('#adminXugglerPanel').html(adminXugglerPanelHTML);
-									}
+								form: form.getDOM(),
+								loadingMask: {
+									'strings.loading': Liferay.Language.get('xuggler-library-is-installed')
 								},
-								dataType: 'HTML',
-								form: form.getDOM()
+								selector: '#adminXugglerPanelContent',
+								where: 'outer'
 							}
 						);
 					},
@@ -166,6 +143,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-loading-mask-deprecated', 'liferay-portlet-base']
+		requires: ['aui-io-plugin-deprecated', 'liferay-portlet-base']
 	}
 );

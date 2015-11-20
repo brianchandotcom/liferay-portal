@@ -35,7 +35,7 @@ AUI.add(
 
 						var value = SelectField.superclass.getContextValue.apply(instance, arguments);
 
-						if (!Lang.isArray(value)) {
+						if (!Array.isArray(value)) {
 							try {
 								value = JSON.parse(value);
 							}

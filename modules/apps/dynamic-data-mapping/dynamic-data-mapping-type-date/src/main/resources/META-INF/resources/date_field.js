@@ -1,9 +1,7 @@
 AUI.add(
 	'liferay-ddm-form-field-date',
 	function(A) {
-		var Lang = A.Lang;
-
-		var isArray = Lang.isArray;
+		var isArray = Array.isArray;
 
 		var datePicker = new A.DatePicker(
 			{

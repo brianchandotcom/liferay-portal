@@ -1,8 +1,6 @@
 AUI.add(
 	'liferay-ddm-form-field-radio',
 	function(A) {
-		var Lang = A.Lang;
-
 		var RadioField = A.Component.create(
 			{
 				ATTRS: {
@@ -30,7 +28,7 @@ AUI.add(
 
 						var value = RadioField.superclass.getContextValue.apply(instance, arguments);
 
-						if (!Lang.isArray(value)) {
+						if (!Array.isArray(value)) {
 							try {
 								value = JSON.parse(value);
 							}

@@ -111,11 +111,9 @@ public class JournalArticleAssetRendererFactory
 		}
 
 		JournalArticleAssetRenderer journalArticleAssetRenderer =
-			new JournalArticleAssetRenderer(article);
+			getJournalArticleAssetRenderer(article);
 
 		journalArticleAssetRenderer.setAssetRendererType(type);
-		journalArticleAssetRenderer.setJournalContent(_journalContent);
-		journalArticleAssetRenderer.setJournalConverter(_journalConverter);
 		journalArticleAssetRenderer.setServletContext(_servletContext);
 
 		return journalArticleAssetRenderer;
@@ -130,7 +128,7 @@ public class JournalArticleAssetRendererFactory
 			_journalArticleService.getDisplayArticleByUrlTitle(
 				groupId, urlTitle);
 
-		return new JournalArticleAssetRenderer(article);
+		return getJournalArticleAssetRenderer(article);
 	}
 
 	@Override
@@ -302,6 +300,18 @@ public class JournalArticleAssetRendererFactory
 	@Reference(unbind = "-")
 	protected void setJournalConverter(JournalConverter journalConverter) {
 		_journalConverter = journalConverter;
+	}
+
+	private JournalArticleAssetRenderer getJournalArticleAssetRenderer(
+		JournalArticle article) {
+
+		JournalArticleAssetRenderer journalArticleAssetRenderer =
+			new JournalArticleAssetRenderer(article);
+
+		journalArticleAssetRenderer.setJournalContent(_journalContent);
+		journalArticleAssetRenderer.setJournalConverter(_journalConverter);
+
+		return journalArticleAssetRenderer;
 	}
 
 	private volatile DDMStructureLocalService _ddmStructureLocalService;

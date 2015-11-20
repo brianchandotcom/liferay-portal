@@ -10,6 +10,7 @@ dependencies {
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-io")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-validator")
+	compile project(":apps:dynamic-data-lists:dynamic-data-lists-api")
 	compile project(":apps:export-import:export-import-api")
 	compile project(":apps:mobile-device-rules:mobile-device-rules-api")
 	compile project(":core:osgi-service-tracker-collections")

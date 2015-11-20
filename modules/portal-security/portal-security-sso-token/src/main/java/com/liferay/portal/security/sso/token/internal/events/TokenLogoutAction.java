@@ -52,18 +52,13 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * <li>
  * If authentication cookies are configured, all named cookies are deleted by
  * the <code>@Component</code> defined in the class
- * {@link
- * com.liferay.portal.security.sso.token.internal.events.CookieLogoutProcessor}
- * (which implements
- * {@link LogoutProcessor})
+ * {@link CookieLogoutProcessor} (which implements {@link LogoutProcessor})
  * </li>
  * <li>
  * If a logout redirect URL is set, then an HTTP redirect response to the
  * specified URL is issued by the <code>@Component</code> defined in the class
- * {@link
- * com.liferay.portal.security.sso.token.internal.events.RedirectLogoutProcessor}
- * (which implements
- * {@link com.liferay.portal.security.sso.token.auto.events.LogoutProcessor})
+ * {@link RedirectLogoutProcessor} (which implements {@link
+ * com.liferay.portal.security.sso.token.auto.events.LogoutProcessor})
  * </li>
  * </ol>
  *

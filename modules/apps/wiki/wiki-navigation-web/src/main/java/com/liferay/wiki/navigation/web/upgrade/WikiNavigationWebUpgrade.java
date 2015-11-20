@@ -31,7 +31,7 @@ public class WikiNavigationWebUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.wiki.navigation.web", "0.0.1", "1.0.0",
+			"com.liferay.wiki.navigation.web", "0.0.0", "1.0.0",
 			new UpgradePortletPreferences());
 
 		registry.register(

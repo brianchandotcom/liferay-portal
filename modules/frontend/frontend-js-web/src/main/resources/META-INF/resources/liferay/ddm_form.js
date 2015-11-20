@@ -469,7 +469,7 @@ AUI.add(
 						var defaultLocale = themeDisplay.getDefaultLanguageId();
 
 						if (definition) {
-							defaultLocale = definition['defaultLanguageId'];
+							defaultLocale = definition.defaultLanguageId;
 						}
 
 						var label = labelsMap[instance.get('displayLocale')] || labelsMap[defaultLocale];

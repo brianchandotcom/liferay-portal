@@ -1,22 +1,14 @@
 buildscript {
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.service.builder", version: "latest.release"
+	}
+
 	repositories {
 		mavenLocal()
 
 		maven {
 			url "http://cdn.repository.liferay.com/nexus/content/groups/public"
 		}
-	}
-
-	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.service.builder", version: "latest.release"
-	}
-}
-
-repositories {
-	mavenLocal()
-
-	maven {
-		url "http://cdn.repository.liferay.com/nexus/content/groups/public"
 	}
 }
 
@@ -25,4 +17,12 @@ apply plugin: "com.liferay.portal.tools.service.builder"
 buildService {
 	apiDir = "../tmp/api"
 	testDir = "../tmp/test/integration"
+}
+
+repositories {
+	mavenLocal()
+
+	maven {
+		url "http://cdn.repository.liferay.com/nexus/content/groups/public"
+	}
 }

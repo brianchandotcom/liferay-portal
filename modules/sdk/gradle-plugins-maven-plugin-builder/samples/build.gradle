@@ -1,11 +1,11 @@
 buildscript {
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.maven.plugin.builder", version: "latest.release"
+	}
+
 	repositories {
 		mavenLocal()
 		mavenCentral()
-	}
-
-	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.maven.plugin.builder", version: "latest.release"
 	}
 }
 

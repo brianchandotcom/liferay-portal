@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Component;
 public class ControlPanelLayoutTypeAccessPolicy
 	extends DefaultLayoutTypeAccessPolicyImpl {
 
-		@Override
+	@Override
 	public void checkAccessAllowedToPortlet(
 			HttpServletRequest request, Layout layout, Portlet portlet)
 		throws PortalException {

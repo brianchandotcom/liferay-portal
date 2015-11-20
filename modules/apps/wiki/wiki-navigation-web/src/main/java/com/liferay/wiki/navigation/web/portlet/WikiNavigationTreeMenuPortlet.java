@@ -15,11 +15,18 @@
 package com.liferay.wiki.navigation.web.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.navigation.web.constants.WikiNavigationPortletKeys;
 
+import java.io.IOException;
+
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -47,4 +54,33 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class WikiNavigationTreeMenuPortlet extends MVCPortlet {
+
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		renderRequest.setAttribute(
+			WikiGroupServiceConfiguration.class.getName(),
+			_wikiGroupServiceConfiguration);
+
+		super.render(renderRequest, renderResponse);
+	}
+
+	@Reference
+	protected void setWikiGroupServiceConfiguration(
+		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
+
+		_wikiGroupServiceConfiguration = wikiGroupServiceConfiguration;
+	}
+
+	protected void unsetWikiGroupServiceConfiguration(
+		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
+
+		_wikiGroupServiceConfiguration = null;
+	}
+
+	private volatile WikiGroupServiceConfiguration
+		_wikiGroupServiceConfiguration;
+
 }

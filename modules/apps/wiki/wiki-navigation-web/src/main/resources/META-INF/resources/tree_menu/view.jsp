@@ -17,7 +17,7 @@
 <%@ include file="/tree_menu/init.jsp" %>
 
 <%
-String title = ParamUtil.getString(request, "title", PropsUtil.get("wiki.front.page.name"));
+String title = ParamUtil.getString(request, "title", wikiGroupServiceConfiguration.frontPageName());
 
 PortletURL portletURL = renderResponse.createRenderURL();
 

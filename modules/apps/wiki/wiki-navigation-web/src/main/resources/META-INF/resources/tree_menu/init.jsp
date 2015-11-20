@@ -19,12 +19,11 @@
 <%
 int depth = PrefsParamUtil.getInteger(portletPreferences, request, "depth", WikiNavigationConstants.DEPTH_ALL);
 long selNodeId = PrefsParamUtil.getLong(portletPreferences, request, "selNodeId");
+WikiGroupServiceConfiguration wikiGroupServiceConfiguration = (WikiGroupServiceConfiguration)request.getAttribute(WikiGroupServiceConfiguration.class.getName());
 
 if (selNodeId <= 0) {
-	String wikiName = PropsUtil.get("wiki.initial.node.name");
-
 	try {
-		WikiNode node = WikiNodeServiceUtil.getNode(themeDisplay.getScopeGroupId(), wikiName);
+		WikiNode node = WikiNodeServiceUtil.getNode(themeDisplay.getScopeGroupId(), wikiGroupServiceConfiguration.initialNodeName());
 
 		selNodeId = node.getNodeId();
 	}

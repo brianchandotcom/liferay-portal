@@ -2917,4 +2917,4 @@ There is no need to change anything, since this functionality is no used.
 
 #### Why was this change made?
 
-This change was made as a part of the ongoing strategies to cleanup unused
+This change was made as a part of the ongoing strategies to cleanup unused functionalities in the portal

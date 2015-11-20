@@ -360,7 +360,7 @@ AUI.add(
 							value: instance.getSerializedValue()
 						};
 
-						var fields = instance.get('fields');
+						var fields = instance.getImmediateFields();
 
 						if (fields.length > 0) {
 							fieldJSON.nestedFieldValues = AArray.invoke(fields, 'toJSON');

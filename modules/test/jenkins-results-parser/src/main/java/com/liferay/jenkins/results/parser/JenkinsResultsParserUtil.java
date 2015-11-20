@@ -19,12 +19,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
 import java.net.URL;
-
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -287,6 +284,21 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
+	public static void write(File file, String content) throws IOException {
+		System.out.println(
+			"Write file " + file + " with length " + content.length());
+
+		File parentDir = file.getParentFile();
+
+		if (!parentDir.exists()) {
+			System.out.println("Make parent directories for " + file);
+
+			parentDir.mkdirs();
+		}
+
+		Files.write(Paths.get(file.toURI()), content.getBytes());
+	}
+	
 	private static final Pattern _localURLPattern1 = Pattern.compile(
 		"https://test.liferay.com/([0-9]+)/");
 	private static final Pattern _localURLPattern2 = Pattern.compile(

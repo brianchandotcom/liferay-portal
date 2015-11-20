@@ -962,8 +962,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_secureXmlExclusionFiles = getPropertyList("secure.xml.excludes.files");
 		_staticLogVariableExclusionFiles = getPropertyList(
 			"static.log.excludes.files");
-		_temporaryLPS59076ExclusionFiles = getPropertyList(
-			"temporary.lps59076.excludes.files");
 		_testAnnotationsExclusionFiles = getPropertyList(
 			"test.annotations.excludes.files");
 		_upgradeServiceUtilExclusionFiles = getPropertyList(
@@ -2248,14 +2246,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				}
 			}
 
-			if (!isExcludedFile(
-					_temporaryLPS59076ExclusionFiles, absolutePath)) {
-
-				processErrorMessage(
-					fileName,
-					"LPS-59076: Use @Reference instead of calling " +
-						serviceUtilClassName + " directly: " + fileName);
-			}
+			processErrorMessage(
+				fileName,
+				"LPS-59076: Use @Reference instead of calling " +
+					serviceUtilClassName + " directly: " + fileName);
 		}
 
 		matcher = _setReferenceMethodPattern.matcher(content);
@@ -3589,7 +3583,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private Pattern _stagedModelTypesPattern = Pattern.compile(
 		"StagedModelType\\(([a-zA-Z.]*(class|getClassName[\\(\\)]*))\\)");
 	private List<String> _staticLogVariableExclusionFiles;
-	private List<String> _temporaryLPS59076ExclusionFiles;
 	private List<String> _testAnnotationsExclusionFiles;
 	private Pattern _throwsSystemExceptionPattern = Pattern.compile(
 		"(\n\t+.*)throws(.*) SystemException(.*)( \\{|;\n)");

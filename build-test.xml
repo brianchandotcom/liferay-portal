@@ -9,6 +9,10 @@
 			<available file="${test.base.dir.name}/test.properties" />
 		</and>
 		<then>
+			<property file="${test.base.dir.name}/test.${user.name}.properties" />
+			<property file="${test.base.dir.name}/test.${env.COMPUTERNAME}.properties" />
+			<property file="${test.base.dir.name}/test.${env.HOST}.properties" />
+			<property file="${test.base.dir.name}/test.${env.HOSTNAME}.properties" />
 			<property file="${test.base.dir.name}/test.properties" />
 		</then>
 	</if>

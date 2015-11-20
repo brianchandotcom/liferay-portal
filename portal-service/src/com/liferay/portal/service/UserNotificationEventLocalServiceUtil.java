@@ -478,6 +478,13 @@ public class UserNotificationEventLocalServiceUtil {
 				   .getUserNotificationEventByUuidAndCompanyId(uuid, companyId);
 	}
 
+	public static int getUserNotificationEventCount(long userId,
+		java.lang.String type, int deliveryType, boolean archived) {
+		return getService()
+				   .getUserNotificationEventCount(userId, type, deliveryType,
+			archived);
+	}
+
 	/**
 	* Returns a range of all the user notification events.
 	*

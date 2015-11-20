@@ -357,6 +357,14 @@ public class UserNotificationEventLocalServiceImpl
 	}
 
 	@Override
+	public int getUserNotificationEventCount(
+		long userId, String type, int deliveryType, boolean archived) {
+
+		return userNotificationEventPersistence.countByU_TY_DT_D(
+			userId, type, deliveryType, archived);
+	}
+
+	@Override
 	public List<UserNotificationEvent> getUserNotificationEvents(long userId) {
 		return userNotificationEventPersistence.findByUserId(userId);
 	}

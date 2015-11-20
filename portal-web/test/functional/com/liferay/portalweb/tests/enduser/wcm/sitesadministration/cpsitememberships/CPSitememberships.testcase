@@ -958,8 +958,8 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute macro="Page#changeSiteScope">
-			<var name="siteName" value="Liferay" />
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Liferay" />
 		</execute>
 
 		<execute function="AssertNotVisible" locator1="ControlMenu#ADMIN_SITE_ADMINISTRATION_USERS" value1="Users" />

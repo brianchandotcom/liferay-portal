@@ -157,12 +157,12 @@
 </tr>
 <tr>
 	<td>PRODUCT_MENU_PANEL_MENU_ITEM</td>
-	<td>//div[contains(@class,'active')]//a[.='${key_portletName}']</td>
+	<td>//div[@class='list-group-item']//li/a[contains(.,'${key_portletName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PRODUCT_MENU_PANEL_MENU_ITEM_2</td>
-	<td>xpath=(//div[contains(@class,'active')]//a[.='${key_portletName}'])[2]</td>
+	<td>xpath=(//div[@class='list-group-item']//li/a[contains(.,'${key_portletName}')])[2]</td>
 	<td></td>
 </tr>
 <tr>

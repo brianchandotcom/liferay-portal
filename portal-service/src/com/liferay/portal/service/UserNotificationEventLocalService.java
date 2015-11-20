@@ -359,6 +359,10 @@ public interface UserNotificationEventLocalService extends BaseLocalService,
 	public com.liferay.portal.model.UserNotificationEvent getUserNotificationEventByUuidAndCompanyId(
 		java.lang.String uuid, long companyId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserNotificationEventCount(long userId,
+		java.lang.String type, int deliveryType, boolean archived);
+
 	/**
 	* Returns a range of all the user notification events.
 	*

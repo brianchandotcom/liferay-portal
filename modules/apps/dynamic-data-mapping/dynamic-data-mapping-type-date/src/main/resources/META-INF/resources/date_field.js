@@ -109,7 +109,7 @@ AUI.add(
 						if (datePicker.get('activeInput') === triggerNode) {
 							var date = event.newSelection;
 
-							if (isArray(date) && (date.length > 0)) {
+							if (isArray(date) && date.length) {
 								date = date[0];
 							}
 

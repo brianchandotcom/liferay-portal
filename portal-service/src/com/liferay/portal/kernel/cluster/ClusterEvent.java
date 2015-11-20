@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.cluster;
 import java.io.Serializable;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -66,6 +67,6 @@ public class ClusterEvent implements Serializable {
 	}
 
 	private final ClusterEventType _clusterEventType;
-	private List<ClusterNode> _clusterNodes;
+	private List<ClusterNode> _clusterNodes = Collections.emptyList();
 
 }

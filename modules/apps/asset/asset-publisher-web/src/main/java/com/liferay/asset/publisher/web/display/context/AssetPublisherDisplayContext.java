@@ -62,7 +62,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
@@ -150,7 +149,7 @@ public class AssetPublisherDisplayContext {
 				_allAssetTagNames, assetTagName);
 		}
 
-		if (isMergeURLTags() || isMergeLayoutTags()) {
+		if (isMergeURLTags()) {
 			_allAssetTagNames = ArrayUtil.append(
 				_allAssetTagNames, getCompilerTagNames());
 		}
@@ -303,16 +302,6 @@ public class AssetPublisherDisplayContext {
 
 		if (isMergeURLTags()) {
 			_compilerTagNames = ParamUtil.getParameterValues(_request, "tags");
-		}
-
-		if (isMergeLayoutTags()) {
-			Set<String> layoutTagNames = AssetUtil.getLayoutTagNames(_request);
-
-			if (!layoutTagNames.isEmpty()) {
-				_compilerTagNames = ArrayUtil.append(
-					_compilerTagNames,
-					layoutTagNames.toArray(new String[layoutTagNames.size()]));
-			}
 		}
 
 		return _compilerTagNames;
@@ -824,15 +813,6 @@ public class AssetPublisherDisplayContext {
 		}
 
 		return _excludeZeroViewCount;
-	}
-
-	public boolean isMergeLayoutTags() {
-		if (_mergeLayoutTags == null) {
-			_mergeLayoutTags = GetterUtil.getBoolean(
-				_portletPreferences.getValue("mergeLayoutTags", null), false);
-		}
-
-		return _mergeLayoutTags;
 	}
 
 	public boolean isMergeURLTags() {
@@ -1432,7 +1412,6 @@ public class AssetPublisherDisplayContext {
 	private Boolean _excludeZeroViewCount;
 	private String[] _extensions;
 	private long[] _groupIds;
-	private Boolean _mergeLayoutTags;
 	private Boolean _mergeURLTags;
 	private String[] _metadataFields;
 	private Boolean _openOfficeServerEnabled;

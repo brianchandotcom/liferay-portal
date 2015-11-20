@@ -15,12 +15,9 @@
 package com.liferay.document.library.web.upload;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.upload.BaseUploadHandler;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -39,9 +36,6 @@ import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.io.InputStream;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 
 /**
  * @author Roberto Díaz
@@ -69,28 +63,6 @@ public class FileEntryDLUploadHandler extends BaseUploadHandler {
 
 		DLFolderPermission.check(
 			permissionChecker, groupId, folderId, ActionKeys.ADD_DOCUMENT);
-	}
-
-	@Override
-	protected void doHandleUploadException(
-			PortletRequest portletRequest, PortletResponse portletResponse,
-			PortalException pe, JSONObject jsonObject)
-		throws PortalException {
-
-		if (pe instanceof FileSizeException) {
-			String errorMessage = StringPool.BLANK;
-			int errorType = ServletResponseConstants.SC_FILE_SIZE_EXCEPTION;
-
-			JSONObject errorJSONObject = JSONFactoryUtil.createJSONObject();
-
-			errorJSONObject.put("errorType", errorType);
-			errorJSONObject.put("message", errorMessage);
-
-			jsonObject.put("error", errorJSONObject);
-		}
-		else {
-			throw pe;
-		}
 	}
 
 	@Override

@@ -123,10 +123,13 @@ public abstract class BaseUploadHandler implements UploadHandler {
 			long groupId, long folderId, PermissionChecker permissionChecker)
 		throws PortalException;
 
-	protected abstract void doHandleUploadException(
+	protected void doHandleUploadException(
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			PortalException pe, JSONObject jsonObject)
-		throws PortalException;
+		throws PortalException {
+
+		throw pe;
+	}
 
 	protected abstract FileEntry fetchFileEntry(
 			long userId, long groupId, long folderId, String fileName)

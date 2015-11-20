@@ -6,6 +6,10 @@ AUI.add(
 		var SelectField = A.Component.create(
 			{
 				ATTRS: {
+					multiple: {
+						value: false
+					},
+
 					options: {
 						validator: Array.isArray,
 						value: []
@@ -53,6 +57,7 @@ AUI.add(
 						return A.merge(
 							SelectField.superclass.getTemplateContext.apply(instance, arguments),
 							{
+								multiple: instance.get('multiple') ? 'multiple' : '',
 								options: instance.getOptions()
 							}
 						);

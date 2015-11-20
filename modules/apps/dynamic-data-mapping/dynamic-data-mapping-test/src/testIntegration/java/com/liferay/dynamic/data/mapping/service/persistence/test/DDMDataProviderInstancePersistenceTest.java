@@ -248,6 +248,12 @@ public class DDMDataProviderInstancePersistenceTest {
 			getOrderByComparator());
 	}
 
+	@Test
+	public void testFilterFindByGroupId() throws Exception {
+		_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, getOrderByComparator());
+	}
+
 	protected OrderByComparator<DDMDataProviderInstance> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("DDMDataProviderInstance",
 			"uuid", true, "dataProviderInstanceId", true, "groupId", true,

@@ -34,7 +34,6 @@ page import="com.liferay.portal.LocaleException" %><%@
 page import="com.liferay.portal.facebook.FacebookConnectUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
-page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProvider" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProviderUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.taglib.DynamicInclude" %><%@
@@ -89,16 +88,13 @@ page import="java.util.Map" %><%@
 page import="java.util.Set" %>
 
 <%@ page import="javax.portlet.PortletPreferences" %><%@
-page import="javax.portlet.PortletURL" %><%@
-page import="javax.portlet.WindowState" %>
+page import="javax.portlet.PortletURL" %>
 
 <portlet:defineObjects />
 
 <liferay-theme:defineObjects />
 
 <%
-WindowState windowState = liferayPortletRequest.getWindowState();
-
 PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
 
 String currentURL = currentURLObj.toString();

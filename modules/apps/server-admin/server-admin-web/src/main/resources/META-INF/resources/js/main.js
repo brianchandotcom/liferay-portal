@@ -63,20 +63,21 @@ AUI.add(
 						A.Array.invoke(instance._eventHandles, 'detach');
 					},
 
-					_addInputsFromData: function(node) {
+					_addInputsFromData: function(data) {
 						var instance = this;
 
 						var form = instance.get(STR_FORM);
 
-						var data = node.getData();
+						var inputsArray = A.Object.map(
+							data,
+							function(value, key) {
+								var nsKey = instance.ns(key);
 
-						for (var key in data) {
-							if (data.hasOwnProperty(key)) {
-								var namespaceKey = instance.ns(key);
-
-								form.append('<input id="' + namespaceKey + '" name="' + namespaceKey + '" type="hidden" value="' + data[key] + '" />');
+								return '<input id="' + nsKey + '" name="' + nsKey + '" type="hidden" value="' + value + '" />';
 							}
-						}
+						);
+
+						form.append(inputsArray.join(''));
 					},
 
 					_bindXuggler: function() {
@@ -143,13 +144,15 @@ AUI.add(
 
 						var form = instance.get(STR_FORM);
 
+						var data = event.currentTarget.getData();
+
 						var redirect = instance.one('#redirect', form);
 
 						if (redirect) {
 							redirect.val(instance.get('redirectURL'));
 						}
 
-						instance._addInputsFromData(event.currentTarget);
+						instance._addInputsFromData(data);
 
 						submitForm(
 							form,

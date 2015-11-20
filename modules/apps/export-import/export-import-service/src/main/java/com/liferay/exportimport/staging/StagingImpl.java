@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lock.DuplicateLockException;
 import com.liferay.portal.kernel.lock.Lock;
-import com.liferay.portal.kernel.lock.LockManagerUtil;
+import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -1257,14 +1257,13 @@ public class StagingImpl implements Staging {
 	@Deprecated
 	@Override
 	public void lockGroup(long userId, long groupId) throws PortalException {
-		if (LockManagerUtil.isLocked(Staging.class.getName(), groupId)) {
-			Lock lock = LockManagerUtil.getLock(
-				Staging.class.getName(), groupId);
+		if (_lockManager.isLocked(Staging.class.getName(), groupId)) {
+			Lock lock = _lockManager.getLock(Staging.class.getName(), groupId);
 
 			throw new DuplicateLockException(lock);
 		}
 
-		LockManagerUtil.lock(
+		_lockManager.lock(
 			userId, Staging.class.getName(), String.valueOf(groupId),
 			StagingImpl.class.getName(), false,
 			StagingConstants.LOCK_EXPIRATION_TIME);
@@ -1723,7 +1722,7 @@ public class StagingImpl implements Staging {
 	@Deprecated
 	@Override
 	public void unlockGroup(long groupId) {
-		LockManagerUtil.unlock(Staging.class.getName(), groupId);
+		_lockManager.unlock(Staging.class.getName(), groupId);
 	}
 
 	@Override
@@ -2446,6 +2445,11 @@ public class StagingImpl implements Staging {
 		_layoutService = layoutService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setLockManager(LockManager lockManager) {
+		_lockManager = lockManager;
+	}
+
 	protected void setRecentLayoutBranchId(
 		PortalPreferences portalPreferences, long layoutSetBranchId, long plid,
 		long layoutBranchId) {
@@ -2689,6 +2693,7 @@ public class StagingImpl implements Staging {
 	private volatile LayoutLocalService _layoutLocalService;
 	private volatile LayoutRevisionLocalService _layoutRevisionLocalService;
 	private volatile LayoutService _layoutService;
+	private volatile LockManager _lockManager;
 	private volatile StagingLocalService _stagingLocalService;
 	private volatile UserLocalService _userLocalService;
 	private volatile WorkflowInstanceLinkLocalService

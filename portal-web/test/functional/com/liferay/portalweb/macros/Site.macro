@@ -161,11 +161,9 @@
 	<command name="addMemberCP">
 		<var name="key_userScreenName" value="${userScreenName}" />
 
-		<execute function="AssertClick" locator1="SiteMemberships#TOOLBAR_ADD_MEMBERS" value1="Add Members" />
-		<execute function="AssertClick" locator1="MenuItem#USER" value1="User" />
+		<execute function="AssertClick" locator1="SiteMemberships#NAVIGATION_USERS" value1="Users" />
 
-		<execute function="Type" locator1="TextInput#KEYWORDS" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
+		<execute function="Click" locator1="Button#PLUS" />
 
 		<if>
 			<isset var="userMiddleName" />
@@ -186,10 +184,10 @@
 	<command name="addMemberOrganizationCP">
 		<var name="key_orgName" value="${orgName}" />
 
-		<execute function="AssertClick" locator1="SiteMemberships#TOOLBAR_ADD_MEMBERS" value1="Add Members" />
-		<execute function="AssertClick" locator1="MenuItem#ORGANIZATION" value1="Organization" />
-		<execute function="Type" locator1="Search#SEARCH_FIELD" value1="${orgName}" />
-		<execute function="AssertClick" locator1="Search#SEARCH_BUTTON" value1="Search" />
+		<execute function="AssertClick" locator1="SiteMemberships#NAVIGATION_ORGANIZATIONS" value1="Organizations" />
+
+		<execute function="Click" locator1="Button#PLUS" />
+
 		<execute function="AssertTextEquals" locator1="SiteMembershipsAddMembers#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
 		<execute function="Check" locator1="SiteMembershipsAddMembers#ORGANIZATION_TABLE_CHECKBOX" />
 		<execute function="Click" locator1="Button#SAVE" />
@@ -199,10 +197,10 @@
 	<command name="addMemberUserGroupCP">
 		<var name="key_userGroupName" value="${userGroupName}" />
 
-		<execute function="AssertClick" locator1="SiteMemberships#TOOLBAR_ADD_MEMBERS" value1="Add Members" />
-		<execute function="AssertClick" locator1="MenuItem#USER_GROUP" value1="User Group" />
-		<execute function="Type" locator1="TextInput#KEYWORDS" value1="${userGroupName}" />
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
+		<execute function="AssertClick" locator1="SiteMemberships#NAVIGATION_USER_GROUPS" value1="User Groups" />
+
+		<execute function="Click" locator1="Button#PLUS" />
+
 		<execute function="AssertTextEquals" locator1="SiteMembershipsAddMembers#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
 		<execute function="Check" locator1="SiteMembershipsAddMembers#USER_GROUP_TABLE_CHECKBOX" />
 		<execute function="Click" locator1="Button#SAVE" />

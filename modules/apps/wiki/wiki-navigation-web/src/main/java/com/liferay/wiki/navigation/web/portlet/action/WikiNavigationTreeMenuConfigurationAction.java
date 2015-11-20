@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.navigation.web.constants.WikiNavigationPortletKeys;
-import com.liferay.wiki.service.WikiNodeServiceUtil;
+import com.liferay.wiki.service.WikiNodeService;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -67,16 +67,23 @@ public class WikiNavigationTreeMenuConfigurationAction
 		super.setServletContext(servletContext);
 	}
 
+	@Reference(unbind = "-")
+	protected void setWikiNodeService(WikiNodeService wikiNodeService) {
+		_wikiNodeService = wikiNodeService;
+	}
+
 	protected void validateNode(ActionRequest actionRequest) throws Exception {
 		long selNodeId = GetterUtil.getLong(
 			getParameter(actionRequest, "selNodeId"));
 
 		try {
-			WikiNodeServiceUtil.getNode(selNodeId);
+			_wikiNodeService.getNode(selNodeId);
 		}
 		catch (NoSuchNodeException nsne) {
 			SessionErrors.add(actionRequest, nsne.getClass());
 		}
 	}
+
+	private WikiNodeService _wikiNodeService;
 
 }

@@ -754,8 +754,6 @@ AUI.add(
 			}
 		);
 
-		FieldTypes.field = Field;
-
 		var CheckboxField = A.Component.create(
 			{
 				EXTENDS: Field,
@@ -1065,6 +1063,25 @@ AUI.add(
 		);
 
 		FieldTypes['ddm-documentlibrary'] = DocumentLibraryField;
+
+		FieldTypes.field = Field;
+
+		var FieldsetField = A.Component.create(
+			{
+
+				EXTENDS: Field,
+
+				prototype: {
+					getFieldNodes: function() {
+						var instance = this;
+
+						return instance.get('container').all('.field-wrapper');
+					}
+				}
+			}
+		);
+
+		FieldTypes.fieldset = FieldsetField;
 
 		var ImageField = A.Component.create(
 			{

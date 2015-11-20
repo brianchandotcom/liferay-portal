@@ -2834,3 +2834,26 @@ method to generate the UI.
 
 This change was made as a part of the ongoing strategy to modularize Liferay
 Portal.
+
+---------------------------------------
+
+### Removed the mergeLayoutTags preference from Asset Publisher Portlet
+- **Date:** 2015-Nov-20
+- **JIRA Ticket:** LPS-60677
+
+#### What changed?
+
+The mergeLayoutTags preference has been removed from Asset Publisher.
+
+#### Who is affected?
+
+This affects any asset publisher portlet that used this preference.
+
+#### How should I update my code?
+
+There is no need to change anything, since this functionality is no used.
+
+#### Why was this change made?
+
+This change was made as a part of the ongoing strategies to cleanup unused
+functionalities in the portal

@@ -379,6 +379,10 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 					throw new FileSizeException(cause);
 				}
 
+				if (uploadException.isExceededLiferayFileItemSizeLimit()) {
+					throw new LiferayFileItemException(cause);
+				}
+
 				if (uploadException.isExceededRequestContentLengthLimit()) {
 					throw new RequestContentLengthException(cause);
 				}

@@ -26,12 +26,13 @@ String type = (String)request.getAttribute("liferay-ui:search:type");
 
 String id = searchContainer.getId(request, namespace);
 
-List resultRows = searchContainer.getResultRows();
+String emptyResultsMessage = searchContainer.getEmptyResultsMessage();
 List<String> headerNames = searchContainer.getHeaderNames();
 List<String> normalizedHeaderNames = searchContainer.getNormalizedHeaderNames();
-String emptyResultsMessage = searchContainer.getEmptyResultsMessage();
+Map orderableHeaders = searchContainer.getOrderableHeaders();
 RowChecker rowChecker = searchContainer.getRowChecker();
 RowMover rowMover = searchContainer.getRowMover();
+List resultRows = searchContainer.getResultRows();
 
 JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 %>

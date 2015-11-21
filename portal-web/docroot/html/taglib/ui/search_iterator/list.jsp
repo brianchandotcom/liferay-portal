@@ -20,8 +20,6 @@
 int end = searchContainer.getEnd();
 int total = searchContainer.getTotal();
 
-Map orderableHeaders = searchContainer.getOrderableHeaders();
-
 if (end > total) {
 	end = total;
 }

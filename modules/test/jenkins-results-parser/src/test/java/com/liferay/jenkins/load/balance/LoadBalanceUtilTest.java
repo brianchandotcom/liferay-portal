@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.jenkins.load.balancer;
+package com.liferay.jenkins.load.balance;
 
 import java.io.File;
 import java.net.URL;
@@ -22,9 +22,8 @@ import org.apache.tools.ant.Project;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.liferay.jenkins.load.balancer.LoadBalanceUtil;
+import com.liferay.jenkins.load.balance.LoadBalanceUtil;
 import com.liferay.jenkins.results.parser.BaseJenkinsResultsParserTestCase;
-import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
 /**
  * @author Peter Yoo

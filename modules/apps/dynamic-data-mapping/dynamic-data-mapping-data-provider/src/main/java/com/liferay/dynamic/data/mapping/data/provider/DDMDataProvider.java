@@ -27,4 +27,6 @@ public interface DDMDataProvider {
 			DDMDataProviderContext ddmDataProviderContext)
 		throws DDMDataProviderException;
 
+	public Class<?> getSettings();
+
 }

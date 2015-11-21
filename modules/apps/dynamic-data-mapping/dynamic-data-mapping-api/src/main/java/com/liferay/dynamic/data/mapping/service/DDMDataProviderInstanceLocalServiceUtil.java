@@ -218,6 +218,11 @@ public class DDMDataProviderInstanceLocalServiceUtil {
 				   .fetchDDMDataProviderInstanceByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance fetchDataProviderInstance(
+		long dataProviderInstanceId) {
+		return getService().fetchDataProviderInstance(dataProviderInstanceId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}

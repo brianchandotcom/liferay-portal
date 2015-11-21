@@ -661,6 +661,120 @@ public class DDMDataProviderInstanceUtil {
 	}
 
 	/**
+	* Returns all the d d m data provider instances that the user has permission to view where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @return the matching d d m data provider instances that the user has permission to view
+	*/
+	public static List<DDMDataProviderInstance> filterFindByGroupId(
+		long groupId) {
+		return getPersistence().filterFindByGroupId(groupId);
+	}
+
+	/**
+	* Returns a range of all the d d m data provider instances that the user has permission to view where groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMDataProviderInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param start the lower bound of the range of d d m data provider instances
+	* @param end the upper bound of the range of d d m data provider instances (not inclusive)
+	* @return the range of matching d d m data provider instances that the user has permission to view
+	*/
+	public static List<DDMDataProviderInstance> filterFindByGroupId(
+		long groupId, int start, int end) {
+		return getPersistence().filterFindByGroupId(groupId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the d d m data provider instances that the user has permissions to view where groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMDataProviderInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param start the lower bound of the range of d d m data provider instances
+	* @param end the upper bound of the range of d d m data provider instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching d d m data provider instances that the user has permission to view
+	*/
+	public static List<DDMDataProviderInstance> filterFindByGroupId(
+		long groupId, int start, int end,
+		OrderByComparator<DDMDataProviderInstance> orderByComparator) {
+		return getPersistence()
+				   .filterFindByGroupId(groupId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the d d m data provider instances before and after the current d d m data provider instance in the ordered set of d d m data provider instances that the user has permission to view where groupId = &#63;.
+	*
+	* @param dataProviderInstanceId the primary key of the current d d m data provider instance
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next d d m data provider instance
+	* @throws com.liferay.dynamic.data.mapping.NoSuchDataProviderInstanceException if a d d m data provider instance with the primary key could not be found
+	*/
+	public static DDMDataProviderInstance[] filterFindByGroupId_PrevAndNext(
+		long dataProviderInstanceId, long groupId,
+		OrderByComparator<DDMDataProviderInstance> orderByComparator)
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchDataProviderInstanceException {
+		return getPersistence()
+				   .filterFindByGroupId_PrevAndNext(dataProviderInstanceId,
+			groupId, orderByComparator);
+	}
+
+	/**
+	* Returns all the d d m data provider instances that the user has permission to view where groupId = any &#63;.
+	*
+	* @param groupIds the group IDs
+	* @return the matching d d m data provider instances that the user has permission to view
+	*/
+	public static List<DDMDataProviderInstance> filterFindByGroupId(
+		long[] groupIds) {
+		return getPersistence().filterFindByGroupId(groupIds);
+	}
+
+	/**
+	* Returns a range of all the d d m data provider instances that the user has permission to view where groupId = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMDataProviderInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupIds the group IDs
+	* @param start the lower bound of the range of d d m data provider instances
+	* @param end the upper bound of the range of d d m data provider instances (not inclusive)
+	* @return the range of matching d d m data provider instances that the user has permission to view
+	*/
+	public static List<DDMDataProviderInstance> filterFindByGroupId(
+		long[] groupIds, int start, int end) {
+		return getPersistence().filterFindByGroupId(groupIds, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the d d m data provider instances that the user has permission to view where groupId = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMDataProviderInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupIds the group IDs
+	* @param start the lower bound of the range of d d m data provider instances
+	* @param end the upper bound of the range of d d m data provider instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching d d m data provider instances that the user has permission to view
+	*/
+	public static List<DDMDataProviderInstance> filterFindByGroupId(
+		long[] groupIds, int start, int end,
+		OrderByComparator<DDMDataProviderInstance> orderByComparator) {
+		return getPersistence()
+				   .filterFindByGroupId(groupIds, start, end, orderByComparator);
+	}
+
+	/**
 	* Returns all the d d m data provider instances where groupId = any &#63;.
 	*
 	* <p>
@@ -761,6 +875,26 @@ public class DDMDataProviderInstanceUtil {
 	*/
 	public static int countByGroupId(long[] groupIds) {
 		return getPersistence().countByGroupId(groupIds);
+	}
+
+	/**
+	* Returns the number of d d m data provider instances that the user has permission to view where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @return the number of matching d d m data provider instances that the user has permission to view
+	*/
+	public static int filterCountByGroupId(long groupId) {
+		return getPersistence().filterCountByGroupId(groupId);
+	}
+
+	/**
+	* Returns the number of d d m data provider instances that the user has permission to view where groupId = any &#63;.
+	*
+	* @param groupIds the group IDs
+	* @return the number of matching d d m data provider instances that the user has permission to view
+	*/
+	public static int filterCountByGroupId(long[] groupIds) {
+		return getPersistence().filterCountByGroupId(groupIds);
 	}
 
 	/**

@@ -136,7 +136,7 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 		}
 	}
 
-	public void installApp(
+	public void installLocalApp(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -146,34 +146,34 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 		String installMethod = ParamUtil.getString(
 			uploadPortletRequest, "installMethod");
 
-		if (installMethod.equals("local")) {
-			String fileName = GetterUtil.getString(
-				uploadPortletRequest.getFileName("file"));
+		String fileName = GetterUtil.getString(
+			uploadPortletRequest.getFileName("file"));
 
-			File file = uploadPortletRequest.getFile("file");
+		File file = uploadPortletRequest.getFile("file");
 
-			byte[] bytes = FileUtil.getBytes(file);
+		byte[] bytes = FileUtil.getBytes(file);
 
-			if (ArrayUtil.isEmpty(bytes)) {
-				SessionErrors.add(
-					actionRequest, UploadException.class.getName());
-			}
-			else if (!fileName.endsWith(".jar") &&
-					 !fileName.endsWith(".lpkg") &&
-					 !fileName.endsWith(".war")) {
-
-				throw new FileExtensionException();
-			}
-			else {
-				String deployDir = PrefsPropsUtil.getString(
-					PropsKeys.AUTO_DEPLOY_DEPLOY_DIR);
-
-				FileUtil.copyFile(
-					file.toString(), deployDir + StringPool.SLASH + fileName);
-
-				SessionMessages.add(actionRequest, "pluginUploaded");
-			}
+		if (ArrayUtil.isEmpty(bytes)) {
+			SessionErrors.add(actionRequest, UploadException.class.getName());
 		}
+		else if (!fileName.endsWith(".jar") && !fileName.endsWith(".lpkg") &&
+				 !fileName.endsWith(".war")) {
+
+			throw new FileExtensionException();
+		}
+		else {
+			String deployDir = PrefsPropsUtil.getString(
+				PropsKeys.AUTO_DEPLOY_DEPLOY_DIR);
+
+			FileUtil.copyFile(
+				file.toString(), deployDir + StringPool.SLASH + fileName);
+
+			SessionMessages.add(actionRequest, "pluginUploaded");
+		}
+
+		String redirect = ParamUtil.getString(uploadPortletRequest, "redirect");
+
+		actionResponse.sendRedirect(redirect);
 	}
 
 	public void installRemoteApp(

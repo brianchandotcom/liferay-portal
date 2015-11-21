@@ -121,18 +121,6 @@ public class LoadBalanceUtil {
 		}
 	}
 
-	public static void main(String[] args) {
-		try {
-			System.out.println(
-				"Most available master: " +
-					getMostAvailableMasterURL(getProject()));
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			System.exit(-1);
-		}
-	}
-
 	protected static int calculateMaxHostNames(
 		Project project, String hostNamePrefix) {
 
@@ -286,35 +274,6 @@ public class LoadBalanceUtil {
 
 		protected final String url;
 
-	}
-
-	private static Project getProject() {
-		Project project = new Project();
-
-		project.setProperty("base.invocation.url", "http://test-1.liferay.com");
-		project.setProperty("jenkins.shared.dir", "mnt/mfs-ssd1-10.10/jenkins");
-		project.setProperty("jenkins.local.url[test-1-1]", "http://test-1-1");
-		project.setProperty("jenkins.local.url[test-1-2]", "http://test-1-2");
-		project.setProperty("jenkins.local.url[test-1-3]", "http://test-1-3");
-		project.setProperty("jenkins.local.url[test-1-4]", "http://test-1-4");
-		project.setProperty("jenkins.local.url[test-1-5]", "http://test-1-5");
-		project.setProperty("jenkins.local.url[test-1-6]", "http://test-1-6");
-		project.setProperty("jenkins.local.url[test-1-7]", "http://test-1-7");
-		project.setProperty("jenkins.local.url[test-1-8]", "http://test-1-8");
-		project.setProperty("jenkins.local.url[test-1-9]", "http://test-1-9");
-		project.setProperty("jenkins.local.url[test-1-10]", "http://test-1-10");
-		project.setProperty("jenkins.local.url[test-1-11]", "http://test-1-11");
-		project.setProperty("jenkins.local.url[test-1-12]", "http://test-1-12");
-		project.setProperty("jenkins.local.url[test-1-13]", "http://test-1-13");
-		project.setProperty("jenkins.local.url[test-1-14]", "http://test-1-14");
-		project.setProperty("jenkins.local.url[test-1-15]", "http://test-1-15");
-		project.setProperty("jenkins.local.url[test-1-16]", "http://test-1-16");
-		project.setProperty("jenkins.local.url[test-1-17]", "http://test-1-17");
-		project.setProperty("jenkins.local.url[test-1-18]", "http://test-1-18");
-		project.setProperty("jenkins.local.url[test-1-19]", "http://test-1-19");
-		project.setProperty("jenkins.local.url[test-1-20]", "http://test-1-20");
-
-		return project;
 	}
 
 	private static final long _MAX_AGE = 30 * 1000;

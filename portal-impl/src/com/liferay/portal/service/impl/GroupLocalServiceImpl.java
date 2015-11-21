@@ -890,12 +890,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				classNameLocalService.getClassNameId(Group.class),
 				group.getGroupId());
 
-			// Software catalog
-
-			scFrameworkVersionLocalService.deleteFrameworkVersions(
-				group.getGroupId());
-			scProductEntryLocalService.deleteProductEntries(group.getGroupId());
-
 			// Resources
 
 			List<ResourcePermission> resourcePermissions =

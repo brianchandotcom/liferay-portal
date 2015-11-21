@@ -1332,7 +1332,8 @@ public class FileSystemImporter extends BaseImporter {
 
 		portletPreferencesJSONObject.put("articleId", journalArticleId);
 		portletPreferencesJSONObject.put("groupId", groupId);
-		portletPreferencesJSONObject.put("portletSetupShowBorders", false);
+		portletPreferencesJSONObject.put(
+			"portletSetupPortletDecoratorId", "borderless");
 
 		portletJSONObject.put(
 			"portletPreferences", portletPreferencesJSONObject);

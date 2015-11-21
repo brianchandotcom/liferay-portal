@@ -31,6 +31,7 @@ import com.liferay.portal.upgrade.v7_0_0.UpgradeExpando;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeGroup;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeLastPublishDate;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeListType;
+import com.liferay.portal.upgrade.v7_0_0.UpgradeLookAndFeel;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeMembershipRequest;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeMessageBoards;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeModules;
@@ -76,6 +77,7 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 		upgrade(UpgradeGroup.class);
 		upgrade(UpgradeLastPublishDate.class);
 		upgrade(UpgradeListType.class);
+		upgrade(UpgradeLookAndFeel.class);
 		upgrade(UpgradeMembershipRequest.class);
 		upgrade(UpgradeMessageBoards.class);
 		upgrade(UpgradeModules.class);

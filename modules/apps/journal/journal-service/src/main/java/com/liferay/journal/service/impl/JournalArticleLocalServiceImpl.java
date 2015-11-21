@@ -120,7 +120,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -6476,13 +6475,9 @@ public class JournalArticleLocalServiceImpl
 				dlAppLocalService.getFileEntryByUuidAndGroupId(uuid, groupId);
 
 			if (tempFile) {
-				String originalTempFileName =
-					TempFileEntryUtil.getOriginalTempFileName(
-						fileEntry.getFileName());
-
 				String fileEntryName = DLUtil.getUniqueFileName(
 					fileEntry.getGroupId(), fileEntry.getFolderId(),
-					originalTempFileName);
+					fileEntry.getFileName());
 
 				fileEntry = dlAppLocalService.addFileEntry(
 					fileEntry.getUserId(), fileEntry.getGroupId(), 0,

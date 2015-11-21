@@ -59,16 +59,6 @@
 		</liferay-ui:panel>
 	</liferay-ui:panel-container>
 
-	<liferay-ui:panel-container extended="<%= true %>" id="adminSoftwareCatalogImagesPanelContainer" persistState="<%= true %>">
-		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="adminSoftwareCatalogImagesPanel" persistState="<%= true %>" title="software-catalog-images">
-			<aui:input cssClass="lfr-input-text-container" label="maximum-file-size" name="scImageMaxSize" type="text" value="<%= PrefsPropsUtil.getLong(PropsKeys.SC_IMAGE_MAX_SIZE) %>" />
-
-			<aui:input cssClass="lfr-input-text-container" label="maximum-thumbnail-height" name="scImageThumbnailMaxHeight" type="text" value="<%= PrefsPropsUtil.getLong(PropsKeys.SC_IMAGE_THUMBNAIL_MAX_HEIGHT) %>" />
-
-			<aui:input cssClass="lfr-input-text-container" label="maximum-thumbnail-width" name="scImageThumbnailMaxWidth" type="text" value="<%= PrefsPropsUtil.getLong(PropsKeys.SC_IMAGE_THUMBNAIL_MAX_WIDTH) %>" />
-		</liferay-ui:panel>
-	</liferay-ui:panel-container>
-
 	<liferay-ui:panel-container extended="<%= true %>" id="adminUserImagesPanelContainer" persistState="<%= true %>">
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="adminUserImagesPanel" persistState="<%= true %>" title="user-images">
 			<aui:input cssClass="lfr-input-text-container" label="maximum-file-size" name="usersImageMaxSize" type="text" value="<%= PrefsPropsUtil.getLong(PropsKeys.USERS_IMAGE_MAX_SIZE) %>" />

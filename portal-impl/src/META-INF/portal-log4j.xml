@@ -668,10 +668,6 @@
 		<priority value="ERROR" />
 	</category>
 
-	<category name="com.liferay.portal.servlet.SoftwareCatalogServlet">
-		<priority value="ERROR" />
-	</category>
-
 	<category name="com.liferay.portal.servlet.filters">
 		<priority value="ERROR" />
 	</category>

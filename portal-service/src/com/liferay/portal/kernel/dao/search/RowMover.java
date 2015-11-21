@@ -31,20 +31,22 @@ public class RowMover {
 	public RowMover() {
 	}
 
-	public void addDropTarget(RowMoverDropTarget dropTarget) {
-		_dropTargets.add(dropTarget);
+	public void addRowMoverDropTarget(RowMoverDropTarget rowMoverDropTarget) {
+		_rowMoverDropTargets.add(rowMoverDropTarget);
 	}
 
-	public List<RowMoverDropTarget> getDropTargets() {
-		return _dropTargets;
+	public List<RowMoverDropTarget> getRowMoverDropTargets() {
+		return _rowMoverDropTargets;
 	}
 
 	public String getRowSelector() {
 		return _rowSelector;
 	}
 
-	public void setDropTargets(List<RowMoverDropTarget> dropTargets) {
-		_dropTargets = dropTargets;
+	public void setRowMoverDropTargets(
+		List<RowMoverDropTarget> rowMoverDropTargets) {
+
+		_rowMoverDropTargets = rowMoverDropTargets;
 	}
 
 	public void setRowSelector(String rowSelector) {
@@ -56,23 +58,26 @@ public class RowMover {
 
 		jsonObject.put("rowSelector", _rowSelector);
 
-		JSONArray dropTargetsJSONArray = JSONFactoryUtil.createJSONArray();
+		JSONArray rowMoverDropTargetsJSONArray =
+			JSONFactoryUtil.createJSONArray();
 
-		for (RowMoverDropTarget dropTarget : _dropTargets) {
-			String dropTargetJSON = JSONFactoryUtil.looseSerialize(dropTarget);
+		for (RowMoverDropTarget rowMoverDropTarget : _rowMoverDropTargets) {
+			String rowMoverDropTargetJSON = JSONFactoryUtil.looseSerialize(
+				rowMoverDropTarget);
 
-			JSONObject dropTargetJSONObject = JSONFactoryUtil.createJSONObject(
-				dropTargetJSON);
+			JSONObject rowMoverDropTargetJSONObject =
+				JSONFactoryUtil.createJSONObject(rowMoverDropTargetJSON);
 
-			dropTargetsJSONArray.put(dropTargetJSONObject);
+			rowMoverDropTargetsJSONArray.put(
+				rowMoverDropTargetJSONObject);
 		}
 
-		jsonObject.put("dropTargets", dropTargetsJSONArray);
+		jsonObject.put("dropTargets", rowMoverDropTargetsJSONArray);
 
 		return jsonObject.toString();
 	}
 
-	private List<RowMoverDropTarget> _dropTargets = new ArrayList<>();
+	private List<RowMoverDropTarget> _rowMoverDropTargets = new ArrayList<>();
 	private String _rowSelector = StringPool.BLANK;
 
 }

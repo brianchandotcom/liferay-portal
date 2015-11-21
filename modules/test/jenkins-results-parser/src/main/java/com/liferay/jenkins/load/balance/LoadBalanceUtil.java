@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.jenkins.load.balancer;
+package com.liferay.jenkins.load.balance;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 

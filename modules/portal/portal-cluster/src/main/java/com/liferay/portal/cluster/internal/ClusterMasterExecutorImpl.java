@@ -284,7 +284,7 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 			ClusterEventType clusterEventType =
 				clusterEvent.getClusterEventType();
 
-			if (clusterEventType.equals(ClusterEventType.COORDINATOR_UPDATE)) {
+			if (clusterEventType == ClusterEventType.COORDINATOR_UPDATE) {
 				getMasterClusterNodeId(true);
 			}
 		}

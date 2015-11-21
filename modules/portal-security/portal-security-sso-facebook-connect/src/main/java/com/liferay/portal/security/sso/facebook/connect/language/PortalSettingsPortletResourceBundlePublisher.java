@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.facebook.connect.util;
+package com.liferay.portal.security.sso.facebook.connect.language;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.language.BaseResourceBundlePublisher;

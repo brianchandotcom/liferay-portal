@@ -46,42 +46,44 @@ public class PortalSettingsFacebookConnectAuthenticationFormMVCActionCommand
 	protected void doValidateForm(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
-		boolean fbEnabled = ParamUtil.getBoolean(
+		boolean facebookEnabled = ParamUtil.getBoolean(
 			actionRequest, "facebook--enabled");
 
-		if (!fbEnabled) {
+		if (!facebookEnabled) {
 			return;
 		}
 
-		String fbGraphURL = ParamUtil.getString(
+		String facebookGraphURL = ParamUtil.getString(
 			actionRequest, "facebook--graphURL");
-		String fbOauthAuthURL = ParamUtil.getString(
+		String facebookOauthAuthURL = ParamUtil.getString(
 			actionRequest, "facebook--oauthAuthURL");
-		String fbOauthRedirectURL = ParamUtil.getString(
+		String facebookOauthRedirectURL = ParamUtil.getString(
 			actionRequest, "facebook--oauthRedirectURL");
-		String fbOauthTokenURL = ParamUtil.getString(
+		String facebookOauthTokenURL = ParamUtil.getString(
 			actionRequest, "facebook--oauthTokenURL");
 
-		if (Validator.isNotNull(fbGraphURL) && !Validator.isUrl(fbGraphURL)) {
+		if (Validator.isNotNull(facebookGraphURL) &&
+			!Validator.isUrl(facebookGraphURL)) {
+
 			SessionErrors.add(actionRequest, "facebookConnectGraphURLInvalid");
 		}
 
-		if (Validator.isNotNull(fbOauthAuthURL) &&
-			!Validator.isUrl(fbOauthAuthURL)) {
+		if (Validator.isNotNull(facebookOauthAuthURL) &&
+			!Validator.isUrl(facebookOauthAuthURL)) {
 
 			SessionErrors.add(
 				actionRequest, "facebookConnectOauthAuthURLInvalid");
 		}
 
-		if (Validator.isNotNull(fbOauthRedirectURL) &&
-			!Validator.isUrl(fbOauthRedirectURL)) {
+		if (Validator.isNotNull(facebookOauthRedirectURL) &&
+			!Validator.isUrl(facebookOauthRedirectURL)) {
 
 			SessionErrors.add(
 				actionRequest, "facebookConnectOauthRedirectURLInvalid");
 		}
 
-		if (Validator.isNotNull(fbOauthTokenURL) &&
-			!Validator.isUrl(fbOauthTokenURL)) {
+		if (Validator.isNotNull(facebookOauthTokenURL) &&
+			!Validator.isUrl(facebookOauthTokenURL)) {
 
 			SessionErrors.add(
 				actionRequest, "facebookConnectOauthTokenURLInvalid");

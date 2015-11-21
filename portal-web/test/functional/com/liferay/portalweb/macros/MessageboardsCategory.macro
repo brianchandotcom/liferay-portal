@@ -217,8 +217,8 @@
 	</command>
 
 	<command name="tearDownCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<while>

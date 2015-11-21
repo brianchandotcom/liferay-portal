@@ -70,8 +70,8 @@
 	</command>
 
 	<command name="DeleteMessageboardsThread" priority="5">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute macro="MessageboardsThread#addCP">
@@ -79,8 +79,8 @@
 			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute macro="MessageboardsThread#moveToRecycleBinCP">
@@ -107,8 +107,8 @@
 			<var name="assetName" value="MB Thread Message Subject" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewDefaultCP">
@@ -117,8 +117,8 @@
 	</command>
 
 	<command name="RestoreMessageboardsThread" priority="5">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute macro="MessageboardsThread#addCP">
@@ -126,8 +126,8 @@
 			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute macro="MessageboardsThread#moveToRecycleBinCP">
@@ -154,8 +154,8 @@
 			<var name="assetName" value="MB Thread Message Subject" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewCP">

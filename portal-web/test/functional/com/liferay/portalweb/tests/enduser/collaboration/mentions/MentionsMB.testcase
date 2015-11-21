@@ -38,8 +38,8 @@
 	</tear-down>
 
 	<command name="ViewMentionViaMessageBoardsThread" priority="5">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute macro="Mentions#addMentionViaMessageBoardThread">
@@ -49,8 +49,8 @@
 			<var name="threadSubject" value="Thread Subject" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewCP">
@@ -66,8 +66,8 @@
 	</command>
 
 	<command name="ViewMentionViaMessageBoardsThreadReply" priority="5">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute macro="MessageboardsThread#addCP">
@@ -75,8 +75,8 @@
 			<var name="threadSubject" value="Thread Subject" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute macro="Mentions#addMentionViaMessageBoardsReply">
@@ -86,8 +86,8 @@
 			<var name="threadSubject" value="Thread Subject" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewReplyCP">
@@ -106,8 +106,8 @@
 	</command>
 
 	<command name="ViewMentionViaUpdatedMessageBoardsThread" priority="5">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute macro="MessageboardsThread#addCP">
@@ -115,8 +115,8 @@
 			<var name="threadSubject" value="Thread Subject" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute macro="Mentions#addMentionViaMessageBoardThread">
@@ -127,8 +127,8 @@
 			<var name="threadSubject" value="Thread Subject" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewCP">

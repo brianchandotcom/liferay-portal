@@ -113,8 +113,8 @@
 		<var name="threadSubject" value="MB Thread Message Subject" />
 		<var name="workflowAssetType" value="Message Boards Message" />
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute macro="MessageboardsThread#addWithWorkflowCP">
@@ -278,8 +278,8 @@
 		<var name="threadSubject" value="MB Thread Message Subject" />
 		<var name="workflowAssetType" value="Message Boards Message" />
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute macro="MessageboardsThread#addWithWorkflowCP">

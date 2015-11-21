@@ -16,8 +16,8 @@
 	<command name="AddMBCategory" priority="5">
 		<var name="categoryName" value="MB Category Name" />
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#addCP">
@@ -37,16 +37,16 @@
 		<var name="subCategoryDescription" value="MB Subcategory Description" />
 		<var name="subCategoryName" value="MB Subcategory Name" />
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#addCP">
 			<var name="categoryName" value="${categoryName}" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#addSubcategoryCP">
@@ -60,8 +60,8 @@
 		<var name="threadBody" value="MB Thread Message Body" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute macro="MessageboardsThread#addCP">
@@ -69,8 +69,8 @@
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewCP">
@@ -81,8 +81,8 @@
 	</command>
 
 	<command name="EditMBThreadBody" priority="5">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute macro="MessageboardsThread#addCP">
@@ -90,8 +90,8 @@
 			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute macro="MessageboardsThread#gotoCP">
@@ -102,8 +102,8 @@
 			<var name="threadBodyEdit" value="MB Thread Message Body Edit" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewCP">
@@ -114,8 +114,8 @@
 	</command>
 
 	<command name="EditMBThreadSubject" priority="5">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute macro="MessageboardsThread#addCP">
@@ -123,8 +123,8 @@
 			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute macro="MessageboardsThread#gotoCP">
@@ -135,8 +135,8 @@
 			<var name="threadSubjectEdit" value="MB Thread Message Subject Edit" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewCP">
@@ -147,8 +147,8 @@
 	</command>
 
 	<command name="EditMBThreadSubjectAndBody" priority="5">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute macro="MessageboardsThread#addCP">
@@ -156,8 +156,8 @@
 			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute macro="MessageboardsThread#gotoCP">
@@ -169,8 +169,8 @@
 			<var name="threadSubjectEdit" value="MB Thread Message Subject Edit" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewCP">
@@ -184,8 +184,8 @@
 		<var name="threadBody" value="MB Thread Message Body" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute macro="MessageboardsThread#addCP">
@@ -193,16 +193,16 @@
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute macro="MessageboardsThread#moveToRecycleBinCP">
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewDefaultCP">
@@ -211,8 +211,8 @@
 	</command>
 
 	<command name="ViewAnonymousPostingAllowedCheckboxConfiguration" priority="3">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewAnonymousPostingCheckboxCP" />
@@ -225,8 +225,8 @@
 			<var name="anonymousPostingEnabled" value="false" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute macro="Portlet#gotoPortletOptions">
@@ -237,8 +237,8 @@
 			<var name="anonymousPostingEnabled" value="false" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewNoAnonymousPostingCheckboxCP" />

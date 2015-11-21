@@ -30,8 +30,8 @@
 			<var name="solrVersion" value="5.2.1" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
 		</execute>
 
 		<execute macro="MessageboardsThread#addCP">

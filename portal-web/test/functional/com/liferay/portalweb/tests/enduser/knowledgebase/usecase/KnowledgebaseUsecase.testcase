@@ -746,8 +746,8 @@
 
 		<execute macro="KBArticle#viewImageViaContentCmd" />
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Documents and Media" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no documents or media files in this folder." />

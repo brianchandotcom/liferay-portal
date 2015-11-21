@@ -184,7 +184,7 @@ public class LoadBalanceUtil {
 				new IdleSlaveCounterCallable(
 					project.getProperty(
 						"jenkins.local.url[" + targetHostName + "]") +
-							"/computer/api/json");
+							"/computer/api/json?pretty&tree=computer[idle]");
 
 			FutureTask<Integer> futureTask = new FutureTask<>(callable);
 

@@ -205,16 +205,6 @@
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
-	<command name="changeSiteScope">
-		<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_TABS_SITES_NAVIGATION" value1="Sites" />
-
-		<execute function="Click" locator1="ProductMenu#PRODUCT_MENU_PANEL_SITE_SELECTOR" />
-
-		<var name="key_portletName" value="${siteName}" />
-
-		<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_PANEL_MENU_ITEM" value1="${siteName}" />
-	</command>
-
 	<command name="deleteFriendlyURLPG">
 		<var name="key_friendlyUrlLocalized" value="${friendlyUrlLocalized}" />
 
@@ -320,8 +310,8 @@
 		<if>
 			<isset var="siteScopeName" />
 			<then>
-				<execute macro="Page#changeSiteScope">
-					<var name="siteName" value="${siteScopeName}" />
+				<execute macro="ProductMenu#gotoSite">
+					<var name="site" value="${siteScopeName}" />
 				</execute>
 			</then>
 		</if>
@@ -396,8 +386,8 @@
 		<if>
 			<isset var="siteScopeName" />
 			<then>
-				<execute macro="Page#changeSiteScope">
-					<var name="siteName" value="${siteScopeName}" />
+				<execute macro="ProductMenu#gotoSite">
+					<var name="site" value="${siteScopeName}" />
 				</execute>
 			</then>
 		</if>

@@ -56,8 +56,6 @@ public class RowMover {
 	public String toJSON() throws PortalException {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("rowSelector", _rowSelector);
-
 		JSONArray rowMoverDropTargetsJSONArray =
 			JSONFactoryUtil.createJSONArray();
 
@@ -73,6 +71,8 @@ public class RowMover {
 		}
 
 		jsonObject.put("dropTargets", rowMoverDropTargetsJSONArray);
+
+		jsonObject.put("rowSelector", _rowSelector);
 
 		return jsonObject.toString();
 	}

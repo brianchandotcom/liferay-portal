@@ -38,8 +38,6 @@ import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 
 import java.io.Serializable;
 
-import java.lang.reflect.InvocationTargetException;
-
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
@@ -334,8 +332,8 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 
 			Assert.fail();
 		}
-		catch (InvocationTargetException ite) {
-			Throwable throwable = ite.getTargetException();
+		catch (Exception e) {
+			Throwable throwable = e.getCause();
 
 			Assert.assertEquals(timestamp, throwable.getMessage());
 		}

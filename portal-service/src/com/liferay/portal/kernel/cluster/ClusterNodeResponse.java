@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.cluster;
 
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
@@ -50,17 +51,9 @@ public class ClusterNodeResponse implements Serializable {
 		return _exception;
 	}
 
-	public Serializable getPayload() {
+	public Object getResult() {
 		if (_exception != null) {
-			return _exception;
-		}
-
-		return _result;
-	}
-
-	public Object getResult() throws Exception {
-		if (_exception != null) {
-			throw _exception;
+			return ReflectionUtil.throwException(_exception);
 		}
 
 		return _result;

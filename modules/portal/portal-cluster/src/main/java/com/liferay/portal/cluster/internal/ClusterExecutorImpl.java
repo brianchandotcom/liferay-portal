@@ -418,12 +418,16 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 	protected void handleReceivedClusterNodeResponse(
 		ClusterNodeResponse clusterNodeResponse) {
 
-		Serializable payload = clusterNodeResponse.getPayload();
+		Exception exception = clusterNodeResponse.getException();
 
-		if (payload instanceof ClusterNodeStatus) {
-			_memberJoined((ClusterNodeStatus)payload);
+		if (exception == null) {
+			Serializable result = (Serializable)clusterNodeResponse.getResult();
 
-			return;
+			if (result instanceof ClusterNodeStatus) {
+				_memberJoined((ClusterNodeStatus)result);
+
+				return;
+			}
 		}
 
 		String uuid = clusterNodeResponse.getUuid();

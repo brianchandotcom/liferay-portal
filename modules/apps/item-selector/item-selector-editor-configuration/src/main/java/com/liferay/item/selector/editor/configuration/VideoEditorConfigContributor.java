@@ -16,8 +16,8 @@ package com.liferay.item.selector.editor.configuration;
 
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
-import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
+import com.liferay.item.selector.criteria.video.criterion.VideoItemSelectorCriterion;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -34,10 +34,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Sergio González
+ * @author Carlos Lancha
  */
 @Component(service = EditorConfigContributor.class)
-public class ImageEditorConfigContributor extends BaseEditorConfigContributor {
+public class VideoEditorConfigContributor extends BaseEditorConfigContributor {
 
 	@Override
 	public void populateConfigJSONObject(
@@ -52,7 +52,7 @@ public class ImageEditorConfigContributor extends BaseEditorConfigContributor {
 				"liferay-ui:input-editor:allowBrowseDocuments"));
 
 		if (allowBrowseDocuments) {
-			itemSelectorCriteria.add(new ImageItemSelectorCriterion());
+			itemSelectorCriteria.add(new VideoItemSelectorCriterion());
 		}
 
 		itemSelectorCriteria.add(new URLItemSelectorCriterion());
@@ -64,9 +64,9 @@ public class ImageEditorConfigContributor extends BaseEditorConfigContributor {
 
 		if (itemSelectorURL != null) {
 			jsonObject.put(
-				"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString());
+				"filebrowserVideoBrowseLinkUrl", itemSelectorURL.toString());
 			jsonObject.put(
-				"filebrowserImageBrowseUrl", itemSelectorURL.toString());
+				"filebrowserVideoBrowseUrl", itemSelectorURL.toString());
 		}
 	}
 
@@ -79,6 +79,6 @@ public class ImageEditorConfigContributor extends BaseEditorConfigContributor {
 		return _itemSelector;
 	}
 
-	private volatile ItemSelector _itemSelector;
+	private ItemSelector _itemSelector;
 
 }

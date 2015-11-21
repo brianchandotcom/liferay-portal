@@ -35,7 +35,7 @@ public class EntriesMover extends RowMover {
 		moveToFolderDropTarget.setActiveCssClass("active");
 		moveToFolderDropTarget.setSelector("[data-folder=\"true\"]");
 
-		addDropTarget(moveToFolderDropTarget);
+		addRowMoverDropTarget(moveToFolderDropTarget);
 
 		if (TrashUtil.isTrashEnabled(scopeGroupId)) {
 			RowMoverDropTarget moveToTrashDropTarget = new RowMoverDropTarget();
@@ -55,7 +55,7 @@ public class EntriesMover extends RowMover {
 			moveToTrashDropTarget.setSelector(
 				"#_" + productMenuPortletId + "_portlet_" + trashPortletId);
 
-			addDropTarget(moveToTrashDropTarget);
+			addRowMoverDropTarget(moveToTrashDropTarget);
 		}
 	}
 

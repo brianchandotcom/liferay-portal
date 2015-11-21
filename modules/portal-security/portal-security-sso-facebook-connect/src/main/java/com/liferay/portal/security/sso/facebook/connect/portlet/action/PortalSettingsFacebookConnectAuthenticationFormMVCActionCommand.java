@@ -91,12 +91,12 @@ public class PortalSettingsFacebookConnectAuthenticationFormMVCActionCommand
 	}
 
 	@Override
-	protected String getServiceName() {
+	protected String getSettingsId() {
 		return FacebookConnectConstants.SERVICE_NAME;
 	}
 
 	@Override
-	protected String getShortNamespace() {
+	protected String getParameterNamespace() {
 		return "facebook--";
 	}
 

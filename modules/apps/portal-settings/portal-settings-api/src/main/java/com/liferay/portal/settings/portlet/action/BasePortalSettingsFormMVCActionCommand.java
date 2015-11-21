@@ -55,12 +55,12 @@ public abstract class BasePortalSettingsFormMVCActionCommand
 		}
 
 		storeSettings(
-			actionRequest, themeDisplay, getServiceName(), getShortNamespace());
+			actionRequest, themeDisplay, getServiceName());
 	}
 
-	protected abstract String getServiceName();
+	protected abstract String getSettingsId();
 
-	protected abstract String getShortNamespace();
+	protected abstract String getParameterNamespace();
 
 	protected boolean hasPermissions(
 		ActionRequest actionRequest, ActionResponse actionResponse,
@@ -81,23 +81,22 @@ public abstract class BasePortalSettingsFormMVCActionCommand
 	}
 
 	protected void storeSettings(
-			ActionRequest actionRequest, ThemeDisplay themeDisplay,
-			String serviceName, String shortNamespace)
+			ActionRequest actionRequest, ThemeDisplay themeDisplay)
 		throws IOException, SettingsException, ValidatorException {
 
 		Settings settings = SettingsFactoryUtil.getSettings(
 			new CompanyServiceSettingsLocator(
-				themeDisplay.getCompanyId(), serviceName));
+				themeDisplay.getCompanyId(), getSettingsId()));
 
 		ModifiableSettings modifiableSettings =
 			settings.getModifiableSettings();
 
 		SettingsDescriptor settingsDescriptor =
-			SettingsFactoryUtil.getSettingsDescriptor(serviceName);
+			SettingsFactoryUtil.getSettingsDescriptor(getSettingsId());
 
 		for (String name : settingsDescriptor.getAllKeys()) {
 			String value = ParamUtil.getString(
-				actionRequest, shortNamespace + name);
+				actionRequest, getParameterNamespace() + name);
 			String oldValue = settings.getValue(name, null);
 
 			if (!value.equals(oldValue)) {

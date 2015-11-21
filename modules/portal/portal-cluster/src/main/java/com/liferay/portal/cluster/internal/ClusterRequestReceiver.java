@@ -88,8 +88,23 @@ public class ClusterRequestReceiver extends BaseClusterReceiver {
 
 		try {
 			if (messagePayload instanceof ClusterRequest) {
-				processClusterRequest(
-					(ClusterRequest)messagePayload, srcAddress);
+				ClusterRequest clusterRequest = (ClusterRequest)messagePayload;
+
+				Serializable responsePayload =
+					_clusterExecutorImpl.handleReceivedClusterRequest(
+						clusterRequest);
+
+				if (responsePayload == null) {
+					return;
+				}
+
+				try {
+					clusterChannel.sendUnicastMessage(
+						responsePayload, srcAddress);
+				}
+				catch (Throwable t) {
+					_log.error("Unable to send message " + responsePayload, t);
+				}
 			}
 			else if (messagePayload instanceof ClusterNodeResponse) {
 				_clusterExecutorImpl.handleReceivedClusterNodeResponse(
@@ -105,27 +120,6 @@ public class ClusterRequestReceiver extends BaseClusterReceiver {
 			ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
 
 			CentralizedThreadLocal.clearShortLivedThreadLocals();
-		}
-	}
-
-	protected void processClusterRequest(
-		ClusterRequest clusterRequest, Address sourceAddress) {
-
-		Serializable responsePayload =
-			_clusterExecutorImpl.handleReceivedClusterRequest(clusterRequest);
-
-		if (responsePayload == null) {
-			return;
-		}
-
-		ClusterChannel clusterChannel =
-			_clusterExecutorImpl.getClusterChannel();
-
-		try {
-			clusterChannel.sendUnicastMessage(responsePayload, sourceAddress);
-		}
-		catch (Throwable t) {
-			_log.error("Unable to send message " + responsePayload, t);
 		}
 	}
 

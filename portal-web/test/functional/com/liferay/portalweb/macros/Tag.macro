@@ -268,8 +268,8 @@
 	</command>
 
 	<command name="tearDownCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
 		</execute>
 
 		<if>

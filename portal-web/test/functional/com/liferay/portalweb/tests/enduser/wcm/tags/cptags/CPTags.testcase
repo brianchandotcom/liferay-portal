@@ -12,8 +12,8 @@
 	<command name="AddTag" priority="5">
 		<property name="portal.acceptance" value="true" />
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
 		</execute>
 
 		<execute macro="Tag#addCP">
@@ -22,8 +22,8 @@
 	</command>
 
 	<command name="AddTagInvalidCharacters" priority="4">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
 		</execute>
 
 		<var name="tagEntryAmpersand"><![CDATA[&tag]]></var>
@@ -33,8 +33,8 @@
 			<var name="tagNameVariation" value="Variation" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
 		</execute>
 
 		<var name="tagEntryApostrophe"><![CDATA['tag']]></var>
@@ -44,8 +44,8 @@
 			<var name="tagNameVariation" value="Variation" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
 		</execute>
 
 		<var name="tagEntryAsterisk"><![CDATA[*tag]]></var>
@@ -55,8 +55,8 @@
 			<var name="tagNameVariation" value="Variation" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
 		</execute>
 
 		<var name="tagEntryAt"><![CDATA[@tag]]></var>
@@ -66,8 +66,8 @@
 			<var name="tagNameVariation" value="Variation" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
 		</execute>
 
 		<var name="tagEntryBackSlash"><![CDATA[\test]]></var>
@@ -77,8 +77,8 @@
 			<var name="tagNameVariation" value="Variation" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
 		</execute>
 
 		<var name="tagEntryBracket"><![CDATA[[tag]]]></var>
@@ -88,8 +88,8 @@
 			<var name="tagNameVariation" value="Variation" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
 		</execute>
 
 		<var name="tagEntryCompare"><![CDATA[>tag<]]></var>
@@ -99,8 +99,8 @@
 			<var name="tagNameVariation" value="Variation" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
 		</execute>
 
 		<var name="tagEntryCurlyBrace"><![CDATA[{tag}]]></var>
@@ -110,8 +110,8 @@
 			<var name="tagNameVariation" value="Variation" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
 		</execute>
 
 		<var name="tagEntryColon"><![CDATA[:tag]]></var>
@@ -121,8 +121,8 @@
 			<var name="tagNameVariation" value="Variation" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
 		</execute>
 
 		<var name="tagEntryComma"><![CDATA[,tag]]></var>
@@ -132,8 +132,8 @@
 			<var name="tagNameVariation" value="Variation" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
 		</execute>
 
 		<execute macro="Tag#addCP">
@@ -141,8 +141,8 @@
 			<var name="tagNameVariation" value="Duplicate" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
 		</execute>
 
 		<var name="tagEntryEqual"><![CDATA[=tag]]></var>
@@ -152,8 +152,8 @@
 			<var name="tagNameVariation" value="Variation" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
 		</execute>
 
 		<var name="tagEntryForwardSlash"><![CDATA[/test]]></var>
@@ -163,16 +163,16 @@
 			<var name="tagNameVariation" value="Variation" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
 		</execute>
 
 		<execute macro="Tag#addWithNullTitleCP">
 			<var name="tagEntry" value=" " />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
 		</execute>
 
 		<var name="tagEntryPercent"><![CDATA[%tag]]></var>
@@ -182,8 +182,8 @@
 			<var name="tagNameVariation" value="Variation" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
 		</execute>
 
 		<var name="tagEntryPlus"><![CDATA[+tag]]></var>
@@ -193,8 +193,8 @@
 			<var name="tagNameVariation" value="Variation" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
 		</execute>
 
 		<var name="tagEntryPound"><![CDATA[#tag]]></var>
@@ -204,8 +204,8 @@
 			<var name="tagNameVariation" value="Variation" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
 		</execute>
 
 		<var name="tagEntryQuestion"><![CDATA[?tag]]></var>
@@ -215,8 +215,8 @@
 			<var name="tagNameVariation" value="Variation" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
 		</execute>
 
 		<var name="tagEntryQuotation"><![CDATA["tag"]]></var>
@@ -226,8 +226,8 @@
 			<var name="tagNameVariation" value="Variation" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
 		</execute>
 
 		<var name="tagEntrySemiColon"><![CDATA[;tag]]></var>
@@ -237,8 +237,8 @@
 			<var name="tagNameVariation" value="Variation" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
 		</execute>
 
 		<var name="tagEntryTilde"><![CDATA[~tag]]></var>
@@ -260,8 +260,8 @@
 			</execute>
 		</for>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
 		</execute>
 
 		<execute macro="Tag#viewTagsCP">
@@ -272,16 +272,16 @@
 	</command>
 
 	<command name="DeleteTagFromList" priority="4">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
 		</execute>
 
 		<execute macro="Tag#addCP">
 			<var name="tagName" value="tag name" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
 		</execute>
 
 		<execute macro="Tag#deleteCP">
@@ -291,16 +291,16 @@
 	</command>
 
 	<command name="DeleteTagFromToolbar" priority="4">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
 		</execute>
 
 		<execute macro="Tag#addCP">
 			<var name="tagName" value="tag name" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
 		</execute>
 
 		<execute macro="Tag#deleteCP">
@@ -312,8 +312,8 @@
 	<command name="EditTag" priority="5">
 		<property name="portal.acceptance" value="true" />
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
 		</execute>
 
 		<execute macro="Tag#addCP">
@@ -325,8 +325,8 @@
 			<var name="tagNameEdit" value="tag name edit" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
 		</execute>
 
 		<execute macro="Tag#viewCP">
@@ -335,8 +335,8 @@
 	</command>
 
 	<command name="EditTagCancel" priority="4">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
 		</execute>
 
 		<execute macro="Tag#addCP">
@@ -349,8 +349,8 @@
 	</command>
 
 	<command name="MergeMultipleTags" priority="3">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
 		</execute>
 
 		<execute macro="Tag#addCP">
@@ -376,8 +376,8 @@
 	</command>
 
 	<command name="MergeSingleTagWarning" priority="3">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
 		</execute>
 
 		<execute macro="Tag#addCP">
@@ -392,8 +392,8 @@
 	<command name="SearchTag" priority="5">
 		<property name="portal.acceptance" value="true" />
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
 		</execute>
 
 		<execute macro="Tag#addCP">
@@ -408,8 +408,8 @@
 			<var name="tagName" value="tag name 3" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
 		</execute>
 
 		<execute macro="Tag#searchTagCP">

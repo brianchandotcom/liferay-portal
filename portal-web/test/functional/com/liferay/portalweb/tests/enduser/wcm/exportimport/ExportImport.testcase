@@ -590,8 +590,8 @@
 			<var name="displaySettings" value="Display Settings" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Polls" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Polls" />
 		</execute>
 
 		<execute macro="Polls#addPollCP">
@@ -601,16 +601,16 @@
 			<var name="pollsQuestionTitle" value="Polls Title" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Polls" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Polls" />
 		</execute>
 
 		<execute macro="LAR#exportPortlet">
 			<var name="larFileName" value="PollsExport.lar" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Polls" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Polls" />
 		</execute>
 
 		<execute macro="LAR#importPortlet">

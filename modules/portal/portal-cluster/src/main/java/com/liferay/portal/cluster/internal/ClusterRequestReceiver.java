@@ -94,7 +94,7 @@ public class ClusterRequestReceiver extends BaseClusterReceiver {
 					_clusterExecutorImpl.handleReceivedClusterRequest(
 						clusterRequest);
 
-				if (responsePayload == null) {
+				if (clusterRequest.isFireAndForget()) {
 					return;
 				}
 

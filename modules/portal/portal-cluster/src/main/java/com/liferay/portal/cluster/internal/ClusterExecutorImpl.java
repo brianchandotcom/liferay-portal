@@ -464,14 +464,7 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 				clusterRequest.getUuid(), _localClusterNodeStatus);
 		}
 
-		ClusterNodeResponse clusterNodeResponse = executeClusterRequest(
-			clusterRequest);
-
-		if (clusterRequest.isFireAndForget()) {
-			return null;
-		}
-
-		return clusterNodeResponse;
+		return executeClusterRequest(clusterRequest);
 	}
 
 	protected void initialize(

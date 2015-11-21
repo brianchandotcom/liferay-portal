@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Portlet Custom User Attributes
+Bundle-SymbolicName: com.liferay.portlet.custom.user.attributes
+Bundle-Version: 1.0.0
+Include-Resource: classes

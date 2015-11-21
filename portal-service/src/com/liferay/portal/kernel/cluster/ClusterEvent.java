@@ -44,7 +44,7 @@ public class ClusterEvent implements Serializable {
 	}
 
 	public ClusterEvent(ClusterEventType clusterEventType) {
-		_clusterEventType = clusterEventType;
+		this(clusterEventType, Collections.<ClusterNode>emptyList());
 	}
 
 	public ClusterEvent(
@@ -62,11 +62,7 @@ public class ClusterEvent implements Serializable {
 		return _clusterNodes;
 	}
 
-	public void setClusterNodes(List<ClusterNode> clusterNodes) {
-		_clusterNodes = clusterNodes;
-	}
-
 	private final ClusterEventType _clusterEventType;
-	private List<ClusterNode> _clusterNodes = Collections.emptyList();
+	private final List<ClusterNode> _clusterNodes;
 
 }

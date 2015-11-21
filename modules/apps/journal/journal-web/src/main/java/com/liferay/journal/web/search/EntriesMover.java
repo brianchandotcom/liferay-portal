@@ -29,21 +29,23 @@ import com.liferay.portlet.trash.util.TrashUtil;
 public class EntriesMover extends RowMover {
 
 	public EntriesMover(long scopeGroupId) throws PortalException {
-		RowMoverDropTarget moveToFolderDropTarget = new RowMoverDropTarget();
+		RowMoverDropTarget moveToFolderRowMoverDropTarget =
+			new RowMoverDropTarget();
 
-		moveToFolderDropTarget.setAction("move-to-folder");
-		moveToFolderDropTarget.setActiveCssClass("active");
-		moveToFolderDropTarget.setSelector("[data-folder=\"true\"]");
+		moveToFolderRowMoverDropTarget.setAction("move-to-folder");
+		moveToFolderRowMoverDropTarget.setActiveCssClass("active");
+		moveToFolderRowMoverDropTarget.setSelector("[data-folder=\"true\"]");
 
-		addRowMoverDropTarget(moveToFolderDropTarget);
+		addRowMoverDropTarget(moveToFolderRowMoverDropTarget);
 
 		if (TrashUtil.isTrashEnabled(scopeGroupId)) {
-			RowMoverDropTarget moveToTrashDropTarget = new RowMoverDropTarget();
+			RowMoverDropTarget moveToTrashRowMoverDropTarget =
+				new RowMoverDropTarget();
 
-			moveToTrashDropTarget.setAction("move-to-trash");
-			moveToTrashDropTarget.setActiveCssClass("active");
-			moveToTrashDropTarget.setContainer("body");
-			moveToTrashDropTarget.setInfoCssClass("active");
+			moveToTrashRowMoverDropTarget.setAction("move-to-trash");
+			moveToTrashRowMoverDropTarget.setActiveCssClass("active");
+			moveToTrashRowMoverDropTarget.setContainer("body");
+			moveToTrashRowMoverDropTarget.setInfoCssClass("active");
 
 			String productMenuPortletId = PortletProviderUtil.getPortletId(
 				PortalProductMenuApplicationType.ProductMenu.CLASS_NAME,
@@ -52,10 +54,10 @@ public class EntriesMover extends RowMover {
 			String trashPortletId = PortletProviderUtil.getPortletId(
 				TrashEntry.class.getName(), PortletProvider.Action.VIEW);
 
-			moveToTrashDropTarget.setSelector(
+			moveToTrashRowMoverDropTarget.setSelector(
 				"#_" + productMenuPortletId + "_portlet_" + trashPortletId);
 
-			addRowMoverDropTarget(moveToTrashDropTarget);
+			addRowMoverDropTarget(moveToTrashRowMoverDropTarget);
 		}
 	}
 

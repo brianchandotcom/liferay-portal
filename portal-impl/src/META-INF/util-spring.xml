@@ -611,19 +611,6 @@
 	<bean id="com.liferay.portlet.social.util.SocialConfigurationUtil" class="com.liferay.portlet.social.util.SocialConfigurationUtil">
 		<property name="socialConfiguration" ref="com.liferay.portlet.social.util.SocialConfiguration" />
 	</bean>
-	<bean id="com.liferay.portlet.softwarecatalog.action.EditFrameworkVersionMVCActionCommand" class="com.liferay.portlet.softwarecatalog.action.EditFrameworkVersionMVCActionCommand" />
-	<bean id="com.liferay.portlet.softwarecatalog.action.EditFrameworkVersionMVCRenderCommand" class="com.liferay.portlet.softwarecatalog.action.EditFrameworkVersionMVCRenderCommand" />
-	<bean id="com.liferay.portlet.softwarecatalog.action.EditLicenseMVCActionCommand" class="com.liferay.portlet.softwarecatalog.action.EditLicenseMVCActionCommand" />
-	<bean id="com.liferay.portlet.softwarecatalog.action.EditLicenseMVCRenderCommand" class="com.liferay.portlet.softwarecatalog.action.EditLicenseMVCRenderCommand" />
-	<bean id="com.liferay.portlet.softwarecatalog.action.EditProductEntryMVCActionCommand" class="com.liferay.portlet.softwarecatalog.action.EditProductEntryMVCActionCommand" />
-	<bean id="com.liferay.portlet.softwarecatalog.action.EditProductEntryMVCRenderCommand" class="com.liferay.portlet.softwarecatalog.action.EditProductEntryMVCRenderCommand" />
-	<bean id="com.liferay.portlet.softwarecatalog.action.EditProductVersionMVCActionCommand" class="com.liferay.portlet.softwarecatalog.action.EditProductVersionMVCActionCommand" />
-	<bean id="com.liferay.portlet.softwarecatalog.action.EditProductVersionMVCRenderCommand" class="com.liferay.portlet.softwarecatalog.action.EditProductVersionMVCRenderCommand" />
-	<bean id="com.liferay.portlet.softwarecatalog.action.ViewMVCRenderCommand" class="com.liferay.portlet.softwarecatalog.action.ViewMVCRenderCommand" />
-	<bean id="com.liferay.portlet.softwarecatalog.action.ViewProductEntryMVCRenderCommand" class="com.liferay.portlet.softwarecatalog.action.ViewProductEntryMVCRenderCommand" />
-	<bean id="com.liferay.portlet.softwarecatalog.service.permission.SCFrameworkVersionPermission" class="com.liferay.portlet.softwarecatalog.service.permission.SCFrameworkVersionPermission" />
-	<bean id="com.liferay.portlet.softwarecatalog.service.permission.SCProductEntryPermission" class="com.liferay.portlet.softwarecatalog.service.permission.SCProductEntryPermission" />
-	<bean id="com.liferay.portlet.softwarecatalog.util.SCIndexer" class="com.liferay.portlet.softwarecatalog.util.SCIndexer" />
 	<bean id="com.liferay.portlet.trash.util.Trash" class="com.liferay.portlet.trash.util.TrashImpl" />
 	<bean id="com.liferay.portlet.trash.util.TrashIndexer" class="com.liferay.portlet.trash.util.TrashIndexer" />
 	<bean id="com.liferay.portlet.trash.util.TrashUtil" class="com.liferay.portlet.trash.util.TrashUtil">

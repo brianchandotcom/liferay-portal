@@ -158,8 +158,8 @@
 	</command>
 
 	<command name="SearchBlogsEntryCategory" priority="4">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Categories" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Categories" />
 		</execute>
 
 		<execute macro="Vocabulary#addCP">
@@ -234,8 +234,8 @@
 	</command>
 
 	<command name="SearchBlogsEntryCategoryQuotes" priority="4">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Categories" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Categories" />
 		</execute>
 
 		<execute macro="Vocabulary#addCP">

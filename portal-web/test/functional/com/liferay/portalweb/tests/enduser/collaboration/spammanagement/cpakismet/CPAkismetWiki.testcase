@@ -72,6 +72,8 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
 		</execute>
@@ -93,6 +95,8 @@
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
@@ -132,6 +136,8 @@
 		<execute macro="SpamModerationPortlet#viewDefault">
 			<var name="assetType" value="wikiPage" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
@@ -207,6 +213,8 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
 		</execute>
@@ -228,6 +236,8 @@
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />

@@ -18,6 +18,8 @@
 		<var name="bookmarkName" value="Test Bookmark" />
 		<var name="bookmarkURL" value="http://www.liferay.com" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
 		</execute>
@@ -27,6 +29,8 @@
 			<var name="bookmarkName" value="${bookmarkName}" />
 			<var name="bookmarkURL" value="${bookmarkURL}" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
@@ -48,6 +52,8 @@
 		<var name="bookmark2Name" value="Test Bookmark 2" />
 		<var name="bookmark2URL" value="http://www.digg.com" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
 		</execute>
@@ -57,6 +63,8 @@
 			<var name="bookmarkName" value="${bookmark1Name}" />
 			<var name="bookmarkURL" value="${bookmark1URL}" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
@@ -68,6 +76,8 @@
 			<var name="bookmarkURL" value="${bookmark2URL}" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
 		</execute>
@@ -76,6 +86,8 @@
 			<var name="bookmarkName" value="${bookmark1Name}" />
 			<var name="bookmarkURL" value="${bookmark1URL}" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
@@ -93,6 +105,8 @@
 		<var name="folderDescription" value="This is a test bookmarks folder!" />
 		<var name="folderName" value="Test Bookmarks Folder" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
 		</execute>
@@ -108,6 +122,8 @@
 		<var name="bookmarkName" value="Test Bookmark" />
 		<var name="bookmarkURL" value="www.liferay.com" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
 		</execute>
@@ -120,6 +136,8 @@
 	</command>
 
 	<command name="AddNullBookmark" priority="4">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
 		</execute>
@@ -129,6 +147,8 @@
 
 	<command name="AddNullFolder" priority="5">
 		<property name="portal.acceptance" value="true" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
@@ -141,6 +161,8 @@
 		<var name="folderDescription" value="This is a test bookmarks folder!" />
 		<var name="folderName" value="Test Bookmarks Folder" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
 		</execute>
@@ -149,6 +171,8 @@
 			<var name="folderDescription" value="${folderDescription}" />
 			<var name="folderName" value="${folderName}" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
@@ -163,6 +187,8 @@
 		<var name="bookmarkDescription" value="This is a test bookmark!" />
 		<var name="bookmarkURL" value="http://www.liferay.com" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
 		</execute>
@@ -176,6 +202,8 @@
 	<command name="AddNullURLBookmark" priority="4">
 		<var name="bookmarkDescription" value="This is a test bookmark!" />
 		<var name="bookmarkName" value="Test Bookmark" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
@@ -193,6 +221,8 @@
 		<var name="subfolderDescription" value="This is a test bookmarks subfolder!" />
 		<var name="subfolderName" value="Test Bookmarks Subfolder" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
 		</execute>
@@ -201,6 +231,8 @@
 			<var name="folderDescription" value="${folderDescription}" />
 			<var name="folderName" value="${folderName}" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
@@ -220,6 +252,8 @@
 		<var name="bookmarkName" value="Test Bookmark" />
 		<var name="bookmarkURL" value="http://www.liferay.com" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
 		</execute>
@@ -229,6 +263,8 @@
 			<var name="bookmarkName" value="${bookmarkName}" />
 			<var name="bookmarkURL" value="${bookmarkURL}" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
@@ -254,6 +290,8 @@
 		<var name="bookmarkName" value="Test Bookmark" />
 		<var name="bookmarkURL" value="http://www.liferay.com" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
 		</execute>
@@ -264,6 +302,8 @@
 			<var name="bookmarkURL" value="${bookmarkURL}" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
 		</execute>
@@ -273,6 +313,8 @@
 			<var name="bookmarkName" value="${bookmark2Name}" />
 			<var name="bookmarkURL" value="${bookmark2URL}" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
@@ -294,6 +336,8 @@
 		<var name="editBookmarkName" value="Test Bookmark Edit" />
 		<var name="editBookmarkURL" value="http://www.narutofan.com" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
 		</execute>
@@ -304,6 +348,8 @@
 			<var name="bookmarkURL" value="${bookmarkURL}" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
 		</execute>
@@ -312,6 +358,8 @@
 			<var name="bookmarkName" value="${bookmarkName}" />
 			<var name="bookmarkURL" value="${bookmarkURL}" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
@@ -335,6 +383,8 @@
 		<var name="folderDescription" value="This is a test bookmarks folder!" />
 		<var name="folderName" value="Test Bookmarks Folder" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
 		</execute>
@@ -343,6 +393,8 @@
 			<var name="folderDescription" value="${folderDescription}" />
 			<var name="folderName" value="${folderName}" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
@@ -362,6 +414,8 @@
 		<var name="subfolderDescription" value="This is a test bookmarks subfolder!" />
 		<var name="subfolderName" value="Test Bookmarks Subfolder" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
 		</execute>
@@ -370,6 +424,8 @@
 			<var name="folderDescription" value="${folderDescription}" />
 			<var name="folderName" value="${folderName}" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
@@ -380,6 +436,8 @@
 			<var name="subfolderDescription" value="${subfolderDescription}" />
 			<var name="subfolderName" value="${subfolderName}" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
@@ -401,6 +459,8 @@
 		<var name="subfolderDescription" value="This is a test bookmarks subfolder!" />
 		<var name="subfolderName" value="Test Bookmarks Subfolder" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
 		</execute>
@@ -409,6 +469,8 @@
 			<var name="folderDescription" value="${folderDescription}" />
 			<var name="folderName" value="${folderName}" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
@@ -419,6 +481,8 @@
 			<var name="subfolderDescription" value="${subfolderDescription}" />
 			<var name="subfolderName" value="${subfolderName}" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
@@ -431,6 +495,8 @@
 			<var name="folderName" value="${folderName}" />
 			<var name="subfolderName" value="${subfolderName}" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
@@ -450,6 +516,8 @@
 		<var name="subfolderDescription" value="This is a test bookmarks subfolder!" />
 		<var name="subfolderName" value="Test Bookmarks Subfolder" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
 		</execute>
@@ -458,6 +526,8 @@
 			<var name="folderDescription" value="${folderDescription}" />
 			<var name="folderName" value="${folderName}" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
@@ -468,6 +538,8 @@
 			<var name="subfolderDescription" value="${subfolderDescription}" />
 			<var name="subfolderName" value="${subfolderName}" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
@@ -480,6 +552,8 @@
 			<var name="folderName" value="${folderName}" />
 			<var name="subfolderName" value="${subfolderName}" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
@@ -498,6 +572,8 @@
 		<var name="folderDescription" value="This is a test bookmarks folder!" />
 		<var name="folderName" value="Test Bookmarks Folder" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
 		</execute>
@@ -507,6 +583,8 @@
 			<var name="folderName" value="${folderName}" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
 		</execute>
@@ -515,6 +593,8 @@
 			<var name="folderDescription" value="${folderDescription}" />
 			<var name="folderName" value="${folderName}" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
@@ -534,6 +614,8 @@
 		<var name="bookmarkName" value="Test Bookmark" />
 		<var name="bookmarkURL" value="http://www.liferay.com" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
 		</execute>
@@ -544,6 +626,8 @@
 			<var name="bookmarkURL" value="${bookmarkURL}" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
 		</execute>
@@ -552,6 +636,8 @@
 			<var name="bookmarkName" value="${bookmarkName}" />
 			<var name="bookmarkURL" value="${bookmarkURL}" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
@@ -570,6 +656,8 @@
 		<var name="bookmark2Name" value="Test Bookmark 2" />
 		<var name="bookmark2URL" value="http://www.digg.com" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
 		</execute>
@@ -579,6 +667,8 @@
 			<var name="bookmarkName" value="${bookmark1Name}" />
 			<var name="bookmarkURL" value="${bookmark1URL}" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
@@ -590,6 +680,8 @@
 			<var name="bookmarkURL" value="${bookmark2URL}" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
 		</execute>
@@ -598,6 +690,8 @@
 			<var name="bookmarkName" value="${bookmark1Name}" />
 			<var name="bookmarkURL" value="${bookmark1URL}" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
@@ -608,6 +702,8 @@
 			<var name="bookmarkURL" value="${bookmark2URL}" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
 		</execute>
@@ -615,6 +711,8 @@
 		<execute macro="Bookmark#searchCP">
 			<var name="bookmarkName" value="${bookmark1Name}" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
@@ -634,6 +732,8 @@
 		<var name="bookmarkURL" value="http://www.liferay.com" />
 		<var name="nullBookmarkName" value="Test1" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
 		</execute>
@@ -644,6 +744,8 @@
 			<var name="bookmarkURL" value="${bookmarkURL}" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />
 		</execute>
@@ -653,6 +755,8 @@
 			<var name="bookmarkName" value="${bookmark2Name}" />
 			<var name="bookmarkURL" value="${bookmark2URL}" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />

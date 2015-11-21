@@ -44,6 +44,8 @@
 			<var name="exportTemplateName" value="Export Template Name" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Recycle Bin" />
 		</execute>
@@ -71,6 +73,8 @@
 	</command>
 
 	<command name="EditExportTemplate" priority="4">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>
@@ -79,6 +83,8 @@
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />
@@ -326,6 +332,8 @@
 	</command>
 
 	<command name="ExportImportDMRootFolder" priority="3">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -590,6 +598,8 @@
 			<var name="displaySettings" value="Display Settings" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Polls" />
 		</execute>
@@ -601,6 +611,8 @@
 			<var name="pollsQuestionTitle" value="Polls Title" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Polls" />
 		</execute>
@@ -608,6 +620,8 @@
 		<execute macro="LAR#exportPortlet">
 			<var name="larFileName" value="PollsExport.lar" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Polls" />
@@ -656,6 +670,8 @@
 	</command>
 
 	<command name="ExportImportValidation" priority="4">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -666,6 +682,8 @@
 			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>
@@ -674,6 +692,8 @@
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
@@ -890,6 +910,8 @@
 
 	<command name="ImportCorruptedFile" priority="5">
 		<property name="portal.acceptance" value="true" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Bookmarks" />

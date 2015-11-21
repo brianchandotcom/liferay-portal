@@ -49,6 +49,8 @@
 			<var name="workflowResourceKey" value="RESOURCE_TABLE_BLOGS_ENTRY_SELECT" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>
@@ -58,6 +60,8 @@
 			<var name="entrySubtitle" value="Subtitle" />
 			<var name="entryTitle" value="Blogs Entry 1" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
@@ -77,6 +81,8 @@
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="task2" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
@@ -98,6 +104,8 @@
 			<var name="workflowTask" value="task2" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>
@@ -115,6 +123,8 @@
 			<var name="entryTitle" value="Blogs Entry 1" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>
@@ -124,6 +134,8 @@
 			<var name="entrySubtitle" value="Subtitle" />
 			<var name="entryTitle" value="Blogs Entry 2" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
@@ -143,6 +155,8 @@
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="task2" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
@@ -164,6 +178,8 @@
 			<var name="workflowTask" value="task2" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>
@@ -180,6 +196,8 @@
 			<var name="entryContent" value="Blogs Entry 2 Content" />
 			<var name="entryTitle" value="Blogs Entry 2" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
@@ -190,6 +208,8 @@
 			<var name="entrySubtitle" value="Subtitle" />
 			<var name="entryTitle" value="Blogs Entry 3" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
@@ -241,6 +261,8 @@
 			<var name="workflowDefinitionTask" value="join-xor" />
 			<var name="workflowTask" value="task1" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
@@ -264,6 +286,8 @@
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>
@@ -273,6 +297,8 @@
 			<var name="entrySubtitle" value="Subtitle" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
@@ -293,6 +319,8 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>
@@ -311,6 +339,8 @@
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
@@ -337,6 +367,8 @@
 	<command name="RejectBlogsEntryCP" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
@@ -376,6 +408,8 @@
 			<var name="workflowAssetTitle" value="${entryTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />

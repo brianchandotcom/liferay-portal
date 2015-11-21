@@ -12,6 +12,8 @@
 	</tear-down>
 
 	<command name="AddWikiFrontPage" priority="5">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
 		</execute>
@@ -28,6 +30,8 @@
 			<var name="wikiFrontPageContent" value="Wiki FrontPage Content" />
 			<var name="wikiNodeName" value="Main" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
@@ -47,6 +51,8 @@
 	</command>
 
 	<command name="AddWikiNode" priority="5">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
 		</execute>
@@ -54,6 +60,8 @@
 		<execute macro="WikiNode#addCP">
 			<var name="wikiNodeName" value="Wiki Node Name" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
@@ -66,6 +74,8 @@
 	</command>
 
 	<command name="AddWikiPageToNode" priority="5">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
 		</execute>
@@ -73,6 +83,8 @@
 		<execute macro="WikiNode#addCP">
 			<var name="wikiNodeName" value="Wiki Node Name" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
@@ -88,6 +100,8 @@
 			<var name="wikiPageContent" value="Wiki Page Content" />
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
@@ -109,6 +123,8 @@
 	</command>
 
 	<command name="CompareVersionsWikiPage" priority="4">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
 		</execute>
@@ -123,6 +139,8 @@
 			<var name="wikiPageContent" value="Wiki Page Content" />
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
@@ -140,6 +158,8 @@
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
 		</execute>
@@ -156,6 +176,8 @@
 			<var name="wikiPageContent" value="Wiki Page Content Edit" />
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
@@ -177,6 +199,8 @@
 	</command>
 
 	<command name="DeleteWikiNode" priority="5">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
 		</execute>
@@ -189,6 +213,8 @@
 			<var name="wikiNodeName" value="Wiki Node Name" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Recycle Bin" />
 		</execute>
@@ -198,6 +224,8 @@
 			<var name="assetType" value="Wiki Node" />
 			<var name="deleteUser" value="Test Test" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
@@ -209,6 +237,8 @@
 	</command>
 
 	<command name="EditWikiNode" priority="5">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
 		</execute>
@@ -224,6 +254,8 @@
 			<var name="wikiNodeNameEdit" value="Wiki Node Name Edit" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
 		</execute>
@@ -235,6 +267,8 @@
 	</command>
 
 	<command name="MovePageUnderNewParentPage" priority="5">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
 		</execute>
@@ -254,6 +288,8 @@
 		</execute>
 
 		<execute macro="WikiEntry#publish" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
@@ -275,6 +311,8 @@
 
 		<execute macro="WikiEntry#publish" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
 		</execute>
@@ -292,6 +330,8 @@
 		<execute macro="WikiPage#selectNewParent">
 			<var name="wikiParentName" value="Wiki Page 1" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
@@ -329,6 +369,8 @@
 	</command>
 
 	<command name="MoveToRecycleBinFrontPage" priority="4">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
 		</execute>
@@ -346,6 +388,8 @@
 			<var name="wikiNodeName" value="Main" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
 		</execute>
@@ -359,6 +403,8 @@
 			<var name="wikiNodeName" value="Main" />
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
@@ -377,6 +423,8 @@
 	</command>
 
 	<command name="RestoreDeletedPage" priority="5">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
 		</execute>
@@ -396,6 +444,8 @@
 		</execute>
 
 		<execute macro="WikiEntry#publish" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
@@ -409,6 +459,8 @@
 			<var name="wikiPageTitle" value="Wiki Page 1 Original" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
 		</execute>
@@ -428,6 +480,8 @@
 		</execute>
 
 		<execute macro="WikiEntry#publish" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Recycle Bin" />
@@ -444,6 +498,8 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
@@ -473,6 +529,8 @@
 	</command>
 
 	<command name="ViewWikiEntryRSS" priority="4">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
 		</execute>
@@ -492,6 +550,8 @@
 		</execute>
 
 		<execute macro="WikiEntry#publish" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />

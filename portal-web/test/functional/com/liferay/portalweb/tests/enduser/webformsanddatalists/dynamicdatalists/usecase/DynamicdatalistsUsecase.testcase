@@ -26,6 +26,8 @@
 	</tear-down>
 
 	<command name="AddDataDefinitionWithoutANameAndAssertErrorMessage" priority="3">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -48,6 +50,8 @@
 	<command name="AddListWithoutDataDefinitionAndAssertErrorMessage" priority="3">
 		<var name="ddlDataDefinitionName" value="To Do" />
 		<var name="ddlListName" value="List Name" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -73,6 +77,8 @@
 			<var name="workflowDefinitionTitle" value="New Uploaded Definition" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -84,6 +90,8 @@
 		</execute>
 
 		<execute macro="DDLList#saveCP" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -100,6 +108,8 @@
 		<var name="fieldFieldLabel" value="Text Label" />
 		<var name="fieldName" value="TextName" />
 		<var name="pageName" value="Dynamic Data Lists Display Page" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -118,6 +128,8 @@
 
 		<execute macro="DDLDataDefinition#saveCP" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -132,6 +144,8 @@
 		</execute>
 
 		<execute macro="DDLList#saveCP" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -186,6 +200,8 @@
 
 		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -205,6 +221,8 @@
 	<command name="AddRecordBlankDateField" priority="3">
 		<description message="This is a use case for LPS-51513." />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -221,6 +239,8 @@
 
 		<execute macro="DDLDataDefinition#saveCP" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -233,6 +253,8 @@
 			<var name="fieldFieldLabel" value="Date" />
 			<var name="fieldName" value="Date" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -247,6 +269,8 @@
 		</execute>
 
 		<execute macro="DDLList#saveCP" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -269,6 +293,8 @@
 			<var name="fieldFieldLabel" value="Date" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -290,6 +316,8 @@
 			<var name="fieldFieldLabel" value="Date" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -305,6 +333,8 @@
 	</command>
 
 	<command name="AddRepeatableFieldAndAssertOrderInTranslation" priority="4">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -325,6 +355,8 @@
 
 		<execute macro="DDLDataDefinition#saveCP" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -338,6 +370,8 @@
 		</execute>
 
 		<execute macro="DDLList#saveCP" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -359,6 +393,8 @@
 
 		<execute macro="DDLRecord#saveAsDraftCP" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -379,6 +415,8 @@
 
 		<execute macro="DDLRecord#publishCP" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -398,6 +436,8 @@
 		</execute>
 
 		<execute macro="DDLRecord#publishCP" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -430,6 +470,8 @@
 
 		<var name="ddlRecordFieldData2"><![CDATA['+alert('xss')+'"+alert("xss")+"]]></var>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -451,6 +493,8 @@
 
 		<execute macro="DDLDataDefinition#saveCP" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -465,6 +509,8 @@
 			<var name="fieldName" value="HTML" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -474,6 +520,8 @@
 		<execute macro="DDLDataDefinition#selectCP" />
 
 		<execute macro="DDLList#saveCP" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -489,6 +537,8 @@
 
 		<execute macro="DDLRecord#publishCP" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -499,11 +549,15 @@
 
 		<execute macro="DDLRecord#viewInvalidHTMLfield" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLRecord#deleteCP" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -512,6 +566,8 @@
 		<execute macro="DDLRecord#addCP" />
 
 		<execute macro="DDLRecord#publishCP" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -605,6 +661,8 @@
 			<var name="portletName" value="${portletName}" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -656,6 +714,8 @@
 		<description message="This is a use case for LPS-48736." />
 
 		<var name="ddlDataDefinitionName" value="Data Definition Title" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -715,6 +775,8 @@
 		<var name="pageName" value="Dynamic Data Lists Display Page" />
 		<var name="portletName" value="Dynamic Data Lists Display" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -737,6 +799,8 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#saveCP" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -906,6 +970,8 @@
 			<var name="portletName" value="${portletName}" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -974,6 +1040,8 @@
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="${portletName}" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -1051,6 +1119,8 @@
 			<var name="userScreenName" value="usersn1" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -1104,6 +1174,8 @@
 
 		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -1139,6 +1211,8 @@
 		<execute macro="Navigator#selectSpecificWindow">
 			<var name="windowTitle" value="Users and Organizations - Control Panel - Liferay" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -1378,6 +1452,8 @@
 		<var name="fieldName" value="TextName" />
 		<var name="pageName" value="Dynamic Data Lists Display Page" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -1395,6 +1471,8 @@
 
 		<execute macro="DDLDataDefinition#saveCP" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -1409,6 +1487,8 @@
 		</execute>
 
 		<execute macro="DDLList#saveCP" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -1427,6 +1507,8 @@
 
 		<execute macro="DDLRecord#publishCP" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -1435,6 +1517,8 @@
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -1442,6 +1526,8 @@
 		<execute macro="DDLList#deleteCP">
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -1453,6 +1539,8 @@
 	</command>
 
 	<command name="FormTemplateUniqueField" priority="4">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -1469,6 +1557,8 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#saveCP" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -1531,6 +1621,8 @@
 	</command>
 
 	<command name="RemoveRepeatableFieldAndAssertOrderInTranslation" priority="3">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -1551,6 +1643,8 @@
 
 		<execute macro="DDLDataDefinition#saveCP" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -1564,6 +1658,8 @@
 		</execute>
 
 		<execute macro="DDLList#saveCP" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -1589,6 +1685,8 @@
 
 		<execute macro="DDLRecord#saveAsDraftCP" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -1609,6 +1707,8 @@
 
 		<execute macro="DDLRecord#publishCP" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -1624,6 +1724,8 @@
 		</execute>
 
 		<execute macro="DDLRecord#publishCP" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -1648,6 +1750,8 @@
 	<command name="TemplateAddDeletedField" priority="3">
 		<description message="This is a use case for LPS-48743." />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -1669,6 +1773,8 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#saveCP" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -1713,6 +1819,8 @@
 	<command name="ViewCannotSaveWithDuplicateFieldNames" priority="4">
 		<description message="This is a use case for LPS-52865." />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -1747,6 +1855,8 @@
 	<command name="ViewFieldsNestedInDDLRecord" priority="3">
 		<description message="This is a use case for LPS-48913." />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -1769,6 +1879,8 @@
 
 		<execute macro="DDLDataDefinition#saveCP" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -1783,6 +1895,8 @@
 		</execute>
 
 		<execute macro="DDLList#saveCP" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -1805,6 +1919,8 @@
 
 		<execute macro="DDLRecord#publishCP" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -1823,6 +1939,8 @@
 
 	<command name="ViewFormTemplateFieldsAfterBackNavigation" priority="3">
 		<description message="This is a use case for LPS-48591." />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -1845,6 +1963,8 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#saveCP" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -1915,6 +2035,8 @@
 	<command name="ViewNestedFieldDoesNotDisplayInRecordTable" priority="3">
 		<description message="This is a use case for LPS-51538." />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -1938,6 +2060,8 @@
 
 		<execute macro="DDLDataDefinition#saveCP" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -1951,6 +2075,8 @@
 		</execute>
 
 		<execute macro="DDLList#saveCP" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -1973,6 +2099,8 @@
 
 		<execute macro="DDLRecord#publishCP" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -1991,6 +2119,8 @@
 
 	<command name="ViewNestedFieldEntryWithBlankParentField" priority="3">
 		<description message="This is a use case for LPS-48969." />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -2015,6 +2145,8 @@
 
 		<execute macro="DDLDataDefinition#saveCP" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -2028,6 +2160,8 @@
 		</execute>
 
 		<execute macro="DDLList#saveCP" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -2044,6 +2178,8 @@
 		</execute>
 
 		<execute macro="DDLRecord#publishCP" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -2065,6 +2201,8 @@
 	<command name="ViewUniqueFieldLabels" priority="4">
 		<description message="This is a use case for LPS-51684." />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -2085,6 +2223,8 @@
 
 		<execute macro="DDLDataDefinition#saveCP" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -2092,6 +2232,8 @@
 		<execute macro="DDLDataDefinition#viewCP">
 			<var name="fieldFieldLabel" value="Text1" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -2104,6 +2246,8 @@
 
 	<command name="ViewVisualGroupingOfRepeatableNestedFields" priority="3">
 		<description message="This is a use case for LPS-42060." />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -2131,6 +2275,8 @@
 
 		<execute macro="DDLDataDefinition#saveCP" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -2145,6 +2291,8 @@
 		</execute>
 
 		<execute macro="DDLList#saveCP" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />

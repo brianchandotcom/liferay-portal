@@ -38,6 +38,8 @@
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="workflowComment" value="Workflow Comment" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>
@@ -82,6 +84,8 @@
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="workflowComment" value="Workflow Comment" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>
@@ -115,6 +119,8 @@
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="workflowComment" value="Workflow Comment" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
@@ -171,6 +177,8 @@
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>
@@ -233,6 +241,8 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>
@@ -254,6 +264,8 @@
 	<command name="ApproveTaskByDetails" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
@@ -286,6 +298,8 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>
@@ -308,6 +322,8 @@
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>
@@ -329,6 +345,8 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>
@@ -342,6 +360,8 @@
 	<command name="RejectTaskByDetails" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
@@ -383,6 +403,8 @@
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>
@@ -396,6 +418,8 @@
 	<command name="ResubmitTaskByActions" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
@@ -449,6 +473,8 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>
@@ -464,6 +490,8 @@
 
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
@@ -506,6 +534,8 @@
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Update" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
@@ -597,6 +627,8 @@
 			<var name="userLoginFullName" value="${userFirstName1} ${userLastName1}" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>
@@ -649,6 +681,8 @@
 			<var name="workflowTask" value="Update" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>
@@ -688,6 +722,8 @@
 			<var name="userLoginFullName" value="${userFirstName1} ${userLastName1}" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>
@@ -714,6 +750,8 @@
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
@@ -744,6 +782,8 @@
 		<var name="workflowDueDate" value="10/02/2016" />
 		<var name="workflowDueDateFormatted" value="10/2/16" />
 		<var name="workflowDueDateTime" value="12:45 PM" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />

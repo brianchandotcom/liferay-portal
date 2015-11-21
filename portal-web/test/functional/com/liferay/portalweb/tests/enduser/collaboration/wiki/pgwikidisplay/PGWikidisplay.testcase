@@ -36,6 +36,8 @@
 		<var name="wikiPageContent" value="Wiki FrontPage Content" />
 		<var name="wikiPageTitle" value="FrontPage" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
 		</execute>
@@ -101,6 +103,8 @@
 		<var name="wikiNodeName" value="Main" />
 		<var name="wikiPageContent" value="Wiki FrontPage Content" />
 		<var name="wikiPageTitle" value="FrontPage" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
@@ -192,6 +196,8 @@
 		<var name="wikiNodeName" value="Main" />
 		<var name="wikiPageContent" value="Wiki FrontPage Content" />
 		<var name="wikiPageTitle" value="FrontPage" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
@@ -339,6 +345,8 @@
 		<var name="wikiPageTitle" value="FrontPage" />
 		<var name="wikiPageUsername" value="Test Test" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
 		</execute>
@@ -394,6 +402,8 @@
 		<var name="wikiPageRevision" value="1.1" />
 		<var name="wikiPageTitle" value="FrontPage" />
 		<var name="wikiPageUsername" value="Test Test" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />

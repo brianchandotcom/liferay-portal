@@ -30,6 +30,8 @@
 			<var name="solrVersion" value="5.2.1" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Message Boards" />
 		</execute>
@@ -38,6 +40,8 @@
 			<var name="threadBody" value="Orange" />
 			<var name="threadSubject" value="Apple" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />

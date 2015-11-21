@@ -230,6 +230,8 @@
 			<var name="entryValidTitleLength" value="${entryValidTitleLength}" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>
@@ -908,6 +910,8 @@
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>
@@ -934,6 +938,8 @@
 			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
@@ -1711,6 +1717,8 @@
 		<execute macro="BlogsConfiguration#selectScopePG">
 			<var name="scopeSelection" value="${pageName}" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />

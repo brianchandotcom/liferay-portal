@@ -21,6 +21,8 @@
 		<var name="fieldFieldLabel" value="Text Label" />
 		<var name="fieldName" value="TextName" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -38,6 +40,8 @@
 
 		<execute macro="DDLDataDefinition#saveCP" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -53,6 +57,8 @@
 		</execute>
 
 		<execute macro="DDLList#saveCP" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -85,6 +91,8 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -113,6 +121,8 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -139,6 +149,8 @@
 		<var name="fieldFieldLabel" value="Text Label" />
 		<var name="fieldName" value="TextName" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -156,6 +168,8 @@
 
 		<execute macro="DDLDataDefinition#saveCP" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -171,6 +185,8 @@
 		</execute>
 
 		<execute macro="DDLList#saveCP" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -202,6 +218,8 @@
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -239,6 +257,8 @@
 			<var name="workflowAssetTitle" value="${ddlListName}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />

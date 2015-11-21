@@ -70,6 +70,8 @@
 	</command>
 
 	<command name="DeleteMessageboardsThread" priority="5">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Message Boards" />
 		</execute>
@@ -78,6 +80,8 @@
 			<var name="threadBody" value="MB Thread Message Body" />
 			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Message Boards" />
@@ -90,6 +94,8 @@
 			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Recycle Bin" />
 		</execute>
@@ -99,6 +105,8 @@
 			<var name="assetType" value="Message Boards Thread" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Recycle Bin" />
 		</execute>
@@ -106,6 +114,8 @@
 		<execute macro="RecycleBin#viewDefaultCP">
 			<var name="assetName" value="MB Thread Message Subject" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Message Boards" />
@@ -117,6 +127,8 @@
 	</command>
 
 	<command name="RestoreMessageboardsThread" priority="5">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Message Boards" />
 		</execute>
@@ -126,6 +138,8 @@
 			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Message Boards" />
 		</execute>
@@ -134,6 +148,8 @@
 			<var name="threadBody" value="MB Thread Message Body" />
 			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Recycle Bin" />
@@ -146,6 +162,8 @@
 			<var name="assetType" value="Message Boards Thread" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Recycle Bin" />
 		</execute>
@@ -153,6 +171,8 @@
 		<execute macro="RecycleBin#viewDefaultCP">
 			<var name="assetName" value="MB Thread Message Subject" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Message Boards" />

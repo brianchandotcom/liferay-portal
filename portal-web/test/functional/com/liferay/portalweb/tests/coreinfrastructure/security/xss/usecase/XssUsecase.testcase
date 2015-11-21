@@ -189,6 +189,8 @@
 	<command name="ViewRecycleBinNoXSS" priority="4">
 		<var name="entryTitle"><![CDATA[<script>alert(123)</script>]]></var>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>
@@ -197,6 +199,8 @@
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
@@ -207,6 +211,8 @@
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Recycle Bin" />
@@ -287,6 +293,8 @@
 			<var name="userMiddleNameEdit" value="${userMiddleNameEdit}" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
 		</execute>
@@ -294,6 +302,8 @@
 		<execute macro="WikiNode#addCP">
 			<var name="wikiNodeName" value="Wiki Node Name" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
@@ -309,6 +319,8 @@
 			<var name="wikiPageContent" value="Wiki Page Content" />
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />

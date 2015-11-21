@@ -6,6 +6,8 @@
 	</set-up>
 
 	<tear-down>
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Forms" />
 		</execute>
@@ -17,6 +19,8 @@
 
 	<command name="NavigateToCorrectForm" priority="4">
 		<description message="This is a use case for LPS-59331" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Forms" />
@@ -96,6 +100,8 @@
 			<var name="formName" value="Text" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Forms" />
 		</execute>
@@ -107,6 +113,8 @@
 		<execute macro="Form#viewFormName">
 			<var name="formName" value="Checkbox" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Forms" />
@@ -125,6 +133,8 @@
 		<description message="This is a use case for LPS-59336." />
 
 		<var name="fieldValueList" value="testEntry1,exampleText,sampleAnswer" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Forms" />
@@ -187,6 +197,8 @@
 			<execute macro="FormPortlet#submit" />
 		</for>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Forms" />
 		</execute>
@@ -233,6 +245,8 @@
 	</command>
 
 	<command name="SubmitForm3x3Layout" priority="4">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Forms" />
 		</execute>
@@ -390,6 +404,8 @@
 
 		<execute macro="FormPortlet#submit" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Forms" />
 		</execute>
@@ -405,6 +421,8 @@
 	</command>
 
 	<command name="SubmitFormWithMultipleFields" priority="4">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Forms" />
 		</execute>
@@ -566,6 +584,8 @@
 
 		<execute macro="FormPortlet#submit" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Forms" />
 		</execute>
@@ -596,6 +616,8 @@
 	<command name="SubmitFormWithoutAFormNameAndViewErrorMessage" priority="3">
 		<description message="This is a use case for LPS-59664." />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Forms" />
 		</execute>
@@ -613,6 +635,8 @@
 
 	<command name="SubmitFormWithRequiredCheckboxField" priority="4">
 		<description message="This is a use case for LPS-59338." />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Forms" />
@@ -681,6 +705,8 @@
 
 		<execute macro="FormPortlet#submit" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Forms" />
 		</execute>
@@ -695,6 +721,8 @@
 
 	<command name="SubmitFormWithRequiredMultiLineTextField" priority="3">
 		<description message="This is a use case for LPS-59997." />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Forms" />
@@ -772,6 +800,8 @@
 
 		<execute macro="FormPortlet#submit" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Forms" />
 		</execute>
@@ -785,6 +815,8 @@
 	</command>
 
 	<command name="SubmitFormWithRequiredRadioField" priority="4">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Forms" />
 		</execute>
@@ -866,6 +898,8 @@
 
 		<execute macro="FormPortlet#submit" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Forms" />
 		</execute>
@@ -880,6 +914,8 @@
 
 	<command name="SubmitFormWithRequiredRepeatingTextField" priority="4">
 		<description message="This is a use case for LPS-59335." />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Forms" />
@@ -954,6 +990,8 @@
 
 		<execute macro="FormPortlet#submit" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Forms" />
 		</execute>
@@ -968,6 +1006,8 @@
 
 	<command name="SubmitFormWithRequiredTextField" priority="4">
 		<description message="This is a use case for LPS-58829." />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Forms" />
@@ -1037,6 +1077,8 @@
 
 		<execute macro="FormPortlet#submit" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Forms" />
 		</execute>
@@ -1050,6 +1092,8 @@
 	</command>
 
 	<command name="SubmitFormWithTextField" priority="5">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Forms" />
 		</execute>
@@ -1112,6 +1156,8 @@
 
 		<execute macro="FormPortlet#submit" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Forms" />
 		</execute>
@@ -1125,6 +1171,8 @@
 	</command>
 
 	<command name="SubmitFormWithThreePages" priority="4">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Forms" />
 		</execute>
@@ -1273,6 +1321,8 @@
 
 		<execute macro="FormPortlet#submit" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Forms" />
 		</execute>
@@ -1296,6 +1346,8 @@
 	</command>
 
 	<command name="ViewRepeatableTextFieldLabel" priority="4">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Forms" />
 		</execute>

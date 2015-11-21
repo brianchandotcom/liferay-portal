@@ -112,6 +112,8 @@
 		<var name="fieldFieldLabel" value="Text" />
 		<var name="fieldName" value="Text" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -158,6 +160,8 @@
 		<var name="field" value="Text" />
 		<var name="fieldFieldLabel" value="Text" />
 		<var name="fieldName" value="Text" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -301,6 +305,8 @@
 		<var name="fieldFieldLabel" value="Text" />
 		<var name="fieldName" value="Text" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -354,6 +360,8 @@
 		<var name="field" value="Text" />
 		<var name="fieldFieldLabel" value="Text" />
 		<var name="fieldName" value="Text" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -409,6 +417,8 @@
 		<var name="field" value="Text" />
 		<var name="fieldFieldLabel" value="Text" />
 		<var name="fieldName" value="Text" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -472,6 +482,8 @@
 		<var name="fieldFieldLabel" value="Text" />
 		<var name="fieldName" value="Text" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -530,6 +542,8 @@
 		<var name="fieldFieldLabel" value="Text" />
 		<var name="fieldName" value="Text" />
 		<var name="recordFieldDataEdit" value="Text Edit" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -611,6 +625,8 @@
 		<var name="fieldName" value="Text" />
 		<var name="recordFieldDataEdit" value="Text Edit" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -683,6 +699,8 @@
 	</command>
 
 	<command name="SearchDynamicDataListsRecords" priority="4">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -704,6 +722,8 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#saveCP" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -839,6 +859,8 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -854,6 +876,8 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#saveCP" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -934,6 +958,8 @@
 		<var name="fieldFieldLabel" value="Text" />
 		<var name="fieldName" value="Text" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -949,6 +975,8 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#saveCP" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -1031,6 +1059,8 @@
 		<var name="fieldFieldLabel" value="Boolean" />
 		<var name="fieldName" value="Boolean" />
 		<var name="fieldPredefinedValue" value="Yes" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -1140,6 +1170,8 @@
 		<var name="fieldPredefinedValueMonth" value="June" />
 		<var name="fieldPredefinedValueYear" value="2015" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -1246,6 +1278,8 @@
 		<var name="fieldName" value="Decimal" />
 		<var name="fieldPredefinedValue" value="30.09" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -1351,6 +1385,8 @@
 		<var name="fieldName" value="Text" />
 		<var name="userRole" value="Guest" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -1367,6 +1403,8 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#saveCP" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -1436,6 +1474,8 @@
 		<var name="fieldFieldLabel" value="Integer" />
 		<var name="fieldName" value="Integer" />
 		<var name="fieldPredefinedValue" value="5678" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -1541,6 +1581,8 @@
 		<var name="fieldFieldLabel" value="Text" />
 		<var name="fieldName" value="Text" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -1603,6 +1645,8 @@
 		<var name="fieldFieldLabel" value="Name" />
 		<var name="fieldName" value="Name" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -1619,6 +1663,8 @@
 
 		<execute macro="DDLDataDefinition#saveCP" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -1629,6 +1675,8 @@
 			<var name="ddlDisplayTemplateName" value="${ddlDisplayTemplateName}" />
 			<var name="ddlDisplayTemplateScriptFile" value="ddl_template_freemarker_1.ftl" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -1643,6 +1691,8 @@
 		</execute>
 
 		<execute macro="DDLList#saveCP" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -1660,6 +1710,8 @@
 		</execute>
 
 		<execute macro="DDLRecord#publishCP" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -1714,6 +1766,8 @@
 		<var name="fieldFieldLabel" value="Name" />
 		<var name="fieldName" value="Name" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -1730,6 +1784,8 @@
 
 		<execute macro="DDLDataDefinition#saveCP" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -1740,6 +1796,8 @@
 			<var name="ddlDisplayTemplateName" value="${ddlDisplayTemplateName}" />
 			<var name="ddlDisplayTemplateScriptFile" value="ddl_template_velocity_1.vm" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -1754,6 +1812,8 @@
 		</execute>
 
 		<execute macro="DDLList#saveCP" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -1771,6 +1831,8 @@
 		</execute>
 
 		<execute macro="DDLRecord#publishCP" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -1835,6 +1897,8 @@
 		<var name="fieldFieldLabel" value="Name" />
 		<var name="fieldName" value="Name" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -1852,6 +1916,8 @@
 
 		<execute macro="DDLDataDefinition#saveCP" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -1863,6 +1929,8 @@
 			<var name="ddlDisplayTemplateName" value="${ddlDisplayTemplateName}" />
 			<var name="ddlDisplayTemplateScript" value="${ddlDisplayTemplateScript}" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -1878,6 +1946,8 @@
 		</execute>
 
 		<execute macro="DDLList#saveCP" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -1895,6 +1965,8 @@
 		</execute>
 
 		<execute macro="DDLRecord#publishCP" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -1941,6 +2013,8 @@
 		<var name="fieldFieldLabel" value="Number" />
 		<var name="fieldName" value="Number" />
 		<var name="fieldPredefinedValue" value="9011" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
@@ -2047,6 +2121,8 @@
 		<var name="fieldName" value="TextBox" />
 		<var name="fieldPredefinedValue" value="Test 1" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
@@ -2149,6 +2225,8 @@
 		<var name="fieldFieldLabel" value="Text" />
 		<var name="fieldName" value="Text" />
 		<var name="fieldPredefinedValue" value="(Enter Text Here)" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Dynamic Data Lists" />

@@ -19,6 +19,8 @@
 		<var name="dmDocumentSize" value="0KB" />
 		<var name="dmDocumentTitle" value="DM Document Title" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -44,6 +46,8 @@
 		<var name="dmFolderDescription" value="DM Folder Description" />
 		<var name="dmFolderName" value="DM Folder Name" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -66,6 +70,8 @@
 		<var name="dmDocumentTitle" value="DM Document Title" />
 		<var name="dmDocumentTitleEdit" value="DM Document Title Edit" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -85,6 +91,8 @@
 			<var name="dmDocumentSize" value="${dmDocumentSize}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
@@ -108,6 +116,8 @@
 		<var name="dmFolderName" value="DM Folder Name" />
 		<var name="dmFolderNameEdit" value="DM Folder Name Name" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -120,6 +130,8 @@
 		<execute macro="DMFolder#viewCP">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
@@ -145,6 +157,8 @@
 		<var name="dmFolderDescription" value="DM Folder Description" />
 		<var name="dmFolderName" value="DM Folder Name" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -165,6 +179,8 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -177,6 +193,8 @@
 		<execute macro="DMFolder#viewCP">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
@@ -198,6 +216,8 @@
 		<var name="dmFolderDescription2" value="DM Folder2 Description" />
 		<var name="dmFolderName1" value="DM Folder1 Name" />
 		<var name="dmFolderName2" value="DM Folder2 Name" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
@@ -230,6 +250,8 @@
 		<var name="dmDocumentSize" value="0KB" />
 		<var name="dmDocumentTitle" value="DM Document Title" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -253,6 +275,8 @@
 		<var name="dmFolderDescription" value="DM Folder Description" />
 		<var name="dmFolderName" value="DM Folder Name" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -261,6 +285,8 @@
 			<var name="dmFolderDescription" value="${dmFolderDescription}" />
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
@@ -273,6 +299,8 @@
 	</command>
 
 	<command name="SearchForDocumentInHomeFolder" priority="4">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -283,6 +311,8 @@
 			<var name="dmDocumentSize" value="0KB" />
 			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />

@@ -146,6 +146,8 @@
 	<command name="SearchEntriesByPortletsAndModifiedRangeFacet" priority="4">
 		<var name="searchTerm"><![CDATA["AssetContent"]]></var>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>
@@ -155,6 +157,8 @@
 			<var name="entryTitle" value="Blogs Entry1 Title" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>
@@ -163,6 +167,8 @@
 			<var name="entryContent" value="Blogs Entry2 Content" />
 			<var name="entryTitle" value="Blogs Entry2 Title" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />
@@ -181,6 +187,8 @@
 			<var name="webContentTitle" value="WC WebContent1 Title" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />
 		</execute>
@@ -198,6 +206,8 @@
 			<var name="webContentTitle" value="WC WebContent2 Title" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
 		</execute>
@@ -213,6 +223,8 @@
 			<var name="wikiPageTitle" value="Wiki Page1 Title" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
 		</execute>
@@ -227,6 +239,8 @@
 			<var name="wikiPageContent" value="Wiki Page2 AssetContent" />
 			<var name="wikiPageTitle" value="Wiki Page2 Title" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />

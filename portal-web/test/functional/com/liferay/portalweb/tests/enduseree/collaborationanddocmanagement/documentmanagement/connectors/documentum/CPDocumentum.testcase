@@ -35,6 +35,8 @@
 			<var name="userScreenName" value="barthur" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -61,6 +63,8 @@
 			<var name="dmFolderName" value="Claim Templates" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -72,6 +76,8 @@
 		<execute macro="DMFolder#viewCP">
 			<var name="dmFolderName" value="Filed Claims" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
@@ -129,6 +135,8 @@
 	</command>
 
 	<command name="AddDocumentInSubfolder" priority="5">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -149,6 +157,8 @@
 			<var name="dmDocumentFile" value="Document_2.txt" />
 			<var name="dmDocumentTitle" value="Document_2.txt" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
@@ -203,6 +213,8 @@
 			<var name="dmRepositoryName" value="true" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -218,6 +230,8 @@
 		<execute macro="DMDocument#checkinCP">
 			<var name="dmRepositoryName" value="true" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
@@ -257,6 +271,8 @@
 		<execute macro="DMDocument#checkoutCP">
 			<var name="dmRepositoryName" value="true" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
@@ -322,6 +338,8 @@
 			<var name="dmDocumentFile" value="Document_2.doc" />
 			<var name="dmDocumentTitle" value="Document_2.doc" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
@@ -437,6 +455,8 @@
 			<var name="dmDocumentTitleEdit" value="Document_1.jpg" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -468,6 +488,8 @@
 			<var name="dmDocumentTitle" value="Document_2.docx" />
 			<var name="dmDocumentTitleEdit" value="Document_2_Edit.jpg" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
@@ -501,6 +523,8 @@
 			<var name="dmDocumentTitleEdit" value="Document_3" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -519,6 +543,8 @@
 	</command>
 
 	<command name="MoveCheckedoutDocumentToFolder" priority="5">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -534,6 +560,8 @@
 		<execute macro="DMFolder#viewCP">
 			<var name="dmFolderName" value="Documentum Subfolder Name" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
@@ -556,6 +584,8 @@
 			<var name="dmRepositoryName" value="true" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -575,6 +605,8 @@
 		<execute macro="DMDocument#viewCheckedoutCP" >
 			<var name="dmRepositoryName" value="true" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
@@ -623,6 +655,8 @@
 			<var name="dmFolderName" value="Home" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -634,6 +668,8 @@
 		<execute macro="DMDocument#viewCP">
 			<var name="dmDocumentTitle" value="Document_1.odt" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
@@ -710,6 +746,8 @@
 			<var name="dmRepositoryName" value="true" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -724,6 +762,8 @@
 			<var name="dmDocumentTitleEdit" value="Document_1_Edit.jpg" />
 			<var name="dmRepositoryName" value="true" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
@@ -747,6 +787,8 @@
 	</command>
 
 	<command name="ViewRepository" priority="5">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>

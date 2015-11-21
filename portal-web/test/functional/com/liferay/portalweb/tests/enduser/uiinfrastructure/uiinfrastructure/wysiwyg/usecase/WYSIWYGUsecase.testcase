@@ -57,6 +57,8 @@
 	</command>
 
 	<command name="AddWebContentArticleWithImageViaURL" priority="4">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />
 		</execute>

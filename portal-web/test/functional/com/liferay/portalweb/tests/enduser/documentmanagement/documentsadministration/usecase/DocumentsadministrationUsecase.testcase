@@ -358,6 +358,8 @@
 	<command name="Comments" priority="4">
 		<var name="pageName" value="Documents and Media Page" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -365,6 +367,8 @@
 		<execute macro="DMFolder#addCP">
 			<var name="dmFolderName" value="Folder1" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
@@ -374,6 +378,8 @@
 			<var name="dmFolderDescription" value="Description of Folder2" />
 			<var name="dmFolderName" value="Folder2" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
@@ -388,6 +394,8 @@
 			<var name="dmDocumentTitle" value="Zero Document File" />
 			<var name="nullFile" value="true" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
@@ -612,6 +620,8 @@
 	<command name="ImportDocumentWithDBStore" priority="3">
 		<property name="custom.properties" value="dl.store.impl=com.liferay.portal.store.db.DBStore" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -621,6 +631,8 @@
 			<var name="dmDocumentFile" value="Document_1.jpg" />
 			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
@@ -1158,6 +1170,8 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Categories" />
 		</execute>
@@ -1279,6 +1293,8 @@
 	</command>
 
 	<command name="ViewSingleDocumentSelectionDoesNotCheckAllFileSelectionCP" priority="4">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -1289,6 +1305,8 @@
 			<var name="dmDocumentTitle" value="DM Document1 Title" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -1298,6 +1316,8 @@
 			<var name="dmDocumentFile" value="Document_1.jpg" />
 			<var name="dmDocumentTitle" value="DM Document2 Title" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />

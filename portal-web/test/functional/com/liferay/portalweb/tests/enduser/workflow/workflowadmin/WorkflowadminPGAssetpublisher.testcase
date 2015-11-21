@@ -21,6 +21,8 @@
 			<var name="workflowResourceKey" value="RESOURCE_TABLE_MESSAGE_BOARDS_MESSAGE_SELECT" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />
 		</execute>
@@ -112,6 +114,8 @@
 		<var name="threadBody" value="MB Thread Message Body" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
 		<var name="workflowAssetType" value="Message Boards Message" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Message Boards" />
@@ -277,6 +281,8 @@
 		<var name="threadBody" value="MB Thread Message Body" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
 		<var name="workflowAssetType" value="Message Boards Message" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Message Boards" />

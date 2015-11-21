@@ -29,6 +29,8 @@
 		<var name="pollsQuestionChoiceE"><![CDATA["Other"]]></var>
 		<var name="pollsQuestionChoiceList" value="${pollsQuestionChoiceA},${pollsQuestionChoiceB},${pollsQuestionChoiceC},${pollsQuestionChoiceD},${pollsQuestionChoiceE}" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Polls" />
 		</execute>
@@ -410,6 +412,8 @@
 		<var name="pollsQuestionChoiceList" value="${pollsQuestionChoiceA},${pollsQuestionChoiceB},${pollsQuestionChoiceC}" />
 		<var name="pollsQuestionTitle" value="Favorite Liferay Portlet" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Polls" />
 		</execute>
@@ -462,6 +466,8 @@
 		<execute function="Type" locator1="TextInput#EMAIL_ADDRESS" value1="test@liferay.com" />
 		<execute function="Type" locator1="TextInput#PASSWORD" value1="test" />
 		<execute function="Click" locator1="Button#SIGN_IN" value1="Sign In" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Polls" />

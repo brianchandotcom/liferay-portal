@@ -41,6 +41,8 @@
 	</tear-down>
 
 	<command name="AddBlogsEntryWithHTML" priority="4">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>
@@ -69,6 +71,8 @@
 	</command>
 
 	<command name="AddBlogsEntryWithInlineImage">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>
@@ -226,6 +230,8 @@
 	<command name="DeleteBlogsEntry" priority="5">
 		<property name="portal.acceptance" value="true" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>
@@ -234,6 +240,8 @@
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
@@ -244,6 +252,8 @@
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Recycle Bin" />
 		</execute>
@@ -253,6 +263,8 @@
 			<var name="assetType" value="Blogs Entry" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Recycle Bin" />
 		</execute>
@@ -260,6 +272,8 @@
 		<execute macro="RecycleBin#viewDefaultCP">
 			<var name="assetName" value="Blogs Entry Title" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
@@ -271,6 +285,8 @@
 	</command>
 
 	<command name="DeleteDraftBlogsEntry" priority="4">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>
@@ -281,6 +297,8 @@
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>
@@ -289,6 +307,8 @@
 			<var name="assetType" value="Blogs Entry" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Recycle Bin" />
@@ -299,6 +319,8 @@
 			<var name="assetType" value="Blogs Entry" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Recycle Bin" />
 		</execute>
@@ -306,6 +328,8 @@
 		<execute macro="RecycleBin#viewDefaultCP">
 			<var name="assetName" value="Blogs Entry Title" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
@@ -605,6 +629,8 @@
 	<command name="RestoreBlogsEntry" priority="5">
 		<var name="assetRestoreLocation" value="Blogs" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>
@@ -614,6 +640,8 @@
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>
@@ -622,6 +650,8 @@
 			<var name="assetType" value="Blogs Entry" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Recycle Bin" />
@@ -634,6 +664,8 @@
 			<var name="assetType" value="Blogs Entry" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Recycle Bin" />
 		</execute>
@@ -641,6 +673,8 @@
 		<execute macro="RecycleBin#viewDefaultCP">
 			<var name="assetName" value="Blogs Entry Title" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
@@ -901,6 +935,8 @@
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>
@@ -1037,6 +1073,8 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>
@@ -1122,6 +1160,8 @@
 	</command>
 
 	<command name="ViewBlogsEntryWithCoverImageUploadedToDM" priority="3">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>
@@ -1150,6 +1190,8 @@
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -1164,6 +1206,8 @@
 	</command>
 
 	<command name="ViewBlogsEntryWithCustomAbstract" priority="4">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>
@@ -1196,6 +1240,8 @@
 	</command>
 
 	<command name="ViewBlogsEntryWithDefaultAbstract" priority="4">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>
@@ -1329,6 +1375,8 @@
 	</command>
 
 	<command name="ViewBlogsEntryWithUploadedCoverImage" priority="4">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>

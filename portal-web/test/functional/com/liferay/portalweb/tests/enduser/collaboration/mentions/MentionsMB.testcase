@@ -38,6 +38,8 @@
 	</tear-down>
 
 	<command name="ViewMentionViaMessageBoardsThread" priority="5">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Message Boards" />
 		</execute>
@@ -48,6 +50,8 @@
 			<var name="threadBody" value="Thread Body" />
 			<var name="threadSubject" value="Thread Subject" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Message Boards" />
@@ -66,6 +70,8 @@
 	</command>
 
 	<command name="ViewMentionViaMessageBoardsThreadReply" priority="5">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Message Boards" />
 		</execute>
@@ -74,6 +80,8 @@
 			<var name="threadBody" value="Thread Body" />
 			<var name="threadSubject" value="Thread Subject" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Message Boards" />
@@ -85,6 +93,8 @@
 			<var name="threadBody" value="Thread Reply Body" />
 			<var name="threadSubject" value="Thread Subject" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Message Boards" />
@@ -106,6 +116,8 @@
 	</command>
 
 	<command name="ViewMentionViaUpdatedMessageBoardsThread" priority="5">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Message Boards" />
 		</execute>
@@ -114,6 +126,8 @@
 			<var name="threadBody" value="Thread Body" />
 			<var name="threadSubject" value="Thread Subject" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Message Boards" />
@@ -126,6 +140,8 @@
 			<var name="threadBody" value="Thread Body" />
 			<var name="threadSubject" value="Thread Subject" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Message Boards" />

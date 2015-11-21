@@ -256,6 +256,8 @@
 			<var name="dmDocumentTypeName" value="Global Document Type Name" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -286,6 +288,8 @@
 	</command>
 
 	<command name="AssetPublisherCategoriesLocalization" priority="3">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Categories" />
 		</execute>
@@ -297,6 +301,8 @@
 			<var name="localizationNameKey" value="de_DE" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Categories" />
@@ -310,6 +316,8 @@
 			<var name="localizationNameKey" value="de_DE" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Categories" />
@@ -457,6 +465,8 @@
 	<command name="AssetPublisherCategoriesNavigation" priority="3">
 		<var name="siteName" value="Liferay" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Categories" />
 		</execute>
@@ -465,6 +475,8 @@
 			<var name="vocabularyDescription" value="This is the Vocabulary1 description" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Categories" />
@@ -476,6 +488,8 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Categories" />
 		</execute>
@@ -484,6 +498,8 @@
 			<var name="categoryName" value="Vocabulary1 Category" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />
@@ -498,6 +514,8 @@
 			<var name="webContentTitle" value="WC WebContent1 Title" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />
 		</execute>
@@ -510,6 +528,8 @@
 			<var name="webContentContent" value="WC WebContent2 Content" />
 			<var name="webContentTitle" value="WC WebContent2 Title" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />
@@ -524,6 +544,8 @@
 			<var name="webContentTitle" value="WC WebContent3 Title" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />
 		</execute>
@@ -536,6 +558,8 @@
 			<var name="webContentContent" value="WC WebContent4 Content" />
 			<var name="webContentTitle" value="WC WebContent4 Title" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />
@@ -633,6 +657,8 @@
 	</command>
 
 	<command name="AssetPublisherFilterAndOrderByFieldType" priority="4">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />
 		</execute>
@@ -656,6 +682,8 @@
 			<var name="structureName" value="WC Structure Name" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />
 		</execute>
@@ -673,6 +701,8 @@
 		</execute>
 
 		<execute macro="WebContentTemplates#save" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />
@@ -696,6 +726,8 @@
 			<var name="webContentTitle" value="Web Content1 Title" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />
 		</execute>
@@ -712,6 +744,8 @@
 		</execute>
 
 		<execute macro="WebContent#publish" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />
@@ -735,6 +769,8 @@
 			<var name="webContentTitle" value="Web Content2 Title" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />
 		</execute>
@@ -751,6 +787,8 @@
 		</execute>
 
 		<execute macro="WebContent#publish" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />
@@ -774,6 +812,8 @@
 			<var name="webContentTitle" value="Web Content3 Title" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />
 		</execute>
@@ -790,6 +830,8 @@
 		</execute>
 
 		<execute macro="WebContent#publish" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />
@@ -898,6 +940,8 @@
 			<var name="assetSubtypeFields" value="Effective Date,Expiration Date,Contract Type,Status,Legal Reviewer,Signing Authority,Deal Name" />
 			<var name="selectedAsset" value="Document" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />
@@ -1017,6 +1061,8 @@
 	<command name="AssetPublisherSiteAndGlobalScopeAccessibility" priority="5">
 		<property name="portal.acceptance" value="true" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />
 		</execute>
@@ -1131,6 +1177,8 @@
 	</command>
 
 	<command name="AssetPublisherTogglingBetweenSites" priority="4">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />
 		</execute>
@@ -1310,6 +1358,8 @@
 	</command>
 
 	<command name="ValidateRelatedAssetsAdvancedSearchFunction" priority="3">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -1319,6 +1369,8 @@
 			<var name="dmDocumentFile" value="Document_1.jpeg" />
 			<var name="dmDocumentTitle" value="DM Document1 Image Title" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
@@ -1331,6 +1383,8 @@
 		<execute macro="DMDocument#viewCP">
 			<var name="dmDocumentTitle" value="DM Document1 Image Title" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
@@ -1342,6 +1396,8 @@
 			<var name="dmDocumentTitle" value="DM Document2 Image Title" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -1353,6 +1409,8 @@
 		<execute macro="DMDocument#viewCP">
 			<var name="dmDocumentTitle" value="DM Document2 Image Title" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
@@ -1364,6 +1422,8 @@
 			<var name="dmDocumentTitle" value="DM Document3 Document Title" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -1375,6 +1435,8 @@
 		<execute macro="DMDocument#viewCP">
 			<var name="dmDocumentTitle" value="DM Document3 Document Title" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />
@@ -1760,6 +1822,8 @@
 			<var name="entryTitle" value="Blogs Entry1 Title" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>
@@ -1824,6 +1888,8 @@
 	</command>
 
 	<command name="ViewDeletedWCDArticleAsAdminAndGuestCP" priority="4">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />
 		</execute>
@@ -1873,6 +1939,8 @@
 		<execute macro="WebContent#viewPGViaWCD">
 			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />

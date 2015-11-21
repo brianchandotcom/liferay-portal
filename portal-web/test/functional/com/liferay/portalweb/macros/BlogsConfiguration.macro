@@ -213,6 +213,8 @@
 	</command>
 
 	<command name="viewScopeCP">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>
@@ -224,6 +226,8 @@
 	</command>
 
 	<command name="viewScopeDefaultNoEntryCP">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>

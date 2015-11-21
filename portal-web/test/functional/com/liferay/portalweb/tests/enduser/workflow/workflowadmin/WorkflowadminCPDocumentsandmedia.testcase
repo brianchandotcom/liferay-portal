@@ -8,6 +8,8 @@
 	<tear-down>
 		<execute macro="DMDocument#tearDownCP" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -22,6 +24,8 @@
 	<command name="AddDocumentsAndMediaNoWorkflowCP" priority="3">
 		<var name="dmDocumentDescription" value="DM Document Description" />
 		<var name="dmDocumentTitle" value="DM Document Title" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
@@ -47,6 +51,8 @@
 	</command>
 
 	<command name="ApproveDMDocumentCP" priority="4">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -71,6 +77,8 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -91,6 +99,8 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -105,6 +115,8 @@
 	</command>
 
 	<command name="ApproveInDMFolderNoWorkflowWithHomeFolderSingleApproverWorkflowCP" priority="3">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -140,6 +152,8 @@
 			<var name="dmDocumentTitle" value="DM Folder Document Title" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -166,6 +180,8 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -186,6 +202,8 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -197,6 +215,8 @@
 	</command>
 
 	<command name="ApproveInDMFolderSingleApproverTypeSpecificWorkflowCP" priority="4">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -206,6 +226,8 @@
 			<var name="dmDocumentTypeFieldNames" value="Text" />
 			<var name="dmDocumentTypeName" value="DM Document Type Name" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
@@ -248,6 +270,8 @@
 			<var name="workflowStatus" value="Pending (Review)" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -267,6 +291,8 @@
 			<var name="dmDocumentStatus" value="Approved" />
 			<var name="dmDocumentTitle" value="DM Folder Document Title" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
@@ -294,6 +320,8 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -318,6 +346,8 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -334,6 +364,8 @@
 	</command>
 
 	<command name="ApproveInDMFolderSingleApproverWorkflowWithNoHomeFolderWorkflowCP" priority="4">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -349,6 +381,8 @@
 			<var name="workflowRestriction" value="Default Workflow" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -363,6 +397,8 @@
 			<var name="dmDocumentStatus" value="Approved" />
 			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
@@ -395,6 +431,8 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -420,6 +458,8 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -436,6 +476,8 @@
 	</command>
 
 	<command name="ApproveInDMFolderWithParentFolderSingleApproverWorkflowCP" priority="4">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -453,6 +495,8 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 			<var name="workflowRestriction" value="Parent Folder" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
@@ -474,6 +518,8 @@
 			<var name="dmDocumentTitle" value="DM Folder Document Title" />
 			<var name="workflowStatus" value="Pending (Review)" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
@@ -507,6 +553,8 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -521,6 +569,8 @@
 			<var name="dmDocumentTitle" value="DM Folder Document Title" />
 			<var name="workflowStatus" value="Pending (Review)" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
@@ -552,6 +602,8 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -566,6 +618,8 @@
 			<var name="dmDocumentTitle" value="DM Folder Document Title" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -577,6 +631,8 @@
 	</command>
 
 	<command name="RejectDMDocumentCP" priority="4">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -600,6 +656,8 @@
 			<var name="workflowAssetType" value="Document" />
 			<var name="workflowTask" value="Review" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
@@ -629,6 +687,8 @@
 			<var name="workflowAssetType" value="Document" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -640,6 +700,8 @@
 	</command>
 
 	<command name="RejectInDMFolderNoWorkflowWithHomeFolderSingleApproverWorkflowCP" priority="3">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -675,6 +737,8 @@
 			<var name="dmDocumentTitle" value="DM Folder Document Title" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -700,6 +764,8 @@
 			<var name="workflowAssetType" value="Document" />
 			<var name="workflowTask" value="Review" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
@@ -730,6 +796,8 @@
 			<var name="workflowAssetType" value="Document" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -742,6 +810,8 @@
 	</command>
 
 	<command name="RejectInDMFolderSingleApproverTypeSpecificWorkflowCP" priority="3">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -751,6 +821,8 @@
 			<var name="dmDocumentTypeFieldNames" value="Text" />
 			<var name="dmDocumentTypeName" value="DM Document Type Name" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
@@ -804,6 +876,8 @@
 			<var name="workflowStatus" value="Pending (Review)" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -830,6 +904,8 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -863,6 +939,8 @@
 			<var name="workflowAssetType" value="Document" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -879,6 +957,8 @@
 	</command>
 
 	<command name="RejectInDMFolderSingleApproverWorkflowWithNoHomeFolderWorkflowCP" priority="3">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -894,6 +974,8 @@
 			<var name="workflowRestriction" value="Default Workflow" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -908,6 +990,8 @@
 			<var name="dmDocumentStatus" value="Approved" />
 			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
@@ -940,6 +1024,8 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -974,6 +1060,8 @@
 			<var name="workflowAssetType" value="Document" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -991,6 +1079,8 @@
 	</command>
 
 	<command name="RejectInDMFolderWithParentFolderSingleApproverWorkflowCP" priority="3">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -1008,6 +1098,8 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 			<var name="workflowRestriction" value="Parent Folder" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
@@ -1029,6 +1121,8 @@
 			<var name="dmDocumentTitle" value="DM Folder Document Title" />
 			<var name="workflowStatus" value="Pending (Review)" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
@@ -1062,6 +1156,8 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -1076,6 +1172,8 @@
 			<var name="dmDocumentTitle" value="DM Folder Document Title" />
 			<var name="workflowStatus" value="Pending (Review)" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
@@ -1125,6 +1223,8 @@
 			<var name="workflowAssetType" value="Document" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -1139,6 +1239,8 @@
 			<var name="dmDocumentTitle" value="DM Folder Document Title" />
 			<var name="workflowStatus" value="Pending (Update)" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />

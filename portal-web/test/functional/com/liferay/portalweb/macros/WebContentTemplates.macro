@@ -173,6 +173,8 @@
 		<var name="key_ddlTemplateName" value="${templateName}" />
 		<var name="key_localizationName" value="${localization1NameKey}" />
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />
 		</execute>
@@ -213,6 +215,8 @@
 	</command>
 
 	<command name="tearDownCP">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />
 		</execute>

@@ -99,6 +99,8 @@
 			<var name="isPresent" value="SETUP_DISPLAY_SETTINGS" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
 		</execute>
@@ -136,6 +138,8 @@
 	</command>
 
 	<command name="DeleteDeleteWikiFrontpage" priority="5">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
 		</execute>
@@ -153,6 +157,8 @@
 			<var name="wikiNodeName" value="Main" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
 		</execute>
@@ -166,6 +172,8 @@
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Recycle Bin" />
 		</execute>
@@ -175,6 +183,8 @@
 			<var name="assetType" value="Wiki Page" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Recycle Bin" />
 		</execute>
@@ -182,6 +192,8 @@
 		<execute macro="RecycleBin#viewDefaultCP">
 			<var name="assetName" value="FrontPage" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
@@ -199,6 +211,8 @@
 	</command>
 
 	<command name="RateAndEditPageComment" priority="5">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
 		</execute>
@@ -268,6 +282,8 @@
 	</command>
 
 	<command name="RatePage" priority="5">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
 		</execute>
@@ -331,6 +347,8 @@
 	</command>
 
 	<command name="RestoreDeleteWikiFrontpage" priority="5">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
 		</execute>
@@ -348,6 +366,8 @@
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
 		</execute>
@@ -361,6 +381,8 @@
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Recycle Bin" />
 		</execute>
@@ -368,6 +390,8 @@
 		<execute macro="RecycleBin#restoreOverwriteCP">
 			<var name="assetName" value="FrontPage" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />

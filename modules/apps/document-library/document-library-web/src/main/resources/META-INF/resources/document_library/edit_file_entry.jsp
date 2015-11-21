@@ -322,13 +322,15 @@ if (portletTitleBasedNavigation) {
 				</c:if>
 			</div>
 
-			<div class="alert alert-danger hide" id="<portlet:namespace />fileTitleError">
-				<liferay-ui:message key="you-must-specify-a-file-or-a-title" />
-			</div>
-
 			<%@ include file="/document_library/edit_file_entry_picker.jspf" %>
 
-			<aui:input name="title" />
+			<aui:input name="title">
+				<aui:validator errorMessage="you-must-specify-a-file-or-a-title" name="custom">
+					function(val, fieldNode, ruleValue) {
+						return ((val != '') || A.one('#<portlet:namespace />file').val() != '');
+					}
+				</aui:validator>
+			</aui:input>
 
 			<c:if test="<%= (folder == null) || folder.isSupportsMetadata() %>">
 				<aui:input name="description" />
@@ -543,43 +545,28 @@ if (portletTitleBasedNavigation) {
 	function <portlet:namespace />saveFileEntry(draft) {
 		var $ = AUI.$;
 
-		var className = 'alert alert-danger';
-
-		var fileTitleErrorNode = $('#<portlet:namespace />fileTitleError');
-
 		var form = $(document.<portlet:namespace />fm);
-
-		fileTitleErrorNode.addClass(className + ' hide');
 
 		var fileValue = form.fm('file').val();
 
-		var hasFieldValue = !!(fileValue || form.fm('title').val());
-
-		if (hasFieldValue) {
-			if (fileValue) {
-				<%= HtmlUtil.escape(uploadProgressId) %>.startProgress();
-			}
-
-			form.fm('<%= Constants.CMD %>').val('<%= (fileEntry == null) ? Constants.ADD : Constants.UPDATE %>');
-
-			var checkedOut = <%= (fileEntry != null) && checkedOut %>;
-			var showModalDialog = form.fm('updateVersionDetails').is(':checked');
-
-			if (draft || !showModalDialog) {
-				if (draft) {
-					form.fm('workflowAction').val('<%= WorkflowConstants.ACTION_SAVE_DRAFT %>');
-				}
-
-				submitForm(form);
-			}
-			else if (!checkedOut) {
-				<portlet:namespace />showVersionDetailsDialog(form);
-			}
+		if (fileValue) {
+			<%= HtmlUtil.escape(uploadProgressId) %>.startProgress();
 		}
-		else {
-			fileTitleErrorNode.addClass(className + ' show');
 
-			window.location.hash = '<portlet:namespace />fileTitleError';
+		form.fm('<%= Constants.CMD %>').val('<%= (fileEntry == null) ? Constants.ADD : Constants.UPDATE %>');
+
+		var checkedOut = <%= (fileEntry != null) && checkedOut %>;
+		var showModalDialog = form.fm('updateVersionDetails').is(':checked');
+
+		if (draft || !showModalDialog) {
+			if (draft) {
+				form.fm('workflowAction').val('<%= WorkflowConstants.ACTION_SAVE_DRAFT %>');
+			}
+
+			submitForm(form);
+		}
+		else if (!checkedOut) {
+			<portlet:namespace />showVersionDetailsDialog(form);
 		}
 	}
 

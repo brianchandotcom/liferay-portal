@@ -52,8 +52,6 @@ PortletURL portletURL = renderResponse.createRenderURL();
 TemplateSearch templateSearch = new TemplateSearch(renderRequest, portletURL);
 
 TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.getSearchTerms();
-
-String searchContainerId = "ddmTemplates";
 %>
 
 <liferay-ui:error exception="<%= RequiredTemplateException.MustNotDeleteTemplateReferencedByTemplateLinks.class %>" message="the-template-cannot-be-deleted-because-it-is-required-by-one-or-more-template-links" />
@@ -95,12 +93,12 @@ String searchContainerId = "ddmTemplates";
 	</c:if>
 
 	<liferay-util:include page="/template_toolbar.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="searchContainerId" value="<%= searchContainerId %>" />
+		<liferay-util:param name="searchContainerId" value="ddmTemplates" />
 	</liferay-util:include>
 
 	<div class="container-fluid-1280" id="<portlet:namespace />entriesContainer">
 		<liferay-ui:search-container
-			id="<%= searchContainerId %>"
+			id="ddmTemplates"
 			orderByCol="<%= orderByCol %>"
 			orderByComparator="<%= orderByComparator %>"
 			orderByType="<%= orderByType %>"

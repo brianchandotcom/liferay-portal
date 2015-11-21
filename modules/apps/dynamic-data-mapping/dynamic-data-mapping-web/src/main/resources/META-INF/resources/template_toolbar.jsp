@@ -18,7 +18,6 @@
 
 <%
 boolean includeCheckBox = ParamUtil.getBoolean(request, "includeCheckBox", true);
-
 String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 %>
 

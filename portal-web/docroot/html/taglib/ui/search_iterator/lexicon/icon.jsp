@@ -54,8 +54,8 @@
 				boolean rowIsDisabled = false;
 
 				if (rowChecker != null) {
-					rowIsDisabled = rowChecker.isDisabled(row.getObject());
 					rowIsChecked = rowChecker.isChecked(row.getObject());
+					rowIsDisabled = rowChecker.isDisabled(row.getObject());
 
 					if (!rowIsChecked) {
 						allRowsIsChecked = false;

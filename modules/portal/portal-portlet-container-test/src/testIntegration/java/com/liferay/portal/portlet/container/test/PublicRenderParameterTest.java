@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.Portlet;
@@ -31,14 +32,15 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.test.randomizerbumpers.FriendlyURLRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.test.PortletContainerTestUtil;
+import com.liferay.portal.util.test.PortletContainerTestUtil.Response;
 import com.liferay.portlet.PortletQName;
 import com.liferay.portlet.PortletURLImpl;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import java.util.List;
-import java.util.Map;
+import java.util.Dictionary;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.portlet.PortletException;
@@ -75,6 +77,8 @@ public class PublicRenderParameterTest extends BasePortletContainerTestCase {
 			NumericStringRandomizerBumper.INSTANCE,
 			UniqueStringRandomizerBumper.INSTANCE);
 		final AtomicBoolean success = new AtomicBoolean(false);
+
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put(
 			"com.liferay.portlet.application-type",
@@ -124,7 +128,8 @@ public class PublicRenderParameterTest extends BasePortletContainerTestCase {
 			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name),
 			ServiceContextTestUtil.getServiceContext());
 
-		HttpServletRequest httpServletRequest = getHttpServletRequest();
+		HttpServletRequest httpServletRequest =
+			PortletContainerTestUtil.getHttpServletRequest(group, layout);
 
 		PortletURL portletURL = new PortletURLImpl(
 			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
@@ -138,9 +143,9 @@ public class PublicRenderParameterTest extends BasePortletContainerTestCase {
 			portletURLString.contains(
 				PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE));
 
-		Map<String, List<String>> responseMap = request(portletURLString);
+		Response response = PortletContainerTestUtil.request(portletURLString);
 
-		Assert.assertEquals("200", getString(responseMap, "code"));
+		Assert.assertEquals(200, response.getCode());
 		Assert.assertTrue(success.get());
 	}
 
@@ -152,6 +157,8 @@ public class PublicRenderParameterTest extends BasePortletContainerTestCase {
 			NumericStringRandomizerBumper.INSTANCE,
 			UniqueStringRandomizerBumper.INSTANCE);
 		final AtomicBoolean success = new AtomicBoolean(false);
+
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put(
 			"javax.portlet.supported-public-render-parameter", prpName);
@@ -178,7 +185,8 @@ public class PublicRenderParameterTest extends BasePortletContainerTestCase {
 
 		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
 
-		HttpServletRequest httpServletRequest = getHttpServletRequest();
+		HttpServletRequest httpServletRequest =
+			PortletContainerTestUtil.getHttpServletRequest(group, layout);
 
 		PortletURL portletURL = new PortletURLImpl(
 			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
@@ -192,9 +200,9 @@ public class PublicRenderParameterTest extends BasePortletContainerTestCase {
 			portletURLString.contains(
 				PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE));
 
-		Map<String, List<String>> responseMap = request(portletURLString);
+		Response response = PortletContainerTestUtil.request(portletURLString);
 
-		Assert.assertEquals("200", getString(responseMap, "code"));
+		Assert.assertEquals(200, response.getCode());
 		Assert.assertTrue(success.get());
 	}
 

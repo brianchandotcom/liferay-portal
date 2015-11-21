@@ -16,7 +16,6 @@ package com.liferay.portal.security.sso.facebook.connect.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectConstants;
 import com.liferay.portal.settings.portlet.action.BasePortalSettingsFormMVCActionCommand;
@@ -46,21 +45,18 @@ public class PortalSettingsFacebookConnectAuthenticationFormMVCActionCommand
 	protected void doValidateForm(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
-		boolean facebookEnabled = ParamUtil.getBoolean(
-			actionRequest, "facebook--enabled");
+		boolean facebookEnabled = getBoolean(actionRequest, "enabled");
 
 		if (!facebookEnabled) {
 			return;
 		}
 
-		String facebookGraphURL = ParamUtil.getString(
-			actionRequest, "facebook--graphURL");
-		String facebookOauthAuthURL = ParamUtil.getString(
-			actionRequest, "facebook--oauthAuthURL");
-		String facebookOauthRedirectURL = ParamUtil.getString(
-			actionRequest, "facebook--oauthRedirectURL");
-		String facebookOauthTokenURL = ParamUtil.getString(
-			actionRequest, "facebook--oauthTokenURL");
+		String facebookGraphURL = getString(actionRequest, "graphURL");
+		String facebookOauthAuthURL = getString(actionRequest, "oauthAuthURL");
+		String facebookOauthRedirectURL = getString(
+			actionRequest, "oauthRedirectURL");
+		String facebookOauthTokenURL = getString(
+			actionRequest, "oauthTokenURL");
 
 		if (Validator.isNotNull(facebookGraphURL) &&
 			!Validator.isUrl(facebookGraphURL)) {
@@ -91,13 +87,13 @@ public class PortalSettingsFacebookConnectAuthenticationFormMVCActionCommand
 	}
 
 	@Override
-	protected String getSettingsId() {
-		return FacebookConnectConstants.SERVICE_NAME;
+	protected String getParameterNamespace() {
+		return "facebook--";
 	}
 
 	@Override
-	protected String getParameterNamespace() {
-		return "facebook--";
+	protected String getSettingsId() {
+		return FacebookConnectConstants.SERVICE_NAME;
 	}
 
 }

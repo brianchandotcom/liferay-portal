@@ -2364,8 +2364,8 @@
 		<var name="pageName" value="Kaleo Forms" />
 		<var name="workflowDefinitionTitle" value="Single Approver" />
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
@@ -6016,8 +6016,8 @@
 			<var name="fieldName" value="quantity" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLTemplate#deleteTemplateCP">
@@ -6274,8 +6274,8 @@
 
 		<execute function="AssertElementNotPresent" locator1="DDLEditRecord#TEXT_FIELD" />
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLTemplate#deleteTemplateCP">
@@ -6739,8 +6739,8 @@
 		<var name="pageName" value="Kaleo Forms" />
 		<var name="workflowDefinitionTitle" value="Single Approver" />
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
@@ -6875,8 +6875,8 @@
 		<var name="pageName" value="Kaleo Forms" />
 		<var name="workflowDefinitionTitle" value="Single Approver" />
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
@@ -7041,8 +7041,8 @@
 		<var name="pageName" value="Kaleo Forms" />
 		<var name="workflowDefinitionTitle" value="Single Approver" />
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
@@ -8507,8 +8507,8 @@
 		<var name="pageName" value="Kaleo Forms" />
 		<var name="workflowDefinitionTitle" value="Single Approver" />
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
@@ -8926,8 +8926,8 @@
 		<var name="pageName" value="Kaleo Forms" />
 		<var name="workflowDefinitionTitle" value="Single Approver" />
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">

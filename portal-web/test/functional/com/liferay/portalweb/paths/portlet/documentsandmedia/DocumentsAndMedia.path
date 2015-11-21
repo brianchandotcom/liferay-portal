@@ -56,7 +56,7 @@
 </tr>
 <tr>
 	<td>ICON_DOCUMENT_THUMBNAIL</td>
-	<td>//div[@data-title='${key_dmDocumentTitle}']//div[@class='entry-thumbnail']/img</td>
+	<td>//li[@data-title='${key_dmDocumentTitle}']//div[contains(@class,'bg-cover')]/a/img</td>
 	<td></td>
 </tr>
 <tr>

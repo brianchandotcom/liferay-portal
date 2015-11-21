@@ -600,6 +600,13 @@
 	</command>
 
 	<command name="publishToLivePublishTemplate">
+		<if>
+			<condition function="IsElementPresent" locator1="StagingPublishtolivenow#SWITCH_TO_ADVANCED" />
+			<then>
+				<execute function="AssertClick#assertPartialTextClickAt" locator1="StagingPublishtolivenow#SWITCH_TO_ADVANCED" value1="Switch to Advanced Publication" />
+			</then>
+		</if>
+
 		<execute function="AssertClick" locator1="StagingPublishToLive#PUBLISH_TEMPLATES_BUTTON" value1="Publish Templates" />
 
 		<var name="key_publishTemplateName" value="${publishTemplateName}" />

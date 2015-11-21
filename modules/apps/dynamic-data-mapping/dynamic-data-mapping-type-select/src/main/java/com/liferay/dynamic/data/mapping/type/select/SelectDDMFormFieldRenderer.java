@@ -18,11 +18,13 @@ import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldRenderer
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.StringPool;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -86,6 +88,13 @@ public class SelectDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 			ddmFormField.isMultiple() ? "multiple" : StringPool.BLANK);
 		template.put(
 			"options", getOptions(ddmFormField, ddmFormFieldRenderingContext));
+
+		Map<String, String> stringsMap = new HashMap<>();
+		stringsMap.put(
+			"chooseAnOption", LanguageUtil.get(
+				ddmFormFieldRenderingContext.getLocale(), "choose-an-option"));
+
+		template.put("strings", stringsMap);
 	}
 
 	private TemplateResource _templateResource;

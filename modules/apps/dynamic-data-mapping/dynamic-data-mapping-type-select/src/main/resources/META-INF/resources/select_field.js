@@ -15,6 +15,12 @@ AUI.add(
 						value: []
 					},
 
+					strings: {
+						value: {
+							chooseAnOption: Liferay.Language.get('choose-an-option')
+						}
+					},
+
 					type: {
 						value: 'select'
 					},
@@ -75,7 +81,8 @@ AUI.add(
 							SelectField.superclass.getTemplateContext.apply(instance, arguments),
 							{
 								multiple: instance.get('multiple') ? 'multiple' : '',
-								options: instance.getOptions()
+								options: instance.getOptions(),
+								strings: instance.get('strings')
 							}
 						);
 					},

@@ -256,11 +256,6 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet>
-		<servlet-name>Software Catalog Servlet</servlet-name>
-		<servlet-class>com.liferay.portal.servlet.SoftwareCatalogServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet>
 		<servlet-name>Tunnel Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.servlet.TunnelServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
@@ -725,10 +720,6 @@
 	<servlet-mapping>
 		<servlet-name>Sharepoint Web Services Servlet</servlet-name>
 		<url-pattern>/_vti_bin/webs.asmx</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>Software Catalog Servlet</servlet-name>
-		<url-pattern>/software_catalog/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Web Server Servlet</servlet-name>

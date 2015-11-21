@@ -173,7 +173,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				}
 
 				if (uploadException.isExceededLiferayFileItemSizeLimit()) {
-					throw new LiferayFileItemException();
+					throw new LiferayFileItemException(cause);
 				}
 
 				if (uploadException.isExceededRequestContentLengthLimit()) {

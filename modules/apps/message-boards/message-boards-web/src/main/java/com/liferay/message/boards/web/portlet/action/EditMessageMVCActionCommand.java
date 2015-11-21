@@ -121,7 +121,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 				}
 
 				if (uploadException.isExceededLiferayFileItemSizeLimit()) {
-					throw new LiferayFileItemException();
+					throw new LiferayFileItemException(cause);
 				}
 
 				if (uploadException.isExceededRequestContentLengthLimit()) {

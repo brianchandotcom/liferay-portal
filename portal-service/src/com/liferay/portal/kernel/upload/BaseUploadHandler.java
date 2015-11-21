@@ -80,7 +80,7 @@ public abstract class BaseUploadHandler implements UploadHandler {
 				}
 
 				if (uploadException.isExceededLiferayFileItemSizeLimit()) {
-					throw new LiferayFileItemException();
+					throw new LiferayFileItemException(cause);
 				}
 
 				if (uploadException.isExceededRequestContentLengthLimit()) {

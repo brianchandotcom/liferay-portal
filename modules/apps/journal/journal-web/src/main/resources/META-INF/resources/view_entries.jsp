@@ -211,8 +211,6 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(articleSearchCo
 </c:if>
 
 <%
-String displayStyle = journalDisplayContext.getDisplayStyle();
-
 String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 %>
 
@@ -245,6 +243,8 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 		else {
 			curArticle = (JournalArticle)result;
 		}
+
+		String displayStyle = journalDisplayContext.getDisplayStyle();
 		%>
 
 		<c:choose>

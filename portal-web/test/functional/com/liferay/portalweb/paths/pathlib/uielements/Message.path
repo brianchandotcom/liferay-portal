@@ -90,17 +90,7 @@
 </tr>
 <tr>
 	<td>INFO_1</td>
-	<td>xpath=(//div[@class='alert alert-info'])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>INFO_2</td>
-	<td>xpath=(//div[@class='alert alert-info'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>INFO_3</td>
-	<td>xpath=(//div[@class='alert alert-info'])[3]</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')][1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -109,23 +99,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>INFO_5</td>
-	<td>//div[contains(@class,'text') and contains(@class,'empty-message')]/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>INFO_ADD_EXPLANATION</td>
-	<td>//div[contains(@id,'explanationPost')]/div[@class='alert alert-info']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>INFO_ARTICLE</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]/span/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>INFO_NO_PAGES_FOUND</td>
-	<td>//div[@class='alert alert-info' and contains(.,'No pages were found that matched the keywords')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -134,18 +109,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>INFO_PAGE_DOES_NOT_EXIST</td>
-	<td>//div[@class='alert alert-info' and contains(.,'This page does not exist yet. Use the form below to create it')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>INFO_EXPLANATION_POST</td>
 	<td>//div[contains(@id,'explanationPost')]/div[@class='alert alert-info']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>INFO_RESPONSE</td>
-	<td>//div[contains(@class,'message-response') and contains(@class,'alert')]</td>
 	<td></td>
 </tr>
 <tr>

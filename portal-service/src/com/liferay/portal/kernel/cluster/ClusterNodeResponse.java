@@ -51,7 +51,7 @@ public class ClusterNodeResponse implements Serializable {
 		return _exception;
 	}
 
-	public Object getResult() {
+	public Serializable getResult() {
 		if (_exception != null) {
 			return ReflectionUtil.throwException(_exception);
 		}

@@ -421,7 +421,7 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 		Exception exception = clusterNodeResponse.getException();
 
 		if (exception == null) {
-			Serializable result = (Serializable)clusterNodeResponse.getResult();
+			Serializable result = clusterNodeResponse.getResult();
 
 			if (result instanceof ClusterNodeStatus) {
 				_memberJoined((ClusterNodeStatus)result);

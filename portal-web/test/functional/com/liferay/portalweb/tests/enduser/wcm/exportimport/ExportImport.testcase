@@ -891,8 +891,8 @@
 	<command name="ImportCorruptedFile" priority="5">
 		<property name="portal.acceptance" value="true" />
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Bookmarks" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Bookmarks" />
 		</execute>
 
 		<execute macro="LAR#importPortlet">

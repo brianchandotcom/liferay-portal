@@ -184,14 +184,12 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 			ClusterChannel clusterChannel =
 				_clusterExecutorImpl.getClusterChannel();
 
-			Address localAddress = clusterChannel.getLocalAddress();
-
 			ClusterReceiver clusterReceiver =
 				clusterChannel.getClusterReceiver();
 
 			Address coordinator = clusterReceiver.getCoordinator();
 
-			master = localAddress.equals(coordinator);
+			master = coordinator.equals(clusterChannel.getLocalAddress());
 
 			if (master) {
 				masterClusterNodeId = _localClusterNodeId;

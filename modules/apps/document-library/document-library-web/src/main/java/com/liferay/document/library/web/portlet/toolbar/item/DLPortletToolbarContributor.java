@@ -154,7 +154,8 @@ public class DLPortletToolbarContributor implements PortletToolbarContributor {
 
 		urlMenuItem.setLabel(
 			LanguageUtil.get(
-				PortalUtil.getHttpServletRequest(portletRequest), "folder"));
+				PortalUtil.getHttpServletRequest(portletRequest),
+				(folder != null) ? "subfolder" : "folder"));
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 

@@ -20,8 +20,6 @@
 String browseBy = ParamUtil.getString(request, "browseBy");
 
 String keywords = ParamUtil.getString(request, "keywords");
-
-String searchContainerId = "articles";
 %>
 
 <portlet:actionURL name="restoreTrashEntries" var="restoreTrashEntriesURL" />
@@ -33,7 +31,7 @@ String searchContainerId = "articles";
 <liferay-util:include page="/navigation.jsp" servletContext="<%= application %>" />
 
 <liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="searchContainerId" value="<%= searchContainerId %>" />
+	<liferay-util:param name="searchContainerId" value="articles" />
 </liferay-util:include>
 
 <div id="<portlet:namespace />journalContainer">
@@ -68,7 +66,7 @@ String searchContainerId = "articles";
 						</c:when>
 						<c:otherwise>
 							<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>">
-								<liferay-util:param name="searchContainerId" value="<%= searchContainerId %>" />
+								<liferay-util:param name="searchContainerId" value="articles" />
 							</liferay-util:include>
 						</c:otherwise>
 					</c:choose>
@@ -105,7 +103,7 @@ String searchContainerId = "articles";
 			},
 			moveEntryUrl: '<portlet:renderURL><portlet:param name="mvcPath" value="/move_entries.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>',
 			namespace: '<portlet:namespace />',
-			searchContainerId: '<%= searchContainerId %>'
+			searchContainerId: 'articles'
 		}
 	);
 

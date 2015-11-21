@@ -17,9 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String keywords = ParamUtil.getString(request, "keywords");
-
 String searchContainerId = ParamUtil.getString(request, "searchContainerId");
+
+String keywords = ParamUtil.getString(request, "keywords");
 %>
 
 <liferay-frontend:management-bar

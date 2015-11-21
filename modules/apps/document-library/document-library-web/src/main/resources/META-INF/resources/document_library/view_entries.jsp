@@ -266,11 +266,11 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 					if (DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
 						draggable = true;
 
-						if (Validator.isNull(dlSearchContainer.getRowChecker())) {
+						if (dlSearchContainer.getRowChecker() == null) {
 							dlSearchContainer.setRowChecker(entriesChecker);
 						}
 
-						if (Validator.isNull(dlSearchContainer.getRowMover())) {
+						if (dlSearchContainer.getRowMover() == null) {
 							dlSearchContainer.setRowMover(entriesMover);
 						}
 					}
@@ -439,11 +439,11 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 					if (DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.DELETE) || DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE)) {
 						draggable = true;
 
-						if (Validator.isNull(dlSearchContainer.getRowChecker())) {
+						if (dlSearchContainer.getRowChecker() == null) {
 							dlSearchContainer.setRowChecker(entriesChecker);
 						}
 
-						if (Validator.isNull(dlSearchContainer.getRowMover())) {
+						if (dlSearchContainer.getRowMover() == null) {
 							dlSearchContainer.setRowMover(entriesMover);
 						}
 					}

@@ -25,9 +25,9 @@ long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-re
 
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 
-boolean search = mvcRenderCommandName.equals("/document_library/search");
-
 String searchContainerId = ParamUtil.getString(request, "searchContainerId");
+
+boolean search = mvcRenderCommandName.equals("/document_library/search");
 %>
 
 <liferay-frontend:management-bar

@@ -89,8 +89,6 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 request.setAttribute("view.jsp-displayStyle", displayStyle);
 request.setAttribute("view.jsp-orderByCol", orderByCol);
 request.setAttribute("view.jsp-orderByType", orderByType);
-
-String searchContainerId = "entries";
 %>
 
 <liferay-util:buffer var="uploadURL"><liferay-portlet:actionURL name="/document_library/edit_file_entry"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_DYNAMIC %>" /><portlet:param name="folderId" value="{folderId}" /><portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" /></liferay-portlet:actionURL></liferay-util:buffer>
@@ -106,7 +104,7 @@ String searchContainerId = "entries";
 <liferay-util:include page="/document_library/navigation.jsp" servletContext="<%= application %>" />
 
 <liferay-util:include page="/document_library/toolbar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="searchContainerId" value="<%= searchContainerId %>" />
+	<liferay-util:param name="searchContainerId" value="entries" />
 </liferay-util:include>
 
 <div id="<portlet:namespace />documentLibraryContainer">
@@ -145,7 +143,7 @@ String searchContainerId = "entries";
 						</c:when>
 						<c:otherwise>
 							<liferay-util:include page="/document_library/view_entries.jsp" servletContext="<%= application %>">
-								<liferay-util:param name="searchContainerId" value="<%= searchContainerId %>" />
+								<liferay-util:param name="searchContainerId" value="entries" />
 							</liferay-util:include>
 						</c:otherwise>
 					</c:choose>
@@ -257,7 +255,7 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(DLPortletKeys.
 
 			],
 			scopeGroupId: <%= scopeGroupId %>,
-			searchContainerId: '<%= searchContainerId %>',
+			searchContainerId: 'entries',
 			trashEnabled: <%= (scopeGroupId == repositoryId) && TrashUtil.isTrashEnabled(scopeGroupId) %>,
 			updateable: <%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.UPDATE) %>,
 			uploadURL: '<%= uploadURL %>',

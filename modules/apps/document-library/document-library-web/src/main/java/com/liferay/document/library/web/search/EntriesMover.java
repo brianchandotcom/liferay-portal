@@ -29,7 +29,8 @@ import com.liferay.portlet.trash.util.TrashUtil;
 public class EntriesMover extends RowMover {
 
 	public EntriesMover(long scopeGroupId) throws PortalException {
-		RowMoverDropTarget moveToFolderRowMoverDropTarget = new RowMoverDropTarget();
+		RowMoverDropTarget moveToFolderRowMoverDropTarget =
+			new RowMoverDropTarget();
 
 		moveToFolderRowMoverDropTarget.setAction("move-to-folder");
 		moveToFolderRowMoverDropTarget.setActiveCssClass("active");
@@ -38,7 +39,8 @@ public class EntriesMover extends RowMover {
 		addRowMoverDropTarget(moveToFolderRowMoverDropTarget);
 
 		if (TrashUtil.isTrashEnabled(scopeGroupId)) {
-			RowMoverDropTarget moveToTrashRowMoverDropTarget = new RowMoverDropTarget();
+			RowMoverDropTarget moveToTrashRowMoverDropTarget =
+				new RowMoverDropTarget();
 
 			moveToTrashRowMoverDropTarget.setAction("move-to-trash");
 			moveToTrashRowMoverDropTarget.setActiveCssClass("active");

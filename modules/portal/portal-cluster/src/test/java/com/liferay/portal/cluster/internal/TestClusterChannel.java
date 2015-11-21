@@ -138,7 +138,7 @@ public class TestClusterChannel implements ClusterChannel {
 		_unicastMessages.add(new ObjectValuePair<>(message, address));
 	}
 
-	private static final AtomicInteger _COUNTER = new AtomicInteger(1000);
+	private static final AtomicInteger _COUNTER = new AtomicInteger();
 
 	private static final Map<String, SortedMap<Address, TestClusterChannel>>
 		_clusters = new HashMap<>();

@@ -213,8 +213,8 @@
 	</command>
 
 	<command name="viewScopeCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Blogs" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Blogs" />
 		</execute>
 
 		<var name="key_entryTitle" value="${entryTitle}" />
@@ -224,8 +224,8 @@
 	</command>
 
 	<command name="viewScopeDefaultNoEntryCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Blogs" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Blogs" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="ProductMenu#PRODUCT_MENU_PANEL_SCOPE" value1="${contentScopeName}" />

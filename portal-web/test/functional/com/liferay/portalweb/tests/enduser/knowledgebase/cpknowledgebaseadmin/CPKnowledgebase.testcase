@@ -155,8 +155,8 @@
 	</command>
 
 	<command name="AddKBArticleWithBlogsEntryRelatedAssetViaKBAdmin" priority="3">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Blogs" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Blogs" />
 		</execute>
 
 		<execute macro="Blogs#addEntry">

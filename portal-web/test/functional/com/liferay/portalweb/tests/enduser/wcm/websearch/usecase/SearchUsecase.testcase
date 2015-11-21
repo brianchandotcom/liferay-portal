@@ -146,8 +146,8 @@
 	<command name="SearchEntriesByPortletsAndModifiedRangeFacet" priority="4">
 		<var name="searchTerm"><![CDATA["AssetContent"]]></var>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Blogs" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Blogs" />
 		</execute>
 
 		<execute macro="Blogs#addEntry">
@@ -155,8 +155,8 @@
 			<var name="entryTitle" value="Blogs Entry1 Title" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Blogs" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Blogs" />
 		</execute>
 
 		<execute macro="Blogs#addEntry">

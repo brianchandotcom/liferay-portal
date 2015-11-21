@@ -68,7 +68,7 @@ public class UserFinderTest {
 
 		GroupLocalServiceUtil.addUserGroup(_groupUser.getUserId(), _group);
 
-		_organization = OrganizationTestUtil.addOrganization();
+		_organization = OrganizationTestUtil.addOrganization(true);
 		_organizationUser = UserTestUtil.addUser();
 
 		OrganizationLocalServiceUtil.addUserOrganization(
@@ -158,6 +158,15 @@ public class UserFinderTest {
 
 		Assert.assertEquals(1, counts.size());
 		Assert.assertEquals(4, (int)counts.get(groupId));
+
+		long orgGroupId = _organization.getGroupId();
+
+		counts = UserFinderUtil.countByGroups(
+			TestPropsValues.getCompanyId(), WorkflowConstants.STATUS_APPROVED,
+			new long[] {groupId, orgGroupId});
+
+		Assert.assertEquals(2, counts.size());
+		Assert.assertEquals(1, (int)counts.get(orgGroupId));
 	}
 
 	@Test

@@ -318,7 +318,7 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 		try {
 			return ClusterNodeResponse.createResultClusterNodeResponse(
 				_localClusterNodeStatus.getClusterNode(),
-				clusterRequest.getUuid(), methodHandler.invoke());
+				clusterRequest.getUuid(), (Serializable)methodHandler.invoke());
 		}
 		catch (Exception e) {
 			return ClusterNodeResponse.createExceptionClusterNodeResponse(

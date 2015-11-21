@@ -533,8 +533,6 @@
 	<bean class="com.liferay.portal.verify.model.RatingsEntryVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.RepositoryEntryVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.RoleVerifiableModel" />
-	<bean class="com.liferay.portal.verify.model.SCFrameworkVersionVerifiableModel" />
-	<bean class="com.liferay.portal.verify.model.SCProductEntryVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.TeamVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.UserGroupVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.UserVerifiableModel" />

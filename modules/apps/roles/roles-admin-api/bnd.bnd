@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Roles Admin API
+Bundle-SymbolicName: com.liferay.roles.admin.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.roles.admin.constants
+Include-Resource: classes

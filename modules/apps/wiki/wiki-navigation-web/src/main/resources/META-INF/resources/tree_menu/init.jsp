@@ -21,6 +21,8 @@ int depth = PrefsParamUtil.getInteger(portletPreferences, request, "depth", Wiki
 
 long selNodeId = PrefsParamUtil.getLong(portletPreferences, request, "selNodeId");
 
+WikiGroupServiceConfiguration wikiGroupServiceConfiguration = (WikiGroupServiceConfiguration)request.getAttribute(WikiGroupServiceConfiguration.class.getName());
+
 if (selNodeId <= 0) {
 	try {
 		WikiNode node = WikiNodeServiceUtil.getNode(themeDisplay.getScopeGroupId(), wikiGroupServiceConfiguration.initialNodeName());
@@ -30,8 +32,6 @@ if (selNodeId <= 0) {
 	catch (Exception e) {
 	}
 }
-
-WikiGroupServiceConfiguration wikiGroupServiceConfiguration = (WikiGroupServiceConfiguration)request.getAttribute(WikiGroupServiceConfiguration.class.getName());
 
 themeDisplay.setThemeJsBarebone(false);
 %>

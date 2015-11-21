@@ -53,8 +53,6 @@ public class UpgradeCompanyId
 					{"Layout", "iconImageId"},
 					{"LayoutRevision", "iconImageId"},
 					{"LayoutSetBranch", "logoId"}, {"Organization_", "logoId"},
-					{"SCProductScreenshot", "fullImageId"},
-					{"SCProductScreenshot", "thumbnailId"},
 					{"User_", "portraitId"}
 				}),
 			new TableUpdater("MBStatsUser", "Group_", "groupId"),
@@ -79,13 +77,6 @@ public class UpgradeCompanyId
 				}),
 			new TableUpdater(
 				"ResourceBlockPermission", "ResourceBlock", "resourceBlockId"),
-			new TableUpdater(
-				"SCFrameworkVersi_SCProductVers", "SCFrameworkVersion",
-				"frameworkVersionId"),
-			new SCLicenseTableUpdater("SCLicense"),
-			new TableUpdater(
-				"SCLicenses_SCProductEntries", "SCProductEntry",
-				"productEntryId"),
 			new TableUpdater("TrashVersion", "TrashEntry", "entryId"),
 			new TableUpdater("UserGroupGroupRole", "UserGroup", "userGroupId"),
 			new TableUpdater("UserGroupRole", "User_", "userId"),
@@ -176,30 +167,6 @@ public class UpgradeCompanyId
 					"PortletPreferences.ownerId";
 
 			runSQL(getUpdateSQL(selectSQL));
-		}
-
-	}
-
-	protected class SCLicenseTableUpdater extends TableUpdater {
-
-		public SCLicenseTableUpdater(String tableName) {
-			super(tableName, "", "");
-		}
-
-		@Override
-		protected String getSelectSQL(
-			String foreignTableName, String foreignColumnName) {
-
-			StringBundler sb = new StringBundler(6);
-
-			sb.append("select SCProductEntry.companyId from ");
-			sb.append("SCLicenses_SCProductEntries, SCProductEntry where ");
-			sb.append("SCLicenses_SCProductEntries.licenseId = ");
-			sb.append("SCLicense.licenseId and ");
-			sb.append("SCLicenses_SCProductEntries.productEntryId = ");
-			sb.append("SCProductEntry.productEntryId");
-
-			return sb.toString();
 		}
 
 	}

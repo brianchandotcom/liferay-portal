@@ -378,15 +378,17 @@ public class PoshiRunnerExecutor {
 			else {
 				PoshiRunnerStackTraceUtil.popStackTrace();
 
-				PoshiRunnerStackTraceUtil.setCurrentElement(executeElement);
+				if (_functionExecuteElement == executeElement) {
+					PoshiRunnerStackTraceUtil.setCurrentElement(executeElement);
 
-				SummaryLoggerHandler.failSummary(
-					_functionExecuteElement, t.getMessage());
+					SummaryLoggerHandler.failSummary(
+						_functionExecuteElement, t.getMessage());
 
-				CommandLoggerHandler.failCommand(_functionExecuteElement);
+					CommandLoggerHandler.failCommand(_functionExecuteElement);
 
-				_functionExecuteElement = null;
-				_functionWarningMessage = null;
+					_functionExecuteElement = null;
+					_functionWarningMessage = null;
+				}
 
 				throw t;
 			}

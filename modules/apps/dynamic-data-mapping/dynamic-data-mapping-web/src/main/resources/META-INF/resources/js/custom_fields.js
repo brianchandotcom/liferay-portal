@@ -138,36 +138,93 @@ AUI.add(
 						);
 					},
 
-					_onClickChoose: function() {
+					_getDocumentLibrarySelectorURL: function() {
 						var instance = this;
+
+						var scopeGroupId = Liferay.ThemeDisplay.getScopeGroupId();
+
+						var portletNamespace = instance.get('portletNamespace');
 
 						var portletURL = Liferay.PortletURL.createURL(themeDisplay.getURLControlPanel());
 
-						portletURL.setDoAsGroupId(themeDisplay.getScopeGroupId());
-						portletURL.setParameter('eventName', 'selectDocumentLibrary');
-						portletURL.setParameter('groupId', themeDisplay.getScopeGroupId());
-						portletURL.setParameter('refererPortletName', '167');
-						portletURL.setParameter('mvcPath', '/view.jsp');
-						portletURL.setParameter('tabs1Names', 'documents');
+						portletURL.setDoAsGroupId(scopeGroupId);
+
+						portletURL.setParameter('criteria', 'com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion');
+						portletURL.setParameter('itemSelectedEventName', portletNamespace + 'selectDocumentLibrary');
+
+						var criterionJSON = {
+							desiredItemSelectorReturnTypes: 'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType,com.liferay.item.selector.criteria.UploadableFileReturnType'
+						};
+
+						portletURL.setParameter('0_json', JSON.stringify(criterionJSON));
+						portletURL.setParameter('1_json', JSON.stringify(criterionJSON));
+
+						var uploadCriterionJSON = {
+							desiredItemSelectorReturnTypes: 'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType,com.liferay.item.selector.criteria.UploadableFileReturnType',
+							URL: instance._getUploadURL()
+						};
+
+						portletURL.setParameter('2_json', JSON.stringify(uploadCriterionJSON));
+
 						portletURL.setPortletId(Liferay.PortletKeys.ITEM_SELECTOR);
+						portletURL.setPortletMode('view');
 						portletURL.setWindowState('pop_up');
 
-						Liferay.Util.selectEntity(
+						return portletURL.toString();
+					},
+
+					_getUploadURL: function() {
+						var instance = this;
+
+						var scopeGroupId = Liferay.ThemeDisplay.getScopeGroupId();
+
+						var portletURL = Liferay.PortletURL.createURL(themeDisplay.getURLControlPanel());
+
+						portletURL.setDoAsGroupId(scopeGroupId);
+						portletURL.setLifecycle(Liferay.PortletURL.ACTION_PHASE);
+
+						portletURL.setParameter('cmd', 'add_temp');
+						portletURL.setParameter('javax.portlet.action', '/document_library/upload_file_entry');
+						portletURL.setParameter('p_auth', Liferay.authToken);
+
+						portletURL.setPortletId(Liferay.PortletKeys.DOCUMENT_LIBRARY);
+
+						return portletURL.toString();
+					},
+
+					_isDocumentLibraryDialogOpen: function() {
+						var instance = this;
+
+						var portletNamespace = instance.get('portletNamespace');
+
+						return !!Liferay.Util.getWindow(portletNamespace + 'selectDocumentLibrary');
+					},
+
+					_onClickChoose: function() {
+						var instance = this;
+
+						var portletNamespace = instance.get('portletNamespace');
+
+						var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 							{
-								dialog: {
-									constrain: true,
-									destroyOnHide: true,
-									modal: true
+								eventName: portletNamespace + 'selectDocumentLibrary',
+								on: {
+									selectedItemChange: function(event) {
+										var selectedItem = event.newVal;
+
+										if (selectedItem) {
+											var itemValue = JSON.parse(selectedItem.value);
+
+											instance._selectFileEntry(itemValue.groupId, itemValue.title, itemValue.uuid);
+										}
+									}
 								},
-								eventName: 'selectDocumentLibrary',
-								id: 'selectDocumentLibrary',
-								title: Liferay.Language.get('select-document'),
-								uri: portletURL.toString()
-							},
-							function(event) {
-								instance._selectFileEntry(event.url, event.uuid, event.groupid, event.title, event.version);
+								url: instance._getDocumentLibrarySelectorURL()
 							}
 						);
+
+						itemSelectorDialog.open();
+
 					},
 
 					_onClickClear: function() {
@@ -176,7 +233,19 @@ AUI.add(
 						instance.set('value', STR_BLANK);
 					},
 
-					_selectFileEntry: function(url, uuid, groupId, title, version) {
+					_onDocMouseDownExt: function(event) {
+						var instance = this;
+
+						var boundingBox = instance.get('boundingBox');
+
+						var documentLibraryDialogOpen = instance._isDocumentLibraryDialogOpen();
+
+						if (!documentLibraryDialogOpen && !boundingBox.contains(event.target)) {
+							instance.set('visible', false);
+						}
+					},
+
+					_selectFileEntry: function(groupId, title, uuid) {
 						var instance = this;
 
 						instance.set(
@@ -185,8 +254,7 @@ AUI.add(
 								{
 									groupId: groupId,
 									title: title,
-									uuid: uuid,
-									version: version
+									uuid: uuid
 								}
 							)
 						);
@@ -1348,6 +1416,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-portlet-dynamic-data-mapping']
+		requires: ['liferay-item-selector-dialog', 'liferay-portlet-dynamic-data-mapping']
 	}
 );

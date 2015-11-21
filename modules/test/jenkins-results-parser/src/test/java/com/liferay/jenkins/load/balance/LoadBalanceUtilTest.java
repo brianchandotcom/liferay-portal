@@ -34,7 +34,6 @@ public class LoadBalanceUtilTest extends BaseJenkinsResultsParserTestCase {
 	public void setUp() throws Exception {
 		downloadSample("test-1", null);
 		downloadSample("test-2", null);
-		//downloadSample("test-3", null);
 	}
 	
 	public LoadBalanceUtilTest() {
@@ -80,7 +79,8 @@ public class LoadBalanceUtilTest extends BaseJenkinsResultsParserTestCase {
 		project.setProperty(
 			"base.invocation.url", "http://" + baseInvocationHostName +
 			".liferay.com");
-		project.setProperty("jenkins.shared.dir", "mnt/mfs-ssd1-10.10/jenkins");
+		project.setProperty(
+			"jenkins.shared.dir", "mnt/mfs-ssd1-10.10/jenkins/tmp");
 		project.setProperty("jenkins.local.url[test-1-1]", "http://test-1-1");
 		project.setProperty("jenkins.local.url[test-1-2]", "http://test-1-2");
 		project.setProperty("jenkins.local.url[test-1-3]", "http://test-1-3");

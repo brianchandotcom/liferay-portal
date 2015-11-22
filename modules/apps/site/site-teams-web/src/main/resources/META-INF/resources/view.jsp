@@ -54,8 +54,8 @@ teamSearchContainer.setTotal(teamsCount);
 
 <c:if test="<%= teamsCount > 0 %>">
 	<liferay-frontend:management-bar
-		checkBoxContainerId="teamsSearchContainer"
 		includeCheckBox="<%= true %>"
+		searchContainerId="teams"
 	>
 
 		<%

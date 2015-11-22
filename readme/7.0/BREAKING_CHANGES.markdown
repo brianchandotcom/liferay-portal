@@ -1555,7 +1555,7 @@ exceptions wherever possible. For example, instead of using
 
 This change was made in accordance with the new exceptions pattern being applied
 throughout Portal. It also allows the new localized user name configuration
-feature to be thoroughly covered by exceptions for different configurations.  
+feature to be thoroughly covered by exceptions for different configurations.
 
 ---------------------------------------
 
@@ -2834,3 +2834,65 @@ method to generate the UI.
 
 This change was made as a part of the ongoing strategy to modularize Liferay
 Portal.
+
+---------------------------------------
+
+### Removed Hover and Alternate Style Features of Search Container Taglib
+- **Date:** 2015-Nov-03
+- **JIRA Ticket:** LPS-58854
+
+#### What changed?
+
+The following attributes and methods have been removed:
+
+- The attribute `hover` of the `liferay-ui:search-container` taglib tag
+has been removed`.
+- The method `SearchContainerTag.isHover()` of the `SearchContainerTag` class has been removed
+- The attributes `classNameHover`, `hover`, `rowClassNameAlternate`, `rowClassNameAlternateHover`,
+`rowClassNameBody`, `rowClassNameBodyHover` of the `liferay-search-container` JavaScript module.
+
+#### Who is affected?
+
+This affects developers that use the `hover` attribute of the `liferay-ui:search-container` taglib
+tag.
+
+#### How should I update my code?
+
+You should update your code changing the css selector that defines how rows look on hover to use the
+`:hover` and `:nth-of-type` css pseudo selectors instead.
+
+#### Why was this change made?
+
+Browsers support nowadays better ways to style content on hover in a way that doesn't penalize
+performance.
+
+---------------------------------------
+
+### Removed AppViewMove and AppViewSelect JavaScript Modules
+- **Date:** 2015-Nov-03
+- **JIRA Ticket:** LPS-58854
+
+#### What changed?
+
+The JavaScript modules AppViewMove and AppViewSelect have been removed.
+
+#### Who is affected?
+
+This affects developers that use these modules to configure select and move actions inside their
+applications.
+
+#### How should I update my code?
+
+If you are using any of these modules, you can make use of the following SearchContainer APIs:
+- Listen to the `rowToggled` event of the search container to be notified about changes in the
+search container state.
+- Configure your search container move options creating a `RowMover` and define the allowed move
+targets and associated actions.
+- Use the `registerAction` method of the search container to execute your move logic when the user
+completes a move action.
+
+#### Why was this change made?
+
+The removed JavaScript modules contained too much logic and were quite difficult to reason about. It
+was also difficult to add this to an existing app. With this change, every app using a search
+container can make use of this in an easier way.

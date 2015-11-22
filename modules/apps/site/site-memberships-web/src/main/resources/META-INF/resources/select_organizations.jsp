@@ -33,7 +33,7 @@ viewOrganizationsURL.setParameter("tabs2", "available");
 viewOrganizationsURL.setParameter("redirect", currentURL);
 viewOrganizationsURL.setParameter("groupId", String.valueOf(group.getGroupId()));
 
-OrganizationGroupChecker organizationGroupChecker = new OrganizationGroupChecker(renderResponse, group);
+OrganizationGroupChecker rowChecker = new OrganizationGroupChecker(renderResponse, group);
 
 SearchContainer searchContainer = new OrganizationSearch(renderRequest, viewOrganizationsURL);
 %>
@@ -47,7 +47,7 @@ SearchContainer searchContainer = new OrganizationSearch(renderRequest, viewOrga
 	<aui:input name="removeOrganizationIds" type="hidden" />
 
 	<liferay-ui:search-container
-		rowChecker="<%= organizationGroupChecker %>"
+		rowChecker="<%= rowChecker %>"
 		searchContainer="<%= searchContainer %>"
 		var="organizationSearchContainer"
 	>
@@ -76,6 +76,7 @@ SearchContainer searchContainer = new OrganizationSearch(renderRequest, viewOrga
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.model.Organization"
+			cssClass="selectable"
 			escapedModel="<%= true %>"
 			keyProperty="organizationId"
 			modelVar="organization"

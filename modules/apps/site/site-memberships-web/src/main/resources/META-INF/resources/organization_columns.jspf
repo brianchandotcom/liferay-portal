@@ -41,6 +41,7 @@
 				cssClass="entry-display-style"
 				icon="users"
 				resultRow="<%= row %>"
+				rowChecker="<%= rowChecker %>"
 				subtitle="<%= LanguageUtil.get(request, organization.getType()) %>"
 				title="<%= name %>"
 			/>

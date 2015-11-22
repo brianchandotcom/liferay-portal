@@ -38,10 +38,15 @@ viewOrganizationsURL.setParameter("groupId", String.valueOf(group.getGroupId()))
 SearchContainer searchContainer = new OrganizationSearch(renderRequest, PortletURLUtil.clone(viewOrganizationsURL, renderResponse));
 
 searchContainer.setEmptyResultsMessage("no-organization-was-found-that-is-a-member-of-this-site");
+
+RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 %>
 
 <c:if test='<%= !tabs1.equals("summary") %>'>
-	<liferay-frontend:management-bar>
+	<liferay-frontend:management-bar
+		checkBoxContainerId="organizationsSearchContainer"
+		includeCheckBox="<%= true %>"
+	>
 		<liferay-frontend:management-bar-buttons>
 			<liferay-frontend:management-bar-display-buttons
 				displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
@@ -63,6 +68,10 @@ searchContainer.setEmptyResultsMessage("no-organization-was-found-that-is-a-memb
 				portletURL="<%= PortletURLUtil.clone(viewOrganizationsURL, renderResponse) %>"
 			/>
 		</liferay-frontend:management-bar-filters>
+
+		<liferay-frontend:management-bar-action-buttons>
+			<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-trash" id="deleteSelectedOrganizations" />
+		</liferay-frontend:management-bar-action-buttons>
 	</liferay-frontend:management-bar>
 </c:if>
 
@@ -75,6 +84,8 @@ searchContainer.setEmptyResultsMessage("no-organization-was-found-that-is-a-memb
 	<aui:input name="removeOrganizationIds" type="hidden" />
 
 	<liferay-ui:search-container
+		id="organizations"
+		rowChecker="<%= rowChecker %>"
 		searchContainer="<%= searchContainer %>"
 		var="organizationSearchContainer"
 	>
@@ -106,6 +117,7 @@ searchContainer.setEmptyResultsMessage("no-organization-was-found-that-is-a-memb
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.model.Organization"
+			cssClass="selectable"
 			escapedModel="<%= true %>"
 			keyProperty="organizationId"
 			modelVar="organization"
@@ -145,3 +157,26 @@ searchContainer.setEmptyResultsMessage("no-organization-was-found-that-is-a-memb
 		</c:choose>
 	</liferay-ui:search-container>
 </aui:form>
+
+<c:if test='<%= !tabs1.equals("summary") %>'>
+	<aui:script sandbox="<%= true %>">
+		var Util = Liferay.Util;
+
+		var form = $(document.<portlet:namespace />fm);
+
+		$('#<portlet:namespace />deleteSelectedOrganizations').on(
+			'click',
+			function() {
+				if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+					<portlet:actionURL name="editGroupOrganizations" var="deleteOrganizationsURL">
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+					</portlet:actionURL>
+
+					form.fm('removeOrganizationIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+
+					submitForm(form, '<%= deleteOrganizationsURL %>');
+				}
+			}
+		);
+	</aui:script>
+</c:if>

@@ -45,6 +45,7 @@ String userGroupGroupRolesString = ListUtil.toString(userGroupGroupRoles, UsersA
 				cssClass="entry-display-style"
 				icon="users"
 				resultRow="<%= row %>"
+				rowChecker="<%= rowChecker %>"
 				subtitle="<%= userGroup.getDescription() %>"
 				title="<%= userGroup.getName() %>"
 			>

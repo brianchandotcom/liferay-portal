@@ -138,8 +138,11 @@ request.setAttribute("edit_site_assignments.jsp-portletURL", portletURL);
 	</c:when>
 	<c:when test='<%= tabs1.equals("users") %>'>
 		<c:choose>
-			<c:when test="<%= selUser == null %>">
+			<c:when test='<%= (selUser == null) && tabs2.equals("current") %>'>
 				<liferay-util:include page="/users.jsp" servletContext="<%= application %>" />
+			</c:when>
+			<c:when test='<%= (selUser == null) && tabs2.equals("available") %>'>
+				<liferay-util:include page="/select_users.jsp" servletContext="<%= application %>" />
 			</c:when>
 			<c:otherwise>
 				<liferay-util:include page="/users_roles.jsp" servletContext="<%= application %>" />
@@ -147,12 +150,22 @@ request.setAttribute("edit_site_assignments.jsp-portletURL", portletURL);
 		</c:choose>
 	</c:when>
 	<c:when test='<%= tabs1.equals("organizations") %>'>
-		<liferay-util:include page="/organizations.jsp" servletContext="<%= application %>" />
+		<c:choose>
+			<c:when test='<%= tabs2.equals("current") %>'>
+				<liferay-util:include page="/organizations.jsp" servletContext="<%= application %>" />
+			</c:when>
+			<c:when test='<%= tabs2.equals("available") %>'>
+				<liferay-util:include page="/select_organizations.jsp" servletContext="<%= application %>" />
+			</c:when>
+		</c:choose>
 	</c:when>
 	<c:when test='<%= tabs1.equals("user-groups") %>'>
 		<c:choose>
-			<c:when test="<%= userGroupId == 0 %>">
+			<c:when test='<%= (userGroupId == 0) && tabs2.equals("current") %>'>
 				<liferay-util:include page="/user_groups.jsp" servletContext="<%= application %>" />
+			</c:when>
+			<c:when test='<%= (userGroupId == 0) && tabs2.equals("available") %>'>
+				<liferay-util:include page="/select_user_groups.jsp" servletContext="<%= application %>" />
 			</c:when>
 			<c:otherwise>
 				<liferay-util:include page="/user_groups_roles.jsp" servletContext="<%= application %>" />

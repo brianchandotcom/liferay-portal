@@ -1,9 +1,5 @@
 dependencies {
-	compile group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
-	compile project(":apps:application-list:application-list-api")
-	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-taglib")
-	compile project(":apps:users-admin:users-admin-web")
-	compile project(":portal:portal-upgrade")
+	compile project(":apps:portal-settings:portal-settings-web")
 }
 
 liferay {

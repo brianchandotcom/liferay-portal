@@ -33,7 +33,7 @@ viewUsersURL.setParameter("tabs2", "available");
 viewUsersURL.setParameter("redirect", currentURL);
 viewUsersURL.setParameter("groupId", String.valueOf(group.getGroupId()));
 
-SiteMembershipChecker siteMembershipChecker = new SiteMembershipChecker(renderResponse, group);
+SiteMembershipChecker rowChecker = new SiteMembershipChecker(renderResponse, group);
 
 SearchContainer searchContainer = new UserSearch(renderRequest, viewUsersURL);
 %>
@@ -49,7 +49,7 @@ SearchContainer searchContainer = new UserSearch(renderRequest, viewUsersURL);
 	<liferay-ui:membership-policy-error />
 
 	<liferay-ui:search-container
-		rowChecker="<%= siteMembershipChecker %>"
+		rowChecker="<%= rowChecker %>"
 		searchContainer="<%= searchContainer %>"
 		var="userSearchContainer"
 	>
@@ -81,6 +81,7 @@ SearchContainer searchContainer = new UserSearch(renderRequest, viewUsersURL);
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.model.User"
+			cssClass="selectable"
 			escapedModel="<%= true %>"
 			keyProperty="userId"
 			modelVar="user2"

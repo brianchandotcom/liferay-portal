@@ -38,10 +38,15 @@ viewUsersURL.setParameter("groupId", String.valueOf(group.getGroupId()));
 SearchContainer searchContainer = new UserSearch(renderRequest, PortletURLUtil.clone(viewUsersURL, renderResponse));
 
 searchContainer.setEmptyResultsMessage("no-user-was-found-that-is-a-direct-member-of-this-site");
+
+RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 %>
 
 <c:if test='<%= !tabs1.equals("summary") %>'>
-	<liferay-frontend:management-bar>
+	<liferay-frontend:management-bar
+		checkBoxContainerId="usersSearchContainer"
+		includeCheckBox="<%= true %>"
+	>
 		<liferay-frontend:management-bar-buttons>
 			<liferay-frontend:management-bar-display-buttons
 				displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
@@ -63,6 +68,10 @@ searchContainer.setEmptyResultsMessage("no-user-was-found-that-is-a-direct-membe
 				portletURL="<%= PortletURLUtil.clone(viewUsersURL, renderResponse) %>"
 			/>
 		</liferay-frontend:management-bar-filters>
+
+		<liferay-frontend:management-bar-action-buttons>
+			<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-trash" id="deleteSelectedUsers" />
+		</liferay-frontend:management-bar-action-buttons>
 	</liferay-frontend:management-bar>
 </c:if>
 
@@ -77,6 +86,8 @@ searchContainer.setEmptyResultsMessage("no-user-was-found-that-is-a-direct-membe
 	<liferay-ui:membership-policy-error />
 
 	<liferay-ui:search-container
+		id="users"
+		rowChecker="<%= rowChecker %>"
 		searchContainer="<%= searchContainer %>"
 		var="userSearchContainer"
 	>
@@ -106,6 +117,7 @@ searchContainer.setEmptyResultsMessage("no-user-was-found-that-is-a-direct-membe
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.model.User"
+			cssClass="selectable"
 			escapedModel="<%= true %>"
 			keyProperty="userId"
 			modelVar="user2"
@@ -147,3 +159,26 @@ searchContainer.setEmptyResultsMessage("no-user-was-found-that-is-a-direct-membe
 		</c:choose>
 	</liferay-ui:search-container>
 </aui:form>
+
+<c:if test='<%= !tabs1.equals("summary") %>'>
+	<aui:script sandbox="<%= true %>">
+		var Util = Liferay.Util;
+
+		var form = $(document.<portlet:namespace />fm);
+
+		$('#<portlet:namespace />deleteSelectedUsers').on(
+			'click',
+			function() {
+				if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+					<portlet:actionURL name="editGroupUsers" var="deleteUsersURL">
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+					</portlet:actionURL>
+
+					form.fm('removeUserIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+
+					submitForm(form, '<%= deleteUsersURL %>');
+				}
+			}
+		);
+	</aui:script>
+</c:if>

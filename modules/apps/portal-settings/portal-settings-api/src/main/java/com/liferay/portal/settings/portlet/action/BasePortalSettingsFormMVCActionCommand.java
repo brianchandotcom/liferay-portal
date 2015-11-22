@@ -54,7 +54,7 @@ public abstract class BasePortalSettingsFormMVCActionCommand
 			return;
 		}
 
-		storeSettings(actionRequest, themeDisplay, getServiceName());
+		storeSettings(actionRequest, themeDisplay);
 	}
 
 	protected boolean getBoolean(ActionRequest actionRequest, String name) {

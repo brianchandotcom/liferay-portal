@@ -96,7 +96,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 			TestClusterChannel.getUnicastMessages();
 
 		Message message = new Message();
-		Address address = new TestAddress("test.address");
+		Address address = new TestAddress(-1);
 
 		clusterLinkImpl.sendUnicastMessage(address, message, Priority.LEVEL1);
 
@@ -258,7 +258,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 		Assert.assertTrue(unicastMessages.isEmpty());
 
 		Message message = new Message();
-		Address address = new TestAddress("test.address");
+		Address address = new TestAddress(-1);
 
 		clusterLinkImpl.sendUnicastMessage(address, message, Priority.LEVEL1);
 

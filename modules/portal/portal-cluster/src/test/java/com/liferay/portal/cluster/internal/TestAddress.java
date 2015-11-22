@@ -21,13 +21,13 @@ import com.liferay.portal.kernel.cluster.Address;
  */
 public class TestAddress implements Address, Comparable<TestAddress> {
 
-	public TestAddress(String address) {
+	public TestAddress(int address) {
 		_address = address;
 	}
 
 	@Override
 	public int compareTo(TestAddress testAddress) {
-		return _address.compareTo(testAddress._address);
+		return Integer.compare(_address, testAddress._address);
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class TestAddress implements Address, Comparable<TestAddress> {
 
 		TestAddress testAddress = (TestAddress)obj;
 
-		if (_address.equals(testAddress._address)) {
+		if (_address == testAddress._address) {
 			return true;
 		}
 
@@ -51,7 +51,7 @@ public class TestAddress implements Address, Comparable<TestAddress> {
 
 	@Override
 	public String getDescription() {
-		return _address;
+		return String.valueOf(_address);
 	}
 
 	@Override
@@ -61,9 +61,9 @@ public class TestAddress implements Address, Comparable<TestAddress> {
 
 	@Override
 	public int hashCode() {
-		return _address.hashCode();
+		return _address;
 	}
 
-	private final String _address;
+	private final int _address;
 
 }

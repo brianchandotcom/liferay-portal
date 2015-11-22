@@ -77,8 +77,7 @@ public class TestClusterChannel implements ClusterChannel {
 
 		_bindInetAddress = InetAddress.getLoopbackAddress();
 
-		_localAddress = new TestAddress(
-			"test.address." + _COUNTER.getAndIncrement());
+		_localAddress = new TestAddress(_COUNTER.getAndIncrement());
 
 		SortedMap<Address, TestClusterChannel> clusterChannels = _clusters.get(
 			_clusterName);

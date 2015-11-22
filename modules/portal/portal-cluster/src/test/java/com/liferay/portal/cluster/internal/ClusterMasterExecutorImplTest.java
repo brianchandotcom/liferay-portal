@@ -679,8 +679,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 	private static final MethodHandler _BAD_METHOD_HANDLER = new MethodHandler(
 		new MethodKey());
 
-	private static final Address _TEST_ADDRESS = new TestAddress(
-		"test.address");
+	private static final Address _TEST_ADDRESS = new TestAddress(-1);
 
 	private static final String _TEST_CLUSTER_NODE_ID = "test.cluster.node.id";
 

@@ -38,6 +38,8 @@ import java.io.PrintWriter;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.component.annotations.Activate;
@@ -248,6 +250,10 @@ public class VerifyProcessTracker {
 		ReleaseLocalService releaseLocalService) {
 
 		_releaseLocalService = releaseLocalService;
+	}
+
+	@Reference(target = "(original.bean=true)", unbind = "-")
+	protected void setServletContext(ServletContext servletContext) {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

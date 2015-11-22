@@ -1,6 +1,7 @@
 dependencies {
 	compile group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "2.4.1"
 	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
+	compile group: "org.glassfish", name: "javax.servlet", transitive: false, version: "3.2-b06"
 	compile project(":apps:configuration-admin:configuration-admin-api")
 	compile project(":core:osgi-service-tracker-collections")
 	compile project(":portal:portal-output-stream-container")

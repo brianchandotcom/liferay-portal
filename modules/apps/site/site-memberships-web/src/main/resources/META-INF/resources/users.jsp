@@ -35,14 +35,29 @@ viewUsersURL.setParameter("tabs2", "current");
 viewUsersURL.setParameter("redirect", currentURL);
 viewUsersURL.setParameter("groupId", String.valueOf(group.getGroupId()));
 
-SearchContainer searchContainer = new UserSearch(renderRequest, PortletURLUtil.clone(viewUsersURL, renderResponse));
+UserSearch userSearch = new UserSearch(renderRequest, PortletURLUtil.clone(viewUsersURL, renderResponse));
 
-searchContainer.setEmptyResultsMessage("no-user-was-found-that-is-a-direct-member-of-this-site");
+userSearch.setEmptyResultsMessage("no-user-was-found-that-is-a-direct-member-of-this-site");
 
 RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
+
+UserSearchTerms searchTerms = (UserSearchTerms)userSearch.getSearchTerms();
+
+LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
+
+userParams.put("inherit", Boolean.TRUE);
+userParams.put("usersGroups", Long.valueOf(group.getGroupId()));
+
+int usersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams);
+
+userSearch.setTotal(usersCount);
+
+List<User> users = UserLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams, userSearch.getStart(), userSearch.getEnd(), userSearch.getOrderByComparator());
+
+userSearch.setResults(users);
 %>
 
-<c:if test='<%= !tabs1.equals("summary") %>'>
+<c:if test='<%= !tabs1.equals("summary") && (usersCount > 0) %>'>
 	<liferay-frontend:management-bar
 		checkBoxContainerId="usersSearchContainer"
 		includeCheckBox="<%= true %>"
@@ -88,32 +103,8 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 	<liferay-ui:search-container
 		id="users"
 		rowChecker="<%= rowChecker %>"
-		searchContainer="<%= searchContainer %>"
-		var="userSearchContainer"
+		searchContainer="<%= userSearch %>"
 	>
-
-		<%
-		UserSearchTerms searchTerms = (UserSearchTerms)userSearchContainer.getSearchTerms();
-
-		LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
-
-		userParams.put("inherit", Boolean.TRUE);
-		userParams.put("usersGroups", Long.valueOf(group.getGroupId()));
-		%>
-
-		<liferay-ui:search-container-results>
-
-			<%
-			total = UserLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams);
-
-			userSearchContainer.setTotal(total);
-
-			results = UserLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams, userSearchContainer.getStart(), userSearchContainer.getEnd(), userSearchContainer.getOrderByComparator());
-
-			userSearchContainer.setResults(results);
-			%>
-
-		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.model.User"
@@ -136,7 +127,7 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 				<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" persistState="<%= true %>" title='<%= LanguageUtil.format(request, (total > 1) ? "x-users" : "x-user", total, false) %>'>
 					<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
 
-					<c:if test="<%= total > searchContainer.getDelta() %>">
+					<c:if test="<%= total > userSearch.getDelta() %>">
 						<a href="<%= HtmlUtil.escapeAttribute(viewUsersURL.toString()) %>"><liferay-ui:message key="view-more" /> &raquo;</a>
 					</c:if>
 				</liferay-ui:panel>

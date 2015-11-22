@@ -40,9 +40,23 @@ UserGroupSearch userGroupSearch = new UserGroupSearch(renderRequest, PortletURLU
 userGroupSearch.setEmptyResultsMessage("no-user-group-was-found-that-is-a-member-of-this-site");
 
 RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
+
+UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)userGroupSearch.getSearchTerms();
+
+LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
+
+userGroupParams.put("userGroupsGroups", Long.valueOf(group.getGroupId()));
+
+int userGroupsCount = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams);
+
+userGroupSearch.setTotal(userGroupsCount);
+
+List<UserGroup> userGroups = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams, userGroupSearch.getStart(), userGroupSearch.getEnd(), userGroupSearch.getOrderByComparator());
+
+userGroupSearch.setResults(userGroups);
 %>
 
-<c:if test='<%= !tabs1.equals("summary") %>'>
+<c:if test='<%= !tabs1.equals("summary") && (userGroupsCount > 0) %>'>
 	<liferay-frontend:management-bar
 		checkBoxContainerId="userGroupsSearchContainer"
 		includeCheckBox="<%= true %>"
@@ -88,28 +102,6 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 		rowChecker="<%= rowChecker %>"
 		searchContainer="<%= userGroupSearch %>"
 	>
-
-		<%
-		UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)searchContainer.getSearchTerms();
-
-		LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
-
-		userGroupParams.put("userGroupsGroups", Long.valueOf(group.getGroupId()));
-		%>
-
-		<liferay-ui:search-container-results>
-
-			<%
-			total = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams);
-
-			searchContainer.setTotal(total);
-
-			results = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-
-			searchContainer.setResults(results);
-			%>
-
-		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.model.UserGroup"

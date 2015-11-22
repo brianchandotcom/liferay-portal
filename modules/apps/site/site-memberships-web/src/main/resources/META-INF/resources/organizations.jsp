@@ -35,14 +35,31 @@ viewOrganizationsURL.setParameter("tabs2", "current");
 viewOrganizationsURL.setParameter("redirect", currentURL);
 viewOrganizationsURL.setParameter("groupId", String.valueOf(group.getGroupId()));
 
-SearchContainer searchContainer = new OrganizationSearch(renderRequest, PortletURLUtil.clone(viewOrganizationsURL, renderResponse));
+OrganizationSearch organizationSearch = new OrganizationSearch(renderRequest, PortletURLUtil.clone(viewOrganizationsURL, renderResponse));
 
-searchContainer.setEmptyResultsMessage("no-organization-was-found-that-is-a-member-of-this-site");
+organizationSearch.setEmptyResultsMessage("no-organization-was-found-that-is-a-member-of-this-site");
 
 RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
+
+OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)organizationSearch.getSearchTerms();
+
+long parentOrganizationId = OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
+
+LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
+
+organizationParams.put("groupOrganization", Long.valueOf(group.getGroupId()));
+organizationParams.put("organizationsGroups", Long.valueOf(group.getGroupId()));
+
+int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), parentOrganizationId, searchTerms.getKeywords(), searchTerms.getType(), searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(), organizationParams);
+
+organizationSearch.setTotal(organizationsCount);
+
+List<Organization> organizations = OrganizationLocalServiceUtil.search(company.getCompanyId(), parentOrganizationId, searchTerms.getKeywords(), searchTerms.getType(), searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(), organizationParams, organizationSearch.getStart(), organizationSearch.getEnd(), organizationSearch.getOrderByComparator());
+
+organizationSearch.setResults(organizations);
 %>
 
-<c:if test='<%= !tabs1.equals("summary") %>'>
+<c:if test='<%= !tabs1.equals("summary") && (organizationsCount > 0) %>'>
 	<liferay-frontend:management-bar
 		checkBoxContainerId="organizationsSearchContainer"
 		includeCheckBox="<%= true %>"
@@ -86,34 +103,8 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 	<liferay-ui:search-container
 		id="organizations"
 		rowChecker="<%= rowChecker %>"
-		searchContainer="<%= searchContainer %>"
-		var="organizationSearchContainer"
+		searchContainer="<%= organizationSearch %>"
 	>
-
-		<%
-		OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)organizationSearchContainer.getSearchTerms();
-
-		long parentOrganizationId = OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
-
-		LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
-
-		organizationParams.put("groupOrganization", Long.valueOf(group.getGroupId()));
-		organizationParams.put("organizationsGroups", Long.valueOf(group.getGroupId()));
-		%>
-
-		<liferay-ui:search-container-results>
-
-			<%
-			total = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), parentOrganizationId, searchTerms.getKeywords(), searchTerms.getType(), searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(), organizationParams);
-
-			organizationSearchContainer.setTotal(total);
-
-			results = OrganizationLocalServiceUtil.search(company.getCompanyId(), parentOrganizationId, searchTerms.getKeywords(), searchTerms.getType(), searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(), organizationParams, organizationSearchContainer.getStart(), organizationSearchContainer.getEnd(), organizationSearchContainer.getOrderByComparator());
-
-			organizationSearchContainer.setResults(results);
-			%>
-
-		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.model.Organization"
@@ -135,7 +126,7 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 				<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" persistState="<%= true %>" title='<%= LanguageUtil.format(request, (total > 1) ? "x-organizations" : "x-organization", total, false) %>'>
 					<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
 
-					<c:if test="<%= total > searchContainer.getDelta() %>">
+					<c:if test="<%= total > organizationSearch.getDelta() %>">
 						<a href="<%= viewOrganizationsURL %>"><liferay-ui:message key="view-more" /> &raquo;</a>
 					</c:if>
 				</liferay-ui:panel>

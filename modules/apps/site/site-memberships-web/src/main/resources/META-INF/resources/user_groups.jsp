@@ -38,10 +38,15 @@ viewUserGroupsURL.setParameter("groupId", String.valueOf(group.getGroupId()));
 UserGroupSearch userGroupSearch = new UserGroupSearch(renderRequest, PortletURLUtil.clone(viewUserGroupsURL, renderResponse));
 
 userGroupSearch.setEmptyResultsMessage("no-user-group-was-found-that-is-a-member-of-this-site");
+
+RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 %>
 
 <c:if test='<%= !tabs1.equals("summary") %>'>
-	<liferay-frontend:management-bar>
+	<liferay-frontend:management-bar
+		checkBoxContainerId="userGroupsSearchContainer"
+		includeCheckBox="<%= true %>"
+	>
 		<liferay-frontend:management-bar-buttons>
 			<liferay-frontend:management-bar-display-buttons
 				displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
@@ -63,6 +68,10 @@ userGroupSearch.setEmptyResultsMessage("no-user-group-was-found-that-is-a-member
 				portletURL="<%= PortletURLUtil.clone(viewUserGroupsURL, renderResponse) %>"
 			/>
 		</liferay-frontend:management-bar-filters>
+
+		<liferay-frontend:management-bar-action-buttons>
+			<liferay-frontend:management-bar-button href="javascript:;" iconCssClass="icon-trash" id="deleteSelectedUserGroups" />
+		</liferay-frontend:management-bar-action-buttons>
 	</liferay-frontend:management-bar>
 </c:if>
 
@@ -75,6 +84,8 @@ userGroupSearch.setEmptyResultsMessage("no-user-group-was-found-that-is-a-member
 	<aui:input name="removeUserGroupIds" type="hidden" />
 
 	<liferay-ui:search-container
+		id="userGroups"
+		rowChecker="<%= rowChecker %>"
 		searchContainer="<%= userGroupSearch %>"
 	>
 
@@ -102,6 +113,7 @@ userGroupSearch.setEmptyResultsMessage("no-user-group-was-found-that-is-a-member
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.model.UserGroup"
+			cssClass="selectable"
 			escapedModel="<%= true %>"
 			keyProperty="userGroupId"
 			modelVar="userGroup"
@@ -141,3 +153,26 @@ userGroupSearch.setEmptyResultsMessage("no-user-group-was-found-that-is-a-member
 		</c:choose>
 	</liferay-ui:search-container>
 </aui:form>
+
+<c:if test='<%= !tabs1.equals("summary") %>'>
+	<aui:script sandbox="<%= true %>">
+		var Util = Liferay.Util;
+
+		var form = $(document.<portlet:namespace />fm);
+
+		$('#<portlet:namespace />deleteSelectedUserGroups').on(
+			'click',
+			function() {
+				if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+					<portlet:actionURL name="editGroupUserGroups" var="deleteUserGroupsURL">
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+					</portlet:actionURL>
+
+					form.fm('removeUserGroupIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+
+					submitForm(form, '<%= deleteUserGroupsURL %>');
+				}
+			}
+		);
+	</aui:script>
+</c:if>

@@ -33,7 +33,7 @@ viewUserGroupsURL.setParameter("tabs2", "available");
 viewUserGroupsURL.setParameter("redirect", currentURL);
 viewUserGroupsURL.setParameter("groupId", String.valueOf(group.getGroupId()));
 
-UserGroupGroupChecker userGroupGroupChecker = new UserGroupGroupChecker(renderResponse, group);
+UserGroupGroupChecker rowChecker = new UserGroupGroupChecker(renderResponse, group);
 
 UserGroupSearch userGroupSearch = new UserGroupSearch(renderRequest, viewUserGroupsURL);
 %>
@@ -47,7 +47,7 @@ UserGroupSearch userGroupSearch = new UserGroupSearch(renderRequest, viewUserGro
 	<aui:input name="removeUserGroupIds" type="hidden" />
 
 	<liferay-ui:search-container
-		rowChecker="<%= userGroupGroupChecker %>"
+		rowChecker="<%= rowChecker %>"
 		searchContainer="<%= userGroupSearch %>"
 	>
 
@@ -73,6 +73,7 @@ UserGroupSearch userGroupSearch = new UserGroupSearch(renderRequest, viewUserGro
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.model.UserGroup"
+			cssClass="selectable"
 			escapedModel="<%= true %>"
 			keyProperty="userGroupId"
 			modelVar="userGroup"

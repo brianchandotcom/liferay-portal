@@ -5118,6 +5118,8 @@ module.framework.properties.osgi.console=11312</echo>
 				<equals arg1="${browser.type}" arg2="iossafari" />
 			</or>
 			<then>
+				<stop-appium />
+
 				<start-appium />
 
 				<echo append="true" file="${test.ext.properties.file}">
@@ -6843,6 +6845,8 @@ jdbc.default.password=${database.mysql.password}</echo>
 		</if>
 
 		<antcall target="clean-up-mobile-device" />
+
+		<antcall target="clean-up-selenium-driver" />
 	</target>
 
 	<target name="run-simple-server">
@@ -7138,8 +7142,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 				<var name="app.server.bundle.index" unset="true" />
 			</then>
 		</if>
-
-		<antcall target="clean-up-selenium-driver" />
 
 		<antcall target="clean-up-sikuli-temp-files" />
 

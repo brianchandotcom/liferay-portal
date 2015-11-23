@@ -34,6 +34,7 @@ import java.util.concurrent.Callable;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -48,7 +49,8 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "ratings";
 
-	public PageRatingsPortletDataHandler() {
+	@Activate
+	protected void activate() {
 		setDataAlwaysStaged(true);
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(RatingsEntry.class));

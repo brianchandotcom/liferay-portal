@@ -3733,6 +3733,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>markupView</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>The ID of the component that contains the panel. If a <![CDATA[<code>liferay-ui:panel-container</code>]]> is used as the container for the panel, its ID is used as the value for the <![CDATA[<code>parentID</code>]]>.</description>
 			<name>parentId</name>
 			<required>false</required>

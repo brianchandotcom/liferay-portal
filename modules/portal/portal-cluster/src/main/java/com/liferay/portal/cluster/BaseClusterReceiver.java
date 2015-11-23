@@ -50,6 +50,19 @@ public abstract class BaseClusterReceiver implements ClusterReceiver {
 		}
 
 		_hasDoViewAccepted = hasDoViewAccepted;
+
+		boolean hasDoCoordinatorUpdated = false;
+
+		try {
+			clazz.getDeclaredMethod(
+				"doCoordinatorUpdated", Address.class, Address.class);
+
+			hasDoCoordinatorUpdated = true;
+		}
+		catch (ReflectiveOperationException roe) {
+		}
+
+		_hasDoCoordinatorUpdated = hasDoCoordinatorUpdated;
 	}
 
 	@Override
@@ -88,8 +101,49 @@ public abstract class BaseClusterReceiver implements ClusterReceiver {
 	}
 
 	@Override
+	public void coordinatorUpdated(Address coordinator) {
+		if (_coordinator == null) {
+			_coordinator = coordinator;
+
+			return;
+		}
+
+		Address oldCoordinator = null;
+
+		try {
+			_countDownLatch.await();
+
+			oldCoordinator = _coordinator;
+
+			_coordinator = coordinator;
+
+			if (_hasDoCoordinatorUpdated) {
+				_executorService.execute(
+					new CoordinatorUpdatedRunnable(
+						oldCoordinator, coordinator));
+			}
+		}
+		catch (InterruptedException ie) {
+			_log.error(
+				"Latch opened prematurely by interruption. Dependence may " +
+					"not be ready.");
+		}
+		catch (RejectedExecutionException ree) {
+			_log.error(
+				"Unable to handle coordinator update from " + oldCoordinator +
+					" to " + coordinator,
+				ree);
+		}
+	}
+
+	@Override
 	public List<Address> getAddresses() {
 		return Collections.unmodifiableList(_addresses);
+	}
+
+	@Override
+	public Address getCoordinator() {
+		return _coordinator;
 	}
 
 	@Override
@@ -120,6 +174,10 @@ public abstract class BaseClusterReceiver implements ClusterReceiver {
 		List<Address> oldAddresses, List<Address> newAddresses) {
 	}
 
+	protected void doCoordinatorUpdated(
+		Address oldCoordinator, Address newCoordinator) {
+	}
+
 	protected abstract void doReceive(
 		Object messagePayload, Address srcAddress);
 
@@ -127,8 +185,10 @@ public abstract class BaseClusterReceiver implements ClusterReceiver {
 		BaseClusterReceiver.class);
 
 	private volatile List<Address> _addresses;
+	private volatile Address _coordinator;
 	private final CountDownLatch _countDownLatch = new CountDownLatch(1);
 	private final ExecutorService _executorService;
+	private final boolean _hasDoCoordinatorUpdated;
 	private final boolean _hasDoViewAccepted;
 
 	private class AddressesUpdatedRunnable implements Runnable {
@@ -147,6 +207,25 @@ public abstract class BaseClusterReceiver implements ClusterReceiver {
 
 		private final List<Address> _newAddresses;
 		private final List<Address> _oldAddresses;
+
+	}
+
+	private class CoordinatorUpdatedRunnable implements Runnable {
+
+		@Override
+		public void run() {
+			doCoordinatorUpdated(_oldCoordinator, _newCoordinator);
+		}
+
+		private CoordinatorUpdatedRunnable(
+			Address oldCoordinator, Address newCoordinator) {
+
+			_oldCoordinator = oldCoordinator;
+			_newCoordinator = newCoordinator;
+		}
+
+		private final Address _newCoordinator;
+		private final Address _oldCoordinator;
 
 	}
 

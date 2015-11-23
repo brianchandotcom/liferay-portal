@@ -96,7 +96,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 			TestClusterChannel.getUnicastMessages();
 
 		Message message = new Message();
-		Address address = new TestAddress("test.address");
+		Address address = new TestAddress(-1);
 
 		clusterLinkImpl.sendUnicastMessage(address, message, Priority.LEVEL1);
 
@@ -214,7 +214,8 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 		for (TestClusterChannel clusterChannel : clusterChannels) {
 			Assert.assertFalse(clusterChannel.isClosed());
 
-			ClusterReceiver clusterReceiver = clusterChannel.getReceiver();
+			ClusterReceiver clusterReceiver =
+				clusterChannel.getClusterReceiver();
 
 			CountDownLatch countDownLatch = ReflectionTestUtil.getFieldValue(
 				clusterReceiver, "_countDownLatch");
@@ -257,7 +258,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 		Assert.assertTrue(unicastMessages.isEmpty());
 
 		Message message = new Message();
-		Address address = new TestAddress("test.address");
+		Address address = new TestAddress(-1);
 
 		clusterLinkImpl.sendUnicastMessage(address, message, Priority.LEVEL1);
 

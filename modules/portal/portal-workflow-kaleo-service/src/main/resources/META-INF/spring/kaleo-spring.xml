@@ -101,9 +101,6 @@
 		</property>
 		<property name="workflowDefinitionManager" ref="com.liferay.portal.kernel.workflow.WorkflowDefinitionManager" />
 	</bean>
-	<bean id="com.liferay.portal.workflow.kaleo.manager.PortalKaleoManagerUtil" class="com.liferay.portal.workflow.kaleo.manager.PortalKaleoManagerUtil">
-		<property name="portalKaleoManager" ref="com.liferay.portal.workflow.kaleo.manager.PortalKaleoManager" />
-	</bean>
 
 	<!-- Runtime -->
 

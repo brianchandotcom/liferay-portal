@@ -6272,7 +6272,39 @@ if (ppstate.equals("normal")) {
 
 		<loadfile property="file.content" srcFile="test.case.method.names.properties" />
 
-		<echo>${file.content}</echo>
+		<if>
+			<contains string="${file.content}" substring="RUN_TEST_CASE_METHOD_GROUP" />
+			<then>
+				<beanshell>
+					<![CDATA[
+						import java.util.regex.Matcher;
+						import java.util.regex.Pattern;
+
+						Pattern pattern = Pattern.compile("RUN_TEST_CASE_METHOD_GROUP.*");
+
+						Matcher matcher = pattern.matcher(project.getProperty("file.content"));
+
+						sb = new StringBuilder();
+
+						while (matcher.find()) {
+							sb.append(matcher.group());
+							sb.append("\n");
+						}
+
+						project.setProperty("file.content", sb.toString());
+					]]>
+				</beanshell>
+
+				<echo></echo>
+				<echo>${file.content}</echo>
+				<echo></echo>
+			</then>
+			<else>
+				<echo></echo>
+				<echo>${file.content}</echo>
+				<echo></echo>
+			</else>
+		</if>
 
 		<var name="file.content" unset="true" />
 	</target>

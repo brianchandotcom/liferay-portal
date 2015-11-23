@@ -723,9 +723,6 @@
 	<command name="removeParentArticleCP">
 		<execute function="SelectFrame" locator1="KnowledgeBaseSelectParent#IFRAME" />
 		<execute function="Click" locator1="KnowledgeBaseSelectParent#REMOVE_BUTTON" />
-
-		<execute function="AssertTextEquals" locator1="KnowledgeBase#MOVE_NEW_PARENT_TITLE_FIELD" value1="" />
-
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute function="Click" locator1="Button#MOVE" />

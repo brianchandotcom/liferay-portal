@@ -58,7 +58,6 @@ public class TestNonEmbeddedPortlet extends PortletImpl implements Portlet {
 	public void processAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException, PortletException {
-
 	}
 
 	@Override

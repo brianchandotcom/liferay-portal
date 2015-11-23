@@ -85,6 +85,18 @@ public class PoshiRunnerGetterUtil {
 		return dir;
 	}
 
+	public static String getClassCommandName(
+		String className, String commandName) {
+
+		StringBuilder sb = new StringBuilder(3);
+
+		sb.append(className);
+		sb.append("#");
+		sb.append(commandName);
+
+		return sb.toString();
+	}
+
 	public static String getClassNameFromClassCommandName(
 		String classCommandName) {
 

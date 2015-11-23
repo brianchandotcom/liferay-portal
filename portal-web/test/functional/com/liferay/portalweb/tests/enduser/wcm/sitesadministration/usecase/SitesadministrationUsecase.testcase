@@ -506,8 +506,8 @@
 			<var name="privateVirtualHosts" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="Private Pages" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
@@ -615,9 +615,8 @@
 			<var name="publicVirtualHosts" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
-			<var name="siteScopeName" value="Site Name" />
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="Public Pages" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
@@ -956,7 +955,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="portlet" value="Site Pages" />
+			<var name="page" value="Public Pages" />
 		</execute>
 
 		<for list="Home,Arenas" param="publicPageName" >
@@ -968,7 +967,7 @@
 		</for>
 
 		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="portlet" value="Site Pages" />
+			<var name="page" value="Public Pages" />
 		</execute>
 
 		<for list="Arena Baltika,Zenit Arena,Kazan Arena" param="childPageName" >
@@ -981,7 +980,7 @@
 		</for>
 
 		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="portlet" value="Site Pages" />
+			<var name="page" value="Private Pages" />
 		</execute>
 
 		<for list="Accomodations,Maps" param="privatePageName" >
@@ -993,7 +992,7 @@
 		</for>
 
 		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="portlet" value="Site Pages" />
+			<var name="page" value="Public Pages" />
 		</execute>
 
 		<execute macro="Page#changeLogoViaPageCP">
@@ -1024,7 +1023,7 @@
 		<execute function="Confirm#waitForConfirmation" value1="Welcome to Russia." />
 
 		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="portlet" value="Site Pages" />
+			<var name="page" value="Public Pages" />
 		</execute>
 
 		<execute macro="SitePage#addJavaScript">

@@ -208,9 +208,8 @@
 			<var name="siteName" value="Site1 Name" />
 		</execute>
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
-			<var name="siteScopeName" value="Site1 Name" />
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="Public Pages" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
@@ -228,9 +227,8 @@
 			<var name="siteName" value="Site2 Name" />
 		</execute>
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
-			<var name="siteScopeName" value="Site2 Name" />
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="Public Pages" />
 		</execute>
 
 		<execute macro="SitePage#addCP">

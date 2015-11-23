@@ -154,7 +154,6 @@
 		</execute>
 
 		<execute macro="Site#addBlankCP">
-			<var name="page" value="Private Pages" />
 			<var name="siteName" value="Site Name" />
 		</execute>
 
@@ -169,9 +168,9 @@
 		</execute>
 
 		<execute macro="Page#addPG">
+			<var name="page" value="Private Pages" />
 			<var name="pageAccess" value="Private" />
 			<var name="pageName" value="Blogs Page" />
-			<var name="privatePage" value="Private Pages" />
 			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>

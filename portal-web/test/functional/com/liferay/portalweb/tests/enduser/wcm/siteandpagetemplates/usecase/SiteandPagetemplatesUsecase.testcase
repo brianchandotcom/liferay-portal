@@ -52,6 +52,7 @@
 		<execute macro="SiteTemplates#addChildPageViaSiteTemplateCP">
 			<var name="childSitepageName" value="true" />
 			<var name="siteChildPageName" value="Site Child Page Name" />
+			<var name="sitePageName" value="Site Page Name" />
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
@@ -65,12 +66,12 @@
 		</execute>
 
 		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
+			<var name="page" value="Public Pages" />
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute macro="SitePage#gotoCP">
-			<var name="sitePageName" value="Site Page Name" />
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="Public Pages" />
 		</execute>
 
 		<execute macro="SitePage#viewNoDeletePagesAssociatedWithSiteTemplateCP">

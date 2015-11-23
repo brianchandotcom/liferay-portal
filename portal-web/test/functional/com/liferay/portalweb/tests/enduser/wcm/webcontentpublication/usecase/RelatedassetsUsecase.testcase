@@ -108,7 +108,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="portlet" value="Site Pages" />
+			<var name="page" value="Private Pages" />
 		</execute>
 
 		<execute macro="SitePage#addCP">

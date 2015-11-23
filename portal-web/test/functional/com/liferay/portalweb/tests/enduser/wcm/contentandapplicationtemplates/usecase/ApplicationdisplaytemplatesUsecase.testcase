@@ -537,8 +537,8 @@
 		</execute>
 
 		<execute macro="Page#gotoPagesCP">
+			<var name="page" value="Public Pages" />
 			<var name="pageStaging" value="true" />
-			<var name="portletName" value="Site Pages" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteScopeName" value="${siteName}" />
 			<var name="siteURL" value="true" />

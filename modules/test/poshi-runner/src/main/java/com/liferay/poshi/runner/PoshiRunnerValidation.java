@@ -132,7 +132,7 @@ public class PoshiRunnerValidation {
 
 		List<String> possibleElementNames = Arrays.asList(
 			"description", "echo", "execute", "fail", "for", "if", "property",
-			"take-screenshot", "task", "var", "while");
+			"return", "take-screenshot", "task", "var", "while");
 
 		if (Validator.isNotNull(filePath) && filePath.endsWith(".function")) {
 			possibleElementNames = Arrays.asList("execute", "if");
@@ -164,6 +164,9 @@ public class PoshiRunnerValidation {
 			}
 			else if (elementName.equals("property")) {
 				validatePropertyElement(childElement, filePath);
+			}
+			else if (elementName.equals("return")) {
+				validateCommandReturnElement(childElement, filePath);
 			}
 			else if (elementName.equals("take-screenshot")) {
 				validateTakeScreenshotElement(childElement, filePath);
@@ -211,12 +214,55 @@ public class PoshiRunnerValidation {
 		Element element, String filePath) {
 
 		List<String> possibleAttributeNames = Arrays.asList(
-			"line-number", "name", "summary", "summary-ignore");
+			"line-number", "name", "returns", "summary", "summary-ignore");
 
 		validatePossibleAttributeNames(
 			element, possibleAttributeNames, filePath);
 		validateRequiredAttributeNames(
 			element, Arrays.asList("name"), filePath);
+
+		String returns = element.attributeValue("returns");
+
+		List<Element> returnElements =
+			PoshiRunnerGetterUtil.getAllChildElements(element, "return");
+
+		if (returns == null) {
+			if (!returnElements.isEmpty()) {
+				_exceptions.add(
+					new Exception(
+						element.attributeValue("name") +
+							" does not return values\n" + filePath + ":" +
+								element.attributeValue("line-number")));
+			}
+		}
+		else {
+			List<String> returnsList = Arrays.asList(StringUtil.split(returns));
+
+			for (Element returnElement : returnElements) {
+				String returnVariable = returnElement.attributeValue("name");
+
+				if (returnsList.contains(returnVariable)) {
+					continue;
+				}
+
+				_exceptions.add(
+					new Exception(
+						returnVariable + " not listed as a return variable\n" +
+							filePath + ":" +
+								element.attributeValue("line-number")));
+			}
+		}
+	}
+
+	protected static void validateCommandReturnElement(
+		Element element, String filePath) {
+
+		List<String> attributeNames = Arrays.asList(
+			"line-number", "name", "value");
+
+		validateHasNoChildElements(element, filePath);
+		validatePossibleAttributeNames(element, attributeNames, filePath);
+		validateRequiredAttributeNames(element, attributeNames, filePath);
 	}
 
 	protected static void validateConditionElement(
@@ -513,20 +559,48 @@ public class PoshiRunnerValidation {
 				element, multiplePrimaryAttributeNames, primaryAttributeNames,
 				filePath);
 
-			for (Element childElement : childElements) {
-				if (Validator.equals(childElement.getName(), "var")) {
-					validateVarElement(childElement, filePath);
+			List<String> possibleChildElementNames = Arrays.asList(
+				"var", "return");
 
-					continue;
-				}
-				else {
+			for (Element childElement : childElements) {
+				String childElementName = childElement.getName();
+
+				if (!possibleChildElementNames.contains(childElementName)) {
 					_exceptions.add(
 						new Exception(
 							"Invalid child element\n" + filePath + ":" +
 								childElement.attributeValue("line-number")));
 				}
 			}
+
+			List<Element> varElements = element.elements("var");
+
+			for (Element varElement : varElements) {
+				validateVarElement(varElement, filePath);
+			}
+
+			List<Element> returnElements = element.elements("return");
+
+			for (Element returnElement : returnElements) {
+				validateExecuteReturnElement(returnElement, filePath);
+
+				if (primaryAttributeName.equals("macro")) {
+					validateMacroReturns(
+						element, "macro", returnElement, filePath);
+				}
+			}
 		}
+	}
+
+	protected static void validateExecuteReturnElement(
+		Element element, String filePath) {
+
+		List<String> attributeNames = Arrays.asList(
+			"from", "line-number", "name");
+
+		validateHasNoChildElements(element, filePath);
+		validatePossibleAttributeNames(element, attributeNames, filePath);
+		validateRequiredAttributeNames(element, attributeNames, filePath);
 	}
 
 	protected static void validateForElement(Element element, String filePath) {
@@ -841,6 +915,26 @@ public class PoshiRunnerValidation {
 			else if (childElementName.equals("var")) {
 				validateVarElement(childElement, filePath);
 			}
+		}
+	}
+
+	protected static void validateMacroReturns(
+		Element element, String macroType, Element returnElement,
+		String filePath) {
+
+		String classCommandName = element.attributeValue(macroType);
+
+		List<String> returns = PoshiRunnerContext.getMacroCommandReturns(
+			classCommandName);
+
+		String returnVariable = returnElement.attributeValue("from");
+
+		if (!returns.contains(returnVariable)) {
+			_exceptions.add(
+				new Exception(
+					returnVariable + " not specified as a return variable\n" +
+						filePath + ":" +
+							element.attributeValue("line-number")));
 		}
 	}
 

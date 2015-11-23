@@ -23,7 +23,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
  * only be visible and accessible to the omni administrator. In a portlet's
  * <code>liferay-portlet.xml</code> file, this class can be specified as the
  * value for the <a
- * href="http://docs.liferay.com/portal/6.2/definitions/liferay-portlet-app_6_2_0.dtd.html#control-panel-entry-class"
+ * href="http://docs.liferay.com/portal/7.0/definitions/liferay-portlet-app_7_0_0.dtd.html#control-panel-entry-class"
  * > control-panel-entry-class </a> element.
  *
  * @author Jorge Ferrer

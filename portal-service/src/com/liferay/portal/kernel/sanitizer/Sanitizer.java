@@ -26,7 +26,7 @@ import java.util.Map;
  * (CSS). Multiple implementations can be deployed in a hook plugin and
  * specified in a comma separated list of values for the
  * <code>sanitizer.impl</code> portal property (see <a
- * href="http://docs.liferay.com/portal/6.2/propertiesdoc/portal.properties.html#Sanitizer">Sanitizer</a>).
+ * href="http://docs.liferay.com/portal/7.0/propertiesdoc/portal.properties.html#Sanitizer">Sanitizer</a>).
  * All installed sanitizers are chained.
  *
  * @author Zsolt Balogh

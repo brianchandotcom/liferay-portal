@@ -227,7 +227,7 @@ public class PoshiRunnerValidation {
 			PoshiRunnerGetterUtil.getAllChildElements(element, "return");
 
 		if (returns == null) {
-			if (returnElements.isEmpty()) {
+			if (!returnElements.isEmpty()) {
 				_exceptions.add(
 					new Exception(
 						element.attributeValue("name") +

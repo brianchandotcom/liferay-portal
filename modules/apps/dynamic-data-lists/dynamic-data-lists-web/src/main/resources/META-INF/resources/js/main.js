@@ -573,26 +573,26 @@ AUI.add(
 				},
 
 				findStructureFieldByAttribute: function(fieldsArray, attributeName, attributeValue) {
-					var instance = this;
+					var instance = this,
+						structureField;
 
-					var found = null;
+					AArray.some(
+						fieldsArray,
+						function(item) {
+							var nestedFieldsArray = item.fields;
 
-					for (var index = 0; index < fieldsArray.length && !found; index++) {
-						var field = fieldsArray[index];
+							if (item[attributeName] === attributeValue) {
+								structureField = item;
+							}
+							else if (nestedFieldsArray) {
+								structureField = instance.findStructureFieldByAttribute(nestedFieldsArray, attributeName, attributeValue);
+							}
 
-						if (field[attributeName] === attributeValue) {
-							found = field;
-							break;
+							return structureField !== undefined;
 						}
+					);
 
-						var nestedFieldsArray = field.fields;
-
-						if (nestedFieldsArray) {
-							found = instance.findStructureFieldByAttribute(nestedFieldsArray, attributeName, attributeValue);
-						}
-					}
-
-					return found;
+					return structureField;
 				},
 
 				getCellEditorOptions: function(options) {

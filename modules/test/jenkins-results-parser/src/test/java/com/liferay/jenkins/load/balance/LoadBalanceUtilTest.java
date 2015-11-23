@@ -14,71 +14,47 @@
 
 package com.liferay.jenkins.load.balance;
 
+import com.liferay.jenkins.results.parser.BaseJenkinsResultsParserTestCase;
+
 import java.io.File;
+
 import java.net.URL;
+
 import java.util.Hashtable;
 
 import org.apache.tools.ant.Project;
+
 import org.junit.Before;
 import org.junit.Test;
-
-import com.liferay.jenkins.load.balance.LoadBalanceUtil;
-import com.liferay.jenkins.results.parser.BaseJenkinsResultsParserTestCase;
 
 /**
  * @author Peter Yoo
  */
 public class LoadBalanceUtilTest extends BaseJenkinsResultsParserTestCase {
 
-	@Before
-	public void setUp() throws Exception {
-		downloadSample("test-1", null);
-		downloadSample("test-2", null);
-	}
-	
 	public LoadBalanceUtilTest() {
 		dependenciesDir = new File(
 			"src/test/resources/com/liferay/load/balance/dependencies/" +
 				getSimpleClassName());
 	}
-	
+
+	@Before
+	public void setUp() throws Exception {
+		downloadSample("test-1", null);
+		downloadSample("test-2", null);
+	}
+
 	@Test
 	public void testGetMostAvailableMasterURL() throws Exception {
 		assertSamples();
 	}
-	
-	@Override
-	protected void downloadSample(File sampleDir, URL url) throws Exception {
-		Project project = getDownloadProject(sampleDir.getName());
-		int maxHostNames = 
-			LoadBalanceUtil.calculateMaxHostNames(project, sampleDir.getName());
-		for (int i = 1; i <= maxHostNames; i++) {
-						
-			downloadSampleURL(
-				new File(sampleDir, sampleDir.getName() + "-" + i), 
-				createURL(
-					project.getProperty(
-						"jenkins.local.url[" + sampleDir.getName() + "-" + i +
-						"]")),
-				"/computer/api/json?pretty&tree=computer[idle]");
-		}
-	}
-	
-	@Override
-	protected String getMessage(String urlString) throws Exception {
-		File sampleDir = new File(urlString.substring("file:".length()));
 
-		Project project = getTestProject(sampleDir.getName());
-
-		return LoadBalanceUtil.getMostAvailableMasterURL(project);
-	}
-	
 	protected static Project getDownloadProject(String baseInvocationHostName) {
 		Project project = new Project();
 
 		project.setProperty(
-			"base.invocation.url", "http://" + baseInvocationHostName +
-			".liferay.com");
+			"base.invocation.url",
+			"http://" + baseInvocationHostName + ".liferay.com");
 		project.setProperty(
 			"jenkins.shared.dir", "mnt/mfs-ssd1-10.10/jenkins/tmp");
 		project.setProperty("jenkins.local.url[test-1-1]", "http://test-1-1");
@@ -105,21 +81,56 @@ public class LoadBalanceUtilTest extends BaseJenkinsResultsParserTestCase {
 		project.setProperty("jenkins.local.url[test-3-1]", "http://test-3-1");
 		project.setProperty("jenkins.local.url[test-3-2]", "http://test-3-2");
 		project.setProperty("jenkins.local.url[test-3-3]", "http://test-3-3");
-		
+
 		return project;
 	}
-	
-	protected static Project getTestProject(String baseInvocationHostName) {
+
+	@Override
+	protected void downloadSample(File sampleDir, URL url) throws Exception {
+		Project project = getDownloadProject(sampleDir.getName());
+		int maxHostNames = LoadBalanceUtil.calculateMaxHostNames(
+			project, sampleDir.getName());
+
+		for (int i = 1; i <= maxHostNames; i++) {
+			downloadSampleURL(
+				new File(sampleDir, sampleDir.getName() + "-" + i),
+				createURL(
+					project.getProperty(
+						"jenkins.local.url[" + sampleDir.getName() + "-" + i +
+						"]")),
+				"/computer/api/json?pretty&tree=computer[idle]");
+		}
+	}
+
+	@Override
+	protected String getMessage(String urlString) throws Exception {
+		File sampleDir = new File(urlString.substring("file:".length()));
+
+		Project project = getTestProject(sampleDir.getName());
+
+		return LoadBalanceUtil.getMostAvailableMasterURL(project);
+	}
+
+	protected Project getTestProject(String baseInvocationHostName) {
 		Project project = getDownloadProject(baseInvocationHostName);
 		Hashtable<String, Object> propertiesTable = project.getProperties();
+
 		for (String key : propertiesTable.keySet()) {
 			if (key.equals("base.invocation.url")) {
 				continue;
 			}
-			String value = (String) propertiesTable.get(key);
-			value.replace("http://", "file:" + System.getProperty("user.dir") + "/");
-			propertiesTable.put(key, value);
+
+			String value = (String)propertiesTable.get(key);
+
+			if (value.contains("http://")) {
+				value = value.replace(
+					"http://",
+					"file:" + dependenciesDir.getAbsolutePath() + "/" +
+						baseInvocationHostName + "/");
+				project.setProperty(key, value);
+			}
 		}
+
 		return project;
 	}
 

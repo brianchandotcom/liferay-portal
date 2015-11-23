@@ -2997,11 +2997,20 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		FileVersion latestFileVersion = fileVersions.get(
 			fileVersions.size() - 1);
 
+		String fileName = latestFileVersion.getTitle();
+
+		String extension = latestFileVersion.getExtension();
+
+		if (Validator.isNotNull(extension) &&
+			!fileName.endsWith(StringPool.PERIOD + extension)) {
+
+			fileName += StringPool.PERIOD + extension;
+		}
+
 		FileEntry destinationFileEntry = toRepository.addFileEntry(
-			getUserId(), newFolderId, fileEntry.getTitle(),
-			latestFileVersion.getMimeType(), latestFileVersion.getTitle(),
-			latestFileVersion.getDescription(), StringPool.BLANK,
-			latestFileVersion.getContentStream(false),
+			getUserId(), newFolderId, fileName, latestFileVersion.getMimeType(),
+			latestFileVersion.getTitle(), latestFileVersion.getDescription(),
+			StringPool.BLANK, latestFileVersion.getContentStream(false),
 			latestFileVersion.getSize(), serviceContext);
 
 		for (int i = fileVersions.size() - 2; i >= 0; i--) {
@@ -3012,9 +3021,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			try {
 				destinationFileEntry = toRepository.updateFileEntry(
 					getUserId(), destinationFileEntry.getFileEntryId(),
-					fileVersion.getTitle(), fileVersion.getMimeType(),
-					fileVersion.getTitle(), fileVersion.getDescription(),
-					StringPool.BLANK,
+					fileName, fileVersion.getMimeType(), fileVersion.getTitle(),
+					fileVersion.getDescription(), StringPool.BLANK,
 					DLAppUtil.isMajorVersion(previousFileVersion, fileVersion),
 					fileVersion.getContentStream(false), fileVersion.getSize(),
 					serviceContext);

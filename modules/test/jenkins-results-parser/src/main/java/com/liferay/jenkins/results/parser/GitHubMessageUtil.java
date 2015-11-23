@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -149,7 +150,6 @@ public class GitHubMessageUtil {
 			sb.append(topLevelResult);
 			sb.append(".</pre></li>");
 
-			
 			List<String> errorReportsList = new ArrayList<>();
 			List<String> highPriorityList = new ArrayList<>();
 
@@ -161,6 +161,7 @@ public class GitHubMessageUtil {
 				if (content.contains("job-result=\\\"SUCCESS\\\"")) {
 					continue;
 				}
+
 				if (isHighPriority(content)) {
 					highPriorityList.add("<li>" + content + "</li>");
 				}
@@ -168,7 +169,7 @@ public class GitHubMessageUtil {
 					errorReportsList.add("<li>" + content + "</li>");
 				}
 			}
-			
+
 			errorReportsList.addAll(0, highPriorityList);
 
 			for (int i = 0; i < errorReportsList.size(); i++) {
@@ -176,27 +177,27 @@ public class GitHubMessageUtil {
 					sb.append("<li>...</li>");
 					break;
 				}
-				
+
 				sb.append(errorReportsList.get(i));
 			}
-			
+
 			sb.append("</ol>");
 		}
 
 		project.setProperty("github.post.comment.body", sb.toString());
 	}
-	
+
 	protected static boolean isHighPriority(String content) {
 		String[] contentFlags = new String[] {
-			"compileJSP",
-			"Unable to compile JSPs"
+			"compileJSP", "Unable to compile JSPs"
 		};
-		
+
 		for (String contentFlag : contentFlags) {
 			if (content.contains(contentFlag)) {
 				return true;
 			}
 		}
+
 		return false;
 	}
 

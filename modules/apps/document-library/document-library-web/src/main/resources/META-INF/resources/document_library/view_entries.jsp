@@ -216,6 +216,8 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 <div class="document-container" id="<portlet:namespace />entriesContainer">
 
 	<%
+	String[] entryColumns = dlPortletInstanceSettingsHelper.getEntryColumns();
+
 	String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 	%>
 
@@ -352,11 +354,6 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 							</liferay-ui:search-container-column-text>
 						</c:when>
 						<c:otherwise>
-
-							<%
-							String[] entryColumns = dlPortletInstanceSettingsHelper.getEntryColumns();
-							%>
-
 							<c:if test='<%= ArrayUtil.contains(entryColumns, "name") %>'>
 								<liferay-ui:search-container-column-text
 									name="title"

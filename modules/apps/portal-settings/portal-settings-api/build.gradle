@@ -1,0 +1,7 @@
+dependencies {
+	compile project(":apps:portal-settings:portal-settings-web")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}

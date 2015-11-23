@@ -269,16 +269,15 @@ public class PoshiRunnerContext {
 
 		double totalGroupCount = Math.ceil(totalTestCount / maxGroupSize);
 
-		double groupSize = Math.ceil(totalTestCount / totalGroupCount);
+		int groupSize = (int)Math.ceil(totalTestCount / totalGroupCount);
 
 		Map<Integer, List<String>> classCommandNameGroups = new HashMap<>();
-		int classCommandNameIndex = 0;
 
-		for (List<String> partition : Lists.partition(
-			classCommandNames, (int)groupSize)) {
+		List<List<String>> partitions = Lists.partition(
+			classCommandNames, groupSize);
 
-			classCommandNameGroups.put(classCommandNameIndex, partition);
-			classCommandNameIndex++;
+		for (int i = 0; i < partitions.size(); i++) {
+			classCommandNameGroups.put(i, partitions.get(i));
 		}
 
 		return classCommandNameGroups;

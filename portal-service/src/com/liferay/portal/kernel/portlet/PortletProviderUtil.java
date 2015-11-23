@@ -147,27 +147,19 @@ public class PortletProviderUtil {
 	}
 
 	private static final ServiceTrackerMap<String, AddPortletProvider>
-		_addServiceTrackerMap = ServiceTrackerCollections.singleValueMap(
+		_addServiceTrackerMap = ServiceTrackerCollections.openSingleValueMap(
 			AddPortletProvider.class, "model.class.name");
 	private static final ServiceTrackerMap<String, BrowsePortletProvider>
-		_browseServiceTrackerMap = ServiceTrackerCollections.singleValueMap(
+		_browseServiceTrackerMap = ServiceTrackerCollections.openSingleValueMap(
 			BrowsePortletProvider.class, "model.class.name");
 	private static final ServiceTrackerMap<String, EditPortletProvider>
-		_editServiceTrackerMap = ServiceTrackerCollections.singleValueMap(
+		_editServiceTrackerMap = ServiceTrackerCollections.openSingleValueMap(
 			EditPortletProvider.class, "model.class.name");
 	private static final ServiceTrackerMap<String, ManagePortletProvider>
-		_manageServiceTrackerMap = ServiceTrackerCollections.singleValueMap(
+		_manageServiceTrackerMap = ServiceTrackerCollections.openSingleValueMap(
 			ManagePortletProvider.class, "model.class.name");
 	private static final ServiceTrackerMap<String, ViewPortletProvider>
-		_viewServiceTrackerMap = ServiceTrackerCollections.singleValueMap(
+		_viewServiceTrackerMap = ServiceTrackerCollections.openSingleValueMap(
 			ViewPortletProvider.class, "model.class.name");
-
-	static {
-		_addServiceTrackerMap.open();
-		_browseServiceTrackerMap.open();
-		_editServiceTrackerMap.open();
-		_manageServiceTrackerMap.open();
-		_viewServiceTrackerMap.open();
-	}
 
 }

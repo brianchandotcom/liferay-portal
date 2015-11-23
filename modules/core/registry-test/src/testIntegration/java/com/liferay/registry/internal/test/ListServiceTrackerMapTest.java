@@ -225,7 +225,7 @@ public class ListServiceTrackerMapTest {
 		RegistryUtil.setRegistry(registryWrapper);
 
 		try (ServiceTrackerMap<TrackedOne, TrackedOne> serviceTrackerMap =
-				ServiceTrackerCollections.singleValueMap(
+				ServiceTrackerCollections.openSingleValueMap(
 					TrackedOne.class, null,
 					new ServiceReferenceMapper<TrackedOne, TrackedOne>() {
 
@@ -236,8 +236,6 @@ public class ListServiceTrackerMapTest {
 						}
 
 					})) {
-
-			serviceTrackerMap.open();
 
 			ServiceRegistration<TrackedOne> serviceRegistration1 =
 				registerService(new TrackedOne());

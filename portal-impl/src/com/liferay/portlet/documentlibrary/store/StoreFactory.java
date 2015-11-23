@@ -167,10 +167,6 @@ public class StoreFactory {
 		_storeType = key;
 	}
 
-	private StoreFactory() {
-		_storeServiceTrackerMap.open();
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(StoreFactory.class);
 
 	private static StoreFactory _storeFactory;
@@ -178,7 +174,7 @@ public class StoreFactory {
 
 	private volatile Store _store;
 	private final ServiceTrackerMap<String, Store> _storeServiceTrackerMap =
-		ServiceTrackerCollections.singleValueMap(
+		ServiceTrackerCollections.openSingleValueMap(
 			Store.class, "store.type", new StoreServiceTrackerCustomizer());
 	private String _storeType;
 	private final ServiceTrackerMap<String, List<StoreWrapper>>

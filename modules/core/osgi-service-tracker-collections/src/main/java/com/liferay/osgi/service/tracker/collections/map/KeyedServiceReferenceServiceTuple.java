@@ -17,16 +17,16 @@ package com.liferay.osgi.service.tracker.collections.map;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.liferay.osgi.service.tracker.collections.internal.common.ServiceReferenceServiceTuple;
 import org.osgi.framework.ServiceReference;
 
 /**
  * @author Carlos Sierra Andrés
  */
-public class ServiceReferenceServiceTuple<SR, TS, K>
-	extends com.liferay.osgi.service.tracker.collections.internal.common.
-		ServiceReferenceServiceTuple<SR, TS> {
+public class KeyedServiceReferenceServiceTuple<SR, TS, K>
+	extends ServiceReferenceServiceTuple<SR, TS> {
 
-	public ServiceReferenceServiceTuple(
+	public KeyedServiceReferenceServiceTuple(
 		ServiceReference<SR> serviceReference, TS service) {
 
 		super(serviceReference, service);

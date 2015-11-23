@@ -1710,23 +1710,15 @@
 		<if>
 			<equals arg1="${dmDocumentStatus}" arg2="Approved" />
 			<then>
-				<execute function="Click" locator1="DocumentsAndMedia#TOOLBAR_DISPLAY_STYLE_BUTTON" />
-				<execute function="AssertClick" locator1="MenuItem#DISPLAY_STYLE_LIST" value1="List" />
-				<execute function="AssertTextEquals" locator1="DocumentsAndMedia#LIST_DOCUMENT_WORKFLOW_STATUS" value1="Approved" />
+				<execute function="AssertTextEquals" locator1="DocumentsAndMedia#ICON_DOCUMENT_WORKFLOW_STATUS" value1="Approved" />
 			</then>
 			<else>
-				<execute function="Click" locator1="DocumentsAndMedia#TOOLBAR_DISPLAY_STYLE_BUTTON" />
-				<execute function="AssertClick" locator1="MenuItem#DISPLAY_STYLE_DESCRIPTIVE" value1="Descriptive" />
-				<execute function="AssertElementPresent" locator1="DocumentsAndMedia#ICON_DOCUMENT_THUMBNAIL" />
 				<execute function="AssertTextEquals" locator1="DocumentsAndMedia#ICON_DOCUMENT_WORKFLOW_STATUS" value1="${dmDocumentStatus}" />
 				<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
 				<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${dmDocumentTitle}" />
 			</else>
 		</if>
-
-		<execute function="Click" locator1="DocumentsAndMedia#TOOLBAR_DISPLAY_STYLE_BUTTON" />
-		<execute function="AssertClick" locator1="MenuItem#DISPLAY_STYLE_ICON" value1="Icon" />
 	</command>
 
 	<command name="viewDefaultCP">

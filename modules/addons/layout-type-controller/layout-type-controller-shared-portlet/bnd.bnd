@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Shared Portlet Layout Type Controller
+Bundle-SymbolicName: com.liferay.layout.type.controller.shared.portlet
+Bundle-Version: 1.0.0
+Include-Resource: classes
+Web-ContextPath: /layout-type-controller-shared-portlet

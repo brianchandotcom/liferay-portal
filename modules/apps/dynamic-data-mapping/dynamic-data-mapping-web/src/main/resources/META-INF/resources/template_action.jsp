@@ -56,8 +56,10 @@ DDMTemplate template = (DDMTemplate)row.getObject();
 	<c:if test="<%= DDMTemplatePermission.containsAddTemplatePermission(permissionChecker, scopeGroupId, template.getClassNameId(), template.getResourceClassNameId()) %>">
 		<portlet:renderURL var="copyURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 			<portlet:param name="mvcPath" value="/copy_template.jsp" />
-			<portlet:param name="closeRedirect" value="<%= HttpUtil.encodeURL(currentURL) %>" />
 			<portlet:param name="templateId" value="<%= String.valueOf(template.getTemplateId()) %>" />
+			<portlet:param name="classNameId" value="<%= String.valueOf(template.getClassNameId()) %>" />
+			<portlet:param name="classPK" value="<%= String.valueOf(template.getClassPK()) %>" />
+			<portlet:param name="resourceClassNameId" value="<%= String.valueOf(template.getResourceClassNameId()) %>" />
 		</portlet:renderURL>
 
 		<%

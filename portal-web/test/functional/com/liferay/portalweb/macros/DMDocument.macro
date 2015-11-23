@@ -1535,6 +1535,7 @@
 
 	<command name="searchCP">
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${dmDocumentKeyword}" />
+
 		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 	</command>
 

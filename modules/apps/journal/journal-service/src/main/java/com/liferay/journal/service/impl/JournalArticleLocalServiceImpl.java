@@ -6475,7 +6475,7 @@ public class JournalArticleLocalServiceImpl
 				dlAppLocalService.getFileEntryByUuidAndGroupId(uuid, groupId);
 
 			if (tempFile) {
-				String fileEntryName = DLUtil.getFileName(
+				String fileEntryName = DLUtil.getUniqueFileName(
 					fileEntry.getGroupId(), fileEntry.getFolderId(),
 					fileEntry.getFileName());
 

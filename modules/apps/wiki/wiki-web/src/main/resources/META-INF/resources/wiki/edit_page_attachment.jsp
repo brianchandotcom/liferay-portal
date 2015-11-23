@@ -146,6 +146,7 @@ Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class
 					nodeId: <%= node.getNodeId() %>
 				}
 			},
+			tempRandomSuffix: '<%= TempFileEntryUtil.TEMP_RANDOM_SUFFIX %>',
 			uploadFile: '<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>" name="/wiki/edit_page_attachment"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /><portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" /><portlet:param name="title" value="<%= wikiPage.getTitle() %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= WikiPage.class.getName() %>" />'
 		}
 	);
@@ -191,7 +192,7 @@ Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class
 					_.forEach(
 						responseData,
 						function(item, index) {
-							var checkBox = $('input[data-fileName="' + item.fileName + '"]');
+							var checkBox = $('input[data-fileName="' + item.originalFileName + '"]');
 
 							checkBox.prop('checked', false);
 							checkBox.addClass('hide');
@@ -205,8 +206,20 @@ Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class
 
 							if (item.added) {
 								cssClass = 'file-saved';
+								var originalFileName = item.originalFileName;
 
-								childHTML = '<span class="success-message"><%= UnicodeLanguageUtil.get(request, "successfully-saved") %></span>';
+								var pos = originalFileName.indexOf('<%= TempFileEntryUtil.TEMP_RANDOM_SUFFIX %>');
+
+								if (pos != -1) {
+									originalFileName = originalFileName.substr(0, pos);
+								}
+
+								if (originalFileName === item.fileName) {
+									childHTML = '<span class="success-message"><%= UnicodeLanguageUtil.get(request, "successfully-saved") %></span>';
+								}
+								else {
+									childHTML = '<span class="success-message"><%= UnicodeLanguageUtil.get(request, "successfully-saved") %> (' + item.fileName + ')</span>';
+								}
 							}
 							else {
 								cssClass = 'upload-error';

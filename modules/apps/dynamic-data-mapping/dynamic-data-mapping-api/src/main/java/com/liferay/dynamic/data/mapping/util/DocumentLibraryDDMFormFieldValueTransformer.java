@@ -63,7 +63,7 @@ public class DocumentLibraryDDMFormFieldValueTransformer
 	protected FileEntry addFileEntry(FileEntry tempFileEntry)
 		throws PortalException {
 
-		String fileName = DLUtil.getFileName(
+		String fileName = DLUtil.getUniqueFileName(
 			tempFileEntry.getGroupId(), tempFileEntry.getFolderId(),
 			tempFileEntry.getFileName());
 

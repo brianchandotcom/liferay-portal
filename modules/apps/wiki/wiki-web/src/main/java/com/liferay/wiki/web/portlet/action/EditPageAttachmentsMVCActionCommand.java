@@ -219,8 +219,6 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 			List<KeyValuePair> invalidFileNameKVPs)
 		throws Exception {
 
-		String originalSelectedFileName = selectedFileName;
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -234,23 +232,26 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
 				_TEMP_FOLDER_NAME, selectedFileName);
 
-			InputStream inputStream = tempFileEntry.getContentStream();
+			String originalSelectedFileName =
+				TempFileEntryUtil.getOriginalTempFileName(
+					tempFileEntry.getFileName());
+
 			String mimeType = tempFileEntry.getMimeType();
 
-			_wikiPageService.addPageAttachment(
-				nodeId, title, selectedFileName, inputStream, mimeType);
+			InputStream inputStream = tempFileEntry.getContentStream();
+
+			FileEntry fileEntry = _wikiPageService.addPageAttachment(
+				nodeId, title, originalSelectedFileName, inputStream, mimeType);
 
 			validFileNameKVPs.add(
-				new KeyValuePair(selectedFileName, originalSelectedFileName));
+				new KeyValuePair(fileEntry.getTitle(), selectedFileName));
 		}
 		catch (Exception e) {
 			String errorMessage = getAddMultipleFileEntriesErrorMessage(
 				portletConfig, actionRequest, actionResponse, e);
 
-			KeyValuePair invalidFileNameKVP = new KeyValuePair(
-				selectedFileName, errorMessage);
-
-			invalidFileNameKVPs.add(invalidFileNameKVP);
+			invalidFileNameKVPs.add(
+				new KeyValuePair(selectedFileName, errorMessage));
 		}
 		finally {
 			if (tempFileEntry != null) {
@@ -260,7 +261,8 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void addTempAttachment(ActionRequest actionRequest)
+	protected void addTempAttachment(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		UploadPortletRequest uploadPortletRequest =
@@ -276,9 +278,21 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 
 			String mimeType = uploadPortletRequest.getContentType("file");
 
-			_wikiPageService.addTempFileEntry(
-				nodeId, _TEMP_FOLDER_NAME, sourceFileName, inputStream,
-				mimeType);
+			String tempFileName = TempFileEntryUtil.getTempFileName(
+				sourceFileName);
+
+			FileEntry fileEntry = _wikiPageService.addTempFileEntry(
+				nodeId, _TEMP_FOLDER_NAME, tempFileName, inputStream, mimeType);
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			jsonObject.put("groupId", fileEntry.getGroupId());
+			jsonObject.put("name", fileEntry.getTitle());
+			jsonObject.put("title", sourceFileName);
+			jsonObject.put("uuid", fileEntry.getUuid());
+
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse, jsonObject);
 		}
 		finally {
 			StreamUtil.cleanUp(inputStream);
@@ -374,7 +388,7 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 					portletConfig, actionRequest, actionResponse);
 			}
 			else if (cmd.equals(Constants.ADD_TEMP)) {
-				addTempAttachment(actionRequest);
+				addTempAttachment(actionRequest, actionResponse);
 			}
 			else if (cmd.equals(Constants.CHECK)) {
 				JSONObject jsonObject = RestoreEntryUtil.checkEntry(

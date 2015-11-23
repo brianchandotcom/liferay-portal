@@ -108,6 +108,7 @@ public class FailureMessageUtil {
 		}
 
 		Matcher sfMatcher = _sfPattern.matcher(consoleOutput);
+
 		if (sfMatcher.find()) {
 			sb.append("<pre>");
 			sb.append(sfMatcher.group("snippet"));
@@ -166,7 +167,6 @@ public class FailureMessageUtil {
 
 	private static final Pattern _pattern = Pattern.compile(
 		"\\n[a-z\\-\\.]+\\:\\n");
-
 	private static final Pattern _sfPattern =
 		Pattern.compile("(?<snippet>^\\s+\\[exec\\] " +
 			"com.liferay.source.formatter.SourceFormatterTest > " +

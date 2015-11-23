@@ -15,6 +15,7 @@
 package com.liferay.osgi.service.tracker.collections.internal.map;
 
 import com.liferay.osgi.service.tracker.collections.internal.common.ServiceReferenceServiceTuple;
+import com.liferay.osgi.service.tracker.collections.internal.common.ServiceReferenceServiceTupleComparator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerBucket;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerBucketFactory;
 

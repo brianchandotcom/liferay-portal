@@ -15,6 +15,7 @@
 package com.liferay.osgi.service.tracker.collections.internal.list;
 
 import com.liferay.osgi.service.tracker.collections.internal.common.ServiceReferenceServiceTuple;
+import com.liferay.osgi.service.tracker.collections.internal.common.ServiceReferenceServiceTupleComparator;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 
 import java.util.Collections;
@@ -48,7 +49,7 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<S, T> {
 			_comparator = Collections.reverseOrder();
 		}
 		else {
-			_comparator = new EntryServiceReferenceComparator<>(comparator);
+			_comparator = new ServiceReferenceServiceTupleComparator<>(comparator);
 		}
 
 		if (filterString != null) {
@@ -87,7 +88,7 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<S, T> {
 	}
 
 	private final BundleContext _bundleContext;
-	private final Comparator<ServiceReferenceServiceTuple<S, T>> _comparator;
+	private final Comparator<ServiceReferenceServiceTuple<S, ?>> _comparator;
 	private final List<ServiceReferenceServiceTuple<S, T>> _services =
 		new CopyOnWriteArrayList<>();
 	private final ServiceTracker<S, T> _serviceTracker;
@@ -121,36 +122,6 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<S, T> {
 		}
 
 		private final Iterator<ServiceReferenceServiceTuple<S, T>> _iterator;
-
-	}
-
-	private class EntryServiceReferenceComparator<S, T>
-		implements Comparator<ServiceReferenceServiceTuple<S, T>> {
-
-		public EntryServiceReferenceComparator(
-			Comparator<ServiceReference<S>> comparator) {
-
-			_comparator = comparator;
-		}
-
-		@Override
-		public int compare(
-			ServiceReferenceServiceTuple<S, T> serviceReferenceServiceTuple1,
-			ServiceReferenceServiceTuple<S, T> serviceReferenceServiceTuple2) {
-
-			int value = _comparator.compare(
-				serviceReferenceServiceTuple1.getServiceReference(),
-				serviceReferenceServiceTuple2.getServiceReference());
-
-			if (value != 0) {
-				return value;
-			}
-
-			return serviceReferenceServiceTuple1.compareTo(
-				serviceReferenceServiceTuple2);
-		}
-
-		private final Comparator<ServiceReference<S>> _comparator;
 
 	}
 

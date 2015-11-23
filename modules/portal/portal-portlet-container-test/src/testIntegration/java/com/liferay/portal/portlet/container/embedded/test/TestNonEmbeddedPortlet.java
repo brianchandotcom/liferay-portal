@@ -33,9 +33,6 @@ public class TestNonEmbeddedPortlet extends PortletImpl implements Portlet {
 
 	@Override
 	public void destroy() {
-
-		// NOOP
-
 	}
 
 	@Override
@@ -45,9 +42,6 @@ public class TestNonEmbeddedPortlet extends PortletImpl implements Portlet {
 
 	@Override
 	public void init(PortletConfig portletConfig) throws PortletException {
-
-		// NOOP
-
 	}
 
 	@Override
@@ -65,17 +59,12 @@ public class TestNonEmbeddedPortlet extends PortletImpl implements Portlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException, PortletException {
 
-		// NOOP
-
 	}
 
 	@Override
 	public void render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
-
-		// NOOP
-
 	}
 
 }

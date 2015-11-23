@@ -42,7 +42,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alexander Chow
  * @author Tina Tian
  */
-@Component(immediate = true, service = LinkbackMessageListener.class)
+@Component(
+	configurationPid = "com.liferay.blogs.configuration.BlogsConfiguration",
+	immediate = true, service = LinkbackMessageListener.class
+)
 public class LinkbackMessageListener extends BaseSchedulerEntryMessageListener {
 
 	@Activate

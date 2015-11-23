@@ -4,6 +4,19 @@
 <#if entries?has_content>
 	<#assign languageId = localeUtil.toLanguageId(locale) />
 
+	<style>
+		.taglib-language-option {
+			background: none no-repeat 5px center;
+			padding-left: 25px;
+		}
+
+		<#list entries as entry>
+			.taglib-language-option-${entry.getW3cLanguageId()} {
+				background-image: url(${themeDisplay.getPathThemeImages()}/language/${entry.getLanguageId()}.png);
+			}
+		</#list>
+	</style>
+
 	<@aui["form"]
 		action=formAction
 		method="post"
@@ -12,7 +25,7 @@
 	>
 		<@aui["select"]
 			changesContext=true
-			id='${namespace + name}'
+			id='${namespace + formName}'
 			label=""
 			name='${name}'
 			onChange='${namespace + "changeLanguage();"}'
@@ -20,7 +33,7 @@
 		>
 			<#list entries as entry>
 				<@aui["option"]
-					cssClass="taglib-language-option"
+					cssClass="taglib-language-option taglib-language-option-${entry.getW3cLanguageId()}"
 					disabled=entry.isDisabled()
 					label=entry.getLongDisplayName()
 					lang=entry.getW3cLanguageId()
@@ -32,10 +45,6 @@
 	</@>
 
 	<@aui["script"]>
-		<#list entries as entry>
-			document.${namespace + formName}.${name}.options[${entry_index}].style.backgroundImage = 'url(${themeDisplay.getPathThemeImages()}/language/${entry.getLanguageId()}.png)';
-		</#list>
-
 		function ${namespace}changeLanguage() {
 			var languageId = AUI.$(document.${namespace + formName}.${name}).val();
 

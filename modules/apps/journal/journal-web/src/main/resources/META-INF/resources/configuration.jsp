@@ -142,17 +142,10 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 					/>
 			</liferay-ui:section>
 
-			<%
-			emailDefinitionTerms.put("[$TO_ADDRESS$]", emailDefinitionTerms.get("[$FROM_ADDRESS$]"));
-			emailDefinitionTerms.put("[$TO_NAME$]", emailDefinitionTerms.get("[$FROM_NAME$]"));
-			emailDefinitionTerms.put("[$FROM_ADDRESS$]", LanguageUtil.get(themeDisplay.getLocale(), "the-address-of-the-email-sender"));
-			emailDefinitionTerms.put("[$FROM_NAME$]", LanguageUtil.get(themeDisplay.getLocale(), "the-name-of-the-email-sender"));
-			%>
-
 			<liferay-ui:section>
 				<liferay-ui:email-notification-settings
 					emailBodyLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleApprovalRequestedBody() %>"
-					emailDefinitionTerms="<%= emailDefinitionTerms %>"
+					emailDefinitionTerms='<%= JournalUtil.getEmailDefinitionTerms(renderRequest, emailFromAddress, emailFromName, "requested") %>'
 					emailEnabled="<%= journalGroupServiceConfiguration.emailArticleApprovalRequestedEnabled() %>"
 					emailParam="emailArticleApprovalRequested"
 					emailSubjectLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleApprovalRequestedSubject() %>"

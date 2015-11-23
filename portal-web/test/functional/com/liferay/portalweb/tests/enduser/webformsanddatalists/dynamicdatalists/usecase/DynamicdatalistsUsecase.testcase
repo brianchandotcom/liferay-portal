@@ -15,23 +15,33 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="User#firstLoginPG" />
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
-		<execute macro="DDLTemplate#tearDownTemplateCP" />
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="User#firstLoginPG" />
 
-		<execute macro="DDLTemplate#tearDownTemplateCP">
-			<var name="ddlDataDefinitionName" value="Data Definition Clone With Form Template" />
-		</execute>
+				<execute macro="DDLTemplate#tearDownTemplateCP" />
 
-		<execute macro="DDLList#tearDownCP" />
+				<execute macro="DDLTemplate#tearDownTemplateCP">
+					<var name="ddlDataDefinitionName" value="Data Definition Clone With Form Template" />
+				</execute>
 
-		<execute macro="DDLDataDefinition#tearDownCP" />
+				<execute macro="DDLList#tearDownCP" />
 
-		<execute macro="DMDocument#tearDownCP" />
+				<execute macro="DDLDataDefinition#tearDownCP" />
 
-		<execute macro="User#tearDownCP" />
+				<execute macro="DMDocument#tearDownCP" />
 
-		<execute macro="Page#tearDownPG" />
+				<execute macro="User#tearDownCP" />
+
+				<execute macro="Page#tearDownPG" />
+			</else>
+		</if>
 	</tear-down>
 
 	<command name="AddDataDefinitionWithoutANameAndAssertErrorMessage" priority="3">

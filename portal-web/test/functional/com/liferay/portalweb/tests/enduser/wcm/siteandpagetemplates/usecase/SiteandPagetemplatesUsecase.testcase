@@ -17,22 +17,32 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="Page#openURL" />
-		<execute macro="User#logoutAndLoginPG">
-			<var name="password" value="test" />
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
-		<execute macro="User#tearDownCP" />
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="Page#openURL" />
+				<execute macro="User#logoutAndLoginPG">
+					<var name="password" value="test" />
+					<var name="userLoginEmailAddress" value="test@liferay.com" />
+					<var name="userLoginFullName" value="Test Test" />
+				</execute>
 
-		<execute macro="UserGroup#tearDownCP" />
+				<execute macro="User#tearDownCP" />
 
-		<execute macro="Site#tearDownCP" />
+				<execute macro="UserGroup#tearDownCP" />
 
-		<execute macro="SiteTemplates#tearDownCP" />
+				<execute macro="Site#tearDownCP" />
 
-		<execute macro="DMDocument#tearDownCP" />
+				<execute macro="SiteTemplates#tearDownCP" />
+
+				<execute macro="DMDocument#tearDownCP" />
+			</else>
+		</if>
 	</tear-down>
 
 	<command name="AdminCanNotAddASubpageOfAChildPageLinkedToSiteTemplatePage" priority="4">

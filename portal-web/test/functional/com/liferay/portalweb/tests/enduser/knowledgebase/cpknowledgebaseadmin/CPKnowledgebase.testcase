@@ -16,19 +16,29 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="Workflow#tearDownSiteWorkflow" />
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
-		<execute macro="BlogsEntry#tearDownCP" />
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="Workflow#tearDownSiteWorkflow" />
 
-		<execute macro="Vocabulary#tearDownCP" />
+				<execute macro="BlogsEntry#tearDownCP" />
 
-		<execute macro="KBFolder#tearDownCP" />
+				<execute macro="Vocabulary#tearDownCP" />
 
-		<execute macro="KBTemplate#tearDownCP" />
+				<execute macro="KBFolder#tearDownCP" />
 
-		<execute macro="KBArticle#tearDownCP" />
+				<execute macro="KBTemplate#tearDownCP" />
 
-		<execute macro="Page#tearDownPG" />
+				<execute macro="KBArticle#tearDownCP" />
+
+				<execute macro="Page#tearDownPG" />
+			</else>
+		</if>
 	</tear-down>
 
 	<command name="AddChildArticleToKBArticleViaKBAdmin" priority="4">

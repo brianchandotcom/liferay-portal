@@ -15,9 +15,19 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="Bookmark#tearDownCP" />
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
-		<execute macro="BookmarksFolder#tearDownCP" />
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="Bookmark#tearDownCP" />
+
+				<execute macro="BookmarksFolder#tearDownCP" />
+			</else>
+		</if>
 	</tear-down>
 
 	<command name="AddBookmark" priority="5">

@@ -37,13 +37,23 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="MessageboardsCategory#tearDownCP" />
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
-		<execute macro="MessageboardsThread#tearDownCP">
-			<var name="assetType" value="Message Boards Thread" />
-		</execute>
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="MessageboardsCategory#tearDownCP" />
 
-		<execute macro="Page#tearDownPG" />
+				<execute macro="MessageboardsThread#tearDownCP">
+					<var name="assetType" value="Message Boards Thread" />
+				</execute>
+
+				<execute macro="Page#tearDownPG" />
+			</else>
+		</if>
 	</tear-down>
 
 	<command name="ViewMentionViaMessageBoardsThread" priority="5">

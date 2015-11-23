@@ -15,11 +15,21 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="Organization#tearDownCP" />
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
-		<execute macro="Site#tearDownCP" />
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="Organization#tearDownCP" />
 
-		<execute macro="User#tearDownCP" />
+				<execute macro="Site#tearDownCP" />
+
+				<execute macro="User#tearDownCP" />
+			</else>
+		</if>
 	</tear-down>
 
 	<command name="AddMember" priority="5">

@@ -39,15 +39,25 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="PageComment#tearDownPG">
-			<var name="pageName" value="Page Comments Page" />
-		</execute>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
-		<execute macro="Page#tearDownPG" />
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="PageComment#tearDownPG">
+					<var name="pageName" value="Page Comments Page" />
+				</execute>
 
-		<execute macro="Workflow#tearDownPortalWorkflow" />
+				<execute macro="Page#tearDownPG" />
 
-		<execute macro="Workflow#tearDownSiteWorkflow" />
+				<execute macro="Workflow#tearDownPortalWorkflow" />
+
+				<execute macro="Workflow#tearDownSiteWorkflow" />
+			</else>
+		</if>
 	</tear-down>
 
 	<command name="ApprovePageCommentPG" priority="4">

@@ -33,27 +33,37 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="BlogsEntry#tearDownCP" />
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
-		<execute macro="Blogs#tearDownConfigurationDisplaySettingsPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="portletNameBorderless" value="Blogs" />
-		</execute>
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="BlogsEntry#tearDownCP" />
 
-		<execute macro="Blogs#tearDownConfigurationScopePG">
-			<var name="pageName" value="${pageName}" />
-			<var name="portletNameBorderless" value="Blogs" />
-		</execute>
+				<execute macro="Blogs#tearDownConfigurationDisplaySettingsPG">
+					<var name="pageName" value="${pageName}" />
+					<var name="portletNameBorderless" value="Blogs" />
+				</execute>
 
-		<execute macro="Page#tearDownPG" />
+				<execute macro="Blogs#tearDownConfigurationScopePG">
+					<var name="pageName" value="${pageName}" />
+					<var name="portletNameBorderless" value="Blogs" />
+				</execute>
 
-		<execute macro="Site#tearDownCP" />
+				<execute macro="Page#tearDownPG" />
 
-		<execute macro="Organization#tearDownCP" />
+				<execute macro="Site#tearDownCP" />
 
-		<execute macro="User#tearDownCP" />
+				<execute macro="Organization#tearDownCP" />
 
-		<execute macro="ServerAdministration#tearDownMailServerSettings" />
+				<execute macro="User#tearDownCP" />
+
+				<execute macro="ServerAdministration#tearDownMailServerSettings" />
+			</else>
+		</if>
 	</tear-down>
 
 	<command name="AddBlogsEntries" priority="5">

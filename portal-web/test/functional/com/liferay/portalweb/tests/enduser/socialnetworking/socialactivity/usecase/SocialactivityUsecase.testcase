@@ -15,17 +15,27 @@
 	</set-up>
 
 	<tear-down>
-		<!--There is no need for a SocialActivity#tearDownCP, as the User Statistics will not be reset and Jenkins does not run teardowns.-->
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
-		<execute macro="User#firstLoginPG" />
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<!--There is no need for a SocialActivity#tearDownCP, as the User Statistics will not be reset and Jenkins does not run teardowns.-->
 
-		<execute macro="User#tearDownCP" />
+				<execute macro="User#firstLoginPG" />
 
-		<execute macro="BlogsEntry#tearDownCP" />
+				<execute macro="User#tearDownCP" />
 
-		<execute macro="Polls#tearDownCP" />
+				<execute macro="BlogsEntry#tearDownCP" />
 
-		<execute macro="Page#tearDownPG" />
+				<execute macro="Polls#tearDownCP" />
+
+				<execute macro="Page#tearDownPG" />
+			</else>
+		</if>
 	</tear-down>
 
 	<command name="AddPollsQuestionWithSpecialCharacters" priority="4">

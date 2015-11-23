@@ -16,13 +16,23 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="KBFolder#tearDownCP" />
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
-		<execute macro="KBArticle#tearDownCP" />
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="KBFolder#tearDownCP" />
 
-		<execute macro="User#tearDownCP" />
+				<execute macro="KBArticle#tearDownCP" />
 
-		<execute macro="Page#tearDownPG" />
+				<execute macro="User#tearDownCP" />
+
+				<execute macro="Page#tearDownPG" />
+			</else>
+		</if>
 	</tear-down>
 
 	<command name="DeleteConfiguredKBFolder" priority="3">

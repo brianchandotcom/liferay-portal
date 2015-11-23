@@ -15,19 +15,29 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="DMDocument#tearDownCP" />
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
-		<execute macro="Navigator#openURL" />
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="DMDocument#tearDownCP" />
 
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Documents and Media" />
-		</execute>
+				<execute macro="Navigator#openURL" />
 
-		<execute macro="Workflow#configureWorkflowViaFolderInfo">
-			<var name="workflowDefinition" value="No Workflow" />
-		</execute>
+				<execute macro="ProductMenu#gotoSitesContent">
+					<var name="portlet" value="Documents and Media" />
+				</execute>
 
-		<execute macro="DMDocumentType#tearDownCP" />
+				<execute macro="Workflow#configureWorkflowViaFolderInfo">
+					<var name="workflowDefinition" value="No Workflow" />
+				</execute>
+
+				<execute macro="DMDocumentType#tearDownCP" />
+			</else>
+		</if>
 	</tear-down>
 
 	<command name="AddDocumentsAndMediaNoWorkflowCP" priority="3">

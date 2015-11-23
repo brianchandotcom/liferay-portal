@@ -32,30 +32,40 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
 		<if>
-			<condition function="IsElementPresent" locator1="Calendar#SCHEDULER_EVENT_GENERIC" />
+			<equals arg1="${testPortalInstance}" arg2="true" />
 			<then>
-				<execute macro="CalendarEvent#tearDown" />
+				<execute macro="PortalInstances#tearDownCP" />
 			</then>
+			<else>
+				<execute macro="Page#gotoPG">
+					<var name="pageName" value="${pageName}" />
+				</execute>
+
+				<if>
+					<condition function="IsElementPresent" locator1="Calendar#SCHEDULER_EVENT_GENERIC" />
+					<then>
+						<execute macro="CalendarEvent#tearDown" />
+					</then>
+				</if>
+
+				<execute macro="Calendar#tearDown" />
+
+				<execute macro="Calendar#tearDownColor" />
+
+				<execute macro="CalendarResource#tearDown" />
+
+				<execute macro="CalendarConfiguration#tearDown" />
+
+				<execute macro="Page#tearDownPG" />
+
+				<execute macro="User#tearDownCP" />
+
+				<execute macro="Site#tearDownCP" />
+			</else>
 		</if>
-
-		<execute macro="Calendar#tearDown" />
-
-		<execute macro="Calendar#tearDownColor" />
-
-		<execute macro="CalendarResource#tearDown" />
-
-		<execute macro="CalendarConfiguration#tearDown" />
-
-		<execute macro="Page#tearDownPG" />
-
-		<execute macro="User#tearDownCP" />
-
-		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
 	<command name="AddCalendarEventAllDay" priority="4">

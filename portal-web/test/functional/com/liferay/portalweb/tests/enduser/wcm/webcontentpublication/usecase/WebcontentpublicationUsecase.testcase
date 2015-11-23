@@ -35,26 +35,36 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
-		<execute macro="Page#tearDownPG" />
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="User#logoutAndLoginPG">
+					<var name="userLoginEmailAddress" value="test@liferay.com" />
+					<var name="userLoginFullName" value="Test Test" />
+				</execute>
 
-		<execute macro="WebContent#tearDownCP" />
+				<execute macro="Page#tearDownPG" />
 
-		<execute macro="WebContent#tearDownCP">
-			<var name="siteScopeName" value="Global" />
-		</execute>
+				<execute macro="WebContent#tearDownCP" />
 
-		<execute macro="DMDocumentType#tearDownCP" />
+				<execute macro="WebContent#tearDownCP">
+					<var name="siteScopeName" value="Global" />
+				</execute>
 
-		<execute macro="BlogsEntry#tearDownCP" />
+				<execute macro="DMDocumentType#tearDownCP" />
 
-		<execute macro="Vocabulary#tearDownCP" />
+				<execute macro="BlogsEntry#tearDownCP" />
 
-		<execute macro="Site#tearDownCP" />
+				<execute macro="Vocabulary#tearDownCP" />
+
+				<execute macro="Site#tearDownCP" />
+			</else>
+		</if>
 	</tear-down>
 
 	<command name="AddAndEditAssetsViaVirtualHostOrganizations" priority="4">

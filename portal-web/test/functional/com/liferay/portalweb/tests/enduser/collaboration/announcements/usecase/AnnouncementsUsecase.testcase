@@ -26,13 +26,23 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="AnnouncementsEntry#tearDownPG" />
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
-		<execute macro="Page#tearDownPG" />
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="AnnouncementsEntry#tearDownPG" />
 
-		<execute macro="User#tearDownCP" />
+				<execute macro="Page#tearDownPG" />
 
-		<execute macro="Site#tearDownCP" />
+				<execute macro="User#tearDownCP" />
+
+				<execute macro="Site#tearDownCP" />
+			</else>
+		</if>
 	</tear-down>
 
 	<command name="ViewAnnouncementsEntryWithDistributedScope" priority="4">

@@ -18,13 +18,23 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="WikiNode#tearDownCP" />
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
-		<execute macro="WikiPage#tearDownCP" />
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="WikiNode#tearDownCP" />
 
-		<execute macro="User#tearDownCP" />
+				<execute macro="WikiPage#tearDownCP" />
 
-		<execute macro="AkismetPortlet#tearDownConfiguration" />
+				<execute macro="User#tearDownCP" />
+
+				<execute macro="AkismetPortlet#tearDownConfiguration" />
+			</else>
+		</if>
 	</tear-down>
 
 	<command name="MarkAsNotSpamWikiPage" priority="4">

@@ -15,29 +15,39 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="User#firstLoginPG" />
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
-		<execute macro="Role#tearDownCP" />
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="User#firstLoginPG" />
 
-		<execute macro="DDLList#tearDownCP" />
+				<execute macro="Role#tearDownCP" />
 
-		<execute macro="DDLDataDefinition#tearDownCP" />
+				<execute macro="DDLList#tearDownCP" />
 
-		<execute macro="User#tearDownCP" />
+				<execute macro="DDLDataDefinition#tearDownCP" />
 
-		<execute macro="UserGroup#tearDownCP" />
+				<execute macro="User#tearDownCP" />
 
-		<execute macro="Organization#tearDownCP" />
+				<execute macro="UserGroup#tearDownCP" />
 
-		<execute macro="Team#tearDownCP" />
+				<execute macro="Organization#tearDownCP" />
 
-		<execute macro="Site#tearDownCP" />
+				<execute macro="Team#tearDownCP" />
 
-		<execute macro="Bookmark#tearDownCP" />
+				<execute macro="Site#tearDownCP" />
 
-		<execute macro="DMDocument#tearDownCP" />
+				<execute macro="Bookmark#tearDownCP" />
 
-		<execute macro="Page#tearDownPG" />
+				<execute macro="DMDocument#tearDownCP" />
+
+				<execute macro="Page#tearDownPG" />
+			</else>
+		</if>
 	</tear-down>
 
 	<command name="EditTeamPermissions" priority="4">

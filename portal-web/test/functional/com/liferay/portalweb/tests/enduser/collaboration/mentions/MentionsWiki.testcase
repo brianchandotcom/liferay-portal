@@ -79,11 +79,21 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="WikiPage#tearDownCP" />
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
-		<execute macro="User#tearDownCP" />
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="WikiPage#tearDownCP" />
 
-		<execute macro="Page#tearDownCP" />
+				<execute macro="User#tearDownCP" />
+
+				<execute macro="Page#tearDownCP" />
+			</else>
+		</if>
 	</tear-down>
 
 	<command name="ViewWikiCommentMentionedUser" priority="5">

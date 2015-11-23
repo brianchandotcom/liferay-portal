@@ -15,21 +15,31 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="User#firstLoginPG" />
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
-		<execute macro="PortalSettings#tearDownCP" />
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="User#firstLoginPG" />
 
-		<execute macro="User#tearDownCP" />
+				<execute macro="PortalSettings#tearDownCP" />
 
-		<execute macro="Role#tearDownCP" />
+				<execute macro="User#tearDownCP" />
 
-		<execute macro="Organization#tearDownCP" />
+				<execute macro="Role#tearDownCP" />
 
-		<execute macro="Site#tearDownCP" />
+				<execute macro="Organization#tearDownCP" />
 
-		<execute macro="BlogsEntry#tearDownCP" />
+				<execute macro="Site#tearDownCP" />
 
-		<execute macro="Page#tearDownPG" />
+				<execute macro="BlogsEntry#tearDownCP" />
+
+				<execute macro="Page#tearDownPG" />
+			</else>
+		</if>
 	</tear-down>
 
 	<command name="ViewBlogsEntryRegRoleInline" priority="4">

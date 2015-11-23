@@ -15,11 +15,21 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="MessageboardsCategory#tearDownCP" />
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
-		<execute macro="MessageboardsThread#tearDownCP" />
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="MessageboardsCategory#tearDownCP" />
 
-		<execute macro="MessageboardsPortlet#tearDownConfigurationGeneralCP" />
+				<execute macro="MessageboardsThread#tearDownCP" />
+
+				<execute macro="MessageboardsPortlet#tearDownConfigurationGeneralCP" />
+			</else>
+		</if>
 	</tear-down>
 
 	<command name="AddMBCategory" priority="5">

@@ -38,13 +38,23 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="DMDocument#tearDownCP" />
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
-		<execute macro="DMFolder#tearDownCP" />
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="DMDocument#tearDownCP" />
 
-		<execute macro="DMDocumentType#tearDownCP" />
+				<execute macro="DMFolder#tearDownCP" />
 
-		<execute macro="Page#tearDownPG" />
+				<execute macro="DMDocumentType#tearDownCP" />
+
+				<execute macro="Page#tearDownPG" />
+			</else>
+		</if>
 	</tear-down>
 
 	<command name="AddDocument" priority="5">

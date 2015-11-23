@@ -22,21 +22,31 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="BlogsEntry#tearDownCP" />
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
-		<execute macro="MessageboardsThread#tearDownCP" />
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="BlogsEntry#tearDownCP" />
 
-		<execute macro="User#tearDownCP" />
+				<execute macro="MessageboardsThread#tearDownCP" />
 
-		<execute macro="WebContent#tearDownCP" />
+				<execute macro="User#tearDownCP" />
 
-		<execute macro="WikiPage#tearDownCP" />
+				<execute macro="WebContent#tearDownCP" />
 
-		<execute macro="Vocabulary#tearDownCP" />
+				<execute macro="WikiPage#tearDownCP" />
 
-		<execute macro="Tag#tearDownCP" />
+				<execute macro="Vocabulary#tearDownCP" />
 
-		<execute macro="Page#tearDownPG" />
+				<execute macro="Tag#tearDownCP" />
+
+				<execute macro="Page#tearDownPG" />
+			</else>
+		</if>
 	</tear-down>
 
 	<command name="SearchBlogsEntry" priority="4">

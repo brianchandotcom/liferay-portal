@@ -38,13 +38,23 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="DMFolder#tearDownPGViaMG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
-		<execute macro="Page#tearDownPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="DMFolder#tearDownPGViaMG">
+					<var name="pageName" value="${pageName}" />
+				</execute>
+
+				<execute macro="Page#tearDownPG">
+					<var name="pageName" value="${pageName}" />
+				</execute>
+			</else>
+		</if>
 	</tear-down>
 
 	<command name="AddFolder" priority="5">

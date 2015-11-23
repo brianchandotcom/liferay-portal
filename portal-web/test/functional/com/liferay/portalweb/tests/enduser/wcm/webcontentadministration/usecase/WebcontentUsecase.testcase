@@ -17,19 +17,29 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="User#firstLoginPG" />
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
-		<execute macro="WebContent#tearDownCP" />
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="User#firstLoginPG" />
 
-		<execute macro="WebContentTemplates#tearDownCP" />
+				<execute macro="WebContent#tearDownCP" />
 
-		<execute macro="WebContentStructures#tearDownCP" />
+				<execute macro="WebContentTemplates#tearDownCP" />
 
-		<execute macro="WebContentStructures#tearDownCP">
-			<var name="siteScopeName" value="${globalSiteName}" />
-		</execute>
+				<execute macro="WebContentStructures#tearDownCP" />
 
-		<execute macro="Page#tearDownPG" />
+				<execute macro="WebContentStructures#tearDownCP">
+					<var name="siteScopeName" value="${globalSiteName}" />
+				</execute>
+
+				<execute macro="Page#tearDownPG" />
+			</else>
+		</if>
 	</tear-down>
 
 	<command name="AddAndViewStructureAndTemplateWithPermissions" priority="4">

@@ -14,6 +14,7 @@
 
 package com.liferay.osgi.service.tracker.collections.list;
 
+import com.liferay.osgi.service.tracker.collections.internal.common.DefaultServiceTrackerCustomizer;
 import com.liferay.osgi.service.tracker.collections.internal.list.ServiceTrackerListImpl;
 
 import java.util.Comparator;
@@ -171,34 +172,6 @@ public class ServiceTrackerListFactory {
 		serviceTrackerList.open();
 
 		return serviceTrackerList;
-	}
-
-	private static class DefaultServiceTrackerCustomizer<T>
-		implements ServiceTrackerCustomizer<T, T> {
-
-		public DefaultServiceTrackerCustomizer(BundleContext bundleContext) {
-			_bundleContext = bundleContext;
-		}
-
-		@Override
-		public T addingService(ServiceReference<T> serviceReference) {
-			return _bundleContext.getService(serviceReference);
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<T> serviceReference, T service) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<T> serviceReference, T service) {
-
-			_bundleContext.ungetService(serviceReference);
-		}
-
-		private final BundleContext _bundleContext;
-
 	}
 
 }

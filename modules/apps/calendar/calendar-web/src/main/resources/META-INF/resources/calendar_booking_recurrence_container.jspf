@@ -160,7 +160,6 @@ if (recurrence != null) {
 						%>
 
 						<aui:input name="weekdays" type="hidden" value="<%= startTimeWeekday.getValue() %>" />
-
 					</aui:field-wrapper>
 				</td>
 			</tr>

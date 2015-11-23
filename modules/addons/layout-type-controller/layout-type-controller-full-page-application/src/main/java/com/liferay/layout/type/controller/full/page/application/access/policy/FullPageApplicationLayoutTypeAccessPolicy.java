@@ -15,13 +15,8 @@
 package com.liferay.layout.type.controller.full.page.application.access.policy;
 
 import com.liferay.layout.type.controller.full.page.application.constants.FullPageApplicationLayoutTypeControllerConstants;
-import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypeAccessPolicy;
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.model.impl.DefaultLayoutTypeAccessPolicyImpl;
-import com.liferay.portal.security.permission.PermissionChecker;
-
-import javax.servlet.http.HttpServletRequest;
+import com.liferay.portal.model.impl.ModificationDeniedLayoutTypeAccessPolicyImpl;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -34,55 +29,5 @@ import org.osgi.service.component.annotations.Component;
 	service = LayoutTypeAccessPolicy.class
 )
 public class FullPageApplicationLayoutTypeAccessPolicy
-	extends DefaultLayoutTypeAccessPolicyImpl {
-
-	@Override
-	public boolean isAddLayoutAllowed(
-		PermissionChecker permissionChecker, Layout layout) {
-
-		return false;
-	}
-
-	@Override
-	public boolean isCustomizeLayoutAllowed(
-		PermissionChecker permissionChecker, Layout layout) {
-
-		return false;
-	}
-
-	@Override
-	public boolean isDeleteLayoutAllowed(
-		PermissionChecker permissionChecker, Layout layout) {
-
-		return false;
-	}
-
-	@Override
-	public boolean isUpdateLayoutAllowed(
-		PermissionChecker permissionChecker, Layout layout) {
-
-		return false;
-	}
-
-	@Override
-	public boolean isViewLayoutAllowed(
-		PermissionChecker permissionChecker, Layout layout) {
-
-		return true;
-	}
-
-	@Override
-	protected boolean hasAccessPermission(
-		HttpServletRequest request, Layout layout, Portlet portlet) {
-
-		return true;
-	}
-
-	@Override
-	protected boolean isAccessAllowedToLayoutPortlet(
-		HttpServletRequest request, Layout layout, Portlet portlet) {
-
-		return true;
-	}
-
+	extends ModificationDeniedLayoutTypeAccessPolicyImpl {
 }

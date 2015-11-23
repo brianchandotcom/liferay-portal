@@ -149,6 +149,8 @@ AUI.add(
 			_getField: function(fieldNode) {
 				var instance = this;
 
+				var displayLocale = instance.get('displayLocale');
+
 				var fieldInstanceId = instance.extractInstanceId(fieldNode);
 
 				var fieldName = fieldNode.getData('fieldName');
@@ -166,7 +168,7 @@ AUI.add(
 							container: fieldNode,
 							dataType: fieldDefinition.dataType,
 							definition: definition,
-							displayLocale: instance.get('displayLocale'),
+							displayLocale: displayLocale,
 							instanceId: fieldInstanceId,
 							name: fieldName,
 							parent: instance,
@@ -358,6 +360,20 @@ AUI.add(
 						return field;
 					},
 
+					getDefaulLocale: function() {
+						var instance = this;
+
+						var definition = instance.get('definition');
+
+						var defaultLocale = themeDisplay.getDefaultLanguageId();
+
+						if (definition) {
+							defaultLocale = definition.defaultLanguageId;
+						}
+
+						return defaultLocale;
+					},
+
 					getFieldDefinition: function() {
 						var instance = this;
 
@@ -484,8 +500,26 @@ AUI.add(
 
 						var labelNode = instance.getLabelNode();
 
+						var tipNode = labelNode.one('.taglib-icon-help');
+
 						if (Lang.isValue(label) && Lang.isNode(labelNode)) {
 							labelNode.html(A.Escape.html(label));
+						}
+
+						if (tipNode) {
+							var defaultLocale = instance.getDefaulLocale();
+
+							var fieldDefinition = instance.getFieldDefinition();
+
+							var tipsMap = fieldDefinition.tip;
+
+							if (Lang.isObject(tipsMap)) {
+								var tip = tipsMap[instance.get('displayLocale')] || tipsMap[defaultLocale];
+
+								tipNode.one('.tooltip-text').html(A.Escape.html(tip));
+							}
+
+							labelNode.append(tipNode);
 						}
 					},
 
@@ -504,17 +538,11 @@ AUI.add(
 					syncLabelUI: function() {
 						var instance = this;
 
+						var defaultLocale = instance.getDefaulLocale();
+
 						var fieldDefinition = instance.getFieldDefinition();
 
 						var labelsMap = fieldDefinition.label;
-
-						var definition = instance.get('definition');
-
-						var defaultLocale = themeDisplay.getDefaultLanguageId();
-
-						if (definition) {
-							defaultLocale = definition.defaultLanguageId;
-						}
 
 						var label = labelsMap[instance.get('displayLocale')] || labelsMap[defaultLocale];
 

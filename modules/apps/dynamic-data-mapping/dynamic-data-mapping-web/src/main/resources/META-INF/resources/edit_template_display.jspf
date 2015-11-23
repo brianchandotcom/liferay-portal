@@ -66,7 +66,7 @@ if (Validator.isNotNull(scriptContent)) {
 
 											<li class="palette-item-container">
 												<span class="palette-item" data-content="<%= HtmlUtil.escapeAttribute(_getDataContent(templateVariableDefinition, language)) %>" data-title="<%= HtmlUtil.escapeAttribute(_getPaletteItemTitle(request, resourceBundle, templateVariableDefinition)) %>">
-													<%= LanguageUtil.get(request, resourceBundle, templateVariableDefinition.getLabel()) %>
+													<%= HtmlUtil.escape(LanguageUtil.get(request, resourceBundle, templateVariableDefinition.getLabel())) %>
 
 													<c:if test="<%= templateVariableDefinition.isCollection() || templateVariableDefinition.isRepeatable() %>">*</c:if>
 												</span>

@@ -1321,7 +1321,7 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="ddlDataDefinitionName" value="To Do" />
-			<var name="workflowAssetTitle" value="DDL List" />
+			<var name="workflowAssetTitle" value="New ${ddlDataDefinitionName} for List: ${ddlListName}" />
 			<var name="workflowAssetType" value="Dynamic Data Lists Record" />
 			<var name="workflowTask" value="Review" />
 		</execute>
@@ -1332,7 +1332,7 @@
 
 		<execute macro="Workflow#rejectTaskByActions">
 			<var name="ddlDataDefinitionName" value="To Do" />
-			<var name="workflowAssetTitle" value="DDL List" />
+			<var name="workflowAssetTitle" value="New ${ddlDataDefinitionName} for List: ${ddlListName}" />
 			<var name="workflowAssetType" value="Dynamic Data Lists Record" />
 			<var name="workflowTask" value="Review" />
 		</execute>
@@ -1350,7 +1350,7 @@
 
 		<execute macro="Workflow#viewRejectedTask">
 			<var name="ddlDataDefinitionName" value="To Do" />
-			<var name="workflowAssetTitle" value="DDL List" />
+			<var name="workflowAssetTitle" value="New ${ddlDataDefinitionName} for List: ${ddlListName}" />
 			<var name="workflowAssetType" value="Dynamic Data Lists Record" />
 		</execute>
 

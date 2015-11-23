@@ -604,16 +604,7 @@
 
 		<execute function="AssertTextEquals" locator1="CPMyworkflowtasksCompleted#COMPLETED_TABLE_TASK" value1="${workflowTask}" />
 
-		<if>
-			<equals arg1="${workflowAssetType}" arg2="Dynamic Data Lists Record" />
-			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="CPMyworkflowtasks#COMPLETED_TABLE_ASSET_TITLE" value1="New ${ddlDataDefinitionName} for List: ${workflowAssetTitle}" />
-			</then>
-			<else>
-				<execute function="AssertTextEquals#assertPartialText" locator1="CPMyworkflowtasks#COMPLETED_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
-			</else>
-		</if>
-
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPMyworkflowtasks#COMPLETED_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
 		<execute function="AssertTextEquals" locator1="CPMyworkflowtasks#COMPLETED_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
 		<execute function="AssertElementPresent" locator1="CPMyworkflowtasks#COMPLETED_TABLE_LAST_ACTIVITY_DATE" />
 		<execute function="AssertElementPresent" locator1="CPMyworkflowtasks#COMPLETED_TABLE_DUE_DATE" />
@@ -714,16 +705,7 @@
 
 		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_TASK" value1="Update" />
 
-		<if>
-			<equals arg1="${workflowAssetType}" arg2="Dynamic Data Lists Record" />
-			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TITLE" value1="New ${ddlDataDefinitionName} for List: ${workflowAssetTitle}" />
-			</then>
-			<else>
-				<execute function="AssertTextEquals#assertPartialText" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
-			</else>
-		</if>
-
+		<execute function="AssertTextEquals#assertPartialText" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
 		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
 		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_LAST_ACTIVITY_DATE" />
 		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_DUE_DATE" />
@@ -741,16 +723,7 @@
 
 		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_TASK" value1="${workflowTask}" />
 
-		<if>
-			<equals arg1="${workflowAssetType}" arg2="Dynamic Data Lists Record" />
-			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TITLE" value1="New ${ddlDataDefinitionName} for List: ${workflowAssetTitle}" />
-			</then>
-			<else>
-				<execute function="AssertTextEquals#assertPartialText" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
-			</else>
-		</if>
-
+		<execute function="AssertTextEquals#assertPartialText" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
 		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
 		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_LAST_ACTIVITY_DATE" />
 		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_DUE_DATE" />
@@ -783,16 +756,7 @@
 
 		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_TASK" value1="${workflowTask}" />
 
-		<if>
-			<equals arg1="${workflowAssetType}" arg2="Dynamic Data Lists Record" />
-			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TITLE" value1="New ${ddlDataDefinitionName} for List: ${workflowAssetTitle}" />
-			</then>
-			<else>
-				<execute function="AssertTextEquals#assertPartialText" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
-			</else>
-		</if>
-
+		<execute function="AssertTextEquals#assertPartialText" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
 		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
 		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_LAST_ACTIVITY_DATE" />
 		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_DUE_DATE" />

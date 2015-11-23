@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1655,7 +1656,14 @@ public class DDMStructureLocalServiceImpl
 			getDDMFormFieldsNames(ddmForm));
 
 		if (!commonDDMFormFieldNames.isEmpty()) {
-			throw new StructureDuplicateElementException();
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("Duplicate DDMFormField names: ");
+			sb.append(StringPool.OPEN_CURLY_BRACE);
+			sb.append(StringUtil.merge(commonDDMFormFieldNames));
+			sb.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new StructureDuplicateElementException(sb.toString());
 		}
 	}
 
@@ -1712,7 +1720,7 @@ public class DDMStructureLocalServiceImpl
 			throw sde;
 		}
 		catch (Exception e) {
-			throw new StructureDefinitionException();
+			throw new StructureDefinitionException(e);
 		}
 	}
 
@@ -1723,7 +1731,9 @@ public class DDMStructureLocalServiceImpl
 		String name = nameMap.get(contentDefaultLocale);
 
 		if (Validator.isNull(name)) {
-			throw new StructureNameException();
+			throw new StructureNameException(
+				"Name is null for locale " +
+					contentDefaultLocale.getDisplayName());
 		}
 
 		if (!LanguageUtil.isAvailableLocale(contentDefaultLocale)) {

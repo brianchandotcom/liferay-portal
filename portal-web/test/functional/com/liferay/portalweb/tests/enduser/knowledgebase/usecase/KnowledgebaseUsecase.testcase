@@ -849,6 +849,14 @@
 		</execute>
 
 		<execute macro="KBArticle#gotoViaKBDisplayPG">
+			<var name="kbArticleTitle" value="${kbArticleTitle2}" />
+		</execute>
+
+		<execute macro="KBArticle#viewKBDisplayPG">
+			<var name="kbArticleFriendlyURL" value="kb-article-2-title" />
+		</execute>
+
+		<execute macro="KBArticle#gotoViaKBDisplayPG">
 			<var name="kbArticleTitle" value="${kbArticleTitle}" />
 		</execute>
 

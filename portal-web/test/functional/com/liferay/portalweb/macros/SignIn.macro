@@ -104,7 +104,7 @@
 		</execute>
 	</command>
 
-	<command name="signInPortalInstance">
+	<command name="signInPortalInstanceSetUp">
 		<execute macro="SignIn#signInSpecificURL">
 			<var name="url" value="http://localhost:8080" />
 		</execute>
@@ -139,8 +139,6 @@
 		</execute>
 
 		<execute macro="Navigator#openURL" />
-
-		<execute macro="SignIn#signInTestSetup" />
 	</command>
 
 	<command name="signInSite">

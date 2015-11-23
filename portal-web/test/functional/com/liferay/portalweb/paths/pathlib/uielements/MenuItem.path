@@ -708,6 +708,11 @@
 	<td>//a[@role='menuitem' and contains(.,'Withdraw Submission')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>VIEW_MEMBERSHIP_REQUESTS</td>
+	<td>//a[@role='menuitem' and contains(.,'View Membership Requests')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

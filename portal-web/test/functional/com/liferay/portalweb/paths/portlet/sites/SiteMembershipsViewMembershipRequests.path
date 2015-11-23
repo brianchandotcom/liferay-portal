@@ -20,27 +20,27 @@
 </tr>
 <tr>
 	<td>REPLY</td>
-	<td>//span[contains(.,'Reply')]/a/span</td>
+	<td>//span[contains(.,'Reply')]/a/i[contains(@class,'icon-reply')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_NAME</td>
-	<td>//tbody/tr/td[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_COMMENTS</td>
 	<td>//tbody/tr/td[3]</td>
 	<td></td>
 </tr>
 <tr>
+	<td>USER_COMMENTS</td>
+	<td>//tbody/tr/td[4]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REPLIER_NAME</td>
-	<td>//tbody/tr/td[5]</td>
+	<td>//tbody/tr/td[6]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>REPLY_COMMENTS</td>
-	<td>//tbody/tr/td[6]</td>
+	<td>//tbody/tr/td[7]</td>
 	<td></td>
 </tr>
 <tr>

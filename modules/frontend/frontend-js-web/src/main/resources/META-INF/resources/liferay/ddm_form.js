@@ -65,12 +65,28 @@ AUI.add(
 			mode: {
 			},
 
+			translationManager: {
+				getter: '_getTranslationManager'
+			},
+
 			values: {
 				value: {}
 			}
 		};
 
 		FieldsSupport.prototype = {
+			eachParent: function(fn) {
+				var instance = this;
+
+				var parent = instance.get('parent');
+
+				while (parent !== undefined) {
+					fn.call(instance, parent);
+
+					parent = parent.get('parent');
+				}
+			},
+
 			extractInstanceId: function(fieldNode) {
 				var instance = this;
 
@@ -114,6 +130,20 @@ AUI.add(
 				return instance.get('container').all('> .field-wrapper');
 			},
 
+			getRoot: function() {
+				var instance = this;
+
+				var root;
+
+				instance.eachParent(
+					function(parent) {
+						root = parent;
+					}
+				);
+
+				return root;
+			},
+
 			_getField: function(fieldNode) {
 				var instance = this;
 
@@ -145,7 +175,7 @@ AUI.add(
 
 				field.addTarget(instance);
 
-				var translationManager = instance.getTranslationManager();
+				var translationManager = instance.get('translationManager');
 
 				if (translationManager) {
 					translationManager.addTarget(field);
@@ -193,6 +223,18 @@ AUI.add(
 				portletURL.setWindowState('pop_up');
 
 				return portletURL.toString();
+			},
+
+			_getTranslationManager: function(translationManager) {
+				var instance = this;
+
+				if (!A.instanceOf(instance, Liferay.DDM.Form)) {
+					var form = instance.getRoot();
+
+					translationManager = form.get('translationManager');
+				}
+
+				return translationManager;
 			},
 
 			_valueFields: function() {
@@ -380,28 +422,10 @@ AUI.add(
 						);
 					},
 
-					getRootParent: function() {
-						var instance = this;
-
-						while (instance.get('parent')) {
-							instance = instance.get('parent');
-						}
-
-						return instance;
-					},
-
 					getSiblings: function() {
 						var instance = this;
 
 						return instance.get('parent').get('fields');
-					},
-
-					getTranslationManager: function() {
-						var instance = this;
-
-						var form = instance.getRootParent();
-
-						return form.getTranslationManager();
 					},
 
 					getValue: function() {
@@ -1541,12 +1565,6 @@ AUI.add(
 						}
 					},
 
-					getTranslationManager: function() {
-						var instance = this;
-
-						return instance.get('translationManager');
-					},
-
 					destructor: function() {
 						var instance = this;
 
@@ -1597,7 +1615,7 @@ AUI.add(
 					toJSON: function() {
 						var instance = this;
 
-						var translationManager = instance.getTranslationManager();
+						var translationManager = instance.get('translationManager');
 
 						return {
 							availableLanguageIds: translationManager.get('availableLocales'),
@@ -1714,7 +1732,7 @@ AUI.add(
 					_valueDisplayLocale: function() {
 						var instance = this;
 
-						var translationManager = instance.getTranslationManager();
+						var translationManager = instance.get('translationManager');
 
 						return translationManager.get('editingLocale');
 					},

@@ -106,7 +106,7 @@
 	</command>
 
 	<command name="addCP">
-		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
+		<execute function="AssertClick" locator1="Wiki#ADD_PAGE" value1="Add Page" />
 
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
@@ -304,7 +304,7 @@
 	</command>
 
 	<command name="addPageWithWorkflowPG">
-		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
+		<execute function="AssertClick" locator1="Wiki#ADD_PAGE" value1="Add Page" />
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${wikiPageTitle}" />
 
@@ -354,7 +354,7 @@
 	</command>
 
 	<command name="addPG">
-		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
+		<execute function="AssertClick" locator1="Wiki#ADD_PAGE" value1="Add Page" />
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${wikiPageTitle}" />
 

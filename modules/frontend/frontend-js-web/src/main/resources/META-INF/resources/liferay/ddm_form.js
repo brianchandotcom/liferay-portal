@@ -145,7 +145,7 @@ AUI.add(
 
 				field.addTarget(instance);
 
-				var translationManager = instance.get('translationManager');
+				var translationManager = instance.getTranslationManager();
 
 				if (translationManager) {
 					translationManager.addTarget(field);
@@ -380,10 +380,28 @@ AUI.add(
 						);
 					},
 
+					getRootParent: function() {
+						var instance = this;
+
+						while (instance.get('parent')) {
+							instance = instance.get('parent');
+						}
+
+						return instance;
+					},
+
 					getSiblings: function() {
 						var instance = this;
 
 						return instance.get('parent').get('fields');
+					},
+
+					getTranslationManager: function() {
+						var instance = this;
+
+						var form = instance.getRootParent();
+
+						return form.getTranslationManager();
 					},
 
 					getValue: function() {
@@ -1523,6 +1541,12 @@ AUI.add(
 						}
 					},
 
+					getTranslationManager: function() {
+						var instance = this;
+
+						return instance.get('translationManager');
+					},
+
 					destructor: function() {
 						var instance = this;
 
@@ -1573,7 +1597,7 @@ AUI.add(
 					toJSON: function() {
 						var instance = this;
 
-						var translationManager = instance.get('translationManager');
+						var translationManager = instance.getTranslationManager();
 
 						return {
 							availableLanguageIds: translationManager.get('availableLocales'),
@@ -1690,7 +1714,7 @@ AUI.add(
 					_valueDisplayLocale: function() {
 						var instance = this;
 
-						var translationManager = instance.get('translationManager');
+						var translationManager = instance.getTranslationManager();
 
 						return translationManager.get('editingLocale');
 					},

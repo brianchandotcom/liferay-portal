@@ -24,8 +24,6 @@ boolean mergeGuestPublicPages = PropertiesParamUtil.getBoolean(layoutsAdminDispl
 
 <liferay-ui:error-marker key="errorSection" value="advanced" />
 
-<h3><liferay-ui:message key="advanced" /></h3>
-
 <aui:fieldset>
 	<c:choose>
 		<c:when test="<%= !layoutsAdminDisplayContext.isPrivateLayout() && (layoutsAdminDisplayContext.getLiveGroupId() != guestGroup.getGroupId()) %>">

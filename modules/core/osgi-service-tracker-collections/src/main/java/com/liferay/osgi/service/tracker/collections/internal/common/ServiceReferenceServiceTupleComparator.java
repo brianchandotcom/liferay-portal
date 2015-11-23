@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.osgi.service.tracker.collections.internal.map;
-
-import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceServiceTuple;
+package com.liferay.osgi.service.tracker.collections.internal.common;
 
 import java.util.Comparator;
 
@@ -23,8 +21,8 @@ import org.osgi.framework.ServiceReference;
 /**
  * @author Carlos Sierra Andrés
  */
-class ServiceReferenceServiceTupleComparator<S>
-	implements Comparator<ServiceReferenceServiceTuple<S, ?, ?>> {
+public class ServiceReferenceServiceTupleComparator<S>
+	implements Comparator<ServiceReferenceServiceTuple<S, ?>> {
 
 	public ServiceReferenceServiceTupleComparator(
 		Comparator<ServiceReference<S>> comparator) {
@@ -34,8 +32,8 @@ class ServiceReferenceServiceTupleComparator<S>
 
 	@Override
 	public int compare(
-		ServiceReferenceServiceTuple<S, ?, ?> serviceReferenceServiceTuple1,
-		ServiceReferenceServiceTuple<S, ?, ?> serviceReferenceServiceTuple2) {
+		ServiceReferenceServiceTuple<S, ?> serviceReferenceServiceTuple1,
+		ServiceReferenceServiceTuple<S, ?> serviceReferenceServiceTuple2) {
 
 		if (serviceReferenceServiceTuple1 == null) {
 			if (serviceReferenceServiceTuple2 == null) {

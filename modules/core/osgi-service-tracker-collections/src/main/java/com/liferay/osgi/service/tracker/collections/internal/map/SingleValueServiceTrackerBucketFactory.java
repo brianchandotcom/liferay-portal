@@ -14,7 +14,8 @@
 
 package com.liferay.osgi.service.tracker.collections.internal.map;
 
-import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceServiceTuple;
+import com.liferay.osgi.service.tracker.collections.internal.common.ServiceReferenceServiceTuple;
+import com.liferay.osgi.service.tracker.collections.internal.common.ServiceReferenceServiceTupleComparator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerBucket;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerBucketFactory;
 
@@ -72,12 +73,12 @@ public class SingleValueServiceTrackerBucketFactory<SR, TS>
 
 		@Override
 		public synchronized void remove(
-			ServiceReferenceServiceTuple<SR, TS, ?>
+			ServiceReferenceServiceTuple<SR, TS>
 				serviceReferenceServiceTuple) {
 
 			_serviceReferences.remove(serviceReferenceServiceTuple);
 
-			ServiceReferenceServiceTuple<SR, TS, ?>
+			ServiceReferenceServiceTuple<SR, TS>
 				headServiceReferenceServiceTuple = _serviceReferences.peek();
 
 			if (headServiceReferenceServiceTuple != null) {
@@ -90,7 +91,7 @@ public class SingleValueServiceTrackerBucketFactory<SR, TS>
 
 		@Override
 		public synchronized void store(
-			ServiceReferenceServiceTuple<SR, TS, ?>
+			ServiceReferenceServiceTuple<SR, TS>
 				serviceReferenceServiceTuple) {
 
 			_serviceReferences.add(serviceReferenceServiceTuple);
@@ -99,7 +100,7 @@ public class SingleValueServiceTrackerBucketFactory<SR, TS>
 		}
 
 		private TS _service;
-		private final PriorityQueue<ServiceReferenceServiceTuple<SR, TS, ?>>
+		private final PriorityQueue<ServiceReferenceServiceTuple<SR, TS>>
 			_serviceReferences;
 
 	}

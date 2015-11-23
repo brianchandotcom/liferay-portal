@@ -12,33 +12,26 @@
  * details.
  */
 
-package com.liferay.osgi.service.tracker.collections.map;
-
-import java.util.ArrayList;
-import java.util.List;
+package com.liferay.osgi.service.tracker.collections.internal.common;
 
 import org.osgi.framework.ServiceReference;
 
 /**
- * @author Carlos Sierra Andrés
+ * @author Adolfo Pérez
  */
-public class ServiceReferenceServiceTuple<SR, TS, K>
-	implements Comparable<ServiceReferenceServiceTuple<SR, TS, K>> {
+public class ServiceReferenceServiceTuple<S, T>
+	implements Comparable<ServiceReferenceServiceTuple<S, T>> {
 
 	public ServiceReferenceServiceTuple(
-		ServiceReference<SR> serviceReference, TS service) {
+		ServiceReference<S> serviceReference, T service) {
 
 		_serviceReference = serviceReference;
 		_service = service;
 	}
 
-	public void addEmittedKey(K key) {
-		_emittedKeys.add(key);
-	}
-
 	@Override
 	public int compareTo(
-		ServiceReferenceServiceTuple<SR, TS, K> serviceReferenceServiceTuple) {
+		ServiceReferenceServiceTuple<S, T> serviceReferenceServiceTuple) {
 
 		return _serviceReference.compareTo(
 			serviceReferenceServiceTuple.getServiceReference());
@@ -54,32 +47,27 @@ public class ServiceReferenceServiceTuple<SR, TS, K>
 			return false;
 		}
 
-		ServiceReferenceServiceTuple<SR, TS, K> serviceReferenceServiceTuple =
-			(ServiceReferenceServiceTuple<SR, TS, K>)obj;
+		ServiceReferenceServiceTuple<S, T> serviceReferenceServiceTuple =
+			(ServiceReferenceServiceTuple<S, T>)obj;
 
-		return _serviceReference.equals(
+		return getServiceReference().equals(
 			serviceReferenceServiceTuple.getServiceReference());
 	}
 
-	public List<K> getEmittedKeys() {
-		return _emittedKeys;
-	}
-
-	public TS getService() {
+	public T getService() {
 		return _service;
 	}
 
-	public ServiceReference<SR> getServiceReference() {
+	public ServiceReference<S> getServiceReference() {
 		return _serviceReference;
 	}
 
 	@Override
 	public int hashCode() {
-		return _serviceReference.hashCode();
+		return getServiceReference().hashCode();
 	}
 
-	private final List<K> _emittedKeys = new ArrayList<>();
-	private final TS _service;
-	private final ServiceReference<SR> _serviceReference;
+	private final T _service;
+	private final ServiceReference<S> _serviceReference;
 
 }

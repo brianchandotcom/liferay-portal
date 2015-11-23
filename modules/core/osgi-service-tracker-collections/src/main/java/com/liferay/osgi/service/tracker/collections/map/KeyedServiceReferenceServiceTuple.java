@@ -16,19 +16,31 @@ package com.liferay.osgi.service.tracker.collections.map;
 
 import com.liferay.osgi.service.tracker.collections.internal.common.ServiceReferenceServiceTuple;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.osgi.framework.ServiceReference;
+
 /**
  * @author Carlos Sierra Andrés
  */
-public interface ServiceTrackerBucket<SR, TS, R> {
+public class KeyedServiceReferenceServiceTuple<SR, TS, K>
+	extends ServiceReferenceServiceTuple<SR, TS> {
 
-	public R getContent();
+	public KeyedServiceReferenceServiceTuple(
+		ServiceReference<SR> serviceReference, TS service) {
 
-	public boolean isDisposable();
+		super(serviceReference, service);
+	}
 
-	public void remove(
-		ServiceReferenceServiceTuple<SR, TS> serviceReferenceServiceTuple);
+	public void addEmittedKey(K key) {
+		_emittedKeys.add(key);
+	}
 
-	public void store(
-		ServiceReferenceServiceTuple<SR, TS> serviceReferenceServiceTuple);
+	public List<K> getEmittedKeys() {
+		return _emittedKeys;
+	}
+
+	private final List<K> _emittedKeys = new ArrayList<>();
 
 }

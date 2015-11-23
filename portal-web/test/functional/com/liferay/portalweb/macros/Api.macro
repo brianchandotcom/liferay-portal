@@ -15,7 +15,7 @@
 		<execute function="AssertTextEquals" locator1="JSONWSUser#API_METHOD" value1="/user/update-user" />
 
 		<execute function="Type" locator1="JSONWSUser#API_EXECUTE_USER_ID_FIELD" value1="${userId}" />
-		<execute function="Type" locator1="JSONWSUser#API_EXECUTE_PASSWORD_RESET_FALSE_RADIO" value1="False" />
+		<execute function="Click" locator1="JSONWSUser#API_EXECUTE_PASSWORD_RESET_FALSE_RADIO" />
 		<execute function="Type" locator1="JSONWSUser#API_EXECUTE_SCREEN_NAME_FIELD" value1="${userScreenName}" />
 		<execute function="Type" locator1="JSONWSUser#API_EXECUTE_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
 		<execute function="Type" locator1="JSONWSUser#API_EXECUTE_FACEBOOK_ID_FIELD" value1="${userFacebookId}" />
@@ -23,7 +23,7 @@
 		<execute function="Type" locator1="JSONWSUser#API_EXECUTE_LAST_NAME_FIELD" value1="${userLastName}" />
 		<execute function="Type" locator1="JSONWSUser#API_EXECUTE_PREFIX_ID_FIELD" value1="${userPrefixId}" />
 		<execute function="Type" locator1="JSONWSUser#API_EXECUTE_SUFFIX_ID_FIELD" value1="${userSuffixId}" />
-		<execute function="Type" locator1="JSONWSUser#API_EXECUTE_MALE_TRUE_RADIO" value1="True" />
+		<execute function="Click" locator1="JSONWSUser#API_EXECUTE_MALE_TRUE_RADIO" />
 		<execute function="Type" locator1="JSONWSUser#API_EXECUTE_BIRTHDAY_MONTH_FIELD" value1="${userBirthdayMonth}" />
 		<execute function="Type" locator1="JSONWSUser#API_EXECUTE_BIRTHDAY_DAY_FIELD" value1="${userBirthdayDay}" />
 		<execute function="Type" locator1="JSONWSUser#API_EXECUTE_BIRTHDAY_YEAR_FIELD" value1="${userBirthdayYear}" />

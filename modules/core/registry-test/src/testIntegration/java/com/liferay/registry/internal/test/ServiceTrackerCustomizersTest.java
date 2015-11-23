@@ -40,11 +40,9 @@ public class ServiceTrackerCustomizersTest {
 	@Test
 	public void testServiceWrapper() {
 		ServiceTrackerMap<String, ServiceWrapper<TrackedOne>>
-			serviceTrackerMap = ServiceTrackerCollections.singleValueMap(
+			serviceTrackerMap = ServiceTrackerCollections.openSingleValueMap(
 				TrackedOne.class, "target",
 				ServiceTrackerCustomizers.<TrackedOne>serviceWrapper());
-
-		serviceTrackerMap.open();
 
 		try {
 			Map<String, Object> properties = new Hashtable<>();

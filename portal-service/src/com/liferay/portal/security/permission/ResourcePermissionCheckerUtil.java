@@ -44,11 +44,7 @@ public class ResourcePermissionCheckerUtil {
 	}
 
 	private static final ServiceTrackerMap<String, ResourcePermissionChecker>
-		_serviceTrackerMap = ServiceTrackerCollections.singleValueMap(
+		_serviceTrackerMap = ServiceTrackerCollections.openSingleValueMap(
 			ResourcePermissionChecker.class, "resource.name");
-
-	static {
-		_serviceTrackerMap.open();
-	}
 
 }

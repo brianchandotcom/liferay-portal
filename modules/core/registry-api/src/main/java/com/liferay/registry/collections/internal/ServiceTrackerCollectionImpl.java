@@ -67,8 +67,6 @@ public class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 				clazz,
 				new DefaultServiceTrackerCustomizer(serviceTrackerCustomizer));
 		}
-
-		_serviceTracker.open();
 	}
 
 	@Override
@@ -211,6 +209,11 @@ public class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 	@Override
 	public ListIterator<S> listIterator(int index) {
 		return new ServiceTrackerIterator(_services.listIterator(index));
+	}
+
+	@Override
+	public void open() {
+		_serviceTracker.open();
 	}
 
 	@Override

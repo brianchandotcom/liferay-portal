@@ -1203,6 +1203,17 @@ public class AssetPublisherUtil {
 		return key;
 	}
 
+	public static long getSubscriptionClassPK(
+			long userId, int ownerType, long plid, String portletId)
+		throws PortalException {
+
+		com.liferay.portal.model.PortletPreferences portletPreferencesModel =
+			_portletPreferencesLocalService.getPortletPreferences(
+				userId, ownerType, plid, portletId);
+
+		return portletPreferencesModel.getPortletPreferencesId();
+	}
+
 	public static long getSubscriptionClassPK(long plid, String portletId)
 		throws PortalException {
 

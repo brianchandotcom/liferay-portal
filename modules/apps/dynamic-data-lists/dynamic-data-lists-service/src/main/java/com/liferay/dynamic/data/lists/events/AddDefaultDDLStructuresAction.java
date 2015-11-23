@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.GroupLocalService;
@@ -75,8 +74,10 @@ public class AddDefaultDDLStructuresAction extends SimpleAction {
 	protected void doRun(long companyId) throws Exception {
 		ServiceContext serviceContext = new ServiceContext();
 
-		Group group = _groupLocalService.getGroup(
-			companyId, GroupConstants.GUEST);
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setAddGroupPermissions(true);
+
+		Group group = _groupLocalService.getCompanyGroup(companyId);
 
 		serviceContext.setScopeGroupId(group.getGroupId());
 

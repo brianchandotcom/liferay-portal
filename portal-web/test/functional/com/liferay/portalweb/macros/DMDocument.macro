@@ -1,5 +1,6 @@
 <definition>
 	<var name="assetType" value="Document" />
+	<var name="dmDocumentTypeName" value="Basic Document" />
 
 	<command name="addCommentPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
@@ -23,7 +24,9 @@
 	</command>
 
 	<command name="addCP">
-		<execute macro="DMDocument#gotoAddBasicDocument" />
+		<execute macro="DMDocument#gotoAddDocumentType">
+			<var name="dmDocumentTypeName" value="${dmDocumentTypeName}" />
+		</execute>
 
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
@@ -111,10 +114,9 @@
 	</command>
 
 	<command name="addDocumentTypeCmdCP">
-		<var name="key_dmDocumentTypeName" value="${dmDocumentTypeName}" />
-
-		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="NavBar#ADD" value1="Add" />
-		<execute function="AssertClick" locator1="MenuItem#DOCUMENT_TYPE" value1="${dmDocumentTypeName}" />
+		<execute macro="DMDocument#gotoAddDocumentType">
+			<var name="dmDocumentTypeName" value="${dmDocumentTypeName}" />
+		</execute>
 
 		<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="${dmDocumentFile}" />
 		<execute function="Type" locator1="TextInput#TITLE" value1="${dmDocumentTitle}" />
@@ -519,7 +521,9 @@
 	</command>
 
 	<command name="addWithWorkflowCP">
-		<execute macro="DMDocument#gotoAddBasicDocument" />
+		<execute macro="DMDocument#gotoAddDocumentType">
+			<var name="dmDocumentTypeName" value="${dmDocumentTypeName}" />
+		</execute>
 
 		<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="${dmDocumentFile}" />
 		<execute function="Type" locator1="TextInput#TITLE" value1="${dmDocumentTitle}" />
@@ -1070,10 +1074,12 @@
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_WORKFLOW" value1="Status: Draft" />
 	</command>
 
-	<command name="gotoAddBasicDocument">
+	<command name="gotoAddDocumentType">
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="AssertClick" locator1="MenuItem#BASIC_DOCUMENT" value1="Basic Document" />
+		<var name="key_dmDocumentTypeName" value="${dmDocumentTypeName}" />
+
+		<execute function="AssertClick" locator1="MenuItem#DOCUMENT_TYPE" value1="${dmDocumentTypeName}" />
 	</command>
 
 	<command name="gotoCP">

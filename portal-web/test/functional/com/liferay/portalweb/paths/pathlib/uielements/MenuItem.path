@@ -255,7 +255,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_TYPE</td>
-	<td>//a[@role='menuitem' and contains(.,'${key_dmDocumentTypeName}')]</td>
+	<td>//div[contains(@class,'open')]//a[contains(.,'${key_dmDocumentTypeName}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -187,16 +187,18 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 			ClusterReceiver clusterReceiver =
 				clusterChannel.getClusterReceiver();
 
-			Address coordinator = clusterReceiver.getCoordinatorAddress();
+			Address coordinatorAddress =
+				clusterReceiver.getCoordinatorAddress();
 
-			master = coordinator.equals(clusterChannel.getLocalAddress());
+			master = coordinatorAddress.equals(
+				clusterChannel.getLocalAddress());
 
 			if (master) {
 				masterClusterNodeId = _localClusterNodeId;
 			}
 			else {
 				ClusterNode clusterNode = _clusterExecutorImpl.getClusterNode(
-					coordinator);
+					coordinatorAddress);
 
 				if (clusterNode != null) {
 					masterClusterNodeId = clusterNode.getClusterNodeId();
@@ -210,7 +212,7 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					"Unable to get cluster node information for coordinator " +
-						coordinator + ". Trying again.");
+						"address " + coordinatorAddress + ". Trying again.");
 			}
 		}
 
@@ -282,7 +284,9 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 			ClusterEventType clusterEventType =
 				clusterEvent.getClusterEventType();
 
-			if (clusterEventType == ClusterEventType.COORDINATOR_UPDATE) {
+			if (clusterEventType ==
+					ClusterEventType.COORDINATOR_ADDRESS_UPDATE) {
+
 				getMasterClusterNodeId(true);
 			}
 		}

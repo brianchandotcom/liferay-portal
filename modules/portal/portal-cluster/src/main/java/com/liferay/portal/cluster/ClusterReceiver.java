@@ -25,7 +25,7 @@ public interface ClusterReceiver {
 
 	public void addressesUpdated(List<Address> addresses);
 
-	public void coordinatorUpdated(Address coordinatorAddress);
+	public void coordinatorAddressUpdated(Address coordinatorAddress);
 
 	public List<Address> getAddresses();
 

@@ -104,13 +104,13 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 			0);
 
 		clusterEventListener.processClusterEvent(
-			new ClusterEvent(ClusterEventType.COORDINATOR_UPDATE));
+			new ClusterEvent(ClusterEventType.COORDINATOR_ADDRESS_UPDATE));
 
 		Assert.assertTrue(clusterMasterExecutorImpl.isMaster());
 
 		// Test 2, test JOIN event when coordiator is changed
 
-		mockClusterExecutor.setCoordinator(_TEST_ADDRESS);
+		mockClusterExecutor.setCoordinatorAddress(_TEST_ADDRESS);
 
 		clusterEventListener.processClusterEvent(
 			new ClusterEvent(ClusterEventType.JOIN));
@@ -119,19 +119,20 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 		// Test 3, test DEPART event when coordiator is changed
 
-		mockClusterExecutor.setCoordinator(_TEST_ADDRESS);
+		mockClusterExecutor.setCoordinatorAddress(_TEST_ADDRESS);
 
 		clusterEventListener.processClusterEvent(
 			new ClusterEvent(ClusterEventType.DEPART));
 
 		Assert.assertTrue(clusterMasterExecutorImpl.isMaster());
 
-		// Test 4, test COORDINATOR_UPDATE event when coordiator is changed
+		// Test 4, test COORDINATOR_ADDRESS_UPDATE event when coordiator is
+		// changed
 
-		mockClusterExecutor.setCoordinator(_TEST_ADDRESS);
+		mockClusterExecutor.setCoordinatorAddress(_TEST_ADDRESS);
 
 		clusterEventListener.processClusterEvent(
-			new ClusterEvent(ClusterEventType.COORDINATOR_UPDATE));
+			new ClusterEvent(ClusterEventType.COORDINATOR_ADDRESS_UPDATE));
 
 		Assert.assertFalse(clusterMasterExecutorImpl.isMaster());
 	}
@@ -374,9 +375,10 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 		clusterMasterExecutorImpl.addClusterMasterTokenTransitionListener(
 			mockClusterMasterTokenTransitionListener);
 
-		Address oldCoordinator = mockClusterExecutor.getCoordinatorAddress();
+		Address oldCoordinatorAddress =
+			mockClusterExecutor.getCoordinatorAddress();
 
-		mockClusterExecutor.setCoordinator(_TEST_ADDRESS);
+		mockClusterExecutor.setCoordinatorAddress(_TEST_ADDRESS);
 
 		Assert.assertEquals(
 			_TEST_CLUSTER_NODE_ID,
@@ -388,7 +390,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 		// Test 2, slave to master
 
-		mockClusterExecutor.setCoordinator(oldCoordinator);
+		mockClusterExecutor.setCoordinatorAddress(oldCoordinatorAddress);
 
 		Assert.assertEquals(
 			mockClusterExecutor.getLocalClusterNodeId(),
@@ -415,7 +417,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 		clusterMasterExecutorImpl.activate();
 
-		mockClusterExecutor.setCoordinator(_TEST_ADDRESS);
+		mockClusterExecutor.setCoordinatorAddress(_TEST_ADDRESS);
 
 		ClusterExecutorAdvice.block();
 
@@ -441,8 +443,8 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 					Assert.assertEquals(
 						"Unable to get cluster node information for "+
-							"coordinator " + _TEST_ADDRESS +
-								", reattempting to acquire",
+							"coordinator address " + _TEST_ADDRESS +
+								". Trying again.",
 						logRecord.getMessage());
 				}
 			}
@@ -546,7 +548,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 			_TEST_ADDRESS,
 			new ClusterNode(_TEST_CLUSTER_NODE_ID, InetAddress.getLocalHost()));
 
-		mockClusterExecutor.setCoordinator(_TEST_ADDRESS);
+		mockClusterExecutor.setCoordinatorAddress(_TEST_ADDRESS);
 
 		clusterMasterExecutorImpl = new ClusterMasterExecutorImpl();
 
@@ -742,14 +744,14 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 			_clusterNodes.remove(address);
 		}
 
-		public void setCoordinator(Address address) throws Exception {
+		public void setCoordinatorAddress(Address address) throws Exception {
 			ClusterChannel clusterChannel = getClusterChannel();
 
 			ClusterReceiver clusterReceiver =
 				clusterChannel.getClusterReceiver();
 
 			Field field = ReflectionUtil.getDeclaredField(
-				BaseClusterReceiver.class, "_coordinator");
+				BaseClusterReceiver.class, "_coordinatorAddress");
 
 			field.set(clusterReceiver, address);
 		}

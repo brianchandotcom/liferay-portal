@@ -66,7 +66,7 @@ public class ClusterRequestReceiver extends BaseClusterReceiver {
 	}
 
 	@Override
-	protected void doCoordinatorUpdated(
+	protected void doCoordinatorAddressUpdated(
 		Address oldCoordinatorAddress, Address newCoordinatorAddress) {
 
 		if (oldCoordinatorAddress.equals(newCoordinatorAddress)) {
@@ -74,7 +74,7 @@ public class ClusterRequestReceiver extends BaseClusterReceiver {
 		}
 
 		_clusterExecutorImpl.fireClusterEvent(
-			new ClusterEvent(ClusterEventType.COORDINATOR_UPDATE));
+			new ClusterEvent(ClusterEventType.COORDINATOR_ADDRESS_UPDATE));
 	}
 
 	@Override

@@ -51,18 +51,18 @@ public abstract class BaseClusterReceiver implements ClusterReceiver {
 
 		_hasDoViewAccepted = hasDoViewAccepted;
 
-		boolean hasDoCoordinatorUpdated = false;
+		boolean hasDoCoordinatorAddressUpdated = false;
 
 		try {
 			clazz.getDeclaredMethod(
-				"doCoordinatorUpdated", Address.class, Address.class);
+				"doCoordinatorAddressUpdated", Address.class, Address.class);
 
-			hasDoCoordinatorUpdated = true;
+			hasDoCoordinatorAddressUpdated = true;
 		}
 		catch (ReflectiveOperationException roe) {
 		}
 
-		_hasDoCoordinatorUpdated = hasDoCoordinatorUpdated;
+		_hasDoCoordinatorAddressUpdated = hasDoCoordinatorAddressUpdated;
 	}
 
 	@Override
@@ -101,26 +101,26 @@ public abstract class BaseClusterReceiver implements ClusterReceiver {
 	}
 
 	@Override
-	public void coordinatorUpdated(Address coordinator) {
-		if (_coordinator == null) {
-			_coordinator = coordinator;
+	public void coordinatorAddressUpdated(Address coordinatorAddress) {
+		if (_coordinatorAddress == null) {
+			_coordinatorAddress = coordinatorAddress;
 
 			return;
 		}
 
-		Address oldCoordinator = null;
+		Address oldCoordinatorAddress = null;
 
 		try {
 			_countDownLatch.await();
 
-			oldCoordinator = _coordinator;
+			oldCoordinatorAddress = _coordinatorAddress;
 
-			_coordinator = coordinator;
+			_coordinatorAddress = coordinatorAddress;
 
-			if (_hasDoCoordinatorUpdated) {
+			if (_hasDoCoordinatorAddressUpdated) {
 				_executorService.execute(
-					new CoordinatorUpdatedRunnable(
-						oldCoordinator, coordinator));
+					new CoordinatorAddressUpdatedRunnable(
+						oldCoordinatorAddress, coordinatorAddress));
 			}
 		}
 		catch (InterruptedException ie) {
@@ -130,8 +130,8 @@ public abstract class BaseClusterReceiver implements ClusterReceiver {
 		}
 		catch (RejectedExecutionException ree) {
 			_log.error(
-				"Unable to handle coordinator update from " + oldCoordinator +
-					" to " + coordinator,
+				"Unable to handle coordinator address update from " +
+					oldCoordinatorAddress + " to " + coordinatorAddress,
 				ree);
 		}
 	}
@@ -143,7 +143,7 @@ public abstract class BaseClusterReceiver implements ClusterReceiver {
 
 	@Override
 	public Address getCoordinatorAddress() {
-		return _coordinator;
+		return _coordinatorAddress;
 	}
 
 	@Override
@@ -174,8 +174,8 @@ public abstract class BaseClusterReceiver implements ClusterReceiver {
 		List<Address> oldAddresses, List<Address> newAddresses) {
 	}
 
-	protected void doCoordinatorUpdated(
-		Address oldCoordinator, Address newCoordinator) {
+	protected void doCoordinatorAddressUpdated(
+		Address oldCoordinatorAddress, Address newCoordinatorAddress) {
 	}
 
 	protected abstract void doReceive(
@@ -185,10 +185,10 @@ public abstract class BaseClusterReceiver implements ClusterReceiver {
 		BaseClusterReceiver.class);
 
 	private volatile List<Address> _addresses;
-	private volatile Address _coordinator;
+	private volatile Address _coordinatorAddress;
 	private final CountDownLatch _countDownLatch = new CountDownLatch(1);
 	private final ExecutorService _executorService;
-	private final boolean _hasDoCoordinatorUpdated;
+	private final boolean _hasDoCoordinatorAddressUpdated;
 	private final boolean _hasDoViewAccepted;
 
 	private class AddressesUpdatedRunnable implements Runnable {
@@ -210,22 +210,23 @@ public abstract class BaseClusterReceiver implements ClusterReceiver {
 
 	}
 
-	private class CoordinatorUpdatedRunnable implements Runnable {
+	private class CoordinatorAddressUpdatedRunnable implements Runnable {
 
 		@Override
 		public void run() {
-			doCoordinatorUpdated(_oldCoordinator, _newCoordinator);
+			doCoordinatorAddressUpdated(
+				_oldCoordinatorAddress, _newCoordinatorAddress);
 		}
 
-		private CoordinatorUpdatedRunnable(
-			Address oldCoordinator, Address newCoordinator) {
+		private CoordinatorAddressUpdatedRunnable(
+			Address oldCoordinatorAddress, Address newCoordinatorAddress) {
 
-			_oldCoordinator = oldCoordinator;
-			_newCoordinator = newCoordinator;
+			_oldCoordinatorAddress = oldCoordinatorAddress;
+			_newCoordinatorAddress = newCoordinatorAddress;
 		}
 
-		private final Address _newCoordinator;
-		private final Address _oldCoordinator;
+		private final Address _newCoordinatorAddress;
+		private final Address _oldCoordinatorAddress;
 
 	}
 

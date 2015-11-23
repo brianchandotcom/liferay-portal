@@ -90,7 +90,7 @@ public class TestClusterChannel implements ClusterChannel {
 
 		clusterChannels.put(_localAddress, this);
 
-		_clusterReceiver.coordinatorUpdated(clusterChannels.firstKey());
+		_clusterReceiver.coordinatorAddressUpdated(clusterChannels.firstKey());
 	}
 
 	@Override

@@ -19,6 +19,6 @@ package com.liferay.portal.kernel.cluster;
  */
 public enum ClusterEventType {
 
-	COORDINATOR_UPDATE, DEPART, JOIN
+	COORDINATOR_ADDRESS_UPDATE, DEPART, JOIN
 
 }

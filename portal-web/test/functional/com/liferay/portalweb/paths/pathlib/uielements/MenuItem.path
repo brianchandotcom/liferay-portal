@@ -260,7 +260,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_TYPES</td>
-	<td>//li[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Document Types')]</td>
+	<td>//a[@role='menuitem']//span[contains(.,'Document Types')]</td>
 	<td></td>
 </tr>
 <tr>

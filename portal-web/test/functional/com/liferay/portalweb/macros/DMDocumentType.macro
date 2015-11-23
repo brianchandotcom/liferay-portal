@@ -1,7 +1,6 @@
 <definition>
 	<command name="addCP">
-		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="DocumentsAndMedia#TOOLBAR_MANAGE" value1="Manage" />
-		<execute function="AssertClick" locator1="MenuItem#DOCUMENT_TYPES" value1="Document Types" />
+		<execute macro="DMDocumentType#gotoCP" />
 
 		<execute macro="DMDocumentType#selectDocumentTypeFrame" />
 
@@ -159,7 +158,7 @@
 	</command>
 
 	<command name="gotoCP">
-		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="DocumentsAndMedia#TOOLBAR_MANAGE" value1="Manage" />
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#DOCUMENT_TYPES" value1="Document Types" />
 	</command>
 

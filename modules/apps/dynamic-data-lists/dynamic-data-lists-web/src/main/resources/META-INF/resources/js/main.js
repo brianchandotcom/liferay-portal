@@ -573,8 +573,9 @@ AUI.add(
 				},
 
 				findStructureFieldByAttribute: function(fieldsArray, attributeName, attributeValue) {
-					var instance = this,
-						structureField;
+					var instance = this;
+
+					var	structureField;
 
 					AArray.some(
 						fieldsArray,

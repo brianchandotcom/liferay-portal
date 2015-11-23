@@ -622,6 +622,8 @@
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
 		<execute function="AssertClick" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_PARENT" value1="${kbArticleTitle}" />
+
+		<execute function="Pause" locator1="5000" />
 	</command>
 
 	<command name="importCP">

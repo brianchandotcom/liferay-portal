@@ -195,7 +195,9 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 		return fieldJSONObject;
 	}
 
-	private JSONObject getStructureJSONObject(long structureId) throws Exception {
+	private JSONObject getStructureJSONObject(long structureId)
+		throws Exception {
+
 		JSONObject ddmStructureJSONObject = _structures.get(structureId);
 
 		if (ddmStructureJSONObject != null) {
@@ -240,11 +242,15 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 	private boolean isDateField(
 		JSONObject ddmStructureJSONObject, String selectedFieldName) {
 
-		JSONArray fieldsJSONArray = ddmStructureJSON.getJSONArray("fields");
+		JSONArray fieldsJSONArray = ddmStructureJSONObject.getJSONArray(
+			"fields");
 
-		JSONObject field = findFieldByName(fieldsJSONArray, selectedFieldName);
+		JSONObject fieldJSONObject = findFieldByName(
+			fieldsJSONArray, selectedFieldName);
 
-		if ((field != null) && field.getString("type").equals("ddm-date")) {
+		if ((fieldJSONObject != null) &&
+			fieldJSONObject.getString("type").equals("ddm-date")) {
+
 			return true;
 		}
 
@@ -285,16 +291,16 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 			ResultSet rs = null;
 
 			try {
-				long classNameId = PortalUtil.getClassNameId(
+				long fileEntryTypeClassNameId = PortalUtil.getClassNameId(
 					DLFileEntryType.class);
 
 				con = DataAccess.getUpgradeOptimizedConnection();
 
 				ps = con.prepareStatement(
-					"select structureId from DDMStructureLink where " +
-						"classNameId = ? and classPK = ?" );
+					"select structureId from DDMStructureLink " +
+						"where classNameId = ? and classPK = ?" );
 
-				ps.setLong(1, classNameId);
+				ps.setLong(1, fileEntryTypeClassNameId);
 				ps.setLong(2, fileEntryTypeId);
 
 				rs = ps.executeQuery();

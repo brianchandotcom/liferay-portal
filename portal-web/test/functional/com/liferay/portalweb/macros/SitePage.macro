@@ -40,7 +40,15 @@
 
 		<execute function="AssertClick" locator1="Button#ADD_PAGE_BTN" value1="Add Page" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<if>
+			<and>
+				<condition function="IsElementPresent" locator1="Message#SUCCESS" />
+				<condition function="IsVisible" locator1="Message#SUCCESS" />
+			</and>
+			<then>
+				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+			</then>
+		</if>
 	</command>
 
 	<command name="addCmd">

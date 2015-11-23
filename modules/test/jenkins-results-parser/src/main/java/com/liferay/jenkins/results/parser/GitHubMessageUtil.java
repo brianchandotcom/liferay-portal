@@ -15,7 +15,8 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -148,38 +149,55 @@ public class GitHubMessageUtil {
 			sb.append(topLevelResult);
 			sb.append(".</pre></li>");
 
-			int jobFailureCount = 1;
+			
+			List<String> errorReportsList = new ArrayList<>();
+			List<String> highPriorityList = new ArrayList<>();
 
 			for (String reportFileName : reportFileNames.split(" ")) {
-				try {
-					File file = new File(reportFileName);
+				File file = new File(reportFileName);
 
-					String content = JenkinsResultsParserUtil.read(file);
+				String content = JenkinsResultsParserUtil.read(file);
 
-					if (content.contains("job-result=\\\"SUCCESS\\\"")) {
-						continue;
-					}
-
-					sb.append("<li>");
-					sb.append(content);
-					sb.append("</li>");
-
-					jobFailureCount++;
-
-					if (jobFailureCount >= 5) {
-						sb.append("<li>...</li>");
-
-						break;
-					}
+				if (content.contains("job-result=\\\"SUCCESS\\\"")) {
+					continue;
 				}
-				catch (Exception e) {
+				if (isHighPriority(content)) {
+					highPriorityList.add("<li>" + content + "</li>");
+				}
+				else {
+					errorReportsList.add("<li>" + content + "</li>");
 				}
 			}
+			
+			errorReportsList.addAll(0, highPriorityList);
 
+			for (int i = 0; i < errorReportsList.size(); i++) {
+				if (i == 4) {
+					sb.append("<li>...</li>");
+					break;
+				}
+				
+				sb.append(errorReportsList.get(i));
+			}
+			
 			sb.append("</ol>");
 		}
 
 		project.setProperty("github.post.comment.body", sb.toString());
+	}
+	
+	protected static boolean isHighPriority(String content) {
+		String[] contentFlags = new String[] {
+			"compileJSP",
+			"Unable to compile JSPs"
+		};
+		
+		for (String contentFlag : contentFlags) {
+			if (content.contains(contentFlag)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private static final Pattern _pattern = Pattern.compile(

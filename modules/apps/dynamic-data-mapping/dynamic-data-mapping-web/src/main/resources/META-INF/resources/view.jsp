@@ -57,15 +57,18 @@ portletURL.setParameter("groupId", String.valueOf(groupId));
 			<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 		</liferay-util:include>
 
-		<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
+			<liferay-util:param name="searchContainerId" value="ddmStructures" />
+		</liferay-util:include>
 	</c:if>
 
 	<div class="container-fluid-1280" id="<portlet:namespace />entriesContainer">
 		<liferay-ui:search-container
+			id="ddmStructures"
 			orderByCol="<%= orderByCol %>"
 			orderByComparator="<%= orderByComparator %>"
 			orderByType="<%= orderByType %>"
-			rowChecker="<%= new RowChecker(renderResponse) %>"
+			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
 			searchContainer="<%= new StructureSearch(renderRequest, portletURL) %>"
 		>
 

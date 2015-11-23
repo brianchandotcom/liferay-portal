@@ -55,42 +55,6 @@
 				combine: COMBINE,
 				filter: filterConfig,
 				modules: {
-					'liferay-app-view-move': {
-						path: 'app_view_move.js',
-						plugins: {
-							'liferay-app-view-move-touch': {
-								condition: {
-									name: 'liferay-app-view-move-touch',
-									trigger: 'liferay-app-view-move',
-									ua: 'touch'
-								}
-							}
-						},
-						requires: [
-							'aui-base',
-							'dd-constrain',
-							'dd-delegate',
-							'dd-drag',
-							'dd-drop',
-							'dd-proxy',
-							'liferay-history-manager',
-							'liferay-portlet-base'
-						]
-					},
-					'liferay-app-view-move-touch': {
-						path: 'app_view_move_touch.js',
-						requires: [
-							'aui-base'
-						]
-					},
-					'liferay-app-view-select': {
-						path: 'app_view_select.js',
-						requires: [
-							'liferay-app-view-move',
-							'liferay-history-manager',
-							'liferay-portlet-base'
-						]
-					},
 					'liferay-asset-addon-entry-selector': {
 						path: 'asset_addon_entry_selector.js',
 						requires: [
@@ -715,8 +679,26 @@
 						path: 'search_container.js',
 						requires: [
 							'aui-base',
-							'aui-datatable-core',
-							'event-mouseenter'
+							'aui-datatable-core'
+						]
+					},
+					'liferay-search-container-move': {
+						path: 'search_container_move.js',
+						requires: [
+							'aui-component',
+							'dd-constrain',
+							'dd-delegate',
+							'dd-drag',
+							'dd-drop',
+							'dd-proxy',
+							'plugin'
+						]
+					},
+					'liferay-search-container-select': {
+						path: 'search_container_select.js',
+						requires: [
+							'aui-component',
+							'plugin'
 						]
 					},
 					'liferay-search-filter': {

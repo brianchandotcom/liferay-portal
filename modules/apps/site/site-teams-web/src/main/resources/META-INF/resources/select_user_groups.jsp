@@ -70,8 +70,8 @@ RowChecker rowChecker = new UserGroupTeamChecker(renderResponse, team);
 
 <c:if test="<%= userGroupsCount > 0 %>">
 	<liferay-frontend:management-bar
-		checkBoxContainerId="userGroupsSearchContainer"
 		includeCheckBox="<%= true %>"
+		searchContainerId="userGroups"
 	>
 		<liferay-frontend:management-bar-filters>
 			<liferay-frontend:management-bar-navigation

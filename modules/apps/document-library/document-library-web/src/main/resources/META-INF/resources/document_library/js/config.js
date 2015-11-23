@@ -25,8 +25,6 @@
 								'aui-progressbar',
 								'aui-template-deprecated',
 								'aui-tooltip',
-								'liferay-app-view-move',
-								'liferay-app-view-select',
 								'liferay-search-container',
 								'liferay-storage-formatter',
 								'querystring-parse-simple',
@@ -37,7 +35,6 @@
 							path: 'main.js',
 							requires: [
 								'document-library-upload',
-								'liferay-app-view-move',
 								'liferay-message',
 								'liferay-portlet-base'
 							]

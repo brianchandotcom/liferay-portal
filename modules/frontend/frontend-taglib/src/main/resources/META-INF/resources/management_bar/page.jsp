@@ -82,8 +82,8 @@
 	<aui:script use="liferay-management-bar">
 		var managementBar = new Liferay.ManagementBar(
 			{
-				checkBoxContainer: '#<%= checkBoxContainerId %>',
 				namespace: '<%= namespace %>',
+				searchContainerId: '<%= namespace + searchContainerId %>',
 				secondaryBar: '#actionButtons'
 			}
 		);

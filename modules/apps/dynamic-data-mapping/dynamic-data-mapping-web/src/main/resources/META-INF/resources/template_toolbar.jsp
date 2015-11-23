@@ -18,13 +18,14 @@
 
 <%
 boolean includeCheckBox = ParamUtil.getBoolean(request, "includeCheckBox", true);
+String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 %>
 
 <liferay-util:include page="/template_search_bar.jsp" servletContext="<%= application %>" />
 
 <liferay-frontend:management-bar
-	checkBoxContainerId="entriesContainer"
 	includeCheckBox="<%= includeCheckBox && !user.isDefaultUser() %>"
+	searchContainerId="<%= searchContainerId %>"
 >
 	<liferay-frontend:management-bar-filters>
 		<liferay-util:include page="/template_sort_button.jsp" servletContext="<%= application %>" />

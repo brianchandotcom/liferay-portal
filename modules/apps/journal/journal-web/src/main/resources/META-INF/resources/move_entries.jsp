@@ -100,7 +100,7 @@ JournalMoveEntriesDisplayContext journalMovesEntriesDisplayContext = new Journal
 		</div>
 	</c:if>
 
-	<aui:input name="folderIds" type="hidden" value="<%= ListUtil.toString(validMoveFolders, JournalFolder.FOLDER_ID_ACCESSOR) %>" />
+	<aui:input name="rowIdsJournalFolder" type="hidden" value="<%= ListUtil.toString(validMoveFolders, JournalFolder.FOLDER_ID_ACCESSOR) %>" />
 
 	<%
 	List<JournalArticle> validMoveArticles = journalMovesEntriesDisplayContext.getValidMoveArticles();
@@ -170,7 +170,7 @@ JournalMoveEntriesDisplayContext journalMovesEntriesDisplayContext = new Journal
 		</div>
 	</c:if>
 
-	<aui:input name="articleIds" type="hidden" value="<%= ListUtil.toString(validMoveArticles, JournalArticle.ARTICLE_ID_ACCESSOR) %>" />
+	<aui:input name="rowIdsJournalArticle" type="hidden" value="<%= ListUtil.toString(validMoveArticles, JournalArticle.ARTICLE_ID_ACCESSOR) %>" />
 
 	<aui:fieldset>
 		<div class="form-group">

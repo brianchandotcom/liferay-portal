@@ -123,6 +123,10 @@ public class BundleManager {
 	public boolean isInstalled(String symbolicName, String version) {
 		Bundle bundle = getBundle(symbolicName, version);
 
+		if (bundle == null) {
+			return false;
+		}
+
 		return isInstalled(bundle);
 	}
 
@@ -137,6 +141,10 @@ public class BundleManager {
 
 	public void uninstallBundle(String symbolicName, String version) {
 		Bundle bundle = getBundle(symbolicName, version);
+
+		if (bundle == null) {
+			return;
+		}
 
 		uninstallBundle(bundle);
 	}

@@ -80,7 +80,7 @@ public class MediaWikiEngine extends BaseInputEditorWikiEngine {
 
 	@Override
 	public String getHelpURL() {
-		return "http://www.mediawiki.org/wiki/Help:Formatting";
+		return "http://jamwiki.org/wiki/en/Help:Formatting";
 	}
 
 	@Override

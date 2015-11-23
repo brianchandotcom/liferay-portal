@@ -39,6 +39,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Point;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
@@ -637,6 +638,10 @@ public class WebDriverHelper {
 		WebDriver.Navigation navigation = webDriver.navigate();
 
 		navigation.refresh();
+
+		if (isAlertPresent(webDriver)) {
+			getConfirmation(webDriver);
+		}
 	}
 
 	public static void select(
@@ -890,6 +895,20 @@ public class WebDriverHelper {
 			if (timeout != null) {
 				setDefaultTimeoutImplicit(webDriver);
 			}
+		}
+	}
+
+	protected static boolean isAlertPresent(WebDriver webDriver) {
+		WebDriverWait webDriverWait = new WebDriverWait(webDriver, 1);
+
+		try {
+			Alert alert = webDriverWait.until(
+				ExpectedConditions.alertIsPresent());
+
+			return true;
+		}
+		catch (TimeoutException e) {
+			return false;
 		}
 	}
 

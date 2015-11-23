@@ -457,14 +457,15 @@ public class DDMStructureLocalServiceImpl
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public void deleteStructure(DDMStructure structure) throws PortalException {
 		if (!GroupThreadLocal.isDeleteInProcess()) {
-			if (structure.getClassName().equals(DDLRecordSet.class.getName())) {
-				if (ddmStructureLinkPersistence.countByStructureId(
-						structure.getStructureId()) > 0) {
+			String structureClassName = structure.getClassName();
+
+			if (structureClassName.equals(DDLRecordSet.class.getName()) &&
+				(ddmStructureLinkPersistence.countByStructureId(
+					structure.getStructureId()) > 0)) {
 
 				throw new RequiredStructureException.
 					MustNotDeleteStructureReferencedByStructureLinks(
 						structure.getStructureId());
-				}
 			}
 
 			if (ddmStructurePersistence.countByParentStructureId(

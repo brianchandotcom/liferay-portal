@@ -12,7 +12,7 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute macro="Workflow#configureDocumentsAndMediaWorkflow">
+		<execute macro="Workflow#configureWorkflowViaFolderInfo">
 			<var name="workflowDefinition" value="No Workflow" />
 		</execute>
 
@@ -51,7 +51,7 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute macro="Workflow#configureDocumentsAndMediaWorkflow">
+		<execute macro="Workflow#configureWorkflowViaFolderInfo">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 		</execute>
 
@@ -65,7 +65,7 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#assignToMeTaskByActions">
+		<execute macro="Workflow#assignToMeTaskByDetails">
 			<var name="workflowAssetTitle" value="DM Document Title" />
 			<var name="workflowAssetType" value="Document" />
 			<var name="workflowTask" value="Review" />
@@ -84,7 +84,8 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#approveTaskByActions">
+		<execute macro="Workflow#approveTaskByDetails">
+			<var name="workflowAssetContent" value="DM Document Title" />
 			<var name="workflowAssetTitle" value="DM Document Title" />
 			<var name="workflowAssetType" value="Document" />
 			<var name="workflowTask" value="Review" />
@@ -108,7 +109,7 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute macro="Workflow#configureDocumentsAndMediaWorkflow">
+		<execute macro="Workflow#configureWorkflowViaFolderInfo">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 		</execute>
 
@@ -439,7 +440,7 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute macro="Workflow#configureDocumentsAndMediaWorkflow">
+		<execute macro="Workflow#configureWorkflowViaFolderInfo">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 		</execute>
 
@@ -580,7 +581,7 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute macro="Workflow#configureDocumentsAndMediaWorkflow">
+		<execute macro="Workflow#configureWorkflowViaFolderInfo">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 		</execute>
 
@@ -643,7 +644,7 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute macro="Workflow#configureDocumentsAndMediaWorkflow">
+		<execute macro="Workflow#configureWorkflowViaFolderInfo">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 		</execute>
 
@@ -994,7 +995,7 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute macro="Workflow#configureDocumentsAndMediaWorkflow">
+		<execute macro="Workflow#configureWorkflowViaFolderInfo">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 		</execute>
 

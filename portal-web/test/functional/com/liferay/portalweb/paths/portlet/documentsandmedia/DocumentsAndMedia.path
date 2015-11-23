@@ -106,7 +106,7 @@
 </tr>
 <tr>
 	<td>ICON_DOCUMENT_WORKFLOW_STATUS</td>
-	<td>//div[contains(.,'${key_dmDocumentTitle}') and a[@data-folder='false']]//span[@class='workflow-status']/strong</td>
+	<td>//div[contains(.,'${key_dmDocumentTitle}') and @class='card-dm-details']//div[@class='status']</td>
 	<td></td>
 </tr>
 <tr>

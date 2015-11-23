@@ -2064,7 +2064,7 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute macro="Workflow#configureWebContentWorkflow">
+		<execute macro="Workflow#configureWorkflowViaFolderInfo">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 		</execute>
 
@@ -2249,7 +2249,7 @@
 			<var name="siteScopeName" value="Community Site Name" />
 		</execute>
 
-		<execute macro="Workflow#configureWebContentWorkflow">
+		<execute macro="Workflow#configureWorkflowViaFolderInfo">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 		</execute>
 
@@ -2717,7 +2717,7 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute macro="Workflow#configureWebContentWorkflow">
+		<execute macro="Workflow#configureWorkflowViaFolderInfo">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 		</execute>
 

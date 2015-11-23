@@ -1,5 +1,6 @@
 <definition>
 	<var name="assetType" value="Document" />
+	<var name="dmDocumentTypeName" value="Basic Document" />
 
 	<command name="addCommentPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
@@ -23,10 +24,11 @@
 	</command>
 
 	<command name="addCP">
-		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+		<execute macro="DMDocument#gotoAddDocumentType">
+			<var name="dmDocumentTypeName" value="${dmDocumentTypeName}" />
+		</execute>
 
-		<execute function="Click" locator1="Button#PLUS" />
-		<execute function="AssertClick" locator1="MenuItem#BASIC_DOCUMENT" value1="Basic Document" />
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
 		<if>
 			<equals arg1="${uploadTempFile}" arg2="true" />
@@ -112,10 +114,9 @@
 	</command>
 
 	<command name="addDocumentTypeCmdCP">
-		<var name="key_dmDocumentTypeName" value="${dmDocumentTypeName}" />
-
-		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="NavBar#ADD" value1="Add" />
-		<execute function="AssertClick" locator1="MenuItem#DOCUMENT_TYPE" value1="${dmDocumentTypeName}" />
+		<execute macro="DMDocument#gotoAddDocumentType">
+			<var name="dmDocumentTypeName" value="${dmDocumentTypeName}" />
+		</execute>
 
 		<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="${dmDocumentFile}" />
 		<execute function="Type" locator1="TextInput#TITLE" value1="${dmDocumentTitle}" />
@@ -520,8 +521,9 @@
 	</command>
 
 	<command name="addWithWorkflowCP">
-		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="NavBar#ADD" value1="Add" />
-		<execute function="AssertClick" locator1="MenuItem#BASIC_DOCUMENT" value1="Basic Document" />
+		<execute macro="DMDocument#gotoAddDocumentType">
+			<var name="dmDocumentTypeName" value="${dmDocumentTypeName}" />
+		</execute>
 
 		<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="${dmDocumentFile}" />
 		<execute function="Type" locator1="TextInput#TITLE" value1="${dmDocumentTitle}" />
@@ -1110,6 +1112,14 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 
 		<execute function="SelectFrame" locator1="relative=top" />
+	</command>
+
+	<command name="gotoAddDocumentType">
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<var name="key_dmDocumentTypeName" value="${dmDocumentTypeName}" />
+
+		<execute function="AssertClick" locator1="MenuItem#DOCUMENT_TYPE" value1="${dmDocumentTypeName}" />
 	</command>
 
 	<command name="gotoCP">
@@ -1749,23 +1759,15 @@
 		<if>
 			<equals arg1="${dmDocumentStatus}" arg2="Approved" />
 			<then>
-				<execute function="Click" locator1="DocumentsAndMedia#TOOLBAR_DISPLAY_STYLE_BUTTON" />
-				<execute function="AssertClick" locator1="MenuItem#DISPLAY_STYLE_LIST" value1="List" />
-				<execute function="AssertTextEquals" locator1="DocumentsAndMedia#LIST_DOCUMENT_WORKFLOW_STATUS" value1="Approved" />
+				<execute function="AssertTextEquals" locator1="DocumentsAndMedia#ICON_DOCUMENT_WORKFLOW_STATUS" value1="Approved" />
 			</then>
 			<else>
-				<execute function="Click" locator1="DocumentsAndMedia#TOOLBAR_DISPLAY_STYLE_BUTTON" />
-				<execute function="AssertClick" locator1="MenuItem#DISPLAY_STYLE_DESCRIPTIVE" value1="Descriptive" />
-				<execute function="AssertElementPresent" locator1="DocumentsAndMedia#ICON_DOCUMENT_THUMBNAIL" />
 				<execute function="AssertTextEquals" locator1="DocumentsAndMedia#ICON_DOCUMENT_WORKFLOW_STATUS" value1="${dmDocumentStatus}" />
 				<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
 				<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${dmDocumentTitle}" />
 			</else>
 		</if>
-
-		<execute function="Click" locator1="DocumentsAndMedia#TOOLBAR_DISPLAY_STYLE_BUTTON" />
-		<execute function="AssertClick" locator1="MenuItem#DISPLAY_STYLE_ICON" value1="Icon" />
 	</command>
 
 	<command name="viewDefaultCP">

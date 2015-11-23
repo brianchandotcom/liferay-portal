@@ -25,7 +25,7 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="Workflow#configureWebContentWorkflow">
+		<execute macro="Workflow#configureWorkflowViaFolderInfo">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 		</execute>
 

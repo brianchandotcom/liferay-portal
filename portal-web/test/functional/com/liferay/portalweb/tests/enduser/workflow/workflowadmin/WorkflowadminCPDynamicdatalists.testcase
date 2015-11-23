@@ -78,9 +78,9 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#assignToMeTaskByActions">
+		<execute macro="Workflow#assignToMeTaskByDetails">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-			<var name="workflowAssetTitle" value="${ddlListName}" />
+			<var name="workflowAssetTitle" value="New ${ddlDataDefinitionName} for List: ${ddlListName}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
@@ -105,9 +105,10 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#approveTaskByActions">
+		<execute macro="Workflow#approveTaskByDetails">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-			<var name="workflowAssetTitle" value="${ddlListName}" />
+			<var name="workflowAssetContent" value="Record Text" />
+			<var name="workflowAssetTitle" value="New ${ddlDataDefinitionName} for List: ${ddlListName}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>

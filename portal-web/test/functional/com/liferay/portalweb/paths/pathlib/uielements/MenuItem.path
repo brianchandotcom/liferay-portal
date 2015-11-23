@@ -255,12 +255,12 @@
 </tr>
 <tr>
 	<td>DOCUMENT_TYPE</td>
-	<td>//a[@role='menuitem' and contains(.,'${key_dmDocumentTypeName}')]</td>
+	<td>//div[contains(@class,'open')]//a[contains(.,'${key_dmDocumentTypeName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENT_TYPES</td>
-	<td>//li[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Document Types')]</td>
+	<td>//a[@role='menuitem']//span[contains(.,'Document Types')]</td>
 	<td></td>
 </tr>
 <tr>

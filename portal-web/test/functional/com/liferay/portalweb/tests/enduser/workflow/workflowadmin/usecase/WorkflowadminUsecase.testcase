@@ -574,7 +574,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Workflow#configureDocumentsAndMediaWorkflow">
+		<execute macro="Workflow#configureWorkflowViaFolderInfo">
 			<var name="workflowDefinition" value="Scripted Single Approver (Version 1)" />
 		</execute>
 
@@ -588,7 +588,7 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute macro="Workflow#configureDocumentsAndMediaWorkflow">
+		<execute macro="Workflow#configureWorkflowViaFolderInfo">
 			<var name="workflowDefinition" value="Scripted Single Approver (Version 1)" />
 		</execute>
 
@@ -770,7 +770,7 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="Workflow#configureWebContentWorkflow">
+		<execute macro="Workflow#configureWorkflowViaFolderInfo">
 			<var name="workflowDefinition" value="Category Specific Approval (Version 1)" />
 		</execute>
 
@@ -1236,7 +1236,7 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="Workflow#configureWebContentWorkflow">
+		<execute macro="Workflow#configureWorkflowViaFolderInfo">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 		</execute>
 
@@ -1297,7 +1297,7 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="Workflow#configureWebContentWorkflow">
+		<execute macro="Workflow#configureWorkflowViaFolderInfo">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 		</execute>
 
@@ -1485,7 +1485,7 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="Workflow#configureWebContentWorkflow">
+		<execute macro="Workflow#configureWorkflowViaFolderInfo">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 		</execute>
 

@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONFIGURATION_IFRAME</td>
+	<td>//iframe[contains(@id,'DLPortlet')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONFIGURATION_OPTIONS</td>
 	<td>//a[@title='Options']</td>
 	<td></td>

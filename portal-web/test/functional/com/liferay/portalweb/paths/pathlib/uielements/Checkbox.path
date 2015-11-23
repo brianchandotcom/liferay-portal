@@ -260,7 +260,7 @@
 </tr>
 <tr>
 	<td>SHOW_ACTIONS_CHECKBOX</td>
-	<td>//input[contains(@id,'showActions')]</td>
+	<td>//label[contains(@for,'showActions')]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
@@ -275,12 +275,12 @@
 </tr>
 <tr>
 	<td>SHOW_FOLDER_MENU_CHECKBOX</td>
-	<td>//input[contains(@id,'showFolderMenu')]</td>
+	<td>//label[contains(@for,'showFolderMenu')]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SHOW_NAVIGATION_LINKS_CHECKBOX</td>
-	<td>//input[contains(@id,'showTabs')]</td>
+	<td>//label[contains(@for,'showTabs')]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

@@ -511,6 +511,7 @@ public class PortletPreferencesFactoryImpl
 					(LayoutTypePortlet)layout.getLayoutType();
 
 				if (layoutTypePortlet.isPortletEmbedded(portletId)) {
+					ownerId = layout.getGroupId();
 					plid = PortletKeys.PREFS_PLID_SHARED;
 				}
 

@@ -16,16 +16,22 @@ package com.liferay.portal.test.rule.callback;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.test.rule.callback.BaseTestCallback;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
+
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.sql.Statement;
 
 import java.util.concurrent.CountDownLatch;
@@ -52,7 +58,7 @@ public class HypersonicServerTestCallback
 
 	@Override
 	public void afterClass(Description description, Server server)
-		throws SQLException {
+		throws Exception {
 
 		try (Connection connection = DriverManager.getConnection(
 				DATABASE_URL_BASE + _databaseName, "sa", "");
@@ -63,7 +69,7 @@ public class HypersonicServerTestCallback
 
 		server.stop();
 
-		FileUtil.deltree(_HSQL_COPY);
+		deleteFolder(Paths.get(_HSQL_COPY));
 	}
 
 	@Override
@@ -108,11 +114,18 @@ public class HypersonicServerTestCallback
 
 		};
 
-		File hsqlHomeDir = new File(_HSQL_HOME);
+		Path hsqlHomePath = Paths.get(_HSQL_HOME);
 
-		hsqlHomeDir.mkdirs();
+		Files.createDirectories(hsqlHomePath);
 
-		FileUtil.copyDirectory(_HSQL_HOME, _HSQL_COPY);
+		Path hsqlCopyPath = Paths.get(_HSQL_COPY);
+
+		deleteFolder(hsqlCopyPath);
+
+		copyFile(_databaseName.concat(".log"), hsqlHomePath, hsqlCopyPath);
+		copyFile(
+			_databaseName.concat(".properties"), hsqlHomePath, hsqlCopyPath);
+		copyFile(_databaseName.concat(".script"), hsqlHomePath, hsqlCopyPath);
 
 		server.setErrWriter(
 			new UnsyncPrintWriter(
@@ -132,6 +145,55 @@ public class HypersonicServerTestCallback
 		}
 
 		return server;
+	}
+
+	protected void copyFile(
+			String fileName, Path fromFolderPath, Path toFolderPath)
+		throws IOException {
+
+		Path filePath = fromFolderPath.resolve(fileName);
+
+		if (Files.exists(filePath)) {
+			Files.createDirectories(toFolderPath);
+
+			Files.copy(filePath, toFolderPath.resolve(fileName));
+		}
+	}
+
+	protected void deleteFolder(Path folderPath) throws IOException {
+		if (!Files.exists(folderPath)) {
+			return;
+		}
+
+		Files.walkFileTree(
+			folderPath,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult postVisitDirectory(
+						Path dirPath, IOException ioe)
+					throws IOException {
+
+					if (ioe != null) {
+						throw ioe;
+					}
+
+					Files.delete(dirPath);
+
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult visitFile(
+						Path filePath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					Files.delete(filePath);
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
 	}
 
 	private static final String _HSQL_COPY =

@@ -36,30 +36,8 @@ public class ServiceReferenceServiceTuple<SR, TS, K>
 		_emittedKeys.add(key);
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null) {
-			return false;
-		}
-
-		if (!(obj instanceof ServiceReferenceServiceTuple)) {
-			return false;
-		}
-
-		ServiceReferenceServiceTuple<SR, TS, K> serviceReferenceServiceTuple =
-			(ServiceReferenceServiceTuple<SR, TS, K>)obj;
-
-		return getServiceReference().equals(
-			serviceReferenceServiceTuple.getServiceReference());
-	}
-
 	public List<K> getEmittedKeys() {
 		return _emittedKeys;
-	}
-
-	@Override
-	public int hashCode() {
-		return getServiceReference().hashCode();
 	}
 
 	private final List<K> _emittedKeys = new ArrayList<>();

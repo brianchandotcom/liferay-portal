@@ -37,12 +37,34 @@ public class ServiceReferenceServiceTuple<S, T>
 			serviceReferenceServiceTuple.getServiceReference());
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+
+		if (!(obj instanceof ServiceReferenceServiceTuple)) {
+			return false;
+		}
+
+		ServiceReferenceServiceTuple<S, T> serviceReferenceServiceTuple =
+			(ServiceReferenceServiceTuple<S, T>)obj;
+
+		return getServiceReference().equals(
+			serviceReferenceServiceTuple.getServiceReference());
+	}
+
 	public T getService() {
 		return _service;
 	}
 
 	public ServiceReference<S> getServiceReference() {
 		return _serviceReference;
+	}
+
+	@Override
+	public int hashCode() {
+		return getServiceReference().hashCode();
 	}
 
 	private final T _service;

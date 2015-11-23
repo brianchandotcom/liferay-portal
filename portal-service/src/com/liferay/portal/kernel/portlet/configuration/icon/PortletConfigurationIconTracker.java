@@ -111,16 +111,12 @@ public class PortletConfigurationIconTracker {
 		return portletDisplay.getRootPortletId();
 	}
 
-	private PortletConfigurationIconTracker() {
-		_serviceTrackerMap.open();
-	}
-
 	private static final ServiceTrackerList<PortletConfigurationIconLocator>
-		_serviceTrackerList = ServiceTrackerCollections.list(
+		_serviceTrackerList = ServiceTrackerCollections.openList(
 			PortletConfigurationIconLocator.class);
 	private static final ServiceTrackerMap
 		<String, List<PortletConfigurationIconFactory>>
-			_serviceTrackerMap = ServiceTrackerCollections.multiValueMap(
+			_serviceTrackerMap = ServiceTrackerCollections.openMultiValueMap(
 				PortletConfigurationIconFactory.class, null,
 				new PortletConfigurationIconServiceReferenceMapper());
 

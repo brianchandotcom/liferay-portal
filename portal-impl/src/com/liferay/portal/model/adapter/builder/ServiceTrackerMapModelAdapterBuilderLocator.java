@@ -34,10 +34,6 @@ import java.lang.reflect.Type;
 public class ServiceTrackerMapModelAdapterBuilderLocator
 	implements ModelAdapterBuilderLocator, Closeable {
 
-	public ServiceTrackerMapModelAdapterBuilderLocator() {
-		_modelAdapterBuilders.open();
-	}
-
 	@Override
 	public void close() {
 		_modelAdapterBuilders.close();
@@ -59,7 +55,7 @@ public class ServiceTrackerMapModelAdapterBuilderLocator
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	private final ServiceTrackerMap<String, ModelAdapterBuilder>
-		_modelAdapterBuilders = ServiceTrackerCollections.singleValueMap(
+		_modelAdapterBuilders = ServiceTrackerCollections.openSingleValueMap(
 			ModelAdapterBuilder.class, null,
 			new ServiceReferenceMapper<String, ModelAdapterBuilder>() {
 

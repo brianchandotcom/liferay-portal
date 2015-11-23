@@ -145,11 +145,9 @@ public class VerifyProcessTracker {
 					new VerifyServiceTrackerMapListener();
 			}
 
-			_verifyProcesses = ServiceTrackerMapFactory.singleValueMap(
+			_verifyProcesses = ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, VerifyProcess.class, "verify.process.name",
 				verifyServiceTrackerMapListener);
-
-			_verifyProcesses.open();
 		}
 		catch (InvalidSyntaxException ise) {
 			throw new IllegalStateException(ise);

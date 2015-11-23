@@ -96,10 +96,6 @@ public class SocialActivityManagerImpl<T extends ClassedModel & GroupedModel>
 			userId, model, type, createDate);
 	}
 
-	protected void activate() {
-		_serviceTrackerMap.open();
-	}
-
 	protected SocialActivityManager<T> getSocialActivityManager(
 		String className) {
 
@@ -116,7 +112,7 @@ public class SocialActivityManagerImpl<T extends ClassedModel & GroupedModel>
 	private final SocialActivityManager<T> _defaultSocialActivityManager;
 
 	private final ServiceTrackerMap<String, SocialActivityManager<T>>
-		_serviceTrackerMap = ServiceTrackerCollections.singleValueMap(
+		_serviceTrackerMap = ServiceTrackerCollections.openSingleValueMap(
 			(Class<SocialActivityManager<T>>)(Class<?>)
 				SocialActivityManager.class,
 			"(model.class.name=*)",

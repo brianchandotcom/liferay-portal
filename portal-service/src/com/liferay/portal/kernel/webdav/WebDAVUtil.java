@@ -44,9 +44,8 @@ import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.ServiceRegistrationMap;
 import com.liferay.registry.collections.ServiceRegistrationMapImpl;
+import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
-import com.liferay.registry.collections.ServiceTrackerMapFactory;
-import com.liferay.registry.collections.ServiceTrackerMapFactoryUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -363,10 +362,7 @@ public class WebDAVUtil {
 	}
 
 	private WebDAVUtil() {
-		ServiceTrackerMapFactory serviceTrackerMapFactory =
-			ServiceTrackerMapFactoryUtil.getServiceTrackerMapFactory();
-
-		_storages = serviceTrackerMapFactory.singleValueMap(
+		_storages = ServiceTrackerCollections.openSingleValueMap(
 			WebDAVStorage.class, "webdav.storage.token",
 			new ServiceTrackerCustomizer<WebDAVStorage, WebDAVStorage>() {
 
@@ -409,8 +405,6 @@ public class WebDAVUtil {
 				}
 
 			});
-
-		_storages.open();
 	}
 
 	private void _addStorage(WebDAVStorage storage) {

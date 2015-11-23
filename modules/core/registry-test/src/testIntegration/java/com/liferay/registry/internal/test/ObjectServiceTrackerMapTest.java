@@ -200,7 +200,7 @@ public class ObjectServiceTrackerMapTest {
 	@Test
 	public void testGetServiceWithCustomResolver() {
 		try (ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
-				ServiceTrackerCollections.singleValueMap(
+				ServiceTrackerCollections.openSingleValueMap(
 					TrackedOne.class, "(&(other=*)(target=*))",
 					new ServiceReferenceMapper<String, TrackedOne>() {
 
@@ -215,8 +215,6 @@ public class ObjectServiceTrackerMapTest {
 						}
 
 					})) {
-
-			serviceTrackerMap.open();
 
 			Dictionary<String, String> properties = new Hashtable<>();
 
@@ -250,7 +248,7 @@ public class ObjectServiceTrackerMapTest {
 		final Registry registry = RegistryUtil.getRegistry();
 
 		try (ServiceTrackerMap<String, TrackedTwo> serviceTrackerMap =
-				ServiceTrackerCollections.singleValueMap(
+				ServiceTrackerCollections.openSingleValueMap(
 					TrackedOne.class, "target",
 					new ServiceTrackerCustomizer<TrackedOne, TrackedTwo>() {
 
@@ -279,8 +277,6 @@ public class ObjectServiceTrackerMapTest {
 						}
 
 					})) {
-
-			serviceTrackerMap.open();
 
 			TrackedOne trackedOne1 = new TrackedOne();
 
@@ -312,7 +308,7 @@ public class ObjectServiceTrackerMapTest {
 		final Registry registry = RegistryUtil.getRegistry();
 
 		try (ServiceTrackerMap<String, TrackedTwo> serviceTrackerMap =
-				ServiceTrackerCollections.singleValueMap(
+				ServiceTrackerCollections.openSingleValueMap(
 					TrackedOne.class, ("(target=*)"),
 					new ServiceReferenceMapper<String, TrackedOne>() {
 
@@ -361,8 +357,6 @@ public class ObjectServiceTrackerMapTest {
 						}
 
 					})) {
-
-			serviceTrackerMap.open();
 
 			TrackedOne trackedOne1 = new TrackedOne("1");
 
@@ -467,7 +461,7 @@ public class ObjectServiceTrackerMapTest {
 		RegistryWrapper registryWrapper = getRegistryWrapper();
 
 		try (ServiceTrackerMap<TrackedOne, TrackedOne> serviceTrackerMap =
-				ServiceTrackerCollections.singleValueMap(
+				ServiceTrackerCollections.openSingleValueMap(
 					TrackedOne.class, null,
 					new ServiceReferenceMapper<TrackedOne, TrackedOne>() {
 
@@ -479,8 +473,6 @@ public class ObjectServiceTrackerMapTest {
 
 					}
 				)) {
-
-			serviceTrackerMap.open();
 
 			ServiceRegistration<TrackedOne> serviceRegistration1 =
 				registerService(new TrackedOne());
@@ -509,12 +501,8 @@ public class ObjectServiceTrackerMapTest {
 	public Bundle bundle;
 
 	protected ServiceTrackerMap<String, TrackedOne> createServiceTrackerMap() {
-		_serviceTrackerMap = ServiceTrackerCollections.singleValueMap(
+		return ServiceTrackerCollections.openSingleValueMap(
 			TrackedOne.class, "target");
-
-		_serviceTrackerMap.open();
-
-		return _serviceTrackerMap;
 	}
 
 	protected RegistryWrapper getRegistryWrapper() {

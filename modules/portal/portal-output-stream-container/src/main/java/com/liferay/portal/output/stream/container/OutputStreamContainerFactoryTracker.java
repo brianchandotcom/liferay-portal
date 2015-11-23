@@ -69,14 +69,12 @@ public class OutputStreamContainerFactoryTracker {
 	protected void activate(BundleContext bundleContext) {
 		try {
 			_outputStreamContainerFactories =
-				ServiceTrackerMapFactory.singleValueMap(
+				ServiceTrackerMapFactory.openSingleValueMap(
 					bundleContext, OutputStreamContainerFactory.class, "name");
 		}
 		catch (InvalidSyntaxException ise) {
 			throw new IllegalStateException(ise);
 		}
-
-		_outputStreamContainerFactories.open();
 	}
 
 	@Deactivate

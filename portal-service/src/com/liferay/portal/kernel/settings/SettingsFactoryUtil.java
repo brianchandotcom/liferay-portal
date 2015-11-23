@@ -70,7 +70,7 @@ public class SettingsFactoryUtil {
 	}
 
 	private static final ServiceTrackerList<SettingsFactory>
-		_settingsFactories = ServiceTrackerCollections.list(
+		_settingsFactories = ServiceTrackerCollections.openList(
 			SettingsFactory.class);
 
 }

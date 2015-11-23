@@ -93,7 +93,7 @@ public class FormNavigatorCategoryUtil {
 	}
 
 	private FormNavigatorCategoryUtil() {
-		_formNavigatorCategories = ServiceTrackerCollections.multiValueMap(
+		_formNavigatorCategories = ServiceTrackerCollections.openMultiValueMap(
 			FormNavigatorCategory.class, null,
 			new ServiceReferenceMapper<String, FormNavigatorCategory>() {
 
@@ -113,8 +113,6 @@ public class FormNavigatorCategoryUtil {
 				}
 
 			});
-
-		_formNavigatorCategories.open();
 	}
 
 	private static final FormNavigatorCategoryUtil _instance =

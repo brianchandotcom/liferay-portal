@@ -147,12 +147,8 @@ public class PortletRatingsDefinitionUtil {
 
 	private static final ServiceTrackerMap
 		<String, PortletRatingsDefinitionValues> _serviceTrackerMap =
-			ServiceTrackerCollections.singleValueMap(
+			ServiceTrackerCollections.openSingleValueMap(
 				PortletRatingsDefinition.class, "model.class.name",
 				_serviceTrackerCustomizer);
-
-	static {
-		_serviceTrackerMap.open();
-	}
 
 }

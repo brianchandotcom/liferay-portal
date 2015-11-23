@@ -287,11 +287,7 @@ public class JournalContentSearchLocalServiceImpl
 		JournalContentSearchLocalServiceImpl.class);
 
 	private static final ServiceTrackerMap<String, DisplayInformationProvider>
-		_serviceTrackerMap = ServiceTrackerCollections.singleValueMap(
+		_serviceTrackerMap = ServiceTrackerCollections.openSingleValueMap(
 			DisplayInformationProvider.class, "javax.portlet.name");
-
-	static {
-		_serviceTrackerMap.open();
-	}
 
 }

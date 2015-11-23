@@ -66,8 +66,7 @@ public class RowMover {
 			JSONObject rowMoverDropTargetJSONObject =
 				JSONFactoryUtil.createJSONObject(rowMoverDropTargetJSON);
 
-			rowMoverDropTargetsJSONArray.put(
-				rowMoverDropTargetJSONObject);
+			rowMoverDropTargetsJSONArray.put(rowMoverDropTargetJSONObject);
 		}
 
 		jsonObject.put("dropTargets", rowMoverDropTargetsJSONArray);

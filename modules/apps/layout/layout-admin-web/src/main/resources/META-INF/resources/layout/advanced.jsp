@@ -26,8 +26,6 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 
 <aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
-<h3><liferay-ui:message key="advanced" /></h3>
-
 <liferay-ui:error exception="<%= ImageTypeException.class %>" message="please-enter-a-file-with-a-valid-file-type" />
 
 <aui:fieldset cssClass="lfr-portrait-editor">

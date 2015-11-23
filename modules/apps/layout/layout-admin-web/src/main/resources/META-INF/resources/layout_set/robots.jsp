@@ -26,8 +26,6 @@ String robots = ParamUtil.getString(request, "robots", defaultRobots);
 
 <liferay-ui:error-marker key="errorSection" value="robots" />
 
-<h3><liferay-ui:message key="robots" /></h3>
-
 <aui:fieldset>
 	<c:choose>
 		<c:when test="<%= Validator.isNotNull(virtualHostName) %>">

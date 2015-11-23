@@ -156,7 +156,7 @@ public class DDMStructureLinkLocalServiceImpl
 			ddmStructureLinkPersistence.findByC_C(classNameId, classPK);
 
 		if (structureLinks.isEmpty()) {
-			StringBundler sb = new StringBundler();
+			StringBundler sb = new StringBundler(5);
 
 			sb.append("No DDMStructureLink found for {classNameId=");
 			sb.append(classNameId);

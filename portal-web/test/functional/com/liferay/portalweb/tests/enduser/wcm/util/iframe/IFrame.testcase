@@ -26,6 +26,17 @@
 		</execute>
 	</set-up>
 
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+		</if>
+	</tear-down>
+
 	<command name="ViewIFramePortlet" priority="3">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="IFrame Page" />

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.Group;
@@ -38,6 +39,8 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.LayoutTestUtil;
+import com.liferay.portal.util.test.PortletContainerTestUtil;
+import com.liferay.portal.util.test.PortletContainerTestUtil.Response;
 import com.liferay.portlet.PortletURLImpl;
 
 import java.io.IOException;
@@ -45,7 +48,6 @@ import java.io.IOException;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
 
 import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
@@ -151,8 +153,8 @@ public class EmbeddedPortletTCKTest {
 				PortletKeys.LOGIN);
 
 			PortletPreferencesLocalServiceUtil.addPortletPreferences(
-				TestPropsValues.getCompanyId(),
-				_layout.getGroupId(), PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+				TestPropsValues.getCompanyId(), _layout.getGroupId(),
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
 				PortletKeys.PREFS_PLID_SHARED, portlet.getPortletId(), portlet,
 				null);
 
@@ -167,8 +169,8 @@ public class EmbeddedPortletTCKTest {
 				PortletKeys.LOGIN);
 
 			PortletPreferencesLocalServiceUtil.addPortletPreferences(
-				TestPropsValues.getCompanyId(),
-				_layout.getGroupId(), PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+				TestPropsValues.getCompanyId(), _layout.getGroupId(),
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
 				PortletKeys.PREFS_PLID_SHARED, portlet.getPortletId(), portlet,
 				null);
 
@@ -354,7 +356,7 @@ public class EmbeddedPortletTCKTest {
 
 		@Test
 		public void shouldRenderADTAndRuntimePortlets() throws Exception {
-			TestPortlet adtPortlet = new TestPortlet(map) {
+			TestPortlet adtPortlet = new TestPortlet() {
 
 				@Override
 				public void render(
@@ -362,7 +364,7 @@ public class EmbeddedPortletTCKTest {
 						RenderResponse renderResponse)
 					throws IOException, PortletException {
 
-					map.put("render", Boolean.TRUE.toString());
+					super.render(renderRequest, renderResponse);
 
 					PortletContext portletContext = getPortletContext();
 
@@ -375,6 +377,8 @@ public class EmbeddedPortletTCKTest {
 
 			};
 
+			Dictionary<String, Object> properties = new HashMapDictionary<>();
+
 			properties.put(
 				"com.liferay.portlet.instanceable", Boolean.FALSE.toString());
 
@@ -386,23 +390,14 @@ public class EmbeddedPortletTCKTest {
 				TemplateHandler.class,
 				new TestEmbeddedPortletDisplayTemplateHandler(), properties);
 
-			HttpServletRequest httpServletRequest = getHttpServletRequest();
+			HttpServletRequest httpServletRequest =
+				PortletContainerTestUtil.getHttpServletRequest(group, layout);
 
 			PortletURL portletURL = new PortletURLImpl(
 				httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 				PortletRequest.RENDER_PHASE);
 
-			TestPortlet testRuntimePortlet = new TestPortlet(map) {
-
-				@Override
-				public void render(
-					RenderRequest renderRequest, RenderResponse renderResponse)
-				throws IOException, PortletException {
-
-					map.put("runtime", Boolean.TRUE.toString());
-				}
-
-			};
+			TestRuntimePortlet testRuntimePortlet = new TestRuntimePortlet();
 
 			String testRuntimePortletId = "testRuntimePortletId";
 
@@ -412,12 +407,12 @@ public class EmbeddedPortletTCKTest {
 			portletURL.setParameter(
 				"testRuntimePortletId", testRuntimePortletId);
 
-			Map<String, List<String>> responseMap = request(
+			Response response = PortletContainerTestUtil.request(
 				portletURL.toString());
 
-			Assert.assertEquals("200", getString(responseMap, "code"));
-			Assert.assertTrue(map.containsKey("render"));
-			Assert.assertTrue(map.containsKey("runtime"));
+			Assert.assertEquals(200, response.getCode());
+			Assert.assertTrue(adtPortlet.isCalledRender());
+			Assert.assertTrue(testRuntimePortlet.isCalledRuntime());
 		}
 
 	}
@@ -452,7 +447,7 @@ public class EmbeddedPortletTCKTest {
 						ResourceResponse resourceResponse)
 					throws IOException, PortletException {
 
-					map.put("resource", Boolean.TRUE.toString());
+					super.serveResource(resourceRequest, resourceResponse);
 
 					PortletContext portletContext = getPortletContext();
 
@@ -466,6 +461,8 @@ public class EmbeddedPortletTCKTest {
 
 			};
 
+			Dictionary<String, Object> properties = new HashMapDictionary<>();
+
 			setUpPortlet(embeddedPortlet, properties, TEST_PORTLET_ID, false);
 
 			PortletPreferencesLocalServiceUtil.addPortletPreferences(
@@ -474,7 +471,8 @@ public class EmbeddedPortletTCKTest {
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
 				TEST_PORTLET_ID, null, null);
 
-			HttpServletRequest httpServletRequest = getHttpServletRequest();
+			HttpServletRequest httpServletRequest =
+				PortletContainerTestUtil.getHttpServletRequest(group, layout);
 
 			PortletURL portletURL = new PortletURLImpl(
 				httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
@@ -482,17 +480,7 @@ public class EmbeddedPortletTCKTest {
 
 			String testRuntimePortletId = "testRuntimePortletId";
 
-			TestPortlet testRuntimePortlet = new TestPortlet(map) {
-
-				@Override
-				public void render(
-					RenderRequest renderRequest, RenderResponse renderResponse)
-				throws IOException, PortletException {
-
-					map.put("runtime", Boolean.TRUE.toString());
-				}
-
-			};
+			TestRuntimePortlet testRuntimePortlet = new TestRuntimePortlet();
 
 			setUpPortlet(
 				testRuntimePortlet, properties, testRuntimePortletId, false);
@@ -500,12 +488,12 @@ public class EmbeddedPortletTCKTest {
 			portletURL.setParameter(
 				"testRuntimePortletId", testRuntimePortletId);
 
-			Map<String, List<String>> responseMap = request(
+			Response response = PortletContainerTestUtil.request(
 				portletURL.toString());
 
-			Assert.assertEquals("200", getString(responseMap, "code"));
-			Assert.assertTrue(map.containsKey("resource"));
-			Assert.assertTrue(map.containsKey("runtime"));
+			Assert.assertEquals(200, response.getCode());
+			Assert.assertTrue(embeddedPortlet.isCalledServeResource());
+			Assert.assertTrue(testRuntimePortlet.isCalledRuntime());
 		}
 
 	}

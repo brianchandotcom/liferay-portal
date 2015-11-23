@@ -14,6 +14,8 @@
 
 package com.liferay.osgi.service.tracker.collections.map;
 
+import com.liferay.osgi.service.tracker.collections.internal.common.ServiceReferenceServiceTuple;
+
 /**
  * @author Carlos Sierra Andrés
  */
@@ -24,9 +26,9 @@ public interface ServiceTrackerBucket<SR, TS, R> {
 	public boolean isDisposable();
 
 	public void remove(
-		ServiceReferenceServiceTuple<SR, TS, ?> serviceReferenceServiceTuple);
+		ServiceReferenceServiceTuple<SR, TS> serviceReferenceServiceTuple);
 
 	public void store(
-		ServiceReferenceServiceTuple<SR, TS, ?> serviceReferenceServiceTuple);
+		ServiceReferenceServiceTuple<SR, TS> serviceReferenceServiceTuple);
 
 }

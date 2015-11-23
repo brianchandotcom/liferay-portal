@@ -3795,6 +3795,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>markupView</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>Whether to remember the component's state and persist it to the database. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>persistState</name>
 			<required>false</required>

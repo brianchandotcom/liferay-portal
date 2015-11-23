@@ -409,17 +409,22 @@ public class DDLRecordSetLocalServiceImpl
 			ddmStructureId);
 
 		if (ddmStructure == null) {
-			throw new RecordSetDDMStructureIdException();
+			throw new RecordSetDDMStructureIdException(
+				"No DDMStructure found for {ddmStructureId=" +
+					ddmStructureId + "}");
 		}
 	}
 
 	protected void validateName(Map<Locale, String> nameMap)
 		throws PortalException {
 
-		String name = nameMap.get(LocaleUtil.getSiteDefault());
+		Locale locale = LocaleUtil.getSiteDefault();
+
+		String name = nameMap.get(locale);
 
 		if (Validator.isNull(name)) {
-			throw new RecordSetNameException();
+			throw new RecordSetNameException(
+				"Name is null for locale " + locale.getDisplayName());
 		}
 	}
 

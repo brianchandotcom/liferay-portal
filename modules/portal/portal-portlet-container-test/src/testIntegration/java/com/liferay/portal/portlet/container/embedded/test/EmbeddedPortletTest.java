@@ -105,7 +105,7 @@ import org.junit.runner.RunWith;
  * @author Manuel de la Peña
  */
 @RunWith(Enclosed.class)
-public class EmbeddedPortletTCKTest {
+public class EmbeddedPortletTest {
 
 	@RunWith(Arquillian.class)
 	public static class WhenEmbeddingEmbeddablePortletInLayout {

@@ -14,8 +14,8 @@
 
 package com.liferay.osgi.service.tracker.collections.internal.map;
 
-import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.KeyedServiceReferenceServiceTuple;
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerBucket;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerBucketFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -125,9 +125,11 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 	}
 
 	private void removeKeys(
-		KeyedServiceReferenceServiceTuple<SR, TS, K> keyedServiceReferenceServiceTuple) {
+		KeyedServiceReferenceServiceTuple<SR, TS, K>
+			keyedServiceReferenceServiceTuple) {
 
-		List<K> emittedKeys = keyedServiceReferenceServiceTuple.getEmittedKeys();
+		List<K> emittedKeys =
+			keyedServiceReferenceServiceTuple.getEmittedKeys();
 
 		for (K emittedKey : emittedKeys) {
 			ServiceTrackerBucket<SR, TS, R> serviceTrackerBucket =
@@ -149,7 +151,8 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 
 	private void storeKey(
 		K key,
-		KeyedServiceReferenceServiceTuple<SR, TS, K> keyedServiceReferenceServiceTuple) {
+		KeyedServiceReferenceServiceTuple<SR, TS, K>
+			keyedServiceReferenceServiceTuple) {
 
 		ServiceTrackerBucket<SR, TS, R> serviceTrackerBucket =
 			_serviceTrackerBuckets.get(key);
@@ -173,8 +176,8 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 
 	private final Logger _logger;
 	private final ServiceReferenceMapper<K, ? super SR> _serviceReferenceMapper;
-	private final ServiceTracker<SR, KeyedServiceReferenceServiceTuple<SR, TS, K>>
-		_serviceTracker;
+	private final ServiceTracker
+		<SR, KeyedServiceReferenceServiceTuple<SR, TS, K>> _serviceTracker;
 	private final ConcurrentMap<K, ServiceTrackerBucket<SR, TS, R>>
 		_serviceTrackerBuckets = new ConcurrentHashMap<>();
 	private final ServiceTrackerCustomizer<SR, TS> _serviceTrackerCustomizer;
@@ -235,9 +238,9 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 		}
 
 		private boolean _invokedServiceTrackerCustomizer;
-		private final ServiceReference<SR> _serviceReference;
 		private KeyedServiceReferenceServiceTuple<SR, TS, K>
 			_keyedServiceReferenceServiceTuple;
+		private final ServiceReference<SR> _serviceReference;
 
 	}
 
@@ -270,7 +273,8 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 			removeKeys(keyedServiceReferenceServiceTuple);
 
 			_serviceTrackerCustomizer.modifiedService(
-				serviceReference, keyedServiceReferenceServiceTuple.getService());
+				serviceReference,
+				keyedServiceReferenceServiceTuple.getService());
 
 			_serviceReferenceMapper.map(
 				(ServiceReference)serviceReference,
@@ -293,7 +297,8 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 			removeKeys(keyedServiceReferenceServiceTuple);
 
 			_serviceTrackerCustomizer.removedService(
-				serviceReference, keyedServiceReferenceServiceTuple.getService());
+				serviceReference,
+				keyedServiceReferenceServiceTuple.getService());
 		}
 
 	}

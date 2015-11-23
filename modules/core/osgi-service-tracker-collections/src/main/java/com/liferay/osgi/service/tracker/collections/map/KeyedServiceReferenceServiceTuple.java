@@ -14,10 +14,11 @@
 
 package com.liferay.osgi.service.tracker.collections.map;
 
+import com.liferay.osgi.service.tracker.collections.internal.common.ServiceReferenceServiceTuple;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import com.liferay.osgi.service.tracker.collections.internal.common.ServiceReferenceServiceTuple;
 import org.osgi.framework.ServiceReference;
 
 /**

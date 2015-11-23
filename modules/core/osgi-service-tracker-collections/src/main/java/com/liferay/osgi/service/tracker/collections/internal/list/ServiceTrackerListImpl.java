@@ -49,7 +49,8 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<S, T> {
 			_comparator = Collections.reverseOrder();
 		}
 		else {
-			_comparator = new ServiceReferenceServiceTupleComparator<>(comparator);
+			_comparator = new ServiceReferenceServiceTupleComparator<>(
+				comparator);
 		}
 
 		if (filterString != null) {

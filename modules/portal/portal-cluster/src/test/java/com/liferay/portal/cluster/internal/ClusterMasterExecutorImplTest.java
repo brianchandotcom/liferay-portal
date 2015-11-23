@@ -374,7 +374,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 		clusterMasterExecutorImpl.addClusterMasterTokenTransitionListener(
 			mockClusterMasterTokenTransitionListener);
 
-		Address oldCoordinator = mockClusterExecutor.getCoordinator();
+		Address oldCoordinator = mockClusterExecutor.getCoordinatorAddress();
 
 		mockClusterExecutor.setCoordinator(_TEST_ADDRESS);
 
@@ -705,13 +705,13 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 			return super.execute(clusterRequest);
 		}
 
-		public Address getCoordinator() {
+		public Address getCoordinatorAddress() {
 			ClusterChannel clusterChannel = getClusterChannel();
 
 			ClusterReceiver clusterReceiver =
 				clusterChannel.getClusterReceiver();
 
-			return clusterReceiver.getCoordinator();
+			return clusterReceiver.getCoordinatorAddress();
 		}
 
 		public String getLocalClusterNodeId() {

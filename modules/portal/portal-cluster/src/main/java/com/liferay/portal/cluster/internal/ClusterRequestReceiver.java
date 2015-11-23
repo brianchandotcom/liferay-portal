@@ -67,9 +67,9 @@ public class ClusterRequestReceiver extends BaseClusterReceiver {
 
 	@Override
 	protected void doCoordinatorUpdated(
-		Address oldCoordinator, Address newCoordinator) {
+		Address oldCoordinatorAddress, Address newCoordinatorAddress) {
 
-		if (oldCoordinator.equals(newCoordinator)) {
+		if (oldCoordinatorAddress.equals(newCoordinatorAddress)) {
 			return;
 		}
 

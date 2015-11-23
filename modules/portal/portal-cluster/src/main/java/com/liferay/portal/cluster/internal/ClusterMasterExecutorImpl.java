@@ -177,8 +177,8 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 	}
 
 	protected String getMasterClusterNodeId(boolean notify) {
-		String masterClusterNodeId = null;
 		boolean master = false;
+		String masterClusterNodeId = null;
 
 		while (true) {
 			ClusterChannel clusterChannel =
@@ -187,7 +187,7 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 			ClusterReceiver clusterReceiver =
 				clusterChannel.getClusterReceiver();
 
-			Address coordinator = clusterReceiver.getCoordinator();
+			Address coordinator = clusterReceiver.getCoordinatorAddress();
 
 			master = coordinator.equals(clusterChannel.getLocalAddress());
 
@@ -210,7 +210,7 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					"Unable to get cluster node information for coordinator " +
-						coordinator + ", reattempting to acquire");
+						coordinator + ". Trying again.");
 			}
 		}
 

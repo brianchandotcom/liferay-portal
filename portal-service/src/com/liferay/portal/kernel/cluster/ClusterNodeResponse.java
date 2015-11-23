@@ -99,7 +99,7 @@ public class ClusterNodeResponse implements Serializable {
 		Exception exception) {
 
 		if (clusterNode == null) {
-			throw new NullPointerException("ClusterNode is null");
+			throw new NullPointerException("Cluster node is null");
 		}
 
 		_clusterNode = clusterNode;

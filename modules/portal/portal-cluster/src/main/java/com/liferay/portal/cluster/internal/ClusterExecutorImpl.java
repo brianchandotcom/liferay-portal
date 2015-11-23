@@ -154,7 +154,7 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 				if (clusterNodeStatus == null) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
-							"Unable to find cluster node " + clusterNodeId +
+							"Unable to get cluster node " + clusterNodeId +
 								" while executing " + clusterRequest);
 					}
 
@@ -357,7 +357,7 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 		}
 
 		if (_log.isErrorEnabled()) {
-			_log.error("Unable to find cluster node with address " + address);
+			_log.error("Unable to get cluster node with address " + address);
 		}
 
 		return null;
@@ -437,7 +437,7 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 
 		if (futureClusterResponses == null) {
 			if (_log.isInfoEnabled()) {
-				_log.info("Unable to find response container for " + uuid);
+				_log.info("Unable to get response container for " + uuid);
 			}
 
 			return;

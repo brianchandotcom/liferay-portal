@@ -142,7 +142,7 @@ public abstract class BaseClusterReceiver implements ClusterReceiver {
 	}
 
 	@Override
-	public Address getCoordinator() {
+	public Address getCoordinatorAddress() {
 		return _coordinator;
 	}
 

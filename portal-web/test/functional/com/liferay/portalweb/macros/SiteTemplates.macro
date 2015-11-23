@@ -5,9 +5,13 @@
 		<execute function="Click" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_ACTIONS" value1="${siteTemplateName}" />
 		<execute function="Click" locator1="MenuItem#MANAGE" />
 
+		<execute macro="ProductMenuHelper#openProductMenu" />
+
 		<execute macro="ProductMenuHelper#expandCategory">
 			<var name="category" value="Pages" />
 		</execute>
+
+		<var name="key_sitePageName" value="${sitePageName}" />
 
 		<if>
 			<isset var="childSitepageName" />
@@ -56,6 +60,8 @@
 
 		<execute function="Click" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_ACTIONS" value1="${siteTemplateName}" />
 		<execute function="Click" locator1="MenuItem#MANAGE" />
+
+		<execute macro="ProductMenuHelper#openProductMenu" />
 
 		<execute macro="ProductMenuHelper#expandCategory">
 			<var name="category" value="Pages" />

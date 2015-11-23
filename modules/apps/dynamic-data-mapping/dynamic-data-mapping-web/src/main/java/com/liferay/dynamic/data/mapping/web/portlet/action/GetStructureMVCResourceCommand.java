@@ -65,7 +65,7 @@ public class GetStructureMVCResourceCommand extends BaseMVCResourceCommand {
 
 		ServletResponseUtil.sendFile(
 			httpServletRequest, httpServletResponse, null,
-			definition.getBytes(), ContentTypes.TEXT_XML_UTF8);
+			definition.getBytes(), ContentTypes.APPLICATION_JSON);
 	}
 
 	@Reference(unbind = "-")

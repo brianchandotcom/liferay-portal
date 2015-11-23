@@ -2,35 +2,15 @@
 	<property name="testray.main.component.name" value="Web Content Administration" />
 
 	<set-up>
-		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="SignIn#signInPortalInstance" />
-			</then>
-			<else>
-				<execute macro="User#firstLoginPG" />
-			</else>
-		</if>
+		<execute macro="User#firstLoginPG" />
 	</set-up>
 
 	<tear-down>
-		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+		<execute macro="WebContent#tearDownCP" />
 
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="WebContent#tearDownCP" />
+		<execute macro="WebContentTemplates#tearDownCP" />
 
-				<execute macro="WebContentTemplates#tearDownCP" />
-
-				<execute macro="WebContentStructures#tearDownCP" />
-			</else>
-		</if>
+		<execute macro="WebContentStructures#tearDownCP" />
 	</tear-down>
 
 	<command name="AddFolder" priority="5">

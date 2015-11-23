@@ -2,17 +2,7 @@
 	<property name="testray.main.component.name" value="Smoke" />
 
 	<set-up>
-		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="SignIn#signInPortalInstance" />
-			</then>
-			<else>
-				<execute macro="SignIn#signInTestSetup" />
-			</else>
-		</if>
+		<execute macro="SignIn#signInTestSetup" />
 	</set-up>
 
 	<tear-down>

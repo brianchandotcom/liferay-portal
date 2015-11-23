@@ -57,7 +57,8 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 		setExportControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "ratings-entries", true, false, null,
-				RatingsEntry.class.getName()));
+				RatingsEntry.class.getName(),
+				StagedModelType.REFERRER_CLASS_NAME_ALL));
 		setImportControls(getExportControls());
 		setPublishToLiveByDefault(true);
 

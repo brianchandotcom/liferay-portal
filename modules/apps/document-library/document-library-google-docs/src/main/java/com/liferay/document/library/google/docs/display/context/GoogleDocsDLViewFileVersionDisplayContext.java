@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.documentlibrary.display.context.BaseDLViewFileVersionDisplayContext;
 import com.liferay.portlet.documentlibrary.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.portlet.dynamicdatamapping.DDMStructure;
@@ -121,12 +122,14 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 			String previewURL = _googleDocsMetadataHelper.getFieldValue(
 				GoogleDocsConstants.DDM_FIELD_NAME_EMBEDDABLE_URL);
 
-			printWriter.format(
-				"<iframe frameborder=\"0\" height=\"300\" src=\"%s\" " +
-					"width=\"100%%\"></iframe>",
-				previewURL);
+			if (Validator.isNotNull(previewURL)) {
+				printWriter.format(
+					"<iframe frameborder=\"0\" height=\"300\" src=\"%s\" " +
+						"width=\"100%%\"></iframe>",
+					previewURL);
 
-			return;
+				return;
+			}
 		}
 
 		ResourceBundle resourceBundle = ResourceUtil.getResourceBundle(

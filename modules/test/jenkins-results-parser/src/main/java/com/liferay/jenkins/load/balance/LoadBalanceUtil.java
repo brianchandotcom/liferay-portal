@@ -270,9 +270,13 @@ public class LoadBalanceUtil {
 
 		protected IdleSlaveCounterCallable(String statusUrl) {
 			url = statusUrl;
+
+			if (url.startsWith("file")) {
+				url = url.replace("?", "%3F");
+			}
 		}
 
-		protected final String url;
+		protected String url;
 
 	}
 

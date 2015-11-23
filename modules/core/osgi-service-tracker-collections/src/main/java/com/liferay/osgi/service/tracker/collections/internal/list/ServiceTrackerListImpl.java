@@ -14,6 +14,7 @@
 
 package com.liferay.osgi.service.tracker.collections.internal.list;
 
+import com.liferay.osgi.service.tracker.collections.internal.common.ServiceReferenceServiceTuple;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 
 import java.util.Collections;
@@ -91,37 +92,6 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<S, T> {
 		new CopyOnWriteArrayList<>();
 	private final ServiceTracker<S, T> _serviceTracker;
 	private final ServiceTrackerCustomizer<S, T> _serviceTrackerCustomizer;
-
-	private static class ServiceReferenceServiceTuple<S, T>
-		implements Comparable<ServiceReferenceServiceTuple<S, T>> {
-
-		public ServiceReferenceServiceTuple(
-			ServiceReference<S> serviceReference, T service) {
-
-			_serviceReference = serviceReference;
-			_service = service;
-		}
-
-		@Override
-		public int compareTo(
-			ServiceReferenceServiceTuple<S, T> serviceReferenceServiceTuple) {
-
-			return _serviceReference.compareTo(
-				serviceReferenceServiceTuple.getServiceReference());
-		}
-
-		public T getService() {
-			return _service;
-		}
-
-		public ServiceReference<S> getServiceReference() {
-			return _serviceReference;
-		}
-
-		private final T _service;
-		private final ServiceReference<S> _serviceReference;
-
-	}
 
 	private static class ServiceTrackerListIterator<S, T>
 		implements Iterator<T> {

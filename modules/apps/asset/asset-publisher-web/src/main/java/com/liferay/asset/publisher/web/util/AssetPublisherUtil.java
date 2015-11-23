@@ -784,7 +784,7 @@ public class AssetPublisherUtil {
 			Map<String, Serializable> attributes)
 		throws Exception {
 
-		if (!showAssetEntryResults(portletName, assetEntryQuery)) {
+		if (!isShowAssetEntryResults(portletName, assetEntryQuery)) {
 			return Collections.emptyList();
 		}
 
@@ -1626,7 +1626,7 @@ public class AssetPublisherUtil {
 		return false;
 	}
 
-	protected static boolean showAssetEntryResults(
+	protected static boolean isShowAssetEntryResults(
 			String portletName, AssetEntryQuery assetEntryQuery)
 		throws Exception {
 

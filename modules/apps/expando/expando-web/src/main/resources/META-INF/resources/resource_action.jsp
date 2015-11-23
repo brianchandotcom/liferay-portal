@@ -27,17 +27,15 @@ CustomAttributesDisplay customAttributesDisplay = (CustomAttributesDisplay)row.g
 %>
 
 <c:if test="<%= permissionChecker.isCompanyAdmin() %>">
-	<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
-		<portlet:renderURL var="editURL">
-			<portlet:param name="mvcPath" value="/view_attributes.jsp" />
-			<portlet:param name="redirect" value="<%= redirect %>" />
-			<portlet:param name="modelResource" value="<%= customAttributesDisplay.getClassName() %>" />
-		</portlet:renderURL>
+	<portlet:renderURL var="editURL">
+		<portlet:param name="mvcPath" value="/view_attributes.jsp" />
+		<portlet:param name="redirect" value="<%= redirect %>" />
+		<portlet:param name="modelResource" value="<%= customAttributesDisplay.getClassName() %>" />
+	</portlet:renderURL>
 
-		<liferay-ui:icon
-			iconCssClass="icon-edit"
-			message="edit"
-			url="<%= editURL %>"
-		/>
-	</liferay-ui:icon-menu>
+	<liferay-ui:icon
+		iconCssClass="icon-edit"
+		message="edit"
+		url="<%= editURL %>"
+	/>
 </c:if>

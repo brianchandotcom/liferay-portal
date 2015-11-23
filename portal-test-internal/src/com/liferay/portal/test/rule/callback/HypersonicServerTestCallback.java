@@ -69,7 +69,7 @@ public class HypersonicServerTestCallback
 
 		server.stop();
 
-		deleteFolder(Paths.get(_HSQL_COPY));
+		deleteFolder(Paths.get(_HSQL_HOME_TEMP));
 	}
 
 	@Override
@@ -118,24 +118,26 @@ public class HypersonicServerTestCallback
 
 		Files.createDirectories(hsqlHomePath);
 
-		Path hsqlCopyPath = Paths.get(_HSQL_COPY);
+		Path hsqlHomeTempPath = Paths.get(_HSQL_HOME_TEMP);
 
-		deleteFolder(hsqlCopyPath);
+		deleteFolder(hsqlHomeTempPath);
 
-		copyFile(_databaseName.concat(".log"), hsqlHomePath, hsqlCopyPath);
+		copyFile(_databaseName.concat(".log"), hsqlHomePath, hsqlHomeTempPath);
 		copyFile(
-			_databaseName.concat(".properties"), hsqlHomePath, hsqlCopyPath);
-		copyFile(_databaseName.concat(".script"), hsqlHomePath, hsqlCopyPath);
+			_databaseName.concat(".properties"), hsqlHomePath,
+			hsqlHomeTempPath);
+		copyFile(
+			_databaseName.concat(".script"), hsqlHomePath, hsqlHomeTempPath);
 
 		server.setErrWriter(
 			new UnsyncPrintWriter(
-				new File(_HSQL_COPY, _databaseName + ".err.log")));
+				new File(_HSQL_HOME_TEMP, _databaseName + ".err.log")));
 		server.setLogWriter(
 			new UnsyncPrintWriter(
-				new File(_HSQL_COPY, _databaseName + ".std.log")));
+				new File(_HSQL_HOME_TEMP, _databaseName + ".std.log")));
 
 		server.setDatabaseName(0, _databaseName);
-		server.setDatabasePath(0, _HSQL_COPY + _databaseName);
+		server.setDatabasePath(0, _HSQL_HOME_TEMP + _databaseName);
 
 		server.start();
 
@@ -196,11 +198,11 @@ public class HypersonicServerTestCallback
 			});
 	}
 
-	private static final String _HSQL_COPY =
-		PropsValues.LIFERAY_HOME + "/data/hypersonicCopy/";
-
 	private static final String _HSQL_HOME =
 		PropsValues.LIFERAY_HOME + "/data/hypersonic/";
+
+	private static final String _HSQL_HOME_TEMP =
+		PropsValues.LIFERAY_HOME + "/data/hypersonic-temp/";
 
 	private final String _databaseName;
 

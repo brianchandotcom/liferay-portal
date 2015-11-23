@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -54,6 +55,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.text.DateFormat;
+
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -308,6 +312,7 @@ public class UpgradeJournal extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		updateBasicWebContentStructure();
+		updateJournalArticlesDateFieldValueFormat();
 
 		addDDMTemplateLinks();
 	}
@@ -332,6 +337,19 @@ public class UpgradeJournal extends UpgradeProcess {
 		Element rootElement = document.getRootElement();
 
 		return rootElement.elements("structure");
+	}
+
+	protected String transformDateFieldValues(String content) throws Exception {
+		Document document = SAXReaderUtil.read(content);
+
+		Element rootElement = document.getRootElement();
+
+		List<Element> dynamicElementElements = rootElement.elements(
+			"dynamic-element");
+
+		transformDateFieldValues(dynamicElementElements);
+
+		return XMLUtil.formatXML(document);
 	}
 
 	protected void updateBasicWebContentStructure() throws Exception {
@@ -398,7 +416,111 @@ public class UpgradeJournal extends UpgradeProcess {
 		}
 	}
 
+	protected void updateJournalArticlesDateFieldValueFormat()
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select id_, content from JournalArticle where content like " +
+					"'%type=_ddm-date_%'");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long id_ = rs.getLong("id_");
+				String content = rs.getString("content");
+
+				updateJournalArticlesDateFieldValueFormat(id_, content);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected void updateJournalArticlesDateFieldValueFormat(
+			long id_, String content)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"update JournalArticle set content = ? where id_ = ?");
+
+			ps.setString(1, transformDateFieldValues(content));
+			ps.setLong(2, id_);
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
+	}
+
+	private void transformDateFieldValue(Element dynamicContentElement) {
+		String valueString = dynamicContentElement.getText();
+
+		if (Validator.isNull(valueString) || !Validator.isNumber(valueString)) {
+			return;
+		}
+
+		Date dateValue = new Date(GetterUtil.getLong(valueString));
+
+		dynamicContentElement.clearContent();
+
+		dynamicContentElement.addCDATA(_dateFieldFormat.format(dateValue));
+	}
+
+	private void transformDateFieldValues(
+		List<Element> dynamicElementElements) {
+
+		if ( (dynamicElementElements == null) ||
+			dynamicElementElements.isEmpty() ) {
+
+			return;
+		}
+
+		for (Element dynamicElementElement : dynamicElementElements) {
+			String type = GetterUtil.getString(
+				dynamicElementElement.attributeValue("type"));
+
+			if (type.equals("ddm-date")) {
+				List<Element> dynamicContentElements =
+					dynamicElementElement.elements("dynamic-content");
+
+				for (Element dynamicContentElement : dynamicContentElements) {
+					transformDateFieldValue(dynamicContentElement);
+				}
+			}
+
+			List<Element> nestedDynamicElementElements =
+				dynamicElementElement.elements("dynamic-element");
+
+			transformDateFieldValues(nestedDynamicElementElements);
+		}
+	}
+
+	private static final String _CLASS_NAME_DDM_STRUCTURE =
+		"com.liferay.dynamic.data.mapping.model.DDMStructure";
+
+	private static final String _CLASS_NAME_DDM_TEMPLATE =
+		"com.liferay.dynamic.data.mapping.model.DDMTemplate";
+
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeJournal.class);
+
+	private static final DateFormat _dateFieldFormat =
+		DateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd");
 
 	private final CompanyLocalService _companyLocalService;
 	private final DDMStructureLocalService _ddmStructureLocalService;

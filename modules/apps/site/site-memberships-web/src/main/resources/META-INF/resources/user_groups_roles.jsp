@@ -55,8 +55,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "edit-site-roles-for-user-grou
 </aui:nav-bar>
 
 <liferay-frontend:management-bar
-	checkBoxContainerId="userGroupGroupRoleRoleSearchContainer"
 	includeCheckBox="<%= true %>"
+	searchContainerId="userGroupGroupRoleRole"
 >
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation

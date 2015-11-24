@@ -51,7 +51,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 		</aui:nav>
 
-		<c:if test="<%= tabs1.equals("resources") %>">
+		<c:if test='<%= tabs1.equals("resources") %>'>
 			<aui:nav-bar-search>
 
 				<liferay-portlet:renderURL varImpl="searchURL" />

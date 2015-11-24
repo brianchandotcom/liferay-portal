@@ -24,6 +24,7 @@ import com.liferay.portal.search.elasticsearch.settings.BaseSettingsContributor;
 
 import java.io.File;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -53,21 +54,28 @@ import org.mockito.Mockito;
  */
 public class ElasticsearchFixture {
 
+	public ElasticsearchFixture(String subdirName) {
+		this(subdirName, Collections.<String, Object>emptyMap());
+	}
+
 	public ElasticsearchFixture(
 		String subdirName,
-		HashMap<String, Object> elasticsearchConfigurationProperties) {
-
-		elasticsearchConfigurationProperties.put(
-			"configurationPid", ElasticsearchConfiguration.class.getName());
-		elasticsearchConfigurationProperties.put("logExceptionsOnly", false);
+		Map<String, Object> elasticsearchConfigurationProperties) {
 
 		_elasticsearchConfigurationProperties =
-			elasticsearchConfigurationProperties;
+			createElasticsearchConfigurationProperties(
+				elasticsearchConfigurationProperties);
 
 		_tmpDirName = "tmp/" + subdirName;
 	}
 
 	public Index createIndex(String indexName) {
+		return createIndex(indexName, Mockito.mock(IndexCreationHelper.class));
+	}
+
+	public Index createIndex(
+		String indexName, IndexCreationHelper indexCreationHelper) {
+
 		indexName = StringUtil.toLowerCase(indexName);
 
 		IndicesAdminClient indicesAdminClient = getIndicesAdminClient();
@@ -83,6 +91,8 @@ public class ElasticsearchFixture {
 
 		CreateIndexRequestBuilder createIndexRequestBuilder =
 			indicesAdminClient.prepareCreate(indexName);
+
+		indexCreationHelper.contribute(createIndexRequestBuilder);
 
 		createIndexRequestBuilder.get();
 
@@ -102,9 +112,13 @@ public class ElasticsearchFixture {
 	}
 
 	public AdminClient getAdminClient() {
-		Client client = _embeddedElasticsearchConnection.getClient();
+		Client client = getClient();
 
 		return client.admin();
+	}
+
+	public Client getClient() {
+		return _embeddedElasticsearchConnection.getClient();
 	}
 
 	public ClusterHealthResponse getClusterHealthResponse(
@@ -238,6 +252,18 @@ public class ElasticsearchFixture {
 			unicastSettingsContributor);
 	}
 
+	protected Map<String, Object> createElasticsearchConfigurationProperties(
+		Map<String, Object> elasticsearchConfigurationProperties) {
+
+		Map<String, Object> map = new HashMap<>(
+			elasticsearchConfigurationProperties);
+
+		map.put("configurationPid", ElasticsearchConfiguration.class.getName());
+		map.put("logExceptionsOnly", false);
+
+		return map;
+	}
+
 	protected EmbeddedElasticsearchConnection createElasticsearchConnection() {
 		EmbeddedElasticsearchConnection embeddedElasticsearchConnection =
 			new EmbeddedElasticsearchConnection();
@@ -254,8 +280,14 @@ public class ElasticsearchFixture {
 			_tmpDirName
 		);
 
+		ClusterSettingsContext clusterSettingsContext = _clusterSettingsContext;
+
+		if (clusterSettingsContext == null) {
+			clusterSettingsContext = Mockito.mock(ClusterSettingsContext.class);
+		}
+
 		embeddedElasticsearchConnection.setClusterSettingsContext(
-			_clusterSettingsContext);
+			clusterSettingsContext);
 		embeddedElasticsearchConnection.setProps(props);
 
 		embeddedElasticsearchConnection.activate(

@@ -14,6 +14,6 @@
  */
 --%>
 
-<%@ include file="/html/taglib/aui/fieldset_group/init.jsp" %>
+<%@ include file="/html/taglib/ui/panel_container/init.jsp" %>
 
-<div aria-multiselectable="true" class="panel-group" role="tablist">
+</div>

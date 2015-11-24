@@ -24,8 +24,6 @@ boolean showButtons = GroupPermissionUtil.contains(permissionChecker, layoutsAdm
 
 <liferay-ui:error-marker key="errorSection" value="logo" />
 
-<h3><liferay-ui:message key="logo" /></h3>
-
 <aui:fieldset>
 	<liferay-ui:error exception="<%= FileSizeException.class %>">
 

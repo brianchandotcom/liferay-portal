@@ -24,8 +24,6 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
 <aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
-<h3><liferay-ui:message key="custom-fields" /></h3>
-
 <aui:fieldset>
 	<liferay-ui:custom-attribute-list
 		className="<%= Layout.class.getName() %>"

@@ -51,35 +51,42 @@ public class LoadBalanceUtil {
 			return baseInvocationUrl;
 		}
 
-		int maxHostNames = calculateMaxHostNames(project, hostNamePrefix);
+		int hostNameCount = getHostNameCount(project, hostNamePrefix);
 
-		File file = new File(
-			project.getProperty(
-				"jenkins.shared.dir") + "/" + hostNamePrefix + ".semaphore");
+		File baseDir = new File(
+			project.getProperty("jenkins.shared.dir") + "/" + hostNamePrefix);
 
-		waitForTurn(file, maxHostNames);
+		File semaphoreFile = new File(baseDir, hostNamePrefix + ".semaphore");
 
-		JenkinsResultsParserUtil.write(file, myHostName);
+		waitForTurn(semaphoreFile, hostNameCount);
+
+		JenkinsResultsParserUtil.write(semaphoreFile, myHostName);
+
+		List<String> coolDownList = getCoolDownList(
+			new File(baseDir, "timeout"));
+
+		List<String> hostNameList = new ArrayList<>(hostNameCount);
+		int maxResult = Integer.MIN_VALUE;
+		int x = -1;
 
 		try {
-			List<String> hostNameList = new ArrayList<>(maxHostNames);
-			List<FutureTask<Integer>> taskList = new ArrayList<>(maxHostNames);
+			List<FutureTask<Integer>> taskList = new ArrayList<>(hostNameCount);
 
 			startParallelTasks(
-				hostNameList, hostNamePrefix, maxHostNames, project, taskList);
+				hostNameList, hostNamePrefix, hostNameCount, project, taskList,
+				coolDownList);
 
 			List<Integer> badIndicies = new ArrayList<>(taskList.size());
 			List<Integer> maxIndicies = new ArrayList<>(taskList.size());
-			int maxResult = 0;
 
 			for (int i = 0; i < taskList.size(); i++) {
 				FutureTask<Integer> task = taskList.get(i);
 
 				Integer result = task.get();
-				
+
 				System.out.println(hostNameList.get(i) + " : " + result);
 
-				if (result == -1) {
+				if (result == null) {
 					badIndicies.add(i);
 					continue;
 				}
@@ -94,19 +101,12 @@ public class LoadBalanceUtil {
 				}
 			}
 
-			if (badIndicies.size() == maxHostNames) {
-				throw new IllegalStateException(
-					"SEVERE: All hosts failed to respond.");
-			}
-
-			int x = -1;
-
 			if (maxIndicies.size() > 0) {
 				x = maxIndicies.get(getRandomValue(0, maxIndicies.size() - 1));
 			}
 			else {
 				while (true) {
-					x = getRandomValue(0, maxHostNames - 1);
+					x = getRandomValue(0, hostNameCount - 1);
 
 					if (badIndicies.contains(x)) {
 						continue;
@@ -115,16 +115,41 @@ public class LoadBalanceUtil {
 					break;
 				}
 			}
-			System.out.println("Most available master: " + hostNameList.get(x) +
-				" with " + maxResult + " available slaves.");
-			return hostNameList.get(x);
+
+			JenkinsResultsParserUtil.write(
+				new File(baseDir, "timeout/" + hostNameList.get(x)),
+				Long.toString(System.currentTimeMillis()));
+
+			System.out.println(
+				"Most available master: " + hostNameList.get(x) + " with " +
+					maxResult + " available slaves.");
 		}
 		finally {
-			JenkinsResultsParserUtil.write(file, "");
+			JenkinsResultsParserUtil.write(semaphoreFile, "");
 		}
+
+		return hostNameList.get(x);
 	}
 
-	protected static int calculateMaxHostNames(
+	protected static List<String> getCoolDownList(File dir) throws Exception {
+		List<String> coolDownList = new ArrayList<>();
+
+		if (!dir.exists()) {
+			return coolDownList;
+		}
+
+		for (File file : dir.listFiles()) {
+			long lastUsed = Long.parseLong(JenkinsResultsParserUtil.read(file));
+
+			if (System.currentTimeMillis() < (lastUsed + coolDownPeriod)) {
+				coolDownList.add(file.getName());
+			}
+		}
+
+		return coolDownList;
+	}
+
+	protected static int getHostNameCount(
 		Project project, String hostNamePrefix) {
 
 		int i = 1;
@@ -161,21 +186,24 @@ public class LoadBalanceUtil {
 	}
 
 	protected static void startParallelTasks(
-		List<String> hostNameList, String hostNamePrefix, int maxHostNames,
-		Project project, List<FutureTask<Integer>> taskList) throws Exception {
+		List<String> hostNameList, String hostNamePrefix, int hostNameCount,
+		Project project, List<FutureTask<Integer>> taskList,
+		List<String> coolDownList) throws Exception {
 
-		ExecutorService executor = Executors.newFixedThreadPool(maxHostNames);
+		ExecutorService executor = Executors.newFixedThreadPool(hostNameCount);
 
-		for (int i = 1; i <= maxHostNames; i++) {
+		for (int i = 1; i <= hostNameCount; i++) {
 			String targetHostName = hostNamePrefix + "-" + i;
+
+			if (coolDownList.contains(targetHostName)) {
+				continue;
+			}
 
 			hostNameList.add(targetHostName);
 
-			IdleSlaveCounterCallable callable =
-				new IdleSlaveCounterCallable(
-					project.getProperty(
-						"jenkins.local.url[" + targetHostName + "]") +
-							"/computer/api/json?pretty&tree=computer[idle]");
+			IdleSlaveCounterCallable callable = new IdleSlaveCounterCallable(
+				project.getProperty(
+					"jenkins.local.url[" + targetHostName + "]"));
 
 			FutureTask<Integer> futureTask = new FutureTask<>(callable);
 
@@ -187,7 +215,7 @@ public class LoadBalanceUtil {
 		executor.shutdown();
 	}
 
-	protected static void waitForTurn(File file, int maxHostNames)
+	protected static void waitForTurn(File file, int hostNameCount)
 		throws Exception {
 
 		boolean bypass = false;
@@ -201,17 +229,8 @@ public class LoadBalanceUtil {
 			long age = System.currentTimeMillis() - file.lastModified();
 			String content = JenkinsResultsParserUtil.read(file);
 
-			if (!bypass &&
-				((age < _MIN_RUN_INTERVAL) ||
-				 ((content.length() > 0) && (age < _MAX_AGE)))) {
-
-				long sleepPeriod =
-					_MIN_RUN_INTERVAL - age + (getRandomValue(0, maxHostNames) *
-						10);
-
-				System.out.println("Waiting " + sleepPeriod + " milliseconds.");
-
-				Thread.sleep(sleepPeriod);
+			if (!bypass && (content.length() > 0) && (age < maxAge)) {
+				Thread.sleep(1000);
 
 				continue;
 			}
@@ -220,9 +239,11 @@ public class LoadBalanceUtil {
 		}
 	}
 
+	protected static long coolDownPeriod = 60 * 1000;
+	protected static long maxAge = 30 * 1000;
 	protected static final String myHostName;
 	protected static final Pattern urlPattern = Pattern.compile(
-		"http://(?<hostNamePrefix>[\\S&&[^-]]+-\\d+).liferay.com");
+		"http://(?<hostNamePrefix>.+-\\d?).liferay.com");
 
 	static {
 		InetAddress inetAddress = null;
@@ -245,15 +266,24 @@ public class LoadBalanceUtil {
 		@Override
 		public Integer call() throws Exception {
 			JSONObject jsonObject = null;
+			JSONObject queueJsonObject = null;
 
 			try {
-				jsonObject = JenkinsResultsParserUtil.toJSONObject(url, false);
+				jsonObject = JenkinsResultsParserUtil.toJSONObject(
+					JenkinsResultsParserUtil.getLocalURL(
+						url + "/computer/api/json?pretty&tree=computer" +
+						"[displayName,idle,offline]"),
+					false, 5000);
+				queueJsonObject = JenkinsResultsParserUtil.toJSONObject(
+					JenkinsResultsParserUtil.getLocalURL(
+						url + "/queue/api/json?pretty"),
+					false, 5000);
 			}
 			catch (Exception e) {
 				System.out.println(
 					"WARNING : Exception occurred while attempting to read: " +
 						url);
-				return -1;
+				return null;
 			}
 
 			JSONArray jsonArray = jsonObject.getJSONArray("computer");
@@ -263,8 +293,25 @@ public class LoadBalanceUtil {
 			for (int i = 0; i < jsonArray.length(); i++) {
 				JSONObject idleJsonObject = jsonArray.getJSONObject(i);
 
-				if (idleJsonObject.getBoolean("idle")) {
-					idle++;
+				if (idleJsonObject.getBoolean("idle") &&
+					!idleJsonObject.getBoolean("offline")) {
+
+					String displayName = idleJsonObject.getString(
+						"displayName");
+
+					if (!displayName.equals("master")) {
+						idle++;
+					}
+				}
+			}
+
+			if (queueJsonObject.has("items")) {
+				JSONArray itemsJsonArray = queueJsonObject.getJSONArray(
+					"items");
+				int queueLength = itemsJsonArray.length();
+
+				if (queueLength > 0) {
+					return -1 * queueLength;
 				}
 			}
 
@@ -273,31 +320,10 @@ public class LoadBalanceUtil {
 
 		protected IdleSlaveCounterCallable(String statusUrl) {
 			url = statusUrl;
-
-			if (url.startsWith("file")) {
-				url = url.replace("?", "%3F");
-			}
 		}
 
 		protected String url;
 
-	}
-
-	private static final long _MAX_AGE = 30 * 1000;
-
-	private static final long _MIN_RUN_INTERVAL = 15 * 1000;
-	
-	public static void main(String[] args) {
-		Project project = LoadBalanceUtilTest.getDownloadProject("test-1");
-		while (true) {
-			try {
-				getMostAvailableMasterURL(project);
-				Thread.sleep(5000);
-			} catch (Exception e) {
-				e.printStackTrace();
-				System.exit(-1);
-			}
-		}
 	}
 
 }

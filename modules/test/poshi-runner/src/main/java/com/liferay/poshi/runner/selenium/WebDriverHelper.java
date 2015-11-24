@@ -902,8 +902,7 @@ public class WebDriverHelper {
 		WebDriverWait webDriverWait = new WebDriverWait(webDriver, 1);
 
 		try {
-			Alert alert = webDriverWait.until(
-				ExpectedConditions.alertIsPresent());
+			webDriverWait.until(ExpectedConditions.alertIsPresent());
 
 			return true;
 		}

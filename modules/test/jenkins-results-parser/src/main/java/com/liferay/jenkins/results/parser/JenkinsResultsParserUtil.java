@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import java.net.URL;
+import java.net.URLConnection;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -180,6 +181,10 @@ public class JenkinsResultsParserUtil {
 		remoteURL = remoteURL.replace(
 			"${user.dir}", System.getProperty("user.dir"));
 
+		if (remoteURL.startsWith("file")) {
+			remoteURL = remoteURL.replace("?", "%3F");
+		}
+
 		Matcher matcher = _localURLPattern1.matcher(remoteURL);
 
 		if (matcher.find()) {
@@ -214,20 +219,33 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static JSONObject toJSONObject(String url) throws Exception {
-		return toJSONObject(url, true);
+		return toJSONObject(url, true, 0);
 	}
 
 	public static JSONObject toJSONObject(String url, boolean checkCache)
 		throws Exception {
 
-		return new JSONObject(toString(url, checkCache));
+		return new JSONObject(toString(url, checkCache, 0));
+	}
+
+	public static JSONObject toJSONObject(
+			String url, boolean checkCache, int timeout)
+		throws Exception {
+
+		return new JSONObject(toString(url, checkCache, timeout));
 	}
 
 	public static String toString(String url) throws Exception {
-		return toString(url, true);
+		return toString(url, true, 0);
 	}
 
 	public static String toString(String url, boolean checkCache)
+		throws Exception {
+
+		return toString(url, checkCache, 0);
+	}
+
+	public static String toString(String url, boolean checkCache, int timeout)
 		throws Exception {
 
 		url = fixURL(url);
@@ -252,8 +270,15 @@ public class JenkinsResultsParserUtil {
 
 				URL urlObject = new URL(url);
 
+				URLConnection connection = urlObject.openConnection();
+
+				if (timeout != 0) {
+					connection.setConnectTimeout(timeout);
+					connection.setReadTimeout(timeout);
+				}
+
 				InputStreamReader inputStreamReader = new InputStreamReader(
-					urlObject.openStream());
+					connection.getInputStream());
 
 				BufferedReader bufferedReader = new BufferedReader(
 					inputStreamReader);

@@ -12,14 +12,18 @@
  * details.
  */
 
-package com.liferay.flags.page.flags.web.constants;
+package com.liferay.flags.web.constants;
 
 /**
  * @author Adolfo Pérez
+ * @author Peter Fellwock
  */
-public class PageFlagsPortletKeys {
+public class FlagsPortletKeys {
+	
+	public static final String FLAGS =
+			"com_liferay_flags_web_portlet_FlagsPortlet";
 
 	public static final String PAGE_FLAGS =
 		"com_liferay_flags_page_flags_web_portlet_PageFlagsPortlet";
-
+	
 }

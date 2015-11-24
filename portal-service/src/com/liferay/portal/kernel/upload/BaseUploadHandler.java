@@ -62,12 +62,11 @@ public abstract class BaseUploadHandler implements UploadHandler {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		try {
-			checkPermission(
-				themeDisplay.getScopeGroupId(),
-				getFolderId(uploadPortletRequest),
-				themeDisplay.getPermissionChecker());
+		checkPermission(
+			themeDisplay.getScopeGroupId(), getFolderId(uploadPortletRequest),
+			themeDisplay.getPermissionChecker());
 
+		try {
 			UploadException uploadException =
 				(UploadException)portletRequest.getAttribute(
 					WebKeys.UPLOAD_EXCEPTION);

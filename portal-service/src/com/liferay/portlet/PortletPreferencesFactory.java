@@ -159,6 +159,9 @@ public interface PortletPreferencesFactory {
 	public PortletPreferences getStrictPortletSetup(
 		Layout layout, String portletId);
 
+	public PortletPreferences getStrictPortletSetup(
+		long companyId, long groupId, String portletId);
+
 	public PortletPreferences strictFromXML(
 		long companyId, long ownerId, int ownerType, long plid,
 		String portletId, String xml);

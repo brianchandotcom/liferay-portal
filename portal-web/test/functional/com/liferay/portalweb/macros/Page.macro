@@ -436,12 +436,12 @@
 		<description message="Navigate to Site Administration > Configuration > ${portletName}." />
 
 		<execute macro="Page#gotoCmdCP">
+			<var name="category" value="Configuration" />
 			<var name="friendlyURL" value="${friendlyURL}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageAccess" value="${pageAccess}" />
 			<var name="pageStaging" value="${pageStaging}" />
 			<var name="portletCategoryKey" value="ADMIN_SITE_ADMINISTRATION_CONFIGURATION" />
-			<var name="portletCategoryName" value="Configuration" />
 			<var name="portletName" value="${portletName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteNameURL" value="${siteNameURL}" />
@@ -470,12 +470,12 @@
 
 	<command name="gotoContentCP" summary="Navigate to Admin > Site Administration > Content > ${portletName}">
 		<execute macro="Page#gotoCmdCP">
+			<var name="category" value="Content" />
 			<var name="friendlyURL" value="${friendlyURL}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageAccess" value="${pageAccess}" />
 			<var name="pageStaging" value="${pageStaging}" />
 			<var name="portletCategoryKey" value="ADMIN_SITE_ADMINISTRATION_CONTENT" />
-			<var name="portletCategoryName" value="Content" />
 			<var name="portletName" value="${portletName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteNameURL" value="${siteNameURL}" />
@@ -699,12 +699,12 @@
 		<description message="Navigate to Site Administration > Pages > ${portletName}." />
 
 		<execute macro="Page#gotoCmdCP">
+			<var name="category" value="Pages" />
 			<var name="friendlyURL" value="${friendlyURL}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageAccess" value="${pageAccess}" />
 			<var name="pageStaging" value="${pageStaging}" />
 			<var name="portletCategoryKey" value="ADMIN_SITE_ADMINISTRATION_PAGES" />
-			<var name="portletCategoryName" value="Pages" />
 			<var name="portletName" value="${portletName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteNameURL" value="${siteNameURL}" />
@@ -782,11 +782,11 @@
 		<description message="Navigate to Site Administration > Publishing tools > ${portletName}." />
 
 		<execute macro="Page#gotoCmdCP">
+			<var name="category" value="Publishing Tools" />
 			<var name="friendlyURL" value="${friendlyURL}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageAccess" value="${pageAccess}" />
 			<var name="pageStaging" value="${pageStaging}" />
-			<var name="portletCategoryName" value="Publishing Tools" />
 			<var name="portletName" value="${portletName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteNameURL" value="${siteNameURL}" />
@@ -822,12 +822,12 @@
 		<description message="Navigate to Site Administration > Users > ${portletName}." />
 
 		<execute macro="Page#gotoCmdCP">
+			<var name="category" value="Users" />
 			<var name="friendlyURL" value="${friendlyURL}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageAccess" value="${pageAccess}" />
 			<var name="pageStaging" value="${pageStaging}" />
 			<var name="portletCategoryKey" value="ADMIN_SITE_ADMINISTRATION_USERS" />
-			<var name="portletCategoryName" value="Users" />
 			<var name="portletName" value="${portletName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteNameURL" value="${siteNameURL}" />

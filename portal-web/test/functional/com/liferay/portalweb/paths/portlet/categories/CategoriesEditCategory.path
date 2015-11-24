@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>VIEWABLE_BY_SELECT</td>
-	<td>//select[contains(@id,'inputPermissionsViewRole')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>LOCALIZATION_NAME</td>
 	<td>//li[@data-value='${key_localizationName}']</td>
 	<td></td>
@@ -36,12 +31,12 @@
 <!--PROPERTIES-->
 <tr>
 	<td>PROPERTIES_BAR</td>
-	<td>//div[@class='panel-toggle' and contains(.,'Properties')]</td>
+	<td>//a[contains(.,'Properties')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PROPERTIES_BAR_COLLAPSED</td>
-	<td>//div[contains(@id,'assetCategoryPropertiesPanel')]//div[contains(@class,'panel-heading') and contains(@class,'toggler-header') and contains(@class,'toggler-header-collapsed')]</td>
+	<td>//fieldset//a[contains(.,'Propertie') and contains(@class,'collapsed')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -97,6 +92,27 @@
 <tr>
 	<td>VOCABULARY_SELECT</td>
 	<td>//div[contains(@class,'select-wrapper')]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PERMISSIONS-->
+<tr>
+	<td>PERMISSIONS_BAR</td>
+	<td>//a[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSIONS_BAR_COLLAPSED</td>
+	<td>//fieldset//a[contains(.,'Permissions') and contains(@class,'collapsed')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSIONS_VIEWABLE_BY_SELECT</td>
+	<td>//select[contains(@id,'inputPermissionsViewRole')]</td>
 	<td></td>
 </tr>
 </tbody>

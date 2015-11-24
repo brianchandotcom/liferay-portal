@@ -1,7 +1,5 @@
 <definition>
 	<command name="viewPlatformSettingCP">
-		<execute function="AssertClick" locator1="MenuItem#PLATFORM" value1="Platform" />
-
 		<var name="key_assetEntry" value="${configurationName}" />
 
 		<execute function="Click" locator1="Icon#DESCRIPTIVE_VERTICAL_ELLIPSIS" />

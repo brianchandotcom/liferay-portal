@@ -14,8 +14,8 @@
 			<var name="configurationName" value="LDAPAuth configuration" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Portal Settings" />
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Portal Settings" />
 		</execute>
 
 		<execute macro="PortalSettings#enableLDAPCP" />
@@ -23,6 +23,8 @@
 		<execute macro="ProductMenu#gotoControlPanelSystem">
 			<var name="portlet" value="System Settings" />
 		</execute>
+
+		<execute macro="SystemSettingsNavigator#gotoPlatformCP" />
 
 		<execute macro="SystemSettings#viewPlatformSettingCP">
 			<var name="configurationName" value="LDAPAuth configuration" />

@@ -439,7 +439,7 @@
 		</for>
 	</command>
 
-	<command name="SubmitFormWithMultipleFields" priority="4">
+	<command name="SubmitFormWithMultipleFieldsAndViewEntriesViaDescriptiveDisplay" priority="4">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">

@@ -43,9 +43,9 @@ public class EntriesMover extends RowMover {
 				new RowMoverDropTarget();
 
 			moveToTrashRowMoverDropTarget.setAction("move-to-trash");
-			moveToTrashRowMoverDropTarget.setActiveCssClass("active");
+			moveToTrashRowMoverDropTarget.setActiveCssClass("bg-info");
 			moveToTrashRowMoverDropTarget.setContainer("body");
-			moveToTrashRowMoverDropTarget.setInfoCssClass("active");
+			moveToTrashRowMoverDropTarget.setInfoCssClass("bg-primary");
 
 			String productMenuPortletId = PortletProviderUtil.getPortletId(
 				PortalProductMenuApplicationType.ProductMenu.CLASS_NAME,

@@ -52,6 +52,51 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>diff-version-comparator</name>
+		<tag-class>com.liferay.frontend.taglib.servlet.taglib.DiffVersionComparatorTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>availableLocales</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>diffHtmlResults</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>diffVersionsInfo</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>languageId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>portletURL</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>resourceURL</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>sourceVersion</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>targetVersion</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<description>Creates a lexicon-based card component.</description>
 		<name>horizontal-card</name>
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.HorizontalCardTag</tag-class>

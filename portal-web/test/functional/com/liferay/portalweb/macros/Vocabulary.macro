@@ -10,9 +10,9 @@
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_SELECT" />
+			<condition function="IsElementPresent" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_BAR_COLLAPSED" />
 			<then>
-				<execute function="AssertClick" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_DROP_DOWN" value1="Associated Asset Types" />
+				<execute function="Click" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_BAR" />
 			</then>
 		</if>
 
@@ -68,7 +68,15 @@
 		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${vocabularyName}" />
-		<execute function="Select" locator1="CategoriesEditVocabulary#VIEWABLE_BY_SELECT" value1="${viewableBy}" />
+
+		<if>
+			<condition function="IsElementPresent" locator1="CategoriesEditVocabulary#PERMISSIONS_BAR_COLLAPSED" />
+			<then>
+				<execute function="Click" locator1="CategoriesEditVocabulary#PERMISSIONS_BAR" />
+			</then>
+		</if>
+
+		<execute function="Select" locator1="CategoriesEditVocabulary#PERMISSIONS_VIEWABLE_BY_SELECT" value1="${viewableBy}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
@@ -91,9 +99,9 @@
 		<execute function="Type" locator1="TextInput#NAME" value1="${vocabularyName}" />
 
 		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_SELECT" />
+			<condition function="IsElementPresent" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_BAR_COLLAPSED" />
 			<then>
-				<execute function="AssertClick" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_DROP_DOWN" value1="Associated Asset Types" />
+				<execute function="Click" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_BAR" />
 			</then>
 		</if>
 
@@ -125,9 +133,9 @@
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_SELECT" />
+			<condition function="IsElementPresent" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_BAR_COLLAPSED" />
 			<then>
-				<execute function="AssertClick" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_DROP_DOWN" value1="Associated Asset Types" />
+				<execute function="Click" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_BAR" />
 			</then>
 		</if>
 
@@ -321,9 +329,9 @@
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_SELECT" />
+			<condition function="IsElementPresent" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_BAR_COLLAPSED" />
 			<then>
-				<execute function="AssertClick" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_DROP_DOWN" value1="Associated Asset Types" />
+				<execute function="Click" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_BAR" />
 			</then>
 		</if>
 

@@ -525,11 +525,11 @@ public class PoshiRunnerExecutor {
 			String[] returnNames = StringUtil.split(returns);
 
 			for (String returnName : returnNames) {
-				if (PoshiRunnerVariablesUtil.containsKeyInCommandMap(
+				if (PoshiRunnerVariablesUtil.containsKeyInReturnMap(
 						returnName)) {
 
 					String returnValue =
-						PoshiRunnerVariablesUtil.getValueFromCommandMap(
+						PoshiRunnerVariablesUtil.getValueFromReturnMap(
 							returnName);
 
 					macroReturns.put(returnName, returnValue);
@@ -625,7 +625,7 @@ public class PoshiRunnerExecutor {
 			returnValue = PoshiRunnerVariablesUtil.replaceCommandVars(
 				returnValue);
 
-			PoshiRunnerVariablesUtil.putIntoCommandMap(returnName, returnValue);
+			PoshiRunnerVariablesUtil.putIntoReturnMap(returnName, returnValue);
 		}
 
 		XMLLoggerHandler.updateStatus(returnElement, "pass");

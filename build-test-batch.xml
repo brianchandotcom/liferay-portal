@@ -1135,7 +1135,7 @@
 			<arg line="oracledb start" />
 		</exec>
 
-		<retry retrycount="5">
+		<retry retrycount="60">
 			<sequential>
 				<local name="output.content" />
 				<local name="return.code" />
@@ -1152,7 +1152,7 @@ ${output.content}</echo>
 						<contains string="${output.content}" substring="The listener supports no services" />
 					</or>
 					<then>
-						<sleep minutes="1" />
+						<sleep seconds="5" />
 
 						<fail message="Output content: ${output.content}" />
 					</then>

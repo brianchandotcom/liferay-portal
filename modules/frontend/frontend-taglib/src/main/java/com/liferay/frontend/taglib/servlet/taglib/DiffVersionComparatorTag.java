@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.taglib.ui;
+package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.portal.kernel.diff.DiffVersionsInfo;
 import com.liferay.taglib.util.IncludeTag;

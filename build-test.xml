@@ -4647,7 +4647,24 @@ journal.articles.search.with.index=false</echo>
 ## From portal-legacy-6.2.properties
 ##
 
-users.image.check.token=false</echo>
+users.image.check.token=false
+
+layout.set.prototype.propagate.logo=true
+
+editor.wysiwyg.portal-web.docroot.html.taglib.ui.discussion.jsp=simple
+
+web.server.servlet.check.image.gallery=true
+
+blogs.trackback.enabled=true
+
+discussion.comments.format=bbcode
+
+discussion.max.comments=0
+
+dl.file.entry.thumbnail.max.height=128
+dl.file.entry.thumbnail.max.width=128
+
+upgrade.processes=${upgrade.processes.master}</echo>
 			</then>
 		</if>
 

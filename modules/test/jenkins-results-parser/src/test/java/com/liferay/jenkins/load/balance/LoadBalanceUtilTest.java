@@ -32,6 +32,21 @@ import org.junit.Test;
  */
 public class LoadBalanceUtilTest extends BaseJenkinsResultsParserTestCase {
 
+	public static void main(String[] args) {
+		Project project = getDownloadProject("test-1");
+		while (true) {
+			try {
+				LoadBalanceUtil.coolDownPeriod = 0;
+				LoadBalanceUtil.getMostAvailableMasterURL(project);
+				Thread.sleep(5000);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				System.exit(-1);
+			}
+		}
+	}
+
 	public LoadBalanceUtilTest() {
 		dependenciesDir = new File(
 			"src/test/resources/com/liferay/load/balance/dependencies/" +
@@ -46,6 +61,7 @@ public class LoadBalanceUtilTest extends BaseJenkinsResultsParserTestCase {
 
 	@Test
 	public void testGetMostAvailableMasterURL() throws Exception {
+		LoadBalanceUtil.coolDownPeriod = 0;
 		assertSamples();
 	}
 
@@ -88,7 +104,7 @@ public class LoadBalanceUtilTest extends BaseJenkinsResultsParserTestCase {
 	@Override
 	protected void downloadSample(File sampleDir, URL url) throws Exception {
 		Project project = getDownloadProject(sampleDir.getName());
-		int maxHostNames = LoadBalanceUtil.calculateMaxHostNames(
+		int maxHostNames = LoadBalanceUtil.getHostNameCount(
 			project, sampleDir.getName());
 
 		for (int i = 1; i <= maxHostNames; i++) {
@@ -98,7 +114,15 @@ public class LoadBalanceUtilTest extends BaseJenkinsResultsParserTestCase {
 					project.getProperty(
 						"jenkins.local.url[" + sampleDir.getName() + "-" + i +
 						"]")),
-				"/computer/api/json?pretty&tree=computer[idle]");
+					"/computer/api/json?pretty&tree=computer" +
+						"[displayName,idle,offline]");
+			downloadSampleURL(
+				new File(sampleDir, sampleDir.getName() + "-" + i),
+				createURL(
+					project.getProperty(
+						"jenkins.local.url[" + sampleDir.getName() + "-" + i +
+						"]")),
+				"/queue/api/json?pretty");
 		}
 	}
 

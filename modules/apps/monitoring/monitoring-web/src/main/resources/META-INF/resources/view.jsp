@@ -22,6 +22,12 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("mvcRenderCommandName", "/monitoring/view");
 %>
 
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item label="live-sessions" selected="<%= true %>" />
+	</aui:nav>
+</aui:nav-bar>
+
 <c:choose>
 	<c:when test="<%= PropsValues.LIVE_USERS_ENABLED && PropsValues.SESSION_TRACKER_MEMORY_ENABLED %>">
 

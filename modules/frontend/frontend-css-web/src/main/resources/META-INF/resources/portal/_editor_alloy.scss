@@ -3,6 +3,8 @@
 }
 
 .alloy-editor {
+	overflow: hidden;
+
 	&.alloy-editor-placeholder {
 		&:empty:not(:focus):not(.form-control) {
 			border-left: 2px solid;

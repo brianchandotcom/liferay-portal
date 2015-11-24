@@ -366,7 +366,7 @@
 
 					<execute function="AssertClick" locator1="Button#REPLY" value1="Reply" />
 
-					<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request processed successfully." />
+					<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 				</for>
 			</then>
 			<else>
@@ -374,7 +374,7 @@
 
 				<execute function="AssertClick" locator1="Button#REPLY" value1="Reply" />
 
-				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request processed successfully." />
+				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 			</else>
 		</if>
 

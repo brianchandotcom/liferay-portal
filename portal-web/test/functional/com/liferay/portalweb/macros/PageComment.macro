@@ -16,7 +16,7 @@
 
 		<var name="key_commentBody" value="${commentBody}" />
 
-		<execute function="AssertTextEquals" locator1="PGPagecomments#SUCCESS_MESSAGE" value1="Your request processed successfully." />
+		<execute function="AssertTextEquals" locator1="PGPagecomments#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<execute function="AssertElementPresent" locator1="Comments#WORKFLOW_STATUS" />
 

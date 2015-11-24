@@ -41,7 +41,7 @@ public class FieldsetTag extends BaseFieldsetTag {
 	protected int processEndTag() throws Exception {
 		JspWriter jspWriter = pageContext.getOut();
 
-		jspWriter.write("</div></fieldset>");
+		jspWriter.write("</div></div></div>");
 
 		return EVAL_PAGE;
 	}

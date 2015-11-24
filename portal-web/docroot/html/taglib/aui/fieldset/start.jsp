@@ -16,7 +16,7 @@
 
 <%@ include file="/html/taglib/aui/fieldset/init.jsp" %>
 
-<fieldset class="fieldset <%= collapsible ? "panel panel-default" : StringPool.BLANK %> <%= cssClass %>" <%= Validator.isNotNull(id) ? "id=\"" + namespace + id + "\"" : StringPool.BLANK %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
+<div aria-labelledby="<%= panelId %>Title" class="<%= collapsible ? "panel panel-default" : StringPool.BLANK %> <%= cssClass %>" <%= Validator.isNotNull(id) ? "id=\"" + namespace + id + "\"" : StringPool.BLANK %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %> role="group">
 	<c:if test="<%= Validator.isNotNull(label) %>">
 		<liferay-util:buffer var="header">
 			<liferay-ui:message key="<%= label %>" localizeKey="<%= localizeLabel %>" />
@@ -26,22 +26,21 @@
 			</c:if>
 		</liferay-util:buffer>
 
-		<c:choose>
-			<c:when test="<%= collapsible %>">
-				<legend class="fieldset-legend panel-heading">
-					<a aria-controls="collapseOne" aria-expanded="<%= !collapsed %>" class="<%= !collapsed ? "collapsed" : StringPool.BLANK %>" data-toggle="collapse" href="#<%= panelId %>" role="button">
+		<div class="panel-heading" id="<%= panelId %>Header" role="presentation">
+			<div class="h4 panel-title" id="<%= panelId %>Title">
+				<c:choose>
+					<c:when test="<%= collapsible %>">
+						<a aria-controls="<%= panelId %>Content" aria-expanded="true" class="collapse-icon collapse-icon-middle <%= !collapsed ? "collapsed" : StringPool.BLANK %>" data-toggle="collapse" href="#<%= panelId %>Content" role="button">
+							<%= header %>
+						</a>
+					</c:when>
+					<c:otherwise>
 						<%= header %>
-					</a>
-				</legend>
-			</c:when>
-			<c:otherwise>
-				<legend class="fieldset-legend">
-					<span class="legend">
-						<%= header %>
-					</span>
-				</legend>
-			</c:otherwise>
-		</c:choose>
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</div>
 	</c:if>
 
-	<div class="<%= !collapsed ? "in" : StringPool.BLANK %> <%= collapsible ? "panel-collapse collapse" : StringPool.BLANK %> <%= column ? "row-fluid" : StringPool.BLANK %>" id="<%= panelId %>">
+	<div aria-labelledby="<%= panelId %>Header" class="<%= !collapsed ? "in" : StringPool.BLANK %> <%= collapsible ? "panel-collapse collapse" : StringPool.BLANK %> <%= column ? "row-fluid" : StringPool.BLANK %>" id="<%= panelId %>Content" role="presentation">
+		<div class="panel-body">

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/diff_version_comparator/init.jsp" %>
+<%@ include file="/diff_version_comparator/init.jsp" %>
 
 <%
 Set<Locale> availableLocales = (Set<Locale>)request.getAttribute("liferay-ui:diff-version-comparator:availableLocales");

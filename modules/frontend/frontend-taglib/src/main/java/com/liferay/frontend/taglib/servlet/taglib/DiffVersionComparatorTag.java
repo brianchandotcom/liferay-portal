@@ -113,8 +113,7 @@ public class DiffVersionComparatorTag extends IncludeTag {
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 
-	private static final String _PAGE =
-		"/html/taglib/ui/diff_version_comparator/page.jsp";
+	private static final String _PAGE = "/diff_version_comparator/page.jsp";
 
 	private Set<Locale> _availableLocales;
 	private String _diffHtmlResults;

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String className = ParamUtil.getString(request, "className");

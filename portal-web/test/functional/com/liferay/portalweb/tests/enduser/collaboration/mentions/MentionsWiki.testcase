@@ -78,6 +78,8 @@
 	</tear-down>
 
 	<command name="ViewWikiCommentMentionedUser" priority="5">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />
 		</execute>
@@ -99,6 +101,8 @@
 		</execute>
 
 		<execute macro="WikiEntry#publish" />
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Wiki" />

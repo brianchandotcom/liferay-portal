@@ -155,8 +155,10 @@
 	</command>
 
 	<command name="AddKBArticleWithBlogsEntryRelatedAssetViaKBAdmin" priority="3">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Blogs" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Blogs" />
 		</execute>
 
 		<execute macro="Blogs#addEntry">
@@ -197,8 +199,10 @@
 	</command>
 
 	<command name="AddKBArticleWithCategory" priority="4">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Categories" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Categories" />
 		</execute>
 
 		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
@@ -207,8 +211,10 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Categories" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Categories" />
 		</execute>
 
 		<execute macro="Category#addCP">
@@ -259,8 +265,10 @@
 	</command>
 
 	<command name="AddKBArticleWithoutRequiredCategory" priority="3">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Categories" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Categories" />
 		</execute>
 
 		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
@@ -269,8 +277,10 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Categories" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Categories" />
 		</execute>
 
 		<execute macro="Category#addCP">

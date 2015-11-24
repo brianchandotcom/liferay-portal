@@ -45,6 +45,8 @@
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>

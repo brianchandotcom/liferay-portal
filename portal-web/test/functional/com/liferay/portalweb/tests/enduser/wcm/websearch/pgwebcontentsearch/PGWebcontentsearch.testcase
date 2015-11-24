@@ -152,8 +152,10 @@
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Categories" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Categories" />
 		</execute>
 
 		<execute macro="Vocabulary#addCP">
@@ -249,8 +251,10 @@
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Categories" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Categories" />
 		</execute>
 
 		<execute macro="Vocabulary#addCP">

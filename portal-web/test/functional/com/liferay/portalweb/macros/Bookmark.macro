@@ -184,8 +184,10 @@
 		<execute function="AssertClick" locator1="PGBookmarksFolder#BOOKMARK_ACTION_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="The ${assetType} ${bookmarkName} was moved to the Recycle Bin. Undo" />
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Recycle Bin" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Recycle Bin" />
 		</execute>
 
 		<execute macro="RecycleBin#emptyCP" />
@@ -316,16 +318,20 @@
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no bookmarks in this folder." />
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Bookmarks" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Bookmarks" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Bookmarks#BOOKMARKS_TABLE_NAME" value1="${bookmarkName}" />
 	</command>
 
 	<command name="moveToRecycleBinCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Bookmarks" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Bookmarks" />
 		</execute>
 
 		<var name="key_bookmarkName" value="${bookmarkName}" />
@@ -406,8 +412,10 @@
 	</command>
 
 	<command name="tearDownCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Bookmarks" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Bookmarks" />
 		</execute>
 
 		<while>
@@ -421,8 +429,10 @@
 			</then>
 		</while>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Recycle Bin" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Recycle Bin" />
 		</execute>
 
 		<execute macro="RecycleBin#emptyCP" />

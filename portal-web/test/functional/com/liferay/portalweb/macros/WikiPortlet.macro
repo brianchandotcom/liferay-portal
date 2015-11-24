@@ -45,8 +45,10 @@
 	</command>
 
 	<command name="tearDownCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Wiki" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Wiki" />
 		</execute>
 
 		<var name="key_wikiNodeName" value="Main" />

@@ -101,6 +101,8 @@
 	</command>
 
 	<command name="gotoBlogsEntryCP">
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Blogs" />
 		</execute>

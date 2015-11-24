@@ -907,7 +907,7 @@ public class WebDriverHelper {
 
 			return true;
 		}
-		catch (TimeoutException e) {
+		catch (TimeoutException te) {
 			return false;
 		}
 	}

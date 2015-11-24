@@ -32,21 +32,6 @@ import org.junit.Test;
  */
 public class LoadBalanceUtilTest extends BaseJenkinsResultsParserTestCase {
 
-	public static void main(String[] args) {
-		Project project = getDownloadProject("test-1");
-		while (true) {
-			try {
-				LoadBalanceUtil.coolDownPeriod = 0;
-				LoadBalanceUtil.getMostAvailableMasterURL(project);
-				Thread.sleep(5000);
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-				System.exit(-1);
-			}
-		}
-	}
-
 	public LoadBalanceUtilTest() {
 		dependenciesDir = new File(
 			"src/test/resources/com/liferay/load/balance/dependencies/" +

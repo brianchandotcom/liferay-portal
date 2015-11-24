@@ -6191,6 +6191,8 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 					<arg value="--password=${database.password}" />
 					<arg value="--user=${database.username}" />
 				</exec>
+
+				<exec executable="mysql_upgrade" />
 			</then>
 		</if>
 	</target>

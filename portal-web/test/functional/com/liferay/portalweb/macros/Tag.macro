@@ -121,7 +121,7 @@
 				</then>
 			</elseif>
 			<else>
-				<execute function="Check" locator1="Tags#ALL_TAGS_CHECKBOX" />
+				<execute function="Check#checkAll" locator1="Tags#ALL_TAGS_CHECKBOX" />
 				<execute function="Click" locator1="Tags#TOOLBAR_ACTIONS" />
 				<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 			</else>
@@ -162,7 +162,7 @@
 	</command>
 
 	<command name="mergeMultipleTags">
-		<execute function="Check" locator1="Tags#ALL_TAGS_CHECKBOX" />
+		<execute function="Check#checkAll" locator1="Tags#ALL_TAGS_CHECKBOX" />
 		<execute function="Click" locator1="Icon#MERGE" />
 		<execute function="Select" locator1="Tags#MERGE_TAGS_INTO_THIS_TAG_SELECT" value1="${tagName2}" />
 		<execute function="AssertClickNoError" locator1="Button#MERGE" value1="Merge" />

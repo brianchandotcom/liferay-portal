@@ -572,18 +572,28 @@ AUI.add(
 					return emptyRows;
 				},
 
-				findStructureFieldByAttribute: function(structure, attributeName, attributeValue) {
-					var found = null;
+				findStructureFieldByAttribute: function(fieldsArray, attributeName, attributeValue) {
+					var instance = this;
 
-					structure.some(
-						function(item, index) {
-							found = item;
+					var	structureField;
 
-							return found[attributeName] === attributeValue;
+					AArray.some(
+						fieldsArray,
+						function(item) {
+							var nestedFieldsArray = item.fields;
+
+							if (item[attributeName] === attributeValue) {
+								structureField = item;
+							}
+							else if (nestedFieldsArray) {
+								structureField = instance.findStructureFieldByAttribute(nestedFieldsArray, attributeName, attributeValue);
+							}
+
+							return structureField !== undefined;
 						}
 					);
 
-					return found;
+					return structureField;
 				},
 
 				getCellEditorOptions: function(options) {

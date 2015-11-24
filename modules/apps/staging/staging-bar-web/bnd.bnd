@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.staging.bar.web
 Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\
+	content=../staging-lang/src/main/resources/content,\
 	META-INF/resources=src/main/resources/META-INF/resources
 Require-Capability:\
 	osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/staging";version:Version="1.0.0"

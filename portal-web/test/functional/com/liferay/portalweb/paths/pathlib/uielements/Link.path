@@ -98,6 +98,11 @@
 	<td>//a[contains(@class,'show-url-file')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>WEB_CONTENT_ARTICLE</td>
+	<td>//a[contains(@data-assettype,'Web Content Article') and contains(.,'${key_webContentTitle}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

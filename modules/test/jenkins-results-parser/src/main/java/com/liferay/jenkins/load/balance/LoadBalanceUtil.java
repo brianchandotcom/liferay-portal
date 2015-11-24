@@ -113,7 +113,8 @@ public class LoadBalanceUtil {
 					break;
 				}
 			}
-
+			System.out.println("Most available master: " + hostNameList.get(x) +
+				" with " + maxResult + " available slaves.");
 			return hostNameList.get(x);
 		}
 		finally {

@@ -415,7 +415,7 @@ if (Validator.isNotNull(scriptContent)) {
 					}
 				).render(paletteContainer);
 
-				tooltip.get('boundingBox').on('clickoutside', tooltip.hide, tooltip);
+				tooltip.get('boundingBox').on('mouseleave', tooltip.hide, tooltip);
 
 				paletteContainer.delegate(
 					'mouseenter',

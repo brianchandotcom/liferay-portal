@@ -1,0 +1,772 @@
+{
+  "items" : [
+    {
+      "actions" : [
+        {
+          "parameters" : [
+            {
+              "name" : "AXIS_VARIABLES",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_BRANCH_NAME",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_BRANCH_USERNAME",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_PULL_REQUEST_NUMBER",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_PULL_REQUEST_USERNAME",
+              "value" : ""
+            },
+            {
+              "name" : "JOB_VARIANT",
+              "value" : "tck"
+            },
+            {
+              "name" : "TOP_LEVEL_SHARED_DIR",
+              "value" : "/mnt/mfs-ssd1-10.0.10/jenkins/test-1-13/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/540"
+            }
+          ]
+        },
+        {
+          
+        },
+        {
+          "causes" : [
+            {
+              "shortDescription" : "Started by upstream project \"test-portal-acceptance-pullrequest-batch(master)\" build number 15,518",
+              "upstreamBuild" : 15518,
+              "upstreamProject" : "test-portal-acceptance-pullrequest-batch(master)",
+              "upstreamUrl" : "job/test-portal-acceptance-pullrequest-batch(master)/"
+            }
+          ]
+        }
+      ],
+      "blocked" : false,
+      "buildable" : true,
+      "id" : 35793,
+      "inQueueSince" : 1448395314596,
+      "params" : "\nAXIS_VARIABLES=\nJENKINS_GITHUB_BRANCH_NAME=\nJENKINS_GITHUB_BRANCH_USERNAME=\nJENKINS_GITHUB_PULL_REQUEST_NUMBER=\nJENKINS_GITHUB_PULL_REQUEST_USERNAME=\nJOB_VARIANT=tck\nTOP_LEVEL_SHARED_DIR=/mnt/mfs-ssd1-10.0.10/jenkins/test-1-13/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/540",
+      "stuck" : false,
+      "task" : {
+        "name" : "AXIS_VARIABLE=9,label_exp=!master",
+        "url" : "https://test-1-5.liferay.com/job/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=9,label_exp=!master/",
+        "color" : "blue_anime"
+      },
+      "url" : "queue/item/35793/",
+      "why" : "Waiting for next available executor on !master",
+      "buildableStartMilliseconds" : 1448395314597,
+      "pending" : false
+    },
+    {
+      "actions" : [
+        {
+          "parameters" : [
+            {
+              "name" : "AXIS_VARIABLES",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_BRANCH_NAME",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_BRANCH_USERNAME",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_PULL_REQUEST_NUMBER",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_PULL_REQUEST_USERNAME",
+              "value" : ""
+            },
+            {
+              "name" : "JOB_VARIANT",
+              "value" : "tck"
+            },
+            {
+              "name" : "TOP_LEVEL_SHARED_DIR",
+              "value" : "/mnt/mfs-ssd1-10.0.10/jenkins/test-1-13/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/540"
+            }
+          ]
+        },
+        {
+          
+        },
+        {
+          "causes" : [
+            {
+              "shortDescription" : "Started by upstream project \"test-portal-acceptance-pullrequest-batch(master)\" build number 15,518",
+              "upstreamBuild" : 15518,
+              "upstreamProject" : "test-portal-acceptance-pullrequest-batch(master)",
+              "upstreamUrl" : "job/test-portal-acceptance-pullrequest-batch(master)/"
+            }
+          ]
+        }
+      ],
+      "blocked" : false,
+      "buildable" : true,
+      "id" : 35792,
+      "inQueueSince" : 1448395314458,
+      "params" : "\nAXIS_VARIABLES=\nJENKINS_GITHUB_BRANCH_NAME=\nJENKINS_GITHUB_BRANCH_USERNAME=\nJENKINS_GITHUB_PULL_REQUEST_NUMBER=\nJENKINS_GITHUB_PULL_REQUEST_USERNAME=\nJOB_VARIANT=tck\nTOP_LEVEL_SHARED_DIR=/mnt/mfs-ssd1-10.0.10/jenkins/test-1-13/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/540",
+      "stuck" : false,
+      "task" : {
+        "name" : "AXIS_VARIABLE=6,label_exp=!master",
+        "url" : "https://test-1-5.liferay.com/job/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=6,label_exp=!master/",
+        "color" : "blue_anime"
+      },
+      "url" : "queue/item/35792/",
+      "why" : "Waiting for next available executor on !master",
+      "buildableStartMilliseconds" : 1448395314458,
+      "pending" : false
+    },
+    {
+      "actions" : [
+        {
+          "parameters" : [
+            {
+              "name" : "AXIS_VARIABLES",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_BRANCH_NAME",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_BRANCH_USERNAME",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_PULL_REQUEST_NUMBER",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_PULL_REQUEST_USERNAME",
+              "value" : ""
+            },
+            {
+              "name" : "JOB_VARIANT",
+              "value" : "tck"
+            },
+            {
+              "name" : "TOP_LEVEL_SHARED_DIR",
+              "value" : "/mnt/mfs-ssd1-10.0.10/jenkins/test-1-13/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/540"
+            }
+          ]
+        },
+        {
+          
+        },
+        {
+          "causes" : [
+            {
+              "shortDescription" : "Started by upstream project \"test-portal-acceptance-pullrequest-batch(master)\" build number 15,518",
+              "upstreamBuild" : 15518,
+              "upstreamProject" : "test-portal-acceptance-pullrequest-batch(master)",
+              "upstreamUrl" : "job/test-portal-acceptance-pullrequest-batch(master)/"
+            }
+          ]
+        }
+      ],
+      "blocked" : false,
+      "buildable" : true,
+      "id" : 35791,
+      "inQueueSince" : 1448395314457,
+      "params" : "\nAXIS_VARIABLES=\nJENKINS_GITHUB_BRANCH_NAME=\nJENKINS_GITHUB_BRANCH_USERNAME=\nJENKINS_GITHUB_PULL_REQUEST_NUMBER=\nJENKINS_GITHUB_PULL_REQUEST_USERNAME=\nJOB_VARIANT=tck\nTOP_LEVEL_SHARED_DIR=/mnt/mfs-ssd1-10.0.10/jenkins/test-1-13/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/540",
+      "stuck" : false,
+      "task" : {
+        "name" : "AXIS_VARIABLE=1,label_exp=!master",
+        "url" : "https://test-1-5.liferay.com/job/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=1,label_exp=!master/",
+        "color" : "blue_anime"
+      },
+      "url" : "queue/item/35791/",
+      "why" : "Waiting for next available executor on !master",
+      "buildableStartMilliseconds" : 1448395314458,
+      "pending" : false
+    },
+    {
+      "actions" : [
+        {
+          "parameters" : [
+            {
+              "name" : "AXIS_VARIABLES",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_BRANCH_NAME",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_BRANCH_USERNAME",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_PULL_REQUEST_NUMBER",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_PULL_REQUEST_USERNAME",
+              "value" : ""
+            },
+            {
+              "name" : "JOB_VARIANT",
+              "value" : "tck"
+            },
+            {
+              "name" : "TOP_LEVEL_SHARED_DIR",
+              "value" : "/mnt/mfs-ssd1-10.0.10/jenkins/test-1-13/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/540"
+            }
+          ]
+        },
+        {
+          
+        },
+        {
+          "causes" : [
+            {
+              "shortDescription" : "Started by upstream project \"test-portal-acceptance-pullrequest-batch(master)\" build number 15,518",
+              "upstreamBuild" : 15518,
+              "upstreamProject" : "test-portal-acceptance-pullrequest-batch(master)",
+              "upstreamUrl" : "job/test-portal-acceptance-pullrequest-batch(master)/"
+            }
+          ]
+        }
+      ],
+      "blocked" : false,
+      "buildable" : true,
+      "id" : 35790,
+      "inQueueSince" : 1448395314343,
+      "params" : "\nAXIS_VARIABLES=\nJENKINS_GITHUB_BRANCH_NAME=\nJENKINS_GITHUB_BRANCH_USERNAME=\nJENKINS_GITHUB_PULL_REQUEST_NUMBER=\nJENKINS_GITHUB_PULL_REQUEST_USERNAME=\nJOB_VARIANT=tck\nTOP_LEVEL_SHARED_DIR=/mnt/mfs-ssd1-10.0.10/jenkins/test-1-13/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/540",
+      "stuck" : false,
+      "task" : {
+        "name" : "AXIS_VARIABLE=3,label_exp=!master",
+        "url" : "https://test-1-5.liferay.com/job/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=3,label_exp=!master/",
+        "color" : "blue_anime"
+      },
+      "url" : "queue/item/35790/",
+      "why" : "Waiting for next available executor on !master",
+      "buildableStartMilliseconds" : 1448395314343,
+      "pending" : false
+    },
+    {
+      "actions" : [
+        {
+          "parameters" : [
+            {
+              "name" : "AXIS_VARIABLES",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_BRANCH_NAME",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_BRANCH_USERNAME",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_PULL_REQUEST_NUMBER",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_PULL_REQUEST_USERNAME",
+              "value" : ""
+            },
+            {
+              "name" : "JOB_VARIANT",
+              "value" : "tck"
+            },
+            {
+              "name" : "TOP_LEVEL_SHARED_DIR",
+              "value" : "/mnt/mfs-ssd1-10.0.10/jenkins/test-1-13/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/540"
+            }
+          ]
+        },
+        {
+          
+        },
+        {
+          "causes" : [
+            {
+              "shortDescription" : "Started by upstream project \"test-portal-acceptance-pullrequest-batch(master)\" build number 15,518",
+              "upstreamBuild" : 15518,
+              "upstreamProject" : "test-portal-acceptance-pullrequest-batch(master)",
+              "upstreamUrl" : "job/test-portal-acceptance-pullrequest-batch(master)/"
+            }
+          ]
+        }
+      ],
+      "blocked" : false,
+      "buildable" : true,
+      "id" : 35789,
+      "inQueueSince" : 1448395314235,
+      "params" : "\nAXIS_VARIABLES=\nJENKINS_GITHUB_BRANCH_NAME=\nJENKINS_GITHUB_BRANCH_USERNAME=\nJENKINS_GITHUB_PULL_REQUEST_NUMBER=\nJENKINS_GITHUB_PULL_REQUEST_USERNAME=\nJOB_VARIANT=tck\nTOP_LEVEL_SHARED_DIR=/mnt/mfs-ssd1-10.0.10/jenkins/test-1-13/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/540",
+      "stuck" : false,
+      "task" : {
+        "name" : "AXIS_VARIABLE=7,label_exp=!master",
+        "url" : "https://test-1-5.liferay.com/job/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=7,label_exp=!master/",
+        "color" : "blue_anime"
+      },
+      "url" : "queue/item/35789/",
+      "why" : "Waiting for next available executor on !master",
+      "buildableStartMilliseconds" : 1448395314235,
+      "pending" : false
+    },
+    {
+      "actions" : [
+        {
+          "parameters" : [
+            {
+              "name" : "AXIS_VARIABLES",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_BRANCH_NAME",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_BRANCH_USERNAME",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_PULL_REQUEST_NUMBER",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_PULL_REQUEST_USERNAME",
+              "value" : ""
+            },
+            {
+              "name" : "JOB_VARIANT",
+              "value" : "tck"
+            },
+            {
+              "name" : "TOP_LEVEL_SHARED_DIR",
+              "value" : "/mnt/mfs-ssd1-10.0.10/jenkins/test-1-13/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/540"
+            }
+          ]
+        },
+        {
+          
+        },
+        {
+          "causes" : [
+            {
+              "shortDescription" : "Started by upstream project \"test-portal-acceptance-pullrequest-batch(master)\" build number 15,518",
+              "upstreamBuild" : 15518,
+              "upstreamProject" : "test-portal-acceptance-pullrequest-batch(master)",
+              "upstreamUrl" : "job/test-portal-acceptance-pullrequest-batch(master)/"
+            }
+          ]
+        }
+      ],
+      "blocked" : false,
+      "buildable" : true,
+      "id" : 35788,
+      "inQueueSince" : 1448395314134,
+      "params" : "\nAXIS_VARIABLES=\nJENKINS_GITHUB_BRANCH_NAME=\nJENKINS_GITHUB_BRANCH_USERNAME=\nJENKINS_GITHUB_PULL_REQUEST_NUMBER=\nJENKINS_GITHUB_PULL_REQUEST_USERNAME=\nJOB_VARIANT=tck\nTOP_LEVEL_SHARED_DIR=/mnt/mfs-ssd1-10.0.10/jenkins/test-1-13/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/540",
+      "stuck" : false,
+      "task" : {
+        "name" : "AXIS_VARIABLE=8,label_exp=!master",
+        "url" : "https://test-1-5.liferay.com/job/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=8,label_exp=!master/",
+        "color" : "blue_anime"
+      },
+      "url" : "queue/item/35788/",
+      "why" : "Waiting for next available executor on !master",
+      "buildableStartMilliseconds" : 1448395314135,
+      "pending" : false
+    },
+    {
+      "actions" : [
+        {
+          "parameters" : [
+            {
+              "name" : "AXIS_VARIABLES",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_BRANCH_NAME",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_BRANCH_USERNAME",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_PULL_REQUEST_NUMBER",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_PULL_REQUEST_USERNAME",
+              "value" : ""
+            },
+            {
+              "name" : "JOB_VARIANT",
+              "value" : "tck"
+            },
+            {
+              "name" : "TOP_LEVEL_SHARED_DIR",
+              "value" : "/mnt/mfs-ssd1-10.0.10/jenkins/test-1-13/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/540"
+            }
+          ]
+        },
+        {
+          
+        },
+        {
+          "causes" : [
+            {
+              "shortDescription" : "Started by upstream project \"test-portal-acceptance-pullrequest-batch(master)\" build number 15,518",
+              "upstreamBuild" : 15518,
+              "upstreamProject" : "test-portal-acceptance-pullrequest-batch(master)",
+              "upstreamUrl" : "job/test-portal-acceptance-pullrequest-batch(master)/"
+            }
+          ]
+        }
+      ],
+      "blocked" : false,
+      "buildable" : true,
+      "id" : 35787,
+      "inQueueSince" : 1448395313984,
+      "params" : "\nAXIS_VARIABLES=\nJENKINS_GITHUB_BRANCH_NAME=\nJENKINS_GITHUB_BRANCH_USERNAME=\nJENKINS_GITHUB_PULL_REQUEST_NUMBER=\nJENKINS_GITHUB_PULL_REQUEST_USERNAME=\nJOB_VARIANT=tck\nTOP_LEVEL_SHARED_DIR=/mnt/mfs-ssd1-10.0.10/jenkins/test-1-13/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/540",
+      "stuck" : false,
+      "task" : {
+        "name" : "AXIS_VARIABLE=4,label_exp=!master",
+        "url" : "https://test-1-5.liferay.com/job/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=4,label_exp=!master/",
+        "color" : "blue_anime"
+      },
+      "url" : "queue/item/35787/",
+      "why" : "Waiting for next available executor on !master",
+      "buildableStartMilliseconds" : 1448395313984,
+      "pending" : false
+    },
+    {
+      "actions" : [
+        {
+          "parameters" : [
+            {
+              "name" : "AXIS_VARIABLES",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_BRANCH_NAME",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_BRANCH_USERNAME",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_PULL_REQUEST_NUMBER",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_PULL_REQUEST_USERNAME",
+              "value" : ""
+            },
+            {
+              "name" : "JOB_VARIANT",
+              "value" : "tck"
+            },
+            {
+              "name" : "TOP_LEVEL_SHARED_DIR",
+              "value" : "/mnt/mfs-ssd1-10.0.10/jenkins/test-1-13/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/540"
+            }
+          ]
+        },
+        {
+          
+        },
+        {
+          "causes" : [
+            {
+              "shortDescription" : "Started by upstream project \"test-portal-acceptance-pullrequest-batch(master)\" build number 15,518",
+              "upstreamBuild" : 15518,
+              "upstreamProject" : "test-portal-acceptance-pullrequest-batch(master)",
+              "upstreamUrl" : "job/test-portal-acceptance-pullrequest-batch(master)/"
+            }
+          ]
+        }
+      ],
+      "blocked" : false,
+      "buildable" : true,
+      "id" : 35786,
+      "inQueueSince" : 1448395313912,
+      "params" : "\nAXIS_VARIABLES=\nJENKINS_GITHUB_BRANCH_NAME=\nJENKINS_GITHUB_BRANCH_USERNAME=\nJENKINS_GITHUB_PULL_REQUEST_NUMBER=\nJENKINS_GITHUB_PULL_REQUEST_USERNAME=\nJOB_VARIANT=tck\nTOP_LEVEL_SHARED_DIR=/mnt/mfs-ssd1-10.0.10/jenkins/test-1-13/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/540",
+      "stuck" : false,
+      "task" : {
+        "name" : "AXIS_VARIABLE=2,label_exp=!master",
+        "url" : "https://test-1-5.liferay.com/job/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=2,label_exp=!master/",
+        "color" : "blue_anime"
+      },
+      "url" : "queue/item/35786/",
+      "why" : "Waiting for next available executor on !master",
+      "buildableStartMilliseconds" : 1448395313913,
+      "pending" : false
+    },
+    {
+      "actions" : [
+        {
+          "parameters" : [
+            {
+              "name" : "AXIS_VARIABLES",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_BRANCH_NAME",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_BRANCH_USERNAME",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_PULL_REQUEST_NUMBER",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_PULL_REQUEST_USERNAME",
+              "value" : ""
+            },
+            {
+              "name" : "JOB_VARIANT",
+              "value" : "tck"
+            },
+            {
+              "name" : "TOP_LEVEL_SHARED_DIR",
+              "value" : "/mnt/mfs-ssd1-10.0.10/jenkins/test-1-13/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/540"
+            }
+          ]
+        },
+        {
+          
+        },
+        {
+          "causes" : [
+            {
+              "shortDescription" : "Started by upstream project \"test-portal-acceptance-pullrequest-batch(master)\" build number 15,518",
+              "upstreamBuild" : 15518,
+              "upstreamProject" : "test-portal-acceptance-pullrequest-batch(master)",
+              "upstreamUrl" : "job/test-portal-acceptance-pullrequest-batch(master)/"
+            }
+          ]
+        }
+      ],
+      "blocked" : false,
+      "buildable" : true,
+      "id" : 35785,
+      "inQueueSince" : 1448395313844,
+      "params" : "\nAXIS_VARIABLES=\nJENKINS_GITHUB_BRANCH_NAME=\nJENKINS_GITHUB_BRANCH_USERNAME=\nJENKINS_GITHUB_PULL_REQUEST_NUMBER=\nJENKINS_GITHUB_PULL_REQUEST_USERNAME=\nJOB_VARIANT=tck\nTOP_LEVEL_SHARED_DIR=/mnt/mfs-ssd1-10.0.10/jenkins/test-1-13/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/540",
+      "stuck" : false,
+      "task" : {
+        "name" : "AXIS_VARIABLE=5,label_exp=!master",
+        "url" : "https://test-1-5.liferay.com/job/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=5,label_exp=!master/",
+        "color" : "blue_anime"
+      },
+      "url" : "queue/item/35785/",
+      "why" : "Waiting for next available executor on !master",
+      "buildableStartMilliseconds" : 1448395313844,
+      "pending" : false
+    },
+    {
+      "actions" : [
+        {
+          "parameters" : [
+            {
+              "name" : "AXIS_VARIABLES",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_BRANCH_NAME",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_BRANCH_USERNAME",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_PULL_REQUEST_NUMBER",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_PULL_REQUEST_USERNAME",
+              "value" : ""
+            },
+            {
+              "name" : "JOB_VARIANT",
+              "value" : "tck"
+            },
+            {
+              "name" : "TOP_LEVEL_SHARED_DIR",
+              "value" : "/mnt/mfs-ssd1-10.0.10/jenkins/test-1-13/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/540"
+            }
+          ]
+        },
+        {
+          
+        },
+        {
+          "causes" : [
+            {
+              "shortDescription" : "Started by upstream project \"test-portal-acceptance-pullrequest-batch(master)\" build number 15,518",
+              "upstreamBuild" : 15518,
+              "upstreamProject" : "test-portal-acceptance-pullrequest-batch(master)",
+              "upstreamUrl" : "job/test-portal-acceptance-pullrequest-batch(master)/"
+            }
+          ]
+        }
+      ],
+      "blocked" : false,
+      "buildable" : true,
+      "id" : 35784,
+      "inQueueSince" : 1448395313791,
+      "params" : "\nAXIS_VARIABLES=\nJENKINS_GITHUB_BRANCH_NAME=\nJENKINS_GITHUB_BRANCH_USERNAME=\nJENKINS_GITHUB_PULL_REQUEST_NUMBER=\nJENKINS_GITHUB_PULL_REQUEST_USERNAME=\nJOB_VARIANT=tck\nTOP_LEVEL_SHARED_DIR=/mnt/mfs-ssd1-10.0.10/jenkins/test-1-13/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/540",
+      "stuck" : false,
+      "task" : {
+        "name" : "AXIS_VARIABLE=0,label_exp=!master",
+        "url" : "https://test-1-5.liferay.com/job/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=0,label_exp=!master/",
+        "color" : "blue_anime"
+      },
+      "url" : "queue/item/35784/",
+      "why" : "Waiting for next available executor on !master",
+      "buildableStartMilliseconds" : 1448395313791,
+      "pending" : false
+    },
+    {
+      "actions" : [
+        {
+          "parameters" : [
+            {
+              "name" : "AXIS_VARIABLES",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_BRANCH_NAME",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_BRANCH_USERNAME",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_PULL_REQUEST_NUMBER",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_PULL_REQUEST_USERNAME",
+              "value" : ""
+            },
+            {
+              "name" : "JOB_VARIANT",
+              "value" : "integration-mysql"
+            },
+            {
+              "name" : "TOP_LEVEL_SHARED_DIR",
+              "value" : "/mnt/mfs-ssd1-10.0.10/jenkins/test-1-13/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/540"
+            }
+          ]
+        },
+        {
+          
+        },
+        {
+          "causes" : [
+            {
+              "shortDescription" : "Started by upstream project \"test-portal-acceptance-pullrequest-batch(master)\" build number 15,517",
+              "upstreamBuild" : 15517,
+              "upstreamProject" : "test-portal-acceptance-pullrequest-batch(master)",
+              "upstreamUrl" : "job/test-portal-acceptance-pullrequest-batch(master)/"
+            }
+          ]
+        }
+      ],
+      "blocked" : false,
+      "buildable" : true,
+      "id" : 35783,
+      "inQueueSince" : 1448395280337,
+      "params" : "\nAXIS_VARIABLES=\nJENKINS_GITHUB_BRANCH_NAME=\nJENKINS_GITHUB_BRANCH_USERNAME=\nJENKINS_GITHUB_PULL_REQUEST_NUMBER=\nJENKINS_GITHUB_PULL_REQUEST_USERNAME=\nJOB_VARIANT=integration-mysql\nTOP_LEVEL_SHARED_DIR=/mnt/mfs-ssd1-10.0.10/jenkins/test-1-13/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/540",
+      "stuck" : false,
+      "task" : {
+        "name" : "AXIS_VARIABLE=1,label_exp=!master",
+        "url" : "https://test-1-5.liferay.com/job/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=1,label_exp=!master/",
+        "color" : "blue_anime"
+      },
+      "url" : "queue/item/35783/",
+      "why" : "Waiting for next available executor on !master",
+      "buildableStartMilliseconds" : 1448395280338,
+      "pending" : false
+    },
+    {
+      "actions" : [
+        {
+          "parameters" : [
+            {
+              "name" : "AXIS_VARIABLES",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_BRANCH_NAME",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_BRANCH_USERNAME",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_PULL_REQUEST_NUMBER",
+              "value" : ""
+            },
+            {
+              "name" : "JENKINS_GITHUB_PULL_REQUEST_USERNAME",
+              "value" : ""
+            },
+            {
+              "name" : "JOB_VARIANT",
+              "value" : "integration-mysql"
+            },
+            {
+              "name" : "TOP_LEVEL_SHARED_DIR",
+              "value" : "/mnt/mfs-ssd1-10.0.10/jenkins/test-1-13/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/540"
+            }
+          ]
+        },
+        {
+          
+        },
+        {
+          "causes" : [
+            {
+              "shortDescription" : "Started by upstream project \"test-portal-acceptance-pullrequest-batch(master)\" build number 15,517",
+              "upstreamBuild" : 15517,
+              "upstreamProject" : "test-portal-acceptance-pullrequest-batch(master)",
+              "upstreamUrl" : "job/test-portal-acceptance-pullrequest-batch(master)/"
+            }
+          ]
+        }
+      ],
+      "blocked" : false,
+      "buildable" : true,
+      "id" : 35782,
+      "inQueueSince" : 1448395280270,
+      "params" : "\nAXIS_VARIABLES=\nJENKINS_GITHUB_BRANCH_NAME=\nJENKINS_GITHUB_BRANCH_USERNAME=\nJENKINS_GITHUB_PULL_REQUEST_NUMBER=\nJENKINS_GITHUB_PULL_REQUEST_USERNAME=\nJOB_VARIANT=integration-mysql\nTOP_LEVEL_SHARED_DIR=/mnt/mfs-ssd1-10.0.10/jenkins/test-1-13/opt/java/jenkins/userContent/jobs/test-portal-acceptance-pullrequest(master)/builds/540",
+      "stuck" : false,
+      "task" : {
+        "name" : "AXIS_VARIABLE=3,label_exp=!master",
+        "url" : "https://test-1-5.liferay.com/job/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=3,label_exp=!master/",
+        "color" : "blue_anime"
+      },
+      "url" : "queue/item/35782/",
+      "why" : "Waiting for next available executor on !master",
+      "buildableStartMilliseconds" : 1448395280272,
+      "pending" : false
+    }
+  ]
+}

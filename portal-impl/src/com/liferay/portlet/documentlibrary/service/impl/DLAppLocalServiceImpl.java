@@ -1280,12 +1280,11 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		String fileName = latestFileVersion.getTitle();
 
-		String extension = latestFileVersion.getExtension();
+		if (Validator.isNotNull(latestFileVersion.getExtension()) &&
+			!fileName.endsWith(
+				StringPool.PERIOD + latestFileVersion.getExtension())) {
 
-		if (Validator.isNotNull(extension) &&
-			!fileName.endsWith(StringPool.PERIOD + extension)) {
-
-			fileName += StringPool.PERIOD + extension;
+			fileName += StringPool.PERIOD + latestFileVersion.getExtension();
 		}
 
 		FileEntry destinationFileEntry = toLocalRepository.addFileEntry(

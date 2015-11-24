@@ -954,13 +954,14 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		}
 
 		@Test
-		public void shouldHaveSameExtension() throws Exception {
+		public void shouldHaveSameFileExtension() throws Exception {
 			FileEntry fileEntry = addFileEntry(
 				group.getGroupId(), parentFolder.getFolderId(), _FILE_NAME,
 				_STRIPPED_FILE_NAME, null);
 
 			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(toGroup.getGroupId());
+				ServiceContextTestUtil.getServiceContext(
+					targetGroup.getGroupId());
 
 			FileEntry copiedFileEntry = DLAppServiceUtil.moveFileEntry(
 				fileEntry.getFileEntryId(),

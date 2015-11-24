@@ -6,10 +6,17 @@
 	<command name="addCP">
 		<var name="key_ddlListName" value="${ddlListName}" />
 
-		<execute function="AssertClick" locator1="DDL#LIST_TABLE_NAME" value1="${ddlListName}" />
+		<execute macro="DDLRecord#viewCP">
+			<var name="ddlListName" value="${ddlListName}" />
+		</execute>
 
-		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${ddlListName}" />
+		<execute macro="DDLRecord#addDefinitionCP" />
+	</command>
+
+	<command name="addDefinitionCP">
 		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="New DDL Definition" />
 	</command>
 
 	<command name="addRepeatableField">

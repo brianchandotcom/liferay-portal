@@ -132,7 +132,7 @@ AUI.add(
 					_moveToTrash: function() {
 						var instance = this;
 
-						instance._processAction('moveToTrash', instance.get('editEntryUrl'));
+						instance._processAction('move_to_trash', instance.get('editEntryUrl'));
 					},
 
 					_openDocument: function(event) {

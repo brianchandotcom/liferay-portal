@@ -48,7 +48,7 @@ String notificationTemplateBody = BeanPropertiesUtil.getString(calendarNotificat
 	<aui:nav cssClass="navbar-nav">
 
 		<%
-			navigationURL.setParameter("tabs3", "invite-email");
+		navigationURL.setParameter("tabs3", "invite-email");
 		%>
 
 		<aui:nav-item
@@ -58,7 +58,7 @@ String notificationTemplateBody = BeanPropertiesUtil.getString(calendarNotificat
 		/>
 
 		<%
-			navigationURL.setParameter("tabs3", "reminder-email");
+		navigationURL.setParameter("tabs3", "reminder-email");
 		%>
 
 		<aui:nav-item

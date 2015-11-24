@@ -63,7 +63,7 @@ navigationURL.setParameter("calendarResourceId", calendarResourceId);
 	<aui:nav cssClass="navbar-nav">
 
 		<%
-			navigationURL.setParameter("tabs2", "general");
+		navigationURL.setParameter("tabs2", "general");
 		%>
 
 		<aui:nav-item
@@ -75,7 +75,7 @@ navigationURL.setParameter("calendarResourceId", calendarResourceId);
 		<c:if test="<%= calendar != null %>">
 
 			<%
-				navigationURL.setParameter("tabs2", "notification-templates");
+			navigationURL.setParameter("tabs2", "notification-templates");
 			%>
 
 			<aui:nav-item

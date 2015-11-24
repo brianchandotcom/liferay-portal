@@ -30,7 +30,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 		<aui:nav cssClass="navbar-nav">
 
 			<%
-				portletURL.setParameter("tabs1", "calendar");
+			portletURL.setParameter("tabs1", "calendar");
 			%>
 
 			<aui:nav-item
@@ -40,7 +40,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			/>
 
 			<%
-				portletURL.setParameter("tabs1", "resources");
+			portletURL.setParameter("tabs1", "resources");
 			%>
 
 			<aui:nav-item

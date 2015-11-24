@@ -53,6 +53,45 @@ portletURL.setParameter("eventName", eventName);
 request.setAttribute("view.jsp-portletURL", portletURL);
 
 AssetBrowserSearch assetBrowserSearch = new AssetBrowserSearch(renderRequest, PortletURLUtil.clone(portletURL, liferayPortletResponse));
+
+AssetBrowserSearchTerms searchTerms = (AssetBrowserSearchTerms)assetBrowserSearch.getSearchTerms();
+
+AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(typeSelection);
+
+int assetEntriesTotal = 0;
+
+if (AssetBrowserWebConfigurationValues.SEARCH_WITH_DATABASE) {
+	assetEntriesTotal = AssetEntryLocalServiceUtil.getEntriesCount(selectedGroupIds, new long[] {assetRendererFactory.getClassNameId()}, searchTerms.getKeywords(), searchTerms.getUserName(), searchTerms.getTitle(), searchTerms.getDescription(), listable, searchTerms.isAdvancedSearch(), searchTerms.isAndOperator());
+
+	assetBrowserSearch.setTotal(assetEntriesTotal);
+
+	List<AssetEntry> assetEntries = AssetEntryLocalServiceUtil.getEntries(selectedGroupIds, new long[] {assetRendererFactory.getClassNameId()}, searchTerms.getKeywords(), searchTerms.getUserName(), searchTerms.getTitle(), searchTerms.getDescription(), listable, searchTerms.isAdvancedSearch(), searchTerms.isAndOperator(), assetBrowserSearch.getStart(), assetBrowserSearch.getEnd(), "modifiedDate", "title", "DESC", "ASC");
+
+	assetBrowserSearch.setResults(assetEntries);
+}
+else {
+	Hits hits = null;
+
+	int[] statuses = {WorkflowConstants.STATUS_APPROVED};
+
+	if (showScheduled) {
+		statuses = new int[] {WorkflowConstants.STATUS_APPROVED, WorkflowConstants.STATUS_SCHEDULED};
+	}
+
+	if (searchTerms.isAdvancedSearch()) {
+		hits = AssetEntryLocalServiceUtil.search(themeDisplay.getCompanyId(), new long[] {searchTerms.getGroupId()}, themeDisplay.getUserId(), assetRendererFactory.getClassName(), subtypeSelectionId, searchTerms.getUserName(), searchTerms.getTitle(), searchTerms.getDescription(), null, null, showNonindexable, statuses, searchTerms.isAndOperator(), assetBrowserSearch.getStart(), assetBrowserSearch.getEnd());
+	}
+	else {
+		hits = AssetEntryLocalServiceUtil.search(themeDisplay.getCompanyId(), selectedGroupIds, themeDisplay.getUserId(), assetRendererFactory.getClassName(), subtypeSelectionId, searchTerms.getKeywords(), showNonindexable, statuses, assetBrowserSearch.getStart(), assetBrowserSearch.getEnd());
+	}
+
+	assetEntriesTotal = hits.getLength();
+
+	List<AssetEntry> assetEntries = AssetUtil.getAssetEntries(hits);
+
+	assetBrowserSearch.setResults(assetEntries);
+	assetBrowserSearch.setTotal(assetEntriesTotal);
+}
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
@@ -71,22 +110,24 @@ AssetBrowserSearch assetBrowserSearch = new AssetBrowserSearch(renderRequest, Po
 	</aui:nav-bar-search>
 </aui:nav-bar>
 
-<liferay-frontend:management-bar>
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all"} %>'
-				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-			/>
-		</liferay-frontend:management-bar-filters>
+<c:if test="<%= assetEntriesTotal > 0 %>">
+	<liferay-frontend:management-bar>
+		<liferay-frontend:management-bar-buttons>
+			<liferay-frontend:management-bar-filters>
+				<liferay-frontend:management-bar-navigation
+					navigationKeys='<%= new String[] {"all"} %>'
+					portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+				/>
+			</liferay-frontend:management-bar-filters>
 
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-			selectedDisplayStyle="<%= displayStyle %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
+			<liferay-frontend:management-bar-display-buttons
+				displayViews='<%= new String[] {"list"} %>'
+				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+				selectedDisplayStyle="<%= displayStyle %>"
+			/>
+		</liferay-frontend:management-bar-buttons>
+	</liferay-frontend:management-bar>
+</c:if>
 
 <aui:form action="<%= portletURL %>" cssClass="container-fluid-1280" method="post" name="selectAssetFm">
 	<aui:input name="typeSelection" type="hidden" value="<%= typeSelection %>" />
@@ -94,56 +135,6 @@ AssetBrowserSearch assetBrowserSearch = new AssetBrowserSearch(renderRequest, Po
 	<liferay-ui:search-container
 		searchContainer="<%= assetBrowserSearch %>"
 	>
-
-		<%
-		AssetBrowserSearchTerms searchTerms = (AssetBrowserSearchTerms)assetBrowserSearch.getSearchTerms();
-
-		AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(typeSelection);
-		%>
-
-		<liferay-ui:search-container-results>
-			<c:choose>
-				<c:when test="<%= AssetBrowserWebConfigurationValues.SEARCH_WITH_DATABASE %>">
-
-					<%
-					int assetEntriesTotal = AssetEntryLocalServiceUtil.getEntriesCount(selectedGroupIds, new long[] {assetRendererFactory.getClassNameId()}, searchTerms.getKeywords(), searchTerms.getUserName(), searchTerms.getTitle(), searchTerms.getDescription(), listable, searchTerms.isAdvancedSearch(), searchTerms.isAndOperator());
-
-					assetBrowserSearch.setTotal(assetEntriesTotal);
-
-					List<AssetEntry> assetEntries = AssetEntryLocalServiceUtil.getEntries(selectedGroupIds, new long[] {assetRendererFactory.getClassNameId()}, searchTerms.getKeywords(), searchTerms.getUserName(), searchTerms.getTitle(), searchTerms.getDescription(), listable, searchTerms.isAdvancedSearch(), searchTerms.isAndOperator(), assetBrowserSearch.getStart(), assetBrowserSearch.getEnd(), "modifiedDate", "title", "DESC", "ASC");
-
-					assetBrowserSearch.setResults(assetEntries);
-					%>
-
-				</c:when>
-				<c:otherwise>
-
-					<%
-					Hits hits = null;
-
-					int[] statuses = {WorkflowConstants.STATUS_APPROVED};
-
-					if (showScheduled) {
-						statuses = new int[] {WorkflowConstants.STATUS_APPROVED, WorkflowConstants.STATUS_SCHEDULED};
-					}
-
-					if (searchTerms.isAdvancedSearch()) {
-						hits = AssetEntryLocalServiceUtil.search(themeDisplay.getCompanyId(), new long[] {searchTerms.getGroupId()}, themeDisplay.getUserId(), assetRendererFactory.getClassName(), subtypeSelectionId, searchTerms.getUserName(), searchTerms.getTitle(), searchTerms.getDescription(), null, null, showNonindexable, statuses, searchTerms.isAndOperator(), assetBrowserSearch.getStart(), assetBrowserSearch.getEnd());
-					}
-					else {
-						hits = AssetEntryLocalServiceUtil.search(themeDisplay.getCompanyId(), selectedGroupIds, themeDisplay.getUserId(), assetRendererFactory.getClassName(), subtypeSelectionId, searchTerms.getKeywords(), showNonindexable, statuses, assetBrowserSearch.getStart(), assetBrowserSearch.getEnd());
-					}
-
-					List<AssetEntry> assetEntries = AssetUtil.getAssetEntries(hits);
-
-					assetBrowserSearch.setResults(assetEntries);
-					assetBrowserSearch.setTotal(hits.getLength());
-					%>
-
-				</c:otherwise>
-			</c:choose>
-		</liferay-ui:search-container-results>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.portlet.asset.model.AssetEntry"
 			escapedModel="<%= true %>"

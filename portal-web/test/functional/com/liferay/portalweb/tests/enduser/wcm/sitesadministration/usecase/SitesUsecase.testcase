@@ -59,7 +59,6 @@
 		</execute>
 
 		<execute macro="Page#viewTranslationsPG">
-			<var name="pageConfirmationMessage" value="en English (United States)." />
 			<var name="pageLocalizationMessage" value="This page is displayed in Spanish (Spain). Display the page in English (United States). Set Spanish (Spain) as your preferred language." />
 			<var name="pageLocalizationPreferredLanguage" value="Set Spanish (Spain) as your preferred language." />
 			<var name="pageName" value="Casa" />
@@ -92,7 +91,6 @@
 
 		<execute macro="Page#viewTranslationsPG">
 			<var name="childPageName" value="Blog Página" />
-			<var name="pageConfirmationMessage" value="en English (United States)." />
 			<var name="pageLocalizationMessage" value="This page is displayed in Spanish (Spain). Display the page in English (United States). Set Spanish (Spain) as your preferred language." />
 			<var name="pageLocalizationPreferredLanguage" value="Set Spanish (Spain) as your preferred language." />
 			<var name="sitePageURL" value="http://localhost:8080/es/web/site-name/blog-page" />

@@ -1324,7 +1324,7 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMDocument#gotoCP">
+		<execute macro="DMNavigator#gotoDocumentCP">
 			<var name="dmDocumentTitle" value="DM Document1 Image Title" />
 		</execute>
 
@@ -1346,7 +1346,7 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMDocument#gotoCP">
+		<execute macro="DMNavigator#gotoDocumentCP">
 			<var name="dmDocumentTitle" value="DM Document2 Image Title" />
 		</execute>
 
@@ -1368,7 +1368,7 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMDocument#gotoCP">
+		<execute macro="DMNavigator#gotoDocumentCP">
 			<var name="dmDocumentTitle" value="DM Document3 Document Title" />
 		</execute>
 
@@ -2089,7 +2089,7 @@
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
-		<execute macro="DMDocument#gotoRelatedAssetPG">
+		<execute macro="DMNavigator#gotoRelatedAssetPG">
 			<var name="assetTitle" value="Blogs Entry Title" />
 			<var name="dmDocumentTitle" value="DM Document Title Edit" />
 		</execute>

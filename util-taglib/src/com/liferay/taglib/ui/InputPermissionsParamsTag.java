@@ -196,7 +196,7 @@ public class InputPermissionsParamsTag extends TagSupport {
 		_modelName = modelName;
 	}
 
-	protected Group getLayoutGroup(Layout layout) throws PortalException {
+	protected static Group getLayoutGroup(Layout layout) throws PortalException {
 		if (!(layout instanceof VirtualLayout)) {
 			return layout.getGroup();
 		}

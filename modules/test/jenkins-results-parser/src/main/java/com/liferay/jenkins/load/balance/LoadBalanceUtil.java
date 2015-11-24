@@ -218,20 +218,26 @@ public class LoadBalanceUtil {
 	protected static void waitForTurn(File file, int hostNameCount)
 		throws Exception {
 
-		boolean bypass = false;
-
 		while (true) {
 			if (!file.exists()) {
 				JenkinsResultsParserUtil.write(file, "");
-				bypass = true;
+				return;
 			}
 
 			long age = System.currentTimeMillis() - file.lastModified();
 			String content = JenkinsResultsParserUtil.read(file);
-
-			if (!bypass && (content.length() > 0) && (age < maxAge)) {
+			
+			if ((content.length() > 0) && (age < maxAge)) {
 				Thread.sleep(1000);
 
+				continue;
+			}
+			
+			if ((content.length()) == 0 && (age < executionRate)) {
+				Thread.sleep(
+					executionRate - age + 
+					getRandomValue(1, hostNameCount) * 100);
+				
 				continue;
 			}
 
@@ -240,6 +246,7 @@ public class LoadBalanceUtil {
 	}
 
 	protected static long coolDownPeriod = 60 * 1000;
+	protected static long executionRate = 15 * 1000;
 	protected static long maxAge = 30 * 1000;
 	protected static final String myHostName;
 	protected static final Pattern urlPattern = Pattern.compile(

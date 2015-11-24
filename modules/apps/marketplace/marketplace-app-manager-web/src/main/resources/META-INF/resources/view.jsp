@@ -17,361 +17,41 @@
 <%@ include file="/init.jsp" %>
 
 <%
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcPath", "/view.jsp");
-
 String category = ParamUtil.getString(request, "category");
-
-portletURL.setParameter("category", category);
+int state = ParamUtil.getInteger(request, "state");
 %>
 
-<liferay-ui:error exception="<%= RequiredPluginPackageException.class %>" message="unable-to-uninstall-app-or-plugin-because-it-is-required" />
+<div class="container-fluid-1280">
+	<liferay-ui:search-container>
+		<liferay-ui:search-container-results>
 
-<div class="row">
-	<div class="category-nav column column-first w25">
-		<div class="alert-container"></div>
+			<%
+			List<Bundle> bundles = BundleManagerUtil.getBundles();
 
-		<div class="well">
-			<%@ include file="/categories.jspf" %>
-		</div>
-	</div>
+			List<AppDisplay> appDisplays = AppDisplayFactoryUtil.getAppDisplays(bundles, category, state);
 
-	<div class="apps column column-last w75">
-		<h3>
-			<c:choose>
-				<c:when test="<%= Validator.isNull(category) %>">
-					<liferay-ui:message key="all-apps" />
-				</c:when>
-				<c:otherwise>
-					<%= category %>
-				</c:otherwise>
-			</c:choose>
-		</h3>
+			int end = searchContainer.getEnd();
 
-		<%
-		List<App> apps = null;
-
-		if (Validator.isNotNull(category)) {
-			apps = AppLocalServiceUtil.getInstalledApps(category);
-		}
-		else {
-			apps = AppLocalServiceUtil.getInstalledApps();
-		}
-
-		for (App app : apps) {
-			List<LayoutTemplate> layoutTemplates = new ArrayList<LayoutTemplate>();
-			List<Portlet> portlets = new ArrayList<Portlet>();
-			List<Theme> themes = new ArrayList<Theme>();
-
-			boolean displayActions = true;
-
-			for (String contextName : app.getContextNames()) {
-				ServletContext servletContext = ServletContextPool.get(contextName);
-
-				if (servletContext == null) {
-					continue;
-				}
-
-				List<LayoutTemplate> servletContextLayoutTemplates = (List<LayoutTemplate>)servletContext.getAttribute(WebKeys.PLUGIN_LAYOUT_TEMPLATES);
-
-				if (servletContextLayoutTemplates != null) {
-					layoutTemplates.addAll(servletContextLayoutTemplates);
-
-					Iterator<LayoutTemplate> itr = layoutTemplates.iterator();
-
-					while (itr.hasNext()) {
-						LayoutTemplate layoutTemplate = itr.next();
-
-						if (layoutTemplate.isStandard()) {
-							itr.remove();
-						}
-					}
-				}
-
-				List<Portlet> servletContextPortlets = (List<Portlet>)servletContext.getAttribute(WebKeys.PLUGIN_PORTLETS);
-
-				if (servletContextPortlets != null) {
-					portlets.addAll(servletContextPortlets);
-
-					Iterator<Portlet> itr = portlets.iterator();
-
-					while (itr.hasNext()) {
-						Portlet portlet = itr.next();
-
-						String curPortletId = portlet.getPortletId();
-
-						if (curPortletId.equals(PortletKeys.PORTAL)) {
-							itr.remove();
-						}
-						else if (portlet.isSystem()) {
-							itr.remove();
-						}
-					}
-				}
-
-				List<Theme> servletContextThemes = (List<Theme>)servletContext.getAttribute(WebKeys.PLUGIN_THEMES);
-
-				if (servletContextThemes != null) {
-					themes.addAll(servletContextThemes);
-				}
-
-				if (contextName.equals(PortalUtil.getPathContext())) {
-					displayActions = false;
-				}
-				else if (DeployManagerUtil.isRequiredDeploymentContext(contextName)) {
-					displayActions = false;
-				}
+			if (end > appDisplays.size()) {
+				end = appDisplays.size();
 			}
 
-			List plugins = new ArrayList(layoutTemplates.size() + portlets.size() + themes.size());
+			searchContainer.setResults(appDisplays.subList(searchContainer.getStart(), end));
 
-			plugins.addAll(layoutTemplates);
-			plugins.addAll(portlets);
-			plugins.addAll(themes);
+			searchContainer.setTotal(appDisplays.size());
+			%>
 
-			plugins = ListUtil.sort(plugins, new PluginComparator(application, locale));
-		%>
+		</liferay-ui:search-container-results>
 
-			<div class="app">
-				<div class="icon">
-					<c:if test="<%= Validator.isNotNull(app.getIconURL()) %>">
-						<img src="<%= app.getIconURL() %>" />
-					</c:if>
-				</div>
+		<liferay-ui:search-container-row
+			className="com.liferay.marketplace.app.manager.web.util.AppDisplay"
+			modelVar="appDisplay"
+		>
+			<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+				<%= appDisplay.getName() %>
+			</liferay-ui:search-container-column-text>
+		</liferay-ui:search-container-row>
 
-				<div class="info">
-					<div class="title">
-						<%= app.getTitle() %>
-					</div>
-
-					<div class="version">
-						<span>
-							<liferay-ui:message key="version" />:
-						<span>
-
-						<%= app.getVersion() %>
-					</div>
-
-					<div class="description">
-						<%= HtmlUtil.escape(app.getDescription()) %>
-					</div>
-
-					<div class="plugins well">
-						<c:choose>
-							<c:when test="<%= !plugins.isEmpty() %>">
-								<ul class="summary">
-									<li class="switch">
-										<i class="icon-chevron-right"></i>
-									</li>
-
-									<li>
-										<liferay-ui:message key="this-app-contains" />
-									</li>
-
-									<c:if test="<%= !layoutTemplates.isEmpty() %>">
-										<li>
-											<%= layoutTemplates.size() %> <liferay-ui:message key='<%= layoutTemplates.size() == 1 ? "layout-template" : "layout-templates" %>' />
-										</li>
-									</c:if>
-
-									<c:if test="<%= !portlets.isEmpty() %>">
-										<li>
-											<%= portlets.size() %> <liferay-ui:message key='<%= portlets.size() == 1 ? "portlet" : "portlets" %>' />
-										</li>
-									</c:if>
-
-									<c:if test="<%= !themes.isEmpty() %>">
-										<li>
-											<%= themes.size() %> <liferay-ui:message key='<%= themes.size() == 1 ? "theme" : "themes" %>' />
-										</li>
-									</c:if>
-								</ul>
-
-								<div class="plugin-list">
-									<%@ include file="/plugins.jspf" %>
-								</div>
-							</c:when>
-							<c:otherwise>
-								<liferay-ui:message key="there-are-no-configurable-plugins-for-this-app" />
-							</c:otherwise>
-						</c:choose>
-					</div>
-				</div>
-
-				<c:if test="<%= displayActions %>">
-					<div class="app-actions">
-						<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
-							<liferay-portlet:actionURL name="updatePluginSettings" var="activateURL">
-								<portlet:param name="contextNames" value="<%= StringUtil.merge(app.getContextNames()) %>" />
-								<portlet:param name="active" value="<%= String.valueOf(true) %>" />
-							</liferay-portlet:actionURL>
-
-							<liferay-ui:icon
-								iconCssClass="icon-ok-sign"
-								message="activate"
-								url="<%= activateURL %>"
-							/>
-
-							<liferay-portlet:actionURL name="updatePluginSettings" var="deactivateURL">
-								<portlet:param name="contextNames" value="<%= StringUtil.merge(app.getContextNames()) %>" />
-								<portlet:param name="active" value="<%= String.valueOf(false) %>" />
-							</liferay-portlet:actionURL>
-
-							<liferay-ui:icon
-								iconCssClass="icon-remove-sign"
-								message="deactivate"
-								url="<%= deactivateURL %>"
-							/>
-
-							<liferay-portlet:actionURL name="uninstallApp" var="uninstallURL">
-								<portlet:param name="remoteAppId" value="<%= String.valueOf(app.getRemoteAppId()) %>" />
-								<portlet:param name="contextNames" value="<%= StringUtil.merge(app.getContextNames()) %>" />
-								<portlet:param name="activate" value="<%= String.valueOf(false) %>" />
-							</liferay-portlet:actionURL>
-
-							<liferay-ui:icon-delete
-								confirmation="are-you-sure-you-want-to-uninstall-this"
-								message="uninstall"
-								url="<%= uninstallURL %>"
-							/>
-						</liferay-ui:icon-menu>
-					</div>
-				</c:if>
-			</div>
-
-		<%
-		}
-		%>
-
-	</div>
+		<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" />
+	</liferay-ui:search-container>
 </div>
-
-<aui:script use="anim,aui-base,aui-io,aui-tooltip,aui-url">
-	var marketplacePortlet = A.one('.marketplace-portlet');
-
-	marketplacePortlet.delegate(
-		'click',
-		function(event) {
-			var targetNode = event.currentTarget;
-
-			var pluginsContainer = targetNode.ancestor('.plugins');
-
-			var pluginSwitch = pluginsContainer.one('.switch i');
-			var pluginList = pluginsContainer.one('.plugin-list');
-
-			if (pluginsContainer.hasClass('active')) {
-				pluginsContainer.removeClass('active');
-
-				pluginSwitch.setAttribute('class', 'icon-chevron-right');
-			}
-			else {
-				pluginsContainer.addClass('active');
-
-				pluginSwitch.setAttribute('class', 'icon-chevron-down');
-			}
-		},
-		'ul.summary'
-	);
-
-	var showMessage = function(message) {
-		marketplacePortlet.one('.alert-container').prepend(message);
-
-		setTimeout(
-			function() {
-				new A.Anim(
-					{
-						node: message,
-						on: {
-							end: function() {
-								var node = this.get('node');
-
-								node.get('parentNode').removeChild(node);
-							}
-						},
-						to: {
-							opacity: 0
-						}
-					}
-				).run();
-			},
-			2000
-		);
-	};
-
-	marketplacePortlet.delegate(
-		'click',
-		function(event) {
-			event.preventDefault();
-
-			var actionButton = event.currentTarget;
-
-			if (actionButton.hasClass('disabled')) {
-				return;
-			}
-
-			actionButton.addClass('disabled');
-
-			var url = new A.Url(actionButton.getAttribute('href'));
-
-			if (actionButton.hasClass('activate')) {
-				url.setParameter('<portlet:namespace />active', true);
-			}
-			else if (actionButton.hasClass('deactivate')) {
-				url.setParameter('<portlet:namespace />active', false);
-			}
-
-			A.io.request(
-				url.toString(),
-				{
-					after: {
-						complete: function(event, id, obj) {
-							actionButton.removeClass('disabled');
-						}
-					},
-					method: 'POST',
-					on: {
-						failure: function(event, id, obj) {
-							showMessage(
-								A.Node.create(
-									'<div class="alert alert-danger">' +
-										'<i class="icon-minus-sign"></i> <liferay-ui:message key="an-unexpected-error-occurred" />' +
-									'</div>'
-								)
-							);
-						},
-						success: function(event, id, obj) {
-							if (actionButton.hasClass('activate')) {
-								actionButton.setAttribute('class', 'btn btn-mini btn-success deactivate');
-
-								actionButton.html('<liferay-ui:message key="active" />');
-							}
-							else if (actionButton.hasClass('deactivate')) {
-								actionButton.setAttribute('class', 'btn btn-mini btn-danger activate');
-
-								actionButton.html('<liferay-ui:message key="inactive" />');
-							}
-
-							showMessage(
-								A.Node.create(
-									'<div class="alert alert-success">' +
-										'<i class="icon-ok"></i> <liferay-ui:message key="your-request-completed-successfully" />' +
-									'</div>'
-								)
-							);
-						}
-					}
-				}
-			);
-		},
-		'.plugin-actions .btn'
-	);
-
-	new A.TooltipDelegate(
-		{
-			position: 'top',
-			trigger: '.marketplace-portlet .apps i.icon-wrench',
-			zIndex: 100
-		}
-	);
-</aui:script>

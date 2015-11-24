@@ -179,11 +179,13 @@ public class AppDisplayFactoryUtil {
 		for (Bundle bundle : bundles) {
 			Dictionary<String, String> headers = bundle.getHeaders();
 
-			String[] categories = StringUtil.split(
-				headers.get(BundleConstants.LIFERAY_RELENG_CATEGORY));
+			if (Validator.isNotNull(category)) {
+				String[] categories = StringUtil.split(
+					headers.get(BundleConstants.LIFERAY_RELENG_CATEGORY));
 
-			if (!ArrayUtil.contains(categories, category)) {
-				continue;
+				if (!ArrayUtil.contains(categories, category)) {
+					continue;
+				}
 			}
 
 			String appTitle = headers.get(
@@ -220,7 +222,7 @@ public class AppDisplayFactoryUtil {
 		while (iterator.hasNext()) {
 			AppDisplay appDisplay = iterator.next();
 
-			if (appDisplay.getState() != state) {
+			if ((state > 0) && (appDisplay.getState() != state)) {
 				iterator.remove();
 			}
 		}

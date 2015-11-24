@@ -25,9 +25,12 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.expression.Expression;
+import com.liferay.portal.expression.ExpressionEvaluationException;
 import com.liferay.portal.expression.ExpressionFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -97,9 +100,8 @@ public class DDMFormEvaluatorHelper {
 	}
 
 	protected boolean evaluateBooleanExpression(
-			String expressionString,
-			Set<DDMFormFieldValue> ancestorDDMFormFieldValues)
-		throws PortalException {
+		String expressionString,
+		Set<DDMFormFieldValue> ancestorDDMFormFieldValues) {
 
 		if (Validator.isNull(expressionString)) {
 			return true;
@@ -111,7 +113,18 @@ public class DDMFormEvaluatorHelper {
 		setExpressionVariables(
 			expression, _rootDDMFormFieldValues, ancestorDDMFormFieldValues);
 
-		return expression.evaluate();
+		try {
+			return expression.evaluate();
+		}
+		catch (ExpressionEvaluationException eee) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Invalid expression or expression is making reference to" +
+						" a field no longer available. " + expressionString);
+			}
+		}
+
+		return true;
 	}
 
 	protected DDMFormFieldEvaluationResult evaluateDDMFormFieldValue(
@@ -286,6 +299,9 @@ public class DDMFormEvaluatorHelper {
 			expression.setStringVariableValue(variableName, variableValue);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDMFormEvaluatorHelper.class);
 
 	private final Map<String, DDMFormField> _ddmFormFieldsMap;
 	private ExpressionFactory _expressionFactory;

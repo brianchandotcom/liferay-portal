@@ -156,6 +156,9 @@ public class EmbeddedElasticsearchConnection
 		builder.put(
 			"path.data",
 			_props.get(PropsKeys.LIFERAY_HOME) + "/data/elasticsearch/indices");
+		builder.put(
+			"path.home",
+			_props.get(PropsKeys.LIFERAY_HOME) + "/data/elasticsearch");
 		builder.put("path.logs", _props.get(PropsKeys.LIFERAY_HOME) + "/logs");
 		builder.put(
 			"path.plugins",

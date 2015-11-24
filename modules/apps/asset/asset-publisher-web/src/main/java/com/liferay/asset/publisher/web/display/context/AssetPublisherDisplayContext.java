@@ -56,6 +56,7 @@ import com.liferay.portlet.asset.util.AssetUtil;
 
 import java.io.Serializable;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
@@ -218,20 +219,24 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public Map<String, Serializable> getAttributes() {
+		if (_attributes != null) {
+			return _attributes;
+		}
+
+		_attributes = new HashMap<>();
+
 		Map<String, String[]> parameters = _request.getParameterMap();
 
-		if (_attributes == null) {
-			for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
-				String name = entry.getKey();
-				String[] values = entry.getValue();
+		for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
+			String name = entry.getKey();
+			String[] values = entry.getValue();
 
-				if (ArrayUtil.isNotEmpty(values)) {
-					if (values.length == 1) {
-						_attributes.put(name, values[0]);
-					}
-					else {
-						_attributes.put(name, values);
-					}
+			if (ArrayUtil.isNotEmpty(values)) {
+				if (values.length == 1) {
+					_attributes.put(name, values[0]);
+				}
+				else {
+					_attributes.put(name, values);
 				}
 			}
 		}

@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lock.DuplicateLockException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -84,6 +86,8 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.fileupload.FileUploadBase;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -375,19 +379,28 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 			if (uploadException != null) {
 				Throwable cause = uploadException.getCause();
 
-				if (uploadException.isExceededFileSizeLimit()) {
-					throw new FileSizeException(cause);
+				if (cmd.equals(Constants.ADD_TEMP)) {
+					if (cause instanceof FileUploadBase.IOFileUploadException) {
+						if (_log.isInfoEnabled()) {
+							_log.info("Temporary upload was cancelled");
+						}
+					}
 				}
+				else {
+					if (uploadException.isExceededFileSizeLimit()) {
+						throw new FileSizeException(cause);
+					}
 
-				if (uploadException.isExceededLiferayFileItemSizeLimit()) {
-					throw new LiferayFileItemException(cause);
+					if (uploadException.isExceededLiferayFileItemSizeLimit()) {
+						throw new LiferayFileItemException(cause);
+					}
+
+					if (uploadException.isExceededUploadRequestSizeLimit()) {
+						throw new UploadRequestSizeException(cause);
+					}
+
+					throw new PortalException(cause);
 				}
-
-				if (uploadException.isExceededUploadRequestSizeLimit()) {
-					throw new UploadRequestSizeException(cause);
-				}
-
-				throw new PortalException(cause);
 			}
 			else if (cmd.equals(Constants.ADD)) {
 				addAttachment(actionRequest);
@@ -771,6 +784,9 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 
 	private static final String _TEMP_FOLDER_NAME =
 		EditPageAttachmentsMVCActionCommand.class.getName();
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditPageAttachmentsMVCActionCommand.class);
 
 	private volatile TrashEntryService _trashEntryService;
 	private volatile WikiPageService _wikiPageService;

@@ -734,5 +734,16 @@
 		</if>
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="DDLRecord#FIELD_1" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
+
+		<if>
+			<isset var="ddlRecordNestedFieldData" />
+			<then>
+				<var name="key_ddlRecordFieldData" value="${ddlRecordNestedFieldData}" />
+				<var name="key_fieldFieldLabel" value="${nestedFieldFieldLabel}" />
+
+				<execute function="AssertTextEquals" locator1="DDLRecord#FIELD_NESTED" value1="${nestedFieldFieldLabel} ${ddlRecordNestedFieldData}" />
+				<execute function="AssertCssValue" locator1="DDLRecord#FIELD_NESTED" locator2="margin-left" value1="15px" />
+			</then>
+		</if>
 	</command>
 </definition>

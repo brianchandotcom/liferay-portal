@@ -25,6 +25,7 @@ String productMenuState = SessionClicks.get(request, "com.liferay.control.menu.w
 		<span class="icon-align-justify icon-monospaced"></span>
 	</a>
 </li>
+
 <%
 String controlMenuPortletId = PortletProviderUtil.getPortletId(PortalControlMenuApplicationType.ControlMenu.CLASS_NAME, PortletProvider.Action.VIEW);
 %>

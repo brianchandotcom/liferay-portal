@@ -90,9 +90,8 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
-			<var name="siteScopeName" value="Site Name" />
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="Public Pages" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
@@ -313,9 +312,8 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
-			<var name="siteScopeName" value="Site Name" />
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="Public Pages" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
@@ -369,9 +367,8 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
-			<var name="siteScopeName" value="Site Name" />
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="Public Pages" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
@@ -391,9 +388,8 @@
 			<var name="siteFriendlyURLEdit" value="/alpha/alpha" />
 		</execute>
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
-			<var name="siteScopeName" value="Site Name" />
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="Public Pages" />
 		</execute>
 
 		<execute macro="SitePage#viewFriendlyURLCP">

@@ -248,11 +248,17 @@
 
 		<execute function="AssertTextEquals" locator1="SiteMemberships#MEMBERSHIP_TYPE" value1="Membership Type: Restricted" />
 		<execute function="AssertTextEquals" locator1="SiteMemberships#REQUEST_MESSAGE" value1="There are 1 membership requests pending." />
-		<execute function="AssertClick" locator1="SiteMemberships#TOOLBAR_VIEW_MEMBERSHIP_REQUESTS" value1="View Membership Requests" />
+
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#VIEW_MEMBERSHIP_REQUESTS" value1="View Membership Requests" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute function="AssertTextEquals" locator1="SiteMembershipsViewMembershipRequests#USER_NAME" value1="${userFirstName} ${userLastName} (${userEmailAddress})" />
 		<execute function="AssertTextEquals" locator1="SiteMembershipsViewMembershipRequests#USER_COMMENTS" value1="Please allow me to join the Restricted Site." />
-		<execute function="AssertClick" locator1="SiteMembershipsViewMembershipRequests#REPLY" value1="Reply" />
+
+		<execute function="Click" locator1="SiteMembershipsViewMembershipRequests#REPLY" />
 
 		<execute function="Select" locator1="SiteMembershipsViewMembershipRequests#STATUS" value1="Approve" />
 		<execute function="Type" locator1="SiteMembershipsViewMembershipRequests#REPLY_COMMENTS_AREA" value1="You may join the Restricted Site." />

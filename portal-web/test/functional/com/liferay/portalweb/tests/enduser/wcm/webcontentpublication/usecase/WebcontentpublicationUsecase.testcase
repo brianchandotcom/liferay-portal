@@ -1824,8 +1824,8 @@
 	</command>
 
 	<command name="ViewDeletedWCDArticleAsAdminAndGuestCP" priority="4">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Web Content" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
@@ -1874,8 +1874,8 @@
 			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Web Content" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
 		</execute>
 
 		<execute macro="WebContent#deleteCP">

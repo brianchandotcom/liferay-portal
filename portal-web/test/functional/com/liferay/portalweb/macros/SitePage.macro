@@ -30,6 +30,8 @@
 			</else>
 		</if>
 
+		<execute macro="ProductMenuHelper#openProductMenu" />
+
 		<execute function="Pause" locator1="5000" />
 
 		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
@@ -696,22 +698,24 @@
 			</then>
 		</if>
 
-		<var name="key_sitePageName" value="${sitePageName}" />
-
 		<if>
 			<isset var="sitePageName" />
 			<then>
+				<var name="key_sitePageName" value="${sitePageName}" />
+
 				<execute function="AssertClick" locator1="SitePages#PAGE_TREE_PAGE_LINK" value1="${sitePageName}" />
 			</then>
 			<elseif>
 				<isset var="siteChildPageName" />
 				<then>
-					<execute function="AssertClick" locator1="SitePages#PAGE_TREE_PAGE_LINK_3" value1="${siteChildPageName}" />
+					<var name="key_siteChildPageName" value="${siteChildPageName}" />
+
+					<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_LINK_3" value1="${siteChildPageName}" />
 				</then>
 			</elseif>
 		</if>
 
-		<execute function="AssertElementNotPresent" locator1="SitePages#TOOLBAR_ADD_CHILD_PAGE" value1="Add Child Page" />
+		<execute function="AssertElementNotPresent" locator1="Button#ADD_PAGE" value1="Add Page" />
 		<execute function="AssertElementNotPresent" locator1="SitePages#TOOLBAR_DELETE" value1="Delete" />
 		<execute function="AssertTextEquals" locator1="Message#ERROR_3" value1="This page cannot be deleted and cannot have child pages because it is associated to a site template." />
 

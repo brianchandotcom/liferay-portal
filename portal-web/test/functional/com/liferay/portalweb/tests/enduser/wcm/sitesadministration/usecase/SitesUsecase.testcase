@@ -36,9 +36,8 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
-			<var name="siteScopeName" value="Site Name" />
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="Public Pages" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
@@ -311,9 +310,12 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Web Content" />
-			<var name="siteScopeName" value="Global" />
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Global" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
 		</execute>
 
 		<execute macro="Site#viewGlobalLandingDefault">

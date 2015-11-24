@@ -20,9 +20,9 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
-			<var name="siteScopeName" value="Site Name" />
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="page" value="Public Pages" />
+			<var name="site" value="Site Name" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
@@ -349,7 +349,7 @@
 
 	<command name="DisableShowPage" priority="5">
 		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="portlet" value="Site Pages" />
+			<var name="page" value="Public Pages" />
 		</execute>
 
 		<execute macro="SitePage#addChildCP">
@@ -500,7 +500,7 @@
 
 	<command name="DisplayTemplateWithHorizontalStyle" priority="4">
 		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="portlet" value="Site Pages" />
+			<var name="page" value="Public Pages" />
 		</execute>
 
 		<execute macro="SitePage#addChildCP">
@@ -546,7 +546,7 @@
 
 	<command name="DisplayTemplateWithVerticalStyle" priority="4">
 		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="portlet" value="Site Pages" />
+			<var name="page" value="Public Pages" />
 		</execute>
 
 		<execute macro="SitePage#addChildCP">
@@ -592,7 +592,7 @@
 
 	<command name="EnableShowGuestSite" priority="4">
 		<execute macro="ProductMenu#gotoSitesPages">
-			<var name="portlet" value="Site Pages" />
+			<var name="page" value="Public Pages" />
 		</execute>
 
 		<execute macro="SitePage#addChildCP">

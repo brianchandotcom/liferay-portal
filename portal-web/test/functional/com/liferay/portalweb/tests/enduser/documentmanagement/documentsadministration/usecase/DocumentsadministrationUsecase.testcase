@@ -42,7 +42,7 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMMetadataSet#gotoPG" />
+		<execute macro="DMNavigator#gotoMetadataSetsCP" />
 
 		<execute macro="DMMetadataSet#addPG">
 			<var name="dmMetadataSetFieldNames" value="Text Box" />
@@ -55,7 +55,7 @@
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
-		<execute macro="DMDocumentType#gotoPG" />
+		<execute macro="DMNavigator#gotoDocumentTypePG" />
 
 		<execute macro="DMDocumentType#addPG">
 			<var name="dmDocumentTypeDescription" value="DM Document Type Description" />
@@ -68,7 +68,7 @@
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
-		<execute macro="DMDocumentType#gotoPG" />
+		<execute macro="DMNavigator#gotoDocumentTypePG" />
 
 		<execute macro="DMDocumentType#editPG">
 			<var name="dmDocumentTypeName" value="DM Document Type Name" />
@@ -397,7 +397,7 @@
 			<var name="dmFolderName" value="Folder1" />
 		</execute>
 
-		<execute macro="DMDocument#gotoCP">
+		<execute macro="DMNavigator#gotoDocumentCP">
 			<var name="dmDocumentTitle" value="Zero Document File" />
 		</execute>
 
@@ -561,7 +561,7 @@
 
 		<execute function="Pause" locator1="180000" />
 
-		<execute macro="DMDocument#gotoPG">
+		<execute macro="DMNavigator#gotoDocumentPG">
 			<var name="dmDocumentTitle" value="Document_1.mp4" />
 		</execute>
 
@@ -581,7 +581,7 @@
 					<var name="pageName" value="Documents and Media Page" />
 				</execute>
 
-				<execute macro="DMDocument#gotoPG">
+				<execute macro="DMNavigator#gotoDocumentPG">
 					<var name="dmDocumentTitle" value="Document_1.mp4" />
 				</execute>
 			</then>
@@ -652,7 +652,7 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute macro="DMDocument#gotoCP">
+		<execute macro="DMNavigator#gotoDocumentCP">
 			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
 
@@ -758,7 +758,7 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMDocumentType#gotoPG" />
+		<execute macro="DMNavigator#gotoDocumentTypePG" />
 
 		<execute macro="DMDocumentType#addPG">
 			<var name="dmDocumentTypeDescription" value="Images" />
@@ -918,7 +918,7 @@
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
-		<execute macro="DMDocumentType#gotoPG" />
+		<execute macro="DMNavigator#gotoDocumentTypePG" />
 
 		<execute macro="DMDocumentType#editPG">
 			<var name="dmDocumentTypeFieldNames" value="Radio" />

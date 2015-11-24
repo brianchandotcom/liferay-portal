@@ -707,7 +707,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="DMDocument#gotoCP">
+		<execute macro="DMNavigator#gotoDocumentCP">
 			<var name="dmDocumentTitle" value="DM Document Organization" />
 		</execute>
 
@@ -719,7 +719,7 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMDocument#gotoCP">
+		<execute macro="DMNavigator#gotoDocumentCP">
 			<var name="dmDocumentTitle" value="DM Document Liferay" />
 		</execute>
 

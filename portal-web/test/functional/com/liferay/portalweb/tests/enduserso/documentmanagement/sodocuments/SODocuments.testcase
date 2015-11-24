@@ -1374,7 +1374,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="DMDocumentType#gotoPG" />
+		<execute macro="DMNavigator#gotoDocumentTypePG" />
 
 		<execute macro="DMDocumentType#addPG">
 			<var name="dmDocumentTypeDescription" value="${dmDocumentTypeDescription}" />
@@ -1435,7 +1435,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="DMMetadataSet#gotoPG" />
+		<execute macro="DMNavigator#gotoMetadataSetsPG" />
 
 		<execute macro="DMMetadataSet#addPG">
 			<var name="dmMetadataSetFieldName" value="${dmMetadataSetFieldName}" />
@@ -1448,7 +1448,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="DMDocumentType#gotoPG" />
+		<execute macro="DMNavigator#gotoDocumentTypePG" />
 
 		<execute macro="DMDocumentType#addPG">
 			<var name="dmDocumentTypeDescription" value="${dmDocumentTypeDescription}" />
@@ -2367,7 +2367,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="DMDocumentType#gotoPG" />
+		<execute macro="DMNavigator#gotoDocumentTypePG" />
 
 		<execute macro="DMDocumentType#addPG">
 			<var name="dmDocumentTypeDescription" value="${dmDocumentTypeDescription}" />
@@ -2389,7 +2389,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="DMDocumentType#gotoPG" />
+		<execute macro="DMNavigator#gotoDocumentTypePG" />
 
 		<execute macro="DMDocumentType#deletePG">
 			<var name="dmDocumentTypeName" value="${dmDocumentTypeName}" />
@@ -2931,7 +2931,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="DMDocumentType#gotoPG" />
+		<execute macro="DMNavigator#gotoDocumentTypePG" />
 
 		<execute macro="DMDocumentType#addPG">
 			<var name="dmDocumentTypeDescription" value="${dmDocumentTypeDescription}" />
@@ -2953,7 +2953,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="DMDocumentType#gotoPG" />
+		<execute macro="DMNavigator#gotoDocumentTypePG" />
 
 		<execute macro="DMDocumentType#editPG">
 			<var name="dmDocumentTypeDescriptionEdit" value="${dmDocumentTypeDescriptionEdit}" />

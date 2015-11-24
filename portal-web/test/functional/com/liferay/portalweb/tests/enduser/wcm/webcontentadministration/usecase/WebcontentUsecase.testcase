@@ -280,7 +280,7 @@
 			<var name="dmDocumentTitle" value="Document_1.mp3" />
 		</execute>
 
-		<execute macro="DMDocument#gotoCP">
+		<execute macro="DMNavigator#gotoDocumentCP">
 			<var name="dmDocumentTitle" value="Document_1.mp3" />
 		</execute>
 

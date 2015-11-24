@@ -24,7 +24,7 @@
 	</command>
 
 	<command name="addCP">
-		<execute macro="DMDocument#gotoAddDocumentType">
+		<execute macro="DMNavigator#gotoAddDocumentType">
 			<var name="dmDocumentTypeName" value="${dmDocumentTypeName}" />
 		</execute>
 
@@ -114,7 +114,7 @@
 	</command>
 
 	<command name="addDocumentTypeCmdCP">
-		<execute macro="DMDocument#gotoAddDocumentType">
+		<execute macro="DMNavigator#gotoAddDocumentType">
 			<var name="dmDocumentTypeName" value="${dmDocumentTypeName}" />
 		</execute>
 
@@ -521,7 +521,7 @@
 	</command>
 
 	<command name="addWithWorkflowCP">
-		<execute macro="DMDocument#gotoAddDocumentType">
+		<execute macro="DMNavigator#gotoAddDocumentType">
 			<var name="dmDocumentTypeName" value="${dmDocumentTypeName}" />
 		</execute>
 

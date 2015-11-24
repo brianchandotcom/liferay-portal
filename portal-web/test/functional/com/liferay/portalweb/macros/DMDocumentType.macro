@@ -1,6 +1,6 @@
 <definition>
 	<command name="addCP">
-		<execute macro="DMDocumentType#gotoCP" />
+		<execute macro="DMNavigator#gotoDocumentType" />
 
 		<execute macro="DMDocumentType#selectDocumentTypeFrame" />
 
@@ -185,7 +185,7 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMDocumentType#gotoCP" />
+		<execute macro="DMNavigator#gotoDocumentType" />
 
 		<execute macro="DMDocumentType#selectDocumentTypeFrame" />
 
@@ -204,7 +204,7 @@
 	</command>
 
 	<command name="viewNoAvailableActionsViaDocumentTypesPG">
-		<execute macro="DMDocumentType#gotoPG" />
+		<execute macro="DMNavigator#gotoDocumentTypePG" />
 
 		<execute function="AssertElementNotPresent" locator1="DocumentsAndMediaDocumentTypes#DOCUMENT_TYPES_TABLE_ACTIONS_1" />
 	</command>

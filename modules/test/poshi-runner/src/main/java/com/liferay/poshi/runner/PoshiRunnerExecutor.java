@@ -507,7 +507,7 @@ public class PoshiRunnerExecutor {
 		}
 	}
 
-	public static Map<String,String> runMacroCommandElement(
+	public static Map<String, String> runMacroCommandElement(
 			String classCommandName, Element commandElement)
 		throws Exception {
 
@@ -517,7 +517,7 @@ public class PoshiRunnerExecutor {
 
 		parseElement(commandElement);
 
-		Map<String,String> returnValues = new HashMap<String,String>();
+		Map<String, String> returnValues = new HashMap<>();
 
 		String returns = commandElement.attributeValue("returns");
 
@@ -525,7 +525,7 @@ public class PoshiRunnerExecutor {
 			String[] returnsArray = StringUtil.split(returns);
 
 			for (String returnVariable : returnsArray) {
-				String returnValue = 
+				String returnValue =
 					PoshiRunnerVariablesUtil.getValueFromCommandMap(
 						returnVariable);
 
@@ -578,7 +578,8 @@ public class PoshiRunnerExecutor {
 			classCommandName);
 
 		try {
-			Map<String, String> returnValues = runMacroCommandElement(classCommandName, commandElement);
+			Map<String, String> returnValues = runMacroCommandElement(
+				classCommandName, commandElement);
 
 			List<Element> returnElements = executeElement.elements("return");
 
@@ -588,7 +589,7 @@ public class PoshiRunnerExecutor {
 				String returnValue = returnValues.get(returnVariable);
 
 				if (returnValue != null) {
-					String returnVariableCommandName = 
+					String returnVariableCommandName =
 						returnElement.attributeValue("name");
 
 					PoshiRunnerVariablesUtil.putIntoCommandMap(
@@ -620,7 +621,7 @@ public class PoshiRunnerExecutor {
 			returnValue = PoshiRunnerVariablesUtil.replaceCommandVars(
 				returnValue);
 
-			String returnVariable = returnElement.attributeValue("name"); 
+			String returnVariable = returnElement.attributeValue("name");
 
 			PoshiRunnerVariablesUtil.putIntoCommandMap(
 				returnVariable, returnValue);

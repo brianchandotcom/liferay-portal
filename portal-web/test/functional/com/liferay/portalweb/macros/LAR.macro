@@ -369,19 +369,6 @@
 		<execute function="AssertClick" locator1="SitePages#TOOLBAR_IMPORT" value1="Import" />
 	</command>
 
-	<command name="importDDL">
-		<execute macro="LAR#gotoExportImportCmd" />
-
-		<execute macro="LAR#selectImportFileCmd">
-			<var name="cannotImport" value="${cannotImport}" />
-			<var name="importPermissions" value="${importPermissions}" />
-			<var name="larFileName" value="${larFileName}" />
-			<var name="uploadFrom" value="${uploadFrom}" />
-		</execute>
-
-		<execute macro="LAR#importSiteCmd" />
-	</command>
-
 	<command name="importPortlet">
 		<execute macro="LAR#gotoExportImportCmd" />
 

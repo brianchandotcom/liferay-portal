@@ -528,14 +528,13 @@ public class JournalUtil {
 			themeDisplay.getLocale(), "the-name-of-the-email-recipient");
 
 		if (emailType.equals("requested")) {
-			String tempToName = fromName;
-			String tempToAddress = fromAddress;
+			toName = fromName;
+			toAddress = fromAddress;
 
-			fromName = toName;
-			fromAddress = toAddress;
-
-			toName = tempToName;
-			toAddress = tempToAddress;
+			fromName = LanguageUtil.get(
+				themeDisplay.getLocale(), "the-name-of-the-email-sender");
+			fromAddress = LanguageUtil.get(
+				themeDisplay.getLocale(), "the-address-of-the-email-sender");
 		}
 
 		Map<String, String> definitionTerms = new LinkedHashMap<>();

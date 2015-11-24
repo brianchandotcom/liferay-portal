@@ -1025,7 +1025,7 @@
 		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Dynamic Data Lists Page" />
 		</execute>
 
 		<execute macro="DDLRecord#addViaDDLDisplayPG">

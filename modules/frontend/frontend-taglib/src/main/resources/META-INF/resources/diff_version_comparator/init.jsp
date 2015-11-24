@@ -17,6 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <%@ page import="com.liferay.portal.kernel.diff.DiffVersion" %><%@
-page import="com.liferay.portal.kernel.diff.DiffVersionsInfo" %>
+page import="com.liferay.portal.kernel.diff.DiffVersionsInfo" %><%@
+page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
+page import="com.liferay.portal.model.User" %><%@
+page import="com.liferay.portal.service.UserLocalServiceUtil" %>
+
+<%@ page import="java.util.HashMap" %><%@
+page import="java.util.Locale" %><%@
+page import="java.util.Set" %>
 
 <portlet:defineObjects />

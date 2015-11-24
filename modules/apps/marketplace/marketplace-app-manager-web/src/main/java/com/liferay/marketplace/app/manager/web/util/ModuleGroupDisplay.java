@@ -21,9 +21,10 @@ import org.osgi.framework.Bundle;
 /**
  * @author Ryan Park
  */
-public interface AppDisplay extends Comparable<AppDisplay> {
+public interface ModuleGroupDisplay extends Comparable<ModuleGroupDisplay> {
 
-	public static final String APP_TITLE_UNCATEGORIZED = "Uncategorized";
+	public static final String MODULE_GROUP_TITLE_UNCATEGORIZED =
+		"Uncategorized";
 
 	public void addBundle(Bundle bundle);
 
@@ -31,16 +32,10 @@ public interface AppDisplay extends Comparable<AppDisplay> {
 
 	public String getDescription();
 
-	public String getIconURL();
-
-	public List<ModuleGroupDisplay> getModuleGroupDisplays();
-
 	public int getState();
 
 	public String getTitle();
 
 	public String getVersion();
-
-	public boolean hasModuleGroups();
 
 }

@@ -16,10 +16,6 @@ package com.liferay.marketplace.app.manager.web.util;
 
 import com.liferay.portal.kernel.util.StringPool;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.osgi.framework.Bundle;
 import org.osgi.framework.Version;
 
 /**
@@ -39,14 +35,6 @@ public class SimpleAppDisplay extends BaseAppDisplay {
 		_version = version;
 	}
 
-	public void addBundle(Bundle bundle) {
-		_bundles.add(bundle);
-	}
-
-	public List<Bundle> getBundles() {
-		return _bundles;
-	}
-
 	public String getDescription() {
 		return _description;
 	}
@@ -63,7 +51,6 @@ public class SimpleAppDisplay extends BaseAppDisplay {
 		return _version.toString();
 	}
 
-	private final List<Bundle> _bundles = new ArrayList<>();
 	private final String _description;
 	private final String _title;
 	private final Version _version;

@@ -14,56 +14,66 @@
 
 package com.liferay.marketplace.app.manager.web.util;
 
+import com.liferay.portal.kernel.util.StringPool;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.framework.Bundle;
+import org.osgi.framework.Version;
 
 /**
  * @author Ryan Park
  */
-public abstract class BaseAppDisplay implements AppDisplay {
+public class SimpleModuleGroupDisplay implements ModuleGroupDisplay {
+
+	public SimpleModuleGroupDisplay() {
+		_title = MODULE_GROUP_TITLE_UNCATEGORIZED;
+		_description = StringPool.BLANK;
+		_version = null;
+	}
+
+	public SimpleModuleGroupDisplay(
+		String title, String description, Version version) {
+
+		_title = title;
+		_description = description;
+		_version = version;
+	}
 
 	public void addBundle(Bundle bundle) {
-		_moduleGroupDisplays = null;
-
 		_bundles.add(bundle);
 	}
 
 	@Override
-	public int compareTo(AppDisplay appDisplay) {
-		if (appDisplay == null) {
+	public int compareTo(ModuleGroupDisplay moduleGroupDisplay) {
+		if (moduleGroupDisplay == null) {
 			return -1;
 		}
 
 		String title = getTitle();
 
-		return title.compareToIgnoreCase(appDisplay.getTitle());
+		return title.compareToIgnoreCase(moduleGroupDisplay.getTitle());
 	}
 
 	public List<Bundle> getBundles() {
 		return _bundles;
 	}
 
-	public List<ModuleGroupDisplay> getModuleGroupDisplays() {
-		if (_moduleGroupDisplays == null) {
-			_moduleGroupDisplays =
-				ModuleGroupDisplayFactoryUtil.getModuleGroupDisplays(_bundles);
-		}
-
-		return _moduleGroupDisplays;
+	public String getDescription() {
+		return _description;
 	}
 
 	public int getState() {
-		List<Bundle> _bundles = getBundles();
+		List<Bundle> bundles = getBundles();
 
-		if (_bundles.isEmpty()) {
+		if (bundles.isEmpty()) {
 			return Bundle.UNINSTALLED;
 		}
 
 		int state = Bundle.ACTIVE;
 
-		for (Bundle bundle : _bundles) {
+		for (Bundle bundle : bundles) {
 			int bundleState = bundle.getState();
 
 			if (state > bundleState) {
@@ -74,26 +84,17 @@ public abstract class BaseAppDisplay implements AppDisplay {
 		return state;
 	}
 
-	public boolean hasModuleGroups() {
-		List<ModuleGroupDisplay> moduleGroupDisplays = getModuleGroupDisplays();
-
-		if (moduleGroupDisplays.size() > 1) {
-			return false;
-		}
-
-		ModuleGroupDisplay moduleGroupDisplay = moduleGroupDisplays.get(0);
-
-		String title = moduleGroupDisplay.getTitle();
-
-		if (title.equals(ModuleGroupDisplay.MODULE_GROUP_TITLE_UNCATEGORIZED)) {
-			return false;
-		}
-		else {
-			return true;
-		}
+	public String getTitle() {
+		return _title;
 	}
 
-	private List<Bundle> _bundles = new ArrayList<>();
-	private List<ModuleGroupDisplay> _moduleGroupDisplays;
+	public String getVersion() {
+		return _version.toString();
+	}
+
+	private final List<Bundle> _bundles = new ArrayList<>();
+	private final String _description;
+	private final String _title;
+	private final Version _version;
 
 }

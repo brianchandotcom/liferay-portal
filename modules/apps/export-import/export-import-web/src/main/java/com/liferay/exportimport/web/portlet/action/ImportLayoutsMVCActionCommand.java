@@ -119,8 +119,8 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 				Throwable cause = uploadException.getCause();
 
 				if (cause instanceof FileUploadBase.IOFileUploadException) {
-					if (_log.isErrorEnabled()) {
-						_log.error("Temporary upload was cancelled");
+					if (_log.isInfoEnabled()) {
+						_log.info("Temporary upload was cancelled");
 					}
 				}
 
@@ -132,8 +132,9 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 					throw new RequestContentLengthException(cause);
 				}
 			}
-
-			throw e;
+			else {
+				throw e;
+			}
 		}
 		finally {
 			StreamUtil.cleanUp(inputStream);

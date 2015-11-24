@@ -434,29 +434,28 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			if (uploadException != null) {
 				Throwable cause = uploadException.getCause();
 
-				if (Validator.isNotNull(cmd) &&
-					cmd.equals(cmd.equals(Constants.ADD_TEMP))) {
-
+				if (cmd.equals(Constants.ADD_TEMP)) {
 					if (cause instanceof FileUploadBase.IOFileUploadException) {
-						if (_log.isErrorEnabled()) {
-							_log.error("Temporary upload was cancelled");
+						if (_log.isInfoEnabled()) {
+							_log.info("Temporary upload was cancelled");
 						}
 					}
 				}
+				else {
+					if (uploadException.isExceededFileSizeLimit()) {
+						throw new FileSizeException(cause);
+					}
 
-				if (uploadException.isExceededFileSizeLimit()) {
-					throw new FileSizeException(cause);
+					if (uploadException.isExceededLiferayFileItemSizeLimit()) {
+						throw new LiferayFileItemException(cause);
+					}
+
+					if (uploadException.isExceededRequestContentLengthLimit()) {
+						throw new RequestContentLengthException(cause);
+					}
+
+					throw new PortalException(cause);
 				}
-
-				if (uploadException.isExceededLiferayFileItemSizeLimit()) {
-					throw new LiferayFileItemException(cause);
-				}
-
-				if (uploadException.isExceededRequestContentLengthLimit()) {
-					throw new RequestContentLengthException(cause);
-				}
-
-				throw new PortalException(cause);
 			}
 			else if (cmd.equals(Constants.ADD) ||
 					 cmd.equals(Constants.ADD_DYNAMIC) ||

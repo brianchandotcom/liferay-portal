@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `5504915e`.*
+*This document has been reviewed through commit `fde1fb9`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -2847,24 +2847,26 @@ The following attributes and methods have been removed:
 
 - The attribute `hover` of the `liferay-ui:search-container` taglib tag
 has been removed`.
-- The method `SearchContainerTag.isHover()` of the `SearchContainerTag` class has been removed
-- The attributes `classNameHover`, `hover`, `rowClassNameAlternate`, `rowClassNameAlternateHover`,
-`rowClassNameBody`, `rowClassNameBodyHover` of the `liferay-search-container` JavaScript module.
+- The method `SearchContainerTag.isHover()` of the `SearchContainerTag` class
+has been removed
+- The attributes `classNameHover`, `hover`, `rowClassNameAlternate`,
+`rowClassNameAlternateHover`, `rowClassNameBody`, `rowClassNameBodyHover` of the
+`liferay-search-container` JavaScript module.
 
 #### Who is affected?
 
-This affects developers that use the `hover` attribute of the `liferay-ui:search-container` taglib
-tag.
+This affects developers that use the `hover` attribute of the
+`liferay-ui:search-container` taglib tag.
 
 #### How should I update my code?
 
-You should update your code changing the css selector that defines how rows look on hover to use the
-`:hover` and `:nth-of-type` css pseudo selectors instead.
+You should update your code changing the css selector that defines how rows look
+on hover to use the `:hover` and `:nth-of-type` css pseudo selectors instead.
 
 #### Why was this change made?
 
-Browsers support nowadays better ways to style content on hover in a way that doesn't penalize
-performance.
+Browsers support nowadays better ways to style content on hover in a way that
+doesn't penalize performance.
 
 ---------------------------------------
 
@@ -2878,24 +2880,27 @@ The JavaScript modules AppViewMove and AppViewSelect have been removed.
 
 #### Who is affected?
 
-This affects developers that use these modules to configure select and move actions inside their
-applications.
+This affects developers that use these modules to configure select and move
+actions inside their applications.
 
 #### How should I update my code?
 
-If you are using any of these modules, you can make use of the following SearchContainer APIs:
-- Listen to the `rowToggled` event of the search container to be notified about changes in the
-search container state.
-- Configure your search container move options creating a `RowMover` and define the allowed move
-targets and associated actions.
-- Use the `registerAction` method of the search container to execute your move logic when the user
-completes a move action.
+If you are using any of these modules, you can make use of the following
+SearchContainer APIs:
+
+- Listen to the `rowToggled` event of the search container to be notified about
+changes in the search container state.
+- Configure your search container move options creating a `RowMover` and define
+the allowed move targets and associated actions.
+- Use the `registerAction` method of the search container to execute your move
+logic when the user completes a move action.
 
 #### Why was this change made?
 
-The removed JavaScript modules contained too much logic and were quite difficult to reason about. It
-was also difficult to add this to an existing app. With this change, every app using a search
-container can make use of this in an easier way.
+The removed JavaScript modules contained too much logic and were quite difficult
+to reason about. It was also difficult to add this to an existing app. With this
+change, every app using a search container can make use of this in an easier
+way.
 
 ---------------------------------------
 

@@ -1114,43 +1114,6 @@
 		<execute function="SelectFrame" locator1="relative=top" />
 	</command>
 
-	<command name="gotoAddDocumentType">
-		<execute function="Click" locator1="Button#PLUS" />
-
-		<var name="key_dmDocumentTypeName" value="${dmDocumentTypeName}" />
-
-		<execute function="AssertClick" locator1="MenuItem#DOCUMENT_TYPE" value1="${dmDocumentTypeName}" />
-	</command>
-
-	<command name="gotoCP">
-		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
-
-		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
-	</command>
-
-	<command name="gotoHomeCP">
-		<execute function="AssertClick#assertTextClickAtAndWait" locator1="DocumentsAndMedia#BREADCRUMB_HOME" value1="HOME" />
-	</command>
-
-	<command name="gotoPG">
-		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
-
-		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
-	</command>
-
-	<command name="gotoRelatedAssetPG">
-		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
-
-		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
-
-		<var name="key_assetTitle" value="${key_assetTitle}" />
-
-		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}" />
-		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_RELATED_ASSETS_HEADER" value1="Related Assets:" />
-		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_RELATED_ASSETS_TITLE" value1="${assetTitle}" />
-		<execute function="AssertClick" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_RELATED_ASSETS_TITLE" value1="${assetTitle}" />
-	</command>
-
 	<command name="linkImage">
 		<execute function="Click#pauseClickAt" locator1="CKEditor#CONTENT_IMAGE_LINK" />
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="CKEditor#CONTENT_IMAGE_LINK_BROWSE_SERVER_BUTTON" value1="Browse Server" />

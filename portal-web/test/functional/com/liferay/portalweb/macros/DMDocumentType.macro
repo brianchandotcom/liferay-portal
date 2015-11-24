@@ -157,16 +157,6 @@
 		</if>
 	</command>
 
-	<command name="gotoCP">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-		<execute function="AssertClick" locator1="MenuItem#DOCUMENT_TYPES" value1="Document Types" />
-	</command>
-
-	<command name="gotoPG">
-		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="Toolbar#MANAGE" value1="Manage" />
-		<execute function="AssertClick" locator1="MenuItem#DOCUMENT_TYPES" value1="Document Types" />
-	</command>
-
 	<command name="selectDocumentTypeFrame">
 		<if>
 			<condition function="IsElementPresent" locator1="IFrame#DOCUMENT_TYPES" />

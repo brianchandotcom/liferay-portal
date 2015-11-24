@@ -70,16 +70,6 @@
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaMetadataSets#METADATA_SETS_TABLE_NAME" value1="${key_metadataSetName}" />
 	</command>
 
-	<command name="gotoCP">
-		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="DocumentsAndMedia#TOOLBAR_MANAGE" value1="Manage" />
-		<execute function="AssertClick" locator1="MenuItem#METADATA_SETS" value1="Metadata Sets" />
-	</command>
-
-	<command name="gotoPG">
-		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="Toolbar#MANAGE" value1="Manage" />
-		<execute function="AssertClick" locator1="MenuItem#METADATA_SETS" value1="Metadata Sets" />
-	</command>
-
 	<command name="save">
 		<execute function="SelectFrameTop" />
 

@@ -123,7 +123,7 @@
 </tr>
 <tr>
 	<td>REPEAT_ENDS_AFTER_FIELD</td>
-	<td>//input[contains(@id,'CalendarPortlet_count')]</td>
+	<td>//input[contains(@id,'CalendarPortlet_count')and(@class='field form-control')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -2837,7 +2837,7 @@ Portal.
 
 ---------------------------------------
 
-### Removed Hover and Alternate Style Features of Search Container Taglib
+### Removed Hover and Alternate Style Features of Search Container Tag
 - **Date:** 2015-Nov-03
 - **JIRA Ticket:** LPS-58854
 
@@ -2845,10 +2845,8 @@ Portal.
 
 The following attributes and methods have been removed:
 
-- The attribute `hover` of the `liferay-ui:search-container` taglib tag
-has been removed`.
-- The method `SearchContainerTag.isHover()` of the `SearchContainerTag` class
-has been removed
+- The attribute `hover` of the `liferay-ui:search-container` tag.
+- The method `isHover()` of the `SearchContainerTag` class.
 - The attributes `classNameHover`, `hover`, `rowClassNameAlternate`,
 `rowClassNameAlternateHover`, `rowClassNameBody`, `rowClassNameBodyHover` of the
 `liferay-search-container` JavaScript module.
@@ -2856,17 +2854,18 @@ has been removed
 #### Who is affected?
 
 This affects developers that use the `hover` attribute of the
-`liferay-ui:search-container` taglib tag.
+`liferay-ui:search-container` tag.
 
 #### How should I update my code?
 
-You should update your code changing the css selector that defines how rows look
-on hover to use the `:hover` and `:nth-of-type` css pseudo selectors instead.
+You should update your code changing the CSS selector that defines how rows look
+on hover to use the `:hover` and `:nth-of-type` CSS pseudo selectors instead.
 
 #### Why was this change made?
 
-Browsers support nowadays better ways to style content on hover in a way that
-doesn't penalize performance.
+Browsers support better ways to style content on hover in a way that doesn't
+penalize performance. Therefore, this change was made to increase the
+performance of hovering over content in Liferay.
 
 ---------------------------------------
 
@@ -2876,31 +2875,31 @@ doesn't penalize performance.
 
 #### What changed?
 
-The JavaScript modules AppViewMove and AppViewSelect have been removed.
+The JavaScript modules `AppViewMove` and `AppViewSelect` have been removed.
 
 #### Who is affected?
 
-This affects developers that use these modules to configure select and move
+This affects developers that use these modules to configure *select* and *move*
 actions inside their applications.
 
 #### How should I update my code?
 
 If you are using any of these modules, you can make use of the following
-SearchContainer APIs:
+`SearchContainer` APIs:
 
 - Listen to the `rowToggled` event of the search container to be notified about
-changes in the search container state.
-- Configure your search container move options creating a `RowMover` and define
-the allowed move targets and associated actions.
-- Use the `registerAction` method of the search container to execute your move
-logic when the user completes a move action.
+changes to the search container state.
+- Configure your search container *move* options creating a `RowMover` and
+define the allowed *move* targets and associated actions.
+- Use the `registerAction` method of the search container to execute your *move*
+logic when the user completes a *move* action.
 
 #### Why was this change made?
 
-The removed JavaScript modules contained too much logic and were quite difficult
-to reason about. It was also difficult to add this to an existing app. With this
-change, every app using a search container can make use of this in an easier
-way.
+The removed JavaScript modules contained too much logic and were difficult to
+decipher. It was also difficult to add this to an existing app. With this
+change, every app using a search container can use this functionality much
+easier.
 
 ---------------------------------------
 

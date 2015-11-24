@@ -17,14 +17,14 @@
 <%@ include file="/diff_version_comparator/init.jsp" %>
 
 <%
-Set<Locale> availableLocales = (Set<Locale>)request.getAttribute("liferay-ui:diff-version-comparator:availableLocales");
-String diffHtmlResults = (String)request.getAttribute("liferay-ui:diff-version-comparator:diffHtmlResults");
-DiffVersionsInfo diffVersionsInfo = (DiffVersionsInfo)request.getAttribute("liferay-ui:diff-version-comparator:diffVersionsInfo");
-String languageId = (String)request.getAttribute("liferay-ui:diff-version-comparator:languageId");
-PortletURL portletURL = (PortletURL)request.getAttribute("liferay-ui:diff-version-comparator:portletURL");
-PortletURL resourceURL = (PortletURL)request.getAttribute("liferay-ui:diff-version-comparator:resourceURL");
-double sourceVersion = (Double)request.getAttribute("liferay-ui:diff-version-comparator:sourceVersion");
-double targetVersion = (Double)request.getAttribute("liferay-ui:diff-version-comparator:targetVersion");
+Set<Locale> availableLocales = (Set<Locale>)request.getAttribute("liferay-frontend:diff-version-comparator:availableLocales");
+String diffHtmlResults = (String)request.getAttribute("liferay-frontend:diff-version-comparator:diffHtmlResults");
+DiffVersionsInfo diffVersionsInfo = (DiffVersionsInfo)request.getAttribute("liferay-frontend:diff-version-comparator:diffVersionsInfo");
+String languageId = (String)request.getAttribute("liferay-frontend:diff-version-comparator:languageId");
+PortletURL portletURL = (PortletURL)request.getAttribute("liferay-frontend:diff-version-comparator:portletURL");
+PortletURL resourceURL = (PortletURL)request.getAttribute("liferay-frontend:diff-version-comparator:resourceURL");
+double sourceVersion = (Double)request.getAttribute("liferay-frontend:diff-version-comparator:sourceVersion");
+double targetVersion = (Double)request.getAttribute("liferay-frontend:diff-version-comparator:targetVersion");
 
 double nextVersion = diffVersionsInfo.getNextVersion();
 double previousVersion = diffVersionsInfo.getPreviousVersion();

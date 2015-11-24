@@ -91,24 +91,27 @@ public class DiffVersionComparatorTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-ui:diff-version-comparator:availableLocales",
+			"liferay-frontend:diff-version-comparator:availableLocales",
 			_availableLocales);
 		request.setAttribute(
-			"liferay-ui:diff-version-comparator:diffHtmlResults",
+			"liferay-frontend:diff-version-comparator:diffHtmlResults",
 			_diffHtmlResults);
 		request.setAttribute(
-			"liferay-ui:diff-version-comparator:diffVersionsInfo",
+			"liferay-frontend:diff-version-comparator:diffVersionsInfo",
 			_diffVersionsInfo);
 		request.setAttribute(
-			"liferay-ui:diff-version-comparator:languageId", _languageId);
+			"liferay-frontend:diff-version-comparator:languageId", _languageId);
 		request.setAttribute(
-			"liferay-ui:diff-version-comparator:portletURL", _portletURL);
+			"liferay-frontend:diff-version-comparator:portletURL", _portletURL);
 		request.setAttribute(
-			"liferay-ui:diff-version-comparator:resourceURL", _resourceURL);
+			"liferay-frontend:diff-version-comparator:resourceURL",
+			_resourceURL);
 		request.setAttribute(
-			"liferay-ui:diff-version-comparator:sourceVersion", _sourceVersion);
+			"liferay-frontend:diff-version-comparator:sourceVersion",
+			_sourceVersion);
 		request.setAttribute(
-			"liferay-ui:diff-version-comparator:targetVersion", _targetVersion);
+			"liferay-frontend:diff-version-comparator:targetVersion",
+			_targetVersion);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;

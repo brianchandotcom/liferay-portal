@@ -43,6 +43,12 @@ public interface BundleConstants extends Constants {
 	public static final String LIFERAY_RELENG_MARKETPLACE =
 		"Liferay-Releng-Marketplace";
 
+	public static final String LIFERAY_RELENG_MODULE_GROUP_DESCRIPTION =
+		"Liferay-Releng-App-Description";
+
+	public static final String LIFERAY_RELENG_MODULE_GROUP_TITLE =
+		"Liferay-Releng-App-Title";
+
 	public static final String LIFERAY_RELENG_PUBLIC = "Liferay-Releng-Public";
 
 	public static final String LIFERAY_RELENG_SUPPORT_URL =

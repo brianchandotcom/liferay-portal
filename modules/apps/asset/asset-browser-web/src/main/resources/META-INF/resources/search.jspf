@@ -15,13 +15,14 @@
 --%>
 
 <%
-AssetBrowserDisplayTerms displayTerms = (AssetBrowserDisplayTerms)searchContainer.getDisplayTerms();
+AssetBrowserDisplayTerms displayTerms = (AssetBrowserDisplayTerms)assetBrowserSearch.getDisplayTerms();
 %>
 
 <liferay-ui:search-toggle
 	buttonLabel="search"
 	displayTerms="<%= displayTerms %>"
 	id="toggle_id_asset_search"
+	markupView="lexicon"
 >
 	<aui:fieldset>
 		<aui:input inlineField="<%= true %>" name="<%= AssetBrowserDisplayTerms.TITLE %>" size="20" type="text" value="<%= displayTerms.getTitle() %>" />

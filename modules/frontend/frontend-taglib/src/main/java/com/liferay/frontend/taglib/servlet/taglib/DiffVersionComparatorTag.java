@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.taglib.servlet.taglib;
 
+import com.liferay.frontend.taglib.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.diff.DiffVersionsInfo;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -23,6 +24,7 @@ import java.util.Set;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Eudaldo Alonso
@@ -48,6 +50,13 @@ public class DiffVersionComparatorTag extends IncludeTag {
 
 	public void setLanguageId(String languageId) {
 		_languageId = languageId;
+	}
+
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		servletContext = ServletContextUtil.getServletContext();
 	}
 
 	public void setPortletURL(PortletURL portletURL) {

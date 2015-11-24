@@ -33,10 +33,14 @@ public interface AppDisplay extends Comparable<AppDisplay> {
 
 	public String getIconURL();
 
+	public List<ModuleGroupDisplay> getModuleGroupDisplays();
+
 	public int getState();
 
 	public String getTitle();
 
 	public String getVersion();
+
+	public boolean hasModuleGroups();
 
 }

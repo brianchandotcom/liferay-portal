@@ -14,6 +14,7 @@
 
 package com.liferay.marketplace.app.manager.web.util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.framework.Bundle;
@@ -22,6 +23,12 @@ import org.osgi.framework.Bundle;
  * @author Ryan Park
  */
 public abstract class BaseAppDisplay implements AppDisplay {
+
+	public void addBundle(Bundle bundle) {
+		_moduleGroupDisplays = null;
+
+		_bundles.add(bundle);
+	}
 
 	@Override
 	public int compareTo(AppDisplay appDisplay) {
@@ -34,16 +41,29 @@ public abstract class BaseAppDisplay implements AppDisplay {
 		return title.compareToIgnoreCase(appDisplay.getTitle());
 	}
 
-	public int getState() {
-		List<Bundle> bundles = getBundles();
+	public List<Bundle> getBundles() {
+		return _bundles;
+	}
 
-		if (bundles.isEmpty()) {
+	public List<ModuleGroupDisplay> getModuleGroupDisplays() {
+		if (_moduleGroupDisplays == null) {
+			_moduleGroupDisplays =
+				ModuleGroupDisplayFactoryUtil.getModuleGroupDisplays(_bundles);
+		}
+
+		return _moduleGroupDisplays;
+	}
+
+	public int getState() {
+		List<Bundle> _bundles = getBundles();
+
+		if (_bundles.isEmpty()) {
 			return Bundle.UNINSTALLED;
 		}
 
 		int state = Bundle.ACTIVE;
 
-		for (Bundle bundle : bundles) {
+		for (Bundle bundle : _bundles) {
 			int bundleState = bundle.getState();
 
 			if (state > bundleState) {
@@ -53,5 +73,27 @@ public abstract class BaseAppDisplay implements AppDisplay {
 
 		return state;
 	}
+
+	public boolean hasModuleGroups() {
+		List<ModuleGroupDisplay> moduleGroupDisplays = getModuleGroupDisplays();
+
+		if (moduleGroupDisplays.size() > 1) {
+			return false;
+		}
+
+		ModuleGroupDisplay moduleGroupDisplay = moduleGroupDisplays.get(0);
+
+		String title = moduleGroupDisplay.getTitle();
+
+		if (title.equals(ModuleGroupDisplay.MODULE_GROUP_TITLE_UNCATEGORIZED)) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+
+	private List<Bundle> _bundles = new ArrayList<>();
+	private List<ModuleGroupDisplay> _moduleGroupDisplays;
 
 }

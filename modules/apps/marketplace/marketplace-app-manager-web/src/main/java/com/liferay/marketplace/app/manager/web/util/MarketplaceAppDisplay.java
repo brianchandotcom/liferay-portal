@@ -16,11 +16,6 @@ package com.liferay.marketplace.app.manager.web.util;
 
 import com.liferay.marketplace.model.App;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.osgi.framework.Bundle;
-
 /**
  * @author Ryan Park
  */
@@ -34,16 +29,8 @@ public class MarketplaceAppDisplay extends BaseAppDisplay {
 		_app = app;
 	}
 
-	public void addBundle(Bundle bundle) {
-		_bundles.add(bundle);
-	}
-
 	public App getApp() {
 		return _app;
-	}
-
-	public List<Bundle> getBundles() {
-		return _bundles;
 	}
 
 	public String getDescription() {
@@ -63,6 +50,5 @@ public class MarketplaceAppDisplay extends BaseAppDisplay {
 	}
 
 	private final App _app;
-	private final List<Bundle> _bundles = new ArrayList<>();
 
 }

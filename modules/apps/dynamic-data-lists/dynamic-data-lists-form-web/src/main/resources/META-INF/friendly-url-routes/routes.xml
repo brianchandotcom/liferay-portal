@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!DOCTYPE routes PUBLIC "-//Liferay//DTD Friendly URL Routes 7.0.0//EN" "http://www.liferay.com/dtd/liferay-friendly-url-routes_7_0_0.dtd">
+
+<routes>
+	<route>
+		<pattern>/{recordSetId:\d+}</pattern>
+		<implicit-parameter name="p_p_id">com_liferay_dynamic_data_lists_form_web_portlet_DDLFormPortlet</implicit-parameter>
+		<implicit-parameter name="shared">true</implicit-parameter>
+	</route>
+</routes>

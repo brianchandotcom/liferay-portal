@@ -252,49 +252,6 @@
 		</execute>
 	</command>
 
-	<command name="RecycleBinEntriesMaxAge" priority="4">
-		<property name="custom.properties" value="trash.entry.check.interval=1" />
-		<property name="custom.properties" value="trash.entries.max.age=1" />
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="Web Content Content" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="WebContent#publish" />
-
-		<execute macro="WebContent#moveToRecycleBinCP">
-			<var name="assetType" value="Web Content Article" />
-			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="RecycleBin#viewRecycleBinMaxAge">
-			<var name="maxAgeField" value="1" />
-		</execute>
-
-		<execute function="Pause" locator1="180000" />
-
-		<execute function="Refresh" />
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="RecycleBin#viewDefaultCP">
-			<var name="assetName" value="Web Content Title" />
-		</execute>
-	</command>
-
 	<command name="RecycleBinMBAttachment" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Message Boards" />

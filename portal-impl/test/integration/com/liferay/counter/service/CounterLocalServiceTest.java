@@ -44,13 +44,20 @@ import com.liferay.registry.RegistryUtil;
 
 import java.io.File;
 
+import java.lang.management.ManagementFactory;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.Future;
 
+import javax.management.MBeanServer;
+import javax.management.ObjectName;
+
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -88,6 +95,18 @@ public class CounterLocalServiceTest {
 					}
 
 				}));
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
+
+		Set<ObjectName> objectNames = mBeanServer.queryNames(
+			null, new ObjectName("com.zaxxer.hikari:type=Pool (*"));
+
+		for (ObjectName objectName : objectNames) {
+			mBeanServer.invoke(objectName, "softEvictConnections", null, null);
+		}
+	}
 
 	@Test
 	public void testConcurrentIncrement() throws Exception {

@@ -78,7 +78,7 @@ if (!TrashUtil.isInTrash(className, classPK)) {
 							popup.plug(
 								A.Plugin.IO, {
 									data: data,
-									uri: '<liferay-portlet:renderURL portletName="<%= PortletKeys.FLAGS %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/flags/edit_entry" /></liferay-portlet:renderURL>'
+									uri: '<liferay-portlet:renderURL portletName="<%= PortletKeys.FLAGS %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcRenderCommandName" value="/flags/edit_entry" /></liferay-portlet:renderURL>'
 								}
 							);
 						}

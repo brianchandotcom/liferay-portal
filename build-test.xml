@@ -4633,6 +4633,10 @@ javascript.fast.load=false</echo>
 			</or>
 			<then>
 				<prepare-portal-legacy-properties portal.major.version="6.2" />
+
+				<echo file="portal-impl/src/portal-ext.properties" append="true">
+
+upgrade.processes=${upgrade.processes.master}</echo>
 			</then>
 		</if>
 

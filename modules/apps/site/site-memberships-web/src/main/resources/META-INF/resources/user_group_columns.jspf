@@ -21,21 +21,16 @@ userParams.put("usersUserGroups", Long.valueOf(userGroup.getUserGroupId()));
 
 int usersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), StringPool.BLANK, WorkflowConstants.STATUS_ANY, userParams);
 
-List<UserGroupGroupRole> userGroupGroupRoles = UserGroupGroupRoleLocalServiceUtil.getUserGroupGroupRoles(userGroup.getUserGroupId(), group.getGroupId());
+List<UserGroupGroupRole> userGroupGroupRoles = UserGroupGroupRoleLocalServiceUtil.getUserGroupGroupRoles(userGroup.getUserGroupId(), siteMembershipsDisplayContext.getGroupId());
 
 String userGroupGroupRolesString = ListUtil.toString(userGroupGroupRoles, UsersAdmin.USER_GROUP_GROUP_ROLE_TITLE_ACCESSOR, StringPool.COMMA_AND_SPACE);
 %>
-
-<liferay-ui:search-container-row-parameter
-	name="group"
-	value="<%= group %>"
-/>
 
 <c:choose>
 	<c:when test='<%= displayStyle.equals("icon") %>'>
 
 		<%
-		row.setCssClass("col-md-2 col-sm-4 col-xs-6 selectable");
+		row.setCssClass("col-md-2 col-sm-4 col-xs-6");
 		%>
 
 		<liferay-ui:search-container-column-text>
@@ -45,6 +40,7 @@ String userGroupGroupRolesString = ListUtil.toString(userGroupGroupRoles, UsersA
 				cssClass="entry-display-style"
 				icon="users"
 				resultRow="<%= row %>"
+				rowChecker="<%= rowChecker %>"
 				subtitle="<%= userGroup.getDescription() %>"
 				title="<%= userGroup.getName() %>"
 			>

@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+
 String tabs1 = ParamUtil.getString(request, "tabs1", "pending");
 
 int statusId = -1;
@@ -40,6 +42,8 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("mvcPath", "/view_membership_requests.jsp");
 portletURL.setParameter("tabs1", tabs1);
 portletURL.setParameter("groupId", String.valueOf(group.getGroupId()));
+
+int membershipRequestCount = MembershipRequestLocalServiceUtil.searchCount(group.getGroupId(), statusId);
 %>
 
 <liferay-ui:success key="membershipReplySent" message="your-reply-will-be-sent-to-the-user-by-email" />
@@ -73,11 +77,30 @@ portletURL.setParameter("groupId", String.valueOf(group.getGroupId()));
 	</aui:nav>
 </aui:nav-bar>
 
+<c:if test="<%= membershipRequestCount > 0 %>">
+	<liferay-frontend:management-bar>
+		<liferay-frontend:management-bar-buttons>
+			<liferay-frontend:management-bar-display-buttons
+				displayViews='<%= new String[] {"list"} %>'
+				portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+				selectedDisplayStyle="<%= displayStyle %>"
+			/>
+		</liferay-frontend:management-bar-buttons>
+
+		<liferay-frontend:management-bar-filters>
+			<liferay-frontend:management-bar-navigation
+				navigationKeys='<%= new String[] {"all"} %>'
+				portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+			/>
+		</liferay-frontend:management-bar-filters>
+	</liferay-frontend:management-bar>
+</c:if>
+
 <div class="container-fluid-1280">
 	<liferay-ui:search-container
 		emptyResultsMessage="no-requests-were-found"
 		iteratorURL="<%= portletURL %>"
-		total="<%= MembershipRequestLocalServiceUtil.searchCount(group.getGroupId(), statusId) %>"
+		total="<%= membershipRequestCount %>"
 	>
 		<liferay-ui:search-container-results
 			results="<%= MembershipRequestLocalServiceUtil.search(group.getGroupId(), statusId, searchContainer.getStart(), searchContainer.getEnd()) %>"

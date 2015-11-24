@@ -16,13 +16,11 @@
 		<pattern>/members/{tabs1}</pattern>
 		<implicit-parameter name="mvcPath">/view.jsp</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
-		<implicit-parameter name="tabs2">current</implicit-parameter>
 	</route>
 	<route>
 		<pattern>/members/{tabs1}/assignments</pattern>
 		<implicit-parameter name="mvcPath">/view.jsp</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
-		<implicit-parameter name="tabs2">available</implicit-parameter>
 	</route>
 	<route>
 		<pattern>/members</pattern>

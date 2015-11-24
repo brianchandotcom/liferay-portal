@@ -20,14 +20,12 @@
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 Organization organization = (Organization)row.getObject();
-
-Group group = (Group)row.getParameter("group");
 %>
 
-<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>">
+<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, siteMembershipsDisplayContext.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>">
 	<portlet:actionURL name="editGroupOrganizations" var="removeURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
+		<portlet:param name="groupId" value="<%= String.valueOf(siteMembershipsDisplayContext.getGroupId()) %>" />
 		<portlet:param name="removeOrganizationIds" value="<%= String.valueOf(organization.getOrganizationId()) %>" />
 	</portlet:actionURL>
 

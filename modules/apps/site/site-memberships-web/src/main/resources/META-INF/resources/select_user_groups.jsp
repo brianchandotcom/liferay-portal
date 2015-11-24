@@ -17,60 +17,80 @@
 <%@ include file="/init.jsp" %>
 
 <%
-int cur = (Integer)request.getAttribute("edit_site_assignments.jsp-cur");
+String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectUserGroups");
 
-Group group = (Group)request.getAttribute("edit_site_assignments.jsp-group");
-
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
-
-PortletURL portletURL = (PortletURL)request.getAttribute("edit_site_assignments.jsp-portletURL");
+String displayStyle = ParamUtil.getString(request, "displayStyle", "icon");
+String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
 PortletURL viewUserGroupsURL = renderResponse.createRenderURL();
 
-viewUserGroupsURL.setParameter("mvcPath", "/view.jsp");
-viewUserGroupsURL.setParameter("tabs1", "user-groups");
-viewUserGroupsURL.setParameter("tabs2", "available");
-viewUserGroupsURL.setParameter("redirect", currentURL);
-viewUserGroupsURL.setParameter("groupId", String.valueOf(group.getGroupId()));
+viewUserGroupsURL.setParameter("mvcPath", "/select_user_groups.jsp");
+viewUserGroupsURL.setParameter("eventName", eventName);
+viewUserGroupsURL.setParameter("groupId", String.valueOf(siteMembershipsDisplayContext.getGroupId()));
 
-UserGroupGroupChecker userGroupGroupChecker = new UserGroupGroupChecker(renderResponse, group);
+UserGroupSiteMembershipsChecker rowChecker = new UserGroupSiteMembershipsChecker(renderResponse, siteMembershipsDisplayContext.getGroup());
 
-UserGroupSearch userGroupSearch = new UserGroupSearch(renderRequest, viewUserGroupsURL);
+UserGroupSearch userGroupSearch = new UserGroupSearch(renderRequest, PortletURLUtil.clone(viewUserGroupsURL, renderResponse));
+
+UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)userGroupSearch.getSearchTerms();
+
+LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
+
+int userGroupsCount = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams);
+
+userGroupSearch.setTotal(userGroupsCount);
+
+List<UserGroup> userGroups = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams, userGroupSearch.getStart(), userGroupSearch.getEnd(), userGroupSearch.getOrderByComparator());
+
+userGroupSearch.setResults(userGroups);
 %>
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="tabs1" type="hidden" value="user-groups" />
-	<aui:input name="tabs2" type="hidden" value="available" />
-	<aui:input name="assignmentsRedirect" type="hidden" />
-	<aui:input name="groupId" type="hidden" value="<%= String.valueOf(group.getGroupId()) %>" />
-	<aui:input name="addUserGroupIds" type="hidden" />
-	<aui:input name="removeUserGroupIds" type="hidden" />
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<c:if test="<%= userGroupsCount > 0 %>">
+		<aui:nav-bar-search>
+			<aui:form action="<%= viewUserGroupsURL.toString() %>" name="searchFm">
+				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
+			</aui:form>
+		</aui:nav-bar-search>
+	</c:if>
+</aui:nav-bar>
 
+<c:if test="<%= userGroupsCount > 0 %>">
+	<liferay-frontend:management-bar
+		includeCheckBox="<%= true %>"
+		searchContainerId="userGroups"
+	>
+		<liferay-frontend:management-bar-buttons>
+			<liferay-frontend:management-bar-display-buttons
+				displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
+				portletURL="<%= PortletURLUtil.clone(viewUserGroupsURL, renderResponse) %>"
+				selectedDisplayStyle="<%= displayStyle %>"
+			/>
+		</liferay-frontend:management-bar-buttons>
+
+		<liferay-frontend:management-bar-filters>
+			<liferay-frontend:management-bar-navigation
+				navigationKeys='<%= new String[] {"all"} %>'
+				portletURL="<%= PortletURLUtil.clone(viewUserGroupsURL, renderResponse) %>"
+			/>
+
+			<liferay-frontend:management-bar-sort
+				orderByCol="<%= orderByCol %>"
+				orderByType="<%= orderByType %>"
+				orderColumns='<%= new String[] {"name", "description"} %>'
+				portletURL="<%= PortletURLUtil.clone(viewUserGroupsURL, renderResponse) %>"
+			/>
+		</liferay-frontend:management-bar-filters>
+	</liferay-frontend:management-bar>
+</c:if>
+
+<aui:form cssClass="container-fluid-1280" name="fm">
 	<liferay-ui:search-container
-		rowChecker="<%= userGroupGroupChecker %>"
+		id="userGroups"
+		rowChecker="<%= rowChecker %>"
 		searchContainer="<%= userGroupSearch %>"
 	>
-
-		<%
-		UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)searchContainer.getSearchTerms();
-
-		LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
-		%>
-
-		<liferay-ui:search-container-results>
-
-			<%
-			total = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams);
-
-			searchContainer.setTotal(total);
-
-			results = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-
-			searchContainer.setResults(results);
-			%>
-
-		</liferay-ui:search-container-results>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.model.UserGroup"
 			escapedModel="<%= true %>"
@@ -86,33 +106,24 @@ UserGroupSearch userGroupSearch = new UserGroupSearch(renderRequest, viewUserGro
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
-
-		<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>">
-
-			<%
-			portletURL.setParameter("tabs2", "current");
-			portletURL.setParameter("cur", String.valueOf(cur));
-
-			String taglibOnClick = renderResponse.getNamespace() + "updateGroupUserGroups('" + portletURL.toString() + "');";
-			%>
-
-			<aui:button-row>
-				<aui:button onClick="<%= taglibOnClick %>" primary="<%= true %>" value="save" />
-			</aui:button-row>
-		</c:if>
 	</liferay-ui:search-container>
 </aui:form>
 
 <aui:script>
-	function <portlet:namespace />updateGroupUserGroups(assignmentsRedirect) {
-		var Util = Liferay.Util;
+	var Util = Liferay.Util;
 
-		var form = AUI.$(document.<portlet:namespace />fm);
+	var form = AUI.$(document.<portlet:namespace />fm);
 
-		form.fm('assignmentsRedirect').val(assignmentsRedirect);
-		form.fm('addUserGroupIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-		form.fm('removeUserGroupIds').val(Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
+	$('input[name="<portlet:namespace />rowIds"]').on(
+		'change',
+		function(event) {
+			var values = {
+				data: {
+					addUserGroupIds: Util.listCheckedExcept(form, '<portlet:namespace />allRowIds')
+				}
+			};
 
-		submitForm(form, '<portlet:actionURL name="editGroupUserGroups" />');
-	}
+			Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', values);
+		}
+	);
 </aui:script>

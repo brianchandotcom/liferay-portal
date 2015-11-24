@@ -26,7 +26,9 @@ import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializerUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializerUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializerUtil;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -53,6 +55,7 @@ import java.io.Writer;
 import java.net.URL;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -211,6 +214,15 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		template.put(
 			"definition", DDMFormJSONSerializerUtil.serialize(ddmForm));
 
+		DDMFormValues ddmFormValues =
+			ddmFormRenderingContext.getDDMFormValues();
+
+		if (ddmFormValues != null) {
+			removeStaleDDMFormFieldValues(
+				ddmForm.getDDMFormFieldsMap(true),
+				ddmFormValues.getDDMFormFieldValues());
+		}
+
 		Locale locale = ddmFormRenderingContext.getLocale();
 
 		DDMFormEvaluationResult ddmFormEvaluationResult =
@@ -243,9 +255,6 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		template.put("strings", getLanguageStringsMap(locale));
 		template.put("templateNamespace", getTemplateNamespace(ddmFormLayout));
 
-		DDMFormValues ddmFormValues =
-			ddmFormRenderingContext.getDDMFormValues();
-
 		if (ddmFormValues != null) {
 			template.put(
 				"values",
@@ -253,6 +262,25 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		}
 		else {
 			template.put("values", JSONFactoryUtil.getNullJSON());
+		}
+	}
+
+	protected void removeStaleDDMFormFieldValues(
+		Map<String, DDMFormField> ddmFormFieldsMap,
+		List<DDMFormFieldValue> ddmFormFieldValues) {
+
+		Iterator<DDMFormFieldValue> itr = ddmFormFieldValues.iterator();
+
+		while (itr.hasNext()) {
+			DDMFormFieldValue ddmFormFieldValue = itr.next();
+
+			if (!ddmFormFieldsMap.containsKey(ddmFormFieldValue.getName())) {
+				itr.remove();
+			}
+
+			removeStaleDDMFormFieldValues(
+				ddmFormFieldsMap,
+				ddmFormFieldValue.getNestedDDMFormFieldValues());
 		}
 	}
 

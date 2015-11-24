@@ -27,6 +27,11 @@ List<UserTrackerPath> paths = userTracker.getPaths();
 int numHits = userTracker.getHits();
 
 userTracker = userTracker.toEscapedModel();
+
+renderResponse.setTitle(LanguageUtil.get(request, "live-session"));
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
 %>
 
 <portlet:actionURL name="/monitoring/edit_session" var="editSessionURL" />
@@ -34,11 +39,6 @@ userTracker = userTracker.toEscapedModel();
 <aui:form action="<%= editSessionURL %>" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="sessionId" type="hidden" value="<%= sessionId %>" />
-
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		title="live-session"
-	/>
 
 	<c:choose>
 		<c:when test="<%= userTracker == null %>">

@@ -631,6 +631,10 @@
 		<execute function="AssertElementPresent" locator1="DDL#RECORD_TABLE_PREVIEW_INVALID_IMG" />
 	</command>
 
+	<command name="viewNestedFieldsVisualGroupingViaDDLDisplay">
+		<execute function="SikuliAssertElementPresent" locator1="DDLRecord#NESTED_FIELD_VISUAL_GROUPING_DDL_DISPLAY_PNG" />
+	</command>
+
 	<command name="viewRepeatableNestedFieldsVisualGrouping">
 		<execute function="SikuliAssertElementPresent" locator1="DDLRecord#NESTED_FIELD_REPEATABLE_VISUAL_GROUPING_PNG" />
 	</command>

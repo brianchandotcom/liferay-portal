@@ -45,6 +45,8 @@ public abstract class BaseDLAppTestCase {
 
 		group = GroupTestUtil.addGroup();
 
+		toGroup = GroupTestUtil.addGroup();
+
 		try {
 			DLAppServiceUtil.deleteFolder(
 				group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -84,6 +86,9 @@ public abstract class BaseDLAppTestCase {
 	protected Group group;
 
 	protected Folder parentFolder;
+
+	@DeleteAfterTestRun
+	protected Group toGroup;
 
 	private String _name;
 

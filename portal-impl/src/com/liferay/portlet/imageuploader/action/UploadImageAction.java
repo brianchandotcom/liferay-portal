@@ -28,9 +28,9 @@ import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
-import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -266,8 +266,8 @@ public class UploadImageAction extends PortletAction {
 				 e instanceof FileSizeException ||
 				 e instanceof ImageTypeException ||
 				 e instanceof NoSuchFileException ||
-				 e instanceof UploadRequestSizeException ||
-				 e instanceof UploadException) {
+				 e instanceof UploadException ||
+				 e instanceof UploadRequestSizeException) {
 
 			if (cmd.equals(Constants.ADD_TEMP)) {
 				hideDefaultErrorMessage(actionRequest);

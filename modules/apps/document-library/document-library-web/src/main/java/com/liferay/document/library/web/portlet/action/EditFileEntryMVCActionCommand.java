@@ -34,9 +34,9 @@ import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
-import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -732,9 +732,9 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				 e instanceof FileSizeException ||
 				 e instanceof LiferayFileItemException ||
 				 e instanceof NoSuchFolderException ||
-				 e instanceof UploadRequestSizeException ||
 				 e instanceof SourceFileNameException ||
-				 e instanceof StorageFieldRequiredException) {
+				 e instanceof StorageFieldRequiredException ||
+				 e instanceof UploadRequestSizeException) {
 
 			if (!cmd.equals(Constants.ADD_DYNAMIC) &&
 				!cmd.equals(Constants.ADD_MULTIPLE) &&

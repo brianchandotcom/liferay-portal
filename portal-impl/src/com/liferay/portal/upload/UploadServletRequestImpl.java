@@ -132,8 +132,7 @@ public class UploadServletRequestImpl
 						UploadException uploadException = new UploadException(
 							sb.toString());
 
-						uploadException.setExceededUploadRequestSizeLimit(
-							true);
+						uploadException.setExceededUploadRequestSizeLimit(true);
 
 						request.setAttribute(
 							WebKeys.UPLOAD_EXCEPTION, uploadException);

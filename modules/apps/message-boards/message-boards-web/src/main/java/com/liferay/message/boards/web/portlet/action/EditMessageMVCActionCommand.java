@@ -26,9 +26,9 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
-import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -184,7 +184,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 			   FileNameException | FileSizeException |
 			   LiferayFileItemException | LockedThreadException |
 			   MessageBodyException | MessageSubjectException |
-				UploadRequestSizeException | SanitizerException e) {
+			   SanitizerException | UploadRequestSizeException e) {
 
 			if (e instanceof AntivirusScannerException) {
 				SessionErrors.add(actionRequest, e.getClass(), e);

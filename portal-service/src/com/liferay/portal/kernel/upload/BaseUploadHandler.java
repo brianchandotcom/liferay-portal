@@ -277,8 +277,7 @@ public abstract class BaseUploadHandler implements UploadHandler {
 			}
 			else if (pe instanceof UploadRequestSizeException) {
 				errorType =
-					ServletResponseConstants.
-							SC_UPLOAD_REQUEST_SIZE_EXCEPTION;
+					ServletResponseConstants.SC_UPLOAD_REQUEST_SIZE_EXCEPTION;
 			}
 
 			JSONObject errorJSONObject = JSONFactoryUtil.createJSONObject();

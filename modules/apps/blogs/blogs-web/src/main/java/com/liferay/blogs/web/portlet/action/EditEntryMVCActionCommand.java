@@ -36,8 +36,8 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionAttribute;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
-import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.upload.UploadException;
+import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -341,8 +341,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			   EntryDescriptionException | EntryDisplayDateException |
 			   EntrySmallImageNameException | EntrySmallImageScaleException |
 			   EntryTitleException | FileSizeException |
-			   LiferayFileItemException | UploadRequestSizeException |
-			   SanitizerException e) {
+			   LiferayFileItemException | SanitizerException |
+			   UploadRequestSizeException e) {
 
 			SessionErrors.add(actionRequest, e.getClass());
 

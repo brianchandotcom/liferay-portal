@@ -17,6 +17,7 @@ package com.liferay.taglib.ui;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.taglib.util.IncludeTag;
@@ -86,6 +87,10 @@ public class FormNavigatorTag extends IncludeTag {
 		_jspPath = jspPath;
 	}
 
+	public void setMarkupView(String markupView) {
+		_markupView = markupView;
+	}
+
 	public void setShowButtons(boolean showButtons) {
 		_showButtons = showButtons;
 	}
@@ -102,6 +107,7 @@ public class FormNavigatorTag extends IncludeTag {
 		_htmlTop = null;
 		_id = null;
 		_jspPath = null;
+		_markupView = null;
 		_showButtons = true;
 	}
 
@@ -191,7 +197,12 @@ public class FormNavigatorTag extends IncludeTag {
 
 	@Override
 	protected String getPage() {
-		return _PAGE;
+		if (Validator.isNotNull(_markupView)) {
+			return
+				"/html/taglib/ui/form_navigator/" + _markupView + "/page.jsp";
+		}
+
+		return "/html/taglib/ui/form_navigator/page.jsp";
 	}
 
 	@Override
@@ -223,9 +234,6 @@ public class FormNavigatorTag extends IncludeTag {
 			String.valueOf(_showButtons));
 	}
 
-	private static final String _PAGE =
-		"/html/taglib/ui/form_navigator/page.jsp";
-
 	private String _backURL;
 	private String[] _categoryNames;
 	private String[][] _categorySections;
@@ -236,6 +244,7 @@ public class FormNavigatorTag extends IncludeTag {
 	private String _htmlTop;
 	private String _id;
 	private String _jspPath;
+	private String _markupView;
 	private boolean _showButtons = true;
 
 }

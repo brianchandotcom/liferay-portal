@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `fde1fb9`.*
+*This document has been reviewed through commit `252b72b`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -2903,22 +2903,25 @@ easier.
 
 ---------------------------------------
 
-### Removed the mergeLayoutTags preference from Asset Publisher Portlet
+### Removed the mergeLayoutTags Preference from Asset Publisher
 - **Date:** 2015-Nov-20
 - **JIRA Ticket:** LPS-60677
 
 #### What changed?
 
-The mergeLayoutTags preference has been removed from Asset Publisher.
+The `mergeLayoutTags` preference has been removed from the Asset Publisher.
 
 #### Who is affected?
 
-This affects any asset publisher portlet that used this preference.
+This affects any Asset Publisher portlet that uses this preference.
 
 #### How should I update my code?
 
-There is no need to change anything, since this functionality is no used.
+There is nothing to update since this functionality is no longer used.
 
 #### Why was this change made?
 
-This change was made as a part of the ongoing strategies to cleanup unused
+In previous versions of Liferay, some applications such as Blogs and Wiki shared
+the tags of their entries within the page. The Asset Publisher was able to use
+them to show other assets with the same tags. This functionality has changed, so
+the preference is no longer used.

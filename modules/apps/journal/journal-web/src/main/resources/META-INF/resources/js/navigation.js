@@ -100,7 +100,7 @@ AUI.add(
 					_moveToTrash: function() {
 						var instance = this;
 
-						instance._processAction('moveToTrash', instance.get('editEntryUrl'));
+						instance._processAction('moveEntriesToTrash', instance.get('editEntryUrl'));
 					},
 
 					_processAction: function(action, url, redirectUrl) {

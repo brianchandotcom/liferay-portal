@@ -156,8 +156,30 @@ AssetBrowserSearch assetBrowserSearch = new AssetBrowserSearch(renderRequest, Po
 
 			<liferay-ui:search-container-column-text
 				name="title"
-				value="<%= assetEntry.getTitle(locale) %>"
-			/>
+			>
+				<c:choose>
+					<c:when test="<%= assetEntry.getEntryId() != refererAssetEntryId %>">
+
+						<%
+						Map<String, Object> data = new HashMap<String, Object>();
+
+						data.put("assetentryid", assetEntry.getEntryId());
+						data.put("assetclassname", assetEntry.getClassName());
+						data.put("assetclasspk", assetEntry.getClassPK());
+						data.put("assettype", assetRendererFactory.getTypeName(locale, subtypeSelectionId));
+						data.put("assettitle", assetEntry.getTitle(locale));
+						data.put("groupdescriptivename", group.getDescriptiveName(locale));
+						%>
+
+						<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+							<%= assetEntry.getTitle(locale) %>
+						</aui:a>
+					</c:when>
+					<c:otherwise>
+						<%= assetEntry.getTitle(locale) %>
+					</c:otherwise>
+				</c:choose>
+			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
 				name="description"
@@ -178,24 +200,6 @@ AssetBrowserSearch assetBrowserSearch = new AssetBrowserSearch(renderRequest, Po
 				name="site"
 				value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
 			/>
-
-			<liferay-ui:search-container-column-text>
-				<c:if test="<%= assetEntry.getEntryId() != refererAssetEntryId %>">
-
-					<%
-					Map<String, Object> data = new HashMap<String, Object>();
-
-					data.put("assetentryid", assetEntry.getEntryId());
-					data.put("assetclassname", assetEntry.getClassName());
-					data.put("assetclasspk", assetEntry.getClassPK());
-					data.put("assettype", assetRendererFactory.getTypeName(locale, subtypeSelectionId));
-					data.put("assettitle", assetEntry.getTitle(locale));
-					data.put("groupdescriptivename", group.getDescriptiveName(locale));
-					%>
-
-					<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
-				</c:if>
-			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />

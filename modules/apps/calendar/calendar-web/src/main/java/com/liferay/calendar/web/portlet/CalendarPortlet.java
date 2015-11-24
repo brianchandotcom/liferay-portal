@@ -149,8 +149,6 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.header-portlet-javascript=/js/components.js",
 		"com.liferay.portlet.header-portlet-javascript=/js/javascript.js",
-		"com.liferay.portlet.header-portlet-javascript=/js/recurrence.js",
-		"com.liferay.portlet.header-portlet-javascript=/js/recurrence_converter.js",
 		"com.liferay.portlet.icon=/icons/calendar.png",
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.preferences-unique-per-layout=false",

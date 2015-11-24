@@ -8,5 +8,6 @@ Include-Resource:\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/portlet/PortletProps.class
+JS-Config: /META-INF/resources/js/config.js
 Require-SchemaVersion: 1.1.0
 Web-ContextPath: /calendar-web

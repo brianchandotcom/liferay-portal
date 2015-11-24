@@ -298,14 +298,7 @@
 			</else>
 		</if>
 
-		<if>
-			<condition function="IsElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_OPENED" />
-			<then>
-				<execute function="Click" locator1="ProductMenu#TOGGLE" />
-			</then>
-		</if>
-
-		<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_TABS_SITES_NAVIGATION" value1="Sites" />
+		<execute macro="ProductMenuHelper#gotoSites" />
 
 		<if>
 			<isset var="siteScopeName" />
@@ -313,28 +306,8 @@
 				<execute macro="ProductMenu#gotoSite">
 					<var name="site" value="${siteScopeName}" />
 				</execute>
-			</then>
-		</if>
 
-		<if>
-			<condition function="IsElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_OPENED" />
-			<then>
-				<execute function="Click" locator1="ProductMenu#TOGGLE" />
-			</then>
-		</if>
-
-		<execute macro="ProductMenuHelper#openProductMenu" />
-
-		<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_TABS_SITES_NAVIGATION" value1="Sites" />
-
-		<var name="key_portletName" value="${portletName}" />
-
-		<if>
-			<condition function="IsElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_PANEL_MENU_ITEM" value1="${portletName}" />
-			<then>
-				<var name="key_portletCategoryName" value="${portletCategoryName}" />
-
-				<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_PANEL_SITES_PANEL_TITLE" value1="${portletCategoryName}" />
+				<execute macro="ProductMenuHelper#gotoSites" />
 			</then>
 		</if>
 
@@ -343,22 +316,18 @@
 				<isset var="nonAdminUser" />
 			</not>
 			<then>
-				<if>
-					<condition function="IsElementPresent" locator1="Home#SITE_ADMINISTRATION_CATEGORY_COLLAPSED" value1="${portletCategoryName}" />
-					<then>
-						<execute function="AssertClick#assertPartialTextClickAtCPNavigation" locator1="Home#SITE_ADMINISTRATION_CATEGORY_COLLAPSED" value1="${portletCategoryName}" />
-						<execute function="AssertTextEquals#assertPartialText" locator1="Home#SITE_ADMINISTRATION_CATEGORY_EXPANDED" value1="${portletCategoryName}" />
-					</then>
-				</if>
+				<execute macro="ProductMenuHelper#expandCategory">
+					<var name="category" value="${category}" />
+				</execute>
 
 				<if>
 					<not>
 						<contains string="${portletName}" substring="{portletName}" />
 					</not>
 					<then>
-						<var name="key_portletName" value="${portletName}" />
-
-						<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_PANEL_MENU_ITEM" value1="${portletName}" />
+						<execute macro="ProductMenuHelper#gotoPortlet">
+							<var name="portlet" value="${portletName}" />
+						</execute>
 					</then>
 				</if>
 			</then>

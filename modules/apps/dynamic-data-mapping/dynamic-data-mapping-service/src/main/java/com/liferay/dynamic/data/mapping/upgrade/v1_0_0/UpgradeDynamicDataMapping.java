@@ -28,8 +28,6 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
-import com.liferay.dynamic.data.mapping.service.permission.DDMStructurePermission;
-import com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormFieldValueTransformer;
@@ -346,6 +344,42 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		return DDMFormLayoutJSONSerializerUtil.serialize(ddmFormLayout);
 	}
 
+	protected String getStructureModelResourceName(long classNameId)
+		throws UpgradeException {
+
+		String className = PortalUtil.getClassName(classNameId);
+
+		String structureModelResourceName = _structureModelResourceNames.get(
+			className);
+
+		if (structureModelResourceName == null) {
+			throw new UpgradeException(
+				"Model " + className + " does not support DDMStructure " +
+					"permission checking");
+		}
+		else {
+			return structureModelResourceName;
+		}
+	}
+
+	protected String getTemplateModelResourceName(long classNameId)
+		throws UpgradeException {
+
+		String className = PortalUtil.getClassName(classNameId);
+
+		String templateModelResourceName = _templateModelResourceNames.get(
+			className);
+
+		if (templateModelResourceName == null) {
+			throw new UpgradeException(
+				"Model " + className + " does not support DDMTemplate " +
+					"permission checking");
+		}
+		else {
+			return templateModelResourceName;
+		}
+	}
+
 	protected long getTemplateResourceClassNameId(
 		long classNameId, long classPK) {
 
@@ -649,9 +683,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 					continue;
 				}
 
-				String resourceName =
-					DDMStructurePermission.getStructureModelResourceName(
-						classNameId);
+				String resourceName = getStructureModelResourceName(
+					classNameId);
 
 				runSQL(
 					"update ResourcePermission set name = '" + resourceName +
@@ -762,9 +795,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 					continue;
 				}
 
-				String resourceName =
-					DDMTemplatePermission.getTemplateModelResourceName(
-						resourceClassNameId);
+				String resourceName = getTemplateModelResourceName(
+					resourceClassNameId);
 
 				runSQL(
 					"update ResourcePermission set name = '" + resourceName +
@@ -937,6 +969,41 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeDynamicDataMapping.class);
+
+	private static final Map<String, String> _structureModelResourceNames =
+		new HashMap<>();
+	private static final Map<String, String> _templateModelResourceNames =
+		new HashMap<>();
+
+	static {
+		_structureModelResourceNames.put(
+			"com.liferay.journal.model.JournalArticle",
+			"com.liferay.journal.model.JournalArticle-" +
+				DDMStructure.class.getName());
+
+		_structureModelResourceNames.put(
+			"com.liferay.dynamic.data.lists.model.DDLRecordSet",
+			"com.liferay.dynamic.data.lists.model.DDLRecordSet-" +
+				DDMStructure.class.getName());
+
+		_structureModelResourceNames.put(
+			"com.liferay.portlet.documentlibrary.util.RawMetadataProcessor",
+			DDMTemplate.class.getName());
+
+		_structureModelResourceNames.put(
+			"com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata",
+			"com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata-" +
+				DDMStructure.class.getName());
+
+		_templateModelResourceNames.put(
+			"com.liferay.journal.model.JournalArticle",
+			"com.liferay.journal.model.JournalArticle-" +
+				DDMStructure.class.getName());
+
+		_templateModelResourceNames.put(
+			"com.liferay.portlet.display.template.PortletDisplayTemplate",
+			DDMTemplate.class.getName());
+	}
 
 	private final Map<Long, DDMForm> _ddmForms = new HashMap<>();
 	private final Map<Long, Long> _structureClassNameIds = new HashMap<>();

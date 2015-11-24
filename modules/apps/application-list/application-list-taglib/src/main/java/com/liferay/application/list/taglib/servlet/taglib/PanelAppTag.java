@@ -141,6 +141,9 @@ public class PanelAppTag extends BasePanelTag {
 			_data = new HashMap<>();
 
 			_data.put("navigation", true);
+		}
+
+		if (!_data.containsKey("title")) {
 			_data.put("title", _label);
 		}
 

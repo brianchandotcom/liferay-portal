@@ -363,9 +363,9 @@ AUI.add(
 					getDefaulLocale: function() {
 						var instance = this;
 
-						var definition = instance.get('definition');
-
 						var defaultLocale = themeDisplay.getDefaultLanguageId();
+
+						var definition = instance.get('definition');
 
 						if (definition) {
 							defaultLocale = definition.defaultLanguageId;

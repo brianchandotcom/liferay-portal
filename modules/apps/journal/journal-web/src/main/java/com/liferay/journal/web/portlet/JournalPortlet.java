@@ -582,7 +582,7 @@ public class JournalPortlet extends MVCPortlet {
 			}
 
 			if (uploadException.isExceededFileSizeLimit() ||
-				uploadException.isExceededRequestContentLengthLimit()) {
+				uploadException.isExceededUploadRequestSizeLimit()) {
 
 				throw new ArticleContentSizeException(cause);
 			}

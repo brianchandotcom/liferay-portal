@@ -74,8 +74,8 @@ public class BaseDLEditFileEntryDisplayContext
 	}
 
 	@Override
-	public long getMaximumUploadRequestContentLength() throws PortalException {
-		return parentDisplayContext.getMaximumUploadRequestContentLength();
+	public long getMaximumUploadRequestSize() throws PortalException {
+		return parentDisplayContext.getMaximumUploadRequestSize();
 	}
 
 	@Override

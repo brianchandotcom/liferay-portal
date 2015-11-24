@@ -19,20 +19,20 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Roberto Díaz
  */
-public class RequestContentLengthException extends PortalException {
+public class UploadRequestSizeException extends PortalException {
 
-	public RequestContentLengthException() {
+	public UploadRequestSizeException() {
 	}
 
-	public RequestContentLengthException(String msg) {
+	public UploadRequestSizeException(String msg) {
 		super(msg);
 	}
 
-	public RequestContentLengthException(String msg, Throwable cause) {
+	public UploadRequestSizeException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public RequestContentLengthException(Throwable cause) {
+	public UploadRequestSizeException(Throwable cause) {
 		super(cause);
 	}
 

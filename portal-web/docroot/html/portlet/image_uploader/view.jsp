@@ -67,8 +67,8 @@ String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 				<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(maxFileSize, locale) %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
 			</liferay-ui:error>
 
-			<liferay-ui:error exception="<%= RequestContentLengthException.class %>">
-				<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(maxFileSize, locale) %>" key="form-data-is-larger-than-x-and-could-not-be-processed" translateArguments="<%= false %>" />
+			<liferay-ui:error exception="<%= UploadRequestSizeException.class %>">
+				<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(maxFileSize, locale) %>" key="upload-request-is-larger-than-x-and-could-not-be-processed" translateArguments="<%= false %>" />
 			</liferay-ui:error>
 
 			<liferay-ui:error exception="<%= NoSuchFileException.class %>" message="an-unexpected-error-occurred-while-uploading-your-file" />

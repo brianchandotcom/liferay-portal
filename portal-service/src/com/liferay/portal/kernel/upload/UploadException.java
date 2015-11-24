@@ -44,17 +44,17 @@ public class UploadException extends PortalException {
 		return _exceededLiferayFileItemSizeLimit;
 	}
 
-	public boolean isExceededRequestContentLengthLimit() {
-		return _exceededRequestContentLengthLimit;
+	public boolean isExceededUploadRequestSizeLimit() {
+		return _exceededUploadRequestSizeLimit;
 	}
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #
-	 *             isExceededRequestContentLengthLimit()}
+	 *             isExceededUploadRequestSizeLimit()}
 	 */
 	@Deprecated
 	public boolean isExceededSizeLimit() {
-		return isExceededRequestContentLengthLimit();
+		return isExceededUploadRequestSizeLimit();
 	}
 
 	public void setExceededFileSizeLimit(boolean exceededFileSizeLimit) {
@@ -67,23 +67,23 @@ public class UploadException extends PortalException {
 		_exceededLiferayFileItemSizeLimit = exceededLiferayFileItemSizeLimit;
 	}
 
-	public void setExceededRequestContentLengthLimit(
-		boolean exceededRequestContentLengthLimit) {
+	public void setExceededUploadRequestSizeLimit(
+		boolean exceededUploadRequestSizeLimit) {
 
-		_exceededRequestContentLengthLimit = exceededRequestContentLengthLimit;
+		_exceededUploadRequestSizeLimit = exceededUploadRequestSizeLimit;
 	}
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #
-	 *             setExceededRequestContentLengthLimit(boolean)}
+	 *             setExceededUploadRequestSizeLimit(boolean)}
 	 */
 	@Deprecated
 	public void setExceededSizeLimit(boolean exceededSizeLimit) {
-		setExceededRequestContentLengthLimit(exceededSizeLimit);
+		setExceededUploadRequestSizeLimit(exceededSizeLimit);
 	}
 
 	private boolean _exceededFileSizeLimit;
 	private boolean _exceededLiferayFileItemSizeLimit;
-	private boolean _exceededRequestContentLengthLimit;
+	private boolean _exceededUploadRequestSizeLimit;
 
 }

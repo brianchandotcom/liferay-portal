@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
-import com.liferay.portal.kernel.upload.RequestContentLengthException;
+import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
@@ -450,8 +450,8 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 						throw new LiferayFileItemException(cause);
 					}
 
-					if (uploadException.isExceededRequestContentLengthLimit()) {
-						throw new RequestContentLengthException(cause);
+					if (uploadException.isExceededUploadRequestSizeLimit()) {
+						throw new UploadRequestSizeException(cause);
 					}
 
 					throw new PortalException(cause);
@@ -732,7 +732,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				 e instanceof FileSizeException ||
 				 e instanceof LiferayFileItemException ||
 				 e instanceof NoSuchFolderException ||
-				 e instanceof RequestContentLengthException ||
+				 e instanceof UploadRequestSizeException ||
 				 e instanceof SourceFileNameException ||
 				 e instanceof StorageFieldRequiredException) {
 
@@ -758,7 +758,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				e instanceof FileExtensionException ||
 				e instanceof FileNameException ||
 				e instanceof FileSizeException ||
-				e instanceof RequestContentLengthException) {
+				e instanceof UploadRequestSizeException) {
 
 				HttpServletResponse response =
 					PortalUtil.getHttpServletResponse(actionResponse);

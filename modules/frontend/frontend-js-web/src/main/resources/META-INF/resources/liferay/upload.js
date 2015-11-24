@@ -200,7 +200,7 @@ AUI.add(
 							fileCannotBeSavedText: Liferay.Language.get('the-file-x-cannot-be-saved'),
 							invalidFileNameText: Liferay.Language.get('please-enter-a-file-with-a-valid-file-name'),
 							invalidFileSizeText: Liferay.Language.get('please-enter-a-file-with-a-valid-file-size-no-larger-than-x'),
-							invalidRequestContentLength: Liferay.Language.get('form-data-is-larger-than-x-and-could-not-be-processed'),
+							invalidUploadRequestSizeText: Liferay.Language.get('upload-request-is-larger-than-x-and-could-not-be-processed'),
 							noFilesSelectedText: Liferay.Language.get('no-files-selected'),
 							notAvailableText: Liferay.Language.get('multiple-file-uploading-is-not-available'),
 							orText: Liferay.Language.get('or'),
@@ -265,10 +265,10 @@ AUI.add(
 						}
 						else {
 							var maxFileSize = instance.formatStorage(instance.get('maxFileSize'));
-							var maxUploadRequestContentLength = Liferay.PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE;
+							var maxUploadRequestSize = Liferay.PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE;
 
 							instance._invalidFileSizeText = Lang.sub(strings.invalidFileSizeText, [maxFileSize]);
-							instance._invalidRequestContentLength = Lang.sub(strings.invalidRequestContentLength, [maxUploadRequestContentLength]);
+							instance._invalidUploadRequestSize = Lang.sub(strings.invalidUploadRequestSizeText, [maxUploadRequestSize]);
 
 							instance._metadataContainer = instance.get('metadataContainer');
 							instance._metadataExplanationContainer = instance.get('metadataExplanationContainer');
@@ -462,7 +462,7 @@ AUI.add(
 						var strings = instance.get(STRINGS);
 
 						var maxFileSize = instance.get('maxFileSize');
-						var maxUploadRequestContentLength = Liferay.PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE;
+						var maxUploadRequestSize = Liferay.PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE;
 
 						return data.filter(
 							function(item, index) {
@@ -482,8 +482,8 @@ AUI.add(
 								else if (maxFileSize > 0 && size > maxFileSize) {
 									error = instance._invalidFileSizeText;
 								}
-								else if (maxUploadRequestContentLength > 0 && size > maxUploadRequestContentLength) {
-									error = instance._invalidRequestContentLength;
+								else if (maxUploadRequestSize > 0 && size > maxUploadRequestSize) {
+									error = instance._invalidUploadRequestSize;
 								}
 
 								if (error) {

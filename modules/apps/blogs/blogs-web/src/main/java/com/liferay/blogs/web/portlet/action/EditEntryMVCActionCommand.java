@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionAttribute;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
-import com.liferay.portal.kernel.upload.RequestContentLengthException;
+import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -176,8 +176,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 					throw new LiferayFileItemException(cause);
 				}
 
-				if (uploadException.isExceededRequestContentLengthLimit()) {
-					throw new RequestContentLengthException(cause);
+				if (uploadException.isExceededUploadRequestSizeLimit()) {
+					throw new UploadRequestSizeException(cause);
 				}
 
 				throw new PortalException(cause);
@@ -341,7 +341,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			   EntryDescriptionException | EntryDisplayDateException |
 			   EntrySmallImageNameException | EntrySmallImageScaleException |
 			   EntryTitleException | FileSizeException |
-			   LiferayFileItemException | RequestContentLengthException |
+			   LiferayFileItemException | UploadRequestSizeException |
 			   SanitizerException e) {
 
 			SessionErrors.add(actionRequest, e.getClass());

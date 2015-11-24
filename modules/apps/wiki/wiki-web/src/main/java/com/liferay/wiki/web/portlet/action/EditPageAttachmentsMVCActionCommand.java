@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
-import com.liferay.portal.kernel.upload.RequestContentLengthException;
+import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
@@ -383,8 +383,8 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 					throw new LiferayFileItemException(cause);
 				}
 
-				if (uploadException.isExceededRequestContentLengthLimit()) {
-					throw new RequestContentLengthException(cause);
+				if (uploadException.isExceededUploadRequestSizeLimit()) {
+					throw new UploadRequestSizeException(cause);
 				}
 
 				throw new PortalException(cause);

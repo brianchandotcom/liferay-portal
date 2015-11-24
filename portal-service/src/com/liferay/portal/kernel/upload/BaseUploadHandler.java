@@ -82,8 +82,8 @@ public abstract class BaseUploadHandler implements UploadHandler {
 					throw new LiferayFileItemException(cause);
 				}
 
-				if (uploadException.isExceededRequestContentLengthLimit()) {
-					throw new RequestContentLengthException(cause);
+				if (uploadException.isExceededUploadRequestSizeLimit()) {
+					throw new UploadRequestSizeException(cause);
 				}
 
 				throw new PortalException(cause);
@@ -253,7 +253,7 @@ public abstract class BaseUploadHandler implements UploadHandler {
 		if (pe instanceof AntivirusScannerException ||
 			pe instanceof FileNameException ||
 			pe instanceof FileSizeException ||
-			pe instanceof RequestContentLengthException) {
+			pe instanceof UploadRequestSizeException) {
 
 			String errorMessage = StringPool.BLANK;
 			int errorType = 0;
@@ -275,10 +275,10 @@ public abstract class BaseUploadHandler implements UploadHandler {
 			else if (pe instanceof FileSizeException) {
 				errorType = ServletResponseConstants.SC_FILE_SIZE_EXCEPTION;
 			}
-			else if (pe instanceof RequestContentLengthException) {
+			else if (pe instanceof UploadRequestSizeException) {
 				errorType =
 					ServletResponseConstants.
-						SC_UPLOAD_REQUEST_CONTENT_LENGTH_EXCEPTION;
+							SC_UPLOAD_REQUEST_SIZE_EXCEPTION;
 			}
 
 			JSONObject errorJSONObject = JSONFactoryUtil.createJSONObject();

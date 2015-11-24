@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
-import com.liferay.portal.kernel.upload.RequestContentLengthException;
+import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
@@ -104,8 +104,8 @@ public class UploadImageAction extends PortletAction {
 					throw new FileSizeException(cause);
 				}
 
-				if (uploadException.isExceededRequestContentLengthLimit()) {
-					throw new RequestContentLengthException(cause);
+				if (uploadException.isExceededUploadRequestSizeLimit()) {
+					throw new UploadRequestSizeException(cause);
 				}
 
 				throw new PortalException(cause);
@@ -266,7 +266,7 @@ public class UploadImageAction extends PortletAction {
 				 e instanceof FileSizeException ||
 				 e instanceof ImageTypeException ||
 				 e instanceof NoSuchFileException ||
-				 e instanceof RequestContentLengthException ||
+				 e instanceof UploadRequestSizeException ||
 				 e instanceof UploadException) {
 
 			if (cmd.equals(Constants.ADD_TEMP)) {

@@ -14,6 +14,9 @@
 
 package com.liferay.marketplace.app.manager.web.util;
 
+import com.liferay.marketplace.model.App;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.framework.Bundle;
@@ -21,22 +24,45 @@ import org.osgi.framework.Bundle;
 /**
  * @author Ryan Park
  */
-public interface AppDisplay extends Comparable<AppDisplay> {
+public class MarketplaceAppDisplay extends BaseAppDisplay {
 
-	public static final String APP_TITLE_UNCATEGORIZED = "Uncategorized";
+	public MarketplaceAppDisplay() {
+		_app = null;
+	}
 
-	public void addBundle(Bundle bundle);
+	public MarketplaceAppDisplay(App app) {
+		_app = app;
+	}
 
-	public List<Bundle> getBundles();
+	public void addBundle(Bundle bundle) {
+		_bundles.add(bundle);
+	}
 
-	public String getDescription();
+	public App getApp() {
+		return _app;
+	}
 
-	public String getIconURL();
+	public List<Bundle> getBundles() {
+		return _bundles;
+	}
 
-	public int getState();
+	public String getDescription() {
+		return _app.getDescription();
+	}
 
-	public String getTitle();
+	public String getIconURL() {
+		return _app.getIconURL();
+	}
 
-	public String getVersion();
+	public String getTitle() {
+		return _app.getTitle();
+	}
+
+	public String getVersion() {
+		return _app.getVersion();
+	}
+
+	private final App _app;
+	private final List<Bundle> _bundles = new ArrayList<>();
 
 }

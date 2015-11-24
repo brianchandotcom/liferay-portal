@@ -21,22 +21,37 @@ import org.osgi.framework.Bundle;
 /**
  * @author Ryan Park
  */
-public interface AppDisplay extends Comparable<AppDisplay> {
+public abstract class BaseAppDisplay implements AppDisplay {
 
-	public static final String APP_TITLE_UNCATEGORIZED = "Uncategorized";
+	@Override
+	public int compareTo(AppDisplay appDisplay) {
+		if (appDisplay == null) {
+			return -1;
+		}
 
-	public void addBundle(Bundle bundle);
+		String title = getTitle();
 
-	public List<Bundle> getBundles();
+		return title.compareToIgnoreCase(appDisplay.getTitle());
+	}
 
-	public String getDescription();
+	public int getState() {
+		List<Bundle> bundles = getBundles();
 
-	public String getIconURL();
+		if (bundles.isEmpty()) {
+			return Bundle.UNINSTALLED;
+		}
 
-	public int getState();
+		int state = Bundle.ACTIVE;
 
-	public String getTitle();
+		for (Bundle bundle : bundles) {
+			int bundleState = bundle.getState();
 
-	public String getVersion();
+			if (state > bundleState) {
+				state = bundleState;
+			}
+		}
+
+		return state;
+	}
 
 }

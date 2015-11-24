@@ -25,22 +25,22 @@
 </tr>
 <tr>
 	<td>SPECIFIC_CHECKBOX</td>
-	<td>//div[contains(@class,'vertical-card') and contains(.,'${text}')]//input[@type='checkbox']</td>
+	<td>//div[contains(@class,'vertical-card') and contains(.,'${key_cardText}')]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SPECIFIC_LARGE_TEXT</td>
-	<td>//div[contains(@class,'vertical-card') and contains(.,'${text}')]//div[contains(@class,'text-large')]</td>
+	<td>//div[contains(@class,'vertical-card') and contains(.,'${key_cardText}')]//div[contains(@class,'text-large')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SPECIFIC_TEXT</td>
-	<td>//div[contains(@class,'vertical-card') and contains(.,'${text}')]//div[@class='card-dm-text']</td>
+	<td>//div[contains(@class,'vertical-card') and contains(.,'${key_cardText}')]//div[@class='card-dm-text']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SPECIFIC_SMALL_TEXT</td>
-	<td>//div[contains(@class,'vertical-card') and contains(.,'${text}')]//div[@class='card-dm-text-small']</td>
+	<td>//div[contains(@class,'vertical-card') and contains(.,'${key_cardText}')]//div[@class='card-dm-text-small']</td>
 	<td></td>
 </tr>
 </tbody>

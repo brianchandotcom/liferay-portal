@@ -159,7 +159,7 @@
 	</command>
 
 	<command name="addMemberCP">
-		<var name="text" value="${userScreenName}" />
+		<var name="key_cardText" value="${userScreenName}" />
 
 		<execute function="AssertClick" locator1="NavBar#USERS" value1="Users" />
 
@@ -189,7 +189,7 @@
 	</command>
 
 	<command name="addMemberOrganizationCP">
-		<var name="text" value="${orgName}" />
+		<var name="key_cardText" value="${orgName}" />
 
 		<execute function="AssertClick" locator1="NavBar#ORGANIZATIONS" value1="Organizations" />
 
@@ -209,7 +209,7 @@
 	</command>
 
 	<command name="addMemberUserGroupCP">
-		<var name="text" value="${userGroupName}" />
+		<var name="key_cardText" value="${userGroupName}" />
 
 		<execute function="AssertClick" locator1="NavBar#USER_GROUPS" value1="User Groups" />
 
@@ -726,7 +726,7 @@
 	</command>
 
 	<command name="removeMemberCP">
-		<var name="text" value="${userScreenName}" />
+		<var name="key_cardText" value="${userScreenName}" />
 
 		<execute function="Type" locator1="TextInput#SEARCH" value1="${userScreenName}" />
 		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
@@ -743,7 +743,7 @@
 
 		<execute function="AssertTextEquals" locator1="Card#SPECIFIC_TEXT" value1="${userScreenName}" />
 
-		<var name="cardEntry" value="${text}" />
+		<var name="cardEntry" value="${key_cardText}" />
 
 		<execute function="Click" locator1="Icon#CARD_VERTICAL_ELLIPSIS" />
 
@@ -1054,12 +1054,12 @@
 	</command>
 
 	<command name="viewMemberCP">
-		<var name="text" value="${userScreenName}" />
+		<var name="key_cardText" value="${userScreenName}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${userFirstName} ${userLastName}" />
 		<execute function="AssertTextEquals" locator1="Card#SPECIFIC_TEXT" value1="${userScreenName}" />
 
-		<var name="cardEntry" value="${text}" />
+		<var name="cardEntry" value="${key_cardText}" />
 
 		<execute function="AssertVisible" locator1="Icon#CARD_VERTICAL_ELLIPSIS" />
 	</command>
@@ -1077,7 +1077,7 @@
 	</command>
 
 	<command name="viewMemberOrganizationCP">
-		<var name="text" value="${orgName}" />
+		<var name="key_cardText" value="${orgName}" />
 
 		<execute function="AssertClick" locator1="NavBar#ORGANIZATIONS" value1="Organizations" />
 

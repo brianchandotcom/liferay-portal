@@ -134,15 +134,15 @@ AUI.add(
 											).drop.on(
 												{
 													'drop:enter': function(event) {
-														item.addClass(target.activeCSSClass);
+														item.addClass(target.activeCssClass);
 													},
 
 													'drop:exit': function(event) {
-														item.removeClass(target.activeCSSClass);
+														item.removeClass(target.activeCssClass);
 													},
 
 													'drop:hit': function(event) {
-														item.removeClass(target.activeCSSClass);
+														item.removeClass(target.activeCssClass);
 
 														var selectedItems = instance._ddHandler.dd.get(STR_DATA).selectedItems;
 
@@ -161,11 +161,11 @@ AUI.add(
 										}
 									);
 
-									if (target.infoCSSClass) {
+									if (target.infoCssClass) {
 										instance._ddHandler.on(
 											['drag:start', 'drag:end'],
 											function(event) {
-												targetNodes.toggleClass(target.infoCSSClass, event.type == 'drag:start');
+												targetNodes.toggleClass(target.infoCssClass, event.type == 'drag:start');
 											}
 										);
 									}

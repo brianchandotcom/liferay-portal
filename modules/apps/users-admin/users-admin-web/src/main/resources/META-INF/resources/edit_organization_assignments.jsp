@@ -39,13 +39,12 @@ portletURL.setParameter("organizationId", String.valueOf(organization.getOrganiz
 UsersAdminUtil.addPortletBreadcrumbEntries(organization, request, renderResponse);
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "assign-members"), currentURL);
-%>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	localizeTitle="<%= false %>"
-	title="<%= organization.getName() %>"
-/>
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(organization.getName());
+%>
 
 <liferay-ui:membership-policy-error />
 

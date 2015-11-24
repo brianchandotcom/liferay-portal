@@ -36,13 +36,11 @@ portletURL.setParameter("eventName", eventName);
 if (Validator.isNotNull(target)) {
 	portletURL.setParameter("target", target);
 }
+
+renderResponse.setTitle(LanguageUtil.get(request, "organizations"));
 %>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="selectOrganizationFm">
-	<liferay-ui:header
-		title="organizations"
-	/>
-
 	<liferay-ui:search-container
 		searchContainer="<%= new OrganizationSearch(renderRequest, portletURL) %>"
 		var="organizationSearchContainer"

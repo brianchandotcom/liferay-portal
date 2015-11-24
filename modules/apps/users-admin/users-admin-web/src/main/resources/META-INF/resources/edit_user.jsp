@@ -161,12 +161,13 @@ if (selUser != null) {
 		<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
 	</div>
 
-	<liferay-ui:header
-		backURL="<%= backURL %>"
-		escapeXml="<%= false %>"
-		localizeTitle="<%= (selUser == null) %>"
-		title='<%= (selUser == null) ? "add-user" : LanguageUtil.format(request, "edit-user-x", HtmlUtil.escape(selUser.getFullName()), false) %>'
-	/>
+	<%
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(backURL);
+
+	renderResponse.setTitle((selUser == null) ? LanguageUtil.get(request, "add-user") : LanguageUtil.format(request, "edit-user-x", selUser.getFullName(), false));
+	%>
+
 </c:if>
 
 <portlet:actionURL name="/users_admin/edit_user" var="editUserActionURL" />

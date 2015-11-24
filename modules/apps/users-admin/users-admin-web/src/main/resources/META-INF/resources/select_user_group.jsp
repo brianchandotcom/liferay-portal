@@ -30,13 +30,11 @@ if (selUser != null) {
 }
 
 portletURL.setParameter("eventName", eventName);
+
+renderResponse.setTitle(LanguageUtil.get(request, "user-groups"));
 %>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="selectUserGroupFm">
-	<liferay-ui:header
-		title="user-groups"
-	/>
-
 	<liferay-ui:search-container
 		searchContainer="<%= new UserGroupSearch(renderRequest, portletURL) %>"
 	>

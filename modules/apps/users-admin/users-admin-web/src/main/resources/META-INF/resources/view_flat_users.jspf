@@ -174,32 +174,39 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 		<aui:input name="<%= UserDisplayTerms.ORGANIZATION_ID %>" type="hidden" value="<%= userOrganization.getOrganizationId() %>" />
 
 		<c:if test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_USERS) %>">
-			<liferay-ui:header
-				backURL="<%= backURL %>"
-				localizeTitle="<%= false %>"
-				title="<%= userOrganization.getName() %>"
-			/>
+
+			<%
+			portletDisplay.setShowBackIcon(true);
+			portletDisplay.setURLBack(backURL);
+
+			renderResponse.setTitle(userOrganization.getName());
+			%>
+
 		</c:if>
 	</c:if>
 
 	<c:if test="<%= role != null %>">
 		<aui:input name="<%= UserDisplayTerms.ROLE_ID %>" type="hidden" value="<%= role.getRoleId() %>" />
 
-		<liferay-ui:header
-			backURL="<%= backURL %>"
-			localizeTitle="<%= false %>"
-			title="<%= role.getTitle(locale) %>"
-		/>
+		<%
+		portletDisplay.setShowBackIcon(true);
+		portletDisplay.setURLBack(backURL);
+
+		renderResponse.setTitle(role.getTitle(locale));
+		%>
+
 	</c:if>
 
 	<c:if test="<%= userGroup != null %>">
 		<aui:input name="<%= UserDisplayTerms.USER_GROUP_ID %>" type="hidden" value="<%= userGroup.getUserGroupId() %>" />
 
-		<liferay-ui:header
-			backURL="<%= backURL %>"
-			localizeTitle="<%= false %>"
-			title="<%= userGroup.getName() %>"
-		/>
+		<%
+		portletDisplay.setShowBackIcon(true);
+		portletDisplay.setURLBack(backURL);
+
+		renderResponse.setTitle(userGroup.getName());
+		%>
+
 	</c:if>
 
 	<%

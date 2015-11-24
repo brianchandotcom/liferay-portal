@@ -150,12 +150,13 @@ if (organization != null) {
 				<portlet:param name="organizationId" value="<%= String.valueOf(parentOrganizationId) %>" />
 			</portlet:renderURL>
 
-			<liferay-ui:header
-				backLabel="<%= parentOrganizationName %>"
-				backURL="<%= Validator.isNotNull(backURL) ? backURL : headerBackURL.toString() %>"
-				localizeTitle="<%= false %>"
-				title="<%= organization.getName() %>"
-			/>
+			<%
+			portletDisplay.setShowBackIcon(true);
+			portletDisplay.setURLBack(Validator.isNotNull(backURL) ? backURL : headerBackURL.toString());
+
+			renderResponse.setTitle(organization.getName());
+			%>
+
 		</c:if>
 
 		<aui:row>

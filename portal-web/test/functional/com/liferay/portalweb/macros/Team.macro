@@ -39,7 +39,7 @@
 				<execute function="AssertTextEquals" locator1="Message#INFO" value1="No users were found." />
 			</then>
 			<else>
-				<var name="text" value="${userScreenName}" />
+				<var name="key_cardText" value="${userScreenName}" />
 
 				<execute function="AssertTextEquals" locator1="Card#SPECIFIC_TEXT" value1="${userScreenName}" />
 
@@ -75,7 +75,7 @@
 
 		<execute function="AssertClick" locator1="SiteTeamsAssignMembers#AVAILABLE" value1="Available" />
 
-		<var name="text" value="${userGroupName}" />
+		<var name="key_cardText" value="${userGroupName}" />
 
 		<if>
 			<equals arg1="${userGroupsNameIsNotAvailable}" arg2="true" />
@@ -169,7 +169,7 @@
 	</command>
 
 	<command name="viewMemberCP">
-		<var name="text" value="${userScreenName}" />
+		<var name="key_cardText" value="${userScreenName}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${userFirstName} ${userLastName}" />
 		<execute function="AssertTextEquals" locator1="Card#SPECIFIC_TEXT" value1="${userScreenName}" />

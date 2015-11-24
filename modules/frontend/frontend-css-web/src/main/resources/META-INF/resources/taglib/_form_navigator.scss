@@ -84,10 +84,6 @@
 	.form-navigator-content {
 		overflow: visible;
 
-		&[class*="col-"] {
-			padding-left: 0;
-		}
-
 		.form-section {
 			display: none;
 

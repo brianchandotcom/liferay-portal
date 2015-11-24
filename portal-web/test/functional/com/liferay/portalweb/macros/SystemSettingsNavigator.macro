@@ -1,0 +1,5 @@
+<definition>
+	<command name="gotoPlatformCP">
+		<execute function="AssertClick" locator1="MenuItem#PLATFORM" value1="Platform" />
+	</command>
+</definition>

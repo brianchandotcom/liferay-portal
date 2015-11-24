@@ -85,7 +85,7 @@
 </tr>
 <tr>
 	<td>DESCRIPTIVE_VERTICAL_ELLIPSIS</td>
-	<td>//li[@data-title='${key_assetEntry}']//span[contains(@class,'icon-ellipsis-vertical')] | //div[contains(@class,'entry-display') and contains(.,'${key_assetEntry}')]//span[contains(@class,'icon-ellipsis-vertical')]</td>
+	<td>//li[@data-title='${key_assetEntry}']//span[contains(@class,'icon-ellipsis-vertical')] | //div[contains(@class,'entry-display') and contains(.,'${key_assetEntry}')]//span[contains(@class,'icon-ellipsis-vertical')] | //tr[contains(.,'${key_assetEntry}')]//span[contains(@class,'icon-ellipsis-vertical')]</td>
 	<td></td>
 </tr>
 <tr>

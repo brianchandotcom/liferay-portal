@@ -304,6 +304,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>STATUS</td>
+	<td>//span[@class='icon-check' and contains(.,'${key_status}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENABLE_SYNTAX_CHECKING</td>
 	<td>//label[contains(.,'Enable Syntax Checking')]/input[@type='checkbox']</td>
 	<td></td>

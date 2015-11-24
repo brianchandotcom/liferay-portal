@@ -1084,7 +1084,7 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute macro="DMMetadataSet#gotoPG" />
+		<execute macro="DMNavigator#gotoMetadataSetsPG" />
 
 		<execute macro="DMMetadataSet#addPG">
 			<var name="dmMetadataSetFieldNames" value="Text,Number" />
@@ -1097,7 +1097,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="DMDocumentType#gotoPG" />
+		<execute macro="DMNavigator#gotoDocumentTypePG" />
 
 		<execute macro="DMDocumentType#addPG">
 			<var name="dmDocumentTypeDescription" value="DM Document Type Description" />
@@ -1167,7 +1167,7 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute macro="DMDocument#gotoPG">
+		<execute macro="DMNavigator#gotoDocumentPG">
 			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
 
@@ -3407,7 +3407,7 @@
 			<var name="siteScopeName" value="Global" />
 		</execute>
 
-		<execute macro="DMDocument#gotoCP">
+		<execute macro="DMNavigator#gotoDocumentCP">
 			<var name="dmDocumentTitle" value="DM Document Title" />
 			<var name="nodePort" value="9080" />
 		</execute>

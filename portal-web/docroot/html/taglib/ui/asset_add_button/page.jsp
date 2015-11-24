@@ -145,6 +145,7 @@ private String _getMessage(String className, Map<String, PortletURL> addPortletU
 
 private String _getURL(long groupId, long plid, PortletURL addPortletURL, String portletId, String message, boolean addDisplayPageParameter, Layout layout, PageContext pageContext, PortletResponse portletResponse) {
 	addPortletURL.setParameter("groupId", String.valueOf(groupId));
+	addPortletURL.setParameter("hideDefaultSuccessMessage", Boolean.TRUE.toString());
 	addPortletURL.setParameter("showHeader", Boolean.FALSE.toString());
 
 	String addPortletURLString = addPortletURL.toString();

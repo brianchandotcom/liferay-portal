@@ -1160,8 +1160,8 @@
 			<isset var="numberOfOccurrences" />
 			<then>
 				<execute function="Click" locator1="CalendarEditEvent#REPEAT_ENDS_AFTER_RADIO" />
-				<execute function="Pause" value1="1000" />
-				<execute function="Type" locator1="CalendarEditEvent#REPEAT_ENDS_AFTER_FIELD" value1="${numberOfOccurrences}" />
+				
+				<execute function="Type#mouseOverFocusType" locator1="CalendarEditEvent#REPEAT_ENDS_AFTER_FIELD" value1="${numberOfOccurrences}" />
 			</then>
 		</if>
 

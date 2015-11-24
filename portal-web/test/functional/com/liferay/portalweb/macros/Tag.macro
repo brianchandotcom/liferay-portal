@@ -129,7 +129,7 @@
 
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no tags. You can add a tag by clicking the plus button on the right bottom corner." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no tags. You can add a tag by clicking the plus button on the bottom right corner." />
 		<execute function="AssertTextNotPresent" value1="${tagName}" />
 	</command>
 

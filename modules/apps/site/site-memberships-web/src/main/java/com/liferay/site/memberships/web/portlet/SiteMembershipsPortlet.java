@@ -101,20 +101,12 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 
 		addUserIds = filterAddUserIds(groupId, addUserIds);
 
-		long[] removeUserIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "removeUserIds"), 0L);
-
-		removeUserIds = filterRemoveUserIds(groupId, removeUserIds);
-
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
 		_userService.addGroupUsers(groupId, addUserIds, serviceContext);
-		_userService.unsetGroupUsers(groupId, removeUserIds, serviceContext);
 
 		LiveUsers.joinGroup(themeDisplay.getCompanyId(), groupId, addUserIds);
-		LiveUsers.leaveGroup(
-			themeDisplay.getCompanyId(), groupId, removeUserIds);
 
 		String redirect = ParamUtil.getString(
 			actionRequest, "assignmentsRedirect");
@@ -133,11 +125,6 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 
 		long groupId = themeDisplay.getSiteGroupId();
 
-		long[] addUserIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "addUserIds"), 0L);
-
-		addUserIds = filterAddUserIds(groupId, addUserIds);
-
 		long[] removeUserIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "removeUserIds"), 0L);
 
@@ -146,10 +133,8 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		_userService.addGroupUsers(groupId, addUserIds, serviceContext);
 		_userService.unsetGroupUsers(groupId, removeUserIds, serviceContext);
 
-		LiveUsers.joinGroup(themeDisplay.getCompanyId(), groupId, addUserIds);
 		LiveUsers.leaveGroup(
 			themeDisplay.getCompanyId(), groupId, removeUserIds);
 

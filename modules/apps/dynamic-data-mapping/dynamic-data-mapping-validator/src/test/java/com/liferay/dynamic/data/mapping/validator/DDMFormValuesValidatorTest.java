@@ -39,6 +39,7 @@ import org.junit.Test;
  */
 public class DDMFormValuesValidatorTest {
 
+	@Test
 	public void testValidationWithInvalidFieldName() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm("firstName");
 
@@ -51,6 +52,7 @@ public class DDMFormValuesValidatorTest {
 		_ddmFormValuesValidator.validate(ddmFormValues);
 	}
 
+	@Test
 	public void testValidationWithInvalidNestedFieldName() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 

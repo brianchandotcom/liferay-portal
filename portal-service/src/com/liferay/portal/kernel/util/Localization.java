@@ -148,7 +148,7 @@ public interface Localization {
 	 * localization exists for a locale or the localization matches the default
 	 * locale, that locale is not included in the map.
 	 *
-	 * @param  locales the locales
+	 * @param  locales the locales to be used in the map
 	 * @param  defaultLocale the default locale
 	 * @param  key the language key to be translated
 	 * @return the locales and localized strings for the key

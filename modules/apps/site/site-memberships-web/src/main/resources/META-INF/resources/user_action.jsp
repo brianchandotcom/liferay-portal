@@ -48,15 +48,15 @@ boolean userGroupUser = GetterUtil.getBoolean(row.getParameter("userGroupUser"))
 	</c:if>
 
 	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, siteMembershipsDisplayContext.getGroupId(), ActionKeys.ASSIGN_MEMBERS) && !(organizationUser || userGroupUser) && !SiteMembershipPolicyUtil.isMembershipProtected(permissionChecker, user2.getUserId(), siteMembershipsDisplayContext.getGroupId()) && !SiteMembershipPolicyUtil.isMembershipRequired(user2.getUserId(), siteMembershipsDisplayContext.getGroupId()) %>">
-		<portlet:actionURL name="editGroupUsers" var="removeURL">
+		<portlet:actionURL name="deleteGroupUsers" var="deleteURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(siteMembershipsDisplayContext.getGroupId()) %>" />
-			<portlet:param name="removeUserIds" value="<%= String.valueOf(user2.getUserId()) %>" />
+			<portlet:param name="removeUserId" value="<%= String.valueOf(user2.getUserId()) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon
 			message="remove-membership"
-			url="<%= removeURL %>"
+			url="<%= deleteURL %>"
 		/>
 	</c:if>
 </liferay-ui:icon-menu>

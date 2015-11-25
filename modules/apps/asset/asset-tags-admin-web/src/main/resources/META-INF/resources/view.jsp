@@ -114,9 +114,11 @@ tagsSearchContainer.setResults(tags);
 	</liferay-frontend:management-bar>
 </c:if>
 
-<aui:form cssClass="container-fluid-1280" name="fm">
-	<aui:input name="deleteTagIds" type="hidden" />
+<portlet:actionURL name="deleteTag" var="deleteURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
 
+<aui:form action="<%= deleteURL %>" cssClass="container-fluid-1280" name="fm">
 	<liferay-ui:search-container
 		id="assetTags"
 		searchContainer="<%= tagsSearchContainer %>"
@@ -166,13 +168,7 @@ tagsSearchContainer.setResults(tags);
 		'click',
 		function() {
 			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-				<portlet:actionURL name="deleteTag" var="deleteURL">
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-				</portlet:actionURL>
-
-				form.fm('deleteTagIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-
-				submitForm(form, '<%= deleteURL %>');
+				submitForm(form);
 			}
 		}
 	);

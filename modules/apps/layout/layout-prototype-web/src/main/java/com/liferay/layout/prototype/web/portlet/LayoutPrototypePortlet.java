@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.LayoutPrototypeService;
@@ -76,11 +75,21 @@ public class LayoutPrototypePortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long[] layoutPrototypeIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "layoutPrototypeIds"), 0L);
+		long[] layoutPrototypeIds = null;
 
-		for (long layoutPrototypeId : layoutPrototypeIds) {
-			_layoutPrototypeService.deleteLayoutPrototype(layoutPrototypeId);
+		long layoutPrototypeId = ParamUtil.getLong(
+			actionRequest, "layoutPrototypeId");
+
+		if (layoutPrototypeId > 0) {
+			layoutPrototypeIds = new long[] {layoutPrototypeId};
+		}
+		else {
+			layoutPrototypeIds = ParamUtil.getLongValues(
+				actionRequest, "rowIds");
+		}
+
+		for (long curLayoutPrototypeId : layoutPrototypeIds) {
+			_layoutPrototypeService.deleteLayoutPrototype(curLayoutPrototypeId);
 		}
 	}
 

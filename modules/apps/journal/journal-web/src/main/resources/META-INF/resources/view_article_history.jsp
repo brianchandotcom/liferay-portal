@@ -93,8 +93,6 @@ JournalArticle article = journalDisplayContext.getArticle();
 		<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
 			<aui:input name="referringPortletResource" type="hidden" value="<%= referringPortletResource %>" />
 			<aui:input name="groupId" type="hidden" value="<%= String.valueOf(article.getGroupId()) %>" />
-			<aui:input name="articleIds" type="hidden" />
-			<aui:input name="expireArticleIds" type="hidden" />
 
 			<liferay-ui:search-container
 				id="articleVersions"
@@ -209,8 +207,6 @@ JournalArticle article = journalDisplayContext.getArticle();
 						if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-version") %>')) {
 							var form = AUI.$(document.<portlet:namespace />fm);
 
-							form.fm('articleIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-
 							submitForm(form, '<portlet:actionURL name="deleteArticles"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
 						}
 					}
@@ -223,8 +219,6 @@ JournalArticle article = journalDisplayContext.getArticle();
 					function() {
 						if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-expire-the-selected-version") %>')) {
 							var form = AUI.$(document.<portlet:namespace />fm);
-
-							form.fm('expireArticleIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
 							submitForm(form, '<portlet:actionURL name="expireArticles"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
 						}

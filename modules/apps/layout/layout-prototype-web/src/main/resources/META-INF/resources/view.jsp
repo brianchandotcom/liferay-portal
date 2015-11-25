@@ -79,7 +79,11 @@ PortletURL portletURL = renderResponse.createRenderURL();
 	</liferay-frontend:management-bar>
 </c:if>
 
-<aui:form cssClass="container-fluid-1280" name="fm">
+<portlet:actionURL name="deleteLayoutPrototypes" var="deleteURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
+
+<aui:form action="<%= deleteURL %>" cssClass="container-fluid-1280" name="fm">
 	<liferay-ui:search-container
 		emptyResultsMessage="there-are-no-page-templates.-you-can-add-a-page-template-by-clicking-the-plus-button-on-the-bottom-right-corner"
 		headerNames="name"
@@ -88,7 +92,6 @@ PortletURL portletURL = renderResponse.createRenderURL();
 		rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
 		total="<%= totalVar %>"
 	>
-		<aui:input name="layoutPrototypeIds" type="hidden" />
 
 		<%
 		boolean orderByAsc = false;
@@ -175,21 +178,11 @@ PortletURL portletURL = renderResponse.createRenderURL();
 </c:if>
 
 <aui:script sandbox="<%= true %>">
-	var Util = Liferay.Util;
-
-	var form = $(document.<portlet:namespace />fm);
-
 	$('#<portlet:namespace />deleteSelectedLayoutPrototypes').on(
 		'click',
 		function() {
 			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-				<portlet:actionURL name="deleteLayoutPrototypes" var="deleteURL">
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-				</portlet:actionURL>
-
-				form.fm('layoutPrototypeIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-
-				submitForm(form, '<%= deleteURL %>');
+				submitForm($(document.<portlet:namespace />fm));
 			}
 		}
 	);

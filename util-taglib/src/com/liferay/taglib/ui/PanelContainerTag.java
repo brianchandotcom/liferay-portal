@@ -136,6 +136,10 @@ public class PanelContainerTag extends BaseBodyTagSupport implements BodyTag {
 		_id = id;
 	}
 
+	public void setMarkupView(String markupView) {
+		_markupView = markupView;
+	}
+
 	public void setPersistState(boolean persistState) {
 		_persistState = persistState;
 	}
@@ -156,7 +160,12 @@ public class PanelContainerTag extends BaseBodyTagSupport implements BodyTag {
 
 	protected String getEndPage() {
 		if (Validator.isNull(_endPage)) {
-			return _END_PAGE;
+			if (Validator.isNotNull(_markupView)) {
+				return "/html/taglib/ui/panel_container/" + _markupView +
+					"/end.jsp";
+			}
+
+			return "/html/taglib/ui/panel_container/end.jsp";
 		}
 		else {
 			return _endPage;
@@ -165,24 +174,24 @@ public class PanelContainerTag extends BaseBodyTagSupport implements BodyTag {
 
 	protected String getStartPage() {
 		if (Validator.isNull(_startPage)) {
-			return _START_PAGE;
+			if (Validator.isNotNull(_markupView)) {
+				return "/html/taglib/ui/panel_container/" + _markupView +
+					"/start.jsp";
+			}
+
+			return "/html/taglib/ui/panel_container/start.jsp";
 		}
 		else {
 			return _startPage;
 		}
 	}
 
-	private static final String _END_PAGE =
-		"/html/taglib/ui/panel_container/end.jsp";
-
-	private static final String _START_PAGE =
-		"/html/taglib/ui/panel_container/start.jsp";
-
 	private boolean _accordion;
 	private String _cssClass;
 	private String _endPage;
 	private Boolean _extended;
 	private String _id;
+	private String _markupView;
 	private boolean _persistState;
 	private String _startPage;
 

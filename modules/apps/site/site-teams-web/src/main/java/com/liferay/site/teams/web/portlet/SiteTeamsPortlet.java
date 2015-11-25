@@ -116,8 +116,18 @@ public class SiteTeamsPortlet extends MVCPortlet {
 
 		long teamId = ParamUtil.getLong(actionRequest, "teamId");
 
-		long[] removeUserGroupIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "removeUserGroupIds"), 0L);
+		long[] removeUserGroupIds = null;
+
+		long removeUserGroupId = ParamUtil.getLong(
+			actionRequest, "removeUserGroupId");
+
+		if (removeUserGroupId > 0) {
+			removeUserGroupIds = new long[] {removeUserGroupId};
+		}
+		else {
+			removeUserGroupIds = ParamUtil.getLongValues(
+				actionRequest, "rowIds");
+		}
 
 		_userGroupService.unsetTeamUserGroups(teamId, removeUserGroupIds);
 

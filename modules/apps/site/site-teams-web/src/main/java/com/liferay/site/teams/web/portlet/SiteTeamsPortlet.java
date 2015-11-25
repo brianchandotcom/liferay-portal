@@ -98,11 +98,8 @@ public class SiteTeamsPortlet extends MVCPortlet {
 
 		long[] addUserIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "addUserIds"), 0L);
-		long[] removeUserIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "removeUserIds"), 0L);
 
 		_userService.addTeamUsers(teamId, addUserIds);
-		_userService.unsetTeamUsers(teamId, removeUserIds);
 
 		String redirect = ParamUtil.getString(
 			actionRequest, "assignmentsRedirect");
@@ -163,12 +160,9 @@ public class SiteTeamsPortlet extends MVCPortlet {
 
 		long teamId = ParamUtil.getLong(actionRequest, "teamId");
 
-		long[] addUserIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "addUserIds"), 0L);
 		long[] removeUserIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "removeUserIds"), 0L);
 
-		_userService.addTeamUsers(teamId, addUserIds);
 		_userService.unsetTeamUsers(teamId, removeUserIds);
 
 		String redirect = ParamUtil.getString(

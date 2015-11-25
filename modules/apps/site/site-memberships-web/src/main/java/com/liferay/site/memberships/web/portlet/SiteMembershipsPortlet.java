@@ -87,6 +87,31 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class SiteMembershipsPortlet extends MVCPortlet {
 
+	public void addGroupOrganizations(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long[] addOrganizationIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "addOrganizationIds"), 0L);
+		long[] removeOrganizationIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "removeOrganizationIds"), 0L);
+
+		_organizationService.addGroupOrganizations(
+			themeDisplay.getSiteGroupId(), addOrganizationIds);
+		_organizationService.unsetGroupOrganizations(
+			themeDisplay.getSiteGroupId(), removeOrganizationIds);
+
+		String redirect = ParamUtil.getString(
+			actionRequest, "assignmentsRedirect");
+
+		if (Validator.isNotNull(redirect)) {
+			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
+		}
+	}
+
 	public void addGroupUsers(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -107,6 +132,31 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 		_userService.addGroupUsers(groupId, addUserIds, serviceContext);
 
 		LiveUsers.joinGroup(themeDisplay.getCompanyId(), groupId, addUserIds);
+
+		String redirect = ParamUtil.getString(
+			actionRequest, "assignmentsRedirect");
+
+		if (Validator.isNotNull(redirect)) {
+			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
+		}
+	}
+
+	public void deleteGroupOrganizations(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long[] addOrganizationIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "addOrganizationIds"), 0L);
+		long[] removeOrganizationIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "removeOrganizationIds"), 0L);
+
+		_organizationService.addGroupOrganizations(
+			themeDisplay.getSiteGroupId(), addOrganizationIds);
+		_organizationService.unsetGroupOrganizations(
+			themeDisplay.getSiteGroupId(), removeOrganizationIds);
 
 		String redirect = ParamUtil.getString(
 			actionRequest, "assignmentsRedirect");
@@ -145,31 +195,6 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 
 		LiveUsers.leaveGroup(
 			themeDisplay.getCompanyId(), groupId, removeUserIds);
-
-		String redirect = ParamUtil.getString(
-			actionRequest, "assignmentsRedirect");
-
-		if (Validator.isNotNull(redirect)) {
-			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
-		}
-	}
-
-	public void editGroupOrganizations(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long[] addOrganizationIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "addOrganizationIds"), 0L);
-		long[] removeOrganizationIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "removeOrganizationIds"), 0L);
-
-		_organizationService.addGroupOrganizations(
-			themeDisplay.getSiteGroupId(), addOrganizationIds);
-		_organizationService.unsetGroupOrganizations(
-			themeDisplay.getSiteGroupId(), removeOrganizationIds);
 
 		String redirect = ParamUtil.getString(
 			actionRequest, "assignmentsRedirect");

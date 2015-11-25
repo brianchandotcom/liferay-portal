@@ -73,6 +73,26 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class SiteTeamsPortlet extends MVCPortlet {
 
+	public void addTeamUserGroups(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long teamId = ParamUtil.getLong(actionRequest, "teamId");
+
+		long[] addUserGroupIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "addUserGroupIds"), 0L);
+		long[] removeUserGroupIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "removeUserGroupIds"), 0L);
+
+		_userGroupService.addTeamUserGroups(teamId, addUserGroupIds);
+		_userGroupService.unsetTeamUserGroups(teamId, removeUserGroupIds);
+
+		String redirect = ParamUtil.getString(
+			actionRequest, "assignmentsRedirect");
+
+		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
+	}
+
 	public void deleteTeam(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -91,6 +111,26 @@ public class SiteTeamsPortlet extends MVCPortlet {
 		for (long teamId : teamIds) {
 			_teamService.deleteTeam(teamId);
 		}
+	}
+
+	public void deleteTeamUserGroups(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long teamId = ParamUtil.getLong(actionRequest, "teamId");
+
+		long[] addUserGroupIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "addUserGroupIds"), 0L);
+		long[] removeUserGroupIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "removeUserGroupIds"), 0L);
+
+		_userGroupService.addTeamUserGroups(teamId, addUserGroupIds);
+		_userGroupService.unsetTeamUserGroups(teamId, removeUserGroupIds);
+
+		String redirect = ParamUtil.getString(
+			actionRequest, "assignmentsRedirect");
+
+		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
 	public void editTeam(
@@ -122,26 +162,6 @@ public class SiteTeamsPortlet extends MVCPortlet {
 
 			_teamService.updateTeam(teamId, name, description);
 		}
-	}
-
-	public void editTeamUserGroups(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long teamId = ParamUtil.getLong(actionRequest, "teamId");
-
-		long[] addUserGroupIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "addUserGroupIds"), 0L);
-		long[] removeUserGroupIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "removeUserGroupIds"), 0L);
-
-		_userGroupService.addTeamUserGroups(teamId, addUserGroupIds);
-		_userGroupService.unsetTeamUserGroups(teamId, removeUserGroupIds);
-
-		String redirect = ParamUtil.getString(
-			actionRequest, "assignmentsRedirect");
-
-		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
 	public void editTeamUsers(

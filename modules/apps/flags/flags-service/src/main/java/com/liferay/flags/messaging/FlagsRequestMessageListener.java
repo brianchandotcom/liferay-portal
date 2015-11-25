@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.flags.messaging;
+package com.liferay.flags.messaging;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;

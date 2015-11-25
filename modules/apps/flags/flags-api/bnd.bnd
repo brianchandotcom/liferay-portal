@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Flags API
+Bundle-SymbolicName: com.liferay.flags.api
+Bundle-Version: 1.0.0
+Export-Package:	\
+	com.liferay.flags,\
+	com.liferay.flags.messaging,\
+	com.liferay.flags.service
+Include-Resource: classes

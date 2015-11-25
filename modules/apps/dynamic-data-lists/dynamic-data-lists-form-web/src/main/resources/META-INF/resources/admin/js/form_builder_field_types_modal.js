@@ -3,6 +3,8 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
+		var FormBuilderUtil = Liferay.DDL.FormBuilderUtil;
+
 		var TPL_COLUMN = '<div class="col col-md-{size}"></div>';
 
 		var TPL_ROW = '<div class="row"></div>';
@@ -29,6 +31,14 @@ AUI.add(
 				NAME: 'form-builder-field-types-modal',
 
 				prototype: {
+					bindUI: function() {
+						var instance = this;
+
+						FormBuilderFieldTypesModal.superclass.bindUI.apply(instance, arguments);
+
+						instance.on('xyChange', instance._onModalXYChange);
+					},
+
 					_createColumn: function(size) {
 						var instance = this;
 
@@ -46,6 +56,10 @@ AUI.add(
 						var instance = this;
 
 						return A.Node.create(TPL_ROW);
+					},
+
+					_onModalXYChange: function(event) {
+						event.newVal = FormBuilderUtil.normalizeModalXY(event.newVal);
 					},
 
 					_uiSetFieldTypes: function(fieldTypes) {
@@ -101,6 +115,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-form-builder-field-types-modal']
+		requires: ['aui-form-builder-field-types-modal', 'liferay-ddl-form-builder-util']
 	}
 );

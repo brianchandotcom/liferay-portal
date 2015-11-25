@@ -96,9 +96,11 @@ teamSearchContainer.setTotal(teamsCount);
 	</liferay-frontend:management-bar>
 </c:if>
 
-<aui:form cssClass="container-fluid-1280" name="fm">
-	<aui:input name="teamIds" type="hidden" />
+<portlet:actionURL name="deleteTeams" var="deleteTeamsURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
 
+<aui:form action="<%= deleteTeamsURL %>" cssClass="container-fluid-1280" name="fm">
 	<liferay-ui:search-container
 		emptyResultsMessage="there-are-no-site-teams.-you-can-add-a-site-team-by-clicking-the-plus-button-on-the-bottom-right-corner"
 		id="teams"
@@ -191,21 +193,11 @@ teamSearchContainer.setTotal(teamsCount);
 </c:if>
 
 <aui:script sandbox="<%= true %>">
-	var Util = Liferay.Util;
-
-	var form = $(document.<portlet:namespace />fm);
-
 	$('#<portlet:namespace />deleteSelectedTeams').on(
 		'click',
 		function() {
 			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-				<portlet:actionURL name="deleteTeams" var="deleteTeamsURL">
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-				</portlet:actionURL>
-
-				form.fm('teamIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-
-				submitForm(form, '<%= deleteTeamsURL %>');
+				submitForm($(document.<portlet:namespace />fm));
 			}
 		}
 	);

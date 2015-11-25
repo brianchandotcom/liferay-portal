@@ -86,8 +86,7 @@ public class SiteTeamsPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long[] teamIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "teamIds"), 0L);
+		long[] teamIds = ParamUtil.getLongValues(actionRequest, "rowIds");
 
 		for (long teamId : teamIds) {
 			_teamService.deleteTeam(teamId);

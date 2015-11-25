@@ -48,6 +48,7 @@ import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -63,7 +64,8 @@ public class CalendarPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "calendar";
 
-	public CalendarPortletDataHandler() {
+	@Activate
+	protected void activate() {
 		setDataLocalized(true);
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(Calendar.class),

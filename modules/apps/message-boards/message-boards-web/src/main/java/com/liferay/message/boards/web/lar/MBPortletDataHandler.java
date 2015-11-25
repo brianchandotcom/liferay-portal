@@ -53,6 +53,7 @@ import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -72,7 +73,13 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "message_boards";
 
-	public MBPortletDataHandler() {
+	@Override
+	public String getServiceName() {
+		return MBConstants.SERVICE_NAME;
+	}
+
+	@Activate
+	protected void activate() {
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(MBBan.class),
 			new StagedModelType(MBCategory.class),
@@ -92,11 +99,6 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 		setImportControls(getExportControls());
 		setPublishToLiveByDefault(
 			PropsValues.MESSAGE_BOARDS_PUBLISH_TO_LIVE_BY_DEFAULT);
-	}
-
-	@Override
-	public String getServiceName() {
-		return MBConstants.SERVICE_NAME;
 	}
 
 	@Override

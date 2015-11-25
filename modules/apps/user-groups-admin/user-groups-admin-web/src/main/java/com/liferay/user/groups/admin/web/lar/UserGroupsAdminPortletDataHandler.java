@@ -32,6 +32,7 @@ import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -50,7 +51,8 @@ public class UserGroupsAdminPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "user_groups_admin";
 
-	public UserGroupsAdminPortletDataHandler() {
+	@Activate
+	protected void activate() {
 		setDataLevel(DataLevel.PORTAL);
 		setExportControls(
 			new PortletDataHandlerBoolean(

@@ -1151,6 +1151,7 @@
 			<isset var="position" />
 			<then>
 				<execute function="Click" locator1="CalendarEditEvent#REPEAT_REPEAT_ON_DAY_OF_THE_WEEK_RADIO" />
+
 				<execute function="Select" locator1="CalendarEditEvent#REPEAT_REPEAT_ON_DAY_OF_THE_WEEK_POSITION_DROPDOWN" value1="${position}" />
 				<execute function="Select" locator1="CalendarEditEvent#REPEAT_REPEAT_ON_DAY_OF_THE_WEEK_WEEKDAY_DROPDOWN" value1="${weekday}" />
 			</then>
@@ -1160,7 +1161,7 @@
 			<isset var="numberOfOccurrences" />
 			<then>
 				<execute function="Click" locator1="CalendarEditEvent#REPEAT_ENDS_AFTER_RADIO" />
-				
+
 				<execute function="Type#mouseOverFocusType" locator1="CalendarEditEvent#REPEAT_ENDS_AFTER_FIELD" value1="${numberOfOccurrences}" />
 			</then>
 		</if>
@@ -1169,6 +1170,7 @@
 			<isset var="endOnDate" />
 			<then>
 				<execute function="Click" locator1="CalendarEditEvent#REPEAT_ENDS_ON_RADIO" />
+
 				<execute function="Type#clickAtSendKeys" locator1="CalendarEditEvent#REPEAT_ENDS_ON_DATE_FIELD" value1="${endOnDate}" />
 			</then>
 		</if>

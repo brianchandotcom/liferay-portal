@@ -554,9 +554,8 @@
 			<then>
 				<execute macro="DDLRecord#gotoRecordPreview" />
 
-				<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
-
 				<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_PREVIEW" value1="${ddlRecordFieldData}" />
+
 				<execute function="Click" locator1="DDL#RECORD_TABLE_PREVIEW_CLOSE" />
 			</then>
 			<else>

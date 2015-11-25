@@ -82,7 +82,7 @@
 	</command>
 
 	<command name="selectTextFieldLineOption">
-		<var name="key_textFieldLineOption" value="textFieldLineOption" />
+		<var name="key_textFieldLineOption" value="${textFieldLineOption}" />
 
 		<execute function="Click" locator1="FormFields#TEXT_FIELD_LINE_OPTION" />
 	</command>

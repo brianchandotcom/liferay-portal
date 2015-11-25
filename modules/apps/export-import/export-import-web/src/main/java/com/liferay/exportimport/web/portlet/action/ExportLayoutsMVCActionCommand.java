@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.exportimport.LARFileNameException;
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationConstants;
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationSettingsMapFactory;
@@ -75,6 +77,13 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		if (Validator.isNull(cmd)) {
+			SessionMessages.add(
+				actionRequest,
+				PortalUtil.getPortletId(actionRequest) +
+					SessionMessages.KEY_SUFFIX_FORCE_SEND_REDIRECT);
+
+			hideDefaultSuccessMessage(actionRequest);
+
 			return;
 		}
 

@@ -20,7 +20,6 @@
 String category = ParamUtil.getString(request, "category", "all-categories");
 String state = ParamUtil.getString(request, "state", "all-statuses");
 
-String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
 List<App> apps = AppLocalServiceUtil.getApps(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
@@ -69,7 +68,7 @@ portletURL.setParameter("state", state);
 		/>
 
 		<liferay-frontend:management-bar-sort
-			orderByCol="<%= orderByCol %>"
+			orderByCol="title"
 			orderByType="<%= orderByType %>"
 			orderColumns='<%= new String[] {"title"} %>'
 			portletURL="<%= portletURL %>"
@@ -89,6 +88,8 @@ portletURL.setParameter("state", state);
 			}
 
 			List<AppDisplay> appDisplays = AppDisplayFactoryUtil.getAppDisplays(bundles, category, BundleStateConstants.getState(state));
+
+			appDisplays = ListUtil.sort(appDisplays, new AppDisplayComparator(orderByType));
 
 			int end = searchContainer.getEnd();
 

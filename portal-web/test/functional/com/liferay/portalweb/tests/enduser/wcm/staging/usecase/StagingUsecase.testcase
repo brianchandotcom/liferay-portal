@@ -888,12 +888,12 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Blogs Entry Content 1" />
-			<var name="entryTitle" value="Blogs Entry Title 1" />
+		<execute macro="RecentBloggers#viewPG">
+			<var name="entryAuthor" value="Test Test" />
+			<var name="postCount" value="1" />
 		</execute>
 
-		<execute macro="BlogsEntry#viewPG">
+		<execute macro="BlogsNavigator#gotoEntryPG">
 			<var name="entryContent" value="Blogs Entry Content 1" />
 			<var name="entryTitle" value="Blogs Entry Title 1" />
 		</execute>
@@ -902,15 +902,17 @@
 			<var name="viewEntryTitle" value="Blogs Entry Title 1" />
 		</execute>
 
-		<execute macro="RecentBloggers#viewPG">
-			<var name="entryAuthor" value="Test Test" />
-			<var name="postCount" value="1" />
+		<execute macro="BlogsEntry#viewPG">
+			<var name="entryContent" value="Blogs Entry Content 1" />
+			<var name="entryTitle" value="Blogs Entry Title 1" />
 		</execute>
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
-			<var name="siteScopeName" value="Site Name" />
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
 		</execute>
+
+		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="Staging#gotoPublishToLive" />
 
@@ -926,6 +928,15 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
+		<execute macro="RecentBloggers#viewPG">
+			<var name="entryAuthor" value="Test Test" />
+			<var name="postCount" value="1" />
+		</execute>
+
+		<execute macro="BlogsAggregatorPortlet#viewBlogsEntryViaBAPortletPG">
+			<var name="viewEntryTitle" value="Blogs Entry Title 1" />
+		</execute>
+
 		<execute macro="BlogsNavigator#gotoEntryPG">
 			<var name="entryContent" value="Blogs Entry Content 1" />
 			<var name="entryTitle" value="Blogs Entry Title 1" />
@@ -934,15 +945,6 @@
 		<execute macro="BlogsEntry#viewPG">
 			<var name="entryContent" value="Blogs Entry Content 1" />
 			<var name="entryTitle" value="Blogs Entry Title 1" />
-		</execute>
-
-		<execute macro="BlogsAggregatorPortlet#viewBlogsEntryViaBAPortletPG">
-			<var name="viewEntryTitle" value="Blogs Entry Title 1" />
-		</execute>
-
-		<execute macro="RecentBloggers#viewPG">
-			<var name="entryAuthor" value="Test Test" />
-			<var name="postCount" value="1" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

@@ -1278,12 +1278,13 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		FileVersion latestFileVersion = fileVersions.get(
 			fileVersions.size() - 1);
 
-		String fileName = DLAppUtil.getSourceFileName(latestFileVersion);
+		String sourceFileName = DLAppUtil.getSourceFileName(latestFileVersion);
 
 		FileEntry destinationFileEntry = toLocalRepository.addFileEntry(
-			userId, newFolderId, fileName, latestFileVersion.getMimeType(),
-			latestFileVersion.getTitle(), latestFileVersion.getDescription(),
-			StringPool.BLANK, latestFileVersion.getContentStream(false),
+			userId, newFolderId, sourceFileName,
+			latestFileVersion.getMimeType(), latestFileVersion.getTitle(),
+			latestFileVersion.getDescription(), StringPool.BLANK,
+			latestFileVersion.getContentStream(false),
 			latestFileVersion.getSize(), serviceContext);
 
 		for (int i = fileVersions.size() - 2; i >= 0; i--) {
@@ -1293,8 +1294,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 			try {
 				destinationFileEntry = toLocalRepository.updateFileEntry(
-					userId, destinationFileEntry.getFileEntryId(), fileName,
-					destinationFileEntry.getMimeType(),
+					userId, destinationFileEntry.getFileEntryId(),
+					sourceFileName, destinationFileEntry.getMimeType(),
 					destinationFileEntry.getTitle(),
 					destinationFileEntry.getDescription(), StringPool.BLANK,
 					DLAppUtil.isMajorVersion(fileVersion, previousFileVersion),

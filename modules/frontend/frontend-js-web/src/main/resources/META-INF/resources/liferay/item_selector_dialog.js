@@ -60,12 +60,21 @@ AUI.add(
 
 						var zIndex = instance.get('zIndex');
 
+						instance._selectedItem = null;
+
 						Util.selectEntity(
 							{
 								dialog: {
 									constrain: true,
 									destroyOnHide: true,
 									modal: true,
+									on: {
+										'visibleChange': function(event) {
+											if (!event.newVal) {
+												instance.set(STR_SELECTED_ITEM, instance._selectedItem);
+											}
+										}
+									},
 									'toolbars.footer': [
 										{
 											cssClass: 'btn-lg btn-primary',
@@ -74,7 +83,6 @@ AUI.add(
 											label: strings.add,
 											on: {
 												click: function() {
-													instance.set(STR_SELECTED_ITEM, instance._selectedItem);
 													instance.close();
 												}
 											}
@@ -85,7 +93,6 @@ AUI.add(
 											label: strings.cancel,
 											on: {
 												click: function() {
-													instance.set(STR_SELECTED_ITEM, null);
 													instance.close();
 												}
 											}

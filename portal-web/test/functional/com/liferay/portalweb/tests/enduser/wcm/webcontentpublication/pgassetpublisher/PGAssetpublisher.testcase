@@ -555,17 +555,11 @@
 	<command name="DisplayMultipleDDLRecordsAndSortByModifiedDate" priority="3">
 		<description message="This is a use case for LPS-57993" />
 
-		<var name="ddlDataDefinitionName" value="DDL Definition" />
-		<var name="ddlListName" value="DDL List" />
-
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute macro="DDLDataDefinition#addCP">
-			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionName} Description" />
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-		</execute>
+		<execute macro="DDLDataDefinition#addCP" />
 
 		<execute macro="DynamicDataMapping#addField">
 			<var name="field" value="Text" />
@@ -579,14 +573,9 @@
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute macro="DDLList#addCP">
-			<var name="ddlListDescription" value="${ddlListName} Description" />
-			<var name="ddlListName" value="${ddlListName}" />
-		</execute>
+		<execute macro="DDLList#addCP" />
 
-		<execute macro="DDLDataDefinition#selectCP">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-		</execute>
+		<execute macro="DDLDataDefinition#selectCP" />
 
 		<execute macro="DDLList#saveCP" />
 
@@ -594,10 +583,7 @@
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute macro="DDLRecord#viewCP">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-			<var name="ddlListName" value="${ddlListName}" />
-		</execute>
+		<execute macro="DDLRecord#viewCP" />
 
 		<for list="firstRecord,secondText,thirdTest" param="ddlRecordFieldData">
 			<execute macro="DDLRecord#addDefinitionCP" />

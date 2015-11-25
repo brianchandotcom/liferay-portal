@@ -111,8 +111,8 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 			deleteVocabularyIds = new long[] {vocabularyId};
 		}
 		else {
-			deleteVocabularyIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "deleteVocabularyIds"), 0L);
+			deleteVocabularyIds = ParamUtil.getLongValues(
+				actionRequest, "rowIds");
 		}
 
 		for (long deleteVocabularyId : deleteVocabularyIds) {

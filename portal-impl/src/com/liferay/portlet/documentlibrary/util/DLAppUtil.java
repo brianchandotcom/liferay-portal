@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
@@ -50,6 +51,24 @@ public class DLAppUtil {
 		}
 
 		return mimeType;
+	}
+
+	public static String getSourceFileName(FileVersion fileVersion) {
+		String extension = fileVersion.getExtension();
+
+		if (Validator.isNull(extension)) {
+			return fileVersion.getTitle();
+		}
+
+		String suffix = StringPool.PERIOD + extension;
+
+		String title = fileVersion.getTitle();
+
+		if (title.endsWith(suffix)) {
+			return title;
+		}
+
+		return title + suffix;
 	}
 
 	public static boolean isMajorVersion(

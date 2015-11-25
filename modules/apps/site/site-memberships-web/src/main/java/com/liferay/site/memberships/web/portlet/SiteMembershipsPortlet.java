@@ -87,6 +87,80 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class SiteMembershipsPortlet extends MVCPortlet {
 
+	public void addGroupUsers(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long groupId = themeDisplay.getSiteGroupId();
+
+		long[] addUserIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "addUserIds"), 0L);
+
+		addUserIds = filterAddUserIds(groupId, addUserIds);
+
+		long[] removeUserIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "removeUserIds"), 0L);
+
+		removeUserIds = filterRemoveUserIds(groupId, removeUserIds);
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
+		_userService.addGroupUsers(groupId, addUserIds, serviceContext);
+		_userService.unsetGroupUsers(groupId, removeUserIds, serviceContext);
+
+		LiveUsers.joinGroup(themeDisplay.getCompanyId(), groupId, addUserIds);
+		LiveUsers.leaveGroup(
+			themeDisplay.getCompanyId(), groupId, removeUserIds);
+
+		String redirect = ParamUtil.getString(
+			actionRequest, "assignmentsRedirect");
+
+		if (Validator.isNotNull(redirect)) {
+			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
+		}
+	}
+
+	public void deleteGroupUsers(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long groupId = themeDisplay.getSiteGroupId();
+
+		long[] addUserIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "addUserIds"), 0L);
+
+		addUserIds = filterAddUserIds(groupId, addUserIds);
+
+		long[] removeUserIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "removeUserIds"), 0L);
+
+		removeUserIds = filterRemoveUserIds(groupId, removeUserIds);
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
+		_userService.addGroupUsers(groupId, addUserIds, serviceContext);
+		_userService.unsetGroupUsers(groupId, removeUserIds, serviceContext);
+
+		LiveUsers.joinGroup(themeDisplay.getCompanyId(), groupId, addUserIds);
+		LiveUsers.leaveGroup(
+			themeDisplay.getCompanyId(), groupId, removeUserIds);
+
+		String redirect = ParamUtil.getString(
+			actionRequest, "assignmentsRedirect");
+
+		if (Validator.isNotNull(redirect)) {
+			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
+		}
+	}
+
 	public void editGroupOrganizations(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -128,43 +202,6 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			themeDisplay.getSiteGroupId(), addUserGroupIds);
 		_userGroupService.unsetGroupUserGroups(
 			themeDisplay.getSiteGroupId(), removeUserGroupIds);
-
-		String redirect = ParamUtil.getString(
-			actionRequest, "assignmentsRedirect");
-
-		if (Validator.isNotNull(redirect)) {
-			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
-		}
-	}
-
-	public void editGroupUsers(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long groupId = themeDisplay.getSiteGroupId();
-
-		long[] addUserIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "addUserIds"), 0L);
-
-		addUserIds = filterAddUserIds(groupId, addUserIds);
-
-		long[] removeUserIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "removeUserIds"), 0L);
-
-		removeUserIds = filterRemoveUserIds(groupId, removeUserIds);
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
-
-		_userService.addGroupUsers(groupId, addUserIds, serviceContext);
-		_userService.unsetGroupUsers(groupId, removeUserIds, serviceContext);
-
-		LiveUsers.joinGroup(themeDisplay.getCompanyId(), groupId, addUserIds);
-		LiveUsers.leaveGroup(
-			themeDisplay.getCompanyId(), groupId, removeUserIds);
 
 		String redirect = ParamUtil.getString(
 			actionRequest, "assignmentsRedirect");

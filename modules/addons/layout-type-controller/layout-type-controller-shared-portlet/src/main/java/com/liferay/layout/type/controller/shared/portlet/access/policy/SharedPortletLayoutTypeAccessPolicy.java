@@ -12,22 +12,22 @@
  * details.
  */
 
-package com.liferay.layout.type.controller.full.page.application.access.policy;
+package com.liferay.layout.type.controller.shared.portlet.access.policy;
 
-import com.liferay.layout.type.controller.full.page.application.constants.FullPageApplicationLayoutTypeControllerConstants;
+import com.liferay.layout.type.controller.shared.portlet.constants.SharedPortletLayoutTypeControllerConstants;
 import com.liferay.portal.model.LayoutTypeAccessPolicy;
 import com.liferay.portal.model.impl.ModificationDeniedLayoutTypeAccessPolicyImpl;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Eudaldo Alonso
+ * @author Leonardo Barros
  */
 @Component(
 	immediate = true,
-	property = {"layout.type=" + FullPageApplicationLayoutTypeControllerConstants.LAYOUT_TYPE_FULL_PAGE_APPLICATION},
+	property = {"layout.type=" + SharedPortletLayoutTypeControllerConstants.LAYOUT_TYPE_SHARED_PORTLET},
 	service = LayoutTypeAccessPolicy.class
 )
-public class FullPageApplicationLayoutTypeAccessPolicy
+public class SharedPortletLayoutTypeAccessPolicy
 	extends ModificationDeniedLayoutTypeAccessPolicyImpl {
 }

@@ -44,14 +44,19 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowEngineManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
 import java.util.List;
@@ -183,6 +188,27 @@ public class DDLFormAdminDisplayContext {
 		return _recordSet;
 	}
 
+	public String getRecordSetLayoutURL() throws PortalException {
+		if (_recordSet == null) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler(5);
+
+		ThemeDisplay themeDisplay =
+			_ddlFormAdminRequestHelper.getThemeDisplay();
+
+		Group group = themeDisplay.getSiteGroup();
+
+		sb.append(themeDisplay.getPortalURL());
+		sb.append(group.getPathFriendlyURL(false, themeDisplay));
+		sb.append(group.getFriendlyURL());
+		sb.append("/shared");
+		sb.append(String.format("/-/form/%d", _recordSet.getRecordSetId()));
+
+		return sb.toString();
+	}
+
 	public List<DDLRecordSet> getSearchContainerResults(
 			SearchContainer<DDLRecordSet> searchContainer)
 		throws PortalException {
@@ -281,6 +307,17 @@ public class DDLFormAdminDisplayContext {
 		}
 
 		return false;
+	}
+
+	public boolean isRecordSetPublished() throws PortalException {
+		DDLRecordSet recordSet = getRecordSet();
+
+		if (recordSet == null) {
+			return false;
+		}
+
+		return GetterUtil.getBoolean(
+			recordSet.getSettingsProperty("published", "false"));
 	}
 
 	public boolean isShowAddRecordSetButton() {

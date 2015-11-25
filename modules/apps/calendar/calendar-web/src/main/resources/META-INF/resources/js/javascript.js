@@ -22,7 +22,9 @@ AUI.add(
 			}
 		);
 
-		var toInt = Lang.toInt;
+		var toInt = function(value) {
+			return Lang.toInt(value, 10, 0);
+		};
 
 		var CONTROLS_NODE = 'controlsNode';
 

@@ -552,7 +552,7 @@
 		</execute>
 	</command>
 
-	<command name="DisplayMultipleDDLRecordsAndSortByModifiedDate" priority="5">
+	<command name="DisplayMultipleDDLRecordsAndSortByModifiedDate" priority="3">
 		<description message="This is a use case for LPS-57993" />
 
 		<var name="ddlDataDefinitionName" value="DDL Definition" />

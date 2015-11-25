@@ -403,7 +403,7 @@
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute macro="DDLRecord#viewCP" />
+		<execute macro="DDLNavigator#gotoListRecords" />
 
 		<execute macro="DDLRecord#viewFirstFieldCP">
 			<var name="ddlRecordFieldData" value="Yes" />
@@ -431,7 +431,7 @@
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute macro="DDLRecord#viewCP" />
+		<execute macro="DDLNavigator#gotoListRecords" />
 
 		<execute macro="DDLRecord#viewFirstFieldCP">
 			<var name="ddlRecordFieldData" value="Yes" />
@@ -458,7 +458,7 @@
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute macro="DDLRecord#viewCP" />
+		<execute macro="DDLNavigator#gotoListRecords" />
 
 		<execute macro="DDLRecord#viewFirstFieldCP">
 			<var name="ddlRecordFieldData" value="Yes" />
@@ -486,7 +486,7 @@
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute macro="DDLRecord#viewCP">
+		<execute macro="DDLNavigator#gotoListRecords">
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 

@@ -583,7 +583,7 @@
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute macro="DDLRecord#viewCP" />
+		<execute macro="DDLNavigator#gotoListRecords" />
 
 		<for list="firstRecord,secondText,thirdTest" param="ddlRecordFieldData">
 			<execute macro="DDLNavigator#gotoAddListRecord" />

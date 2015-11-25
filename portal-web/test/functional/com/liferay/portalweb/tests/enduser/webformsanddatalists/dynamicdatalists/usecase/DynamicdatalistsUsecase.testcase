@@ -225,7 +225,7 @@
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute macro="DDLRecord#viewCP">
+		<execute macro="DDLNavigator#gotoListRecords">
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
@@ -341,7 +341,7 @@
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute macro="DDLRecord#viewCP">
+		<execute macro="DDLNavigator#gotoListRecords">
 			<var name="ddlListName" value="List Name" />
 		</execute>
 
@@ -562,7 +562,7 @@
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute macro="DDLRecord#viewCP" />
+		<execute macro="DDLNavigator#gotoListRecords" />
 
 		<execute macro="DDLRecord#gotoRecordPreview" />
 
@@ -592,7 +592,7 @@
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute macro="DDLRecord#viewCP" />
+		<execute macro="DDLNavigator#gotoListRecords" />
 
 		<execute macro="DDLRecord#viewFirstFieldCP">
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData2}" />
@@ -1941,7 +1941,7 @@
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute macro="DDLRecord#viewCP">
+		<execute macro="DDLNavigator#gotoListRecords">
 			<var name="ddlListName" value="List Name" />
 		</execute>
 
@@ -2121,7 +2121,7 @@
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute macro="DDLRecord#viewCP">
+		<execute macro="DDLNavigator#gotoListRecords">
 			<var name="ddlListName" value="Dynamic Data List" />
 		</execute>
 
@@ -2201,7 +2201,7 @@
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute macro="DDLRecord#viewCP">
+		<execute macro="DDLNavigator#gotoListRecords">
 			<var name="ddlListName" value="Dynamic Data List" />
 		</execute>
 

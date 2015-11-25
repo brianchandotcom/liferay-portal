@@ -6,7 +6,7 @@
 	<command name="addCP">
 		<var name="key_ddlListName" value="${ddlListName}" />
 
-		<execute macro="DDLRecord#viewCP">
+		<execute macro="DDLNavigator#gotoListRecords">
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
@@ -341,15 +341,6 @@
 		<execute function="AssertClick" locator1="Button#SAVE_AS_DRAFT" value1="Save as Draft" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-	</command>
-
-	<command name="viewCP">
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlListName}" />
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
-		<execute function="AssertTextEquals" locator1="DDL#LIST_TABLE_NAME_1" value1="${ddlListName}" />
-		<execute function="Click" locator1="DDL#LIST_TABLE_NAME_1" value1="${ddlListName}" />
-
-		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${ddlListName}" />
 	</command>
 
 	<command name="viewFieldCP">

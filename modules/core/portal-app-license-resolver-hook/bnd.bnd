@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Portal App Resolver Hook
-Bundle-SymbolicName: com.liferay.portal.app.resolver.hook
+Bundle-SymbolicName: com.liferay.portal.app.license.resolver.hook
 Bundle-Version: 1.0.0
 Fragment-Host: org.eclipse.osgi; bundle-version="[3.10.0,4.0.0)"; extension:=framework
 Include-Resource: classes

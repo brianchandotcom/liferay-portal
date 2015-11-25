@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.app.resolver;
+package com.liferay.portal.app.license.resolver;
 
 import com.liferay.portal.app.license.AppLicenseVerifier;
 

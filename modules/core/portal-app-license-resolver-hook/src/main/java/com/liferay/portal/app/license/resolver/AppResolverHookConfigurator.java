@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.app.resolver;
+package com.liferay.portal.app.license.resolver;
 
 import org.eclipse.osgi.internal.hookregistry.ActivatorHookFactory;
 import org.eclipse.osgi.internal.hookregistry.HookConfigurator;

@@ -14,7 +14,14 @@
  */
 --%>
 
+<%@ include file="/init.jsp" %>
+
 <%
+String className = GetterUtil.getString(request.getAttribute("view_entry.jsp-className"));
+AnnouncementsEntry entry = (AnnouncementsEntry)request.getAttribute(WebKeys.ANNOUNCEMENTS_ENTRY);
+int flagValue = GetterUtil.getInteger(request.getAttribute("view_entry.jsp-flagValue"));
+String tabs1 = GetterUtil.getString(request.getAttribute("view_entry.jsp-tabs1"));
+
 boolean hiddenEntry = false;
 boolean readEntry = false;
 

@@ -17,13 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = "preview";
-
-AnnouncementsEntry entry = (AnnouncementsEntry)request.getAttribute(WebKeys.ANNOUNCEMENTS_ENTRY);
-
-int flagValue = AnnouncementsFlagConstants.NOT_HIDDEN;
-
-String className = StringPool.BLANK;
+request.setAttribute("view_entry.jsp-flagValue", AnnouncementsFlagConstants.NOT_HIDDEN);
+request.setAttribute("view_entry.jsp-tabs1", "preview");
 %>
 
-<%@ include file="/view_entry.jspf" %>
+<liferay-util:include page="/view_entry.jspf" servletContext="<%= application %>" />

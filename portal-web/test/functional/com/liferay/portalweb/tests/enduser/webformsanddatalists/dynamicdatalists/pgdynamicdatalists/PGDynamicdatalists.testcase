@@ -237,7 +237,7 @@
 		</execute>
 	</command>
 
-	<command name="AddRecordNested" priority="5">
+	<command name="AddRecordNested" priority="3">
 		<description message="This is a use case for LPS-59565." />
 
 		<execute macro="Page#gotoContentCP">

@@ -52,27 +52,27 @@
 <!--ACTIONS_MENULIST-->
 <tr>
 	<td>ACTIONS_MENULIST_EDIT</td>
-	<td>//ul/li/a[contains(.,'Edit')]</td>
+	<td>//ul/li/a[contains(@id,'CalendarPortlet')and contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ACTIONS_MENULIST_EXPORT</td>
-	<td>//ul/li/a[contains(.,'Export')]</td>
+	<td>//ul/li/a[contains(@id,'CalendarPortlet')and contains(.,'Export')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ACTIONS_MENULIST_IMPORT</td>
-	<td>//ul/li/a[contains(.,'Import')]</td>
+	<td>//ul/li/a[contains(@id,'CalendarPortlet')and contains(.,'Import')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ACTIONS_MENULIST_PERMISSIONS</td>
-	<td>//ul/li/a[contains(.,'Permissions')]</td>
+	<td>//ul/li/a[contains(@id,'CalendarPortlet')and contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ACTIONS_MENULIST_RSS</td>
-	<td>//ul/li/a[contains(.,'RSS')]</td>
+	<td>//ul/li/a[contains(@id,'CalendarPortlet')and contains(.,'RSS')]</td>
 	<td></td>
 </tr>
 </tbody>

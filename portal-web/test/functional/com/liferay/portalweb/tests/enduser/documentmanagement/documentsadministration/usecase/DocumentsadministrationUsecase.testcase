@@ -95,9 +95,12 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
-			<var name="siteScopeName" value="Site Name" />
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
@@ -753,8 +756,8 @@
 			<execute function="Check" locator1="DocumentsAndMedia#ICON_DOCUMENT_CHECKBOX" />
 		</for>
 
-		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="Toolbar#ACTIONS" value1="Actions" />
-		<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+		<execute function="Click" locator1="Icon#DELETE" />
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="moved to the Recycle Bin. Undo" />
 
 		<execute macro="DMDocument#viewDefaultCP" />
@@ -1105,13 +1108,8 @@
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
-			<var name="siteScopeName" value="DM Site Name" />
-		</execute>
-
-		<execute macro="SitePage#gotoCP">
-			<var name="sitePageName" value="DM Site Page Name - Global" />
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="DM Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1205,6 +1203,8 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
+		<execute macro="DMDocument#enableActionsMenuOnPortlet" />
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -1219,9 +1219,9 @@
 
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute function="Click" locator1="DocumentsAndMedia#ICON_DOCUMENT_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick#assertTextClick" locator1="Button#EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<var name="key_categoryName" value="${categoryName}" />
 

@@ -79,7 +79,8 @@
 	</command>
 
 	<command name="addSubfolderPG">
-		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="PGDocumentsandmediaFolder#TOOLBAR_ADD" value1="Add" />
+		<execute function="Click#clickAtAndWait" locator1="Button#PLUS" />
+
 		<execute function="AssertClick" locator1="MenuItem#SUBFOLDER" value1="Subfolder" />
 
 		<execute function="Type" locator1="DocumentsAndMediaEditFolder#NAME_FIELD" value1="${dmSubFolderName}" />

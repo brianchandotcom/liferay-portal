@@ -213,7 +213,7 @@
 			<then>
 				<var name="key_portletName" value="${portletName}" />
 
-				<execute function="Click#makeVisibleClickAt" locator1="BasePortlet#SPECIFIC_PORTLET_OPTIONS_ICON" />
+				<execute function="Click#makeVisibleClickAt" locator1="BasePortlet#SPECIFIC_PORTLET_BORDERLESS_ELLIPSIS_ICON" />
 			</then>
 			<elseif>
 				<isset var="portletNameBorderless" />

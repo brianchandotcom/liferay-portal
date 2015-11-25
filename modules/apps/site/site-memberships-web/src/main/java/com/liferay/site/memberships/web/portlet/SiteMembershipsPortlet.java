@@ -196,8 +196,18 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long[] removeUserGroupIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "removeUserGroupIds"), 0L);
+		long[] removeUserGroupIds = null;
+
+		long removeUserGroupId = ParamUtil.getLong(
+			actionRequest, "removeUserGroupId");
+
+		if (removeUserGroupId > 0) {
+			removeUserGroupIds = new long[] {removeUserGroupId};
+		}
+		else {
+			removeUserGroupIds = ParamUtil.getLongValues(
+				actionRequest, "rowIds");
+		}
 
 		_userGroupService.unsetGroupUserGroups(
 			themeDisplay.getSiteGroupId(), removeUserGroupIds);

@@ -90,7 +90,7 @@ page import="com.liferay.portlet.usersadmin.search.UserSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserSearchTerms" %><%@
 page import="com.liferay.portlet.usersadmin.util.UsersAdmin" %><%@
 page import="com.liferay.portlet.usersadmin.util.UsersAdminUtil" %><%@
-page import="com.liferay.site.memberships.web.context.SiteMembershipsDisplayContext" %>
+page import="com.liferay.site.memberships.web.display.context.SiteMembershipsDisplayContext" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.HashMap" %><%@

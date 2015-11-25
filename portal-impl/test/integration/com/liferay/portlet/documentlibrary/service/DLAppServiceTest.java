@@ -953,6 +953,24 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			Assert.assertEquals(1, moveCounter.get());
 		}
 
+		@Test
+		public void shouldHaveSameFileExtension() throws Exception {
+			FileEntry fileEntry = addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(), _FILE_NAME,
+				_STRIPPED_FILE_NAME, null);
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(
+					targetGroup.getGroupId());
+
+			FileEntry copiedFileEntry = DLAppServiceUtil.moveFileEntry(
+				fileEntry.getFileEntryId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
+
+			Assert.assertEquals(
+				fileEntry.getExtension(), copiedFileEntry.getExtension());
+		}
+
 	}
 
 	@Sync

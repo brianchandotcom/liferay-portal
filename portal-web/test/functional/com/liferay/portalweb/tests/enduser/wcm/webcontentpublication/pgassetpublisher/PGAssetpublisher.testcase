@@ -554,6 +554,7 @@
 
 	<command name="DisplayMultipleDDLRecordsAndSortByModifiedDate" priority="5">
 		<description message="This is a use case for LPS-57993" />
+
 		<var name="ddlDataDefinitionName" value="DDL Definition" />
 		<var name="ddlListName" value="DDL List" />
 
@@ -594,9 +595,9 @@
 		</execute>
 
 		<execute macro="DDLRecord#viewCP">
-				<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-				<var name="ddlListName" value="${ddlListName}" />
-			</execute>
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlListName" value="${ddlListName}" />
+		</execute>
 
 		<for list="firstRecord,secondText,thirdTest" param="ddlRecordFieldData">
 			<execute macro="DDLRecord#addDefinitionCP" />

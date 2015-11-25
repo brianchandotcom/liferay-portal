@@ -102,9 +102,10 @@ if (group != null) {
 	</div>
 
 	<div class="sidenav-content">
-		<aui:form action="<%= searchURLString %>" name="fm">
+		<portlet:actionURL name="deleteGroups" var="deleteURL" />
+
+		<aui:form action="<%= deleteURL %>" name="fm">
 			<aui:input name="redirect" type="hidden" value="<%= portletURLString %>" />
-			<aui:input name="deleteGroupIds" type="hidden" />
 
 			<div id="breadcrumb">
 				<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
@@ -155,11 +156,7 @@ if (group != null) {
 		'click',
 		function() {
 			if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
-				var form = AUI.$(document.<portlet:namespace />fm);
-
-				form.fm('deleteGroupIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-
-				submitForm(form, '<portlet:actionURL name="deleteGroups" />');
+				submitForm(AUI.$(document.<portlet:namespace />fm));
 			}
 		}
 	);

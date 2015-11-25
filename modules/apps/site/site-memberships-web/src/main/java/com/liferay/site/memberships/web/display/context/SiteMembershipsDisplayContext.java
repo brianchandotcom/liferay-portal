@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.site.memberships.web.context;
+package com.liferay.site.memberships.web.display.context;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;

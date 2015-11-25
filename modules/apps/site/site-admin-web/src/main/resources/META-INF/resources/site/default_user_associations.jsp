@@ -55,8 +55,7 @@ for (long defaultTeamId : defaultTeamIds) {
 
 <liferay-util:buffer var="removeRoleIcon">
 	<liferay-ui:icon
-		iconCssClass="icon-unlink"
-		label="<%= true %>"
+		iconCssClass="icon-remove"
 		message="remove"
 	/>
 </liferay-util:buffer>
@@ -93,12 +92,14 @@ for (long defaultTeamId : defaultTeamIds) {
 			/>
 		</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-text>
+		<liferay-ui:search-container-column-text
+			cssClass="list-group-item-field"
+		>
 			<a class="modify-link" data-rowId="<%= role.getRoleId() %>" href="javascript:;"><%= removeRoleIcon %></a>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator paginate="<%= false %>" />
+	<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
 </liferay-ui:search-container>
 
 <liferay-ui:icon
@@ -134,12 +135,14 @@ for (long defaultTeamId : defaultTeamIds) {
 			value="<%= HtmlUtil.escape(team.getName()) %>"
 		/>
 
-		<liferay-ui:search-container-column-text>
+		<liferay-ui:search-container-column-text
+			cssClass="list-group-item-field"
+		>
 			<a class="modify-link" data-rowId="<%= team.getTeamId() %>" href="javascript:;"><%= removeRoleIcon %></a>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator paginate="<%= false %>" />
+	<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
 </liferay-ui:search-container>
 
 <liferay-ui:icon

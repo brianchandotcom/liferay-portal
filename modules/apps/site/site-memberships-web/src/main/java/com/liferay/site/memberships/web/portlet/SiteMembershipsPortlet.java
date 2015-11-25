@@ -117,13 +117,9 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 
 		long[] addUserGroupIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "addUserGroupIds"), 0L);
-		long[] removeUserGroupIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "removeUserGroupIds"), 0L);
 
 		_userGroupService.addGroupUserGroups(
 			themeDisplay.getSiteGroupId(), addUserGroupIds);
-		_userGroupService.unsetGroupUserGroups(
-			themeDisplay.getSiteGroupId(), removeUserGroupIds);
 
 		String redirect = ParamUtil.getString(
 			actionRequest, "assignmentsRedirect");
@@ -200,13 +196,9 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long[] addUserGroupIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "addUserGroupIds"), 0L);
 		long[] removeUserGroupIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "removeUserGroupIds"), 0L);
 
-		_userGroupService.addGroupUserGroups(
-			themeDisplay.getSiteGroupId(), addUserGroupIds);
 		_userGroupService.unsetGroupUserGroups(
 			themeDisplay.getSiteGroupId(), removeUserGroupIds);
 

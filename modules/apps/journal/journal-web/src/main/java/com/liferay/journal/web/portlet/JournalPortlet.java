@@ -258,8 +258,8 @@ public class JournalPortlet extends MVCPortlet {
 			ActionUtil.expireArticle(actionRequest, articleId);
 		}
 		else {
-			String[] expireArticleIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "expireArticleIds"));
+			String[] expireArticleIds = ParamUtil.getParameterValues(
+				actionRequest, "rowIds");
 
 			for (String expireArticleId : expireArticleIds) {
 				ActionUtil.expireArticle(
@@ -962,8 +962,8 @@ public class JournalPortlet extends MVCPortlet {
 			deleteArticleIds = new String[] {articleId};
 		}
 		else {
-			deleteArticleIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "articleIds"));
+			deleteArticleIds = ParamUtil.getParameterValues(
+				actionRequest, "rowIds");
 		}
 
 		List<TrashedModel> trashedModels = new ArrayList<>();

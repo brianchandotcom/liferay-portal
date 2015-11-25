@@ -15,18 +15,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>RESOURCE_TABLE_CUSTOM_FIELDS_LINK</td>
-	<td>//tr[contains(.,'${key_resourceName}')]/td[2]/a[contains(.,'${customFieldName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>RESOURCE_TABLE_CUSTOM_FIELDS_LINK_GENERIC</td>
 	<td>//tr/td[2]/a[.!='']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RESOURCE_TABLE_EDIT_LINK</td>
-	<td>//tr[contains(.,'${key_resourceName}')]/td[3]/span/a/span</td>
 	<td></td>
 </tr>
 </tbody>

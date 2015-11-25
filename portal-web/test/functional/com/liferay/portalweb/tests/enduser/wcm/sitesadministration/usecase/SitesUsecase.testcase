@@ -4,27 +4,46 @@
 	<var name="globalSiteName" value="Global" />
 
 	<set-up>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="SignIn#signInPortalInstanceSetUp" />
+			</then>
+		</if>
+
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
 	<tear-down>
-		<execute macro="User#firstLoginPG" />
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
-		<execute macro="Site#tearDownCP" />
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="User#firstLoginPG" />
 
-		<execute macro="Page#tearDownPG" />
+				<execute macro="Site#tearDownCP" />
 
-		<execute macro="WebContent#tearDownCP">
-			<var name="siteScopeName" value="Global" />
-		</execute>
+				<execute macro="Page#tearDownPG" />
 
-		<execute macro="WebContentTemplates#tearDownCP">
-			<var name="siteScopeName" value="Global" />
-		</execute>
+				<execute macro="WebContent#tearDownCP">
+					<var name="siteScopeName" value="Global" />
+				</execute>
 
-		<execute macro="WebContentStructures#tearDownCP">
-			<var name="siteScopeName" value="Global" />
-		</execute>
+				<execute macro="WebContentTemplates#tearDownCP">
+					<var name="siteScopeName" value="Global" />
+				</execute>
+
+				<execute macro="WebContentStructures#tearDownCP">
+					<var name="siteScopeName" value="Global" />
+				</execute>
+			</else>
+		</if>
 	</tear-down>
 
 	<command name="AddPageAndChildPageTranslations" priority="3">

@@ -6,6 +6,15 @@
 	<var name="portletName" value="Friends Directory" />
 
 	<set-up>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="SignIn#signInPortalInstanceSetUp" />
+			</then>
+		</if>
+
 		<execute macro="User#firstLoginPG" />
 
 		<execute macro="Page#addPG">
@@ -22,14 +31,24 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="User#tearDownCP" />
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
-		<execute macro="Page#tearDownPG" />
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="User#tearDownCP" />
 
-		<execute macro="Page#tearDownPG">
-			<var name="siteName" value="test" />
-			<var name="siteURL" value="true" />
-		</execute>
+				<execute macro="Page#tearDownPG" />
+
+				<execute macro="Page#tearDownPG">
+					<var name="siteName" value="test" />
+					<var name="siteURL" value="true" />
+				</execute>
+			</else>
+		</if>
 	</tear-down>
 
 	<command name="SearchFriendsDirectory" priority="3">

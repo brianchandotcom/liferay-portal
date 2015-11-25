@@ -85,13 +85,16 @@ userSearch.setResults(users);
 
 <liferay-util:include page="/info_message.jsp" servletContext="<%= application %>" />
 
-<aui:form action="<%= viewUsersURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
+<portlet:actionURL name="deleteGroupUsers" var="deleteUsersURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
+
+<aui:form action="<%= deleteUsersURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="tabs1" type="hidden" value="users" />
 	<aui:input name="assignmentsRedirect" type="hidden" />
 	<aui:input name="groupId" type="hidden" value="<%= String.valueOf(siteMembershipsDisplayContext.getGroupId()) %>" />
 	<aui:input name="p_u_i_d" type="hidden" />
 	<aui:input name="addUserIds" type="hidden" />
-	<aui:input name="removeUserIds" type="hidden" />
 	<aui:input name="addRoleIds" type="hidden" />
 	<aui:input name="removeRoleIds" type="hidden" />
 
@@ -137,13 +140,7 @@ userSearch.setResults(users);
 		'click',
 		function() {
 			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-				<portlet:actionURL name="editGroupUsers" var="deleteUsersURL">
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-				</portlet:actionURL>
-
-				form.fm('removeUserIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-
-				submitForm(form, '<%= deleteUsersURL %>');
+				submitForm(form);
 			}
 		}
 	);
@@ -196,7 +193,7 @@ userSearch.setResults(users);
 							if (selectedItem) {
 								form.fm('addUserIds').val(selectedItem.addUserIds);
 
-								submitForm(form, '<portlet:actionURL name="editGroupUsers" />');
+								submitForm(form, '<portlet:actionURL name="addGroupUsers" />');
 							}
 						}
 					},

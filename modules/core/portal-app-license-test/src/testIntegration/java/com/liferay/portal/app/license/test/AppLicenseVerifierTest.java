@@ -106,30 +106,25 @@ public class AppLicenseVerifierTest {
 	}
 
 	@Test
-	public void testVerifyPass() {
-		try {
-			Filter filter = FrameworkUtil.createFilter("(version=1.0.1)");
+	public void testVerifyPass() throws Exception {
+		Filter filter = FrameworkUtil.createFilter("(version=1.0.1)");
 
-			Map<ServiceReference<AppLicenseVerifier>, AppLicenseVerifier>
-				serviceReferences = _serviceTracker.getTracked();
+		Map<ServiceReference<AppLicenseVerifier>, AppLicenseVerifier>
+			serviceReferences = _serviceTracker.getTracked();
 
-			for (ServiceReference serviceReference :
-					serviceReferences.keySet()) {
+		for (ServiceReference serviceReference :
+				serviceReferences.keySet()) {
 
-				if (!filter.match(serviceReference)) {
-					continue;
-				}
-
-				AppLicenseVerifier appLicenseVerifier = serviceReferences.get(
-					serviceReference);
-
-				appLicenseVerifier.verify(bundle, "", "", "");
-
-				break;
+			if (!filter.match(serviceReference)) {
+				continue;
 			}
-		}
-		catch (Exception e) {
-			Assert.fail();
+
+			AppLicenseVerifier appLicenseVerifier = serviceReferences.get(
+				serviceReference);
+
+			appLicenseVerifier.verify(bundle, "", "", "");
+
+			break;
 		}
 	}
 

@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Staging Lang
+Bundle-SymbolicName: com.liferay.staging.lang
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.staging.lang
+Include-Resource:\
+	classes

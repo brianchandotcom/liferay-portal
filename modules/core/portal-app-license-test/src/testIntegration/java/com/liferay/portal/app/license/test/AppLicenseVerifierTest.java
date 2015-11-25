@@ -18,7 +18,6 @@ import com.liferay.portal.app.license.AppLicenseVerifier;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
-import java.util.SortedMap;
 import java.util.Map;
 
 import org.jboss.arquillian.junit.Arquillian;
@@ -114,7 +113,9 @@ public class AppLicenseVerifierTest {
 			Map<ServiceReference<AppLicenseVerifier>, AppLicenseVerifier>
 				serviceReferences = _serviceTracker.getTracked();
 
-			for (ServiceReference serviceReference : serviceReferences.keySet()) {
+			for (ServiceReference serviceReference :
+					serviceReferences.keySet()) {
+
 				if (!filter.match(serviceReference)) {
 					continue;
 				}

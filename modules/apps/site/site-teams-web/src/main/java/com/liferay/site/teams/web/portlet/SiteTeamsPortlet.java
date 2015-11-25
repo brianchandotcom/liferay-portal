@@ -81,11 +81,8 @@ public class SiteTeamsPortlet extends MVCPortlet {
 
 		long[] addUserGroupIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "addUserGroupIds"), 0L);
-		long[] removeUserGroupIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "removeUserGroupIds"), 0L);
 
 		_userGroupService.addTeamUserGroups(teamId, addUserGroupIds);
-		_userGroupService.unsetTeamUserGroups(teamId, removeUserGroupIds);
 
 		String redirect = ParamUtil.getString(
 			actionRequest, "assignmentsRedirect");
@@ -119,12 +116,9 @@ public class SiteTeamsPortlet extends MVCPortlet {
 
 		long teamId = ParamUtil.getLong(actionRequest, "teamId");
 
-		long[] addUserGroupIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "addUserGroupIds"), 0L);
 		long[] removeUserGroupIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "removeUserGroupIds"), 0L);
 
-		_userGroupService.addTeamUserGroups(teamId, addUserGroupIds);
 		_userGroupService.unsetTeamUserGroups(teamId, removeUserGroupIds);
 
 		String redirect = ParamUtil.getString(

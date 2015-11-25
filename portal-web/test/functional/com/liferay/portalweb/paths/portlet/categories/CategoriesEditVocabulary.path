@@ -14,7 +14,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ALLOW_MULTIPLE_CATEGORIES_CHECKBOX</td>
+	<td>ALLOW_MULTIPLE_CATEGORIES_TOGGLE_SWITCH</td>
 	<td>//input[contains(@id,'multiValued')]</td>
 	<td></td>
 </tr>

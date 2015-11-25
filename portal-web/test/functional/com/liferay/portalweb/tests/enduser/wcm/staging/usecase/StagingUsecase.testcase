@@ -1084,9 +1084,9 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoMetadataSetsPG" />
+		<execute macro="DMNavigator#gotoMetadataSets" />
 
-		<execute macro="DMMetadataSet#addPG">
+		<execute macro="DMMetadataSet#add">
 			<var name="dmMetadataSetFieldNames" value="Text,Number" />
 			<var name="metadataSetName" value="DM Metadata Set Name" />
 		</execute>
@@ -1097,9 +1097,9 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoDocumentTypePG" />
+		<execute macro="DMNavigator#gotoDocumentType" />
 
-		<execute macro="DMDocumentType#addPG">
+		<execute macro="DMDocumentType#add">
 			<var name="dmDocumentTypeDescription" value="DM Document Type Description" />
 			<var name="dmDocumentTypeFieldNames" value="Boolean" />
 			<var name="dmDocumentTypeName" value="DM Document Type Name" />

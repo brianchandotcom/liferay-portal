@@ -405,7 +405,7 @@
 </tr>
 <tr>
 	<td>METADATA_SETS</td>
-	<td>//li[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Metadata Sets')]</td>
+	<td>//a[@role='menuitem']//span[contains(.,'Metadata Sets')]</td>
 	<td></td>
 </tr>
 <tr>

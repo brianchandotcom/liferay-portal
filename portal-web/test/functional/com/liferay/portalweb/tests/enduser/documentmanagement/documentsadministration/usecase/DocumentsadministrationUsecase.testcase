@@ -24,53 +24,43 @@
 	</tear-down>
 
 	<command name="AddAndRemoveMetadataSets" priority="4">
-		<execute macro="Page#addPG">
-			<var name="pageName" value="Documents and Media Page" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Documents and Media Page" />
-		</execute>
+		<execute macro="DMNavigator#gotoMetadataSets" />
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute macro="Portlet#dragAndDropPortletToColumnPG">
-			<var name="columnNumberFrom" value="1" />
-			<var name="columnNumberTo" value="2" />
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoMetadataSetsCP" />
-
-		<execute macro="DMMetadataSet#addPG">
+		<execute macro="DMMetadataSet#add">
 			<var name="dmMetadataSetFieldNames" value="Text Box" />
 			<var name="metadataSetName" value="DM Metadata Set Name" />
 		</execute>
 
 		<execute macro="DMMetadataSet#save" />
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Documents and Media Page" />
+		<execute function="SelectFrameTop" value1="relative=top" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoDocumentTypePG" />
+		<execute macro="DMNavigator#gotoDocumentType" />
 
-		<execute macro="DMDocumentType#addPG">
+		<execute macro="DMDocumentType#add">
 			<var name="dmDocumentTypeDescription" value="DM Document Type Description" />
 			<var name="dmDocumentTypeFieldNames" value="Text Box" />
 			<var name="dmDocumentTypeName" value="DM Document Type Name" />
 			<var name="metadataSetName" value="DM Metadata Set Name" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Documents and Media Page" />
+		<execute function="SelectFrameTop" value1="relative=top" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoDocumentTypePG" />
+		<execute macro="DMNavigator#gotoDocumentType" />
 
-		<execute macro="DMDocumentType#editPG">
+		<execute macro="DMDocumentType#edit">
 			<var name="dmDocumentTypeName" value="DM Document Type Name" />
 			<var name="metadataSetName" value="DM Metadata Set Name" />
 			<var name="removeMetadataSet" value="true" />
@@ -770,9 +760,9 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoDocumentTypePG" />
+		<execute macro="DMNavigator#gotoDocumentType" />
 
-		<execute macro="DMDocumentType#addPG">
+		<execute macro="DMDocumentType#add">
 			<var name="dmDocumentTypeDescription" value="Images" />
 			<var name="dmDocumentTypeFieldNames" value="Text Box,Date" />
 			<var name="dmDocumentTypeName" value="Photos" />
@@ -930,9 +920,9 @@
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoDocumentTypePG" />
+		<execute macro="DMNavigator#gotoDocumentType" />
 
-		<execute macro="DMDocumentType#editPG">
+		<execute macro="DMDocumentType#edit">
 			<var name="dmDocumentTypeFieldNames" value="Radio" />
 			<var name="dmDocumentTypeName" value="Photos" />
 		</execute>

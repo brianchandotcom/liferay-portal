@@ -24,22 +24,12 @@
 		<execute function="AssertClick" locator1="MenuItem#DOCUMENT_TYPES" value1="Document Types" />
 	</command>
 
-	<command name="gotoDocumentTypePG">
-		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="Toolbar#MANAGE" value1="Manage" />
-		<execute function="AssertClick" locator1="MenuItem#DOCUMENT_TYPES" value1="Document Types" />
-	</command>
-
 	<command name="gotoHomeCP">
 		<execute function="AssertClick#assertTextClickAtAndWait" locator1="DocumentsAndMedia#BREADCRUMB_HOME" value1="HOME" />
 	</command>
 
-	<command name="gotoMetadataSetsCP">
-		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="DocumentsAndMedia#TOOLBAR_MANAGE" value1="Manage" />
-		<execute function="AssertClick" locator1="MenuItem#METADATA_SETS" value1="Metadata Sets" />
-	</command>
-
-	<command name="gotoMetadataSetsPG">
-		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="Toolbar#MANAGE" value1="Manage" />
+	<command name="gotoMetadataSets">
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#METADATA_SETS" value1="Metadata Sets" />
 	</command>
 

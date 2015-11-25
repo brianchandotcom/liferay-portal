@@ -221,7 +221,7 @@
 			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMDocumentType#addCP">
+		<execute macro="DMDocumentType#add">
 			<var name="dmDocumentTypeDescription" value="DM Document Type Description" />
 			<var name="dmDocumentTypeFieldNames" value="Text" />
 			<var name="dmDocumentTypeName" value="DM Document Type Name" />
@@ -816,7 +816,7 @@
 			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMDocumentType#addCP">
+		<execute macro="DMDocumentType#add">
 			<var name="dmDocumentTypeDescription" value="DM Document Type Description" />
 			<var name="dmDocumentTypeFieldNames" value="Text" />
 			<var name="dmDocumentTypeName" value="DM Document Type Name" />

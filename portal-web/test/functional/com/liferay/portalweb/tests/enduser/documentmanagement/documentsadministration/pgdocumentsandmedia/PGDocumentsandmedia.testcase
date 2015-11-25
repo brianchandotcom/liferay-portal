@@ -220,85 +220,93 @@
 	</command>
 
 	<command name="AddDocumentType" priority="4">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoDocumentTypePG" />
+		<execute macro="DMNavigator#gotoDocumentType" />
 
-		<execute macro="DMDocumentType#addPG">
+		<execute macro="DMDocumentType#add">
 			<var name="dmDocumentTypeDescription" value="DM Document Type Description" />
 			<var name="dmDocumentTypeFieldNames" value="Text Box" />
 			<var name="dmDocumentTypeName" value="DM Document Type Name" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+		<execute function="SelectFrameTop" value1="relative=top" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMDocumentType#viewPGAddMenulist">
+		<execute macro="DMDocumentType#viewMenulistOption">
 			<var name="dmDocumentTypeName" value="DM Document Type Name" />
 		</execute>
 	</command>
 
 	<command name="AddDocumentTypes" priority="4">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoDocumentTypePG" />
+		<execute macro="DMNavigator#gotoDocumentType" />
 
-		<execute macro="DMDocumentType#addPG">
+		<execute macro="DMDocumentType#add">
 			<var name="dmDocumentTypeDescription" value="DM Document Type 1 Description" />
 			<var name="dmDocumentTypeFieldNames" value="Text Box" />
 			<var name="dmDocumentTypeName" value="DM Document Type 1 Name" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+		<execute function="SelectFrameTop" value1="relative=top" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMDocumentType#viewPGAddMenulist">
+		<execute macro="DMDocumentType#viewMenulistOption">
 			<var name="dmDocumentTypeName" value="DM Document Type 1 Name" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoDocumentTypePG" />
+		<execute macro="DMNavigator#gotoDocumentType" />
 
-		<execute macro="DMDocumentType#addPG">
+		<execute macro="DMDocumentType#add">
 			<var name="dmDocumentTypeDescription" value="DM Document Type 2 Description" />
 			<var name="dmDocumentTypeFieldNames" value="Text Box" />
 			<var name="dmDocumentTypeName" value="DM Document Type 2 Name" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+		<execute function="SelectFrameTop" value1="relative=top" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMDocumentType#viewPGAddMenulist">
+		<execute macro="DMDocumentType#viewMenulistOption">
 			<var name="dmDocumentTypeName" value="DM Document Type 2 Name" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoDocumentTypePG" />
+		<execute macro="DMNavigator#gotoDocumentType" />
 
-		<execute macro="DMDocumentType#addPG">
+		<execute macro="DMDocumentType#add">
 			<var name="dmDocumentTypeDescription" value="DM Document Type 3 Description" />
 			<var name="dmDocumentTypeFieldNames" value="Text Box" />
 			<var name="dmDocumentTypeName" value="DM Document Type 3 Name" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+		<execute function="SelectFrameTop" value1="relative=top" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMDocumentType#viewPGAddMenulist">
+		<execute macro="DMDocumentType#viewMenulistOption">
 			<var name="dmDocumentTypeName" value="DM Document Type 3 Name" />
 		</execute>
 	</command>
@@ -839,31 +847,33 @@
 	</command>
 
 	<command name="DeleteDocumentType" priority="4">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoDocumentTypePG" />
+		<execute macro="DMNavigator#gotoDocumentType" />
 
-		<execute macro="DMDocumentType#addPG">
+		<execute macro="DMDocumentType#add">
 			<var name="dmDocumentTypeDescription" value="DM Document Type Description" />
 			<var name="dmDocumentTypeFieldNames" value="Text Box" />
 			<var name="dmDocumentTypeName" value="DM Document Type Name" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+		<execute function="SelectFrameTop" value1="relative=top" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMDocumentType#viewPGAddMenulist">
+		<execute macro="DMDocumentType#viewMenulistOption">
 			<var name="dmDocumentTypeName" value="DM Document Type Name" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoDocumentTypePG" />
+		<execute macro="DMNavigator#gotoDocumentType" />
 
 		<execute macro="DMDocumentType#deletePG">
 			<var name="dmDocumentTypeName" value="DM Document Type Name" />
@@ -1065,43 +1075,47 @@
 	</command>
 
 	<command name="EditDocumentType" priority="5">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoDocumentTypePG" />
+		<execute macro="DMNavigator#gotoDocumentType" />
 
-		<execute macro="DMDocumentType#addPG">
+		<execute macro="DMDocumentType#add">
 			<var name="dmDocumentTypeDescription" value="DM Document Type Description" />
 			<var name="dmDocumentTypeFieldNames" value="Text Box" />
 			<var name="dmDocumentTypeName" value="DM Document Type Name" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+		<execute function="SelectFrameTop" value1="relative=top" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMDocumentType#viewPGAddMenulist">
+		<execute macro="DMDocumentType#viewMenulistOption">
 			<var name="dmDocumentTypeName" value="DM Document Type Name" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoDocumentTypePG" />
+		<execute macro="DMNavigator#gotoDocumentType" />
 
-		<execute macro="DMDocumentType#editPG">
+		<execute macro="DMDocumentType#edit">
 			<var name="dmDocumentTypeDescriptionEdit" value="DM Document Type Description Edit" />
 			<var name="dmDocumentTypeName" value="DM Document Type Name" />
 			<var name="dmDocumentTypeNameEdit" value="DM Document Type Name Edit" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+		<execute function="SelectFrameTop" value1="relative=top" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMDocumentType#viewPGAddMenulist">
+		<execute macro="DMDocumentType#viewMenulistOption">
 			<var name="dmDocumentTypeName" value="DM Document Type Name Edit" />
 		</execute>
 	</command>

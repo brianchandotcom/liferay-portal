@@ -1,4 +1,20 @@
 <definition>
+	<command name="add">
+		<execute macro="DMMetadataSet#selectMetadataSetsFrame" />
+
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="Type" locator1="TextInput#NAME" value1="${metadataSetName}" />
+
+		<for list="${dmMetadataSetFieldNames}" param="dmMetadataSetFieldName">
+			<execute macro="DMMetadataSet#addField">
+				<var name="field" value="${dmMetadataSetFieldName}" />
+				<var name="fieldFieldLabel" value="${dmMetadataSetFieldName}" />
+				<var method="StringUtil#replace('${dmMetadataSetFieldName}', ' ', '')" name="fieldName" />
+			</execute>
+		</for>
+	</command>
+
 	<command name="addField">
 		<var name="key_field" value="${field}" />
 
@@ -18,22 +34,6 @@
 		<execute function="AssertTextEquals" locator1="DDMEditStructure#SETTINGS_NAME" value1="${fieldName}" />
 		<execute function="AssertClick" locator1="DDMEditStructure#FIELDS_LINK" value1="Fields" />
 		<execute function="Click" locator1="TextInput#NAME" />
-	</command>
-
-	<command name="addPG">
-		<execute macro="DMMetadataSet#selectMetadataSetsFrame" />
-
-		<execute function="Click" locator1="Button#PLUS" />
-
-		<execute function="Type" locator1="TextInput#NAME" value1="${metadataSetName}" />
-
-		<for list="${dmMetadataSetFieldNames}" param="dmMetadataSetFieldName">
-			<execute macro="DMMetadataSet#addField">
-				<var name="field" value="${dmMetadataSetFieldName}" />
-				<var name="fieldFieldLabel" value="${dmMetadataSetFieldName}" />
-				<var method="StringUtil#replace('${dmMetadataSetFieldName}', ' ', '')" name="fieldName" />
-			</execute>
-		</for>
 	</command>
 
 	<command name="deletePG">
@@ -96,7 +96,7 @@
 			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoMetadataSetsCP" />
+		<execute macro="DMNavigator#gotoMetadataSets" />
 
 		<execute macro="DMMetadataSet#selectMetadataSetsFrame" />
 

@@ -77,8 +77,11 @@ public abstract class BaseAppDisplay implements AppDisplay {
 	public boolean hasModuleGroups() {
 		List<ModuleGroupDisplay> moduleGroupDisplays = getModuleGroupDisplays();
 
-		if (moduleGroupDisplays.size() > 1) {
+		if (moduleGroupDisplays.isEmpty()) {
 			return false;
+		}
+		else if (moduleGroupDisplays.size() > 1) {
+			return true;
 		}
 
 		ModuleGroupDisplay moduleGroupDisplay = moduleGroupDisplays.get(0);

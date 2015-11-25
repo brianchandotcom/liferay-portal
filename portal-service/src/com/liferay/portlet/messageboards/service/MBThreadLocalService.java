@@ -482,7 +482,7 @@ public interface MBThreadLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public com.liferay.portlet.messageboards.model.MBThread splitThread(
-		long messageId, java.lang.String subject,
+		long userId, long messageId, java.lang.String subject,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 

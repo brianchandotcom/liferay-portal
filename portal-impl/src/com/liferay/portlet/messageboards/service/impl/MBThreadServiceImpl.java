@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.messageboards.LockedThreadException;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
@@ -382,14 +383,19 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 			long messageId, String subject, ServiceContext serviceContext)
 		throws PortalException {
 
+		PermissionChecker permissionChecker = getPermissionChecker();
+
 		MBMessage message = mbMessageLocalService.getMessage(messageId);
 
 		MBCategoryPermission.check(
-			getPermissionChecker(), message.getGroupId(),
-			message.getCategoryId(), ActionKeys.MOVE_THREAD);
+			permissionChecker, message.getGroupId(), message.getCategoryId(),
+			ActionKeys.MOVE_THREAD);
+
+		MBMessagePermission.check(
+			permissionChecker, messageId, ActionKeys.VIEW);
 
 		return mbThreadLocalService.splitThread(
-			messageId, subject, serviceContext);
+			getGuestOrUserId(), messageId, subject, serviceContext);
 	}
 
 	@Override

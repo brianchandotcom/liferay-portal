@@ -1087,7 +1087,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 	@Override
 	public MBThread splitThread(
-			long messageId, String subject, ServiceContext serviceContext)
+			long userId, long messageId, String subject,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
@@ -1116,8 +1117,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		if (Validator.isNotNull(subject)) {
 			MBMessageDisplay messageDisplay =
-				mbMessageService.getMessageDisplay(
-					messageId, WorkflowConstants.STATUS_ANY,
+				mbMessageLocalService.getMessageDisplay(
+					userId, messageId, WorkflowConstants.STATUS_ANY,
 					MBThreadConstants.THREAD_VIEW_TREE, false);
 
 			MBTreeWalker treeWalker = messageDisplay.getTreeWalker();

@@ -33,7 +33,9 @@ page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.KeyValuePair" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.PrefsParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PropsUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
@@ -96,6 +98,14 @@ String currentURL = currentURLObj.toString();
 int pageDelta = GetterUtil.getInteger(portletPreferences.getValue("pageDelta", String.valueOf(SearchContainer.DEFAULT_DELTA)));
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(DateFormat.FULL, themeDisplay.getLocale(), themeDisplay.getTimeZone());
+
+Group scopeGroup = themeDisplay.getScopeGroup();
+
+boolean customizeAnnouncementsDisplayed = PrefsParamUtil.getBoolean(portletPreferences, request, "customizeAnnouncementsDisplayed", scopeGroup.isUser() ? false : true);
+String selectedScopeGroupIds = PrefsParamUtil.getString(portletPreferences, request, "selectedScopeGroupIds", String.valueOf(layout.getGroupId()));
+String selectedScopeOrganizationIds = PrefsParamUtil.getString(portletPreferences, request, "selectedScopeOrganizationIds", "");
+String selectedScopeRoleIds = PrefsParamUtil.getString(portletPreferences, request, "selectedScopeRoleIds", "");
+String selectedScopeUserGroupIds = PrefsParamUtil.getString(portletPreferences, request, "selectedScopeUserGroupIds", "");
 %>
 
 <%@ include file="/init-ext.jsp" %>

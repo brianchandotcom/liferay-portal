@@ -42,11 +42,9 @@ import org.osgi.util.tracker.ServiceTracker;
 public class AppResolverHook implements ResolverHook {
 
 	public AppResolverHook(
-		final Collection<BundleRevision> triggers,
 		final ServiceTracker<AppLicenseVerifier, AppLicenseVerifier>
 			serviceTracker) {
 
-		_triggers = triggers;
 		_serviceTracker = serviceTracker;
 	}
 
@@ -152,6 +150,5 @@ public class AppResolverHook implements ResolverHook {
 
 	private final ServiceTracker<AppLicenseVerifier, AppLicenseVerifier>
 		_serviceTracker;
-	private final Collection<BundleRevision> _triggers;
 
 }

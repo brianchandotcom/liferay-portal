@@ -297,8 +297,7 @@
 
 		<var name="key_dmFolderName" value="DM Folder Name" />
 
-		<execute function="Click" locator1="DocumentsAndMedia#ICON_FOLDER_ACTIONS" />
-		<execute function="AssertElementNotPresent#assertNotVisible" locator1="MenuItem#DELETE" value1="Delete" />
+		<execute function="AssertElementNotPresent" locator1="DocumentsAndMedia#ICON_FOLDER_CHECKBOX" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
@@ -362,8 +361,7 @@
 
 		<var name="key_dmFolderName" value="DM Folder Name" />
 
-		<execute function="Click" locator1="DocumentsAndMedia#ICON_FOLDER_ACTIONS" />
-		<execute function="AssertElementNotPresent#assertNotVisible" locator1="MenuItem#DELETE" value1="Delete" />
+		<execute function="AssertElementNotPresent" locator1="DocumentsAndMedia#ICON_FOLDER_CHECKBOX" />
 	</command>
 
 	<command name="ViewDMFolderGuestInline" priority="4">

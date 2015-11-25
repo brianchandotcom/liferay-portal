@@ -152,7 +152,7 @@
 		<var name="key_ddlTemplateName" value="${templateName}" />
 
 		<execute function="Type" locator1="DDMSelectTemplate#TOOLBAR_SEARCH_FIELD" value1="${templateName}" />
-		<execute function="AssertClick" locator1="DDMSelectTemplate#TOOLBAR_SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 		<execute function="Click" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ELLIPSIS" />
 		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
@@ -161,7 +161,7 @@
 			<equals arg1="${webContentHasReference}" arg2="true" />
 			<then>
 				<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
-				<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Required templates could not be deleted. They are referenced by web content." />
+				<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="The template cannot be deleted because it is required by one or more template links." />
 			</then>
 			<else>
 				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />

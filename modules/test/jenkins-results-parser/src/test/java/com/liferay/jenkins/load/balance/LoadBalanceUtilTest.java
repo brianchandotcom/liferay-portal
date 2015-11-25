@@ -46,7 +46,7 @@ public class LoadBalanceUtilTest extends BaseJenkinsResultsParserTestCase {
 
 	@Test
 	public void testGetMostAvailableMasterURL() throws Exception {
-		LoadBalanceUtil.coolDownPeriod = 0;
+		LoadBalanceUtil.recentJobsPeriod = 10;
 		assertSamples();
 	}
 
@@ -82,6 +82,7 @@ public class LoadBalanceUtilTest extends BaseJenkinsResultsParserTestCase {
 		project.setProperty("jenkins.local.url[test-3-1]", "http://test-3-1");
 		project.setProperty("jenkins.local.url[test-3-2]", "http://test-3-2");
 		project.setProperty("jenkins.local.url[test-3-3]", "http://test-3-3");
+		project.setProperty("invoked.batch.size", "2");
 
 		return project;
 	}

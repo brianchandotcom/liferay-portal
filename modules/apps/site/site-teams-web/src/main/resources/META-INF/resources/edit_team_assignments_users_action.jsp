@@ -24,10 +24,10 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 User user2 = (User)row.getObject();
 %>
 
-<portlet:actionURL name="editTeamUsers" var="deleteURL">
+<portlet:actionURL name="deleteTeamUsers" var="deleteURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="teamId" value="<%= String.valueOf(teamId) %>" />
-	<portlet:param name="removeUserIds" value="<%= String.valueOf(user2.getUserId()) %>" />
+	<portlet:param name="removeUserId" value="<%= String.valueOf(user2.getUserId()) %>" />
 </portlet:actionURL>
 
 <liferay-ui:icon

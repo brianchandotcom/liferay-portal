@@ -84,15 +84,14 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 	<aui:button cssClass="btn-lg btn-primary" id="addUsers" value="add-team-members" />
 </aui:button-row>
 
-<portlet:actionURL name="editTeamUsers" var="editTeamUsersURL" />
+<portlet:actionURL name="deleteTeamUsers" var="deleteTeamUsersURL" />
 
-<aui:form action="<%= editTeamUsersURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<aui:form action="<%= deleteTeamUsersURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="assignmentsRedirect" type="hidden" />
 	<aui:input name="teamId" type="hidden" value="<%= String.valueOf(team.getTeamId()) %>" />
 	<aui:input name="addUserIds" type="hidden" />
-	<aui:input name="removeUserIds" type="hidden" />
 
 	<liferay-ui:search-container
 		emptyResultsMessage="there-are-no-members.-you-can-add-a-member-by-clicking-the-button-on-the-top-of-this-box"
@@ -144,11 +143,9 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 							var selectedItem = event.newVal;
 
 							if (selectedItem) {
-								var form = AUI.$(document.<portlet:namespace />fm);
-
 								form.fm('addUserIds').val(selectedItem.value);
 
-								submitForm(form);
+								submitForm(form, '<portlet:actionURL name="addTeamUsers" />');
 							}
 						}
 					},
@@ -165,8 +162,6 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 		'click',
 		function() {
 			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-				form.fm('removeUserIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-
 				submitForm(form);
 			}
 		}

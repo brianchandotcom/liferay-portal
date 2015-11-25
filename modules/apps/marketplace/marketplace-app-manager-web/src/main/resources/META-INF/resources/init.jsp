@@ -19,6 +19,7 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
@@ -26,16 +27,23 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.marketplace.app.manager.web.constants.BundleStateConstants" %><%@
 page import="com.liferay.marketplace.app.manager.web.util.AppDisplay" %><%@
 page import="com.liferay.marketplace.app.manager.web.util.AppDisplayFactoryUtil" %><%@
+page import="com.liferay.marketplace.app.manager.web.util.MarketplaceAppManagerUtil" %><%@
 page import="com.liferay.marketplace.bundle.BundleManagerUtil" %><%@
 page import="com.liferay.marketplace.exception.FileExtensionException" %><%@
+page import="com.liferay.marketplace.model.App" %><%@
+page import="com.liferay.marketplace.service.AppLocalServiceUtil" %><%@
+page import="com.liferay.portal.kernel.dao.orm.QueryUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.upload.UploadException" %><%@
 page import="com.liferay.portal.kernel.util.HttpUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.service.CompanyLocalServiceUtil" %>
 
 <%@ page import="java.util.List" %>
+
+<%@ page import="javax.portlet.PortletURL" %>
 
 <%@ page import="org.osgi.framework.Bundle" %>
 

@@ -38,6 +38,11 @@ public class BundleStateConstants {
 		BundleStateConstants.INSTALLED
 	};
 
+	public static final String[] INSTALLED_STATES_LABEL = {
+		BundleStateConstants.ACTIVE_LABEL, BundleStateConstants.RESOLVED_LABEL,
+		BundleStateConstants.INSTALLED_LABEL
+	};
+
 	public static final int RESOLVED = Bundle.RESOLVED;
 
 	public static final String RESOLVED_LABEL = "resolved";
@@ -61,6 +66,24 @@ public class BundleStateConstants {
 		}
 		else {
 			return StringPool.BLANK;
+		}
+	}
+
+	public static int getState(String label) {
+		if (label.equals(ACTIVE_LABEL)) {
+			return ACTIVE;
+		}
+		else if (label.equals(INSTALLED_LABEL)) {
+			return INSTALLED;
+		}
+		else if (label.equals(RESOLVED_LABEL)) {
+			return RESOLVED;
+		}
+		else if (label.equals(UNINSTALLED_LABEL)) {
+			return UNINSTALLED;
+		}
+		else {
+			return 0;
 		}
 	}
 

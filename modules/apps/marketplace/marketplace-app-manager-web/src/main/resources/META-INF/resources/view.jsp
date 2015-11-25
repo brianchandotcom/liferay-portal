@@ -17,8 +17,19 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String category = ParamUtil.getString(request, "category");
-int state = ParamUtil.getInteger(request, "state");
+String category = ParamUtil.getString(request, "category", "all-categories");
+String state = ParamUtil.getString(request, "state", "all-statuses");
+
+String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
+List<App> apps = AppLocalServiceUtil.getApps(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+List<Bundle> bundles = BundleManagerUtil.getBundles();
+
+PortletURL portletURL = renderResponse.createRenderURL();
+
+portletURL.setParameter("category", category);
+portletURL.setParameter("state", state);
 %>
 
 <aui:nav-bar markupView="lexicon">
@@ -33,14 +44,51 @@ int state = ParamUtil.getInteger(request, "state");
 	</aui:nav>
 </aui:nav-bar>
 
+<liferay-frontend:management-bar
+	searchContainerId="appDisplays"
+>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"descriptive"} %>'
+			portletURL="<%= portletURL %>"
+			selectedDisplayStyle="descriptive"
+		/>
+	</liferay-frontend:management-bar-buttons>
+
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys="<%= MarketplaceAppManagerUtil.getCategories(apps, bundles) %>"
+			navigationParam="category"
+			portletURL="<%= portletURL %>"
+		/>
+
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all-statuses", BundleStateConstants.ACTIVE_LABEL, BundleStateConstants.RESOLVED_LABEL, BundleStateConstants.INSTALLED_LABEL} %>'
+			navigationParam="state"
+			portletURL="<%= portletURL %>"
+		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= orderByCol %>"
+			orderByType="<%= orderByType %>"
+			orderColumns='<%= new String[] {"title"} %>'
+			portletURL="<%= portletURL %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+</liferay-frontend:management-bar>
+
 <div class="container-fluid-1280">
-	<liferay-ui:search-container>
+	<liferay-ui:search-container
+		id="appDisplays"
+	>
 		<liferay-ui:search-container-results>
 
 			<%
-			List<Bundle> bundles = BundleManagerUtil.getBundles();
+			if (category.equals("all-categories")) {
+				category = StringPool.BLANK;
+			}
 
-			List<AppDisplay> appDisplays = AppDisplayFactoryUtil.getAppDisplays(bundles, category, state);
+			List<AppDisplay> appDisplays = AppDisplayFactoryUtil.getAppDisplays(bundles, category, BundleStateConstants.getState(state));
 
 			int end = searchContainer.getEnd();
 

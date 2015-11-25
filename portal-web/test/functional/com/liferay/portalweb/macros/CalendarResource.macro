@@ -85,9 +85,9 @@
 		<execute macro="CalendarNavigator#gotoResources" />
 
 		<while>
-			<condition function="IsElementPresent" locator1="CalendarResources#RESOURCE_TABLE_ACTIONS_GENERIC" />
+			<condition function="IsElementPresent" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 			<then>
-				<execute function="Click" locator1="CalendarResources#RESOURCE_TABLE_ACTIONS_GENERIC" />
+				<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 				<execute function="AssertClickNoError" locator1="CalendarResources#RESOURCE_MENULIST_DELETE" value1="Delete" />
 
 				<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to delete this? It will be deleted immediately." />
@@ -96,7 +96,7 @@
 		</while>
 
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No resources were found." />
-		<execute function="AssertElementNotPresent" locator1="CalendarResources#RESOURCE_TABLE_ACTIONS_GENERIC" />
+		<execute function="AssertElementNotPresent" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 	</command>
 
 	<command name="view">

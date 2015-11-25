@@ -41,12 +41,12 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_GENERAL_TAB</td>
-	<td>//ul[contains(@class,'nav nav-tabs')]/li/a[contains(.,'General')]</td>
+	<td>//ul[contains(@class,'nav navbar-nav')]/li/a/span[contains(.,'General')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_NOTIFICATION_TEMPLATES_TAB</td>
-	<td>//ul[contains(@class,'nav nav-tabs')]/li/a[contains(.,'Notification Templates')]</td>
+	<td>//ul[contains(@class,'nav navbar-nav')]/li/a/span[contains(.,'Notification Templates')]</td>
 	<td></td>
 </tr>
 <tr>

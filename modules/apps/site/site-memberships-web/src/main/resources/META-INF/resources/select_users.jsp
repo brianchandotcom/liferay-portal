@@ -30,7 +30,7 @@ viewUsersURL.setParameter("mvcPath", "/select_users.jsp");
 viewUsersURL.setParameter("groupId", String.valueOf(group.getGroupId()));
 viewUsersURL.setParameter("eventName", eventName);
 
-UserSiteMembershipsChecker rowChecker = new UserSiteMembershipsChecker(renderResponse, group);
+UserSiteMembershipChecker rowChecker = new UserSiteMembershipChecker(renderResponse, group);
 
 UserSearch userSearch = new UserSearch(renderRequest, PortletURLUtil.clone(viewUsersURL, renderResponse));
 

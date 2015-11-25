@@ -28,7 +28,7 @@ viewUserGroupsURL.setParameter("mvcPath", "/select_user_groups.jsp");
 viewUserGroupsURL.setParameter("groupId", String.valueOf(siteMembershipsDisplayContext.getGroupId()));
 viewUserGroupsURL.setParameter("eventName", eventName);
 
-UserGroupSiteMembershipsChecker rowChecker = new UserGroupSiteMembershipsChecker(renderResponse, siteMembershipsDisplayContext.getGroup());
+UserGroupSiteMembershipChecker rowChecker = new UserGroupSiteMembershipChecker(renderResponse, siteMembershipsDisplayContext.getGroup());
 
 UserGroupSearch userGroupSearch = new UserGroupSearch(renderRequest, PortletURLUtil.clone(viewUserGroupsURL, renderResponse));
 

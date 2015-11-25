@@ -28,7 +28,7 @@ viewOrganizationsURL.setParameter("mvcPath", "/select_organizations.jsp");
 viewOrganizationsURL.setParameter("groupId", String.valueOf(siteMembershipsDisplayContext.getGroupId()));
 viewOrganizationsURL.setParameter("eventName", eventName);
 
-OrganizationSiteMembershipsChecker rowChecker = new OrganizationSiteMembershipsChecker(renderResponse, siteMembershipsDisplayContext.getGroup());
+OrganizationSiteMembershipChecker rowChecker = new OrganizationSiteMembershipChecker(renderResponse, siteMembershipsDisplayContext.getGroup());
 
 OrganizationSearch organizationSearch = new OrganizationSearch(renderRequest, PortletURLUtil.clone(viewOrganizationsURL, renderResponse));
 

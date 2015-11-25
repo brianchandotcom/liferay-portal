@@ -27,9 +27,9 @@ import javax.portlet.RenderResponse;
 /**
  * @author Brian Wing Shun Chan
  */
-public class UserSiteMembershipsChecker extends EmptyOnClickRowChecker {
+public class UserSiteMembershipChecker extends EmptyOnClickRowChecker {
 
-	public UserSiteMembershipsChecker(
+	public UserSiteMembershipChecker(
 		RenderResponse renderResponse, Group group) {
 
 		super(renderResponse);
@@ -85,7 +85,7 @@ public class UserSiteMembershipsChecker extends EmptyOnClickRowChecker {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		UserSiteMembershipsChecker.class);
+		UserSiteMembershipChecker.class);
 
 	private final Group _group;
 

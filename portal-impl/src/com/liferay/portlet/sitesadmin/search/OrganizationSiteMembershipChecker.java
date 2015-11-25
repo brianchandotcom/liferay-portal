@@ -18,17 +18,17 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.UserGroup;
-import com.liferay.portal.service.UserGroupLocalServiceUtil;
+import com.liferay.portal.model.Organization;
+import com.liferay.portal.service.OrganizationLocalServiceUtil;
 
 import javax.portlet.RenderResponse;
 
 /**
  * @author Charles May
  */
-public class UserGroupSiteMembershipsChecker extends EmptyOnClickRowChecker {
+public class OrganizationSiteMembershipChecker extends EmptyOnClickRowChecker {
 
-	public UserGroupSiteMembershipsChecker(
+	public OrganizationSiteMembershipChecker(
 		RenderResponse renderResponse, Group group) {
 
 		super(renderResponse);
@@ -38,26 +38,37 @@ public class UserGroupSiteMembershipsChecker extends EmptyOnClickRowChecker {
 
 	@Override
 	public boolean isChecked(Object obj) {
-		UserGroup userGroup = (UserGroup)obj;
+		Organization organization = (Organization)obj;
 
 		try {
-			return UserGroupLocalServiceUtil.hasGroupUserGroup(
-				_group.getGroupId(), userGroup.getUserGroupId());
+			if (OrganizationLocalServiceUtil.hasGroupOrganization(
+					_group.getGroupId(), organization.getOrganizationId()) ||
+				(_group.getOrganizationId() ==
+					organization.getOrganizationId())) {
+
+				return true;
+			}
 		}
 		catch (Exception e) {
 			_log.error(e, e);
-
-			return false;
 		}
+
+		return false;
 	}
 
 	@Override
 	public boolean isDisabled(Object obj) {
+		Organization organization = (Organization)obj;
+
+		if (_group.getOrganizationId() == organization.getOrganizationId()) {
+			return true;
+		}
+
 		return isChecked(obj);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		UserGroupSiteMembershipsChecker.class);
+		OrganizationSiteMembershipChecker.class);
 
 	private final Group _group;
 

@@ -38,7 +38,7 @@ public class AppResolverHookFactory implements ResolverHookFactory {
 
 	@Override
 	public ResolverHook begin(final Collection<BundleRevision> triggers) {
-		return new AppResolverHook(triggers, _serviceTracker);
+		return new AppResolverHook(_serviceTracker);
 	}
 
 	public void close() {

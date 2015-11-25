@@ -19,7 +19,6 @@
 <%
 String cmd = GetterUtil.getString(request.getAttribute("liferay-staging:content:cmd"));
 boolean disableInputs = GetterUtil.getBoolean(request.getAttribute("liferay-staging:content:disableInputs"));
-PortletRequest renderRequest = (PortletRequest)request.getAttribute("liferay-staging:content:renderRequest");
 Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject(request.getAttribute("liferay-staging:content:parameterMap"), Collections.emptyMap());
 String type = GetterUtil.getString(request.getAttribute("liferay-staging:content:type"));
 

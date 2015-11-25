@@ -73,9 +73,9 @@
 			<var name="page" value="Public Pages" />
 		</execute>
 
-		<execute macro-mobile="MobileNavigator#clickReorderIcon" />
-
 		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
+
+		<execute macro-mobile="MobileNavigator#clickRemoveIcon" />
 
 		<execute function="Type#typeClickAt" locator1="TextInput#NAME" value1="${pageName}" />
 

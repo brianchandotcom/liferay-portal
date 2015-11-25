@@ -806,6 +806,12 @@
 		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_GENERIC_TITLE_3" value1="${assetTitle3}" />
 	</command>
 
+	<command name="viewMultipleDDLRecordsViaAP">
+		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DDL_RECORD_1" value1="${ddlRecordFieldData1}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DDL_RECORD_2" value1="${ddlRecordFieldData2}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DDL_RECORD_3" value1="${ddlRecordFieldData3}" />
+	</command>
+
 	<command name="viewMultipleSiteScopesAddDropdowns">
 		<var name="key_siteScope" value="${siteName1}" />
 

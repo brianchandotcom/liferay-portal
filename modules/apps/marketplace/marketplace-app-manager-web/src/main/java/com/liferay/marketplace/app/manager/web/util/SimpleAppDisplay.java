@@ -16,6 +16,9 @@ package com.liferay.marketplace.app.manager.web.util;
 
 import com.liferay.portal.kernel.util.StringPool;
 
+import javax.portlet.MimeResponse;
+import javax.portlet.PortletURL;
+
 import org.osgi.framework.Version;
 
 /**
@@ -37,6 +40,21 @@ public class SimpleAppDisplay extends BaseAppDisplay {
 
 	public String getDescription() {
 		return _description;
+	}
+
+	public String getDisplayURL(MimeResponse mimeResponse) {
+		PortletURL portletURL = mimeResponse.createRenderURL();
+
+		if (hasModuleGroups()) {
+			portletURL.setParameter("mvcPath", "view_module_groups.jsp");
+		}
+		else {
+			portletURL.setParameter("mvcPath", "view_modules.jsp");
+		}
+
+		portletURL.setParameter("app", _title);
+
+		return portletURL.toString();
 	}
 
 	public String getIconURL() {

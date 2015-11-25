@@ -125,8 +125,16 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 
 		long groupId = themeDisplay.getSiteGroupId();
 
-		long[] removeUserIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "removeUserIds"), 0L);
+		long[] removeUserIds = null;
+
+		long removeUserId = ParamUtil.getLong(actionRequest, "removeUserId");
+
+		if (removeUserId > 0) {
+			removeUserIds = new long[] {removeUserId};
+		}
+		else {
+			removeUserIds = ParamUtil.getLongValues(actionRequest, "rowIds");
+		}
 
 		removeUserIds = filterRemoveUserIds(groupId, removeUserIds);
 

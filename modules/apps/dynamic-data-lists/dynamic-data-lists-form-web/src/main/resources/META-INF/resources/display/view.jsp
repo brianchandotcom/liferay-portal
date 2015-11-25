@@ -81,7 +81,7 @@ if (recordSet != null) {
 			</c:when>
 			<c:otherwise>
 				<div class="alert alert-warning">
-					<liferay-ui:message key="this-form-has-been-unpublished" />
+					<liferay-ui:message key="this-form-not-available-or-it-was-not-published" />
 				</div>
 			</c:otherwise>
 		</c:choose>

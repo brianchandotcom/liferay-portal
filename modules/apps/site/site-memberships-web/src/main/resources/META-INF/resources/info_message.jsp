@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-Group group = (Group)request.getAttribute("edit_site_assignments.jsp-group");
+Group group = siteMembershipsDisplayContext.getGroup();
 %>
 
 <div class="alert alert-info container-fluid-1280 site-membership-type">

@@ -14,10 +14,9 @@
  */
 --%>
 
-<liferay-ui:search-container-row-parameter
-	name="group"
-	value="<%= group %>"
-/>
+<%
+Group group = siteMembershipsDisplayContext.getGroup();
+%>
 
 <liferay-util:buffer var="name">
 	<%= organization.getName() %>
@@ -31,7 +30,7 @@
 	<c:when test='<%= displayStyle.equals("icon") %>'>
 
 		<%
-		row.setCssClass("col-md-2 col-sm-4 col-xs-6 selectable");
+		row.setCssClass("col-md-2 col-sm-4 col-xs-6");
 		%>
 
 		<liferay-ui:search-container-column-text>
@@ -41,6 +40,7 @@
 				cssClass="entry-display-style"
 				icon="users"
 				resultRow="<%= row %>"
+				rowChecker="<%= rowChecker %>"
 				subtitle="<%= LanguageUtil.get(request, organization.getType()) %>"
 				title="<%= name %>"
 			/>

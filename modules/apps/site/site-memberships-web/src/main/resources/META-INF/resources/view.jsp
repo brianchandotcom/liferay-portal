@@ -17,164 +17,59 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = ParamUtil.getString(request, "tabs1", "summary");
-String tabs2 = ParamUtil.getString(request, "tabs2", "current");
-
-int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
-
-String redirect = ParamUtil.getString(request, "redirect");
-
-if (Validator.isNull(redirect)) {
-	PortletURL portletURL = renderResponse.createRenderURL();
-
-	redirect = portletURL.toString();
-}
-
-long groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getSiteGroupId());
-
-Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-if (group != null) {
-	group = StagingUtil.getLiveGroup(group.getGroupId());
-}
-
-User selUser = PortalUtil.getSelectedUser(request, false);
-
-long userGroupId = ParamUtil.getLong(request, "userGroupId");
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcPath", "/view.jsp");
-portletURL.setParameter("tabs1", tabs1);
-portletURL.setParameter("tabs2", tabs2);
-portletURL.setParameter("groupId", String.valueOf(group.getGroupId()));
-
-PortletURL tabsURL = renderResponse.createRenderURL();
-
-tabsURL.setParameter("mvcPath", "/view.jsp");
-tabsURL.setParameter("tabs1", tabs1);
-tabsURL.setParameter("tabs2", "current");
-
-request.setAttribute("edit_site_assignments.jsp-tabs1", tabs1);
-request.setAttribute("edit_site_assignments.jsp-tabs2", tabs2);
-
-request.setAttribute("edit_site_assignments.jsp-cur", cur);
-
-request.setAttribute("edit_site_assignments.jsp-redirect", redirect);
-
-request.setAttribute("edit_site_assignments.jsp-group", group);
-request.setAttribute("edit_site_assignments.jsp-selUser", selUser);
-
-request.setAttribute("edit_site_assignments.jsp-portletURL", portletURL);
+String tabs1 = siteMembershipsDisplayContext.getTabs1();
 %>
 
-<c:if test="<%= (selUser == null) && (userGroupId == 0) %>">
-	<c:if test='<%= tabs2.equals("available") %>'>
-		<liferay-ui:header
-			backURL="<%= redirect %>"
-			escapeXml="<%= false %>"
-			localizeTitle="<%= false %>"
-			title='<%= LanguageUtil.get(request, "add-members") + ": " + LanguageUtil.get(request, tabs1) %>'
-		/>
-	</c:if>
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
 
-	<c:if test='<%= tabs1.equals("summary") || tabs2.equals("current") %>'>
-		<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-			<aui:nav cssClass="navbar-nav">
+		<%
+		PortletURL usersURL = siteMembershipsDisplayContext.getPortletURL();
 
-				<%
-				PortletURL summaryURL = PortletURLUtil.clone(portletURL, renderResponse);
+		usersURL.setParameter("tabs1", "users");
+		%>
 
-				summaryURL.setParameter("tabs1", "summary");
-				%>
+		<aui:nav-item href="<%= usersURL.toString() %>" label="users" selected='<%= tabs1.equals("users") %>' />
 
-				<aui:nav-item href="<%= summaryURL.toString() %>" label="summary" selected='<%= tabs1.equals("summary") %>' />
+		<%
+		PortletURL organizationsURL = siteMembershipsDisplayContext.getPortletURL();
 
-				<%
-				PortletURL usersURL = PortletURLUtil.clone(portletURL, renderResponse);
+		organizationsURL.setParameter("tabs1", "organizations");
+		%>
 
-				usersURL.setParameter("tabs1", "users");
-				%>
+		<aui:nav-item href="<%= organizationsURL.toString() %>" label="organizations" selected='<%= tabs1.equals("organizations") %>' />
 
-				<aui:nav-item href="<%= usersURL.toString() %>" label="users" selected='<%= tabs1.equals("users") %>' />
+		<%
+		PortletURL userGroupsURL = siteMembershipsDisplayContext.getPortletURL();
 
-				<%
-				PortletURL organizationsURL = PortletURLUtil.clone(portletURL, renderResponse);
+		userGroupsURL.setParameter("tabs1", "user-groups");
+		%>
 
-				organizationsURL.setParameter("tabs1", "organizations");
-				%>
+		<aui:nav-item href="<%= userGroupsURL.toString() %>" label="user-groups" selected='<%= tabs1.equals("user-groups") %>' />
+	</aui:nav>
 
-				<aui:nav-item href="<%= organizationsURL.toString() %>" label="organizations" selected='<%= tabs1.equals("organizations") %>' />
-
-				<%
-				PortletURL userGroupsURL = PortletURLUtil.clone(portletURL, renderResponse);
-
-				userGroupsURL.setParameter("tabs1", "user-groups");
-				%>
-
-				<aui:nav-item href="<%= userGroupsURL.toString() %>" label="user-groups" selected='<%= tabs1.equals("user-groups") %>' />
-			</aui:nav>
-
-			<aui:nav-bar-search>
-				<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-					<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
-				</aui:form>
-			</aui:nav-bar-search>
-		</aui:nav-bar>
-	</c:if>
-</c:if>
+	<aui:nav-bar-search>
+		<aui:form action="<%= siteMembershipsDisplayContext.getPortletURL() %>" name="searchFm">
+			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
+		</aui:form>
+	</aui:nav-bar-search>
+</aui:nav-bar>
 
 <c:choose>
-	<c:when test='<%= tabs1.equals("summary") %>'>
-		<aui:input name="keywords" type="hidden" value="" />
-
-		<liferay-util:include page="/info_message.jsp" servletContext="<%= application %>" />
-
-		<liferay-util:include page="/users.jsp" servletContext="<%= application %>" />
-
-		<liferay-util:include page="/organizations.jsp" servletContext="<%= application %>" />
-
-		<liferay-util:include page="/user_groups.jsp" servletContext="<%= application %>" />
-	</c:when>
 	<c:when test='<%= tabs1.equals("users") %>'>
-		<c:choose>
-			<c:when test='<%= (selUser == null) && tabs2.equals("current") %>'>
-				<liferay-util:include page="/users.jsp" servletContext="<%= application %>" />
-			</c:when>
-			<c:when test='<%= (selUser == null) && tabs2.equals("available") %>'>
-				<liferay-util:include page="/select_users.jsp" servletContext="<%= application %>" />
-			</c:when>
-			<c:otherwise>
-				<liferay-util:include page="/users_roles.jsp" servletContext="<%= application %>" />
-			</c:otherwise>
-		</c:choose>
+		<liferay-util:include page="/users.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:when test='<%= tabs1.equals("organizations") %>'>
-		<c:choose>
-			<c:when test='<%= tabs2.equals("current") %>'>
-				<liferay-util:include page="/organizations.jsp" servletContext="<%= application %>" />
-			</c:when>
-			<c:when test='<%= tabs2.equals("available") %>'>
-				<liferay-util:include page="/select_organizations.jsp" servletContext="<%= application %>" />
-			</c:when>
-		</c:choose>
+		<liferay-util:include page="/organizations.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:when test='<%= tabs1.equals("user-groups") %>'>
-		<c:choose>
-			<c:when test='<%= (userGroupId == 0) && tabs2.equals("current") %>'>
-				<liferay-util:include page="/user_groups.jsp" servletContext="<%= application %>" />
-			</c:when>
-			<c:when test='<%= (userGroupId == 0) && tabs2.equals("available") %>'>
-				<liferay-util:include page="/select_user_groups.jsp" servletContext="<%= application %>" />
-			</c:when>
-			<c:otherwise>
-				<liferay-util:include page="/user_groups_roles.jsp" servletContext="<%= application %>" />
-			</c:otherwise>
-		</c:choose>
+		<liferay-util:include page="/user_groups.jsp" servletContext="<%= application %>" />
 	</c:when>
 </c:choose>
 
 <%
+Group group = siteMembershipsDisplayContext.getGroup();
+
 PortalUtil.addPortletBreadcrumbEntry(request, group.getDescriptiveName(locale), null);
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "assign-members"), currentURL);
 %>

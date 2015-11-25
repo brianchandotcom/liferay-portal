@@ -39,8 +39,11 @@
 				<execute function="AssertTextEquals" locator1="Message#INFO" value1="No users were found." />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="SiteTeamsAssignMembers#USER_CARD_SCREEN_NAME" value1="${userScreenName}" />
-				<execute function="Check" locator1="SiteTeamsAssignMembers#USER_CARD_CHECKBOX" />
+				<var name="key_cardText" value="${userScreenName}" />
+
+				<execute function="AssertTextEquals" locator1="Card#SPECIFIC_TEXT" value1="${userScreenName}" />
+
+				<execute function="Check" locator1="Card#SPECIFIC_CHECKBOX" />
 
 				<execute function="SelectFrameTop" />
 
@@ -48,7 +51,7 @@
 
 				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
-				<execute function="AssertElementPresent" locator1="SiteTeamsAssignMembers#USER_CARD_NAME" />
+				<execute function="AssertElementPresent" locator1="Card#SPECIFIC_LARGE_TEXT" />
 			</else>
 		</if>
 	</command>
@@ -66,13 +69,13 @@
 
 		<execute function="AssertClick" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />
 
-		<execute function="AssertClick" locator1="SiteTeamsAssignMembers#USER_GROUPS" value1="User Groups" />
+		<execute function="AssertClick" locator1="NavBar#USER_GROUPS" value1="User Groups" />
 
 		<execute function="Pause" locator1="5000" />
 
 		<execute function="AssertClick" locator1="SiteTeamsAssignMembers#AVAILABLE" value1="Available" />
 
-		<var name="key_userGroupName" value="${userGroupName}" />
+		<var name="key_cardText" value="${userGroupName}" />
 
 		<if>
 			<equals arg1="${userGroupsNameIsNotAvailable}" arg2="true" />
@@ -80,12 +83,12 @@
 				<execute function="AssertTextNotPresent" locator1="SiteTeamsAssignMembers#USER_GROUPS_TABLE_NAME" value1="${userGroupName}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="SiteTeamsAssignMembers#USER_GROUPS_TABLE_NAME" value1="${userGroupName}" />
-				<execute function="Check" locator1="SiteTeamsAssignMembers#USER_GROUPS_TABLE_CHECKBOX" />
+				<execute function="AssertTextEquals" locator1="Card#SPECIFIC_SMALL_TEXT" value1="${userGroupName}" />
+				<execute function="Check" locator1="Card#SPECIFIC_CHECKBOX" />
 				<execute function="AssertClick" locator1="Button#UPDATE_ASSOCIATIONS" value1="Update Associations" />
 
 				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-				<execute function="AssertChecked" locator1="SiteTeamsAssignMembers#USER_GROUPS_TABLE_CHECKBOX" />
+				<execute function="AssertChecked" locator1="Card#SPECIFIC_CHECKBOX" />
 			</else>
 		</if>
 	</command>
@@ -166,12 +169,14 @@
 	</command>
 
 	<command name="viewMemberCP">
-		<var name="key_teamName" value="${teamName}" />
-		<var name="key_userScreenName" value="${userScreenName}" />
+		<var name="key_cardText" value="${userScreenName}" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="SiteMemberships#USER_TABLE_NAME" value1="${userFirstName} ${userLastName}" />
-		<execute function="AssertTextEquals" locator1="SiteMemberships#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-		<execute function="AssertTextEquals" locator1="SiteMemberships#USER_TABLE_SITE_ROLES_AND_TEAMS" value1="${teamName}" />
-		<execute function="AssertVisible" locator1="SiteMemberships#USER_TABLE_ACTIONS" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${userFirstName} ${userLastName}" />
+		<execute function="AssertTextEquals" locator1="Card#SPECIFIC_TEXT" value1="${userScreenName}" />
+		<execute function="AssertTextEquals" locator1="Card#SPECIFIC_SMALL_TEXT" value1="${teamName}" />
+
+		<var name="cardEntry" value="${key_cardText}" />
+
+		<execute function="AssertVisible" locator1="Icon#CARD_VERTICAL_ELLIPSIS" />
 	</command>
 </definition>

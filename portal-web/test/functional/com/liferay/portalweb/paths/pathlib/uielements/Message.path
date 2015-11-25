@@ -199,6 +199,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TOOLTIP</td>
+	<td>//div[contains(@class,'tooltip-content')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>UNIQUE_SUCCESS</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-success') and contains(.,'${key_uniqueSuccess}')]</td>
 	<td></td>

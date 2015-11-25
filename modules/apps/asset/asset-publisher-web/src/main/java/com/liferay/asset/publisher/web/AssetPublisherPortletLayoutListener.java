@@ -61,19 +61,19 @@ public class AssetPublisherPortletLayoutListener
 		try {
 			Layout layout = _layoutLocalService.getLayout(plid);
 
-			long userId = PortletKeys.PREFS_OWNER_ID_DEFAULT;
-			int ownerType = PortletKeys.PREFS_OWNER_TYPE_LAYOUT;
-
-			if (PortletConstants.hasUserId(portletId)) {
-				userId = PortletConstants.getUserId(portletId);
-				ownerType = PortletKeys.PREFS_OWNER_TYPE_USER;
-			}
-
 			if (AssetUtil.isDefaultAssetPublisher(
 					layout, portletId, StringPool.BLANK)) {
 
 				_journalArticleLocalService.deleteLayoutArticleReferences(
 					layout.getGroupId(), layout.getUuid());
+			}
+
+			int ownerType = PortletKeys.PREFS_OWNER_TYPE_LAYOUT;
+			long userId = PortletKeys.PREFS_OWNER_ID_DEFAULT;
+
+			if (PortletConstants.hasUserId(portletId)) {
+				ownerType = PortletKeys.PREFS_OWNER_TYPE_USER;
+				userId = PortletConstants.getUserId(portletId);
 			}
 
 			_subscriptionLocalService.deleteSubscriptions(

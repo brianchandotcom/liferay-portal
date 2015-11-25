@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
+import com.liferay.bookmarks.service.permission.BookmarksFolderPermissionChecker;
 import com.liferay.bookmarks.util.test.BookmarksTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -25,9 +26,21 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Role;
+import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.Subscription;
+import com.liferay.portal.model.User;
+import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.service.ResourceBlockServiceUtil;
+import com.liferay.portal.service.RoleLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -64,6 +77,36 @@ public class BookmarksFolderLocalServiceTest {
 		ServiceTestUtil.setUser(TestPropsValues.getUser());
 
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	public void testAddSubfolderPermission() throws Exception {
+		BookmarksFolder folder = BookmarksTestUtil.addFolder(
+			_group.getGroupId(), RandomTestUtil.randomString());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		String roleName = StringUtil.randomString();
+
+		Role role = RoleLocalServiceUtil.addRole(
+			TestPropsValues.getUserId(), null, 0, roleName, null, null,
+			RoleConstants.TYPE_SITE, null, serviceContext);
+
+		ResourceBlockServiceUtil.addCompanyScopePermission(
+			_group.getGroupId(), _group.getCompanyId(),
+			BookmarksFolder.class.getName(), role.getRoleId(),
+			ActionKeys.ADD_SUBFOLDER);
+
+		User user = UserTestUtil.addGroupUser(_group, roleName);
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		Assert.assertTrue(
+			BookmarksFolderPermissionChecker.contains(
+				permissionChecker, _group.getGroupId(), folder.getFolderId(),
+				ActionKeys.ADD_FOLDER));
 	}
 
 	@Test

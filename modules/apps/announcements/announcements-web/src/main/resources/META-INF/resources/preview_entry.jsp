@@ -21,4 +21,4 @@ request.setAttribute("view_entry.jsp-flagValue", AnnouncementsFlagConstants.NOT_
 request.setAttribute("view_entry.jsp-tabs1", "preview");
 %>
 
-<liferay-util:include page="/view_entry.jspf" servletContext="<%= application %>" />
+<liferay-util:include page="/view_entry.jsp" servletContext="<%= application %>" />

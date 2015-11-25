@@ -43,7 +43,7 @@ for (int i = 0; i < results.size(); i++) {
 	request.setAttribute("view_entry.jsp-tabs1", tabs1);
 %>
 
-	<liferay-util:include page="/view_entry.jspf" servletContext="<%= application %>" />
+	<liferay-util:include page="/view_entry.jsp" servletContext="<%= application %>" />
 
 <%
 }

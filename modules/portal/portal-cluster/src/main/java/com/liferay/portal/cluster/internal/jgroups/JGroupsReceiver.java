@@ -90,13 +90,23 @@ public class JGroupsReceiver extends ReceiverAdapter {
 			_log.info("Accepted view " + view);
 		}
 
-		List<Address> members = new ArrayList<>();
+		List<Address> addresses = new ArrayList<>();
+		Address coordinatorAddress = null;
 
-		for (org.jgroups.Address address : view.getMembers()) {
-			members.add(new AddressImpl(address));
+		List<org.jgroups.Address> jGroupsAddresses = view.getMembers();
+
+		for (int i = 0; i < jGroupsAddresses.size(); i++) {
+			Address address = new AddressImpl(jGroupsAddresses.get(i));
+
+			if (i == 0) {
+				coordinatorAddress = address;
+			}
+
+			addresses.add(address);
 		}
 
-		_clusterReceiver.addressesUpdated(members);
+		_clusterReceiver.addressesUpdated(addresses);
+		_clusterReceiver.coordinatorAddressUpdated(coordinatorAddress);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

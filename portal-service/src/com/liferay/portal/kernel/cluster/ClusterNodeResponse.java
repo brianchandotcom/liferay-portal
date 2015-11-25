@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.cluster;
 
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
@@ -30,7 +31,7 @@ public class ClusterNodeResponse implements Serializable {
 	}
 
 	public static ClusterNodeResponse createResultClusterNodeResponse(
-		ClusterNode clusterNode, String uuid, Object result) {
+		ClusterNode clusterNode, String uuid, Serializable result) {
 
 		if ((result != null) && !(result instanceof Serializable)) {
 			return new ClusterNodeResponse(
@@ -49,9 +50,9 @@ public class ClusterNodeResponse implements Serializable {
 		return _exception;
 	}
 
-	public Object getResult() throws Exception {
+	public Serializable getResult() {
 		if (_exception != null) {
-			throw _exception;
+			return ReflectionUtil.throwException(_exception);
 		}
 
 		return _result;
@@ -94,11 +95,11 @@ public class ClusterNodeResponse implements Serializable {
 	}
 
 	private ClusterNodeResponse(
-		ClusterNode clusterNode, String uuid, Object result,
+		ClusterNode clusterNode, String uuid, Serializable result,
 		Exception exception) {
 
 		if (clusterNode == null) {
-			throw new NullPointerException("ClusterNode is null");
+			throw new NullPointerException("Cluster node is null");
 		}
 
 		_clusterNode = clusterNode;
@@ -109,7 +110,7 @@ public class ClusterNodeResponse implements Serializable {
 
 	private final ClusterNode _clusterNode;
 	private final Exception _exception;
-	private final Object _result;
+	private final Serializable _result;
 	private final String _uuid;
 
 }

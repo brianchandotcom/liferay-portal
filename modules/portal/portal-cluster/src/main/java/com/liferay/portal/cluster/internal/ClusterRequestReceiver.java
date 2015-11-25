@@ -19,10 +19,10 @@ import com.liferay.portal.cluster.ClusterChannel;
 import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.cluster.Address;
-import com.liferay.portal.kernel.cluster.ClusterNode;
+import com.liferay.portal.kernel.cluster.ClusterEvent;
+import com.liferay.portal.kernel.cluster.ClusterEventType;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
-import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
@@ -66,6 +66,18 @@ public class ClusterRequestReceiver extends BaseClusterReceiver {
 	}
 
 	@Override
+	protected void doCoordinatorAddressUpdated(
+		Address oldCoordinatorAddress, Address newCoordinatorAddress) {
+
+		if (oldCoordinatorAddress.equals(newCoordinatorAddress)) {
+			return;
+		}
+
+		_clusterExecutorImpl.fireClusterEvent(
+			new ClusterEvent(ClusterEventType.COORDINATOR_ADDRESS_UPDATE));
+	}
+
+	@Override
 	protected void doReceive(Object messagePayload, Address srcAddress) {
 		ClusterChannel clusterChannel =
 			_clusterExecutorImpl.getClusterChannel();
@@ -76,11 +88,27 @@ public class ClusterRequestReceiver extends BaseClusterReceiver {
 
 		try {
 			if (messagePayload instanceof ClusterRequest) {
-				processClusterRequest(
-					(ClusterRequest)messagePayload, srcAddress);
+				ClusterRequest clusterRequest = (ClusterRequest)messagePayload;
+
+				Serializable responsePayload =
+					_clusterExecutorImpl.handleReceivedClusterRequest(
+						clusterRequest);
+
+				if (clusterRequest.isFireAndForget()) {
+					return;
+				}
+
+				try {
+					clusterChannel.sendUnicastMessage(
+						responsePayload, srcAddress);
+				}
+				catch (Throwable t) {
+					_log.error("Unable to send message " + responsePayload, t);
+				}
 			}
 			else if (messagePayload instanceof ClusterNodeResponse) {
-				processClusterResponse((ClusterNodeResponse)messagePayload);
+				_clusterExecutorImpl.handleReceivedClusterNodeResponse(
+					(ClusterNodeResponse)messagePayload);
 			}
 			else if (_log.isWarnEnabled()) {
 				_log.warn(
@@ -92,55 +120,6 @@ public class ClusterRequestReceiver extends BaseClusterReceiver {
 			ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
 
 			CentralizedThreadLocal.clearShortLivedThreadLocals();
-		}
-	}
-
-	protected void processClusterRequest(
-		ClusterRequest clusterRequest, Address sourceAddress) {
-
-		Serializable responsePayload =
-			_clusterExecutorImpl.handleReceivedClusterRequest(clusterRequest);
-
-		if (responsePayload == null) {
-			return;
-		}
-
-		ClusterChannel clusterChannel =
-			_clusterExecutorImpl.getClusterChannel();
-
-		try {
-			clusterChannel.sendUnicastMessage(responsePayload, sourceAddress);
-		}
-		catch (Throwable t) {
-			_log.error("Unable to send message " + responsePayload, t);
-		}
-	}
-
-	protected void processClusterResponse(
-		ClusterNodeResponse clusterNodeResponse) {
-
-		String uuid = clusterNodeResponse.getUuid();
-
-		FutureClusterResponses futureClusterResponses =
-			_clusterExecutorImpl.getFutureClusterResponses(uuid);
-
-		if (futureClusterResponses == null) {
-			if (_log.isInfoEnabled()) {
-				_log.info("Unable to find response container for " + uuid);
-			}
-
-			return;
-		}
-
-		if (!futureClusterResponses.addClusterNodeResponse(
-				clusterNodeResponse) &&
-			_log.isWarnEnabled()) {
-
-			ClusterNode clusterNode = clusterNodeResponse.getClusterNode();
-
-			_log.warn(
-				"Unexpected cluster node ID " + clusterNode.getClusterNodeId() +
-					" for response container with UUID " + uuid);
 		}
 	}
 

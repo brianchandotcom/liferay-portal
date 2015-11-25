@@ -2048,6 +2048,97 @@
 		</execute>
 	</command>
 
+	<command name="ViewMultipleDDLRecordsInAssetPublisherAndSortByModifiedDate" priority="3">
+		<description message="This is a use case for LPS-57993" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Asset Publisher" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#addCP" />
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text Label" />
+			<var name="fieldName" value="TextName" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLList#addCP" />
+
+		<execute macro="DDLDataDefinition#selectCP" />
+
+		<execute macro="DDLList#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLNavigator#gotoListRecords" />
+
+		<for list="firstRecord,secondText,thirdTest" param="ddlRecordFieldData">
+			<execute macro="DDLNavigator#gotoAddListRecord" />
+
+			<execute macro="DDLRecord#populateFieldText">
+				<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
+				<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+				<var name="fieldName" value="TextName" />
+			</execute>
+
+			<execute macro="DDLRecord#publishCP" />
+		</for>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewMultipleDDLRecordsViaAP">
+			<var name="ddlRecordFieldData1" value="thirdTest" />
+			<var name="ddlRecordFieldData2" value="secondText" />
+			<var name="ddlRecordFieldData3" value="firstRecord" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureSelectedPG">
+			<var name="selectedAsset" value="Dynamic Data Lists Record" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureAssetDisplayOrderPG">
+			<var name="fieldNameOrder" value="Modified Date" />
+			<var name="sortOrder" value="Ascending" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewMultipleDDLRecordsViaAP">
+			<var name="ddlRecordFieldData1" value="firstRecord" />
+			<var name="ddlRecordFieldData2" value="secondText" />
+			<var name="ddlRecordFieldData3" value="thirdTest" />
+		</execute>
+	</command>
+
 	<command name="ViewNestedFieldDoesNotDisplayInRecordTable" priority="3">
 		<description message="This is a use case for LPS-51538." />
 

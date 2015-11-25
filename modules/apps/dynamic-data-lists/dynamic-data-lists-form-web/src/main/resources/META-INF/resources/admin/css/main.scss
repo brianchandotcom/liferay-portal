@@ -403,17 +403,11 @@
 			color: #879CB5;
 			display: block;
 			font-weight: 500;
-			margin: 0;
+			margin: 0 -50px;
 			padding: 18px 50px;
-			position: absolute;
+			position: static;
 			text-decoration: none;
-			width: 100%;
-
-			&.active {
-				margin: 0 -50px;
-				position: static;
-				width: auto;
-			}
+			width: auto;
 		}
 	}
 }

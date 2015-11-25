@@ -29,8 +29,6 @@ AUI.add(
 							labelField.on('keyChange', A.bind('_onLabelFieldKeyChange', instance)),
 							labelField.on(A.bind('_onLabelFieldNormalizeKey', instance), labelField, 'normalizeKey')
 						);
-
-						instance._createModeToggler();
 					},
 
 					submit: function(callback) {
@@ -83,6 +81,8 @@ AUI.add(
 
 						container.append(TPL_SUBMIT_BUTTON);
 
+						instance._createModeToggler();
+
 						instance._syncModeToggler();
 
 						var formName = A.guid();
@@ -113,7 +113,11 @@ AUI.add(
 					_createModeToggler: function() {
 						var instance = this;
 
+						var advancedSettingsNode = instance.getPageNode(2);
+
 						var modeToggler = A.Node.create('<a class="settings-toggler" href="javascript:;"></a>');
+
+						advancedSettingsNode.insert(modeToggler, 'before');
 
 						modeToggler.on('click', A.bind('_onClickModeToggler', instance));
 
@@ -193,10 +197,7 @@ AUI.add(
 
 						var advancedSettingsNode = instance.getPageNode(2);
 
-						var basicSettingsNode = instance.getPageNode(1);
-
 						advancedSettingsNode.toggleClass('active');
-						basicSettingsNode.toggleClass('active');
 
 						var field = instance.get('field');
 
@@ -239,16 +240,10 @@ AUI.add(
 						if (advancedSettingsNode.hasClass('active')) {
 							modeToggler.addClass('active');
 							modeToggler.html(Liferay.Language.get('hide-options'));
-
-							advancedSettingsNode.insert(modeToggler, 'before');
 						}
 						else {
 							modeToggler.removeClass('active');
 							modeToggler.html(Liferay.Language.get('show-more-options'));
-
-							var bodyNode = instance._getModalStdModeNode(A.WidgetStdMod.BODY);
-
-							bodyNode.insert(modeToggler, 'after');
 						}
 					},
 

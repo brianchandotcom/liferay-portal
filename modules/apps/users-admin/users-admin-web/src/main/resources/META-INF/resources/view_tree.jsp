@@ -175,27 +175,29 @@ if (organization != null) {
 						request.setAttribute("phones.classPK", organizationId);
 						request.setAttribute("websites.className", Organization.class.getName());
 						request.setAttribute("websites.classPK", organizationId);
+
+						String directoryPortletId = PortletProviderUtil.getPortletId(PortalDirectoryApplicationType.PortalDirectory.CLASS_NAME, PortletProvider.Action.VIEW);
 						%>
 
 						<div class="organization-information">
 							<div class="section">
-								<liferay-util:include page="/html/portlet/directory/common/additional_email_addresses.jsp" portletId="<%= PortletKeys.DIRECTORY %>" />
+								<liferay-util:include page="/common/additional_email_addresses.jsp" portletId="<%= directoryPortletId %>" />
 							</div>
 
 							<div class="section">
-								<liferay-util:include page="/html/portlet/directory/common/websites.jsp" portletId="<%= PortletKeys.DIRECTORY %>" />
+								<liferay-util:include page="/common/websites.jsp" portletId="<%= directoryPortletId %>" />
 							</div>
 
 							<div class="section">
-								<liferay-util:include page="/html/portlet/directory/organization/addresses.jsp" portletId="<%= PortletKeys.DIRECTORY %>" />
+								<liferay-util:include page="/organization/addresses.jsp" portletId="<%= directoryPortletId %>" />
 							</div>
 
 							<div class="section">
-								<liferay-util:include page="/html/portlet/directory/organization/phone_numbers.jsp" portletId="<%= PortletKeys.DIRECTORY %>" />
+								<liferay-util:include page="/organization/phone_numbers.jsp" portletId="<%= directoryPortletId %>" />
 							</div>
 
 							<div class="section">
-								<liferay-util:include page="/html/portlet/directory/organization/comments.jsp" portletId="<%= PortletKeys.DIRECTORY %>" />
+								<liferay-util:include page="/organization/comments.jsp" portletId="<%= directoryPortletId %>" />
 							</div>
 						</div>
 

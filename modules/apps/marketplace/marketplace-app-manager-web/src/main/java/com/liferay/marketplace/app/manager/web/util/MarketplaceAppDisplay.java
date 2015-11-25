@@ -16,6 +16,9 @@ package com.liferay.marketplace.app.manager.web.util;
 
 import com.liferay.marketplace.model.App;
 
+import javax.portlet.MimeResponse;
+import javax.portlet.PortletURL;
+
 /**
  * @author Ryan Park
  */
@@ -35,6 +38,21 @@ public class MarketplaceAppDisplay extends BaseAppDisplay {
 
 	public String getDescription() {
 		return _app.getDescription();
+	}
+
+	public String getDisplayURL(MimeResponse mimeResponse) {
+		PortletURL portletURL = mimeResponse.createRenderURL();
+
+		if (hasModuleGroups()) {
+			portletURL.setParameter("mvcPath", "view_module_groups.jsp");
+		}
+		else {
+			portletURL.setParameter("mvcPath", "view_modules.jsp");
+		}
+
+		portletURL.setParameter("app", String.valueOf(_app.getAppId()));
+
+		return portletURL.toString();
 	}
 
 	public String getIconURL() {

@@ -22,6 +22,7 @@ import com.liferay.marketplace.service.ModuleLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -87,8 +88,9 @@ public class AppDisplayFactoryUtil {
 			}
 
 			if (appDisplay == null) {
-				String appDescription = headers.get(
-					BundleConstants.LIFERAY_RELENG_APP_DESCRIPTION);
+				String appDescription = GetterUtil.getString(
+					headers.get(
+						BundleConstants.LIFERAY_RELENG_APP_DESCRIPTION));
 				Version appVersion = bundle.getVersion();
 
 				appDisplay = new SimpleAppDisplay(
@@ -198,8 +200,9 @@ public class AppDisplayFactoryUtil {
 			AppDisplay appDisplay = appDisplaysMap.get(appTitle);
 
 			if (appDisplay == null) {
-				String appDescription = headers.get(
-					BundleConstants.LIFERAY_RELENG_APP_DESCRIPTION);
+				String appDescription = GetterUtil.getString(
+					headers.get(
+						BundleConstants.LIFERAY_RELENG_APP_DESCRIPTION));
 				Version appVersion = bundle.getVersion();
 
 				appDisplay = new SimpleAppDisplay(

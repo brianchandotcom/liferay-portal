@@ -19,6 +19,7 @@ import com.liferay.portal.app.license.AppLicenseVerifier;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.SortedMap;
+import java.util.Map;
 
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
@@ -79,17 +80,19 @@ public class AppLicenseVerifierTest {
 	@Test
 	public void testVerifyFailure() {
 		try {
-			SortedMap<ServiceReference<AppLicenseVerifier>, AppLicenseVerifier>
-				verifiers = _serviceTracker.getTracked();
-
 			Filter filter = FrameworkUtil.createFilter("(version=1.0.0)");
 
-			for (ServiceReference serviceReference : verifiers.keySet()) {
+			Map<ServiceReference<AppLicenseVerifier>, AppLicenseVerifier>
+				serviceReferences = _serviceTracker.getTracked();
+
+			for (ServiceReference serviceReference :
+					serviceReferences.keySet()) {
+
 				if (!filter.match(serviceReference)) {
 					continue;
 				}
 
-				AppLicenseVerifier appLicenseVerifier = verifiers.get(
+				AppLicenseVerifier appLicenseVerifier = serviceReferences.get(
 					serviceReference);
 
 				appLicenseVerifier.verify(bundle, "", "", "");
@@ -106,17 +109,17 @@ public class AppLicenseVerifierTest {
 	@Test
 	public void testVerifyPass() {
 		try {
-			SortedMap<ServiceReference<AppLicenseVerifier>, AppLicenseVerifier>
-				verifiers = _serviceTracker.getTracked();
-
 			Filter filter = FrameworkUtil.createFilter("(version=1.0.1)");
 
-			for (ServiceReference serviceReference : verifiers.keySet()) {
+			Map<ServiceReference<AppLicenseVerifier>, AppLicenseVerifier>
+				serviceReferences = _serviceTracker.getTracked();
+
+			for (ServiceReference serviceReference : serviceReferences.keySet()) {
 				if (!filter.match(serviceReference)) {
 					continue;
 				}
 
-				AppLicenseVerifier appLicenseVerifier = verifiers.get(
+				AppLicenseVerifier appLicenseVerifier = serviceReferences.get(
 					serviceReference);
 
 				appLicenseVerifier.verify(bundle, "", "", "");

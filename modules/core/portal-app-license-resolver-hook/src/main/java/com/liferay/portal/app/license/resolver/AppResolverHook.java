@@ -42,8 +42,7 @@ import org.osgi.util.tracker.ServiceTracker;
 public class AppResolverHook implements ResolverHook {
 
 	public AppResolverHook(
-		final ServiceTracker<AppLicenseVerifier, AppLicenseVerifier>
-			serviceTracker) {
+		ServiceTracker<AppLicenseVerifier, AppLicenseVerifier> serviceTracker) {
 
 		_serviceTracker = serviceTracker;
 	}
@@ -70,9 +69,7 @@ public class AppResolverHook implements ResolverHook {
 			}
 			catch (Exception e) {
 				_log.error(
-					bundleRevision.getSymbolicName() +
-						" could not be resolved.",
-					e);
+					"Unable to resolve " + bundleRevision.getSymbolicName(), e);
 
 				iterator.remove();
 			}
@@ -96,40 +93,42 @@ public class AppResolverHook implements ResolverHook {
 
 		Dictionary<String, String> headers = bundle.getHeaders();
 
-		String marketplaceProperties = headers.get("X-Liferay-Marketplace");
+		String xLiferayMarketplace = headers.get("X-Liferay-Marketplace");
 
-		if (marketplaceProperties == null) {
+		if (xLiferayMarketplace == null) {
 			return;
 		}
 
-		Attrs parameters = OSGiHeader.parseProperties(marketplaceProperties);
+		Attrs attrs = OSGiHeader.parseProperties(xLiferayMarketplace);
 
-		String productId = parameters.get("productId");
-		String productType = parameters.get("productType");
-		String productVersion = parameters.get("productVersion");
-		String licenseVersion = parameters.get("licenseVersion");
+		String productId = attrs.get("productId");
 
 		if (productId == null) {
 			return;
 		}
 
-		SortedMap<ServiceReference<AppLicenseVerifier>, AppLicenseVerifier>
-			verifiers = _serviceTracker.getTracked();
-
 		boolean verified = false;
+
+		String licenseVersion = attrs.get("licenseVersion");
 
 		Filter filter = FrameworkUtil.createFilter(
 			"(version=" + licenseVersion + ")");
 
+		SortedMap<ServiceReference<AppLicenseVerifier>, AppLicenseVerifier>
+			serviceReferences = _serviceTracker.getTracked();
+
 		for (ServiceReference<AppLicenseVerifier> serviceReference :
-				verifiers.keySet()) {
+				serviceReferences.keySet()) {
 
 			if (!filter.match(serviceReference)) {
 				continue;
 			}
 
-			AppLicenseVerifier appLicenseVerifier = verifiers.get(
+			AppLicenseVerifier appLicenseVerifier = serviceReferences.get(
 				serviceReference);
+
+			String productType = attrs.get("productType");
+			String productVersion = attrs.get("productVersion");
 
 			appLicenseVerifier.verify(
 				bundle, productId, productType, productVersion);
@@ -141,7 +140,7 @@ public class AppResolverHook implements ResolverHook {
 
 		if (!verified) {
 			throw new Exception(
-				AppLicenseVerifier.class.getName() + " could not be resolved.");
+				"Unable to resolve " + AppLicenseVerifier.class.getName());
 		}
 	}
 

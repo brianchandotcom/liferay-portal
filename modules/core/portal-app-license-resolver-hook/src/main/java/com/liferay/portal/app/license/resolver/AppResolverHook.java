@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.app.resolver;
+package com.liferay.portal.app.license.resolver;
 
 import aQute.bnd.header.Attrs;
 import aQute.bnd.header.OSGiHeader;

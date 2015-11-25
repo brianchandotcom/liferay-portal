@@ -50,6 +50,8 @@ if (entry.getPriority() > 0) {
 %>
 
 <div class="entry<%= className %>" id="<portlet:namespace /><%= entry.getEntryId() %>">
+	<liferay-ui:user-display userId="<%= entry.getUserId() %>" />
+
 	<h3 class="entry-title">
 		<c:choose>
 			<c:when test="<%= Validator.isNotNull(entry.getUrl()) %>">

@@ -260,12 +260,12 @@ if (!roles.isEmpty()) {
 	var form = A.one('#<portlet:namespace />fm');
 
 	var modified = function(panel) {
-		var modifiedNotice = panel.one('.accordion-heading .modified-notice');
+		var modifiedNotice = panel.one('.panel-heading .panel-toggle .modified-notice');
 
 		if (modifiedNotice == null) {
-			var displayTitle = panel.one('.accordion-heading');
+			var displayTitle = panel.one('.panel-heading .panel-toggle');
 
-			displayTitle.append('<span class="accordion-toggle modified-notice"> (<liferay-ui:message key="modified" />) </span>');
+			displayTitle.append('<span class="modified-notice"> (<liferay-ui:message key="modified" />) </span>');
 		}
 	}
 

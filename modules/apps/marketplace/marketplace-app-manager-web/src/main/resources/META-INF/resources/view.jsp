@@ -28,7 +28,7 @@ int state = ParamUtil.getInteger(request, "state");
 		<aui:nav-item
 			href="<%= viewURL %>"
 			label="apps"
-			selected="true"
+			selected="<%= true %>"
 		/>
 	</aui:nav>
 </aui:nav-bar>

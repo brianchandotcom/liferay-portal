@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>ADD_PAGE_BTN</td>
-	<td>//div[contains(@class,'add-page-toolbar')]/button[contains(.,'Add Page')]</td>
+	<td>//button[contains(@id,'GroupPagesPortlet') and contains(.,'Add Page')]</td>
 	<td></td>
 </tr>
 <tr>

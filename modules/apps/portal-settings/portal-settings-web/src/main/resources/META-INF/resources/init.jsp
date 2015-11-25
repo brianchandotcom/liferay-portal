@@ -31,7 +31,6 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.portal.CompanyMxException" %><%@
 page import="com.liferay.portal.CompanyVirtualHostException" %><%@
 page import="com.liferay.portal.LocaleException" %><%@
-page import="com.liferay.portal.facebook.FacebookConnectUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@

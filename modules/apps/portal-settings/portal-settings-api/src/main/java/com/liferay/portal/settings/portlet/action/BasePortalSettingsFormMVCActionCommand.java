@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.settings.web.portlet.action;
+package com.liferay.portal.settings.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseFormMVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -54,13 +54,22 @@ public abstract class BasePortalSettingsFormMVCActionCommand
 			return;
 		}
 
-		storeSettings(
-			actionRequest, themeDisplay, getServiceName(), getShortNamespace());
+		storeSettings(actionRequest, themeDisplay);
 	}
 
-	protected abstract String getServiceName();
+	protected boolean getBoolean(ActionRequest actionRequest, String name) {
+		return ParamUtil.getBoolean(
+			actionRequest, getParameterNamespace() + name);
+	}
 
-	protected abstract String getShortNamespace();
+	protected abstract String getParameterNamespace();
+
+	protected abstract String getSettingsId();
+
+	protected String getString(ActionRequest actionRequest, String name) {
+		return ParamUtil.getString(
+			actionRequest, getParameterNamespace() + name);
+	}
 
 	protected boolean hasPermissions(
 		ActionRequest actionRequest, ActionResponse actionResponse,
@@ -81,23 +90,21 @@ public abstract class BasePortalSettingsFormMVCActionCommand
 	}
 
 	protected void storeSettings(
-			ActionRequest actionRequest, ThemeDisplay themeDisplay,
-			String serviceName, String shortNamespace)
+			ActionRequest actionRequest, ThemeDisplay themeDisplay)
 		throws IOException, SettingsException, ValidatorException {
 
 		Settings settings = SettingsFactoryUtil.getSettings(
 			new CompanyServiceSettingsLocator(
-				themeDisplay.getCompanyId(), serviceName));
+				themeDisplay.getCompanyId(), getSettingsId()));
 
 		ModifiableSettings modifiableSettings =
 			settings.getModifiableSettings();
 
 		SettingsDescriptor settingsDescriptor =
-			SettingsFactoryUtil.getSettingsDescriptor(serviceName);
+			SettingsFactoryUtil.getSettingsDescriptor(getSettingsId());
 
 		for (String name : settingsDescriptor.getAllKeys()) {
-			String value = ParamUtil.getString(
-				actionRequest, shortNamespace + name);
+			String value = getString(actionRequest, name);
 			String oldValue = settings.getValue(name, null);
 
 			if (!value.equals(oldValue)) {

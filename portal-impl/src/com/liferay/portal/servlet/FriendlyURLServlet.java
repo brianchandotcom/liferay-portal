@@ -353,7 +353,7 @@ public class FriendlyURLServlet extends HttpServlet {
 
 				if (Validator.isNotNull(i18nLanguageId)) {
 					Locale i18nLocale = LocaleUtil.fromLanguageId(
-						i18nLanguageId);
+						i18nLanguageId, true, false);
 
 					if (!LanguageUtil.isAvailableLocale(
 							group.getGroupId(), i18nLocale)) {

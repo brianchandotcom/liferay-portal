@@ -166,7 +166,7 @@
 					</li>
 
 					<li class="options">
-						<liferay-staging:portlet-list dateRange="<%= dateRange %>" disableInputs="<%= disableInputs %>" parameterMap="<%= parameterMap %>" portlets="<%= dataSiteLevelPortlets %>" type="<%= type %>" />
+						<liferay-staging:portlet-list disableInputs="<%= disableInputs %>" parameterMap="<%= parameterMap %>" portlets="<%= dataSiteLevelPortlets %>" type="<%= type %>" />
 					</li>
 				</ul>
 			</li>

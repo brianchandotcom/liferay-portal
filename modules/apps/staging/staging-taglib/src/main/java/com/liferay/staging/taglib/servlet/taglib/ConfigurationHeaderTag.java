@@ -61,9 +61,6 @@ public class ConfigurationHeaderTag extends IncludeTag {
 			_exportImportConfiguration);
 		request.setAttribute(
 			"liferay-staging:configuration-header:label", _label);
-		request.setAttribute(
-			"liferay-staging:configuration-header:liferayPortletRequest",
-			pageContext.getAttribute("liferayPortletRequest"));
 	}
 
 	private static final String _PAGE = "/configuration_header/page.jsp";

@@ -70,9 +70,6 @@ public class ContentTag extends IncludeTag {
 			"liferay-staging:content:disableInputs", _disableInputs);
 		request.setAttribute(
 			"liferay-staging:content:parameterMap", _parameterMap);
-		request.setAttribute(
-			"liferay-staging:content:renderRequest",
-			pageContext.getAttribute("renderRequest"));
 		request.setAttribute("liferay-staging:content:type", _type);
 	}
 

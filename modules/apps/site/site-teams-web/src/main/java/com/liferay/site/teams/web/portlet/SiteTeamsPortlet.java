@@ -90,6 +90,26 @@ public class SiteTeamsPortlet extends MVCPortlet {
 		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
+	public void addTeamUsers(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long teamId = ParamUtil.getLong(actionRequest, "teamId");
+
+		long[] addUserIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "addUserIds"), 0L);
+		long[] removeUserIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "removeUserIds"), 0L);
+
+		_userService.addTeamUsers(teamId, addUserIds);
+		_userService.unsetTeamUsers(teamId, removeUserIds);
+
+		String redirect = ParamUtil.getString(
+			actionRequest, "assignmentsRedirect");
+
+		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
+	}
+
 	public void deleteTeam(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -137,6 +157,26 @@ public class SiteTeamsPortlet extends MVCPortlet {
 		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
+	public void deleteTeamUsers(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long teamId = ParamUtil.getLong(actionRequest, "teamId");
+
+		long[] addUserIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "addUserIds"), 0L);
+		long[] removeUserIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "removeUserIds"), 0L);
+
+		_userService.addTeamUsers(teamId, addUserIds);
+		_userService.unsetTeamUsers(teamId, removeUserIds);
+
+		String redirect = ParamUtil.getString(
+			actionRequest, "assignmentsRedirect");
+
+		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
+	}
+
 	public void editTeam(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -166,26 +206,6 @@ public class SiteTeamsPortlet extends MVCPortlet {
 
 			_teamService.updateTeam(teamId, name, description);
 		}
-	}
-
-	public void editTeamUsers(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long teamId = ParamUtil.getLong(actionRequest, "teamId");
-
-		long[] addUserIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "addUserIds"), 0L);
-		long[] removeUserIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "removeUserIds"), 0L);
-
-		_userService.addTeamUsers(teamId, addUserIds);
-		_userService.unsetTeamUsers(teamId, removeUserIds);
-
-		String redirect = ParamUtil.getString(
-			actionRequest, "assignmentsRedirect");
-
-		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
 	@Override

@@ -31,6 +31,8 @@
 	</tear-down>
 
 	<command name="JoinSiteOpen" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

@@ -167,9 +167,11 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 	</liferay-frontend:management-bar>
 </c:if>
 
-<aui:form cssClass="container-fluid-1280" name="fm">
-	<aui:input name="deleteCategoryIds" type="hidden" />
+<portlet:actionURL name="deleteCategory" var="deleteCategoryURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
 
+<aui:form action="<%= deleteCategoryURL %>" cssClass="container-fluid-1280" name="fm">
 	<liferay-ui:breadcrumb
 		showCurrentGroup="<%= false %>"
 		showGuestGroup="<%= false %>"
@@ -236,21 +238,11 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 </c:if>
 
 <aui:script sandbox="<%= true %>">
-	var Util = Liferay.Util;
-
-	var form = $(document.<portlet:namespace />fm);
-
 	$('#<portlet:namespace />deleteSelectedCategories').on(
 		'click',
 		function() {
 			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-				<portlet:actionURL name="deleteCategory" var="deleteCategoryURL">
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-				</portlet:actionURL>
-
-				form.fm('deleteCategoryIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-
-				submitForm(form, '<%= deleteCategoryURL %>');
+				submitForm($(document.<portlet:namespace />fm));
 			}
 		}
 	);

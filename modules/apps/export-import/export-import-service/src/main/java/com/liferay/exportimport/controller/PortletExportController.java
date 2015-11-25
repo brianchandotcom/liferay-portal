@@ -59,7 +59,6 @@ import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletItem;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.User;
-import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.service.PortletItemLocalService;
@@ -1350,16 +1349,18 @@ public class PortletExportController implements ExportController {
 				}
 			}
 
+			javax.portlet.PortletPreferences jxPortletPreferences = null;
+
 			if (layout == null) {
-				layout = new LayoutImpl();
-
-				layout.setCompanyId(group.getCompanyId());
-				layout.setGroupId(group.getGroupId());
+				jxPortletPreferences =
+					PortletPreferencesFactoryUtil.getStrictPortletSetup(
+						group.getCompanyId(), group.getGroupId(), _portletId);
 			}
-
-			javax.portlet.PortletPreferences jxPortletPreferences =
-				PortletPreferencesFactoryUtil.getStrictPortletSetup(
-					layout, _portletId);
+			else {
+				jxPortletPreferences =
+					PortletPreferencesFactoryUtil.getStrictPortletSetup(
+						layout, _portletId);
+			}
 
 			ExportImportDateUtil.updateLastPublishDate(
 				_portletId, jxPortletPreferences, _dateRange, _endDate);

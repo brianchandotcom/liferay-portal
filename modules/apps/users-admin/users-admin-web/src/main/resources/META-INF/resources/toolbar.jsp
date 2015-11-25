@@ -70,21 +70,4 @@ String usersListView = ParamUtil.get(request, "usersListView", UserConstants.LIS
 			</c:if>
 		</aui:nav-item>
 	</c:if>
-
-	<c:choose>
-		<c:when test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.EXPORT_USER) %>">
-			<aui:nav-item href='<%= "javascript:" + renderResponse.getNamespace() + "exportUsers();" %>' label="export-users" selected='<%= toolbarItem.equals("export-users") %>' />
-		</c:when>
-		<c:when test="<%= PortletPermissionUtil.contains(permissionChecker, UsersAdminPortletKeys.USERS_ADMIN, ActionKeys.EXPORT_USER) %>">
-			<aui:nav-item href='<%= "javascript:" + renderResponse.getNamespace() + "exportUsers();" %>' label="export-organization-users" selected='<%= toolbarItem.equals("export-organization-users") %>' />
-		</c:when>
-	</c:choose>
 </aui:nav>
-
-<aui:script>
-	function <portlet:namespace />exportUsers() {
-		document.<portlet:namespace />fm.method = 'post';
-
-		submitForm(document.<portlet:namespace />fm, '<portlet:actionURL name="/users_admin/export_users" />&compress=0&etag=0&strip=0', false);
-	}
-</aui:script>

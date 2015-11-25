@@ -7,4 +7,5 @@ Include-Resource:\
 	META-INF/resources=src/main/resources/META-INF/resources
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
+Web-ContextPath: /users-admin-web
 -include: ../../../../marketplace/platform/bnd.bnd

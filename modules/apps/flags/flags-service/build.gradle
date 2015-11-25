@@ -1,0 +1,22 @@
+buildService {
+	apiDir = "../flags-api/src/main/java"
+	autoNamespaceTables = false
+	testDir = "../flags-test/src/testIntegration/java"
+}
+
+dependencies {
+	compile group: "com.liferay", name: "com.liferay.portal.spring.extender", transitive: false, version: "1.0.2"
+	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
+	compile group: "javax.portlet", name: "portlet-api", version: "2.0"
+	compile group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
+	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
+	compile project(":apps:flags:flags-api")
+	compile project(":core:registry-api")
+	compile project(":portal:portal-upgrade")
+
+	provided group: "com.liferay.portal", name: "util-java", version: liferay.portalVersion
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}

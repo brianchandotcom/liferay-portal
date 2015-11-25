@@ -87,11 +87,11 @@ organizationSearch.setResults(organizations);
 
 <liferay-util:include page="/info_message.jsp" servletContext="<%= application %>" />
 
-<portlet:actionURL name="deleteGroupOrganizations" var="deleteOrganizationsURL">
+<portlet:actionURL name="deleteGroupOrganizations" var="deleteGroupOrganizationsURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteOrganizationsURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<aui:form action="<%= deleteGroupOrganizationsURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="tabs1" type="hidden" value="organizations" />
 	<aui:input name="assignmentsRedirect" type="hidden" />
 	<aui:input name="groupId" type="hidden" value="<%= String.valueOf(siteMembershipsDisplayContext.getGroupId()) %>" />

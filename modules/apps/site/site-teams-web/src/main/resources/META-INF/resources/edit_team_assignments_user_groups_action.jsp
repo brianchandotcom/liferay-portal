@@ -24,7 +24,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 UserGroup userGroup = (UserGroup)row.getObject();
 %>
 
-<portlet:actionURL name="deleteTeamUserGroups" var="deleteURL">
+<portlet:actionURL name="deleteTeamUserGroups" var="deleteTeamUserGroupsURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="teamId" value="<%= String.valueOf(teamId) %>" />
 	<portlet:param name="removeUserGroupId" value="<%= String.valueOf(userGroup.getUserGroupId()) %>" />
@@ -33,5 +33,5 @@ UserGroup userGroup = (UserGroup)row.getObject();
 <liferay-ui:icon
 	iconCssClass="icon-trash"
 	message="delete"
-	url="<%= deleteURL %>"
+	url="<%= deleteTeamUserGroupsURL %>"
 />

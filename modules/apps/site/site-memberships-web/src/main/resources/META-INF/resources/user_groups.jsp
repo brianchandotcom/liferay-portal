@@ -84,11 +84,11 @@ userGroupSearch.setResults(userGroups);
 
 <liferay-util:include page="/info_message.jsp" servletContext="<%= application %>" />
 
-<portlet:actionURL name="deleteGroupUserGroups" var="deleteUserGroupsURL">
+<portlet:actionURL name="deleteGroupUserGroups" var="deleteGroupUserGroupsURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteUserGroupsURL %>" cssClass="container-fluid-1280" name="fm">
+<aui:form action="<%= deleteGroupUserGroupsURL %>" cssClass="container-fluid-1280" name="fm">
 	<aui:input name="tabs1" type="hidden" value="user-groups" />
 	<aui:input name="assignmentsRedirect" type="hidden" />
 	<aui:input name="groupId" type="hidden" value="<%= String.valueOf(siteMembershipsDisplayContext.getGroupId()) %>" />

@@ -78,11 +78,11 @@ PortletURL portletURL = renderResponse.createRenderURL();
 	</liferay-frontend:management-bar>
 </c:if>
 
-<portlet:actionURL name="deleteLayoutSetPrototypes" var="deleteURL">
+<portlet:actionURL name="deleteLayoutSetPrototypes" var="deleteLayoutSetPrototypesURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteURL %>" cssClass="container-fluid-1280" name="fm">
+<aui:form action="<%= deleteLayoutSetPrototypesURL %>" cssClass="container-fluid-1280" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 
 	<liferay-ui:search-container

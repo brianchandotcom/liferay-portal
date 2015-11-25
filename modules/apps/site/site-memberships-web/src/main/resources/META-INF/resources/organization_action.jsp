@@ -23,7 +23,7 @@ Organization organization = (Organization)row.getObject();
 %>
 
 <c:if test="<%= GroupPermissionUtil.contains(permissionChecker, siteMembershipsDisplayContext.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>">
-	<portlet:actionURL name="deleteGroupOrganizations" var="deleteURL">
+	<portlet:actionURL name="deleteGroupOrganizations" var="deleteGroupOrganizationsURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="groupId" value="<%= String.valueOf(siteMembershipsDisplayContext.getGroupId()) %>" />
 		<portlet:param name="removeOrganizationId" value="<%= String.valueOf(organization.getOrganizationId()) %>" />
@@ -32,6 +32,6 @@ Organization organization = (Organization)row.getObject();
 	<liferay-ui:icon
 		iconCssClass="icon-trash"
 		message="remove-membership"
-		url="<%= deleteURL %>"
+		url="<%= deleteGroupOrganizationsURL %>"
 	/>
 </c:if>

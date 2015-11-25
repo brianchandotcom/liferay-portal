@@ -102,9 +102,9 @@ if (group != null) {
 	</div>
 
 	<div class="sidenav-content">
-		<portlet:actionURL name="deleteGroups" var="deleteURL" />
+		<portlet:actionURL name="deleteGroups" var="deleteGroupsURL" />
 
-		<aui:form action="<%= deleteURL %>" name="fm">
+		<aui:form action="<%= deleteGroupsURL %>" name="fm">
 			<aui:input name="redirect" type="hidden" value="<%= portletURLString %>" />
 
 			<div id="breadcrumb">

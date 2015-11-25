@@ -114,11 +114,11 @@ tagsSearchContainer.setResults(tags);
 	</liferay-frontend:management-bar>
 </c:if>
 
-<portlet:actionURL name="deleteTag" var="deleteURL">
+<portlet:actionURL name="deleteTag" var="deleteTagURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteURL %>" cssClass="container-fluid-1280" name="fm">
+<aui:form action="<%= deleteTagURL %>" cssClass="container-fluid-1280" name="fm">
 	<liferay-ui:search-container
 		id="assetTags"
 		searchContainer="<%= tagsSearchContainer %>"

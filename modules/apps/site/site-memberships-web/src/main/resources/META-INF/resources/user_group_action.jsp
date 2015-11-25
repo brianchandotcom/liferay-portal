@@ -45,7 +45,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 	</c:if>
 
 	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, siteMembershipsDisplayContext.getGroup(), ActionKeys.ASSIGN_MEMBERS) %>">
-		<portlet:actionURL name="deleteGroupUserGroups" var="deleteURL">
+		<portlet:actionURL name="deleteGroupUserGroups" var="deleteGroupUserGroupsURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(siteMembershipsDisplayContext.getGroupId()) %>" />
 			<portlet:param name="removeUserGroupId" value="<%= String.valueOf(userGroup.getUserGroupId()) %>" />
@@ -53,7 +53,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 
 		<liferay-ui:icon
 			message="remove-membership"
-			url="<%= deleteURL %>"
+			url="<%= deleteGroupUserGroupsURL %>"
 		/>
 	</c:if>
 </liferay-ui:icon-menu>

@@ -24,21 +24,25 @@
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-	<aui:fieldset>
-		<aui:select label="maximum-items-to-display" name="preferences--pageDelta--">
+	<liferay-ui:panel-container extended="<%= true %>" persistState="<%= true %>">
+		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="displaySettingsPanel" persistState="<%= true %>" title="display-settings">
+			<aui:fieldset>
+				<aui:select label="maximum-items-to-display" name="preferences--pageDelta--">
 
-			<%
-			for (int pageDeltaValue : PropsValues.ANNOUNCEMENTS_ENTRY_PAGE_DELTA_VALUES) {
-			%>
+					<%
+					for (int pageDeltaValue : PropsValues.ANNOUNCEMENTS_ENTRY_PAGE_DELTA_VALUES) {
+					%>
 
-				<aui:option label="<%= pageDeltaValue %>" selected="<%= pageDelta == pageDeltaValue %>" />
+						<aui:option label="<%= pageDeltaValue %>" selected="<%= pageDelta == pageDeltaValue %>" />
 
-			<%
-			}
-			%>
+					<%
+					}
+					%>
 
-		</aui:select>
-	</aui:fieldset>
+				</aui:select>
+			</aui:fieldset>
+		</liferay-ui:panel>
+	</liferay-ui:panel-container>
 
 	<aui:button-row>
 		<aui:button type="submit" />

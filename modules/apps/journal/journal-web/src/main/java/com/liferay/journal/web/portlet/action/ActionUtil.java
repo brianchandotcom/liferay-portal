@@ -475,7 +475,7 @@ public class ActionUtil {
 
 		if (Validator.isNull(articleId)) {
 			String[] articleIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "articleIds"));
+				ParamUtil.getString(actionRequest, "rowIds"));
 
 			if (articleIds.length <= 0) {
 				return false;

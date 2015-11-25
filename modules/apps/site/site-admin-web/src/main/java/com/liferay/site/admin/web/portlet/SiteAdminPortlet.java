@@ -182,8 +182,7 @@ public class SiteAdminPortlet extends MVCPortlet {
 			deleteGroupIds = new long[] {groupId};
 		}
 		else {
-			deleteGroupIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "deleteGroupIds"), 0L);
+			deleteGroupIds = ParamUtil.getLongValues(actionRequest, "rowIds");
 		}
 
 		for (long deleteGroupId : deleteGroupIds) {

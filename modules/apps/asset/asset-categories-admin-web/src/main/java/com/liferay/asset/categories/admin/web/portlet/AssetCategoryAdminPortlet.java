@@ -92,8 +92,8 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 			deleteCategoryIds = new long[] {categoryId};
 		}
 		else {
-			deleteCategoryIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "deleteCategoryIds"), 0L);
+			deleteCategoryIds = ParamUtil.getLongValues(
+				actionRequest, "rowIds");
 		}
 
 		_assetCategoryService.deleteCategories(deleteCategoryIds);
@@ -111,8 +111,8 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 			deleteVocabularyIds = new long[] {vocabularyId};
 		}
 		else {
-			deleteVocabularyIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "deleteVocabularyIds"), 0L);
+			deleteVocabularyIds = ParamUtil.getLongValues(
+				actionRequest, "rowIds");
 		}
 
 		for (long deleteVocabularyId : deleteVocabularyIds) {

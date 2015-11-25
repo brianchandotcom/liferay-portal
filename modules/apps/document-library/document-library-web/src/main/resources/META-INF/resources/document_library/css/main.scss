@@ -27,8 +27,14 @@
 		margin-top: 1em;
 	}
 
-	.lfr-asset-panels .lfr-panel.lfr-extended {
-		border-bottom-width: 0;
+	.lfr-asset-panels {
+		.lfr-panel.lfr-extended {
+			border-bottom-width: 0;
+		}
+
+		.lfr-panel.lfr-asset-metadata {
+			word-wrap: break-word;
+		}
 	}
 
 	.document-container {

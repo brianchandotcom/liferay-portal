@@ -111,9 +111,18 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 		throws StorageException {
 
 		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
-			validateDDMFormFieldValue(
-				ddmFormFieldsMap.get(ddmFormFieldValue.getName()),
-				ddmFormFieldValue);
+			DDMFormField ddmFormField = ddmFormFieldsMap.get(
+				ddmFormFieldValue.getName());
+
+			if (Validator.isNotNull(ddmFormField)) {
+				validateDDMFormFieldValue(
+					ddmFormFieldsMap.get(ddmFormFieldValue.getName()),
+					ddmFormFieldValue);
+
+				traverseDDMFormFieldValues(
+						ddmFormFieldValue.getNestedDDMFormFieldValues(),
+						ddmFormField.getNestedDDMFormFieldsMap());
+			}
 		}
 	}
 

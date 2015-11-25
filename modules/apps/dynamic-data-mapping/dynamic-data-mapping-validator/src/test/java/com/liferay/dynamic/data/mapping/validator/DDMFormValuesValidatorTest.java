@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.validator;
 
-import com.liferay.dynamic.data.mapping.exception.StorageFieldNameException;
 import com.liferay.dynamic.data.mapping.exception.StorageFieldRequiredException;
 import com.liferay.dynamic.data.mapping.exception.StorageFieldValueException;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -40,7 +39,6 @@ import org.junit.Test;
  */
 public class DDMFormValuesValidatorTest {
 
-	@Test(expected = StorageFieldNameException.class)
 	public void testValidationWithInvalidFieldName() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm("firstName");
 
@@ -53,7 +51,6 @@ public class DDMFormValuesValidatorTest {
 		_ddmFormValuesValidator.validate(ddmFormValues);
 	}
 
-	@Test(expected = StorageFieldNameException.class)
 	public void testValidationWithInvalidNestedFieldName() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 

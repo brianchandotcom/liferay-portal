@@ -87,12 +87,15 @@ organizationSearch.setResults(organizations);
 
 <liferay-util:include page="/info_message.jsp" servletContext="<%= application %>" />
 
-<aui:form action="<%= viewOrganizationsURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
+<portlet:actionURL name="deleteGroupOrganizations" var="deleteOrganizationsURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
+
+<aui:form action="<%= deleteOrganizationsURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="tabs1" type="hidden" value="organizations" />
 	<aui:input name="assignmentsRedirect" type="hidden" />
 	<aui:input name="groupId" type="hidden" value="<%= String.valueOf(siteMembershipsDisplayContext.getGroupId()) %>" />
 	<aui:input name="addOrganizationIds" type="hidden" />
-	<aui:input name="removeOrganizationIds" type="hidden" />
 
 	<liferay-ui:search-container
 		id="organizations"
@@ -133,13 +136,7 @@ organizationSearch.setResults(organizations);
 		'click',
 		function() {
 			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-				<portlet:actionURL name="editGroupOrganizations" var="deleteOrganizationsURL">
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-				</portlet:actionURL>
-
-				form.fm('removeOrganizationIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-
-				submitForm(form, '<%= deleteOrganizationsURL %>');
+				submitForm(form);
 			}
 		}
 	);
@@ -159,7 +156,7 @@ organizationSearch.setResults(organizations);
 							if (selectedItem) {
 								form.fm('addOrganizationIds').val(selectedItem.addOrganizationIds);
 
-								submitForm(form, '<portlet:actionURL name="editGroupOrganizations" />');
+								submitForm(form, '<portlet:actionURL name="addGroupOrganizations" />');
 							}
 						}
 					},

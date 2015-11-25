@@ -76,14 +76,15 @@ public class TrashEmptyTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-ui:trash-empty:confirmMessage", _confirmMessage);
+			"liferay-trash:trash-empty:confirmMessage", _confirmMessage);
 		request.setAttribute(
-			"liferay-ui:trash-empty:emptyMessage", _emptyMessage);
+			"liferay-trash:trash-empty:emptyMessage", _emptyMessage);
 		request.setAttribute(
-			"liferay-ui:trash-empty:infoMessage", _infoMessage);
-		request.setAttribute("liferay-ui:trash-empty:portletURL", _portletURL);
+			"liferay-trash:trash-empty:infoMessage", _infoMessage);
 		request.setAttribute(
-			"liferay-ui:trash-empty:totalEntries", _totalEntries);
+			"liferay-trash:trash-empty:portletURL", _portletURL);
+		request.setAttribute(
+			"liferay-trash:trash-empty:totalEntries", _totalEntries);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;

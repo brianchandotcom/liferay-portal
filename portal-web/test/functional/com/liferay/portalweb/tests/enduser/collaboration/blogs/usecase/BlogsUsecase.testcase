@@ -89,7 +89,7 @@
 		</execute>
 	</command>
 
-	<command name="AddBlogsEntryWithInlineImage">
+	<command name="AddBlogsEntryWithInlineImage" priority="4">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">

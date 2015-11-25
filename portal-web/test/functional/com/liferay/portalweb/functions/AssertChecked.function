@@ -11,7 +11,7 @@
 
 	<command name="assertCheckedToggleSwitch">
 		<execute selenium="waitForElementPresent" />
-		
+
 		<execute selenium="assertChecked" />
 
 		<execute selenium="assertJavaScriptErrors" />

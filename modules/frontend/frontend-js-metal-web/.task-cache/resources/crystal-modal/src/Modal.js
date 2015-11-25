@@ -1,320 +1,203 @@
-define(
-    "frontend-js-metal-web@1.0.0/crystal-modal/src/Modal",
-    ['exports', 'module', 'metal/src/core', 'metal/src/dom/dom', 'metal/src/component/ComponentRegistry', 'metal/src/events/EventHandler', 'metal/src/soy/SoyComponent', 'crystal-modal/src/Modal.soy', 'metal-jquery-adapter/src/JQueryAdapter'],
-    function (exports, module, _metalSrcCore, _metalSrcDomDom, _metalSrcComponentComponentRegistry, _metalSrcEventsEventHandler, _metalSrcSoySoyComponent, _crystalModalSrcModalSoy, _metalJqueryAdapterSrcJQueryAdapter) {
-        'use strict';
+'use strict';
 
-        var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
 
-        var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+define("frontend-js-metal-web@1.0.0/crystal-modal/src/Modal", ['exports', 'metal/src/core', 'metal/src/dom/dom', 'metal/src/events/EventHandler', 'crystal-modal/src/Modal.soy', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _core, _dom, _EventHandler, _Modal, _JQueryAdapter) {
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 
-        function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	var _core2 = _interopRequireDefault(_core);
 
-        function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	var _dom2 = _interopRequireDefault(_dom);
 
-        function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	var _EventHandler2 = _interopRequireDefault(_EventHandler);
 
-        var _core = _interopRequireDefault(_metalSrcCore);
+	var _Modal2 = _interopRequireDefault(_Modal);
 
-        var _dom = _interopRequireDefault(_metalSrcDomDom);
+	var _JQueryAdapter2 = _interopRequireDefault(_JQueryAdapter);
 
-        var _ComponentRegistry = _interopRequireDefault(_metalSrcComponentComponentRegistry);
+	function _interopRequireDefault(obj) {
+		return obj && obj.__esModule ? obj : {
+			default: obj
+		};
+	}
 
-        var _EventHandler = _interopRequireDefault(_metalSrcEventsEventHandler);
+	function _classCallCheck(instance, Constructor) {
+		if (!(instance instanceof Constructor)) {
+			throw new TypeError("Cannot call a class as a function");
+		}
+	}
 
-        var _SoyComponent2 = _interopRequireDefault(_metalSrcSoySoyComponent);
+	function _possibleConstructorReturn(self, call) {
+		if (!self) {
+			throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+		}
 
-        var _JQueryAdapter = _interopRequireDefault(_metalJqueryAdapterSrcJQueryAdapter);
+		return call && ((typeof call === 'undefined' ? 'undefined' : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+	}
 
-        /**
-      * Modal component.
-      */
+	function _inherits(subClass, superClass) {
+		if (typeof superClass !== "function" && superClass !== null) {
+			throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+		}
 
-        var Modal = (function (_SoyComponent) {
-            _inherits(Modal, _SoyComponent);
+		subClass.prototype = Object.create(superClass && superClass.prototype, {
+			constructor: {
+				value: subClass,
+				enumerable: false,
+				writable: true,
+				configurable: true
+			}
+		});
+		if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+	}
 
-            /**
-       * @inheritDoc
-       */
+	var Modal = (function (_ModalBase) {
+		_inherits(Modal, _ModalBase);
 
-            function Modal(opt_config) {
-                _classCallCheck(this, Modal);
+		function Modal(opt_config) {
+			_classCallCheck(this, Modal);
 
-                _get(Object.getPrototypeOf(Modal.prototype), 'constructor', this).call(this, opt_config);
-                this.eventHandler_ = new _EventHandler['default']();
-            }
+			var _this = _possibleConstructorReturn(this, _ModalBase.call(this, opt_config));
 
-            /**
-       * Default modal elementClasses.
-       * @default modal
-       * @type {string}
-       * @static
-       */
+			_this.eventHandler_ = new _EventHandler2.default();
+			return _this;
+		}
 
-            /**
-       * @inheritDoc
-       */
+		Modal.prototype.attached = function attached() {
+			this.autoFocus_(this.autoFocus);
+		};
 
-            _createClass(Modal, [{
-                key: 'attached',
-                value: function attached() {
-                    this.autoFocus_(this.autoFocus);
-                }
+		Modal.prototype.autoFocus_ = function autoFocus_(autoFocusSelector) {
+			if (this.inDocument && this.visible && autoFocusSelector) {
+				var element = this.element.querySelector(autoFocusSelector);
 
-                /**
-        * Automatically focuses the element specified by the given selector.
-        * @param {boolean|string} autoFocusSelector The selector, or false if no
-        *   element should be automatically focused.
-        * @protected
-        */
-            }, {
-                key: 'autoFocus_',
-                value: function autoFocus_(autoFocusSelector) {
-                    if (this.inDocument && this.visible && autoFocusSelector) {
-                        var element = this.element.querySelector(autoFocusSelector);
-                        if (element) {
-                            element.focus();
-                        }
-                    }
-                }
+				if (element) {
+					element.focus();
+				}
+			}
+		};
 
-                /**
-        * @inheritDoc
-        */
-            }, {
-                key: 'detached',
-                value: function detached() {
-                    _get(Object.getPrototypeOf(Modal.prototype), 'detached', this).call(this);
-                    this.eventHandler_.removeAllListeners();
-                }
+		Modal.prototype.detached = function detached() {
+			_ModalBase.prototype.detached.call(this);
 
-                /**
-        * @inheritDoc
-        */
-            }, {
-                key: 'disposeInternal',
-                value: function disposeInternal() {
-                    _dom['default'].exitDocument(this.overlayElement);
-                    this.unrestrictFocus_();
-                    _get(Object.getPrototypeOf(Modal.prototype), 'disposeInternal', this).call(this);
-                }
+			this.eventHandler_.removeAllListeners();
+		};
 
-                /**
-        * Handles a `focus` event on the document. If the focused element is
-        * outside the modal and an overlay is being used, focuses the modal back.
-        * @param {!Event} event
-        * @protected
-        */
-            }, {
-                key: 'handleDocumentFocus_',
-                value: function handleDocumentFocus_(event) {
-                    if (this.overlay && !this.element.contains(event.target)) {
-                        this.autoFocus_('.modal-dialog');
-                    }
-                }
+		Modal.prototype.disposeInternal = function disposeInternal() {
+			_dom2.default.exitDocument(this.overlayElement);
 
-                /**
-        * Handles document click in order to close the alert.
-        * @param {!Event} event
-        * @protected
-        */
-            }, {
-                key: 'handleKeyup_',
-                value: function handleKeyup_(event) {
-                    if (event.keyCode === 27) {
-                        this.hide();
-                    }
-                }
+			this.unrestrictFocus_();
 
-                /**
-        * Hides the modal, setting its `visible` attribute to false.
-        */
-            }, {
-                key: 'hide',
-                value: function hide() {
-                    this.visible = false;
-                }
+			_ModalBase.prototype.disposeInternal.call(this);
+		};
 
-                /**
-        * Restricts focus to the modal while it's visible.
-        * @protected
-        */
-            }, {
-                key: 'restrictFocus_',
-                value: function restrictFocus_() {
-                    this.restrictFocusHandle_ = _dom['default'].on(document, 'focus', this.handleDocumentFocus_.bind(this), true);
-                }
+		Modal.prototype.handleDocumentFocus_ = function handleDocumentFocus_(event) {
+			if (this.overlay && !this.element.contains(event.target)) {
+				this.autoFocus_('.modal-dialog');
+			}
+		};
 
-                /**
-        * Shifts the focus back to the last element that had been focused before the
-        * modal was shown.
-        * @protected
-        */
-            }, {
-                key: 'shiftFocusBack_',
-                value: function shiftFocusBack_() {
-                    if (this.lastFocusedElement_) {
-                        this.lastFocusedElement_.focus();
-                        this.lastFocusedElement_ = null;
-                    }
-                }
+		Modal.prototype.handleKeyup_ = function handleKeyup_(event) {
+			if (event.keyCode === 27) {
+				this.hide();
+			}
+		};
 
-                /**
-        * Shows the modal, setting its `visible` attribute to true.
-        */
-            }, {
-                key: 'show',
-                value: function show() {
-                    this.visible = true;
-                }
+		Modal.prototype.hide = function hide() {
+			this.visible = false;
+		};
 
-                /**
-        * Syncs the component according to the value of the `hideOnEscape` attribute.
-        * @param {boolean} hideOnEscape
-        */
-            }, {
-                key: 'syncHideOnEscape',
-                value: function syncHideOnEscape(hideOnEscape) {
-                    if (hideOnEscape) {
-                        this.eventHandler_.add(_dom['default'].on(document, 'keyup', this.handleKeyup_.bind(this)));
-                    } else {
-                        this.eventHandler_.removeAllListeners();
-                    }
-                }
+		Modal.prototype.restrictFocus_ = function restrictFocus_() {
+			this.restrictFocusHandle_ = _dom2.default.on(document, 'focus', this.handleDocumentFocus_.bind(this), true);
+		};
 
-                /**
-        * Syncs the component according to the value of the `overlay` attribute.
-        * @param {boolean} overlay
-        */
-            }, {
-                key: 'syncOverlay',
-                value: function syncOverlay(overlay) {
-                    var willShowOverlay = overlay && this.visible;
-                    _dom['default'][willShowOverlay ? 'enterDocument' : 'exitDocument'](this.overlayElement);
-                }
+		Modal.prototype.shiftFocusBack_ = function shiftFocusBack_() {
+			if (this.lastFocusedElement_) {
+				this.lastFocusedElement_.focus();
+				this.lastFocusedElement_ = null;
+			}
+		};
 
-                /**
-        * Syncs the component according to the value of the `visible` attribute.
-        * @param {boolean} visible
-        */
-            }, {
-                key: 'syncVisible',
-                value: function syncVisible(visible) {
-                    this.element.style.display = visible ? 'block' : '';
-                    this.syncOverlay(this.overlay);
-                    if (this.visible) {
-                        this.lastFocusedElement_ = document.activeElement;
-                        this.autoFocus_(this.autoFocus);
-                        this.restrictFocus_();
-                    } else {
-                        this.unrestrictFocus_();
-                        this.shiftFocusBack_();
-                    }
-                }
+		Modal.prototype.show = function show() {
+			this.visible = true;
+		};
 
-                /**
-        * Removes the handler that restricts focus to elements inside the modal.
-        * @protected
-        */
-            }, {
-                key: 'unrestrictFocus_',
-                value: function unrestrictFocus_() {
-                    if (this.restrictFocusHandle_) {
-                        this.restrictFocusHandle_.removeListener();
-                    }
-                }
+		Modal.prototype.syncHideOnEscape = function syncHideOnEscape(hideOnEscape) {
+			if (hideOnEscape) {
+				this.eventHandler_.add(_dom2.default.on(document, 'keyup', this.handleKeyup_.bind(this)));
+			} else {
+				this.eventHandler_.removeAllListeners();
+			}
+		};
 
-                /**
-        * Defines the default value for the `overlayElement` attribute.
-        * @protected
-        */
-            }, {
-                key: 'valueOverlayElementFn_',
-                value: function valueOverlayElementFn_() {
-                    return _dom['default'].buildFragment('<div class="modal-backdrop fade in"></div>').firstChild;
-                }
-            }]);
+		Modal.prototype.syncOverlay = function syncOverlay(overlay) {
+			var willShowOverlay = overlay && this.visible;
 
-            return Modal;
-        })(_SoyComponent2['default']);
+			_dom2.default[willShowOverlay ? 'enterDocument' : 'exitDocument'](this.overlayElement);
+		};
 
-        Modal.ELEMENT_CLASSES = 'modal';
+		Modal.prototype.syncVisible = function syncVisible(visible) {
+			this.element.style.display = visible ? 'block' : '';
+			this.syncOverlay(this.overlay);
 
-        Modal.ATTRS = {
-            /**
-       * A selector for the element that should be automatically focused when the modal
-       * becomes visible, or `false` if no auto focus should happen. Defaults to the
-       * modal's close button.
-       * @type {boolean|string}
-       */
-            autoFocus: {
-                validator: function validator(val) {
-                    return val === false || _core['default'].isString(val);
-                },
-                value: '.close'
-            },
+			if (this.visible) {
+				this.lastFocusedElement_ = document.activeElement;
+				this.autoFocus_(this.autoFocus);
+				this.restrictFocus_();
+			} else {
+				this.unrestrictFocus_();
+				this.shiftFocusBack_();
+			}
+		};
 
-            /**
-       * Content to be placed inside modal body.
-       * @type {string|SanitizedHtml}
-       */
-            body: {},
+		Modal.prototype.unrestrictFocus_ = function unrestrictFocus_() {
+			if (this.restrictFocusHandle_) {
+				this.restrictFocusHandle_.removeListener();
+			}
+		};
 
-            /**
-       * Content to be placed inside modal footer.
-       * @type {string|SanitizedHtml}
-       */
-            footer: {},
+		Modal.prototype.valueOverlayElementFn_ = function valueOverlayElementFn_() {
+			return _dom2.default.buildFragment('<div class="modal-backdrop fade in"></div>').firstChild;
+		};
 
-            /**
-       * Content to be placed inside modal header.
-       * @type {string|SanitizedHtml}
-       */
-            header: {},
+		return Modal;
+	})(_Modal2.default);
 
-            /**
-       * Whether modal should hide on esc.
-       * @type {boolean}
-       * @default true
-       */
-            hideOnEscape: {
-                validator: _core['default'].isBoolean,
-                value: true
-            },
+	Modal.ELEMENT_CLASSES = 'modal';
+	Modal.ATTRS = {
+		autoFocus: {
+			validator: function validator(val) {
+				return val === false || _core2.default.isString(val);
+			},
+			value: '.close'
+		},
+		body: {},
+		footer: {},
+		header: {},
+		hideOnEscape: {
+			validator: _core2.default.isBoolean,
+			value: true
+		},
+		overlay: {
+			validator: _core2.default.isBoolean,
+			value: true
+		},
+		overlayElement: {
+			initOnly: true,
+			valueFn: 'valueOverlayElementFn_'
+		},
+		role: {
+			validator: _core2.default.isString,
+			value: 'dialog'
+		}
+	};
 
-            /**
-       * Whether overlay should be visible when modal is visible.
-       * @type {boolean}
-       * @default true
-       */
-            overlay: {
-                validator: _core['default'].isBoolean,
-                value: true
-            },
+	_Modal2.default.setImpl(Modal);
 
-            /**
-       * Element to be used as overlay.
-       * @type {Element}
-       */
-            overlayElement: {
-                initOnly: true,
-                valueFn: 'valueOverlayElementFn_'
-            },
+	exports.default = Modal;
 
-            /**
-       * The ARIA role to be used for this modal.
-       * @type {string}
-       * @default 'dialog'
-       */
-            role: {
-                validator: _core['default'].isString,
-                value: 'dialog'
-            }
-        };
-
-        _ComponentRegistry['default'].register('Modal', Modal);
-
-        module.exports = Modal;
-        _JQueryAdapter['default'].register('modal', Modal);
-    }
-);
+	_JQueryAdapter2.default.register('modal', Modal);
+});
+//# sourceMappingURL=Modal.js.map

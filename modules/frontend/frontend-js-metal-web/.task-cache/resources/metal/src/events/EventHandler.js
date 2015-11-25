@@ -1,86 +1,83 @@
-define(
-    "frontend-js-metal-web@1.0.0/metal/src/events/EventHandler",
-    ['exports', 'module', 'metal/src/disposable/Disposable'],
-    function (exports, module, _metalSrcDisposableDisposable) {
-        'use strict';
+'use strict';
 
-        var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
 
-        var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+define("frontend-js-metal-web@1.0.0/metal/src/events/EventHandler", ['exports', 'metal/src/disposable/Disposable'], function (exports, _Disposable2) {
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 
-        function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	var _Disposable3 = _interopRequireDefault(_Disposable2);
 
-        function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	function _interopRequireDefault(obj) {
+		return obj && obj.__esModule ? obj : {
+			default: obj
+		};
+	}
 
-        function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	function _classCallCheck(instance, Constructor) {
+		if (!(instance instanceof Constructor)) {
+			throw new TypeError("Cannot call a class as a function");
+		}
+	}
 
-        var _Disposable2 = _interopRequireDefault(_metalSrcDisposableDisposable);
+	function _possibleConstructorReturn(self, call) {
+		if (!self) {
+			throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+		}
 
-        /**
-      * EventHandler utility. It's useful for easily removing a group of
-      * listeners from different EventEmitter instances.
-      * @constructor
-      * @extends {Disposable}
-      */
+		return call && ((typeof call === 'undefined' ? 'undefined' : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+	}
 
-        var EventHandler = (function (_Disposable) {
-            _inherits(EventHandler, _Disposable);
+	function _inherits(subClass, superClass) {
+		if (typeof superClass !== "function" && superClass !== null) {
+			throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+		}
 
-            function EventHandler() {
-                _classCallCheck(this, EventHandler);
+		subClass.prototype = Object.create(superClass && superClass.prototype, {
+			constructor: {
+				value: subClass,
+				enumerable: false,
+				writable: true,
+				configurable: true
+			}
+		});
+		if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+	}
 
-                _get(Object.getPrototypeOf(EventHandler.prototype), 'constructor', this).call(this);
+	var EventHandler = (function (_Disposable) {
+		_inherits(EventHandler, _Disposable);
 
-                /**
-        * An array that holds the added event handles, so the listeners can be
-        * removed later.
-        * @type {Array.<EventHandle>}
-        * @protected
-        */
-                this.eventHandles_ = [];
-            }
+		function EventHandler() {
+			_classCallCheck(this, EventHandler);
 
-            /**
-       * Adds event handles to be removed later through the `removeAllListeners`
-       * method.
-       * @param {...(!EventHandle)} var_args
-       */
+			var _this = _possibleConstructorReturn(this, _Disposable.call(this));
 
-            _createClass(EventHandler, [{
-                key: 'add',
-                value: function add() {
-                    for (var i = 0; i < arguments.length; i++) {
-                        this.eventHandles_.push(arguments[i]);
-                    }
-                }
+			_this.eventHandles_ = [];
+			return _this;
+		}
 
-                /**
-        * Disposes of this instance's object references.
-        * @override
-        */
-            }, {
-                key: 'disposeInternal',
-                value: function disposeInternal() {
-                    this.eventHandles_ = null;
-                }
+		EventHandler.prototype.add = function add() {
+			for (var i = 0; i < arguments.length; i++) {
+				this.eventHandles_.push(arguments[i]);
+			}
+		};
 
-                /**
-        * Removes all listeners that have been added through the `add` method.
-        */
-            }, {
-                key: 'removeAllListeners',
-                value: function removeAllListeners() {
-                    for (var i = 0; i < this.eventHandles_.length; i++) {
-                        this.eventHandles_[i].removeListener();
-                    }
+		EventHandler.prototype.disposeInternal = function disposeInternal() {
+			this.eventHandles_ = null;
+		};
 
-                    this.eventHandles_ = [];
-                }
-            }]);
+		EventHandler.prototype.removeAllListeners = function removeAllListeners() {
+			for (var i = 0; i < this.eventHandles_.length; i++) {
+				this.eventHandles_[i].removeListener();
+			}
 
-            return EventHandler;
-        })(_Disposable2['default']);
+			this.eventHandles_ = [];
+		};
 
-        module.exports = EventHandler;
-    }
-);
+		return EventHandler;
+	})(_Disposable3.default);
+
+	exports.default = EventHandler;
+});
+//# sourceMappingURL=EventHandler.js.map

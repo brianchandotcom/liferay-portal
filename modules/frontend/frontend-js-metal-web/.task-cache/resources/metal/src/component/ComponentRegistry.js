@@ -1,77 +1,58 @@
-define(
-    "frontend-js-metal-web@1.0.0/metal/src/component/ComponentRegistry",
-    ['exports', 'module'],
-    function (exports, module) {
-        'use strict';
+'use strict';
 
-        /**
-      * The component registry is used to register components, so they can
-      * be accessible by name.
-      * @type {Object}
-      */
+define("frontend-js-metal-web@1.0.0/metal/src/component/ComponentRegistry", ['exports', 'metal/src/core'], function (exports, _core) {
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 
-        var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	var _core2 = _interopRequireDefault(_core);
 
-        function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	function _interopRequireDefault(obj) {
+		return obj && obj.__esModule ? obj : {
+			default: obj
+		};
+	}
 
-        var ComponentRegistry = (function () {
-            function ComponentRegistry() {
-                _classCallCheck(this, ComponentRegistry);
-            }
+	function _classCallCheck(instance, Constructor) {
+		if (!(instance instanceof Constructor)) {
+			throw new TypeError("Cannot call a class as a function");
+		}
+	}
 
-            /**
-       * Holds all registered components, indexed by their names.
-       * @type {!Object<string, function()>}
-       * @protected
-       * @static
-       */
+	var ComponentRegistry = (function () {
+		function ComponentRegistry() {
+			_classCallCheck(this, ComponentRegistry);
+		}
 
-            _createClass(ComponentRegistry, null, [{
-                key: 'getConstructor',
+		ComponentRegistry.getConstructor = function getConstructor(name) {
+			var constructorFn = ComponentRegistry.components_[name];
 
-                /**
-        * Gets the constructor function for the given component name, or
-        * undefined if it hasn't been registered yet.
-        * @param {string} name The component's name.
-        * @return {?function}
-        * @static
-        */
-                value: function getConstructor(name) {
-                    var constructorFn = ComponentRegistry.components_[name];
-                    if (!constructorFn) {
-                        console.error('There\'s no constructor registered for the component ' + 'named ' + name + '. Components need to be registered via ' + 'ComponentRegistry.register.');
-                    }
-                    return constructorFn;
-                }
+			if (!constructorFn) {
+				console.error('There\'s no constructor registered for the component ' + 'named ' + name + '. Components need to be registered via ' + 'ComponentRegistry.register.');
+			}
 
-                /**
-        * Registers a component.
-        * @param {string} name The component's name.
-        * @param {string} constructorFn The component's constructor function.
-        * @static
-        */
-            }, {
-                key: 'register',
-                value: function register(name, constructorFn) {
-                    ComponentRegistry.components_[name] = constructorFn;
-                    constructorFn.NAME = name;
-                    constructorFn.TEMPLATES = ComponentRegistry.Templates[name];
-                }
-            }]);
+			return constructorFn;
+		};
 
-            return ComponentRegistry;
-        })();
+		ComponentRegistry.register = function register(constructorFn, opt_name) {
+			var name = opt_name;
 
-        ComponentRegistry.components_ = {};
+			if (!name) {
+				if (constructorFn.hasOwnProperty('NAME')) {
+					name = constructorFn.NAME;
+				} else {
+					name = _core2.default.getFunctionName(constructorFn);
+				}
+			}
 
-        /**
-      * Holds all registered component templates, indexed by component names.
-      * Soy files automatically add their templates to this object when imported.
-      * @type {!Object<string, !Object<string, !function()>>}
-      * @static
-      */
-        ComponentRegistry.Templates = {};
+			constructorFn.NAME = name;
+			ComponentRegistry.components_[name] = constructorFn;
+		};
 
-        module.exports = ComponentRegistry;
-    }
-);
+		return ComponentRegistry;
+	})();
+
+	ComponentRegistry.components_ = {};
+	exports.default = ComponentRegistry;
+});
+//# sourceMappingURL=ComponentRegistry.js.map

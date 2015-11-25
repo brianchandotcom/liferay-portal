@@ -1314,6 +1314,97 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-portal-legacy-properties">
+		<attribute name="portal.major.version" />
+		<sequential>
+			<var name="portal.legacy.file.content" unset="true" />
+
+			<loadfile property="portal.legacy.file.content" srcFile="portal-impl/src/portal-legacy-@{portal.major.version}.properties" />
+
+			<propertyregex
+				input="${portal.legacy.file.content}"
+				override="true"
+				property="portal.legacy.file.content"
+				regexp="\$\{resource.repositories.root\}"
+				replace="$${liferay.home}"
+			/>
+
+			<propertyregex
+				input="${portal.legacy.file.content}"
+				override="true"
+				property="portal.legacy.file.content"
+				regexp="dl.store.cmis.*"
+				replace=""
+			/>
+
+			<propertyregex
+				input="${portal.legacy.file.content}"
+				override="true"
+				property="portal.legacy.file.content"
+				regexp="dl.store.jcr.fetch.delay=.*"
+				replace="dl.store.jcr.fetch.delay=500"
+			/>
+
+			<propertyregex
+				input="${portal.legacy.file.content}"
+				override="true"
+				property="portal.legacy.file.content"
+				regexp="dl.store.jcr.fetch.max.failures=.*"
+				replace="dl.store.jcr.fetch.max.failures=5"
+			/>
+
+			<propertyregex
+				input="${portal.legacy.file.content}"
+				override="true"
+				property="portal.legacy.file.content"
+				regexp="dl.store.jcr.move.version.labels=.*"
+				replace="dl.store.jcr.move.version.labels=false"
+			/>
+
+			<propertyregex
+				input="${portal.legacy.file.content}"
+				override="true"
+				property="portal.legacy.file.content"
+				regexp="dl.store.s3.*"
+				replace=""
+			/>
+
+			<propertyregex
+				input="${portal.legacy.file.content}"
+				override="true"
+				property="portal.legacy.file.content"
+				regexp="resource.repositories.root=.*"
+				replace=""
+			/>
+
+			<propertyregex
+				input="${portal.legacy.file.content}"
+				override="true"
+				property="portal.legacy.file.content"
+				regexp="permissions.user.check.algorithm=.*"
+				replace=""
+			/>
+
+			<propertyregex
+				input="${portal.legacy.file.content}"
+				override="true"
+				property="portal.legacy.file.content"
+				regexp="permissions.view.dynamic.inheritance=.*"
+				replace=""
+			/>
+
+			<echo file="portal-impl/src/portal-ext.properties" append="true">
+
+##
+## From portal-legacy-@{portal.major.version}.properties
+##
+
+${portal.legacy.file.content}</echo>
+
+			<var name="portal.legacy.file.content" unset="true" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-safari-driver">
 		<sequential>
 			<if>
@@ -4495,26 +4586,7 @@ javascript.fast.load=false</echo>
 		<if>
 			<equals arg1="${portal.major.version}" arg2="5.1" />
 			<then>
-				<echo file="portal-impl/src/portal-ext.properties" append="true">
-
-##
-## From portal-legacy-5.1.properties
-##
-
-theme.portlet.sharing.default=true
-
-organizations.country.required[regular]=true
-organizations.assignment.auto=true
-organizations.assignment.strict=false
-organizations.membership.strict=true
-
-lucene.dir=$${liferay.home}/lucene/
-
-jcr.jackrabbit.repository.root=$${liferay.home}/jackrabbit
-
-dl.hook.impl=com.liferay.documentlibrary.util.JCRHook
-
-dl.hook.file.system.root.dir=$${liferay.home}/document_library</echo>
+				<prepare-portal-legacy-properties portal.major.version="5.1" />
 			</then>
 		</if>
 
@@ -4524,34 +4596,7 @@ dl.hook.file.system.root.dir=$${liferay.home}/document_library</echo>
 				<equals arg1="${portal.major.version}" arg2="5.2" />
 			</or>
 			<then>
-				<echo file="portal-impl/src/portal-ext.properties" append="true">
-
-##
-## From portal-legacy-5.2.properties
-##
-
-users.image.max.height=0
-users.image.max.width=0
-
-locale.prepend.friendly.url.style=0
-
-auth.token.check.enabled=false
-
-#permissions.user.check.algorithm=5
-#permissions.view.dynamic.inheritance=false
-
-image.hook.impl=com.liferay.portal.image.DatabaseHook
-
-cdn.host.http=$${cdn.host}
-cdn.host.https=$${cdn.host}
-
-virtual.hosts.default.community.name=
-
-breadcrumb.show.guest.group=false
-breadcrumb.show.parent.groups=false
-
-wiki.page.titles.regexp=([^/\\\\\\[\\]%&amp;?@]+)
-wiki.page.titles.remove.regexp=([/\\\\\\[\\]%&amp;?@]+)</echo>
+				<prepare-portal-legacy-properties portal.major.version="5.2" />
 			</then>
 		</if>
 
@@ -4562,40 +4607,7 @@ wiki.page.titles.remove.regexp=([/\\\\\\[\\]%&amp;?@]+)</echo>
 				<equals arg1="${portal.major.version}" arg2="6.0" />
 			</or>
 			<then>
-				<echo file="portal-impl/src/portal-ext.properties" append="true">
-
-##
-## From portal-legacy-6.0.properties
-##
-
-users.last.name.required=true
-
-portal.security.manager.strategy=liferay
-
-layout.types=portlet,panel,embedded,article,url,link_to_layout
-
-editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.bb_code.jsp=bbcode
-
-setup.wizard.enabled=false
-
-discussion.subscribe.by.default=false
-
-#dl.store.cmis.credentials.username=${dl.hook.cmis.credentials.username}
-#dl.store.cmis.credentials.password=${dl.hook.cmis.credentials.password}
-#dl.store.cmis.repository.url=${dl.hook.cmis.repository.url}
-#dl.store.cmis.system.root.dir=${dl.hook.cmis.system.root.dir}
-
-dl.store.file.system.root.dir=${liferay.home}/data/document_library
-
-dl.store.jcr.fetch.delay=500
-dl.store.jcr.fetch.max.failures=5
-dl.store.jcr.move.version.labels=false
-
-dl.store.s3.access.key=
-dl.store.s3.secret.key=
-dl.store.s3.bucket.name=
-
-message.boards.subscribe.by.default=false</echo>
+				<prepare-portal-legacy-properties portal.major.version="6.0" />
 			</then>
 		</if>
 
@@ -4607,28 +4619,7 @@ message.boards.subscribe.by.default=false</echo>
 				<equals arg1="${portal.major.version}" arg2="6.1" />
 			</or>
 			<then>
-				<echo file="portal-impl/src/portal-ext.properties" append="true">
-
-##
-## From portal-legacy-6.1.properties
-##
-
-hibernate.cache.use_query_cache=true
-hibernate.cache.use_second_level_cache=true
-
-locale.prepend.friendly.url.style=1
-
-passwords.encryption.algorithm.legacy=SHA
-
-mobile.device.styling.wap.enabled=true
-
-dl.char.blacklist=\\\\,//,:,*,?,\",&lt;,&gt;,|,[,],../,/..
-
-dl.char.last.blacklist=
-
-dl.name.blacklist=
-
-journal.articles.search.with.index=false</echo>
+				<prepare-portal-legacy-properties portal.major.version="6.1" />
 			</then>
 		</if>
 
@@ -4641,28 +4632,7 @@ journal.articles.search.with.index=false</echo>
 				<equals arg1="${portal.major.version}" arg2="6.2" />
 			</or>
 			<then>
-				<echo file="portal-impl/src/portal-ext.properties" append="true">
-
-##
-## From portal-legacy-6.2.properties
-##
-
-users.image.check.token=false
-
-layout.set.prototype.propagate.logo=true
-
-editor.wysiwyg.portal-web.docroot.html.taglib.ui.discussion.jsp=simple
-
-web.server.servlet.check.image.gallery=true
-
-blogs.trackback.enabled=true
-
-discussion.comments.format=bbcode
-
-discussion.max.comments=0
-
-dl.file.entry.thumbnail.max.height=128
-dl.file.entry.thumbnail.max.width=128</echo>
+				<prepare-portal-legacy-properties portal.major.version="6.2" />
 			</then>
 		</if>
 

@@ -9,6 +9,16 @@
 		<execute selenium="assertLiferayErrors" />
 	</command>
 
+	<command name="assertCheckedToggleSwitch">
+		<execute selenium="waitForElementPresent" />
+		
+		<execute selenium="assertChecked" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+	</command>
+
 	<command name="waitForElementPresentAssertChecked">
 		<execute selenium="waitForElementPresent" />
 

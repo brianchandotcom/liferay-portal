@@ -1,4 +1,12 @@
 <definition>
+	<var name="ddlDataDefinitionName" value="Data Definition Name" />
+
+	<command name="gotoAddListRecord">
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="New ${ddlDataDefinitionName}" />
+	</command>
+
 	<command name="gotoDDLRecordEditViaWorkflow">
 		<execute function="AssertClick" locator1="WorkflowSubmissionsTask#PREVIEW_EDIT" value1="Edit" />
 		<execute function="SelectFrame" value1="relative=top" />

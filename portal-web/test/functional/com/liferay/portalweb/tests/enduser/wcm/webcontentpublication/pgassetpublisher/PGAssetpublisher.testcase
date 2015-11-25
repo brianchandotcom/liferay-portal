@@ -586,7 +586,7 @@
 		<execute macro="DDLRecord#viewCP" />
 
 		<for list="firstRecord,secondText,thirdTest" param="ddlRecordFieldData">
-			<execute macro="DDLRecord#addDefinitionCP" />
+			<execute macro="DDLNavigator#gotoAddListRecord" />
 
 			<execute macro="DDLRecord#populateFieldText">
 				<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />

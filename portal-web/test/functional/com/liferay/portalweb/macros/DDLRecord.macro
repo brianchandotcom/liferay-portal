@@ -10,13 +10,9 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLRecord#addDefinitionCP" />
-	</command>
-
-	<command name="addDefinitionCP">
-		<execute function="Click" locator1="Button#PLUS" />
-
-		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="New DDL Definition" />
+		<execute macro="DDLNavigator#gotoAddListRecord">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+		</execute>
 	</command>
 
 	<command name="addRepeatableField">

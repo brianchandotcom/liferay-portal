@@ -96,13 +96,9 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 
 		long[] addOrganizationIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "addOrganizationIds"), 0L);
-		long[] removeOrganizationIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "removeOrganizationIds"), 0L);
 
 		_organizationService.addGroupOrganizations(
 			themeDisplay.getSiteGroupId(), addOrganizationIds);
-		_organizationService.unsetGroupOrganizations(
-			themeDisplay.getSiteGroupId(), removeOrganizationIds);
 
 		String redirect = ParamUtil.getString(
 			actionRequest, "assignmentsRedirect");
@@ -148,13 +144,9 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long[] addOrganizationIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "addOrganizationIds"), 0L);
 		long[] removeOrganizationIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "removeOrganizationIds"), 0L);
 
-		_organizationService.addGroupOrganizations(
-			themeDisplay.getSiteGroupId(), addOrganizationIds);
 		_organizationService.unsetGroupOrganizations(
 			themeDisplay.getSiteGroupId(), removeOrganizationIds);
 

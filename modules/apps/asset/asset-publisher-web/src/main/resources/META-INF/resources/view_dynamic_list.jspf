@@ -15,7 +15,7 @@
 --%>
 
 <%
-List<AssetEntryResult> assetEntryResults = assetPublisherDisplayContext.getAssetEntryResults(searchContainer);
+List<AssetEntryResult> assetEntryResults = AssetPublisherUtil.getAssetEntryResults(assetPublisherDisplayContext, searchContainer, portletPreferences);
 
 for (AssetEntryResult assetEntryResult : assetEntryResults) {
 	List<AssetEntry> assetEntries = assetEntryResult.getAssetEntries();

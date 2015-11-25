@@ -1220,6 +1220,14 @@
 		<execute macro="RecycleBin#emptyCP" />
 	</command>
 
+	<command name="viewAsWorkflowAsset">
+		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${wikiPageTitle}" />
+
+		<var name="key_wikiPageContent" value="${wikiPageContent}" />
+
+		<execute function="AssertTextEquals" locator1="Wiki#BODY_ASSET" value1="${wikiPageContent}" />
+	</command>
+
 	<command name="viewAttachmentPG">
 		<var name="key_attachmentFileName" value="${attachmentFileName}" />
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />

@@ -36,7 +36,7 @@
 		<if>
 			<equals arg1="${allowMultipleCategories}" arg2="false" />
 			<then>
-				<execute function="Uncheck#uncheckToggleSwitch" locator1="CategoriesEditVocabulary#ALLOW_MULTIPLE_CATEGORIES_CHECKBOX" />
+				<execute function="Uncheck#uncheckToggleSwitch" locator1="CategoriesEditVocabulary#ALLOW_MULTIPLE_CATEGORIES_TOGGLE_SWITCH" />
 			</then>
 		</if>
 
@@ -191,12 +191,12 @@
 		<if>
 			<equals arg1="${allowMultipleCategories}" arg2="false" />
 			<then>
-				<execute function="Uncheck#uncheckToggleSwitch" locator1="CategoriesEditVocabulary#ALLOW_MULTIPLE_CATEGORIES_CHECKBOX" />
+				<execute function="Uncheck#uncheckToggleSwitch" locator1="CategoriesEditVocabulary#ALLOW_MULTIPLE_CATEGORIES_TOGGLE_SWITCH" />
 			</then>
 			<elseif>
 				<equals arg1="${allowMultipleCategories}" arg2="true" />
 				<then>
-					<execute function="Check#checkToggleSwitch" locator1="CategoriesEditVocabulary#ALLOW_MULTIPLE_CATEGORIES_CHECKBOX" />
+					<execute function="Check#checkToggleSwitch" locator1="CategoriesEditVocabulary#ALLOW_MULTIPLE_CATEGORIES_TOGGLE_SWITCH" />
 				</then>
 			</elseif>
 		</if>
@@ -248,7 +248,7 @@
 
 				<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 				<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
-				<execute function="AssertNotChecked#assertNotCheckedToggleSwitch" locator1="CategoriesEditVocabulary#ALLOW_MULTIPLE_CATEGORIES_CHECKBOX" />
+				<execute function="AssertNotChecked#assertNotCheckedToggleSwitch" locator1="CategoriesEditVocabulary#ALLOW_MULTIPLE_CATEGORIES_TOGGLE_SWITCH" />
 			</then>
 		</if>
 	</command>

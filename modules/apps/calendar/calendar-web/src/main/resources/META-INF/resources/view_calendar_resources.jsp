@@ -20,37 +20,35 @@
 CalendarResourceDisplayTerms displayTerms = new CalendarResourceDisplayTerms(renderRequest);
 %>
 
-<liferay-portlet:renderURL varImpl="searchURL" />
+<c:if test="<%= CalendarPortletPermission.contains(permissionChecker, scopeGroupId, CalendarActionKeys.ADD_RESOURCE) %>">
+	<aui:button-row>
+		<liferay-portlet:renderURL var="editCalendarResourceURL">
+			<liferay-portlet:param name="mvcPath" value="/edit_calendar_resource.jsp" />
+			<liferay-portlet:param name="redirect" value="<%= currentURL %>" />
+		</liferay-portlet:renderURL>
 
-<aui:form action="<%= searchURL %>" method="get" name="fm">
-	<liferay-portlet:renderURLParams varImpl="searchURL" />
-	<aui:input name="mvcPath" type="hidden" value="/view.jsp" />
-	<aui:input name="tabs1" type="hidden" value="resources" />
-
-	<liferay-ui:search-form
-		page="/calendar_resource_search.jsp"
-		servletContext="<%= application %>"
-	/>
-</aui:form>
-
-<div class="separator"><!-- --></div>
+		<aui:button onClick="<%= editCalendarResourceURL %>" primary="<%= true %>" value="add-calendar-resource" />
+	</aui:button-row>
+</c:if>
 
 <liferay-portlet:renderURL varImpl="iteratorURL">
 	<portlet:param name="mvcPath" value="/view.jsp" />
 	<portlet:param name="tabs1" value="resources" />
 </liferay-portlet:renderURL>
 
-<c:choose>
-	<c:when test="<%= displayTerms.getScope() == themeDisplay.getCompanyGroupId() %>">
-		<h3><liferay-ui:message key="users" /></h3>
+<div class="container-fluid-1280">
+	<c:choose>
+		<c:when test="<%= displayTerms.getScope() == themeDisplay.getCompanyGroupId() %>">
+			<h3><liferay-ui:message key="users" /></h3>
 
-		<%@ include file="/calendar_resource_user_search_container.jspf" %>
+			<%@ include file="/calendar_resource_user_search_container.jspf" %>
 
-		<h3><liferay-ui:message key="sites" /></h3>
+			<h3><liferay-ui:message key="sites" /></h3>
 
-		<%@ include file="/calendar_resource_group_search_container.jspf" %>
-	</c:when>
-	<c:otherwise>
-		<%@ include file="/calendar_resource_search_container.jspf" %>
-	</c:otherwise>
-</c:choose>
+			<%@ include file="/calendar_resource_group_search_container.jspf" %>
+		</c:when>
+		<c:otherwise>
+			<%@ include file="/calendar_resource_search_container.jspf" %>
+		</c:otherwise>
+	</c:choose>
+</div>

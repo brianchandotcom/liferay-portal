@@ -64,7 +64,6 @@ renderResponse.setTitle(title);
 <liferay-util:buffer var="removeDDMStructureIcon">
 	<liferay-ui:icon
 		iconCssClass="icon-remove"
-		label="<%= true %>"
 		message="remove"
 	/>
 </liferay-util:buffer>
@@ -90,9 +89,28 @@ renderResponse.setTitle(title);
 
 	<aui:model-context bean="<%= folder %>" model="<%= JournalFolder.class %>" />
 
-	<aui:fieldset>
+	<aui:fieldset-group markupView="lexicon">
+		<c:if test="<%= !rootFolder %>">
+			<aui:fieldset>
+				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="name" />
+
+				<aui:input name="description" />
+			</aui:fieldset>
+
+			<liferay-ui:custom-attributes-available className="<%= JournalFolder.class.getName() %>">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
+					<liferay-ui:custom-attribute-list
+						className="<%= JournalFolder.class.getName() %>"
+						classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"
+						editable="<%= true %>"
+						label="<%= true %>"
+					/>
+				</aui:fieldset>
+			</liferay-ui:custom-attributes-available>
+		</c:if>
+
 		<c:if test="<%= !rootFolder && (folder != null) %>">
-			<aui:field-wrapper label="parent-folder">
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="parent-folder">
 
 				<%
 				String parentFolderName = LanguageUtil.get(request, "home");
@@ -117,8 +135,7 @@ renderResponse.setTitle(title);
 									{
 										dialog: {
 											constrain: true,
-											modal: true,
-											width: 680
+											modal: true
 										},
 										id: '<portlet:namespace />selectFolder',
 										title: '<liferay-ui:message arguments="folder" key="select-x" />',
@@ -152,41 +169,17 @@ renderResponse.setTitle(title);
 					<aui:button disabled="<%= (parentFolderId <= 0) %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
 				</div>
 
-				<aui:input disabled="<%= mergeWithParentFolderDisabled %>" label="merge-with-parent-folder" name="mergeWithParentFolder" type="checkbox" />
-			</aui:field-wrapper>
-		</c:if>
-
-		<c:if test="<%= !rootFolder %>">
-			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="name" />
-
-			<aui:input name="description" />
-
-			<liferay-ui:custom-attributes-available className="<%= JournalFolder.class.getName() %>">
-				<liferay-ui:custom-attribute-list
-					className="<%= JournalFolder.class.getName() %>"
-					classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"
-					editable="<%= true %>"
-					label="<%= true %>"
-				/>
-			</liferay-ui:custom-attributes-available>
+				<aui:input disabled="<%= mergeWithParentFolderDisabled %>" label="merge-with-parent-folder" name="mergeWithParentFolder" type="toggle-switch" />
+			</aui:fieldset>
 		</c:if>
 
 		<c:if test="<%= rootFolder || (folder != null) %>">
 
 			<%
 			List<DDMStructure> ddmStructures = JournalFolderLocalServiceUtil.getDDMStructures(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), folderId, JournalFolderConstants.RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW);
-
-			String headerNames = null;
-
-			if (workflowEnabled) {
-				headerNames = "name,workflow,null";
-			}
-			else {
-				headerNames = "name,null";
-			}
 			%>
 
-			<aui:fieldset helpMessage='<%= rootFolder ? "" : "structure-restrictions-help" %>' label='<%= rootFolder ? "" : (workflowEnabled ? "structure-restrictions-and-workflow" : "structure-restrictions") %>'>
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" helpMessage='<%= rootFolder ? "" : "structure-restrictions-help" %>' label='<%= rootFolder ? "" : (workflowEnabled ? "structure-restrictions-and-workflow" : "structure-restrictions") %>'>
 				<c:if test="<%= !rootFolder %>">
 
 					<%
@@ -205,7 +198,6 @@ renderResponse.setTitle(title);
 
 					<div class='<%= (folder.getRestrictionType() == JournalFolderConstants.RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW) ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />restrictionTypeDefinedDiv">
 						<liferay-ui:search-container
-							headerNames="<%= headerNames %>"
 							total="<%= ddmStructures.size() %>"
 						>
 							<liferay-ui:search-container-results
@@ -259,12 +251,11 @@ renderResponse.setTitle(title);
 								</liferay-ui:search-container-column-text>
 							</liferay-ui:search-container-row>
 
-							<liferay-ui:search-iterator paginate="<%= false %>" />
+							<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
 						</liferay-ui:search-container>
 
 						<liferay-ui:icon
 							cssClass="modify-link select-structure"
-							iconCssClass="icon-search"
 							label="<%= true %>"
 							linkCssClass="btn btn-default"
 							message="choose-structure"
@@ -317,18 +308,18 @@ renderResponse.setTitle(title);
 		</c:if>
 
 		<c:if test="<%= !rootFolder && (folder == null) %>">
-			<aui:field-wrapper label="permissions">
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
 				<liferay-ui:input-permissions
 					modelName="<%= JournalFolder.class.getName() %>"
 				/>
-			</aui:field-wrapper>
+			</aui:fieldset>
 		</c:if>
-	</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:button-row>
-		<aui:button type="submit" />
+		<aui:button cssClass="btn-lg" type="submit" />
 
-		<aui:button href="<%= redirect %>" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

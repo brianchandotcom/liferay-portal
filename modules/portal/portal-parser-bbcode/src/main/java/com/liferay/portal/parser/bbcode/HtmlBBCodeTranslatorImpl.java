@@ -396,7 +396,8 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 	}
 
 	protected void handleImage(
-		StringBundler sb, List<BBCodeItem> bbCodeItems, IntegerWrapper marker) {
+		StringBundler sb, Stack<String> tags, List<BBCodeItem> bbCodeItems,
+		IntegerWrapper marker) {
 
 		sb.append("<img src=\"");
 
@@ -424,6 +425,8 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 		}
 
 		sb.append(" />");
+
+		tags.push(StringPool.BLANK);
 	}
 
 	protected void handleImageAttributes(StringBundler sb, String attributes) {
@@ -641,7 +644,7 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 			handleItalic(sb, tags);
 		}
 		else if (tag.equals("img")) {
-			handleImage(sb, bbCodeItems, marker);
+			handleImage(sb, tags, bbCodeItems, marker);
 		}
 		else if (tag.equals("li") || tag.equals("*")) {
 			handleListItem(sb, tags);

@@ -79,8 +79,7 @@ public class AssetTagsAdminPortlet extends MVCPortlet {
 			deleteTagIds = new long[] {tagId};
 		}
 		else {
-			deleteTagIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "deleteTagIds"), 0L);
+			deleteTagIds = ParamUtil.getLongValues(actionRequest, "rowIds");
 		}
 
 		for (long deleteTagId : deleteTagIds) {

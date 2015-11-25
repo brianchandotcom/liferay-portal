@@ -93,10 +93,6 @@ public class LoadBalanceUtil {
 					continue;
 				}
 
-				if (recentJobsMap.containsKey(hostNameList.get(i))) {
-					result -= recentJobsMap.get(hostNameList.get(i));
-				}
-
 				message.append(hostNameList.get(i));
 				message.append(" : ");
 				message.append(result);
@@ -317,19 +313,10 @@ public class LoadBalanceUtil {
 				continue;
 			}
 
-			if ((content.length() == 0) && (age < executionRate)) {
-				Thread.sleep(
-					executionRate - age +
-					getRandomValue(1, hostNameCount) * 100);
-
-				continue;
-			}
-
 			return;
 		}
 	}
 
-	protected static long executionRate = 0;
 	protected static long maxAge = 30 * 1000;
 	protected static final String myHostName;
 	protected static long recentJobsPeriod = 120 * 1000;

@@ -14,13 +14,14 @@
 
 package com.liferay.flags.web.portlet.action;
 
+import com.liferay.flags.service.FlagsEntryServiceUtil;
 import com.liferay.flags.web.constants.FlagsPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portlet.flags.service.FlagsEntryServiceUtil;
+
 
 
 import javax.portlet.ActionRequest;

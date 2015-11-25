@@ -496,6 +496,8 @@ AUI.add(
 
 						if (Lang.isValue(value)) {
 							inputNode.val(value);
+
+							inputNode.set('defaultValue', value);
 						}
 					},
 

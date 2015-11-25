@@ -108,6 +108,31 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 		}
 	}
 
+	public void addGroupUserGroups(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long[] addUserGroupIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "addUserGroupIds"), 0L);
+		long[] removeUserGroupIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "removeUserGroupIds"), 0L);
+
+		_userGroupService.addGroupUserGroups(
+			themeDisplay.getSiteGroupId(), addUserGroupIds);
+		_userGroupService.unsetGroupUserGroups(
+			themeDisplay.getSiteGroupId(), removeUserGroupIds);
+
+		String redirect = ParamUtil.getString(
+			actionRequest, "assignmentsRedirect");
+
+		if (Validator.isNotNull(redirect)) {
+			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
+		}
+	}
+
 	public void addGroupUsers(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -168,6 +193,31 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 		}
 	}
 
+	public void deleteGroupUserGroups(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long[] addUserGroupIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "addUserGroupIds"), 0L);
+		long[] removeUserGroupIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "removeUserGroupIds"), 0L);
+
+		_userGroupService.addGroupUserGroups(
+			themeDisplay.getSiteGroupId(), addUserGroupIds);
+		_userGroupService.unsetGroupUserGroups(
+			themeDisplay.getSiteGroupId(), removeUserGroupIds);
+
+		String redirect = ParamUtil.getString(
+			actionRequest, "assignmentsRedirect");
+
+		if (Validator.isNotNull(redirect)) {
+			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
+		}
+	}
+
 	public void deleteGroupUsers(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -197,31 +247,6 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 
 		LiveUsers.leaveGroup(
 			themeDisplay.getCompanyId(), groupId, removeUserIds);
-
-		String redirect = ParamUtil.getString(
-			actionRequest, "assignmentsRedirect");
-
-		if (Validator.isNotNull(redirect)) {
-			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
-		}
-	}
-
-	public void editGroupUserGroups(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long[] addUserGroupIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "addUserGroupIds"), 0L);
-		long[] removeUserGroupIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "removeUserGroupIds"), 0L);
-
-		_userGroupService.addGroupUserGroups(
-			themeDisplay.getSiteGroupId(), addUserGroupIds);
-		_userGroupService.unsetGroupUserGroups(
-			themeDisplay.getSiteGroupId(), removeUserGroupIds);
 
 		String redirect = ParamUtil.getString(
 			actionRequest, "assignmentsRedirect");

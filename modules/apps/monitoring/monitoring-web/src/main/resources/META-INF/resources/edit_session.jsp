@@ -28,7 +28,7 @@ int numHits = userTracker.getHits();
 
 userTracker = userTracker.toEscapedModel();
 
-renderResponse.setTitle(LanguageUtil.get(request, "live-session"));
+renderResponse.setTitle(LanguageUtil.format(request, "session-id-x", sessionId, false));
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);

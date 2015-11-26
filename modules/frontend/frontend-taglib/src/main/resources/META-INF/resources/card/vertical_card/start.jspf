@@ -25,4 +25,4 @@
 			</c:when>
 		</c:choose>
 
-		<div class="card card-dm <%= showCheckbox ? "toggle-card-container" : StringPool.BLANK %>">
+		<div class="card card-dm">

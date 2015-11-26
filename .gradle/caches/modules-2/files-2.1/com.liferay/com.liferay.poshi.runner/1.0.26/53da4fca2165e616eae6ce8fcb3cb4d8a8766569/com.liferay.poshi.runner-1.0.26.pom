@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.liferay</groupId>
   <artifactId>com.liferay.poshi.runner</artifactId>
-  <version>1.0.25</version>
+  <version>1.0.26</version>
   <licenses>
     <license>
       <name>LGPL 2.1</name>
@@ -52,6 +52,12 @@
       <groupId>com.liferay</groupId>
       <artifactId>net.jsourcerer.webdriver.JSErrorCollector</artifactId>
       <version>0.6</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>16.0.1</version>
       <scope>compile</scope>
     </dependency>
     <dependency>

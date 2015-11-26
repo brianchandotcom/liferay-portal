@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.LayoutPrototype;
-import com.liferay.portal.model.impl.LayoutPrototypeImpl;
 import com.liferay.portal.service.LayoutPrototypeLocalService;
 import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
 import com.liferay.portlet.exportimport.lar.DataLevel;
@@ -28,7 +27,6 @@ import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
-import com.liferay.portlet.exportimport.xstream.XStreamAliasRegistryUtil;
 
 import java.util.List;
 
@@ -61,9 +59,6 @@ public class LayoutPrototypePortletDataHandler extends BasePortletDataHandler {
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "page-templates", true, true, null,
 				LayoutPrototype.class.getName()));
-
-		XStreamAliasRegistryUtil.register(
-			LayoutPrototypeImpl.class, "LayoutPrototype");
 	}
 
 	@Override

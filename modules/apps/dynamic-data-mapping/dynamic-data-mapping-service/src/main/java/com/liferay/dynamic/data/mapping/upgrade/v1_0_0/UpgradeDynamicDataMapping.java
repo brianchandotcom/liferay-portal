@@ -999,6 +999,11 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				DDMStructure.class.getName());
 
 		_templateModelResourceNames.put(
+			"com.liferay.portlet.dynamicdatalists.model.DDLRecordSet",
+			"com.liferay.dynamic.data.lists.model.DDLRecordSet-" +
+				DDMTemplate.class.getName());
+
+		_templateModelResourceNames.put(
 			"com.liferay.portlet.display.template.PortletDisplayTemplate",
 			DDMTemplate.class.getName());
 	}

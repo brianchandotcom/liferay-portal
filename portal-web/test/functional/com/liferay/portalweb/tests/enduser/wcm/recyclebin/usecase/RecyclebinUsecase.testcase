@@ -906,6 +906,8 @@
 	</command>
 
 	<command name="RestoreDMDocumentFromFolderCP" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 			<var name="siteScopeName" value="Site Name" />

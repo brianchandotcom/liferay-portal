@@ -212,7 +212,7 @@
 			</else>
 		</if>
 
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
@@ -246,7 +246,7 @@
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${webContentTitle}" />
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 

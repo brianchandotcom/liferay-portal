@@ -412,6 +412,8 @@ public interface WebKeys {
 
 	public static final String PORTLET_DECORATE = "PORTLET_DECORATE";
 
+	public static final String PORTLET_DISPLAY_CONTEXT = "PORTLET_DISPLAY_CONTEXT";
+
 	public static final String PORTLET_DISPLAY_TEMPLATE = "PORTLET_DISPLAY_TEMPLATE";
 
 	public static final String PORTLET_ID = "PORTLET_ID";

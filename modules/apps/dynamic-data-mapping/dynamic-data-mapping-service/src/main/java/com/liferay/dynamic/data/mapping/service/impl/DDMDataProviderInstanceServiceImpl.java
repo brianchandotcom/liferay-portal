@@ -64,6 +64,26 @@ public class DDMDataProviderInstanceServiceImpl
 	}
 
 	@Override
+	public DDMDataProviderInstance fetchDataProviderInstance(
+			long dataProviderInstanceId)
+		throws PortalException {
+
+		DDMDataProviderInstance dataProviderInstance =
+			ddmDataProviderInstanceLocalService.fetchDataProviderInstance(
+				dataProviderInstanceId);
+
+		if (dataProviderInstance == null) {
+			return null;
+		}
+
+		DDMDataProviderInstancePermission.check(
+			getPermissionChecker(),
+			dataProviderInstance.getDataProviderInstanceId(), ActionKeys.VIEW);
+
+		return dataProviderInstance;
+	}
+
+	@Override
 	public DDMDataProviderInstance getDataProviderInstance(
 			long dataProviderInstanceId)
 		throws PortalException {

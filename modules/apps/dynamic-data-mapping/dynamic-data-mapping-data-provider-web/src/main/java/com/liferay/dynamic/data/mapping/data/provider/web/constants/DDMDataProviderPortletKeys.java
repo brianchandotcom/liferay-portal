@@ -12,13 +12,14 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.data.provider;
+package com.liferay.dynamic.data.mapping.data.provider.web.constants;
 
 /**
- * @author Marcellus Tavares
+ * @author Leonardo Barros
  */
-public interface DDMDataProviderSettings {
+public class DDMDataProviderPortletKeys {
 
-	public Class<?> getSettings();
+	public static final String DYNAMIC_DATA_MAPPING_DATA_PROVIDER =
+		"com_liferay_dynamic_data_mapping_data_provider_web_portlet_DDMDataProviderPortlet";
 
 }

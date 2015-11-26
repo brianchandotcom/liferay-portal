@@ -52,7 +52,7 @@ renderResponse.setTitle(((vocabulary == null) ? LanguageUtil.get(request, "add-n
 
 	<aui:model-context bean="<%= vocabulary %>" model="<%= AssetVocabulary.class %>" />
 
-	<aui:fieldset-group>
+	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
 			<aui:input autoFocus="<%= true %>" label="name" name="title" />
 

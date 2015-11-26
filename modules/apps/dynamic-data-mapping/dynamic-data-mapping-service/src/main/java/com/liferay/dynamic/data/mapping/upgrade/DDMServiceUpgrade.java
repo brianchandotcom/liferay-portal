@@ -44,7 +44,7 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 			new UpgradeSchema(), new UpgradeClassNames(),
 			new UpgradeCompanyId(),
 			new UpgradeDynamicDataMapping(
-				_assetEntryLocalService, _dLFileEntryLocalService,
+				_assetEntryLocalService, _dlFileEntryLocalService,
 				_dlFileVersionLocalService, _dlFolderLocalService,
 				_resourceActionLocalService, _resourcePermissionLocalService),
 			new UpgradeLastPublishDate());
@@ -52,9 +52,9 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Reference(unbind = "-")
 	public void setDLFileEntryLocalService(
-		DLFileEntryLocalService dLFileEntryLocalService) {
+		DLFileEntryLocalService dlFileEntryLocalService) {
 
-		_dLFileEntryLocalService = dLFileEntryLocalService;
+		_dlFileEntryLocalService = dlFileEntryLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -97,11 +97,12 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 		_resourcePermissionLocalService = resourcePermissionLocalService;
 	}
 
-	private AssetEntryLocalService _assetEntryLocalService;
-	private DLFileEntryLocalService _dLFileEntryLocalService;
-	private DLFileVersionLocalService _dlFileVersionLocalService;
-	private DLFolderLocalService _dlFolderLocalService;
-	private ResourceActionLocalService _resourceActionLocalService;
-	private ResourcePermissionLocalService _resourcePermissionLocalService;
+	private volatile AssetEntryLocalService _assetEntryLocalService;
+	private volatile DLFileEntryLocalService _dlFileEntryLocalService;
+	private volatile DLFileVersionLocalService _dlFileVersionLocalService;
+	private volatile DLFolderLocalService _dlFolderLocalService;
+	private volatile ResourceActionLocalService _resourceActionLocalService;
+	private volatile ResourcePermissionLocalService
+		_resourcePermissionLocalService;
 
 }

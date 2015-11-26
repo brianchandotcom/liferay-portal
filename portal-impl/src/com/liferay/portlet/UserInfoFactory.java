@@ -16,17 +16,13 @@ package com.liferay.portlet;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -112,78 +108,12 @@ public class UserInfoFactory {
 			_log.error(e, e);
 		}
 
-		Map<String, String> unmodifiableUserInfo = Collections.unmodifiableMap(
-			(Map<String, String>)userInfo.clone());
+		PortletContextBag portletContextBag = PortletContextBagPool.get(
+			portletApp.getServletContextName());
 
-		// Custom user attributes
-
-		Map<String, CustomUserAttributes> customUserAttributesMap =
-			new HashMap<>();
-
-		Map<String, String> customUserAttributesClassNames =
-			portletApp.getCustomUserAttributes();
-
-		for (Map.Entry<String, String> entry :
-				customUserAttributesClassNames.entrySet()) {
-
-			String userAttributeName = entry.getKey();
-			String customUserAttributesClassName = entry.getValue();
-
-			CustomUserAttributes customUserAttributes =
-				customUserAttributesMap.get(customUserAttributesClassName);
-
-			if (customUserAttributes == null) {
-				if (portletApp.isWARFile()) {
-					PortletContextBag portletContextBag =
-						PortletContextBagPool.get(
-							portletApp.getServletContextName());
-
-					Map<String, CustomUserAttributes>
-						portletContextBagCustomUserAttributes =
-							portletContextBag.getCustomUserAttributes();
-
-					customUserAttributes =
-						portletContextBagCustomUserAttributes.get(
-							customUserAttributesClassName);
-
-					if (customUserAttributes != null) {
-						customUserAttributes =
-							(CustomUserAttributes)customUserAttributes.clone();
-					}
-				}
-				else {
-					customUserAttributes = newInstance(
-						customUserAttributesClassName);
-				}
-
-				if (customUserAttributes != null) {
-					customUserAttributesMap.put(
-						customUserAttributesClassName, customUserAttributes);
-				}
-			}
-
-			if (customUserAttributes != null) {
-				String attrValue = customUserAttributes.getValue(
-					userAttributeName, unmodifiableUserInfo);
-
-				if (attrValue != null) {
-					userInfo.put(userAttributeName, attrValue);
-				}
-			}
-		}
+		portletContextBag.populateUserInfo(userInfo, portletApp);
 
 		return userInfo;
-	}
-
-	private static CustomUserAttributes newInstance(String className) {
-		try {
-			return (CustomUserAttributes)InstanceFactory.newInstance(className);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

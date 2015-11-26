@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.calendar.service.impl;
 
+import com.liferay.mail.service.MailService;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cal.DayAndPosition;
 import com.liferay.portal.kernel.cal.Recurrence;
 import com.liferay.portal.kernel.cal.TZSRecurrence;
@@ -1770,6 +1772,9 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 			}
 		}
 	}
+
+	@BeanReference(type = MailService.class)
+	protected MailService mailService;
 
 	private static final long _CALENDAR_EVENT_CHECK_INTERVAL =
 		PropsValues.CALENDAR_EVENT_CHECK_INTERVAL * Time.MINUTE;

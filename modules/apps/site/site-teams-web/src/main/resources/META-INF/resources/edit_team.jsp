@@ -48,7 +48,7 @@ renderResponse.setTitle(((team == null) ? LanguageUtil.get(request, "new-team") 
 
 	<aui:model-context bean="<%= team %>" model="<%= Team.class %>" />
 
-	<aui:fieldset-group>
+	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
 			<c:if test="<%= team != null %>">
 				<aui:input name="teamId" type="resource" value="<%= String.valueOf(team.getTeamId()) %>" />

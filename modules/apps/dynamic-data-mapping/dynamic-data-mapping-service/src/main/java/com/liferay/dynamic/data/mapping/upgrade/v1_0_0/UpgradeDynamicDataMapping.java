@@ -986,7 +986,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 		_structureModelResourceNames.put(
 			"com.liferay.portlet.documentlibrary.util.RawMetadataProcessor",
-			DDMTemplate.class.getName());
+			DDMStructure.class.getName());
 
 		_structureModelResourceNames.put(
 			"com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata",
@@ -996,7 +996,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		_templateModelResourceNames.put(
 			"com.liferay.portlet.journal.model.JournalArticle",
 			"com.liferay.journal.model.JournalArticle-" +
-				DDMStructure.class.getName());
+				DDMTemplate.class.getName());
 
 		_templateModelResourceNames.put(
 			"com.liferay.portlet.dynamicdatalists.model.DDLRecordSet",

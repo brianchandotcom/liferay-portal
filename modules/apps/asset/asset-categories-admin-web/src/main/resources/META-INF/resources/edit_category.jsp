@@ -104,7 +104,7 @@ renderResponse.setTitle(((category == null) ? LanguageUtil.get(request, "add-new
 
 	<aui:model-context bean="<%= category %>" model="<%= AssetCategory.class %>" />
 
-	<aui:fieldset-group>
+	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
 			<aui:input autoFocus="<%= true %>" label="name" name="title" />
 

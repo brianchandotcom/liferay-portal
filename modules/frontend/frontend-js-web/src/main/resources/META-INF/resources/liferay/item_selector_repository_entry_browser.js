@@ -160,14 +160,12 @@ AUI.add(
 						}
 					},
 
-					_getUploadErrorMessage: function(event) {
+					_getUploadErrorMessage: function(error) {
 						var instance = this;
 
 						var notice = instance._notice;
 
 						if (!notice) {
-							var error = event.error;
-
 							var errorType = error.errorType;
 
 							var message = Liferay.Language.get('an-unexpected-error-occurred-while-uploading-your-file');
@@ -286,7 +284,7 @@ AUI.add(
 							uploadItemViewer.hide();
 						}
 
-						instance._getUploadErrorMessage(event).show();
+						instance._getUploadErrorMessage(event.error).show();
 					},
 
 					_previewFile: function(file) {

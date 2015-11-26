@@ -6,6 +6,8 @@ AUI.add(
 
 		var CSS_DROP_ACTIVE = 'drop-active';
 
+		var STATUS_CODE = Liferay.STATUS_CODE;
+
 		var STR_DRAG_LEAVE = 'dragleave';
 
 		var STR_DRAG_OVER = 'dragover';
@@ -15,8 +17,6 @@ AUI.add(
 		var STR_ITEM_SELECTED = '_onItemSelected';
 
 		var STR_ITEM_UPLOAD_ERROR = '_onItemUploadError';
-
-		var STATUS_CODE = Liferay.STATUS_CODE;
 
 		var STR_LINKS = 'links';
 

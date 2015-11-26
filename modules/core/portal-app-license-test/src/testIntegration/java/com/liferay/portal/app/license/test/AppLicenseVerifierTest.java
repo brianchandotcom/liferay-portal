@@ -24,7 +24,6 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -76,32 +75,24 @@ public class AppLicenseVerifierTest {
 		bundle.stop();
 	}
 
-	@Test
-	public void testVerifyFailure() {
-		try {
-			Filter filter = FrameworkUtil.createFilter("(version=1.0.0)");
+	@Test(expected = Exception.class)
+	public void testVerifyFailure() throws Exception {
+		Filter filter = FrameworkUtil.createFilter("(version=1.0.0)");
 
-			Map<ServiceReference<AppLicenseVerifier>, AppLicenseVerifier>
-				serviceReferences = _serviceTracker.getTracked();
+		Map<ServiceReference<AppLicenseVerifier>, AppLicenseVerifier>
+			serviceReferences = _serviceTracker.getTracked();
 
-			for (ServiceReference serviceReference :
-					serviceReferences.keySet()) {
-
-				if (!filter.match(serviceReference)) {
-					continue;
-				}
-
-				AppLicenseVerifier appLicenseVerifier = serviceReferences.get(
-					serviceReference);
-
-				appLicenseVerifier.verify(bundle, "", "", "");
-
-				break;
+		for (ServiceReference serviceReference : serviceReferences.keySet()) {
+			if (!filter.match(serviceReference)) {
+				continue;
 			}
 
-			Assert.fail();
-		}
-		catch (Exception e) {
+			AppLicenseVerifier appLicenseVerifier = serviceReferences.get(
+				serviceReference);
+
+			appLicenseVerifier.verify(bundle, "", "", "");
+
+			break;
 		}
 	}
 
@@ -112,9 +103,7 @@ public class AppLicenseVerifierTest {
 		Map<ServiceReference<AppLicenseVerifier>, AppLicenseVerifier>
 			serviceReferences = _serviceTracker.getTracked();
 
-		for (ServiceReference serviceReference :
-				serviceReferences.keySet()) {
-
+		for (ServiceReference serviceReference : serviceReferences.keySet()) {
 			if (!filter.match(serviceReference)) {
 				continue;
 			}

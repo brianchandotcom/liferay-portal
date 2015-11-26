@@ -108,14 +108,14 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 	public UpgradeDynamicDataMapping(
 		AssetEntryLocalService assetEntryLocalService,
-		DLFileEntryLocalService dLFileEntryLocalService,
+		DLFileEntryLocalService dlFileEntryLocalService,
 		DLFileVersionLocalService dlFileVersionLocalService,
 		DLFolderLocalService dlFolderLocalService,
 		ResourceActionLocalService resourceActionLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService) {
 
 		_assetEntryLocalService = assetEntryLocalService;
-		_dLFileEntryLocalService = dLFileEntryLocalService;
+		_dlFileEntryLocalService = dlFileEntryLocalService;
 		_dlFileVersionLocalService = dlFileVersionLocalService;
 		_dlFolderLocalService = dlFolderLocalService;
 		_resourceActionLocalService = resourceActionLocalService;
@@ -290,8 +290,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 		upgradeFieldTypeReferences();
 
-		upgradeStructurePermissions();
-		upgradeTemplatePermissions();
+		upgradeStructuresPermissions();
+		upgradeTemplatesPermissions();
 	}
 
 	protected DDMForm getDDMForm(long structureId) throws Exception {
@@ -650,50 +650,31 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		}
 	}
 
-	protected void upgradeStructurePermissions() throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+	protected void upgradeStructurePermissions(long companyId, long structureId)
+		throws Exception {
 
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
+		List<ResourcePermission> resourcePermissions =
+			_resourcePermissionLocalService.getResourcePermissions(
+				companyId, DDMStructure.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				StringUtil.valueOf(structureId));
 
-			ps = con.prepareStatement("select * from DDMStructure");
+		for (ResourcePermission resourcePermission : resourcePermissions) {
+			Long classNameId = _structureClassNameIds.get(
+				resourcePermission.getPrimKey());
 
-			ps = connection.prepareStatement(sb.toString());
-
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				long companyId = rs.getLong("companyId");
-				long structureId = rs.getLong("structureId");
-
-				List<ResourcePermission> list =
-					_resourcePermissionLocalService.getResourcePermissions(
-							companyId, DDMStructure.class.getName(),
-						ResourceConstants.SCOPE_INDIVIDUAL,
-						StringUtil.valueOf(structureId));
-
-				for (ResourcePermission resourcePermission : list) {
-					Long classNameId = _structureClassNameIds.get(
-						resourcePermission.getPrimKey());
-
-					if (classNameId == null) {
-						continue;
-					}
-
-					String resourceName =
-						DDMStructurePermission.getStructureModelResourceName(
-							classNameId);
-					resourcePermission.setName(resourceName);
-
-					_resourcePermissionLocalService.updateResourcePermission(
-						resourcePermission);
-				}
+			if (classNameId == null) {
+				continue;
 			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
+
+			String resourceName =
+				DDMStructurePermission.getStructureModelResourceName(
+					classNameId);
+
+			resourcePermission.setName(resourceName);
+
+			_resourcePermissionLocalService.updateResourcePermission(
+				resourcePermission);
 		}
 	}
 
@@ -764,7 +745,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		}
 	}
 
-	protected void upgradeTemplatePermissions() throws Exception {
+	protected void upgradeStructuresPermissions() throws Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -772,40 +753,46 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
-			ps = con.prepareStatement("select * from DDMTemplate");
+			ps = con.prepareStatement("select * from DDMStructure");
 
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
 				long companyId = rs.getLong("companyId");
-				long templateId = rs.getLong("templateId");
+				long structureId = rs.getLong("structureId");
 
-				List<ResourcePermission> list =
-					_resourcePermissionLocalService.getResourcePermissions(
-							companyId, DDMTemplate.class.getName(),
-						ResourceConstants.SCOPE_INDIVIDUAL,
-						StringUtil.valueOf(templateId));
-
-				for (ResourcePermission resourcePermission : list) {
-					Long classNameId = _templateResourceClassNameIds.get(
-						resourcePermission.getPrimKey());
-
-					if (classNameId == null) {
-						continue;
-					}
-
-					String resourceName =
-						DDMTemplatePermission.getTemplateModelResourceName(
-							classNameId);
-					resourcePermission.setName(resourceName);
-
-					_resourcePermissionLocalService.updateResourcePermission(
-						resourcePermission);
-				}
+				upgradeStructurePermissions(companyId, structureId);
 			}
 		}
 		finally {
-			DataAccess.cleanUp(ps, rs);
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected void upgradeTemplatePermissions(long companyId, long templateId)
+		throws Exception {
+
+		List<ResourcePermission> resourcePermissions =
+			_resourcePermissionLocalService.getResourcePermissions(
+				companyId, DDMTemplate.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				StringUtil.valueOf(templateId));
+
+		for (ResourcePermission resourcePermission : resourcePermissions) {
+			Long classNameId = _templateResourceClassNameIds.get(
+				resourcePermission.getPrimKey());
+
+			if (classNameId == null) {
+				continue;
+			}
+
+			String resourceName =
+				DDMTemplatePermission.getTemplateModelResourceName(classNameId);
+
+			resourcePermission.setName(resourceName);
+
+			_resourcePermissionLocalService.updateResourcePermission(
+				resourcePermission);
 		}
 	}
 
@@ -835,6 +822,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
 			ps = connection.prepareStatement("select * from DDMTemplate");
 
 			rs = ps.executeQuery();
@@ -895,9 +884,12 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	protected void upgradeTemplateScript(long templateId, String script)
 		throws Exception {
 
+		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
 			ps = connection.prepareStatement(
 				"update DDMTemplate set language = ?, script = ? where " +
 					"templateId = ?");
@@ -920,11 +912,38 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		}
 	}
 
-	protected void upgradeXMLStorageAdapter() throws Exception {
+	protected void upgradeTemplatesPermissions() throws Exception {
+		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement("select * from DDMTemplate");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long companyId = rs.getLong("companyId");
+				long templateId = rs.getLong("templateId");
+
+				upgradeTemplatePermissions(companyId, templateId);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected void upgradeXMLStorageAdapter() throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
 			StringBundler sb = new StringBundler(5);
 
 			sb.append("select DDMStorageLink.classPK, DDMStorageLink.");
@@ -1002,7 +1021,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 private final AssetEntryLocalService _assetEntryLocalService;
 	private final Map<Long, DDMForm> _ddmForms = new HashMap<>();
-	private final DLFileEntryLocalService _dLFileEntryLocalService;
+	private final DLFileEntryLocalService _dlFileEntryLocalService;
 	private final DLFileVersionLocalService _dlFileVersionLocalService;
 	private final DLFolderLocalService _dlFolderLocalService;
 	private final ResourceActionLocalService _resourceActionLocalService;
@@ -1849,12 +1868,11 @@ private final AssetEntryLocalService _assetEntryLocalService;
 			try {
 				DLFolder dlFolder = _dlFolderLocalService.getFolder(
 					groupId, parentFolderId, name);
+
 				return dlFolder.getFolderId();
 			}
-			catch (PortalException e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to get DLfolder ID " + e);
-				}
+			catch (PortalException pe) {
+				_log.error("Unable to get DLfolder ID " + pe);
 
 				return 0;
 			}

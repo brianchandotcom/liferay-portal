@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
+import com.liferay.portal.XugglerInstallException;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.io.DummyOutputStream;
 import com.liferay.portal.kernel.log.Log;
@@ -83,7 +84,12 @@ public class XugglerAutoInstallHelper {
 			Xuggler xuggler = new XugglerImpl();
 
 			try {
-				xuggler.installNativeLibraries(xugglerJarFile, null);
+				xuggler.installNativeLibraries(xugglerJarFile);
+			}
+			catch (XugglerInstallException.MuseBeURLClassLoader xie) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(xie, xie);
+				}
 			}
 			catch (Exception e) {
 				throw new ProcessException(e);

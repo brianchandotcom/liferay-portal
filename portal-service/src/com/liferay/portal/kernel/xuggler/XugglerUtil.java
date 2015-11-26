@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.xuggler;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-import com.liferay.portal.kernel.util.ProgressTracker;
 
 /**
  * @author Alexander Chow
@@ -28,11 +27,8 @@ public class XugglerUtil {
 		return _xuggler;
 	}
 
-	public static void installNativeLibraries(
-			String name, ProgressTracker progressTracker)
-		throws Exception {
-
-		getXuggler().installNativeLibraries(name, progressTracker);
+	public static void installNativeLibraries(String name) throws Exception {
+		getXuggler().installNativeLibraries(name);
 	}
 
 	public static boolean isEnabled() {
@@ -41,6 +37,10 @@ public class XugglerUtil {
 
 	public static boolean isEnabled(boolean checkNativeLibraries) {
 		return getXuggler().isEnabled(checkNativeLibraries);
+	}
+
+	public static boolean isNativeLibraryCopied() {
+		return getXuggler().isNativeLibraryCopied();
 	}
 
 	public static boolean isNativeLibraryInstalled() {

@@ -24,7 +24,7 @@ AUI.add(
 				);
 			},
 
-			normalizeModalXY: function(xy, topOffset) {
+			normalizeModalXY: function(xy) {
 				xy[1] = 0;
 
 				return xy;

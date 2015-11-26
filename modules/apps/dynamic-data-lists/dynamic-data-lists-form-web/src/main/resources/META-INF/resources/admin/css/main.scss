@@ -153,8 +153,22 @@
 	.ddl-form-builder-app {
 		margin-top: -120px;
 
+		.form-builder-content,
+		.lfr-ddm-form-content {
+			background: #FFF;
+			border: 1px solid #DCE0E3;
+			border-radius: 1px;
+			box-shadow: 0 2px 4px rgba(188, 197, 204, 0.3);
+			margin: 0 auto;
+			width: auto;
+		}
+
 		.form-builder-field-list-empty .form-builder-field-list-add-button {
 			position: relative;
+		}
+
+		.form-builder-field-toolbar-items {
+			z-index: 500;
 		}
 
 		.form-builder-field-toolbar {
@@ -171,16 +185,6 @@
 			font-size: 60px;
 			margin-top: 150px;
 			text-align: center;
-		}
-
-		.form-builder-content,
-		.lfr-ddm-form-content {
-			background: #FFF;
-			border: 1px solid #DCE0E3;
-			border-radius: 1px;
-			box-shadow: 0 2px 4px rgba(188, 197, 204, 0.3);
-			margin: 0 auto;
-			width: auto;
 		}
 
 		.liferay-ddm-form-field-text textarea {

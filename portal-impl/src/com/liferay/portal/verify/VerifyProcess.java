@@ -60,6 +60,35 @@ public abstract class VerifyProcess extends BaseDBProcess {
 
 	public static final int ONCE = 1;
 
+	public boolean tableHasData(String tableName) throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement("select count(*) from " + tableName);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				int count = rs.getInt(1);
+
+				if (count > 0) {
+					return true;
+				}
+			}
+		}
+		catch (Exception e) {
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+
+		return false;
+	}
+
 	public void verify() throws VerifyException {
 		long start = System.currentTimeMillis();
 

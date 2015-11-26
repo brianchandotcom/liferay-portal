@@ -45,126 +45,147 @@ public class LoadBalanceUtil {
 	public static String getMostAvailableMasterURL(Project project)
 		throws Exception {
 
-		String baseInvocationUrl = project.getProperty("base.invocation.url");
+		int retries = 0;
 
-		String hostNamePrefix = getHostNamePrefix(baseInvocationUrl);
+		while (true) {
+			String baseInvocationUrl = project.getProperty(
+				"base.invocation.url");
 
-		if (hostNamePrefix.equals(baseInvocationUrl)) {
-			return baseInvocationUrl;
-		}
+			String hostNamePrefix = getHostNamePrefix(baseInvocationUrl);
 
-		int hostNameCount = getHostNameCount(project, hostNamePrefix);
-
-		File baseDir = new File(
-			project.getProperty("jenkins.shared.dir") + "/" + hostNamePrefix);
-
-		File semaphoreFile = new File(baseDir, hostNamePrefix + ".semaphore");
-
-		waitForTurn(semaphoreFile, hostNameCount);
-
-		JenkinsResultsParserUtil.write(semaphoreFile, myHostName);
-
-		Map<String, Integer> recentJobsMap = getRecentJobsMap(
-			new File(baseDir, "recentJobs"));
-
-		List<String> hostNameList = new ArrayList<>(hostNameCount);
-		int maxResult = Integer.MIN_VALUE;
-		int x = -1;
-
-		try {
-			List<FutureTask<Integer>> taskList = new ArrayList<>(hostNameCount);
-
-			startParallelTasks(
-				recentJobsMap, hostNameList, hostNamePrefix, hostNameCount,
-				project, taskList);
-
-			List<Integer> badIndicies = new ArrayList<>(taskList.size());
-			List<Integer> maxIndicies = new ArrayList<>(taskList.size());
-
-			StringBuilder message = new StringBuilder();
-
-			for (int i = 0; i < taskList.size(); i++) {
-				FutureTask<Integer> task = taskList.get(i);
-
-				Integer result = task.get();
-
-				if (result == null) {
-					badIndicies.add(i);
-					continue;
-				}
-
-				message.append(hostNameList.get(i));
-				message.append(" : ");
-				message.append(result);
-				message.append("\n");
-
-				if (result > maxResult) {
-					maxResult = result;
-					maxIndicies.clear();
-				}
-
-				if (result >= maxResult) {
-					maxIndicies.add(i);
-				}
+			if (hostNamePrefix.equals(baseInvocationUrl)) {
+				return baseInvocationUrl;
 			}
 
-			if (maxIndicies.size() > 0) {
-				x = maxIndicies.get(getRandomValue(0, maxIndicies.size() - 1));
-			}
-			else {
-				while (true) {
-					x = getRandomValue(0, hostNameCount - 1);
+			int hostNameCount = getHostNameCount(project, hostNamePrefix);
 
-					if (badIndicies.contains(x)) {
+			File baseDir = new File(
+				project.getProperty(
+					"jenkins.shared.dir") + "/" + hostNamePrefix);
+
+			File semaphoreFile = new File(
+				baseDir, hostNamePrefix + ".semaphore");
+
+			waitForTurn(semaphoreFile, hostNameCount);
+
+			JenkinsResultsParserUtil.write(semaphoreFile, myHostName);
+
+			Map<String, Integer> recentJobsMap = getRecentJobsMap(
+				new File(baseDir, "recentJobs"));
+
+			List<String> hostNameList = new ArrayList<>(hostNameCount);
+			int maxResult = Integer.MIN_VALUE;
+			int x = -1;
+
+			try {
+				List<FutureTask<Integer>> taskList = new ArrayList<>(
+					hostNameCount);
+
+				startParallelTasks(
+					recentJobsMap, hostNameList, hostNamePrefix, hostNameCount,
+					project, taskList);
+
+				List<Integer> badIndicies = new ArrayList<>(taskList.size());
+				List<Integer> maxIndicies = new ArrayList<>(taskList.size());
+
+				StringBuilder message = new StringBuilder();
+
+				for (int i = 0; i < taskList.size(); i++) {
+					FutureTask<Integer> task = taskList.get(i);
+
+					Integer result = task.get();
+
+					if (result == null) {
+						badIndicies.add(i);
 						continue;
 					}
 
-					break;
-				}
-			}
+					message.append(hostNameList.get(i));
+					message.append(" : ");
+					message.append(result);
+					message.append("\n");
 
-			message.append("\nMost available master: ");
-			message.append(hostNameList.get(x));
-			message.append(" with ");
-			message.append(Integer.toString(maxResult));
-			message.append(" available slaves.");
+					if (result > maxResult) {
+						maxResult = result;
+						maxIndicies.clear();
+					}
 
-			System.out.println(message);
-
-			return hostNameList.get(x);
-		}
-		finally {
-			JenkinsResultsParserUtil.write(semaphoreFile, "");
-
-			if (recentJobsPeriod > 0) {
-				File recentJobsFile = new File(
-					baseDir, "recentJobs/" + hostNameList.get(x));
-
-				String existingContent = "";
-
-				if (recentJobsFile.exists()) {
-					existingContent = JenkinsResultsParserUtil.read(
-						recentJobsFile);
-
-					if (existingContent.length() > 0) {
-						existingContent += "|";
+					if (result >= maxResult) {
+						maxIndicies.add(i);
 					}
 				}
 
-				int batchSizeInt = 1;
-				String batchSizeString = project.getProperty(
-					"invoked.job.batch.size");
+				if (maxResult == Integer.MIN_VALUE) {
+					if (retries == 3) {
+						throw new RuntimeException(
+							"Retry limit exceeded. Could not communicate " +
+							" with masters.");
+					}
 
-				if ((batchSizeString != null) &&
-					(batchSizeString.length() > 0)) {
+					retries++;
 
-					batchSizeInt = Integer.parseInt(batchSizeString);
+					continue;
 				}
 
-				JenkinsResultsParserUtil.write(
-					recentJobsFile,
-					existingContent + batchSizeInt + "-" +
-						System.currentTimeMillis());
+				if (maxIndicies.size() > 0) {
+					x = maxIndicies.get(
+						getRandomValue(0, maxIndicies.size() - 1));
+				}
+				else {
+					while (true) {
+						x = getRandomValue(0, hostNameCount - 1);
+
+						if (badIndicies.contains(x)) {
+							continue;
+						}
+
+						break;
+					}
+				}
+
+				message.append("\nMost available master: ");
+				message.append(hostNameList.get(x));
+				message.append(" with ");
+				message.append(Integer.toString(maxResult));
+				message.append(" available slaves.");
+
+				System.out.println(message);
+
+				return hostNameList.get(x);
+			}
+			finally {
+				JenkinsResultsParserUtil.write(semaphoreFile, "");
+
+				if (recentJobsPeriod > 0) {
+					File recentJobsFile = new File(
+						baseDir, "recentJobs/" + hostNameList.get(x));
+
+					String existingContent = "";
+
+					if (recentJobsFile.exists()) {
+						existingContent = JenkinsResultsParserUtil.read(
+							recentJobsFile);
+
+						if (existingContent.length() > 0) {
+							existingContent += "|";
+						}
+					}
+
+					int batchSizeInt = 1;
+					String batchSizeString = project.getProperty(
+						"invoked.job.batch.size");
+
+					if ((batchSizeString != null) &&
+						(batchSizeString.length() > 0)) {
+
+						batchSizeInt = Integer.parseInt(batchSizeString);
+					}
+
+					JenkinsResultsParserUtil.write(
+						recentJobsFile,
+						existingContent + batchSizeInt + "-" +
+							System.currentTimeMillis());
+				}
 			}
 		}
 	}

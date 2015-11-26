@@ -33,8 +33,6 @@ portletURL.setParameter("mvcRenderCommandName", "/monitoring/view");
 		<c:when test="<%= PropsValues.LIVE_USERS_ENABLED && PropsValues.SESSION_TRACKER_MEMORY_ENABLED %>">
 
 			<%
-			renderResponse.setTitle(LanguageUtil.get(request, "monitoring"));
-
 			Map<String, UserTracker> sessionUsers = LiveUsers.getSessionUsers(company.getCompanyId());
 
 			List<UserTracker> userTrackers = new ArrayList<UserTracker>(sessionUsers.values());

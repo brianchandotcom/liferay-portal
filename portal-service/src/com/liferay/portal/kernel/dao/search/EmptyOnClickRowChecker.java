@@ -14,9 +14,14 @@
 
 package com.liferay.portal.kernel.dao.search;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.PortletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Eudaldo Alonso
@@ -33,6 +38,45 @@ public class EmptyOnClickRowChecker extends RowChecker {
 		String checkBoxPostOnClick) {
 
 		return StringPool.BLANK;
+	}
+
+	@Override
+	protected String getRowCheckBox(
+		HttpServletRequest request, boolean checked, boolean disabled,
+		String name, String value, String checkBoxRowIds,
+		String checkBoxAllRowIds, String checkBoxPostOnClick) {
+
+		StringBundler sb = new StringBundler(14);
+
+		sb.append("<label><input ");
+
+		if (checked) {
+			sb.append("checked ");
+		}
+
+		if (disabled) {
+			sb.append("disabled ");
+		}
+
+		sb.append("class=\"");
+		sb.append(_cssClass);
+		sb.append("\" name=\"");
+		sb.append(name);
+		sb.append("\" title=\"");
+		sb.append(LanguageUtil.get(request.getLocale(), "select"));
+		sb.append("\" type=\"checkbox\" value=\"");
+		sb.append(HtmlUtil.escapeAttribute(value));
+		sb.append("\" ");
+
+		if (Validator.isNotNull(_allRowIds)) {
+			sb.append(
+				getOnClick(
+					checkBoxRowIds, checkBoxAllRowIds, checkBoxPostOnClick));
+		}
+
+		sb.append("></label>");
+
+		return sb.toString();
 	}
 
 }

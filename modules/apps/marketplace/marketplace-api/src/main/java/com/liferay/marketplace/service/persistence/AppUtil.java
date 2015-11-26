@@ -18,12 +18,11 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.marketplace.model.App;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -967,14 +966,6 @@ public class AppUtil {
 	public void setPersistence(AppPersistence persistence) {
 	}
 
-	private static ServiceTracker<AppPersistence, AppPersistence> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(AppUtil.class);
-
-		_serviceTracker = new ServiceTracker<AppPersistence, AppPersistence>(bundle.getBundleContext(),
-				AppPersistence.class, null);
-
-		_serviceTracker.open();
-	}
+	private static ServiceTracker<AppPersistence, AppPersistence> _serviceTracker =
+		ServiceTrackerFactory.open(AppPersistence.class);
 }

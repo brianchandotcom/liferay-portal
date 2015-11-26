@@ -18,12 +18,11 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -844,14 +843,6 @@ public class DDMStructureLinkUtil {
 	public void setPersistence(DDMStructureLinkPersistence persistence) {
 	}
 
-	private static ServiceTracker<DDMStructureLinkPersistence, DDMStructureLinkPersistence> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(DDMStructureLinkUtil.class);
-
-		_serviceTracker = new ServiceTracker<DDMStructureLinkPersistence, DDMStructureLinkPersistence>(bundle.getBundleContext(),
-				DDMStructureLinkPersistence.class, null);
-
-		_serviceTracker.open();
-	}
+	private static ServiceTracker<DDMStructureLinkPersistence, DDMStructureLinkPersistence> _serviceTracker =
+		ServiceTrackerFactory.open(DDMStructureLinkPersistence.class);
 }

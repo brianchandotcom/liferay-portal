@@ -975,13 +975,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 	static {
 		_structureModelResourceNames.put(
-			"com.liferay.portlet.journal.model.JournalArticle",
-			"com.liferay.journal.model.JournalArticle-" +
-				DDMStructure.class.getName());
-
-		_structureModelResourceNames.put(
-			"com.liferay.portlet.dynamicdatalists.model.DDLRecordSet",
-			"com.liferay.dynamic.data.lists.model.DDLRecordSet-" +
+			"com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata",
+			"com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata-" +
 				DDMStructure.class.getName());
 
 		_structureModelResourceNames.put(
@@ -989,14 +984,18 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			DDMStructure.class.getName());
 
 		_structureModelResourceNames.put(
-			"com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata",
-			"com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata-" +
+			"com.liferay.portlet.dynamicdatalists.model.DDLRecordSet",
+			"com.liferay.dynamic.data.lists.model.DDLRecordSet-" +
+				DDMStructure.class.getName());
+
+		_structureModelResourceNames.put(
+			"com.liferay.portlet.journal.model.JournalArticle",
+			"com.liferay.journal.model.JournalArticle-" +
 				DDMStructure.class.getName());
 
 		_templateModelResourceNames.put(
-			"com.liferay.portlet.journal.model.JournalArticle",
-			"com.liferay.journal.model.JournalArticle-" +
-				DDMTemplate.class.getName());
+			"com.liferay.portlet.display.template.PortletDisplayTemplate",
+			DDMTemplate.class.getName());
 
 		_templateModelResourceNames.put(
 			"com.liferay.portlet.dynamicdatalists.model.DDLRecordSet",
@@ -1004,8 +1003,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				DDMTemplate.class.getName());
 
 		_templateModelResourceNames.put(
-			"com.liferay.portlet.display.template.PortletDisplayTemplate",
-			DDMTemplate.class.getName());
+			"com.liferay.portlet.journal.model.JournalArticle",
+			"com.liferay.journal.model.JournalArticle-" +
+				DDMTemplate.class.getName());
 	}
 
 	private final Map<Long, DDMForm> _ddmForms = new HashMap<>();

@@ -23,6 +23,7 @@ import com.liferay.taglib.aui.base.BaseFieldsetTag;
 import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
 
 /**
  * @author Julio Camarero
@@ -30,6 +31,19 @@ import javax.servlet.http.HttpServletRequest;
  * @author Brian Wing Shun Chan
  */
 public class FieldsetTag extends BaseFieldsetTag {
+
+	@Override
+	public int doStartTag() throws JspException {
+		FieldsetGroupTag fieldsetGroupTag =
+			(FieldsetGroupTag)findAncestorWithClass(
+				this, FieldsetGroupTag.class);
+
+		if (Validator.isNull(getMarkupView()) && (fieldsetGroupTag != null)) {
+			setMarkupView(fieldsetGroupTag.getMarkupView());
+		}
+
+		return super.doStartTag();
+	}
 
 	@Override
 	protected String getEndPage() {

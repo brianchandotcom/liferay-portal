@@ -23,7 +23,6 @@ import com.liferay.taglib.aui.base.BaseFieldsetTag;
 import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.JspWriter;
 
 /**
  * @author Julio Camarero
@@ -31,6 +30,25 @@ import javax.servlet.jsp.JspWriter;
  * @author Brian Wing Shun Chan
  */
 public class FieldsetTag extends BaseFieldsetTag {
+
+	@Override
+	protected String getEndPage() {
+		if (Validator.isNotNull(getMarkupView())) {
+			return "/html/taglib/aui/fieldset/" + getMarkupView() + "/end.jsp";
+		}
+
+		return "/html/taglib/aui/fieldset/end.jsp";
+	}
+
+	@Override
+	protected String getStartPage() {
+		if (Validator.isNotNull(getMarkupView())) {
+			return "/html/taglib/aui/fieldset/" + getMarkupView() +
+				"/start.jsp";
+		}
+
+		return "/html/taglib/aui/fieldset/start.jsp";
+	}
 
 	@Override
 	protected boolean isCleanUpSetAttributes() {

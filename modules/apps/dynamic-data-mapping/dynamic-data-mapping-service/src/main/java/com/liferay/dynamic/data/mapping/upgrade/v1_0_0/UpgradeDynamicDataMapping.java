@@ -1675,7 +1675,7 @@ private final AssetEntryLocalService _assetEntryLocalService;
 			throws Exception {
 
 			DLFileEntry dlFileEntry =
-				_dLFileEntryLocalService.createDLFileEntry(fileEntryId);
+				_dlFileEntryLocalService.createDLFileEntry(fileEntryId);
 
 			dlFileEntry.setUuid(uuid);
 			dlFileEntry.setGroupId(groupId);
@@ -1706,7 +1706,7 @@ private final AssetEntryLocalService _assetEntryLocalService;
 			dlFileEntry.setCustom2ImageId(custom2ImageId);
 			dlFileEntry.setManualCheckInRequired(manualCheckInRequired);
 
-			_dLFileEntryLocalService.updateDLFileEntry(dlFileEntry);
+			_dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);
 		}
 
 		protected void addDLFileVersion(

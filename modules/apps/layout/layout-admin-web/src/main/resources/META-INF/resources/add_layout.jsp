@@ -113,7 +113,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "add-new-page"));
 
 	<aui:model-context model="<%= Layout.class %>" />
 
-	<aui:fieldset-group>
+	<aui:fieldset-group markupView="lexicon">
 		<aui:input autoFocus="<%= true %>" id="addLayoutName" name="name" />
 
 		<aui:input id="addLayoutHidden" label="hide-from-navigation-menu" name="hidden" type="toggle-switch" />

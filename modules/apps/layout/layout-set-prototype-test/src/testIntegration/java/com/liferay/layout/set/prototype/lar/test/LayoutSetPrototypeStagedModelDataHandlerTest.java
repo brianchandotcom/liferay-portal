@@ -15,7 +15,7 @@
 package com.liferay.layout.set.prototype.lar.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.layout.set.prototype.web.lar.LayoutSetPrototypeStagedModelDataHandler;
+import com.liferay.layout.set.prototype.lar.LayoutSetPrototypeStagedModelDataHandler;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;

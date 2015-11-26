@@ -33,10 +33,21 @@ public abstract class BaseFieldsetGroupTag extends com.liferay.taglib.util.Inclu
 		return super.doStartTag();
 	}
 
+	public java.lang.String getMarkupView() {
+		return _markupView;
+	}
+
+	public void setMarkupView(java.lang.String markupView) {
+		_markupView = markupView;
+
+		setScopedAttribute("markupView", markupView);
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_markupView = null;
 	}
 
 	@Override
@@ -51,6 +62,7 @@ public abstract class BaseFieldsetGroupTag extends com.liferay.taglib.util.Inclu
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		setNamespacedAttribute(request, "markupView", _markupView);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "aui:fieldset-group:";
@@ -61,5 +73,6 @@ public abstract class BaseFieldsetGroupTag extends com.liferay.taglib.util.Inclu
 	private static final String _START_PAGE =
 		"/html/taglib/aui/fieldset_group/start.jsp";
 
+	private java.lang.String _markupView = null;
 
 }

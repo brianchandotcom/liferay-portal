@@ -12,16 +12,9 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-
-@generated
 --%>
 
-<%@ include file="/html/taglib/taglib-init.jsp" %>
+<%@ include file="/html/taglib/aui/fieldset_group/init.jsp" %>
 
-<%
-java.lang.String markupView = GetterUtil.getString((java.lang.String)request.getAttribute("aui:fieldset-group:markupView"));
-Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("aui:fieldset-group:dynamicAttributes");
-Map<String, Object> scopedAttributes = (Map<String, Object>)request.getAttribute("aui:fieldset-group:scopedAttributes");
-%>
-
-<%@ include file="/html/taglib/aui/fieldset_group/init-ext.jspf" %>
+<div class="card-horizontal main-content-card">
+	<div aria-multiselectable="true" class="panel-group" role="tablist">

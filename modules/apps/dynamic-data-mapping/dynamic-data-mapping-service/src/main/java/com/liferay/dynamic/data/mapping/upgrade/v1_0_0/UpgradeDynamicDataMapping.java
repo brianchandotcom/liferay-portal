@@ -72,6 +72,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 
 import java.io.File;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -356,9 +357,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				"Model " + className + " does not support DDMStructure " +
 					"permission checking");
 		}
-		else {
-			return structureModelResourceName;
-		}
+
+		return structureModelResourceName;
 	}
 
 	protected String getTemplateModelResourceName(long classNameId)
@@ -374,9 +374,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				"Model " + className + " does not support DDMTemplate " +
 					"permission checking");
 		}
-		else {
-			return templateModelResourceName;
-		}
+
+		return templateModelResourceName;
 	}
 
 	protected long getTemplateResourceClassNameId(

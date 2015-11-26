@@ -85,7 +85,7 @@ portletURL.setParameter("mvcRenderCommandName", "/monitoring/view");
 
 					<liferay-ui:search-container-column-text
 						href="<%= rowURL %>"
-						name="user-id"
+						name="user-name"
 						value='<%= ((user2 != null) ? HtmlUtil.escape(user2.getFullName()) : LanguageUtil.get(request, "not-available")) %>'
 					/>
 

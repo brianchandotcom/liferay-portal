@@ -38,15 +38,6 @@ public class FieldsetTag extends BaseFieldsetTag {
 	}
 
 	@Override
-	protected int processEndTag() throws Exception {
-		JspWriter jspWriter = pageContext.getOut();
-
-		jspWriter.write("</div></fieldset>");
-
-		return EVAL_PAGE;
-	}
-
-	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		super.setAttributes(request);
 

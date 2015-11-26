@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.expando.model.ExpandoColumn;
 import com.liferay.portlet.expando.model.ExpandoRow;
 import com.liferay.portlet.expando.model.ExpandoValue;
 import com.liferay.portlet.expando.service.ExpandoRowLocalService;
@@ -149,10 +150,10 @@ public class UpgradeDynamicDataLists extends UpgradeProcess {
 			try {
 				_expandoTableLocalService.deleteTable(tableId);
 			}
-			catch (PortalException e) {
-				_log.error("Unable delete expando table ", e);
+			catch (PortalException pe) {
+				_log.error("Unable delete expando table ", pe);
 
-				throw e;
+				throw pe;
 			}
 		}
 		finally {
@@ -194,15 +195,9 @@ public class UpgradeDynamicDataLists extends UpgradeProcess {
 		Map<String, String> fieldsMap = new HashMap<>();
 
 		for (ExpandoValue expandoValue : rowValues) {
-			try {
-				fieldsMap.put(
-					expandoValue.getColumn().getName(), expandoValue.getData());
-			}
-			catch (PortalException e) {
-				_log.error("Unable to add expando value data ", e);
-				throw e;
+			ExpandoColumn expandoColumn = expandoValue.getColumn();
 
-			}
+			fieldsMap.put(expandoColumn.getName(), expandoValue.getData());
 		}
 
 		return fieldsMap;

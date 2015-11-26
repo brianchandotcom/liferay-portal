@@ -293,6 +293,13 @@ public class PortletPreferencesFactoryUtil {
 			layout, portletId);
 	}
 
+	public static PortletPreferences getStrictPortletSetup(
+		long companyId, long groupId, String portletId) {
+
+		return getPortletPreferencesFactory().getStrictPortletSetup(
+			companyId, groupId, portletId);
+	}
+
 	public static PortletPreferences strictFromXML(
 		long companyId, long ownerId, int ownerType, long plid,
 		String portletId, String xml) {

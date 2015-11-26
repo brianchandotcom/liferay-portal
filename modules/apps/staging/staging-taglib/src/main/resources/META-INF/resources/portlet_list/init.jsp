@@ -17,7 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-DateRange dateRange = (DateRange)GetterUtil.getObject(request.getAttribute("liferay-staging:portlet-list:dateRange"));
 boolean disableInputs = GetterUtil.getBoolean(request.getAttribute("liferay-staging:portlet-list:disableInputs"));
 Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject(request.getAttribute("liferay-staging:content:parameterMap"), Collections.emptyMap());
 List<Portlet> portlets = (List<Portlet>)GetterUtil.getObject(request.getAttribute("liferay-staging:portlet-list:portlets"), Collections.emptyList());
@@ -26,19 +25,21 @@ String type = GetterUtil.getString(request.getAttribute("liferay-staging:portlet
 Set<String> displayedControls = new HashSet<String>();
 Set<String> portletDataHandlerClasses = new HashSet<String>();
 
+String defaultRange = null;
 long exportGroupId = groupId;
 
-if (type.equals(Constants.EXPORT) && (liveGroupId > 0)) {
-	exportGroupId = liveGroupId;
+if (type.equals(Constants.EXPORT)) {
+	defaultRange = ExportImportDateUtil.RANGE_ALL;
+
+	if (liveGroupId > 0) {
+		exportGroupId = liveGroupId;
+	}
 }
-else if (stagingGroupId > 0) {
-	exportGroupId = stagingGroupId;
+else {
+	defaultRange = ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE;
+
+	if (stagingGroupId > 0) {
+		exportGroupId = stagingGroupId;
+	}
 }
-
-Date startDate = dateRange.getStartDate();
-Date endDate = dateRange.getEndDate();
-
-PortletDataContext portletDataContext = PortletDataContextFactoryUtil.createPreparePortletDataContext(company.getCompanyId(), exportGroupId, startDate, endDate);
-
-ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 %>

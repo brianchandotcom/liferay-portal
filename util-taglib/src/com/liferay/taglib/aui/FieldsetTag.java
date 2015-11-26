@@ -23,7 +23,7 @@ import com.liferay.taglib.aui.base.BaseFieldsetTag;
 import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.JspException;
 
 /**
  * @author Julio Camarero
@@ -33,17 +33,40 @@ import javax.servlet.jsp.JspWriter;
 public class FieldsetTag extends BaseFieldsetTag {
 
 	@Override
-	protected boolean isCleanUpSetAttributes() {
-		return _CLEAN_UP_SET_ATTRIBUTES;
+	public int doStartTag() throws JspException {
+		FieldsetGroupTag fieldsetGroupTag =
+			(FieldsetGroupTag)findAncestorWithClass(
+				this, FieldsetGroupTag.class);
+
+		if (Validator.isNull(getMarkupView()) && (fieldsetGroupTag != null)) {
+			setMarkupView(fieldsetGroupTag.getMarkupView());
+		}
+
+		return super.doStartTag();
 	}
 
 	@Override
-	protected int processEndTag() throws Exception {
-		JspWriter jspWriter = pageContext.getOut();
+	protected String getEndPage() {
+		if (Validator.isNotNull(getMarkupView())) {
+			return "/html/taglib/aui/fieldset/" + getMarkupView() + "/end.jsp";
+		}
 
-		jspWriter.write("</div></fieldset>");
+		return "/html/taglib/aui/fieldset/end.jsp";
+	}
 
-		return EVAL_PAGE;
+	@Override
+	protected String getStartPage() {
+		if (Validator.isNotNull(getMarkupView())) {
+			return "/html/taglib/aui/fieldset/" + getMarkupView() +
+				"/start.jsp";
+		}
+
+		return "/html/taglib/aui/fieldset/start.jsp";
+	}
+
+	@Override
+	protected boolean isCleanUpSetAttributes() {
+		return _CLEAN_UP_SET_ATTRIBUTES;
 	}
 
 	@Override

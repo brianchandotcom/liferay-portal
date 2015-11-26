@@ -16,8 +16,7 @@ package com.liferay.portal.background.task.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -501,14 +500,6 @@ public class BackgroundTaskLocalServiceUtil {
 	public void setService(BackgroundTaskLocalService service) {
 	}
 
-	private static ServiceTracker<BackgroundTaskLocalService, BackgroundTaskLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(BackgroundTaskLocalServiceUtil.class);
-
-		_serviceTracker = new ServiceTracker<BackgroundTaskLocalService, BackgroundTaskLocalService>(bundle.getBundleContext(),
-				BackgroundTaskLocalService.class, null);
-
-		_serviceTracker.open();
-	}
+	private static ServiceTracker<BackgroundTaskLocalService, BackgroundTaskLocalService> _serviceTracker =
+		ServiceTrackerFactory.open(BackgroundTaskLocalService.class);
 }

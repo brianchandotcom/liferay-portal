@@ -16,8 +16,7 @@ package com.liferay.wiki.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -155,14 +154,6 @@ public class WikiNodeServiceUtil {
 	public void setService(WikiNodeService service) {
 	}
 
-	private static ServiceTracker<WikiNodeService, WikiNodeService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(WikiNodeServiceUtil.class);
-
-		_serviceTracker = new ServiceTracker<WikiNodeService, WikiNodeService>(bundle.getBundleContext(),
-				WikiNodeService.class, null);
-
-		_serviceTracker.open();
-	}
+	private static ServiceTracker<WikiNodeService, WikiNodeService> _serviceTracker =
+		ServiceTrackerFactory.open(WikiNodeService.class);
 }

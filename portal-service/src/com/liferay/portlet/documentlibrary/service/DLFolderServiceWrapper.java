@@ -244,12 +244,6 @@ public class DLFolderServiceWrapper implements DLFolderService,
 	}
 
 	@Override
-	public boolean hasInheritableLock(long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFolderService.hasInheritableLock(folderId);
-	}
-
-	@Override
 	public boolean isFolderLocked(long folderId) {
 		return _dlFolderService.isFolderLocked(folderId);
 	}
@@ -339,13 +333,6 @@ public class DLFolderServiceWrapper implements DLFolderService,
 		return _dlFolderService.updateFolder(folderId, parentFolderId, name,
 			description, defaultFileEntryTypeId, fileEntryTypeIds,
 			restrictionType, serviceContext);
-	}
-
-	@Override
-	public boolean verifyInheritableLock(long folderId,
-		java.lang.String lockUuid)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFolderService.verifyInheritableLock(folderId, lockUuid);
 	}
 
 	/**

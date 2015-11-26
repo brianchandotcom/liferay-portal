@@ -1569,7 +1569,7 @@ public class DLFileEntryLocalServiceImpl
 		if (!hasLock &&
 			(folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
 
-			hasLock = dlFolderService.hasInheritableLock(folderId);
+			hasLock = dlFolderLocalService.hasInheritableLock(folderId);
 		}
 
 		return hasLock;
@@ -2131,7 +2131,7 @@ public class DLFileEntryLocalServiceImpl
 				DLFileEntry dlFileEntry = dlFileEntryLocalService.getFileEntry(
 					fileEntryId);
 
-				lockVerified = dlFolderService.verifyInheritableLock(
+				lockVerified = dlFolderLocalService.verifyInheritableLock(
 					dlFileEntry.getFolderId(), lockUuid);
 			}
 			else {

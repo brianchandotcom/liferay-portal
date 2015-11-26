@@ -1114,7 +1114,7 @@ public class LiferayRepository
 	public boolean verifyInheritableLock(long folderId, String lockUuid)
 		throws PortalException {
 
-		return dlFolderService.verifyInheritableLock(
+		return dlFolderLocalService.verifyInheritableLock(
 			toFolderId(folderId), lockUuid);
 	}
 

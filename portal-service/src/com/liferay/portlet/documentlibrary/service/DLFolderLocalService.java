@@ -591,6 +591,9 @@ public interface DLFolderLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasFolderLock(long userId, long folderId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasInheritableLock(long folderId) throws PortalException;
+
 	public com.liferay.portal.kernel.lock.Lock lockFolder(long userId,
 		long folderId) throws PortalException;
 
@@ -702,4 +705,7 @@ public interface DLFolderLocalService extends BaseLocalService,
 		java.util.Map<java.lang.String, java.io.Serializable> workflowContext,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
+
+	public boolean verifyInheritableLock(long folderId,
+		java.lang.String lockUuid) throws PortalException;
 }

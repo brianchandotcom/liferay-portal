@@ -742,6 +742,11 @@ public class DLFolderLocalServiceUtil {
 		return getService().hasFolderLock(userId, folderId);
 	}
 
+	public static boolean hasInheritableLock(long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().hasInheritableLock(folderId);
+	}
+
 	public static com.liferay.portal.kernel.lock.Lock lockFolder(long userId,
 		long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -909,6 +914,12 @@ public class DLFolderLocalServiceUtil {
 		return getService()
 				   .updateStatus(userId, folderId, status, workflowContext,
 			serviceContext);
+	}
+
+	public static boolean verifyInheritableLock(long folderId,
+		java.lang.String lockUuid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().verifyInheritableLock(folderId, lockUuid);
 	}
 
 	public static DLFolderLocalService getService() {

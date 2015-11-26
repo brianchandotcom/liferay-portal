@@ -389,20 +389,6 @@ public class DLFolderServiceSoap {
 		}
 	}
 
-	public static boolean hasInheritableLock(long folderId)
-		throws RemoteException {
-		try {
-			boolean returnValue = DLFolderServiceUtil.hasInheritableLock(folderId);
-
-			return returnValue;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static boolean isFolderLocked(long folderId)
 		throws RemoteException {
 		try {
@@ -567,21 +553,6 @@ public class DLFolderServiceSoap {
 					serviceContext);
 
 			return com.liferay.portlet.documentlibrary.model.DLFolderSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static boolean verifyInheritableLock(long folderId,
-		java.lang.String lockUuid) throws RemoteException {
-		try {
-			boolean returnValue = DLFolderServiceUtil.verifyInheritableLock(folderId,
-					lockUuid);
-
-			return returnValue;
 		}
 		catch (Exception e) {
 			_log.error(e, e);

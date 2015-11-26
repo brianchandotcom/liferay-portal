@@ -127,7 +127,7 @@ public class DLFolderImpl extends DLFolderBaseImpl {
 	@Override
 	public boolean hasInheritableLock() {
 		try {
-			return DLFolderServiceUtil.hasInheritableLock(getFolderId());
+			return DLFolderLocalServiceUtil.hasInheritableLock(getFolderId());
 		}
 		catch (Exception e) {
 		}

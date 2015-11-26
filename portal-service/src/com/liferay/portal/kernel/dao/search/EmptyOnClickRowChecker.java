@@ -55,13 +55,12 @@ public class EmptyOnClickRowChecker extends RowChecker {
 			sb.append("checked ");
 		}
 
-		sb.append("class=\"");
-		sb.append(getCssClass());
-
 		if (disabled) {
 			sb.append("disabled ");
 		}
 
+		sb.append("class=\"");
+		sb.append(getCssClass());
 		sb.append("\" name=\"");
 		sb.append(name);
 		sb.append("\" title=\"");

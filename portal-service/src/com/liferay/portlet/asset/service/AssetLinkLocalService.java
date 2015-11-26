@@ -136,6 +136,8 @@ public interface AssetLinkLocalService extends BaseLocalService,
 	*/
 	public void deleteLinks(long entryId1, long entryId2);
 
+	public void deleteLinksByAssetEntryGroupId(long groupId);
+
 	/**
 	* @throws PortalException
 	*/

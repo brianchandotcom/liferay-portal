@@ -520,7 +520,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="Fieldset" bodyContent="true" writeEndJSP="false">
+	<component name="Fieldset" bodyContent="true">
 		<description>Creates a <![CDATA[<code>&lt;div&gt;</code>]]> tag to group related form elements and offer additional styling.</description>
 		<attributes>
 			<attribute>

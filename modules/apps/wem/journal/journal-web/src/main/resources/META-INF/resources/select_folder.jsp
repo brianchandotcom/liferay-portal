@@ -34,10 +34,10 @@ portletURL.setParameter("mvcPath", "/select_folder.jsp");
 JournalPortletUtil.addPortletBreadcrumbEntries(folder, request, portletURL);
 %>
 
-<aui:form method="post" name="selectFolderFm">
+<aui:form cssClass="container-fluid-1280" method="post" name="selectFolderFm">
 	<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showParentGroups="<%= false %>" />
 
-	<aui:button-row>
+	<aui:button-row cssClass="text-center">
 
 		<%
 		Map<String, Object> data = new HashMap<String, Object>();

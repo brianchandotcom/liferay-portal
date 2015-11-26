@@ -343,19 +343,6 @@
 			{
 				"template_pt": {
 					"mapping": {
-						"analyzer": "brazilian",
-						"index": "analyzed",
-						"store": "true",
-						"term_vector": "with_positions_offsets",
-						"type": "string"
-					},
-					"match": "*_pt_BR",
-					"match_mapping_type": "string"
-				}
-			},
-			{
-				"template_pt": {
-					"mapping": {
 						"analyzer": "portuguese",
 						"index": "analyzed",
 						"store": "true",
@@ -365,6 +352,19 @@
 					"match": "\\w+_pt\\b|\\w+_pt_PT\\b",
 					"match_mapping_type": "string",
 					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_pt_br": {
+					"mapping": {
+						"analyzer": "brazilian",
+						"index": "analyzed",
+						"store": "true",
+						"term_vector": "with_positions_offsets",
+						"type": "string"
+					},
+					"match": "*_pt_BR",
+					"match_mapping_type": "string"
 				}
 			},
 			{

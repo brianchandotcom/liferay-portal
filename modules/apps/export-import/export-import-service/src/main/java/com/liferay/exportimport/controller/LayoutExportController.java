@@ -92,7 +92,6 @@ import com.liferay.portlet.exportimport.lar.StagedModelType;
 import com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleManager;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 import com.liferay.portlet.exportimport.staging.LayoutStagingUtil;
-import com.liferay.portlet.exportimport.xstream.XStreamAliasRegistryUtil;
 
 import java.io.File;
 import java.io.Serializable;
@@ -105,7 +104,6 @@ import java.util.concurrent.Callable;
 
 import org.apache.commons.lang.time.StopWatch;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -173,11 +171,6 @@ public class LayoutExportController implements ExportController {
 
 			throw t;
 		}
-	}
-
-	@Activate
-	protected void activate() {
-		XStreamAliasRegistryUtil.register(LayoutImpl.class, "Layout");
 	}
 
 	protected File doExport(

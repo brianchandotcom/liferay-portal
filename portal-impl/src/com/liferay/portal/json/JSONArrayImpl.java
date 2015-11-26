@@ -26,6 +26,10 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.Writer;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -50,6 +54,11 @@ public class JSONArrayImpl implements JSONArray {
 		catch (Exception e) {
 			throw new JSONException(e);
 		}
+	}
+
+	@Override
+	public Object get(int index) {
+		return _jsonArray.opt(index);
 	}
 
 	@Override
@@ -106,6 +115,17 @@ public class JSONArrayImpl implements JSONArray {
 	@Override
 	public boolean isNull(int index) {
 		return _jsonArray.isNull(index);
+	}
+
+	@Override
+	public Iterator<Object> iterator() {
+		List<Object> list = new ArrayList<>();
+
+		for (int i = 0; i < length(); i++) {
+			list.add(get(i));
+		}
+
+		return list.iterator();
 	}
 
 	@Override
@@ -168,6 +188,13 @@ public class JSONArrayImpl implements JSONArray {
 	@Override
 	public JSONArray put(long value) {
 		_jsonArray.put(String.valueOf(value));
+
+		return this;
+	}
+
+	@Override
+	public JSONArray put(Object value) {
+		_jsonArray.put(value);
 
 		return this;
 	}

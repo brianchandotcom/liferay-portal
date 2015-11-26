@@ -52,6 +52,7 @@ import com.liferay.calendar.util.CalendarResourceUtil;
 import com.liferay.calendar.util.CalendarUtil;
 import com.liferay.calendar.util.JCalendarUtil;
 import com.liferay.calendar.util.RSSUtil;
+import com.liferay.calendar.util.RecurrenceUtil;
 import com.liferay.calendar.web.upgrade.CalendarWebUpgrade;
 import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -70,6 +71,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -381,10 +383,6 @@ public class CalendarPortlet extends MVCPortlet {
 				actionRequest, "updateCalendarBookingInstance");
 
 			if (updateCalendarBookingInstance) {
-				calendarBooking =
-					_calendarBookingLocalService.getCalendarBooking(
-						calendarBookingId);
-
 				boolean allFollowing = ParamUtil.getBoolean(
 					actionRequest, "allFollowing");
 
@@ -413,6 +411,9 @@ public class CalendarPortlet extends MVCPortlet {
 					_calendarBookingService.
 						getNewStartTimeAndDurationCalendarBooking(
 							calendarBookingId, offset, duration);
+
+				calendarBooking = getFirstInstanceInRecurrence(
+					calendarBooking, recurrence, calendar.getTimeZone());
 
 				calendarBooking = _calendarBookingService.updateCalendarBooking(
 					calendarBookingId, calendarId, childCalendarIds, titleMap,
@@ -617,6 +618,23 @@ public class CalendarPortlet extends MVCPortlet {
 			CalendarWebKeys.CALENDAR_RESOURCE, calendarResource);
 	}
 
+	protected List<Integer> getDaysOfWeek(Recurrence recurrenceObj) {
+		List<Integer> daysOfWeek = new ArrayList<>();
+
+		List<PositionalWeekday> positionalWeekdays =
+			recurrenceObj.getPositionalWeekdays();
+
+		if (positionalWeekdays != null) {
+			for (PositionalWeekday positionalWeekday : positionalWeekdays) {
+				Weekday weekday = positionalWeekday.getWeekday();
+
+				daysOfWeek.add(weekday.getCalendarWeekday());
+			}
+		}
+
+		return daysOfWeek;
+	}
+
 	protected String getEditCalendarURL(
 			ActionRequest actionRequest, ActionResponse actionResponse,
 			Calendar calendar)
@@ -649,6 +667,32 @@ public class CalendarPortlet extends MVCPortlet {
 			calendar.getCalendarId());
 
 		return editCalendarURL;
+	}
+
+	protected CalendarBooking getFirstInstanceInRecurrence(
+		CalendarBooking calendarBooking, String recurrence, TimeZone timeZone) {
+
+		if (Validator.isNull(recurrence)) {
+			return calendarBooking;
+		}
+
+		Recurrence recurrenceObj = RecurrenceSerializer.deserialize(recurrence);
+		List<Integer> daysOfWeek = getDaysOfWeek(recurrenceObj);
+
+		java.util.Calendar startTimeJCalendar = CalendarFactoryUtil.getCalendar(
+			calendarBooking.getStartTime(), timeZone);
+		int firstStartTimeDayOfWeek = startTimeJCalendar.get(
+			java.util.Calendar.DAY_OF_WEEK);
+
+		if ((recurrenceObj.getFrequency() == Frequency.WEEKLY) &&
+			!daysOfWeek.contains(firstStartTimeDayOfWeek)) {
+
+			calendarBooking.setRecurrence(recurrence);
+			calendarBooking = RecurrenceUtil.getCalendarBookingInstance(
+				calendarBooking, 1);
+		}
+
+		return calendarBooking;
 	}
 
 	protected java.util.Calendar getJCalendar(

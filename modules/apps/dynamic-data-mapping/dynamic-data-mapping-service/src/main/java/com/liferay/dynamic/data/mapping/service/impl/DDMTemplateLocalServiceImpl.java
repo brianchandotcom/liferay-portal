@@ -452,6 +452,18 @@ public class DDMTemplateLocalServiceImpl
 	}
 
 	/**
+	 * Returns the template with the ID.
+	 *
+	 * @param  templateId the primary key of the template
+	 * @return the matching template, or <code>null</code> if a matching
+	 *         template could not be found
+	 */
+	@Override
+	public DDMTemplate fetchTemplate(long templateId) {
+		return ddmTemplatePersistence.fetchByPrimaryKey(templateId);
+	}
+
+	/**
 	 * Returns the template matching the group and template key.
 	 *
 	 * @param  groupId the primary key of the group

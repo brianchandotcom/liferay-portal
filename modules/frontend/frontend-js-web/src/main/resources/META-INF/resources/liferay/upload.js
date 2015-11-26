@@ -200,6 +200,7 @@ AUI.add(
 							fileCannotBeSavedText: Liferay.Language.get('the-file-x-cannot-be-saved'),
 							invalidFileNameText: Liferay.Language.get('please-enter-a-file-with-a-valid-file-name'),
 							invalidFileSizeText: Liferay.Language.get('please-enter-a-file-with-a-valid-file-size-no-larger-than-x'),
+							invalidUploadRequestSizeText: Liferay.Language.get('request-is-larger-than-x-and-could-not-be-processed'),
 							noFilesSelectedText: Liferay.Language.get('no-files-selected'),
 							notAvailableText: Liferay.Language.get('multiple-file-uploading-is-not-available'),
 							orText: Liferay.Language.get('or'),
@@ -264,8 +265,10 @@ AUI.add(
 						}
 						else {
 							var maxFileSize = instance.formatStorage(instance.get('maxFileSize'));
+							var maxUploadRequestSize = Liferay.PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE;
 
 							instance._invalidFileSizeText = Lang.sub(strings.invalidFileSizeText, [maxFileSize]);
+							instance._invalidUploadRequestSize = Lang.sub(strings.invalidUploadRequestSizeText, [maxUploadRequestSize]);
 
 							instance._metadataContainer = instance.get('metadataContainer');
 							instance._metadataExplanationContainer = instance.get('metadataExplanationContainer');
@@ -459,6 +462,7 @@ AUI.add(
 						var strings = instance.get(STRINGS);
 
 						var maxFileSize = instance.get('maxFileSize');
+						var maxUploadRequestSize = Liferay.PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE;
 
 						return data.filter(
 							function(item, index) {
@@ -477,6 +481,9 @@ AUI.add(
 								}
 								else if (maxFileSize > 0 && size > maxFileSize) {
 									error = instance._invalidFileSizeText;
+								}
+								else if (maxUploadRequestSize > 0 && size > maxUploadRequestSize) {
+									error = instance._invalidUploadRequestSize;
 								}
 
 								if (error) {

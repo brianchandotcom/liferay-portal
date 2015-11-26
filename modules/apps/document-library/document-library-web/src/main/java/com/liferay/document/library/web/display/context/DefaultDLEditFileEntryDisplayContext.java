@@ -65,12 +65,17 @@ public class DefaultDLEditFileEntryDisplayContext
 	}
 
 	@Override
+	public long getMaximumUploadRequestSize() {
+		return PrefsPropsUtil.getLong(
+			PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
+	}
+
+	@Override
 	public long getMaximumUploadSize() {
 		long fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
 
 		if (fileMaxSize == 0) {
-			fileMaxSize = PrefsPropsUtil.getLong(
-				PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
+			fileMaxSize = getMaximumUploadRequestSize();
 		}
 
 		return fileMaxSize;

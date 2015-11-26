@@ -132,9 +132,7 @@ public class UploadServletRequestImpl
 						UploadException uploadException = new UploadException(
 							sb.toString());
 
-						uploadException.setExceededLiferayFileItemSizeLimit(
-							false);
-						uploadException.setExceededSizeLimit(true);
+						uploadException.setExceededUploadRequestSizeLimit(true);
 
 						request.setAttribute(
 							WebKeys.UPLOAD_EXCEPTION, uploadException);
@@ -173,7 +171,6 @@ public class UploadServletRequestImpl
 
 						uploadException.setExceededLiferayFileItemSizeLimit(
 							true);
-						uploadException.setExceededSizeLimit(true);
 
 						request.setAttribute(
 							WebKeys.UPLOAD_EXCEPTION, uploadException);
@@ -211,10 +208,11 @@ public class UploadServletRequestImpl
 		catch (Exception e) {
 			UploadException uploadException = new UploadException(e);
 
-			if (e instanceof FileUploadBase.FileSizeLimitExceededException ||
-				e instanceof FileUploadBase.SizeLimitExceededException ) {
-
-				uploadException.setExceededSizeLimit(true);
+			if (e instanceof FileUploadBase.FileSizeLimitExceededException) {
+				uploadException.setExceededFileSizeLimit(true);
+			}
+			else if (e instanceof FileUploadBase.SizeLimitExceededException ) {
+				uploadException.setExceededUploadRequestSizeLimit(true);
 			}
 
 			request.setAttribute(WebKeys.UPLOAD_EXCEPTION, uploadException);

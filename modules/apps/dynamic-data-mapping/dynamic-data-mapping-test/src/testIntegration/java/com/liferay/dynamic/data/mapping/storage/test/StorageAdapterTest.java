@@ -55,7 +55,6 @@ import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -161,16 +160,16 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		Map<Locale, List<Serializable>> dataMap = new HashMap<>();
 
-		Date date1 = PortalUtil.getDate(0, 1, 2013);
-		Date date2 = PortalUtil.getDate(0, 2, 2013);
+		Serializable date1 = getDateFieldValue(0, 1, 2013, _enLocale);
+		Serializable date2 = getDateFieldValue(0, 2, 2013, _enLocale);
 
 		List<Serializable> enValues = ListUtil.fromArray(
 			new Serializable[] {date1, date2});
 
 		dataMap.put(_enLocale, enValues);
 
-		Date date3 = PortalUtil.getDate(0, 3, 2013);
-		Date date4 = PortalUtil.getDate(0, 4, 2013);
+		Serializable date3 = getDateFieldValue(0, 3, 2013, _enLocale);
+		Serializable date4 = getDateFieldValue(0, 4, 2013, _enLocale);
 
 		List<Serializable> ptValues = ListUtil.fromArray(
 			new Serializable[] {date3, date4});

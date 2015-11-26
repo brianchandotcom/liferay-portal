@@ -3,6 +3,8 @@ AUI.add(
 	function(A) {
 		var AArray = A.Array;
 
+		var DateMath = A.DataType.DateMath;
+
 		var Lang = A.Lang;
 
 		var INSTANCE_ID_PREFIX = '_INSTANCE_';
@@ -814,11 +816,13 @@ AUI.add(
 
 						var datePicker = instance.getDatePicker();
 
-						var timestamp = datePicker.getDate().getTime();
+						var selectedDate = datePicker.getDate();
+
+						var formattedDate = A.DataType.Date.format(selectedDate);
 
 						var inputNode = instance.getInputNode();
 
-						return inputNode.val() ? String(timestamp) : '';
+						return inputNode.val() ? formattedDate : '';
 					},
 
 					repeat: function() {
@@ -852,7 +856,11 @@ AUI.add(
 						datePicker.deselectDates();
 
 						if (value) {
-							datePicker.selectDates(new Date(Lang.toInt(value)));
+							var date = A.DataType.Date.parse(value);
+
+							date = DateMath.add(date, DateMath.MINUTES, date.getTimezoneOffset());
+
+							datePicker.selectDates(date);
 						}
 					}
 				}

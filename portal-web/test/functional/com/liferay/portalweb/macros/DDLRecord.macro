@@ -631,6 +631,10 @@
 		<execute function="AssertElementPresent" locator1="DDL#RECORD_TABLE_PREVIEW_INVALID_IMG" />
 	</command>
 
+	<command name="viewNestedFieldsVisualGroupingViaDDLDisplay">
+		<execute function="SikuliAssertElementPresent" locator1="DDLRecord#NESTED_FIELD_VISUAL_GROUPING_DDL_DISPLAY_PNG" />
+	</command>
+
 	<command name="viewRepeatableNestedFieldsVisualGrouping">
 		<execute function="SikuliAssertElementPresent" locator1="DDLRecord#NESTED_FIELD_REPEATABLE_VISUAL_GROUPING_PNG" />
 	</command>
@@ -729,6 +733,17 @@
 			</then>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="DDLRecord#FIELD_1" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="DDLRecord#FIELD_1" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
+
+		<if>
+			<isset var="ddlRecordNestedFieldData" />
+			<then>
+				<var name="key_ddlRecordFieldData" value="${ddlRecordNestedFieldData}" />
+				<var name="key_fieldFieldLabel" value="${nestedFieldFieldLabel}" />
+
+				<execute function="AssertTextEquals" locator1="DDLRecord#FIELD_NESTED" value1="${nestedFieldFieldLabel} ${ddlRecordNestedFieldData}" />
+				<execute function="AssertCssValue" locator1="DDLRecord#FIELD_NESTED" locator2="margin-left" value1="15px" />
+			</then>
+		</if>
 	</command>
 </definition>

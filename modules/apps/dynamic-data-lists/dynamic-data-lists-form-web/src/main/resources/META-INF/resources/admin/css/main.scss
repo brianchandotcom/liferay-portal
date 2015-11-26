@@ -202,6 +202,10 @@
 	margin: 0;
 	width: 100%;
 
+	&:focus {
+		outline: none;
+	}
+
 	.modal-body {
 		background-color: #FFF;
 		height: 100%;

@@ -111,16 +111,16 @@ AUI.add(
 						getter: '_getPosition'
 					},
 
-					positionInput: {
-						setter: A.one,
-						value: null
-					},
-
 					positionalDayOfWeek: {
 						getter: '_getPositionalDayOfWeek'
 					},
 
 					positionalDayOfWeekOptions: {
+						setter: A.one,
+						value: null
+					},
+
+					positionInput: {
 						setter: A.one,
 						value: null
 					},
@@ -304,7 +304,6 @@ AUI.add(
 						var instance = this;
 
 						var dayOfWeekInput = instance.get('dayOfWeekInput');
-						var frequency = instance.get('frequency');
 
 						var positionalDayOfWeek = null;
 
@@ -347,8 +346,6 @@ AUI.add(
 
 					_getStartDatePosition: function() {
 						var instance = this;
-
-						var lastPositionCheckbox = instance.get('lastPositionCheckbox');
 
 						var startDateDatePicker = instance.get('startDateDatePicker');
 

@@ -51,6 +51,7 @@ portletURL.setParameter("mvcRenderCommandName", "/document_library/view");
 portletURL.setParameter("curFolder", currentFolder);
 portletURL.setParameter("deltaFolder", deltaFolder);
 portletURL.setParameter("folderId", String.valueOf(folderId));
+portletURL.setParameter("navigation", navigation);
 
 SearchContainer dlSearchContainer = new SearchContainer(liferayPortletRequest, null, null, "curEntry", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
 

@@ -16,17 +16,6 @@
 
 <%@ include file="/html/taglib/aui/fieldset/init.jsp" %>
 
-<fieldset class="fieldset <%= cssClass %>" <%= Validator.isNotNull(id) ? "id=\"" + namespace + id + "\"" : StringPool.BLANK %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
-	<c:if test="<%= Validator.isNotNull(label) %>">
-		<legend class="fieldset-legend">
-			<span class="legend">
-				<liferay-ui:message key="<%= label %>" localizeKey="<%= localizeLabel %>" />
-
-				<c:if test="<%= Validator.isNotNull(helpMessage) %>">
-					<liferay-ui:icon-help message="<%= helpMessage %>" />
-				</c:if>
-			</span>
-		</legend>
-	</c:if>
-
-	<div class="<%= column ? "row-fluid" : StringPool.BLANK %>">
+		</div>
+	</div>
+</div>

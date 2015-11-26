@@ -67,8 +67,6 @@ if (selLayout != null) {
 
 <aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
-<h3><liferay-ui:message key="customization-settings" /></h3>
-
 <c:choose>
 	<c:when test="<%= curFreeformLayout %>">
 		<div class="alert alert-warning">

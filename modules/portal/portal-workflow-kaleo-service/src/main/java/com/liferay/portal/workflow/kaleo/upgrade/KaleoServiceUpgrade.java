@@ -57,6 +57,6 @@ public class KaleoServiceUpgrade implements UpgradeStepRegistrator {
 		_ddlRecordLocalService = ddlRecordLocalService;
 	}
 
-	private DDLRecordLocalService _ddlRecordLocalService;
+	private volatile DDLRecordLocalService _ddlRecordLocalService;
 
 }

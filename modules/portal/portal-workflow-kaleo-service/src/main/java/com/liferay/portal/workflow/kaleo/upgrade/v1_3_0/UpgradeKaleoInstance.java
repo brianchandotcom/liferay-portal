@@ -45,6 +45,7 @@ public class UpgradeKaleoInstance extends UpgradeProcess {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			StringBundler sb = new StringBundler(6);
+
 			sb.append("select * from ");
 			sb.append(tableName);
 			sb.append(" where ");
@@ -59,21 +60,23 @@ public class UpgradeKaleoInstance extends UpgradeProcess {
 			if (rs.next()) {
 				long classPK = rs.getLong("classPK");
 
-					DDLRecord ddlRecord = _ddlRecordLocalService.fetchDDLRecord(
-						classPK);
+				DDLRecord ddlRecord = _ddlRecordLocalService.fetchDDLRecord(
+					classPK);
 
-					if (ddlRecord == null) {
-						sb = new StringBundler(8);
-						sb.append("delete from ");
-						sb.append(tableName);
-						sb.append(" where ");
-						sb.append(columnName);
-						sb.append(" = ");
-						sb.append(columnValue);
-						sb.append(" and classPK = ");
-						sb.append(classPK);
-						runSQL(sb.toString());
-					}
+				if (ddlRecord == null) {
+					sb = new StringBundler(8);
+
+					sb.append("delete from ");
+					sb.append(tableName);
+					sb.append(" where ");
+					sb.append(columnName);
+					sb.append(" = ");
+					sb.append(columnValue);
+					sb.append(" and classPK = ");
+					sb.append(classPK);
+
+					runSQL(sb.toString());
+				}
 			}
 		}
 		finally {

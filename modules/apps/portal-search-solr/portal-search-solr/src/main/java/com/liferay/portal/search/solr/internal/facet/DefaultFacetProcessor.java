@@ -14,11 +14,13 @@
 
 package com.liferay.portal.search.solr.internal.facet;
 
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.search.solr.facet.FacetProcessor;
 
 import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.common.params.FacetParams;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -32,7 +34,36 @@ public class DefaultFacetProcessor implements FacetProcessor<SolrQuery> {
 	public void processFacet(SolrQuery solrQuery, Facet facet) {
 		FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
 
-		solrQuery.addFacetField(facetConfiguration.getFieldName());
+		String fieldName = facetConfiguration.getFieldName();
+
+		String prefix = "f." + fieldName + ".";
+
+		JSONObject data = facetConfiguration.getData();
+
+		applyFrequencyThreshold(solrQuery, prefix, data);
+		applyMaxTerms(solrQuery, prefix, data);
+
+		solrQuery.addFacetField(fieldName);
+	}
+
+	protected void applyFrequencyThreshold(
+		SolrQuery solrQuery, String prefix, JSONObject data) {
+
+		int minCount = data.getInt("frequencyThreshold");
+
+		if (minCount > 0) {
+			solrQuery.set(prefix.concat(FacetParams.FACET_MINCOUNT), minCount);
+		}
+	}
+
+	protected void applyMaxTerms(
+		SolrQuery solrQuery, String prefix, JSONObject data) {
+
+		int limit = data.getInt("maxTerms");
+
+		if (limit > 0) {
+			solrQuery.set(prefix.concat(FacetParams.FACET_LIMIT), limit);
+		}
 	}
 
 }

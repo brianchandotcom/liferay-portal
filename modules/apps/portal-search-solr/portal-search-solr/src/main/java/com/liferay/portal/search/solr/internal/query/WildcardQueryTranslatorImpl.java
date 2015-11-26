@@ -50,8 +50,16 @@ public class WildcardQueryTranslatorImpl implements WildcardQueryTranslator {
 	}
 
 	protected String escape(String value) {
+		value = escape(value, CharPool.CLOSE_PARENTHESIS);
+		value = escape(value, CharPool.OPEN_PARENTHESIS);
+		value = escape(value, CharPool.SPACE);
+
+		return value;
+	}
+
+	protected String escape(String value, char character) {
 		return StringUtil.replace(
-			value, CharPool.SPACE, StringPool.BACK_SLASH + StringPool.SPACE);
+			value, character, StringPool.BACK_SLASH + character);
 	}
 
 }

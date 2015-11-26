@@ -7,16 +7,16 @@
 				components: {
 					base: PATH_CALENDAR_WEB + '/',
 					modules: {
+						'liferay-calendar-recurrence-converter': {
+							path: 'js/recurrence_converter.js',
+							requires: []
+						},
 						'liferay-calendar-recurrence-dialog': {
 							path: 'js/recurrence.js',
 							requires: [
 								'aui-base',
 								'liferay-calendar-recurrence-util'
 							]
-						},
-						'liferay-calendar-recurrence-converter': {
-							path: 'js/recurrence_converter.js',
-							requires: []
 						}
 					},
 					root: PATH_CALENDAR_WEB + '/'

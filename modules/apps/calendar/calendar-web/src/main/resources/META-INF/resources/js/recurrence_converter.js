@@ -208,7 +208,6 @@ AUI.add(
 					return rrule;
 				},
 
-
 				_twoDigits: function(number) {
 					var paddedNumber = STR_ZERO + number;
 

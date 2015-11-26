@@ -570,6 +570,11 @@
 				<outputType>boolean</outputType>
 				<defaultValue>true</defaultValue>
 			</attribute>
+			<attribute>
+				<name>markupView</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
 		</attributes>
 	</component>
 	<component name="FieldsetGroup" bodyContent="true">

@@ -65,6 +65,10 @@ public abstract class BaseFieldsetTag extends com.liferay.taglib.util.IncludeTag
 		return _localizeLabel;
 	}
 
+	public java.lang.String getMarkupView() {
+		return _markupView;
+	}
+
 	public void setCollapsed(boolean collapsed) {
 		_collapsed = collapsed;
 
@@ -113,6 +117,12 @@ public abstract class BaseFieldsetTag extends com.liferay.taglib.util.IncludeTag
 		setScopedAttribute("localizeLabel", localizeLabel);
 	}
 
+	public void setMarkupView(java.lang.String markupView) {
+		_markupView = markupView;
+
+		setScopedAttribute("markupView", markupView);
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -125,6 +135,12 @@ public abstract class BaseFieldsetTag extends com.liferay.taglib.util.IncludeTag
 		_id = null;
 		_label = null;
 		_localizeLabel = true;
+		_markupView = null;
+	}
+
+	@Override
+	protected String getEndPage() {
+		return _END_PAGE;
 	}
 
 	@Override
@@ -142,9 +158,13 @@ public abstract class BaseFieldsetTag extends com.liferay.taglib.util.IncludeTag
 		setNamespacedAttribute(request, "id", _id);
 		setNamespacedAttribute(request, "label", _label);
 		setNamespacedAttribute(request, "localizeLabel", _localizeLabel);
+		setNamespacedAttribute(request, "markupView", _markupView);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "aui:fieldset:";
+
+	private static final String _END_PAGE =
+		"/html/taglib/aui/fieldset/end.jsp";
 
 	private static final String _START_PAGE =
 		"/html/taglib/aui/fieldset/start.jsp";
@@ -157,5 +177,6 @@ public abstract class BaseFieldsetTag extends com.liferay.taglib.util.IncludeTag
 	private java.lang.String _id = null;
 	private java.lang.String _label = null;
 	private boolean _localizeLabel = true;
+	private java.lang.String _markupView = null;
 
 }

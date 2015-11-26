@@ -966,17 +966,20 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 					group.getGroupId(), RoleConstants.TYPE_SITE);
 			}
 			else {
+				if (!group.isStagingGroup() || group.isStagedRemotely()) {
+
+					// Group roles
+
+					userGroupRoleLocalService.deleteUserGroupRolesByGroupId(
+						group.getGroupId());
+
+					// User group roles
+
+					userGroupGroupRoleLocalService.
+						deleteUserGroupGroupRolesByGroupId(group.getGroupId());
+				}
+
 				groupPersistence.remove(group);
-
-				// Group roles
-
-				userGroupRoleLocalService.deleteUserGroupRolesByGroupId(
-					group.getGroupId());
-
-				// User group roles
-
-				userGroupGroupRoleLocalService.
-					deleteUserGroupGroupRolesByGroupId(group.getGroupId());
 			}
 
 			// Permission cache

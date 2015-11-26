@@ -10,9 +10,16 @@
 >
 	<bean id="com.liferay.portal.model.adapter.builder.StagedGroupModelAdapterBuilder" class="com.liferay.portal.model.adapter.builder.StagedGroupModelAdapterBuilder" />
 	<bean id="com.liferay.portal.model.adapter.builder.StagedThemeModelAdapterBuilder" class="com.liferay.portal.model.adapter.builder.StagedThemeModelAdapterBuilder" />
+	<bean id="com.liferay.portal.service.impl.GroupLocalServiceStagingAdvice" class="com.liferay.portal.service.impl.GroupLocalServiceStagingAdvice" />
 	<bean id="com.liferay.portal.service.impl.LayoutLocalServiceStagingAdvice" class="com.liferay.portal.service.impl.LayoutLocalServiceStagingAdvice" />
 	<bean id="com.liferay.portal.service.impl.LayoutSetLocalServiceStagingAdvice" class="com.liferay.portal.service.impl.LayoutSetLocalServiceStagingAdvice" />
+	<bean id="com.liferay.portal.service.impl.OrganizationLocalServiceStagingAdvice" class="com.liferay.portal.service.impl.OrganizationLocalServiceStagingAdvice" />
 	<bean id="com.liferay.portal.service.impl.PortletPreferencesLocalServiceStagingAdvice" class="com.liferay.portal.service.impl.PortletPreferencesLocalServiceStagingAdvice" />
+	<bean id="com.liferay.portal.service.impl.RoleLocalServiceStagingAdvice" class="com.liferay.portal.service.impl.RoleLocalServiceStagingAdvice" />
+	<bean id="com.liferay.portal.service.impl.UserGroupGroupRoleLocalServiceStagingAdvice" class="com.liferay.portal.service.impl.UserGroupGroupRoleLocalServiceStagingAdvice" />
+	<bean id="com.liferay.portal.service.impl.UserGroupLocalServiceStagingAdvice" class="com.liferay.portal.service.impl.UserGroupLocalServiceStagingAdvice" />
+	<bean id="com.liferay.portal.service.impl.UserGroupRoleLocalServiceStagingAdvice" class="com.liferay.portal.service.impl.UserGroupRoleLocalServiceStagingAdvice" />
+	<bean id="com.liferay.portal.service.impl.UserLocalServiceStagingAdvice" class="com.liferay.portal.service.impl.UserLocalServiceStagingAdvice" />
 	<bean id="com.liferay.portlet.asset.model.adapter.builder.StagedAssetLinkModelAdapterBuilder" class="com.liferay.portlet.asset.model.adapter.builder.StagedAssetLinkModelAdapterBuilder" />
 	<bean id="com.liferay.portlet.exportimport.lar.PortletDataHandlerStatusMessageSenderUtil" class="com.liferay.portlet.exportimport.lar.PortletDataHandlerStatusMessageSenderUtil">
 		<property name="portletDataHandlerStatusMessageSender">
@@ -26,8 +33,15 @@
 		</property>
 	</bean>
 	<aop:config proxy-target-class="false">
+		<aop:advisor advice-ref="com.liferay.portal.service.impl.GroupLocalServiceStagingAdvice" pointcut="bean(com.liferay.portal.service.GroupLocalService)" />
 		<aop:advisor advice-ref="com.liferay.portal.service.impl.LayoutLocalServiceStagingAdvice" pointcut="bean(com.liferay.portal.service.LayoutLocalService)" />
 		<aop:advisor advice-ref="com.liferay.portal.service.impl.LayoutSetLocalServiceStagingAdvice" pointcut="bean(com.liferay.portal.service.LayoutSetLocalService)" />
+		<aop:advisor advice-ref="com.liferay.portal.service.impl.OrganizationLocalServiceStagingAdvice" pointcut="bean(com.liferay.portal.service.OrganizationLocalService)" />
 		<aop:advisor advice-ref="com.liferay.portal.service.impl.PortletPreferencesLocalServiceStagingAdvice" pointcut="bean(com.liferay.portal.service.PortletPreferencesLocalService)" />
+		<aop:advisor advice-ref="com.liferay.portal.service.impl.RoleLocalServiceStagingAdvice" pointcut="bean(com.liferay.portal.service.RoleLocalService)" />
+		<aop:advisor advice-ref="com.liferay.portal.service.impl.UserGroupGroupRoleLocalServiceStagingAdvice" pointcut="bean(com.liferay.portal.service.UserGroupGroupRoleLocalService)" />
+		<aop:advisor advice-ref="com.liferay.portal.service.impl.UserGroupLocalServiceStagingAdvice" pointcut="bean(com.liferay.portal.service.UserGroupLocalService)" />
+		<aop:advisor advice-ref="com.liferay.portal.service.impl.UserGroupRoleLocalServiceStagingAdvice" pointcut="bean(com.liferay.portal.service.UserGroupRoleLocalService)" />
+		<aop:advisor advice-ref="com.liferay.portal.service.impl.UserLocalServiceStagingAdvice" pointcut="bean(com.liferay.portal.service.UserLocalService)" />
 	</aop:config>
 </beans>

@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Layout Prototype Service
-Bundle-SymbolicName: com.liferay.layout.prototype.service
-Bundle-Version: 1.0.0
-Include-Resource: classes

@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.lists.upgrade.v1_0_0.UpgradeClassNames;
 import com.liferay.dynamic.data.lists.upgrade.v1_0_0.UpgradeDynamicDataLists;
 import com.liferay.dynamic.data.lists.upgrade.v1_0_0.UpgradeLastPublishDate;
 import com.liferay.dynamic.data.lists.upgrade.v1_0_0.UpgradeSchema;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -36,6 +37,11 @@ public class DDLServiceUpgrade implements UpgradeStepRegistrator {
 			"com.liferay.dynamic.data.lists.service", "0.0.1", "1.0.0",
 			new UpgradeSchema(), new UpgradeClassNames(),
 			new UpgradeDynamicDataLists(), new UpgradeLastPublishDate());
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMStructureLocalService(
+		DDMStructureLocalService ddmStructureLocalService) {
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

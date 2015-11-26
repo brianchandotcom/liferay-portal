@@ -129,7 +129,7 @@
 			<elseif>
 				<equals arg1="${userScreenNameVariation}" arg2="Invalid" />
 				<then>
-					<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#SCREEN_NAME_FIELD_ALERT" value1="The screen name cannot be an email address or a reserved word, such as cyrus, postfix. It must contain only alphanumeric or the following special characters: -._." />
+					<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#SCREEN_NAME_FIELD_ALERT" value1="The screen name cannot be an email address or a reserved word, such as postfix. It must contain only alphanumeric or the following special characters: -._." />
 				</then>
 			</elseif>
 			<else>

@@ -27,7 +27,6 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 <liferay-portlet:renderURL varImpl="portletURL">
 	<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.PUBLISH %>" />
-	<portlet:param name="tabs2" value="new-publication-process" />
 	<portlet:param name="publishConfigurationButtons" value="saved" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />

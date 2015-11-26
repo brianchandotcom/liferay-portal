@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.AuthException;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -126,14 +125,7 @@ public class PublishLayoutsMVCActionCommand extends BaseMVCActionCommand {
 					SessionErrors.add(actionRequest, e.getClass(), e);
 				}
 
-				String redirect = ParamUtil.getString(
-					actionRequest, "redirect");
-
-				redirect = StringUtil.replace(
-					redirect, "tabs2=current-and-previous",
-					"tabs2=new-publication-process");
-
-				sendRedirect(actionRequest, actionResponse, redirect);
+				sendRedirect(actionRequest, actionResponse);
 			}
 			else {
 				throw e;

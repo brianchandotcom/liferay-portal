@@ -16,8 +16,6 @@ package com.liferay.portal.cache;
 
 import com.liferay.portal.cache.configuration.PortalCacheConfiguration;
 import com.liferay.portal.cache.configuration.PortalCacheManagerConfiguration;
-import com.liferay.portal.cache.internal.BlockingPortalCache;
-import com.liferay.portal.cache.internal.transactional.TransactionalPortalCache;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheException;
 import com.liferay.portal.kernel.cache.PortalCacheListener;

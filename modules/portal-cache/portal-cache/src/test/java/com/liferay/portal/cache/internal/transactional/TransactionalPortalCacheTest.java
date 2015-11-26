@@ -14,6 +14,7 @@
 
 package com.liferay.portal.cache.internal.transactional;
 
+import com.liferay.portal.cache.TransactionalPortalCache;
 import com.liferay.portal.cache.test.TestPortalCache;
 import com.liferay.portal.cache.test.TestPortalCacheListener;
 import com.liferay.portal.cache.test.TestPortalCacheReplicator;

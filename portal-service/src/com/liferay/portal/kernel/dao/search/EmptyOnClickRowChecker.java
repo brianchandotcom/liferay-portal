@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.PortletResponse;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -48,7 +49,7 @@ public class EmptyOnClickRowChecker extends RowChecker {
 
 		StringBundler sb = new StringBundler(14);
 
-		sb.append("<label><input ");
+		sb.append("<input ");
 
 		if (checked) {
 			sb.append("checked ");
@@ -59,7 +60,7 @@ public class EmptyOnClickRowChecker extends RowChecker {
 		}
 
 		sb.append("class=\"");
-		sb.append(_cssClass);
+		sb.append(getCssClass());
 		sb.append("\" name=\"");
 		sb.append(name);
 		sb.append("\" title=\"");
@@ -68,13 +69,13 @@ public class EmptyOnClickRowChecker extends RowChecker {
 		sb.append(HtmlUtil.escapeAttribute(value));
 		sb.append("\" ");
 
-		if (Validator.isNotNull(_allRowIds)) {
+		if (Validator.isNotNull(getAllRowIds())) {
 			sb.append(
 				getOnClick(
 					checkBoxRowIds, checkBoxAllRowIds, checkBoxPostOnClick));
 		}
 
-		sb.append("></label>");
+		sb.append(">");
 
 		return sb.toString();
 	}

@@ -396,6 +396,17 @@ public interface DDMTemplateLocalService extends BaseLocalService,
 		long groupId, long classNameId, java.lang.String templateKey,
 		boolean includeAncestorTemplates) throws PortalException;
 
+	/**
+	* Returns the template with the ID.
+	*
+	* @param templateId the primary key of the template
+	* @return the matching template, or <code>null</code> if a matching
+	template could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.dynamic.data.mapping.model.DDMTemplate fetchTemplate(
+		long templateId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 

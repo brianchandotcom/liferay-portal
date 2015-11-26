@@ -467,6 +467,19 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 			templateKey, includeAncestorTemplates);
 	}
 
+	/**
+	* Returns the template with the ID.
+	*
+	* @param templateId the primary key of the template
+	* @return the matching template, or <code>null</code> if a matching
+	template could not be found
+	*/
+	@Override
+	public com.liferay.dynamic.data.mapping.model.DDMTemplate fetchTemplate(
+		long templateId) {
+		return _ddmTemplateLocalService.fetchTemplate(templateId);
+	}
+
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _ddmTemplateLocalService.getActionableDynamicQuery();

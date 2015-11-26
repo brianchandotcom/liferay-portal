@@ -12,14 +12,13 @@
  * details.
  */
 
-package com.liferay.layout.set.prototype.web.lar;
+package com.liferay.layout.set.prototype.lar;
 
 import com.liferay.layout.set.prototype.web.constants.LayoutSetPrototypePortletKeys;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.LayoutSetPrototype;
-import com.liferay.portal.model.impl.LayoutSetPrototypeImpl;
 import com.liferay.portal.service.LayoutSetPrototypeLocalService;
 import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
 import com.liferay.portlet.exportimport.lar.DataLevel;
@@ -29,7 +28,6 @@ import com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerControl;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
-import com.liferay.portlet.exportimport.xstream.XStreamAliasRegistryUtil;
 
 import java.util.List;
 
@@ -68,9 +66,6 @@ public class LayoutSetPrototypePortletDataHandler
 				},
 				LayoutSetPrototype.class.getName()
 			));
-
-		XStreamAliasRegistryUtil.register(
-			LayoutSetPrototypeImpl.class, "LayoutSetPrototype");
 	}
 
 	@Override

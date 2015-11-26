@@ -574,6 +574,13 @@
 	</component>
 	<component name="FieldsetGroup" bodyContent="true">
 		<description>Creates a <![CDATA[<code>&lt;div&gt;</code>]]> tag to group fieldset elements and offer additional styling.</description>
+		<attributes>
+			<attribute>
+				<name>markupView</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+		</attributes>
 	</component>
 	<component name="Form" bodyContent="true">
 		<description>Creates a form that offers additional styling and custom namespacing.</description>

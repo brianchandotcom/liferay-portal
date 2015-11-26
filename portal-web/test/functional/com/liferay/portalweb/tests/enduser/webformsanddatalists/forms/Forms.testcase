@@ -447,7 +447,7 @@
 		</for>
 	</command>
 
-	<command name="SubmitFormWithCheckboxSwitcherDisplayField" priority="4">
+	<command name="SubmitFormWithSwitcherCheckboxField" priority="4">
 		<description message="This is a use case for LPS-59351." />
 
 		<execute macro="Navigator#openURL" />

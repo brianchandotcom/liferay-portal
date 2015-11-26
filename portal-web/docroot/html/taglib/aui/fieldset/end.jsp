@@ -14,4 +14,7 @@
  */
 --%>
 
-<%@ include file="init.jsp" %>
+<%@ include file="/html/taglib/aui/fieldset/init.jsp" %>
+
+	</div>
+</fieldset>

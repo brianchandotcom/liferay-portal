@@ -104,7 +104,7 @@ renderResponse.setTitle(((category == null) ? LanguageUtil.get(request, "add-new
 
 	<aui:model-context bean="<%= category %>" model="<%= AssetCategory.class %>" />
 
-	<aui:fieldset-group>
+	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
 			<aui:input autoFocus="<%= true %>" label="name" name="title" />
 
@@ -159,13 +159,13 @@ renderResponse.setTitle(((category == null) ? LanguageUtil.get(request, "add-new
 <aui:script use="liferay-auto-fields">
 	var autoFields = new Liferay.AutoFields(
 		{
-			contentBox: 'fieldset#<portlet:namespace />categoryPropertiesId',
+			contentBox: '#<portlet:namespace />categoryPropertiesId',
 			fieldIndexes: '<portlet:namespace />categoryPropertiesIndexes',
 			namespace: '<portlet:namespace />'
 		}
 	).render();
 
-	var categoryPropertiesTrigger = A.one('fieldset#<portlet:namespace />categoryPropertiesId');
+	var categoryPropertiesTrigger = A.one('#<portlet:namespace />categoryPropertiesId');
 
 	if (categoryPropertiesTrigger) {
 		categoryPropertiesTrigger.setData('autoFieldsInstance', autoFields);

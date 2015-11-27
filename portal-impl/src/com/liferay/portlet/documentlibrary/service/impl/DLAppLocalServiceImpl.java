@@ -1292,6 +1292,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		for (int i = fileVersions.size() - 2; i >= 0; i--) {
 			FileVersion fileVersion = fileVersions.get(i);
 
+			sourceFileName = DLAppUtil.getSourceFileName(fileVersion);
+
 			FileVersion previousFileVersion = fileVersions.get(i + 1);
 
 			try {

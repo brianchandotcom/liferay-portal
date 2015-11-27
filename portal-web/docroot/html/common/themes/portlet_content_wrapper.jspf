@@ -30,7 +30,7 @@
 				</c:if>
 
 				<c:choose>
-					<c:when test="<%= group.isLayoutPrototype() && layoutTypePortlet.hasPortletId(portletDisplay.getId()) && !portletName.equals(PortletKeys.NESTED_PORTLETS) && portletDisplay.isModeView() %>">
+					<c:when test="<%= PortalUtil.isSkipPortletContentRendering(group, layoutTypePortlet, portletDisplay, portletName) %>">
 						<div class="alert alert-info">
 							<liferay-ui:message key="configure-this-application-and-place-it-where-desired-on-the-page" />
 						</div>

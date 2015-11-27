@@ -62,7 +62,7 @@ if (showEditURL && assetRenderer.hasEditPermission(permissionChecker)) {
 			data="<%= data %>"
 			iconCssClass="icon-edit-sign"
 			label="<%= false %>"
-			message='<%= showIconLabel ? HtmlUtil.escape(HtmlUtil.render(LanguageUtil.format(request, "edit-x-x", new Object[] {"hide-accessible", assetRenderer.getTitle(locale)}, false))) : LanguageUtil.format(request, "edit-x", HtmlUtil.escape(assetRenderer.getTitle(locale)), false) %>'
+			message='<%= showIconLabel ? HtmlUtil.render(LanguageUtil.format(request, "edit-x-x", new Object[] {"hide-accessible", HtmlUtil.escape(assetRenderer.getTitle(locale))}, false)) : LanguageUtil.format(request, "edit-x", HtmlUtil.escape(assetRenderer.getTitle(locale)), false) %>'
 			method="get"
 			url="<%= editPortletURL.toString() %>"
 			useDialog="<%= true %>"

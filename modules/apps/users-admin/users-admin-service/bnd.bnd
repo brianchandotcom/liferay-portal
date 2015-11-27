@@ -1,5 +1,0 @@
-Bundle-Name: Liferay Users Admin Service
-Bundle-SymbolicName: com.liferay.users.admin.service
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.users.admin.lar
-Include-Resource: classes

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.roles.admin.lar;
+package com.liferay.roles.admin.internal.lar;
 
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.NoSuchResourceActionException;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.roles.admin.lar;
+package com.liferay.roles.admin.internal.lar;
 
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;

@@ -327,7 +327,9 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 			return ClusterNodeResponse.createExceptionClusterNodeResponse(
 				_localClusterNodeStatus.getClusterNode(),
 				clusterRequest.getUuid(),
-				new ClusterException("Return value is not serializable"));
+				new ClusterException(
+					methodHandler + " returned value " + result +
+						" that is not serializable"));
 		}
 		catch (Exception e) {
 			return ClusterNodeResponse.createExceptionClusterNodeResponse(

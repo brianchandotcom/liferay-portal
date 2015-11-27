@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<root>
+	<template>
+		<template-key>test-adt-multi-column-layout-ftl</template-key>
+		<name>portlet-display-template-name-multi-column-layout</name>
+		<description>portlet-display-template-description-multi-column-layout-test-adt</description>
+		<language>ftl</language>
+		<script-file>com/liferay/portal/portlet/container/embedded/test/template/dependencies/portlet_display_template_layout.ftl</script-file>
+		<cacheable>false</cacheable>
+	</template>
+</root>

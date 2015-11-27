@@ -72,6 +72,23 @@ public class BasePortletContainerTestCase {
 		serviceRegistrations.clear();
 	}
 
+	protected void registerService(
+		Class<?> clazz, Object object, Dictionary<String, Object> properties) {
+
+		Assert.assertNotNull(properties);
+
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		ServiceRegistration<?> serviceRegistration =
+			bundleContext.registerService(
+				new String[] {Object.class.getName(), clazz.getName()},
+				object, properties);
+
+		serviceRegistrations.add(serviceRegistration);
+	}
+
 	protected void setUpPortlet(
 			Portlet portlet, Dictionary<String, Object> properties,
 			String portletName)
@@ -85,18 +102,9 @@ public class BasePortletContainerTestCase {
 			String portletName, boolean addToLayout)
 		throws Exception {
 
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		Assert.assertNotNull(properties);
-
 		properties.put("javax.portlet.name", portletName);
 
-		serviceRegistrations.add(
-			bundleContext.registerService(
-				new String[] {Object.class.getName(), Portlet.class.getName()},
-				portlet, properties));
+		registerService(Portlet.class, portlet, properties);
 
 		if (addToLayout) {
 			LayoutTestUtil.addPortletToLayout(

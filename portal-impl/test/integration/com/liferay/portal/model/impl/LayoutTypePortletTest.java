@@ -297,7 +297,7 @@ public class LayoutTypePortletTest {
 	}
 
 	@Test
-	public void testNoPortlets() throws Exception {
+	public void testGetAllPortletsShouldReturnNoPortlet() throws Exception {
 		List<Portlet> portlets = _layoutTypePortlet.getAllPortlets();
 
 		Assert.assertEquals(0, portlets.size());

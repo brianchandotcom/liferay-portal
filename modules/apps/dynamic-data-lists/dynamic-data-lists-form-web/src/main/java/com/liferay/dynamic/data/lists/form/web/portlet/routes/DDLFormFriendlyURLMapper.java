@@ -12,22 +12,24 @@
  * details.
  */
 
-package com.liferay.layout.type.controller.full.page.application.access.policy;
+package com.liferay.dynamic.data.lists.form.web.portlet.routes;
 
-import com.liferay.layout.type.controller.full.page.application.constants.FullPageApplicationLayoutTypeControllerConstants;
-import com.liferay.portal.model.LayoutTypeAccessPolicy;
-import com.liferay.portal.model.impl.ModificationDeniedLayoutTypeAccessPolicyImpl;
+import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
+import com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper;
+import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Eudaldo Alonso
+ * @author Leonardo Barros
  */
 @Component(
 	immediate = true,
-	property = {"layout.type=" + FullPageApplicationLayoutTypeControllerConstants.LAYOUT_TYPE_FULL_PAGE_APPLICATION},
-	service = LayoutTypeAccessPolicy.class
+	property = {
+		"com.liferay.portlet.friendly-url-routes=META-INF/friendly-url-routes/routes.xml",
+		"javax.portlet.name=" + DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM
+	},
+	service = FriendlyURLMapper.class
 )
-public class FullPageApplicationLayoutTypeAccessPolicy
-	extends ModificationDeniedLayoutTypeAccessPolicyImpl {
+public class DDLFormFriendlyURLMapper extends DefaultFriendlyURLMapper {
 }

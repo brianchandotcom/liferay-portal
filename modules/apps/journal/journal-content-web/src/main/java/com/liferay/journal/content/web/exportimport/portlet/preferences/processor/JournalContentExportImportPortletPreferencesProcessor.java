@@ -41,6 +41,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
+import com.liferay.portlet.exportimport.staging.MergeLayoutPrototypesThreadLocal;
 
 import java.util.List;
 import java.util.Map;
@@ -199,6 +200,12 @@ public class JournalContentExportImportPortletPreferencesProcessor
 
 		long importGroupId = GetterUtil.getLong(
 			portletPreferences.getValue("groupId", null));
+
+		if ((importGroupId == portletDataContext.getCompanyGroupId()) &&
+			MergeLayoutPrototypesThreadLocal.isInProgress()) {
+
+			portletDataContext.setScopeType("company");
+		}
 
 		long groupId = MapUtil.getLong(groupIds, importGroupId, importGroupId);
 

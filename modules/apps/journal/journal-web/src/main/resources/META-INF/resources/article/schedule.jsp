@@ -40,8 +40,6 @@ if (article != null) {
 
 <aui:model-context bean="<%= article %>" model="<%= JournalArticle.class %>" />
 
-<h3><liferay-ui:message key="schedule" /></h3>
-
 <liferay-ui:error exception="<%= ArticleDisplayDateException.class %>" message="please-enter-a-valid-display-date" />
 <liferay-ui:error exception="<%= ArticleExpirationDateException.class %>" message="please-enter-a-valid-expiration-date" />
 

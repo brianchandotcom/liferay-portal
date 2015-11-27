@@ -28,8 +28,6 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 
 <aui:model-context bean="<%= journalDisplayContext.getArticle() %>" model="<%= JournalArticle.class %>" />
 
-<h3><liferay-ui:message key="categorization" /></h3>
-
 <liferay-ui:asset-categories-error />
 
 <liferay-ui:asset-tags-error />

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.calendar.web.lar;
+package com.liferay.calendar.lar;
 
 import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.model.Calendar;

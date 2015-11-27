@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.password.policies.admin.lar;
+package com.liferay.password.policies.admin.internal.lar;
 
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.exception.PortalException;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.password.policies.admin.exportimport.xstream.configurator;
+package com.liferay.password.policies.admin.internal.exportimport.xstream.configurator;
 
 import com.liferay.exportimport.xstream.configurator.XStreamConfigurator;
 import com.liferay.portal.kernel.util.ListUtil;

@@ -35,44 +35,44 @@ public class VerifyWorkflow extends VerifyProcess {
 		for (String[] orphanedAttachedModel : getOrphanedAttachedModels()) {
 			String tableName = orphanedAttachedModel[0];
 
-			if (tableHasData(tableName)) {
-				try {
-					ps = connection.prepareStatement(
-						"select distinct classNameId from " + tableName);
+			if (!tableHasData(tableName)) {
+				continue;
+			}
 
-					rs = ps.executeQuery();
+			try {
+				ps = connection.prepareStatement(
+					"select distinct classNameId from " + tableName);
 
-					while (rs.next()) {
-						long classNameId = rs.getLong("classNameId");
+				rs = ps.executeQuery();
 
-						ClassName className =
-							ClassNameLocalServiceUtil.fetchClassName(
-								classNameId);
+				while (rs.next()) {
+					long classNameId = rs.getLong("classNameId");
 
-						if (className == null) {
-							continue;
-						}
+					ClassName className =
+						ClassNameLocalServiceUtil.fetchClassName(classNameId);
 
-						String classNameValue = className.getValue();
+					if (className == null) {
+						continue;
+					}
 
-						String orphanedClassName = orphanedAttachedModel[1];
+					String classNameValue = className.getValue();
 
-						if (classNameValue.equals(orphanedClassName)) {
-							String orphanedTableName = orphanedAttachedModel[2];
-							String orphanedColumnName =
-								orphanedAttachedModel[3];
+					String orphanedClassName = orphanedAttachedModel[1];
 
-							if (tableHasData(orphanedTableName)) {
-								deleteOrphaned(
-									tableName, orphanedTableName,
-									orphanedColumnName);
-							}
+					if (classNameValue.equals(orphanedClassName)) {
+						String orphanedTableName = orphanedAttachedModel[2];
+						String orphanedColumnName = orphanedAttachedModel[3];
+
+						if (tableHasData(orphanedTableName)) {
+							deleteOrphaned(
+								tableName, orphanedTableName,
+								orphanedColumnName);
 						}
 					}
 				}
-				finally {
-					DataAccess.cleanUp(null, ps, rs);
-				}
+			}
+			finally {
+				DataAccess.cleanUp(null, ps, rs);
 			}
 		}
 	}
@@ -105,19 +105,23 @@ public class VerifyWorkflow extends VerifyProcess {
 	}
 
 	private static final String[][] _ORPHANED_ATTACHED_MODELS = new String[][] {
-		new String[] {"WorkflowDefinitionLink",
+		new String[] {
+			"WorkflowDefinitionLink",
 			"com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess",
 			"KaleoProcess", "kaleoProcessId"
 		},
-		new String[] {"WorkflowDefinitionLink",
+		new String[] {
+			"WorkflowDefinitionLink",
 			"com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess",
 			"DDLRecord", "recordId"
 		},
-		new String[] { "KaleoInstance",
+		new String[] {
+			"KaleoInstance",
 			"com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess",
 			"DDLRecord", "recordId"
 		},
-		new String[] {"KaleoInstanceToken",
+		new String[] {
+			"KaleoInstanceToken",
 			"com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess",
 			"DDLRecord", "recordId"
 		}

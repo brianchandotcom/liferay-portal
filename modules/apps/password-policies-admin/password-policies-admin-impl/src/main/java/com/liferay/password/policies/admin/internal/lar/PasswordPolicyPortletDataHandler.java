@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.password.policies.admin.lar;
+package com.liferay.password.policies.admin.internal.lar;
 
 import com.liferay.password.policies.admin.constants.PasswordPoliciesAdminPortletKeys;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;

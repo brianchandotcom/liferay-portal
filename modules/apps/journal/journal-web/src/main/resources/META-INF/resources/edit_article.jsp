@@ -190,6 +190,24 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
 
 	<%
+	DDMFormValues ddmFormValues = journalDisplayContext.getDDMFormValues(ddmStructure);
+
+	Locale[] availableLocales = new Locale[] {LocaleUtil.fromLanguageId(defaultLanguageId)};
+
+	if (ddmFormValues != null) {
+		Set<Locale> availableLocalesSet = ddmFormValues.getAvailableLocales();
+
+		availableLocales = availableLocalesSet.toArray(new Locale[availableLocalesSet.size()]);
+	}
+	%>
+
+	<aui:translation-manager
+		availableLocales="<%= availableLocales %>"
+		defaultLanguageId="<%= defaultLanguageId %>"
+		id="translationManager"
+	/>
+
+	<%
 	boolean approved = false;
 	boolean pending = false;
 

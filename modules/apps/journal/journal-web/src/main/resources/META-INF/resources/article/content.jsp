@@ -31,16 +31,6 @@ DDMTemplate ddmTemplate = (DDMTemplate)request.getAttribute("edit_article.jsp-te
 
 String defaultLanguageId = (String)request.getAttribute("edit_article.jsp-defaultLanguageId");
 
-DDMFormValues ddmFormValues = journalDisplayContext.getDDMFormValues(ddmStructure);
-
-Locale[] availableLocales = new Locale[] {LocaleUtil.fromLanguageId(defaultLanguageId)};
-
-if (ddmFormValues != null) {
-	Set<Locale> availableLocalesSet = ddmFormValues.getAvailableLocales();
-
-	availableLocales = availableLocalesSet.toArray(new Locale[availableLocalesSet.size()]);
-}
-
 boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_article.jsp-changeStructure"));
 %>
 
@@ -85,12 +75,6 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 					</c:choose>
 				</c:if>
 			</div>
-
-			<aui:translation-manager
-				availableLocales="<%= availableLocales %>"
-				defaultLanguageId="<%= defaultLanguageId %>"
-				id="translationManager"
-			/>
 		</div>
 
 		<div class="journal-article-general-fields">
@@ -108,7 +92,7 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 				checkRequired="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>"
 				classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
 				classPK="<%= ddmStructure.getStructureId() %>"
-				ddmFormValues="<%= ddmFormValues %>"
+				ddmFormValues="<%= journalDisplayContext.getDDMFormValues(ddmStructure) %>"
 				ignoreRequestValue="<%= changeStructure %>"
 				requestedLocale="<%= LocaleUtil.fromLanguageId(defaultLanguageId) %>"
 			/>

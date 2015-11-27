@@ -42,8 +42,13 @@ import org.apache.commons.lang.time.StopWatch;
 
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.settings.Settings.Builder;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.node.NodeBuilder;
+import org.elasticsearch.plugin.analysis.icu.AnalysisICUPlugin;
+import org.elasticsearch.plugin.analysis.kuromoji.AnalysisKuromojiPlugin;
+import org.elasticsearch.plugin.analysis.smartcn.AnalysisSmartChinesePlugin;
+import org.elasticsearch.plugin.analysis.stempel.AnalysisStempelPlugin;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -170,6 +175,14 @@ public class EmbeddedElasticsearchConnection
 			"path.work", SystemProperties.get(SystemProperties.TMP_DIR));
 	}
 
+	protected void configurePlugins(Builder builder) {
+		builder.putArray(
+			"plugin.types", AnalysisICUPlugin.class.getName(),
+			AnalysisKuromojiPlugin.class.getName(),
+			AnalysisSmartChinesePlugin.class.getName(),
+			AnalysisStempelPlugin.class.getName());
+	}
+
 	@Override
 	protected Client createClient(Settings.Builder builder) {
 		StopWatch stopWatch = new StopWatch();
@@ -228,6 +241,8 @@ public class EmbeddedElasticsearchConnection
 		builder.put("node.local", true);
 
 		configurePaths(builder);
+
+		configurePlugins(builder);
 
 		if (PortalRunMode.isTestMode()) {
 			builder.put("index.refresh_interval", "1ms");

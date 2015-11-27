@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.roles.admin.exportimport.xstream.configurator;
+package com.liferay.roles.admin.internal.exportimport.xstream.configurator;
 
 import com.liferay.exportimport.xstream.configurator.XStreamConfigurator;
 import com.liferay.portal.kernel.util.ListUtil;

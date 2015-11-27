@@ -14,7 +14,7 @@
 
 package com.liferay.message.boards.layout.set.prototype.action;
 
-import com.liferay.layout.set.prototype.web.constants.LayoutSetPrototypePortletKeys;
+import com.liferay.layout.set.prototype.constants.LayoutSetPrototypePortletKeys;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.polls.constants.PollsPortletKeys;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;

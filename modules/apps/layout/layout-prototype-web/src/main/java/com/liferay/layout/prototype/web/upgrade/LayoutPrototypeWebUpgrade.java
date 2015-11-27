@@ -14,7 +14,7 @@
 
 package com.liferay.layout.prototype.web.upgrade;
 
-import com.liferay.layout.prototype.web.constants.LayoutPrototypePortletKeys;
+import com.liferay.layout.prototype.constants.LayoutPrototypePortletKeys;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.util.UpgradePortletId;

@@ -14,7 +14,7 @@
 
 package com.liferay.layout.prototype.web.portlet.route;
 
-import com.liferay.layout.prototype.web.constants.LayoutPrototypePortletKeys;
+import com.liferay.layout.prototype.constants.LayoutPrototypePortletKeys;
 import com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 

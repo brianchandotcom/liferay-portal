@@ -1,0 +1,10 @@
+dependencies {
+	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
+	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
+	compile project(":apps:export-import:export-import-api")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}

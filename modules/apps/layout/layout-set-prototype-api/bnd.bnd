@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Layout Set Prototype API
+Bundle-SymbolicName: com.liferay.layout.set.prototype
+Bundle-Version: 1.0.0
+Export-package: com.liferay.layout.set.prototype.constants
+Include-Resource: classes

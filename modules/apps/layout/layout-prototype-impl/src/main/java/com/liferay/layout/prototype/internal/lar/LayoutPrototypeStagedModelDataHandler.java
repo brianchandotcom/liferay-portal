@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.prototype.lar;
+package com.liferay.layout.prototype.internal.lar;
 
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.exception.PortalException;

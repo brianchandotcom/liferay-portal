@@ -64,6 +64,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/events/DomEventHandle", ['exports'
 		return DomEventHandle;
 	})(_EventHandle3.default);
 
+	DomEventHandle.prototype.registerMetalComponent && DomEventHandle.prototype.registerMetalComponent(DomEventHandle, 'DomEventHandle')
 	exports.default = DomEventHandle;
 });
 //# sourceMappingURL=DomEventHandle.js.map

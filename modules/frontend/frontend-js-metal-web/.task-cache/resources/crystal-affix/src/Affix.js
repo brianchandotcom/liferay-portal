@@ -137,6 +137,7 @@ define("frontend-js-metal-web@1.0.0/crystal-affix/src/Affix", ['exports', 'metal
 		return Affix;
 	})(_Attribute3.default);
 
+	Affix.prototype.registerMetalComponent && Affix.prototype.registerMetalComponent(Affix, 'Affix')
 	Affix.Position = {
 		Top: 'affix-top',
 		Bottom: 'affix-bottom',

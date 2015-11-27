@@ -2,7 +2,7 @@
 
 function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
 
-define("frontend-js-metal-web@1.0.0/crystal-popover/src/Popover", ['exports', 'metal/src/core', 'crystal-tooltip/src/TooltipBase', 'crystal-popover/src/Popover.soy', 'metal-jquery-adapter/src/JQueryAdapter'], function (exports, _core, _TooltipBase2, _Popover, _JQueryAdapter) {
+define("frontend-js-metal-web@1.0.0/crystal-popover/src/Popover", ['exports', 'metal/src/core', 'crystal-tooltip/src/TooltipBase', 'metal-jquery-adapter/src/JQueryAdapter', 'crystal-popover/src/Popover.soy'], function (exports, _core, _TooltipBase2, _JQueryAdapter) {
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
@@ -10,8 +10,6 @@ define("frontend-js-metal-web@1.0.0/crystal-popover/src/Popover", ['exports', 'm
 	var _core2 = _interopRequireDefault(_core);
 
 	var _TooltipBase3 = _interopRequireDefault(_TooltipBase2);
-
-	var _Popover2 = _interopRequireDefault(_Popover);
 
 	var _JQueryAdapter2 = _interopRequireDefault(_JQueryAdapter);
 
@@ -69,6 +67,7 @@ define("frontend-js-metal-web@1.0.0/crystal-popover/src/Popover", ['exports', 'm
 		return Popover;
 	})(_TooltipBase3.default);
 
+	Popover.prototype.registerMetalComponent && Popover.prototype.registerMetalComponent(Popover, 'Popover')
 	Popover.ATTRS = {
 		title: {
 			validator: _core2.default.isString
@@ -80,9 +79,6 @@ define("frontend-js-metal-web@1.0.0/crystal-popover/src/Popover", ['exports', 'm
 	};
 	Popover.Align = _TooltipBase3.default.Align;
 	Popover.ELEMENT_CLASSES = 'popover';
-
-	_Popover2.default.setImpl(Popover);
-
 	exports.default = Popover;
 
 	_JQueryAdapter2.default.register('popover', Popover);

@@ -129,6 +129,7 @@ define("frontend-js-metal-web@1.0.0/crystal-dropdown/src/Dropdown", ['exports', 
 		return Dropdown;
 	})(_Dropdown2.default);
 
+	Dropdown.prototype.registerMetalComponent && Dropdown.prototype.registerMetalComponent(Dropdown, 'Dropdown')
 	Dropdown.ATTRS = {
 		body: {},
 		header: {},
@@ -141,9 +142,6 @@ define("frontend-js-metal-web@1.0.0/crystal-dropdown/src/Dropdown", ['exports', 
 		}
 	};
 	Dropdown.ELEMENT_CLASSES = 'dropdown';
-
-	_Dropdown2.default.setImpl(Dropdown);
-
 	exports.default = Dropdown;
 
 	_JQueryAdapter2.default.register('dropdown', Dropdown);

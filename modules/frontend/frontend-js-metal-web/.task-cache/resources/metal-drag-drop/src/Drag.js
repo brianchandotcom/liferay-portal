@@ -486,6 +486,7 @@ define("frontend-js-metal-web@1.0.0/metal-drag-drop/src/Drag", ['exports', 'meta
 		return Drag;
 	})(_Attribute3.default);
 
+	Drag.prototype.registerMetalComponent && Drag.prototype.registerMetalComponent(Drag, 'Drag')
 	Drag.ATTRS = {
 		autoScroll: {
 			setter: 'setterAutoScrollFn_',

@@ -2,7 +2,7 @@
 
 function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
 
-define("frontend-js-metal-web@1.0.0/metal/src/component/Component", ['exports', 'metal/src/array/array', 'metal/src/core', 'metal/src/dom/dom', 'metal/src/dom/features', 'metal/src/eval/globalEval', 'metal/src/html/html', 'metal/src/object/object', 'metal/src/string/string', 'metal/src/attribute/Attribute', 'metal/src/component/ComponentCollector', 'metal/src/component/ComponentRenderer', 'metal/src/events/EventEmitterProxy', 'metal/src/events/EventHandler', 'metal/src/component/EventsCollector', 'metal/src/component/SurfaceCollector'], function (exports, _array, _core, _dom, _features, _globalEval, _html, _object, _string, _Attribute2, _ComponentCollector, _ComponentRenderer, _EventEmitterProxy, _EventHandler, _EventsCollector, _SurfaceCollector) {
+define("frontend-js-metal-web@1.0.0/metal/src/component/Component", ['exports', 'metal/src/array/array', 'metal/src/core', 'metal/src/dom/dom', 'metal/src/dom/features', 'metal/src/eval/globalEval', 'metal/src/html/html', 'metal/src/object/object', 'metal/src/string/string', 'metal/src/attribute/Attribute', 'metal/src/component/ComponentCollector', 'metal/src/component/ComponentRegistry', 'metal/src/component/ComponentRenderer', 'metal/src/events/EventEmitterProxy', 'metal/src/events/EventHandler', 'metal/src/component/EventsCollector', 'metal/src/component/SurfaceCollector'], function (exports, _array, _core, _dom, _features, _globalEval, _html, _object, _string, _Attribute2, _ComponentCollector, _ComponentRegistry, _ComponentRenderer, _EventEmitterProxy, _EventHandler, _EventsCollector, _SurfaceCollector) {
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
@@ -26,6 +26,8 @@ define("frontend-js-metal-web@1.0.0/metal/src/component/Component", ['exports', 
 	var _Attribute3 = _interopRequireDefault(_Attribute2);
 
 	var _ComponentCollector2 = _interopRequireDefault(_ComponentCollector);
+
+	var _ComponentRegistry2 = _interopRequireDefault(_ComponentRegistry);
 
 	var _ComponentRenderer2 = _interopRequireDefault(_ComponentRenderer);
 
@@ -698,6 +700,10 @@ define("frontend-js-metal-web@1.0.0/metal/src/component/Component", ['exports', 
 			return this.id + '-' + surfaceId;
 		};
 
+		Component.prototype.registerMetalComponent = function registerMetalComponent(constructorFn, opt_name) {
+			_ComponentRegistry2.default.register(constructorFn, opt_name);
+		};
+
 		Component.prototype.removeSurface = function removeSurface(surfaceId) {
 			var el = this.getSurfaceElement(surfaceId);
 
@@ -1004,6 +1010,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/component/Component", ['exports', 
 		return Component;
 	})(_Attribute3.default);
 
+	Component.prototype.registerMetalComponent && Component.prototype.registerMetalComponent(Component, 'Component')
 	Component.componentsCollector = new _ComponentCollector2.default();
 	Component.surfacesCollector = new _SurfaceCollector2.default();
 	Component.ATTRS = {

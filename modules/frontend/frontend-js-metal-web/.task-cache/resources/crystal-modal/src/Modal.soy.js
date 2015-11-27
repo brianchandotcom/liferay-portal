@@ -2,14 +2,12 @@
 
 function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
 
-define("frontend-js-metal-web@1.0.0/crystal-modal/src/Modal.soy", ['exports', 'metal/src/component/Component', 'metal/src/component/ComponentRegistry', 'metal/src/soy/SoyAop', 'metal/src/soy/SoyRenderer', 'metal/src/soy/SoyTemplates'], function (exports, _Component2, _ComponentRegistry, _SoyAop, _SoyRenderer, _SoyTemplates) {
+define("frontend-js-metal-web@1.0.0/crystal-modal/src/Modal.soy", ['exports', 'metal/src/component/Component', 'metal/src/soy/SoyAop', 'metal/src/soy/SoyRenderer', 'metal/src/soy/SoyTemplates'], function (exports, _Component2, _SoyAop, _SoyRenderer, _SoyTemplates) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
 
   var _Component3 = _interopRequireDefault(_Component2);
-
-  var _ComponentRegistry2 = _interopRequireDefault(_ComponentRegistry);
 
   var _SoyAop2 = _interopRequireDefault(_SoyAop);
 
@@ -105,15 +103,11 @@ define("frontend-js-metal-web@1.0.0/crystal-modal/src/Modal.soy", ['exports', 'm
       return _possibleConstructorReturn(this, _Component.apply(this, arguments));
     }
 
-    Modal.setImpl = function setImpl(ctor) {
-      _ComponentRegistry2.default.register(ctor, 'Modal');
-    };
-
     return Modal;
   })(_Component3.default);
 
+  Modal.prototype.registerMetalComponent && Modal.prototype.registerMetalComponent(Modal, 'Modal')
   Modal.RENDERER = _SoyRenderer2.default;
-  Modal.setImpl(Modal);
 
   _SoyAop2.default.registerTemplates('Modal');
 

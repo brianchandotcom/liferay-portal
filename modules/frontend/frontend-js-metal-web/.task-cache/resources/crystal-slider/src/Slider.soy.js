@@ -2,14 +2,12 @@
 
 function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
 
-define("frontend-js-metal-web@1.0.0/crystal-slider/src/Slider.soy", ['exports', 'metal/src/component/Component', 'metal/src/component/ComponentRegistry', 'metal/src/soy/SoyAop', 'metal/src/soy/SoyRenderer', 'metal/src/soy/SoyTemplates'], function (exports, _Component2, _ComponentRegistry, _SoyAop, _SoyRenderer, _SoyTemplates) {
+define("frontend-js-metal-web@1.0.0/crystal-slider/src/Slider.soy", ['exports', 'metal/src/component/Component', 'metal/src/soy/SoyAop', 'metal/src/soy/SoyRenderer', 'metal/src/soy/SoyTemplates'], function (exports, _Component2, _SoyAop, _SoyRenderer, _SoyTemplates) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
 
   var _Component3 = _interopRequireDefault(_Component2);
-
-  var _ComponentRegistry2 = _interopRequireDefault(_ComponentRegistry);
 
   var _SoyAop2 = _interopRequireDefault(_SoyAop);
 
@@ -105,15 +103,11 @@ define("frontend-js-metal-web@1.0.0/crystal-slider/src/Slider.soy", ['exports', 
       return _possibleConstructorReturn(this, _Component.apply(this, arguments));
     }
 
-    Slider.setImpl = function setImpl(ctor) {
-      _ComponentRegistry2.default.register(ctor, 'Slider');
-    };
-
     return Slider;
   })(_Component3.default);
 
+  Slider.prototype.registerMetalComponent && Slider.prototype.registerMetalComponent(Slider, 'Slider')
   Slider.RENDERER = _SoyRenderer2.default;
-  Slider.setImpl(Slider);
 
   _SoyAop2.default.registerTemplates('Slider');
 

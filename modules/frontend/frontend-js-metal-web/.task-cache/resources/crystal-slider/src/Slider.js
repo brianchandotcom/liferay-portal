@@ -146,6 +146,7 @@ define("frontend-js-metal-web@1.0.0/crystal-slider/src/Slider", ['exports', 'met
 		return Slider;
 	})(_Slider2.default);
 
+	Slider.prototype.registerMetalComponent && Slider.prototype.registerMetalComponent(Slider, 'Slider')
 	Slider.ATTRS = {
 		inputName: {
 			validator: _core2.default.isString
@@ -164,9 +165,6 @@ define("frontend-js-metal-web@1.0.0/crystal-slider/src/Slider", ['exports', 'met
 		}
 	};
 	Slider.ELEMENT_CLASSES = 'slider';
-
-	_Slider2.default.setImpl(Slider);
-
 	exports.default = Slider;
 
 	_JQueryAdapter2.default.register('slider', Slider);

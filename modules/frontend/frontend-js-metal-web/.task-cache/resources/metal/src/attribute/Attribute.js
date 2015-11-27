@@ -346,6 +346,7 @@ define("frontend-js-metal-web@1.0.0/metal/src/attribute/Attribute", ['exports', 
 		return Attribute;
 	})(_EventEmitter3.default);
 
+	Attribute.prototype.registerMetalComponent && Attribute.prototype.registerMetalComponent(Attribute, 'Attribute')
 	Attribute.INVALID_ATTRS = ['attrs'];
 	Attribute.States = {
 		UNINITIALIZED: 0,

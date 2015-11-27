@@ -132,6 +132,7 @@ define("frontend-js-metal-web@1.0.0/crystal-progressbar/src/ProgressBar", ['expo
 		return ProgressBar;
 	})(_ProgressBar2.default);
 
+	ProgressBar.prototype.registerMetalComponent && ProgressBar.prototype.registerMetalComponent(ProgressBar, 'ProgressBar')
 	ProgressBar.ATTRS = {
 		barClass: {
 			validator: _core2.default.isString
@@ -156,9 +157,6 @@ define("frontend-js-metal-web@1.0.0/crystal-progressbar/src/ProgressBar", ['expo
 		}
 	};
 	ProgressBar.ELEMENT_CLASSES = 'progress';
-
-	_ProgressBar2.default.setImpl(ProgressBar);
-
 	exports.default = ProgressBar;
 
 	_JQueryAdapter2.default.register('progressBar', ProgressBar);

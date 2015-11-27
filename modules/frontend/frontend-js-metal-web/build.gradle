@@ -1,24 +1,20 @@
-import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask
-import com.liferay.gradle.plugins.node.tasks.ExecuteNodeTask
+import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 apply plugin: "com.liferay.cache"
 
-task bowerInstall(type: ExecuteNodeTask)
-task buildCrystalComponents(type: Copy)
-task downloadBower(type: DownloadNodeModuleTask)
+configurations {
+	crystalComponents
+}
 
-String bowerVersion = "1.5.2"
+task buildCrystalComponents(type: Copy)
+
+String crystalComponentsVersion = "1.0.0-rc.3"
 
 String defineRegex = "define(['exports', 'metal/src/core', 'metal/src/dom/dom', 'metal/src/object/object', 'metal/src/component/Component', 'metal/src/component/ComponentRegistry', 'metal/src/component/ComponentRenderer', 'metal/src/soy/SoyAop', 'metal/src/soy/SoyTemplates'], function (exports, _core, _dom, _object, _Component2, _ComponentRegistry, _ComponentRenderer2, _SoyAop, _SoyTemplates) {";
 String defineReplace = "define(['exports', 'soyutils', 'metal/src/core', 'metal/src/dom/dom', 'metal/src/object/object', 'metal/src/component/Component', 'metal/src/component/ComponentRegistry', 'metal/src/component/ComponentRenderer', 'metal/src/soy/SoyAop', 'metal/src/soy/SoyTemplates'], function (exports, _soyutils, _core, _dom, _object, _Component2, _ComponentRegistry, _ComponentRenderer2, _SoyAop, _SoyTemplates) {";
 
-bowerInstall {
-	args = [new File(node.nodeDir, "node_modules/bower/bin/bower"), "install", "--allow-root"]
-	dependsOn downloadBower
-}
-
 buildCrystalComponents {
-	dependsOn bowerInstall
+	eachFile new StripPathSegmentsAction(7)
 
 	eachFile {
 		if (name.equals("SoyRenderer.js")) {
@@ -37,7 +33,12 @@ buildCrystalComponents {
 		}
 	}
 
-	from "bower_components/crystal-components/build/amd-jquery"
+	from {
+		zipTree(configurations.crystalComponents.singleFile)
+	}
+
+	include "META-INF/resources/webjars/crystal-components/${crystalComponentsVersion}/build/amd-jquery/**"
+	include "META-INF/resources/webjars/crystal-components/${crystalComponentsVersion}/build/soy/**"
 	includeEmptyDirs = false
 	into "classes/META-INF/resources"
 }
@@ -50,7 +51,6 @@ cache {
 
 		testFile "bower.json"
 		testFile "build.gradle"
-		testFile "package.json"
 	}
 }
 
@@ -61,11 +61,8 @@ configJSModules {
 
 dependencies {
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
-}
 
-downloadBower {
-	moduleName = "bower"
-	moduleVersion = bowerVersion
+	crystalComponents group: "org.webjars.bower", name: "crystal-components", transitive: false, version: crystalComponentsVersion
 }
 
 liferay {

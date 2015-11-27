@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.service.permission;
+package com.liferay.layout.internal.service.permission;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.model.Layout;

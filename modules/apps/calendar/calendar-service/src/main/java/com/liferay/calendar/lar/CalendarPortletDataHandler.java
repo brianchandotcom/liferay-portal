@@ -19,10 +19,6 @@ import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarNotificationTemplate;
 import com.liferay.calendar.model.CalendarResource;
-import com.liferay.calendar.model.impl.CalendarBookingImpl;
-import com.liferay.calendar.model.impl.CalendarImpl;
-import com.liferay.calendar.model.impl.CalendarNotificationTemplateImpl;
-import com.liferay.calendar.model.impl.CalendarResourceImpl;
 import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.service.CalendarLocalService;
 import com.liferay.calendar.service.CalendarNotificationTemplateLocalService;
@@ -42,7 +38,6 @@ import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
-import com.liferay.portlet.exportimport.xstream.XStreamAliasRegistryUtil;
 
 import java.util.List;
 
@@ -90,15 +85,6 @@ public class CalendarPortletDataHandler extends BasePortletDataHandler {
 				},
 				CalendarNotificationTemplate.class.getName())
 		);
-
-		XStreamAliasRegistryUtil.register(CalendarImpl.class, "Calendar");
-		XStreamAliasRegistryUtil.register(
-			CalendarBookingImpl.class, "CalendarBooking");
-		XStreamAliasRegistryUtil.register(
-			CalendarResourceImpl.class, "CalendarResource");
-		XStreamAliasRegistryUtil.register(
-			CalendarNotificationTemplateImpl.class,
-			"CalendarNotificationTemplate");
 	}
 
 	protected void addSkipGuestCalendarResourceCriterion(

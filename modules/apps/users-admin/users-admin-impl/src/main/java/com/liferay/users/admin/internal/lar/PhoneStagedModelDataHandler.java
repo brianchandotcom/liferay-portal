@@ -12,16 +12,16 @@
  * details.
  */
 
-package com.liferay.users.admin.lar;
+package com.liferay.users.admin.internal.lar;
 
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Website;
+import com.liferay.portal.model.Phone;
 import com.liferay.portal.service.GroupLocalService;
+import com.liferay.portal.service.PhoneLocalService;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.WebsiteLocalService;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
@@ -36,10 +36,15 @@ import org.osgi.service.component.annotations.Reference;
  * @author David Mendez Gonzalez
  */
 @Component(immediate = true, service = StagedModelDataHandler.class)
-public class WebsiteStagedModelDataHandler
-	extends BaseStagedModelDataHandler<Website> {
+public class PhoneStagedModelDataHandler
+	extends BaseStagedModelDataHandler<Phone> {
 
-	public static final String[] CLASS_NAMES = {Website.class.getName()};
+	public static final String[] CLASS_NAMES = {Phone.class.getName()};
+
+	@Override
+	public void deleteStagedModel(Phone phone) {
+		_phoneLocalService.deletePhone(phone);
+	}
 
 	@Override
 	public void deleteStagedModel(
@@ -48,30 +53,24 @@ public class WebsiteStagedModelDataHandler
 
 		Group group = _groupLocalService.getGroup(groupId);
 
-		Website website = _websiteLocalService.fetchWebsiteByUuidAndCompanyId(
+		Phone phone = _phoneLocalService.fetchPhoneByUuidAndCompanyId(
 			uuid, group.getCompanyId());
 
-		if (website != null) {
-			deleteStagedModel(website);
+		if (phone != null) {
+			deleteStagedModel(phone);
 		}
 	}
 
 	@Override
-	public void deleteStagedModel(Website website) {
-		_websiteLocalService.deleteWebsite(website);
-	}
-
-	@Override
-	public List<Website> fetchStagedModelsByUuidAndCompanyId(
+	public List<Phone> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		List<Website> websites = new ArrayList<>();
+		List<Phone> phones = new ArrayList<>();
 
-		websites.add(
-			_websiteLocalService.fetchWebsiteByUuidAndCompanyId(
-				uuid, companyId));
+		phones.add(
+			_phoneLocalService.fetchPhoneByUuidAndCompanyId(uuid, companyId));
 
-		return websites;
+		return phones;
 	}
 
 	@Override
@@ -81,48 +80,45 @@ public class WebsiteStagedModelDataHandler
 
 	@Override
 	protected void doExportStagedModel(
-			PortletDataContext portletDataContext, Website website)
+			PortletDataContext portletDataContext, Phone phone)
 		throws Exception {
 
-		Element websiteElement = portletDataContext.getExportDataElement(
-			website);
+		Element phoneElement = portletDataContext.getExportDataElement(phone);
 
 		portletDataContext.addClassedModel(
-			websiteElement, ExportImportPathUtil.getModelPath(website),
-			website);
+			phoneElement, ExportImportPathUtil.getModelPath(phone), phone);
 	}
 
 	@Override
 	protected void doImportStagedModel(
-			PortletDataContext portletDataContext, Website website)
+			PortletDataContext portletDataContext, Phone phone)
 		throws Exception {
 
-		long userId = portletDataContext.getUserId(website.getUserUuid());
+		long userId = portletDataContext.getUserId(phone.getUserUuid());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			website);
+			phone);
 
-		Website existingWebsite =
-			_websiteLocalService.fetchWebsiteByUuidAndCompanyId(
-				website.getUuid(), portletDataContext.getCompanyGroupId());
+		Phone existingPhone = _phoneLocalService.fetchPhoneByUuidAndCompanyId(
+			phone.getUuid(), portletDataContext.getCompanyId());
 
-		Website importedWebsite = null;
+		Phone importedPhone = null;
 
-		if (existingWebsite == null) {
-			serviceContext.setUuid(website.getUuid());
+		if (existingPhone == null) {
+			serviceContext.setUuid(phone.getUuid());
 
-			importedWebsite = _websiteLocalService.addWebsite(
-				userId, website.getClassName(), website.getClassPK(),
-				website.getUrl(), website.getTypeId(), website.isPrimary(),
-				serviceContext);
+			importedPhone = _phoneLocalService.addPhone(
+				userId, phone.getClassName(), phone.getClassPK(),
+				phone.getNumber(), phone.getExtension(), phone.getTypeId(),
+				phone.isPrimary(), serviceContext);
 		}
 		else {
-			importedWebsite = _websiteLocalService.updateWebsite(
-				existingWebsite.getWebsiteId(), website.getUrl(),
-				website.getTypeId(), website.isPrimary());
+			importedPhone = _phoneLocalService.updatePhone(
+				existingPhone.getPhoneId(), phone.getNumber(),
+				phone.getExtension(), phone.getTypeId(), phone.isPrimary());
 		}
 
-		portletDataContext.importClassedModel(website, importedWebsite);
+		portletDataContext.importClassedModel(phone, importedPhone);
 	}
 
 	@Reference(unbind = "-")
@@ -131,13 +127,11 @@ public class WebsiteStagedModelDataHandler
 	}
 
 	@Reference(unbind = "-")
-	protected void setWebsiteLocalService(
-		WebsiteLocalService websiteLocalService) {
-
-		_websiteLocalService = websiteLocalService;
+	protected void setPhoneLocalService(PhoneLocalService phoneLocalService) {
+		_phoneLocalService = phoneLocalService;
 	}
 
 	private volatile GroupLocalService _groupLocalService;
-	private volatile WebsiteLocalService _websiteLocalService;
+	private volatile PhoneLocalService _phoneLocalService;
 
 }

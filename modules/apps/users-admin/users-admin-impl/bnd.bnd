@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Users Admin Implementation
 Bundle-SymbolicName: com.liferay.users.admin.impl
 Bundle-Version: 1.0.0
-Export-Package: com.liferay.users.admin.lar
+Export-Package: com.liferay.users.admin.internal.lar
 Include-Resource: classes

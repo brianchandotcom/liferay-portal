@@ -179,7 +179,8 @@ public class CASFilter extends BaseFilter {
 			String login = (String)session.getAttribute(CASWebKeys.CAS_LOGIN);
 
 			if (Validator.isNotNull(login)) {
-				processFilter(CASFilter.class, request, response, filterChain);
+				processFilter(
+					CASFilter.class.getName(), request, response, filterChain);
 
 				return;
 			}
@@ -220,7 +221,8 @@ public class CASFilter extends BaseFilter {
 			}
 		}
 
-		processFilter(CASFilter.class, request, response, filterChain);
+		processFilter(
+			CASFilter.class.getName(), request, response, filterChain);
 	}
 
 	@Reference(unbind = "-")

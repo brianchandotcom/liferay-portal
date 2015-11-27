@@ -223,7 +223,8 @@ public class VirtualHostFilter extends BasePortalFilter {
 			_log.debug("Friendly URL is not valid");
 
 			processFilter(
-				VirtualHostFilter.class, request, response, filterChain);
+				VirtualHostFilter.class.getName(), request, response,
+				filterChain);
 
 			return;
 		}
@@ -237,7 +238,8 @@ public class VirtualHostFilter extends BasePortalFilter {
 
 		if (layoutSet == null) {
 			processFilter(
-				VirtualHostFilter.class, request, response, filterChain);
+				VirtualHostFilter.class.getName(), request, response,
+				filterChain);
 
 			return;
 		}
@@ -275,7 +277,7 @@ public class VirtualHostFilter extends BasePortalFilter {
 						request, group.getGroupId(), friendlyURL)) {
 
 					processFilter(
-						VirtualHostFilter.class, request, response,
+						VirtualHostFilter.class.getName(), request, response,
 						filterChain);
 
 					return;
@@ -322,7 +324,8 @@ public class VirtualHostFilter extends BasePortalFilter {
 			_log.error(e, e);
 
 			processFilter(
-				VirtualHostFilter.class, request, response, filterChain);
+				VirtualHostFilter.class.getName(), request, response,
+				filterChain);
 		}
 	}
 

@@ -84,8 +84,8 @@ public class ETagFilter extends BasePortalFilter {
 					response, PropsValues.ETAG_RESPONSE_SIZE_MAX);
 
 		processFilter(
-			ETagFilter.class, request, restrictedByteBufferCacheServletResponse,
-			filterChain);
+			ETagFilter.class.getName(), request,
+			restrictedByteBufferCacheServletResponse, filterChain);
 
 		if (!restrictedByteBufferCacheServletResponse.isOverflowed()) {
 			ByteBuffer byteBuffer =

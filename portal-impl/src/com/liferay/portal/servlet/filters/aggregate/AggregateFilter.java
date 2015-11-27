@@ -432,8 +432,8 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 				new BufferCacheServletResponse(response);
 
 			processFilter(
-				AggregateFilter.class, request, bufferCacheServletResponse,
-				filterChain);
+				AggregateFilter.class.getName(), request,
+				bufferCacheServletResponse, filterChain);
 
 			bufferCacheServletResponse.finishResponse(false);
 
@@ -554,7 +554,8 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 
 		if (minifiedContent == null) {
 			processFilter(
-				AggregateFilter.class, request, response, filterChain);
+				AggregateFilter.class.getName(), request, response,
+				filterChain);
 		}
 		else {
 			if (minifiedContent instanceof File) {

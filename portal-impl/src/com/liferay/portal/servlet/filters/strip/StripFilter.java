@@ -334,7 +334,7 @@ public class StripFilter extends BasePortalFilter {
 			new BufferCacheServletResponse(response);
 
 		processFilter(
-			StripFilter.class, request, bufferCacheServletResponse,
+			StripFilter.class.getName(), request, bufferCacheServletResponse,
 			filterChain);
 
 		String contentType = GetterUtil.getString(

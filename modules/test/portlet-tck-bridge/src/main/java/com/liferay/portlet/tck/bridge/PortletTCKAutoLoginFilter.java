@@ -58,7 +58,7 @@ public class PortletTCKAutoLoginFilter extends BasePortalFilter {
 
 		if (httpSession.getAttribute(_TCK_SKIP_LOGIN) == Boolean.TRUE) {
 			processFilter(
-				PortletTCKAutoLoginFilter.class, request, response,
+				PortletTCKAutoLoginFilter.class.getName(), request, response,
 				filterChain);
 
 			return;
@@ -72,8 +72,8 @@ public class PortletTCKAutoLoginFilter extends BasePortalFilter {
 					httpSession.setAttribute(_TCK_SKIP_LOGIN, Boolean.TRUE);
 
 					processFilter(
-						PortletTCKAutoLoginFilter.class, request, response,
-						filterChain);
+						PortletTCKAutoLoginFilter.class.getName(), request,
+						response, filterChain);
 
 					return;
 				}
@@ -88,7 +88,8 @@ public class PortletTCKAutoLoginFilter extends BasePortalFilter {
 		}
 
 		processFilter(
-			PortletTCKAutoLoginFilter.class, request, response, filterChain);
+			PortletTCKAutoLoginFilter.class.getName(), request, response,
+			filterChain);
 	}
 
 	@Reference(unbind = "-")

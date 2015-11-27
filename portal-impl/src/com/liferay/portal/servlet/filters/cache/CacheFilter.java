@@ -385,7 +385,8 @@ public class CacheFilter extends BasePortalFilter {
 				}
 
 				processFilter(
-					CacheFilter.class, request, response, filterChain);
+					CacheFilter.class.getName(), request, response,
+					filterChain);
 
 				return;
 			}
@@ -416,7 +417,8 @@ public class CacheFilter extends BasePortalFilter {
 				}
 
 				processFilter(
-					CacheFilter.class, request, response, filterChain);
+					CacheFilter.class.getName(), request, response,
+					filterChain);
 
 				return;
 			}
@@ -429,8 +431,8 @@ public class CacheFilter extends BasePortalFilter {
 				new BufferCacheServletResponse(response);
 
 			processFilter(
-				CacheFilter.class, request, bufferCacheServletResponse,
-				filterChain);
+				CacheFilter.class.getName(), request,
+				bufferCacheServletResponse, filterChain);
 
 			cacheResponseData = new CacheResponseData(
 				bufferCacheServletResponse);

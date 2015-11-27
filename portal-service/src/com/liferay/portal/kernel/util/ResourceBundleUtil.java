@@ -18,7 +18,10 @@ import com.liferay.portal.kernel.language.UTF8Control;
 
 import java.text.MessageFormat;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
@@ -86,6 +89,51 @@ public class ResourceBundleUtil {
 		catch (MissingResourceException mre) {
 			return null;
 		}
+	}
+
+	public static void loadResourceBundleMap(
+		Map<String, ResourceBundle> resourceBundles, Locale locale,
+		ResourceBundleLoader resourceBundleLoader) {
+
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		String[] tokens = languageId.split("_");
+
+		if (ArrayUtil.isEmpty(tokens)) {
+			return;
+		}
+
+		String token = StringPool.BLANK;
+
+		List<ResourceBundle> listBundles = new ArrayList<>();
+
+		for (int i = 0; i < tokens.length; i++) {
+			if ( i > 0 ) {
+				token += "_";
+			}
+
+			token += tokens[i];
+
+			ResourceBundle resourceBundle = resourceBundleLoader.loadBundle(
+				token);
+
+			if (resourceBundle != null) {
+				listBundles.add(resourceBundle);
+			}
+
+			if (!listBundles.isEmpty()) {
+				resourceBundles.put(
+					token,
+					new AggregateResourceBundle(
+						listBundles.toArray(
+							new ResourceBundle[listBundles.size()])));
+			}
+		}
+	}
+
+	public interface ResourceBundleLoader {
+		public ResourceBundle loadBundle(String languageId);
+
 	}
 
 }

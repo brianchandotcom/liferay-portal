@@ -12,62 +12,44 @@
  * details.
  */
 
-package com.liferay.portal.servlet.filters.language;
+package com.liferay.portal.language.filter;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
-import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.language.LanguageResources;
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
-import com.liferay.portlet.PortletConfigFactoryUtil;
 
-import java.util.List;
+import java.io.IOException;
+
+import java.net.URL;
+
 import java.util.Locale;
+import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
-
-import javax.portlet.PortletConfig;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.http.context.ServletContextHelper;
+
 /**
- * @author Eduardo Lundgren
- * @author Shuyang Zhou
+ * @author Carlos Sierra Andrés
  */
 public class LanguageFilter extends BasePortalFilter {
 
-	@Override
-	public void init(FilterConfig filterConfig) {
-		super.init(filterConfig);
-
-		ServletContext servletContext = filterConfig.getServletContext();
-
-		PortletApp portletApp = (PortletApp)servletContext.getAttribute(
-			PortletServlet.PORTLET_APP);
-
-		if ((portletApp == null) || !portletApp.isWARFile()) {
-			return;
-		}
-
-		List<Portlet> portlets = portletApp.getPortlets();
-
-		if (portlets.size() <= 0) {
-			return;
-		}
-
-		_portletConfig = PortletConfigFactoryUtil.create(
-			portlets.get(0), filterConfig.getServletContext());
+	public LanguageFilter(ServletContextHelper servletContextHelper) {
+		_servletContextHelper = servletContextHelper;
 	}
 
 	@Override
@@ -75,6 +57,19 @@ public class LanguageFilter extends BasePortalFilter {
 			HttpServletRequest request, HttpServletResponse response,
 			FilterChain filterChain)
 		throws Exception {
+
+		String languageId = request.getParameter("languageId");
+
+		if (languageId == null) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Language parameter not present");
+			}
+
+			processFilter(
+				LanguageFilter.class.getName(), request, response, filterChain);
+
+			return;
+		}
 
 		BufferCacheServletResponse bufferCacheServletResponse =
 			new BufferCacheServletResponse(response);
@@ -91,30 +86,73 @@ public class LanguageFilter extends BasePortalFilter {
 
 		String content = bufferCacheServletResponse.getString();
 
-		content = translateResponse(request, content);
+		content = translateResponse(languageId, content);
 
 		ServletResponseUtil.write(response, content);
 	}
 
-	protected String translateResponse(
-		HttpServletRequest request, String content) {
-
-		String languageId = LanguageUtil.getLanguageId(request);
+	protected String translateResponse(String languageId, String content) {
 		Locale locale = LocaleUtil.fromLanguageId(languageId);
 
-		ResourceBundle resourceBundle = LanguageResources.getResourceBundle(
-			locale);
+		ResourceBundle resourceBundle = _getBundle(locale);
 
-		if (_portletConfig != null) {
+		if (resourceBundle == null) {
+			resourceBundle = LanguageResources.getResourceBundle(locale);
+		}
+		else {
 			resourceBundle = new AggregateResourceBundle(
-				_portletConfig.getResourceBundle(locale), resourceBundle);
+				resourceBundle, LanguageResources.getResourceBundle(locale));
 		}
 
 		return LanguageUtil.process(resourceBundle, locale, content);
 	}
 
+	private ResourceBundle _getBundle(Locale locale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		ResourceBundle resourceBundle = _resourceBundles.get(languageId);
+
+		if (resourceBundle == null) {
+			ResourceBundleUtil.loadResourceBundleMap(
+				_resourceBundles, locale,
+				new ResourceBundleUtil.ResourceBundleLoader() {
+
+				@Override
+				public ResourceBundle loadBundle(String languageId) {
+					String name;
+
+					if (Validator.isNull(languageId)) {
+						name = "content/Language.properties";
+					}
+					else {
+						name = "content/Language_" + languageId + ".properties";
+					}
+
+					URL url = _servletContextHelper.getResource(name);
+
+					if (url == null) {
+						return null;
+					}
+
+					try {
+						return new PropertyResourceBundle(url.openStream());
+					}
+					catch (IOException e) {
+						return null;
+					}
+				}
+			});
+
+			resourceBundle = _resourceBundles.get(languageId);
+		}
+
+		return resourceBundle;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(LanguageFilter.class);
 
-	private PortletConfig _portletConfig;
+	private final ConcurrentMap<String, ResourceBundle> _resourceBundles =
+		new ConcurrentHashMap<>();
+	private final ServletContextHelper _servletContextHelper;
 
 }

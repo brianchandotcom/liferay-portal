@@ -311,7 +311,8 @@ public class NtlmFilter extends BaseFilter {
 			}
 		}
 
-		processFilter(NtlmPostFilter.class, request, response, filterChain);
+		processFilter(
+			NtlmPostFilter.class.getName(), request, response, filterChain);
 	}
 
 	@Reference(unbind = "-")

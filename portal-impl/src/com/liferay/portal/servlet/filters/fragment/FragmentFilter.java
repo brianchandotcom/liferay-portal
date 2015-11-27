@@ -102,7 +102,7 @@ public class FragmentFilter extends BasePortalFilter {
 			new BufferCacheServletResponse(response);
 
 		processFilter(
-			FragmentFilter.class, request, bufferCacheServletResponse,
+			FragmentFilter.class.getName(), request, bufferCacheServletResponse,
 			filterChain);
 
 		String content = bufferCacheServletResponse.getString();

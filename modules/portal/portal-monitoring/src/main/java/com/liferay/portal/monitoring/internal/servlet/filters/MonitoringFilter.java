@@ -176,7 +176,8 @@ public class MonitoringFilter
 			}
 
 			processFilter(
-				MonitoringFilter.class, request, response, filterChain);
+				MonitoringFilter.class.getName(), request, response,
+				filterChain);
 
 			if (portalRequestDataSample != null) {
 				portalRequestDataSample.capture(RequestStatus.SUCCESS);

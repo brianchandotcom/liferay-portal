@@ -130,7 +130,8 @@ public class OpenSSOFilter extends BaseFilter {
 		catch (Exception e) {
 			_log.error(e, e);
 
-			processFilter(OpenSSOFilter.class, request, response, filterChain);
+			processFilter(
+				OpenSSOFilter.class.getName(), request, response, filterChain);
 
 			return;
 		}
@@ -157,7 +158,8 @@ public class OpenSSOFilter extends BaseFilter {
 				session.setAttribute(_SUBJECT_ID_KEY, newSubjectId);
 			}
 
-			processFilter(OpenSSOFilter.class, request, response, filterChain);
+			processFilter(
+				OpenSSOFilter.class.getName(), request, response, filterChain);
 
 			return;
 		}

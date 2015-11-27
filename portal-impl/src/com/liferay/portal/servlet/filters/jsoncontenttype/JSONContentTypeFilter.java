@@ -40,11 +40,12 @@ public class JSONContentTypeFilter extends BasePortalFilter {
 
 		if (!BrowserSnifferUtil.isIe(request)) {
 			processFilter(
-				JSONContentTypeFilter.class, request, response, filterChain);
+				JSONContentTypeFilter.class.getName(), request, response,
+				filterChain);
 		}
 		else {
 			processFilter(
-				JSONContentTypeFilter.class, request,
+				JSONContentTypeFilter.class.getName(), request,
 				new JSONContentTypeResponse(response), filterChain);
 		}
 	}

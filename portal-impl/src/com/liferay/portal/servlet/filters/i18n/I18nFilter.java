@@ -251,7 +251,8 @@ public class I18nFilter extends BasePortalFilter {
 		String redirect = getRedirect(request);
 
 		if (redirect == null) {
-			processFilter(I18nFilter.class, request, response, filterChain);
+			processFilter(
+				I18nFilter.class.getName(), request, response, filterChain);
 
 			return;
 		}

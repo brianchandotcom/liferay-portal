@@ -122,7 +122,8 @@ public class GZipFilter extends BasePortalFilter {
 
 		GZipResponse gZipResponse = new GZipResponse(request, response);
 
-		processFilter(GZipFilter.class, request, gZipResponse, filterChain);
+		processFilter(
+			GZipFilter.class.getName(), request, gZipResponse, filterChain);
 
 		gZipResponse.finishResponse(true);
 	}

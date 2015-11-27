@@ -76,8 +76,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
-import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.model.AssetLink;
+import com.liferay.portlet.asset.model.adapter.StagedAssetLink;
 import com.liferay.portlet.asset.service.AssetEntryLocalService;
 import com.liferay.portlet.asset.service.AssetLinkLocalService;
 import com.liferay.portlet.expando.NoSuchTableException;
@@ -103,6 +102,7 @@ import com.liferay.portlet.exportimport.lar.PortletDataContextFactoryUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerStatusMessageSenderUtil;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.UserIdStrategy;
 import com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleManager;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
@@ -1044,77 +1044,28 @@ public class PortletImportController implements ImportController {
 			return;
 		}
 
-		Document document = SAXReaderUtil.read(xml);
+		Element importDataRootElement =
+			portletDataContext.getImportDataRootElement();
 
-		Element rootElement = document.getRootElement();
+		try {
+			Document document = SAXReaderUtil.read(xml);
 
-		List<Element> assetLinkGroupElements = rootElement.elements(
-			"asset-link-group");
+			Element rootElement = document.getRootElement();
 
-		for (Element assetLinkGroupElement : assetLinkGroupElements) {
-			String sourceUuid = assetLinkGroupElement.attributeValue(
-				"source-uuid");
+			portletDataContext.setImportDataRootElement(rootElement);
 
-			AssetEntry sourceAssetEntry = _assetEntryLocalService.fetchEntry(
-				portletDataContext.getScopeGroupId(), sourceUuid);
+			Element linksElement = portletDataContext.getImportDataGroupElement(
+				StagedAssetLink.class);
 
-			if (sourceAssetEntry == null) {
-				sourceAssetEntry = _assetEntryLocalService.fetchEntry(
-					portletDataContext.getCompanyGroupId(), sourceUuid);
+			List<Element> linkElements = linksElement.elements();
+
+			for (Element linkElement : linkElements) {
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, linkElement);
 			}
-
-			if (sourceAssetEntry == null) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to find asset entry with uuid " + sourceUuid);
-				}
-
-				continue;
-			}
-
-			List<Element> assetLinksElements = assetLinkGroupElement.elements(
-				"asset-link");
-
-			for (Element assetLinkElement : assetLinksElements) {
-				String path = assetLinkElement.attributeValue("path");
-
-				if (!portletDataContext.isPathNotProcessed(path)) {
-					continue;
-				}
-
-				String targetUuid = assetLinkElement.attributeValue(
-					"target-uuid");
-
-				AssetEntry targetAssetEntry =
-					_assetEntryLocalService.fetchEntry(
-						portletDataContext.getScopeGroupId(), targetUuid);
-
-				if (targetAssetEntry == null) {
-					targetAssetEntry = _assetEntryLocalService.fetchEntry(
-						portletDataContext.getCompanyGroupId(), targetUuid);
-				}
-
-				if (targetAssetEntry == null) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to find asset entry with uuid " +
-								targetUuid);
-					}
-
-					continue;
-				}
-
-				AssetLink assetLink =
-					(AssetLink)portletDataContext.getZipEntryAsObject(path);
-
-				long userId = portletDataContext.getUserId(
-					assetLink.getUserUuid());
-
-				_assetLinkLocalService.updateLink(
-					userId, sourceAssetEntry.getEntryId(),
-					targetAssetEntry.getEntryId(), assetLink.getType(),
-					assetLink.getWeight());
-			}
+		}
+		finally {
+			portletDataContext.setImportDataRootElement(importDataRootElement);
 		}
 	}
 

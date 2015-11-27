@@ -30,7 +30,6 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.expando.model.ExpandoColumn;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.ratings.model.RatingsEntry;
@@ -291,7 +290,7 @@ public interface PortletDataContext extends Serializable {
 	@Deprecated
 	public Map<String, String[]> getAssetCategoryUuidsMap();
 
-	public Map<String, List<AssetLink>> getAssetLinksMap();
+	public Set<Long> getAssetLinkIds();
 
 	public String[] getAssetTagNames(Class<?> clazz, long classPK);
 

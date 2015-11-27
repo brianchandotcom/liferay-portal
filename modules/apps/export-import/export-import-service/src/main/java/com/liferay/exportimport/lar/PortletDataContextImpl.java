@@ -164,33 +164,11 @@ public class PortletDataContextImpl implements PortletDataContext {
 			return;
 		}
 
-		List<AssetLink> directAssetLinks =
-			AssetLinkLocalServiceUtil.getDirectLinks(assetEntry.getEntryId());
+		List<AssetLink> assetLinks = AssetLinkLocalServiceUtil.getLinks(
+			assetEntry.getEntryId());
 
-		if (directAssetLinks.isEmpty()) {
-			return;
-		}
-
-		Map<Integer, List<AssetLink>> assetLinksMap = new HashMap<>();
-
-		for (AssetLink assetLink : directAssetLinks) {
-			List<AssetLink> assetLinks = assetLinksMap.get(assetLink.getType());
-
-			if (assetLinks == null) {
-				assetLinks = new ArrayList<>();
-
-				assetLinksMap.put(assetLink.getType(), assetLinks);
-			}
-
-			assetLinks.add(assetLink);
-		}
-
-		for (Map.Entry<Integer, List<AssetLink>> entry :
-				assetLinksMap.entrySet()) {
-
-			_assetLinksMap.put(
-				getPrimaryKeyString(assetEntry.getClassUuid(), entry.getKey()),
-				entry.getValue());
+		for (AssetLink assetLink : assetLinks) {
+			_assetLinkIds.add(assetLink.getLinkId());
 		}
 	}
 
@@ -755,8 +733,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	@Override
-	public Map<String, List<AssetLink>> getAssetLinksMap() {
-		return _assetLinksMap;
+	public Set<Long> getAssetLinkIds() {
+		return _assetLinkIds;
 	}
 
 	@Override
@@ -2579,7 +2557,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		PortletDataContextImpl.class);
 
 	private final Map<String, long[]> _assetCategoryIdsMap = new HashMap<>();
-	private final Map<String, List<AssetLink>> _assetLinksMap = new HashMap<>();
+	private final Set<Long> _assetLinkIds = new HashSet<>();
 	private final Map<String, String[]> _assetTagNamesMap = new HashMap<>();
 	private long _companyGroupId;
 	private long _companyId;

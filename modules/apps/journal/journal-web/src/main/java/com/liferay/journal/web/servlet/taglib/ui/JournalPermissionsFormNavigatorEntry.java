@@ -14,7 +14,14 @@
 
 package com.liferay.journal.web.servlet.taglib.ui;
 
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalArticleConstants;
+import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextThreadLocal;
+import com.liferay.portal.theme.ThemeDisplay;
 
 import javax.servlet.ServletContext;
 
@@ -34,6 +41,27 @@ public class JournalPermissionsFormNavigatorEntry
 	@Override
 	public String getKey() {
 		return "permissions";
+	}
+
+	@Override
+	public boolean isVisible(User user, JournalArticle article) {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		long classNameId = BeanParamUtil.getLong(
+			article, themeDisplay.getRequest(), "classNameId");
+
+		if (classNameId > JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
+			return false;
+		}
+
+		if ((article != null) && (article.getId() > 0)) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

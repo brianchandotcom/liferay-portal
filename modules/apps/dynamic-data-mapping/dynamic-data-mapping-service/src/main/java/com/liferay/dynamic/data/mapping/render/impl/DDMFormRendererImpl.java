@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRendererRegistryUtil;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.render.DDMFormRenderer;
+import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.impl.DDMFieldsCounter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -44,6 +45,12 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		StringBundler sb = new StringBundler(ddmFormFields.size());
 
 		for (DDMFormField ddmFormField : ddmFormFields) {
+			if (isDDMFormFieldSkippable(
+					ddmFormField, ddmFormFieldRenderingContext)) {
+
+				continue;
+			}
+
 			DDMFormFieldRenderer ddmFormFieldRenderer =
 				DDMFormFieldRendererRegistryUtil.getDDMFormFieldRenderer(
 					ddmFormField.getType());
@@ -74,6 +81,35 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		if (ddmFieldsCounter != null) {
 			ddmFieldsCounter.clear();
 		}
+	}
+
+	protected boolean isDDMFormFieldSkippable(
+		DDMFormField ddmFormField,
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
+
+		if (!ddmFormFieldRenderingContext.isReadOnly() ||
+			ddmFormFieldRenderingContext.isShowEmptyFieldLabel()) {
+
+			return false;
+		}
+
+		Fields fields = ddmFormFieldRenderingContext.getFields();
+
+		if (fields.contains(ddmFormField.getName())) {
+			return false;
+		}
+
+		for (DDMFormField nestedDDMFormField :
+				ddmFormField.getNestedDDMFormFields()) {
+
+			if (!isDDMFormFieldSkippable(
+					nestedDDMFormField, ddmFormFieldRenderingContext)) {
+
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 }

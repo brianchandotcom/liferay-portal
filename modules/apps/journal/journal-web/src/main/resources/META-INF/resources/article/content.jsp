@@ -38,69 +38,59 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 
 <aui:model-context bean="<%= article %>" defaultLanguageId="<%= defaultLanguageId %>" model="<%= JournalArticle.class %>" />
 
-<div class="journal-article-body" id="<portlet:namespace />journalArticleBody">
-	<div class="journal-article-body-content">
-		<liferay-ui:error exception="<%= ArticleContentException.class %>" message="please-enter-valid-content" />
-		<liferay-ui:error exception="<%= ArticleIdException.class %>" message="please-enter-a-valid-id" />
-		<liferay-ui:error exception="<%= ArticleTitleException.class %>" message="please-enter-a-valid-name" />
-		<liferay-ui:error exception="<%= ArticleVersionException.class %>" message="another-user-has-made-changes-since-you-started-editing-please-copy-your-changes-and-try-again" />
-		<liferay-ui:error exception="<%= DuplicateArticleIdException.class %>" message="please-enter-a-unique-id" />
-		<liferay-ui:error exception="<%= InvalidDDMStructureException.class %>" message="the-structure-you-selected-is-not-valid-for-this-folder" />
-		<liferay-ui:error exception="<%= StorageFieldRequiredException.class %>" message="please-fill-out-all-required-fields" />
+<liferay-ui:error exception="<%= ArticleContentException.class %>" message="please-enter-valid-content" />
+<liferay-ui:error exception="<%= ArticleIdException.class %>" message="please-enter-a-valid-id" />
+<liferay-ui:error exception="<%= ArticleTitleException.class %>" message="please-enter-a-valid-name" />
+<liferay-ui:error exception="<%= ArticleVersionException.class %>" message="another-user-has-made-changes-since-you-started-editing-please-copy-your-changes-and-try-again" />
+<liferay-ui:error exception="<%= DuplicateArticleIdException.class %>" message="please-enter-a-unique-id" />
+<liferay-ui:error exception="<%= InvalidDDMStructureException.class %>" message="the-structure-you-selected-is-not-valid-for-this-folder" />
+<liferay-ui:error exception="<%= StorageFieldRequiredException.class %>" message="please-fill-out-all-required-fields" />
 
-		<liferay-ui:error exception="<%= LocaleException.class %>">
+<liferay-ui:error exception="<%= LocaleException.class %>">
 
-			<%
-			LocaleException le = (LocaleException)errorException;
-			%>
+	<%
+	LocaleException le = (LocaleException)errorException;
+	%>
 
-			<c:if test="<%= le.getType() == LocaleException.TYPE_CONTENT %>">
-				<liferay-ui:message arguments="<%= new String[] {StringUtil.merge(le.getSourceAvailableLocales(), StringPool.COMMA_AND_SPACE), StringUtil.merge(le.getTargetAvailableLocales(), StringPool.COMMA_AND_SPACE)} %>" key="the-default-language-x-does-not-match-the-portal's-available-languages-x" />
-			</c:if>
-		</liferay-ui:error>
+	<c:if test="<%= le.getType() == LocaleException.TYPE_CONTENT %>">
+		<liferay-ui:message arguments="<%= new String[] {StringUtil.merge(le.getSourceAvailableLocales(), StringPool.COMMA_AND_SPACE), StringUtil.merge(le.getTargetAvailableLocales(), StringPool.COMMA_AND_SPACE)} %>" key="the-default-language-x-does-not-match-the-portal's-available-languages-x" />
+	</c:if>
+</liferay-ui:error>
 
-		<div class="journal-article-header-edit" id="<portlet:namespace />articleHeaderEdit">
-			<div class="journal-article-header-id">
-				<c:if test="<%= (article == null) || article.isNew() %>">
-					<c:choose>
-						<c:when test="<%= journalWebConfiguration.journalFeedForceAutogenerateId() || (classNameId != JournalArticleConstants.CLASSNAME_ID_DEFAULT) %>">
-							<aui:input name="newArticleId" type="hidden" />
-							<aui:input name="autoArticleId" type="hidden" value="<%= true %>" />
-						</c:when>
-						<c:otherwise>
-							<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" cssClass="lfr-input-text-container" field="articleId" fieldParam="newArticleId" label="id" name="newArticleId" value="<%= newArticleId %>" />
+<aui:fieldset>
+	<c:if test="<%= (article == null) || article.isNew() %>">
+		<c:choose>
+			<c:when test="<%= journalWebConfiguration.journalFeedForceAutogenerateId() || (classNameId != JournalArticleConstants.CLASSNAME_ID_DEFAULT) %>">
+				<aui:input name="newArticleId" type="hidden" />
+				<aui:input name="autoArticleId" type="hidden" value="<%= true %>" />
+			</c:when>
+			<c:otherwise>
+				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" field="articleId" fieldParam="newArticleId" label="id" name="newArticleId" value="<%= newArticleId %>" />
 
-							<aui:input label="autogenerate-id" name="autoArticleId" type="checkbox" />
-						</c:otherwise>
-					</c:choose>
-				</c:if>
-			</div>
-		</div>
+				<aui:input label="autogenerate-id" name="autoArticleId" type="checkbox" />
+			</c:otherwise>
+		</c:choose>
+	</c:if>
 
-		<div class="journal-article-general-fields">
-			<aui:input autoFocus="<%= (((article != null) && !article.isNew()) && !journalWebConfiguration.journalFeedForceAutogenerateId() && windowState.equals(WindowState.MAXIMIZED)) || windowState.equals(LiferayWindowState.POP_UP) %>" ignoreRequestValue="<%= changeStructure %>" name="title" wrapperCssClass="article-content-title">
-				<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
-					<aui:validator name="required" />
-				</c:if>
-			</aui:input>
+	<aui:input autoFocus="<%= (((article != null) && !article.isNew()) && !journalWebConfiguration.journalFeedForceAutogenerateId() && windowState.equals(WindowState.MAXIMIZED)) || windowState.equals(LiferayWindowState.POP_UP) %>" ignoreRequestValue="<%= changeStructure %>" name="title" wrapperCssClass="article-content-title">
+		<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
+			<aui:validator name="required" />
+		</c:if>
+	</aui:input>
 
-			<aui:input ignoreRequestValue="<%= changeStructure %>" label="summary" name="description" wrapperCssClass="article-content-description" />
-		</div>
+	<aui:input ignoreRequestValue="<%= changeStructure %>" label="summary" name="description" />
 
-		<div class="journal-article-container" id="<portlet:namespace />journalArticleContainer">
-			<liferay-ddm:html
-				checkRequired="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>"
-				classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
-				classPK="<%= ddmStructure.getStructureId() %>"
-				ddmFormValues="<%= journalDisplayContext.getDDMFormValues(ddmStructure) %>"
-				ignoreRequestValue="<%= changeStructure %>"
-				requestedLocale="<%= LocaleUtil.fromLanguageId(defaultLanguageId) %>"
-			/>
+	<liferay-ddm:html
+		checkRequired="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>"
+		classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
+		classPK="<%= ddmStructure.getStructureId() %>"
+		ddmFormValues="<%= journalDisplayContext.getDDMFormValues(ddmStructure) %>"
+		ignoreRequestValue="<%= changeStructure %>"
+		requestedLocale="<%= LocaleUtil.fromLanguageId(defaultLanguageId) %>"
+	/>
 
-			<aui:input label="searchable" name="indexable" />
-		</div>
-	</div>
-</div>
+	<aui:input label="searchable" name="indexable" type="toggle-switch" value="<%= (article != null) ? article.isIndexable() : true %>" />
+</aui:fieldset>
 
 <liferay-portlet:renderURL portletName="<%= PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.EDIT) %>" var="editStructureURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="mvcPath" value="/edit_structure.jsp" />

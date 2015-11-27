@@ -207,9 +207,7 @@ public class ElasticsearchFixture {
 				@Override
 				public void populate(Builder builder) {
 					builder.put(
-						"cluster.service.cluster.service." +
-							"slow_task_logging_threshold",
-						"600s");
+						"cluster.service.slow_task_logging_threshold", "600s");
 				}
 
 			});

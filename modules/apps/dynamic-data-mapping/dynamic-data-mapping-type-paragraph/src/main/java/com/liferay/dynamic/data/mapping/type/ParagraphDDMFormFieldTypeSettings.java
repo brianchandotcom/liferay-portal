@@ -27,7 +27,14 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormField;
 public interface ParagraphDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
 
-	@DDMFormField(visibilityExpression = "false")
+	@DDMFormField(
+			label = "%title",
+			properties = {
+				"placeholder=%enter-title-sentence", "setting.category=basic",
+				"setting.weight=4"
+			},
+			required = true, tip = "%enter-title-sentence", type = "key-value"
+		)
 	public LocalizedValue label();
 
 	@DDMFormField(visibilityExpression = "false")
@@ -43,9 +50,9 @@ public interface ParagraphDDMFormFieldTypeSettings
 	public boolean showLabel();
 
 	@DDMFormField(
-		dataType = "string", label = "%text",
+		dataType = "string", label = "%body-text",
 		properties = {"setting.category=basic", "displayStyle=multiline"},
-		required = true, type = "text"
+		required = true, tip = "%enter-body-text", type = "text"
 	)
 	public String text();
 

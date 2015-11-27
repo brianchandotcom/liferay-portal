@@ -65,6 +65,8 @@ public class FormNavigatorConstants {
 	public static final String FORM_NAVIGATOR_ID_COMPANY_SETTINGS =
 		"company.settings.form";
 
+	public static final String FORM_NAVIGATOR_ID_JOURNAL = "journal.form";
+
 	public static final String FORM_NAVIGATOR_ID_LAYOUT = "layout.form";
 
 	public static final String FORM_NAVIGATOR_ID_LAYOUT_SET = "layout.set.form";

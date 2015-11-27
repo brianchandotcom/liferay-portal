@@ -453,6 +453,18 @@ public class DDMTemplateLocalServiceUtil {
 			includeAncestorTemplates);
 	}
 
+	/**
+	* Returns the template with the ID.
+	*
+	* @param templateId the primary key of the template
+	* @return the matching template, or <code>null</code> if a matching
+	template could not be found
+	*/
+	public static com.liferay.dynamic.data.mapping.model.DDMTemplate fetchTemplate(
+		long templateId) {
+		return getService().fetchTemplate(templateId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}

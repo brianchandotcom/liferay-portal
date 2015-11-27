@@ -146,6 +146,18 @@ public class DDMFormValidatorTest {
 	}
 
 	@Test(expected = DDMFormValidationException.class)
+	public void testInvalidFieldType() throws Exception {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
+
+		DDMFormField ddmFormField = new DDMFormField("Name", "html-text_*");
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		_ddmFormValidator.validate(ddmForm);
+	}
+
+	@Test(expected = DDMFormValidationException.class)
 	public void testNoOptionsSetForFieldOptions() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
@@ -178,25 +190,12 @@ public class DDMFormValidatorTest {
 	}
 
 	@Test
-	public void testRegisteredTextFieldType() throws Exception {
+	public void testValidFieldName() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
 
 		DDMFormField ddmFormField = new DDMFormField(
-			"Text", DDMFormFieldType.TEXT);
-
-		ddmForm.addDDMFormField(ddmFormField);
-
-		_ddmFormValidator.validate(ddmForm);
-	}
-
-	@Test(expected = DDMFormValidationException.class)
-	public void testUnregisteredFieldType() throws Exception {
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
-			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
-
-		DDMFormField ddmFormField = new DDMFormField(
-			"Name", "Unregistered Type");
+			"valid_name", DDMFormFieldType.TEXT);
 
 		ddmForm.addDDMFormField(ddmFormField);
 
@@ -204,12 +203,11 @@ public class DDMFormValidatorTest {
 	}
 
 	@Test
-	public void testValidFieldName() throws Exception {
+	public void testValidFieldType() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
 
-		DDMFormField ddmFormField = new DDMFormField(
-			"valid_name", DDMFormFieldType.TEXT);
+		DDMFormField ddmFormField = new DDMFormField("Name", "html-text_1");
 
 		ddmForm.addDDMFormField(ddmFormField);
 

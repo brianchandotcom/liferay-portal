@@ -12,6 +12,7 @@ Export-Package:\
 	com.liferay.dynamic.data.mapping.storage.impl,\
 	com.liferay.dynamic.data.mapping.template,\
 	com.liferay.dynamic.data.mapping.util.impl,\
+	com.liferay.dynamic.data.mapping.verify,\
 	com.liferay.dynamic.data.mapping.webdav
 Include-Resource:\
 	classes,\

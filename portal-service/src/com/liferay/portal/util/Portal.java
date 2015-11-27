@@ -29,9 +29,11 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutFriendlyURLComposite;
 import com.liferay.portal.model.LayoutQueryStringComposite;
 import com.liferay.portal.model.LayoutSet;
+import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.User;
+import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
@@ -1327,6 +1329,11 @@ public interface Portal {
 	public boolean isRSSFeedsEnabled();
 
 	public boolean isSecure(HttpServletRequest request);
+
+	public boolean isSkipPortletContentRendering(
+			Group group, LayoutTypePortlet layoutTypePortlet,
+			PortletDisplay portletDisplay, String portletName)
+		throws PortalException, SystemException;
 
 	public boolean isSystemGroup(String groupName);
 

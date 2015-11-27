@@ -32,10 +32,12 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutFriendlyURLComposite;
 import com.liferay.portal.model.LayoutQueryStringComposite;
 import com.liferay.portal.model.LayoutSet;
+import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.InvokerPortlet;
 import com.liferay.portlet.PortletInstanceFactoryUtil;
@@ -2202,6 +2204,15 @@ public class PortalUtil {
 
 	public static boolean isSecure(HttpServletRequest request) {
 		return getPortal().isSecure(request);
+	}
+
+	public static boolean isSkipPortletContentRendering(
+			Group group, LayoutTypePortlet layoutTypePortlet,
+			PortletDisplay portletDisplay, String portletName)
+		throws PortalException, SystemException {
+
+		return getPortal().isSkipPortletContentRendering(
+				group, layoutTypePortlet, portletDisplay, portletName);
 	}
 
 	public static boolean isSystemGroup(String groupName) {

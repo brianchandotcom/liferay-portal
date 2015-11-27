@@ -213,7 +213,7 @@ AUI.add(
 				portletURL.setDoAsGroupId(instance.get('doAsGroupId'));
 				portletURL.setParameter('fieldName', instance.get('name'));
 				portletURL.setParameter('mode', instance.get('mode'));
-				portletURL.setParameter('namespace', instance.get('namespace'));
+				portletURL.setParameter('namespace', instance.get('fieldsNamespace'));
 				portletURL.setParameter('p_p_isolated', true);
 				portletURL.setParameter('portletNamespace', instance.get('portletNamespace'));
 				portletURL.setParameter('readOnly', instance.get('readOnly'));

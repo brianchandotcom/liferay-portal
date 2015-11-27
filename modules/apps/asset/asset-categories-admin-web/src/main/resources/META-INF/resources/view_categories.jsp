@@ -203,7 +203,7 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 
 			<liferay-ui:search-container-column-text
 				name="description"
-				value="<%= curCategory.getDescription(locale) %>"
+				value="<%= HtmlUtil.escape(curCategory.getDescription(locale)) %>"
 			/>
 
 			<liferay-ui:search-container-column-date

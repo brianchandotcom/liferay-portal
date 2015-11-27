@@ -65,7 +65,7 @@ public class UpdateRecordSetMVCActionCommand
 
 		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
 
-		boolean publish = ParamUtil.getString(actionRequest, "publish");
+		boolean publish = ParamUtil.getBoolean(actionRequest, "publish");
 
 		typeSettingsProperties.setProperty(
 			"published", String.valueOf(publish));

@@ -16,6 +16,8 @@ package com.liferay.portal.dao.jdbc.pool.metrics;
 
 import com.liferay.portal.dao.jdbc.aop.DefaultDynamicDataSourceTargetSource;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import org.springframework.aop.framework.Advised;
 import org.springframework.aop.support.AopUtils;
@@ -28,16 +30,16 @@ public abstract class BaseConnectionPoolMetrics
 	implements ConnectionPoolMetrics {
 
 	public String getConnectionPoolName() {
-		if (_name == null) {
+		if (_connectionPoolName == null) {
 			initializeConnectionPool();
 		}
 
-		return _name;
+		return _connectionPoolName;
 	}
 
-	protected abstract Object getDataSource();
+	protected abstract String fetchConnectionPoolName();
 
-	protected abstract String getPoolName();
+	protected abstract Object getDataSource();
 
 	protected void initializeConnectionPool() {
 		LazyConnectionDataSourceProxy lazyConnectionDataSourceProxy =
@@ -53,7 +55,7 @@ public abstract class BaseConnectionPoolMetrics
 		if (dataSource.equals(
 				lazyConnectionDataSourceProxy.getTargetDataSource())) {
 
-			_name = "counterDataSource";
+			_connectionPoolName = "counterDataSource";
 
 			return;
 		}
@@ -66,11 +68,12 @@ public abstract class BaseConnectionPoolMetrics
 			lazyConnectionDataSourceProxy.getTargetDataSource();
 
 		if (dataSource.equals(targetDataSource)) {
-			_name = "liferayDataSource";
+			_connectionPoolName = "liferayDataSource";
 
 			return;
-		} else if (AopUtils.isAopProxy(targetDataSource) &&
-			(targetDataSource instanceof Advised)) {
+		}
+		else if (AopUtils.isAopProxy(targetDataSource) &&
+				 (targetDataSource instanceof Advised)) {
 
 			Advised advised = (Advised)targetDataSource;
 
@@ -85,7 +88,7 @@ public abstract class BaseConnectionPoolMetrics
 							targetDataSource).getReadDataSource();
 
 					if (dataSource.equals(readDataSource)) {
-						_name = "readDataSource";
+						_connectionPoolName = "readDataSource";
 
 						return;
 					}
@@ -95,19 +98,23 @@ public abstract class BaseConnectionPoolMetrics
 							targetDataSource).getWriteDataSource();
 
 					if (dataSource.equals(writeDataSource)) {
-						_name = "writeDataSource";
+						_connectionPoolName = "writeDataSource";
 
 						return;
 					}
 				}
 				catch (Exception e) {
+					_log.error(e.getMessage(), e);
 				}
 			}
 		}
 
-		_name = getPoolName();
+		_connectionPoolName = fetchConnectionPoolName();
 	}
 
-	private String _name;
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseConnectionPoolMetrics.class);
+
+	private String _connectionPoolName;
 
 }

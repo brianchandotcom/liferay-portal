@@ -31,12 +31,13 @@ import javax.management.ObjectName;
  */
 public class HikariConnectionPoolMetrics extends BaseConnectionPoolMetrics {
 
-	public HikariConnectionPoolMetrics(HikariDataSource dataSource) {
-		_dataSource = dataSource;
+	public HikariConnectionPoolMetrics(HikariDataSource hikariDataSource) {
+		_hikariDataSource = hikariDataSource;
 	}
 
+	@Override
 	public int getNumActive() {
-		if (!_initializationFailed && (_connectionPool == null)) {
+		if (!_initializationFailed && (_hikariPoolMXBean == null)) {
 			initializeConnectionPool();
 		}
 
@@ -44,11 +45,12 @@ public class HikariConnectionPoolMetrics extends BaseConnectionPoolMetrics {
 			return -1;
 		}
 
-		return _connectionPool.getActiveConnections();
+		return _hikariPoolMXBean.getActiveConnections();
 	}
 
+	@Override
 	public int getNumIdle() {
-		if (!_initializationFailed && (_connectionPool == null)) {
+		if (!_initializationFailed && (_hikariPoolMXBean == null)) {
 			initializeConnectionPool();
 		}
 
@@ -56,7 +58,12 @@ public class HikariConnectionPoolMetrics extends BaseConnectionPoolMetrics {
 			return -1;
 		}
 
-		return _connectionPool.getIdleConnections();
+		return _hikariPoolMXBean.getIdleConnections();
+	}
+
+	@Override
+	protected String fetchConnectionPoolName() {
+		return _hikariDataSource.getPoolName();
 	}
 
 	@Override
@@ -65,17 +72,12 @@ public class HikariConnectionPoolMetrics extends BaseConnectionPoolMetrics {
 			return null;
 		}
 
-		return _dataSource;
-	}
-
-	@Override
-	protected String getPoolName() {
-		return _dataSource.getPoolName();
+		return _hikariDataSource;
 	}
 
 	@Override
 	protected void initializeConnectionPool() {
-		if (_dataSource.getPoolName() == null ) {
+		if (_hikariDataSource.getPoolName() == null ) {
 			_initializationFailed = true;
 
 			return;
@@ -86,9 +88,9 @@ public class HikariConnectionPoolMetrics extends BaseConnectionPoolMetrics {
 		try {
 			ObjectName poolName = new ObjectName(
 				"com.zaxxer.hikari:type=Pool (" +
-					_dataSource.getPoolName() + ")");
+					_hikariDataSource.getPoolName() + ")");
 
-			_connectionPool = JMX.newMXBeanProxy(
+			_hikariPoolMXBean = JMX.newMXBeanProxy(
 				mBeanServer, poolName, HikariPoolMXBean.class);
 		}
 		catch (Exception e) {
@@ -105,8 +107,8 @@ public class HikariConnectionPoolMetrics extends BaseConnectionPoolMetrics {
 	private static final Log _log = LogFactoryUtil.getLog(
 		HikariConnectionPoolMetrics.class);
 
-	private HikariPoolMXBean _connectionPool;
-	private final HikariDataSource _dataSource;
+	private final HikariDataSource _hikariDataSource;
+	private HikariPoolMXBean _hikariPoolMXBean;
 	private boolean _initializationFailed = false;
 
 }

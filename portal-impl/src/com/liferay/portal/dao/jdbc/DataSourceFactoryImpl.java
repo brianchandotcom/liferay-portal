@@ -271,7 +271,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 			}
 		}
 
-		C3P0ConnectionPoolMetrics connectionPoolMetrics =
+		ConnectionPoolMetrics connectionPoolMetrics =
 			new C3P0ConnectionPoolMetrics(comboPooledDataSource);
 
 		registerConnectionPoolMetrics(connectionPoolMetrics);
@@ -285,7 +285,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 		DataSource basicDataSource = BasicDataSourceFactory.createDataSource(
 			properties);
 
-		DBCPConnectionPoolMetrics connectionPoolMetrics =
+		ConnectionPoolMetrics connectionPoolMetrics =
 			new DBCPConnectionPoolMetrics((BasicDataSource)basicDataSource);
 
 		registerConnectionPoolMetrics(connectionPoolMetrics);
@@ -354,7 +354,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 			}
 		}
 
-		HikariConnectionPoolMetrics connectionPoolMetrics =
+		ConnectionPoolMetrics connectionPoolMetrics =
 			new HikariConnectionPoolMetrics((HikariDataSource)hikariDataSource);
 
 		registerConnectionPoolMetrics(connectionPoolMetrics);
@@ -420,7 +420,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 			_serviceTracker.open();
 		}
 
-		TomcatConnectionPoolMetrics connectionPoolMetrics =
+		ConnectionPoolMetrics connectionPoolMetrics =
 			new TomcatConnectionPoolMetrics(dataSource);
 
 		registerConnectionPoolMetrics(connectionPoolMetrics);

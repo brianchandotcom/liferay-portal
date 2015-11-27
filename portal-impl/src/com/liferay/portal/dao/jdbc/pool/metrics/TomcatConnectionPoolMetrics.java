@@ -21,28 +21,30 @@ import org.apache.tomcat.jdbc.pool.DataSourceProxy;
  */
 public class TomcatConnectionPoolMetrics extends BaseConnectionPoolMetrics {
 
-	public TomcatConnectionPoolMetrics(DataSourceProxy connectionPool) {
-		_connectionPool = connectionPool;
+	public TomcatConnectionPoolMetrics(DataSourceProxy dataSourceProxy) {
+		_dataSourceProxy = dataSourceProxy;
 	}
 
+	@Override
 	public int getNumActive() {
-		return _connectionPool.getNumActive();
+		return _dataSourceProxy.getNumActive();
 	}
 
+	@Override
 	public int getNumIdle() {
-		return _connectionPool.getNumIdle();
+		return _dataSourceProxy.getNumIdle();
+	}
+
+	@Override
+	protected String fetchConnectionPoolName() {
+		return _dataSourceProxy.getPoolName();
 	}
 
 	@Override
 	protected Object getDataSource() {
-		return _connectionPool;
+		return _dataSourceProxy;
 	}
 
-	@Override
-	protected String getPoolName() {
-		return _connectionPool.getPoolName();
-	}
-
-	private final DataSourceProxy _connectionPool;
+	private final DataSourceProxy _dataSourceProxy;
 
 }

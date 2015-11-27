@@ -71,25 +71,6 @@ public abstract class ThemeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the theme remote service.
-	 *
-	 * @return the theme remote service
-	 */
-	public com.liferay.portal.service.ThemeService getThemeService() {
-		return themeService;
-	}
-
-	/**
-	 * Sets the theme remote service.
-	 *
-	 * @param themeService the theme remote service
-	 */
-	public void setThemeService(
-		com.liferay.portal.service.ThemeService themeService) {
-		this.themeService = themeService;
-	}
-
-	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -144,25 +125,6 @@ public abstract class ThemeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public void setPluginSettingLocalService(
 		com.liferay.portal.service.PluginSettingLocalService pluginSettingLocalService) {
 		this.pluginSettingLocalService = pluginSettingLocalService;
-	}
-
-	/**
-	 * Returns the plugin setting remote service.
-	 *
-	 * @return the plugin setting remote service
-	 */
-	public com.liferay.portal.service.PluginSettingService getPluginSettingService() {
-		return pluginSettingService;
-	}
-
-	/**
-	 * Sets the plugin setting remote service.
-	 *
-	 * @param pluginSettingService the plugin setting remote service
-	 */
-	public void setPluginSettingService(
-		com.liferay.portal.service.PluginSettingService pluginSettingService) {
-		this.pluginSettingService = pluginSettingService;
 	}
 
 	/**
@@ -226,16 +188,12 @@ public abstract class ThemeLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	@BeanReference(type = com.liferay.portal.service.ThemeLocalService.class)
 	protected ThemeLocalService themeLocalService;
-	@BeanReference(type = com.liferay.portal.service.ThemeService.class)
-	protected com.liferay.portal.service.ThemeService themeService;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
 	@BeanReference(type = com.liferay.portal.service.LayoutTemplateLocalService.class)
 	protected com.liferay.portal.service.LayoutTemplateLocalService layoutTemplateLocalService;
 	@BeanReference(type = com.liferay.portal.service.PluginSettingLocalService.class)
 	protected com.liferay.portal.service.PluginSettingLocalService pluginSettingLocalService;
-	@BeanReference(type = com.liferay.portal.service.PluginSettingService.class)
-	protected com.liferay.portal.service.PluginSettingService pluginSettingService;
 	@BeanReference(type = PluginSettingPersistence.class)
 	protected PluginSettingPersistence pluginSettingPersistence;
 }

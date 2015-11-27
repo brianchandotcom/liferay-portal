@@ -334,25 +334,6 @@ public abstract class DDMTemplateVersionLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the d d m template version remote service.
-	 *
-	 * @return the d d m template version remote service
-	 */
-	public com.liferay.dynamic.data.mapping.service.DDMTemplateVersionService getDDMTemplateVersionService() {
-		return ddmTemplateVersionService;
-	}
-
-	/**
-	 * Sets the d d m template version remote service.
-	 *
-	 * @param ddmTemplateVersionService the d d m template version remote service
-	 */
-	public void setDDMTemplateVersionService(
-		com.liferay.dynamic.data.mapping.service.DDMTemplateVersionService ddmTemplateVersionService) {
-		this.ddmTemplateVersionService = ddmTemplateVersionService;
-	}
-
-	/**
 	 * Returns the d d m template version persistence.
 	 *
 	 * @return the d d m template version persistence
@@ -444,8 +425,6 @@ public abstract class DDMTemplateVersionLocalServiceBaseImpl
 
 	@BeanReference(type = com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalService.class)
 	protected DDMTemplateVersionLocalService ddmTemplateVersionLocalService;
-	@BeanReference(type = com.liferay.dynamic.data.mapping.service.DDMTemplateVersionService.class)
-	protected com.liferay.dynamic.data.mapping.service.DDMTemplateVersionService ddmTemplateVersionService;
 	@BeanReference(type = DDMTemplateVersionPersistence.class)
 	protected DDMTemplateVersionPersistence ddmTemplateVersionPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

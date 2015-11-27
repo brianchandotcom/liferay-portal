@@ -15,14 +15,18 @@
 package com.liferay.shopping.model.listener;
 
 import com.liferay.portal.ModelListenerException;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.model.BaseModelListener;
+import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.User;
 import com.liferay.shopping.service.ShoppingCartLocalService;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Peter Fellwock
  */
+@Component(immediate = true, service = ModelListener.class)
 public class UserModelListener extends BaseModelListener<User> {
 
 	@Override
@@ -35,7 +39,13 @@ public class UserModelListener extends BaseModelListener<User> {
 		}
 	}
 
-	@BeanReference(type = ShoppingCartLocalService.class)
-	private ShoppingCartLocalService _shoppingCartLocalService;
+	@Reference(unbind = "-")
+	protected void setShoppingCartLocalService(
+		ShoppingCartLocalService shoppingCartLocalService) {
+
+		_shoppingCartLocalService = shoppingCartLocalService;
+	}
+
+	private volatile ShoppingCartLocalService _shoppingCartLocalService;
 
 }

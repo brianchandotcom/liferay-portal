@@ -326,25 +326,6 @@ public abstract class OrgLaborLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the org labor remote service.
-	 *
-	 * @return the org labor remote service
-	 */
-	public com.liferay.portal.service.OrgLaborService getOrgLaborService() {
-		return orgLaborService;
-	}
-
-	/**
-	 * Sets the org labor remote service.
-	 *
-	 * @param orgLaborService the org labor remote service
-	 */
-	public void setOrgLaborService(
-		com.liferay.portal.service.OrgLaborService orgLaborService) {
-		this.orgLaborService = orgLaborService;
-	}
-
-	/**
 	 * Returns the org labor persistence.
 	 *
 	 * @return the org labor persistence
@@ -398,25 +379,6 @@ public abstract class OrgLaborLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public void setListTypeLocalService(
 		com.liferay.portal.service.ListTypeLocalService listTypeLocalService) {
 		this.listTypeLocalService = listTypeLocalService;
-	}
-
-	/**
-	 * Returns the list type remote service.
-	 *
-	 * @return the list type remote service
-	 */
-	public com.liferay.portal.service.ListTypeService getListTypeService() {
-		return listTypeService;
-	}
-
-	/**
-	 * Sets the list type remote service.
-	 *
-	 * @param listTypeService the list type remote service
-	 */
-	public void setListTypeService(
-		com.liferay.portal.service.ListTypeService listTypeService) {
-		this.listTypeService = listTypeService;
 	}
 
 	/**
@@ -491,16 +453,12 @@ public abstract class OrgLaborLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	@BeanReference(type = com.liferay.portal.service.OrgLaborLocalService.class)
 	protected OrgLaborLocalService orgLaborLocalService;
-	@BeanReference(type = com.liferay.portal.service.OrgLaborService.class)
-	protected com.liferay.portal.service.OrgLaborService orgLaborService;
 	@BeanReference(type = OrgLaborPersistence.class)
 	protected OrgLaborPersistence orgLaborPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
 	@BeanReference(type = com.liferay.portal.service.ListTypeLocalService.class)
 	protected com.liferay.portal.service.ListTypeLocalService listTypeLocalService;
-	@BeanReference(type = com.liferay.portal.service.ListTypeService.class)
-	protected com.liferay.portal.service.ListTypeService listTypeService;
 	@BeanReference(type = ListTypePersistence.class)
 	protected ListTypePersistence listTypePersistence;
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)

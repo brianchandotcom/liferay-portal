@@ -14,11 +14,11 @@
 
 package com.liferay.shopping.service.impl;
 
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.shopping.model.ShoppingItem;
 import com.liferay.shopping.model.ShoppingItemField;
 import com.liferay.shopping.model.ShoppingItemPrice;
@@ -132,10 +132,10 @@ public class ShoppingItemServiceImpl extends ShoppingItemServiceBaseImpl {
 			itemFields, itemPrices, serviceContext);
 	}
 
-	@BeanReference(type = ShoppingCategoryPermission.class)
+	@ServiceReference(type = ShoppingCategoryPermission.class)
 	protected ShoppingCategoryPermission shoppingCategoryPermission;
 
-	@BeanReference(type = ShoppingItemPermission.class)
+	@ServiceReference(type = ShoppingItemPermission.class)
 	protected ShoppingItemPermission shoppingItemPermission;
 
 }

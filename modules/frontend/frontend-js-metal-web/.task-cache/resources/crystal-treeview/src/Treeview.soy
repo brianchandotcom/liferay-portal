@@ -1,0 +1,67 @@
+{namespace Templates.Treeview}
+
+/**
+ * This renders the main element.
+ * @param id
+ * @param? elementClasses
+ * @skipUpdates elementClasses
+ */
+{template .content}
+	<div id="{$id}" class="treeview component{$elementClasses ? ' ' + $elementClasses : ''}" role="tree">
+		{call .nodes data="all" /}
+	</div>
+{/template}
+
+/**
+ * @param id
+ * @param nodes
+ * @param? parentSurfaceId
+ * @param? surfaceId
+ */
+{template .nodes}
+	{let $elementId: $id + '-' + (isNonnull($surfaceId) ? $surfaceId : 'nodes') /}
+	<ul id="{$elementId}" class="treeview-nodes">
+		{foreach $node in $nodes}
+			{let $index: index($node) /}
+			{call .node}
+				{param id: $id /}
+				{param node: $node /}
+				{param surfaceId: isNonnull($parentSurfaceId) ? ($parentSurfaceId + '-' + $index) : $index /}
+			{/call}
+		{/foreach}
+	</ul>
+{/template}
+
+/**
+ * @param id
+ * @param node
+ * @param surfaceId
+ */
+{template .node private="true"}
+	<li id="{$id}-{$surfaceId}" class="treeview-node">
+		{if $node}
+			<div class="treeview-node-wrapper{$node.expanded ? ' expanded' : ''}">
+				<div
+					class="treeview-node-main clearfix{$node.children ? ' hasChildren' : ''}"
+					data-onclick="handleNodeClicked_"
+					data-onkeyup="handleNodeKeyUp_"
+					aria-expanded="{$node.expanded ? 'true' : 'false'}"
+					role="treeitem"
+					tabindex="0">
+					{if $node.children}
+						<div class="treeview-node-toggler"></div>
+					{/if}
+					<span class="treeview-node-name">{$node.name}</span>
+				</div>
+				{if $node.children}
+					{call .nodes}
+						{param id: $id /}
+						{param nodes: $node.children /}
+						{param parentSurfaceId: $surfaceId /}
+						{param surfaceId: $surfaceId + '-nodes' /}
+					{/call}
+				{/if}
+			</div>
+		{/if}
+	</li>
+{/template}

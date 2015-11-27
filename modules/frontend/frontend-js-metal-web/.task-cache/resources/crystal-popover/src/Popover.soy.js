@@ -2,14 +2,12 @@
 
 function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
 
-define("frontend-js-metal-web@1.0.0/crystal-popover/src/Popover.soy", ['exports', 'metal/src/component/Component', 'metal/src/component/ComponentRegistry', 'metal/src/soy/SoyAop', 'metal/src/soy/SoyRenderer', 'metal/src/soy/SoyTemplates'], function (exports, _Component2, _ComponentRegistry, _SoyAop, _SoyRenderer, _SoyTemplates) {
+define("frontend-js-metal-web@1.0.0/crystal-popover/src/Popover.soy", ['exports', 'metal/src/component/Component', 'metal/src/soy/SoyAop', 'metal/src/soy/SoyRenderer', 'metal/src/soy/SoyTemplates'], function (exports, _Component2, _SoyAop, _SoyRenderer, _SoyTemplates) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
 
   var _Component3 = _interopRequireDefault(_Component2);
-
-  var _ComponentRegistry2 = _interopRequireDefault(_ComponentRegistry);
 
   var _SoyAop2 = _interopRequireDefault(_SoyAop);
 
@@ -100,15 +98,11 @@ define("frontend-js-metal-web@1.0.0/crystal-popover/src/Popover.soy", ['exports'
       return _possibleConstructorReturn(this, _Component.apply(this, arguments));
     }
 
-    Popover.setImpl = function setImpl(ctor) {
-      _ComponentRegistry2.default.register(ctor, 'Popover');
-    };
-
     return Popover;
   })(_Component3.default);
 
+  Popover.prototype.registerMetalComponent && Popover.prototype.registerMetalComponent(Popover, 'Popover')
   Popover.RENDERER = _SoyRenderer2.default;
-  Popover.setImpl(Popover);
 
   _SoyAop2.default.registerTemplates('Popover');
 

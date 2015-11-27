@@ -75,7 +75,7 @@
         "dependencies": ["exports"]
     },
     "frontend-js-metal-web@1.0.0/metal/src/component/Component": {
-        "dependencies": ["exports", "metal/src/array/array", "metal/src/core", "metal/src/dom/dom", "metal/src/dom/features", "metal/src/eval/globalEval", "metal/src/html/html", "metal/src/object/object", "metal/src/string/string", "metal/src/attribute/Attribute", "metal/src/component/ComponentCollector", "metal/src/component/ComponentRenderer", "metal/src/events/EventEmitterProxy", "metal/src/events/EventHandler", "metal/src/component/EventsCollector", "metal/src/component/SurfaceCollector"]
+        "dependencies": ["exports", "metal/src/array/array", "metal/src/core", "metal/src/dom/dom", "metal/src/dom/features", "metal/src/eval/globalEval", "metal/src/html/html", "metal/src/object/object", "metal/src/string/string", "metal/src/attribute/Attribute", "metal/src/component/ComponentCollector", "metal/src/component/ComponentRegistry", "metal/src/component/ComponentRenderer", "metal/src/events/EventEmitterProxy", "metal/src/events/EventHandler", "metal/src/component/EventsCollector", "metal/src/component/SurfaceCollector"]
     },
     "frontend-js-metal-web@1.0.0/metal/src/component/ComponentCollector": {
         "dependencies": ["exports", "metal/src/component/ComponentRegistry", "metal/src/disposable/Disposable"]
@@ -105,13 +105,13 @@
         "dependencies": ["exports", "metal/src/dom/dom", "crystal-treeview/src/Treeview.soy", "metal-jquery-adapter/src/JQueryAdapter"]
     },
     "frontend-js-metal-web@1.0.0/crystal-treeview/src/Treeview.soy": {
-        "dependencies": ["exports", "metal/src/component/Component", "metal/src/component/ComponentRegistry", "metal/src/soy/SoyAop", "metal/src/soy/SoyRenderer", "metal/src/soy/SoyTemplates"]
+        "dependencies": ["exports", "metal/src/component/Component", "metal/src/soy/SoyAop", "metal/src/soy/SoyRenderer", "metal/src/soy/SoyTemplates"]
     },
     "frontend-js-metal-web@1.0.0/crystal-tooltip/src/Tooltip": {
-        "dependencies": ["exports", "metal/src/component/ComponentRegistry", "crystal-tooltip/src/TooltipBase", "metal-jquery-adapter/src/JQueryAdapter", "crystal-tooltip/src/Tooltip.soy"]
+        "dependencies": ["exports", "crystal-tooltip/src/TooltipBase", "metal-jquery-adapter/src/JQueryAdapter", "crystal-tooltip/src/Tooltip.soy"]
     },
     "frontend-js-metal-web@1.0.0/crystal-tooltip/src/Tooltip.soy": {
-        "dependencies": ["exports", "metal/src/component/Component", "metal/src/component/ComponentRegistry", "metal/src/soy/SoyAop", "metal/src/soy/SoyRenderer", "metal/src/soy/SoyTemplates"]
+        "dependencies": ["exports", "metal/src/component/Component", "metal/src/soy/SoyAop", "metal/src/soy/SoyRenderer", "metal/src/soy/SoyTemplates"]
     },
     "frontend-js-metal-web@1.0.0/crystal-tooltip/src/TooltipBase": {
         "dependencies": ["exports", "metal/src/core", "metal/src/dom/dom", "metal-position/src/Align", "metal/src/component/Component", "metal/src/events/EventHandler", "metal/src/soy/SoyRenderer", "metal-jquery-adapter/src/JQueryAdapter", "metal/src/dom/events"]
@@ -120,7 +120,7 @@
         "dependencies": ["exports", "metal/src/core", "metal-drag-drop/src/Drag", "metal-position/src/Position", "crystal-slider/src/Slider.soy", "metal-jquery-adapter/src/JQueryAdapter"]
     },
     "frontend-js-metal-web@1.0.0/crystal-slider/src/Slider.soy": {
-        "dependencies": ["exports", "metal/src/component/Component", "metal/src/component/ComponentRegistry", "metal/src/soy/SoyAop", "metal/src/soy/SoyRenderer", "metal/src/soy/SoyTemplates"]
+        "dependencies": ["exports", "metal/src/component/Component", "metal/src/soy/SoyAop", "metal/src/soy/SoyRenderer", "metal/src/soy/SoyTemplates"]
     },
     "frontend-js-metal-web@1.0.0/crystal-scrollspy/src/Scrollspy": {
         "dependencies": ["exports", "metal/src/core", "metal/src/dom/dom", "metal/src/attribute/Attribute", "metal-position/src/Position", "metal-jquery-adapter/src/JQueryAdapter"]
@@ -129,19 +129,19 @@
         "dependencies": ["exports", "metal/src/core", "metal/src/dom/dom", "crystal-progressbar/src/ProgressBar.soy", "metal-jquery-adapter/src/JQueryAdapter"]
     },
     "frontend-js-metal-web@1.0.0/crystal-progressbar/src/ProgressBar.soy": {
-        "dependencies": ["exports", "metal/src/component/Component", "metal/src/component/ComponentRegistry", "metal/src/soy/SoyAop", "metal/src/soy/SoyRenderer", "metal/src/soy/SoyTemplates"]
+        "dependencies": ["exports", "metal/src/component/Component", "metal/src/soy/SoyAop", "metal/src/soy/SoyRenderer", "metal/src/soy/SoyTemplates"]
     },
     "frontend-js-metal-web@1.0.0/crystal-popover/src/Popover": {
-        "dependencies": ["exports", "metal/src/core", "crystal-tooltip/src/TooltipBase", "crystal-popover/src/Popover.soy", "metal-jquery-adapter/src/JQueryAdapter"]
+        "dependencies": ["exports", "metal/src/core", "crystal-tooltip/src/TooltipBase", "metal-jquery-adapter/src/JQueryAdapter", "crystal-popover/src/Popover.soy"]
     },
     "frontend-js-metal-web@1.0.0/crystal-popover/src/Popover.soy": {
-        "dependencies": ["exports", "metal/src/component/Component", "metal/src/component/ComponentRegistry", "metal/src/soy/SoyAop", "metal/src/soy/SoyRenderer", "metal/src/soy/SoyTemplates"]
+        "dependencies": ["exports", "metal/src/component/Component", "metal/src/soy/SoyAop", "metal/src/soy/SoyRenderer", "metal/src/soy/SoyTemplates"]
     },
     "frontend-js-metal-web@1.0.0/crystal-modal/src/Modal": {
         "dependencies": ["exports", "metal/src/core", "metal/src/dom/dom", "metal/src/events/EventHandler", "crystal-modal/src/Modal.soy", "metal-jquery-adapter/src/JQueryAdapter"]
     },
     "frontend-js-metal-web@1.0.0/crystal-modal/src/Modal.soy": {
-        "dependencies": ["exports", "metal/src/component/Component", "metal/src/component/ComponentRegistry", "metal/src/soy/SoyAop", "metal/src/soy/SoyRenderer", "metal/src/soy/SoyTemplates"]
+        "dependencies": ["exports", "metal/src/component/Component", "metal/src/soy/SoyAop", "metal/src/soy/SoyRenderer", "metal/src/soy/SoyTemplates"]
     },
     "frontend-js-metal-web@1.0.0/crystal-dropdown/src/Dropdown": {
         "dependencies": ["exports", "metal/src/dom/dom", "metal/src/events/EventHandler", "crystal-dropdown/src/Dropdown.soy", "metal-jquery-adapter/src/JQueryAdapter"]

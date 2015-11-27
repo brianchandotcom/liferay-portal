@@ -165,6 +165,7 @@ define("frontend-js-metal-web@1.0.0/crystal-modal/src/Modal", ['exports', 'metal
 		return Modal;
 	})(_Modal2.default);
 
+	Modal.prototype.registerMetalComponent && Modal.prototype.registerMetalComponent(Modal, 'Modal')
 	Modal.ELEMENT_CLASSES = 'modal';
 	Modal.ATTRS = {
 		autoFocus: {
@@ -193,9 +194,6 @@ define("frontend-js-metal-web@1.0.0/crystal-modal/src/Modal", ['exports', 'metal
 			value: 'dialog'
 		}
 	};
-
-	_Modal2.default.setImpl(Modal);
-
 	exports.default = Modal;
 
 	_JQueryAdapter2.default.register('modal', Modal);

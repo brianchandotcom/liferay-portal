@@ -50,7 +50,7 @@ String userGroupGroupRolesString = ListUtil.toString(userGroupGroupRoles, UsersA
 					<c:if test="<%= !selectUserGroup %>">
 						<c:choose>
 							<c:when test="<%= Validator.isNotNull(userGroupGroupRolesString) %>">
-								<%= userGroupGroupRolesString %>
+								<%= HtmlUtil.escape(userGroupGroupRolesString) %>
 							</c:when>
 							<c:otherwise>
 								&nbsp;
@@ -83,7 +83,7 @@ String userGroupGroupRolesString = ListUtil.toString(userGroupGroupRoles, UsersA
 
 		<c:if test="<%= !selectUserGroup %>">
 			<h6>
-				<%= userGroupGroupRolesString %>
+				<%= HtmlUtil.escape(userGroupGroupRolesString) %>
 			</h6>
 
 			<liferay-ui:search-container-column-jsp
@@ -107,7 +107,7 @@ String userGroupGroupRolesString = ListUtil.toString(userGroupGroupRoles, UsersA
 		<c:if test="<%= !selectUserGroup %>">
 			<liferay-ui:search-container-column-text
 				name="site-roles"
-				value="<%= userGroupGroupRolesString %>"
+				value="<%= HtmlUtil.escape(userGroupGroupRolesString) %>"
 			/>
 
 			<liferay-ui:search-container-column-jsp

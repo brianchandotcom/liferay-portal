@@ -197,7 +197,11 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 				<c:if test="<%= (article != null) && !article.isNew() && (classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) %>">
 					<aui:workflow-status id="<%= String.valueOf(article.getArticleId()) %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= article.getStatus() %>" version="<%= String.valueOf(article.getVersion()) %>" />
 
-					<liferay-util:include page="/article_toolbar.jsp" servletContext="<%= application %>" />
+					<div class="article-toolbar toolbar" id="<portlet:namespace />articleToolbar">
+						<div class="btn-group">
+							<aui:button data-title='<%= LanguageUtil.get(request, "in-order-to-preview-your-changes,-the-web-content-is-saved-as-a-draft") %>' disabled="<%= true %>" icon="icon-search" name="basicPreviewButton" value="basic-preview" />
+						</div>
+					</div>
 				</c:if>
 
 				<liferay-ui:form-navigator
@@ -310,15 +314,6 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 				id: '<%= (article != null) ? HtmlUtil.escape(articleId) : StringPool.BLANK %>',
 
 				<c:if test="<%= (article != null) && !article.isNew() %>">
-					<liferay-security:permissionsURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-						modelResource="<%= JournalArticle.class.getName() %>"
-						modelResourceDescription="<%= HtmlUtil.escape(article.getTitle(locale)) %>"
-						resourceGroupId="<%= String.valueOf(article.getGroupId()) %>"
-						resourcePrimKey="<%= String.valueOf(article.getResourcePrimKey()) %>"
-						var="permissionsURL"
-					/>
-
-					permissionsUrl: '<%= permissionsURL %>',
 					previewUrl: '<%= HtmlUtil.escapeJS(previewArticleContentURL.toString()) %>',
 				</c:if>
 

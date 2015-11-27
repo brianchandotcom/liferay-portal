@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	property = {"service.ranking:Integer=80"},
+	property = {"service.ranking:Integer=10"},
 	service = FormNavigatorEntry.class
 )
 public class JournalCustomFieldsFormNavigatorEntry
@@ -46,7 +46,7 @@ public class JournalCustomFieldsFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/aritcle/custom_fields.jsp";
+		return "/article/custom_fields.jsp";
 	}
 
 }

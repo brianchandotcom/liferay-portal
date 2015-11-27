@@ -30,8 +30,6 @@ if (selLayout != null) {
 
 <aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
-<h3><liferay-ui:message key="seo" /></h3>
-
 <aui:input label="html-title" name="title" />
 
 <h4><liferay-ui:message key="meta-tags" /></h4>

@@ -17,8 +17,6 @@ package com.liferay.portal.kernel.dao.orm;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSenderUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -128,10 +126,10 @@ public class IndexableActionableDynamicQuery
 			return;
 		}
 
-		Indexer<?> indexer = IndexerRegistryUtil.getIndexer(getModelClass());
+		Class<?> modelClass = getModelClass();
 
 		ReindexStatusMessageSenderUtil.sendStatusMessage(
-			indexer.getClassName(), _progress, _count);
+			modelClass.getName(), _progress, _count);
 	}
 
 	private boolean _commitImmediately;

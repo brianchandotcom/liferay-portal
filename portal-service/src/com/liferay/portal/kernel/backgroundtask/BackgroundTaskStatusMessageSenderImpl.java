@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.backgroundtask;
 
+import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSender;
 import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactory;
 import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactoryUtil;
@@ -52,14 +53,12 @@ public class BackgroundTaskStatusMessageSenderImpl
 	}
 
 	@Override
-	public void setBackgroundTaskStatusMessage(
-		BackgroundTaskStatusMessage backgroundTaskStatusMessage) {
-
+	public void setBackgroundTaskStatusMessage(Message message) {
 		if (!BackgroundTaskThreadLocal.hasBackgroundTask()) {
 			return;
 		}
 
-		_singleDestinationMessageSender.send(backgroundTaskStatusMessage);
+		_singleDestinationMessageSender.send(message);
 	}
 
 	public void setDestinationName(String destinationName) {

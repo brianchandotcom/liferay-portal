@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.background.task;
 
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessage;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageSender;
 import com.liferay.portal.kernel.search.background.task.ReindexBackgroundTaskConstants;
 import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSender;
@@ -26,36 +27,36 @@ public class ReindexStatusMessageSenderImpl
 
 	@Override
 	public void sendStatusMessage(String className, long progress, long count) {
-		ReindexBackgroundTaskStatusMessage reindexBackgroundTaskStatusMessage =
-			new ReindexBackgroundTaskStatusMessage();
+		BackgroundTaskStatusMessage backgroundTaskStatusMessage =
+			new BackgroundTaskStatusMessage();
 
-		reindexBackgroundTaskStatusMessage.put(
+		backgroundTaskStatusMessage.put(
 			ReindexBackgroundTaskConstants.CLASS_NAME, className);
-		reindexBackgroundTaskStatusMessage.put(
+		backgroundTaskStatusMessage.put(
 			ReindexBackgroundTaskConstants.PROGRESS, progress);
-		reindexBackgroundTaskStatusMessage.put(
+		backgroundTaskStatusMessage.put(
 			ReindexBackgroundTaskConstants.COUNT, count);
 
 		_backgroundTaskStatusMessageSender.setBackgroundTaskStatusMessage(
-			reindexBackgroundTaskStatusMessage);
+			backgroundTaskStatusMessage);
 	}
 
 	@Override
 	public void sendStatusMessage(
 		String phase, long companyId, long[] companyIds) {
 
-		ReindexBackgroundTaskStatusMessage reindexBackgroundTaskStatusMessage =
-			new ReindexBackgroundTaskStatusMessage();
+		BackgroundTaskStatusMessage backgroundTaskStatusMessage =
+			new BackgroundTaskStatusMessage();
 
-		reindexBackgroundTaskStatusMessage.put(
+		backgroundTaskStatusMessage.put(
 			ReindexBackgroundTaskConstants.PHASE, phase);
-		reindexBackgroundTaskStatusMessage.put(
+		backgroundTaskStatusMessage.put(
 			ReindexBackgroundTaskConstants.COMPANY_ID, companyId);
-		reindexBackgroundTaskStatusMessage.put(
+		backgroundTaskStatusMessage.put(
 			ReindexBackgroundTaskConstants.COMPANY_IDS, companyIds);
 
 		_backgroundTaskStatusMessageSender.setBackgroundTaskStatusMessage(
-			reindexBackgroundTaskStatusMessage);
+			backgroundTaskStatusMessage);
 	}
 
 	public void setBackgroundTaskStatusMessageSender(

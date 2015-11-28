@@ -82,7 +82,7 @@ public class ReindexBackgroundTaskStatusMessageTranslator
 			String lastIndexer = GetterUtil.getString(
 				backgroundTaskStatus.getAttribute("lastIndexer"));
 
-			long completedIndexers = GetterUtil.getLong(
+			int completedIndexers = GetterUtil.getInteger(
 				backgroundTaskStatus.getAttribute("completedIndexers"));
 
 			if (Validator.isNull(lastIndexer)) {

@@ -109,9 +109,8 @@ public class ReindexBackgroundTaskStatusMessageTranslator
 	}
 
 	protected int getPercentage(
-		double completedCompanies, double totalCompanies,
-		double completedIndexers, double totalIndexers,
-		double completedDocuments, double totalDocuments) {
+		int completedCompanies, int totalCompanies, int completedIndexers,
+		int totalIndexers, long completedDocuments, long totalDocuments) {
 
 		if (totalCompanies <= 0) {
 			return 100;
@@ -124,11 +123,12 @@ public class ReindexBackgroundTaskStatusMessageTranslator
 		double indexerPercentage = 1;
 
 		if (totalDocuments != 0) {
-			indexerPercentage = completedDocuments / totalDocuments;
+			indexerPercentage = (double)completedDocuments / totalDocuments;
 		}
 
 		double companyPercentage =
 			(completedIndexers + indexerPercentage) / totalIndexers;
+
 		double totalPercentage =
 			(completedCompanies + companyPercentage) / totalCompanies;
 

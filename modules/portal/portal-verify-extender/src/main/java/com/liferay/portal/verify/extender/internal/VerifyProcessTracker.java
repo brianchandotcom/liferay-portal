@@ -21,6 +21,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.RunnableUtil;
 import com.liferay.portal.model.Release;
 import com.liferay.portal.output.stream.container.OutputStreamContainer;
@@ -37,8 +38,6 @@ import java.io.PrintWriter;
 
 import java.util.Map;
 import java.util.Set;
-
-import javax.servlet.ServletContext;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
@@ -236,6 +235,11 @@ public class VerifyProcessTracker {
 		return verifyProcess;
 	}
 
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
+
 	@Reference(unbind = "-")
 	protected void setOutputStreamTracker(
 		OutputStreamContainerFactoryTracker
@@ -250,10 +254,6 @@ public class VerifyProcessTracker {
 		ReleaseLocalService releaseLocalService) {
 
 		_releaseLocalService = releaseLocalService;
-	}
-
-	@Reference(target = "(original.bean=true)", unbind = "-")
-	protected void setServletContext(ServletContext servletContext) {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

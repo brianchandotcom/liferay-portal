@@ -15,6 +15,7 @@
 package com.liferay.portal.search.background.task;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageSender;
+import com.liferay.portal.kernel.search.background.task.ReindexBackgroundTaskConstants;
 import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSender;
 
 /**
@@ -26,7 +27,14 @@ public class ReindexStatusMessageSenderImpl
 	@Override
 	public void sendStatusMessage(String className, long progress, long count) {
 		ReindexBackgroundTaskStatusMessage reindexBackgroundTaskStatusMessage =
-			new ReindexBackgroundTaskStatusMessage(className, progress, count);
+			new ReindexBackgroundTaskStatusMessage();
+
+		reindexBackgroundTaskStatusMessage.put(
+			ReindexBackgroundTaskConstants.CLASS_NAME, className);
+		reindexBackgroundTaskStatusMessage.put(
+			ReindexBackgroundTaskConstants.PROGRESS, progress);
+		reindexBackgroundTaskStatusMessage.put(
+			ReindexBackgroundTaskConstants.COUNT, count);
 
 		_backgroundTaskStatusMessageSender.setBackgroundTaskStatusMessage(
 			reindexBackgroundTaskStatusMessage);
@@ -37,8 +45,14 @@ public class ReindexStatusMessageSenderImpl
 		String phase, long companyId, long[] companyIds) {
 
 		ReindexBackgroundTaskStatusMessage reindexBackgroundTaskStatusMessage =
-			new ReindexBackgroundTaskStatusMessage(
-				phase, companyId, companyIds);
+			new ReindexBackgroundTaskStatusMessage();
+
+		reindexBackgroundTaskStatusMessage.put(
+			ReindexBackgroundTaskConstants.PHASE, phase);
+		reindexBackgroundTaskStatusMessage.put(
+			ReindexBackgroundTaskConstants.COMPANY_ID, companyId);
+		reindexBackgroundTaskStatusMessage.put(
+			ReindexBackgroundTaskConstants.COMPANY_IDS, companyIds);
 
 		_backgroundTaskStatusMessageSender.setBackgroundTaskStatusMessage(
 			reindexBackgroundTaskStatusMessage);

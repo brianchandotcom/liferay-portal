@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.exportimport.lar;
 
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessage;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageSender;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.util.LongWrapper;
@@ -46,16 +47,12 @@ public class PortletDataHandlerStatusMessageSenderImpl
 	public void sendStatusMessage(
 		String messageType, String portletId, ManifestSummary manifestSummary) {
 
-		PortletDataHandlerBackgroundTaskStatusMessage
-			portletDataHandlerBackgroundTaskStatusMessage =
-				new PortletDataHandlerBackgroundTaskStatusMessage();
+		BackgroundTaskStatusMessage backgroundTaskStatusMessage =
+			new BackgroundTaskStatusMessage();
 
-		init(
-			portletDataHandlerBackgroundTaskStatusMessage, messageType,
-			manifestSummary);
+		init(backgroundTaskStatusMessage, messageType, manifestSummary);
 
-		portletDataHandlerBackgroundTaskStatusMessage.put(
-			"portletId", portletId);
+		backgroundTaskStatusMessage.put("portletId", portletId);
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
 
@@ -70,13 +67,13 @@ public class PortletDataHandlerStatusMessageSenderImpl
 				portletModelAdditionCountersTotal = 0;
 			}
 
-			portletDataHandlerBackgroundTaskStatusMessage.put(
+			backgroundTaskStatusMessage.put(
 				"portletModelAdditionCountersTotal",
 				portletModelAdditionCountersTotal);
 		}
 
 		_backgroundTaskStatusMessageSender.setBackgroundTaskStatusMessage(
-			portletDataHandlerBackgroundTaskStatusMessage);
+			backgroundTaskStatusMessage);
 	}
 
 	@Override
@@ -84,51 +81,43 @@ public class PortletDataHandlerStatusMessageSenderImpl
 		String messageType, String[] portletIds,
 		ManifestSummary manifestSummary) {
 
-		PortletDataHandlerBackgroundTaskStatusMessage
-			portletDataHandlerBackgroundTaskStatusMessage =
-				new PortletDataHandlerBackgroundTaskStatusMessage();
+		BackgroundTaskStatusMessage backgroundTaskStatusMessage =
+			new BackgroundTaskStatusMessage();
 
-		init(
-			portletDataHandlerBackgroundTaskStatusMessage, messageType,
-			manifestSummary);
+		init(backgroundTaskStatusMessage, messageType, manifestSummary);
 
-		portletDataHandlerBackgroundTaskStatusMessage.put(
-			"portletIds", portletIds);
+		backgroundTaskStatusMessage.put("portletIds", portletIds);
 
 		_backgroundTaskStatusMessageSender.setBackgroundTaskStatusMessage(
-			portletDataHandlerBackgroundTaskStatusMessage);
+			backgroundTaskStatusMessage);
 	}
 
 	@Override
 	public <T extends StagedModel> void sendStatusMessage(
 		String messageType, T stagedModel, ManifestSummary manifestSummary) {
 
-		PortletDataHandlerBackgroundTaskStatusMessage
-			portletDataHandlerBackgroundTaskStatusMessage =
-				new PortletDataHandlerBackgroundTaskStatusMessage();
+		BackgroundTaskStatusMessage backgroundTaskStatusMessage =
+			new BackgroundTaskStatusMessage();
 
-		init(
-			portletDataHandlerBackgroundTaskStatusMessage, messageType,
-			manifestSummary);
+		init(backgroundTaskStatusMessage, messageType, manifestSummary);
 
 		StagedModelDataHandler<T> stagedModelDataHandler =
 			(StagedModelDataHandler<T>)
 				StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
 					stagedModel.getModelClassName());
 
-		portletDataHandlerBackgroundTaskStatusMessage.put(
+		backgroundTaskStatusMessage.put(
 			"stagedModelName",
 			stagedModelDataHandler.getDisplayName(stagedModel));
 
-		portletDataHandlerBackgroundTaskStatusMessage.put(
+		backgroundTaskStatusMessage.put(
 			"stagedModelType",
 			String.valueOf(stagedModel.getStagedModelType()));
 
-		portletDataHandlerBackgroundTaskStatusMessage.put(
-			"uuid", stagedModel.getUuid());
+		backgroundTaskStatusMessage.put("uuid", stagedModel.getUuid());
 
 		_backgroundTaskStatusMessageSender.setBackgroundTaskStatusMessage(
-			portletDataHandlerBackgroundTaskStatusMessage);
+			backgroundTaskStatusMessage);
 	}
 
 	public void setBackgroundTaskStatusMessageSender(

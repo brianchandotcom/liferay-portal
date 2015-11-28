@@ -128,14 +128,10 @@ public class IndexableActionableDynamicQuery
 			return;
 		}
 
-		Class<?> clazz = getModelClass();
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(clazz);
-
-		String className = indexer.getClassName();
+		Indexer<?> indexer = IndexerRegistryUtil.getIndexer(getModelClass());
 
 		ReindexStatusMessageSenderUtil.sendStatusMessage(
-			className, _progress, _count);
+			indexer.getClassName(), _progress, _count);
 	}
 
 	private boolean _commitImmediately;

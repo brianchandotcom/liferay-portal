@@ -16,6 +16,7 @@ package com.liferay.portal.search.background.task;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessage;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageSender;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.search.background.task.ReindexBackgroundTaskConstants;
 import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSender;
 
@@ -30,6 +31,9 @@ public class ReindexStatusMessageSenderImpl
 		BackgroundTaskStatusMessage backgroundTaskStatusMessage =
 			new BackgroundTaskStatusMessage();
 
+		backgroundTaskStatusMessage.put(
+			"backgroundTaskId",
+			BackgroundTaskThreadLocal.getBackgroundTaskId());
 		backgroundTaskStatusMessage.put(
 			ReindexBackgroundTaskConstants.CLASS_NAME, className);
 		backgroundTaskStatusMessage.put(
@@ -48,6 +52,9 @@ public class ReindexStatusMessageSenderImpl
 		BackgroundTaskStatusMessage backgroundTaskStatusMessage =
 			new BackgroundTaskStatusMessage();
 
+		backgroundTaskStatusMessage.put(
+			"backgroundTaskId",
+			BackgroundTaskThreadLocal.getBackgroundTaskId());
 		backgroundTaskStatusMessage.put(
 			ReindexBackgroundTaskConstants.PHASE, phase);
 		backgroundTaskStatusMessage.put(

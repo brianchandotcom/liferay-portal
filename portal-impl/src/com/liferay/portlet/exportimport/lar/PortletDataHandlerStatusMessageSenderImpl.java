@@ -16,6 +16,7 @@ package com.liferay.portlet.exportimport.lar;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessage;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageSender;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.util.LongWrapper;
 import com.liferay.portal.model.Portlet;
@@ -129,6 +130,9 @@ public class PortletDataHandlerStatusMessageSenderImpl
 	protected void init(
 		Message message, String messageType, ManifestSummary manifestSummary) {
 
+		message.put(
+			"backgroundTaskId",
+			BackgroundTaskThreadLocal.getBackgroundTaskId());
 		message.put("messageType", messageType);
 
 		Map<String, LongWrapper> modelAdditionCounters =

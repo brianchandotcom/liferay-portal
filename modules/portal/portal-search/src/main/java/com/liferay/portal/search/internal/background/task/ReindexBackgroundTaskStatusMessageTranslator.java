@@ -66,7 +66,7 @@ public class ReindexBackgroundTaskStatusMessageTranslator
 		backgroundTaskStatus.setAttribute(
 			ReindexBackgroundTaskConstants.COUNT, count);
 
-		long completedCompanies = 0;
+		int completedCompanies = 0;
 
 		for (long completedCompanyId : companyIds) {
 			if (completedCompanyId == companyId) {

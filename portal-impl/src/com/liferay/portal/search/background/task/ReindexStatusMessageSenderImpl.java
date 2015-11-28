@@ -37,7 +37,7 @@ public class ReindexStatusMessageSenderImpl
 		message.put(ReindexBackgroundTaskConstants.PROGRESS, progress);
 		message.put(ReindexBackgroundTaskConstants.COUNT, count);
 
-		_backgroundTaskStatusMessageSender.setBackgroundTaskStatusMessage(
+		_backgroundTaskStatusMessageSender.sendBackgroundTaskStatusMessage(
 			message);
 	}
 
@@ -54,7 +54,7 @@ public class ReindexStatusMessageSenderImpl
 		message.put(ReindexBackgroundTaskConstants.COMPANY_ID, companyId);
 		message.put(ReindexBackgroundTaskConstants.COMPANY_IDS, companyIds);
 
-		_backgroundTaskStatusMessageSender.setBackgroundTaskStatusMessage(
+		_backgroundTaskStatusMessageSender.sendBackgroundTaskStatusMessage(
 			message);
 	}
 

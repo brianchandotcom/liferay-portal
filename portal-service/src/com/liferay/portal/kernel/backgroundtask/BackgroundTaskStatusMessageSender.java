@@ -21,6 +21,6 @@ import com.liferay.portal.kernel.messaging.Message;
  */
 public interface BackgroundTaskStatusMessageSender {
 
-	public void setBackgroundTaskStatusMessage(Message message);
+	public void sendBackgroundTaskStatusMessage(Message message);
 
 }

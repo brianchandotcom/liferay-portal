@@ -71,7 +71,7 @@ public class PortletDataHandlerStatusMessageSenderImpl
 				portletModelAdditionCountersTotal);
 		}
 
-		_backgroundTaskStatusMessageSender.setBackgroundTaskStatusMessage(
+		_backgroundTaskStatusMessageSender.sendBackgroundTaskStatusMessage(
 			message);
 	}
 
@@ -86,7 +86,7 @@ public class PortletDataHandlerStatusMessageSenderImpl
 
 		message.put("portletIds", portletIds);
 
-		_backgroundTaskStatusMessageSender.setBackgroundTaskStatusMessage(
+		_backgroundTaskStatusMessageSender.sendBackgroundTaskStatusMessage(
 			message);
 	}
 
@@ -113,7 +113,7 @@ public class PortletDataHandlerStatusMessageSenderImpl
 
 		message.put("uuid", stagedModel.getUuid());
 
-		_backgroundTaskStatusMessageSender.setBackgroundTaskStatusMessage(
+		_backgroundTaskStatusMessageSender.sendBackgroundTaskStatusMessage(
 			message);
 	}
 

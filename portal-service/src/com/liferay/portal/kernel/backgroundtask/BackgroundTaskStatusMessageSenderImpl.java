@@ -53,7 +53,7 @@ public class BackgroundTaskStatusMessageSenderImpl
 	}
 
 	@Override
-	public void setBackgroundTaskStatusMessage(Message message) {
+	public void sendBackgroundTaskStatusMessage(Message message) {
 		if (!BackgroundTaskThreadLocal.hasBackgroundTask()) {
 			return;
 		}

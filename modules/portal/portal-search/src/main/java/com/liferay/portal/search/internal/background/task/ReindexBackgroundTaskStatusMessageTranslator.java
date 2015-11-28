@@ -124,11 +124,11 @@ public class ReindexBackgroundTaskStatusMessageTranslator
 		double indexerPercentage = 1;
 
 		if (totalDocuments != 0) {
-			indexerPercentage = (completedDocuments / totalDocuments);
+			indexerPercentage = completedDocuments / totalDocuments;
 		}
 
 		double companyPercentage =
-			(completedIndexers + (indexerPercentage)) / totalIndexers;
+			(completedIndexers + indexerPercentage) / totalIndexers;
 		double totalPercentage =
 			(completedCompanies + companyPercentage) / totalCompanies;
 

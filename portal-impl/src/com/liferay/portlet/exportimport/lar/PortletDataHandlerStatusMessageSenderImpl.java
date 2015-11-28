@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.exportimport.lar;
 
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessage;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageSender;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.messaging.Message;
@@ -48,12 +47,11 @@ public class PortletDataHandlerStatusMessageSenderImpl
 	public void sendStatusMessage(
 		String messageType, String portletId, ManifestSummary manifestSummary) {
 
-		BackgroundTaskStatusMessage backgroundTaskStatusMessage =
-			new BackgroundTaskStatusMessage();
+		Message message = new Message();
 
-		init(backgroundTaskStatusMessage, messageType, manifestSummary);
+		init(message, messageType, manifestSummary);
 
-		backgroundTaskStatusMessage.put("portletId", portletId);
+		message.put("portletId", portletId);
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
 
@@ -68,13 +66,13 @@ public class PortletDataHandlerStatusMessageSenderImpl
 				portletModelAdditionCountersTotal = 0;
 			}
 
-			backgroundTaskStatusMessage.put(
+			message.put(
 				"portletModelAdditionCountersTotal",
 				portletModelAdditionCountersTotal);
 		}
 
 		_backgroundTaskStatusMessageSender.setBackgroundTaskStatusMessage(
-			backgroundTaskStatusMessage);
+			message);
 	}
 
 	@Override
@@ -82,43 +80,41 @@ public class PortletDataHandlerStatusMessageSenderImpl
 		String messageType, String[] portletIds,
 		ManifestSummary manifestSummary) {
 
-		BackgroundTaskStatusMessage backgroundTaskStatusMessage =
-			new BackgroundTaskStatusMessage();
+		Message message = new Message();
 
-		init(backgroundTaskStatusMessage, messageType, manifestSummary);
+		init(message, messageType, manifestSummary);
 
-		backgroundTaskStatusMessage.put("portletIds", portletIds);
+		message.put("portletIds", portletIds);
 
 		_backgroundTaskStatusMessageSender.setBackgroundTaskStatusMessage(
-			backgroundTaskStatusMessage);
+			message);
 	}
 
 	@Override
 	public <T extends StagedModel> void sendStatusMessage(
 		String messageType, T stagedModel, ManifestSummary manifestSummary) {
 
-		BackgroundTaskStatusMessage backgroundTaskStatusMessage =
-			new BackgroundTaskStatusMessage();
+		Message message = new Message();
 
-		init(backgroundTaskStatusMessage, messageType, manifestSummary);
+		init(message, messageType, manifestSummary);
 
 		StagedModelDataHandler<T> stagedModelDataHandler =
 			(StagedModelDataHandler<T>)
 				StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
 					stagedModel.getModelClassName());
 
-		backgroundTaskStatusMessage.put(
+		message.put(
 			"stagedModelName",
 			stagedModelDataHandler.getDisplayName(stagedModel));
 
-		backgroundTaskStatusMessage.put(
+		message.put(
 			"stagedModelType",
 			String.valueOf(stagedModel.getStagedModelType()));
 
-		backgroundTaskStatusMessage.put("uuid", stagedModel.getUuid());
+		message.put("uuid", stagedModel.getUuid());
 
 		_backgroundTaskStatusMessageSender.setBackgroundTaskStatusMessage(
-			backgroundTaskStatusMessage);
+			message);
 	}
 
 	public void setBackgroundTaskStatusMessageSender(

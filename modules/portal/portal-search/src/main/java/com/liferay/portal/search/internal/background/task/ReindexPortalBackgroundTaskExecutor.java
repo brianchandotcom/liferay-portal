@@ -50,10 +50,11 @@ public class ReindexPortalBackgroundTaskExecutor
 			catch (Exception e) {
 				_log.error(e, e);
 			}
-
-			ReindexStatusMessageSenderUtil.sendStatusMessage(
-				ReindexBackgroundTaskConstants.PORTAL_END, companyId,
-				companyIds);
+			finally {
+				ReindexStatusMessageSenderUtil.sendStatusMessage(
+					ReindexBackgroundTaskConstants.PORTAL_END, companyId,
+					companyIds);
+			}
 		}
 	}
 

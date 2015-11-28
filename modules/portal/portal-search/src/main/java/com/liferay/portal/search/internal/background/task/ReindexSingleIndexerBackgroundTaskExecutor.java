@@ -38,7 +38,7 @@ public class ReindexSingleIndexerBackgroundTaskExecutor
 	protected void reindex(String className, long[] companyIds)
 		throws Exception {
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(className);
+		Indexer<?> indexer = IndexerRegistryUtil.getIndexer(className);
 
 		if (indexer == null) {
 			return;
@@ -58,10 +58,11 @@ public class ReindexSingleIndexerBackgroundTaskExecutor
 			catch (Exception e) {
 				_log.error(e, e);
 			}
-
-			ReindexStatusMessageSenderUtil.sendStatusMessage(
-				ReindexBackgroundTaskConstants.SINGLE_END, companyId,
-				companyIds);
+			finally {
+				ReindexStatusMessageSenderUtil.sendStatusMessage(
+					ReindexBackgroundTaskConstants.SINGLE_END, companyId,
+					companyIds);
+			}
 		}
 	}
 

@@ -16,21 +16,21 @@
 
 <%@ include file="/card/horizontal_card/init.jsp" %>
 
-<div class="card-horizontal <%= Validator.isNotNull(cssClass) ? cssClass : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %> >
-	<div class="card-row card-row-padded <%= showCheckbox ? "selectable" : StringPool.BLANK %>">
-		<c:if test="<%= ((rowChecker != null) && (resultRow != null)) || showCheckbox %>">
-			<div class="card-col-field checkbox">
-				<c:choose>
-					<c:when test="<%= (rowChecker != null) && (resultRow != null) %>">
-						<%= rowChecker.getRowCheckBox(request, rowChecker.isChecked(resultRow.getObject()), rowChecker.isDisabled(resultRow.getObject()), resultRow.getPrimaryKey()) %>
-					</c:when>
-					<c:otherwise>
-						<aui:input checked="<%= checkboxChecked %>" cssClass="<%= checkboxCSSClass %>" data="<%= checkboxData %>" disabled="<%= checkboxDisabled %>" id="<%= checkboxId %>" label="" name="<%= checkboxName %>" title='<%= LanguageUtil.format(request, "select-x", new Object[] {HtmlUtil.escape(text)}) %>' type="checkbox" useNamespace="<%= false %>" value="<%= checkboxValue %>" wrappedField="<%= true %>" />
-					</c:otherwise>
-				</c:choose>
-			</div>
-		</c:if>
+<c:if test="<%= ((rowChecker != null) && (resultRow != null)) || showCheckbox %>">
+	<div class="checkbox checkbox-card checkbox-middle-left">
+		<label>
+			<c:choose>
+				<c:when test="<%= (rowChecker != null) && (resultRow != null) %>">
+					<%= rowChecker.getRowCheckBox(request, rowChecker.isChecked(resultRow.getObject()), rowChecker.isDisabled(resultRow.getObject()), resultRow.getPrimaryKey()) %>
+				</c:when>
+				<c:otherwise>
+					<aui:input checked="<%= checkboxChecked %>" cssClass="<%= checkboxCSSClass %>" data="<%= checkboxData %>" disabled="<%= checkboxDisabled %>" id="<%= checkboxId %>" label="" name="<%= checkboxName %>" title='<%= LanguageUtil.format(request, "select-x", new Object[] {HtmlUtil.escape(text)}) %>' type="checkbox" useNamespace="<%= false %>" value="<%= checkboxValue %>" wrappedField="<%= true %>" />
+				</c:otherwise>
+			</c:choose>
+</c:if>
 
+<div class="card card-horizontal <%= Validator.isNotNull(cssClass) ? cssClass : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %> >
+	<div class="card-row card-row-padded <%= showCheckbox ? "selectable" : StringPool.BLANK %>">
 		<c:if test="<%= Validator.isNotNull(imageUrl) || Validator.isNotNull(icon) %>">
 			<div class="card-col-field">
 				<c:choose>
@@ -57,3 +57,8 @@
 		</c:if>
 	</div>
 </div>
+
+<c:if test="<%= ((rowChecker != null) && (resultRow != null)) || showCheckbox %>">
+		</label>
+	</div>
+</c:if>

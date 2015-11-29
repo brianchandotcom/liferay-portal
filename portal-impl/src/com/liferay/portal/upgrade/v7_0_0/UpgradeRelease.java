@@ -37,7 +37,8 @@ public class UpgradeRelease extends UpgradeProcess {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"select distinct buildNumber from Release_");
+				"select distinct buildNumber from Release_ " +
+					"where schemaVersion is null");
 
 			rs = ps.executeQuery();
 
@@ -48,7 +49,8 @@ public class UpgradeRelease extends UpgradeProcess {
 
 				runSQL(
 					"update Release_ set schemaVersion = '" + schemaVersion +
-						"' where buildNumber = " + buildNumber);
+						"' where buildNumber = " + buildNumber +
+							" and schemaVersion is null");
 			}
 		}
 		finally {

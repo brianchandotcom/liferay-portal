@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.taglib.ui;
+package com.liferay.map.taglib.servlet.taglib;
 
 import com.liferay.taglib.util.IncludeTag;
 
@@ -69,16 +69,16 @@ public class MapTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-ui:map:apiKey", _apiKey);
-		request.setAttribute("liferay-ui:map:geolocation", _geolocation);
-		request.setAttribute("liferay-ui:map:latitude", _latitude);
-		request.setAttribute("liferay-ui:map:longitude", _longitude);
-		request.setAttribute("liferay-ui:map:name", _name);
-		request.setAttribute("liferay-ui:map:points", _points);
-		request.setAttribute("liferay-ui:map:provider", _provider);
+		request.setAttribute("liferay-map:map:apiKey", _apiKey);
+		request.setAttribute("liferay-map:map:geolocation", _geolocation);
+		request.setAttribute("liferay-map:map:latitude", _latitude);
+		request.setAttribute("liferay-map:map:longitude", _longitude);
+		request.setAttribute("liferay-map:map:name", _name);
+		request.setAttribute("liferay-map:map:points", _points);
+		request.setAttribute("liferay-map:map:provider", _provider);
 	}
 
-	private static final String _PAGE = "/html/taglib/ui/map/page.jsp";
+	private static final String _PAGE = "/map/page.jsp";
 
 	private String _apiKey;
 	private boolean _geolocation;

@@ -128,7 +128,8 @@ public class VerifyAuditedModel extends VerifyProcess {
 				if (allowAnonymousUser) {
 					userId = previousUserId;
 					userName = "Anonymous";
-				} else {
+				}
+				else {
 					userId = rs.getLong("userId");
 					userName = getUserName(con, userId);
 				}

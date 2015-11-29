@@ -53,26 +53,6 @@ import org.junit.runner.RunWith;
 @RunWith(Enclosed.class)
 public class LayoutTypePortletImplTest {
 
-	public static void setUpScenario() throws Exception {
-		_group = GroupTestUtil.addGroup();
-
-		_layout = LayoutTestUtil.addLayout(_group, false);
-
-		_layoutTypePortlet = (LayoutTypePortlet)_layout.getLayoutType();
-
-		_layoutStaticPortletsAll = PropsValues.LAYOUT_STATIC_PORTLETS_ALL;
-	}
-
-	public static void tearDownScenario() {
-		StringBundler sb = new StringBundler(_layoutStaticPortletsAll.length);
-
-		for (String layoutStaticPortlet : _layoutStaticPortletsAll) {
-			sb.append(layoutStaticPortlet);
-		}
-
-		PropsUtil.set(PropsKeys.LAYOUT_STATIC_PORTLETS_ALL, sb.toString());
-	}
-
 	public static class
 		IsCacheableWhenThereAreEmbeddedPortletsAndNoStaticPortlets {
 
@@ -84,7 +64,7 @@ public class LayoutTypePortletImplTest {
 
 		@Before
 		public void setUp() throws Exception {
-			setUpScenario();
+			_setUp();
 		}
 
 		@Test
@@ -133,7 +113,7 @@ public class LayoutTypePortletImplTest {
 
 		@After
 		public void tearDown() {
-			tearDownScenario();
+			_tearDown();
 		}
 
 	}
@@ -149,12 +129,12 @@ public class LayoutTypePortletImplTest {
 
 		@Before
 		public void setUp() throws Exception {
-			setUpScenario();
+			_setUp();
 		}
 
 		@After
 		public void tearDown() {
-			tearDownScenario();
+			_tearDown();
 		}
 
 		@Test
@@ -208,12 +188,12 @@ public class LayoutTypePortletImplTest {
 
 		@Before
 		public void setUp() throws Exception {
-			setUpScenario();
+			_setUp();
 		}
 
 		@After
 		public void tearDown() {
-			tearDownScenario();
+			_tearDown();
 		}
 
 		@Test
@@ -248,6 +228,26 @@ public class LayoutTypePortletImplTest {
 
 			Assert.assertTrue(_layoutTypePortlet.isCacheable());
 		}
+	}
+
+	private static void _setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+
+		_layout = LayoutTestUtil.addLayout(_group, false);
+
+		_layoutTypePortlet = (LayoutTypePortlet)_layout.getLayoutType();
+
+		_layoutStaticPortletsAll = PropsValues.LAYOUT_STATIC_PORTLETS_ALL;
+	}
+
+	private static void _tearDown() {
+		StringBundler sb = new StringBundler(_layoutStaticPortletsAll.length);
+
+		for (String layoutStaticPortlet : _layoutStaticPortletsAll) {
+			sb.append(layoutStaticPortlet);
+		}
+
+		PropsUtil.set(PropsKeys.LAYOUT_STATIC_PORTLETS_ALL, sb.toString());
 	}
 
 	@DeleteAfterTestRun

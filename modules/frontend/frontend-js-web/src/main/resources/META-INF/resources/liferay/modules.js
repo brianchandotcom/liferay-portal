@@ -475,14 +475,6 @@
 							'liferay-portlet-base'
 						]
 					},
-					'liferay-map-openstreet': {
-						path: 'map_openstreet.js',
-						requires: [
-							'jsonp',
-							'liferay-map-base',
-							'timers'
-						]
-					},
 					'liferay-menu': {
 						path: 'menu.js',
 						requires: [

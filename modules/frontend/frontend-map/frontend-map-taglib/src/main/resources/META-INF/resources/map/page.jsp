@@ -14,18 +14,18 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
+<%@ include file="/map/init.jsp" %>
 
 <%
 String protocol = HttpUtil.getProtocol(request);
 
-String apiKey = GetterUtil.getString(request.getAttribute("liferay-ui:map:apiKey"));
-boolean geolocation = GetterUtil.getBoolean(request.getAttribute("liferay-ui:map:geolocation"));
-double latitude = (Double)request.getAttribute("liferay-ui:map:latitude");
-double longitude = (Double)request.getAttribute("liferay-ui:map:longitude");
-String name = GetterUtil.getString((String)request.getAttribute("liferay-ui:map:name"));
-String points = GetterUtil.getString(request.getAttribute("liferay-ui:map:points"));
-String provider = GetterUtil.getString((String)request.getAttribute("liferay-ui:map:provider"));
+String apiKey = GetterUtil.getString(request.getAttribute("liferay-map:map:apiKey"));
+boolean geolocation = GetterUtil.getBoolean(request.getAttribute("liferay-map:map:geolocation"));
+double latitude = (Double)request.getAttribute("liferay-map:map:latitude");
+double longitude = (Double)request.getAttribute("liferay-map:map:longitude");
+String name = GetterUtil.getString((String)request.getAttribute("liferay-map:map:name"));
+String points = GetterUtil.getString(request.getAttribute("liferay-map:map:points"));
+String provider = GetterUtil.getString((String)request.getAttribute("liferay-map:map:provider"));
 
 if (Validator.isNull(apiKey) || Validator.isNull(provider)) {
 	Group group = themeDisplay.getSiteGroup();

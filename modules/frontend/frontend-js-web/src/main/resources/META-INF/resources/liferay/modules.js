@@ -468,12 +468,6 @@
 							'aui-base'
 						]
 					},
-					'liferay-map-base': {
-						path: 'map_base.js',
-						requires: [
-							'aui-base'
-						]
-					},
 					'liferay-map-google': {
 						path: 'map_google.js',
 						requires: [

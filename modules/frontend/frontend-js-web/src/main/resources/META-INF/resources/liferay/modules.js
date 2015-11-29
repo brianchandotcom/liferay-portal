@@ -484,12 +484,6 @@
 							'liferay-portlet-base'
 						]
 					},
-					'liferay-map-google': {
-						path: 'map_google.js',
-						requires: [
-							'liferay-map-base'
-						]
-					},
 					'liferay-map-openstreet': {
 						path: 'map_openstreet.js',
 						requires: [

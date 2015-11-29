@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Frontend Map Google Web
+Bundle-SymbolicName: com.liferay.frontend.map.google.web
+Bundle-Version: 1.0.0
+Include-Resource: classes
+JS-Config: /META-INF/resources/js/config.js
+Web-ContextPath: /frontend-map-google-web

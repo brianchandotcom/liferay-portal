@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Frontend Map Base Web
+Bundle-SymbolicName: com.liferay.frontend.map.base.web
+Bundle-Version: 1.0.0
+Include-Resource: classes
+JS-Config: /META-INF/resources/js/config.js
+Web-ContextPath: /frontend-map-base-web

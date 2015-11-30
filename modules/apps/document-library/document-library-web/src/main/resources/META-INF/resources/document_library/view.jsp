@@ -97,7 +97,7 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
 
-<liferay-ui:trash-undo
+<liferay-trash:trash-undo
 	portletURL="<%= restoreTrashEntriesURL %>"
 />
 

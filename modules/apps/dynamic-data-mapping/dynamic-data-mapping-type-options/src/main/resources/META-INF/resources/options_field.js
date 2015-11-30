@@ -79,7 +79,7 @@ AUI.add(
 
 						var field = instance._mainField;
 
-						field.get('repetitions').forEach(A.bind(fn, instance));
+						field.get('repetitions').forEach(fn, instance);
 					},
 
 					getLastField: function() {

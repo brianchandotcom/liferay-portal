@@ -61,7 +61,7 @@ public class UpgradeModules extends UpgradeProcess {
 				ps.setString(6, "0.0.1");
 				ps.setInt(7, 001);
 				ps.setTimestamp(8, timestamp);
-				ps.setBoolean(9, true);
+				ps.setBoolean(9, false);
 				ps.setInt(10, 0);
 				ps.setString(11, ReleaseConstants.TEST_STRING);
 

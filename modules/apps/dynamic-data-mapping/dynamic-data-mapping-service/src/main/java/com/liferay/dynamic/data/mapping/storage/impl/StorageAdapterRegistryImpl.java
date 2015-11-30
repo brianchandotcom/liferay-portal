@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.storage.impl;
 
 import com.liferay.dynamic.data.mapping.storage.StorageAdapter;
 import com.liferay.dynamic.data.mapping.storage.StorageAdapterRegistry;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 
 import java.util.List;
@@ -25,7 +26,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Filter;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
@@ -44,22 +44,16 @@ public class StorageAdapterRegistryImpl implements StorageAdapterRegistry {
 
 		_bundleContext = bundle.getBundleContext();
 
-		Filter filter = null;
-
 		try {
-			filter = FrameworkUtil.createFilter(
-				"(&(objectClass=" + StorageAdapter.class.getName() +
-					")(!(objectClass=" + clazz.getName() + ")))");
+			_serviceTracker = ServiceTrackerFactory.open(
+					_bundleContext,
+					"(&(objectClass=" + StorageAdapter.class.getName() +
+							")(!(objectClass=" + clazz.getName() + ")))",
+					new StorageAdapterServiceTrackerCustomizer());
 		}
 		catch (InvalidSyntaxException ise) {
 			ReflectionUtil.throwException(ise);
 		}
-
-		_serviceTracker = new ServiceTracker<>(
-			_bundleContext, filter,
-			new StorageAdapterServiceTrackerCustomizer());
-
-		_serviceTracker.open();
 	}
 
 	@Override

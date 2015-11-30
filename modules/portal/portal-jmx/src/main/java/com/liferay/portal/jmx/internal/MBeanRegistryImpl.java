@@ -14,6 +14,7 @@
 
 package com.liferay.portal.jmx.internal;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.jmx.MBeanRegistry;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -36,7 +37,6 @@ import javax.management.ObjectInstance;
 import javax.management.ObjectName;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Filter;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.ComponentContext;
@@ -129,21 +129,16 @@ public class MBeanRegistryImpl implements MBeanRegistry {
 
 		_mBeanServer = ManagementFactory.getPlatformMBeanServer();
 
-		Filter filter = null;
-
 		try {
-			filter = _bundleContext.createFilter(
+			_serviceTracker = ServiceTrackerFactory.open(
+				_bundleContext,
 				"(&(jmx.objectname=*)(objectClass=*MBean)" +
-					"(!(objectClass=javax.management.DynamicMBean)))");
+					"(!(objectClass=javax.management.DynamicMBean)))",
+				new MBeanServiceTrackerCustomizer());
 		}
 		catch (InvalidSyntaxException ise) {
 			ReflectionUtil.throwException(ise);
 		}
-
-		_serviceTracker = new ServiceTracker<>(
-			_bundleContext, filter, new MBeanServiceTrackerCustomizer());
-
-		_serviceTracker.open();
 	}
 
 	@Reference(

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.scheduler.internal;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.cal.DayAndPosition;
@@ -68,7 +69,6 @@ import javax.portlet.PortletRequest;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Filter;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.ComponentContext;
@@ -763,15 +763,11 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		}
 
 		if (GetterUtil.getBoolean(_props.get(PropsKeys.SCHEDULER_ENABLED))) {
-			Filter filter = _bundleContext.createFilter(
+			_serviceTracker = ServiceTrackerFactory.open(
+				_bundleContext,
 				"(objectClass=" +
-					SchedulerEventMessageListener.class.getName() + ")");
-
-			_serviceTracker = new ServiceTracker<>(
-				_bundleContext, filter,
+					SchedulerEventMessageListener.class.getName() + ")",
 				new SchedulerEventMessageListenerServiceTrackerCustomizer());
-
-			_serviceTracker.open();
 		}
 	}
 

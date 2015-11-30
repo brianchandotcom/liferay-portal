@@ -23,10 +23,22 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class ServiceTrackerFactory {
 
-	public static <T> ServiceTracker<T, T> create(Class<T> clazz) {
-		Bundle bundle = FrameworkUtil.getBundle(clazz);
+	public static <T> ServiceTracker<T, T> create(
+		Bundle bundle, Class<T> clazz) {
 
 		return new ServiceTracker<>(bundle.getBundleContext(), clazz, null);
+	}
+
+	public static <T> ServiceTracker<T, T> create(Class<T> clazz) {
+		return create(FrameworkUtil.getBundle(clazz), clazz);
+	}
+
+	public static <T> ServiceTracker<T, T> open(Bundle bundle, Class<T> clazz) {
+		ServiceTracker<T, T> serviceTracker = create(bundle, clazz);
+
+		serviceTracker.open();
+
+		return serviceTracker;
 	}
 
 	public static <T> ServiceTracker<T, T> open(Class<T> clazz) {

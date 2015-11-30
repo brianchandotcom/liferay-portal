@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.util;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.diff.DiffHtmlUtil;
 import com.liferay.portal.kernel.diff.DiffVersion;
@@ -556,15 +557,11 @@ public class WikiUtil {
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(WikiUtil.class);
 
-		_wikiEngineServiceTracker = new ServiceTracker<>(
-			bundle.getBundleContext(), WikiEngineTracker.class, null);
+		_wikiEngineServiceTracker = ServiceTrackerFactory.open(
+			bundle, WikiEngineTracker.class);
 
-		_wikiEngineServiceTracker.open();
-
-		_wikiImporterServiceTracker = new ServiceTracker<>(
-			bundle.getBundleContext(), WikiImporterTracker.class, null);
-
-		_wikiImporterServiceTracker.open();
+		_wikiImporterServiceTracker = ServiceTrackerFactory.open(
+			bundle, WikiImporterTracker.class);
 	}
 
 }

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String bodyLabel = (String)request.getAttribute("liferay-ui:email-notification-settings:bodyLabel");

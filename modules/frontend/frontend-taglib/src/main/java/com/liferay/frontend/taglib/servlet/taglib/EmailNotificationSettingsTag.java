@@ -183,8 +183,7 @@ public class EmailNotificationSettingsTag extends IncludeTag {
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 
-	private static final String _PAGE =
-		"/html/taglib/ui/email_notification_settings/page.jsp";
+	private static final String _PAGE = "/email_notification_settings/page.jsp";
 
 	private String _bodyLabel;
 	private String _emailBody;

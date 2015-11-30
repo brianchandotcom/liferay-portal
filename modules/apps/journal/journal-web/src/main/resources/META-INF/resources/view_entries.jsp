@@ -25,27 +25,11 @@ PortletURL portletURL = journalDisplayContext.getPortletURL();
 
 ArticleSearch articleSearchContainer = new ArticleSearch(liferayPortletRequest, portletURL);
 
-String orderByCol = ParamUtil.getString(request, "orderByCol");
-String orderByType = ParamUtil.getString(request, "orderByType");
+OrderByComparator<JournalArticle> orderByComparator = JournalPortletUtil.getArticleOrderByComparator(journalDisplayContext.getOrderByCol(), journalDisplayContext.getOrderByType());
 
-if (Validator.isNull(orderByCol)) {
-	orderByCol = portalPreferences.getValue(JournalPortletKeys.JOURNAL, "order-by-col", "modified-date");
-	orderByType = portalPreferences.getValue(JournalPortletKeys.JOURNAL, "order-by-type", "asc");
-}
-else {
-	boolean saveOrderBy = ParamUtil.getBoolean(request, "saveOrderBy");
-
-	if (saveOrderBy) {
-		portalPreferences.setValue(JournalPortletKeys.JOURNAL, "order-by-col", orderByCol);
-		portalPreferences.setValue(JournalPortletKeys.JOURNAL, "order-by-type", orderByType);
-	}
-}
-
-OrderByComparator<JournalArticle> orderByComparator = JournalPortletUtil.getArticleOrderByComparator(orderByCol, orderByType);
-
-articleSearchContainer.setOrderByCol(orderByCol);
+articleSearchContainer.setOrderByCol(journalDisplayContext.getOrderByCol());
 articleSearchContainer.setOrderByComparator(orderByComparator);
-articleSearchContainer.setOrderByType(orderByType);
+articleSearchContainer.setOrderByType(journalDisplayContext.getOrderByType());
 
 EntriesChecker entriesChecker = new EntriesChecker(liferayPortletRequest, liferayPortletResponse);
 
@@ -103,7 +87,7 @@ searchTerms.setVersion(-1);
 
 if (journalDisplayContext.isNavigationRecent()) {
 	articleSearchContainer.setOrderByCol("create-date");
-	articleSearchContainer.setOrderByType(orderByType);
+	articleSearchContainer.setOrderByType(journalDisplayContext.getOrderByType());
 }
 
 int status = WorkflowConstants.STATUS_APPROVED;
@@ -167,14 +151,14 @@ int total = 0;
 
 		boolean orderByAsc = false;
 
-		if (orderByType.equals("asc")) {
+		if (journalDisplayContext.getOrderByType().equals("asc")) {
 			orderByAsc = true;
 		}
 
-		if (orderByCol.equals("display-date")) {
+		if (journalDisplayContext.getOrderByCol().equals("display-date")) {
 			folderOrderByComparator = new FolderArticleDisplayDateComparator(orderByAsc);
 		}
-		else if (orderByCol.equals("modified-date")) {
+		else if (journalDisplayContext.getOrderByCol().equals("modified-date")) {
 			folderOrderByComparator = new FolderArticleModifiedDateComparator(orderByAsc);
 		}
 

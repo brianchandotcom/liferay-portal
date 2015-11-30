@@ -16,29 +16,9 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String ddmStructureKey = ParamUtil.getString(request, "ddmStructureKey");
-
-String orderByCol = ParamUtil.getString(request, "orderByCol");
-String orderByType = ParamUtil.getString(request, "orderByType");
-
-if (Validator.isNull(orderByCol)) {
-	orderByCol = portalPreferences.getValue(JournalPortletKeys.JOURNAL, "order-by-col", "modified-date");
-	orderByType = portalPreferences.getValue(JournalPortletKeys.JOURNAL, "order-by-type", "asc");
-}
-else {
-	boolean saveOrderBy = ParamUtil.getBoolean(request, "saveOrderBy");
-
-	if (saveOrderBy) {
-		portalPreferences.setValue(JournalPortletKeys.JOURNAL, "order-by-col", orderByCol);
-		portalPreferences.setValue(JournalPortletKeys.JOURNAL, "order-by-type", orderByType);
-	}
-}
-%>
-
 <liferay-frontend:management-bar-sort
-	orderByCol="<%= orderByCol %>"
-	orderByType="<%= orderByType %>"
+	orderByCol="<%= journalDisplayContext.getOrderByCol() %>"
+	orderByType="<%= journalDisplayContext.getOrderByType() %>"
 	orderColumns='<%= new String[] {"display-date", "modified-date"} %>'
 	portletURL="<%= journalDisplayContext.getPortletURL() %>"
 />

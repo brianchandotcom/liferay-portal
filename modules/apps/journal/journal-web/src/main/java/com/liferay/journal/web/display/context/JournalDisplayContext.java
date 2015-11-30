@@ -60,6 +60,8 @@ public class JournalDisplayContext {
 		_request = request;
 		_liferayPortletResponse = liferayPortletResponse;
 		_portletPreferences = portletPreferences;
+		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
+			_request);
 	}
 
 	public JournalArticle getArticle() throws PortalException {
@@ -181,6 +183,52 @@ public class JournalDisplayContext {
 		_navigation = ParamUtil.getString(_request, "navigation", "home");
 
 		return _navigation;
+	}
+
+	public String getOrderByCol() {
+		if (_orderByCol != null) {
+			return _orderByCol;
+		}
+
+		_orderByCol = ParamUtil.getString(_request, "orderByCol");
+
+		if (Validator.isNull(_orderByCol)) {
+			_orderByCol = _portalPreferences.getValue(
+				JournalPortletKeys.JOURNAL, "order-by-col", "modified-date");
+		}
+		else {
+			boolean saveOrderBy = ParamUtil.getBoolean(_request, "saveOrderBy");
+
+			if (saveOrderBy) {
+				_portalPreferences.setValue(
+					JournalPortletKeys.JOURNAL, "order-by-col", _orderByCol);
+			}
+		}
+
+		return _orderByCol;
+	}
+
+	public String getOrderByType() {
+		if (_orderByType != null) {
+			return _orderByType;
+		}
+
+		_orderByType = ParamUtil.getString(_request, "orderByType");
+
+		if (Validator.isNull(_orderByCol)) {
+			_orderByType = _portalPreferences.getValue(
+				JournalPortletKeys.JOURNAL, "order-by-type", "asc");
+		}
+		else {
+			boolean saveOrderBy = ParamUtil.getBoolean(_request, "saveOrderBy");
+
+			if (saveOrderBy) {
+				_portalPreferences.setValue(
+					JournalPortletKeys.JOURNAL, "order-by-type", _orderByType);
+			}
+		}
+
+		return _orderByType;
 	}
 
 	public PortletURL getPortletURL() throws PortalException {
@@ -378,6 +426,9 @@ public class JournalDisplayContext {
 	private String _keywords;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _navigation;
+	private String _orderByCol;
+	private String _orderByType;
+	private final PortalPreferences _portalPreferences;
 	private final PortletPreferences _portletPreferences;
 	private final HttpServletRequest _request;
 	private Boolean _showEditActions;

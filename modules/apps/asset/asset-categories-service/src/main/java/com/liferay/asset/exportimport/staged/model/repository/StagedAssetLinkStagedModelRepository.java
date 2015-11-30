@@ -35,6 +35,7 @@ import com.liferay.portlet.asset.service.AssetEntryLocalService;
 import com.liferay.portlet.asset.service.AssetLinkLocalService;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -141,8 +142,12 @@ public class StagedAssetLinkStagedModelRepository
 		List<AssetLink> assetLinks = _assetLinkLocalService.dynamicQuery(
 			dynamicQuery);
 
-		return ModelAdapterUtil.adapt(
-			assetLinks, AssetLink.class, StagedAssetLink.class);
+		if (ListUtil.isNotEmpty(assetLinks)) {
+			return ModelAdapterUtil.adapt(
+				assetLinks, AssetLink.class, StagedAssetLink.class);
+		}
+
+		return Collections.emptyList();
 	}
 
 	@Override

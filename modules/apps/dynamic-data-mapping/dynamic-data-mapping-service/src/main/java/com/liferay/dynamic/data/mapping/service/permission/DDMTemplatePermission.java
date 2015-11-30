@@ -15,7 +15,6 @@
 package com.liferay.dynamic.data.mapping.service.permission;
 
 import com.liferay.dynamic.data.mapping.constants.DDMActionKeys;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.util.DDMTemplatePermissionSupport;
@@ -254,7 +253,7 @@ public class DDMTemplatePermission {
 
 		sb.append(PortalUtil.getClassName(resourceClassNameId));
 		sb.append(ResourceActionsUtil.getCompositeModelNameSeparator());
-		sb.append(DDMStructure.class.getName());
+		sb.append(DDMTemplate.class.getName());
 
 		return sb.toString();
 	}

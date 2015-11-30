@@ -17,6 +17,7 @@ package com.liferay.portal.output.stream.container;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.output.stream.container.internal.ConsoleOutputStreamContainerFactory;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -38,6 +39,8 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Carlos Sierra Andrés
@@ -71,11 +74,20 @@ public class OutputStreamContainerFactoryTracker {
 		return _outputStreamContainerFactories.keySet();
 	}
 
-	@Reference(unbind = "-")
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY, unbind = "-"
+	)
 	public void setOutputStreamContainerFactory(
 		OutputStreamContainerFactory outputStreamContainerFactory) {
 
-		_outputStreamContainerFactory = outputStreamContainerFactory;
+		if (outputStreamContainerFactory == null) {
+			_outputStreamContainerFactory =
+				new ConsoleOutputStreamContainerFactory();
+		}
+		else {
+			_outputStreamContainerFactory = outputStreamContainerFactory;
+		}
 	}
 
 	@Activate

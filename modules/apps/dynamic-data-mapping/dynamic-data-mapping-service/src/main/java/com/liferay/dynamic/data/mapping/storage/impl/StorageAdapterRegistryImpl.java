@@ -37,23 +37,18 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 public class StorageAdapterRegistryImpl implements StorageAdapterRegistry {
 
-	public StorageAdapterRegistryImpl() {
+	public StorageAdapterRegistryImpl() throws InvalidSyntaxException {
 		Class<?> clazz = getClass();
 
 		Bundle bundle = FrameworkUtil.getBundle(clazz);
 
 		_bundleContext = bundle.getBundleContext();
 
-		try {
-			_serviceTracker = ServiceTrackerFactory.open(
-					_bundleContext,
-					"(&(objectClass=" + StorageAdapter.class.getName() +
-							")(!(objectClass=" + clazz.getName() + ")))",
-					new StorageAdapterServiceTrackerCustomizer());
-		}
-		catch (InvalidSyntaxException ise) {
-			ReflectionUtil.throwException(ise);
-		}
+		_serviceTracker = ServiceTrackerFactory.open(
+				_bundleContext,
+				"(&(objectClass=" + StorageAdapter.class.getName() +
+						")(!(objectClass=" + clazz.getName() + ")))",
+				new StorageAdapterServiceTrackerCustomizer());
 	}
 
 	@Override

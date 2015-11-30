@@ -39,23 +39,18 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class DDMFormFieldRendererRegistryImpl
 	implements DDMFormFieldRendererRegistry {
 
-	public DDMFormFieldRendererRegistryImpl() {
+	public DDMFormFieldRendererRegistryImpl() throws InvalidSyntaxException {
 		Class<?> clazz = getClass();
 
 		Bundle bundle = FrameworkUtil.getBundle(clazz);
 
 		_bundleContext = bundle.getBundleContext();
 
-		try {
-			_serviceTracker = ServiceTrackerFactory.open(
-				_bundleContext,
-				"(&(objectClass=" + DDMFormFieldRenderer.class.getName() +
-					")(!(objectClass=" + clazz.getName() + ")))",
-				new DDMFormFieldRendererServiceTrackerCustomizer());
-		}
-		catch (InvalidSyntaxException ise) {
-			ReflectionUtil.throwException(ise);
-		}
+		_serviceTracker = ServiceTrackerFactory.open(
+			_bundleContext,
+			"(&(objectClass=" + DDMFormFieldRenderer.class.getName() +
+				")(!(objectClass=" + clazz.getName() + ")))",
+			new DDMFormFieldRendererServiceTrackerCustomizer());
 	}
 
 	@Override

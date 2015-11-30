@@ -59,6 +59,19 @@ if (recordSet != null) {
 						<liferay-ui:error exception="<%= CaptchaMaxChallengesException.class %>" message="maximum-number-of-captcha-attempts-exceeded" />
 						<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />
 
+						<liferay-ui:error exception="<%= StorageFieldValueException.RequiredValue.class %>">
+
+							<%
+							StorageFieldValueException.RequiredValue rv = (StorageFieldValueException.RequiredValue)errorException;
+							%>
+
+							<liferay-ui:message arguments="<%= rv.getFieldName() %>" key="no-value-defined-for-field-x" translateArguments="<%= false %>" />
+						</liferay-ui:error>
+
+						<div class="ddl-form-basic-info">
+							<div class="container-fluid-1280">
+								<h1 class="ddl-form-name"><%= recordSet.getName(locale) %></h1>
+
 						<div class="ddl-form-basic-info">
 							<div class="container-fluid-1280">
 								<h1 class="ddl-form-name"><%= recordSet.getName(locale) %></h1>

@@ -102,6 +102,18 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 		<aui:input name="status" type="hidden" />
 		<aui:input name="saveAndContinue" type="hidden" value="<%= false %>" />
 
+		<liferay-ui:error exception="<%= DDMFormLayoutValidationException.class %>" message="please-enter-a-valid-form-layout" />
+		<liferay-ui:error exception="<%= DDMFormValidationException.class %>" message="please-enter-a-valid-form-definition" />
+
+		<liferay-ui:error exception="<%= DDMFormLayoutValidationException.MustNotDuplicateFieldName.class %>">
+
+			<%
+			DDMFormLayoutValidationException.MustNotDuplicateFieldName mndfn = (DDMFormLayoutValidationException.MustNotDuplicateFieldName)errorException;
+			%>
+
+			<liferay-ui:message arguments="<%= StringUtil.merge(mndfn.getDuplicatedFieldNames(), StringPool.COMMA_AND_SPACE) %>" key="the-definition-field-name-x-was-defined-more-than-once" translateArguments="<%= false %>" />
+		</liferay-ui:error>
+
 		<liferay-ui:error exception="<%= LocaleException.class %>">
 
 			<%
@@ -111,6 +123,33 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 			<c:if test="<%= le.getType() == LocaleException.TYPE_CONTENT %>">
 				<liferay-ui:message arguments="<%= new String[] {StringUtil.merge(le.getSourceAvailableLocales(), StringPool.COMMA_AND_SPACE), StringUtil.merge(le.getTargetAvailableLocales(), StringPool.COMMA_AND_SPACE)} %>" key="the-default-language-x-does-not-match-the-portal's-available-languages-x" />
 			</c:if>
+		</liferay-ui:error>
+
+		<liferay-ui:error exception="<%= DDMFormValidationException.MustNotDuplicateFieldName.class %>">
+
+			<%
+			DDMFormValidationException.MustNotDuplicateFieldName mndfn = (DDMFormValidationException.MustNotDuplicateFieldName)errorException;
+			%>
+
+			<liferay-ui:message arguments="<%= mndfn.getFieldName() %>" key="the-definition-field-name-x-was-defined-more-than-once" translateArguments="<%= false %>" />
+		</liferay-ui:error>
+
+		<liferay-ui:error exception="<%= DDMFormValidationException.MustSetOptionsForField.class %>">
+
+			<%
+			DDMFormValidationException.MustSetOptionsForField msoff = (DDMFormValidationException.MustSetOptionsForField)errorException;
+			%>
+
+			<liferay-ui:message arguments="<%= msoff.getFieldName() %>" key="at-least-one-option-should-be-set-for-field-x" translateArguments="<%= false %>" />
+		</liferay-ui:error>
+
+		<liferay-ui:error exception="<%= DDMFormValidationException.MustSetValidCharactersForFieldName.class %>">
+
+			<%
+			DDMFormValidationException.MustSetValidCharactersForFieldName msvcffn = (DDMFormValidationException.MustSetValidCharactersForFieldName)errorException;
+			%>
+
+			<liferay-ui:message arguments="<%= msvcffn.getFieldName() %>" key="invalid-characters-were-defined-for-field-name-x" translateArguments="<%= false %>" />
 		</liferay-ui:error>
 
 		<liferay-ui:error exception="<%= StructureDefinitionException.class %>" message="please-enter-a-valid-definition" />

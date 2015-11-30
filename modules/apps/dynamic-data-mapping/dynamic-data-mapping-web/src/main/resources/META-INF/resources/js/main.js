@@ -494,14 +494,7 @@ AUI.add(
 
 						var field = A.Widget.getByNode(event.currentTarget);
 
-						instance.eachParentField(
-							field,
-							function(parent) {
-								var parentBB = parent.get('boundingBox');
-
-								parentBB.dd.removeInvalid('#' + parentBB.attr('id'));
-							}
-						);
+						instance._setInvalidDDHandles(field, 'remove');
 
 						LiferayFormBuilder.superclass._onMouseOutField.apply(instance, arguments);
 					},
@@ -511,14 +504,7 @@ AUI.add(
 
 						var field = A.Widget.getByNode(event.currentTarget);
 
-						instance.eachParentField(
-							field,
-							function(parent) {
-								var parentBB = parent.get('boundingBox');
-
-								parentBB.dd.addInvalid('#' + parentBB.attr('id'));
-							}
-						);
+						instance._setInvalidDDHandles(field, 'add');
 
 						LiferayFormBuilder.superclass._onMouseOverField.apply(instance, arguments);
 					},
@@ -596,6 +582,21 @@ AUI.add(
 						LiferayFormBuilder.UNIQUE_FIELD_NAMES_MAP.clear();
 
 						return LiferayFormBuilder.superclass._setFields.apply(instance, arguments);
+					},
+
+					_setInvalidDDHandles: function(field, type) {
+						var instance = this;
+
+						var methodName = type + 'Invalid';
+
+						instance.eachParentField(
+							field,
+							function(parent) {
+								var parentBB = parent.get('boundingBox');
+
+								parentBB.dd[methodName]('#' + parentBB.attr('id'));
+							}
+						);
 					},
 
 					_toggleInputDirection: function(locale) {

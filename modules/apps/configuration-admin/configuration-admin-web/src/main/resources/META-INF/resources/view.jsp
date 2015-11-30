@@ -48,6 +48,17 @@ portletURL.setParameter("configurationCategory", configurationCategory);
 		%>
 
 	</aui:nav>
+
+	<aui:nav-bar-search>
+		<portlet:actionURL name="search" var="searchURL">
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+		</portlet:actionURL>
+
+		<aui:form action="<%= searchURL %>" name="searchFm">
+			<liferay-ui:input-search autoFocus="<%= true %>"
+									 markupView="lexicon" />
+		</aui:form>
+	</aui:nav-bar-search>
 </aui:nav-bar>
 
 <div class="container-fluid-1280">

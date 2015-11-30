@@ -55,7 +55,6 @@ public class PluginPackageIndexer extends BaseIndexer<PluginPackage> {
 	public static final String CLASS_NAME = PluginPackage.class.getName();
 
 	public PluginPackageIndexer() {
-		setCommitImmediately(true);
 		setDefaultSelectedFieldNames(
 			Field.COMPANY_ID, Field.CONTENT, Field.ENTRY_CLASS_NAME,
 			Field.ENTRY_CLASS_PK, Field.TITLE, Field.UID);

@@ -22,7 +22,10 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Sergio González
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.trash.taglib.servlet.taglib.TrashEmptyTag}
  */
+@Deprecated
 public class TrashEmptyTag extends IncludeTag {
 
 	@Override

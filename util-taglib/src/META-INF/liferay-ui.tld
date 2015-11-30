@@ -5457,7 +5457,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a component for users to permanently delete items such as images, articles, etc. from the recycle bin.</description>
+		<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-trash:trash-empty</code>]]>.</description>
 		<name>trash-empty</name>
 		<tag-class>com.liferay.taglib.ui.TrashEmptyTag</tag-class>
 		<body-content>empty</body-content>
@@ -5494,7 +5494,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a message confirming items were moved to the recycle bin and presenting an option to restore them.</description>
+		<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-trash:trash-undo</code>]]>.</description>
 		<name>trash-undo</name>
 		<tag-class>com.liferay.taglib.ui.TrashUndoTag</tag-class>
 		<body-content>empty</body-content>

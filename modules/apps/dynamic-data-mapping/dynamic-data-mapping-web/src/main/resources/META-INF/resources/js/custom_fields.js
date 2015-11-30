@@ -527,6 +527,50 @@ AUI.add(
 			UNIQUE_FIELD_NAMES_MAP.put(event.newVal, instance);
 		};
 
+		LiferayFieldSupport.prototype._handleDeleteEvent = function(event) {
+			var instance = this;
+
+			var strings = instance.getStrings();
+
+			var deleteModal = Liferay.Util.Window.getWindow(
+				{
+					dialog:	{
+						bodyContent: strings.deleteFieldsMessage,
+						destroyOnHide: true,
+						height: 200,
+						resizable: false,
+						toolbars: {
+							footer: [
+								{
+									cssClass: 'btn-primary',
+									label: Liferay.Language.get('ok'),
+									on: {
+										click: function() {
+											instance.destroy();
+
+											deleteModal.hide();
+										}
+									}
+								},
+								{
+									label: Liferay.Language.get('cancel'),
+									on: {
+										click: function() {
+											deleteModal.hide();
+										}
+									}
+								}
+							]
+						},
+						width: 700
+					},
+					title: instance.get('label')
+				}
+			).render().show();
+
+			event.stopPropagation();
+		};
+
 		LiferayFieldSupport.prototype._randomString = function(length) {
 			var randomString = Liferay.Util.randomInt().toString(36);
 

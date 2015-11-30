@@ -14,6 +14,6 @@ Liferay-Service: true
 Require-Capability:\
 	liferay.extender;\
 	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
-Require-SchemaVersion: 1.0.2
+Require-SchemaVersion: 1.0.3
 Spring-Context: META-INF/spring
 -spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

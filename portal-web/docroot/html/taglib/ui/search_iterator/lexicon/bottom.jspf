@@ -14,7 +14,7 @@
  */
 --%>
 
-		<c:if test="<%= PropsValues.SEARCH_CONTAINER_SHOW_PAGINATION_BOTTOM && paginate %>">
+		<c:if test="<%= paginate %>">
 			<div class="taglib-search-iterator-page-iterator-bottom">
 				<liferay-ui:search-paginator id='<%= id + "PageIteratorBottom" %>' markupView="<%= markupView %>" searchContainer="<%= searchContainer %>" type="<%= type %>" />
 			</div>

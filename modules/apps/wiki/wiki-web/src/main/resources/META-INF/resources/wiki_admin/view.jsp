@@ -45,62 +45,78 @@ searchContainer.setResults(results);
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
 
-<liferay-ui:trash-undo
-	portletURL="<%= restoreTrashEntriesURL %>"
-/>
+<aui:nav-bar markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<portlet:renderURL var="viewNodesURL">
+			<portlet:param name="mvcRenderCommandName" value="/wiki_admin/view" />
+		</portlet:renderURL>
 
-<liferay-ui:error exception="<%= RequiredNodeException.class %>" message="the-last-main-node-is-required-and-cannot-be-deleted" />
+		<aui:nav-item
+			href="<%= viewNodesURL %>"
+			label="wikis"
+			selected="<%= true %>"
+		/>
+	</aui:nav>
+</aui:nav-bar>
 
-<aui:form action="<%= wikiURLHelper.getSearchURL() %>" method="get" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+<div class="container-fluid-1280">
+	<liferay-ui:trash-undo
+		portletURL="<%= restoreTrashEntriesURL %>"
+	/>
 
-	<%
-	List resultRows = searchContainer.getResultRows();
+	<liferay-ui:error exception="<%= RequiredNodeException.class %>" message="the-last-main-node-is-required-and-cannot-be-deleted" />
 
-	for (int i = 0; i < results.size(); i++) {
-		WikiNode node = (WikiNode)results.get(i);
+	<aui:form action="<%= wikiURLHelper.getSearchURL() %>" method="get" name="fm">
+		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
-		node = node.toEscapedModel();
+		<%
+		List resultRows = searchContainer.getResultRows();
 
-		ResultRow row = new ResultRow(node, node.getNodeId(), i);
+		for (int i = 0; i < results.size(); i++) {
+			WikiNode node = (WikiNode)results.get(i);
 
-		PortletURL rowURL = renderResponse.createRenderURL();
+			node = node.toEscapedModel();
 
-		rowURL.setParameter("mvcRenderCommandName", "/wiki/view_all_pages");
-		rowURL.setParameter("redirect", currentURL);
-		rowURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
+			ResultRow row = new ResultRow(node, node.getNodeId(), i);
 
-		// Name
+			PortletURL rowURL = renderResponse.createRenderURL();
 
-		row.addText(node.getName(), rowURL);
+			rowURL.setParameter("mvcRenderCommandName", "/wiki/view_all_pages");
+			rowURL.setParameter("redirect", currentURL);
+			rowURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 
-		// Number of pages
+			// Name
 
-		int pagesCount = WikiPageServiceUtil.getPagesCount(scopeGroupId, node.getNodeId(), true);
+			row.addText(node.getName(), rowURL);
 
-		row.addText(String.valueOf(pagesCount), rowURL);
+			// Number of pages
 
-		// Last post date
+			int pagesCount = WikiPageServiceUtil.getPagesCount(scopeGroupId, node.getNodeId(), true);
 
-		if (node.getLastPostDate() == null) {
-			row.addText(LanguageUtil.get(request, "never"), rowURL);
+			row.addText(String.valueOf(pagesCount), rowURL);
+
+			// Last post date
+
+			if (node.getLastPostDate() == null) {
+				row.addText(LanguageUtil.get(request, "never"), rowURL);
+			}
+			else {
+				row.addText(dateFormatDateTime.format(node.getLastPostDate()), rowURL);
+			}
+
+			// Action
+
+			row.addJSP("/wiki/node_action.jsp", "entry-action", application, request, response);
+
+			// Add result row
+
+			resultRows.add(row);
 		}
-		else {
-			row.addText(dateFormatDateTime.format(node.getLastPostDate()), rowURL);
-		}
+		%>
 
-		// Action
-
-		row.addJSP("/wiki/node_action.jsp", "entry-action", application, request, response);
-
-		// Add result row
-
-		resultRows.add(row);
-	}
-	%>
-
-	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
-</aui:form>
+		<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+	</aui:form>
+</div>
 
 <%
 boolean showAddNodeButton = WikiResourcePermissionChecker.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_NODE);

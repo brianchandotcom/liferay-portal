@@ -8,6 +8,11 @@ AUI.add(
 
 		var instanceOf = A.instanceOf;
 		var isArray = Array.isArray;
+
+		var isFormBuilderField = function(value) {
+			return (value instanceof A.FormBuilderField);
+		};
+
 		var isObject = Lang.isObject;
 		var isString = Lang.isString;
 		var isUndefined = Lang.isUndefined;
@@ -281,6 +286,18 @@ AUI.add(
 						return fields;
 					},
 
+					eachParentField: function(field, fn) {
+						var instance = this;
+
+						var parent = field.get('parent');
+
+						while (isFormBuilderField(parent)) {
+							fn.call(instance, parent);
+
+							parent = parent.get('parent');
+						}
+					},
+
 					getContent: function() {
 						var instance = this;
 
@@ -472,6 +489,26 @@ AUI.add(
 						}
 					},
 
+					_onMouseOutField: function(event) {
+						var instance = this;
+
+						var field = A.Widget.getByNode(event.currentTarget);
+
+						instance._setInvalidDDHandles(field, 'remove');
+
+						LiferayFormBuilder.superclass._onMouseOutField.apply(instance, arguments);
+					},
+
+					_onMouseOverField: function(event) {
+						var instance = this;
+
+						var field = A.Widget.getByNode(event.currentTarget);
+
+						instance._setInvalidDDHandles(field, 'add');
+
+						LiferayFormBuilder.superclass._onMouseOverField.apply(instance, arguments);
+					},
+
 					_onPropertyModelChange: function(event) {
 						var instance = this;
 
@@ -545,6 +582,21 @@ AUI.add(
 						LiferayFormBuilder.UNIQUE_FIELD_NAMES_MAP.clear();
 
 						return LiferayFormBuilder.superclass._setFields.apply(instance, arguments);
+					},
+
+					_setInvalidDDHandles: function(field, type) {
+						var instance = this;
+
+						var methodName = type + 'Invalid';
+
+						instance.eachParentField(
+							field,
+							function(parent) {
+								var parentBB = parent.get('boundingBox');
+
+								parentBB.dd[methodName]('#' + parentBB.attr('id'));
+							}
+						);
 					},
 
 					_toggleInputDirection: function(locale) {

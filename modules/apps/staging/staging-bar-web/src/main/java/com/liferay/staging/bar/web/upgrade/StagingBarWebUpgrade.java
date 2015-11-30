@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Levente Hudák
  */
-@Component(immediate = true, service = UpgradeStepRegistrator.class)
+@Component(immediate = true)
 public class StagingBarWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override

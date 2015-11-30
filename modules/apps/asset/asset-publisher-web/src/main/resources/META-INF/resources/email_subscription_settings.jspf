@@ -34,7 +34,7 @@ boolean emailAssetEntryAddedEnabled = ParamUtil.getBoolean(request, "preferences
 
 		<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= emailFromAddress %>" />
 
-		<liferay-ui:email-notification-settings
+		<liferay-frontend:email-notification-settings
 			emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailAssetEntryAddedBody", "preferences", ContentUtil.get(AssetPublisherWebConfigurationValues.EMAIL_ASSET_ENTRY_ADDED_BODY)) %>'
 			emailDefinitionTerms="<%= AssetPublisherUtil.getEmailDefinitionTerms(renderRequest, emailFromAddress, emailFromName) %>"
 			emailEnabled="<%= emailAssetEntryAddedEnabled %>"

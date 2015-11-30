@@ -132,18 +132,22 @@
 		<execute function="AssertClick" locator1="NavListItem#AUTHENTICATION" value1="Authentication" />
 
 		<execute function="AssertClick" locator1="NavTab#CAS" value1="CAS" />
+
 		<execute function="Check" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_ENABLED_CHECKBOX" />
 		<execute function="Type" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_LOGIN_URL_FIELD" value1="${casLoginURL}" />
 		<execute function="Type" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_LOGOUT_URL_FIELD" value1="${casLogoutURL}" />
 		<execute function="Type" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_SERVER_URL_FIELD" value1="${casServerURL}" />
+
 		<execute function="AssertClick" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_TEST_CAS_CONFIGURATION_BUTTON" value1="Test CAS Configuration" />
 
 		<execute function="AssertTextEquals" locator1="Message#LOGIN_URL_SUCCESS" value1="Pass" />
 		<execute function="AssertTextEquals" locator1="Message#LOGOUT_URL_SUCCESS" value1="Pass" />
 		<execute function="AssertTextEquals" locator1="Message#SERVER_URL_SUCCESS" value1="Pass" />
+
 		<execute function="Click" locator1="Icon#CLOSE" />
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 

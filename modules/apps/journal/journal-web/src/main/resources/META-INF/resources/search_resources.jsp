@@ -270,9 +270,17 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portlet
 
 				for (int i = 0; i < results.size(); i++) {
 					Object result = results.get(i);
-				%>
 
-					<%@ include file="/cast_result.jspf" %>
+					JournalArticle curArticle = null;
+					JournalFolder curFolder = null;
+
+					if (result instanceof JournalFolder) {
+						curFolder = (JournalFolder)result;
+					}
+					else {
+						curArticle = (JournalArticle)result;
+					}
+				%>
 
 					<c:choose>
 						<c:when test="<%= (curArticle != null) && JournalArticlePermission.contains(permissionChecker, curArticle, ActionKeys.VIEW) %>">

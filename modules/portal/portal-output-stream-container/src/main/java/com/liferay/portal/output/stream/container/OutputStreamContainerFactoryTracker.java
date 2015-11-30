@@ -199,13 +199,11 @@ public class OutputStreamContainerFactoryTracker {
 	private class ThreadLocalWriter extends Writer {
 
 		@Override
-		public void write(char[] cbuf, int off, int len)
-			throws IOException {
-
+		public void close() throws IOException {
 			Writer writer = _writerThreadLocal.get();
 
 			if (writer != null) {
-				writer.write(cbuf, off, len);
+				writer.close();
 			}
 		}
 
@@ -219,13 +217,14 @@ public class OutputStreamContainerFactoryTracker {
 		}
 
 		@Override
-		public void close() throws IOException {
+		public void write(char[] cbuf, int off, int len) throws IOException {
 			Writer writer = _writerThreadLocal.get();
 
 			if (writer != null) {
-				writer.close();
+				writer.write(cbuf, off, len);
 			}
 		}
 
 	}
+
 }

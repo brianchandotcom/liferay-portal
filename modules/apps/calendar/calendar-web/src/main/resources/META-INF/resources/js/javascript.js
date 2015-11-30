@@ -28,6 +28,8 @@ AUI.add(
 
 		var CONTROLS_NODE = 'controlsNode';
 
+		var DAYS_OF_WEEK = ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'];
+
 		var ICON_ADD_EVENT_NODE = 'iconAddEventNode';
 
 		var STR_BLANK = '';
@@ -45,6 +47,8 @@ AUI.add(
 			'</div>';
 
 		var USER_ID = toInt(themeDisplay.getUserId());
+
+		var WEEKLY = 'WEEKLY';
 
 		var Time = {
 			DAY: 86400000,
@@ -1368,6 +1372,8 @@ AUI.add(
 					}
 				},
 
+				AUGMENTS: [Liferay.RecurrenceConverter],
+
 				EXTENDS: A.Scheduler,
 
 				NAME: 'scheduler-base',
@@ -1592,6 +1598,50 @@ AUI.add(
 						return offset;
 					},
 
+					_getNewRecurrence: function(schedulerEvent, changedAttributes) {
+						var instance = this;
+
+						var recurrence = instance.parseRecurrence(schedulerEvent.get('recurrence'));
+
+						if (recurrence) {
+							var rrule = recurrence.rrule;
+
+							var newDate = changedAttributes.startDate.newVal;
+
+							var prevDate = changedAttributes.startDate.prevVal;
+
+							if (DateMath.isDayOverlap(prevDate, newDate)) {
+								if (rrule.freq === WEEKLY) {
+									var index = rrule.byday.indexOf(DAYS_OF_WEEK[prevDate.getDay()]);
+
+									AArray.remove(rrule.byday, index);
+
+									rrule.byday.push(DAYS_OF_WEEK[newDate.getDay()]);
+								}
+								else if (rrule.byday) {
+									var position = Math.ceil(newDate.getDate() / DateMath.WEEK_LENGTH);
+
+									var futureDate = DateMath.add(newDate, DateMath.WEEK, 1);
+
+									var lastDayOfWeek = futureDate.getMonth() !== newDate.getMonth();
+
+									if ((position > 4) || (lastDayOfWeek && (rrule.byday.position === -1))) {
+										position = -1;
+									}
+
+									rrule.byday.position = position;
+									rrule.byday.dayOfWeek = DAYS_OF_WEEK[newDate.getDay()];
+
+									if (rrule.bymonth) {
+										rrule.bymonth = newDate.getMonth() + 1;
+									}
+								}
+							}
+						}
+
+						return recurrence;
+					},
+
 					_onClickAddEvent: function(event) {
 						var instance = this;
 
@@ -1683,10 +1733,25 @@ AUI.add(
 
 						var answers = data.answers;
 						var duration = data.duration;
+						var newRecurrence = data.newRecurrence;
 						var offset = data.offset;
 						var schedulerEvent = data.schedulerEvent;
 
 						var showNextQuestion = A.bind(instance.load, instance);
+
+						if (newRecurrence && (!answers.updateInstance || answers.allFollowing)) {
+							var oldRecurrence = instance.parseRecurrence(schedulerEvent.get('recurrence'));
+
+							var recurringDaysCount = oldRecurrence.rrule.byday.length;
+
+							var startDayOfWeek = schedulerEvent.get('instanceIndex') % recurringDaysCount === 0;
+
+							if ((newRecurrence.rrule.freq === WEEKLY) && !startDayOfWeek) {
+								offset %= DateMath.ONE_DAY_MS;
+							}
+
+							schedulerEvent.set('recurrence', instance.encodeRecurrence(newRecurrence));
+						}
 
 						if (answers.cancel) {
 							A.soon(showNextQuestion);
@@ -1710,6 +1775,7 @@ AUI.add(
 								duration: instance._getCalendarBookingDuration(schedulerEvent),
 								hasChild: schedulerEvent.get('hasChildCalendarBookings'),
 								masterBooking: schedulerEvent.isMasterBooking(),
+								newRecurrence: instance._getNewRecurrence(schedulerEvent, changedAttributes),
 								offset: instance._getCalendarBookingOffset(schedulerEvent, changedAttributes),
 								recurring: schedulerEvent.isRecurring(),
 								resolver: A.bind(instance._queueableQuestionResolver, instance),
@@ -2300,6 +2366,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['async-queue', 'aui-datatype', 'aui-io', 'aui-scheduler', 'aui-toolbar', 'autocomplete', 'autocomplete-highlighters', 'dd-plugin', 'liferay-calendar-message-util', 'liferay-calendar-recurrence-util', 'liferay-node', 'liferay-portlet-url', 'liferay-store', 'promise', 'resize-plugin']
+		requires: ['async-queue', 'aui-datatype', 'aui-io', 'aui-scheduler', 'aui-toolbar', 'autocomplete', 'autocomplete-highlighters', 'dd-plugin', 'liferay-calendar-message-util', 'liferay-calendar-recurrence-converter', 'liferay-calendar-recurrence-util', 'liferay-node', 'liferay-portlet-url', 'liferay-store', 'promise', 'resize-plugin']
 	}
 );

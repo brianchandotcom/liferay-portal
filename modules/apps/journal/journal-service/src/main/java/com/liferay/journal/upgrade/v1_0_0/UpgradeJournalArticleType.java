@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -248,7 +249,11 @@ public class UpgradeJournalArticleType extends UpgradeProcess {
 
 		List<Company> companies = _companyLocalService.getCompanies();
 
+		Locale previousDefaultLocale = LocaleThreadLocal.getDefaultLocale();
+
 		for (Company company : companies) {
+			LocaleThreadLocal.setDefaultLocale(company.getLocale());
+
 			Set<Locale> locales = LanguageUtil.getAvailableLocales(
 				company.getGroupId());
 
@@ -278,6 +283,8 @@ public class UpgradeJournalArticleType extends UpgradeProcess {
 			updateArticles(
 				company.getCompanyId(), journalArticleTypesToAssetCategoryIds);
 		}
+
+		LocaleThreadLocal.setDefaultLocale(previousDefaultLocale);
 	}
 
 	private final AssetCategoryLocalService _assetCategoryLocalService;

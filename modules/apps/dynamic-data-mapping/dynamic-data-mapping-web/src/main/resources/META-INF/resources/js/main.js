@@ -8,6 +8,11 @@ AUI.add(
 
 		var instanceOf = A.instanceOf;
 		var isArray = Array.isArray;
+
+		var isFormBuilderField = function(v) {
+			return (v instanceof A.FormBuilderField);
+		};
+
 		var isObject = Lang.isObject;
 		var isString = Lang.isString;
 		var isUndefined = Lang.isUndefined;
@@ -281,6 +286,18 @@ AUI.add(
 						return fields;
 					},
 
+					eachParentField: function(field, fn) {
+						var instance = this;
+
+						var parent = field.get('parent');
+
+						while (isFormBuilderField(parent)) {
+							fn.call(instance, parent);
+
+							parent = parent.get('parent');
+						}
+					},
+
 					getContent: function() {
 						var instance = this;
 
@@ -470,6 +487,40 @@ AUI.add(
 
 							instance._updateLocalizationMaps(config);
 						}
+					},
+
+					_onMouseOutField: function(event) {
+						var instance = this;
+
+						var field = A.Widget.getByNode(event.currentTarget);
+
+						instance.eachParentField(
+							field,
+							function(parent) {
+								var parentBB = parent.get('boundingBox');
+
+								parentBB.dd.removeInvalid('#' + parentBB.attr('id'));
+							}
+						);
+
+						LiferayFormBuilder.superclass._onMouseOutField.apply(instance, arguments);
+					},
+
+					_onMouseOverField: function(event) {
+						var instance = this;
+
+						var field = A.Widget.getByNode(event.currentTarget);
+
+						instance.eachParentField(
+							field,
+							function(parent) {
+								var parentBB = parent.get('boundingBox');
+
+								parentBB.dd.addInvalid('#' + parentBB.attr('id'));
+							}
+						);
+
+						LiferayFormBuilder.superclass._onMouseOverField.apply(instance, arguments);
 					},
 
 					_onPropertyModelChange: function(event) {

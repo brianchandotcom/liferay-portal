@@ -36,6 +36,8 @@ import com.liferay.portal.service.ReleaseLocalService;
 import com.liferay.portal.upgrade.internal.configuration.ReleaseManagerConfiguration;
 import com.liferay.portal.upgrade.internal.graph.ReleaseGraphManager;
 import com.liferay.portal.upgrade.registry.UpgradeInfo;
+import com.liferay.portal.upgrade.util.TransactionHelper;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -191,18 +193,27 @@ public class ReleaseManager {
 			outputStreamContainerFactory.create(
 				"upgrade-" + bundleSymbolicName);
 
+		if (PropsValues.UPGRADE_DATABASE_TRANSACTIONS_DISABLED) {
+			TransactionHelper.disableTransactions();
+		}
+
 		OutputStream outputStream = outputStreamContainer.getOutputStream();
 
-		RunnableUtil.runWithSwappedSystemOut(
-			new UpgradeInfosRunnable(
-				bundleSymbolicName, upgradeInfos, outputStream),
-			outputStream);
-
 		try {
+			RunnableUtil.runWithSwappedSystemOut(
+				new UpgradeInfosRunnable(
+					bundleSymbolicName, upgradeInfos, outputStream),
+				outputStream);
+
 			outputStream.close();
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);
+		}
+		finally {
+			if (PropsValues.UPGRADE_DATABASE_TRANSACTIONS_DISABLED) {
+				TransactionHelper.enableTransactions();
+			}
 		}
 
 		Release release = _releaseLocalService.fetchRelease(bundleSymbolicName);

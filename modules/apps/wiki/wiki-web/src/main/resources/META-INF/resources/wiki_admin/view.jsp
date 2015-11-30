@@ -39,6 +39,19 @@ searchContainer.setTotal(total);
 List results = WikiNodeServiceUtil.getNodes(scopeGroupId, searchContainer.getStart(), searchContainer.getEnd());
 
 searchContainer.setResults(results);
+
+searchContainer.setId("wikiNodes");
+
+String displayStyle = ParamUtil.getString(request, "displayStyle");
+
+if (Validator.isNull(displayStyle)) {
+	displayStyle = portalPreferences.getValue(WikiPortletKeys.WIKI_ADMIN, "nodes-display-style", "descriptive");
+}
+else {
+	portalPreferences.setValue(WikiPortletKeys.WIKI_ADMIN, "nodes-display-style", displayStyle);
+
+	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
+}
 %>
 
 <portlet:actionURL name="/wiki/edit_node" var="restoreTrashEntriesURL">
@@ -58,6 +71,19 @@ searchContainer.setResults(results);
 		/>
 	</aui:nav>
 </aui:nav-bar>
+
+<liferay-frontend:management-bar
+	includeCheckBox="<%= true %>"
+	searchContainerId="wikiNodes"
+>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"descriptive", "list"} %>'
+			portletURL="<%= portletURL %>"
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
+</liferay-frontend:management-bar>
 
 <div class="container-fluid-1280">
 	<liferay-ui:trash-undo

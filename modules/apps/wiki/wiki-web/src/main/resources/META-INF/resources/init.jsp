@@ -89,6 +89,8 @@ page import="com.liferay.portal.service.TicketLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.UserLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
+page import="com.liferay.portlet.PortalPreferences" %><%@
+page import="com.liferay.portlet.PortletPreferencesFactoryUtil" %><%@
 page import="com.liferay.portlet.PortletURLImpl" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" %><%@
@@ -144,4 +146,6 @@ WindowState windowState = liferayPortletRequest.getWindowState();
 PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
 
 String currentURL = currentURLObj.toString();
+
+PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(liferayPortletRequest);
 %>

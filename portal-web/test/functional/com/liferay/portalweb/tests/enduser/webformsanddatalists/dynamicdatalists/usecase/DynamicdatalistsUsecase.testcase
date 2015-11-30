@@ -1443,14 +1443,14 @@
 			<var name="workflowAssetType" value="Dynamic Data Lists Record" />
 		</execute>
 
-		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+		<execute macro="Workflow#viewTaskAssignedToMeDetails">
+			<var name="workflowAssetContent" value="DDL Record Title" />
+			<var name="workflowAssetTitle" value="New To Do for List: DDL List" />
+			<var name="workflowAssignedTo" value="userfn userln" />
+			<var name="workflowTask" value="Update" />
+		</execute>
 
-		<execute function="AssertClick" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TITLE" value1="New To Do for List: DDL List" />
-
-		<execute function="AssertClick" locator1="MyAccountMyWorkflowInstances#EDIT_LINK" value1="Edit" />
-		<execute function="SelectFrame" value1="relative=top" />
-		<execute function="SelectFrame" locator1="MyaccountMyworkflowtasks#MY_ACCOUNT_IFRAME" />
-		<execute function="AssertTextEquals" locator1="Button#VIEW_HISTORY" value1="View History" />
+		<execute macro="DDLNavigator#gotoDDLRecordEditViaWorkflow" />
 
 		<execute macro="User#logoutPG" />
 

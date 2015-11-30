@@ -15,6 +15,7 @@
 package com.liferay.mobile.device.rules.rule;
 
 import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.theme.ThemeDisplay;
 
@@ -71,11 +72,9 @@ public class RuleGroupProcessorUtil {
 
 		_bundleContext = bundle.getBundleContext();
 
-		_serviceTracker = new ServiceTracker<>(
+		_serviceTracker = ServiceTrackerFactory.open(
 			_bundleContext, RuleGroupProcessor.class,
 			new RuleGroupProcessorServiceTrackerCustomizer());
-
-		_serviceTracker.open();
 	}
 
 	private RuleGroupProcessor _getRuleGroupProcessor() {

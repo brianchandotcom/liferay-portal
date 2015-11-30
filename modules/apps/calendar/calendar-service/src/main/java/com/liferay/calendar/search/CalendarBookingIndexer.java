@@ -60,7 +60,6 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 			Field.UID);
 		setDefaultSelectedLocalizedFieldNames(Field.DESCRIPTION, Field.TITLE);
 		setFilterSearch(true);
-		setPermissionAware(true);
 	}
 
 	@Override

@@ -16,8 +16,21 @@ package com.liferay.portal.output.stream.container;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+
+import java.nio.charset.Charset;
 
 import java.util.Set;
+
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+import org.apache.log4j.SimpleLayout;
+import org.apache.log4j.WriterAppender;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
@@ -67,7 +80,20 @@ public class OutputStreamContainerFactoryTracker {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
+		_logger = new org.apache.felix.utils.log.Logger(bundleContext);
+
 		try {
+			Logger rootLogger = Logger.getRootLogger();
+
+			_writerAppender = new WriterAppender(
+				new SimpleLayout(), new ThreadLocalWriter());
+
+			_writerAppender.setThreshold(Level.ALL);
+
+			_writerAppender.activateOptions();
+
+			rootLogger.addAppender(_writerAppender);
+
 			_outputStreamContainerFactories =
 				ServiceTrackerMapFactory.openSingleValueMap(
 					bundleContext, OutputStreamContainerFactory.class, "name");
@@ -79,11 +105,55 @@ public class OutputStreamContainerFactoryTracker {
 
 	@Deactivate
 	protected void deactivate() {
+		Logger rootLogger = Logger.getRootLogger();
+
+		rootLogger.removeAppender(_writerAppender);
+
 		_outputStreamContainerFactories.close();
 	}
 
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind ="-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
+
+	private org.apache.felix.utils.log.Logger _logger;
 	private ServiceTrackerMap<String, OutputStreamContainerFactory>
 		_outputStreamContainerFactories;
 	private volatile OutputStreamContainerFactory _outputStreamContainerFactory;
+	private WriterAppender _writerAppender;
+	private final ThreadLocal<Writer> _writerThreadLocal = new ThreadLocal<>();
 
+	private class ThreadLocalWriter extends Writer {
+
+		@Override
+		public void write(char[] cbuf, int off, int len)
+			throws IOException {
+
+			Writer writer = _writerThreadLocal.get();
+
+			if (writer != null) {
+				writer.write(cbuf, off, len);
+			}
+		}
+
+		@Override
+		public void flush() throws IOException {
+			Writer writer = _writerThreadLocal.get();
+
+			if (writer != null) {
+				writer.flush();
+			}
+		}
+
+		@Override
+		public void close() throws IOException {
+			Writer writer = _writerThreadLocal.get();
+
+			if (writer != null) {
+				writer.close();
+			}
+		}
+
+	}
 }

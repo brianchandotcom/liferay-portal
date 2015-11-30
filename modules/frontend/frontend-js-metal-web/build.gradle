@@ -39,6 +39,7 @@ buildCrystalComponents {
 
 	include "META-INF/resources/webjars/crystal-components/${crystalComponentsVersion}/build/amd-jquery/**"
 	include "META-INF/resources/webjars/crystal-components/${crystalComponentsVersion}/build/soy/**"
+
 	includeEmptyDirs = false
 	into "classes/META-INF/resources"
 }

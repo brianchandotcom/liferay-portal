@@ -335,6 +335,12 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> getDataProviderInstances(
+		long[] groupIds) {
+		return _ddmDataProviderInstanceLocalService.getDataProviderInstances(groupIds);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext) {
 		return _ddmDataProviderInstanceLocalService.getExportActionableDynamicQuery(portletDataContext);

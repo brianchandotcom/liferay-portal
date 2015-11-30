@@ -14,7 +14,14 @@
  */
 --%>
 
+<%@ include file="/init.jsp" %>
+
 <%
+String className = GetterUtil.getString(request.getAttribute("view_entry.jsp-className"));
+AnnouncementsEntry entry = (AnnouncementsEntry)request.getAttribute(WebKeys.ANNOUNCEMENTS_ENTRY);
+int flagValue = GetterUtil.getInteger(request.getAttribute("view_entry.jsp-flagValue"));
+String tabs1 = GetterUtil.getString(request.getAttribute("view_entry.jsp-tabs1"));
+
 boolean hiddenEntry = false;
 boolean readEntry = false;
 
@@ -43,6 +50,12 @@ if (entry.getPriority() > 0) {
 %>
 
 <div class="entry<%= className %>" id="<portlet:namespace /><%= entry.getEntryId() %>">
+	<liferay-ui:user-display userId="<%= entry.getUserId() %>" />
+
+	<div class="entry-time">
+		<%= Time.getRelativeTimeDescription(entry.getDisplayDate(), locale, timeZone, dateFormatDate) %>
+	</div>
+
 	<h3 class="entry-title">
 		<c:choose>
 			<c:when test="<%= Validator.isNotNull(entry.getUrl()) %>">

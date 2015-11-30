@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.registry;
+package com.liferay.portal.upgrade.internal.registry;
 
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.upgrade.internal.UpgradeInfo;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator.Registry;
 
 import java.util.ArrayList;

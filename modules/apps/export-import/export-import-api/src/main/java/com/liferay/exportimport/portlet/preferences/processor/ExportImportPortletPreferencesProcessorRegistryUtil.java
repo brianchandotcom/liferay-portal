@@ -14,6 +14,7 @@
 
 package com.liferay.exportimport.portlet.preferences.processor;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
@@ -53,11 +54,9 @@ public class ExportImportPortletPreferencesProcessorRegistryUtil {
 
 		_bundleContext = bundle.getBundleContext();
 
-		_serviceTracker = new ServiceTracker<>(
+		_serviceTracker = ServiceTrackerFactory.open(
 			_bundleContext, ExportImportPortletPreferencesProcessor.class,
 			new ExportImportPortletPreferencesProcessorServiceTrackerCustomizer());
-
-		_serviceTracker.open();
 	}
 
 	private ExportImportPortletPreferencesProcessor

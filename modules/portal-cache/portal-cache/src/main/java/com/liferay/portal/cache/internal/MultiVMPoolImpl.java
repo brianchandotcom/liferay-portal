@@ -14,6 +14,7 @@
 
 package com.liferay.portal.cache.internal;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
@@ -123,11 +124,9 @@ public class MultiVMPoolImpl implements MultiVMPool {
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
-		_serviceTracker = new ServiceTracker<>(
+		_serviceTracker = ServiceTrackerFactory.open(
 			bundleContext, SPIPortalCacheManagerConfigurator.class,
 			new SPIPortalCacheManagerConfiguratorServiceTrackerCustomizer());
-
-		_serviceTracker.open();
 	}
 
 	@Deactivate

@@ -15,9 +15,9 @@
 package com.liferay.dynamic.data.mapping.io;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
-import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -39,16 +39,8 @@ public class DDMFormLayoutJSONSerializerUtil {
 
 	private static final ServiceTracker
 		<DDMFormLayoutJSONSerializer, DDMFormLayoutJSONSerializer>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			DDMFormLayoutJSONSerializerUtil.class);
-
-		_serviceTracker = new ServiceTracker<>(
-			bundle.getBundleContext(), DDMFormLayoutJSONSerializer.class, null);
-
-		_serviceTracker.open();
-	}
+			_serviceTracker = ServiceTrackerFactory.open(
+				FrameworkUtil.getBundle(DDMFormLayoutJSONSerializerUtil.class),
+				DDMFormLayoutJSONSerializer.class);
 
 }

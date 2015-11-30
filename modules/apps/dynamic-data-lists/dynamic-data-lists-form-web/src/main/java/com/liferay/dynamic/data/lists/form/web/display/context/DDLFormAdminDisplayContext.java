@@ -40,6 +40,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -66,7 +67,6 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -395,17 +395,10 @@ public class DDLFormAdminDisplayContext {
 	}
 
 	private static final ServiceTracker
-		<DDMFormRenderer, DDMFormRenderer> _ddmFormRendererServiceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			DDLFormAdminDisplayContext.class);
-
-		_ddmFormRendererServiceTracker = new ServiceTracker<>(
-			bundle.getBundleContext(), DDMFormRenderer.class, null);
-
-		_ddmFormRendererServiceTracker.open();
-	}
+		<DDMFormRenderer, DDMFormRenderer> _ddmFormRendererServiceTracker =
+			ServiceTrackerFactory.open(
+				FrameworkUtil.getBundle(DDLFormAdminDisplayContext.class),
+				DDMFormRenderer.class);
 
 	private final DDLFormAdminRequestHelper _ddlFormAdminRequestHelper;
 	private DDMStructure _ddmStucture;

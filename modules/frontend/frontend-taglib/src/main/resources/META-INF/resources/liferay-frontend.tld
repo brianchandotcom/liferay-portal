@@ -53,7 +53,7 @@
 	</tag>
 	<tag>
 		<name>email-notification-settings</name>
-		<tag-class>com.liferay.taglib.ui.EmailNotificationSettingsTag</tag-class>
+		<tag-class>com.liferay.frontend.taglib.servlet.taglib.EmailNotificationSettingsTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>bodyLabel</name>

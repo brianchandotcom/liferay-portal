@@ -33,9 +33,9 @@ import com.liferay.portal.output.stream.container.OutputStreamContainer;
 import com.liferay.portal.output.stream.container.OutputStreamContainerFactory;
 import com.liferay.portal.output.stream.container.OutputStreamContainerFactoryTracker;
 import com.liferay.portal.service.ReleaseLocalService;
-import com.liferay.portal.upgrade.internal.UpgradeInfo;
 import com.liferay.portal.upgrade.internal.configuration.ReleaseManagerConfiguration;
 import com.liferay.portal.upgrade.internal.graph.ReleaseGraphManager;
+import com.liferay.portal.upgrade.registry.UpgradeInfo;
 
 import java.io.IOException;
 import java.io.OutputStream;

@@ -16,7 +16,6 @@ package com.liferay.portal.upgrade.registry;
 
 import com.liferay.portal.kernel.dao.db.DBProcessContext;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
-import com.liferay.portal.upgrade.internal.UpgradeInfo;
 
 import java.util.Arrays;
 import java.util.List;

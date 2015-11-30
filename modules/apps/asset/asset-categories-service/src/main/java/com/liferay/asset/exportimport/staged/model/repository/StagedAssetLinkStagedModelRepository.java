@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"model.class.name=com.liferay.asset.exportimport.staged.model.repository.StagedAssetLinkStagedModelRepository"
+		"model.class.name=com.liferay.portlet.asset.model.adapter.StagedAssetLink"
 	},
 	service = {
 		StagedAssetLinkStagedModelRepository.class, StagedModelRepository.class

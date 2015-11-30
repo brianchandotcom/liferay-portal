@@ -14,8 +14,6 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
-import com.liferay.portal.kernel.util.StringBundler;
-
 import java.io.IOException;
 
 import java.sql.SQLException;

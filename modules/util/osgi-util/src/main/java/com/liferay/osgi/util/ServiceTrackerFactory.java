@@ -15,8 +15,11 @@
 package com.liferay.osgi.util;
 
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Adolfo Pérez
@@ -37,6 +40,24 @@ public class ServiceTrackerFactory {
 			bundleContext, clazz, serviceTrackerCustomizer);
 	}
 
+	public static <S, T> ServiceTracker<S, T> create(
+			BundleContext bundleContext, String filterString)
+		throws InvalidSyntaxException {
+
+		return new ServiceTracker<S, T>(
+			bundleContext, bundleContext.createFilter(filterString), null);
+	}
+
+	public static <S, T> ServiceTracker<S, T> create(
+			BundleContext bundleContext, String filterString,
+			ServiceTrackerCustomizer<S, T> serviceTrackerCustomizer)
+		throws InvalidSyntaxException {
+
+		return new ServiceTracker<S, T>(
+			bundleContext, bundleContext.createFilter(filterString),
+			serviceTrackerCustomizer);
+	}
+
 	public static <T> ServiceTracker<T, T> create(Class<T> clazz) {
 		return create(FrameworkUtil.getBundle(clazz), clazz);
 	}
@@ -55,6 +76,31 @@ public class ServiceTrackerFactory {
 
 		ServiceTracker<S, T> serviceTracker = create(
 			bundleContext, clazz, serviceTrackerCustomizer);
+
+		serviceTracker.open();
+
+		return serviceTracker;
+	}
+
+	public static <S, T> ServiceTracker<S, T> open(
+			BundleContext bundleContext, String filterString)
+		throws InvalidSyntaxException {
+
+		ServiceTracker<S, T> serviceTracker = create(
+			bundleContext, filterString);
+
+		serviceTracker.open();
+
+		return serviceTracker;
+	}
+
+	public static <S, T> ServiceTracker<S, T> open(
+			BundleContext bundleContext, String filterString,
+			ServiceTrackerCustomizer<S, T> serviceTrackerCustomizer)
+		throws InvalidSyntaxException {
+
+		ServiceTracker<S, T> serviceTracker = create(
+			bundleContext, filterString, serviceTrackerCustomizer);
 
 		serviceTracker.open();
 

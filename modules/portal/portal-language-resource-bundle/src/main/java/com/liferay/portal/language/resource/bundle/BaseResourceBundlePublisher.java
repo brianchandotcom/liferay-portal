@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.language;
+package com.liferay.portal.language.resource.bundle;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;

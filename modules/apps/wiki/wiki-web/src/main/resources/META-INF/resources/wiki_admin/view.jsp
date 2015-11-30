@@ -21,7 +21,7 @@ WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderRespons
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcPath", "/wiki/view_nodes");
+portletURL.setParameter("mvcRenderCommandName", "/wiki_admin/view");
 
 List<String> headerNames = new ArrayList<String>();
 
@@ -96,39 +96,59 @@ else {
 				className="com.liferay.wiki.model.WikiNode"
 				modelVar="result"
 			>
+				<c:choose>
+					<c:when test='<%= displayStyle.equals("descriptive") %>'>
+						<liferay-ui:search-container-column-icon
+							icon="folder"
+							toggleRowChecker="<%= true %>"
+						/>
 
-				<%
-				WikiNode node = (WikiNode)result;
+						<liferay-ui:search-container-column-jsp
+							colspan="2"
+							path="/wiki_admin/view_node_descriptive.jsp"
+						/>
 
-				PortletURL rowURL = renderResponse.createRenderURL();
+						<liferay-ui:search-container-column-jsp
+							cssClass="entry-action"
+							path="/wiki/node_action.jsp"
+						/>
+					</c:when>
+					<c:otherwise>
 
-				rowURL.setParameter("mvcRenderCommandName", "/wiki/view_all_pages");
-				rowURL.setParameter("redirect", currentURL);
-				rowURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
-				%>
+						<%
+						WikiNode node = (WikiNode)result;
 
-				<liferay-ui:search-container-column-text
-					href="<%= rowURL %>"
-					name="wiki"
-					value="<%= node.getName() %>"
-				/>
+						PortletURL rowURL = renderResponse.createRenderURL();
 
-				<liferay-ui:search-container-column-text
-					href="<%= rowURL %>"
-					name="num-of-pages"
-					value="<%= String.valueOf(WikiPageServiceUtil.getPagesCount(scopeGroupId, node.getNodeId(), true)) %>"
-				/>
+						rowURL.setParameter("mvcRenderCommandName", "/wiki/view_all_pages");
+						rowURL.setParameter("redirect", currentURL);
+						rowURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
+						%>
 
-				<liferay-ui:search-container-column-text
-					href="<%= rowURL %>"
-					name="last-post-date"
-					value='<%= (node.getLastPostDate() == null) ? LanguageUtil.get(request, "never") : dateFormatDateTime.format(node.getLastPostDate()) %>'
-				/>
+						<liferay-ui:search-container-column-text
+							href="<%= rowURL %>"
+							name="wiki"
+							value="<%= node.getName() %>"
+						/>
 
-				<liferay-ui:search-container-column-jsp
-					cssClass="entry-action"
-					path="/wiki/node_action.jsp"
-				/>
+						<liferay-ui:search-container-column-text
+							href="<%= rowURL %>"
+							name="num-of-pages"
+							value="<%= String.valueOf(WikiPageServiceUtil.getPagesCount(scopeGroupId, node.getNodeId(), true)) %>"
+						/>
+
+						<liferay-ui:search-container-column-text
+							href="<%= rowURL %>"
+							name="last-post-date"
+							value='<%= (node.getLastPostDate() == null) ? LanguageUtil.get(request, "never") : dateFormatDateTime.format(node.getLastPostDate()) %>'
+						/>
+
+						<liferay-ui:search-container-column-jsp
+							cssClass="entry-action"
+							path="/wiki/node_action.jsp"
+						/>
+					</c:otherwise>
+				</c:choose>
 			</liferay-ui:search-container-row>
 
 			<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" />

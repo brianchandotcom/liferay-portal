@@ -24,7 +24,6 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.model.impl.VirtualLayout;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -142,12 +141,10 @@ public class InputPermissionsParamsTag extends TagSupport {
 
 		Layout layout = themeDisplay.getLayout();
 
-		Group layoutGroup = _getGroup(layout);
-
 		List<String> guestDefaultActions =
 			ResourceActionsUtil.getModelResourceGuestDefaultActions(modelName);
 
-		if (layoutGroup.isControlPanel()) {
+		if (layout.isTypeControlPanel()) {
 			Group group = themeDisplay.getScopeGroup();
 
 			if (!group.hasPrivateLayouts() &&
@@ -194,18 +191,6 @@ public class InputPermissionsParamsTag extends TagSupport {
 
 	public void setModelName(String modelName) {
 		_modelName = modelName;
-	}
-
-	private static Group _getGroup(Layout layout) throws PortalException {
-		if (!(layout instanceof VirtualLayout)) {
-			return layout.getGroup();
-		}
-
-		VirtualLayout virtualLayout = (VirtualLayout)layout;
-
-		Layout sourceLayout = virtualLayout.getSourceLayout();
-
-		return sourceLayout.getGroup();
 	}
 
 	private String _modelName;

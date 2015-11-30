@@ -421,28 +421,22 @@ public class JournalFeedLocalServiceImpl
 			return;
 		}
 
-		try {
-			DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
-				groupId,
-				classNameLocalService.getClassNameId(JournalArticle.class),
-				ddmStructureKey, true);
+		DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
+			groupId, classNameLocalService.getClassNameId(JournalArticle.class),
+			ddmStructureKey, true);
 
-			DDMForm ddmForm = ddmStructure.getDDMForm();
+		DDMForm ddmForm = ddmStructure.getDDMForm();
 
-			Map<String, DDMFormField> ddmFormFieldsMap =
-				ddmForm.getDDMFormFieldsMap(true);
+		Map<String, DDMFormField> ddmFormFieldsMap =
+			ddmForm.getDDMFormFieldsMap(true);
 
-			if (ddmFormFieldsMap.containsKey(contentField)) {
-				return;
-			}
-
-			if (!isValidStructureOptionValue(ddmFormFieldsMap, contentField)) {
-				throw new FeedContentFieldException(
-					"Invalid contentField: " + contentField);
-			}
+		if (ddmFormFieldsMap.containsKey(contentField)) {
+			return;
 		}
-		catch (Exception e) {
-			throw new FeedContentFieldException(e);
+
+		if (!isValidStructureOptionValue(ddmFormFieldsMap, contentField)) {
+			throw new FeedContentFieldException(
+				"Invalid contentField: " + contentField);
 		}
 	}
 

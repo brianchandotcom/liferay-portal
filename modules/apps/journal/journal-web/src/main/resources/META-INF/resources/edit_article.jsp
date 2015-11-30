@@ -89,17 +89,6 @@ if (article != null) {
 
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
-String[] mainSections = journalWebConfiguration.journalArticleFormAdd();
-
-if (classNameId > JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
-	mainSections = journalWebConfiguration.journalArticleFormDefaultValues();
-}
-else if ((article != null) && (article.getId() > 0)) {
-	mainSections = journalWebConfiguration.journalArticleFormUpdate();
-}
-
-String[][] categorySections = {mainSections};
-
 request.setAttribute("edit_article.jsp-redirect", redirect);
 
 request.setAttribute("edit_article.jsp-structure", ddmStructure);
@@ -302,13 +291,11 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 				</liferay-util:buffer>
 
 				<liferay-ui:form-navigator
-					categorySections="<%= categorySections %>"
 					formModelBean="<%= article %>"
 					formName="fm1"
 					htmlBottom="<%= htmlBottom %>"
 					htmlTop="<%= htmlTop %>"
-					id="journal.article.form"
-					jspPath="/article/"
+					id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_JOURNAL %>"
 					showButtons="<%= false %>"
 				/>
 			</div>

@@ -24,8 +24,6 @@ JournalArticle article = journalDisplayContext.getArticle();
 
 <aui:model-context bean="<%= article %>" model="<%= JournalArticle.class %>" />
 
-<h3><liferay-ui:message key="custom-fields" /></h3>
-
 <aui:fieldset>
 	<liferay-ui:custom-attribute-list
 		className="<%= JournalArticle.class.getName() %>"

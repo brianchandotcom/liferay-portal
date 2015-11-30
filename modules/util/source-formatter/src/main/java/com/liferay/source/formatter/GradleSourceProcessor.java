@@ -17,6 +17,8 @@ package com.liferay.source.formatter;
 import java.io.File;
 
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -60,9 +62,7 @@ public class GradleSourceProcessor extends BaseSourceProcessor {
 
 		String dependencies = matcher.group(1);
 
-		StringBundler sb = new StringBundler();
-
-		String previousConfiguration = null;
+		Set<String> uniqueDependencies = new TreeSet<>();
 
 		for (String dependency : StringUtil.splitLines(dependencies)) {
 			dependency = dependency.trim();
@@ -71,6 +71,14 @@ public class GradleSourceProcessor extends BaseSourceProcessor {
 				continue;
 			}
 
+			uniqueDependencies.add(dependency);
+		}
+
+		StringBundler sb = new StringBundler();
+
+		String previousConfiguration = null;
+
+		for (String dependency : uniqueDependencies) {
 			int pos = dependency.indexOf(StringPool.SPACE);
 
 			String configuration = dependency.substring(0, pos);

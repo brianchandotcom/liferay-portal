@@ -46,7 +46,7 @@ User statusByUser = UserLocalServiceUtil.fetchUser(statusByUserId);
 	<span onmouseover="Liferay.Portal.ToolTip.show(this, '<%= HtmlUtil.escapeJS(HtmlUtil.extractText(buffer)) %>')">
 </c:if>
 
-<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= status %>" />
+<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= status %>" />
 
 <c:if test="<%= statusByUser != null %>">
 	</span>

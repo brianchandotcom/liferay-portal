@@ -93,14 +93,12 @@ UserGroup userGroup = (UserGroup)row.getObject();
 		PortletURL managePagesURL = PortletProviderUtil.getPortletURL(request, userGroupGroup, Layout.class.getName(), PortletProvider.Action.EDIT);
 
 		managePagesURL.setParameter("redirect", redirect);
-		managePagesURL.setWindowState(LiferayWindowState.POP_UP);
 		%>
 
 		<liferay-ui:icon
 			iconCssClass="icon-copy"
 			message="manage-site-pages"
 			url="<%= managePagesURL.toString() %>"
-			useDialog="<%= true %>"
 		/>
 	</c:if>
 

@@ -6,6 +6,9 @@ Export-Package:\
 	com.liferay.document.library.web.lar,\
 	com.liferay.document.library.web.social,\
 	com.liferay.document.library.web.webdav
+Import-Package:\
+	com.liferay.frontend.taglib.servlet.taglib,\
+	*
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/main/resources/META-INF/resources

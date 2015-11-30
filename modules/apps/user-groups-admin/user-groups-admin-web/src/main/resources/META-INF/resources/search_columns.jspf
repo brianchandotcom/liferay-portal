@@ -1,0 +1,60 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<c:choose>
+	<c:when test='<%= displayStyle.equals("descriptive") %>'>
+		<liferay-ui:search-container-column-icon
+			icon="icon-group"
+		/>
+
+		<liferay-ui:search-container-column-text
+			colspan="<%= 2 %>"
+		>
+			<h5>
+				<aui:a href="<%= (rowURL != null) ? rowURL.toString() : null %>"><%= userGroup.getName() %></aui:a>
+			</h5>
+
+			<h6 class="text-default">
+				<span><%= userGroup.getDescription() %></span>
+			</h6>
+
+			<h6 class="text-default">
+				<span><%= LanguageUtil.format(request, usersCount > 1 ? "x-users" : "x-user", usersCount, false) %></span>
+			</h6>
+		</liferay-ui:search-container-column-text>
+	</c:when>
+	<c:otherwise>
+		<liferay-ui:search-container-column-text
+			href="<%= rowURL %>"
+			name="name"
+			orderable="<%= true %>"
+			property="name"
+		/>
+
+		<liferay-ui:search-container-column-text
+			href="<%= rowURL %>"
+			name="description"
+			orderable="<%= true %>"
+			property="description"
+		/>
+
+		<liferay-ui:search-container-column-text
+			name="users"
+		>
+			<%= LanguageUtil.format(request, usersCount > 1 ? "x-users" : "x-user", usersCount, false) %>
+		</liferay-ui:search-container-column-text>
+	</c:otherwise>
+</c:choose>

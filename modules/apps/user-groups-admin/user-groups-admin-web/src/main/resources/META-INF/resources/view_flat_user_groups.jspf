@@ -14,46 +14,11 @@
  */
 --%>
 
-<%
-UserGroupSearch userGroupSearch = new UserGroupSearch(renderRequest, portletURL);
-%>
-
 <liferay-ui:search-container
+	id="userGroups"
 	rowChecker="<%= new UserGroupChecker(renderResponse) %>"
-	searchContainer="<%= userGroupSearch %>"
+	searchContainer="<%= userGroupSearchContainer %>"
 >
-	<aui:input disabled="<%= true %>" name="userGroupsRedirect" type="hidden" value="<%= portletURL.toString() %>" />
-	<aui:input name="deleteUserGroupIds" type="hidden" />
-
-	<aui:nav-bar>
-		<aui:nav cssClass="navbar-nav" searchContainer="<%= userGroupSearch %>">
-			<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER_GROUP) %>">
-				<portlet:renderURL var="viewUserGroupsURL" />
-
-				<portlet:renderURL var="addUsergroupURL">
-					<portlet:param name="mvcPath" value="/edit_user_group.jsp" />
-					<portlet:param name="redirect" value="<%= viewUserGroupsURL %>" />
-				</portlet:renderURL>
-
-				<aui:nav-item href="<%= addUsergroupURL %>" iconCssClass="icon-plus" label="add" />
-			</c:if>
-		</aui:nav>
-
-		<aui:nav-bar-search>
-			<liferay-ui:user-group-search-form />
-		</aui:nav-bar-search>
-	</aui:nav-bar>
-
-	<%
-	UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)searchContainer.getSearchTerms();
-
-	LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
-
-	if (filterManageableUserGroups) {
-		userGroupParams.put("userGroupsUsers", Long.valueOf(user.getUserId()));
-	}
-	%>
-
 	<liferay-ui:user-group-search-container-results
 		searchTerms="<%= searchTerms %>"
 		userGroupParams="<%= userGroupParams %>"
@@ -75,21 +40,11 @@ UserGroupSearch userGroupSearch = new UserGroupSearch(renderRequest, portletURL)
 		if (!UserGroupPermissionUtil.contains(permissionChecker, userGroup.getUserGroupId(), ActionKeys.VIEW)) {
 			rowURL = null;
 		}
+
+		int usersCount = UserLocalServiceUtil.getUserGroupUsersCount(userGroup.getUserGroupId(), WorkflowConstants.STATUS_APPROVED);
 		%>
 
-		<liferay-ui:search-container-column-text
-			href="<%= rowURL %>"
-			name="name"
-			orderable="<%= true %>"
-			property="name"
-		/>
-
-		<liferay-ui:search-container-column-text
-			href="<%= rowURL %>"
-			name="description"
-			orderable="<%= true %>"
-			property="description"
-		/>
+		<%@ include file="/search_columns.jspf" %>
 
 		<liferay-ui:search-container-column-jsp
 			align="right"
@@ -98,11 +53,18 @@ UserGroupSearch userGroupSearch = new UserGroupSearch(renderRequest, portletURL)
 		/>
 	</liferay-ui:search-container-row>
 
-	<c:if test="<%= searchContainer.hasResults() && PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER_GROUP) %>">
-		<div class="separator"><!-- --></div>
-
-		<aui:button disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteUserGroups();" %>' value="delete" />
-	</c:if>
-
-	<liferay-ui:search-iterator />
+	<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 </liferay-ui:search-container>
+
+<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER_GROUP) %>">
+	<portlet:renderURL var="viewUserGroupsURL" />
+
+	<portlet:renderURL var="addUsergroupURL">
+		<portlet:param name="mvcPath" value="/edit_user_group.jsp" />
+		<portlet:param name="redirect" value="<%= viewUserGroupsURL %>" />
+	</portlet:renderURL>
+
+	<liferay-frontend:add-menu>
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addUsergroupURL.toString() %>" />
+	</liferay-frontend:add-menu>
+</c:if>

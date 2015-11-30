@@ -19,6 +19,8 @@
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1");
 
+String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectUsers");
+
 String redirect = ParamUtil.getString(request, "redirect");
 
 long userGroupId = ParamUtil.getLong(request, "userGroupId");
@@ -37,15 +39,11 @@ UserGroup userGroup = UserGroupServiceUtil.fetchUserGroup(userGroupId);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcPath", "/edit_user_group_assignments.jsp");
+portletURL.setParameter("mvcPath", "/select_user_group_users.jsp");
+portletURL.setParameter("eventName", eventName);
 portletURL.setParameter("tabs1", tabs1);
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("userGroupId", String.valueOf(userGroup.getUserGroupId()));
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
-
-renderResponse.setTitle(userGroup.getName());
 
 PortletURL searchURL = PortletURLUtil.clone(portletURL, renderResponse);
 
@@ -59,9 +57,7 @@ if (filterManageableOrganizations) {
 	userParams.put("usersOrgsTree", user.getOrganizations());
 }
 
-userParams.put("usersUserGroups", Long.valueOf(userGroup.getUserGroupId()));
-
-RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
+RowChecker rowChecker = new UserUserGroupChecker(renderResponse, userGroup);
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
@@ -98,24 +94,11 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 			/>
 		</liferay-frontend:management-bar-filters>
 
-		<liferay-frontend:management-bar-action-buttons>
-			<aui:a cssClass="btn" href="javascript:;" iconCssClass="icon-trash" id="removeUsers" />
-		</liferay-frontend:management-bar-action-buttons>
+		<liferay-frontend:management-bar-action-buttons />
 	</liferay-frontend:management-bar>
 </c:if>
 
-<aui:button-row cssClass="text-center">
-	<aui:button cssClass="btn-lg" id="addUsers" primary="<%= true %>" value="add-users" />
-</aui:button-row>
-
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="assignmentsRedirect" type="hidden" />
-	<aui:input name="userGroupId" type="hidden" value="<%= userGroup.getUserGroupId() %>" />
-	<aui:input name="addUserIds" type="hidden" />
-	<aui:input name="removeUserIds" type="hidden" />
-
+<aui:form cssClass="container-fluid-1280" method="post" name="fm">
 	<liferay-ui:search-container
 		id="users"
 		rowChecker="<%= rowChecker %>"
@@ -138,52 +121,34 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script use="liferay-item-selector-dialog">
-	var form = AUI.$(document.<portlet:namespace />fm);
+<aui:script>
+	var A = AUI();
 
-	<portlet:renderURL var="selectUsersURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="mvcPath" value="/select_user_group_users.jsp" />
-		<portlet:param name="userGroupId" value="<%= String.valueOf(userGroupId) %>" />
-	</portlet:renderURL>
+	var <portlet:namespace />userIds = [];
 
-	$('#<portlet:namespace />addUsers').on(
-		'click',
+	$('input[name="<portlet:namespace />rowIds"]').on(
+		'change',
 		function(event) {
-			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-				{
-					eventName: '<portlet:namespace />selectUsers',
-					on: {
-						selectedItemChange: function(event) {
-							var selectedItem = event.newVal;
+			var target = event.target;
 
-							if (selectedItem) {
-								form.fm('addUserIds').val(selectedItem.value);
+			if (target.checked) {
+				<portlet:namespace />userIds.push(target.value);
+			}
+			else {
+				A.Array.removeItem(<portlet:namespace />userIds, target.value);
+			}
 
-								submitForm(form, '<portlet:actionURL name="editUserGroupAssignments" />');
-							}
-						}
-					},
-					title: '<liferay-ui:message arguments="<%= userGroup.getName() %>" key="add-users-to-x" />',
-					url: '<%= selectUsersURL %>'
-				}
-			);
+			var result = {};
 
-			itemSelectorDialog.open();
-		}
-	);
+			if (<portlet:namespace />userIds.length > 0) {
+				result = {
+					data: {
+						value: <portlet:namespace />userIds.join(',')
+					}
+				};
+			}
 
-	$('#<portlet:namespace />removeUsers').on(
-		'click',
-		function() {
-			form.fm('redirect').val('<%= portletURL.toString() %>');
-			form.fm('removeUserIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-
-			submitForm(form, '<portlet:actionURL name="editUserGroupAssignments" />');
+			Liferay.Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
 		}
 	);
 </aui:script>
-
-<%
-PortalUtil.addPortletBreadcrumbEntry(request, userGroup.getName(), null);
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "assign-members"), currentURL);
-%>

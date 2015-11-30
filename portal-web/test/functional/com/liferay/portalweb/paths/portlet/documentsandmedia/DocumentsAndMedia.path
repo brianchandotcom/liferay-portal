@@ -127,7 +127,7 @@
 </tr>
 <tr>
 	<td>ICON_FOLDER_CHECKBOX</td>
-	<td>//div[contains(@class,'selectable') and contains(.,'${key_dmFolderName}')]//input[(@type='checkbox')]</td>
+	<td>//li[contains(@data-title,'${key_dmFolderName}')]//input</td>
 	<td></td>
 </tr>
 <tr>

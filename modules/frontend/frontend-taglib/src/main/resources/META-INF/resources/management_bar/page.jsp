@@ -52,9 +52,11 @@
 			<div class="container-fluid-1280">
 				<div class="management-bar-header">
 					<c:if test="<%= includeCheckBox %>">
-						<label class="checkbox">
-							<aui:input cssClass="select-all-checkboxes" inline="<%= true %>" label="" name="actionsCheckBox" title="select-all" type="checkbox" />
-						</label>
+						<div class="checkbox">
+							<label>
+								<aui:input cssClass="select-all-checkboxes" inline="<%= true %>" label="" name="actionsCheckBox" title="select-all" type="checkbox" />
+							</label>
+						</div>
 					</c:if>
 				</div>
 

@@ -74,6 +74,64 @@ public class OutputStreamContainerFactoryTracker {
 		return _outputStreamContainerFactories.keySet();
 	}
 
+	public void runWithSwappedLog(Runnable runnable, String outputStreamHint) {
+		OutputStreamContainer outputStreamContainer =
+			_outputStreamContainerFactory.create(outputStreamHint);
+
+		runWithSwappedLog(
+			runnable, outputStreamContainer.getDescription(),
+			outputStreamContainer.getOutputStream());
+	}
+
+	public void runWithSwappedLog(
+		Runnable runnable, String outputStreamName, OutputStream outputStream) {
+
+		_logger.log(
+			org.apache.felix.utils.log.Logger.LOG_INFO,
+			"Using " + outputStreamName + " as output");
+
+		Writer writer = _writerThreadLocal.get();
+
+		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
+			outputStream, Charset.forName("UTF-8"));
+
+		_writerThreadLocal.set(outputStreamWriter);
+
+		try {
+			runnable.run();
+
+			outputStreamWriter.flush();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		finally {
+			_writerThreadLocal.set(writer);
+		}
+	}
+
+	public void runWithSwappedLog(
+		Runnable runnable, String outputStreamHint,
+		String outputStreamContainerName) {
+
+		OutputStreamContainerFactory outputStreamContainerFactory =
+			_outputStreamContainerFactories.getService(
+				outputStreamContainerName);
+
+		if (outputStreamContainerFactory == null) {
+			runWithSwappedLog(runnable, outputStreamHint);
+
+			return;
+		}
+
+		OutputStreamContainer outputStreamContainer =
+			outputStreamContainerFactory.create(outputStreamHint);
+
+		runWithSwappedLog(
+			runnable, outputStreamContainer.getDescription(),
+			outputStreamContainer.getOutputStream());
+	}
+
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY, unbind = "-"

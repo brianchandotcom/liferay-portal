@@ -106,7 +106,10 @@ configurations {
 			eachDependency {
 				DependencyResolveDetails dependencyResolveDetails ->
 
-				if ((dependencyResolveDetails.requested.version == "default") && project.hasProperty(dependencyResolveDetails.requested.name + ".version")) {
+				if (dependencyResolveDetails.requested.group == "com.liferay.portal") {
+					dependencyResolveDetails.useVersion liferay.portalVersion
+				}
+				else if ((dependencyResolveDetails.requested.version == "default") && project.hasProperty(dependencyResolveDetails.requested.name + ".version")) {
 					dependencyResolveDetails.useVersion project.properties[dependencyResolveDetails.requested.name + ".version"]
 				}
 			}

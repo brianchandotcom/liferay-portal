@@ -90,7 +90,9 @@ portletURL.setParameter("groupId", String.valueOf(groupId));
 				rowURL.setParameter("classNameId", String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)));
 				rowURL.setParameter("classPK", String.valueOf(structure.getStructureId()));
 
-				String rowHREF = rowURL.toString();
+				boolean hasUpdatePermission = DDMStructurePermission.contains(permissionChecker, structure, refererPortletName, ActionKeys.UPDATE);
+
+				String rowHREF = hasUpdatePermission ? rowURL.toString() : "";
 				%>
 
 				<liferay-ui:search-container-column-text

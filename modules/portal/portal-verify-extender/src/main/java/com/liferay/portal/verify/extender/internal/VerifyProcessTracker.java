@@ -28,6 +28,8 @@ import com.liferay.portal.output.stream.container.OutputStreamContainer;
 import com.liferay.portal.output.stream.container.OutputStreamContainerFactory;
 import com.liferay.portal.output.stream.container.OutputStreamContainerFactoryTracker;
 import com.liferay.portal.service.ReleaseLocalService;
+import com.liferay.portal.upgrade.util.TransactionHelper;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.verify.VerifyException;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.extender.internal.configuration.VerifyProcessTrackerConfiguration;
@@ -178,11 +180,20 @@ public class VerifyProcessTracker {
 
 		VerifyProcess verifyProcess = getVerifyProcess(verifyProcessName);
 
+		if (PropsValues.UPGRADE_DATABASE_TRANSACTIONS_DISABLED) {
+			TransactionHelper.disableTransactions();
+		}
+
 		try {
 			verifyProcess.verify();
 		}
 		catch (VerifyException ve) {
 			_log.error(ve, ve);
+		}
+		finally {
+			if (PropsValues.UPGRADE_DATABASE_TRANSACTIONS_DISABLED) {
+				TransactionHelper.enableTransactions();
+			}
 		}
 	}
 

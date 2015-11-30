@@ -128,7 +128,7 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 		%>
 
 		<liferay-ui:section>
-			<liferay-ui:email-notification-settings
+			<liferay-frontend:email-notification-settings
 				emailBody="<%= mbGroupServiceSettings.getEmailMessageAddedBodyXml() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
 				emailEnabled="<%= mbGroupServiceSettings.isEmailMessageAddedEnabled() %>"
@@ -138,7 +138,7 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 		</liferay-ui:section>
 
 		<liferay-ui:section>
-			<liferay-ui:email-notification-settings
+			<liferay-frontend:email-notification-settings
 				emailBody="<%= mbGroupServiceSettings.getEmailMessageUpdatedBodyXml() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
 				emailEnabled="<%= mbGroupServiceSettings.isEmailMessageUpdatedEnabled() %>"

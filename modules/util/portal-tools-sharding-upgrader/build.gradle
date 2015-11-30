@@ -1,4 +1,6 @@
 dependencies {
+	provided group: "com.zaxxer", name: "HikariCP", transitive: true, version: "2.4.1"
+
 	compile fileTree(dir: 'third-party', include: '*.jar')
 }
 

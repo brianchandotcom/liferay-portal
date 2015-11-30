@@ -59,7 +59,6 @@ public class OrganizationIndexer extends BaseIndexer<Organization> {
 	public static final String CLASS_NAME = Organization.class.getName();
 
 	public OrganizationIndexer() {
-		setCommitImmediately(true);
 		setDefaultSelectedFieldNames(
 			Field.COMPANY_ID, Field.ORGANIZATION_ID, Field.UID);
 		setPermissionAware(true);

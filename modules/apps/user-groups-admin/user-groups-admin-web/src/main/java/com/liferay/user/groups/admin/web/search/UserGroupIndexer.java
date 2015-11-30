@@ -58,7 +58,6 @@ public class UserGroupIndexer extends BaseIndexer<UserGroup> {
 	public static final String CLASS_NAME = UserGroup.class.getName();
 
 	public UserGroupIndexer() {
-		setCommitImmediately(true);
 		setDefaultSelectedFieldNames(
 			Field.COMPANY_ID, Field.UID, Field.USER_GROUP_ID);
 		setPermissionAware(true);

@@ -83,16 +83,20 @@ portletURL.setParameter("groupId", String.valueOf(groupId));
 			>
 
 				<%
-				PortletURL rowURL = renderResponse.createRenderURL();
+				String rowHREF = StringPool.BLANK;
 
-				rowURL.setParameter("mvcPath", "/edit_structure.jsp");
-				rowURL.setParameter("redirect", currentURL);
-				rowURL.setParameter("classNameId", String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)));
-				rowURL.setParameter("classPK", String.valueOf(structure.getStructureId()));
+				boolean hasStructureUpdatePermission = DDMStructurePermission.contains(permissionChecker, structure, refererPortletName, ActionKeys.UPDATE);
 
-				boolean hasUpdatePermission = DDMStructurePermission.contains(permissionChecker, structure, refererPortletName, ActionKeys.UPDATE);
+				if (hasStructureUpdatePermission) {
+					PortletURL rowURL = renderResponse.createRenderURL();
 
-				String rowHREF = hasUpdatePermission ? rowURL.toString() : "";
+					rowURL.setParameter("mvcPath", "/edit_structure.jsp");
+					rowURL.setParameter("redirect", currentURL);
+					rowURL.setParameter("classNameId", String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)));
+					rowURL.setParameter("classPK", String.valueOf(structure.getStructureId()));
+
+					rowHREF = rowURL.toString();
+				}
 				%>
 
 				<liferay-ui:search-container-column-text

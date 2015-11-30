@@ -102,8 +102,8 @@ public class OutputStreamContainerFactoryTracker {
 
 			outputStreamWriter.flush();
 		}
-		catch (IOException e) {
-			e.printStackTrace();
+		catch (IOException ioe) {
+			_logger.log(org.apache.felix.utils.log.Logger.LOG_ERROR, ioe)
 		}
 		finally {
 			_writerThreadLocal.set(writer);

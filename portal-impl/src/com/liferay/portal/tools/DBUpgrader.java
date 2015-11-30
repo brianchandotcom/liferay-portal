@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -78,11 +79,25 @@ public class DBUpgrader {
 			upgrade();
 			verify();
 
+			Registry registry = RegistryUtil.getRegistry();
+
+			Map<String, Object> properties = new HashMap<>();
+
+			properties.put("module.service.lifecycle", "portal.initialized");
+			properties.put("service.vendor", ReleaseInfo.getVendor());
+			properties.put("service.version", ReleaseInfo.getVersion());
+
+			registry.registerService(
+				ModuleServiceLifecycle.class, new ModuleServiceLifecycle() {},
+				properties);
+
 			System.out.println(
-				"\nCompleted upgrade and verify processes in " +
+				"\nCompleted Liferay Core upgrade and verify processes in " +
 					(stopWatch.getTime() / Time.SECOND) + " seconds");
 
-			System.exit(0);
+			System.out.println(
+				"Running modules upgrades. " +
+					"Connect to your Gogo Shell to check the status.");
 		}
 		catch (Exception e) {
 			e.printStackTrace();

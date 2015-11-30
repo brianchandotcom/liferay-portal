@@ -27,6 +27,25 @@ public interface SelectDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
 
 	@DDMFormField(
+		label = "%create-list",
+		optionLabels = {"%manually", "%from-data-provider"},
+		optionValues = {"manual", "data-provider"}, predefinedValue = "manual",
+		properties = {"setting.category=basic", "setting.weight=1"},
+		type = "radio"
+	)
+	public String dataSourceType();
+
+	@DDMFormField(
+		properties = {
+			"setting.category=basic", "setting.weight=0", "showLabel=false"
+		},
+		type = "select",
+		visibilityExpression = "dataSourceType.equals(\"data-provider\")"
+
+	)
+	public long ddmDataProviderInstanceId();
+
+	@DDMFormField(
 		label = "%multiple",
 		properties = {
 			"setting.category=advanced", "setting.weight=2",
@@ -37,8 +56,11 @@ public interface SelectDDMFormFieldTypeSettings
 
 	@DDMFormField(
 		dataType = "ddm-options", label = "%options",
-		properties = {"setting.category=basic", "setting.weight=0"},
-		required = true, type = "options"
+		properties = {
+			"setting.category=basic", "setting.weight=0", "showLabel=false"
+		},
+		required = true, type = "options",
+		visibilityExpression = "dataSourceType.equals(\"manual\")"
 	)
 	public DDMFormFieldOptions options();
 

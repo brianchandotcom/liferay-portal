@@ -98,23 +98,12 @@ searchContainer.setResults(results);
 		resultRows.add(row);
 	}
 
-	boolean showAddNodeButton = WikiResourcePermissionChecker.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_NODE);
 	boolean showPermissionsButton = WikiResourcePermissionChecker.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);
 	%>
 
 	<aui:fieldset>
-		<c:if test="<%= showAddNodeButton || showPermissionsButton %>">
+		<c:if test="<%= showPermissionsButton %>">
 			<aui:button-row>
-				<c:if test="<%= showAddNodeButton %>">
-					<portlet:renderURL var="addNodeURL">
-						<portlet:param name="mvcRenderCommandName" value="/wiki/edit_node" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="nodeId" value="0" />
-					</portlet:renderURL>
-
-					<aui:button href="<%= addNodeURL %>" name="addNodeButton" value="add-wiki" />
-				</c:if>
-
 				<c:if test="<%= showPermissionsButton %>">
 					<liferay-security:permissionsURL
 						modelResource="com.liferay.wiki"
@@ -132,3 +121,22 @@ searchContainer.setResults(results);
 		<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
 	</aui:fieldset>
 </aui:form>
+
+<%
+boolean showAddNodeButton = WikiResourcePermissionChecker.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_NODE);
+%>
+
+<c:if test="<%= showAddNodeButton %>">
+	<portlet:renderURL var="viewNodesURL">
+		<portlet:param name="mvcRenderCommandName" value="/wiki_admin/view" />
+	</portlet:renderURL>
+
+	<portlet:renderURL var="addNodeURL">
+		<portlet:param name="mvcRenderCommandName" value="/wiki/edit_node" />
+		<portlet:param name="redirect" value="<%= viewNodesURL %>" />
+	</portlet:renderURL>
+
+	<liferay-frontend:add-menu>
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-wiki") %>' url="<%= addNodeURL %>" />
+	</liferay-frontend:add-menu>
+</c:if>

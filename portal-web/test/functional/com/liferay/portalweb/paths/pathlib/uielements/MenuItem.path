@@ -200,7 +200,7 @@
 </tr>
 <tr>
 	<td>CONTRACT</td>
-	<td>//li[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Contract')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Contract')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -390,7 +390,7 @@
 </tr>
 <tr>
 	<td>MARKETING_BANNER</td>
-	<td>//li[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Marketing Banner')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Marketing Banner')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -425,12 +425,12 @@
 </tr>
 <tr>
 	<td>MULTIPLE_DOCUMENTS</td>
-	<td>//li[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Multiple Documents')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Multiple Documents')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ONLINE_TRAINING</td>
-	<td>//li[contains(@class,'open')]//a[@role='menuitem' and @title='Online Training']</td>
+	<td>//a[@role='menuitem' and contains(.,'Online Training')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -535,7 +535,7 @@
 </tr>
 <tr>
 	<td>SALES_PRESENTATION</td>
-	<td>//li[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Sales Presentation')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Sales Presentation')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -144,6 +144,9 @@ public class WabServletContextHelper extends ServletContextHelper {
 			dirName = name.substring(0, index);
 			fileName = name.substring(index + 1);
 		}
+		else if (index == 0) {
+			fileName = name.substring(1);
+		}
 
 		Enumeration<URL> enumeration = _bundle.findEntries(
 			dirName, fileName, false);

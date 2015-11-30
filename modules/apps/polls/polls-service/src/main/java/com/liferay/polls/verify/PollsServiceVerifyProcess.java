@@ -21,31 +21,22 @@ import com.liferay.portal.verify.VerifyAuditedModel;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.VerifyResourcePermissions;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
-import org.springframework.context.ApplicationContext;
 
 /**
  * @author Miguel Pastor
  */
-@Component(immediate = true, service = PollsServiceVerifyProcess.class)
+@Component(
+	immediate = true,
+	property = {"verify.process.name=com.liferay.polls.service"},
+	service = VerifyProcess.class
+)
 public class PollsServiceVerifyProcess extends VerifyProcess {
 
-	@Activate
 	@Override
 	protected void doVerify() throws Exception {
 		verifyAuditedModels();
 		verifyResourcedModels();
-	}
-
-	@Reference(
-		target = "(org.springframework.context.service.name=com.liferay.polls.service)",
-		unbind = "-"
-	)
-	protected void setApplicationContext(
-		ApplicationContext applicationContext) {
 	}
 
 	protected void verifyAuditedModels() throws Exception {

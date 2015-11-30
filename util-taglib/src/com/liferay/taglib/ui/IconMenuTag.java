@@ -126,10 +126,6 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 			_direction = "left";
 		}
 
-		if (_icon == null) {
-			_icon = "../aui/cog";
-		}
-
 		if (Validator.isNull(_id)) {
 			_id = (String)request.getAttribute(
 				"liferay-ui:search-container-row:rowId");

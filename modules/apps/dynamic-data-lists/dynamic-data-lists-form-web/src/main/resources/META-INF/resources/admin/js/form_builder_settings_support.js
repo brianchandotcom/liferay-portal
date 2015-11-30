@@ -98,22 +98,21 @@ AUI.add(
 
 				settingsForm.render();
 
-				var settingsModal = instance.getSettingsModal();
+				var settingsModal = instance.getSettingsModal()._modal;
 
-				var settingsModalBoundingBox = settingsModal._modal.get('boundingBox');
+				var settingsModalBoundingBox = settingsModal.get('boundingBox');
 
 				settingsModalBoundingBox.addClass(CSS_FIELD_SETTINGS_MODAL);
 
-				var settingsModalToolbar = settingsModal._modal.getToolbar('footer');
+				var settingsModalToolbar = settingsModal.getToolbar('footer');
 
 				settingsModalToolbar.item(0).set('cssClass', 'btn-lg btn-primary');
 				settingsModalToolbar.item(1).set('cssClass', 'btn-lg btn-link');
 
 				var portletNode = A.one('#p_p_id' + instance.get('portletNamespace'));
 
-				settingsModal._modal.set('centered', portletNode);
-
-				settingsModal._modal.set('zIndex', Liferay.zIndex.OVERLAY);
+				settingsModal.set('centered', portletNode);
+				settingsModal.set('zIndex', Liferay.zIndex.OVERLAY);
 			},
 
 			saveSettings: function() {

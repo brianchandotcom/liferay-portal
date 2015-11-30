@@ -3,6 +3,8 @@ AUI.add(
 	function(A) {
 		var CSS_FIELD_SETTINGS_SAVE = A.getClassName('form', 'builder', 'field', 'settings', 'save');
 
+		var TPL_MODE_TOGGLER = '<a class="settings-toggler" href="javascript:;"></a>';
+
 		var TPL_SETTINGS_FORM = '<form action="javascript:;"></form>';
 
 		var TPL_SUBMIT_BUTTON = '<button class="hide" type="submit" />';
@@ -115,9 +117,9 @@ AUI.add(
 
 						var advancedSettingsNode = instance.getPageNode(2);
 
-						var modeToggler = A.Node.create('<a class="settings-toggler" href="javascript:;"></a>');
+						var modeToggler = A.Node.create(TPL_MODE_TOGGLER);
 
-						advancedSettingsNode.insert(modeToggler, 'before');
+						advancedSettingsNode.placeBefore(modeToggler);
 
 						modeToggler.on('click', A.bind('_onClickModeToggler', instance));
 

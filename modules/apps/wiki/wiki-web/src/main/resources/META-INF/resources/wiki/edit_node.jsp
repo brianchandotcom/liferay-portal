@@ -37,46 +37,48 @@ if (portletTitleBasedNavigation) {
 
 <portlet:actionURL name="/wiki/edit_node" var="editNodeURL" />
 
-<aui:form action="<%= editNodeURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveNode();" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="nodeId" type="hidden" value="<%= nodeId %>" />
+<div class="container-fluid-1280">
+	<aui:form action="<%= editNodeURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveNode();" %>'>
+		<aui:input name="<%= Constants.CMD %>" type="hidden" />
+		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+		<aui:input name="nodeId" type="hidden" value="<%= nodeId %>" />
 
-	<c:if test="<%= !portletTitleBasedNavigation %>">
-		<liferay-ui:header
-			backURL="<%= redirect %>"
-			localizeTitle="<%= (node == null) %>"
-			title="<%= headerTitle %>"
-		/>
-	</c:if>
-
-	<liferay-ui:error exception="<%= DuplicateNodeNameException.class %>" message="please-enter-a-unique-node-name" />
-	<liferay-ui:error exception="<%= NodeNameException.class %>" message="please-enter-a-valid-name" />
-
-	<aui:model-context bean="<%= node %>" model="<%= WikiNode.class %>" />
-
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
-			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
-
-			<aui:input name="description" />
-		</aui:fieldset>
-
-		<c:if test="<%= node == null %>">
-			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
-				<liferay-ui:input-permissions
-					modelName="<%= WikiNode.class.getName() %>"
-				/>
-			</aui:fieldset>
+		<c:if test="<%= !portletTitleBasedNavigation %>">
+			<liferay-ui:header
+				backURL="<%= redirect %>"
+				localizeTitle="<%= (node == null) %>"
+				title="<%= headerTitle %>"
+			/>
 		</c:if>
-	</aui:fieldset-group>
 
-	<aui:button-row>
-		<aui:button type="submit" />
+		<liferay-ui:error exception="<%= DuplicateNodeNameException.class %>" message="please-enter-a-unique-node-name" />
+		<liferay-ui:error exception="<%= NodeNameException.class %>" message="please-enter-a-valid-name" />
 
-		<aui:button href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
-</aui:form>
+		<aui:model-context bean="<%= node %>" model="<%= WikiNode.class %>" />
+
+		<aui:fieldset-group markupView="lexicon">
+			<aui:fieldset>
+				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
+
+				<aui:input name="description" />
+			</aui:fieldset>
+
+			<c:if test="<%= node == null %>">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
+					<liferay-ui:input-permissions
+						modelName="<%= WikiNode.class.getName() %>"
+					/>
+				</aui:fieldset>
+			</c:if>
+		</aui:fieldset-group>
+
+		<aui:button-row>
+			<aui:button type="submit" />
+
+			<aui:button href="<%= redirect %>" type="cancel" />
+		</aui:button-row>
+	</aui:form>
+</div>
 
 <aui:script>
 	function <portlet:namespace />saveNode() {

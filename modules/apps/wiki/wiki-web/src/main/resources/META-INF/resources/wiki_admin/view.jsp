@@ -60,8 +60,12 @@ else {
 	</aui:nav>
 </aui:nav-bar>
 
+<%
+int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
+%>
+
 <liferay-frontend:management-bar
-	includeCheckBox="<%= true %>"
+	includeCheckBox="<%= nodesCount > 0 %>"
 	searchContainerId="wikiNodes"
 >
 	<liferay-frontend:management-bar-buttons>
@@ -83,10 +87,18 @@ else {
 	<aui:form action="<%= wikiURLHelper.getSearchURL() %>" method="get" name="fm">
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
+		<%
+		SearchContainer wikiNodesSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, "there-are-no-wikis");
+
+		NodesChecker nodesChecker = new NodesChecker(liferayPortletRequest, liferayPortletResponse);
+
+		wikiNodesSearchContainer.setRowChecker(nodesChecker);
+		%>
+
 		<liferay-ui:search-container
-			id="blogEntries"
-			searchContainer='<%= new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, "there-are-no-wikis") %>'
-			total="<%= WikiNodeServiceUtil.getNodesCount(scopeGroupId) %>"
+			id="wikiNodes"
+			searchContainer="<%= wikiNodesSearchContainer %>"
+			total="<%= nodesCount %>"
 		>
 			<liferay-ui:search-container-results
 				results="<%= WikiNodeServiceUtil.getNodes(scopeGroupId, searchContainer.getStart(), searchContainer.getEnd()) %>"
@@ -94,6 +106,7 @@ else {
 
 			<liferay-ui:search-container-row
 				className="com.liferay.wiki.model.WikiNode"
+				keyProperty="nodeId"
 				modelVar="result"
 			>
 				<c:choose>

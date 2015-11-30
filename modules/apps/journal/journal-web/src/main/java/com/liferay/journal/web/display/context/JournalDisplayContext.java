@@ -15,6 +15,7 @@
 package com.liferay.journal.web.display.context;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverterUtil;
@@ -28,6 +29,7 @@ import com.liferay.journal.web.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -39,6 +41,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
@@ -105,6 +108,52 @@ public class JournalDisplayContext {
 			ddmStructure, fields);
 
 		return _ddmFormValues;
+	}
+
+	public String getDDMStructureKey() {
+		if (_ddmStructureKey != null) {
+			return _ddmStructureKey;
+		}
+
+		_ddmStructureKey = ParamUtil.getString(_request, "ddmStructureKey");
+
+		return _ddmStructureKey;
+	}
+
+	public String getDdmStructureName() throws PortalException {
+		if (_ddmStructureName != null) {
+			return _ddmStructureName;
+		}
+
+		_ddmStructureName = LanguageUtil.get(_request, "basic-web-content");
+
+		if (Validator.isNull(getDDMStructureKey())) {
+			return _ddmStructureName;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay) _request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
+			themeDisplay.getSiteGroupId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			getDDMStructureKey(), true);
+
+		if (ddmStructure != null) {
+			_ddmStructureName = ddmStructure.getName(themeDisplay.getLocale());
+		}
+
+		return _ddmStructureName;
+	}
+
+	public String getDDMTemplateKey() {
+		if (_ddmTemplateKey != null) {
+			return _ddmTemplateKey;
+		}
+
+		_ddmTemplateKey = ParamUtil.getString(_request, "ddmTemplateKey");
+
+		return _ddmTemplateKey;
 	}
 
 	public String getDisplayStyle() {
@@ -243,8 +292,7 @@ public class JournalDisplayContext {
 
 		portletURL.setParameter("folderId", String.valueOf(getFolderId()));
 
-		String ddmStructureKey = ParamUtil.getString(
-			_request, "ddmStructureKey");
+		String ddmStructureKey = getDDMStructureKey();
 
 		if (!ddmStructureKey.equals("0")) {
 			portletURL.setParameter("ddmStructureKey", ddmStructureKey);
@@ -361,10 +409,7 @@ public class JournalDisplayContext {
 	}
 
 	public boolean isShowInfoPanel() {
-		String ddmStructureKey = ParamUtil.getString(
-			_request, "ddmStructureKey");
-
-		if (Validator.isNotNull(ddmStructureKey)) {
+		if (Validator.isNotNull(getDDMStructureKey())) {
 			return false;
 		}
 
@@ -419,6 +464,9 @@ public class JournalDisplayContext {
 
 	private JournalArticle _article;
 	private DDMFormValues _ddmFormValues;
+	private String _ddmStructureKey;
+	private String _ddmStructureName;
+	private String _ddmTemplateKey;
 	private String _displayStyle;
 	private String[] _displayViews;
 	private JournalFolder _folder;

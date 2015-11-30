@@ -19,8 +19,6 @@
 <%
 String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
 
-String ddmStructureName = LanguageUtil.get(request, "basic-web-content");
-
 PortletURL portletURL = journalDisplayContext.getPortletURL();
 
 ArticleSearch articleSearchContainer = new ArticleSearch(liferayPortletRequest, portletURL);
@@ -46,15 +44,6 @@ ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)articleSearchContainer.g
 
 <c:if test="<%= Validator.isNotNull(displayTerms.getDDMStructureKey()) %>">
 	<aui:input name="<%= ArticleDisplayTerms.DDM_STRUCTURE_KEY %>" type="hidden" value="<%= displayTerms.getDDMStructureKey() %>" />
-
-	<%
-	DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(themeDisplay.getSiteGroupId(), PortalUtil.getClassNameId(JournalArticle.class), displayTerms.getDDMStructureKey(), true);
-
-	if (ddmStructure != null) {
-		ddmStructureName = ddmStructure.getName(locale);
-	}
-	%>
-
 </c:if>
 
 <c:if test="<%= Validator.isNotNull(displayTerms.getDDMTemplateKey()) %>">
@@ -182,7 +171,7 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(articleSearchCo
 		<c:choose>
 			<c:when test="<%= Validator.isNotNull(displayTerms.getDDMStructureKey()) %>">
 				<c:if test="<%= total == 0 %>">
-					<liferay-ui:message arguments="<%= HtmlUtil.escape(ddmStructureName) %>" key="there-is-no-web-content-with-structure-x" translateArguments="<%= false %>" />
+					<liferay-ui:message arguments="<%= HtmlUtil.escape(journalDisplayContext.getDdmStructureName()) %>" key="there-is-no-web-content-with-structure-x" translateArguments="<%= false %>" />
 				</c:if>
 			</c:when>
 			<c:otherwise>

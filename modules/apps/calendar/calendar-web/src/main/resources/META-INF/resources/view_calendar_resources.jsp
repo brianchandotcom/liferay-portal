@@ -27,7 +27,7 @@ CalendarResourceDisplayTerms displayTerms = new CalendarResourceDisplayTerms(ren
 			<liferay-portlet:param name="redirect" value="<%= currentURL %>" />
 		</liferay-portlet:renderURL>
 
-		<aui:button onClick="<%= editCalendarResourceURL %>" primary="<%= true %>" value="add-calendar-resource" />
+		<aui:button href="<%= editCalendarResourceURL %>" primary="<%= true %>" value="add-calendar-resource" />
 	</aui:button-row>
 </c:if>
 

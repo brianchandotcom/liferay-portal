@@ -1094,7 +1094,9 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
 
 		if (message.isRoot()) {
-			throw new SplitThreadException(message.toString());
+			throw new SplitThreadException(
+				"Cannot split message {messageId=" + messageId +
+					"} because it is a root message");
 		}
 
 		MBCategory category = message.getCategory();

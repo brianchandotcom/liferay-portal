@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -67,6 +68,31 @@ public class ModuleGroupDisplayFactoryUtil {
 		}
 
 		return ListUtil.fromMapValues(moduleGroupDisplaysMap);
+	}
+
+	public static List<ModuleGroupDisplay> getModuleGroupDisplays(
+		List<Bundle> bundles, int state) {
+
+		List<ModuleGroupDisplay> moduleGroupDisplays = getModuleGroupDisplays(
+			bundles);
+
+		filterModuleGroupDisplays(moduleGroupDisplays, state);
+
+		return moduleGroupDisplays;
+	}
+
+	protected static void filterModuleGroupDisplays(
+		List<ModuleGroupDisplay> moduleGroupDisplays, int state) {
+
+		Iterator<ModuleGroupDisplay> iterator = moduleGroupDisplays.iterator();
+
+		while (iterator.hasNext()) {
+			ModuleGroupDisplay moduleGroupDisplay = iterator.next();
+
+			if ((state > 0) && (moduleGroupDisplay.getState() != state)) {
+				iterator.remove();
+			}
+		}
 	}
 
 }

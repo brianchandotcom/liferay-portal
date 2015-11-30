@@ -17,27 +17,39 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String category = ParamUtil.getString(request, "category", "all-categories");
+String app = ParamUtil.getString(request, "app");
+
+AppDisplay appDisplay = null;
+
+List<Bundle> bundles = BundleManagerUtil.getBundles();
+
+if (Validator.isNumber(app)) {
+	appDisplay = AppDisplayFactoryUtil.getAppDisplay(bundles, Long.parseLong(app));
+}
+
+if (appDisplay == null) {
+	appDisplay = AppDisplayFactoryUtil.getAppDisplay(bundles, app);
+}
+
 String state = ParamUtil.getString(request, "state", "all-statuses");
 
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
-List<App> apps = AppLocalServiceUtil.getApps(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-List<Bundle> bundles = BundleManagerUtil.getBundles();
-
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("category", category);
+portletURL.setParameter("mvcPath", "/view_module_groups.jsp");
 portletURL.setParameter("state", state);
 %>
 
 <aui:nav-bar markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
-		<portlet:renderURL var="viewURL" />
+		<portlet:renderURL var="viewURL">
+			<portlet:param name="mvcPath" value="/view_module_groups.jsp" />
+		</portlet:renderURL>
 
 		<aui:nav-item
 			href="<%= viewURL %>"
-			label="apps"
+			label="module-groups"
 			selected="<%= true %>"
 		/>
 	</aui:nav>
@@ -56,12 +68,6 @@ portletURL.setParameter("state", state);
 
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
-			navigationKeys="<%= MarketplaceAppManagerUtil.getCategories(apps, bundles) %>"
-			navigationParam="category"
-			portletURL="<%= portletURL %>"
-		/>
-
-		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all-statuses", BundleStateConstants.ACTIVE_LABEL, BundleStateConstants.RESOLVED_LABEL, BundleStateConstants.INSTALLED_LABEL} %>'
 			navigationParam="state"
 			portletURL="<%= portletURL %>"
@@ -77,50 +83,38 @@ portletURL.setParameter("state", state);
 </liferay-frontend:management-bar>
 
 <div class="container-fluid-1280">
-	<liferay-ui:search-container
-		id="appDisplays"
-	>
+	<liferay-ui:search-container>
 		<liferay-ui:search-container-results>
 
 			<%
-			if (category.equals("all-categories")) {
-				category = StringPool.BLANK;
-			}
+			List<ModuleGroupDisplay> moduleGroupDisplays = ModuleGroupDisplayFactoryUtil.getModuleGroupDisplays(appDisplay.getBundles(), BundleStateConstants.getState(state));
 
-			List<AppDisplay> appDisplays = AppDisplayFactoryUtil.getAppDisplays(bundles, category, BundleStateConstants.getState(state));
-
-			appDisplays = ListUtil.sort(appDisplays, new AppDisplayComparator(orderByType));
+			moduleGroupDisplays = ListUtil.sort(moduleGroupDisplays, new ModuleGroupDisplayComparator(orderByType));
 
 			int end = searchContainer.getEnd();
 
-			if (end > appDisplays.size()) {
-				end = appDisplays.size();
+			if (end > moduleGroupDisplays.size()) {
+				end = moduleGroupDisplays.size();
 			}
 
-			searchContainer.setResults(appDisplays.subList(searchContainer.getStart(), end));
+			searchContainer.setResults(moduleGroupDisplays.subList(searchContainer.getStart(), end));
 
-			searchContainer.setTotal(appDisplays.size());
+			searchContainer.setTotal(moduleGroupDisplays.size());
 			%>
 
 		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.marketplace.app.manager.web.util.AppDisplay"
-			modelVar="appDisplay"
+			className="com.liferay.marketplace.app.manager.web.util.ModuleGroupDisplay"
+			modelVar="moduleGroupDisplay"
 		>
-			<liferay-ui:search-container-column-image
-				src="<%= appDisplay.getIconURL() %>"
-			/>
-
 			<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 				<h5>
-					<a href="<%= HtmlUtil.escapeHREF(appDisplay.getDisplayURL(renderResponse)) %>">
-						<%= appDisplay.getTitle() %>
-					</a>
+					<%= moduleGroupDisplay.getTitle() %>
 				</h5>
 
 				<h6 class="text-default">
-					<%= appDisplay.getDescription() %>
+					<%= moduleGroupDisplay.getDescription() %>
 				</h6>
 
 				<div class="additional-info text-default">
@@ -129,7 +123,7 @@ portletURL.setParameter("state", state);
 							<liferay-ui:message key="version" />:
 						</strong>
 
-						<%= appDisplay.getVersion() %>
+						<%= moduleGroupDisplay.getVersion() %>
 					</div>
 
 					<div class="additional-info-item">
@@ -137,7 +131,7 @@ portletURL.setParameter("state", state);
 							<liferay-ui:message key="status" />:
 						</strong>
 
-						<liferay-ui:message key="<%= BundleStateConstants.getLabel(appDisplay.getState()) %>" />
+						<liferay-ui:message key="<%= BundleStateConstants.getLabel(moduleGroupDisplay.getState()) %>" />
 					</div>
 				</div>
 			</liferay-ui:search-container-column-text>

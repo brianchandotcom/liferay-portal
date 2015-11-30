@@ -128,7 +128,9 @@ TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.ge
 				rowURL.setParameter("type", template.getType());
 				rowURL.setParameter("structureAvailableFields", renderResponse.getNamespace() + "getAvailableFields");
 
-				String rowHREF = rowURL.toString();
+				boolean hasUpdatePermission = DDMTemplatePermission.contains(permissionChecker, scopeGroupId, template, refererPortletName, ActionKeys.UPDATE);
+
+				String rowHREF = hasUpdatePermission ? rowURL.toString() : "";
 				%>
 
 				<liferay-ui:search-container-row-parameter

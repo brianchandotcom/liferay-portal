@@ -97,29 +97,9 @@ searchContainer.setResults(results);
 
 		resultRows.add(row);
 	}
-
-	boolean showPermissionsButton = WikiResourcePermissionChecker.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);
 	%>
 
-	<aui:fieldset>
-		<c:if test="<%= showPermissionsButton %>">
-			<aui:button-row>
-				<c:if test="<%= showPermissionsButton %>">
-					<liferay-security:permissionsURL
-						modelResource="com.liferay.wiki"
-						modelResourceDescription="<%= HtmlUtil.escape(themeDisplay.getScopeGroupName()) %>"
-						resourcePrimKey="<%= String.valueOf(scopeGroupId) %>"
-						var="permissionsURL"
-						windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-					/>
-
-					<aui:button href="<%= permissionsURL %>" name="permissionsButton" useDialog="<%= true %>" value="permissions" />
-				</c:if>
-			</aui:button-row>
-		</c:if>
-
-		<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
-	</aui:fieldset>
+	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
 </aui:form>
 
 <%
